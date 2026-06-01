@@ -43,7 +43,8 @@ function handleMaterial(color = 0x1a2744): THREE.MeshPhongMaterial {
     color,
     specular: 0x223355,
     shininess: 18,
-    side: THREE.FrontSide,
+    // Keep both sides visible to avoid artifacts if local loft triangles flip.
+    side: THREE.DoubleSide,
     depthWrite: true,
     transparent: false,
   });
@@ -133,7 +134,8 @@ export function createLoftedHandleGeometry(
   const { baseHalfW, baseHalfT } = bottomProfileExtents(bottom);
   const handlePts = sampleProfilePoints(front, 48);
   const joinY = DEFAULT_DIMS.handleJoinYMm;
-  const topY = Math.min(Math.max(...handlePts.map(p => p.y)), joinY - 0.15);
+  // Leave a small gap from blade neck to reduce depth-fighting / interpenetration artifacts.
+  const topY = Math.min(Math.max(...handlePts.map(p => p.y)), joinY - 0.6);
   const bottomY = Math.min(...handlePts.map(p => p.y));
   const ringTemplate = sampleButtCrossSectionRing(bottom, ringSegments);
   const sliceCount = Math.max(slices, 2);
@@ -187,6 +189,7 @@ export function createLoftedHandleGeometry(
   geo.setIndex(indices);
   geo = mergeVertices(geo);
   geo.computeVertexNormals();
+  geo.normalizeNormals();
   return geo;
 }
 
