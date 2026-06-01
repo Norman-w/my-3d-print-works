@@ -567,6 +567,9 @@ export default function BezierDrawEditor({ target }: Props) {
       if (c && c.dist < 5) commit(splitSegment(profile, c.seg, c.t));
       return;
     }
+    // Left-drag on blank canvas also pans viewport (all targets).
+    setPanDrag({ startX: e.clientX, startY: e.clientY, startCx: viewport.cx, startCy: viewport.cy });
+    svgRef.current?.setPointerCapture(e.pointerId);
     setSelected(null);
   };
 
@@ -751,7 +754,7 @@ export default function BezierDrawEditor({ target }: Props) {
 
       <p style={{ fontSize: 12, color: '#666', margin: '0 0 4px', lineHeight: 1.5 }}>{meta.hint}</p>
       <p style={{ fontSize: 11, color: '#555', margin: '0 0 8px' }}>
-        锚点 {anchorCount(profile)} · 红/蓝 = 曲线锚点 · 黄 = 控制柄 · Shift+点击插锚点 · − 或 Delete 删锚点 · 滚轮缩放 · 空格/中键/Alt+拖移
+        锚点 {anchorCount(profile)} · 红/蓝 = 曲线锚点 · 黄 = 控制柄 · Shift+点击插锚点 · − 或 Delete 删锚点 · 滚轮缩放 · 左键拖动画布平移（或空格/中键/Alt+拖移）
         {onPhoto && ghostFront && (
           <span style={{ color: GHOST_STROKE[ghostFront as 'blade-front' | 'handle-front'] }}>
             {' '}
@@ -1136,7 +1139,7 @@ export default function BezierDrawEditor({ target }: Props) {
           {/* active profile */}
           {onPhoto
             ? renderPhotoPath(profile, meta.stroke, 1, 2.5)
-            : renderGridPath(profile, meta.stroke, 2.5, prefs.showMirror && target === 'handle-bottom')}
+            : renderGridPath(profile, meta.stroke, 2.5, prefs.showMirror && (target === 'handle-bottom' || target === 'side'))}
 
           {renderControlLines(profile)}
           {renderHandles(profile)}
