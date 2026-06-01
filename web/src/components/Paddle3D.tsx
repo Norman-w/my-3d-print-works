@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createPaddleModel } from '../lib/paddleModel';
 
@@ -10,6 +10,7 @@ interface Props {
 export default function Paddle3D({ imuData, impactData }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const refs = useRef<{ scene: THREE.Scene; paddle: THREE.Group; impacts: THREE.Group; trailPts: THREE.Vector3[] } | null>(null);
+  const [waitingTick, setWaitingTick] = useState(0);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -89,12 +90,48 @@ export default function Paddle3D({ imuData, impactData }: Props) {
     });
   }, [impactData]);
 
+  useEffect(() => {
+    if (imuData.length > 0) return;
+    const id = window.setInterval(() => setWaitingTick(v => (v + 1) % 4), 420);
+    return () => window.clearInterval(id);
+  }, [imuData.length]);
+
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
       {imuData.length === 0 && (
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', color: '#555', fontSize: 16, textAlign: 'center', pointerEvents: 'none' }}>
-          <div style={{ fontSize: 48, marginBottom: 12 }}>🏓</div>
-          Waiting for paddle data...
+        <div
+          style={{
+            position: 'absolute',
+            top: 14,
+            right: 14,
+            color: '#d8e4ff',
+            fontSize: 12,
+            letterSpacing: 0.3,
+            pointerEvents: 'none',
+            background: 'linear-gradient(135deg, rgba(16,22,36,0.88), rgba(21,32,58,0.82))',
+            border: '1px solid rgba(120,160,255,0.34)',
+            borderRadius: 12,
+            padding: '8px 11px',
+            backdropFilter: 'blur(4px)',
+            boxShadow: '0 6px 18px rgba(0,0,0,0.28)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: '#59b0ff',
+              boxShadow: '0 0 0 4px rgba(89,176,255,0.2)',
+            }}
+          />
+          <span style={{ fontWeight: 600 }}>
+            Waiting for paddle data
+            <span style={{ display: 'inline-block', width: 18, textAlign: 'left' }}>{'.'.repeat(waitingTick)}</span>
+          </span>
         </div>
       )}
     </div>
