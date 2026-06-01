@@ -1,0 +1,48 @@
+"""SmartPaddle PCB — ESP32-S3 + ICM-42688-P + 4ch piezo TDOA + LiPo charger"""
+
+module ESP32S3WROOM1:
+    pin VDD33_1; pin VDD33_2; pin VDD33_3
+    pin IMU_CS; pin IMU_MOSI; pin IMU_MISO; pin IMU_SCLK
+    pin IMU_INT; pin PIEZO_CH1; pin PIEZO_CH2; pin PIEZO_CH3; pin PIEZO_CH4
+    pin LED_DATA; pin BAT_ADC
+    pin USB_DP; pin USB_DN; pin EN; pin BOOT; pin TCK; pin TDO
+
+    signal spi_sclk; signal spi_mosi; signal spi_miso; signal spi_cs
+    signal imu_int; signal piezo_1; signal piezo_2; signal piezo_3; signal piezo_4
+    signal led_data; signal bat_adc; signal usb_dn; signal usb_dp; signal en
+
+module ICM42688P:
+    pin CS; pin SCLK; pin MOSI; pin MISO; pin INT1; pin VDD; pin VDDIO; pin GND_IMU
+    signal spi_sclk; signal spi_mosi; signal spi_miso; signal spi_cs; signal imu_int
+
+module PowerSection:
+    pin CHARGE_STAT; pin CHARGE_GND; pin CHARGE_VBAT; pin CHARGE_VDD; pin CHARGE_PROG
+    pin LDO_IN; pin LDO_GND; pin LDO_EN; pin LDO_NR; pin LDO_OUT
+    signal vbus_5v; signal vbat; signal v3v3; signal gnd_pwr; signal charge_stat
+
+module PiezoInput4Ch:
+    pin CH1_POS; pin CH2_POS; pin CH3_POS; pin CH4_POS
+    signal ch1_out; signal ch2_out; signal ch3_out; signal ch4_out
+
+component SmartPaddleBoard:
+    mcu = new ESP32S3WROOM1
+    imu = new ICM42688P
+    power = new PowerSection
+    piezo = new PiezoInput4Ch
+
+    signal v3v3_rail
+
+    power.v3v3 ~ v3v3_rail
+    v3v3_rail ~ imu.VDD
+    v3v3_rail ~ imu.VDDIO
+
+    mcu.spi_sclk ~ imu.spi_sclk
+    mcu.spi_mosi ~ imu.spi_mosi
+    mcu.spi_miso ~ imu.spi_miso
+    mcu.spi_cs ~ imu.spi_cs
+    mcu.imu_int ~ imu.imu_int
+
+    piezo.ch1_out ~ mcu.piezo_1
+    piezo.ch2_out ~ mcu.piezo_2
+    piezo.ch3_out ~ mcu.piezo_3
+    piezo.ch4_out ~ mcu.piezo_4

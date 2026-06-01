@@ -1,0 +1,15 @@
+# SmartPaddle
+
+node_modules/
+dist/
+*.db
+*.db-wal
+*.db-shm
+.env
+.DS_Store
+pcb/output/*
+enclosure/output/*
+server/grids/*
+!server/grids/.gitkeep
+.idea/
+.vscode/
