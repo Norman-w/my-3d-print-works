@@ -9,6 +9,13 @@ dist/
 .DS_Store
 pcb/output/*
 enclosure/output/*
+enclosure/generated/profiles.scad
+enclosure/generated/bezier_geometry.scad
+enclosure/stl/*.stl
+!enclosure/stl/.gitkeep
+enclosure/analysis/*
+!enclosure/analysis/.gitkeep
+scripts/.venv-analyze/
 server/grids/*
 !server/grids/.gitkeep
 .idea/

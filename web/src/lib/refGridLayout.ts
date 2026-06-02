@@ -16,7 +16,7 @@ export type RefImageAdjust = {
   rotateDeg: number;
 };
 
-const REF_LAYOUT_KEY = 'smartpaddle-ref-layout';
+const refAdjustSession: Partial<Record<RefGridTarget, RefImageAdjust>> = {};
 
 export const DEFAULT_REF_ADJUST: RefImageAdjust = { offsetX: 0, offsetY: 0, scale: 1, rotateDeg: 0 };
 
@@ -28,39 +28,11 @@ export function defaultRefAdjust(target: RefGridTarget): RefImageAdjust {
 }
 
 export function loadRefAdjust(target: RefGridTarget): RefImageAdjust {
-  try {
-    const raw = localStorage.getItem(REF_LAYOUT_KEY);
-    if (raw) {
-      const all = JSON.parse(raw) as Partial<Record<RefGridTarget, RefImageAdjust>>;
-      const a = all[target];
-      if (a && typeof a.scale === 'number') {
-        const merged = { ...DEFAULT_REF_ADJUST, ...a };
-        // Old UI capped scale at 112%; bump tiny saved values to usable defaults.
-        if (merged.scale <= 1.12) merged.scale = defaultRefAdjust(target).scale;
-        return merged;
-      }
-      // migrate legacy scaleX / scaleY
-      const leg = a as unknown as { offsetX?: number; offsetY?: number; scaleX?: number; scaleY?: number };
-      if (typeof leg.scaleX === 'number') {
-        const s = leg.scaleY != null ? (leg.scaleX + leg.scaleY) / 2 : leg.scaleX;
-        return { offsetX: leg.offsetX ?? 0, offsetY: leg.offsetY ?? 0, scale: s, rotateDeg: 0 };
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  return defaultRefAdjust(target);
+  return refAdjustSession[target] ?? defaultRefAdjust(target);
 }
 
 export function saveRefAdjust(target: RefGridTarget, adjust: RefImageAdjust): void {
-  try {
-    const raw = localStorage.getItem(REF_LAYOUT_KEY);
-    const all = raw ? (JSON.parse(raw) as Partial<Record<RefGridTarget, RefImageAdjust>>) : {};
-    all[target] = adjust;
-    localStorage.setItem(REF_LAYOUT_KEY, JSON.stringify(all));
-  } catch {
-    /* ignore */
-  }
+  refAdjustSession[target] = adjust;
 }
 
 export function applyRefAdjust(base: RefImageBox, adj: RefImageAdjust): RefImageBox {

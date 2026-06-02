@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { RENDER_RUBBER_LAYERS } from '../lib/paddleFromBezier';
 import { createPaddleModel, PADDLE, PADDLE_BOTTOM_Y, PADDLE_TOTAL_HEIGHT } from '../lib/paddleModel';
 import BezierDrawEditor from './BezierDrawEditor';
+import BezierProfileStorePanel from './BezierProfileStorePanel';
 import { DrawTarget } from '../lib/bezierProfile';
 
 type ViewKind = 'front' | 'side';
@@ -94,17 +95,9 @@ function OrthoPanel({ view, label, profileRev }: { view: ViewKind; label: string
   );
 }
 
-const TARGET_KEY = 'smartpaddle-bezier-active-target';
-
 function loadTarget(): DrawTarget {
   const q = new URLSearchParams(window.location.search).get('target');
   if (q === 'blade-front' || q === 'handle-front' || q === 'side' || q === 'handle-bottom') return q;
-  try {
-    const s = localStorage.getItem(TARGET_KEY);
-    if (s === 'blade-front' || s === 'handle-front' || s === 'side' || s === 'handle-bottom') return s;
-  } catch {
-    /* ignore */
-  }
   return 'blade-front';
 }
 
@@ -115,8 +108,12 @@ export default function PaddleShapePreview() {
 
   useEffect(() => {
     const bump = () => setProfileRev(v => v + 1);
+    window.addEventListener('smartpaddle-profiles-loaded', bump);
     window.addEventListener('smartpaddle-profiles-updated', bump);
-    return () => window.removeEventListener('smartpaddle-profiles-updated', bump);
+    return () => {
+      window.removeEventListener('smartpaddle-profiles-loaded', bump);
+      window.removeEventListener('smartpaddle-profiles-updated', bump);
+    };
   }, []);
 
   useEffect(() => {
@@ -129,7 +126,6 @@ export default function PaddleShapePreview() {
 
   const setTarget = (target: DrawTarget) => {
     setDrawTarget(target);
-    localStorage.setItem(TARGET_KEY, target);
     const url = new URL(window.location.href);
     url.searchParams.set('target', target);
     url.searchParams.set('section', 'bezier');
@@ -144,6 +140,8 @@ export default function PaddleShapePreview() {
           底板/手柄正视在官图上绘制；柄侧视、柄底视叠参考照片描轮廓。底视截面沿柄长放样，生成圆润 FL 握感。
         </p>
       </div>
+
+      <BezierProfileStorePanel />
 
       <div ref={bezierRef} id="shape-bezier" data-bezier style={{ marginBottom: 16 }}>
         <div style={{ display: 'flex', gap: 4, marginBottom: 10, flexWrap: 'wrap' }}>

@@ -2,6 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createPaddleModel } from '../lib/paddleModel';
 
+function disposePaddleGroup(group: THREE.Group): void {
+  group.traverse(obj => {
+    if (obj instanceof THREE.Mesh) {
+      obj.geometry?.dispose();
+      const mat = obj.material;
+      if (Array.isArray(mat)) mat.forEach(m => m.dispose());
+      else mat?.dispose();
+    }
+  });
+}
+
 interface Props {
   imuData: { ax: number; ay: number; az: number; gx: number; gy: number; gz: number }[];
   impactData: { x_mm?: number; y_mm?: number; confidence?: number }[];
@@ -66,6 +77,27 @@ export default function Paddle3D({ imuData, impactData }: Props) {
     })();
 
     return () => { cancelAnimationFrame(id); window.removeEventListener('resize', resize); renderer.dispose(); containerRef.current?.removeChild(renderer.domElement); };
+  }, []);
+
+  useEffect(() => {
+    const rebuild = () => {
+      const r = refs.current;
+      if (!r) return;
+      try {
+        r.scene.remove(r.paddle);
+        disposePaddleGroup(r.paddle);
+        r.paddle = createPaddleModel();
+        r.scene.add(r.paddle);
+      } catch (err) {
+        console.warn('Paddle3D rebuild failed', err);
+      }
+    };
+    window.addEventListener('smartpaddle-profiles-loaded', rebuild);
+    window.addEventListener('smartpaddle-profiles-updated', rebuild);
+    return () => {
+      window.removeEventListener('smartpaddle-profiles-loaded', rebuild);
+      window.removeEventListener('smartpaddle-profiles-updated', rebuild);
+    };
   }, []);
 
   useEffect(() => {

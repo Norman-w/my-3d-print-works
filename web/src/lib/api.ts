@@ -20,4 +20,26 @@ export const api = {
   },
   localize: (tdoaNs: number[]) =>
     fetch('/api/impact/localize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tdoa_ns: tdoaNs }) }).then(r => r.json()),
+  bezierProfiles: {
+    project: () => fetch('/api/bezier-profiles/project').then(r => r.json()),
+    store: (profiles: Record<string, unknown>) =>
+      fetch('/api/bezier-profiles/store', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profiles }),
+      }).then(r => r.json()),
+    snapshots: {
+      list: () => fetch('/api/bezier-profiles/snapshots').then(r => r.json()),
+      create: (body: { label?: string; profiles?: Record<string, unknown> }) =>
+        fetch('/api/bezier-profiles/snapshots', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        }).then(r => r.json()),
+      restore: (id: string) =>
+        fetch(`/api/bezier-profiles/snapshots/${encodeURIComponent(id)}/restore`, { method: 'POST' }).then(r =>
+          r.json(),
+        ),
+    },
+  },
 };

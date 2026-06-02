@@ -1,6 +1,7 @@
 /** Cubic Bezier profiles in paddle mm (y-up). */
 
 import { PADDLE } from './paddleModel';
+import { getCachedProfile, isProfileCacheLoaded, notifyProfilesUpdated, setCachedProfile } from './profileCache';
 
 export type Pt = { x: number; y: number };
 
@@ -8,6 +9,8 @@ export type BezierSegment = { cp1: Pt; cp2: Pt; end: Pt };
 
 /** blade-front / handle-front = CA.media.02; side = side thickness; handle-bottom = butt cross-section */
 export type DrawTarget = 'blade-front' | 'handle-front' | 'side' | 'handle-bottom';
+
+export const ALL_DRAW_TARGETS: DrawTarget[] = ['blade-front', 'handle-front', 'side', 'handle-bottom'];
 
 export type BezierProfile = {
   target: DrawTarget;
@@ -19,30 +22,20 @@ export type BezierHandleKind = 'start' | 'cp1' | 'cp2' | 'end';
 
 export type BezierHandleRef = { seg: number; kind: BezierHandleKind };
 
-const STORAGE_PREFIX = 'smartpaddle-bezier-';
-
-export function storageKey(target: DrawTarget): string {
-  return `${STORAGE_PREFIX}${target}`;
-}
-
+/** Requires server load (ProfilesReadyProvider). Never falls back before load completes. */
 export function loadProfile(target: DrawTarget): BezierProfile {
-  try {
-    const raw = localStorage.getItem(storageKey(target));
-    if (raw) {
-      const parsed = JSON.parse(raw) as BezierProfile;
-      if (parsed.target === target && parsed.start && Array.isArray(parsed.segments)) return parsed;
-    }
-  } catch {
-    /* ignore */
+  if (!isProfileCacheLoaded()) {
+    throw new Error('曲线尚未从服务端加载完成');
   }
+  const cached = getCachedProfile(target);
+  if (cached) return cached;
   return defaultProfile(target);
 }
 
+/** Update in-memory cache only; use「保存到服务端」to persist. */
 export function saveProfile(profile: BezierProfile): void {
-  localStorage.setItem(storageKey(profile.target), JSON.stringify(profile));
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('smartpaddle-profiles-updated'));
-  }
+  setCachedProfile(profile);
+  notifyProfilesUpdated();
 }
 
 export function defaultProfile(target: DrawTarget): BezierProfile {

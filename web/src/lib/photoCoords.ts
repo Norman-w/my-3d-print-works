@@ -11,8 +11,6 @@ export type PhotoMapConfig = {
   bottomYMm: number;
 };
 
-const PREFS_KEY = 'smartpaddle-photo-map';
-
 /** Margin around reference image (mm) — extra drag space for control handles. */
 export const CANVAS_PAD_MM = 40;
 
@@ -44,20 +42,7 @@ export function defaultPhotoMap(): PhotoMapConfig {
 }
 
 export function loadPhotoMap(): PhotoMapConfig {
-  try {
-    const raw = localStorage.getItem(PREFS_KEY);
-    if (raw) {
-      const p = JSON.parse(raw) as PhotoMapConfig;
-      if (typeof p.cx === 'number' && typeof p.pxPerMm === 'number') return { ...defaultPhotoMap(), ...p };
-    }
-  } catch {
-    /* ignore */
-  }
   return defaultPhotoMap();
-}
-
-export function savePhotoMap(map: PhotoMapConfig): void {
-  localStorage.setItem(PREFS_KEY, JSON.stringify(map));
 }
 
 export function mmToPhotoPx(map: PhotoMapConfig, xMm: number, yMm: number): { x: number; y: number } {

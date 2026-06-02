@@ -19,6 +19,9 @@ func main() {
 		log.Fatalf("DB init failed: %v", err)
 	}
 	defer db.Close()
+	if err := initBezierDB(); err != nil {
+		log.Fatalf("Bezier DB init failed: %v", err)
+	}
 
 	// Init localizer (load latest calibration profile)
 	localizer = NewLocalizer()
@@ -32,6 +35,11 @@ func main() {
 	http.HandleFunc("/api/calibration/", handleCalibrationByID)
 	http.HandleFunc("/api/impact/localize", handleLocalize)
 	http.HandleFunc("/api/health", handleHealth)
+	// Explicit routes (Go ServeMux: trailing-slash pattern alone misses some paths on older mux)
+	http.HandleFunc("/api/bezier-profiles/project", handleBezierProfilesProjectRoute)
+	http.HandleFunc("/api/bezier-profiles/store", handleBezierProfilesStoreRoute)
+	http.HandleFunc("/api/bezier-profiles/reimport-file", handleBezierReimportFileRoute)
+	http.HandleFunc("/api/bezier-profiles/", handleBezierProfilesRouter)
 
 	// Static: OpenAPI spec + calibration grid PDFs
 	http.Handle("/api/openapi.yaml", http.FileServer(http.Dir(".")))

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { BezierProfile, loadProfile } from './bezierProfile';
+import { BezierProfile } from './bezierProfile';
+import { getCachedProfile, isProfileCacheLoaded } from './profileCache';
 import { createPaddleFromProfiles, PaddleProfiles, RENDER_RUBBER_LAYERS } from './paddleFromBezier';
-import savedProfiles from '../data/userBezierProfiles.json';
 
 // Butterfly Timo Boll ALC FL — 157×150 mm blade, handle 100×25×34 mm
 // Face = photo-fitted ellipse (CA.media.02 rubber); tang + FL handle are separate pieces
@@ -258,52 +258,25 @@ export const PADDLE_TOTAL_HEIGHT = PADDLE.tipYMm - PADDLE_BOTTOM_Y;
 export const PADDLE_CENTER_Y = ((PADDLE.tipYMm + PADDLE_BOTTOM_Y) / 2) * MM;
 
 export function loadUserProfiles(): PaddleProfiles {
-  if (typeof localStorage !== 'undefined') {
-    try {
-      const blade = loadProfile('blade-front');
-      const handle = loadProfile('handle-front');
-      let side: BezierProfile | null = null;
-      let handleBottom: BezierProfile | null = null;
-      try {
-        const raw = localStorage.getItem('smartpaddle-bezier-side');
-        if (raw) side = loadProfile('side');
-      } catch {
-        /* default side */
-      }
-      try {
-        const raw = localStorage.getItem('smartpaddle-bezier-handle-bottom');
-        if (raw) handleBottom = loadProfile('handle-bottom');
-      } catch {
-        /* default */
-      }
-      if (blade.segments.length > 0 && handle.segments.length > 0) {
-        return { blade, handle, side, handleBottom: handleBottom ?? loadProfile('handle-bottom') };
-      }
-    } catch {
-      /* fall through */
-    }
+  if (!isProfileCacheLoaded()) {
+    throw new Error('曲线尚未从服务端加载完成');
   }
-  const s = savedProfiles as {
-    'blade-front': BezierProfile;
-    'handle-front': BezierProfile;
-    'handle-bottom'?: BezierProfile;
-  };
+  const blade = getCachedProfile('blade-front');
+  const handle = getCachedProfile('handle-front');
+  const handleBottom = getCachedProfile('handle-bottom');
+  if (!blade?.segments.length || !handle?.segments.length || !handleBottom?.segments.length) {
+    throw new Error('服务端缺少完整贝塞尔曲线（需要 blade-front、handle-front、handle-bottom）');
+  }
   return {
-    blade: s['blade-front'],
-    handle: s['handle-front'],
-    side: null,
-    handleBottom: s['handle-bottom'] ?? loadProfile('handle-bottom'),
+    blade,
+    handle,
+    side: getCachedProfile('side') ?? null,
+    handleBottom,
   };
 }
 
 export function createPaddleModel(profiles?: PaddleProfiles): THREE.Group {
-  try {
-    return createPaddleFromProfiles(profiles ?? loadUserProfiles());
-  } catch (err) {
-    console.warn('Bezier paddle build failed, using legacy model', err);
-  }
-
-  return createLegacyPaddleModel();
+  return createPaddleFromProfiles(profiles ?? loadUserProfiles());
 }
 
 function createLegacyPaddleModel(): THREE.Group {

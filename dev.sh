@@ -23,10 +23,18 @@ go run . &
 SERVER_PID=$!
 sleep 1
 
-# 2. Start Web dev server
-echo "[2/3] Starting Web UI on :5173..."
+# 2. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
+echo "[2/3] Starting Web UI on :5173 (strict)..."
+if command -v lsof >/dev/null 2>&1; then
+  PIDS=$(lsof -ti:5173 2>/dev/null || true)
+  if [[ -n "$PIDS" ]]; then
+    echo "  释放占用 5173 的进程…"
+    echo "$PIDS" | xargs kill -9 2>/dev/null || true
+    sleep 1
+  fi
+fi
 cd "$ROOT/web"
-npm run dev -- --host &
+npm run dev -- --host --port 5173 --strictPort &
 WEB_PID=$!
 sleep 2
 
@@ -35,11 +43,11 @@ echo "[3/3] Ready!"
 echo ""
 echo "  Server:  http://localhost:8000  (API + WebSocket)"
 echo "  Web UI:  http://localhost:5173"
-echo "  Models:  $ROOT/enclosure/output/"
+echo "  Models:  $ROOT/enclosure/stl/"
 echo ""
 echo "Press Ctrl+C to stop all services."
 
 open "http://localhost:5173"
-open "$ROOT/enclosure/output"
+open "$ROOT/enclosure/stl" 2>/dev/null || true
 
 wait

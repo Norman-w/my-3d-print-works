@@ -53,9 +53,9 @@ import {
   photoPxToMm,
 } from '../lib/photoCoords';
 import { PADDLE } from '../lib/paddleModel';
+import { useToast } from './toast/ToastProvider';
 
 const REF_IMAGE = 'butterfly_ca_media_02.jpg';
-const PREFS_KEY = 'smartpaddle-bezier-ui';
 
 type EditorPrefs = {
   photoOpacity: number;
@@ -66,18 +66,16 @@ type EditorPrefs = {
   zoom: number;
 };
 
+const DEFAULT_PREFS: EditorPrefs = {
+  photoOpacity: 1,
+  gridRefOpacity: 0.55,
+  showMirror: true,
+  showGuides: true,
+  zoom: 1,
+};
+
 const ZOOM_MIN = 1;
 const ZOOM_MAX = 8;
-
-function loadPrefs(): EditorPrefs {
-  try {
-    const raw = localStorage.getItem(PREFS_KEY);
-    if (raw) return { photoOpacity: 1, gridRefOpacity: 0.55, showMirror: true, showGuides: true, zoom: 1, ...JSON.parse(raw) };
-  } catch {
-    /* ignore */
-  }
-  return { photoOpacity: 1, gridRefOpacity: 0.55, showMirror: true, showGuides: true, zoom: 1 };
-}
 
 type Viewport = { cx: number; cy: number; zoom: number };
 type ViewBoxRect = { x: number; y: number; w: number; h: number };
@@ -185,10 +183,6 @@ function zoomViewportAt(base: ViewBoxRect, vp: Viewport, newZoom: number, focal:
   );
 }
 
-function savePrefs(p: EditorPrefs): void {
-  localStorage.setItem(PREFS_KEY, JSON.stringify(p));
-}
-
 type EditorMode = 'photo' | 'grid';
 
 const TARGET_META: Record<
@@ -276,17 +270,33 @@ type Props = {
 };
 
 export default function BezierDrawEditor({ target }: Props) {
+  const { toast } = useToast();
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasWrapRef = useRef<HTMLDivElement>(null);
   const spaceRef = useRef(false);
   const [photoMap] = useState<PhotoMapConfig>(() => loadPhotoMap());
-  const [profiles, setProfiles] = useState<Record<DrawTarget, BezierProfile>>(() => ({
-    'blade-front': loadProfile('blade-front'),
-    'handle-front': loadProfile('handle-front'),
-    side: loadProfile('side'),
-    'handle-bottom': loadProfile('handle-bottom'),
-  }));
-  const [prefs, setPrefs] = useState<EditorPrefs>(loadPrefs);
+  const readAllProfiles = useCallback(
+    (): Record<DrawTarget, BezierProfile> => ({
+      'blade-front': loadProfile('blade-front'),
+      'handle-front': loadProfile('handle-front'),
+      side: loadProfile('side'),
+      'handle-bottom': loadProfile('handle-bottom'),
+    }),
+    [],
+  );
+
+  const [profiles, setProfiles] = useState<Record<DrawTarget, BezierProfile>>(readAllProfiles);
+
+  useEffect(() => {
+    const sync = () => setProfiles(readAllProfiles());
+    window.addEventListener('smartpaddle-profiles-loaded', sync);
+    window.addEventListener('smartpaddle-profiles-updated', sync);
+    return () => {
+      window.removeEventListener('smartpaddle-profiles-loaded', sync);
+      window.removeEventListener('smartpaddle-profiles-updated', sync);
+    };
+  }, [readAllProfiles]);
+  const [prefs, setPrefs] = useState<EditorPrefs>(DEFAULT_PREFS);
   const [selected, setSelected] = useState<BezierHandleRef | null>(null);
   const [drag, setDrag] = useState<BezierHandleRef | null>(null);
   const [panDrag, setPanDrag] = useState<{ startX: number; startY: number; startCx: number; startCy: number } | null>(
@@ -321,7 +331,7 @@ export default function BezierDrawEditor({ target }: Props) {
     : boundsToViewBox(workspace);
 
   const initialViewport = (): Viewport => {
-    const zoom = loadPrefs().zoom;
+    const zoom = DEFAULT_PREFS.zoom;
     if (onPhoto && canvasSize) return defaultViewport({ x: 0, y: 0, w: canvasSize.width, h: canvasSize.height }, zoom);
     if (onGridTarget(target)) {
       const gv = defaultGridViewport(target as RefGridTarget, gridBounds, zoom);
@@ -336,11 +346,7 @@ export default function BezierDrawEditor({ target }: Props) {
   const [spaceHeld, setSpaceHeld] = useState(false);
 
   const updatePrefs = useCallback((patch: Partial<EditorPrefs>) => {
-    setPrefs(prev => {
-      const next = { ...prev, ...patch };
-      savePrefs(next);
-      return next;
-    });
+    setPrefs(prev => ({ ...prev, ...patch }));
   }, []);
 
   const commit = useCallback((next: BezierProfile) => {
@@ -911,7 +917,7 @@ export default function BezierDrawEditor({ target }: Props) {
                 setShowImport(false);
                 setImportText('');
               } catch {
-                alert('JSON 无效');
+                toast('JSON 无效', 'error');
               }
             }}
           >
