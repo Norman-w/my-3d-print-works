@@ -60,11 +60,12 @@ piezo_disc_d         = 20;        // Piezo disc diameter
 piezo_disc_depth     = 1.0;       // Recess depth from inner surface
 piezo_trench_w       = 3.0;       // Wire trench width
 piezo_trench_d       = 2.0;       // Wire trench depth
+// Keep disc centers inside blade outline (20 mm disc + ~3 mm edge margin).
 piezo_positions = [
-    [52,  52],   // upper right
-    [-52, 52],   // upper left
-    [48, -52],   // lower right
-    [-48,-52],   // lower left
+    [38,  52],   // upper right (near tip / 拍头区)
+    [-38, 52],   // upper left
+    [44, -52],   // lower right (shoulder)
+    [-44,-52],   // lower left
 ];
 
 // === USB-C at handle butt ===

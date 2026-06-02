@@ -74,6 +74,18 @@ function screw_in_blade(p) = screw_position_ok(p) && p[1] >= shoulder_bottom_y -
 
 function screw_in_handle(p) = screw_position_ok(p) && p[1] <= shoulder_bottom_y - 10;
 
+// Piezo pockets must stay fully inside blade rubber area (not over shoulder/handle).
+function piezo_in_blade_ok(p) =
+    let(x = p[0], y = p[1], hx = envelope_hx(y), r = piezo_disc_d / 2 + 3)
+    y >= shoulder_bottom_y - 2
+    && y <= blade_tip_y - 12
+    && abs(x) + r < hx;
+    
+// Keep wire channel entry inside handle cavity throat at join.
+function wire_entry_x() =
+    max(3, min(tang_half_w - 1,
+        handle_neck_w / 2 - wall_t - handle_cavity_inset - 1));
+
 function pin_position_ok(p) =
     let(x = p[0], y = p[1], hz = half_z_at(y), hx = envelope_hx(y))
     hz > wall_t + pin_h + 1.5 && abs(x) < hx - 3;
@@ -250,7 +262,7 @@ module plug_recesses() {
 // ═══ Piezo Sensor Pockets ═══
 
 module piezo_pockets() {
-    for (p = piezo_positions) {
+    for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
         x = p[0]; y = p[1];
         hz = half_z_at(y);
         pd = min(piezo_disc_depth, hz - wall_t - 0.3);
@@ -266,14 +278,30 @@ module piezo_pockets() {
 
 module wire_channels() {
     // From each piezo position to the handle cavity entrance
-    entry_y = shoulder_bottom_y + 8;
-    for (p = piezo_positions) {
+    entry_y = shoulder_bottom_y + 2;
+    cx = wire_entry_x();
+    for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
         px = p[0]; py = p[1];
         // Straight channel from piezo to handle entry
         hull() {
             translate([px, py, -eps])
                 cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-            translate([sign(px) * tang_half_w, entry_y, -eps])
+            translate([sign(px) * cx, entry_y, -eps])
+                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+        }
+    }
+}
+
+module wire_channels_handle_bridge() {
+    // Continuation segment inside handle parts so blade->handle wiring is connected.
+    y0 = shoulder_bottom_y + 0.6;
+    y1 = shoulder_bottom_y - 10;
+    cx = wire_entry_x();
+    for (sx = [-1, 1]) {
+        hull() {
+            translate([sx * cx, y0, -eps])
+                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+            translate([sx * cx, y1, -eps])
                 cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
         }
     }
@@ -282,9 +310,9 @@ module wire_channels() {
 // ═══ USB-C Opening ═══
 
 module usb_c_cutout() {
-    // At handle butt, centered
+    // At handle butt, cut inward along +Y from the butt face.
     translate([0, handle_butt_y, -usb_c_h/2])
-        rotate([90, 0, 0])
+        rotate([-90, 0, 0])
             linear_extrude(height = usb_c_depth + eps)
                 square([usb_c_w, usb_c_h], center = true);
 }
@@ -415,9 +443,12 @@ module blade_back_part() {
         }
         for (p = screw_positions)
             if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y), drill_h = (hz - wall_t) * 0.7)
-                translate([x, y, -drill_h])
-                    cylinder(d = screw_d_pilot, h = drill_h + eps);
+                let(x = p[0], y = p[1], hz = half_z_at(y))
+                translate([x, y, -hz - eps])
+                    cylinder(d = screw_d_clearance, h = hz + eps);
+                // Back-side countersink (mirror of front)
+                translate([x, y, -hz - eps])
+                    cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
             }
         piezo_pockets();
         wire_channels();
@@ -450,6 +481,7 @@ module handle_front_part() {
                 }
         }
         handle_cavity();
+        wire_channels_handle_bridge();
         for (p = screw_positions)
             if (screw_in_handle(p)) {
                 let(x = p[0], y = p[1], hz = half_z_at(y))
@@ -480,11 +512,15 @@ module handle_back_part() {
                 }
         }
         handle_cavity();
+        wire_channels_handle_bridge();
         for (p = screw_positions)
             if (screw_in_handle(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y), drill_h = (hz - wall_t) * 0.7)
-                translate([x, y, -drill_h])
-                    cylinder(d = screw_d_pilot, h = drill_h + eps);
+                let(x = p[0], y = p[1], hz = half_z_at(y))
+                translate([x, y, -hz - eps])
+                    cylinder(d = screw_d_clearance, h = hz + eps);
+                // Back-side countersink (mirror of front)
+                translate([x, y, -hz - eps])
+                    cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
             }
         usb_c_cutout();
         for (p = screw_positions)

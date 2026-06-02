@@ -33,10 +33,29 @@ DEFAULT_SIDE = {
     ],
 }
 
-HANDLE_SLICES = 96
-RING_SEGMENTS = 40
+HANDLE_SLICES = 128
+RING_SEGMENTS = 56
 JOIN_GAP_MM = 0.6  # match paddleFromBezier.ts — small gap at blade neck
-HANDLE_BUTT_SOLID_MM = 26.0  # keep a solid tail cap to avoid cavity eating the butt
+HANDLE_BUTT_SOLID_MM = 12.0  # keep minimal solid tail cap while reducing wasted cavity volume
+
+
+def _smooth_series(values: list[float], passes: int = 2) -> list[float]:
+    """Simple edge-preserving smoothing to reduce visible loft stepping."""
+    if len(values) < 5 or passes <= 0:
+        return values[:]
+    out = values[:]
+    for _ in range(passes):
+        nxt = out[:]
+        for i in range(2, len(out) - 2):
+            nxt[i] = (
+                out[i - 2] * 0.1
+                + out[i - 1] * 0.2
+                + out[i] * 0.4
+                + out[i + 1] * 0.2
+                + out[i + 2] * 0.1
+            )
+        out = nxt
+    return out
 
 
 def clip_open_polyline_at_min_y(
@@ -194,11 +213,15 @@ def handle_loft_slices(
     hpts = sample_profile(handle, 48)
     bottom_y = min(p[1] for p in hpts)
     top_y = min(max(p[1] for p in hpts), join_y - JOIN_GAP_MM)
-    out: list[tuple[float, list[tuple[float, float]]]] = []
+    ys: list[float] = []
+    hws: list[float] = []
+    hts: list[float] = []
     for s in range(slices):
         t = s / max(slices - 1, 1)
         y = bottom_y + t * (top_y - bottom_y)
+        ys.append(y)
         hw = half_width_at_y(handle, y)
+        hws.append(hw)
         if side:
             ht_side = half_width_at_y(side, y)
             # Smooth the neck transition so handle thickness eases into blade thickness.
@@ -207,6 +230,14 @@ def handle_loft_slices(
             ht = ht_side * (1.0 - neck_t) + blade_half_t * neck_t
         else:
             ht = base_ht * (hw / base_hw)
+        hts.append(ht)
+
+    # Smooth both width and thickness progression to reduce staircase artifacts.
+    hws = _smooth_series(hws, passes=2)
+    hts = _smooth_series(hts, passes=3)
+
+    out: list[tuple[float, list[tuple[float, float]]]] = []
+    for y, hw, ht in zip(ys, hws, hts):
         sx = max(hw / base_hw, 0.05)
         sz = max(max(ht, 0.5) / base_ht, 0.05)
         poly = [(p[0] * sx, p[1] * sz) for p in ring]
