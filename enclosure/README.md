@@ -27,8 +27,12 @@ enclosure/
 
 | 文件 | 用途 |
 |------|------|
-| `stl/paddle_shell_front.stl` | 前壳，切片打印 |
-| `stl/paddle_shell_back.stl` | 后壳，切片打印 |
+| `stl/paddle_blade_front.stl` | 拍面前半（Z≥0） |
+| `stl/paddle_blade_back.stl` | 拍面后半（Z≤0） |
+| `stl/paddle_handle_front.stl` | 拍柄前半 |
+| `stl/paddle_handle_back.stl` | 拍柄后半（含 USB 开孔） |
+| `stl/paddle_shell_front.stl` | 前壳组装 = 拍面前 + 拍柄前 |
+| `stl/paddle_shell_back.stl` | 后壳组装 = 拍面后 + 拍柄后 |
 
 ```bash
 open enclosure/stl/paddle_shell_front.stl enclosure/stl/paddle_shell_back.stl

@@ -20,3 +20,8 @@ function bezier_half_z_at(y) =
     (y < BEZIER_Y0 || y > BEZIER_Y1) ? blade_half_t :
     let(i = _bezier_idx(y), t = _bezier_t(y, i))
     _bezier_lerp(BEZIER_HZ[i], BEZIER_HZ[i + 1], t);
+
+function bezier_envelope_hx(y) =
+    (y < BEZIER_Y0 || y > BEZIER_Y1) ? tang_half_w :
+    let(i = _bezier_idx(y), t = _bezier_t(y, i))
+    _bezier_lerp(BEZIER_HX[i], BEZIER_HX[i + 1], t);

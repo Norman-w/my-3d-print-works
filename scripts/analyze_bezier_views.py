@@ -93,7 +93,8 @@ def closed_silhouette(right: np.ndarray) -> np.ndarray:
 
 
 def closed_front_silhouette(blade: dict, handle: dict, join_y: float) -> np.ndarray:
-    blade_r = right_half_from_profile(blade, y_min=join_y)
+    """Full blade outline (含鬓角) + handle; matches OpenSCAD bezier_blade_solid."""
+    blade_r = right_half_from_profile(blade)
     handle_r = right_half_from_profile(handle)
     combined = np.vstack([blade_r, handle_r[1:]])
     return closed_silhouette(combined)

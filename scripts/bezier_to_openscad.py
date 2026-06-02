@@ -33,9 +33,10 @@ DEFAULT_SIDE = {
     ],
 }
 
-HANDLE_SLICES = 56
+HANDLE_SLICES = 96
 RING_SEGMENTS = 40
-JOIN_GAP_MM = 0.0  # shell meets blade at join (Live preview uses 0.6 mm gap)
+JOIN_GAP_MM = 0.6  # match paddleFromBezier.ts — small gap at blade neck
+HANDLE_BUTT_SOLID_MM = 26.0  # keep a solid tail cap to avoid cavity eating the butt
 
 
 def clip_open_polyline_at_min_y(
@@ -92,10 +93,14 @@ def sample_profile(profile: dict[str, Any], steps_per_seg: int = 40) -> list[tup
 
 
 def half_width_at_y(profile: dict[str, Any], y_mm: float) -> float:
+    """Right-half width at y (mm); matches paddleFromBezier.ts halfWidthAtY."""
     pts = sample_profile(profile, 40)
+    best_d = abs(pts[0][1] - y_mm)
     x = abs(pts[0][0])
     for px, py in pts:
-        if abs(py - y_mm) < abs(pts[0][1] - y_mm):
+        d = abs(py - y_mm)
+        if d < best_d:
+            best_d = d
             x = abs(px)
     for i in range(len(pts) - 1):
         ax, ay = pts[i]
@@ -104,6 +109,21 @@ def half_width_at_y(profile: dict[str, Any], y_mm: float) -> float:
             t = 0.5 if abs(by - ay) < 1e-6 else (y_mm - ay) / (by - ay)
             x = max(x, abs(ax + t * (bx - ax)))
     return max(x, 0.5)
+
+
+def envelope_half_width_at_y(
+    y_mm: float,
+    blade: dict[str, Any],
+    handle: dict[str, Any],
+    join_y: float,
+) -> float:
+    """Silhouette half-width for screw / boss placement (blade + handle)."""
+    hw = 0.0
+    if y_mm >= join_y - 20:
+        hw = max(hw, half_width_at_y(blade, y_mm))
+    if y_mm <= join_y + 5:
+        hw = max(hw, half_width_at_y(handle, y_mm))
+    return max(hw, 0.5)
 
 
 def close_symmetric_right(right: list[tuple[float, float]]) -> list[tuple[float, float]]:
@@ -116,8 +136,9 @@ def close_symmetric_right(right: list[tuple[float, float]]) -> list[tuple[float,
     return out
 
 
-def blade_closed_polygon(blade: dict[str, Any], join_y: float = -78.5) -> list[tuple[float, float]]:
-    pts = clip_open_polyline_at_min_y(sample_profile(blade, 48), join_y)
+def blade_closed_polygon(blade: dict[str, Any]) -> list[tuple[float, float]]:
+    """Full blade-front outline including neck / 鬓角 (same as web wood extrude)."""
+    pts = sample_profile(blade, 48)
     right = [(max(x, 0.0), y) for x, y in pts]
     return close_symmetric_right(right)
 
@@ -163,6 +184,7 @@ def handle_loft_slices(
     bottom: dict[str, Any],
     side: dict[str, Any] | None,
     join_y: float,
+    blade_half_t: float,
     slices: int,
 ) -> list[tuple[float, list[tuple[float, float]]]]:
     """List of (y_center, polygon in XZ as (x,z) pairs)."""
@@ -177,7 +199,14 @@ def handle_loft_slices(
         t = s / max(slices - 1, 1)
         y = bottom_y + t * (top_y - bottom_y)
         hw = half_width_at_y(handle, y)
-        ht = half_width_at_y(side, y) if side else base_ht * (hw / base_hw)
+        if side:
+            ht_side = half_width_at_y(side, y)
+            # Smooth the neck transition so handle thickness eases into blade thickness.
+            neck_blend_mm = 10.0
+            neck_t = max(0.0, min(1.0, (y - (join_y - neck_blend_mm)) / neck_blend_mm))
+            ht = ht_side * (1.0 - neck_t) + blade_half_t * neck_t
+        else:
+            ht = base_ht * (hw / base_hw)
         sx = max(hw / base_hw, 0.05)
         sz = max(max(ht, 0.5) / base_ht, 0.05)
         poly = [(p[0] * sx, p[1] * sz) for p in ring]
@@ -264,9 +293,12 @@ def write_scad(
         lines.append(f"                linear_extrude(height = {fmt_num(dh)} + 0.02, center = true)")
         lines.append(f"                    polygon(points = {fmt_poly(poly0)});")
     lines.extend(["    }", "}", "", "module bezier_handle_cavity() {", "    union() {"])
+    butt_cap_end_y = handle_slices[0][0] + HANDLE_BUTT_SOLID_MM
     for i in range(len(handle_slices) - 1):
         y0, poly0 = handle_slices[i]
         y1, _ = handle_slices[i + 1]
+        if y0 < butt_cap_end_y:
+            continue
         if y0 > join_y - 2:
             continue
         dh = y1 - y0
@@ -311,7 +343,7 @@ def design_silhouette_profile(
     for i in range(n + 1):
         y = y0 + (y1 - y0) * i / n
         ys.append(y)
-        hw.append(paddle_hx_at_y(y, blade, handle, p))
+        hw.append(envelope_half_width_at_y(y, blade, handle, p["handle_join_y"]))
     return {
         "y_centers": ys,
         "half_width_pos_x": hw,
@@ -346,8 +378,8 @@ def main() -> int:
     join_y = p["handle_join_y"]
     blade_core_t = p["blade_core_t"]
 
-    blade_poly = blade_closed_polygon(blade, join_y)
-    handle_slices = handle_loft_slices(handle, bottom, side, join_y, HANDLE_SLICES)
+    blade_poly = blade_closed_polygon(blade)
+    handle_slices = handle_loft_slices(handle, bottom, side, join_y, blade_core_t / 2, HANDLE_SLICES)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     cavity_margin = p["wall_t"] + p["handle_cavity_inset"]
@@ -358,13 +390,17 @@ def main() -> int:
     y0 = min(s[0] for s in handle_slices)
     y1 = max(p[1] for p in blade_poly)
     dh = (y1 - y0) / n
-    hzs = []
+    hzs: list[float] = []
+    hxs: list[float] = []
     for i in range(n + 1):
         y = y0 + i * dh
-        if y >= join_y - 5:
+        hxs.append(envelope_half_width_at_y(y, blade, handle, join_y))
+        if y >= join_y:
             hzs.append(blade_core_t / 2)
+        elif side:
+            hzs.append(max(half_width_at_y(side, y), 0.5))
         else:
-            hzs.append(half_width_at_y(side, y))
+            hzs.append(blade_core_t / 2)
     profiles_path.write_text(
         "\n".join(
             [
@@ -374,6 +410,7 @@ def main() -> int:
                 f"BEZIER_N = {n};",
                 f"BEZIER_DH = {fmt_num(dh)};",
                 f"BEZIER_HZ = [{', '.join(fmt_num(z) for z in hzs)}];",
+                f"BEZIER_HX = [{', '.join(fmt_num(x) for x in hxs)}];",
                 "",
             ]
         ),

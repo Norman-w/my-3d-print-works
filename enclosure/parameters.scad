@@ -51,8 +51,8 @@ screw_positions = [
     [-50, -25],   // mid left
     [30,  -76],   // neck right
     [-30, -76],   // neck left
-    [0,  -130],   // handle mid
-    [0,  -170],   // handle near butt
+    [22, -145],   // handle (inside FL outline)
+    [-22,-145],
 ];
 
 // === Piezo Sensor Pockets ===

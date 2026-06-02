@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Export paddle_shell front/back STLs for slicing.
+# Export paddle shell STLs: four parts + optional assembled front/back halves.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -31,10 +31,10 @@ if [[ ! -f "$GEN" ]] || [[ ! -f "$ENC/generated/profiles.scad" ]]; then
 fi
 echo ""
 
-export_half() {
+export_part() {
   local half="$1"
-  local out_file="$OUT/paddle_shell_${half}.stl"
-  echo "→ 渲染 HALF=${half} …（可能需要几分钟）"
+  local out_file="$2"
+  echo "→ 渲染 HALF=${half} …"
   openscad -o "$out_file" -D "HALF=\"${half}\"" "$SCAD"
   if [[ -f "$out_file" ]]; then
     ls -lh "$out_file"
@@ -44,16 +44,23 @@ export_half() {
   fi
 }
 
-echo "=== SmartPaddle STL 导出 ==="
+echo "=== SmartPaddle STL 导出（四零件 + 半壳组装）==="
 echo "源: $SCAD"
 echo "输出: $OUT/"
 echo ""
 
-export_half front
-export_half back
+export_part blade_front "$OUT/paddle_blade_front.stl"
+export_part blade_back  "$OUT/paddle_blade_back.stl"
+export_part handle_front "$OUT/paddle_handle_front.stl"
+export_part handle_back  "$OUT/paddle_handle_back.stl"
+
+# 兼容旧流程：前壳 = 拍面前半 + 拍柄前半
+export_part front "$OUT/paddle_shell_front.stl"
+export_part back  "$OUT/paddle_shell_back.stl"
 
 echo ""
-echo "完成。下一步:"
-echo "  1. 用 Bambu Studio / PrusaSlicer 打开上述两个 STL"
-echo "  2. 按 docs/print-prep.md 设置 PETG、摆放、支撑"
-echo "  3. 按 docs/visual-checklist.md 截图核对"
+echo "完成。四零件:"
+echo "  paddle_blade_front.stl / paddle_blade_back.stl"
+echo "  paddle_handle_front.stl / paddle_handle_back.stl"
+echo "半壳组装（前后各一片）:"
+echo "  paddle_shell_front.stl / paddle_shell_back.stl"
