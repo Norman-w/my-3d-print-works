@@ -8,7 +8,9 @@
   将 `web/src/data/userBezierProfiles.json` 转成 `enclosure/generated/*.scad`。
 
 - `export-stl.sh`  
-  用 OpenSCAD 导出 4 个打印件与 2 个组装件 STL。
+  用 OpenSCAD 导出 4 个打印件与 2 个组装件 STL。  
+  优先使用 `/Applications/OpenSCAD.app` (Manifold 后端, ~400x 快于 CGAL)，  
+  回退到 `openscad` (brew 安装的 CGAL 版本)。
 
 - `run-analyze.sh`  
   运行分析流程，生成截图与尺寸检查结果。

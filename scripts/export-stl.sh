@@ -32,13 +32,28 @@ ensure_openscad() {
   )
   local p
 
+  # Prefer snapshot (Manifold backend, ~400x faster) on macOS.
+  if [[ -x /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD ]]; then
+    OPENSCAD_BIN="/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD"
+    OPENSCAD_FLAGS="--backend=Manifold"
+    return 0
+  elif [[ -x /opt/homebrew/bin/openscad ]]; then
+    OPENSCAD_BIN="/opt/homebrew/bin/openscad"
+    OPENSCAD_FLAGS=""
+    return 0
+  fi
+
   if command -v openscad >/dev/null 2>&1; then
+    OPENSCAD_BIN="openscad"
+    OPENSCAD_FLAGS=""
     return 0
   fi
 
   for p in "${default_paths[@]}"; do
     if [[ -x "$p" ]]; then
       export PATH="$(dirname "$p"):$PATH"
+      OPENSCAD_BIN="openscad"
+      OPENSCAD_FLAGS=""
       return 0
     fi
   done
@@ -63,6 +78,8 @@ ensure_openscad() {
     for p in "${default_paths[@]}"; do
       if [[ -x "$p" ]]; then
         export PATH="$(dirname "$p"):$PATH"
+        OPENSCAD_BIN="openscad"
+        OPENSCAD_FLAGS=""
         break
       fi
     done
@@ -79,6 +96,8 @@ ensure_openscad() {
     for p in "${default_paths[@]}"; do
       if [[ -x "$p" ]]; then
         export PATH="$(dirname "$p"):$PATH"
+        OPENSCAD_BIN="openscad"
+        OPENSCAD_FLAGS=""
         break
       fi
     done
@@ -88,6 +107,8 @@ ensure_openscad() {
     echo "错误: 仍未找到 openscad。请手动安装 OpenSCAD 并加入 PATH。" >&2
     return 1
   fi
+  OPENSCAD_BIN="openscad"
+  OPENSCAD_FLAGS=""
 }
 
 ensure_openscad
@@ -156,7 +177,7 @@ export_part() {
   local half="$1"
   local out_file="$2"
   echo "→ 渲染 HALF=${half} …"
-  openscad -o "$out_file" "${SCAD_DEFS[@]}" -D "HALF=\"${half}\"" "$SCAD"
+  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$out_file" "${SCAD_DEFS[@]}" -D "HALF=\"${half}\"" "$SCAD"
   if [[ -f "$out_file" ]]; then
     ls -lh "$out_file"
   else

@@ -247,6 +247,20 @@ module screw_holes_pilot() {
         }
 }
 
+module screw_holes_clearance_back() {
+    for (p = screw_positions)
+        if (screw_position_ok(p)) {
+        x = p[0]; y = p[1];
+        hz = half_z_at(y);
+        // Through hole from back
+        translate([x, y, -hz - eps])
+            cylinder(d = screw_d_clearance, h = hz + eps);
+        // Back-side countersink (mirror of front)
+        translate([x, y, -hz - eps])
+            cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
+        }
+}
+
 // ═══ Silicone Plug Recesses (on outer face) ═══
 
 module plug_recesses() {
@@ -390,6 +404,13 @@ module outer_skin_back() {
 // ═══ Four printable parts (blade/handle × front/back) ═══
 
 module blade_front_part() {
+    // Consolidated single difference — avoids nested CGAL booleans.
+    module _cutouts() {
+        screw_holes_clearance();
+        piezo_pockets();
+        wire_channels();
+        plug_recesses();
+    }
     difference() {
         union() {
             bezier_blade_half(true);
@@ -402,22 +423,7 @@ module blade_front_part() {
                             cylinder(d = screw_d_boss, h = boss_h);
                 }
         }
-        for (p = screw_positions)
-            if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, -eps])
-                    cylinder(d = screw_d_clearance, h = hz + eps);
-                translate([x, y, hz - screw_head_d / 2 + eps])
-                    cylinder(d1 = screw_head_d, d2 = 0, h = screw_head_d / 2);
-            }
-        piezo_pockets();
-        wire_channels();
-        for (p = screw_positions)
-            if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, hz - plug_recess_depth + eps])
-                    cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
-            }
+        _cutouts();
     }
     for (p = pin_positions)
         if (pin_position_ok(p) && p[1] > shoulder_bottom_y) {
@@ -429,6 +435,12 @@ module blade_front_part() {
 }
 
 module blade_back_part() {
+    module _cutouts() {
+        screw_holes_clearance_back();
+        piezo_pockets();
+        wire_channels();
+        plug_recesses();
+    }
     difference() {
         union() {
             bezier_blade_half(false);
@@ -441,23 +453,7 @@ module blade_back_part() {
                             cylinder(d = screw_d_boss, h = boss_h);
                 }
         }
-        for (p = screw_positions)
-            if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, -hz - eps])
-                    cylinder(d = screw_d_clearance, h = hz + eps);
-                // Back-side countersink (mirror of front)
-                translate([x, y, -hz - eps])
-                    cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
-            }
-        piezo_pockets();
-        wire_channels();
-        for (p = screw_positions)
-            if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, hz - plug_recess_depth + eps])
-                    cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
-            }
+        _cutouts();
     }
     for (p = pin_positions)
         if (pin_position_ok(p) && p[1] > shoulder_bottom_y) {
@@ -469,6 +465,12 @@ module blade_back_part() {
 }
 
 module handle_front_part() {
+    module _cutouts() {
+        handle_cavity();
+        wire_channels_handle_bridge();
+        screw_holes_clearance();
+        plug_recesses();
+    }
     difference() {
         union() {
             bezier_handle_half(true);
@@ -480,26 +482,18 @@ module handle_front_part() {
                             cylinder(d = screw_d_boss, h = boss_h);
                 }
         }
-        handle_cavity();
-        wire_channels_handle_bridge();
-        for (p = screw_positions)
-            if (screw_in_handle(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, -eps])
-                    cylinder(d = screw_d_clearance, h = hz + eps);
-                translate([x, y, hz - screw_head_d / 2 + eps])
-                    cylinder(d1 = screw_head_d, d2 = 0, h = screw_head_d / 2);
-            }
-        for (p = screw_positions)
-            if (screw_in_handle(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, hz - plug_recess_depth + eps])
-                    cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
-            }
+        _cutouts();
     }
 }
 
 module handle_back_part() {
+    module _cutouts() {
+        handle_cavity();
+        wire_channels_handle_bridge();
+        screw_holes_clearance_back();
+        usb_c_cutout();
+        plug_recesses();
+    }
     difference() {
         union() {
             bezier_handle_half(false);
@@ -511,24 +505,7 @@ module handle_back_part() {
                             cylinder(d = screw_d_boss, h = boss_h);
                 }
         }
-        handle_cavity();
-        wire_channels_handle_bridge();
-        for (p = screw_positions)
-            if (screw_in_handle(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, -hz - eps])
-                    cylinder(d = screw_d_clearance, h = hz + eps);
-                // Back-side countersink (mirror of front)
-                translate([x, y, -hz - eps])
-                    cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
-            }
-        usb_c_cutout();
-        for (p = screw_positions)
-            if (screw_in_handle(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, hz - plug_recess_depth + eps])
-                    cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
-            }
+        _cutouts();
     }
 }
 
