@@ -36,7 +36,7 @@ blade_inner_floor    = 1.5;       // Floor thickness above piezo pockets in blad
 // === Screw Bosses (M2 self-tapping into PETG) ===
 screw_d_clearance    = 2.4;       // Clearance hole for M2 screw
 screw_d_boss         = 5.5;       // Boss outer diameter
-screw_d_pilot        = 1.8;       // Pilot hole for self-tapping M2 into PETG
+screw_d_pilot        = 1.5;       // Pilot hole for self-tapping M2 into PETG (M2 Ø=2.0, 75% engagement)
 screw_head_d         = 4.6;       // M2 countersunk head diameter
 screw_head_angle     = 90;        // Countersink angle
 plug_recess_d        = 6.0;       // Silicone plug recess diameter
@@ -45,14 +45,16 @@ plug_recess_depth    = 2.0;       // Silicone plug recess depth
 // Screw positions [X, Y] — centered Y=0 is ellipse center
 screw_positions = [
     [0,    65],   // tip center
-    [48,   35],   // upper right
-    [-48,  35],   // upper left
-    [50,  -25],   // mid right
-    [-50, -25],   // mid left
-    [30,  -76],   // neck right
-    [-30, -76],   // neck left
-    [22, -145],   // handle (inside FL outline)
-    [-22,-145],
+    [52,   45],   // upper right
+    [-52,  45],   // upper left
+    [55,    0],   // mid right
+    [-55,   0],   // mid left
+    [36,  -65],   // lower right
+    [-36, -65],   // lower left
+    [0,   -78],   // neck bottom center (join area)
+    [7,  -160],   // handle right
+    [-7, -160],   // handle left
+    [0,   -89],   // handle neck center
 ];
 
 // === Piezo Sensor Pockets ===

@@ -177,7 +177,7 @@ export_part() {
   local half="$1"
   local out_file="$2"
   echo "→ 渲染 HALF=${half} …"
-  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$out_file" "${SCAD_DEFS[@]}" -D "HALF=\"${half}\"" "$SCAD"
+  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$out_file" ${SCAD_DEFS[@]+"${SCAD_DEFS[@]}"} -D "HALF=\"${half}\"" "$SCAD"
   if [[ -f "$out_file" ]]; then
     ls -lh "$out_file"
   else

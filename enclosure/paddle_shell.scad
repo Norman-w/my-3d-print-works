@@ -65,7 +65,7 @@ function sign(x) = x >= 0 ? 1 : -1;
 
 function screw_position_ok(p) =
     let(x = p[0], y = p[1], hz = half_z_at(y), hx = envelope_hx(y))
-    hz > wall_t + 1.5
+    hz > wall_t + 0.3
     && abs(x) < hx - 4
     && y > handle_butt_y + 12
     && y < blade_tip_y - 10;
@@ -226,12 +226,30 @@ module screw_holes_clearance() {
         if (screw_position_ok(p)) {
         x = p[0]; y = p[1];
         hz = half_z_at(y);
+        // Through hole for M2 screw shank
+        translate([x, y, -eps])
+            cylinder(d = screw_d_clearance, h = hz + eps);
+        // Cylindrical head pocket: starts below silicone plug (2mm deep),
+        // extends another 3mm downward to seat the head deeper in the wall.
+        head_pocket_top = hz - 2;
+        head_pocket_h   = 3;
+        translate([x, y, head_pocket_top - head_pocket_h])
+            cylinder(d = screw_head_d, h = head_pocket_h + eps);
+        }
+}
+
+module screw_holes_clearance_blade() {
+    for (p = screw_positions)
+        if (screw_in_blade(p)) {
+        x = p[0]; y = p[1];
+        hz = half_z_at(y);
         // Through hole
         translate([x, y, -eps])
             cylinder(d = screw_d_clearance, h = hz + eps);
-        // Countersink from outer face
-        translate([x, y, hz - screw_head_d/2 + eps])
-            cylinder(d1 = screw_head_d, d2 = 0, h = screw_head_d/2);
+        // Cone countersink below silicone-plug recess for thin blade (M2 90° head).
+        // Sunk 3mm into the wall so screw head sits below surface.
+        translate([x, y, 0])
+            cylinder(d1 = screw_d_clearance, d2 = screw_head_d, h = hz - 3 + eps);
         }
 }
 
@@ -244,20 +262,6 @@ module screw_holes_pilot() {
         drill_h = (hz - wall_t) * 0.7;
         translate([x, y, -drill_h])
             cylinder(d = screw_d_pilot, h = drill_h + eps);
-        }
-}
-
-module screw_holes_clearance_back() {
-    for (p = screw_positions)
-        if (screw_position_ok(p)) {
-        x = p[0]; y = p[1];
-        hz = half_z_at(y);
-        // Through hole from back
-        translate([x, y, -hz - eps])
-            cylinder(d = screw_d_clearance, h = hz + eps);
-        // Back-side countersink (mirror of front)
-        translate([x, y, -hz - eps])
-            cylinder(d1 = 0, d2 = screw_head_d, h = screw_head_d / 2);
         }
 }
 
@@ -291,32 +295,33 @@ module piezo_pockets() {
 // ═══ Wire Routing Channels ═══
 
 module wire_channels() {
-    // From each piezo position to the handle cavity entrance
+    // Converge piezo wires pairwise into handle cavity:
+    // right side (positive x) → +cx, left side (negative x) → -cx.
+    // Entry point is deep inside the handle area so the trench is continuous
+    // across the blade-handle join boundary.
     entry_y = shoulder_bottom_y + 2;
     cx = wire_entry_x();
-    for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
-        px = p[0]; py = p[1];
-        // Straight channel from piezo to handle entry
-        hull() {
-            translate([px, py, -eps])
-                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-            translate([sign(px) * cx, entry_y, -eps])
-                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-        }
-    }
-}
-
-module wire_channels_handle_bridge() {
-    // Continuation segment inside handle parts so blade->handle wiring is connected.
-    y0 = shoulder_bottom_y + 0.6;
-    y1 = shoulder_bottom_y - 10;
-    cx = wire_entry_x();
     for (sx = [-1, 1]) {
-        hull() {
-            translate([sx * cx, y0, -eps])
-                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-            translate([sx * cx, y1, -eps])
-                cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+        // All same-side piezos converge to a single entry point.
+        points = [for (p = piezo_positions) if (piezo_in_blade_ok(p) && sign(p[0]) == sx) p];
+        if (len(points) > 0) {
+            for (p = points) {
+                px = p[0]; py = p[1];
+                // Channel from piezo to convergence point
+                hull() {
+                    translate([px, py, -eps])
+                        cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+                    translate([sx * cx, entry_y, -eps])
+                        cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+                }
+            }
+            // Continue into handle cavity from convergence point
+            hull() {
+                translate([sx * cx, entry_y, -eps])
+                    cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+                translate([sx * cx, shoulder_bottom_y - 20, -eps])
+                    cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+            }
         }
     }
 }
@@ -401,12 +406,33 @@ module outer_skin_back() {
     }
 }
 
+// ═══ Common Screw Boss Column with base flare ═══
+// h: total height, direction: +1 (front) or -1 (back extending toward outer face)
+module screw_boss_column(h, direction) {
+    flare_h = 1.2;
+    flare_d = 7;       // base flare at outer wall (nominal 5.5→7 for stability)
+    shaft_d = 6;       // narrower inward to leave cavity space
+    if (h > 0.3) {
+        union() {
+            hull() {
+                translate([0, 0, direction * 0.01])
+                    cylinder(d = flare_d, h = 0.02, center = false);
+                translate([0, 0, direction * (flare_h - 0.01)])
+                    cylinder(d = shaft_d, h = 0.02, center = false);
+            }
+            if (h > flare_h) {
+                translate([0, 0, direction * flare_h])
+                    cylinder(d = shaft_d, h = h - flare_h, center = false);
+            }
+        }
+    }
+}
+
 // ═══ Four printable parts (blade/handle × front/back) ═══
 
 module blade_front_part() {
-    // Consolidated single difference — avoids nested CGAL booleans.
     module _cutouts() {
-        screw_holes_clearance();
+        screw_holes_clearance_blade();
         piezo_pockets();
         wire_channels();
         plug_recesses();
@@ -415,13 +441,6 @@ module blade_front_part() {
         union() {
             bezier_blade_half(true);
             blade_ribs();
-            for (p = screw_positions)
-                if (screw_in_blade(p)) {
-                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    if (boss_h > 1)
-                        translate([x, y, 0])
-                            cylinder(d = screw_d_boss, h = boss_h);
-                }
         }
         _cutouts();
     }
@@ -436,10 +455,10 @@ module blade_front_part() {
 
 module blade_back_part() {
     module _cutouts() {
-        screw_holes_clearance_back();
+        // Screw enters from front; back gets pilot holes for self-tapping into PETG.
+        screw_holes_pilot();
         piezo_pockets();
         wire_channels();
-        plug_recesses();
     }
     difference() {
         union() {
@@ -448,7 +467,7 @@ module blade_back_part() {
             for (p = screw_positions)
                 if (screw_in_blade(p)) {
                     let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    if (boss_h > 1)
+                    if (boss_h > 0.2)
                         translate([x, y, -boss_h])
                             cylinder(d = screw_d_boss, h = boss_h);
                 }
@@ -465,47 +484,44 @@ module blade_back_part() {
 }
 
 module handle_front_part() {
-    module _cutouts() {
-        handle_cavity();
-        wire_channels_handle_bridge();
-        screw_holes_clearance();
-        plug_recesses();
-    }
     difference() {
         union() {
-            bezier_handle_half(true);
+            // First hollow out the shell, then add bosses so cavity doesn't eat them.
+            difference() {
+                bezier_handle_half(true);
+                handle_cavity();
+            }
             for (p = screw_positions)
                 if (screw_in_handle(p)) {
-                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    if (boss_h > 1)
-                        translate([x, y, 0])
-                            cylinder(d = screw_d_boss, h = boss_h);
+                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t - 3)
+                    if (boss_h > 0.5)
+                    translate([x, y, 0])
+                        screw_boss_column(boss_h, 1);
                 }
         }
-        _cutouts();
+        wire_channels();
+        screw_holes_clearance();
+        plug_recesses();
     }
 }
 
 module handle_back_part() {
-    module _cutouts() {
-        handle_cavity();
-        wire_channels_handle_bridge();
-        screw_holes_clearance_back();
-        usb_c_cutout();
-        plug_recesses();
-    }
     difference() {
         union() {
-            bezier_handle_half(false);
+            difference() {
+                bezier_handle_half(false);
+                handle_cavity();
+            }
             for (p = screw_positions)
                 if (screw_in_handle(p)) {
                     let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    if (boss_h > 1)
-                        translate([x, y, -boss_h])
-                            cylinder(d = screw_d_boss, h = boss_h);
+                    translate([x, y, -boss_h])
+                        screw_boss_column(boss_h, 1);
                 }
         }
-        _cutouts();
+        wire_channels();
+        screw_holes_pilot();
+        usb_c_cutout();
     }
 }
 

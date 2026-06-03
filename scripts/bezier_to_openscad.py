@@ -33,10 +33,10 @@ DEFAULT_SIDE = {
     ],
 }
 
-HANDLE_SLICES = 128
-RING_SEGMENTS = 56
+HANDLE_SLICES = 256
+RING_SEGMENTS = 80
 JOIN_GAP_MM = 0.6  # match paddleFromBezier.ts — small gap at blade neck
-HANDLE_BUTT_SOLID_MM = 12.0  # keep minimal solid tail cap while reducing wasted cavity volume
+HANDLE_BUTT_SOLID_MM = 4.0  # minimal tail wall — just enough for USB-C opening & structural integrity
 
 
 def _smooth_series(values: list[float], passes: int = 2) -> list[float]:
