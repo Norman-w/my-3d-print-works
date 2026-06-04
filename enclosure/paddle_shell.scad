@@ -243,13 +243,12 @@ module screw_holes_clearance_blade() {
         if (screw_in_blade(p)) {
         x = p[0]; y = p[1];
         hz = half_z_at(y);
-        // Through hole
+        // Clearance hole from split plane up to just below outer surface
         translate([x, y, -eps])
-            cylinder(d = screw_d_clearance, h = hz + eps);
-        // Cone countersink below silicone-plug recess for thin blade (M2 90° head).
-        // Sunk 3mm into the wall so screw head sits below surface.
-        translate([x, y, 0])
-            cylinder(d1 = screw_d_clearance, d2 = screw_head_d, h = hz - 3 + eps);
+            cylinder(d = screw_d_clearance, h = hz - 1.5 + eps);
+        // Shallow conical countersink at outer face: wide mouth exposed, narrows down to clearance.
+        translate([x, y, hz - 1.5])
+            cylinder(d1 = screw_d_clearance, d2 = screw_head_d, h = 1.5 + eps);
         }
 }
 
@@ -334,6 +333,19 @@ module usb_c_cutout() {
         rotate([-90, 0, 0])
             linear_extrude(height = usb_c_depth + eps)
                 square([usb_c_w, usb_c_h], center = true);
+}
+
+// ═══ LED Light Guide Hole (handle butt) ═══
+
+led_filament_d = 2.0;     // hole for 1.75mm transparent filament as light guide
+led_filament_depth = 8;    // drill depth into butt wall
+
+module led_light_guide_hole() {
+    // Placed above USB-C at the handle butt face.
+    translate([0, handle_butt_y, usb_c_h/2 + 2.5])
+        rotate([-90, 0, 0])
+            linear_extrude(height = led_filament_depth + eps)
+                circle(d = led_filament_d);
 }
 
 // ═══ Alignment Pins & Sockets ═══
@@ -438,7 +450,6 @@ module blade_front_part() {
         screw_holes_clearance_blade();
         piezo_pockets();
         wire_channels();
-        plug_recesses();
     }
     difference() {
         union() {
@@ -458,8 +469,13 @@ module blade_front_part() {
 
 module blade_back_part() {
     module _cutouts() {
-        // Screw enters from front; back gets pilot holes for self-tapping into PETG.
-        screw_holes_pilot();
+        // Through-hole screw holes: drilled all the way through back shell for max self-tapping bite.
+        for (p = screw_positions)
+            if (screw_in_blade(p)) {
+                let(x = p[0], y = p[1], hz = half_z_at(y))
+                translate([x, y, -hz - eps])
+                    cylinder(d = screw_d_pilot, h = hz + eps);
+            }
         piezo_pockets();
         wire_channels();
     }
@@ -505,6 +521,7 @@ module handle_front_part() {
         wire_channels();
         screw_holes_clearance();
         plug_recesses();
+        led_light_guide_hole();
     }
 }
 

@@ -37,7 +37,7 @@ blade_inner_floor    = 1.5;       // Floor thickness above piezo pockets in blad
 screw_d_clearance    = 2.4;       // Clearance hole for M2 screw
 screw_d_boss         = 5.5;       // Boss outer diameter
 screw_d_pilot        = 1.5;       // Pilot hole for self-tapping M2 into PETG (M2 Ø=2.0, 75% engagement)
-screw_head_d         = 4.6;       // M2 countersunk head diameter
+screw_head_d         = 3.8;       // M2 countersunk head diameter (standard ~3.8mm)
 screw_head_angle     = 90;        // Countersink angle
 plug_recess_d        = 6.0;       // Silicone plug recess diameter
 plug_recess_depth    = 2.0;       // Silicone plug recess depth
@@ -51,7 +51,7 @@ screw_positions = [
     [-55,   0],   // mid left
     [36,  -65],   // lower right
     [-36, -65],   // lower left
-    [0,   -78],   // neck bottom center (join area)
+    [0,    0],   // paddle center
     [7,  -160],   // handle right
     [-7, -160],   // handle left
     [0,   -89],   // handle neck center
