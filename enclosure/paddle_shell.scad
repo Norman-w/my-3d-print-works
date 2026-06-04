@@ -407,22 +407,25 @@ module outer_skin_back() {
 }
 
 // ═══ Common Screw Boss Column with base flare ═══
-// h: total height, direction: +1 (front) or -1 (back extending toward outer face)
+// h: total height. Both front and back bosses use direction=+1.
+// Flare (wide end) is at the far tip — outer wall on front, split-plane on back.
 module screw_boss_column(h, direction) {
     flare_h = 1.2;
-    flare_d = 7;       // base flare at outer wall (nominal 5.5→7 for stability)
-    shaft_d = 6;       // narrower inward to leave cavity space
+    flare_d = 7;
+    shaft_d = 6;
     if (h > 0.3) {
         union() {
-            hull() {
-                translate([0, 0, direction * 0.01])
-                    cylinder(d = flare_d, h = 0.02, center = false);
-                translate([0, 0, direction * (flare_h - 0.01)])
-                    cylinder(d = shaft_d, h = 0.02, center = false);
-            }
+            // Straight shaft from start point inward
             if (h > flare_h) {
-                translate([0, 0, direction * flare_h])
+                translate([0, 0, direction * 0.01])
                     cylinder(d = shaft_d, h = h - flare_h, center = false);
+            }
+            // Flare at the far end
+            hull() {
+                translate([0, 0, direction * (h - flare_h)])
+                    cylinder(d = shaft_d, h = 0.02, center = false);
+                translate([0, 0, direction * (h - 0.01)])
+                    cylinder(d = flare_d, h = 0.02, center = false);
             }
         }
     }
@@ -516,7 +519,7 @@ module handle_back_part() {
                 if (screw_in_handle(p)) {
                     let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
                     translate([x, y, -boss_h])
-                        screw_boss_column(boss_h, 1);
+                        cylinder(d = screw_d_boss, h = boss_h);
                 }
         }
         wire_channels();
