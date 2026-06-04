@@ -252,6 +252,20 @@ module screw_holes_clearance_blade() {
         }
 }
 
+// Handle screws that lie under the blade polygon: blade parts need pass-through clearance holes.
+// (Blade polygon extends to y≈-103 via the 鬓角 lobes, covering some handle screw positions.)
+module blade_pass_through_for_handle_screws() {
+    for (p = screw_positions)
+        if (screw_in_handle(p) && screw_position_ok(p)
+            && abs(p[0]) < envelope_hx(p[1]) - 3) {
+        x = p[0]; y = p[1];
+        hz = half_z_at(y);
+        // Simple clearance hole: screw shaft passes through blade shell to reach handle.
+        translate([x, y, -eps])
+            cylinder(d = screw_d_clearance, h = hz + eps);
+        }
+}
+
 module screw_holes_pilot() {
     for (p = screw_positions)
         if (screw_position_ok(p)) {
@@ -448,6 +462,7 @@ module screw_boss_column(h, direction) {
 module blade_front_part() {
     module _cutouts() {
         screw_holes_clearance_blade();
+        blade_pass_through_for_handle_screws();
         piezo_pockets();
         wire_channels();
     }
@@ -469,13 +484,14 @@ module blade_front_part() {
 
 module blade_back_part() {
     module _cutouts() {
-        // Through-hole screw holes: drilled all the way through back shell for max self-tapping bite.
+        // Through-hole screw holes: drilled slightly past split plane to guarantee clean breakthrough.
         for (p = screw_positions)
             if (screw_in_blade(p)) {
                 let(x = p[0], y = p[1], hz = half_z_at(y))
                 translate([x, y, -hz - eps])
-                    cylinder(d = screw_d_pilot, h = hz + eps);
+                    cylinder(d = screw_d_pilot, h = hz + 2 * eps);
             }
+        blade_pass_through_for_handle_screws();
         piezo_pockets();
         wire_channels();
     }
