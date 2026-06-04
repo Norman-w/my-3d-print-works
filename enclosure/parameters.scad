@@ -34,7 +34,7 @@ rib_spacing          = 18;        // Rib spacing in blade area (mm)
 blade_inner_floor    = 1.5;       // Floor thickness above piezo pockets in blade
 
 // === Screw Bosses (M2 self-tapping into PETG) ===
-screw_d_clearance    = 2.4;       // Clearance hole for M2 screw
+screw_d_clearance    = 2.2;       // Clearance hole for M2 screw (2.0mm shank + 0.2mm)
 screw_d_boss         = 5.5;       // Boss outer diameter
 screw_d_pilot        = 1.5;       // Pilot hole for self-tapping M2 into PETG (M2 Ø=2.0, 75% engagement)
 screw_head_d         = 3.8;       // M2 countersunk head diameter (standard ~3.8mm)
