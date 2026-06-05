@@ -311,6 +311,7 @@ module wire_channels() {
     // 四路压电片导线汇聚到甜区中心 PCB 槽。
     // 从 ESP32-C6 的 ADC 引脚到压电片等长且最短，确保模拟信号一致性。
     cx = pcb_cavity_center[0];  hub_y = pcb_cavity_center[1];
+    hub_d = 10;  // 汇聚点圆形容纳槽，避免四路挤在一起
     for (sx = [-1, 1]) {
         points = [for (p = piezo_positions) if (piezo_in_blade_ok(p) && sign(p[0]) == sx) p];
         if (len(points) > 0) {
@@ -326,6 +327,9 @@ module wire_channels() {
             }
         }
     }
+    // 汇聚点圆形容纳槽
+    translate([cx, hub_y, -eps])
+        cylinder(d = hub_d, h = piezo_trench_d + eps);
 }
 
 // ═══ 电源通道（拍柄电池 → 甜区 ESP32） ═══
