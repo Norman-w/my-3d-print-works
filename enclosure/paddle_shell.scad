@@ -305,6 +305,36 @@ module piezo_pockets() {
     }
 }
 
+// ═══ PZT 信号调理电阻耳槽 ═══
+//
+// 每片 PZT 旁边紧贴一个小矩形槽，容纳:
+//   - 1MΩ 并联电阻 (0603 封装, 1.6×0.8mm)
+//   - BAT54S 双肖特基钳位二极管 (SOT-23-3, 2.9×2.5mm)
+// 总占用 ≈ 5×7mm。耳槽沿 PZT→MCU 汇聚点方向延伸，信号路径最短。
+// 耳槽与 PZT 槽内侧有 1mm 重叠以保证两槽连通。
+module resistor_ears() {
+    cx = pcb_cavity_center[0];
+    hub_y = pcb_cavity_center[1];
+    for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
+        px = p[0]; py = p[1];
+        hz = half_z_at(py);
+        ed = min(resistor_ear_d, hz - wall_t - 0.3);
+        if (ed <= 0.2) {
+            // 壁太薄，不挖
+        } else {
+            dx = cx - px; dy = hub_y - py;
+            angle = atan2(dy, dx);
+            // 耳槽中心: PZT边缘往外伸 resistor_ear_l/2，同时内收 1mm 确保连通
+            ear_center_offset = piezo_disc_d / 2 + resistor_ear_l / 2 - 1;
+            ear_cx = px + ear_center_offset * cos(angle);
+            ear_cy = py + ear_center_offset * sin(angle);
+            translate([ear_cx, ear_cy, -eps])
+                rotate([0, 0, angle])
+                    cube([resistor_ear_l, resistor_ear_w, ed + eps], center = true);
+        }
+    }
+}
+
 // ═══ 导线通道 ═══
 
 module wire_channels() {
@@ -500,6 +530,7 @@ module blade_front_part() {
         screw_holes_clearance_blade();
         blade_pass_through_for_handle_screws();
         piezo_pockets();
+        resistor_ears();
         wire_channels();
         signal_bus_to_handle();
         pcb_main_cavity();
@@ -531,6 +562,7 @@ module blade_back_part() {
             }
         blade_pass_through_for_handle_screws();
         piezo_pockets();
+        resistor_ears();
         wire_channels();
         signal_bus_to_handle();
         pcb_main_cavity();

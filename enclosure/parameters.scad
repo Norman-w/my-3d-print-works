@@ -84,8 +84,11 @@ signal_trench_w       = 2.0;        // 槽宽（VCC+GND 两条线）
 signal_trench_d       = 1.5;        // 槽深
 
 // === Piezo Sensor Pockets ===
-piezo_disc_d         = 20;        // Piezo disc diameter
-piezo_disc_depth     = 1.0;       // Recess depth from inner surface
+// 选用 PZT-5A 翻边型裸陶瓷片 (家铭电子), 20mmØ × 1mm 厚
+// 翻边型正负极同面，安装时平面一侧贴拍面内壁，电极面向内腔。
+// 尺寸含 FDM 打印容差 + 拆装间隙。
+piezo_disc_d         = 20.5;      // 槽位直径 (PZT 20mm + 0.5mm 容差)
+piezo_disc_depth     = 1.3;       // 槽深 (PZT 1mm + 0.3mm 容纳焊点与线)
 piezo_trench_w       = 3.0;       // Wire trench width
 piezo_trench_d       = 2.0;       // Wire trench depth
 // Keep disc centers inside blade outline (20 mm disc + ~3 mm edge margin).
@@ -95,6 +98,12 @@ piezo_positions = [
     [44, -52],   // lower right (shoulder)
     [-44,-52],   // lower left
 ];
+
+// PZT 信号调理耳槽：1MΩ 电阻 (0603) + BAT54S 双肖特基二极管 (SOT-23)
+// 紧贴 PZT 槽边缘，朝向 MCU 汇聚点方向延伸，最短信号路径。
+resistor_ear_w        = 5.0;       // 耳槽宽度（容纳 0603 + SOT-23 并排）
+resistor_ear_l        = 7.0;       // 耳槽长度（从 PZT 槽边缘往外）
+resistor_ear_d        = 1.3;       // 耳槽深度（与 PZT 槽同深）
 
 // === USB-C at handle butt ===
 usb_c_w              = 9.2;       // USB-C female connector width (with tolerance)
