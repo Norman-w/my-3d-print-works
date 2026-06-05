@@ -51,11 +51,34 @@ screw_positions = [
     [-55,   0],   // mid left
     [36,  -65],   // lower right
     [-36, -65],   // lower left
-    [0,    0],   // paddle center
+    [0,   18],   // PCB 上方 (拍头侧)
+    [0,  -33],   // PCB 下方 (拍柄侧)
     [7,  -160],   // handle right
     [-7, -160],   // handle left
     [0,   -89],   // handle neck center
 ];
+
+// ═══ 方案A (V1) — 拍面甜区电子元器件 ═══
+//
+// 布局: IM948 裸板 (13×18.5×3mm) + ESP32-C6-N8 (25×18×3mm) 并排置于甜区。
+// 压电片模拟信号 → ESP32-C6 内置 12-bit SAR ADC 采集（100kSPS，7通道）。
+// IM948 → I2C/UART → ESP32-C6 直接通信。
+// 电源从拍柄电池经左右信号槽引入甜区。
+//
+// ⚠️ 已知坑：ESP32-C6 无硬件 FPU（RISC-V 无 F 扩展）。
+//    单精度浮点 cos() 比带 FPU 的 ESP32-S3 慢 ~20×（2377 vs 121 周期）。
+//    双 IMU 传感器融合（Mahony/Madgwick）必须用定点数（fixed-point）实现，
+//    否则两个 IMU 的 250Hz 融合将超出 4ms 周期。32 位定点比 32 位浮点快约 50%。
+//    方案B (V2) 将升级为带 FPU 的 ESP32-S3。
+//
+pcb_cavity_center     = [0, -5];     // 甜区 PCB 槽中心 [X,Y]
+pcb_cavity_size       = [44, 25];   // X×Y: ESP32 (25×18) + IM948 (13×18.5) 并排 + 间隙
+pcb_cavity_depth      = 2.0;        // 每半壳槽深 (总计 4mm，容纳 3mm 板子 + 1mm 焊线余量)
+
+// 电源通道：电池在拍柄 → ESP32 在拍面甜区。
+// 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。
+signal_trench_w       = 2.0;        // 槽宽（VCC+GND 两条线）
+signal_trench_d       = 1.5;        // 槽深
 
 // === Piezo Sensor Pockets ===
 piezo_disc_d         = 20;        // Piezo disc diameter

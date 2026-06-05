@@ -308,34 +308,67 @@ module piezo_pockets() {
 // ═══ 导线通道 ═══
 
 module wire_channels() {
-    // 将压电片导线成对汇聚引入手柄内腔：
-    // 右侧（正 X）→ +cx，左侧（负 X）→ -cx。
-    // 汇聚点深入手柄区域，确保线槽跨越拍面-手柄连接边界连续。
-    entry_y = shoulder_bottom_y + 2;
-    cx = wire_entry_x();
+    // 四路压电片导线汇聚到甜区中心 PCB 槽。
+    // 从 ESP32-C6 的 ADC 引脚到压电片等长且最短，确保模拟信号一致性。
+    cx = pcb_cavity_center[0];  hub_y = pcb_cavity_center[1];
     for (sx = [-1, 1]) {
-        // 同侧压电片汇聚到同一个人口点。
         points = [for (p = piezo_positions) if (piezo_in_blade_ok(p) && sign(p[0]) == sx) p];
         if (len(points) > 0) {
+            // 每路压电 → PCB 中心直达线槽
             for (p = points) {
                 px = p[0]; py = p[1];
-                // 从压电片到汇聚点的线槽
                 hull() {
                     translate([px, py, -eps])
                         cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-                    translate([sx * cx, entry_y, -eps])
+                    translate([cx, hub_y, -eps])
                         cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
                 }
             }
-            // 从汇聚点继续延伸到手柄内腔
-            hull() {
-                translate([sx * cx, entry_y, -eps])
-                    cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-                translate([sx * cx, shoulder_bottom_y - 20, -eps])
-                    cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-            }
         }
     }
+}
+
+// ═══ 电源通道（拍柄电池 → 甜区 ESP32） ═══
+
+module signal_bus_to_handle() {
+    // 左右各一条槽走 VCC+GND，从 PCB 槽两侧引入手柄空腔深处。
+    trench_w = signal_trench_w;
+    trench_d = signal_trench_d;
+    pcb_left  = pcb_cavity_center[0] - pcb_cavity_size[0] / 2 + 2.5;
+    pcb_right = pcb_cavity_center[0] + pcb_cavity_size[0] / 2 - 2.5;
+    pcb_y     = pcb_cavity_center[1];
+    entry_y_join = shoulder_bottom_y;                       // ≈ -78.5
+    entry_y_deep = shoulder_bottom_y - 20;                  // ≈ -98.5（深入手柄空腔）
+    entry_x      = 5;
+    for (sx = [-1, 1]) {
+        pcb_entry_x = sx > 0 ? pcb_right : pcb_left;
+        handle_entry_x = sx * entry_x;
+        // 第 1 段：PCB 边缘 → 拍面-手柄连接处
+        hull() {
+            translate([pcb_entry_x, pcb_y, -eps])
+                cube([2, trench_w, trench_d + eps], center = true);
+            translate([handle_entry_x, entry_y_join, -eps])
+                cylinder(d = trench_w * 1.5, h = trench_d + eps);
+        }
+        // 第 2 段：连接处 → 手柄内腔深处
+        hull() {
+            translate([handle_entry_x, entry_y_join, -eps])
+                cylinder(d = trench_w * 1.5, h = trench_d + eps);
+            translate([handle_entry_x, entry_y_deep, -eps])
+                cylinder(d = trench_w * 1.5, h = trench_d + eps);
+        }
+    }
+}
+
+// ═══ PCB 安装凹槽 ═══
+
+module pcb_main_cavity() {
+    // 甜区 PCB 槽：容纳 ESP32-C6 (25×18) + IM948 (13×18.5) 并排。
+    // 正反两面挖一样深，PCB 居中放置，焊接面留余量。
+    xy = pcb_cavity_center;
+    wh = pcb_cavity_size;
+    translate([xy[0], xy[1], -eps])
+        cube([wh[0], wh[1], pcb_cavity_depth + eps], center = true);
 }
 
 // ═══ USB-C 开口 ═══
@@ -464,6 +497,8 @@ module blade_front_part() {
         blade_pass_through_for_handle_screws();
         piezo_pockets();
         wire_channels();
+        signal_bus_to_handle();
+        pcb_main_cavity();
     }
     difference() {
         union() {
@@ -493,6 +528,8 @@ module blade_back_part() {
         blade_pass_through_for_handle_screws();
         piezo_pockets();
         wire_channels();
+        signal_bus_to_handle();
+        pcb_main_cavity();
     }
     difference() {
         union() {
@@ -537,6 +574,7 @@ module handle_front_part() {
         screw_holes_clearance();
         plug_recesses();
         led_light_guide_hole();
+        signal_bus_to_handle();
     }
 }
 
@@ -557,6 +595,7 @@ module handle_back_part() {
         wire_channels();
         screw_holes_pilot();
         usb_c_cutout();
+        signal_bus_to_handle();
     }
 }
 

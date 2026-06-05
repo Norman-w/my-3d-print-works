@@ -12,7 +12,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 - 支持 **每副球拍独立标定**，消除个体制造偏差，标定 RMSE < 3mm
 
 ### 挥拍姿态追踪
-- 内置 ICM-42688-P 六轴 IMU，1kHz 采样率
+- 内置 IM948 十轴 IMU（陀螺仪+加速度计+磁力计+气压计），250Hz 输出
 - 服务端运行 **Madgwick AHRS 姿态滤波器** + 零速更新（ZUPT）轨迹重建
 - 实时输出球拍三维方向、挥拍速度与空间轨迹
 
@@ -35,10 +35,10 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 ## 系统架构
 
 ```
-球拍硬件（ESP32）          云端 / 本地服务器（Go）          Web 前端（React + Three.js）
+球拍硬件（ESP32-C6）         云端 / 本地服务器（Go）          Web 前端（React + Three.js）
 ┌─────────────────┐       ┌────────────────────┐       ┌─────────────────────────┐
 │ 4× Piezo 传感器  │       │                    │       │                         │
-│ ICM-42688-P IMU │──WiFi/WebSocket──▶│  SQLite (WAL)       │──REST API／WebSocket──▶│  Live · Shape · Sessions │
+│ IM948 十轴 IMU   │──WiFi/WebSocket──▶│  SQLite (WAL)       │──REST API／WebSocket──▶│  Live · Shape · Sessions │
 │ WS2812 LED      │       │  TDOA 定位引擎     │       │  Calibrate 四大模块     │
 │ 3D 打印外壳      │       │  IMU 姿态／轨迹    │       │                         │
 └─────────────────┘       └────────────────────┘       └─────────────────────────┘
@@ -46,9 +46,9 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 | 层级 | 技术栈 | 说明 |
 |------|--------|------|
-| **传感器/固件** | ESP32, C++, RMT, ICM-42688-P | 压电 TDOA + 六轴 IMU，12.5ns 时差分辨率 |
-| **外壳** | OpenSCAD | 3D 打印 FL 手柄、电池盖、烧录治具 |
-| **PCB** | atopile / KiCad | 传感器接口板设计 |
+| **传感器/固件** | ESP32-C6, C++, ADC, IM948 | 压电 TDOA + 十轴 IMU，12.5ns 时差分辨率 |
+| **外壳** | OpenSCAD | 3D 打印四零件分体壳（拍面+拍柄 × 正/反） |
+| **PCB** | 成品模块飞线（V1）→ 柔性 PCB（V3，atopile） | V1: 成品 IM948+ESP32-C6+TP4056 飞线。V3: 柔性 FPC 铺满拍面，分立芯片焊接。 |
 | **后端** | Go, SQLite, WebSocket | REST API / 实时数据管道 / 定位算法 / 标定管理 |
 | **前端** | React, TypeScript, Three.js | 3D 可视化 / 贝塞尔 CAD / 标定向导 / 遥测仪表 |
 
@@ -74,9 +74,11 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 ## 当前状态
 
-**已完成核心闭环**：传感器 → 数据采集 → TDOA 定位 → 3D 可视化 — 端到端可运行。
+**V1 方案确定**：单 IM948（甜区）+ ESP32-C6-N8（甜区，ADC 直采压电片），全部成品模块飞线。外壳四零件 STL 已导出。
 
-**待完成**：固件 WiFi 通信层、端到端硬件实测、生产级 PCB 制板、移动端适配。
+**待完成**：3D 打印试装、电子元器件采购焊接、固件 WiFi 通信层、端到端硬件实测。
+
+**后续版本**：V2 双 IMU + ESP32-S3，V3 柔性 PCB 量产（`pcb_V3_flex_backup/`）。
 
 ---
 
@@ -86,6 +88,11 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 |------|------|
 | TDOA 时间分辨率 | 12.5 ns |
 | 定位 RMSE（标定后）| < 3 mm |
-| IMU 采样率 | 1000 Hz |
+| IMU 采样率 | 250 Hz（IM948 输出频率） |
+| ADC 采样率 | 100 kSPS（ESP32-C6 内置 SAR ADC） |
 | WebSocket 延迟 | < 10 ms (本地) |
 | 数据库 | SQLite WAL，支持 10万+ 击球记录 |
+
+### ⚠️ ESP32-C6 定点数限制
+
+ESP32-C6 无硬件 FPU，浮点 cos() 比 ESP32-S3 慢 20×。IMU 传感器融合必须用定点数实现。V2 将升级 ESP32-S3 彻底解决。
