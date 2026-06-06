@@ -106,9 +106,52 @@ resistor_ear_l        = 7.0;       // 耳槽长度（从 PZT 槽边缘往外）
 resistor_ear_d        = 1.3;       // 耳槽深度（与 PZT 槽同深）
 
 // === USB-C at handle butt ===
-usb_c_w              = 9.2;       // USB-C female connector width (with tolerance)
-usb_c_h              = 3.6;       // USB-C female connector height
-usb_c_depth          = 8;         // How deep to carve into handle
+// Type-C 开口横跨前后壳分型面 (Z=0)，中心在 (0,0)，前后各占一半。
+// 布局（拍柄底面从外看）：
+//         +X (右侧)
+//   Z=+13 ═══════════ 前壳外表面
+//          ● 充电灯(红绿共用)   Z=+2, X=-5 (左上)
+//   Z=0   ═══════════════════ 分型面
+//          ╔═══ USB-C ═══╗    中心 (0,0)
+//          ╚═════════════╝
+//          ○ 按钮  两段式      X=+9 (右, 远离)
+//          ● WS2812彩色        Z=-5, X=-5 (左下)
+//   Z=-13 ═══════════ 后壳外表面
+usb_c_w              = 3.6;       // USB-C 宽度 (旋转后窄边为 X)
+usb_c_h              = 9.8;       // USB-C 高度 (旋转后宽边为 Z, 含容差)
+usb_c_depth          = 13;        // 向内切深度 (8mm 标准 + 5mm 贝塞尔容差)
+usb_c_z              = 0;         // Z 中心在分型面 → 前后各一半
+
+// === 充电状态 LED 导光孔 (TP4056 红/绿共用) ===
+// 单孔 2mm，位于左上 (X<0, Z>0)，仅前壳。Y 深度余量 +5mm。
+led_hole_d           = 2.0;       // 导光柱孔直径
+led_hole_depth       = 13;        // 钻孔深度 (8mm 标准 + 5mm 余量)
+led_charge_x         = -5;        // 充电灯 X (左侧)
+led_charge_z         = 2;         // 充电灯 Z (前壳侧)
+
+// === 软开关按钮（两段式台阶孔）===
+// 6×6mm 轻触开关，触头 ~3.2mm，开关体 6×6mm。
+//   - 外孔 Ø3.5mm：让触头帽露出（前后壳各切半个圆 → 合并后完整通孔）。
+//   - 内孔 Ø7mm：从壳体内侧往外切，深度容纳开关体，台阶卡住开关不脱落。
+//   - X=+9：与 USB-C 右缘 (X=+1.8) 间距 >5mm，不挤。
+// 中心在分型面 (Z=0)，前后壳各切一半。
+button_cap_d         = 3.5;       // 触头帽外孔直径 (开关触头 3.2 + 容差)
+button_body_d        = 7.0;       // 开关体卡环内孔直径 (6×6 开关 + 容差)
+button_depth         = 13;        // 外孔总深度 (8mm 基准 + 5mm 贝塞尔容差)
+button_body_depth    = 6;         // 卡环从内壁往里挖的深度 (容纳 5mm 高开关体)
+button_x             = 9;         // 按钮 X (右侧)
+button_z             = 0;         // 按钮 Z (分型面)
+// 软开关电路小槽 (AO3401 + 1N4148×2 + 100kΩ — 死虫焊)
+soft_power_cavity_w  = 6;         // 槽宽
+soft_power_cavity_l  = 8;         // 槽长
+soft_power_cavity_d  = 1.5;       // 槽深
+
+// === 用户交互 LED (WS2812-2020) ===
+// 微型 RGB LED，位于左下 (X<0, Z<0)，仅后壳。2mm 导光孔。
+ws2812_led_hole_d     = 2.0;      // 导光孔直径
+ws2812_led_hole_depth = 10;       // 钻孔深度 (5mm 标准 + 5mm 贝塞尔容差)
+ws2812_led_x          = -5;       // LED X (左侧)
+ws2812_led_z          = -5;       // LED Z (后壳侧)
 
 // === Alignment Pins ===
 pin_d                = 3.0;       // Alignment pin diameter

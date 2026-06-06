@@ -408,24 +408,69 @@ module pcb_main_cavity() {
 // ═══ USB-C 开口 ═══
 
 module usb_c_cutout() {
-    // 在拍柄底部，沿 +Y 方向向内切。
-    translate([0, handle_butt_y, -usb_c_h/2])
+    // 在拍柄底部，沿 +Y 方向向内切。Z 中心由 usb_c_z 控制（柄截面正中）。
+    translate([0, handle_butt_y, usb_c_z])
         rotate([-90, 0, 0])
             linear_extrude(height = usb_c_depth + eps)
                 square([usb_c_w, usb_c_h], center = true);
 }
 
 // ═══ LED 导光柱孔（拍柄底部） ═══
+//
+// 充电模块位于拍柄底部内腔。两个 TP4056 LED 指示灯 (红/绿)
+// 通过导光柱孔通向外部，位于 USB-C 上方。
 
-led_filament_d = 2.0;     // 1.75mm 透明耗材丝导光用的孔
-led_filament_depth = 8;    // 钻入底部壁面的深度
-
-module led_light_guide_hole() {
-    // 置于 USB-C 上方，在拍柄底部端面。
-    translate([0, handle_butt_y, usb_c_h/2 + 2.5])
+module led_light_guide_holes() {
+    // 红绿共用单孔，位于左上 (X<0, Z>0)，仅在前壳打孔。
+    translate([led_charge_x, handle_butt_y, led_charge_z])
         rotate([-90, 0, 0])
-            linear_extrude(height = led_filament_depth + eps)
-                circle(d = led_filament_d);
+            linear_extrude(height = led_hole_depth + eps)
+                circle(d = led_hole_d);
+}
+
+// ═══ 软开关按钮孔 ═══
+//
+// 点按轻触开关 (6×6mm)，安装在拍柄底部 USB-C 下方。
+// P-MOSFET 自锁电路：按下 → 上电 → ESP32 GPIO 拉低自锁。
+// 长按 2s → ESP32 释放 GPIO → 关机。
+// 短按 → 唤醒/配网。
+
+module button_cutout() {
+    // 外孔：触头帽露出（Ø3.5mm，全深）
+    translate([button_x, handle_butt_y, button_z])
+        rotate([-90, 0, 0])
+            linear_extrude(height = button_depth + eps)
+                circle(d = button_cap_d);
+    // 内孔（卡环）：开关体容纳（从内壁往外挖 Ø7mm × 6mm 深）
+    translate([button_x, handle_butt_y + button_depth - button_body_depth, button_z])
+        rotate([-90, 0, 0])
+            linear_extrude(height = button_body_depth + eps)
+                circle(d = button_body_d);
+}
+
+// ═══ 软开关电路元件槽 ═══
+//
+// 容纳 AO3401 P-MOSFET + 1N4148×2 + 100kΩ 电阻 (死虫焊)。
+// 位于按钮內侧旁。
+
+module soft_power_circuit_cavity() {
+    // 放在按钮孔内侧壁上（后壳侧），容纳贴片元件。
+    translate([button_x + 5, handle_butt_y + 2, button_z - 3])
+        rotate([90, 0, 0])
+            cube([soft_power_cavity_w, soft_power_cavity_l, soft_power_cavity_d + eps], center = true);
+}
+
+// ═══ 用户交互 LED 导光孔 (WS2812-2020) ═══
+//
+// WS2812-2020 智能 RGB LED（1.6×1.6mm），位于按钮左侧。
+// 状态指示灯：蓝闪配网 / 绿常亮AP / 红闪低电量 / 紫闪OTA。
+// LED 贴在拍柄底部内壁，焊线引出到 PCB 区域侧。
+
+module ws2812_led_hole() {
+    translate([ws2812_led_x, handle_butt_y, ws2812_led_z])
+        rotate([-90, 0, 0])
+            linear_extrude(height = ws2812_led_hole_depth + eps)
+                circle(d = ws2812_led_hole_d);
 }
 
 // ═══ 定位销 & 定位孔 ═══
@@ -609,7 +654,9 @@ module handle_front_part() {
         wire_channels();
         screw_holes_clearance();
         plug_recesses();
-        led_light_guide_hole();
+        usb_c_cutout();
+        led_light_guide_holes();
+        button_cutout();
         signal_bus_to_handle();
     }
 }
@@ -631,6 +678,9 @@ module handle_back_part() {
         wire_channels();
         screw_holes_pilot();
         usb_c_cutout();
+        button_cutout();
+        ws2812_led_hole();
+        soft_power_circuit_cavity();
         signal_bus_to_handle();
     }
 }

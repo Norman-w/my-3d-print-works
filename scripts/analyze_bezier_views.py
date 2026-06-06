@@ -111,7 +111,7 @@ def save_silhouette(
     fig, ax = plt.subplots(figsize=(5, 9), dpi=140)
     ax.fill(pts[:, 0], pts[:, 1], facecolor=facecolor, edgecolor=edgecolor, lw=1.2)
     if join_y is not None:
-        ax.axhline(join_y, color="#c62828", ls="--", lw=0.9, alpha=0.7, label=f"join Y={join_y:.1f}")
+        ax.axhline(join_y, color="#c62828", ls=(0, (10, 4)), lw=0.6, alpha=0.7, label=f"join Y={join_y:.1f}")
         ax.legend(fontsize=7, loc="upper right")
     ax.set_aspect("equal")
     ax.set_title(title)
@@ -126,7 +126,7 @@ def save_silhouette(
 def plot_path(ax, pts: np.ndarray, color: str, label: str, mirror: bool = False) -> None:
     ax.plot(pts[:, 0], pts[:, 1], color=color, lw=2, label=label)
     if mirror:
-        ax.plot(-pts[:, 0], pts[:, 1], color=color, lw=2, alpha=0.85)
+        ax.plot(-pts[:, 0], pts[:, 1], color=color, lw=0.6, ls=(0, (8, 3)), alpha=0.5)
 
 
 def main() -> int:
@@ -187,7 +187,7 @@ def main() -> int:
     handle_only = closed_silhouette(right_half_from_profile(handle))
     ax.fill(blade_only[:, 0], blade_only[:, 1], facecolor="#ff1744", edgecolor="#b71c1c", lw=1.0, alpha=0.45)
     ax.fill(handle_only[:, 0], handle_only[:, 1], facecolor="#00acc1", edgecolor="#006064", lw=1.0, alpha=0.45)
-    ax.axhline(join_y, color="#c62828", ls="--", lw=0.9, alpha=0.7)
+    ax.axhline(join_y, color="#c62828", ls=(0, (10, 4)), lw=0.6, alpha=0.7)
     ax.set_aspect("equal")
     ax.set_title("Bezier: blade + handle (split preview)")
     ax.grid(alpha=0.3)
