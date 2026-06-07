@@ -26,6 +26,9 @@ handle_butt_cut_y = USE_BEZIER_PROFILES
     ? min(handle_butt_y, BEZIER_Y0) - handle_extend_y
     : handle_butt_y;
 
+// 壳体实际外表面 Y (还原延伸量)，用于开孔内段定位。
+actual_butt_y = handle_butt_cut_y + handle_extend_y;
+
 $fn = 80;
 eps = 0.02;
 // 布尔裁剪辅助立方体；尺寸需超过拍体最大延展（Y 约 257 mm）。
@@ -431,26 +434,51 @@ module led_light_guide_holes() {
 
 // ═══ 软开关按钮孔 ═══
 //
-// 点按轻触开关 (6×6×5mm)，安装在拍柄底部 USB-C 右侧。
-// 开关从手柄内腔推入方槽，触头穿过 Ø3.5mm 通孔露出壳外。
-// 壳壁 2mm 自然限位，前后壳合拢后 Z 方向夹持固定，无需额外卡环。
+// 4.5×4.5mm 轻触开关，从分型面 (Z=0) 直接安入。
+// 矩形通道 5×5mm 从外壁内侧直通腔体 (~9mm深)。
+// 前 3mm 容纳开关塑料体，后 6mm 为立柱+焊爪区。
+// 立柱 X=3 Y=5 Z=壳厚，Z 向接到外壳壁面提供结构支撑。
+// 开关焊爪从立柱两侧 1mm 间隙伸入内腔。
 // P-MOSFET 自锁电路：按下 → 上电 → ESP32 GPIO 拉低自锁。
 // 长按 2s → ESP32 释放 GPIO → 关机。
-// 短按 → 唤醒/配网。
 
 module button_cutout() {
-    // 触头通孔：Ø3.5mm，从壳体外壁往里贯穿（前后壳各切半圆）
+    // 按钮柱通孔: Ø3mm，穿透外壁 (button_wall_t=1mm)
     translate([button_x, handle_butt_cut_y, button_z])
         rotate([-90, 0, 0])
-            linear_extrude(height = button_depth + eps)
+            linear_extrude(height = handle_extend_y + button_wall_t + eps)
                 circle(d = button_cap_d);
-    // 开关体方槽：从壳体内壁往里挖，容纳 6×6mm 开关底座。
-    // 壳壁 (wall_t=2mm) 在通孔与方槽之间形成天然限位环，开关不会脱出。
-    // 方槽中心在分型面 (Z=0)，前后各取半深，合壳后形成完整正方形。
-    translate([button_x, handle_butt_cut_y + wall_t, button_z])
+
+    // 矩形通道: 5×5mm，从外壁内侧直通腔体 9mm
+    // 前 3mm 容纳 4.5×4.5 开关体，后 6mm 为立柱（5mm）+ 焊爪间隙（1mm）
+    pocket_start = actual_butt_y + button_wall_t;
+    translate([button_x, pocket_start, button_z])
         rotate([-90, 0, 0])
-            linear_extrude(height = button_body_depth + eps)
-                square([button_body_w, button_body_w], center = true);
+            linear_extrude(height = 9 + eps)
+                square([button_pocket_w, button_pocket_w], center = true);
+}
+
+// ═══ 按钮立柱（加法实体，接驳到 Z 向外壳壁） ═══
+//
+// 立柱 X=3 Y=5 Z=壳厚，位于开关体后壁 (pocket_start+3)。
+// Z 向从分型面 (0) 直通外壳表面，与壳壁一体化，非悬浮片。
+// 开关焊爪从立柱两侧 1mm 间隙 (X方向) 伸入内腔。
+
+module button_retention_column(front = true) {
+    pocket_start = actual_butt_y + button_wall_t;
+    hz = half_z_at(actual_butt_y);   // 拍柄尾端半高
+    col_y = pocket_start + 3;        // 立柱 Y 起点 (开关体槽后壁)
+    col_x = button_x - 1.5;          // 立柱 X 起點 (3mm 宽居中)
+
+    if (front) {
+        // 前壳: Z=0 → +hz，立柱接到前壳外壁
+        translate([col_x, col_y, 0])
+            cube([3, 5, hz]);
+    } else {
+        // 后壳: Z=-hz → 0，立柱接到后壳外壁
+        translate([col_x, col_y, -hz])
+            cube([3, 5, hz]);
+    }
 }
 
 // ═══ 软开关电路元件槽 ═══
@@ -664,6 +692,8 @@ module handle_front_part() {
         button_cutout();
         signal_bus_to_handle();
     }
+    // 加固立柱：从开关槽后壁接到 Z 向外壳
+    button_retention_column(front = true);
 }
 
 module handle_back_part() {
@@ -688,6 +718,8 @@ module handle_back_part() {
         soft_power_circuit_cavity();
         signal_bus_to_handle();
     }
+    // 加固立柱：从开关槽后壁接到 Z 向外壳
+    button_retention_column(front = false);
 }
 
 // ═══ 组装半壳（拍面 + 拍柄，同侧 Z 分割） ═══
