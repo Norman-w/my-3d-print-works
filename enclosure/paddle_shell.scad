@@ -20,6 +20,12 @@ LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 include <generated/bezier_geometry.scad>
 include <bezier_profile.scad>
 
+// 拍柄开孔基准 Y：取贝塞尔实际底部 (BEZIER_Y0) 与参数量级 (handle_butt_y) 二者更深者，
+// 再减 handle_extend_y 延伸量，确保 USB-C/按钮/LED 永远从外部切穿。
+handle_butt_cut_y = USE_BEZIER_PROFILES
+    ? min(handle_butt_y, BEZIER_Y0) - handle_extend_y
+    : handle_butt_y;
+
 $fn = 80;
 eps = 0.02;
 // 布尔裁剪辅助立方体；尺寸需超过拍体最大延展（Y 约 257 mm）。
@@ -409,7 +415,7 @@ module pcb_main_cavity() {
 
 module usb_c_cutout() {
     // 在拍柄底部，沿 +Y 方向向内切。Z 中心由 usb_c_z 控制（柄截面正中）。
-    translate([0, handle_butt_y, usb_c_z])
+    translate([0, handle_butt_cut_y, usb_c_z])
         rotate([-90, 0, 0])
             linear_extrude(height = usb_c_depth + eps)
                 square([usb_c_w, usb_c_h], center = true);
@@ -422,7 +428,7 @@ module usb_c_cutout() {
 
 module led_light_guide_holes() {
     // 红绿共用单孔，位于左上 (X<0, Z>0)，仅在前壳打孔。
-    translate([led_charge_x, handle_butt_y, led_charge_z])
+    translate([led_charge_x, handle_butt_cut_y, led_charge_z])
         rotate([-90, 0, 0])
             linear_extrude(height = led_hole_depth + eps)
                 circle(d = led_hole_d);
@@ -437,12 +443,12 @@ module led_light_guide_holes() {
 
 module button_cutout() {
     // 外孔：触头帽露出（Ø3.5mm，全深）
-    translate([button_x, handle_butt_y, button_z])
+    translate([button_x, handle_butt_cut_y, button_z])
         rotate([-90, 0, 0])
             linear_extrude(height = button_depth + eps)
                 circle(d = button_cap_d);
     // 内孔（卡环）：开关体容纳（从内壁往外挖 Ø7mm × 6mm 深）
-    translate([button_x, handle_butt_y + button_depth - button_body_depth, button_z])
+    translate([button_x, handle_butt_cut_y + button_depth - button_body_depth, button_z])
         rotate([-90, 0, 0])
             linear_extrude(height = button_body_depth + eps)
                 circle(d = button_body_d);
@@ -455,7 +461,7 @@ module button_cutout() {
 
 module soft_power_circuit_cavity() {
     // 放在按钮孔内侧壁上（后壳侧），容纳贴片元件。
-    translate([button_x + 5, handle_butt_y + 2, button_z - 3])
+    translate([button_x + 5, handle_butt_cut_y + 2, button_z - 3])
         rotate([90, 0, 0])
             cube([soft_power_cavity_w, soft_power_cavity_l, soft_power_cavity_d + eps], center = true);
 }
@@ -467,7 +473,7 @@ module soft_power_circuit_cavity() {
 // LED 贴在拍柄底部内壁，焊线引出到 PCB 区域侧。
 
 module ws2812_led_hole() {
-    translate([ws2812_led_x, handle_butt_y, ws2812_led_z])
+    translate([ws2812_led_x, handle_butt_cut_y, ws2812_led_z])
         rotate([-90, 0, 0])
             linear_extrude(height = ws2812_led_hole_depth + eps)
                 circle(d = ws2812_led_hole_d);
@@ -729,7 +735,7 @@ echo(str("=== SmartPaddle Shell ==="));
 echo(str("Profile: ", USE_IMPORTED_OUTER ? "Live outer STL (Three.js)" :
     USE_BEZIER_PROFILES ? "bezier SCAD loft" : "legacy ellipse"));
 echo(str("Loft slices: ", LOFT_SLICES));
-echo(str("Total height: ", blade_tip_y - handle_butt_y, "mm"));
+echo(str("Total height: ", blade_tip_y - handle_butt_cut_y, "mm"));
 echo(str("Blade: ", blade_width, "mm wide × ", blade_core_t, "mm thick"));
 echo(str("Handle: ", handle_length, "mm FL, ", handle_neck_w, "→", handle_butt_w, "mm"));
 echo(str("Half: ", HALF));
