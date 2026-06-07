@@ -87,11 +87,6 @@ function piezo_in_blade_ok(p) =
     && y <= blade_tip_y - 12
     && abs(x) + r < hx;
     
-// 保持线槽入口在手柄空腔喉部内侧。
-function wire_entry_x() =
-    max(3, min(tang_half_w - 1,
-        handle_neck_w / 2 - wall_t - handle_cavity_inset - 1));
-
 function pin_position_ok(p) =
     let(x = p[0], y = p[1], hz = half_z_at(y), hx = envelope_hx(y))
     hz > wall_t + pin_h + 1.5 && abs(x) < hx - 3;
@@ -436,22 +431,26 @@ module led_light_guide_holes() {
 
 // ═══ 软开关按钮孔 ═══
 //
-// 点按轻触开关 (6×6mm)，安装在拍柄底部 USB-C 下方。
+// 点按轻触开关 (6×6×5mm)，安装在拍柄底部 USB-C 右侧。
+// 开关从手柄内腔推入方槽，触头穿过 Ø3.5mm 通孔露出壳外。
+// 壳壁 2mm 自然限位，前后壳合拢后 Z 方向夹持固定，无需额外卡环。
 // P-MOSFET 自锁电路：按下 → 上电 → ESP32 GPIO 拉低自锁。
 // 长按 2s → ESP32 释放 GPIO → 关机。
 // 短按 → 唤醒/配网。
 
 module button_cutout() {
-    // 外孔：触头帽露出（Ø3.5mm，全深）
+    // 触头通孔：Ø3.5mm，从壳体外壁往里贯穿（前后壳各切半圆）
     translate([button_x, handle_butt_cut_y, button_z])
         rotate([-90, 0, 0])
             linear_extrude(height = button_depth + eps)
                 circle(d = button_cap_d);
-    // 内孔（卡环）：开关体容纳（从内壁往外挖 Ø7mm × 6mm 深）
-    translate([button_x, handle_butt_cut_y + button_depth - button_body_depth, button_z])
+    // 开关体方槽：从壳体内壁往里挖，容纳 6×6mm 开关底座。
+    // 壳壁 (wall_t=2mm) 在通孔与方槽之间形成天然限位环，开关不会脱出。
+    // 方槽中心在分型面 (Z=0)，前后各取半深，合壳后形成完整正方形。
+    translate([button_x, handle_butt_cut_y + wall_t, button_z])
         rotate([-90, 0, 0])
             linear_extrude(height = button_body_depth + eps)
-                circle(d = button_body_d);
+                square([button_body_w, button_body_w], center = true);
 }
 
 // ═══ 软开关电路元件槽 ═══
@@ -737,6 +736,6 @@ echo(str("Profile: ", USE_IMPORTED_OUTER ? "Live outer STL (Three.js)" :
 echo(str("Loft slices: ", LOFT_SLICES));
 echo(str("Total height: ", blade_tip_y - handle_butt_cut_y, "mm"));
 echo(str("Blade: ", blade_width, "mm wide × ", blade_core_t, "mm thick"));
-echo(str("Handle: ", handle_length, "mm FL, ", handle_neck_w, "→", handle_butt_w, "mm"));
+echo(str("Handle: ", handle_thickness, "mm thick, butt Y=", handle_butt_y));
 echo(str("Half: ", HALF));
 echo(str("Screws: ", len(screw_positions), "× M2"));
