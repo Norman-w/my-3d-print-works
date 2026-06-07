@@ -409,14 +409,34 @@ module pcb_main_cavity() {
         cube([wh[0], wh[1], pcb_cavity_depth + eps], center = true);
 }
 
-// ═══ USB-C 开口 ═══
+// ═══ USB-C 母座两段式台阶开口 ═══
+//
+// 内圈（壳外可见）：公头大小，穿透 2mm 挡皮。
+// 外圈（腔体内）：母座外壳 + 0.5mm，深约 13mm 入腔体。
+// 母座从腔体向外推入，外圈容纳母座体，2mm 台阶卡住不脱出。
+
+// ── 辅助：圆角矩形 2D 轮廓 (XZ 平面) ──
+module _usb_c_rounded_rect(op_x, op_z, r) {
+    hull() {
+        for (x = [-1, 1], z = [-1, 1])
+            translate([x * (op_x/2 - r), z * (op_z/2 - r)])
+                circle(r = r);
+    }
+}
 
 module usb_c_cutout() {
-    // 在拍柄底部，沿 +Y 方向向内切。Z 中心由 usb_c_z 控制（柄截面正中）。
+    // 1. 内圈：穿透挡皮 (handle_butt_cut_y → +wall端)，公头大小
     translate([0, handle_butt_cut_y, usb_c_z])
         rotate([-90, 0, 0])
-            linear_extrude(height = usb_c_depth + eps)
-                square([usb_c_w, usb_c_h], center = true);
+            linear_extrude(height = handle_extend_y + usb_c_retain_t + eps)
+                _usb_c_rounded_rect(usb_c_opening_x, usb_c_opening_z, usb_c_opening_r);
+
+    // 2. 外圈：从挡皮后侧往腔体挖深，母座外壳 + 0.5mm
+    socket_start_y = handle_butt_cut_y + handle_extend_y + usb_c_retain_t;
+    translate([0, socket_start_y, usb_c_z])
+        rotate([-90, 0, 0])
+            linear_extrude(height = wall_t + 12 + eps)
+                _usb_c_rounded_rect(usb_c_socket_x, usb_c_socket_z, usb_c_socket_r);
 }
 
 // ═══ LED 导光柱孔（拍柄底部） ═══
