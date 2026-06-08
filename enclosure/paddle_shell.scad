@@ -14,6 +14,7 @@ USE_BEZIER_PROFILES = true; // false = 传统椭圆 + FL 手柄
 USE_IMPORTED_OUTER = false;
 // "front"/"back" = 半壳组装件; "blade_front"|"blade_back"|"handle_front"|"handle_back" = 四零件
 HALF = "front";
+TIP_LENGTH = 25;  // handle_back_tip 切片长度 (mm), 可由 -D 覆盖
 LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 
 // 由 scripts/bezier_to_openscad.py 生成（USE_BEZIER_PROFILES=true 时必须）
@@ -437,6 +438,56 @@ module usb_c_cutout() {
         rotate([-90, 0, 0])
             linear_extrude(height = wall_t + 12 + eps)
                 _usb_c_rounded_rect(usb_c_socket_x, usb_c_socket_z, usb_c_socket_r);
+
+    // 3. 线路板槽：母座右侧 +X 方向，1.6mm 板厚
+    //    X: 母座外圈右缘 (+2.0) → +3.6
+    //    Y: 母座挡槽 +1mm 起 15.8mm 深
+    //    Z: ±6mm (前后壳共享)
+    pcb_x  = usb_c_socket_x / 2;                    // PCB X 起点 (母座外圈右缘)
+    pcb_dz = 6;                                     // PCB 槽 Z 半高
+    pcb_y  = socket_start_y + 1;                    // PCB 槽 Y 起点 (挡槽 + 1mm)
+    translate([pcb_x, pcb_y, -pcb_dz])
+        cube([1.6, 15.8, pcb_dz * 2]);
+}
+
+// ═══ 充电 PCB 实心基台 (加法实体, 后续挖空放线路板) ═══
+//
+// USB-C 母座焊接在线路板上, 线路板在母座 +X 方向。
+// 从台阶后 2mm 起向 Y+ 深 19mm (台阶1mm + 母座缝1mm)。
+// 前后壳各贡献一半, 合壳后形成完整块, 后续挖空容纳充电模块。
+
+module usb_c_pcb_block(front = true) {
+    hz = half_z_at(actual_butt_y);   // 拍柄尾端半高
+    blk_y = actual_butt_y + 2;       // Y 起点 (台阶 1mm + 母座缝隙 1mm, 往 +Y)
+
+    blk_x = -(usb_c_socket_x / 2);          // X 起点 (母座外圈左侧)
+    blk_w = usb_c_socket_x + 1.6 + 2;      // X 宽 (母座 + 板厚 + 2mm 容差)
+    if (front) {
+        translate([blk_x, blk_y, 0])
+            cube([blk_w, 19, hz]);
+    } else {
+        translate([blk_x, blk_y, -hz])
+            cube([blk_w, 19, hz]);
+    }
+}
+
+// ═══ USB-C 母座左侧夹持固定销 (加法实体) ═══
+//
+// 从母座外圈左侧 (X=-2.0) 往 X- 方向伸出 1.5mm 宽的销柱。
+// Y: 从墙体内侧 (actual_butt_y + 1) 向拍头 +5mm。
+// Z: 从分型面向 ±3mm (前后壳各延伸 3mm)。
+// 用于辅助夹持固定 USB-C 母座，防止左右窜动。
+
+module usb_c_left_clamp(front = true) {
+    clamp_x = -(usb_c_socket_x / 2) - 1.5;   // X 起点 (母座左侧往 X- 1.5mm)
+    clamp_y = actual_butt_y + usb_c_retain_t; // Y 起点 (墙体内侧)
+    if (front) {
+        translate([clamp_x, clamp_y, 0])
+            cube([1.5, 5, 3]);
+    } else {
+        translate([clamp_x, clamp_y, -3])
+            cube([1.5, 5, 3]);
+    }
 }
 
 // ═══ LED 导光柱孔（拍柄底部） ═══
@@ -703,6 +754,10 @@ module handle_front_part() {
                     translate([x, y, 0])
                         screw_boss_column(boss_h, 1);
                 }
+            // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
+            usb_c_pcb_block(front = true);
+            // USB-C 左侧夹持固定销
+            usb_c_left_clamp(front = true);
         }
         wire_channels();
         screw_holes_clearance();
@@ -729,6 +784,10 @@ module handle_back_part() {
                     translate([x, y, -boss_h])
                         cylinder(d = screw_d_boss, h = boss_h);
                 }
+            // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
+            usb_c_pcb_block(front = false);
+            // USB-C 左侧夹持固定销
+            usb_c_left_clamp(front = false);
         }
         wire_channels();
         screw_holes_pilot();
@@ -772,6 +831,14 @@ if (HALF == "front") {
     handle_front_part();
 } else if (HALF == "handle_back") {
     handle_back_part();
+} else if (HALF == "handle_back_tip") {
+    // 拍柄后壳尾部切片，用于快速打印验证装配。
+    // 长度由 TIP_LENGTH 变量控制，默认 25mm。
+    intersection() {
+        handle_back_part();
+        translate([-BIG, handle_butt_cut_y, -BIG])
+            cube([BIG*2, TIP_LENGTH, BIG*2]);
+    }
 } else if (HALF == "both") {
     %front_half();
     back_half();

@@ -191,6 +191,29 @@ echo "源: $SCAD"
 echo "输出: $OUT/"
 echo ""
 
+# 交互式子命令: ./scripts/export-stl.sh tip
+if [[ "${1:-}" == "tip" ]]; then
+  TIP_LENGTH="${TIP_LENGTH:-25}"
+  echo "→ 导出拍柄后壳尾部 ${TIP_LENGTH}mm 切片（装配验证用）"
+  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_handle_back_tip.stl" \
+    ${SCAD_DEFS[@]+"${SCAD_DEFS[@]}"} \
+    -D "HALF=\"handle_back_tip\"" \
+    -D "TIP_LENGTH=${TIP_LENGTH}" \
+    "$SCAD"
+  if [[ -f "$OUT/paddle_handle_back_tip.stl" ]]; then
+    ls -lh "$OUT/paddle_handle_back_tip.stl"
+  else
+    echo "错误: 未生成 paddle_handle_back_tip.stl" >&2
+    exit 1
+  fi
+  echo ""
+  echo "完成。切片文件:"
+  echo "  paddle_handle_back_tip.stl (${TIP_LENGTH}mm)"
+  echo ""
+  echo "如需指定长度: TIP_LENGTH=30 ./scripts/export-stl.sh tip"
+  exit 0
+fi
+
 export_part blade_front "$OUT/paddle_blade_front.stl"
 export_part blade_back  "$OUT/paddle_blade_back.stl"
 export_part handle_front "$OUT/paddle_handle_front.stl"
@@ -216,3 +239,5 @@ else
 fi
 echo "如需快速预览模式，运行:"
 echo "  QUALITY_MODE=quick ./scripts/export-stl.sh"
+echo "如需拍柄尾部切片（装配验证），运行:"
+echo "  ./scripts/export-stl.sh tip"
