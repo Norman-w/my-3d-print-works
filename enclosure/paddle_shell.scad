@@ -436,7 +436,7 @@ module usb_c_cutout() {
     socket_start_y = handle_butt_cut_y + handle_extend_y + usb_c_retain_t;
     translate([0, socket_start_y, usb_c_z])
         rotate([-90, 0, 0])
-            linear_extrude(height = wall_t + 12 + eps)
+            linear_extrude(height = 7 + eps)
                 _usb_c_rounded_rect(usb_c_socket_x, usb_c_socket_z, usb_c_socket_r);
 
     // 3. 线路板槽：母座右侧 +X 方向，1.6mm 板厚
@@ -448,6 +448,26 @@ module usb_c_cutout() {
     pcb_y  = socket_start_y + 1;                    // PCB 槽 Y 起点 (挡槽 + 1mm)
     translate([pcb_x, pcb_y, -pcb_dz])
         cube([1.6, 15.8, pcb_dz * 2]);
+
+    // 4. 元器件/接线空间槽：外圈切完 7mm 后的 Y 位置为起点，高 6mm。
+    //    X 贯穿基台全宽，Z 为线路板高 12mm (±6mm)。
+    //    用于漏出负载接线通往开关侧，以及线路板正面电子元件空间。
+    clr_x  = -(usb_c_socket_x / 2);                 // 基台 X 起点 (母座外圈左侧)
+    clr_w  = usb_c_socket_x + 1.6 + 2;              // 基台 X 全宽
+    clr_y  = socket_start_y + 7;                    // 外圈 Y 尾端
+    translate([clr_x, clr_y, -pcb_dz])
+        cube([clr_w, 6, pcb_dz * 2]);
+
+    // 5. 电池线焊点/导线空间槽：第4刀 Y 尾端为起点，直到基台 Y 末端。
+    //    X: 从线路板左面 (X=+2.0) 到基台左侧 (X=-2.0)，宽 4mm。
+    //    Z: ±6mm。
+    //    用于腾出充电板背面电池线焊点及导线位置。
+    bat_x = -(usb_c_socket_x / 2);                  // 起点 X (基台左侧)
+    bat_w = usb_c_socket_x;                         // 宽 (母座外圈全宽 4mm)
+    bat_y = clr_y + 6;                               // Y 起点 (第4刀尾端)
+    bat_h = (actual_butt_y + 2 + 19) - bat_y + eps;  // 高 (到基台 Y 末端)
+    translate([bat_x, bat_y, -pcb_dz])
+        cube([bat_w, bat_h, pcb_dz * 2]);
 }
 
 // ═══ 充电 PCB 实心基台 (加法实体, 后续挖空放线路板) ═══
