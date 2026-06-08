@@ -10,7 +10,7 @@ PORT="${1:-/dev/cu.usbmodem*}"
 PORT=$(ls $PORT 2>/dev/null | head -1)
 
 if [ -z "$PORT" ]; then
-    echo "No ESP32-S3 found. Plug in the board and try again."
+    echo "No ESP32-C6 found. Plug in the board and try again."
     echo "Usage: ./flash.sh [port]"
     exit 1
 fi
