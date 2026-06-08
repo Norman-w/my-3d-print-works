@@ -100,21 +100,21 @@ screw_positions = [
 // ---- PCB 槽体 ----
 pcb_cavity_center     = [0, -5];     // 槽体中心 [X,Y]，IMU 居拍头-拍柄中线
 pcb_cavity_size       = [42, 42];    // 正方形 42×42：Y 向容纳 IMU (18.5) + ESP32 (18) + 间隙
-pcb_cavity_depth      = 2.0;         // 每半壳槽深 (总计 4mm)
+pcb_cavity_depth      = 1.5;         // 每半壳槽深 (总计 3mm，剩余壁厚 1.5mm)
 
 // ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----
 // 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。
 signal_trench_w       = 2.0;        // 槽宽 (VCC+GND 两条线)
-signal_trench_d       = 1.5;        // 槽深
+signal_trench_d       = 1.0;        // 槽深 (信号线槽，剩余壁厚 ≥2mm)
 
 // ---- 压电片传感器槽位 (PZT-5A 陶瓷裸片) ----
 // 选用 PZT-5A 翻边型裸陶瓷片 (家铭电子), 20mmØ × 1mm 厚
 // 翻边型正负极同面，平面侧贴拍面内壁，电极面向内腔。
 // 尺寸含 FDM 打印容差 + 拆装间隙。
 piezo_disc_d         = 20.5;      // 槽位直径 (PZT 20mm + 0.5mm 容差)
-piezo_disc_depth     = 1.3;       // 槽深 (PZT 1mm + 0.3mm 容纳焊点与线)
+piezo_disc_depth     = 1.1;       // 槽深 (PZT 1mm + 0.1mm 焊点余量)
 piezo_trench_w       = 3.0;       // 引线槽宽度
-piezo_trench_d       = 2.0;       // 引线槽深度
+piezo_trench_d       = 1.2;       // 引线槽深度 (AWG30 线径 ≈0.25mm，余壁厚 ≥1.8mm)
 // 槽位中心需在拍面轮廓内 (20mm 圆片 + ~3mm 边缘余量)
 piezo_positions = [
     [38,  52],   // 右上 (近拍尖)
@@ -126,9 +126,9 @@ piezo_positions = [
 // ---- PZT 信号调理元件槽 ----
 // 紧贴 PZT 槽边缘，朝向 MCU 汇聚点延伸，最短信号路径。
 // 容纳：1MΩ 电阻 (0603) + BAT54S 双肖特基二极管 (SOT-23)
-resistor_ear_w        = 5.0;       // 耳槽宽度 (0603 + SOT-23 并排)
-resistor_ear_l        = 7.0;       // 耳槽长度 (从 PZT 槽边缘往外)
-resistor_ear_d        = 1.3;       // 耳槽深度 (与 PZT 槽同深)
+resistor_ear_w        = 6.0;       // 耳槽宽度 (0603 + SOT-23 并排 + 容差)
+resistor_ear_l        = 8.0;       // 耳槽长度 (从 PZT 槽边缘往外，加长防毛刺)
+resistor_ear_d        = 1.2;       // 耳槽深度 (与引线槽同深)
 
 // ════════════════════════════════════════════════════════════════
 // 3. 拍柄 (Handle)

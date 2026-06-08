@@ -32,6 +32,7 @@ actual_butt_y = handle_butt_cut_y + handle_extend_y;
 
 $fn = 80;
 eps = 0.02;
+overcut = 0.5;  // Z=0 截面过切量，确保切槽干净穿透分型面
 // 布尔裁剪辅助立方体；尺寸需超过拍体最大延展（Y 约 257 mm）。
 BIG = 1000;
 
@@ -297,15 +298,18 @@ module plug_recesses() {
 
 // ═══ 压电传感器凹槽 ═══
 
-module piezo_pockets() {
+module piezo_pockets(front = true) {
     for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
         x = p[0]; y = p[1];
         hz = half_z_at(y);
         pd = min(piezo_disc_depth, hz - wall_t - 0.3);
         if (pd > 0.2) {
-            // 从分型面向壳体内挖出压电片凹槽
-            translate([x, y, -eps])
-                cylinder(d = piezo_disc_d, h = pd + eps);
+            if (front)
+                translate([x, y, -overcut])
+                    cylinder(d = piezo_disc_d, h = pd + overcut + eps);
+            else
+                translate([x, y, -pd - eps])
+                    cylinder(d = piezo_disc_d, h = pd + eps + overcut);
         }
     }
 }
@@ -317,97 +321,102 @@ module piezo_pockets() {
 //   - BAT54S 双肖特基钳位二极管 (SOT-23-3, 2.9×2.5mm)
 // 总占用 ≈ 5×7mm。耳槽沿 PZT→MCU 汇聚点方向延伸，信号路径最短。
 // 耳槽与 PZT 槽内侧有 1mm 重叠以保证两槽连通。
-module resistor_ears() {
+module resistor_ears(front = true) {
     cx = pcb_cavity_center[0];
     hub_y = pcb_cavity_center[1];
     for (p = piezo_positions) if (piezo_in_blade_ok(p)) {
         px = p[0]; py = p[1];
         hz = half_z_at(py);
         ed = min(resistor_ear_d, hz - wall_t - 0.3);
-        if (ed <= 0.2) {
-            // 壁太薄，不挖
-        } else {
+        if (ed > 0.2) {
             dx = cx - px; dy = hub_y - py;
             angle = atan2(dy, dx);
-            // 耳槽中心: PZT边缘往外伸 resistor_ear_l/2，同时内收 1mm 确保连通
-            ear_center_offset = piezo_disc_d / 2 + resistor_ear_l / 2 - 1;
+            ear_center_offset = piezo_disc_d / 2 + resistor_ear_l / 2 - 2;
             ear_cx = px + ear_center_offset * cos(angle);
             ear_cy = py + ear_center_offset * sin(angle);
-            translate([ear_cx, ear_cy, -eps])
-                rotate([0, 0, angle])
-                    cube([resistor_ear_l, resistor_ear_w, ed + eps], center = true);
+            if (front)
+                translate([ear_cx, ear_cy, ed/2])
+                    rotate([0, 0, angle])
+                        cube([resistor_ear_l, resistor_ear_w, ed + 2*overcut + eps], center = true);
+            else
+                translate([ear_cx, ear_cy, -ed/2])
+                    rotate([0, 0, angle])
+                        cube([resistor_ear_l, resistor_ear_w, ed + 2*overcut + eps], center = true);
         }
     }
 }
 
 // ═══ 导线通道 ═══
 
-module wire_channels() {
-    // 四路压电片导线汇聚到甜区中心 PCB 槽。
-    // 从 ESP32-C6 的 ADC 引脚到压电片等长且最短，确保模拟信号一致性。
+module wire_channels(front = true) {
     cx = pcb_cavity_center[0];  hub_y = pcb_cavity_center[1];
-    hub_d = 10;  // 汇聚点圆形容纳槽，避免四路挤在一起
+    hub_d = 10;
+    td = piezo_trench_d;
+    z0 = front ? -overcut : -td - overcut;
+    zh = td + 2*overcut + eps;
     for (sx = [-1, 1]) {
         points = [for (p = piezo_positions) if (piezo_in_blade_ok(p) && sign(p[0]) == sx) p];
         if (len(points) > 0) {
-            // 每路压电 → PCB 中心直达线槽
             for (p = points) {
                 px = p[0]; py = p[1];
                 hull() {
-                    translate([px, py, -eps])
-                        cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
-                    translate([cx, hub_y, -eps])
-                        cylinder(d = piezo_trench_w, h = piezo_trench_d + eps);
+                    translate([px, py, z0])
+                        cylinder(d = piezo_trench_w, h = zh);
+                    translate([cx, hub_y, z0])
+                        cylinder(d = piezo_trench_w, h = zh);
                 }
             }
         }
     }
-    // 汇聚点圆形容纳槽
-    translate([cx, hub_y, -eps])
-        cylinder(d = hub_d, h = piezo_trench_d + eps);
+    translate([cx, hub_y, z0])
+        cylinder(d = hub_d, h = zh);
 }
 
 // ═══ 电源通道（拍柄电池 → 甜区 ESP32） ═══
 
-module signal_bus_to_handle() {
-    // 左右各一条槽走 VCC+GND，从 PCB 槽两侧引入手柄空腔深处。
+module signal_bus_to_handle(front = true) {
     trench_w = signal_trench_w;
     trench_d = signal_trench_d;
+    // 统一 Z 底起点 + 总高度，cube 和 cylinder 共用，避免 hull 渐变
+    z0    = front ? -overcut : -trench_d - overcut;
+    zh    = trench_d + 2*overcut + eps;
+    zcube = z0 + zh / 2;                     // cube center=true 要用中心点
     pcb_left  = pcb_cavity_center[0] - pcb_cavity_size[0] / 2 + 2.5;
     pcb_right = pcb_cavity_center[0] + pcb_cavity_size[0] / 2 - 2.5;
     pcb_y     = pcb_cavity_center[1];
-    entry_y_join = shoulder_bottom_y;                       // ≈ -78.5
-    entry_y_deep = shoulder_bottom_y - 20;                  // ≈ -98.5（深入手柄空腔）
+    entry_y_join = shoulder_bottom_y;
+    entry_y_deep = shoulder_bottom_y - 20;
     entry_x      = 5;
     for (sx = [-1, 1]) {
         pcb_entry_x = sx > 0 ? pcb_right : pcb_left;
         handle_entry_x = sx * entry_x;
-        // 第 1 段：PCB 边缘 → 拍面-手柄连接处
         hull() {
-            translate([pcb_entry_x, pcb_y, -eps])
-                cube([2, trench_w, trench_d + eps], center = true);
-            translate([handle_entry_x, entry_y_join, -eps])
-                cylinder(d = trench_w * 1.5, h = trench_d + eps);
+            translate([pcb_entry_x, pcb_y, zcube])
+                cube([2, trench_w, zh], center = true);
+            translate([handle_entry_x, entry_y_join, z0])
+                cylinder(d = trench_w * 1.5, h = zh);
         }
-        // 第 2 段：连接处 → 手柄内腔深处
         hull() {
-            translate([handle_entry_x, entry_y_join, -eps])
-                cylinder(d = trench_w * 1.5, h = trench_d + eps);
-            translate([handle_entry_x, entry_y_deep, -eps])
-                cylinder(d = trench_w * 1.5, h = trench_d + eps);
+            translate([handle_entry_x, entry_y_join, z0])
+                cylinder(d = trench_w * 1.5, h = zh);
+            translate([handle_entry_x, entry_y_deep, z0])
+                cylinder(d = trench_w * 1.5, h = zh);
         }
     }
 }
 
 // ═══ PCB 安装凹槽 ═══
 
-module pcb_main_cavity() {
-    // 甜区 PCB 槽：容纳 ESP32-C6 (25×18) + IM948 (13×18.5) 并排。
-    // 正反两面挖一样深，PCB 居中放置，焊接面留余量。
+module pcb_main_cavity(front = true) {
     xy = pcb_cavity_center;
     wh = pcb_cavity_size;
-    translate([xy[0], xy[1], -eps])
-        cube([wh[0], wh[1], pcb_cavity_depth + eps], center = true);
+    d  = pcb_cavity_depth;
+    if (front)
+        translate([xy[0], xy[1], d/2])
+            cube([wh[0], wh[1], d + 2*overcut + eps], center = true);
+    else
+        translate([xy[0], xy[1], -d/2])
+            cube([wh[0], wh[1], d + 2*overcut + eps], center = true);
 }
 
 // ═══ USB-C 母座两段式台阶开口 ═══
@@ -698,11 +707,11 @@ module blade_front_part() {
     module _cutouts() {
         screw_holes_clearance_blade();
         blade_pass_through_for_handle_screws();
-        piezo_pockets();
-        resistor_ears();
-        wire_channels();
-        signal_bus_to_handle();
-        pcb_main_cavity();
+        piezo_pockets(front = true);
+        resistor_ears(front = true);
+        wire_channels(front = true);
+        signal_bus_to_handle(front = true);
+        pcb_main_cavity(front = true);
     }
     difference() {
         union() {
@@ -730,11 +739,11 @@ module blade_back_part() {
                     cylinder(d = screw_d_pilot, h = hz + 2 * eps);
             }
         blade_pass_through_for_handle_screws();
-        piezo_pockets();
-        resistor_ears();
-        wire_channels();
-        signal_bus_to_handle();
-        pcb_main_cavity();
+        piezo_pockets(front = false);
+        resistor_ears(front = false);
+        wire_channels(front = false);
+        signal_bus_to_handle(front = false);
+        pcb_main_cavity(front = false);
     }
     difference() {
         union() {
@@ -779,13 +788,13 @@ module handle_front_part() {
             // USB-C 左侧夹持固定销
             usb_c_left_clamp(front = true);
         }
-        wire_channels();
+        wire_channels(front = true);
         screw_holes_clearance();
         plug_recesses();
         usb_c_cutout();
         led_light_guide_holes();
         button_cutout();
-        signal_bus_to_handle();
+        signal_bus_to_handle(front = true);
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = true);
@@ -809,13 +818,13 @@ module handle_back_part() {
             // USB-C 左侧夹持固定销
             usb_c_left_clamp(front = false);
         }
-        wire_channels();
+        wire_channels(front = false);
         screw_holes_pilot();
         usb_c_cutout();
         button_cutout();
         ws2812_led_hole();
         soft_power_circuit_cavity();
-        signal_bus_to_handle();
+        signal_bus_to_handle(front = false);
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = false);
