@@ -13,6 +13,8 @@ idf_component_register(
         "status_led.cpp"
         "reset_button.cpp"
         "ws_data_server.cpp"
+        "im948_sdk.cpp"
+        "im948_sensor.cpp"
         "http/connection_api_handlers.cpp"
         "http/connection_page_handlers.cpp"
     INCLUDE_DIRS

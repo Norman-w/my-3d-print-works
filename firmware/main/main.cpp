@@ -16,6 +16,8 @@
 #include "status_led.h"
 #include "reset_button.h"
 #include "ws_data_server.h"
+#include "im948_sensor.h"
+#include "im948_data.h"
 
 static const char* TAG = LOG_TAG_MAIN;
 
@@ -64,6 +66,68 @@ static void init_network(void) {
     ws_data_server_init();
 }
 
+// ===== IMU 初始化 =====
+static void init_imu(void) {
+    esp_err_t ret = Im948Sensor::init(IMU_UART_NUM, IMU_UART_TX, IMU_UART_RX,
+                                      IMU_RX_BUF_SIZE);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "IM948 Sensor 初始化失败: %d", ret);
+        return;
+    }
+
+    // 唤醒传感器（发送 Cmd_03 后等待 3 秒）
+    ret = Im948Sensor::wake();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "IM948 唤醒失败: %d", ret);
+        return;
+    }
+
+    // 配置传感器参数
+    ret = Im948Sensor::configure(
+        Im948AccelRange::G16,
+        Im948GyroRange::DPS2048,
+        IMU_REPORT_HZ,
+        Im948ReportTag::TAG_ALL,
+        0,   // gyro_filter=0: 最小滤波
+        0,   // accel_filter=0: 最小滤波
+        9,   // compass_filter=9: 默认
+        false // 不融合磁场
+    );
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "IM948 配置失败: %d", ret);
+        return;
+    }
+
+    // 升级波特率：115200 → 230400
+    ret = Im948Sensor::upgrade_baudrate(Im948BaudRate::B230400);
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "IM948 波特率升级失败，继续使用 115200");
+    }
+
+    // 开启主动上报
+    ret = Im948Sensor::start_streaming();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "IM948 主动上报启动失败: %d", ret);
+        return;
+    }
+
+    ESP_LOGI(TAG, "IM948 初始化完成，%dHz 主动上报中", IMU_REPORT_HZ);
+}
+
+// ===== IMU 数据轮询任务（独立 FreeRTOS 任务） =====
+static void imu_loop(void *arg) {
+    ImuFrame frame;
+    while (true) {
+        if (Im948Sensor::poll(frame)) {
+            if (ws_data_has_client()) {
+                ws_data_send_imu_frame(&frame);
+            }
+        }
+        // 适当让出 CPU，避免 busy-wait 饿死压电任务
+        vTaskDelay(pdMS_TO_TICKS(1));
+    }
+}
+
 // ===== 主入口 =====
 extern "C" void app_main() {
     // 1. NVS 初始化
@@ -82,7 +146,10 @@ extern "C" void app_main() {
     // 3. 网络初始化（WiFi AP → DNS → HTTP → WebSocket）
     init_network();
 
-    // 4. 压电传感器初始化
+    // 4. IMU 初始化（IM948 传感器）
+    init_imu();
+
+    // 5. 压电传感器初始化
     ret = PiezoCapture::init();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "PiezoCapture 初始化失败: %d", ret);
@@ -91,7 +158,10 @@ extern "C" void app_main() {
 
     ESP_LOGI(TAG, "等待击球事件... 连接到 SmartPaddle WiFi 或通过 IP 访问");
 
-    // 5. 主循环：采集压电事件 + WebSocket 推送
+    // 6. 启动 IMU 轮询任务（高优先级、绑定核心 0）
+    xTaskCreatePinnedToCore(imu_loop, "imu_task", 4096, nullptr, 10, nullptr, 0);
+
+    // 7. 主循环：采集压电事件 + WebSocket 推送
     while (true) {
         PiezoEvent first;
         ret = PiezoCapture::wait_for_impact(first, portMAX_DELAY);

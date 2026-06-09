@@ -3,8 +3,9 @@
 
 // --- Piezo TDOA sensor pins ---
 // 4 piezo discs on blade corners, each through zener clamp → GPIO → RMT
-#define PIEZO_PIN_1 GPIO_NUM_4   // Top-left blade corner
-#define PIEZO_PIN_2 GPIO_NUM_5   // Top-right blade corner
+// GPIO4/5 被 IMU UART1 占用，压电传感器迁至 GPIO2/3
+#define PIEZO_PIN_1 GPIO_NUM_2   // Top-left blade corner
+#define PIEZO_PIN_2 GPIO_NUM_3   // Top-right blade corner
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner
 #define PIEZO_PIN_4 GPIO_NUM_7   // Bottom-right blade corner
 
@@ -12,12 +13,12 @@
 #define RMT_CLK_DIV 1            // 80MHz APB / 1 = 80MHz = 12.5ns resolution
 #define RMT_MAX_EDGES 256        // Max edges captured per trigger window
 
-// --- IMU pins (ICM-42688-P, SPI2) ---
-#define IMU_SCLK    GPIO_NUM_12
-#define IMU_MOSI    GPIO_NUM_11
-#define IMU_MISO    GPIO_NUM_13
-#define IMU_CS      GPIO_NUM_10
-#define IMU_INT     GPIO_NUM_14  // FIFO watermark interrupt
+// --- IMU pins (IM948, UART1) ---
+#define IMU_UART_NUM   UART_NUM_1
+#define IMU_UART_TX    GPIO_NUM_4
+#define IMU_UART_RX    GPIO_NUM_5
+#define IMU_UART_BAUD  115200       // 初始波特率，上电后升级到 230400
+#define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
 
 // --- WiFi defaults (override via WebSocket config later) ---
 #define WIFI_SSID_DEFAULT   "SmartPaddle"
@@ -28,13 +29,12 @@
 #define WS_SERVER_PORT      8000
 #define WS_PATH             "/ws/paddle"
 
-// --- Timing ---
-// Shared microsecond timer: esp_timer_get_time() used for both IMU and piezo timestamps
-#define IMU_SAMPLE_RATE_HZ  1000
-#define IMU_FIFO_WATERMARK  8     // Read FIFO every 8 samples (8ms)
+// --- IM948 Timing ---
+#define IMU_REPORT_HZ       250    // IM948 主动上报频率
+#define IMU_RX_BUF_SIZE     4096   // UART 接收缓冲区
 
 // --- Ring buffer ---
-#define RING_BUF_SIZE       65536  // ~27 seconds at 1kHz IMU + impact events
+#define RING_BUF_SIZE       65536  // 通用环缓冲区
 
 // --- LED ---
 #define LED_PIN GPIO_NUM_8  // WS2812C RGB LED

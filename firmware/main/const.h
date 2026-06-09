@@ -18,6 +18,8 @@
 #define LOG_TAG_STATUS_LED        "status_led"
 #define LOG_TAG_RESET_BUTTON      "reset_button"
 #define LOG_TAG_PIEZO             "piezo_capture"
+#define LOG_TAG_IMU_SDK           "im948_sdk"
+#define LOG_TAG_IMU_SENSOR        "im948_sensor"
 
 // 常用常量
 #define DEVICE_ID_BUFFER_SIZE     32
