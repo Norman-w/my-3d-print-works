@@ -29,3 +29,9 @@ scripts/__pycache__/
 
 # Backup files
 *.bak
+
+# IMU support reference binaries (excluded to avoid large files)
+firmware/support/**/*.exe
+firmware/support/**/*.apk
+firmware/support/**/*.rar
+firmware/support/**/*.zip
