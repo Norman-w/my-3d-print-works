@@ -20,3 +20,12 @@ server/grids/*
 !server/grids/.gitkeep
 .idea/
 .vscode/
+
+# ESP-IDF build artifacts
+firmware/build/
+
+# Python cache
+scripts/__pycache__/
+
+# Backup files
+*.bak
