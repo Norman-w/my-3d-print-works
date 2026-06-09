@@ -21,6 +21,25 @@ server/grids/*
 .idea/
 .vscode/
 
+# FPC generator — allowlist (commit generator + output) ignore everything else
+fpc/.venv/
+fpc/build/
+fpc/preview*.svg
+fpc/preview*.png
+fpc/kicad_fullscreen.png
+fpc/ato.yaml
+fpc/paddle_flex.ato
+fpc/fix_outline.py
+fpc/main.py
+fpc/.python-version
+fpc/fp-info-cache
+fpc/layouts/default/fp-info-cache
+fpc/layouts/default/*~
+fpc/layouts/default/*.lck
+fpc/layouts/default/default.kicad_prl
+fpc/layouts/default/default.kicad_pro
+fpc/*.lock
+
 # ESP-IDF build artifacts
 firmware/build/
 
