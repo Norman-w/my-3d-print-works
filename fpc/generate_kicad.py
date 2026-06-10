@@ -1,4 +1,4 @@
-"""SmartPaddle FPC v9.6 — pcbnew 9 fp 内部图 bug 完整修复
+"""SmartPaddle FPC v9.7 — KiCad 9 正确 pcbnew API
 ═══════════════════════════════════════════════════
 A. Y 翻转: SCAD +Y=拍头 → KiCad 数据 -Y=屏上 (KiCad 9 内部 Y+ 永远=屏下)
 B. J1: ESP32-C6-N8 14+14=28邮票孔, 摆放 fab 25.5×18 (X 长)
@@ -11,12 +11,16 @@ H. NC pin 物理有 pad 不连 net (v9.4: 取消 skip, 创建所有 28+16 邮票
 I. 28 pin 完整 net 表 (块 2 修复 2026-06-10): EN 上拉 VCC, PZT→IO4-7, USB→IO13/18, UART→IO16/17
 J. 摆放修正 (块 3 修复 2026-06-10): IMU 拍头端, MCU 拍柄端, X 都用长边
 K. Y 翻转 (v9.3 修复 2026-06-10): opts/PZT/耳角/keepout/stiffener 全部 -(y)
-L. pcbnew 9.0 fp 内部图 bug (v9.6 修复 2026-06-10):
-   现象: PCB_SHAPE(fp) / PAD(fp) 的 SetStart/SetEnd/SetPosition 用 fp 局部坐标
-         期望 fp 内部 (lx, ly), 实际存 fp 内部 (lx - fp_x, ly - fp_y) ← bug
-         全局 = fp 内部 + fp 位置 = (lx, ly) 反而对! 但 fp 内部坐标在 .kicad_pcb 里是错的
-   修复: SetStart/SetPosition 加 fp 位置 (lx + fp_x, ly + fp_y) → fp 内部 (lx, ly) 正确
-   影响: fab_rect/crtyd_rect/fab_circle/pad 全部需要修
+L. KiCad 9 正确 pcbnew API (v9.7 修复 2026-06-10):
+   之前的"pcbnew 9 bug"误诊, 实际是 API 用错!
+   - SetPosition() / GetPosition() → 绝对 (全局) 坐标 (不能直接用 fp 局部)
+   - SetFPRelativePosition() / GetFPRelativePosition() → fp 内部相对坐标 (正确)
+   修复:
+   - pad() 改用 pad.SetFPRelativePosition(fp 内部 pos) 替代 +fpos.x
+   - NPTH 螺丝孔: SetFPRelativePosition(0, 0)
+   - fab_rect/crtyd_rect/fab_circle: PCB_SHAPE.SetStart 接全局坐标
+     (gx + lx - w/2, gy + ly - h/2) 替代 +fpos.x
+   影响: 所有 fp 内部 (pads, F.Fab, F.CrtYd) 坐标现在 .kicad_pcb 正确, KiCad 加载正确
 M. main_module_connector stiffener 改 ESP32 fab 框大小 (v9.4)
 N. 中线 2 NPTH M2 螺丝孔 (v9.4): Y 翻后 (0, -18) + (0, 33) 加 NPTH Ø2.2mm
    pad Ø3.0mm, 避免 FPC 被中线螺丝顶坏
@@ -104,12 +108,13 @@ def main():
 
     # ── FP 构建器 ──
     def pad(fp, nr, pos, sz, net, shape=pcbnew.PAD_SHAPE_CIRCLE):
-        # pcbnew 9 bug: SetPosition fp 局部 (lx, ly) 存 fp 内部 (lx - fp_x, ly - fp_y)
-        # 抵消: SetPosition(lx + fp_x, ly + fp_y) → fp 内部 (lx, ly), 全局 fp 位置 ✓
-        fpos = fp.GetPosition()
+        # KiCad 9.0.6 pcbnew 正确 API:
+        #   - SetPosition / GetPosition → 绝对 (全局) 坐标
+        #   - SetFPRelativePosition / GetFPRelativePosition → fp 内部相对坐标
+        # 用 SetFPRelativePosition 设 fp 内部 pos, 加载时 KiCad 正确计算全局
         p = pcbnew.PAD(fp); p.SetNumber(str(nr)); p.SetShape(shape)
         p.SetAttribute(pcbnew.PAD_ATTRIB_SMD)
-        p.SetPosition(pcbnew.VECTOR2I(mk(pos[0]) + fpos.x, mk(pos[1]) + fpos.y))
+        p.SetFPRelativePosition(pcbnew.VECTOR2I(mk(pos[0]), mk(pos[1])))
         p.SetSize(pcbnew.VECTOR2I(mk(sz[0]), mk(sz[1])))
         if net is not None:
             p.SetNet(net)
@@ -159,26 +164,22 @@ def main():
         return f
 
     def fab_rect(fp, gx, gy, lx, ly, w, h):
-        # pcbnew 9 bug: SetStart fp 局部 (lx, ly) 存 fp 内部 (lx - fp_x, ly - fp_y)
-        # 抵消: SetStart(lx + fp_x, ly + fp_y) → fp 内部 (lx, ly), 全局 fp 位置 ✓
-        fpos = fp.GetPosition()
+        # KiCad 9 PCB_SHAPE.SetStart 全局坐标: KiCad 自动转 fp 内部, 加载时正确
         g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
-        g.SetStart(pcbnew.VECTOR2I(mk(lx-w/2) + fpos.x, mk(ly-h/2) + fpos.y))
-        g.SetEnd(pcbnew.VECTOR2I(mk(lx+w/2) + fpos.x, mk(ly+h/2) + fpos.y))
+        g.SetStart(pcbnew.VECTOR2I(mk(gx + lx - w/2), mk(gy + ly - h/2)))
+        g.SetEnd(pcbnew.VECTOR2I(mk(gx + lx + w/2), mk(gy + ly + h/2)))
         g.SetLayer(pcbnew.F_Fab); g.SetWidth(int(0.1e6)); fp.Add(g)
 
     def crtyd_rect(fp, gx, gy, lx, ly, w, h, margin=0.5):
-        fpos = fp.GetPosition()
         g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
-        g.SetStart(pcbnew.VECTOR2I(mk(lx-w/2-margin) + fpos.x, mk(ly-h/2-margin) + fpos.y))
-        g.SetEnd(pcbnew.VECTOR2I(mk(lx+w/2+margin) + fpos.x, mk(ly+h/2+margin) + fpos.y))
+        g.SetStart(pcbnew.VECTOR2I(mk(gx + lx - w/2 - margin), mk(gy + ly - h/2 - margin)))
+        g.SetEnd(pcbnew.VECTOR2I(mk(gx + lx + w/2 + margin), mk(gy + ly + h/2 + margin)))
         g.SetLayer(pcbnew.F_CrtYd); g.SetWidth(int(0.05e6)); fp.Add(g)
 
     def fab_circle(fp, gx, gy, lx, ly, r):
-        fpos = fp.GetPosition()
         c=pcbnew.PCB_SHAPE(fp); c.SetShape(pcbnew.SHAPE_T_CIRCLE)
-        c.SetCenter(pcbnew.VECTOR2I(mk(lx) + fpos.x, mk(ly) + fpos.y))
-        c.SetEnd(pcbnew.VECTOR2I(mk(lx+r) + fpos.x, mk(ly) + fpos.y))
+        c.SetCenter(pcbnew.VECTOR2I(mk(gx + lx), mk(gy + ly)))
+        c.SetEnd(pcbnew.VECTOR2I(mk(gx + lx + r), mk(gy + ly)))
         c.SetLayer(pcbnew.F_Fab); c.SetWidth(int(0.1e6)); fp.Add(c)
 
     pp = {}
@@ -482,13 +483,12 @@ def main():
         mh.SetReference("")
         mh.SetValue(f"M2_NPTH")
         mh.SetPosition(pcbnew.VECTOR2I(0, mk(hy)))
-        fpos = mh.GetPosition()
         thru = pcbnew.PAD(mh)
         thru.SetNumber("")                       # 无 pin 编号
         thru.SetShape(pcbnew.PAD_SHAPE_CIRCLE)
         thru.SetAttribute(pcbnew.PAD_ATTRIB_NPTH)  # 非电镀通孔
-        # 抵消 pcbnew 9 bug: SetPosition 加 fp 位置
-        thru.SetPosition(pcbnew.VECTOR2I(fpos.x, fpos.y))
+        # KiCad 9 正确 API: SetFPRelativePosition 设 fp 内部 (0, 0)
+        thru.SetFPRelativePosition(pcbnew.VECTOR2I(0, 0))
         thru.SetSize(pcbnew.VECTOR2I(mk(3.0), mk(3.0)))
         thru.SetDrillSize(pcbnew.VECTOR2I(mk(2.2), mk(2.2)))
         ls = pcbnew.LSET()
