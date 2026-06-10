@@ -445,7 +445,8 @@ def main():
     # ═══════════════════════════════════════════════
     all_y = [y for _,y in opts]
     bot_y = max(all_y) - 2    # 拍柄端: Y 翻转后拍柄在屏下方 = max(Y)
-    term = [("VCC",-5.5),("GND",-2),("D+",2),("D-",5.5)]
+    # v9.10 修复: 4 个终端 pad 间距 4.5mm (pad 宽 4mm, 必须 >= pad 宽避免重叠)
+    term = [("VCC",-6.75),("GND",-2.25),("D+",2.25),("D-",6.75)]
     term_w, term_h = 4.0, 3.0
     for label,xo in term:
         nn = "VCC" if label=="VCC" else "GND" if label=="GND" else f"USB_{label}"
