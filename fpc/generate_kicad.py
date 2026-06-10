@@ -25,6 +25,23 @@ M. main_module_connector stiffener 改 ESP32 fab 框大小 (v9.4)
 N. 中线 2 NPTH M2 螺丝孔 (v9.4): Y 翻后 (0, -18) + (0, 33) 加 NPTH Ø2.2mm
    pad Ø3.0mm, 避免 FPC 被中线螺丝顶坏
 O. 中线 2 keepout 大圆移除 (v9.4): 避免中央视觉混乱 (现在有 NPTH 实物)
+P. 丝印重排 (v9.8 修复 2026-06-10):
+   - "IM948 IMU" 丝印: imu_y - ih/2 - 1.5 -> imu_y + ih/2 + 3.5 (放 fab 框上方)
+   - "ESP32-C6-N8" 丝印: mc_y + half_w + 2 -> mc_y + half_w + 4.0 (远离 EPAD 边界)
+   - "RF KEEPOUT 18.5×3" / "25.5×3" 丝印: rf_y1 + 1.5 -> rf_y2 + 1.0 (放 keepout 框上方)
+   - TP 终端 "VCC/GND/D+/D-" 丝印: rot=90 -> 取消旋转, 放终端上方 bot_y + 3.0
+Q. IMU net 表重写 (v9.8 修复 2026-06-10):
+   - 实物 IM948 8-pin (双面 8+8=16 邮票孔), UART 接口
+   - Pin 7 = RXD (UART_TX net) ← ESP32 TX (IO16)
+   - Pin 8 = TXD (UART_RX net) → ESP32 RX (IO17)
+   - 之前 7=PZT_ADIN (错, ADIN 不是 UART, 应是 RXD)
+R. UART 走线重写 (v9.8 修复 2026-06-10):
+   - 之前: U1 pin 13/14 (上排) -> J1 pin 24/25 (上排), Y=中间汇流
+   - 现在: U1 pin 7/8 (下排) -> J1 pin 24/25 (上排), Y=0 汇流 (下->上)
+PZT 实物 layout 待用户确认:
+   - 实物 PZT 应该是 ring electrode, signal 在中心, GND 是外圈铜环
+   - 当前 2-pad (signal 8x8 + GND 3x3) 是不是实物?
+   - 等用户发 PZT 实物图后修 v9.9
 """
 
 import yaml, sys, subprocess, math, re, uuid
@@ -270,37 +287,36 @@ def main():
     # Pin 1-8 沿下侧长边 (Y = -imu_hw = -4.5), 沿 X 等距 1.27
     # 实物左下 → 摆放后左上 (旋转 CCW 90° 后 X=-span/2 是 Pin 1, X=+span/2 是 Pin 8)
     # 实物 → 摆放映射: 实物 l_net[i] 对应摆放后 Pin 1-8 (X 从 -span 到 +span)
-    # 实物引脚 1=VSS(左下) → 摆放后 Pin 1 在 X=-span 端 (左下→左上)
-    #  1=VSS, 2=VBUS, 3=VBAT, 4=VDDIO, 5=NC, 6=NC, 7=ADIN, 8=VSS
+    # 实物 IM948 UART 8-pin (双面 8+8=16 邮票孔) - 实物引脚 1-8 (左下到右上)
+    #  1=VSS, 2=VBUS, 3=VBAT, 4=VDDIO, 5=NC, 6=NC, 7=RXD, 8=TXD
     l_net = [
         "GND",        # 1  VSS
         "VBUS",       # 2  USB 5V 充电输入
-        "VCC",        # 3  锂电池 3.7V
-        "VCC_3V3",    # 4  GPIO 电压域 (≤3.4V!)
+        "VCC",        # 3  锂电池 3.7V (VBAT)
+        "VCC_3V3",    # 4  GPIO 电压域 (VDDIO, ≤3.4V!)
         "NC",         # 5
         "NC",         # 6
-        "PZT_ADIN",   # 7  ADIN: 4 路 PZT 经 CD4051 选通后单 ADC 输入
-        "GND",        # 8  VSS
+        "UART_TX",    # 7  RXD ← ESP32 TX (IO16)
+        "UART_RX",    # 8  TXD → ESP32 RX (IO17)
     ]
     for i in range(imu_n):
-        net = N(l_net[i]) if l_net[i] != "NC" else None    # NC pin 物理有 pad, 不连 net
+        net = N(l_net[i]) if l_net[i] != "NC" else None
         xo = (i - (imu_n - 1) / 2) * imu_pitch
         pad(imu_fp, i + 1, (xo, -imu_hw), (imu_pad_sz, imu_pad_sz),
             net, pcbnew.PAD_SHAPE_CIRCLE)
         Rec("U1", i + 1, imu_x + xo, imu_y - imu_hw)
 
-    # Pin 9-16 沿上侧长边 (Y = +imu_hw = +4.5), 沿 X 等距 1.27
-    # 实物右下 → 摆放后右上
+    # 实物 IM948 Pin 9-16 (镜像, 顶视图右半)
     #  9=LED-B, 10=LED-R, 11=GPIO, 12=KEY, 13=RXD, 14=TXD, 15=VBAT, 16=VSS
     r_net = [
         "NC",         # 9  LED-B    (留空)
         "NC",         # 10 LED-R    (留空)
         "NC",         # 11 GPIO     (留空)
         "NC",         # 12 KEY      (留空)
-        "UART_TX",    # 13 RXD ← ESP32 TX (IO16)
-        "UART_RX",    # 14 TXD → ESP32 RX (IO17)
-        "VCC",        # 15 VBAT
-        "GND",        # 16 VSS
+        "NC",         # 13 RXD      (留空, UART 已在 7/8 走)
+        "NC",         # 14 TXD      (留空)
+        "NC",         # 15 VBAT     (留空, 已在 pin 3 接 VCC)
+        "GND",        # 16 VSS      (双 GND 增强)
     ]
     for i in range(imu_n):
         net = N(r_net[i]) if r_net[i] != "NC" else None
@@ -314,7 +330,7 @@ def main():
     b.Add(imu_fp)
     gfx_rect(pcbnew.F_SilkS, imu_x - iw/2 - 0.5, imu_y - ih/2 - 0.5,
              imu_x + iw/2 + 0.5, imu_y + ih/2 + 0.5, 0.12)
-    silk_text(imu_x, imu_y - ih/2 - 1.5, "IM948 IMU", 1.0, 0.12)
+    silk_text(imu_x, imu_y + ih/2 + 3.5, "IM948 IMU", 1.0, 0.12)
     silk_text(imu_x - imu_span, imu_y - imu_hw - 0.8, "1", 0.6, 0.1)
     silk_text(imu_x + imu_span, imu_y - imu_hw - 0.8, "8", 0.6, 0.1)
     silk_text(imu_x - imu_span, imu_y + imu_hw + 1.2, "9", 0.6, 0.1)
@@ -324,7 +340,7 @@ def main():
     rf_x1, rf_y1 = imu_x - iw/2, imu_y + ih/2
     rf_x2, rf_y2 = imu_x + iw/2, imu_y + ih/2 + 3.0
     gfx_rect(pcbnew.User_4, rf_x1, rf_y1, rf_x2, rf_y2, 0.05)
-    silk_text(imu_x, rf_y1 + 1.5, "RF KEEPOUT 18.5\u00D73", 0.7, 0.1)
+    silk_text(imu_x, rf_y2 + 1.0, "RF KEEPOUT 18.5\u00D73", 0.7, 0.1)
 
     # ═══════════════════════════════════════════════
     # MCU J1 — ESP32-C6-WROOM-1-N8 14+14=28邮票孔 (块 2 修复 2026-06-10)
@@ -401,7 +417,7 @@ def main():
     b.Add(cf)
     gfx_rect(pcbnew.F_SilkS, cx - fw/2 - 1, mc_y - half_w - 1,
              cx + fw/2 + 1, mc_y + half_w + 1, 0.12)
-    silk_text(cx, mc_y + half_w + 2, "ESP32-C6-N8", 1.0, 0.12)
+    silk_text(cx, mc_y + half_w + 4.0, "ESP32-C6-N8", 1.0, 0.12)
     silk_text(cx - half_span, mc_y - half_w - 1.5, "1", 0.6, 0.1)
     silk_text(cx + half_span, mc_y - half_w - 1.5, "14", 0.6, 0.1)
     silk_text(cx - half_span, mc_y + half_w + 1.5, "15", 0.6, 0.1)
@@ -411,7 +427,7 @@ def main():
     rf_x1, rf_y1 = cx - fw/2, mc_y + fh/2
     rf_x2, rf_y2 = cx + fw/2, mc_y + fh/2 + 3.0
     gfx_rect(pcbnew.User_5, rf_x1, rf_y1, rf_x2, rf_y2, 0.05)
-    silk_text(cx, rf_y1 + 1.5, "RF KEEPOUT 25.5\u00D73", 0.7, 0.1)
+    silk_text(cx, rf_y2 + 1.0, "RF KEEPOUT 25.5\u00D73", 0.7, 0.1)
 
     # ═══════════════════════════════════════════════
     # 拍柄末端引出焊盘 (修正 B:4×3mm + C:文字90°)
@@ -427,7 +443,7 @@ def main():
         fab_rect(tf, xo, bot_y, 0, 0, term_w, term_h)
         crtyd_rect(tf, xo, bot_y, 0, 0, term_w, term_h)
         b.Add(tf); Rec(f"TP_{label}", 1, xo, bot_y)
-        silk_text(xo+3.5, bot_y, label, 0.9, 0.12, rot=90)
+        silk_text(xo, bot_y + 3.0, label, 0.9, 0.12)
     silk_text(0, bot_y+6, "\u2192 \u62CD\u67C4\u65B9\u5411", 0.9, 0.12)
 
     # ═══════════════════════════════════════════════
@@ -551,22 +567,23 @@ def main():
         track(N(label), jx, bot_y-3, jx, j1_vcc[1], TRACE_PWR)
         track(N(label), jx, j1_vcc[1], j1_vcc[0], j1_vcc[1], TRACE_PWR)
 
-    # UART: IMU(13:RXD←), IMU(14:TXD→) ↔ J1(24:RXD0/IO17), J1(25:TXD0/IO16)
-    # IMU pin 13/14 在 Y=+10.5 (上排), J1 pin 24/25 在 Y=-8.85 (上排)
-    # 汇流点: IMU 与 J1 中间, Y=-0.5 (IMU 底) 到 -8.85 (J1 顶), 中间 Y≈-5
-    u1_rxd = pp[("U1", 13)]  # IMU RXD 中心 (0.635, 10.5)
-    u1_txd = pp[("U1", 14)]  # IMU TXD 中心 (1.905, 10.5)
-    j1_tx  = j1_pin_xy(25)   # IO16 中心 (+4.445, -8.85)
-    j1_rx  = j1_pin_xy(24)   # IO17 中心 (+3.175, -8.85)
-    jy = -4  # IMU 底 -0.5, J1 顶 -8.85, 中转 Y
-    # TX: IMU pin13 (0.635, 10.5) → 下到 jy=-4 → 横走到 J1 TX X=4.445 → 下到 J1 TX Y=-8.85
+    # UART: IMU(7:TXD→, 8:RXD←) ↔ J1(24:RXD0/IO17, 25:TXD0/IO16)
+    # v9.8 修复: IMU Pin 7=IMU TXD (UART_TX net), Pin 8=IMU RXD (UART_RX net)
+    # IMU pin 7/8 在 Y=-10.5 (下排), J1 pin 24/25 在 Y=+8.85 (上排)
+    # 汇流点: IMU 顶 Y=-10.5 到 J1 顶 Y=+8.85, 中间 Y=0
+    u1_txd = pp[("U1", 7)]  # IMU TXD 中心
+    u1_rxd = pp[("U1", 8)]  # IMU RXD 中心
+    j1_tx  = j1_pin_xy(25)  # IO16 TXD 中心
+    j1_rx  = j1_pin_xy(24)  # IO17 RXD 中心
+    jy = 0  # IMU 底 -10.5, J1 顶 +8.85, 中转 Y
+    # TX (J1→IMU): IMU RXD pin 8 → 上到 jy=0 → 横走到 J1 TX X → 下到 J1 TX Y
     track(N("UART_TX"), u1_rxd[0], u1_rxd[1], u1_rxd[0], jy)
     track(N("UART_TX"), u1_rxd[0], jy, j1_tx[0], jy)
     track(N("UART_TX"), j1_tx[0], jy, j1_tx[0], j1_tx[1])
-    # RX: IMU pin14 (1.905, 10.5) → 下到 jy-0.5=-4.5 → 横走到 J1 RX X=3.175 → 下到 J1 RX Y=-8.85
-    track(N("UART_RX"), u1_txd[0], u1_txd[1], u1_txd[0], jy-0.5)
-    track(N("UART_RX"), u1_txd[0], jy-0.5, j1_rx[0], jy-0.5)
-    track(N("UART_RX"), j1_rx[0], jy-0.5, j1_rx[0], j1_rx[1])
+    # RX (IMU→J1): IMU TXD pin 7 → 上到 jy → 横走到 J1 RX X → 下到 J1 RX Y
+    track(N("UART_RX"), u1_txd[0], u1_txd[1], u1_txd[0], jy)
+    track(N("UART_RX"), u1_txd[0], jy, j1_rx[0], jy)
+    track(N("UART_RX"), j1_rx[0], jy, j1_rx[0], j1_rx[1])
 
     for sc in params["components"]["signal_conditioning"]:
         pid = sc["piezo"]; sn = N(f"{pid}_SIGNAL")
