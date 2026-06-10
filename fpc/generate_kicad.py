@@ -1,4 +1,4 @@
-"""SmartPaddle FPC v9.3 — Y 翻转 + IMU/MCU 摆 X 长 + 实物 1:1
+"""SmartPaddle FPC v9.4 — fab 框修位 + NPTH 螺丝孔 + 28/16 邮票孔完整
 ═══════════════════════════════════════════════════
 A. Y 翻转: SCAD +Y=拍头 → KiCad 数据 -Y=屏上 (KiCad 9 内部 Y+ 永远=屏下)
 B. J1: ESP32-C6-N8 14+14=28邮票孔, 摆放 fab 25.5×18 (X 长)
@@ -7,10 +7,16 @@ D. 终端焊盘: 4×3mm
 E. IMU Y=-6 (拍头甜区, 屏上) / MCU Y=+17 (拍柄端, 屏下) 间隙 7.5mm, X 都居中
 F. KiCad 9.0.6 Save bug 后处理修复
 G. RF keepout 18.5×3 / 25.5×3 (摆放方向)
-H. NC pin 不 pad 出来, 避免空 net (块 1.5 修复 2026-06-09)
+H. NC pin 物理有 pad 不连 net (v9.4: 取消 skip, 创建所有 28+16 邮票孔, NC pin 用 None net)
 I. 28 pin 完整 net 表 (块 2 修复 2026-06-10): EN 上拉 VCC, PZT→IO4-7, USB→IO13/18, UART→IO16/17
 J. 摆放修正 (块 3 修复 2026-06-10): IMU 拍头端, MCU 拍柄端, X 都用长边
 K. Y 翻转 (v9.3 修复 2026-06-10): opts/PZT/耳角/keepout/stiffener 全部 -(y)
+L. fab_rect 修位 (v9.4 修复 2026-06-10): PCB_SHAPE(fp) 内部 fp-Add 会偏移 fp 位置
+   → 改用 board gr 层画 fab 框/crtyd 框/fab_circle, 用全局坐标
+M. main_module_connector stiffener 改 ESP32 fab 框大小 (v9.4)
+N. 中线 2 NPTH M2 螺丝孔 (v9.4): Y 翻后 (0, -18) + (0, 33) 加 NPTH Ø2.2mm
+   pad Ø3.0mm, 避免 FPC 被中线螺丝顶坏
+O. 中线 2 keepout 大圆移除 (v9.4): 避免中央视觉混乱 (现在有 NPTH 实物)
 """
 
 import yaml, sys, subprocess, math, re, uuid
@@ -146,22 +152,24 @@ def main():
         return f
 
     def fab_rect(fp, gx, gy, lx, ly, w, h):
-        g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
-        g.SetStart(pcbnew.VECTOR2I(mk(lx-w/2), mk(ly-h/2)))
-        g.SetEnd(pcbnew.VECTOR2I(mk(lx+w/2), mk(ly+h/2)))
-        g.SetLayer(pcbnew.F_Fab); g.SetWidth(int(0.1e6)); fp.Add(g)
+        # pcbnew 9.0 bug: PCB_SHAPE(fp) 内的 SetStart 在序列化时会加 fp 位置偏移
+        # 改为画到 board gr 层 (全局坐标),用 F_Fab 标志
+        g=pcbnew.PCB_SHAPE(b); g.SetShape(pcbnew.SHAPE_T_RECT)
+        g.SetStart(pcbnew.VECTOR2I(mk(gx+lx-w/2), mk(gy+ly-h/2)))
+        g.SetEnd(pcbnew.VECTOR2I(mk(gx+lx+w/2), mk(gy+ly+h/2)))
+        g.SetLayer(pcbnew.F_Fab); g.SetWidth(int(0.1e6)); b.Add(g)
 
     def crtyd_rect(fp, gx, gy, lx, ly, w, h, margin=0.5):
-        g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
-        g.SetStart(pcbnew.VECTOR2I(mk(lx-w/2-margin), mk(ly-h/2-margin)))
-        g.SetEnd(pcbnew.VECTOR2I(mk(lx+w/2+margin), mk(ly+h/2+margin)))
-        g.SetLayer(pcbnew.F_CrtYd); g.SetWidth(int(0.05e6)); fp.Add(g)
+        g=pcbnew.PCB_SHAPE(b); g.SetShape(pcbnew.SHAPE_T_RECT)
+        g.SetStart(pcbnew.VECTOR2I(mk(gx+lx-w/2-margin), mk(gy+ly-h/2-margin)))
+        g.SetEnd(pcbnew.VECTOR2I(mk(gx+lx+w/2+margin), mk(gy+ly+h/2+margin)))
+        g.SetLayer(pcbnew.F_CrtYd); g.SetWidth(int(0.05e6)); b.Add(g)
 
     def fab_circle(fp, gx, gy, lx, ly, r):
-        c=pcbnew.PCB_SHAPE(fp); c.SetShape(pcbnew.SHAPE_T_CIRCLE)
-        c.SetCenter(pcbnew.VECTOR2I(mk(lx), mk(ly)))
-        c.SetEnd(pcbnew.VECTOR2I(mk(lx+r), mk(ly)))
-        c.SetLayer(pcbnew.F_Fab); c.SetWidth(int(0.1e6)); fp.Add(c)
+        c=pcbnew.PCB_SHAPE(b); c.SetShape(pcbnew.SHAPE_T_CIRCLE)
+        c.SetCenter(pcbnew.VECTOR2I(mk(gx+lx), mk(gy+ly)))
+        c.SetEnd(pcbnew.VECTOR2I(mk(gx+lx+r), mk(gy+ly)))
+        c.SetLayer(pcbnew.F_Fab); c.SetWidth(int(0.1e6)); b.Add(c)
 
     pp = {}
     def Rec(ref,pn,gx,gy): pp[(ref,pn)]=(gx,gy)
@@ -264,11 +272,10 @@ def main():
         "GND",        # 8  VSS
     ]
     for i in range(imu_n):
-        if l_net[i] == "NC":
-            continue                            # NC 不创建 pad (避免出现在 net 表)
+        net = N(l_net[i]) if l_net[i] != "NC" else None    # NC pin 物理有 pad, 不连 net
         xo = (i - (imu_n - 1) / 2) * imu_pitch
         pad(imu_fp, i + 1, (xo, -imu_hw), (imu_pad_sz, imu_pad_sz),
-            N(l_net[i]), pcbnew.PAD_SHAPE_CIRCLE)
+            net, pcbnew.PAD_SHAPE_CIRCLE)
         Rec("U1", i + 1, imu_x + xo, imu_y - imu_hw)
 
     # Pin 9-16 沿上侧长边 (Y = +imu_hw = +4.5), 沿 X 等距 1.27
@@ -285,11 +292,10 @@ def main():
         "GND",        # 16 VSS
     ]
     for i in range(imu_n):
-        if r_net[i] == "NC":
-            continue
+        net = N(r_net[i]) if r_net[i] != "NC" else None
         xo = (i - (imu_n - 1) / 2) * imu_pitch
         pad(imu_fp, i + imu_n + 1, (xo, imu_hw), (imu_pad_sz, imu_pad_sz),
-            N(r_net[i]), pcbnew.PAD_SHAPE_CIRCLE)
+            net, pcbnew.PAD_SHAPE_CIRCLE)
         Rec("U1", i + imu_n + 1, imu_x + xo, imu_y + imu_hw)
 
     fab_rect(imu_fp, imu_x, imu_y, 0, 0, iw, ih)
@@ -364,18 +370,16 @@ def main():
         "GND",            # 28 GND
     ]
     for i in range(n_per_edge):
-        if l_net[i] == "NC":
-            continue                            # NC 不创建 pad
+        net = N(l_net[i]) if l_net[i] != "NC" else None    # NC pin 物理有 pad, 不连 net
         xo = (i - (n_per_edge - 1) / 2) * pitch
         pad(cf, i + 1, (xo, -half_w), (1.5, 0.8),
-            N(l_net[i]), pcbnew.PAD_SHAPE_RECT)
+            net, pcbnew.PAD_SHAPE_RECT)
         Rec("J1", i + 1, cx + xo, mc_y - half_w)
     for i in range(n_per_edge):
-        if r_net[i] == "NC":
-            continue
+        net = N(r_net[i]) if r_net[i] != "NC" else None
         xo = (i - (n_per_edge - 1) / 2) * pitch
         pad(cf, i + n_per_edge + 1, (xo, half_w), (1.5, 0.8),
-            N(r_net[i]), pcbnew.PAD_SHAPE_RECT)
+            net, pcbnew.PAD_SHAPE_RECT)
         Rec("J1", i + n_per_edge + 1, cx + xo, mc_y + half_w)
     # EPAD 29 — 中心接地焊盘
     pad(cf, 29, (0, 0), (12, 16), gnd, pcbnew.PAD_SHAPE_RECT)
@@ -441,11 +445,15 @@ def main():
                 csx = pzx + off*math.cos(rad); csy = pzy + off*math.sin(rad)
                 gfx_rect(pcbnew.User_3, csx-6, csy-4, csx+6, csy+4, 0.05)
         elif zone == "main_module_connector":
-            gfx_rect(pcbnew.User_3, cx-25, mc_y-25, cx+25, mc_y+25, 0.05)
+            # ESP32-C6 摆 X 长后 fab 框 25.5×18, stiffener 加 1mm 余量
+            gfx_rect(pcbnew.User_3, cx-fw/2-1, mc_y-fh/2-1, cx+fw/2+1, mc_y+fh/2+1, 0.05)
 
     for koz in params.get("keep_out_zones", []):
         cr = koz.get("clearance_radius", 3.5)
         for hx,hy in koz.get("positions", []):
+            # 中线 2 颗螺丝已经有 NPTH 实物, 不再画大 keepout 圆 (避免中央视觉混乱)
+            if hx == 0 and hy in [18, -33]:
+                continue
             gfx_circle(pcbnew.User_4, hx, hy, cr, 0.05)
 
     for koz in params.get("keep_out_zones", []):
@@ -454,6 +462,30 @@ def main():
         if label:
             for hx,hy in koz.get("positions", []):
                 silk_text(hx, hy-3.5, label, 0.7, 0.1)
+
+    # ═══ 中线 NPTH 螺丝孔 — FPC 必须避让 2 颗中线螺丝 (Y 翻后 Y=+33/-18) ═══
+    # Y 翻后: (0, 18)→(0, -18) [拍头端, 紧贴 IMU fab 框 Y=0.5 下侧]
+    #         (0, -33)→(0, +33) [拍柄端, 紧贴 ESP32 fab 框 Y=26 上侧]
+    # 螺丝 clearance Ø2.2, pad 直径 3.0 (留 0.4mm 边距)
+    for hy in [-18, 33]:
+        mh = pcbnew.FOOTPRINT(b)                 # 容器 fp
+        mh.SetReference("")
+        mh.SetValue(f"M2_NPTH")
+        mh.SetPosition(pcbnew.VECTOR2I(0, mk(hy)))
+        thru = pcbnew.PAD(mh)
+        thru.SetNumber("")                       # 无 pin 编号
+        thru.SetShape(pcbnew.PAD_SHAPE_CIRCLE)
+        thru.SetAttribute(pcbnew.PAD_ATTRIB_NPTH)  # 非电镀通孔
+        thru.SetPosition(pcbnew.VECTOR2I(0, 0))    # fp 局部 0,0
+        thru.SetSize(pcbnew.VECTOR2I(mk(3.0), mk(3.0)))
+        thru.SetDrillSize(pcbnew.VECTOR2I(mk(2.2), mk(2.2)))
+        ls = pcbnew.LSET()
+        for ly in [pcbnew.Edge_Cuts, pcbnew.F_Cu, pcbnew.B_Cu]:
+            ls.addLayer(ly)
+        thru.SetLayerSet(ls)
+        mh.Add(thru)
+        b.Add(mh)
+        silk_text(0, hy + 3.5, "M2", 0.7, 0.1)   # silk 标记
 
     # ═══════════════════════════════════════════════
     # 走线 (v9.2 — 适配 IMU/MCU 摆 X 长后所有 pin 沿 X 分布)
