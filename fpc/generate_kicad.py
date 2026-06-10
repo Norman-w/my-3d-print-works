@@ -219,10 +219,21 @@ def main():
 
         fp = make_fp(pid, "PZT-5A", px, py)
         pad(fp, 1, (0,0), (8,8), sn)
-        pad(fp, 2, (9.5,0), (3,3), gnd)
+        # v9.9 修复 (用户 2026-06-10 提供 PZT 实物图):
+        #   实物 PZT-5A 负极是 "翻边电极" (外圈 2-3mm 环带, 不是小方块)
+        #   用户要求: 4 个 PZT 负极都朝耳区方向 (朝 MCU/中心)
+        #   中心在 (cx, cy) = (0, -5), PZT 在四角, 方向向量 = (cx-px, cy-py)
+        dx, dy = cx - px, cy - py
+        mag = math.hypot(dx, dy)
+        # GND pad 中心放 PZT 外圈 (距离 = dia/2 - 1.5, 留 1.5mm 边距进中心 signal pad)
+        gnd_off = dia/2 - 1.5
+        gx_local = dx / mag * gnd_off
+        gy_local = dy / mag * gnd_off
+        # 用 3.5×2.5 椭圆 pad 模拟翻边 (环带 2-3mm 宽)
+        pad(fp, 2, (gx_local, gy_local), (3.5, 2.5), gnd, pcbnew.PAD_SHAPE_RECT)
         fab_circle(fp, px, py, 0, 0, dia/2)
         crtyd_rect(fp, px, py, 0, 0, dia+1, dia+1)
-        b.Add(fp); Rec(pid, 1, px, py); Rec(pid, 2, px+9.5, py)
+        b.Add(fp); Rec(pid, 1, px, py); Rec(pid, 2, px + gx_local, py + gy_local)
         gfx_circle(pcbnew.F_SilkS, px, py, dia/2, 0.12)
         silk_text(px, py-12, pid, 1.2, 0.15)
 
