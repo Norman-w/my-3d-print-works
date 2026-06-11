@@ -22,6 +22,7 @@ server/grids/*
 .vscode/
 
 # FPC generator — allowlist (commit generator + output) ignore everything else
+fpc/__pycache__/
 fpc/.venv/
 fpc/build/
 fpc/preview*.svg
@@ -34,6 +35,7 @@ fpc/main.py
 fpc/.python-version
 fpc/fp-info-cache
 fpc/layouts/default/fp-info-cache
+fpc/layouts/default/default-backups/
 fpc/layouts/default/*~
 fpc/layouts/default/*.lck
 fpc/layouts/default/default.kicad_prl
