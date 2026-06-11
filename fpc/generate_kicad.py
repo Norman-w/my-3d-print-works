@@ -124,6 +124,8 @@ def main():
         p.SetAttribute(pcbnew.PAD_ATTRIB_SMD)
         p.SetFPRelativePosition(pcbnew.VECTOR2I(mk(pos[0]), mk(pos[1])))
         p.SetSize(pcbnew.VECTOR2I(mk(sz[0]), mk(sz[1])))
+        if shape == pcbnew.PAD_SHAPE_RECT:
+            p.SetOrientationDegrees(fp.GetOrientationDegrees())
         if net is not None:
             p.SetNet(net)
         ls = pcbnew.LSET()
