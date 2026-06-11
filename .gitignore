@@ -7,6 +7,7 @@ dist/
 *.db-shm
 .env
 .DS_Store
+.codegraph/
 pcb/output/*
 enclosure/output/*
 enclosure/generated/profiles.scad
@@ -22,6 +23,7 @@ server/grids/*
 .vscode/
 
 # FPC generator — allowlist (commit generator + output) ignore everything else
+fpc/__pycache__/
 fpc/.venv/
 fpc/build/
 fpc/preview*.svg
@@ -34,10 +36,18 @@ fpc/main.py
 fpc/.python-version
 fpc/fp-info-cache
 fpc/layouts/default/fp-info-cache
+fpc/layouts/default/default-backups/
 fpc/layouts/default/*~
 fpc/layouts/default/*.lck
 fpc/layouts/default/default.kicad_prl
 fpc/layouts/default/default.kicad_pro
+fpc/layouts/default/dfm_profile_check.json
+fpc/layouts/default/pcb_quality_gate.json
+fpc/layouts/default/pcb_sync.net
+fpc/layouts/default/schematic_quality_gate.json
+fpc/layouts/default/unconnected.json
+fpc/layouts/default/validate_drc.json
+fpc/layouts/default/validate_erc.json
 fpc/*.lock
 
 # ESP-IDF build artifacts
