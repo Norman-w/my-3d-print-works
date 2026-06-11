@@ -127,20 +127,29 @@ def main():
         ls = pcbnew.LSET()
         for ly in [pcbnew.F_Cu,pcbnew.F_Paste,pcbnew.F_Mask]: ls.addLayer(ly)
         p.SetLayerSet(ls); fp.Add(p)
+        return p
 
     track_records = []  # (net_name, x1, y1, x2, y2, width)
 
-    def track(net,x1,y1,x2,y2,w=TRACE_SIG):
-        t=pcbnew.PCB_TRACK(b); t.SetLayer(pcbnew.F_Cu); t.SetNet(net)
+    def track(net,x1,y1,x2,y2,w=TRACE_SIG,layer=pcbnew.F_Cu):
+        t=pcbnew.PCB_TRACK(b); t.SetLayer(layer); t.SetNet(net)
         t.SetStart(pcbnew.VECTOR2I(mk(x1),mk(y1)))
         t.SetEnd(pcbnew.VECTOR2I(mk(x2),mk(y2)))
         t.SetWidth(mk(w)); b.Add(t)
         nn = net.GetNetname() if hasattr(net,'GetNetname') else str(net)
         track_records.append((nn, x1, y1, x2, y2, w))
 
+    def route(net, pts, w=TRACE_SIG, layer=pcbnew.F_Cu):
+        for i in range(len(pts) - 1):
+            track(net, pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1], w, layer)
+
     def via(net,x,y):
         v=pcbnew.PCB_VIA(b); v.SetPosition(pcbnew.VECTOR2I(mk(x),mk(y)))
         v.SetNet(net); v.SetWidth(mk(VIA_PAD)); v.SetDrill(mk(VIA_DRILL)); b.Add(v)
+
+    def pad_xy(p):
+        pos = p.GetPosition()
+        return (pos.x / 1e6, pos.y / 1e6)
 
     def gfx_rect(layer,x1,y1,x2,y2,w=0.05):
         g=pcbnew.PCB_SHAPE(b); g.SetShape(pcbnew.SHAPE_T_RECT)
@@ -245,24 +254,26 @@ def main():
 
         rf = make_fp(f"R_{pid}", "1M", rx, ry)
         rf.SetOrientationDegrees(ang + 90)
-        pad(rf, 1, (0, 0.8), (1.0, 0.7), sn, pcbnew.PAD_SHAPE_RECT)
-        pad(rf, 2, (0, -0.8), (1.0, 0.7), gnd, pcbnew.PAD_SHAPE_RECT)
+        rf_p1 = pad(rf, 1, (0, 0.8), (1.0, 0.7), sn, pcbnew.PAD_SHAPE_RECT)
+        rf_p2 = pad(rf, 2, (0, -0.8), (1.0, 0.7), gnd, pcbnew.PAD_SHAPE_RECT)
         fab_rect(rf, rx, ry, 0, 0, 1.6, 0.8); crtyd_rect(rf, rx, ry, 0, 0, 1.6, 0.8)
         b.Add(rf)
         ca=math.cos(rad+math.pi/2); sa=math.sin(rad+math.pi/2)
-        Rec(f"R_{pid}",1,rx+0.8*ca,ry+0.8*sa); Rec(f"R_{pid}",2,rx-0.8*ca,ry-0.8*sa)
+        Rec(f"R_{pid}", 1, *pad_xy(rf_p1))
+        Rec(f"R_{pid}", 2, *pad_xy(rf_p2))
 
         doff = off_r + 2.5
         dx = pzx + doff*math.cos(rad); dy = pzy + doff*math.sin(rad)
         df = make_fp(f"D_{pid}", "BAT54S", dx, dy)
         df.SetOrientationDegrees(ang + 90)
-        pad(df, 1, (0, 1.0), (0.7, 0.6), sn, pcbnew.PAD_SHAPE_RECT)
-        pad(df, 2, (0, -1.0), (0.7, 0.6), gnd, pcbnew.PAD_SHAPE_RECT)
-        pad(df, 3, (1.0, 0), (0.7, 0.6), vcc, pcbnew.PAD_SHAPE_RECT)
+        df_p1 = pad(df, 1, (0, 1.0), (0.7, 0.6), sn, pcbnew.PAD_SHAPE_RECT)
+        df_p2 = pad(df, 2, (0, -1.0), (0.7, 0.6), gnd, pcbnew.PAD_SHAPE_RECT)
+        df_p3 = pad(df, 3, (1.0, 0), (0.7, 0.6), vcc, pcbnew.PAD_SHAPE_RECT)
         fab_rect(df, dx, dy, 0, 0, 1.7, 1.25); crtyd_rect(df, dx, dy, 0, 0, 1.7, 1.25)
         b.Add(df)
-        Rec(f"D_{pid}",1,dx+1.0*ca,dy+1.0*sa); Rec(f"D_{pid}",2,dx-1.0*ca,dy-1.0*sa)
-        Rec(f"D_{pid}",3,dx,dy)
+        Rec(f"D_{pid}", 1, *pad_xy(df_p1))
+        Rec(f"D_{pid}", 2, *pad_xy(df_p2))
+        Rec(f"D_{pid}", 3, *pad_xy(df_p3))
 
     # ═══════════════════════════════════════════════
     # U1 — 13×18.5mm 16-pin 模块, UART 通信
@@ -329,6 +340,8 @@ def main():
     fab_rect(imu_fp, imu_x, imu_y, 0, 0, iw, ih)
     crtyd_rect(imu_fp, imu_x, imu_y, 0, 0, iw, ih)
     b.Add(imu_fp)
+    for gnd_pin in [1, 8, 16]:
+        via(gnd, *pp[("U1", gnd_pin)])
     gfx_rect(pcbnew.F_SilkS, imu_x - iw/2, imu_y - ih/2,
              imu_x + iw/2, imu_y + ih/2, 0.12)
     silk_text(imu_x, imu_y + ih/2 + 3.5, "IM948 IMU", 1.0, 0.12)
@@ -421,6 +434,26 @@ def main():
         xo = -((i - 6.5) * pitch_v)  # X 反向 (Pin 15 在 +X 端)
         Rec("J1", i + 15, cx + xo, mc_y - half_w_v)
 
+    # 官方封装 EPAD 是 3×3 独立 GND pad, 需要显式连成一组并下接 B.Cu GND。
+    epad_pts = sorted([pad_xy(p) for p in cf.Pads() if p.GetNumber() == "29"],
+                      key=lambda pt: (round(pt[1], 3), round(pt[0], 3)))
+    epad_rows = {}
+    epad_cols = {}
+    for ex, ey in epad_pts:
+        epad_rows.setdefault(round(ey, 3), []).append((ex, ey))
+        epad_cols.setdefault(round(ex, 3), []).append((ex, ey))
+    for row in epad_rows.values():
+        row.sort()
+        for a, c in zip(row, row[1:]):
+            track(gnd, a[0], a[1], c[0], c[1], TRACE_PWR)
+    for col in epad_cols.values():
+        col.sort(key=lambda pt: pt[1])
+        for a, c in zip(col, col[1:]):
+            track(gnd, a[0], a[1], c[0], c[1], TRACE_PWR)
+    if epad_pts:
+        via(gnd, *epad_pts[len(epad_pts) // 2])
+    via(gnd, *pp[("J1", 28)])
+
     # ESP32 实物安装外框: 官方本地外框 x=-9..9, y=-15.75..9.75;
     # 旋转 90° 后成为 X=-9.75..15.75, Y=-9..9。
     esp_x1, esp_y1 = cx - 9.75, mc_y - 9.0
@@ -444,7 +477,7 @@ def main():
     # 拍柄末端引出焊盘 (修正 B:4×3mm + C:文字90°)
     # ═══════════════════════════════════════════════
     all_y = [y for _,y in opts]
-    bot_y = max(all_y) - 2    # 拍柄端: Y 翻转后拍柄在屏下方 = max(Y)
+    bot_y = max(all_y) - 4    # 拍柄端: Y 翻转后拍柄在屏下方 = max(Y), 留足板边间距
     # v9.10 修复: 4 个终端 pad 间距 4.5mm (pad 宽 4mm, 必须 >= pad 宽避免重叠)
     term = [("VCC",-6.75),("GND",-2.25),("D+",2.25),("D-",6.75)]
     term_w, term_h = 4.0, 3.0
@@ -527,6 +560,17 @@ def main():
         b.Add(mh)
         silk_text(0, hy + 3.5, "M2", 0.7, 0.1)   # silk 标记
 
+    # ESP32 EN 上拉电阻位。不能把 EN 直接短到 VCC, 否则 DRC 会正确报短路。
+    r_en_x, r_en_y = cx - 5.72, mc_y + half_w_v + 2.4
+    r_en = make_fp("R_EN", "10k", r_en_x, r_en_y)
+    r_en_p1 = pad(r_en, 1, (0, -0.8), (1.0, 0.7), en, pcbnew.PAD_SHAPE_RECT)
+    r_en_p2 = pad(r_en, 2, (0, 0.8), (1.0, 0.7), vcc, pcbnew.PAD_SHAPE_RECT)
+    fab_rect(r_en, r_en_x, r_en_y, 0, 0, 1.6, 0.8)
+    crtyd_rect(r_en, r_en_x, r_en_y, 0, 0, 1.6, 0.8)
+    b.Add(r_en)
+    Rec("R_EN", 1, *pad_xy(r_en_p1))
+    Rec("R_EN", 2, *pad_xy(r_en_p2))
+
     # ═══════════════════════════════════════════════
     # 走线 (v9.2 — 适配 IMU/MCU 摆 X 长后所有 pin 沿 X 分布)
     # ═══════════════════════════════════════════════
@@ -573,44 +617,44 @@ def main():
         return (cx + x, mc_y + y)
 
     # PZT 信号 → J1 ADC 引脚: IO4(4), IO5(5), IO6(6), IO7(7)
-    # PZT 在拍面 Y=±52, J1 pin 在 Y=-25.15 (下排), 需走长距离
-    def route_signal_v92(pid, spine_x, pin_num):
+    # 长距离段走 B.Cu 左右走廊, 从 D1 与 J1 pin 附近用 via 出入,
+    # 避免在 F.Cu 中线穿过 IMU、M2 和 ESP32 EPAD。
+    def route_signal_v92(pid, side_x, pin_num, lane_y):
         sn = N(f"{pid}_SIGNAL")
         d1 = pp[(f"D_{pid}",1)]
         jp = j1_pin_xy(pin_num)
-        neck_x = max(-8, min(8, spine_x))
-        # 路径: D1(拍面) → 沿 X 走到 spine_x → 上到拍颈 → 横穿到 J1 pin X → 下到 J1 pin Y
-        mid_y = min(d1[1], NECK_Y1) - 5
-        # 简化路径: D1 → spine_x → 拍颈 Y → J1 X → J1 Y (走两次长距离)
-        # 但 ESP32 pin 在 Y=-25.15 (下排), 拍颈 -78.5, 拍面 +52
-        # 走法: D1(±52) → 沿 X 到 spine_x → 沿 Y 到 mid_y (拍颈) → 沿 X 到 neck_x → 沿 Y 到 -25.15
-        pts = [(d1[0],d1[1]),(d1[0],mid_y),(spine_x,mid_y),
-               (spine_x,-25),(neck_x,-25),(jp[0],-25),(jp[0],jp[1])]
-        for i in range(len(pts)-1):
-            track(sn, pts[i][0], pts[i][1], pts[i+1][0], pts[i+1][1])
+        entry = (side_x, d1[1])
+        exitp = (jp[0], lane_y)
+        track(sn, d1[0], d1[1], entry[0], entry[1])
+        via(sn, *entry)
+        route(sn, [entry, (side_x, lane_y), exitp], layer=pcbnew.B_Cu)
+        via(sn, *exitp)
+        track(sn, exitp[0], exitp[1], jp[0], jp[1])
 
-    route_signal_v92("PZT_TR", SPINE_R, 4)
-    route_signal_v92("PZT_BR", SPINE_R, 6)
-    route_signal_v92("PZT_TL", SPINE_L, 5)
-    route_signal_v92("PZT_BL", SPINE_L, 7)
+    route_signal_v92("PZT_TR", SPINE_R, 4, 26.0)
+    route_signal_v92("PZT_TL", SPINE_L, 5, 27.4)
+    route_signal_v92("PZT_BR", SPINE_R, 6, 28.8)
+    route_signal_v92("PZT_BL", SPINE_L, 7, 30.2)
 
-    # VCC/GND 从拍柄终端拉到 J1 供电脚
+    # VCC/GND 从拍柄终端拉到 J1 供电脚。
+    # GND 用 B.Cu 绕过 VCC 竖线和 ESP32 官方 antenna keepout。
     power_targets = {
         "VCC": j1_pin_xy(2),
         "GND": j1_pin_xy(1),
     }
-    for label, jx in [("VCC", cx - 10), ("GND", cx - 12)]:
-        tp = pp[(f"TP_{label}",1)]
-        target = power_targets[label]
-        track(N(label), tp[0], bot_y-3, jx, bot_y-3, TRACE_PWR)
-        if label == "VCC":
-            entry_y = target[1] - 1.85
-            track(N(label), jx, bot_y-3, jx, entry_y, TRACE_PWR)
-            track(N(label), jx, entry_y, target[0], entry_y, TRACE_PWR)
-            track(N(label), target[0], entry_y, target[0], target[1], TRACE_PWR)
-        else:
-            track(N(label), jx, bot_y-3, jx, target[1], TRACE_PWR)
-            track(N(label), jx, target[1], target[0], target[1], TRACE_PWR)
+    vcc_tp = pp[("TP_VCC", 1)]
+    gnd_tp = pp[("TP_GND", 1)]
+    vcc_target = power_targets["VCC"]
+    gnd_target = power_targets["GND"]
+    route(vcc, [vcc_tp, (vcc_target[0], vcc_tp[1]), vcc_target], TRACE_PWR)
+    gnd_entry = (gnd_tp[0], gnd_tp[1] - 2.0)
+    gnd_exit = (gnd_target[0], gnd_target[1] + 2.0)
+    track(gnd, gnd_tp[0], gnd_tp[1], gnd_entry[0], gnd_entry[1], TRACE_PWR)
+    via(gnd, *gnd_entry)
+    gnd_spine = (-8.25, gnd_entry[1])
+    route(gnd, [gnd_entry, gnd_spine], TRACE_PWR, pcbnew.B_Cu)
+    via(gnd, *gnd_spine)
+    route(gnd, [gnd_spine, (-8.25, gnd_exit[1]), gnd_exit, gnd_target], TRACE_PWR)
 
     # UART: U1(13:RXD, 14:TXD) ↔ J1(24:TXD/IO24, 25:RXD/IO25)
     # U1 信号侧朝 X-, J1 信号侧朝 X+; 走线先引到模块间汇流 Y=0。
@@ -618,34 +662,55 @@ def main():
     u1_txd = pp[("U1", 14)]  # U1 TXD 中心, 接 J1 RXD
     j1_tx  = j1_pin_xy(24)  # IO24 TXD 中心 (Pin 24, 全局 (-3.18, 4.60))
     j1_rx  = j1_pin_xy(25)  # IO25 RXD 中心 (Pin 25, 全局 (-4.45, 4.60))
-    # TX (J1→U1): U1 RXD pin 13 → 绕开 J1 下排 NC pad → J1 TX pin 25
-    tx_bus_y = 3.0
-    tx_clear_x = 5.2
-    j1_entry_y = mc_y + half_w_v + 1.65
-    track(N("UART_TX"), u1_rxd[0], u1_rxd[1], u1_rxd[0], tx_bus_y)
-    track(N("UART_TX"), u1_rxd[0], tx_bus_y, tx_clear_x, tx_bus_y)
-    track(N("UART_TX"), tx_clear_x, tx_bus_y, tx_clear_x, j1_entry_y)
-    track(N("UART_TX"), tx_clear_x, j1_entry_y, j1_tx[0], j1_entry_y)
-    track(N("UART_TX"), j1_tx[0], j1_entry_y, j1_tx[0], j1_tx[1])
-    # RX (U1→J1): U1 TXD pin 14 → 绕开 J1 下排 NC pad → J1 RX pin 24
-    rx_bus_y = 1.5
-    rx_clear_x = 10.5
-    rx_entry_y = mc_y + half_w_v + 3.15
-    track(N("UART_RX"), u1_txd[0], u1_txd[1], u1_txd[0], rx_bus_y)
-    track(N("UART_RX"), u1_txd[0], rx_bus_y, rx_clear_x, rx_bus_y)
-    track(N("UART_RX"), rx_clear_x, rx_bus_y, rx_clear_x, rx_entry_y)
-    track(N("UART_RX"), rx_clear_x, rx_entry_y, j1_rx[0], rx_entry_y)
-    track(N("UART_RX"), j1_rx[0], rx_entry_y, j1_rx[0], j1_rx[1])
+    # TX (J1→U1): U1 RXD pin 13 → J1 TX pin 24, 在两模块之间短接。
+    route(N("UART_TX"), [u1_rxd, (u1_rxd[0], 2.35), (j1_tx[0], 2.35), j1_tx])
+    # RX (U1→J1): 另一根走 B.Cu 避免和 TX/模块边界交叉。
+    rx_entry = (u1_txd[0], 2.9)
+    rx_exit = (j1_rx[0], 3.35)
+    track(N("UART_RX"), u1_txd[0], u1_txd[1], rx_entry[0], rx_entry[1])
+    via(N("UART_RX"), *rx_entry)
+    route(N("UART_RX"), [rx_entry, (8.8, rx_entry[1]), (8.8, rx_exit[1]), rx_exit],
+          layer=pcbnew.B_Cu)
+    via(N("UART_RX"), *rx_exit)
+    track(N("UART_RX"), rx_exit[0], rx_exit[1], j1_rx[0], j1_rx[1])
 
     for sc in params["components"]["signal_conditioning"]:
         pid = sc["piezo"]; sn = N(f"{pid}_SIGNAL")
-        p1=pp[(pid,1)]; r1=pp[(f"R_{pid}",1)]; d1=pp[(f"D_{pid}",1)]
-        track(sn, p1[0],p1[1], r1[0],r1[1]); track(sn, r1[0],r1[1], d1[0],d1[1])
+        p1=pp[(pid,1)]
+        r1=pp[(f"R_{pid}",1)]; r2=pp[(f"R_{pid}",2)]
+        d1=pp[(f"D_{pid}",1)]; d2=pp[(f"D_{pid}",2)]
+        # PZT GND 翻边焊盘位于 PZT 中心与调理器件之间; 信号线必须切向绕开。
+        vx, vy = r1[0] - p1[0], r1[1] - p1[1]
+        mag = math.hypot(vx, vy) or 1.0
+        px, py = -vy / mag, vx / mag
+        # 左右两侧用相反切向, 让走线绕到各自 PZT 外侧。
+        # 底部 PZT 的局部几何相反, 切向符号需要翻转, 否则会擦过 GND 翻边焊盘。
+        side = 1 if p1[0] >= 0 else -1
+        if p1[1] > 0:
+            side *= -1
+        off = 6.0 * side
+        dog1 = (p1[0] + px * off, p1[1] + py * off)
+        if p1[1] > 0:
+            # 底部两片的 R_GND pad 位于进线侧, 先进入 D1 signal 再回接 R1。
+            dvx, dvy = d1[0] - d2[0], d1[1] - d2[1]
+            dmag = math.hypot(dvx, dvy) or 1.0
+            d_approach = (d1[0] + dvx / dmag * 1.4, d1[1] + dvy / dmag * 1.4)
+            dog2 = (d_approach[0] + px * off * 0.35, d_approach[1] + py * off * 0.35)
+            route(sn, [p1, dog1, dog2, d_approach, d1, r1])
+        else:
+            dog2 = (r1[0] + px * off * 0.65, r1[1] + py * off * 0.65)
+            avx, avy = r1[0] - r2[0], r1[1] - r2[1]
+            amag = math.hypot(avx, avy) or 1.0
+            approach = (r1[0] + avx / amag * 1.3, r1[1] + avy / amag * 1.3)
+            route(sn, [p1, dog1, dog2, approach, r1, d1])
 
-    # EN 上拉到 VCC (短接到 J1 Pin 2 的 VCC net, J1 Pin 3=EN 离 Pin 2 很近)
+    # EN 通过 R_EN 上拉到 VCC。
     j1_en = j1_pin_xy(3)    # X=-5.715, Y=-25.15
     j1_3v3 = j1_pin_xy(2)   # X=-6.985, Y=-25.15
-    track(en, j1_en[0], j1_en[1], j1_3v3[0], j1_3v3[1], TRACE_PWR)
+    r_en_1 = pp[("R_EN", 1)]
+    r_en_2 = pp[("R_EN", 2)]
+    route(en, [j1_en, (j1_en[0], r_en_1[1]), r_en_1], TRACE_PWR)
+    route(vcc, [r_en_2, (j1_3v3[0], r_en_2[1]), j1_3v3], TRACE_PWR)
 
     # D+/D- 从拍颈上拉到 J1 [实物 2026-06-10]:
     #   D+ → J1(13)=IO13/USB_D+ (下排)
@@ -654,23 +719,14 @@ def main():
     usb_dn_tp = pp[("TP_D-", 1)]
     usb_dp_jp = j1_pin_xy(13)
     usb_dn_jp = j1_pin_xy(16)
-    usb_bottom_y = bot_y - 6.0
-    usb_dp_x = 4.8
-    usb_dn_x = 10.8
-    usb_escape_y = 10.0
-    usb_dp_entry_y = usb_dp_jp[1] + 2.3
+    usb_bottom_y = bot_y - 4.2
+    dp_lane_y = usb_dp_jp[1] + 1.8
+    route(N("USB_D+"), [usb_dp_tp, (usb_dp_tp[0], dp_lane_y),
+                        (usb_dp_jp[0], dp_lane_y), usb_dp_jp])
 
-    track(N("USB_D+"), usb_dp_tp[0], usb_dp_tp[1], usb_dp_tp[0], usb_bottom_y, TRACE_SIG)
-    track(N("USB_D+"), usb_dp_tp[0], usb_bottom_y, usb_dp_x, usb_bottom_y, TRACE_SIG)
-    track(N("USB_D+"), usb_dp_x, usb_bottom_y, usb_dp_x, usb_dp_entry_y, TRACE_SIG)
-    track(N("USB_D+"), usb_dp_x, usb_dp_entry_y, usb_dp_jp[0], usb_dp_entry_y, TRACE_SIG)
-    track(N("USB_D+"), usb_dp_jp[0], usb_dp_entry_y, usb_dp_jp[0], usb_dp_jp[1], TRACE_SIG)
-
-    track(N("USB_D-"), usb_dn_tp[0], usb_dn_tp[1], usb_dn_tp[0], usb_bottom_y, TRACE_SIG)
-    track(N("USB_D-"), usb_dn_tp[0], usb_bottom_y, usb_dn_x, usb_bottom_y, TRACE_SIG)
-    track(N("USB_D-"), usb_dn_x, usb_bottom_y, usb_dn_x, usb_escape_y, TRACE_SIG)
-    track(N("USB_D-"), usb_dn_x, usb_escape_y, usb_dn_jp[0], usb_escape_y, TRACE_SIG)
-    track(N("USB_D-"), usb_dn_jp[0], usb_escape_y, usb_dn_jp[0], usb_dn_jp[1], TRACE_SIG)
+    dn_entry = (12.0, usb_dn_tp[1])
+    dn_exit = (12.0, usb_dn_jp[1] + 1.8)
+    route(N("USB_D-"), [usb_dn_tp, dn_entry, dn_exit, (usb_dn_jp[0], dn_exit[1]), usb_dn_jp])
 
     for pid in ["PZT_TR","PZT_TL","PZT_BR","PZT_BL"]:
         for ref,pn in [(pid,2),(f"R_{pid}",2),(f"D_{pid}",2)]:
@@ -698,12 +754,18 @@ def main():
     ymin = min(p[1] for p in outline_raw)
     # step=2 基础采样
     keep_idx = set(range(0, n_raw, 2))
+    # 保留拍头尖端左右相邻点, 避免闭合线段在尖端附近形成自交。
+    keep_idx.update({0, 1, n_raw - 1})
     # 补拍尾全精度 (Y 最低点 X 最低+5mm)
     for i, (x, y) in enumerate(outline_raw):
         if y < ymin + 5:
             keep_idx.add(i)
     keep_idx = sorted(keep_idx)
     outline_pts = [outline_raw[i] for i in keep_idx]
+    outline_pts = [
+        p for p in outline_pts
+        if not (abs(p[0]) < 0.01 and ymin < p[1] < ymin + 1.0)
+    ]
     if outline_pts[0] != outline_pts[-1]:
         outline_pts.append(outline_pts[0])  # 闭环
 
@@ -793,6 +855,9 @@ def main():
             f.write(''.join(out_lines))
 
     fix_track_nets(str(OUTPUT_FILE), track_records)
+
+    fill_script = Path(__file__).resolve().parent / "fill_zones.py"
+    subprocess.run([sys.executable, str(fill_script), str(OUTPUT_FILE)], check=False)
 
     # ── 统计 ──
     from collections import Counter
