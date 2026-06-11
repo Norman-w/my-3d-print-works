@@ -552,9 +552,7 @@ def main():
     for stiff in params["stiffeners"]:
         zone = stiff["zone"]
         if zone == "PZT_pads_all":
-            for pzt in params["components"]["piezo"]:
-                px,py = pzt["position"]
-                gfx_rect(pcbnew.User_3, px-12.5, py-12.5, px+12.5, py+12.5, 0.05)
+            pass
         elif zone == "signal_conditioning":
             for sc in params["components"]["signal_conditioning"]:
                 pid = sc["piezo"]; ang = ear[pid]; rad = math.radians(ang)
@@ -562,9 +560,9 @@ def main():
                 pzy = [p["position"][1] for p in pzt_list if p["id"]==pid][0]
                 off = 20.5/2 + 8.0/2 - 2 + 1.25
                 csx = pzx + off*math.cos(rad); csy = pzy + off*math.sin(rad)
-                # SCAD ear-slot support: long edge follows the local PZT tangent,
+                # SCAD ear-slot support: long edge follows the radial slot,
                 # not the board world X/Y axes.
-                gfx_rot_rect(pcbnew.User_3, csx, csy, 12.0, 8.0, ang + 90, 0.05)
+                gfx_rot_rect(pcbnew.User_3, csx, csy, 12.0, 8.0, ang, 0.05)
         elif zone == "main_module_connector":
             # ESP32-C6 摆 X 长后 fab 框 25.5×18, stiffener 加 1mm 余量
             gfx_rect(pcbnew.User_3, cx-fw/2-1, mc_y-fh/2-1, cx+fw/2+1, mc_y+fh/2+1, 0.05)
