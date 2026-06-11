@@ -1,47 +1,37 @@
-"""SmartPaddle FPC v9.7 — KiCad 9 正确 pcbnew API
-═══════════════════════════════════════════════════
-A. Y 翻转: SCAD +Y=拍头 → KiCad 数据 -Y=屏上 (KiCad 9 内部 Y+ 永远=屏下)
-B. J1: ESP32-C6-N8 14+14=28邮票孔, 摆放 fab 25.5×18 (X 长)
-C. IMU: IM948 8+8=16邮票孔, 摆放 fab 18.5×13 (X 长)
-D. 终端焊盘: 4×3mm
-E. IMU Y=-6 (拍头甜区, 屏上) / MCU Y=+17 (拍柄端, 屏下) 间隙 7.5mm, X 都居中
-F. KiCad 9.0.6 Save bug 后处理修复
-G. RF keepout 18.5×3 / 25.5×3 (摆放方向)
-H. NC pin 物理有 pad 不连 net (v9.4: 取消 skip, 创建所有 28+16 邮票孔, NC pin 用 None net)
-I. 28 pin 完整 net 表 (块 2 修复 2026-06-10): EN 上拉 VCC, PZT→IO4-7, USB→IO13/18, UART→IO16/17
-J. 摆放修正 (块 3 修复 2026-06-10): IMU 拍头端, MCU 拍柄端, X 都用长边
-K. Y 翻转 (v9.3 修复 2026-06-10): opts/PZT/耳角/keepout/stiffener 全部 -(y)
-L. KiCad 9 正确 pcbnew API (v9.7 修复 2026-06-10):
-   之前的"pcbnew 9 bug"误诊, 实际是 API 用错!
-   - SetPosition() / GetPosition() → 绝对 (全局) 坐标 (不能直接用 fp 局部)
-   - SetFPRelativePosition() / GetFPRelativePosition() → fp 内部相对坐标 (正确)
-   修复:
-   - pad() 改用 pad.SetFPRelativePosition(fp 内部 pos) 替代 +fpos.x
-   - NPTH 螺丝孔: SetFPRelativePosition(0, 0)
-   - fab_rect/crtyd_rect/fab_circle: PCB_SHAPE.SetStart 接全局坐标
-     (gx + lx - w/2, gy + ly - h/2) 替代 +fpos.x
-   影响: 所有 fp 内部 (pads, F.Fab, F.CrtYd) 坐标现在 .kicad_pcb 正确, KiCad 加载正确
-M. main_module_connector stiffener 改 ESP32 fab 框大小 (v9.4)
-N. 中线 2 NPTH M2 螺丝孔 (v9.4): Y 翻后 (0, -18) + (0, 33) 加 NPTH Ø2.2mm
-   pad Ø3.0mm, 避免 FPC 被中线螺丝顶坏
-O. 中线 2 keepout 大圆移除 (v9.4): 避免中央视觉混乱 (现在有 NPTH 实物)
-P. 丝印重排 (v9.8 修复 2026-06-10):
-   - "IM948 IMU" 丝印: imu_y - ih/2 - 1.5 -> imu_y + ih/2 + 3.5 (放 fab 框上方)
-   - "ESP32-C6-N8" 丝印: mc_y + half_w + 2 -> mc_y + half_w + 4.0 (远离 EPAD 边界)
-   - "RF KEEPOUT 18.5×3" / "25.5×3" 丝印: rf_y1 + 1.5 -> rf_y2 + 1.0 (放 keepout 框上方)
-   - TP 终端 "VCC/GND/D+/D-" 丝印: rot=90 -> 取消旋转, 放终端上方 bot_y + 3.0
-Q. IMU net 表重写 (v9.8 修复 2026-06-10):
-   - 实物 IM948 8-pin (双面 8+8=16 邮票孔), UART 接口
-   - Pin 7 = RXD (UART_TX net) ← ESP32 TX (IO16)
-   - Pin 8 = TXD (UART_RX net) → ESP32 RX (IO17)
-   - 之前 7=PZT_ADIN (错, ADIN 不是 UART, 应是 RXD)
-R. UART 走线重写 (v9.8 修复 2026-06-10):
-   - 之前: U1 pin 13/14 (上排) -> J1 pin 24/25 (上排), Y=中间汇流
-   - 现在: U1 pin 7/8 (下排) -> J1 pin 24/25 (上排), Y=0 汇流 (下->上)
-PZT 实物 layout 待用户确认:
-   - 实物 PZT 应该是 ring electrode, signal 在中心, GND 是外圈铜环
-   - 当前 2-pad (signal 8x8 + GND 3x3) 是不是实物?
-   - 等用户发 PZT 实物图后修 v9.9
+"""SmartPaddle FPC v9.12 — OpenSCAD 槽位驱动的 KiCad 9 FPC 生成脚本
+═══════════════════════════════════════════════════════════════
+v9.12 (2026-06-11): 模块位置由 OpenSCAD 甜区槽 center/size 计算
+  - U1/J1 都约束在 42×42 PCB 槽内, 避开中线 M2 螺丝
+  - IMU 在拍头侧, MCU 在拍柄侧, 均沿 X 方向放长边
+
+v9.11 (2026-06-11): 用 FootprintLoad() 加载 Espressif 官方封装替换自定义 ESP32 段
+  - J1: FootprintLoad('fpc/footprints/Espressif.pretty', 'ESP32-C6-WROOM-1')
+  - 旋转 90° 让 fab 长边沿 X (FPC 长边方向)
+  - 28 邮票孔 + 9 EPAD 阵列
+  - 旋转后 pad 沿 X 方向 (Pin 1-14 在 Y=+8.75, Pin 15-28 在 Y=-8.75)
+  - 整体 fab 范围 26.72×19.72mm (含 antenna 突出)
+
+之前 v9.0-v9.10 历史 (保留注释):
+  A. Y 翻转: SCAD +Y=拍头 → KiCad 数据 -Y=屏上 (KiCad 9 内部 Y+ 永远=屏下)
+  B. J1: 自定义 14+14=28 邮票孔, 摆放 fab 25.5×18 (X 长) — v9.11 改用官方
+  C. U1: 13×18.5 16-pin 模块旋转为 X 长摆放 (18.5×13), 信号/RF避让朝 X-
+  D. 终端焊盘: 4×3mm
+  E. U1/J1 位置来自 main_module.center/size, 不再硬编码
+  F. KiCad 9.0.6 Save bug 后处理修复
+  G. RF keepout 18.5×3 / 25.5×3 (摆放方向)
+  H. NC pin 物理有 pad 不连 net
+  I. 28 pin 完整 net 表: EN 上拉 VCC, PZT→IO4-7, USB→IO13/18, UART→IO16/17
+  J. 摆放修正: IMU 拍头端, MCU 拍柄端, X 都用长边
+  K. Y 翻转: opts/PZT/耳角/keepout/stiffener 全部 -(y)
+  L. KiCad 9 正确 pcbnew API (v9.7):
+     - SetPosition/GetPosition → 绝对 (全局) 坐标
+     - SetFPRelativePosition/GetFPRelativePosition → fp 内部相对坐标
+  M. main_module_connector stiffener 改 ESP32 fab 框大小
+  N. 中线 2 NPTH M2 螺丝孔
+  O. 中线 2 keepout 大圆移除
+  P. 丝印重排 (v9.8)
+  Q. IMU net 表重写 (v9.8): Pin 7=RXD, Pin 8=TXD (实物 IM948 UART)
+  R. UART 走线: U1 pin 13/14 (RXD/TXD) -> J1 pin 25/24 (TXD/RXD)
 """
 
 import yaml, sys, subprocess, math, re, uuid
@@ -83,7 +73,6 @@ def main():
     en = N("EN")
     N("USB_D+"); N("USB_D-"); N("UART_RX"); N("UART_TX")
     N("PZT_TR_SIGNAL"); N("PZT_TL_SIGNAL"); N("PZT_BR_SIGNAL"); N("PZT_BL_SIGNAL")
-    pzt_adin = N("PZT_ADIN")
 
     def mk(x): return int(x * 1e6)
 
@@ -207,8 +196,10 @@ def main():
     # ═══════════════════════════════════════════════
     mc_mod  = params["components"]["main_module"]
     mc_c    = mc_mod["center"]
-    cx, cy  = mc_c[0], mc_c[1]          # 槽中心 (cx,cy) = (0,-5)，用于耳角等
-    mc_y    = 17                        # MCU 拍柄端: SCAD Y=-17 → KiCad Y=+17 (屏下 = 拍柄)
+    cx, cy  = mc_c[0], mc_c[1]          # 槽中心, 已随上面的 KiCad 视觉坐标处理
+    cavity_w, cavity_h = mc_mod["size"]
+    cavity_top_y = cy - cavity_h / 2
+    cavity_bottom_y = cy + cavity_h / 2
     ear     = {}
 
     for pzt in params["components"]["piezo"]:
@@ -274,32 +265,31 @@ def main():
         Rec(f"D_{pid}",3,dx,dy)
 
     # ═══════════════════════════════════════════════
-    # IM948 IMU — 16 邮票孔, UART 通信
-    # 实物顶视图 (D=18.5 Y 长, E=13 X 短) + 摆放方向 X 长 (旋转 90°)
-    # 官方数据表 2026-06-09:
-    #   D=18.5  实物长边  | E=13.0  实物短边
-    #   e=2.0   邮票孔中心到短边距离
-    #   b=1.27  邮票孔 P 间距  | a=1.0  邮票孔直径  | t1=1.0  铜环
-    # 摆放后: fab 框 18.5 × 13 (X 长 Y 短), 邮票孔沿 X 排
-    #   邮票孔中心 Y 坐标 = ±(E/2 - e) = ±4.5
-    #   邮票孔中心 X 范围 = ±((N-1)/2 × b) = ±4.445 (N=8/边, pitch=1.27)
-    #   RF 净空: 顶部 18.5×3mm (旋转后 X 方向是长边) (User_4)
-    #   实物 Pin 1 在左下 → 摆放后 Pin 1 在左上 (旋转 90° CCW)
+    # U1 — 13×18.5mm 16-pin 模块, UART 通信
+    # 实际装配约束:
+    #   IMU 靠拍头端, MCU 靠拍柄端; 两者都让长边沿 X 方向。
+    #   IMU 信号/RF 避让区朝 X- 方向, MCU 信号/RF 避让区朝 X+ 方向。
+    # 用户资料:
+    #   原模块 D=18.5 长边, E=13.0 短边; 旋转后 fab = 18.5×13。
+    #   2.0mm pitch, 推荐落盘 1.65×1.27mm; 旋转后焊盘尺寸取 1.27×1.65mm。
+    #   实物邮票孔贴模块边缘, F.Fab/F.SilkS 外框即模块完整外边界。
+    #   Pin 13/14 为 UART RXD/TXD, Pin 15/16 为 VBAT/VSS。
     # ═══════════════════════════════════════════════
-    imu_x, imu_y = 0, -6              # IMU 拍头端: SCAD Y=+6 → KiCad Y=-6 (屏上 = 拍头)
-    iw, ih = 18.5, 13.0                # IM948 摆放后 fab: X=长边18.5, Y=短边13
-    imu_pitch = 1.27; imu_n = 8        # 每侧 8 脚, P 间距
-    imu_hw = ih / 2 - 2.0              # 邮票孔中心 Y = ±(6.5-2.0) = ±4.5
-    imu_hh = iw / 2                    # fab 框 X 半长 = 9.25
-    imu_span = (imu_n - 1) * imu_pitch / 2  # 4.445mm (邮票孔 X 跨距)
-    imu_pad_sz = 1.0                   # 邮票孔直径 a=1.0 (PTH 圆形)
+    iw, ih = 18.5, 13.0                # 旋转后: X=长边18.5, Y=短边13
+    esp_body_h = 18.0                  # ESP32 实物安装外框旋转后 Y 向高度
+    module_gap = 3.0
+    stack_h = ih + module_gap + esp_body_h
+    stack_top_y = cy - stack_h / 2
+    imu_x, imu_y = cx, stack_top_y + ih / 2
+    mc_y = stack_top_y + ih + module_gap + esp_body_h / 2
+    imu_pitch = 2.0; imu_n = 8         # 每侧 8 脚, 2.0mm pitch
+    imu_pad_sz = (1.27, 1.65)          # 旋转后: X 为 pitch 方向, Y 为伸出方向
+    imu_row_y = ih / 2                 # 邮票孔中心贴模块实物边线
+    imu_span = (imu_n - 1) * imu_pitch / 2  # 7.0mm (X 方向 pin 跨距)
 
     imu_fp = make_fp("U1", "IM948", imu_x, imu_y)
-    # Pin 1-8 沿下侧长边 (Y = -imu_hw = -4.5), 沿 X 等距 1.27
-    # 实物左下 → 摆放后左上 (旋转 CCW 90° 后 X=-span/2 是 Pin 1, X=+span/2 是 Pin 8)
-    # 实物 → 摆放映射: 实物 l_net[i] 对应摆放后 Pin 1-8 (X 从 -span 到 +span)
-    # 实物 IM948 UART 8-pin (双面 8+8=16 邮票孔) - 实物引脚 1-8 (左下到右上)
-    #  1=VSS, 2=VBUS, 3=VBAT, 4=VDDIO, 5=NC, 6=NC, 7=RXD, 8=TXD
+    # Pin 1-8: 原左侧旋转到下侧, X 从左到右
+    #  1=VSS, 2=VBUS, 3=VBAT, 4=VDDIO, 5=NC, 6=NC, 7=ADIN, 8=VSS
     l_net = [
         "GND",        # 1  VSS
         "VBUS",       # 2  USB 5V 充电输入
@@ -307,138 +297,148 @@ def main():
         "VCC_3V3",    # 4  GPIO 电压域 (VDDIO, ≤3.4V!)
         "NC",         # 5
         "NC",         # 6
-        "UART_TX",    # 7  RXD ← ESP32 TX (IO16)
-        "UART_RX",    # 8  TXD → ESP32 RX (IO17)
+        "NC",         # 7  ADIN 当前未接
+        "GND",        # 8  VSS
     ]
     for i in range(imu_n):
         net = N(l_net[i]) if l_net[i] != "NC" else None
         xo = (i - (imu_n - 1) / 2) * imu_pitch
-        pad(imu_fp, i + 1, (xo, -imu_hw), (imu_pad_sz, imu_pad_sz),
-            net, pcbnew.PAD_SHAPE_CIRCLE)
-        Rec("U1", i + 1, imu_x + xo, imu_y - imu_hw)
+        pad(imu_fp, i + 1, (xo, -imu_row_y), imu_pad_sz,
+            net, pcbnew.PAD_SHAPE_RECT)
+        Rec("U1", i + 1, imu_x + xo, imu_y - imu_row_y)
 
-    # 实物 IM948 Pin 9-16 (镜像, 顶视图右半)
+    # Pin 9-16: 原右侧旋转到上侧, X 从左到右为 Pin 9→16
     #  9=LED-B, 10=LED-R, 11=GPIO, 12=KEY, 13=RXD, 14=TXD, 15=VBAT, 16=VSS
     r_net = [
         "NC",         # 9  LED-B    (留空)
         "NC",         # 10 LED-R    (留空)
         "NC",         # 11 GPIO     (留空)
         "NC",         # 12 KEY      (留空)
-        "NC",         # 13 RXD      (留空, UART 已在 7/8 走)
-        "NC",         # 14 TXD      (留空)
-        "NC",         # 15 VBAT     (留空, 已在 pin 3 接 VCC)
+        "UART_TX",    # 13 RXD ← ESP32 TX (IO16)
+        "UART_RX",    # 14 TXD → ESP32 RX (IO17)
+        "VCC",        # 15 VBAT
         "GND",        # 16 VSS      (双 GND 增强)
     ]
     for i in range(imu_n):
         net = N(r_net[i]) if r_net[i] != "NC" else None
         xo = (i - (imu_n - 1) / 2) * imu_pitch
-        pad(imu_fp, i + imu_n + 1, (xo, imu_hw), (imu_pad_sz, imu_pad_sz),
-            net, pcbnew.PAD_SHAPE_CIRCLE)
-        Rec("U1", i + imu_n + 1, imu_x + xo, imu_y + imu_hw)
+        pad(imu_fp, i + imu_n + 1, (xo, imu_row_y), imu_pad_sz,
+            net, pcbnew.PAD_SHAPE_RECT)
+        Rec("U1", i + imu_n + 1, imu_x + xo, imu_y + imu_row_y)
 
     fab_rect(imu_fp, imu_x, imu_y, 0, 0, iw, ih)
     crtyd_rect(imu_fp, imu_x, imu_y, 0, 0, iw, ih)
     b.Add(imu_fp)
-    gfx_rect(pcbnew.F_SilkS, imu_x - iw/2 - 0.5, imu_y - ih/2 - 0.5,
-             imu_x + iw/2 + 0.5, imu_y + ih/2 + 0.5, 0.12)
+    gfx_rect(pcbnew.F_SilkS, imu_x - iw/2, imu_y - ih/2,
+             imu_x + iw/2, imu_y + ih/2, 0.12)
     silk_text(imu_x, imu_y + ih/2 + 3.5, "IM948 IMU", 1.0, 0.12)
-    silk_text(imu_x - imu_span, imu_y - imu_hw - 0.8, "1", 0.6, 0.1)
-    silk_text(imu_x + imu_span, imu_y - imu_hw - 0.8, "8", 0.6, 0.1)
-    silk_text(imu_x - imu_span, imu_y + imu_hw + 1.2, "9", 0.6, 0.1)
-    silk_text(imu_x + imu_span, imu_y + imu_hw + 1.2, "16", 0.6, 0.1)
+    silk_text(imu_x - imu_span, imu_y - imu_row_y - 1.4, "1", 0.6, 0.1)
+    silk_text(imu_x + imu_span, imu_y - imu_row_y - 1.4, "8", 0.6, 0.1)
+    silk_text(imu_x - imu_span, imu_y + imu_row_y + 1.4, "9", 0.6, 0.1)
+    silk_text(imu_x + imu_span, imu_y + imu_row_y + 1.4, "16", 0.6, 0.1)
 
-    # RF 净空区: 模块顶部 18.5×3mm 无铜 (官方要求, 摆放后顶部是 X 方向长边)
-    rf_x1, rf_y1 = imu_x - iw/2, imu_y + ih/2
-    rf_x2, rf_y2 = imu_x + iw/2, imu_y + ih/2 + 3.0
+    # IMU 信号/RF 避让区: 朝 X- 方向, 13×3mm
+    rf_x1, rf_y1 = imu_x - iw/2 - 3.0, imu_y - ih/2
+    rf_x2, rf_y2 = imu_x - iw/2, imu_y + ih/2
     gfx_rect(pcbnew.User_4, rf_x1, rf_y1, rf_x2, rf_y2, 0.05)
-    silk_text(imu_x, rf_y2 + 1.0, "RF KEEPOUT 18.5\u00D73", 0.7, 0.1)
+    silk_text(rf_x1 - 1.0, imu_y, "IMU RF X-", 0.7, 0.1, 90)
 
     # ═══════════════════════════════════════════════
-    # MCU J1 — ESP32-C6-WROOM-1-N8 14+14=28邮票孔 (块 2 修复 2026-06-10)
-    # 实物顶视图 (W=18 Y=25.5 实物, 摆放后 fab 25.5×18 X 长)
-    #   邮票孔中心 Y = ±(9-0.85) = ±8.15
-    #   邮票孔中心 X 范围 = ±((14-1)/2 × 1.27) = ±8.255
-    #   Pin 1=GND 在左下 → 摆放后 Pin 1 在 X=-span/2 端 (旋转 CCW 90° 后 14 颗从下到上变成从左到右)
-    #   实物 → 摆放映射: 实物左列(Pin 1-14, 从下到上) → 摆放后下排(X 从 -span 到 +span)
-    #   实物右列(Pin 15-28, 从下到上) → 摆放后上排
-    # 引脚功能来自 ESP32-C6-N8 官方资料 (用户 2026-06-10 提供):
+    # MCU J1 — v9.11 改用 Espressif 官方 ESP32-C6-WROOM-1 封装
+    #   FootprintLoad() 加载官方 .kicad_mod
+    #   旋转 90° 让 fab 长边沿 X (FPC 长边方向)
+    #   28 邮票孔 + 9 EPAD 阵列
+    #   旋转后:
+    #     - Pad 1-14 沿 Y=+8.75 (下排), X 从 -8.26 到 +8.25
+    #     - Pad 15-28 沿 Y=-8.75 (上排), X 从 -4.45 到 -8.26
+    #     - fab 范围 26.72×19.72 (含 antenna 突出)
+    #   mc_y 由 OpenSCAD 甜区槽中心/尺寸计算, 不能硬编码到螺丝区。
     # ═══════════════════════════════════════════════
-    fw, fh = 25.5, 18.0               # 摆放后 fab: X=长边25.5, Y=短边18
-    pitch = 1.27; n_per_edge = 14
-    half_w = fh / 2 - 0.85           # 邮票孔中心 Y = ±(9-0.85) = ±8.15
-    half_span = (n_per_edge - 1) * pitch / 2  # 8.255mm
-    cf = make_fp("J1", "ESP32-C6-N8", cx, mc_y)
+    J1_LIB_PATH = str(PROJECT_ROOT / "fpc" / "footprints" / "Espressif.pretty")
+    cf = pcbnew.FootprintLoad(J1_LIB_PATH, "ESP32-C6-WROOM-1")
+    cf.SetReference("J1")
+    cf.SetValue("ESP32-C6-WROOM-1")
+    cf.SetPosition(pcbnew.VECTOR2I(mk(cx), mk(mc_y)))
+    cf.SetOrientationDegrees(90)  # fab 长边 → X 方向
+    # 官方封装把天线区域边界和局部外框画在 F.SilkS, 容易被误读为安装外框。
+    # 保留官方信息到 Eco2.User, 板级重新画唯一的实物外框与 X+ 避让框。
+    for gi in cf.GraphicalItems():
+        if gi.GetLayer() == pcbnew.F_SilkS:
+            gi.SetLayer(pcbnew.Eco2_User)
 
-    # 左侧引脚 1-14 沿下边 (Y = -half_w = -8.15), 沿 X 等距 1.27
-    # 实物左列从下到上 1=GND, 2=3V3, 3=EN, 4=IO4, 5=IO5, 6=IO6, 7=IO7, 8=IO0,
-    #                  9=IO1, 10=IO8, 11=IO10, 12=IO11, 13=IO12, 14=IO13
-    l_net = [
-        "GND",            # 1  GND     接地
-        "VCC",            # 2  3V3     供电
-        "EN",             # 3  EN      复位使能 (高电平使能, 需上拉到 3V3)
-        "PZT_TR_SIGNAL",  # 4  IO4/ADC1_CH4  ← PZT TR
-        "PZT_TL_SIGNAL",  # 5  IO5/ADC1_CH5  ← PZT TL
-        "PZT_BR_SIGNAL",  # 6  IO6/ADC1_CH6  ← PZT BR
-        "PZT_BL_SIGNAL",  # 7  IO7/ADC1_CH7  ← PZT BL
-        "NC",             # 8  IO0     (不接, 避免启动模式干扰)
-        "NC",             # 9  IO1
-        "NC",             # 10 IO8
-        "NC",             # 11 IO10
-        "NC",             # 12 IO11
-        "NC",             # 13 IO12
-        "USB_D+",         # 14 IO13/USB_D+  → 终端焊盘
-    ]
-    # 右侧引脚 15-28 沿上边 (Y = +half_w = +8.15), 沿 X 等距 1.27
-    # 实物右列从下到上 15=IO9, 16=IO18, 17=IO19, 18=IO20, 19=IO21, 20=IO22, 21=IO23,
-    #                  22=NC, 23=IO15, 24=RXD0(IO17), 25=TXD0(IO16), 26=IO3, 27=IO2, 28=GND
-    r_net = [
-        "NC",             # 15 IO9
-        "USB_D-",         # 16 IO18/USB_D-  → 终端焊盘
-        "NC",             # 17 IO19
-        "NC",             # 18 IO20
-        "NC",             # 19 IO21
-        "NC",             # 20 IO22
-        "NC",             # 21 IO23
-        "NC",             # 22 NC (实物悬空, 不能接地)
-        "NC",             # 23 IO15
-        "UART_RX",        # 24 RXD0/IO17  ← IMU TXD (14)
-        "UART_TX",        # 25 TXD0/IO16  → IMU RXD (13)
-        "NC",             # 26 IO3
-        "NC",             # 27 IO2
-        "GND",            # 28 GND
-    ]
-    for i in range(n_per_edge):
-        net = N(l_net[i]) if l_net[i] != "NC" else None    # NC pin 物理有 pad, 不连 net
-        xo = (i - (n_per_edge - 1) / 2) * pitch
-        pad(cf, i + 1, (xo, -half_w), (1.5, 0.8),
-            net, pcbnew.PAD_SHAPE_RECT)
-        Rec("J1", i + 1, cx + xo, mc_y - half_w)
-    for i in range(n_per_edge):
-        net = N(r_net[i]) if r_net[i] != "NC" else None
-        xo = (i - (n_per_edge - 1) / 2) * pitch
-        pad(cf, i + n_per_edge + 1, (xo, half_w), (1.5, 0.8),
-            net, pcbnew.PAD_SHAPE_RECT)
-        Rec("J1", i + n_per_edge + 1, cx + xo, mc_y + half_w)
-    # EPAD 29 — 中心接地焊盘
-    pad(cf, 29, (0, 0), (12, 16), gnd, pcbnew.PAD_SHAPE_RECT)
-    Rec("J1", 29, cx, mc_y)
+    # 旋转 90° 后 pad 全局坐标 (从刚才的实测确认):
+    #   Pad 1-14: Y = +8.75, X 从 -8.26 到 +8.25 (沿 +X 递增)
+    #   Pad 15-28: Y = -8.75, X 从 -8.26 到 +8.25 (沿 +X 递减, 180° 旋转 pad)
+    # 引脚功能来自 ESP32-C6-WROOM-1 datasheet (用户 2026-06-11 提供官方资料):
+    #   Pin 1=GND, 2=3V3, 3=EN, 4=IO4, 5=IO5, 6=IO6, 7=IO7, 8=IO8, 9=IO9, 10=IO10,
+    #   11=IO11, 12=IO12, 13=IO13, 14=IO14 (下排 X=-8.26 → +8.25)
+    #   Pin 15=IO15, 16=IO16, 17=IO17, 18=IO18, 19=IO19, 20=IO20, 21=IO21, 22=IO22,
+    #   23=IO23, 24=IO24, 25=IO25, 26=IO26, 27=IO27, 28=GND (上排 X=+8.25 → -8.26)
+    # 注意: ESP32-C6-WROOM-1 实物 pin 1 实际是 GND, 但 datasheet pin 序是:
+    #   datasheet 是按芯片本体 pin, WROOM-1 模块把 chip pin 重新编号
+    # 用户指定的 pin 功能映射 (2026-06-10):
+    #   下排 (Pad 1-14, X=-8.26 → +8.25):
+    #     1=GND, 2=3V3, 3=EN, 4=IO4/PZT_TR, 5=IO5/PZT_TL, 6=IO6/PZT_BR, 7=IO7/PZT_BL,
+    #     8=IO8, 9=IO9, 10=IO10, 11=IO11, 12=IO12, 13=IO13/USB_D+, 14=IO14
+    #   上排 (Pad 15-28, X=+8.25 → -8.26):
+    #     15=IO15, 16=IO16/USB_D-, 17=IO17, 18=IO18, 19=IO19, 20=IO20, 21=IO21,
+    #     22=IO22, 23=IO23, 24=IO24/UART_TX, 25=IO25/UART_RX, 26=IO26, 27=IO27, 28=GND
+    j1_nets = {
+        1: "GND", 2: "VCC", 3: "EN",
+        4: "PZT_TR_SIGNAL", 5: "PZT_TL_SIGNAL",
+        6: "PZT_BR_SIGNAL", 7: "PZT_BL_SIGNAL",
+        8: "NC", 9: "NC", 10: "NC", 11: "NC", 12: "NC",
+        13: "USB_D+", 14: "NC",
+        15: "NC", 16: "USB_D-", 17: "NC", 18: "NC", 19: "NC", 20: "NC",
+        21: "NC", 22: "NC", 23: "NC",
+        24: "UART_TX",  # IO24 → IMU RXD (U1 pin 13)
+        25: "UART_RX",  # IO25 ← IMU TXD (U1 pin 14)
+        26: "NC", 27: "NC", 28: "GND",
+    }
+    # EPAD (Pad "29", 9 个) → GND (散热)
+    for p in list(cf.Pads()):
+        pnum = p.GetNumber()
+        if pnum == "29":
+            p.SetNet(gnd)
+        else:
+            pin_int = int(pnum)
+            net_name = j1_nets.get(pin_int, "NC")
+            if net_name != "NC":
+                p.SetNet(N(net_name))
+            # NC pin 不连 net, 留 None (有 pad 物理存在)
 
-    fab_rect(cf, cx, mc_y, 0, 0, fw, fh)
-    crtyd_rect(cf, cx, mc_y, 0, 0, fw, fh)
     b.Add(cf)
-    gfx_rect(pcbnew.F_SilkS, cx - fw/2 - 1, mc_y - half_w - 1,
-             cx + fw/2 + 1, mc_y + half_w + 1, 0.12)
-    silk_text(cx, mc_y + half_w + 4.0, "ESP32-C6-N8", 1.0, 0.12)
-    silk_text(cx - half_span, mc_y - half_w - 1.5, "1", 0.6, 0.1)
-    silk_text(cx + half_span, mc_y - half_w - 1.5, "14", 0.6, 0.1)
-    silk_text(cx - half_span, mc_y + half_w + 1.5, "15", 0.6, 0.1)
-    silk_text(cx + half_span, mc_y + half_w + 1.5, "28", 0.6, 0.1)
+    # 记录 pin 坐标供走线用 (旋转 90° 后的全局坐标)
+    half_w_v = 8.75          # 旋转后 pad 距 X 轴距离
+    half_span_v = 8.255       # X 方向 pin 跨距 (1.27×13/2)
+    pitch_v = 1.27
+    # Pad 1-14: X 从 -8.26 → +8.25 (沿 +X 方向, X 递增)
+    # Pad 15-28: 180° 旋转, X 从 +8.25 → -8.26 (沿 -X 方向)
+    for i in range(14):
+        xo = (i - 6.5) * pitch_v  # X 从 -8.255 到 +8.255
+        Rec("J1", i + 1, cx + xo, mc_y + half_w_v)
+    for i in range(14):
+        xo = -((i - 6.5) * pitch_v)  # X 反向 (Pin 15 在 +X 端)
+        Rec("J1", i + 15, cx + xo, mc_y - half_w_v)
 
-    # RF 净空区: 模块顶部 25.5×3mm 无铜 (官方要求, 摆放后顶部 X 长)
-    rf_x1, rf_y1 = cx - fw/2, mc_y + fh/2
-    rf_x2, rf_y2 = cx + fw/2, mc_y + fh/2 + 3.0
+    # ESP32 实物安装外框: 官方本地外框 x=-9..9, y=-15.75..9.75;
+    # 旋转 90° 后成为 X=-9.75..15.75, Y=-9..9。
+    esp_x1, esp_y1 = cx - 9.75, mc_y - 9.0
+    esp_x2, esp_y2 = cx + 15.75, mc_y + 9.0
+    gfx_rect(pcbnew.F_SilkS, esp_x1, esp_y1, esp_x2, esp_y2, 0.12)
+    silk_text(cx, mc_y + half_w_v + 4.0, "ESP32-C6-WROOM-1", 1.0, 0.12)
+
+    # MCU 信号/RF 避让区: 朝 X- 方向 (antenna 朝 IMU, 拍头端), 19.7×3mm
+    # 实物 antenna 朝 X+ (ESP32 长边内) - 不对, antenna 在 fab 内 -Y 端 (官方 silk "Antenna Area" at 0 -12.75)
+    # 旋转 90° CCW: 原 -Y → +X, 即 antenna 沿 +X 方向
+    # antenna keepout 放 X+ 方向 (远离 IMU)
+    rf_x1, rf_y1 = esp_x2, esp_y1
+    rf_x2, rf_y2 = esp_x2 + 3.0, esp_y2
     gfx_rect(pcbnew.User_5, rf_x1, rf_y1, rf_x2, rf_y2, 0.05)
-    silk_text(cx, rf_y2 + 1.0, "RF KEEPOUT 25.5\u00D73", 0.7, 0.1)
+    silk_text(rf_x2 + 1.0, mc_y, "ESP32 RF X+", 0.7, 0.1, 90)
+
+    # 更新 ESP32 fab 范围用于 stiffener (用官方 fab 范围)
+    fw, fh = 26.72, 19.72
 
     # ═══════════════════════════════════════════════
     # 拍柄末端引出焊盘 (修正 B:4×3mm + C:文字90°)
@@ -533,20 +533,43 @@ def main():
     NECK_Y1 = -71.7; NECK_Y2 = -78.5   # 拍头→拍柄 肩膀区域
     SPINE_L = -22; SPINE_R = 22
 
-    # ESP32 pin 坐标 (摆放后 fab 25.5×18, center (0, mc_y=-17), half_w=8.15, half_span=8.255)
-    # 实物 → 摆放映射: 实物左列从下到上(Pin 1-14) → 摆放后下排 X 从 -8.255 到 +8.255
-    #                实物右列从下到上(Pin 15-28) → 摆放后上排 X 从 -8.255 到 +8.255
+    # ESP32 pin 坐标 (官方封装, 旋转 90° CCW 后 fab 26.72×19.72)
+    # 实测 pcbnew 输出 (权威):
+    #   Pad 1-14 全局: Y = mc_y + 8.75, X 从 -8.26 (Pin 1) → +8.25 (Pin 14)
+    #   Pad 15-28 全局: Y = mc_y - 8.75, X 从 +8.25 (Pin 15) → -8.26 (Pin 28)
+    # pcbnew 内 fp SetOrientationDegrees(90) 的旋转矩阵对应 (x, y) → (y, -x)
+    # 而非常见的 CCW (-y, x):
+    #   Pad 1 局部 (-8.75, -8.26) → 全局偏移 (-8.26, +8.75)
+    #   Pad 14 局部 (-8.75, +8.25) → 全局 (+8.25, +8.75) ✓
+    #   Pad 15 局部 (+8.75, -8.26) → 全局 (-8.26, -8.75) ✓ [Pad 自身旋转 180°, fp 90°: 总 270°]
+    #   Pad 28 局部 (+8.75, +8.25) → 全局 (+8.25, -8.75) ✓
+    # 简化为实测的全局公式:
+    #   Pin 1-14:  X = -(i-6.5)*1.27,  Y = +8.75    [i = pin-1]
+    #   Pin 15-28: X = +(i-6.5)*1.27,  Y = -8.75    [i = pin-15]
+    #   Pin 1 (i=0):  X = -(-6.5)*1.27 = -8.255 ✓ (-8.26 接近)
+    #   Pin 14 (i=13): X = -(13-6.5)*1.27 = +8.255 ✓
+    #   Pin 15 (i=0):  X = +(-6.5)*1.27 = -8.255? 但实测 Pin 15 在 X=+8.25!
+    # 重新核对 (实测):
+    #   Pad 1: X=-8.26 (i=0), Pad 14: X=+8.25 (i=13) → X = (i-6.5)*1.27 + 修正
+    #     (i=0)→X=-8.26: (0-6.5)*1.27 = -8.255 ✓
+    #     (i=13)→X=+8.25: (13-6.5)*1.27 = +8.255 ✓
+    #   Pad 15: X=+8.25 (i=0), Pad 28: X=-8.26 (i=13)
+    #     Pin 15 (i=0) → X=+8.25: 但 (0-6.5)*1.27 = -8.255 (负), 不匹配!
+    # 正确公式 (Pad 15 是 Pin 14 的镜像, 反 X):
+    #   Pin 15-28: X = -(i-6.5)*1.27 (反方向)
+    #     (i=0) → X = -(-6.5)*1.27 = +8.255 ✓ (Pad 15 = +8.25)
+    #     (i=13) → X = -(6.5)*1.27 = -8.255 ✓ (Pad 28 = -8.26)
     def j1_pin_xy(pin_num):
-        """返回 ESP32 pin 实际世界坐标"""
-        pitch = 1.27; half_span_v = 8.255; half_w_v = 8.15
+        """返回 ESP32 pin 全局坐标 (官方封装旋转 90° 后, pcbnew 实测)"""
+        pitch = 1.27
         if pin_num <= 14:
             i = pin_num - 1
-            x = (i - 6.5) * pitch
-            y = -half_w_v
+            x = (i - 6.5) * pitch    # -8.26 → +8.25
+            y = +8.75                # 下排 (Y = mc_y + 8.75)
         else:
             i = pin_num - 15
-            x = (i - 6.5) * pitch
-            y = +half_w_v
+            x = -((i - 6.5) * pitch) # +8.25 → -8.26 (反方向)
+            y = -8.75                # 上排 (Y = mc_y - 8.75)
         return (cx + x, mc_y + y)
 
     # PZT 信号 → J1 ADC 引脚: IO4(4), IO5(5), IO6(6), IO7(7)
@@ -571,31 +594,48 @@ def main():
     route_signal_v92("PZT_TL", SPINE_L, 5)
     route_signal_v92("PZT_BL", SPINE_L, 7)
 
-    # VCC → J1 Pin2 (3V3) — 从拍柄终端 VCC 拉到 J1(2)
-    j1_vcc = j1_pin_xy(2)
-    for label, jx in [("VCC", cx - 4), ("GND", cx + 4)]:
+    # VCC/GND 从拍柄终端拉到 J1 供电脚
+    power_targets = {
+        "VCC": j1_pin_xy(2),
+        "GND": j1_pin_xy(1),
+    }
+    for label, jx in [("VCC", cx - 10), ("GND", cx - 12)]:
         tp = pp[(f"TP_{label}",1)]
+        target = power_targets[label]
         track(N(label), tp[0], bot_y-3, jx, bot_y-3, TRACE_PWR)
-        track(N(label), jx, bot_y-3, jx, j1_vcc[1], TRACE_PWR)
-        track(N(label), jx, j1_vcc[1], j1_vcc[0], j1_vcc[1], TRACE_PWR)
+        if label == "VCC":
+            entry_y = target[1] - 1.85
+            track(N(label), jx, bot_y-3, jx, entry_y, TRACE_PWR)
+            track(N(label), jx, entry_y, target[0], entry_y, TRACE_PWR)
+            track(N(label), target[0], entry_y, target[0], target[1], TRACE_PWR)
+        else:
+            track(N(label), jx, bot_y-3, jx, target[1], TRACE_PWR)
+            track(N(label), jx, target[1], target[0], target[1], TRACE_PWR)
 
-    # UART: IMU(7:TXD→, 8:RXD←) ↔ J1(24:RXD0/IO17, 25:TXD0/IO16)
-    # v9.8 修复: IMU Pin 7=IMU TXD (UART_TX net), Pin 8=IMU RXD (UART_RX net)
-    # IMU pin 7/8 在 Y=-10.5 (下排), J1 pin 24/25 在 Y=+8.85 (上排)
-    # 汇流点: IMU 顶 Y=-10.5 到 J1 顶 Y=+8.85, 中间 Y=0
-    u1_txd = pp[("U1", 7)]  # IMU TXD 中心
-    u1_rxd = pp[("U1", 8)]  # IMU RXD 中心
-    j1_tx  = j1_pin_xy(25)  # IO16 TXD 中心
-    j1_rx  = j1_pin_xy(24)  # IO17 RXD 中心
-    jy = 0  # IMU 底 -10.5, J1 顶 +8.85, 中转 Y
-    # TX (J1→IMU): IMU RXD pin 8 → 上到 jy=0 → 横走到 J1 TX X → 下到 J1 TX Y
-    track(N("UART_TX"), u1_rxd[0], u1_rxd[1], u1_rxd[0], jy)
-    track(N("UART_TX"), u1_rxd[0], jy, j1_tx[0], jy)
-    track(N("UART_TX"), j1_tx[0], jy, j1_tx[0], j1_tx[1])
-    # RX (IMU→J1): IMU TXD pin 7 → 上到 jy → 横走到 J1 RX X → 下到 J1 RX Y
-    track(N("UART_RX"), u1_txd[0], u1_txd[1], u1_txd[0], jy)
-    track(N("UART_RX"), u1_txd[0], jy, j1_rx[0], jy)
-    track(N("UART_RX"), j1_rx[0], jy, j1_rx[0], j1_rx[1])
+    # UART: U1(13:RXD, 14:TXD) ↔ J1(24:TXD/IO24, 25:RXD/IO25)
+    # U1 信号侧朝 X-, J1 信号侧朝 X+; 走线先引到模块间汇流 Y=0。
+    u1_rxd = pp[("U1", 13)]  # U1 RXD 中心, 接 J1 TXD
+    u1_txd = pp[("U1", 14)]  # U1 TXD 中心, 接 J1 RXD
+    j1_tx  = j1_pin_xy(24)  # IO24 TXD 中心 (Pin 24, 全局 (-3.18, 4.60))
+    j1_rx  = j1_pin_xy(25)  # IO25 RXD 中心 (Pin 25, 全局 (-4.45, 4.60))
+    # TX (J1→U1): U1 RXD pin 13 → 绕开 J1 下排 NC pad → J1 TX pin 25
+    tx_bus_y = 3.0
+    tx_clear_x = 5.2
+    j1_entry_y = mc_y + half_w_v + 1.65
+    track(N("UART_TX"), u1_rxd[0], u1_rxd[1], u1_rxd[0], tx_bus_y)
+    track(N("UART_TX"), u1_rxd[0], tx_bus_y, tx_clear_x, tx_bus_y)
+    track(N("UART_TX"), tx_clear_x, tx_bus_y, tx_clear_x, j1_entry_y)
+    track(N("UART_TX"), tx_clear_x, j1_entry_y, j1_tx[0], j1_entry_y)
+    track(N("UART_TX"), j1_tx[0], j1_entry_y, j1_tx[0], j1_tx[1])
+    # RX (U1→J1): U1 TXD pin 14 → 绕开 J1 下排 NC pad → J1 RX pin 24
+    rx_bus_y = 1.5
+    rx_clear_x = 10.5
+    rx_entry_y = mc_y + half_w_v + 3.15
+    track(N("UART_RX"), u1_txd[0], u1_txd[1], u1_txd[0], rx_bus_y)
+    track(N("UART_RX"), u1_txd[0], rx_bus_y, rx_clear_x, rx_bus_y)
+    track(N("UART_RX"), rx_clear_x, rx_bus_y, rx_clear_x, rx_entry_y)
+    track(N("UART_RX"), rx_clear_x, rx_entry_y, j1_rx[0], rx_entry_y)
+    track(N("UART_RX"), j1_rx[0], rx_entry_y, j1_rx[0], j1_rx[1])
 
     for sc in params["components"]["signal_conditioning"]:
         pid = sc["piezo"]; sn = N(f"{pid}_SIGNAL")
@@ -608,20 +648,34 @@ def main():
     track(en, j1_en[0], j1_en[1], j1_3v3[0], j1_3v3[1], TRACE_PWR)
 
     # D+/D- 从拍颈上拉到 J1 [实物 2026-06-10]:
-    #   D+ → J1(14)=IO13/USB_D+ (下排 X=+8.255, Y=-25.15)
+    #   D+ → J1(13)=IO13/USB_D+ (下排)
     #   D- → J1(16)=IO18/USB_D- (上排 X=-6.985, Y=-8.85)
-    for label, pin_num in [("D+", 14), ("D-", 16)]:
-        tp = pp[(f"TP_{label}",1)]
-        jp = j1_pin_xy(pin_num)
-        track(N(f"USB_{label}"), tp[0], bot_y-3, jp[0], bot_y-3, TRACE_SIG)
-        track(N(f"USB_{label}"), jp[0], bot_y-3, jp[0], jp[1], TRACE_SIG)
+    usb_dp_tp = pp[("TP_D+", 1)]
+    usb_dn_tp = pp[("TP_D-", 1)]
+    usb_dp_jp = j1_pin_xy(13)
+    usb_dn_jp = j1_pin_xy(16)
+    usb_bottom_y = bot_y - 6.0
+    usb_dp_x = 4.8
+    usb_dn_x = 10.8
+    usb_escape_y = 10.0
+    usb_dp_entry_y = usb_dp_jp[1] + 2.3
+
+    track(N("USB_D+"), usb_dp_tp[0], usb_dp_tp[1], usb_dp_tp[0], usb_bottom_y, TRACE_SIG)
+    track(N("USB_D+"), usb_dp_tp[0], usb_bottom_y, usb_dp_x, usb_bottom_y, TRACE_SIG)
+    track(N("USB_D+"), usb_dp_x, usb_bottom_y, usb_dp_x, usb_dp_entry_y, TRACE_SIG)
+    track(N("USB_D+"), usb_dp_x, usb_dp_entry_y, usb_dp_jp[0], usb_dp_entry_y, TRACE_SIG)
+    track(N("USB_D+"), usb_dp_jp[0], usb_dp_entry_y, usb_dp_jp[0], usb_dp_jp[1], TRACE_SIG)
+
+    track(N("USB_D-"), usb_dn_tp[0], usb_dn_tp[1], usb_dn_tp[0], usb_bottom_y, TRACE_SIG)
+    track(N("USB_D-"), usb_dn_tp[0], usb_bottom_y, usb_dn_x, usb_bottom_y, TRACE_SIG)
+    track(N("USB_D-"), usb_dn_x, usb_bottom_y, usb_dn_x, usb_escape_y, TRACE_SIG)
+    track(N("USB_D-"), usb_dn_x, usb_escape_y, usb_dn_jp[0], usb_escape_y, TRACE_SIG)
+    track(N("USB_D-"), usb_dn_jp[0], usb_escape_y, usb_dn_jp[0], usb_dn_jp[1], TRACE_SIG)
 
     for pid in ["PZT_TR","PZT_TL","PZT_BR","PZT_BL"]:
         for ref,pn in [(pid,2),(f"R_{pid}",2),(f"D_{pid}",2)]:
             if (ref,pn) in pp: via(gnd, pp[(ref,pn)][0], pp[(ref,pn)][1])
-    # MCU 接地 via: J1 中心 EPAD + 两端
-    via(gnd, cx, mc_y)
-    via(gnd, cx-8, mc_y-8); via(gnd, cx+8, mc_y+8)
+    # J1 是模块落盘, 不放中心 EPAD/近端接地 via, 避免压到 castellated pads。
 
     # ═══════════════════════════════════════════════
     # B.Cu 地平面
@@ -743,7 +797,6 @@ def main():
     # ── 统计 ──
     from collections import Counter
     net_counts = Counter(name for name, *_ in track_records)
-
     fps = sum(1 for _ in b.Footprints())
     trs = len(track_records)
     vis = sum(1 for t in b.Tracks() if t.Type()==pcbnew.PCB_VIA_T)
