@@ -41,6 +41,13 @@ fpc/layouts/default/*~
 fpc/layouts/default/*.lck
 fpc/layouts/default/default.kicad_prl
 fpc/layouts/default/default.kicad_pro
+fpc/layouts/default/dfm_profile_check.json
+fpc/layouts/default/pcb_quality_gate.json
+fpc/layouts/default/pcb_sync.net
+fpc/layouts/default/schematic_quality_gate.json
+fpc/layouts/default/unconnected.json
+fpc/layouts/default/validate_drc.json
+fpc/layouts/default/validate_erc.json
 fpc/*.lock
 
 # ESP-IDF build artifacts
