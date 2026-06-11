@@ -44,6 +44,8 @@ OUTPUT_FILE  = OUTPUT_DIR / "default.kicad_pcb"
 
 TRACE_SIG = 0.2; TRACE_PWR = 0.3
 VIA_DRILL = 0.3; VIA_PAD   = 0.6
+EMIT_SILK = False
+EMIT_COURTYARD = False
 
 
 def main():
@@ -152,18 +154,24 @@ def main():
         return (pos.x / 1e6, pos.y / 1e6)
 
     def gfx_rect(layer,x1,y1,x2,y2,w=0.05):
+        if layer == pcbnew.F_SilkS and not EMIT_SILK:
+            return
         g=pcbnew.PCB_SHAPE(b); g.SetShape(pcbnew.SHAPE_T_RECT)
         g.SetStart(pcbnew.VECTOR2I(mk(x1),mk(y1)))
         g.SetEnd(pcbnew.VECTOR2I(mk(x2),mk(y2)))
         g.SetLayer(layer); g.SetWidth(int(w*1e6)); b.Add(g)
 
     def gfx_circle(layer,cx,cy,r,w=0.05):
+        if layer == pcbnew.F_SilkS and not EMIT_SILK:
+            return
         g=pcbnew.PCB_SHAPE(b); g.SetShape(pcbnew.SHAPE_T_CIRCLE)
         g.SetCenter(pcbnew.VECTOR2I(mk(cx),mk(cy)))
         g.SetEnd(pcbnew.VECTOR2I(mk(cx+r),mk(cy)))
         g.SetLayer(layer); g.SetWidth(int(w*1e6)); b.Add(g)
 
     def silk_text(x,y,txt,sz=1.0,th=0.12,rot=0):
+        if not EMIT_SILK:
+            return
         tx=pcbnew.PCB_TEXT(b); tx.SetText(txt)
         tx.SetPosition(pcbnew.VECTOR2I(mk(x),mk(y)))
         tx.SetLayer(pcbnew.F_SilkS)
@@ -172,8 +180,13 @@ def main():
         if rot: tx.SetTextAngle(pcbnew.EDA_ANGLE(rot, pcbnew.DEGREES_T))
         b.Add(tx)
 
+    def hide_fp_texts(fp):
+        fp.Reference().SetVisible(False)
+        fp.Value().SetVisible(False)
+
     def make_fp(ref, val, gx, gy):
         f=pcbnew.FOOTPRINT(b); f.SetReference(ref); f.SetValue(val)
+        hide_fp_texts(f)
         f.SetLayer(pcbnew.F_Cu)
         f.SetPosition(pcbnew.VECTOR2I(mk(gx), mk(gy)))
         return f
@@ -186,6 +199,8 @@ def main():
         g.SetLayer(pcbnew.F_Fab); g.SetWidth(int(0.1e6)); fp.Add(g)
 
     def crtyd_rect(fp, gx, gy, lx, ly, w, h, margin=0.5):
+        if not EMIT_COURTYARD:
+            return
         g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
         g.SetStart(pcbnew.VECTOR2I(mk(gx + lx - w/2 - margin), mk(gy + ly - h/2 - margin)))
         g.SetEnd(pcbnew.VECTOR2I(mk(gx + lx + w/2 + margin), mk(gy + ly + h/2 + margin)))
@@ -371,8 +386,14 @@ def main():
     cf = pcbnew.FootprintLoad(J1_LIB_PATH, "ESP32-C6-WROOM-1")
     cf.SetReference("J1")
     cf.SetValue("ESP32-C6-WROOM-1")
+    hide_fp_texts(cf)
     cf.SetPosition(pcbnew.VECTOR2I(mk(cx), mk(mc_y)))
     cf.SetOrientationDegrees(90)  # fab 长边 → X 方向
+    # 官方封装自带的 antenna keepout 在旋转后的 footprint 内会覆盖左侧绕线通道。
+    # 本板按实物装配单独在 X+ 方向画 RF 避让框, 因此移除官方局部 keepout zone。
+    for z in list(cf.Zones()):
+        if z.GetZoneName() == "antenna keepout":
+            cf.Remove(z)
     # 官方封装把天线区域边界和局部外框画在 F.SilkS, 容易被误读为安装外框。
     # 保留官方信息到 Eco2.User, 板级重新画唯一的实物外框与 X+ 避让框。
     for gi in cf.GraphicalItems():
@@ -711,6 +732,41 @@ def main():
     r_en_2 = pp[("R_EN", 2)]
     route(en, [j1_en, (j1_en[0], r_en_1[1]), r_en_1], TRACE_PWR)
     route(vcc, [r_en_2, (j1_3v3[0], r_en_2[1]), j1_3v3], TRACE_PWR)
+
+    # IMU supply pins: route on F.Cu around the left side of the ESP32 body,
+    # keeping the antenna keepout clear.
+    u1_vbat_a = pp[("U1", 3)]
+    u1_vbat_b = pp[("U1", 15)]
+    u1_vbat_escape = (u1_vbat_a[0], -15.0)
+    route(vcc, [j1_3v3, (j1_3v3[0], 19.0), (-18.0, 19.0),
+                (-18.0, -15.0), u1_vbat_escape, u1_vbat_a], TRACE_PWR)
+    route(vcc, [u1_vbat_escape, (-18.0, -15.0), (-18.0, -3.0),
+                (u1_vbat_b[0], -3.0), u1_vbat_b], TRACE_PWR)
+
+    # BAT54S clamp rails: feed from TP_VCC on B.Cu using left/right outer corridors.
+    # X=±30 stays outside the PZT signal pads and outside the B.Cu PZT signal spines.
+    tp_vcc = pp[("TP_VCC", 1)]
+    via(vcc, *tp_vcc)
+    left_top_bus_x, left_bottom_bus_x, right_bus_x = -26.0, -30.0, 28.0
+    left_top_y = pp[("D_PZT_TL", 3)][1]
+    left_bottom_y = pp[("D_PZT_BL", 3)][1]
+    right_top_y = pp[("D_PZT_TR", 3)][1]
+    route(vcc, [tp_vcc, (left_top_bus_x, tp_vcc[1]), (left_top_bus_x, left_top_y)],
+          TRACE_PWR, pcbnew.B_Cu)
+    route(vcc, [tp_vcc, (left_bottom_bus_x, tp_vcc[1]), (left_bottom_bus_x, left_bottom_y)],
+          TRACE_PWR, pcbnew.B_Cu)
+    route(vcc, [tp_vcc, (right_bus_x, tp_vcc[1]), (right_bus_x, right_top_y)],
+          TRACE_PWR, pcbnew.B_Cu)
+    for pid in ["PZT_TL", "PZT_BL", "PZT_TR", "PZT_BR"]:
+        p = pp[(f"D_{pid}", 3)]
+        if pid == "PZT_TL":
+            x = left_top_bus_x
+        elif pid == "PZT_BL":
+            x = left_bottom_bus_x
+        else:
+            x = right_bus_x
+        via(vcc, *p)
+        route(vcc, [(x, p[1]), p], TRACE_PWR, pcbnew.B_Cu)
 
     # D+/D- 从拍颈上拉到 J1 [实物 2026-06-10]:
     #   D+ → J1(13)=IO13/USB_D+ (下排)
