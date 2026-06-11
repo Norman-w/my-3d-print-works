@@ -171,6 +171,23 @@ def main():
         g.SetEnd(pcbnew.VECTOR2I(mk(cx+r),mk(cy)))
         g.SetLayer(layer); g.SetWidth(int(w*1e6)); b.Add(g)
 
+    def gfx_rot_rect(layer, cx, cy, width, height, angle_deg, line_w=0.05):
+        rad = math.radians(angle_deg)
+        ux, uy = math.cos(rad), math.sin(rad)
+        vx, vy = -uy, ux
+        hw, hh = width / 2, height / 2
+        pts = [
+            (cx - ux * hw - vx * hh, cy - uy * hw - vy * hh),
+            (cx + ux * hw - vx * hh, cy + uy * hw - vy * hh),
+            (cx + ux * hw + vx * hh, cy + uy * hw + vy * hh),
+            (cx - ux * hw + vx * hh, cy - uy * hw + vy * hh),
+        ]
+        for a, c in zip(pts, pts[1:] + pts[:1]):
+            track_shape=pcbnew.PCB_SHAPE(b); track_shape.SetShape(pcbnew.SHAPE_T_SEGMENT)
+            track_shape.SetStart(pcbnew.VECTOR2I(mk(a[0]), mk(a[1])))
+            track_shape.SetEnd(pcbnew.VECTOR2I(mk(c[0]), mk(c[1])))
+            track_shape.SetLayer(layer); track_shape.SetWidth(int(line_w * 1e6)); b.Add(track_shape)
+
     def silk_text(x,y,txt,sz=1.0,th=0.12,rot=0):
         if not EMIT_SILK:
             return
@@ -194,11 +211,11 @@ def main():
         return f
 
     def fab_rect(fp, gx, gy, lx, ly, w, h):
-        # KiCad 9 PCB_SHAPE.SetStart 全局坐标: KiCad 自动转 fp 内部, 加载时正确
-        g=pcbnew.PCB_SHAPE(fp); g.SetShape(pcbnew.SHAPE_T_RECT)
-        g.SetStart(pcbnew.VECTOR2I(mk(gx + lx - w/2), mk(gy + ly - h/2)))
-        g.SetEnd(pcbnew.VECTOR2I(mk(gx + lx + w/2), mk(gy + ly + h/2)))
-        g.SetLayer(pcbnew.F_Fab); g.SetWidth(int(0.1e6)); fp.Add(g)
+        angle = fp.GetOrientationDegrees()
+        rad = math.radians(angle)
+        cx = gx + lx * math.cos(rad) - ly * math.sin(rad)
+        cy = gy + lx * math.sin(rad) + ly * math.cos(rad)
+        gfx_rot_rect(pcbnew.F_Fab, cx, cy, w, h, angle, 0.1)
 
     def crtyd_rect(fp, gx, gy, lx, ly, w, h, margin=0.5):
         if not EMIT_COURTYARD:
@@ -545,7 +562,9 @@ def main():
                 pzy = [p["position"][1] for p in pzt_list if p["id"]==pid][0]
                 off = 20.5/2 + 8.0/2 - 2 + 1.25
                 csx = pzx + off*math.cos(rad); csy = pzy + off*math.sin(rad)
-                gfx_rect(pcbnew.User_3, csx-6, csy-4, csx+6, csy+4, 0.05)
+                # SCAD ear-slot support: long edge follows the local PZT tangent,
+                # not the board world X/Y axes.
+                gfx_rot_rect(pcbnew.User_3, csx, csy, 12.0, 8.0, ang + 90, 0.05)
         elif zone == "main_module_connector":
             # ESP32-C6 摆 X 长后 fab 框 25.5×18, stiffener 加 1mm 余量
             gfx_rect(pcbnew.User_3, cx-fw/2-1, mc_y-fh/2-1, cx+fw/2+1, mc_y+fh/2+1, 0.05)
