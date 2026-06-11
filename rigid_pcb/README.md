@@ -4,8 +4,9 @@ This directory contains a first rigid-PCB architecture study for SmartPaddle.
 
 ## Architecture
 
-- Central rigid electronics island in the OpenSCAD sweet-zone.
-- ESP32-C6-WROOM-1 and IM948 stay in the center.
+- Drone-frame-like rigid carrier in the OpenSCAD sweet-zone.
+- ESP32-C6-WROOM-1 and IM948 are embedded into board cutouts.
+- The carrier uses plated castellated half-hole pads along the module cutout edges.
 - Four PZT front-end areas are placed near the PZT positions along the radial direction.
 - Each PZT front-end keeps the 1M discharge resistor and BAT54S clamp close to the PZT.
 - Handle-side LED, button, battery, USB D+/D- are still wire-connected by large solder pads.
@@ -37,11 +38,11 @@ If the board is changed to `1.0 mm`, use about `4.6-5.0 mm` pocket depth.
 
 ## Weight Estimate
 
-The current conservative outline is intentionally large so all copper remains on FR4 during the first electrical study. It should be lightened into narrow arms after DRC/routing review.
+The current outline is a skeleton-style carrier with a center spine, four PZT ears, and module cutouts.
 
 For FR4 density around `1.85 g/cm^3`:
 
-- `0.8 mm` full conservative study outline: roughly tens of grams, depending on final arm cutouts.
+- `0.8 mm` skeleton study outline after ESP32/IM948 cutouts: about `10 g`.
 - A full paddle-sized rigid board would be much heavier and is not recommended as the default architecture.
 
 The preferred production direction is a central rigid board plus narrow arms or separate small PZT front-end islands.
@@ -63,9 +64,15 @@ The preferred production direction is a central rigid board plus narrow arms or 
 
 ## Status
 
-`generate_kicad.py` creates the first placement/routing study, but this layout is not yet production-ready. The current route needs cleanup before commit/PR:
+`generate_kicad.py` creates the current rigid-PCB mechanical/electrical placement study.
 
-- reduce outline into true arms,
-- reroute low-speed handle wires away from USB and latch paths,
-- keep the PZT signal routes away from the 3.3V clamp bus,
-- rerun KiCad DRC to zero violations.
+Current KiCad DRC status:
+
+- 26 copper-to-edge warnings remain by design because the ESP32 and IM948 plated castellated pads are centered on the module cutout edges.
+- 58 unconnected items remain because routing is intentionally disabled in this structural study.
+
+Next PCB work:
+
+- decide whether the embedded module half-holes should stay as plated slots/half-holes or become wider solder shelves,
+- route power, USB/UART, LED, button, and PZT nets on the skeleton carrier,
+- add fab notes for castellated internal cutouts before manufacturing.
