@@ -264,10 +264,16 @@ def main():
         pzy = [p["position"][1] for p in pzt_list if p["id"]==pid][0]
 
         piezo_d = 20.5; ear_l = 8.0
+        # Place signal conditioning around the radial slot from PZT to the MCU
+        # sweet-zone: radial coordinate follows the slot, normal coordinate
+        # splits R/D onto opposite slot sides for assembly access.
         off_r = piezo_d/2 + ear_l/2 - 2
+        side_gap = 2.3
         rad = math.radians(ang)
-        rx = pzx + off_r * math.cos(rad)
-        ry = pzy + off_r * math.sin(rad)
+        ux, uy = math.cos(rad), math.sin(rad)
+        nx, ny = -uy, ux
+        rx = pzx + off_r * ux + side_gap * nx
+        ry = pzy + off_r * uy + side_gap * ny
 
         rf = make_fp(f"R_{pid}", "1M", rx, ry)
         rf.SetOrientationDegrees(ang + 90)
@@ -280,7 +286,8 @@ def main():
         Rec(f"R_{pid}", 2, *pad_xy(rf_p2))
 
         doff = off_r + 2.5
-        dx = pzx + doff*math.cos(rad); dy = pzy + doff*math.sin(rad)
+        dx = pzx + doff * ux - side_gap * nx
+        dy = pzy + doff * uy - side_gap * ny
         df = make_fp(f"D_{pid}", "BAT54S", dx, dy)
         df.SetOrientationDegrees(ang + 90)
         df_p1 = pad(df, 1, (0, 1.0), (0.7, 0.6), sn, pcbnew.PAD_SHAPE_RECT)
@@ -700,32 +707,20 @@ def main():
     for sc in params["components"]["signal_conditioning"]:
         pid = sc["piezo"]; sn = N(f"{pid}_SIGNAL")
         p1=pp[(pid,1)]
-        r1=pp[(f"R_{pid}",1)]; r2=pp[(f"R_{pid}",2)]
-        d1=pp[(f"D_{pid}",1)]; d2=pp[(f"D_{pid}",2)]
-        # PZT GND 翻边焊盘位于 PZT 中心与调理器件之间; 信号线必须切向绕开。
-        vx, vy = r1[0] - p1[0], r1[1] - p1[1]
+        r1=pp[(f"R_{pid}",1)]
+        d1=pp[(f"D_{pid}",1)]
+        # R/D now sit on opposite sides of the radial slot. Fan the PZT signal
+        # to each signal pad on its own slot side, avoiding the PZT GND flange
+        # that sits on the slot centerline.
+        vx, vy = cx - p1[0], cy - p1[1]
         mag = math.hypot(vx, vy) or 1.0
-        px, py = -vy / mag, vx / mag
-        # 左右两侧用相反切向, 让走线绕到各自 PZT 外侧。
-        # 底部 PZT 的局部几何相反, 切向符号需要翻转, 否则会擦过 GND 翻边焊盘。
-        side = 1 if p1[0] >= 0 else -1
-        if p1[1] > 0:
-            side *= -1
-        off = 6.0 * side
-        dog1 = (p1[0] + px * off, p1[1] + py * off)
-        if p1[1] > 0:
-            # 底部两片的 R_GND pad 位于进线侧, 先进入 D1 signal 再回接 R1。
-            dvx, dvy = d1[0] - d2[0], d1[1] - d2[1]
-            dmag = math.hypot(dvx, dvy) or 1.0
-            d_approach = (d1[0] + dvx / dmag * 1.4, d1[1] + dvy / dmag * 1.4)
-            dog2 = (d_approach[0] + px * off * 0.35, d_approach[1] + py * off * 0.35)
-            route(sn, [p1, dog1, dog2, d_approach, d1, r1])
-        else:
-            dog2 = (r1[0] + px * off * 0.65, r1[1] + py * off * 0.65)
-            avx, avy = r1[0] - r2[0], r1[1] - r2[1]
-            amag = math.hypot(avx, avy) or 1.0
-            approach = (r1[0] + avx / amag * 1.3, r1[1] + avy / amag * 1.3)
-            route(sn, [p1, dog1, dog2, approach, r1, d1])
+        ux, uy = vx / mag, vy / mag
+        nx, ny = -uy, ux
+        fan = 8.0
+        r_fan = (p1[0] + nx * fan, p1[1] + ny * fan)
+        d_fan = (p1[0] - nx * fan, p1[1] - ny * fan)
+        route(sn, [p1, r_fan, r1])
+        route(sn, [p1, d_fan, d1])
 
     # EN 通过 R_EN 上拉到 VCC。
     j1_en = j1_pin_xy(3)    # X=-5.715, Y=-25.15
