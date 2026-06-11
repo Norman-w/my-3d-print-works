@@ -43,6 +43,7 @@ OUTPUT_DIR   = Path(__file__).resolve().parent / "layouts" / "default"
 OUTPUT_FILE  = OUTPUT_DIR / "default.kicad_pcb"
 
 TRACE_SIG = 0.2; TRACE_PWR = 0.3
+TRACE_TAIL_PWR = 0.6
 VIA_DRILL = 0.3; VIA_PAD   = 0.6
 EMIT_SILK = False
 EMIT_COURTYARD = False
@@ -94,6 +95,30 @@ def main():
     # ═══════════════════════════════════════════════
     def flipy(pt): return (pt[0], -pt[1]) if isinstance(pt, tuple) else pt
     opts = [(x, -y) for (x, y) in opts]
+    # Handle-tail FPC extension: move user solder pads into the handle cavity.
+    # The tail starts well below the lower M2 hole (Y=33) and leaves room for
+    # future LED/button/status lines alongside the current power and USB nets.
+    tail_w = 18.0
+    tail_len = 34.0
+    tail_root_y = max(y for _, y in opts)
+    tail_end_y = tail_root_y + tail_len
+    tail_half = tail_w / 2
+    tail_inserted = False
+    for i in range(len(opts) - 1):
+        x1, y1 = opts[i]
+        x2, y2 = opts[i + 1]
+        if y1 == tail_root_y and y2 == tail_root_y and x1 > 0 and x2 < 0:
+            tail_pts = [
+                (tail_half, tail_root_y),
+                (tail_half, tail_end_y),
+                (-tail_half, tail_end_y),
+                (-tail_half, tail_root_y),
+            ]
+            opts = opts[:i + 1] + tail_pts + opts[i + 1:]
+            tail_inserted = True
+            break
+    if not tail_inserted:
+        raise RuntimeError("Could not insert handle-tail outline")
     # PZT 中心 (x, y) → (x, -y)
     for p in params["components"]["piezo"]:
         p["position"] = (p["position"][0], -p["position"][1])
@@ -523,20 +548,26 @@ def main():
     # ═══════════════════════════════════════════════
     # 拍柄末端引出焊盘 (修正 B:4×3mm + C:文字90°)
     # ═══════════════════════════════════════════════
-    all_y = [y for _,y in opts]
-    bot_y = max(all_y) - 4    # 拍柄端: Y 翻转后拍柄在屏下方 = max(Y), 留足板边间距
-    # v9.10 修复: 4 个终端 pad 间距 4.5mm (pad 宽 4mm, 必须 >= pad 宽避免重叠)
-    term = [("VCC",-6.75),("GND",-2.25),("D+",2.25),("D-",6.75)]
+    # Tail pads sit inside the handle cavity, split across two side channels.
+    # Left column: power; right column: USB/data. Same-side pads are separated
+    # in Y for easier hand soldering and future strain relief.
+    bot_y = tail_end_y - 11.0
+    term = [
+        ("VCC", -4.5, bot_y),
+        ("GND", -4.5, bot_y + 6.0),
+        ("D+", 4.5, bot_y),
+        ("D-", 4.5, bot_y + 6.0),
+    ]
     term_w, term_h = 4.0, 3.0
-    for label,xo in term:
+    for label, xo, yo in term:
         nn = "VCC" if label=="VCC" else "GND" if label=="GND" else f"USB_{label}"
-        tf = make_fp(f"TP_{label}", label, xo, bot_y)
+        tf = make_fp(f"TP_{label}", label, xo, yo)
         pad(tf, 1, (0,0), (term_w, term_h), N(nn), pcbnew.PAD_SHAPE_RECT)
-        fab_rect(tf, xo, bot_y, 0, 0, term_w, term_h)
-        crtyd_rect(tf, xo, bot_y, 0, 0, term_w, term_h)
-        b.Add(tf); Rec(f"TP_{label}", 1, xo, bot_y)
-        silk_text(xo, bot_y + 3.0, label, 0.9, 0.12)
-    silk_text(0, bot_y+6, "\u2192 \u62CD\u67C4\u65B9\u5411", 0.9, 0.12)
+        fab_rect(tf, xo, yo, 0, 0, term_w, term_h)
+        crtyd_rect(tf, xo, yo, 0, 0, term_w, term_h)
+        b.Add(tf); Rec(f"TP_{label}", 1, xo, yo)
+        silk_text(xo, yo + 3.0, label, 0.9, 0.12)
+    silk_text(0, tail_end_y - 2.0, "\u2192 \u62CD\u67C4\u65B9\u5411", 0.9, 0.12)
 
     # ═══════════════════════════════════════════════
     # 标注层
@@ -693,15 +724,18 @@ def main():
     gnd_tp = pp[("TP_GND", 1)]
     vcc_target = power_targets["VCC"]
     gnd_target = power_targets["GND"]
-    route(vcc, [vcc_tp, (vcc_target[0], vcc_tp[1]), vcc_target], TRACE_PWR)
-    gnd_entry = (gnd_tp[0], gnd_tp[1] - 2.0)
+    tail_trunk_y = tail_root_y - 2.0
+    tail_vcc_x = -6.5
+    tail_gnd_x = -2.5
+    route(vcc, [vcc_tp, (tail_vcc_x, vcc_tp[1]), (tail_vcc_x, tail_trunk_y),
+                (vcc_target[0], tail_trunk_y)], TRACE_TAIL_PWR)
+    route(vcc, [(vcc_target[0], tail_trunk_y), vcc_target], TRACE_PWR)
+    gnd_via = (tail_gnd_x, gnd_tp[1])
+    track(gnd, gnd_tp[0], gnd_tp[1], gnd_via[0], gnd_via[1], TRACE_PWR)
+    via(gnd, *gnd_via)
     gnd_exit = (gnd_target[0], gnd_target[1] + 2.0)
-    track(gnd, gnd_tp[0], gnd_tp[1], gnd_entry[0], gnd_entry[1], TRACE_PWR)
-    via(gnd, *gnd_entry)
-    gnd_spine = (-8.25, gnd_entry[1])
-    route(gnd, [gnd_entry, gnd_spine], TRACE_PWR, pcbnew.B_Cu)
-    via(gnd, *gnd_spine)
-    route(gnd, [gnd_spine, (-8.25, gnd_exit[1]), gnd_exit, gnd_target], TRACE_PWR)
+    track(gnd, gnd_target[0], gnd_target[1], gnd_exit[0], gnd_exit[1], TRACE_PWR)
+    via(gnd, *gnd_exit)
 
     # UART: U1(13:RXD, 14:TXD) ↔ J1(24:TXD/IO24, 25:RXD/IO25)
     # U1 信号侧朝 X-, J1 信号侧朝 X+; 走线先引到模块间汇流 Y=0。
@@ -765,11 +799,13 @@ def main():
     left_top_y = pp[("D_PZT_TL", 3)][1]
     left_bottom_y = pp[("D_PZT_BL", 3)][1]
     right_top_y = pp[("D_PZT_TR", 3)][1]
-    route(vcc, [tp_vcc, (left_top_bus_x, tp_vcc[1]), (left_top_bus_x, left_top_y)],
+    tail_vcc_anchor = (tail_vcc_x, tail_trunk_y)
+    route(vcc, [tp_vcc, (tail_vcc_x, tp_vcc[1]), tail_vcc_anchor], TRACE_TAIL_PWR, pcbnew.B_Cu)
+    route(vcc, [tail_vcc_anchor, (left_top_bus_x, tail_trunk_y), (left_top_bus_x, left_top_y)],
           TRACE_PWR, pcbnew.B_Cu)
-    route(vcc, [tp_vcc, (left_bottom_bus_x, tp_vcc[1]), (left_bottom_bus_x, left_bottom_y)],
+    route(vcc, [tail_vcc_anchor, (left_bottom_bus_x, tail_trunk_y), (left_bottom_bus_x, left_bottom_y)],
           TRACE_PWR, pcbnew.B_Cu)
-    route(vcc, [tp_vcc, (right_bus_x, tp_vcc[1]), (right_bus_x, right_top_y)],
+    route(vcc, [tail_vcc_anchor, (right_bus_x, tail_trunk_y), (right_bus_x, right_top_y)],
           TRACE_PWR, pcbnew.B_Cu)
     for pid in ["PZT_TL", "PZT_BL", "PZT_TR", "PZT_BR"]:
         p = pp[(f"D_{pid}", 3)]
@@ -791,12 +827,17 @@ def main():
     usb_dn_jp = j1_pin_xy(16)
     usb_bottom_y = bot_y - 4.2
     dp_lane_y = usb_dp_jp[1] + 1.8
-    route(N("USB_D+"), [usb_dp_tp, (usb_dp_tp[0], dp_lane_y),
+    usb_dp_escape_x = 3.0
+    usb_dn_escape_x = 7.6
+    route(N("USB_D+"), [usb_dp_tp, (usb_dp_escape_x, usb_dp_tp[1]),
+                        (usb_dp_escape_x, tail_trunk_y),
+                        (usb_dp_escape_x, dp_lane_y),
                         (usb_dp_jp[0], dp_lane_y), usb_dp_jp])
 
-    dn_entry = (12.0, usb_dn_tp[1])
+    dn_entry = (usb_dn_escape_x, tail_trunk_y)
     dn_exit = (12.0, usb_dn_jp[1] + 1.8)
-    route(N("USB_D-"), [usb_dn_tp, dn_entry, dn_exit, (usb_dn_jp[0], dn_exit[1]), usb_dn_jp])
+    route(N("USB_D-"), [usb_dn_tp, (usb_dn_escape_x, usb_dn_tp[1]), dn_entry, (12.0, tail_trunk_y),
+                        dn_exit, (usb_dn_jp[0], dn_exit[1]), usb_dn_jp])
 
     for pid in ["PZT_TR","PZT_TL","PZT_BR","PZT_BL"]:
         for ref,pn in [(pid,2),(f"R_{pid}",2),(f"D_{pid}",2)]:
@@ -809,7 +850,7 @@ def main():
     z = pcbnew.ZONE(b); z.SetNet(gnd); z.SetLayer(pcbnew.B_Cu)
     z.SetIsRuleArea(False); z.SetAssignedPriority(0)
     zo = z.Outline(); zo.NewOutline()
-    for x,y in [opts[i] for i in range(0, len(opts), 3)]:
+    for x,y in opts:
         zo.Append(mk(x), mk(y))
     z.SetFillMode(pcbnew.ZONE_FILL_MODE_POLYGONS); z.SetHatchStyle(0)
     z.SetMinThickness(mk(0.2)); z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL)
@@ -829,6 +870,8 @@ def main():
     # 补拍尾全精度 (Y 最低点 X 最低+5mm)
     for i, (x, y) in enumerate(outline_raw):
         if y < ymin + 5:
+            keep_idx.add(i)
+        if y >= tail_root_y - 0.1:
             keep_idx.add(i)
     keep_idx = sorted(keep_idx)
     outline_pts = [outline_raw[i] for i in keep_idx]
