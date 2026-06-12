@@ -14,6 +14,7 @@ from "parts.ato" import PChannelMOSFET_SOT23
 from "parts.ato" import NChannelMOSFET_SOT23
 from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
+from "parts.ato" import SmallWirePad
 
 
 component ESP32C6WROOM1_Cutout:
@@ -203,12 +204,55 @@ module LEDInterface:
 
 
 
+module TestPads:
+    pin VBAT_SW
+    pin VCC_3V3
+    pin GND
+    pin EN
+    pin BOOT
+    pin UART_TX
+    pin UART_RX
+    pin IMU_KEY
+    pin IMU_GPIO
+    pin PWR_LATCH
+    pin LED_DATA
+    pin VBUS
+
+    vbat_pad = new SmallWirePad
+    vcc_pad = new SmallWirePad
+    gnd_pad = new SmallWirePad
+    en_pad = new SmallWirePad
+    boot_pad = new SmallWirePad
+    uart_tx_pad = new SmallWirePad
+    uart_rx_pad = new SmallWirePad
+    imu_key_pad = new SmallWirePad
+    imu_gpio_pad = new SmallWirePad
+    pwr_latch_pad = new SmallWirePad
+    led_data_pad = new SmallWirePad
+    vbus_pad = new SmallWirePad
+
+    vbat_pad.contact ~ VBAT_SW
+    vcc_pad.contact ~ VCC_3V3
+    gnd_pad.contact ~ GND
+    en_pad.contact ~ EN
+    boot_pad.contact ~ BOOT
+    uart_tx_pad.contact ~ UART_TX
+    uart_rx_pad.contact ~ UART_RX
+    imu_key_pad.contact ~ IMU_KEY
+    imu_gpio_pad.contact ~ IMU_GPIO
+    pwr_latch_pad.contact ~ PWR_LATCH
+    led_data_pad.contact ~ LED_DATA
+    vbus_pad.contact ~ VBUS
+
+
+
 module SmartPaddleRigid:
     mcu = new ESP32C6WROOM1_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
     tail = new TailHarness
     led = new LEDInterface
+    bringup = new TestPads
 
     pzt_tr = new PZTDock
     pzt_tl = new PZTDock
@@ -217,7 +261,7 @@ module SmartPaddleRigid:
 
     signal gnd
     signal vbat_in
-    signal vbat
+    signal vbat_sw
     signal vcc
     signal en
     signal usb_dp
@@ -244,7 +288,7 @@ module SmartPaddleRigid:
     tail.BAT_PLUS ~ vbat_in
     tail.GND ~ gnd
     power.VBAT_IN ~ vbat_in
-    power.VBAT_SW ~ vbat
+    power.VBAT_SW ~ vbat_sw
     power.VCC_3V3 ~ vcc
     power.GND ~ gnd
     mcu.VCC_3V3 ~ vcc
@@ -252,8 +296,8 @@ module SmartPaddleRigid:
     mcu.GND_28 ~ gnd
 
     # IM948 module power and UART link.
-    imu.VBAT_3 ~ vbat
-    imu.VBAT_15 ~ vbat
+    imu.VBAT_3 ~ vbat_sw
+    imu.VBAT_15 ~ vbat_sw
     imu.VBUS ~ vbus
     imu.GND_1 ~ gnd
     imu.GND_16 ~ gnd
@@ -283,13 +327,28 @@ module SmartPaddleRigid:
     mcu.USB_DN ~ usb_dn
 
     # External WS2812B-style LED wire interface.
-    tail.LED_PLUS ~ vbat
+    tail.LED_PLUS ~ vbat_sw
     tail.LED_DIN ~ led_din
-    led.LED_SUPPLY ~ vbat
+    led.LED_SUPPLY ~ vbat_sw
     led.MCU_DATA ~ led_data
     led.LED_DIN ~ led_din
     led.GND ~ gnd
     mcu.LED_DATA ~ led_data
+
+    # Bench bring-up pads. These are not intended as permanent user-facing
+    # connectors; they keep early firmware and power checks accessible.
+    bringup.VBAT_SW ~ vbat_sw
+    bringup.VCC_3V3 ~ vcc
+    bringup.GND ~ gnd
+    bringup.EN ~ en
+    bringup.BOOT ~ boot
+    bringup.UART_TX ~ uart_tx
+    bringup.UART_RX ~ uart_rx
+    bringup.IMU_KEY ~ imu_key
+    bringup.IMU_GPIO ~ imu_gpio
+    bringup.PWR_LATCH ~ pwr_latch
+    bringup.LED_DATA ~ led_data
+    bringup.VBUS ~ vbus
 
     # Four PZT docks. The small front-end parts live at each dock.
     mcu.PZT_TR ~ pzt_tr_signal

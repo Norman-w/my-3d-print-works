@@ -57,6 +57,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
     parser.add_argument("--force", action="store_true", help="move already-placed footprints too")
+    parser.add_argument(
+        "--place-docks",
+        action="store_true",
+        help="also place PZT dock parts; default leaves gangway/dock placement for manual KiCad work",
+    )
     args = parser.parse_args()
 
     import pcbnew
@@ -87,16 +92,39 @@ def main() -> None:
         moved += move(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
 
     tail = {
-        "tail.bat_plus_pad": (-6.0, 96.5, 0),
-        "tail.gnd_pad": (-2.0, 96.5, 0),
-        "tail.led_plus_pad": (2.0, 96.5, 0),
-        "tail.led_din_pad": (6.0, 96.5, 0),
-        "tail.button_pad": (-4.0, 101.2, 0),
-        "tail.usb_dp_pad": (0.0, 101.2, 0),
-        "tail.usb_dn_pad": (4.0, 101.2, 0),
+        "tail.bat_plus_pad": (-6.0, 74.5, 0),
+        "tail.gnd_pad": (-2.0, 74.5, 0),
+        "tail.led_plus_pad": (2.0, 74.5, 0),
+        "tail.led_din_pad": (6.0, 74.5, 0),
+        "tail.button_pad": (-4.0, 77.4, 0),
+        "tail.usb_dp_pad": (0.0, 77.4, 0),
+        "tail.usb_dn_pad": (4.0, 77.4, 0),
     }
     for addr, (x, y, rot) in tail.items():
         moved += move(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+
+    test_pads = {
+        "bringup.vbat_pad": (-18.0, -21.2, 0),
+        "bringup.vcc_pad": (-14.0, -21.2, 0),
+        "bringup.gnd_pad": (-18.0, -24.0, 0),
+        "bringup.en_pad": (14.0, -21.2, 0),
+        "bringup.boot_pad": (18.0, -21.2, 0),
+        "bringup.pwr_latch_pad": (18.0, -24.0, 0),
+        "bringup.uart_tx_pad": (-10.0, -24.0, 0),
+        "bringup.uart_rx_pad": (-6.0, -24.0, 0),
+        "bringup.imu_key_pad": (-2.0, -24.0, 0),
+        "bringup.imu_gpio_pad": (2.0, -24.0, 0),
+        "bringup.led_data_pad": (6.0, -24.0, 0),
+        "bringup.vbus_pad": (10.0, -24.0, 0),
+    }
+    for addr, (x, y, rot) in test_pads.items():
+        moved += move(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+
+    if not args.place_docks:
+        save_board(board, args.board)
+        print(f"placed {moved} atopile scaffold footprints in {args.board}")
+        print("left PZT dock footprints at their current/default positions")
+        return
 
     for pzt in params["components"]["piezo"]:
         pid = pzt["id"]
