@@ -59,48 +59,20 @@ SCAD_SLOT_POINTS = [
 ]
 
 
-_PCB_SLOT_SCAD_POINTS = [
-    (9.00, -88.00),
-    (-9.00, -88.00),
-    (-9.00, -26.00),
-    (-17.44, -26.00),
-    (-29.81, -39.19),
-    (-27.70, -41.17),
-    (-33.16, -47.01),
-    (-39.73, -40.86),
-    (-34.27, -35.02),
-    (-32.15, -37.00),
-    (-21.00, -25.12),
-    (-21.00, 16.00),
-    (-18.89, 16.00),
-    (-28.80, 35.24),
-    (-31.18, 33.65),
-    (-35.61, 40.31),
-    (-28.13, 45.30),
-    (-23.69, 38.65),
-    (-26.12, 37.02),
-    (-15.29, 16.00),
-    (15.29, 16.00),
-    (26.12, 37.02),
-    (23.69, 38.65),
-    (28.13, 45.30),
-    (35.61, 40.31),
-    (31.18, 33.65),
-    (28.80, 35.24),
-    (18.89, 16.00),
-    (21.00, 16.00),
-    (21.00, -25.12),
-    (32.15, -37.00),
-    (34.27, -35.02),
-    (39.73, -40.86),
-    (33.16, -47.01),
-    (27.70, -41.17),
-    (29.81, -39.19),
-    (17.44, -26.00),
-    (9.00, -26.00),
-]
+def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
+    """PCB substrate outline derived from the SCAD slot reference.
 
-PCB_SLOT_POINTS = [slot_scad_to_kicad(p) for p in _PCB_SLOT_SCAD_POINTS]
+    Keep the dock/gangway/mainland points aligned to the SCAD slot so the PCB
+    cannot drift outside the black reference frame.  Only shorten the handle
+    tail, because the rigid PCB should stop inside the handle cavity.
+    """
+
+    points = list(SCAD_SLOT_POINTS)
+    points[0] = (points[0][0], -88.00)
+    points[1] = (points[1][0], -88.00)
+    return points
+
+PCB_SLOT_POINTS = [slot_scad_to_kicad(p) for p in _embedded_substrate_scad_points()]
 
 
 MAINLAND_RECT = (0.0, -5.0, 42.0, 42.0)
