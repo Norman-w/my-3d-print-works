@@ -16,8 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board, mk, polyline, save_board, shape_line, scad_to_kicad, xy
-from rigid_pcb.tools.mech_geometry import SCAD_SLOT_POINTS
+from rigid_pcb.tools.kicad_update_utils import load_board, mk, polyline, save_board, shape_line, xy
+from rigid_pcb.tools.mech_geometry import SCAD_SLOT_POINTS, SCAD_TO_KICAD_Y_OFFSET, slot_scad_to_kicad
 
 
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -76,7 +76,7 @@ def main() -> None:
     board = load_board(pcbnew, args.board)
     removed = clear_board(board)
 
-    contour = [scad_to_kicad(p) for p in SCAD_SLOT_POINTS]
+    contour = [slot_scad_to_kicad(p) for p in SCAD_SLOT_POINTS]
     polyline(pcbnew, board, pcbnew.Dwgs_User, contour, 0.18)
 
     xs = [p[0] for p in contour]
@@ -101,6 +101,7 @@ def main() -> None:
     save_board(board, args.board)
     print(f"reset {args.board}")
     print("removed", removed)
+    print(f"scad_to_kicad_y_offset {SCAD_TO_KICAD_Y_OFFSET:.2f} mm")
     print(f"scad_reference_bbox x=[{xmin:.2f}, {xmax:.2f}] y=[{ymin:.2f}, {ymax:.2f}]")
 
 

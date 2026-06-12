@@ -33,7 +33,10 @@ def main() -> None:
     removed = remove_drawings_on_layers(board, {pcbnew.Edge_Cuts})
     polyline(pcbnew, board, pcbnew.Edge_Cuts, PCB_SLOT_POINTS, 0.10)
     save_board(board, args.board)
+    xs = [p[0] for p in PCB_SLOT_POINTS]
+    ys = [p[1] for p in PCB_SLOT_POINTS]
     print(f"drew embedded substrate in {args.board} (removed {removed} Edge.Cuts drawings)")
+    print(f"embedded_substrate_bbox x=[{min(xs):.2f}, {max(xs):.2f}] y=[{min(ys):.2f}, {max(ys):.2f}]")
 
 
 if __name__ == "__main__":

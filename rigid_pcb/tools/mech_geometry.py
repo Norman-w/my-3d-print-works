@@ -8,6 +8,15 @@ editor; the PZT centers from board_params.yaml are converted at their callsite.
 from __future__ import annotations
 
 
+SCAD_TO_KICAD_Y_OFFSET = -10.0
+
+
+def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
+    """Convert SCAD slot coordinates into the KiCad mechanical reference frame."""
+    x, y = point
+    return (x, -y + SCAD_TO_KICAD_Y_OFFSET)
+
+
 SCAD_SLOT_POINTS = [
     (9.00, -108.00),
     (-9.00, -108.00),
@@ -91,10 +100,7 @@ _PCB_SLOT_SCAD_POINTS = [
     (9.00, -26.00),
 ]
 
-# This keeps the known non-self-intersecting slot outline, but shifts it into
-# the same KiCad frame as the 42 x 42 mainland reference: x [-21, 21],
-# y [-26, 16].  The handle tail stops at y ~= 78 mm.
-PCB_SLOT_POINTS = [(x, -y - 10.0) for x, y in _PCB_SLOT_SCAD_POINTS]
+PCB_SLOT_POINTS = [slot_scad_to_kicad(p) for p in _PCB_SLOT_SCAD_POINTS]
 
 
 MAINLAND_RECT = (0.0, -5.0, 42.0, 42.0)
