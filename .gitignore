@@ -48,12 +48,22 @@ fpc/layouts/default/schematic_quality_gate.json
 fpc/layouts/default/unconnected.json
 fpc/layouts/default/validate_drc.json
 fpc/layouts/default/validate_erc.json
+fpc/layouts/default/output/
 fpc/*.lock
+
+# Rigid PCB generator byproducts
+rigid_pcb/build/
+rigid_pcb/layouts/default/*.lck
+rigid_pcb/layouts/default/drc.json
+rigid_pcb/layouts/default/default-backups/
+rigid_pcb/layouts/default/fp-info-cache
+rigid_pcb/preview/
 
 # ESP-IDF build artifacts
 firmware/build/
 
 # Python cache
+__pycache__/
 scripts/__pycache__/
 
 # Backup files

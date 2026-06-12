@@ -346,6 +346,71 @@ module resistor_ears(front = true) {
     }
 }
 
+// ═══ 刚性 PCB 嵌入槽 / KiCad 对照背衬源 ═══
+//
+// 这个 2D 轮廓是 rigid_pcb/generate_kicad.py 的机械基准:
+//   - 中央甜区矩形为主控/IMU/电源小器件大陆 (42 x 42mm)
+//   - 四条约 4.2mm 栈道从大陆通向 PZT 槽旁
+//   - PZT 圆边旁的码头承载 1M + BAT54S + PZT 飞线焊盘
+//   - 拍柄方向是一条宽尾巴，进入手柄空腔供电池/按钮/LED/USB 飞线焊接
+// KiCad 中会把同一批点转换为 Edge.Cuts，并在 Dwgs.User 上画背衬对照。
+rigid_pcb_slot_points = [
+    [9.00, -108.00],
+    [-9.00, -108.00],
+    [-9.00, -26.00],
+    [-16.75, -26.00],
+    [-29.99, -40.11],
+    [-28.24, -41.75],
+    [-35.08, -49.05],
+    [-41.65, -42.90],
+    [-34.81, -35.60],
+    [-33.06, -37.24],
+    [-21.00, -24.39],
+    [-21.00, 16.00],
+    [-19.48, 16.00],
+    [-29.66, 35.62],
+    [-31.62, 34.32],
+    [-37.17, 42.64],
+    [-29.68, 47.63],
+    [-24.13, 39.31],
+    [-26.15, 37.97],
+    [-14.75, 16.00],
+    [14.75, 16.00],
+    [26.15, 37.97],
+    [24.13, 39.31],
+    [29.68, 47.63],
+    [37.17, 42.64],
+    [31.62, 34.32],
+    [29.66, 35.62],
+    [19.48, 16.00],
+    [21.00, 16.00],
+    [21.00, -24.39],
+    [33.06, -37.24],
+    [34.81, -35.60],
+    [41.65, -42.90],
+    [35.08, -49.05],
+    [28.24, -41.75],
+    [29.99, -40.11],
+    [16.75, -26.00],
+    [9.00, -26.00],
+];
+
+module rigid_pcb_profile_2d() {
+    polygon(points = rigid_pcb_slot_points);
+}
+
+module rigid_pcb_cavity(front = true) {
+    d = max(pcb_cavity_depth, piezo_trench_d, resistor_ear_d);
+    if (front)
+        translate([0, 0, d / 2])
+            linear_extrude(height = d + 2 * overcut + eps, center = true)
+                rigid_pcb_profile_2d();
+    else
+        translate([0, 0, -d / 2])
+            linear_extrude(height = d + 2 * overcut + eps, center = true)
+                rigid_pcb_profile_2d();
+}
+
 // ═══ 导线通道 ═══
 
 module wire_channels(front = true) {
@@ -708,10 +773,7 @@ module blade_front_part() {
         screw_holes_clearance_blade();
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = true);
-        resistor_ears(front = true);
-        wire_channels(front = true);
-        signal_bus_to_handle(front = true);
-        pcb_main_cavity(front = true);
+        rigid_pcb_cavity(front = true);
     }
     difference() {
         union() {
@@ -737,13 +799,10 @@ module blade_back_part() {
                 let(x = p[0], y = p[1], hz = half_z_at(y))
                 translate([x, y, -hz - eps])
                     cylinder(d = screw_d_pilot, h = hz + 2 * eps);
-            }
+        }
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = false);
-        resistor_ears(front = false);
-        wire_channels(front = false);
-        signal_bus_to_handle(front = false);
-        pcb_main_cavity(front = false);
+        rigid_pcb_cavity(front = false);
     }
     difference() {
         union() {
@@ -788,13 +847,12 @@ module handle_front_part() {
             // USB-C 左侧夹持固定销
             usb_c_left_clamp(front = true);
         }
-        wire_channels(front = true);
+        rigid_pcb_cavity(front = true);
         screw_holes_clearance();
         plug_recesses();
         usb_c_cutout();
         led_light_guide_holes();
         button_cutout();
-        signal_bus_to_handle(front = true);
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = true);
@@ -818,13 +876,12 @@ module handle_back_part() {
             // USB-C 左侧夹持固定销
             usb_c_left_clamp(front = false);
         }
-        wire_channels(front = false);
+        rigid_pcb_cavity(front = false);
         screw_holes_pilot();
         usb_c_cutout();
         button_cutout();
         ws2812_led_hole();
         soft_power_circuit_cavity();
-        signal_bus_to_handle(front = false);
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = false);

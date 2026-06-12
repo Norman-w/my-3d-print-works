@@ -1,0 +1,83 @@
+"""Generic and project-specific physical parts for the rigid PCB."""
+
+
+component Resistor:
+    designator_prefix = "R"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Resistor_SMD:R_0603_1608Metric"
+
+
+component Capacitor:
+    designator_prefix = "C"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_0603_1608Metric"
+
+
+component Diode:
+    designator_prefix = "D"
+    signal anode
+    signal cathode
+    anode ~ pin 2
+    cathode ~ pin 1
+    footprint = "Diode_SMD:D_SOD-323"
+
+
+component BAT54S:
+    designator_prefix = "D"
+    signal a1
+    signal a2
+    signal cathode_common
+    a1 ~ pin 1
+    a2 ~ pin 2
+    cathode_common ~ pin 3
+    footprint = "Package_TO_SOT_SMD:SOT-23"
+
+
+component PChannelMOSFET_SOT23:
+    designator_prefix = "Q"
+    signal gate
+    signal source
+    signal drain
+    gate ~ pin 1
+    source ~ pin 2
+    drain ~ pin 3
+    footprint = "Package_TO_SOT_SMD:SOT-23"
+
+
+component NChannelMOSFET_SOT23:
+    designator_prefix = "Q"
+    signal gate
+    signal source
+    signal drain
+    gate ~ pin 1
+    source ~ pin 2
+    drain ~ pin 3
+    footprint = "Package_TO_SOT_SMD:SOT-23"
+
+
+component AP2112K_3V3:
+    designator_prefix = "U"
+    signal vin
+    signal gnd
+    signal en
+    signal nc
+    signal vout
+    vin ~ pin 1
+    gnd ~ pin 2
+    en ~ pin 3
+    nc ~ pin 4
+    vout ~ pin 5
+    footprint = "Package_TO_SOT_SMD:SOT-23-5"
+
+
+component WirePad:
+    designator_prefix = "TP"
+    signal contact
+    contact ~ pin 1
+    footprint = "TestPoint:TestPoint_Pad_2.0x2.0mm"
