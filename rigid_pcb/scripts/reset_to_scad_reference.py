@@ -16,8 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board, mk, polyline, save_board, shape_line, xy
-from rigid_pcb.tools.mech_geometry import SCAD_SLOT_POINTS, SCAD_TO_KICAD_Y_OFFSET, slot_scad_to_kicad
+from rigid_pcb.tools.kicad_update_utils import circle, load_board, mk, polyline, save_board, shape_line, xy
+from rigid_pcb.tools.mech_geometry import PZT_CAVITIES_SCAD, SCAD_SLOT_POINTS, SCAD_TO_KICAD_Y_OFFSET, slot_scad_to_kicad
 
 
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -92,6 +92,10 @@ def main() -> None:
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (xmax - 4.0, cy), (xmax + 4.0, cy), 0.12)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, ymin - 4.0), (cx, ymin + 4.0), 0.12)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, ymax - 4.0), (cx, ymax + 4.0), 0.12)
+
+    for pzt_x, pzt_y, pzt_r in PZT_CAVITIES_SCAD:
+        kicad_x, kicad_y = slot_scad_to_kicad((pzt_x, pzt_y))
+        circle(pcbnew, board, pcbnew.Dwgs_User, kicad_x, kicad_y, pzt_r, 0.12)
 
     add_text(pcbnew, board, "X+", xmax + 6.0, cy, 3.0)
     add_text(pcbnew, board, "X-", xmin - 14.0, cy, 3.0)
