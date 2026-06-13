@@ -220,7 +220,7 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 MODULE_CUTOUT_CLEARANCE = 0.20
 ESP32_CUTOUT = (
     0.0,
-    5.0,
+    2.5,
     25.5 + MODULE_CUTOUT_CLEARANCE * 2,
     18.0 + MODULE_CUTOUT_CLEARANCE * 2,
 )

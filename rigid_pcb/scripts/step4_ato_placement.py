@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
 """Step 4 — Normalize atopile footprints and place them at scaffold positions.
 
-This step expects atopile has already produced footprints on the PCB (via
-`atopile build`).  It does two things:
+Layout zones (all positions derived from cutout edges + keepout offsets):
 
-  4a. Normalize — fix empty library IDs and missing footprint attributes
-      so KiCad and atopile can both decode the PCB correctly.
-  4b. Place — move footprints tagged with `atopile_address` properties to
-      their mechanical scaffold positions (MCU/IMU cutout centres, PZT
-      signal-conditioning parts, tail pads, bring-up test pads).
-
-By default only footprints still sitting at atopile's initial 10mm-grid
-position are moved, so any manual KiCad placement survives.  Use --force
-to re-snap everything.
+  MCU X+  — power-latch circuit + LED interface (2 columns)
+  MCU X-  — bring-up test pads ONLY (1 column)
+  IMU X-  — LDO filter capacitors (1 column)
+  IMU X+  — remaining bring-up test pads (2 columns)
 """
 
 # ===== 分区：导入/依赖 =====
@@ -35,6 +29,10 @@ from rigid_pcb.tools.mech_geometry import ESP32_CUTOUT, IMU_CUTOUT
 # ===== 分区：常量/配置 =====
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
 PARAMS = ROOT / "shared" / "board_params.yaml"
+
+KEEPOUT = 1.5
+COL_SPACING_Y = 3.5   # mm between component centres along a column
+COL_MARGIN = 1.0       # extra margin inside keepout before first component
 
 
 # ===== 分区：方法/工具 =====
@@ -78,6 +76,25 @@ def move_one(pcbnew, fp_by_addr: dict, addr: str, x: float, y: float, rot: float
     return 1
 
 
+def _cutout_edges(cutout: tuple[float, float, float, float]) -> dict[str, float]:
+    """Compute edge positions for a cutout (cx, cy, w, h) including keepout."""
+    cx, cy, w, h = cutout
+    hw, hh = w / 2, h / 2
+    return {
+        "left":  cx - hw - KEEPOUT,
+        "right": cx + hw + KEEPOUT,
+        "top":   cy - hh - KEEPOUT,
+        "bot":   cy + hh + KEEPOUT,
+        "cx":    cx,
+        "cy":    cy,
+    }
+
+
+def col_y(t: float, step: int) -> float:
+    """Return Y for the nth position in a vertical column starting at *t* (north edge)."""
+    return t + COL_MARGIN + step * COL_SPACING_Y
+
+
 # ===== 分区：公开 API =====
 
 
@@ -105,7 +122,7 @@ def main() -> None:
 
     print(f"4a. 规范化: 修正了 {changed} 个封装的元数据字段")
 
-    # ---- 4b: Place footprints at scaffold positions ----
+    # ---- 4b: Place footprints at relative scaffold positions ----
     params = yaml.safe_load(PARAMS.read_text())
     fp_by_addr = {addr: fp for fp in board.GetFootprints() if (addr := address(fp))}
 
@@ -117,62 +134,96 @@ def main() -> None:
 
     moved = 0
 
-    # Core modules
+    mcu = _cutout_edges(ESP32_CUTOUT)
+    imu = _cutout_edges(IMU_CUTOUT)
+
+    # ---- Core modules (centre of their cutouts) ----
     moved += move_one(pcbnew, fp_by_addr, "mcu", ESP32_CUTOUT[0], ESP32_CUTOUT[1], 0, args.force)
     moved += move_one(pcbnew, fp_by_addr, "imu", IMU_CUTOUT[0], IMU_CUTOUT[1], 0, args.force)
 
-    # Central mainland components
-    central = {
-        "led.c_supply": (18.0, 14.0, 0),
-        "led.r_data": (18.8, 8.0, 90),
-        "power.q_power": (-17.2, 18.0, 90),
-        "power.q_latch": (-17.2, 11.2, 90),
-        "power.r_gate": (-12.5, 15.0, 0),
-        "power.d_button": (-19.0, 15.0, 0),
-        "power.r_button": (18.2, -2.8, 90),
-        "power.r_latch_pd": (-18.4, 7.8, 0),
-        "power.ldo": (-17.5, -4.8, 90),
-        "power.c_in": (-18.7, -12.0, 0),
-        "power.c_out": (-18.7, -15.2, 0),
+    # ── MCU X+ zone: power-latch + LED  (2 columns) ──
+    # Col spacing inside zone: 3mm between columns
+    rx_A = mcu["right"] + 2.0
+    rx_B = mcu["right"] + 5.0
+    ry   = mcu["top"]           # column start Y
+
+    mcu_right = {
+        # Col A (X=rx_A)
+        "power.q_power":       (rx_A, col_y(ry, 0), 90),
+        "power.q_latch":       (rx_A, col_y(ry, 1), 90),
+        "power.ldo":           (rx_A, col_y(ry, 2), 90),
+        "led.c_supply":        (rx_A, col_y(ry, 3), 0),
+        "led.r_data":          (rx_A, col_y(ry, 4), 90),
+        # Col B (X=rx_B)
+        "power.d_button":      (rx_B, col_y(ry, 0), 0),
+        "power.r_gate":        (rx_B, col_y(ry, 1), 0),
+        "power.r_latch_pd":    (rx_B, col_y(ry, 2), 0),
+        "power.r_button":      (rx_B, col_y(ry, 3), 90),
     }
-    for addr, (x, y, rot) in central.items():
+    for addr, (x, y, rot) in mcu_right.items():
         moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
 
-    # Handle tail pads
+    # ── MCU X- zone: bring-up test pads ONLY (1 column) ──
+    lx = mcu["left"] - 2.0
+    ly = mcu["top"]
+    mcu_left = {
+        "bringup.gnd_pad":      (lx, col_y(ly, 0), 0),
+        "bringup.vcc_pad":      (lx, col_y(ly, 1), 0),
+        "bringup.vbat_pad":     (lx, col_y(ly, 2), 0),
+        "bringup.uart_tx_pad":  (lx, col_y(ly, 3), 0),
+        "bringup.uart_rx_pad":  (lx, col_y(ly, 4), 0),
+    }
+    for addr, (x, y, rot) in mcu_left.items():
+        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+
+    # ── IMU X- zone: LDO filter capacitors (1 column) ──
+    ilx = imu["left"] - 2.0
+    ily = imu["top"]
+    imu_left = {
+        "power.c_in":   (ilx, col_y(ily, 0), 0),
+        "power.c_out":  (ilx, col_y(ily, 1), 0),
+    }
+    for addr, (x, y, rot) in imu_left.items():
+        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+
+    # ── IMU X+ zone: remaining bring-up test pads (2 columns) ──
+    irx_A = imu["right"] + 2.0
+    irx_B = imu["right"] + 5.0
+    iry   = imu["top"]
+    imu_right = {
+        # Col A
+        "bringup.en_pad":           (irx_A, col_y(iry, 0), 0),
+        "bringup.pwr_latch_pad":    (irx_A, col_y(iry, 1), 0),
+        "bringup.imu_gpio_pad":     (irx_A, col_y(iry, 2), 0),
+        "bringup.led_data_pad":     (irx_A, col_y(iry, 3), 0),
+        # Col B
+        "bringup.boot_pad":         (irx_B, col_y(iry, 0), 0),
+        "bringup.imu_key_pad":      (irx_B, col_y(iry, 1), 0),
+        "bringup.vbus_pad":         (irx_B, col_y(iry, 2), 0),
+    }
+    for addr, (x, y, rot) in imu_right.items():
+        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+
+    # ---- Handle tail pads ----
     tail = {
         "tail.bat_plus_pad": (-6.0, 74.5, 0),
-        "tail.gnd_pad": (-2.0, 74.5, 0),
-        "tail.led_plus_pad": (2.0, 74.5, 0),
-        "tail.led_din_pad": (6.0, 74.5, 0),
-        "tail.button_pad": (-4.0, 77.4, 0),
-        "tail.usb_dp_pad": (0.0, 77.4, 0),
-        "tail.usb_dn_pad": (4.0, 77.4, 0),
+        "tail.gnd_pad":      (-2.0, 74.5, 0),
+        "tail.led_plus_pad": ( 2.0, 74.5, 0),
+        "tail.led_din_pad":  ( 6.0, 74.5, 0),
+        "tail.button_pad":   (-4.0, 77.4, 0),
+        "tail.usb_dp_pad":   ( 0.0, 77.4, 0),
+        "tail.usb_dn_pad":   ( 4.0, 77.4, 0),
     }
     for addr, (x, y, rot) in tail.items():
         moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
 
-    # Bring-up test pads
-    test_pads = {
-        "bringup.vbat_pad": (-19.0, -2.0, 0),
-        "bringup.vcc_pad": (-19.0, -5.0, 0),
-        "bringup.gnd_pad": (-19.0, -8.0, 0),
-        "bringup.uart_tx_pad": (-19.0, -11.0, 0),
-        "bringup.uart_rx_pad": (-19.0, -14.0, 0),
-        "bringup.en_pad": (19.0, -2.0, 0),
-        "bringup.boot_pad": (19.0, -5.0, 0),
-        "bringup.pwr_latch_pad": (19.0, -8.0, 0),
-        "bringup.imu_key_pad": (19.0, -11.0, 0),
-        "bringup.imu_gpio_pad": (19.0, -14.0, 0),
-        "bringup.led_data_pad": (15.5, -17.0, 0),
-        "bringup.vbus_pad": (19.0, -17.0, 0),
-    }
-    for addr, (x, y, rot) in test_pads.items():
-        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
-
+    # ---- Summary ----
     if not args.place_docks:
         save_board(board, args.board)
         print(f"4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点")
         print(f"    总共 {len(fp_by_addr)} 个带 atopile_address 的封装")
+        print(f"    MCU 相对: right({rx_A:.1f}/{rx_B:.1f}) left({lx:.1f})")
+        print(f"    IMU 相对: right({irx_A:.1f}/{irx_B:.1f}) left({ilx:.1f})")
         print(f"    PZT 码头封装保持在当前位置 (使用 --place-docks 可同时放置)")
         return
 

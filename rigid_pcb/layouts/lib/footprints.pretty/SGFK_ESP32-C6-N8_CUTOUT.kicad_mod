@@ -50,8 +50,8 @@
   (pad "27" smd roundrect (at -4.630 9.72 180) (size 1.05 1.25) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (pad "28" smd roundrect (at -5.900 9.72 180) (size 1.05 1.25) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (model "${KIPRJMOD}/../lib/3dmodels/SGFK_ESP32-C6-N8_CUTOUT.wrl"
-    (offset (xyz 0 0 0))
-    (scale (xyz 0.3937008 0.3937008 0.3937008))
+    (offset (xyz 0 0 -0.8))
+    (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
   )
 )
