@@ -1,9 +1,0 @@
-requires-atopile: "0.12.4"
-
-paths:
-  src: ./
-  layout: ./layouts
-
-builds:
-  default:
-    entry: main.ato:SmartPaddleBoard

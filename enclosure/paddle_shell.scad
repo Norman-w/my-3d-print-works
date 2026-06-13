@@ -348,7 +348,7 @@ module resistor_ears(front = true) {
 
 // ═══ 刚性 PCB 嵌入槽 / KiCad 对照背衬源 ═══
 //
-// 这个 2D 轮廓是 rigid_pcb/generate_kicad.py 的机械基准:
+// 这个 2D 轮廓是 rigid_pcb/tools/mech_geometry.py 中 SCAD_SLOT_POINTS 的机械基准:
 //   - 中央甜区矩形为主控/IMU/电源小器件大陆 (42 x 42mm)
 //   - 四条约 4.2mm 栈道从大陆通向 PZT 槽旁
 //   - PZT 圆边旁的码头承载 1M + BAT54S + PZT 飞线焊盘
