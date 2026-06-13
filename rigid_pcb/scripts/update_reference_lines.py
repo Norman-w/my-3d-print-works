@@ -16,8 +16,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import circle, load_board, polyline, rect, remove_drawings_on_layers, save_board, scad_to_kicad
+from rigid_pcb.tools.kicad_update_utils import circle, load_board, polyline, rect, remove_drawings_on_layers, save_board
 from rigid_pcb.tools.mech_geometry import ESP32_CUTOUT, IMU_CUTOUT, MAINLAND_RECT, M2_CLEARANCE_HOLES, PCB_SLOT_POINTS, SCAD_SLOT_POINTS
+from rigid_pcb.tools.mech_geometry import slot_scad_to_kicad
 
 
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -35,7 +36,7 @@ def main() -> None:
     removed = remove_drawings_on_layers(board, {pcbnew.Dwgs_User, pcbnew.Eco1_User})
 
     params = yaml.safe_load(PARAMS.read_text())
-    polyline(pcbnew, board, pcbnew.Dwgs_User, [scad_to_kicad(p) for p in SCAD_SLOT_POINTS], 0.15)
+    polyline(pcbnew, board, pcbnew.Dwgs_User, [slot_scad_to_kicad(p) for p in SCAD_SLOT_POINTS], 0.15)
     polyline(pcbnew, board, pcbnew.Eco1_User, PCB_SLOT_POINTS, 0.12)
     rect(pcbnew, board, pcbnew.Dwgs_User, *MAINLAND_RECT, 0.08)
     rect(pcbnew, board, pcbnew.Eco1_User, *ESP32_CUTOUT, 0.10)

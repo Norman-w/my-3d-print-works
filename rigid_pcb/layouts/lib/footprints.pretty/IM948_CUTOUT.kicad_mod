@@ -35,7 +35,7 @@
   (pad "16" smd roundrect (at 6.100 6.95) (size 1.25 1.55) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (model "${KIPRJMOD}/../lib/3dmodels/IM948_CUTOUT.wrl"
     (offset (xyz 0 0 0))
-    (scale (xyz 1 1 1))
+    (scale (xyz 0.3937008 0.3937008 0.3937008))
     (rotate (xyz 0 0 0))
   )
 )

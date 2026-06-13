@@ -17,7 +17,7 @@ from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 
 
-component ESP32C6WROOM1_Cutout:
+component SGFK_ESP32C6N8_Cutout:
     designator_prefix = "J"
     pin GND_1
     pin VCC_3V3
@@ -52,7 +52,7 @@ component ESP32C6WROOM1_Cutout:
     UART_TX ~ pin 24
     UART_RX ~ pin 25
     GND_28 ~ pin 28
-    footprint = "SmartPaddle:ESP32-C6-WROOM-1_CUTOUT"
+    footprint = "SmartPaddle:SGFK_ESP32-C6-N8_CUTOUT"
 
 component IM948_Cutout:
     designator_prefix = "U"
@@ -247,12 +247,15 @@ module TestPads:
 
 
 module SmartPaddleRigid:
-    mcu = new ESP32C6WROOM1_Cutout
+    mcu = new SGFK_ESP32C6N8_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
     tail = new TailHarness
-    led = new LEDInterface
     bringup = new TestPads
+
+    # Inline LED interface components (atopile 0.2.x module nesting bug workaround)
+    led_r_data = new Resistor
+    led_c_supply = new Capacitor
 
     pzt_tr = new PZTDock
     pzt_tl = new PZTDock
@@ -329,10 +332,10 @@ module SmartPaddleRigid:
     # External WS2812B-style LED wire interface.
     tail.LED_PLUS ~ vbat_sw
     tail.LED_DIN ~ led_din
-    led.LED_SUPPLY ~ vbat_sw
-    led.MCU_DATA ~ led_data
-    led.LED_DIN ~ led_din
-    led.GND ~ gnd
+    led_c_supply.p1 ~ vbat_sw
+    led_c_supply.p2 ~ gnd
+    led_r_data.p1 ~ led_data
+    led_r_data.p2 ~ led_din
     mcu.LED_DATA ~ led_data
 
     # Bench bring-up pads. These are not intended as permanent user-facing

@@ -1,8 +1,9 @@
-requires-atopile: "0.12.5"
+ato-version: "0.2.0"
 
 paths:
   src: ./
   layout: ./layouts
+  footprints: ./layouts/lib/footprints.pretty
 
 builds:
   default:
