@@ -31,7 +31,7 @@ DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
 PARAMS = ROOT / "shared" / "board_params.yaml"
 
 KEEPOUT = 1.5
-COL_SPACING_Y = 4.0   # mm between component centres along a column
+COL_SPACING_Y = 5.0   # mm between component centres along a column
 COL_MARGIN = 1.0       # extra margin inside keepout before first component
 TEXT_THICKNESS = 0.10
 
