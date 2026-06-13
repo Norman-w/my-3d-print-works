@@ -104,18 +104,18 @@ def main() -> None:
         moved += move(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
 
     test_pads = {
-        "bringup.vbat_pad": (-18.0, -21.2, 0),
-        "bringup.vcc_pad": (-14.0, -21.2, 0),
-        "bringup.gnd_pad": (-18.0, -24.0, 0),
-        "bringup.en_pad": (14.0, -21.2, 0),
-        "bringup.boot_pad": (18.0, -21.2, 0),
-        "bringup.pwr_latch_pad": (18.0, -24.0, 0),
-        "bringup.uart_tx_pad": (-10.0, -24.0, 0),
-        "bringup.uart_rx_pad": (-6.0, -24.0, 0),
-        "bringup.imu_key_pad": (-2.0, -24.0, 0),
-        "bringup.imu_gpio_pad": (2.0, -24.0, 0),
-        "bringup.led_data_pad": (6.0, -24.0, 0),
-        "bringup.vbus_pad": (10.0, -24.0, 0),
+        "bringup.vbat_pad": (-19.0, -2.0, 0),
+        "bringup.vcc_pad": (-19.0, -5.0, 0),
+        "bringup.gnd_pad": (-19.0, -8.0, 0),
+        "bringup.uart_tx_pad": (-19.0, -11.0, 0),
+        "bringup.uart_rx_pad": (-19.0, -14.0, 0),
+        "bringup.en_pad": (19.0, -2.0, 0),
+        "bringup.boot_pad": (19.0, -5.0, 0),
+        "bringup.pwr_latch_pad": (19.0, -8.0, 0),
+        "bringup.imu_key_pad": (19.0, -11.0, 0),
+        "bringup.imu_gpio_pad": (19.0, -14.0, 0),
+        "bringup.led_data_pad": (15.5, -17.0, 0),
+        "bringup.vbus_pad": (19.0, -17.0, 0),
     }
     for addr, (x, y, rot) in test_pads.items():
         moved += move(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
