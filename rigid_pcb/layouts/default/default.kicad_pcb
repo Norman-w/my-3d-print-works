@@ -468,7 +468,7 @@
 		(uuid "0bfca054-a474-47d1-9275-a6124642524b")
 		(at 31.317363 32.206363 -45)
 		(property "Reference" "PZT_BR_R_DIS_1M"
-			(at 0.848528 0.848528 315)
+			(at 0.848528 0.848528 -45)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "35963852-eb8a-46b3-9c27-4abeaaf5a175")
@@ -1158,7 +1158,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "18908b3b-0d85-43f8-9ef6-25904642524b")
-		(at -16.45 2.8)
+		(at -16.45 -0.2)
 		(property "Reference" "TP_VBAT_SW"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -1279,7 +1279,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "18dddf72-f4a9-4e30-a554-2d704642524b")
-		(at -16.45 -2.2)
+		(at -16.45 -3.7)
 		(property "Reference" "TP_3V3"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -1400,7 +1400,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
 		(uuid "1e35a3df-b3ec-4438-ac93-84664642524b")
-		(at -12.95 -18.7)
+		(at -12.95 -20.2)
 		(property "Reference" "PW_C_OUT_10U"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -1956,7 +1956,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "391ed07c-d687-4e89-91e6-37804642524b")
-		(at 12.95 -8.7)
+		(at 12.95 -13.2)
 		(property "Reference" "TP_LED_DATA"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -2079,7 +2079,7 @@
 		(uuid "3d805dad-dc95-4f0e-92a8-e0274642524b")
 		(at -34.798 28.575 -135)
 		(property "Reference" "PZT_BL_R_DIS_1M"
-			(at 0.848528 -0.848528 225)
+			(at 0.848528 -0.848528 -135)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "6ce6f966-8225-47e8-b72a-915cf0407400")
@@ -3159,7 +3159,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "59c73071-cfff-4a62-a52f-325c4642524b")
-		(at 15.95 -13.7)
+		(at 15.95 -16.7)
 		(property "Reference" "TP_VBUS"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -3402,7 +3402,7 @@
 		(uuid "5f5fe73b-9161-4711-93bb-d7b34642524b")
 		(at 34.571912 29.182088 -135)
 		(property "Reference" "PZT_BR_D_CLAMP"
-			(at 0.848528 -0.848528 225)
+			(at 0.848528 -0.848528 -135)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "5c7cf652-2a3f-4edb-a349-466308c92e62")
@@ -3979,7 +3979,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "6c5b35f4-f3ea-4dc2-8f04-accf4642524b")
-		(at -16.45 7.8)
+		(at -16.45 3.3)
 		(property "Reference" "TP_UART_TX"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -4100,7 +4100,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "79c54f66-0324-4ced-8a0e-13784642524b")
-		(at 12.95 -18.7)
+		(at 12.95 -20.2)
 		(property "Reference" "TP_PWR_LATCH"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -5910,7 +5910,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "aa77947f-a7b8-44ce-9f14-c94a4642524b")
-		(at -16.45 12.8)
+		(at -16.45 6.8)
 		(property "Reference" "TP_UART_RX"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -6609,7 +6609,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "c3c89190-c7d2-459f-a1d5-249a4642524b")
-		(at 15.95 -18.7)
+		(at 15.95 -20.2)
 		(property "Reference" "TP_IMU_KEY"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -7017,7 +7017,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "cc5c3537-92b1-445e-aafb-cd6c4642524b")
-		(at 12.95 -13.7)
+		(at 12.95 -16.7)
 		(property "Reference" "TP_IMU_GPIO"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -8541,7 +8541,7 @@
 		(uuid "f81582d0-cf37-4c8f-8c33-cbae4642524b")
 		(at 27.7345 -49.977 -30)
 		(property "Reference" "PZT_TR_D_CLAMP"
-			(at 0.6 1.03923 330)
+			(at 0.6 1.03923 -30)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "c3c57924-720a-4b45-94b9-f5d69c98ab72")

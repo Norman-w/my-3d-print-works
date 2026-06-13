@@ -31,8 +31,9 @@ DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
 PARAMS = ROOT / "shared" / "board_params.yaml"
 
 KEEPOUT = 1.5
-COL_SPACING_Y = 5.0   # mm between component centres along a column
-COL_MARGIN = 1.0       # extra margin inside keepout before first component
+COL_SPACING_Y = 3.5           # 默认列间距 (元件中心到中心) — 大部分区域用
+COL_SPACING_Y_MCU_XP = 5.0    # MCU X+ 区域专用宽间距 (SOT-23/0603 密集区拉开)
+COL_MARGIN = 1.0               # 距区域北边缘的额外余量
 TEXT_THICKNESS = 0.10
 
 READABLE_REFS = {
@@ -253,9 +254,9 @@ def _cutout_edges(cutout: tuple[float, float, float, float]) -> dict[str, float]
     }
 
 
-def col_y(t: float, step: int) -> float:
+def col_y(t: float, step: int, spacing: float | None = None) -> float:
     """Return Y for the nth position in a vertical column starting at *t* (north edge)."""
-    return t + COL_MARGIN + step * COL_SPACING_Y
+    return t + COL_MARGIN + step * (spacing if spacing is not None else COL_SPACING_Y)
 
 
 # ===== 分区：公开 API =====
@@ -311,19 +312,19 @@ def main() -> None:
     ry   = mcu["top"]           # column start Y
 
     mcu_right = {
-        # Col A (X=rx_A)
-        "power.q_power":       (rx_A, col_y(ry, 0), 90),
-        "power.q_latch":       (rx_A, col_y(ry, 1), 90),
-        "power.ldo":           (rx_A, col_y(ry, 2), 90),
-        "led.c_supply":        (rx_A, col_y(ry, 3), 0),
-        "led.r_data":          (rx_A, col_y(ry, 4), 90),
-        "led_c_supply":        (rx_A, col_y(ry, 3), 0),
-        "led_r_data":          (rx_A, col_y(ry, 4), 90),
-        # Col B (X=rx_B)
-        "power.d_button":      (rx_B, col_y(ry, 0), 0),
-        "power.r_gate":        (rx_B, col_y(ry, 1), 0),
-        "power.r_latch_pd":    (rx_B, col_y(ry, 2), 0),
-        "power.r_button":      (rx_B, col_y(ry, 3), 90),
+        # Col A (X=rx_A) — 使用 MCU X+ 专用宽间距
+        "power.q_power":       (rx_A, col_y(ry, 0, COL_SPACING_Y_MCU_XP), 90),
+        "power.q_latch":       (rx_A, col_y(ry, 1, COL_SPACING_Y_MCU_XP), 90),
+        "power.ldo":           (rx_A, col_y(ry, 2, COL_SPACING_Y_MCU_XP), 90),
+        "led.c_supply":        (rx_A, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 0),
+        "led.r_data":          (rx_A, col_y(ry, 4, COL_SPACING_Y_MCU_XP), 90),
+        "led_c_supply":        (rx_A, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 0),
+        "led_r_data":          (rx_A, col_y(ry, 4, COL_SPACING_Y_MCU_XP), 90),
+        # Col B (X=rx_B) — 使用 MCU X+ 专用宽间距
+        "power.d_button":      (rx_B, col_y(ry, 0, COL_SPACING_Y_MCU_XP), 0),
+        "power.r_gate":        (rx_B, col_y(ry, 1, COL_SPACING_Y_MCU_XP), 0),
+        "power.r_latch_pd":    (rx_B, col_y(ry, 2, COL_SPACING_Y_MCU_XP), 0),
+        "power.r_button":      (rx_B, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 90),
     }
     for addr, (x, y, rot) in mcu_right.items():
         moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
