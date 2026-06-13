@@ -80,11 +80,11 @@ component WirePad:
     designator_prefix = "TP"
     signal contact
     contact ~ pin 1
-    footprint = "TestPoint:TestPoint_Pad_2.0x2.0mm"
+    footprint = "TestPoint:TestPoint_THTPad_D2.5mm_Drill1.2mm"
 
 
 component SmallWirePad:
     designator_prefix = "TP"
     signal contact
     contact ~ pin 1
-    footprint = "TestPoint:TestPoint_Pad_1.0x1.0mm"
+    footprint = "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
