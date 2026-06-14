@@ -445,25 +445,24 @@ def main() -> None:
     moved += place_map(pcbnew, fp_by_addr, sense_led_zone, args.force)
 
     bringup_handle_root = {
-        # Test pads spread along handle edges so they don't block the narrow
-        # routing corridor.  4mm vertical step keeps them dense but leaves
-        # clearance around the centre screw boss at Y≈33.
-        # Left edge
-        "bringup.gnd_pad":        (-5.5, 22.0, 0),
-        "bringup.vcc_pad":        (-5.5, 26.0, 0),
-        "bringup.vbat_pad":       (-5.5, 30.0, 0),
-        "bringup.en_pad":         (-5.5, 34.0, 0),
-        "bringup.boot_pad":       (-5.5, 38.0, 0),
-        "bringup.pwr_latch_pad":  (-5.5, 42.0, 0),
-        "bringup.imu_vddio_pad":  (-5.5, 46.0, 0),
+        # Test pads in the handle corridor between the centre screw boss
+        # (KiCad Y≈23, R3.5) and the gold fingers (Y≈69).  4mm vertical
+        # step, shifted 8mm closer to the tail.
+        "bringup.gnd_pad":        (-5.5, 38.0, 0),
+        "bringup.vcc_pad":        (-5.5, 42.0, 0),
+        "bringup.vbat_pad":       (-5.5, 46.0, 0),
+        "bringup.en_pad":         (-5.5, 50.0, 0),
+        "bringup.boot_pad":       (-5.5, 54.0, 0),
+        "bringup.pwr_latch_pad":  (-5.5, 58.0, 0),
+        "bringup.imu_vddio_pad":  (-5.5, 62.0, 0),
         # Right edge
-        "bringup.uart_tx_pad":    ( 5.5, 22.0, 0),
-        "bringup.uart_rx_pad":    ( 5.5, 26.0, 0),
-        "bringup.imu_key_pad":    ( 5.5, 30.0, 0),
-        "bringup.imu_gpio_pad":   ( 5.5, 34.0, 0),
-        "bringup.vbus_pad":       ( 5.5, 38.0, 0),
-        "bringup.vbat_sense_pad": ( 5.5, 42.0, 0),
-        "bringup.led_data_pad":   ( 5.5, 46.0, 0),
+        "bringup.uart_tx_pad":    ( 5.5, 38.0, 0),
+        "bringup.uart_rx_pad":    ( 5.5, 42.0, 0),
+        "bringup.imu_key_pad":    ( 5.5, 46.0, 0),
+        "bringup.imu_gpio_pad":   ( 5.5, 50.0, 0),
+        "bringup.vbus_pad":       ( 5.5, 54.0, 0),
+        "bringup.vbat_sense_pad": ( 5.5, 58.0, 0),
+        "bringup.led_data_pad":   ( 5.5, 62.0, 0),
     }
     moved += place_map(pcbnew, fp_by_addr, bringup_handle_root, args.force)
 
