@@ -1,0 +1,4 @@
+2026-06-14 19:08:34.072 INFO   Freerouting v2.2.4 (build-date: 2026-05-13)
+2026-06-14 19:08:35.438 WARN   Analytics tracking: first delivery failure in this window - /v1/analytics/identify - IOException: Server returned HTTP response code: 501 for URL: https://api.freerouting.app/v1/analytics/identify | Server response: {"error":"The operation is not implemented."}. Further failures will be aggregated and reported every 60 minutes.
+2026-06-14 19:08:35.849 INFO   [0E5B5E\48AC9C] Job '0E5B5E\48AC9C' started at 2026-06-14T11:08:35.849060Z.
+2026-06-14 19:08:36.810 INFO   New version available: v2.2.4
