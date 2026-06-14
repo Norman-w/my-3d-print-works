@@ -446,24 +446,24 @@ def main() -> None:
 
     bringup_handle_root = {
         # Test pads spread along handle edges so they don't block the narrow
-        # routing corridor.  Left column at X=-5.5, right column at X=+5.5,
-        # evenly spaced from Y=18 (near handle root) down to Y=54.
+        # routing corridor.  4mm vertical step keeps them dense but leaves
+        # clearance around the centre screw boss at Y≈33.
         # Left edge
-        "bringup.gnd_pad":        (-5.5, 18.0, 0),
-        "bringup.vcc_pad":        (-5.5, 24.0, 0),
+        "bringup.gnd_pad":        (-5.5, 22.0, 0),
+        "bringup.vcc_pad":        (-5.5, 26.0, 0),
         "bringup.vbat_pad":       (-5.5, 30.0, 0),
-        "bringup.en_pad":         (-5.5, 36.0, 0),
-        "bringup.boot_pad":       (-5.5, 42.0, 0),
-        "bringup.pwr_latch_pad":  (-5.5, 48.0, 0),
-        "bringup.imu_vddio_pad":  (-5.5, 54.0, 0),
+        "bringup.en_pad":         (-5.5, 34.0, 0),
+        "bringup.boot_pad":       (-5.5, 38.0, 0),
+        "bringup.pwr_latch_pad":  (-5.5, 42.0, 0),
+        "bringup.imu_vddio_pad":  (-5.5, 46.0, 0),
         # Right edge
-        "bringup.uart_tx_pad":    ( 5.5, 18.0, 0),
-        "bringup.uart_rx_pad":    ( 5.5, 24.0, 0),
+        "bringup.uart_tx_pad":    ( 5.5, 22.0, 0),
+        "bringup.uart_rx_pad":    ( 5.5, 26.0, 0),
         "bringup.imu_key_pad":    ( 5.5, 30.0, 0),
-        "bringup.imu_gpio_pad":   ( 5.5, 36.0, 0),
-        "bringup.vbus_pad":       ( 5.5, 42.0, 0),
-        "bringup.vbat_sense_pad": ( 5.5, 48.0, 0),
-        "bringup.led_data_pad":   ( 5.5, 54.0, 0),
+        "bringup.imu_gpio_pad":   ( 5.5, 34.0, 0),
+        "bringup.vbus_pad":       ( 5.5, 38.0, 0),
+        "bringup.vbat_sense_pad": ( 5.5, 42.0, 0),
+        "bringup.led_data_pad":   ( 5.5, 46.0, 0),
     }
     moved += place_map(pcbnew, fp_by_addr, bringup_handle_root, args.force)
 
