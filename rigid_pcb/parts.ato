@@ -3,6 +3,7 @@
 
 component Resistor:
     designator_prefix = "R"
+    value = "unknown"
     signal p1
     signal p2
     p1 ~ pin 1
@@ -12,6 +13,7 @@ component Resistor:
 
 component Capacitor:
     designator_prefix = "C"
+    value = "unknown"
     signal p1
     signal p2
     p1 ~ pin 1
@@ -21,6 +23,7 @@ component Capacitor:
 
 component Diode:
     designator_prefix = "D"
+    value = "Schottky"
     signal anode
     signal cathode
     anode ~ pin 2
@@ -30,17 +33,21 @@ component Diode:
 
 component BAT54S:
     designator_prefix = "D"
-    signal a1
-    signal a2
-    signal cathode_common
-    a1 ~ pin 1
-    a2 ~ pin 2
-    cathode_common ~ pin 3
+    value = "BAT54S"
+    signal low_rail
+    signal high_rail
+    signal signal_node
+    # BAT54S dual-series clamp: pin 1 = low-side anode, pin 3 = common signal,
+    # pin 2 = high-side cathode.  Do not swap pins 2/3 for rail clamping.
+    low_rail ~ pin 1
+    high_rail ~ pin 2
+    signal_node ~ pin 3
     footprint = "Package_TO_SOT_SMD:SOT-23"
 
 
 component PChannelMOSFET_SOT23:
     designator_prefix = "Q"
+    value = "P-MOSFET"
     signal gate
     signal source
     signal drain
@@ -52,6 +59,7 @@ component PChannelMOSFET_SOT23:
 
 component NChannelMOSFET_SOT23:
     designator_prefix = "Q"
+    value = "N-MOSFET"
     signal gate
     signal source
     signal drain
@@ -63,6 +71,7 @@ component NChannelMOSFET_SOT23:
 
 component AP2112K_3V3:
     designator_prefix = "U"
+    value = "AP2112K-3.3"
     signal vin
     signal gnd
     signal en

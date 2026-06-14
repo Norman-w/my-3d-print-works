@@ -27,6 +27,7 @@ from rigid_pcb.tools.kicad_update_utils import (
     xy,
 )
 from rigid_pcb.tools.mech_geometry import (
+    M2_CLEARANCE_HOLES,
     PZT_CAVITIES_SCAD,
     SCAD_SLOT_POINTS,
     SCAD_TO_KICAD_Y_OFFSET,
@@ -116,6 +117,10 @@ def main() -> None:
         kicad_x, kicad_y = slot_scad_to_kicad((pzt_x, pzt_y))
         circle(pcbnew, board, pcbnew.Dwgs_User, kicad_x, kicad_y, pzt_r, 0.12)
 
+    # ---- M2 screw/reference holes ----
+    for hole_x, hole_y, hole_r in M2_CLEARANCE_HOLES:
+        circle(pcbnew, board, pcbnew.Dwgs_User, hole_x, hole_y, hole_r, 0.12)
+
     # ---- X± / Y± text markers ----
     add_text(pcbnew, board, "X+", xmax + 6.0, cy, 3.0)
     add_text(pcbnew, board, "X-", xmin - 14.0, cy, 3.0)
@@ -130,6 +135,7 @@ def main() -> None:
     print(f"参考轮廓 BBox: X=[{xmin:.2f}, {xmax:.2f}] Y=[{ymin:.2f}, {ymax:.2f}]")
     print(f"中心: ({cx:.2f}, {cy:.2f})")
     print(f"PZT腔体: {len(PZT_CAVITIES_SCAD)} 个圆")
+    print(f"M2参考孔: {len(M2_CLEARANCE_HOLES)} 个圆")
     print(f"方向标记: X± Y± 已标注")
 
 

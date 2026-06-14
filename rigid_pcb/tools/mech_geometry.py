@@ -26,6 +26,19 @@ PZT_CAVITIES_SCAD = [
     (-44.0, -52.0, 20.5 / 2),
 ]
 
+SCREW_CLEARANCE_RADIUS = 3.5
+SCREW_HOLES_SCAD = [
+    (0.0, 65.0),
+    (52.0, 45.0),
+    (-52.0, 45.0),
+    (55.0, 0.0),
+    (-55.0, 0.0),
+    (36.0, -65.0),
+    (-36.0, -65.0),
+    (0.0, 24.0),
+    (0.0, -33.0),
+]
+
 
 def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
     """Convert SCAD slot coordinates into the KiCad mechanical reference frame."""
@@ -211,6 +224,7 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
 
     return _polygon_points(points)
 
+
 PCB_SLOT_POINTS = _embedded_substrate_points()
 
 
@@ -230,4 +244,16 @@ IMU_CUTOUT = (
     18.5 + MODULE_CUTOUT_CLEARANCE * 2,
     13.0 + MODULE_CUTOUT_CLEARANCE * 2,
 )
-M2_CLEARANCE_HOLES = [(0.0, -21.0, 1.35), (0.0, 21.0, 1.35), (0.0, -42.0, 1.35)]
+M2_CLEARANCE_HOLES = [
+    (*slot_scad_to_kicad((x, y)), SCREW_CLEARANCE_RADIUS)
+    for x, y in SCREW_HOLES_SCAD
+]
+
+# Actual PCB cutouts.  Keep this narrower than the full mechanical reference
+# list so board-external screw references do not become isolated Edge.Cuts.
+# These two enclosure screws pass through the central substrate; use the same
+# boss clearance as the SCAD keepout so the rigid PCB does not collide with
+# the printed screw towers.
+PCB_CLEARANCE_HOLES = [
+    (*slot_scad_to_kicad((0.0, -33.0)), SCREW_CLEARANCE_RADIUS),
+]

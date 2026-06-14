@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Step 4 — Normalize atopile footprints and place them at scaffold positions.
 
-Layout zones (all positions derived from cutout edges + keepout offsets):
+Layout zones:
 
-  MCU X+  — power-latch circuit + LED interface (2 columns)
-  MCU X-  — bring-up test pads ONLY (1 column)
-  IMU X-  — LDO filter capacitors (1 column)
-  IMU X+  — remaining bring-up test pads (2 columns)
+  mainland right/top    — power latch, EN, button logic, regulator
+  mainland lower/core   — LED interface and battery sense
+  handle root           — bring-up and UART test pads
+  gangway entrances     — PZT series/bleed/clamp parts
+
+PZT signal/GND wire pads stay on the docks and are only re-snapped when
+--place-docks is passed.
 """
 
 # ===== 分区：导入/依赖 =====
@@ -29,10 +32,12 @@ from rigid_pcb.tools.mech_geometry import ESP32_CUTOUT, IMU_CUTOUT
 # ===== 分区：常量/配置 =====
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
 PARAMS = ROOT / "shared" / "board_params.yaml"
+ATO_BACKUP_DIR = ROOT / "rigid_pcb" / "build" / "builds" / "default"
 
 KEEPOUT = 1.5
 COL_SPACING_Y = 3.5           # 默认列间距 (元件中心到中心) — 大部分区域用
-COL_SPACING_Y_MCU_XP = 5.0    # MCU X+ 区域专用宽间距 (SOT-23/0603 密集区拉开)
+GRID_SPACING_X = 4.2
+GRID_SPACING_Y = 4.4
 COL_MARGIN = 1.0               # 距区域北边缘的额外余量
 TEXT_THICKNESS = 0.10
 
@@ -42,12 +47,17 @@ READABLE_REFS = {
     "power.q_power": ("PW_Q_LOAD", "P-MOS load switch"),
     "power.q_latch": ("PW_Q_LATCH", "N-MOS latch"),
     "power.r_gate": ("PW_R_GATE_100K", "100k"),
-    "power.r_button": ("PW_R_BTN_100K", "100k"),
+    "power.r_button_series": ("PW_R_BTN_SER_1K", "1k"),
+    "power.r_button_pullup": ("PW_R_BTN_PU_10K", "10k"),
     "power.r_latch_pd": ("PW_R_LATCH_PD_100K", "100k"),
+    "power.r_en_pullup": ("PW_R_EN_PU_10K", "10k"),
     "power.d_button": ("PW_D_BTN", "Schottky"),
     "power.ldo": ("PW_LDO_3V3", "AP2112K-3.3"),
     "power.c_in": ("PW_C_IN_10U", "10uF"),
     "power.c_out": ("PW_C_OUT_10U", "10uF"),
+    "battery.r_top": ("BAT_R_TOP_1M", "1M"),
+    "battery.r_bottom": ("BAT_R_BOT_1M", "1M"),
+    "battery.c_filter": ("BAT_C_ADC_100N", "100nF"),
     "led.r_data": ("LED_R_DATA_330R", "330R"),
     "led.c_supply": ("LED_C_SUP_100N", "100nF"),
     "led_r_data": ("LED_R_DATA_330R", "330R"),
@@ -57,6 +67,7 @@ READABLE_REFS = {
     "tail.led_plus_pad": ("TAIL_LED_PLUS", "LED+ wire"),
     "tail.led_din_pad": ("TAIL_LED_DIN", "LED DIN wire"),
     "tail.button_pad": ("TAIL_BTN", "button wire"),
+    "tail.usb_vbus_pad": ("TAIL_USB_VBUS", "USB VBUS wire"),
     "tail.usb_dp_pad": ("TAIL_USB_DP", "USB D+ wire"),
     "tail.usb_dn_pad": ("TAIL_USB_DN", "USB D- wire"),
     "bringup.vbat_pad": ("TP_VBAT_SW", "VBAT_SW test"),
@@ -71,6 +82,8 @@ READABLE_REFS = {
     "bringup.pwr_latch_pad": ("TP_PWR_LATCH", "PWR_LATCH test"),
     "bringup.led_data_pad": ("TP_LED_DATA", "LED DATA test"),
     "bringup.vbus_pad": ("TP_VBUS", "VBUS test"),
+    "bringup.imu_vddio_pad": ("TP_IMU_VDDIO", "IMU VDDIO test"),
+    "bringup.vbat_sense_pad": ("TP_VBAT_SENSE", "battery sense test"),
 }
 
 PZT_READABLE_PREFIXES = {
@@ -81,7 +94,8 @@ PZT_READABLE_PREFIXES = {
 }
 
 PZT_READABLE_PARTS = {
-    "clamp_resistor": ("R_DIS_1M", "1M"),
+    "series_resistor": ("R_SER_4K7", "4.7k"),
+    "bleed_resistor": ("R_DIS_1M", "1M"),
     "clamp_diode": ("D_CLAMP", "BAT54S"),
     "pzt_signal_pad": ("SIG", "PZT signal wire"),
     "pzt_gnd_pad": ("GND", "PZT GND wire"),
@@ -220,6 +234,83 @@ def apply_model_scales(board) -> int:
     return changed
 
 
+def _net_source_candidates() -> list[Path]:
+    if not ATO_BACKUP_DIR.exists():
+        return []
+    return sorted(ATO_BACKUP_DIR.glob("default.pcbnew-*.kicad_pcb"), key=lambda p: p.stat().st_mtime, reverse=True)
+
+
+def _board_has_named_nets(board) -> bool:
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            if pad.GetNetname():
+                return True
+    return False
+
+
+def _address_pad_nets(board) -> dict[tuple[str, str], str]:
+    mapping = {}
+    for fp in board.GetFootprints():
+        addr = address(fp)
+        if not addr:
+            continue
+        for pad in fp.Pads():
+            netname = pad.GetNetname()
+            if netname:
+                mapping[(addr, pad.GetNumber())] = netname
+    return mapping
+
+
+def sync_nets_from_recent_ato_backup(pcbnew, board) -> tuple[int, Path | None]:
+    """Restore pad net assignments after a Step 1 clear + ATO rebuild.
+
+    ATO 0.12.5 currently re-adds footprints after a completely cleared PCB, but
+    the generated KiCad netlist can be empty.  The latest pre-build PCB backup
+    still carries the intended pad nets, so copy them by atopile_address + pad
+    number.  This does not create or change any logical connections in ATO.
+    """
+
+    if _board_has_named_nets(board):
+        return 0, None
+
+    for candidate in _net_source_candidates():
+        source_board = load_board(pcbnew, candidate)
+        source_nets = _address_pad_nets(source_board)
+        if not source_nets:
+            continue
+
+        net_cache = {}
+
+        def ensure_net(netname: str):
+            net = net_cache.get(netname)
+            if net is not None:
+                return net
+            net = board.FindNet(netname)
+            if net is None:
+                net = pcbnew.NETINFO_ITEM(board, netname)
+                board.Add(net)
+            net_cache[netname] = net
+            return net
+
+        assigned = 0
+        for fp in board.GetFootprints():
+            addr = address(fp)
+            if not addr:
+                continue
+            for pad in fp.Pads():
+                netname = source_nets.get((addr, pad.GetNumber()))
+                if not netname:
+                    continue
+                pad.SetNet(ensure_net(netname))
+                assigned += 1
+
+        board.BuildListOfNets()
+        board.SanitizeNetcodes()
+        return assigned, candidate
+
+    return 0, None
+
+
 def is_initial_grid(fp) -> bool:
     pos = fp.GetPosition()
     x = pos.x / 1_000_000
@@ -257,6 +348,13 @@ def _cutout_edges(cutout: tuple[float, float, float, float]) -> dict[str, float]
 def col_y(t: float, step: int, spacing: float | None = None) -> float:
     """Return Y for the nth position in a vertical column starting at *t* (north edge)."""
     return t + COL_MARGIN + step * (spacing if spacing is not None else COL_SPACING_Y)
+
+
+def place_map(pcbnew, fp_by_addr: dict, placements: dict[str, tuple[float, float, float]], force: bool) -> int:
+    moved = 0
+    for addr, (x, y, rot) in placements.items():
+        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, force)
+    return moved
 
 
 # ===== 分区：公开 API =====
@@ -305,80 +403,95 @@ def main() -> None:
     moved += move_one(pcbnew, fp_by_addr, "mcu", ESP32_CUTOUT[0], ESP32_CUTOUT[1], 0, args.force)
     moved += move_one(pcbnew, fp_by_addr, "imu", IMU_CUTOUT[0], IMU_CUTOUT[1], 0, args.force)
 
-    # ── MCU X+ zone: power-latch + LED  (2 columns) ──
-    # Col spacing inside zone: 3mm between columns
-    rx_A = mcu["right"] + 2.0
-    rx_B = mcu["right"] + 5.0
-    ry   = mcu["top"]           # column start Y
-
-    mcu_right = {
-        # Col A (X=rx_A) — 使用 MCU X+ 专用宽间距
-        "power.q_power":       (rx_A, col_y(ry, 0, COL_SPACING_Y_MCU_XP), 90),
-        "power.q_latch":       (rx_A, col_y(ry, 1, COL_SPACING_Y_MCU_XP), 90),
-        "power.ldo":           (rx_A, col_y(ry, 2, COL_SPACING_Y_MCU_XP), 90),
-        "led.c_supply":        (rx_A, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 0),
-        "led.r_data":          (rx_A, col_y(ry, 4, COL_SPACING_Y_MCU_XP), 90),
-        "led_c_supply":        (rx_A, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 0),
-        "led_r_data":          (rx_A, col_y(ry, 4, COL_SPACING_Y_MCU_XP), 90),
-        # Col B (X=rx_B) — 使用 MCU X+ 专用宽间距
-        "power.d_button":      (rx_B, col_y(ry, 0, COL_SPACING_Y_MCU_XP), 0),
-        "power.r_gate":        (rx_B, col_y(ry, 1, COL_SPACING_Y_MCU_XP), 0),
-        "power.r_latch_pd":    (rx_B, col_y(ry, 2, COL_SPACING_Y_MCU_XP), 0),
-        "power.r_button":      (rx_B, col_y(ry, 3, COL_SPACING_Y_MCU_XP), 90),
+    # ---- Mainland functional zones ----
+    # The cutouts consume the centre.  These zones keep parts inside the
+    # 42x42 mainland / handle-root substrate while leaving routing corridors
+    # beside the IMU and MCU pads.
+    power_x_a = 15.0
+    power_x_b = 19.2
+    power_y = [-7.2, -2.8, 1.6, 6.0]
+    power_zone = {
+        # Load switch / latch cluster, close to MCU control pins.
+        "power.q_power":          (power_x_a, power_y[0], 90),
+        "power.d_button":         (power_x_b, power_y[0], 0),
+        "power.q_latch":          (power_x_a, power_y[1], 90),
+        "power.r_gate":           (power_x_b, power_y[1], 0),
+        "power.r_latch_pd":       (power_x_a, power_y[2], 0),
+        "power.r_button_series":  (power_x_b, power_y[2], 90),
+        "power.r_button_pullup":  (power_x_a, power_y[3], 90),
+        "power.r_en_pullup":      (power_x_b, power_y[3], 90),
     }
-    for addr, (x, y, rot) in mcu_right.items():
-        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+    moved += place_map(pcbnew, fp_by_addr, power_zone, args.force)
 
-    # ── MCU X- zone: bring-up test pads ONLY (1 column) ──
-    lx = mcu["left"] - 2.0
-    ly = mcu["top"]
-    mcu_left = {
-        "bringup.gnd_pad":      (lx, col_y(ly, 0), 0),
-        "bringup.vcc_pad":      (lx, col_y(ly, 1), 0),
-        "bringup.vbat_pad":     (lx, col_y(ly, 2), 0),
-        "bringup.uart_tx_pad":  (lx, col_y(ly, 3), 0),
-        "bringup.uart_rx_pad":  (lx, col_y(ly, 4), 0),
+    regulator_zone = {
+        # Regulator parts use the right-top mainland pocket beside the IMU.
+        # This keeps the crowded MCU X+ corridor mostly for switch/latch nets.
+        "power.ldo":              (14.0, -20.6, 90),
+        "power.c_in":             (18.3, -20.6, 0),
+        "power.c_out":            (18.3, -16.5, 0),
     }
-    for addr, (x, y, rot) in mcu_left.items():
-        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+    moved += place_map(pcbnew, fp_by_addr, regulator_zone, args.force)
 
-    # ── IMU X- zone: LDO filter capacitors (1 column) ──
-    ilx = imu["left"] - 2.0
-    ily = imu["top"]
-    imu_left = {
-        "power.c_in":   (ilx, col_y(ily, 0), 0),
-        "power.c_out":  (ilx, col_y(ily, 1), 0),
+    sense_led_zone = {
+        # Battery sense and LED input passives live in the left-top mainland
+        # pocket.  Avoid putting extra component height in the handle-root
+        # strip and leave MCU antenna-side routing space below.
+        "battery.r_top":          (-18.0, -20.6, 0),
+        "battery.r_bottom":       (-13.8, -20.6, 0),
+        "battery.c_filter":       (-18.0, -16.5, 0),
+        "led_c_supply":           (-13.8, -16.5, 0),
+        "led_r_data":             (-16.0, -12.4, 90),
     }
-    for addr, (x, y, rot) in imu_left.items():
-        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+    moved += place_map(pcbnew, fp_by_addr, sense_led_zone, args.force)
 
-    # ── IMU X+ zone: remaining bring-up test pads (2 columns) ──
-    irx_A = imu["right"] + 2.0
-    irx_B = imu["right"] + 5.0
-    iry   = imu["top"]
-    imu_right = {
-        # Col A
-        "bringup.en_pad":           (irx_A, col_y(iry, 0), 0),
-        "bringup.pwr_latch_pad":    (irx_A, col_y(iry, 1), 0),
-        "bringup.imu_gpio_pad":     (irx_A, col_y(iry, 2), 0),
-        "bringup.led_data_pad":     (irx_A, col_y(iry, 3), 0),
-        # Col B
-        "bringup.boot_pad":         (irx_B, col_y(iry, 0), 0),
-        "bringup.imu_key_pad":      (irx_B, col_y(iry, 1), 0),
-        "bringup.vbus_pad":         (irx_B, col_y(iry, 2), 0),
+    bringup_handle_root = {
+        # Test pads live above the handle so the shell does not need extra
+        # pockets for small passives.  Keep below the centre screw clearance.
+        "bringup.gnd_pad":        (-6.0, 33.0, 0),
+        "bringup.vcc_pad":        (-2.0, 33.0, 0),
+        "bringup.vbat_pad":       (2.0, 33.0, 0),
+        "bringup.uart_tx_pad":    (6.0, 33.0, 0),
+        "bringup.uart_rx_pad":    (-6.0, 38.0, 0),
+        "bringup.en_pad":         (-2.0, 38.0, 0),
+        "bringup.boot_pad":       (2.0, 38.0, 0),
+        "bringup.pwr_latch_pad":  (6.0, 38.0, 0),
+        "bringup.imu_key_pad":    (-6.0, 43.0, 0),
+        "bringup.imu_gpio_pad":   (-2.0, 43.0, 0),
+        "bringup.imu_vddio_pad":  (2.0, 43.0, 0),
+        "bringup.vbus_pad":       (6.0, 43.0, 0),
+        "bringup.vbat_sense_pad": (-2.0, 48.0, 0),
+        "bringup.led_data_pad":   (2.0, 48.0, 0),
     }
-    for addr, (x, y, rot) in imu_right.items():
-        moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
+    moved += place_map(pcbnew, fp_by_addr, bringup_handle_root, args.force)
+
+    pzt_mainland = {
+        # PZT support parts start in remote staging groups outside the board.
+        # They are deliberately easy to box-select and drag onto docks/manually.
+        "pzt_tl.series_resistor": (-58.0, -78.0, 0),
+        "pzt_tl.bleed_resistor":  (-54.0, -78.0, 0),
+        "pzt_tl.clamp_diode":     (-50.0, -78.0, 0),
+        "pzt_tr.series_resistor": (50.0, -78.0, 0),
+        "pzt_tr.bleed_resistor":  (54.0, -78.0, 0),
+        "pzt_tr.clamp_diode":     (58.0, -78.0, 0),
+        "pzt_bl.series_resistor": (-64.0, 58.0, 0),
+        "pzt_bl.bleed_resistor":  (-60.0, 58.0, 0),
+        "pzt_bl.clamp_diode":     (-56.0, 58.0, 0),
+        "pzt_br.series_resistor": (56.0, 58.0, 0),
+        "pzt_br.bleed_resistor":  (60.0, 58.0, 0),
+        "pzt_br.clamp_diode":     (64.0, 58.0, 0),
+    }
+    moved += place_map(pcbnew, fp_by_addr, pzt_mainland, args.force)
 
     # ---- Handle tail pads ----
     tail = {
-        "tail.bat_plus_pad": (-6.0, 74.5, 0),
-        "tail.gnd_pad":      (-2.0, 74.5, 0),
-        "tail.led_plus_pad": ( 2.0, 74.5, 0),
-        "tail.led_din_pad":  ( 6.0, 74.5, 0),
-        "tail.button_pad":   (-4.0, 77.4, 0),
-        "tail.usb_dp_pad":   ( 0.0, 77.4, 0),
-        "tail.usb_dn_pad":   ( 4.0, 77.4, 0),
+        "tail.bat_plus_pad": (-6.0, 66.0, 0),
+        "tail.gnd_pad":      (-2.0, 66.0, 0),
+        "tail.led_plus_pad": ( 2.0, 66.0, 0),
+        "tail.led_din_pad":  ( 6.0, 66.0, 0),
+        "tail.button_pad":   (-6.0, 72.0, 0),
+        "tail.usb_vbus_pad": (-2.0, 72.0, 0),
+        "tail.usb_dp_pad":   ( 2.0, 72.0, 0),
+        "tail.usb_dn_pad":   ( 6.0, 72.0, 0),
     }
     for addr, (x, y, rot) in tail.items():
         moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
@@ -386,42 +499,44 @@ def main() -> None:
     # ---- Summary ----
     labelled, visible_labels = apply_readable_text(pcbnew, board)
     scaled = apply_model_scales(board)
+    net_assigned, net_source = sync_nets_from_recent_ato_backup(pcbnew, board)
     if not args.place_docks:
         save_board(board, args.board)
         print(f"4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点")
         print(f"4c. 文本: 应用了 {labelled} 个可读Reference, 显示 {visible_labels} 个关键标签, 隐藏Value")
         print(f"4d. 3D: 应用了 {scaled} 个模块模型缩放修正")
+        if net_source:
+            print(f"4e. 网络: 从 {net_source.name} 同步了 {net_assigned} 个焊盘网络")
         print(f"    总共 {len(fp_by_addr)} 个带 atopile_address 的封装")
-        print(f"    MCU 相对: right({rx_A:.1f}/{rx_B:.1f}) left({lx:.1f})")
-        print(f"    IMU 相对: right({irx_A:.1f}/{irx_B:.1f}) left({ilx:.1f})")
-        print(f"    PZT 码头封装保持在当前位置 (使用 --place-docks 可同时放置)")
+        print(f"    功能区: 开关锁存在MCU X+侧, LDO在右上大陆, LED/电池检测在左上大陆, 测试点在拍柄上方")
+        print(f"    PZT小器件: 已放到四个栈道入口附近; PZT信号/GND焊盘保持当前位置")
+        print(f"    PZT码头焊盘: 使用 --place-docks 可按机械点重新放置")
         return
 
-    # PZT dock footprints (only with --place-docks)
+    # PZT wire pads only (with --place-docks).  The small support parts are
+    # already placed on mainland gangway entrances above.
     for pzt in params["components"]["piezo"]:
         pid = pzt["id"]
         key = pid.lower()
         x, y0 = pzt["position"]
         y = -y0
         (ux, uy), (nx, ny), slot_rot = slot_basis(x, y)
-        part_rot = slot_rot - 90
         lead_base = (x + ux * 13.5, y + uy * 13.5)
-        sig = (lead_base[0] - nx * 1.65, lead_base[1] - ny * 1.65)
-        gnd = (lead_base[0] + nx * 1.65, lead_base[1] + ny * 1.65)
-        rpos = (x + ux * 18.0, y + uy * 18.0)
-        dpos = (x + ux * 23.5, y + uy * 23.5)
+        sig = (lead_base[0] - nx * 2.35, lead_base[1] - ny * 2.35)
+        gnd = (lead_base[0] + nx * 2.35, lead_base[1] + ny * 2.35)
 
         moved += move_one(pcbnew, fp_by_addr, f"{key}.pzt_signal_pad", sig[0], sig[1], slot_rot, args.force)
         moved += move_one(pcbnew, fp_by_addr, f"{key}.pzt_gnd_pad", gnd[0], gnd[1], slot_rot, args.force)
-        moved += move_one(pcbnew, fp_by_addr, f"{key}.clamp_resistor", rpos[0], rpos[1], slot_rot, args.force)
-        moved += move_one(pcbnew, fp_by_addr, f"{key}.clamp_diode", dpos[0], dpos[1], part_rot, args.force)
 
     labelled, visible_labels = apply_readable_text(pcbnew, board)
     scaled = apply_model_scales(board)
+    net_assigned, net_source = sync_nets_from_recent_ato_backup(pcbnew, board)
     save_board(board, args.board)
-    print(f"4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点 (含 PZT 码头)")
+    print(f"4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点 (含 PZT 信号/GND码头焊盘)")
     print(f"4c. 文本: 应用了 {labelled} 个可读Reference, 显示 {visible_labels} 个关键标签, 隐藏Value")
     print(f"4d. 3D: 应用了 {scaled} 个模块模型缩放修正")
+    if net_source:
+        print(f"4e. 网络: 从 {net_source.name} 同步了 {net_assigned} 个焊盘网络")
 
 
 if __name__ == "__main__":

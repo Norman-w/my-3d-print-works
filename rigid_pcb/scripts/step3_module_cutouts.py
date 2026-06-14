@@ -19,11 +19,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board, rect, save_board
+from rigid_pcb.tools.kicad_update_utils import circle, load_board, rect, save_board
 from rigid_pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
     IMU_CUTOUT,
     MODULE_CUTOUT_CLEARANCE,
+    PCB_CLEARANCE_HOLES,
 )
 
 # ===== 分区：常量/配置 =====
@@ -43,6 +44,8 @@ def main() -> None:
     # Append only — do not clear Edge.Cuts
     rect(pcbnew, board, pcbnew.Edge_Cuts, *ESP32_CUTOUT, 0.10)
     rect(pcbnew, board, pcbnew.Edge_Cuts, *IMU_CUTOUT, 0.10)
+    for hole_x, hole_y, hole_r in PCB_CLEARANCE_HOLES:
+        circle(pcbnew, board, pcbnew.Edge_Cuts, hole_x, hole_y, hole_r, 0.10)
 
     save_board(board, args.board)
 
@@ -52,6 +55,7 @@ def main() -> None:
           f"尺寸=({ESP32_CUTOUT[2]:.2f}×{ESP32_CUTOUT[3]:.2f}) mm")
     print(f"IMU 开孔:  中心=({IMU_CUTOUT[0]:.1f}, {IMU_CUTOUT[1]:.1f}) "
           f"尺寸=({IMU_CUTOUT[2]:.2f}×{IMU_CUTOUT[3]:.2f}) mm")
+    print(f"PCB螺丝让位孔: {len(PCB_CLEARANCE_HOLES)} 个")
     print(f"注意: 开孔已附加到 Edge.Cuts，基材轮廓保留不变")
 
 
