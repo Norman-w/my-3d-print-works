@@ -62,14 +62,14 @@ READABLE_REFS = {
     "led.c_supply": ("LED_C_SUP_100N", "100nF"),
     "led_r_data": ("LED_R_DATA_330R", "330R"),
     "led_c_supply": ("LED_C_SUP_100N", "100nF"),
-    "tail.bat_plus_pad": ("TAIL_BAT_PLUS", "BAT+ wire"),
-    "tail.gnd_pad": ("TAIL_GND", "GND wire"),
-    "tail.led_plus_pad": ("TAIL_LED_PLUS", "LED+ wire"),
-    "tail.led_din_pad": ("TAIL_LED_DIN", "LED DIN wire"),
-    "tail.button_pad": ("TAIL_BTN", "button wire"),
-    "tail.usb_vbus_pad": ("TAIL_USB_VBUS", "USB VBUS wire"),
-    "tail.usb_dp_pad": ("TAIL_USB_DP", "USB D+ wire"),
-    "tail.usb_dn_pad": ("TAIL_USB_DN", "USB D- wire"),
+    "tail.bat_plus_pad": ("TAIL_BAT_PLUS", "BAT+ finger"),
+    "tail.gnd_pad": ("TAIL_GND", "GND finger"),
+    "tail.led_plus_pad": ("TAIL_LED_PLUS", "LED+ finger"),
+    "tail.led_din_pad": ("TAIL_LED_DIN", "LED DIN finger"),
+    "tail.button_pad": ("TAIL_BTN", "button finger"),
+    "tail.usb_vbus_pad": ("TAIL_USB_VBUS", "USB VBUS finger"),
+    "tail.usb_dp_pad": ("TAIL_USB_DP", "USB D+ finger"),
+    "tail.usb_dn_pad": ("TAIL_USB_DN", "USB D- finger"),
     "bringup.vbat_pad": ("TP_VBAT_SW", "VBAT_SW test"),
     "bringup.vcc_pad": ("TP_3V3", "3V3 test"),
     "bringup.gnd_pad": ("TP_GND", "GND test"),
@@ -445,22 +445,25 @@ def main() -> None:
     moved += place_map(pcbnew, fp_by_addr, sense_led_zone, args.force)
 
     bringup_handle_root = {
-        # Test pads live above the handle so the shell does not need extra
-        # pockets for small passives.  Keep below the centre screw clearance.
-        "bringup.gnd_pad":        (-6.0, 33.0, 0),
-        "bringup.vcc_pad":        (-2.0, 33.0, 0),
-        "bringup.vbat_pad":       (2.0, 33.0, 0),
-        "bringup.uart_tx_pad":    (6.0, 33.0, 0),
-        "bringup.uart_rx_pad":    (-6.0, 38.0, 0),
-        "bringup.en_pad":         (-2.0, 38.0, 0),
-        "bringup.boot_pad":       (2.0, 38.0, 0),
-        "bringup.pwr_latch_pad":  (6.0, 38.0, 0),
-        "bringup.imu_key_pad":    (-6.0, 43.0, 0),
-        "bringup.imu_gpio_pad":   (-2.0, 43.0, 0),
-        "bringup.imu_vddio_pad":  (2.0, 43.0, 0),
-        "bringup.vbus_pad":       (6.0, 43.0, 0),
-        "bringup.vbat_sense_pad": (-2.0, 48.0, 0),
-        "bringup.led_data_pad":   (2.0, 48.0, 0),
+        # Test pads spread along handle edges so they don't block the narrow
+        # routing corridor.  Left column at X=-5.5, right column at X=+5.5,
+        # evenly spaced from Y=18 (near handle root) down to Y=54.
+        # Left edge
+        "bringup.gnd_pad":        (-5.5, 18.0, 0),
+        "bringup.vcc_pad":        (-5.5, 24.0, 0),
+        "bringup.vbat_pad":       (-5.5, 30.0, 0),
+        "bringup.en_pad":         (-5.5, 36.0, 0),
+        "bringup.boot_pad":       (-5.5, 42.0, 0),
+        "bringup.pwr_latch_pad":  (-5.5, 48.0, 0),
+        "bringup.imu_vddio_pad":  (-5.5, 54.0, 0),
+        # Right edge
+        "bringup.uart_tx_pad":    ( 5.5, 18.0, 0),
+        "bringup.uart_rx_pad":    ( 5.5, 24.0, 0),
+        "bringup.imu_key_pad":    ( 5.5, 30.0, 0),
+        "bringup.imu_gpio_pad":   ( 5.5, 36.0, 0),
+        "bringup.vbus_pad":       ( 5.5, 42.0, 0),
+        "bringup.vbat_sense_pad": ( 5.5, 48.0, 0),
+        "bringup.led_data_pad":   ( 5.5, 54.0, 0),
     }
     moved += place_map(pcbnew, fp_by_addr, bringup_handle_root, args.force)
 
@@ -482,17 +485,18 @@ def main() -> None:
     }
     moved += place_map(pcbnew, fp_by_addr, pzt_mainland, args.force)
 
-    # ---- Handle tail pads ----
-    tail = {
-        "tail.bat_plus_pad": (-6.0, 66.0, 0),
-        "tail.gnd_pad":      (-2.0, 66.0, 0),
-        "tail.led_plus_pad": ( 2.0, 66.0, 0),
-        "tail.led_din_pad":  ( 6.0, 66.0, 0),
-        "tail.button_pad":   (-6.0, 72.0, 0),
-        "tail.usb_vbus_pad": (-2.0, 72.0, 0),
-        "tail.usb_dp_pad":   ( 2.0, 72.0, 0),
-        "tail.usb_dn_pad":   ( 6.0, 72.0, 0),
-    }
+    # ---- Handle tail gold-finger pads (1×8, 2.54mm pitch) ----
+    # Exposed edge fingers plug into a board-tail connector.
+    tail_order = [
+        "tail.bat_plus_pad", "tail.gnd_pad", "tail.led_plus_pad", "tail.led_din_pad",
+        "tail.button_pad", "tail.usb_vbus_pad", "tail.usb_dp_pad", "tail.usb_dn_pad",
+    ]
+    pitch = 2.54
+    span = (len(tail_order) - 1) * pitch
+    start_x = -span / 2
+    tail = {}
+    for i, addr in enumerate(tail_order):
+        tail[addr] = (round(start_x + i * pitch, 2), 69.0, 0)
     for addr, (x, y, rot) in tail.items():
         moved += move_one(pcbnew, fp_by_addr, addr, x, y, rot, args.force)
 

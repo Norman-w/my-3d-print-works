@@ -15,6 +15,7 @@ from "parts.ato" import NChannelMOSFET_SOT23
 from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
+from "parts.ato" import EdgeFingerPad
 
 
 component SGFK_ESP32C6N8_Cutout:
@@ -133,14 +134,14 @@ module TailHarness:
     pin USB_DP
     pin USB_DN
 
-    bat_plus_pad = new WirePad
-    gnd_pad = new WirePad
-    led_plus_pad = new WirePad
-    led_din_pad = new WirePad
-    button_pad = new WirePad
-    usb_vbus_pad = new WirePad
-    usb_dp_pad = new WirePad
-    usb_dn_pad = new WirePad
+    bat_plus_pad = new EdgeFingerPad
+    gnd_pad = new EdgeFingerPad
+    led_plus_pad = new EdgeFingerPad
+    led_din_pad = new EdgeFingerPad
+    button_pad = new EdgeFingerPad
+    usb_vbus_pad = new EdgeFingerPad
+    usb_dp_pad = new EdgeFingerPad
+    usb_dn_pad = new EdgeFingerPad
 
     bat_plus_pad.contact ~ BAT_PLUS
     gnd_pad.contact ~ GND

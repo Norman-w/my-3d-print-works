@@ -97,3 +97,11 @@ component SmallWirePad:
     signal contact
     contact ~ pin 1
     footprint = "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
+
+
+component EdgeFingerPad:
+    designator_prefix = "J"
+    value = "GoldFinger"
+    signal contact
+    contact ~ pin 1
+    footprint = "SmartPaddle:EdgeFingerPad_P2.54mm"
