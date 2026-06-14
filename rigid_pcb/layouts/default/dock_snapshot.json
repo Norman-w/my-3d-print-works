@@ -1,0 +1,122 @@
+[
+  {
+    "addr": "pzt_bl.bleed_resistor",
+    "x": -33.1986,
+    "y": 33.7304,
+    "rot": 135.0
+  },
+  {
+    "addr": "pzt_bl.clamp_diode",
+    "x": -32.5399,
+    "y": 29.8729,
+    "rot": 45.0
+  },
+  {
+    "addr": "pzt_bl.pzt_gnd_pad",
+    "x": -34.925,
+    "y": 35.941,
+    "rot": -122.0
+  },
+  {
+    "addr": "pzt_bl.pzt_signal_pad",
+    "x": -38.862,
+    "y": 32.512,
+    "rot": 58.0
+  },
+  {
+    "addr": "pzt_bl.series_resistor",
+    "x": -36.195,
+    "y": 30.607,
+    "rot": -45.0
+  },
+  {
+    "addr": "pzt_br.bleed_resistor",
+    "x": 36.703,
+    "y": 30.988,
+    "rot": 45.0
+  },
+  {
+    "addr": "pzt_br.clamp_diode",
+    "x": 33.0288,
+    "y": 29.9073,
+    "rot": 135.0
+  },
+  {
+    "addr": "pzt_br.pzt_gnd_pad",
+    "x": 38.989,
+    "y": 32.512,
+    "rot": -43.0
+  },
+  {
+    "addr": "pzt_br.pzt_signal_pad",
+    "x": 34.925,
+    "y": 36.195,
+    "rot": 137.0
+  },
+  {
+    "addr": "pzt_br.series_resistor",
+    "x": 33.3256,
+    "y": 33.9844,
+    "rot": 45.0
+  },
+  {
+    "addr": "pzt_tl.bleed_resistor",
+    "x": -28.9085,
+    "y": -52.2925,
+    "rot": 30.0
+  },
+  {
+    "addr": "pzt_tl.clamp_diode",
+    "x": -28.4087,
+    "y": -47.6749,
+    "rot": -60.0
+  },
+  {
+    "addr": "pzt_tl.pzt_gnd_pad",
+    "x": -34.29,
+    "y": -52.07,
+    "rot": 56.0
+  },
+  {
+    "addr": "pzt_tl.pzt_signal_pad",
+    "x": -29.972,
+    "y": -54.991,
+    "rot": 56.0
+  },
+  {
+    "addr": "pzt_tl.series_resistor",
+    "x": -32.1826,
+    "y": -50.1134,
+    "rot": -135.0
+  },
+  {
+    "addr": "pzt_tr.bleed_resistor",
+    "x": 32.9725,
+    "y": -49.7525,
+    "rot": 150.0
+  },
+  {
+    "addr": "pzt_tr.clamp_diode",
+    "x": 28.929,
+    "y": -48.3701,
+    "rot": -120.0
+  },
+  {
+    "addr": "pzt_tr.pzt_gnd_pad",
+    "x": 34.29,
+    "y": -51.943,
+    "rot": -116.0
+  },
+  {
+    "addr": "pzt_tr.pzt_signal_pad",
+    "x": 29.972,
+    "y": -55.118,
+    "rot": 64.0
+  },
+  {
+    "addr": "pzt_tr.series_resistor",
+    "x": 28.7815,
+    "y": -52.6735,
+    "rot": 150.0
+  }
+]
