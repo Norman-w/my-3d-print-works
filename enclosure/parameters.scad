@@ -98,8 +98,8 @@ screw_positions = [
 //    方案B (V2) 将升级为带 FPU 的 ESP32-S3。
 
 // ---- PCB 槽体 ----
-pcb_cavity_center     = [0, -5];     // 槽体中心 [X,Y]，IMU 居拍头-拍柄中线
-pcb_cavity_size       = [42, 42];    // 正方形 42×42：Y 向容纳 IMU (18.5) + ESP32 (18) + 间隙
+pcb_cavity_center     = [0, -1];     // 槽体中心 [X,Y]，IMU 居拍头-拍柄中线 (向拍头扩展 8mm)
+pcb_cavity_size       = [42, 50];    // 矩形 42×50：Y 向扩大 8mm 给布线留空间
 pcb_cavity_depth      = 1.5;         // 每半壳槽深 (总计 3mm，剩余壁厚 1.5mm)
 
 // ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----

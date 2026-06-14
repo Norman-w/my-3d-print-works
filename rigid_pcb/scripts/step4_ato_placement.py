@@ -237,7 +237,7 @@ def apply_model_scales(board) -> int:
 def _net_source_candidates() -> list[Path]:
     if not ATO_BACKUP_DIR.exists():
         return []
-    return sorted(ATO_BACKUP_DIR.glob("default.pcbnew-*.kicad_pcb"), key=lambda p: p.stat().st_mtime, reverse=True)
+    return sorted(ATO_BACKUP_DIR.glob("default.20*.kicad_pcb"), key=lambda p: p.stat().st_mtime, reverse=True)
 
 
 def _board_has_named_nets(board) -> bool:
@@ -405,7 +405,7 @@ def main() -> None:
 
     # ---- Mainland functional zones ----
     # The cutouts consume the centre.  These zones keep parts inside the
-    # 42x42 mainland / handle-root substrate while leaving routing corridors
+    # 42×50 mainland / handle-root substrate while leaving routing corridors
     # beside the IMU and MCU pads.
     power_x_a = 15.0
     power_x_b = 19.2
