@@ -22,12 +22,14 @@ from rigid_pcb.tools.kicad_update_utils import (
     load_board,
     mk,
     polyline,
+    rect,
     save_board,
     shape_line,
     xy,
 )
 from rigid_pcb.tools.mech_geometry import (
     M2_CLEARANCE_HOLES,
+    MAINLAND_RECT,
     PZT_CAVITIES_SCAD,
     SCAD_SLOT_POINTS,
     SCAD_TO_KICAD_Y_OFFSET,
@@ -95,6 +97,12 @@ def main() -> None:
     contour = [slot_scad_to_kicad(p) for p in SCAD_SLOT_POINTS]
     polyline(pcbnew, board, pcbnew.Dwgs_User, contour, 0.18)
 
+    # ---- 大陆区矩形参考线 on Dwgs.User (42×50mm) ----
+    ml_left = MAINLAND_RECT[0] - MAINLAND_RECT[2] / 2
+    ml_top  = MAINLAND_RECT[1] - MAINLAND_RECT[3] / 2
+    rect(pcbnew, board, pcbnew.Dwgs_User, ml_left, ml_top,
+         MAINLAND_RECT[2], MAINLAND_RECT[3], 0.25)
+
     xs = [p[0] for p in contour]
     ys = [p[1] for p in contour]
     xmin, xmax = min(xs), max(xs)
@@ -134,6 +142,7 @@ def main() -> None:
     print(f"SCAD→KiCad Y偏移: {SCAD_TO_KICAD_Y_OFFSET:.2f} mm")
     print(f"参考轮廓 BBox: X=[{xmin:.2f}, {xmax:.2f}] Y=[{ymin:.2f}, {ymax:.2f}]")
     print(f"中心: ({cx:.2f}, {cy:.2f})")
+    print(f"大陆区: {MAINLAND_RECT[2]:.0f}×{MAINLAND_RECT[3]:.0f}mm (Dwgs.User 矩形)")
     print(f"PZT腔体: {len(PZT_CAVITIES_SCAD)} 个圆")
     print(f"M2参考孔: {len(M2_CLEARANCE_HOLES)} 个圆")
     print(f"方向标记: X± Y± 已标注")
