@@ -15,6 +15,13 @@ PZT signal/GND wire pads stay on the docks and are only re-snapped when
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
+# pcbnew 必须在所有其他 import 和 Board 操作之前导入。
+# KiCad 的 pcbnew Python 绑定底层依赖 wxWidgets App 单例，
+# 该单例在 `import pcbnew` 时由 C++ 侧初始化。
+# 若其他库先于 pcbnew 创建线程或修改运行时状态，
+# 可能引发 wxApp 竞态→segfault（"assert traits failed"）。
+import pcbnew
+
 import argparse
 import math
 import re
@@ -366,8 +373,6 @@ def main() -> None:
     parser.add_argument("--force", action="store_true", help="re-snap already-placed footprints")
     parser.add_argument("--place-docks", action="store_true", help="also place PZT dock footprints")
     args = parser.parse_args()
-
-    import pcbnew
 
     board = load_board(pcbnew, args.board)
 
