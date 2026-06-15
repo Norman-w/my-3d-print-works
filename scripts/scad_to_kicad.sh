@@ -108,6 +108,12 @@ run_step4_2() {
     info "Step 4.2 完成 ✓"
 }
 
+run_step4_5() {
+    title "Step 4.5 — 布线预备：尾插 + IMU 拥挤区 fanout stub + via"
+    "$KIPY" "$SCRIPTS/step4.5_prepare_fanout.py"
+    info "Step 4.5 完成 ✓"
+}
+
 run_step5() {
     title "Step 5 — KiCadRoutingTools 自动布线"
     echo ""
@@ -132,7 +138,7 @@ run_step5_route_all() {
         return 1
     fi
 
-    # 纯自动布线（keepout zone 已在 step4.2 注入，fanout via 已在 step4 放置）
+    # 纯自动布线（keepout zone 已在 step4.2 注入，fanout via 已在 step4.5 放置）
     info "KiCadRoutingTools 自动布线 (A* + rip-up/reroute) ..."
     cd "$KRT"
     "$PY3" route.py "$BOARD" \
@@ -164,6 +170,7 @@ run_all() {
     run_step3_2
     run_step4
     run_step4_2
+    run_step4_5
     echo ""
     read -rp "  是否继续 KiCadRoutingTools 自动布线? [y/N]: " do_fr
     if [[ "$do_fr" =~ ^[Yy]$ ]]; then
@@ -188,6 +195,7 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.2]${NC} step3.2 — 导入网络表                ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4]${NC}  step4 — ato 组件放置               ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.5]${NC} step4.5 — fanout stub + via（布线预备）${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — KiCadRoutingTools 自动布线    ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[q]${NC}  退出                              ${BLUE}║${NC}"
         echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
@@ -204,6 +212,7 @@ menu() {
             4)    run_step4 ;;
             4.1)  run_step4_1 ;;
             4.2)  run_step4_2 ;;
+            4.5)  run_step4_5 ;;
             5)    run_step5 ;;
             q|Q)  info "退出"; exit 0 ;;
             *)    warn "无效选择: $choice" ;;

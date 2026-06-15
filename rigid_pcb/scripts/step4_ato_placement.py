@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Step 4 — atopile 组件放置 + Reference + 3D 修正 + 尾插网表 + Fanout。
+"""Step 4 — atopile 组件放置 + Reference + 3D 修正 + 尾插网表分配。
 
 将 ato 生成的封装放入机械定位点，分配可读 Reference，修正 3D 模型缩放，
-显式分配金手指焊盘网络，为尾插和 IMU 拥挤区生成 fanout stub + via。
+显式分配金手指焊盘网络。不产生任何走线或过孔（fanout 由 step4.5 独立处理）。
 """
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
@@ -29,7 +29,6 @@ KEEPOUT = 1.5
 COL_SPACING_Y = 3.5
 COL_MARGIN = 1.0
 TEXT_THICKNESS = 0.10
-STUB_WIDTH = 0.15  # mm，fanout stub 走线宽度
 
 # 可读 Reference 映射（atopile_address → (Reference, Value)）
 READABLE_REFS = {
@@ -83,41 +82,6 @@ TAIL_NET_MAP = {
     'tail.pos5': {'F': 'uart_tx',  'B': 'uart_rx'},
 }
 
-# 尾插 fanout via（每个 pad 独立 via，F/B 面不同网）
-# 螺丝孔 (0,79) r=3.5 → keepout Y≥75.5，via@Y=74 安全
-# stub 路径: pad(Y=96) → (pad_x, 83) → (via_x, 83) → (via_x, via_y)
-TAIL_FANOUT = {
-    ('tail.pos1', 'F'): (-5.5, 74.0),
-    ('tail.pos1', 'B'): (-4.5, 74.0),
-    ('tail.pos2', 'F'): (-3.5, 74.0),
-    ('tail.pos2', 'B'): (-2.5, 74.0),
-    ('tail.pos3', 'F'): ( 3.5, 74.0),
-    ('tail.pos3', 'B'): ( 2.5, 74.0),
-    ('tail.pos4', 'F'): ( 5.5, 74.0),
-    ('tail.pos4', 'B'): ( 4.5, 74.0),
-    ('tail.pos5', 'F'): ( 7.5, 74.0),
-    ('tail.pos5', 'B'): ( 6.5, 74.0),
-}
-
-# IMU 拥挤区 fanout（cutout center (0,-21.5), 18.9×13.4）
-IMU_FANOUT = [
-    ('imu', '1',  (-7.0, -32.0)),
-    ('imu', '2',  (-4.0, -32.0)),
-    ('imu', '3',  ( 4.0, -32.0)),
-    ('imu', '4',  ( 7.0, -32.0)),
-    ('imu', '5',  ( 12.0, -27.0)),
-    ('imu', '6',  ( 12.0, -25.0)),
-    ('imu', '7',  ( 12.0, -23.0)),
-    ('imu', '8',  ( 12.0, -21.0)),
-    ('imu', '9',  ( 7.0, -11.0)),
-    ('imu', '10', ( 4.0, -11.0)),
-    ('imu', '11', (-4.0, -11.0)),
-    ('imu', '12', (-7.0, -11.0)),
-    ('imu', '13', (-12.0, -21.0)),
-    ('imu', '14', (-12.0, -23.0)),
-    ('imu', '15', (-12.0, -25.0)),
-    ('imu', '16', (-12.0, -27.0)),
-]
 
 # ===== 分区：私有成员 — 辅助函数 =====
 
@@ -253,7 +217,7 @@ def _place_map(fp_by_addr, placements, force):
     return moved
 
 
-# ===== 分区：私有成员 — 网表与 Fanout =====
+# ===== 分区：私有成员 — 网表分配 =====
 
 def _assign_tail_nets(board):
     """显式分配金手指焊盘网络（netlist 命名不一致的补偿）。"""
@@ -274,90 +238,6 @@ def _assign_tail_nets(board):
             pad.SetNet(net)
             assigned += 1
     return assigned
-
-
-def _add_tail_fanout(board):
-    """为尾插每个焊盘生成 fanout stub + via（F/B 独立 via）。"""
-    t_add = v_add = 0
-    for fp in board.GetFootprints():
-        addr = _address(fp)
-        for pad in fp.Pads():
-            pn = pad.GetNumber()
-            key = (addr, pn)
-            if key not in TAIL_FANOUT:
-                continue
-            net = pad.GetNet()
-            if not str(net.GetNetname()):
-                continue
-            via_x, via_y = TAIL_FANOUT[key]
-            pos = pad.GetPosition()
-            pad_x, pad_y = pos.x / 1e6, pos.y / 1e6
-            tl = pcbnew.B_Cu if pad.IsOnLayer(pcbnew.B_Cu) else pcbnew.F_Cu
-            for (x1, y1), (x2, y2) in [
-                ((pad_x, pad_y), (pad_x, 83.0)),
-                ((pad_x, 83.0), (via_x, 83.0)),
-                ((via_x, 83.0), (via_x, via_y)),
-            ]:
-                if abs(x1 - x2) < 0.001 and abs(y1 - y2) < 0.001:
-                    continue
-                track = pcbnew.PCB_TRACK(board)
-                track.SetStart(pcbnew.VECTOR2I(int(x1 * 1e6), int(y1 * 1e6)))
-                track.SetEnd(pcbnew.VECTOR2I(int(x2 * 1e6), int(y2 * 1e6)))
-                track.SetLayer(tl)
-                track.SetWidth(int(STUB_WIDTH * 1e6))
-                track.SetNet(net)
-                board.Add(track)
-                t_add += 1
-            via = pcbnew.PCB_VIA(board)
-            via.SetPosition(pcbnew.VECTOR2I(int(via_x * 1e6), int(via_y * 1e6)))
-            via.SetNet(net)
-            via.SetWidth(int(0.5 * 1e6))
-            via.SetDrill(int(0.3 * 1e6))
-            via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
-            board.Add(via)
-            v_add += 1
-    return t_add, v_add
-
-
-def _add_imu_fanout(board):
-    """为 IMU 拥挤区每个焊盘生成 fanout stub + via。"""
-    t_add = v_add = 0
-    for fp in board.GetFootprints():
-        if _address(fp) != 'imu':
-            continue
-        for pad in fp.Pads():
-            pn = pad.GetNumber()
-            net = pad.GetNet()
-            if not str(net.GetNetname()):
-                continue
-            via_target = None
-            for _ia, ip, iv in IMU_FANOUT:
-                if ip == pn:
-                    via_target = iv
-                    break
-            if via_target is None:
-                continue
-            via_x, via_y = via_target
-            pos = pad.GetPosition()
-            pad_x, pad_y = pos.x / 1e6, pos.y / 1e6
-            tl = pcbnew.B_Cu if pad.IsOnLayer(pcbnew.B_Cu) else pcbnew.F_Cu
-            track = pcbnew.PCB_TRACK(board)
-            track.SetStart(pcbnew.VECTOR2I(int(pad_x * 1e6), int(pad_y * 1e6)))
-            track.SetEnd(pcbnew.VECTOR2I(int(via_x * 1e6), int(via_y * 1e6)))
-            track.SetLayer(tl)
-            track.SetWidth(int(STUB_WIDTH * 1e6))
-            track.SetNet(net)
-            board.Add(track)
-            t_add += 1
-            via = pcbnew.PCB_VIA(board)
-            via.SetPosition(pcbnew.VECTOR2I(int(via_x * 1e6), int(via_y * 1e6)))
-            via.SetNet(net)
-            via.SetWidth(int(0.5 * 1e6))
-            via.SetDrill(int(0.3 * 1e6))
-            via.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
-            board.Add(via)
-            v_add += 1
-    return t_add, v_add
 
 
 # ===== 分区：公开 API =====
@@ -453,12 +333,6 @@ def main():
     # 4e. 金手指网络
     tail_net_assigned = _assign_tail_nets(board)
 
-    # 4f. Fanout
-    tail_t, tail_v = _add_tail_fanout(board)
-    imu_t, imu_v = _add_imu_fanout(board)
-    fanout_t = tail_t + imu_t
-    fanout_v = tail_v + imu_v
-
     # 4c/4d. 标签与 3D
     labelled, visible_labels = _apply_readable_text(board)
     scaled = _apply_model_scales(board)
@@ -469,8 +343,8 @@ def main():
     print(f'4c. 文本: 应用了 {labelled} 个可读Reference, 显示 {visible_labels} 个关键标签')
     print(f'4d. 3D: 应用了 {scaled} 个模块模型缩放修正')
     print(f'4e. 金手指网络: 分配了 {tail_net_assigned} 个焊盘')
-    print(f'4f. Fanout: 放置了 {fanout_v} 个过孔 + {fanout_t} 段 stub track')
     print(f'    总共 {len(fp_by_addr)} 个带 atopile_address 的封装')
+    print(f'    ⚠ 无走线/过孔 — fanout 由 step4.5 独立处理')
 
 
 if __name__ == '__main__':
