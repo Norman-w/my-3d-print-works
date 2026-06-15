@@ -98,10 +98,11 @@ def main() -> None:
     polyline(pcbnew, board, pcbnew.Dwgs_User, contour, 0.18)
 
     # ---- 大陆区矩形参考线 on Dwgs.User (42×50mm) ----
-    ml_left = MAINLAND_RECT[0] - MAINLAND_RECT[2] / 2
-    ml_top  = MAINLAND_RECT[1] - MAINLAND_RECT[3] / 2
-    rect(pcbnew, board, pcbnew.Dwgs_User, ml_left, ml_top,
-         MAINLAND_RECT[2], MAINLAND_RECT[3], 0.25)
+    # rect() 参数: (cx, cy, w, h) — 中心坐标，与 MAINLAND_RECT 格式一致
+    rect(pcbnew, board, pcbnew.Dwgs_User,
+         MAINLAND_RECT[0], MAINLAND_RECT[1],  # center
+         MAINLAND_RECT[2], MAINLAND_RECT[3],  # w, h
+         0.25)
 
     xs = [p[0] for p in contour]
     ys = [p[1] for p in contour]
