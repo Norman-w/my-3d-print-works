@@ -495,3 +495,43 @@ def _pcb_clearance_holes() -> list[tuple[float, float, float]]:
     return holes
 
 PCB_CLEARANCE_HOLES = _pcb_clearance_holes()
+
+# ===== 分区：SCAD 腔体可视化 — Dwgs.User 参考线数据源 =====
+# 这些形状直接从 SCAD 定义（paddle_shell.scad 中的 _cutouts 模块）解析而来，
+# 不做任何计算或变换，仅在 KiCad Dwgs.User 上按 SCAD 坐标逐项绘制。
+# 每个条目: {"type": "rect"|"circle"|"polygon", "scad_...": ..., "label": "..."}
+
+SCAD_CAVITY_SHAPES: list[dict] = []
+
+# pcb_main_cavity — 大陆区矩形腔体（paddle_shell.scad L475）
+#   cube([pcb_cavity_size[0], pcb_cavity_size[1]]) at pcb_cavity_center
+#   对上 ato 定义的大陆区：IMU 在上（拍头侧），MCU 在下（拍柄侧）。
+_cav_center_scad = (float(_cav_center[0]), float(_cav_center[1]))  # type: ignore[index]
+_cav_w = float(_cav_size[0])  # type: ignore[index]
+_cav_h = float(_cav_size[1])  # type: ignore[index]
+SCAD_CAVITY_SHAPES.append({
+    "type": "rect",
+    "scad_center": _cav_center_scad,
+    "scad_size": (_cav_w, _cav_h),
+    "label": f"pcb_main_cavity {_cav_w:.0f}×{_cav_h:.0f}",
+})
+
+# rigid_pcb_cavity — 拍形 PCB 槽（paddle_shell.scad L402）
+#   rigid_pcb_profile_2d() = polygon(rigid_pcb_slot_points)
+#   已经在 step1 中作为"SCAD 槽轮廓"绘制，此处仅登记便于审计。
+SCAD_CAVITY_SHAPES.append({
+    "type": "polygon",
+    "scad_points": SCAD_SLOT_POINTS,
+    "label": f"rigid_pcb_cavity ({len(SCAD_SLOT_POINTS)} pts)",
+})
+
+# pirozo_pockets — 压电片圆槽（paddle_shell.scad 中的 piezo_pockets）
+#   4 个圆，圆心=piezo_positions，直径=piezo_disc_d
+#   已经在 step1 中作为 PZT_CAVITIES_SCAD 绘制，此处仅登记便于审计。
+for i, (cx, cy, r) in enumerate(PZT_CAVITIES_SCAD):
+    SCAD_CAVITY_SHAPES.append({
+        "type": "circle",
+        "scad_center": (cx, cy),
+        "scad_radius": r,
+        "label": f"piezo_pocket #{i+1} r={r:.1f}",
+    })

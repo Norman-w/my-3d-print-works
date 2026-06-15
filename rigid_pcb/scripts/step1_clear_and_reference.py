@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Step 1 — Clear PCB and draw SCAD reference with X±/Y± coordinate markers.
+"""Step 1 — 清空 PCB 并绘制 SCAD 腔体参考线和 X±/Y± 坐标标记。
 
-Destructive: removes all footprints, tracks/vias, zones, and drawings.
-Then draws the SCAD slot contour on Dwgs.User plus direction arrows, axis
-tick marks, PZT cavity circles, and X±/Y± text labels for coordinate
-orientation.
+破坏性操作：清除所有封装、走线/过孔、覆铜区和图形。
+然后根据 SCAD 中定义的腔体形状（pcb_main_cavity、rigid_pcb_cavity、
+piezo_pockets）逐项绘制到 Dwgs.User，附以 M2 参照孔和方向标记。
 """
 
 # ===== 分区：导入/依赖 =====
@@ -29,8 +28,7 @@ from rigid_pcb.tools.kicad_update_utils import (
 )
 from rigid_pcb.tools.mech_geometry import (
     M2_CLEARANCE_HOLES,
-    MAINLAND_RECT,
-    PZT_CAVITIES_SCAD,
+    SCAD_CAVITY_SHAPES,
     SCAD_SLOT_POINTS,
     SCAD_TO_KICAD_Y_OFFSET,
     slot_scad_to_kicad,
@@ -84,7 +82,7 @@ def clear_board(board) -> dict[str, int]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Step 1: Clear PCB and draw SCAD reference with X±/Y± markers")
+    parser = argparse.ArgumentParser(description="Step 1: 清空 PCB 并绘制 SCAD 腔体参考线 + X±/Y± 标记")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
     args = parser.parse_args()
 
@@ -93,44 +91,50 @@ def main() -> None:
     board = load_board(pcbnew, args.board)
     removed = clear_board(board)
 
-    # ---- SCAD slot contour on Dwgs.User ----
+    # ---- SCAD 腔体形状 — 逐项从 SCAD 数据绘制到 Dwgs.User ----
+    # 所有腔体形状直接从 SCAD 解析（paddle_shell.scad 中的 _cutouts 模块），
+    # 不做人工计算。每个 SCAD 坐标通过 slot_scad_to_kicad 转换为 KiCad 坐标。
+    pzt_count = 0
+    for shape in SCAD_CAVITY_SHAPES:
+        stype = shape["type"]
+        label = shape["label"]
+        if stype == "rect":
+            sc, ss = shape["scad_center"], shape["scad_size"]
+            kx, ky = slot_scad_to_kicad(sc)
+            rect(pcbnew, board, pcbnew.Dwgs_User, kx, ky, ss[0], ss[1], 0.25)
+        elif stype == "polygon":
+            contour = [slot_scad_to_kicad(p) for p in shape["scad_points"]]
+            polyline(pcbnew, board, pcbnew.Dwgs_User, contour, 0.18)
+        elif stype == "circle":
+            kx, ky = slot_scad_to_kicad(shape["scad_center"])
+            circle(pcbnew, board, pcbnew.Dwgs_User, kx, ky, shape["scad_radius"], 0.12)
+            pzt_count += 1
+        print(f"  SCAD腔体: {label}")
+
+    # ---- M2 螺丝参照孔 ----
+    for hole_x, hole_y, hole_r in M2_CLEARANCE_HOLES:
+        circle(pcbnew, board, pcbnew.Dwgs_User, hole_x, hole_y, hole_r, 0.12)
+
+    # ---- 方向标记：基于 SCAD 槽轮廓的 BBox ----
     contour = [slot_scad_to_kicad(p) for p in SCAD_SLOT_POINTS]
-    polyline(pcbnew, board, pcbnew.Dwgs_User, contour, 0.18)
-
-    # ---- 大陆区矩形参考线 on Dwgs.User (42×50mm) ----
-    # rect() 参数: (cx, cy, w, h) — 中心坐标，与 MAINLAND_RECT 格式一致
-    rect(pcbnew, board, pcbnew.Dwgs_User,
-         MAINLAND_RECT[0], MAINLAND_RECT[1],  # center
-         MAINLAND_RECT[2], MAINLAND_RECT[3],  # w, h
-         0.25)
-
     xs = [p[0] for p in contour]
     ys = [p[1] for p in contour]
     xmin, xmax = min(xs), max(xs)
     ymin, ymax = min(ys), max(ys)
     cx, cy = (xmin + xmax) / 2, (ymin + ymax) / 2
 
-    # ---- Centre cross with direction arrows ----
+    # 中心十字 + 方向箭头
     arrow = 8.0
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, cy), (cx + arrow, cy), 0.15)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, cy), (cx, cy - arrow), 0.15)
 
-    # ---- Axis tick marks at bounding-box edges ----
+    # BBox 边缘刻度线
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (xmin - 4.0, cy), (xmin + 4.0, cy), 0.12)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (xmax - 4.0, cy), (xmax + 4.0, cy), 0.12)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, ymin - 4.0), (cx, ymin + 4.0), 0.12)
     shape_line(pcbnew, board, pcbnew.Dwgs_User, (cx, ymax - 4.0), (cx, ymax + 4.0), 0.12)
 
-    # ---- PZT cavity circles ----
-    for pzt_x, pzt_y, pzt_r in PZT_CAVITIES_SCAD:
-        kicad_x, kicad_y = slot_scad_to_kicad((pzt_x, pzt_y))
-        circle(pcbnew, board, pcbnew.Dwgs_User, kicad_x, kicad_y, pzt_r, 0.12)
-
-    # ---- M2 screw/reference holes ----
-    for hole_x, hole_y, hole_r in M2_CLEARANCE_HOLES:
-        circle(pcbnew, board, pcbnew.Dwgs_User, hole_x, hole_y, hole_r, 0.12)
-
-    # ---- X± / Y± text markers ----
+    # X± / Y± 文本标记
     add_text(pcbnew, board, "X+", xmax + 6.0, cy, 3.0)
     add_text(pcbnew, board, "X-", xmin - 14.0, cy, 3.0)
     add_text(pcbnew, board, "Y+", cx + 2.0, ymin - 8.0, 3.0)
@@ -141,10 +145,12 @@ def main() -> None:
     print(f"=== Step 1 完成 ===")
     print(f"清除了: {removed}")
     print(f"SCAD→KiCad Y偏移: {SCAD_TO_KICAD_Y_OFFSET:.2f} mm")
+    print(f"SCAD腔体形状数: {len(SCAD_CAVITY_SHAPES)}")
+    print(f"  其中 rect: {sum(1 for s in SCAD_CAVITY_SHAPES if s['type']=='rect')}")
+    print(f"  其中 polygon: {sum(1 for s in SCAD_CAVITY_SHAPES if s['type']=='polygon')}")
+    print(f"  其中 circle: {pzt_count}")
     print(f"参考轮廓 BBox: X=[{xmin:.2f}, {xmax:.2f}] Y=[{ymin:.2f}, {ymax:.2f}]")
     print(f"中心: ({cx:.2f}, {cy:.2f})")
-    print(f"大陆区: {MAINLAND_RECT[2]:.0f}×{MAINLAND_RECT[3]:.0f}mm (Dwgs.User 矩形)")
-    print(f"PZT腔体: {len(PZT_CAVITIES_SCAD)} 个圆")
     print(f"M2参考孔: {len(M2_CLEARANCE_HOLES)} 个圆")
     print(f"方向标记: X± Y± 已标注")
 
