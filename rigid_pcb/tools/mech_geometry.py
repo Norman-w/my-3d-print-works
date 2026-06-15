@@ -2,13 +2,111 @@
 
 Coordinates in this file are KiCad board coordinates in millimeters unless the
 name explicitly says SCAD.  KiCad's Y axis is positive downward in the board
-editor; the PZT centers from board_params.yaml are converted at their callsite.
+editor.
+
+SCAD-derived values (screw positions, PZT cavities, mainland rectangle) are
+parsed from enclosure/parameters.scad at import time so changing the SCAD
+parameters automatically updates the KiCad toolchain.
 """
 
 from __future__ import annotations
 
 import math
+import re
+from pathlib import Path
 
+# ===== 分区：SCAD 参数解析 =====
+
+_ROOT = Path(__file__).resolve().parents[2]
+_PARAMS_SCAD = _ROOT / "enclosure" / "parameters.scad"
+
+
+def _eval_scad_term(text: str, ctx: dict[str, object]) -> object:
+    """Evaluate a single SCAD value (number, vector, or nested list)."""
+    text = text.strip()
+
+    # Nested list of vectors: [[...], [...], ...]
+    if text.startswith("["):
+        # Find matching closing bracket
+        depth = 0
+        end = 0
+        for i, ch in enumerate(text):
+            if ch == "[":
+                depth += 1
+            elif ch == "]":
+                depth -= 1
+                if depth == 0:
+                    end = i + 1
+                    break
+
+        inner = text[1 : end - 1].strip()
+        if inner.startswith("["):
+            # List of vectors
+            items = _split_top_level_commas(inner)
+            return tuple(_eval_scad_term(it, ctx) for it in items)
+        elif "," in inner:
+            # Single vector: [x, y] or [x, y, z]
+            parts = [p.strip() for p in inner.split(",")]
+            return tuple(_safe_eval(p, ctx) for p in parts if p)
+
+    # Scalar expression (number, possibly with arithmetic)
+    return _safe_eval(text, ctx)
+
+
+def _safe_eval(expr: str, ctx: dict[str, object]) -> float:
+    """Evaluate a numeric expression, returning 0.0 on failure."""
+    try:
+        return eval(expr, {}, ctx)
+    except Exception:
+        return 0.0
+
+
+def _split_top_level_commas(text: str) -> list[str]:
+    """Split text at top-level commas, respecting bracket nesting."""
+    items = []
+    depth = 0
+    current: list[str] = []
+    for ch in text:
+        if ch == "[":
+            depth += 1
+        elif ch == "]":
+            depth -= 1
+        if ch == "," and depth == 0:
+            items.append("".join(current).strip())
+            current = []
+        else:
+            current.append(ch)
+    if current:
+        items.append("".join(current).strip())
+    return items
+
+
+def _parse_scad_params() -> dict[str, object]:
+    """Extract top-level variable assignments from parameters.scad."""
+    text = _PARAMS_SCAD.read_text(encoding="utf-8")
+    # Remove line comments
+    clean = re.sub(r"//.*$", "", text, flags=re.MULTILINE)
+    # Collapse whitespace so multi-line arrays become single-line
+    collapsed = re.sub(r"\s+", " ", clean).strip()
+
+    result: dict[str, object] = {}
+    # Match: name = value;  (non-greedy, stops at first ;)
+    for m in re.finditer(r"(\w+)\s*=\s*(.+?);", collapsed):
+        name = m.group(1)
+        expr = m.group(2).strip()
+        try:
+            value = _eval_scad_term(expr, result)
+            if value is not None:
+                result[name] = value
+        except Exception:
+            pass
+
+    return result
+
+
+_PARAMS = _parse_scad_params()
+
+# ===== 分区：常量/配置 =====
 
 SCAD_TO_KICAD_Y_OFFSET = -10.0
 SUBSTRATE_EDGE_CLEARANCE = 0.30
@@ -17,27 +115,32 @@ PZT_CAVITY_CLEARANCE = 0.32
 PZT_DOCK_RETREAT_BAND = 4.0
 PZT_DOCK_RETREAT_STEP = 3.0
 SUBSTRATE_EDGE_SAMPLE = 1.0
-MAINLAND_RECT = (0.0, -9.0, 42.0, 50.0)
 
+# PZT 腔体 — 圆心和半径均来自 SCAD
+_pzt_radius = float(_PARAMS.get("piezo_disc_d", 20.5)) / 2  # type: ignore[arg-type]
 PZT_CAVITIES_SCAD = [
-    (38.0, 52.0, 20.5 / 2),
-    (-38.0, 52.0, 20.5 / 2),
-    (44.0, -52.0, 20.5 / 2),
-    (-44.0, -52.0, 20.5 / 2),
+    (float(p[0]), float(p[1]), _pzt_radius)  # type: ignore[index]
+    for p in _PARAMS.get("piezo_positions", [])  # type: ignore[union-attr]
 ]
 
-SCREW_CLEARANCE_RADIUS = 3.5
+# 螺丝孔 — 直径来自 SCAD screw_d_boss，坐标来自 screw_positions
+_screw_boss_d = float(_PARAMS.get("screw_d_boss", 5.5))  # type: ignore[arg-type]
+SCREW_CLEARANCE_RADIUS = _screw_boss_d / 2.0 + 0.75  # boss 柱外 + 0.75mm 余量
 SCREW_HOLES_SCAD = [
-    (0.0, 65.0),
-    (52.0, 45.0),
-    (-52.0, 45.0),
-    (55.0, 0.0),
-    (-55.0, 0.0),
-    (36.0, -65.0),
-    (-36.0, -65.0),
-    (0.0, 32.0),
-    (0.0, -33.0),
+    (float(p[0]), float(p[1]))  # type: ignore[index]
+    for p in _PARAMS.get("screw_positions", [])  # type: ignore[union-attr]
 ]
+
+# 大陆区矩形 — 从 SCAD pcb_cavity_center + pcb_cavity_size 推算 KiCad 坐标
+_cav_center = _PARAMS.get("pcb_cavity_center", (0, -1))  # type: ignore
+_cav_size = _PARAMS.get("pcb_cavity_size", (42, 50))  # type: ignore
+_ki_y = -float(_cav_center[1]) + SCAD_TO_KICAD_Y_OFFSET  # type: ignore[index]  # SCAD +Y=拍头, KiCad -Y=拍头
+MAINLAND_RECT = (
+    float(_cav_center[0]),  # type: ignore[index]
+    _ki_y,
+    float(_cav_size[0]),  # type: ignore[index]
+    float(_cav_size[1]),  # type: ignore[index]
+)
 
 
 def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
@@ -46,6 +149,7 @@ def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
     return (x, -y + SCAD_TO_KICAD_Y_OFFSET)
 
 
+# 拍形外轮廓槽点（来自 paddle_shell.scad 的 rigid_pcb_slot_points，不是 parameters.scad）
 SCAD_SLOT_POINTS = [
     (9.00, -108.00),
     (-9.00, -108.00),
@@ -87,6 +191,8 @@ SCAD_SLOT_POINTS = [
     (9.00, -26.00),
 ]
 
+# ===== 分区：几何工具函数 =====
+
 
 def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
     """PCB substrate outline derived from the SCAD slot reference.
@@ -95,7 +201,6 @@ def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
     cannot drift outside the black reference frame.  Only shorten the handle
     tail, because the rigid PCB should stop inside the handle cavity.
     """
-
     points = list(SCAD_SLOT_POINTS)
     points[0] = (points[0][0], -88.00)
     points[1] = (points[1][0], -88.00)
@@ -132,13 +237,15 @@ def _line_intersection(
     return (ax + adx * t, ay + ady * t)
 
 
-def _edge_inset_polygon(points: list[tuple[float, float]], distance: float) -> list[tuple[float, float]]:
+def _edge_inset_polygon(
+    points: list[tuple[float, float]],
+    distance: float,
+) -> list[tuple[float, float]]:
     """Inset polygon by moving each edge along its inward normal.
 
     This preserves gangway/dock length much better than moving every vertex
     toward the mainland center.
     """
-
     if len(points) < 3:
         return points
 
@@ -151,14 +258,21 @@ def _edge_inset_polygon(points: list[tuple[float, float]], distance: float) -> l
         dx, dy = bx - ax, by - ay
         length = math.hypot(dx, dy) or 1.0
         nx, ny = (-dy / length * inward_sign, dx / length * inward_sign)
-        offset_edges.append(((ax + nx * distance, ay + ny * distance), (bx + nx * distance, by + ny * distance)))
+        offset_edges.append(
+            (
+                (ax + nx * distance, ay + ny * distance),
+                (bx + nx * distance, by + ny * distance),
+            )
+        )
 
     inset = []
     count = len(offset_edges)
     for i in range(count):
         prev_edge = offset_edges[i - 1]
         edge = offset_edges[i]
-        intersection = _line_intersection(prev_edge[0], prev_edge[1], edge[0], edge[1])
+        intersection = _line_intersection(
+            prev_edge[0], prev_edge[1], edge[0], edge[1]
+        )
         if intersection is None:
             px = (prev_edge[1][0] + edge[0][0]) / 2
             py = (prev_edge[1][1] + edge[0][1]) / 2
@@ -212,14 +326,22 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
     for point_a, point_b in zip(base_points, base_points[1:] + base_points[:1]):
         ax, ay = point_a
         bx, by = point_b
-        steps = max(1, math.ceil(math.hypot(bx - ax, by - ay) / SUBSTRATE_EDGE_SAMPLE))
+        steps = max(
+            1, math.ceil(math.hypot(bx - ax, by - ay) / SUBSTRATE_EDGE_SAMPLE)
+        )
         for step in range(steps):
             t = step / steps
             point = (ax + (bx - ax) * t, ay + (by - ay) * t)
             point = (point[0], min(point[1], SUBSTRATE_TAIL_MAX_Y))
             for pzt in pzt_keepouts:
                 point = _retreat_from_pzt(point, pzt, hub)
-            if not points or math.hypot(point[0] - points[-1][0], point[1] - points[-1][1]) > 0.05:
+            if (
+                not points
+                or math.hypot(
+                    point[0] - points[-1][0], point[1] - points[-1][1]
+                )
+                > 0.05
+            ):
                 points.append(point)
 
     return _polygon_points(points)
@@ -227,10 +349,8 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
 
 PCB_SLOT_POINTS = _embedded_substrate_points()
 
+# ===== 分区：模块开孔与螺丝让位 =====
 
-# Module body cutouts.  The actual modules mount with their long side along X.
-# The opening dimensions are the module outside dimensions plus 0.20 mm
-# clearance on each side.
 MODULE_CUTOUT_CLEARANCE = 0.20
 ESP32_CUTOUT = (
     0.0,
@@ -244,16 +364,14 @@ IMU_CUTOUT = (
     18.5 + MODULE_CUTOUT_CLEARANCE * 2,
     13.0 + MODULE_CUTOUT_CLEARANCE * 2,
 )
+
+# 参考线用的全部螺丝孔（含板外螺丝）
 M2_CLEARANCE_HOLES = [
     (*slot_scad_to_kicad((x, y)), SCREW_CLEARANCE_RADIUS)
     for x, y in SCREW_HOLES_SCAD
 ]
 
-# Actual PCB cutouts.  Keep this narrower than the full mechanical reference
-# list so board-external screw references do not become isolated Edge.Cuts.
-# These two enclosure screws pass through the central substrate; use the same
-# boss clearance as the SCAD keepout so the rigid PCB does not collide with
-# the printed screw towers.
+# 实际 PCB Edge.Cuts 上只保留穿过大陆区的那两个
 PCB_CLEARANCE_HOLES = [
     (*slot_scad_to_kicad((0.0, -33.0)), SCREW_CLEARANCE_RADIUS),
 ]
