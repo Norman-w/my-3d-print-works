@@ -102,6 +102,14 @@ pcb_cavity_center     = [0, -1];     // 槽体中心 [X,Y]，IMU 居拍头-拍�
 pcb_cavity_size       = [42, 50];    // 矩形 42×50：Y 向向拍头扩展 8mm 给布线留空间
 pcb_cavity_depth      = 1.5;         // 每半壳槽深 (总计 3mm，剩余壁厚 1.5mm)
 
+// ---- 模块放置偏移 (SCAD 坐标, 相对 pcb_cavity_center) ----
+// IMU (IM948, 13×18.5×3mm): 靠拍头侧，往拍柄方向挪 3mm 留空间。
+//   X=0 居中；Y=12.5 = 大陆中心 + 12.5mm 向拍头（原 15.5，向拍柄收 3mm）
+imu_module_offset     = [0, 12.5];
+// MCU (ESP32-C6-N8, 25×18×3mm): 靠拍柄侧，偏左留 IMU 信号区。
+//   X=-3 偏左 3mm；Y=-11.5 = 大陆中心 - 11.5mm 向拍柄
+mcu_module_offset     = [-3, -11.5];
+
 // ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----
 // 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。
 signal_trench_w       = 2.0;        // 槽宽 (VCC+GND 两条线)

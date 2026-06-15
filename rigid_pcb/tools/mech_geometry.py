@@ -472,6 +472,11 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
             ):
                 points.append(point)
 
+    # 保证多边形显式闭合 — 边采样和 PZT 回退后首尾顶点坐标可能有微小偏差。
+    # FreeRouting 的 DSN 边界解析依赖闭合多边形，任何间隙都会导致轮廓渲染异常。
+    if points:
+        points.append(points[0])
+
     return _polygon_points(points)
 
 
@@ -484,28 +489,31 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ICM-948:          本体 18.5×13.0mm → 开孔 18.9×13.4mm
 MODULE_CUTOUT_CLEARANCE = 0.20
 
-# IMU 模块相对大陆区中心的 Y 轴偏移量（mm，负=拍头方向）。
-# IMU 放在大陆区上半部靠近拍头侧。
-_IMU_Y_OFFSET_FROM_MAINLAND_CENTER = -15.5
+# IMU/MCU 在大陆区内的放置偏移 — 直接从 SCAD 参数解析（SCAD 坐标，相对 pcb_cavity_center）
+# SCAD Y+ = 拍头方向，SCAD Y- = 拍柄方向
+# KiCad 中 Y 反向：y_kicad_offset = -y_scad_offset
+_imu_module_offset = _PARAMS.get("imu_module_offset", [0, 18.5])
+_mcu_module_offset = _PARAMS.get("mcu_module_offset", [-3, -11.5])
 
-# MCU 模块相对大陆区中心的 Y 轴偏移量（mm，正=拍柄方向）。
-# MCU 放在大陆区下半部靠近拍柄侧。
-_MCU_Y_OFFSET_FROM_MAINLAND_CENTER = 11.5
+_IMU_X_OFFSET_KICAD = float(_imu_module_offset[0])  # type: ignore[index]
+_IMU_Y_OFFSET_KICAD = -float(_imu_module_offset[1])  # type: ignore[index] — Y 取反
+_MCU_X_OFFSET_KICAD = float(_mcu_module_offset[0])  # type: ignore[index]
+_MCU_Y_OFFSET_KICAD = -float(_mcu_module_offset[1])  # type: ignore[index] — Y 取反
 
 # ESP32-C6-WROOM-1 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# X 居中于大陆区中线（= PCB X 轴原点），Y 相对大陆区中心偏移
+# 位置从 SCAD mcu_module_offset 推导
 ESP32_CUTOUT = (
-    0.0,                                                            # X 居中
-    _KICAD_MAINLAND_CENTER_Y + _MCU_Y_OFFSET_FROM_MAINLAND_CENTER,  # Y = 大陆中心 + MCU 偏移
-    25.5 + MODULE_CUTOUT_CLEARANCE * 2,                             # 宽 = 模块宽 + 双边间隙
-    18.0 + MODULE_CUTOUT_CLEARANCE * 2,                             # 高 = 模块高 + 双边间隙
+    _MCU_X_OFFSET_KICAD,                                             # X 从 SCAD mcu_module_offset[0]
+    _KICAD_MAINLAND_CENTER_Y + _MCU_Y_OFFSET_KICAD,                  # Y = 大陆中心 + SCAD 偏移（Y 取反）
+    25.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
+    18.0 + MODULE_CUTOUT_CLEARANCE * 2,                              # 高 = 模块高 + 双边间隙
 )
 
 # ICM-948 IMU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# X 居中于大陆区中线，Y 相对大陆区中心偏移（负=拍头方向）
+# 位置从 SCAD imu_module_offset 推导
 IMU_CUTOUT = (
-    0.0,                                                             # X 居中
-    _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_FROM_MAINLAND_CENTER,   # Y = 大陆中心 + IMU 偏移
+    _IMU_X_OFFSET_KICAD,                                             # X 从 SCAD imu_module_offset[0]
+    _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_KICAD,                  # Y = 大陆中心 + SCAD 偏移（Y 取反）
     18.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
     13.0 + MODULE_CUTOUT_CLEARANCE * 2,                              # 高 = 模块高 + 双边间隙
 )

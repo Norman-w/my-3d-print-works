@@ -56,7 +56,10 @@ def shape_line(pcbnew, board, layer: int, a: tuple[float, float], b: tuple[float
 def polyline(pcbnew, board, layer: int, points: list[tuple[float, float]], width: float = 0.1, closed: bool = True):
     if len(points) < 2:
         return
-    pairs = zip(points, points[1:] + points[:1] if closed else points[1:])
+    # 如果首尾坐标一致（显式闭合），不额外添加闭合线段
+    first, last = points[0], points[-1]
+    explicit_closed = closed and math.isclose(first[0], last[0], abs_tol=1e-3) and math.isclose(first[1], last[1], abs_tol=1e-3)
+    pairs = zip(points, points[1:] + points[:1] if (closed and not explicit_closed) else points[1:])
     for a, b in pairs:
         shape_line(pcbnew, board, layer, a, b, width)
 

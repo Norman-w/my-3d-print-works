@@ -79,6 +79,12 @@ run_step3_1() {
     info "ato build 完成 ✓"
 }
 
+run_step3_2() {
+    title "Step 3.2 — 导入 ato 网络表到 KiCad"
+    "$KIPY" "$SCRIPTS/step3_import_netlist.py"
+    info "Step 3.2 完成 ✓"
+}
+
 run_step4() {
     title "Step 4 — atopile 组件放置 + Reference + 3D 修正"
     # macOS Rosetta: step4_ato_placement.py 模块顶层导入与 pcbnew/wxWidgets
@@ -523,6 +529,7 @@ run_all() {
     run_step2
     run_step3
     run_step3_1
+    run_step3_2
     run_step4
     run_step4_2
     echo ""
@@ -546,6 +553,7 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[2]${NC}  step2 — PCB 基材轮廓               ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[3]${NC}  step3 — 模块开孔                   ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.1]${NC} ato build                        ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[3.2]${NC} step3.2 — 导入网络表                ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4]${NC}  step4 — ato 组件放置               ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — FreeRouting 自动布线       ${BLUE}║${NC}"
@@ -560,6 +568,7 @@ menu() {
             2)    run_step2 ;;
             3)    run_step3 ;;
             3.1)  run_step3_1 ;;
+            3.2)  run_step3_2 ;;
             4)    run_step4 ;;
             4.1)  run_step4_1 ;;
             4.2)  run_step4_2 ;;
