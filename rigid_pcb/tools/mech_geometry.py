@@ -18,7 +18,6 @@ from pathlib import Path
 # ===== 分区：SCAD 参数解析 =====
 
 _ROOT = Path(__file__).resolve().parents[2]
-_PARAMS_SCAD = _ROOT / "enclosure" / "parameters.scad"
 
 
 def _eval_scad_term(text: str, ctx: dict[str, object]) -> object:
@@ -81,9 +80,14 @@ def _split_top_level_commas(text: str) -> list[str]:
     return items
 
 
-def _parse_scad_params() -> dict[str, object]:
-    """Extract top-level variable assignments from parameters.scad."""
-    text = _PARAMS_SCAD.read_text(encoding="utf-8")
+def _parse_scad_file(path: Path) -> dict[str, object]:
+    """Extract top-level variable assignments from a SCAD file.
+
+    Supports numbers, vectors ([x, y]), and nested lists of vectors
+    ([[x0,y0], [x1,y1], ...]).  Line comments (//) are stripped before
+    parsing.  Multi-line arrays are collapsed to single-line form.
+    """
+    text = path.read_text(encoding="utf-8")
     # Remove line comments
     clean = re.sub(r"//.*$", "", text, flags=re.MULTILINE)
     # Collapse whitespace so multi-line arrays become single-line
@@ -104,7 +108,12 @@ def _parse_scad_params() -> dict[str, object]:
     return result
 
 
-_PARAMS = _parse_scad_params()
+# Parse parameters.scad first (primary source for dimensions and geometry).
+# Then parse paddle_shell.scad (for the PCB slot outline polygon).
+# Merged in that order so parameters.scad values take precedence on overlap.
+_PARAMS = _parse_scad_file(_ROOT / "enclosure" / "parameters.scad")
+_SHELL_PARAMS = _parse_scad_file(_ROOT / "enclosure" / "paddle_shell.scad")
+_PARAMS = {**_SHELL_PARAMS, **_PARAMS}  # parameters.scad wins on conflict
 
 # ===== 分区：常量/配置 =====
 
@@ -150,47 +159,34 @@ def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
     return (x, -y + SCAD_TO_KICAD_Y_OFFSET)
 
 
-# 拍形外轮廓槽点（来自 paddle_shell.scad 的 rigid_pcb_slot_points，不是 parameters.scad）
-SCAD_SLOT_POINTS = [
-    (9.00, -108.00),
-    (-9.00, -108.00),
-    (-9.00, -26.00),
-    (-16.75, -26.00),
-    (-29.99, -40.11),
-    (-28.24, -41.75),
-    (-35.08, -49.05),
-    (-41.65, -42.90),
-    (-34.81, -35.60),
-    (-33.06, -37.24),
-    (-21.00, -24.39),
-    (-21.00, 16.00),
-    (-19.48, 16.00),
-    (-29.66, 35.62),
-    (-31.62, 34.32),
-    (-37.17, 42.64),
-    (-29.68, 47.63),
-    (-24.13, 39.31),
-    (-26.15, 37.97),
-    (-14.75, 16.00),
-    (14.75, 16.00),
-    (26.15, 37.97),
-    (24.13, 39.31),
-    (29.68, 47.63),
-    (37.17, 42.64),
-    (31.62, 34.32),
-    (29.66, 35.62),
-    (19.48, 16.00),
-    (21.00, 16.00),
-    (21.00, -24.39),
-    (33.06, -37.24),
-    (34.81, -35.60),
-    (41.65, -42.90),
-    (35.08, -49.05),
-    (28.24, -41.75),
-    (29.99, -40.11),
-    (16.75, -26.00),
-    (9.00, -26.00),
-]
+# 拍形外轮廓槽点 — 从 paddle_shell.scad 的 rigid_pcb_slot_points 解析。
+# 该多边形定义了 PCB 在球拍壳体中的最大投影轮廓（37 个顶点）。
+# SCAD 中用 polygon(points=rigid_pcb_slot_points) 驱动腔体切割，
+# KiCad 中用同一组点（经 slot_scad_to_kicad 转换）绘制参考线和 Edge.Cuts。
+# 两边共享同一个数据源，修改 paddle_shell.scad 即可同步。
+_shell_pts = _PARAMS.get("rigid_pcb_slot_points")
+if _shell_pts is not None and len(_shell_pts) > 0:  # type: ignore[arg-type]
+    SCAD_SLOT_POINTS = [
+        (float(p[0]), float(p[1]))  # type: ignore[index]
+        for p in _shell_pts  # type: ignore[union-attr]
+    ]
+else:
+    # 回退：与 paddle_shell.scad 中当前值一致（2026-06-15）
+    SCAD_SLOT_POINTS = [
+        (9.00, -108.00), (-9.00, -108.00), (-9.00, -26.00),
+        (-16.75, -26.00), (-29.99, -40.11), (-28.24, -41.75),
+        (-35.08, -49.05), (-41.65, -42.90), (-34.81, -35.60),
+        (-33.06, -37.24), (-21.00, -24.39), (-21.00, 16.00),
+        (-19.48, 16.00), (-29.66, 35.62), (-31.62, 34.32),
+        (-37.17, 42.64), (-29.68, 47.63), (-24.13, 39.31),
+        (-26.15, 37.97), (-14.75, 16.00), (14.75, 16.00),
+        (26.15, 37.97), (24.13, 39.31), (29.68, 47.63),
+        (37.17, 42.64), (31.62, 34.32), (29.66, 35.62),
+        (19.48, 16.00), (21.00, 16.00), (21.00, -24.39),
+        (33.06, -37.24), (34.81, -35.60), (41.65, -42.90),
+        (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
+        (16.75, -26.00), (9.00, -26.00),
+    ]
 
 # ===== 分区：几何工具函数 =====
 
