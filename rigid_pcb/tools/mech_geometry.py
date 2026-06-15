@@ -1,12 +1,11 @@
-"""Mechanical geometry shared by incremental KiCad update scripts.
+"""KiCad 机械几何共享模块。
 
-Coordinates in this file are KiCad board coordinates in millimeters unless the
-name explicitly says SCAD.  KiCad's Y axis is positive downward in the board
-editor.
+本文件中的坐标为 KiCad 板编辑器坐标（毫米），除非变量名显式标注 SCAD。
+KiCad 的 Y 轴正方向为板编辑器中的"下"方向（拍柄方向），
+SCAD 的 Y 轴正方向为"上"方向（拍头方向），两者通过 slot_scad_to_kicad() 互转。
 
-SCAD-derived values (screw positions, PZT cavities, mainland rectangle) are
-parsed from enclosure/parameters.scad at import time so changing the SCAD
-parameters automatically updates the KiCad toolchain.
+所有 SCAD 衍生值（螺丝孔、PZT 腔体、大陆区矩形、槽点轮廓）在导入时
+从 enclosure/*.scad 文件解析，修改 SCAD 参数后 Python 管线自动同步。
 """
 
 from __future__ import annotations
@@ -21,12 +20,12 @@ _ROOT = Path(__file__).resolve().parents[2]
 
 
 def _eval_scad_term(text: str, ctx: dict[str, object]) -> object:
-    """Evaluate a single SCAD value (number, vector, or nested list)."""
+    """求值单个 SCAD 表达式：纯数字、向量 [x, y]、或嵌套向量列表 [[x,y],...]"""
     text = text.strip()
 
-    # Nested list of vectors: [[...], [...], ...]
+    # 嵌套列表：[[...], [...], ...]
     if text.startswith("["):
-        # Find matching closing bracket
+        # 找到匹配的闭合括号
         depth = 0
         end = 0
         for i, ch in enumerate(text):
@@ -40,20 +39,20 @@ def _eval_scad_term(text: str, ctx: dict[str, object]) -> object:
 
         inner = text[1 : end - 1].strip()
         if inner.startswith("["):
-            # List of vectors
+            # 向量列表（如 screw_positions）
             items = _split_top_level_commas(inner)
             return tuple(_eval_scad_term(it, ctx) for it in items)
         elif "," in inner:
-            # Single vector: [x, y] or [x, y, z]
+            # 单个向量 [x, y] 或 [x, y, z]
             parts = [p.strip() for p in inner.split(",")]
             return tuple(_safe_eval(p, ctx) for p in parts if p)
 
-    # Scalar expression (number, possibly with arithmetic)
+    # 标量表达式（数字，可能含四则运算）
     return _safe_eval(text, ctx)
 
 
 def _safe_eval(expr: str, ctx: dict[str, object]) -> float:
-    """Evaluate a numeric expression, returning 0.0 on failure."""
+    """在给定上下文中求值数值表达式，失败返回 0.0"""
     try:
         return eval(expr, {}, ctx)
     except Exception:
@@ -61,8 +60,8 @@ def _safe_eval(expr: str, ctx: dict[str, object]) -> float:
 
 
 def _split_top_level_commas(text: str) -> list[str]:
-    """Split text at top-level commas, respecting bracket nesting."""
-    items = []
+    """按顶层逗号拆分文本，尊重括号嵌套深度"""
+    items: list[str] = []
     depth = 0
     current: list[str] = []
     for ch in text:
@@ -81,20 +80,20 @@ def _split_top_level_commas(text: str) -> list[str]:
 
 
 def _parse_scad_file(path: Path) -> dict[str, object]:
-    """Extract top-level variable assignments from a SCAD file.
+    """从 SCAD 文件中提取顶层变量赋值。
 
-    Supports numbers, vectors ([x, y]), and nested lists of vectors
-    ([[x0,y0], [x1,y1], ...]).  Line comments (//) are stripped before
-    parsing.  Multi-line arrays are collapsed to single-line form.
+    支持数字、向量 ([x, y])、向量嵌套列表 ([[x0,y0], ...])。
+    行注释 (//) 在解析前被剥离。
+    多行数组被折叠为单行形式后匹配。
     """
     text = path.read_text(encoding="utf-8")
-    # Remove line comments
+    # 删除行注释
     clean = re.sub(r"//.*$", "", text, flags=re.MULTILINE)
-    # Collapse whitespace so multi-line arrays become single-line
+    # 折叠空白使多行数组变为单行
     collapsed = re.sub(r"\s+", " ", clean).strip()
 
     result: dict[str, object] = {}
-    # Match: name = value;  (non-greedy, stops at first ;)
+    # 匹配: 变量名 = 值; （非贪婪，在第一个 ; 处停止）
     for m in re.finditer(r"(\w+)\s*=\s*(.+?);", collapsed):
         name = m.group(1)
         expr = m.group(2).strip()
@@ -108,59 +107,95 @@ def _parse_scad_file(path: Path) -> dict[str, object]:
     return result
 
 
-# Parse parameters.scad first (primary source for dimensions and geometry).
-# Then parse paddle_shell.scad (for the PCB slot outline polygon).
-# Merged in that order so parameters.scad values take precedence on overlap.
+# 先解析 paddle_shell.scad（获取 PCB 槽点轮廓），
+# 再解析 parameters.scad（获取尺寸和几何参数），
+# 合并顺序保证 parameters.scad 在同名变量上优先生效。
 _PARAMS = _parse_scad_file(_ROOT / "enclosure" / "parameters.scad")
 _SHELL_PARAMS = _parse_scad_file(_ROOT / "enclosure" / "paddle_shell.scad")
-_PARAMS = {**_SHELL_PARAMS, **_PARAMS}  # parameters.scad wins on conflict
+_PARAMS = {**_SHELL_PARAMS, **_PARAMS}
 
 # ===== 分区：常量/配置 =====
 
-# KiCad/SCAD Y 轴握手锚点: SCAD blade_ellipse_cy 映射到 KiCad 原点 (0,0)
+# --- 坐标系转换 ---
+
+# KiCad/SCAD Y 轴握手锚点：SCAD 拍头椭圆圆心映射到 KiCad 板原点 (0,0)
+# 来自 parameters.scad: blade_ellipse_cy = -10
+# 公式: y_kicad = -y_scad + SCAD_TO_KICAD_Y_OFFSET
 SCAD_TO_KICAD_Y_OFFSET = float(_PARAMS.get("blade_ellipse_cy", -10.0))  # type: ignore[arg-type]
+
+# --- PCB 基材外形参数 ---
+
+# PCB 边缘相对于 SCAD 槽点参考线的平行内缩量（mm）
+# 值越小 PCB 越贴近外壳壁，越大则越保守
 SUBSTRATE_EDGE_CLEARANCE = 0.30
+
+# 拍柄端（Y+方向，即远离拍头方向）的 PCB 截断线 KiCad Y 坐标（mm）
+# PCB 应止于手柄空腔内，不延伸到拍柄底部
 SUBSTRATE_TAIL_MAX_Y = 78.0
-PZT_CAVITY_CLEARANCE = 0.32
-PZT_DOCK_RETREAT_BAND = 4.0
-PZT_DOCK_RETREAT_STEP = 3.0
+
+# PCB 轮廓边的采样步长（mm），用于在边上插入中间点以平滑 PZT 避让过渡
 SUBSTRATE_EDGE_SAMPLE = 1.0
 
-# PZT 腔体 — 圆心和半径均来自 SCAD
+# --- PZT 码头避让参数 ---
+
+# PZT 压电片腔体与 PCB 码头之间的最小径向间隙（mm）
+PZT_CAVITY_CLEARANCE = 0.32
+
+# 码头触碰 PZT 禁区时的回退触发带宽度（mm）
+# 码头点到腔体中心的距离 < radius + CLEARANCE + BAND 时触发回退
+PZT_DOCK_RETREAT_BAND = 4.0
+
+# 码头点回退的初始步进量（mm），沿码头→大陆区方向一次性后撤
+PZT_DOCK_RETREAT_STEP = 3.0
+
+# --- SCAD 衍生几何（全部从 SCAD 文件解析，附带合理回退值） ---
+
+# PZT 压电片腔体 — 圆心坐标和半径均来自 SCAD
+# piezo_disc_d: 压电片直径（mm），/2 得半径
 _pzt_radius = float(_PARAMS.get("piezo_disc_d", 20.5)) / 2  # type: ignore[arg-type]
+# piezo_positions: 四角压电片中心 SCAD 坐标
 PZT_CAVITIES_SCAD = [
     (float(p[0]), float(p[1]), _pzt_radius)  # type: ignore[index]
     for p in _PARAMS.get("piezo_positions", [])  # type: ignore[union-attr]
 ]
 
-# 螺丝孔 — 直径来自 SCAD screw_d_boss，坐标来自 screw_positions
+# 螺丝孔 — screw_d_boss 决定让位半径，screw_positions 给出中心坐标
+# screw_d_boss: 螺丝柱外径（mm），/2 得柱半径
 _screw_boss_d = float(_PARAMS.get("screw_d_boss", 5.5))  # type: ignore[arg-type]
-SCREW_CLEARANCE_RADIUS = _screw_boss_d / 2.0 + 0.75  # boss 柱外 + 0.75mm 余量
+# 螺丝柱外半径 + 0.75mm 额外间隙 — 防止 PCB 孔边缘与螺丝柱壁干涉
+SCREW_CLEARANCE_RADIUS = _screw_boss_d / 2.0 + 0.75
 SCREW_HOLES_SCAD = [
     (float(p[0]), float(p[1]))  # type: ignore[index]
     for p in _PARAMS.get("screw_positions", [])  # type: ignore[union-attr]
 ]
 
-# 大陆区矩形 — 从 SCAD pcb_cavity_center + pcb_cavity_size 推算 KiCad 坐标
+# 大陆区矩形 — KiCad 坐标 (x_center, y_center, width, height)
+# pcb_cavity_center: SCAD 槽体中心 [X, Y]
+# pcb_cavity_size:   SCAD 槽体尺寸 [宽, 高]
+# Y 轴转换: y_kicad = -(scad_y) + SCAD_TO_KICAD_Y_OFFSET
 _cav_center = _PARAMS.get("pcb_cavity_center", (0, -1))  # type: ignore
 _cav_size = _PARAMS.get("pcb_cavity_size", (42, 50))  # type: ignore
-_ki_y = -float(_cav_center[1]) + SCAD_TO_KICAD_Y_OFFSET  # type: ignore[index]  # SCAD +Y=拍头, KiCad -Y=拍头
+_ki_y = -float(_cav_center[1]) + SCAD_TO_KICAD_Y_OFFSET  # type: ignore[index]
 MAINLAND_RECT = (
     float(_cav_center[0]),  # type: ignore[index]
-    _ki_y,
+    _ki_y,                  # KiCad Y 中心坐标
     float(_cav_size[0]),  # type: ignore[index]
     float(_cav_size[1]),  # type: ignore[index]
 )
 
 
 def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
-    """Convert SCAD slot coordinates into the KiCad mechanical reference frame."""
+    """将 SCAD 槽坐标转换为 KiCad 机械参考坐标系。
+
+    SCAD: +Y=↑(拍头方向)     KiCad: +Y=↓(拍柄方向)
+    转换: y_kicad = -(y_scad) + SCAD_TO_KICAD_Y_OFFSET
+    """
     x, y = point
     return (x, -y + SCAD_TO_KICAD_Y_OFFSET)
 
 
 # 拍形外轮廓槽点 — 从 paddle_shell.scad 的 rigid_pcb_slot_points 解析。
-# 该多边形定义了 PCB 在球拍壳体中的最大投影轮廓（37 个顶点）。
+# 该多边形定义了 PCB 在球拍壳体中的最大投影轮廓（38 个顶点）。
 # SCAD 中用 polygon(points=rigid_pcb_slot_points) 驱动腔体切割，
 # KiCad 中用同一组点（经 slot_scad_to_kicad 转换）绘制参考线和 Edge.Cuts。
 # 两边共享同一个数据源，修改 paddle_shell.scad 即可同步。
@@ -192,23 +227,28 @@ else:
 
 
 def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
-    """PCB substrate outline derived from the SCAD slot reference.
+    """从 SCAD 槽参考线派生 PCB 基材轮廓（SCAD 坐标系）。
 
-    Keep the dock/gangway/mainland points aligned to the SCAD slot so the PCB
-    cannot drift outside the black reference frame.  Only shorten the handle
-    tail, because the rigid PCB should stop inside the handle cavity.
+    保持码头/栈道/大陆区顶点与 SCAD 槽一致，确保 PCB 不会飘出黑色参考框。
+    仅缩短拍柄尾端 — 刚性 PCB 应止于手柄空腔内部。
+    截断位置 Y=-88.00（相对于 blade_ellipse_cy）：
+    手柄接合处为 Y=-78.5，再缩 9.5mm 避免 PCB 伸出颈部进入手柄。
     """
     points = list(SCAD_SLOT_POINTS)
+    # 拍柄尾端截断：首尾两个尾端点（SCAD 索引 0,1）Y 坐标截到 -88
+    # 原值为 -108（伸入手柄底部），截断到 -88 止于手柄空腔内
     points[0] = (points[0][0], -88.00)
     points[1] = (points[1][0], -88.00)
     return points
 
 
 def _polygon_points(poly) -> list[tuple[float, float]]:
+    """将多边形顶点四舍五入到 3 位小数"""
     return [(round(x, 3), round(y, 3)) for x, y in poly]
 
 
 def _signed_area(points: list[tuple[float, float]]) -> float:
+    """计算多边形有向面积 — 正值=CCW(逆时针)，负值=CW(顺时针)"""
     area = 0.0
     for (ax, ay), (bx, by) in zip(points, points[1:] + points[:1]):
         area += ax * by - bx * ay
@@ -221,6 +261,10 @@ def _line_intersection(
     b1: tuple[float, float],
     b2: tuple[float, float],
 ) -> tuple[float, float] | None:
+    """计算两条线段的交点，平行时返回 None。
+
+    ε=1e-9：小于此值的分母视为平行，防止浮点除零。
+    """
     ax, ay = a1
     bx, by = a2
     cx, cy = b1
@@ -238,22 +282,25 @@ def _edge_inset_polygon(
     points: list[tuple[float, float]],
     distance: float,
 ) -> list[tuple[float, float]]:
-    """Inset polygon by moving each edge along its inward normal.
+    """将多边形的每条边沿其内法线方向平移 distance，取相邻平移边的交点形成内缩多边形。
 
-    This preserves gangway/dock length much better than moving every vertex
-    toward the mainland center.
+    相比把所有顶点朝中心收缩，沿边法线平移能更好保持栈道/码头的长度。
+    最少需要 3 个顶点（闭合多边形）。
     """
     if len(points) < 3:
         return points
 
     area = _signed_area(points)
+    # 内法线方向 = 正向(CCW 面积>0) 取 +1，反向(CW) 取 -1
     inward_sign = 1.0 if area > 0 else -1.0
     offset_edges = []
     for a, b in zip(points, points[1:] + points[:1]):
         ax, ay = a
         bx, by = b
         dx, dy = bx - ax, by - ay
+        # 边长度，零长边（退化为点）用 1.0 防除零
         length = math.hypot(dx, dy) or 1.0
+        # 边单位法线 × 内法线符号 × 距离
         nx, ny = (-dy / length * inward_sign, dx / length * inward_sign)
         offset_edges.append(
             (
@@ -262,7 +309,7 @@ def _edge_inset_polygon(
             )
         )
 
-    inset = []
+    inset: list[tuple[float, float]] = []
     count = len(offset_edges)
     for i in range(count):
         prev_edge = offset_edges[i - 1]
@@ -271,6 +318,7 @@ def _edge_inset_polygon(
             prev_edge[0], prev_edge[1], edge[0], edge[1]
         )
         if intersection is None:
+            # 平行边：取相邻端点中点作为近似交点
             px = (prev_edge[1][0] + edge[0][0]) / 2
             py = (prev_edge[1][1] + edge[0][1]) / 2
             intersection = (px, py)
@@ -283,31 +331,46 @@ def _retreat_from_pzt(
     pzt: tuple[float, float, float],
     hub: tuple[float, float],
 ) -> tuple[float, float]:
+    """将靠近 PZT 腔体的码头点沿"码头→大陆区"方向回退，直至脱离禁区。
+
+    不向外扩张码头，而是向内缩短 — 确保 PCB 轮廓不闯入 PZT 安装空间。
+    """
     px, py = point
     cx, cy, radius = pzt
-    keepout = radius + PZT_CAVITY_CLEARANCE
+    keepout = radius + PZT_CAVITY_CLEARANCE  # PZT 禁区半径
     distance = math.hypot(px - cx, py - cy)
     if distance >= keepout + PZT_DOCK_RETREAT_BAND:
-        return point
+        return point  # 远离禁区，无需回退
 
-    # Move the dock point back toward the mainland hub until it clears the
-    # circular PZT cavity.  This shortens the dock instead of expanding it.
     hx, hy = hub
-    dx, dy = hx - px, hy - py
-    step_len = math.hypot(dx, dy) or 1.0
-    ux, uy = dx / step_len, dy / step_len
+    dx, dy = hx - px, hy - py  # 指向大陆区中心的方向向量
+    step_len = math.hypot(dx, dy) or 1.0  # 零长向量用 1.0 防除零
+    ux, uy = dx / step_len, dy / step_len  # 单位方向向量
+
+    # 初始大步回退
     initial_retreat = PZT_DOCK_RETREAT_STEP if distance >= keepout else 0.0
     px += ux * initial_retreat
     py += uy * initial_retreat
 
+    # 细粒度搜索（步长 0.10mm，最多 100 步 = 10mm）
     for i in range(1, 100):
         candidate = (px + ux * i * 0.10, py + uy * i * 0.10)
         if math.hypot(candidate[0] - cx, candidate[1] - cy) >= keepout:
             return candidate
-    return point
+    return point  # 兜底：100 步仍未脱离禁区，返回原始点
 
 
 def _embedded_substrate_points() -> list[tuple[float, float]]:
+    """生成最终的 PCB 基材轮廓顶点列表（KiCad 坐标）。
+
+    流程：
+    1. 从 SCAD 槽参考点出发 → 转换为 KiCad 坐标系
+    2. 每条边沿内法线平行内缩 SUBSTRATE_EDGE_CLEARANCE
+    3. 沿边采样（步长 SUBSTRATE_EDGE_SAMPLE）生成中间点
+    4. 拍柄侧截断到 SUBSTRATE_TAIL_MAX_Y
+    5. 靠近 PZT 腔体的码头点自动回退避让
+    6. 合并距离 < 0.05mm 的重复点
+    """
     hub = (MAINLAND_RECT[0], MAINLAND_RECT[1])
     pzt_keepouts = [
         (*slot_scad_to_kicad((cx, cy)), radius)
@@ -319,7 +382,7 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
         SUBSTRATE_EDGE_CLEARANCE,
     )
 
-    points = []
+    points: list[tuple[float, float]] = []
     for point_a, point_b in zip(base_points, base_points[1:] + base_points[:1]):
         ax, ay = point_a
         bx, by = point_b
@@ -329,9 +392,12 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
         for step in range(steps):
             t = step / steps
             point = (ax + (bx - ax) * t, ay + (by - ay) * t)
+            # 拍柄端截断
             point = (point[0], min(point[1], SUBSTRATE_TAIL_MAX_Y))
+            # PZT 码头回退
             for pzt in pzt_keepouts:
                 point = _retreat_from_pzt(point, pzt, hub)
+            # 距上一点 > 0.05mm 才加入（去重）
             if (
                 not points
                 or math.hypot(
@@ -348,27 +414,38 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 
 # ===== 分区：模块开孔与螺丝让位 =====
 
+# 模块开孔相对于模块外形尺寸的单边装配间隙（mm）
+# ESP32-C6-WROOM-1: 本体 25.5×18.0mm → 开孔 25.9×18.4mm
+# ICM-948:          本体 18.5×13.0mm → 开孔 18.9×13.4mm
 MODULE_CUTOUT_CLEARANCE = 0.20
+
+# ESP32-C6-WROOM-1 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
+# 居中 X=0（大陆区中线），Y=2.5 偏拍柄侧，位于 IMU 下方
 ESP32_CUTOUT = (
-    0.0,
-    2.5,
-    25.5 + MODULE_CUTOUT_CLEARANCE * 2,
-    18.0 + MODULE_CUTOUT_CLEARANCE * 2,
-)
-IMU_CUTOUT = (
-    0.0,
-    -24.5,
-    18.5 + MODULE_CUTOUT_CLEARANCE * 2,
-    13.0 + MODULE_CUTOUT_CLEARANCE * 2,
+    0.0,                                             # X 居中
+    2.5,                                             # Y 偏拍柄方向
+    25.5 + MODULE_CUTOUT_CLEARANCE * 2,              # 宽 = 模块宽 + 双边间隙
+    18.0 + MODULE_CUTOUT_CLEARANCE * 2,              # 高 = 模块高 + 双边间隙
 )
 
-# 参考线用的全部螺丝孔（含板外螺丝）
+# ICM-948 IMU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
+# 居中 X=0，Y=-24.5 偏拍头侧，位于 MCU 上方
+IMU_CUTOUT = (
+    0.0,                                             # X 居中
+    -24.5,                                           # Y 偏拍头方向
+    18.5 + MODULE_CUTOUT_CLEARANCE * 2,              # 宽 = 模块宽 + 双边间隙
+    13.0 + MODULE_CUTOUT_CLEARANCE * 2,              # 高 = 模块高 + 双边间隙
+)
+
+# 参考线用全部 M2 螺丝孔（含板外的拍面螺丝，用于 Dwgs.User 可视对照）
+# 每个元素: (kicad_x, kicad_y, clearance_radius)
 M2_CLEARANCE_HOLES = [
     (*slot_scad_to_kicad((x, y)), SCREW_CLEARANCE_RADIUS)
     for x, y in SCREW_HOLES_SCAD
 ]
 
-# 实际 PCB Edge.Cuts 上只保留穿过大陆区的那两个
+# 实际 PCB Edge.Cuts 上的螺丝让位孔 — 仅保留穿过大陆区的那一颗
+# SCAD 坐标 (0, -33) 为 PCB 正下方（拍柄侧）螺丝，需在 PCB 上开孔让位
 PCB_CLEARANCE_HOLES = [
     (*slot_scad_to_kicad((0.0, -33.0)), SCREW_CLEARANCE_RADIUS),
 ]
