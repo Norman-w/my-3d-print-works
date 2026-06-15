@@ -108,7 +108,8 @@ _PARAMS = _parse_scad_params()
 
 # ===== 分区：常量/配置 =====
 
-SCAD_TO_KICAD_Y_OFFSET = -10.0
+# KiCad/SCAD Y 轴握手锚点: SCAD blade_ellipse_cy 映射到 KiCad 原点 (0,0)
+SCAD_TO_KICAD_Y_OFFSET = float(_PARAMS.get("blade_ellipse_cy", -10.0))  # type: ignore[arg-type]
 SUBSTRATE_EDGE_CLEARANCE = 0.30
 SUBSTRATE_TAIL_MAX_Y = 78.0
 PZT_CAVITY_CLEARANCE = 0.32
