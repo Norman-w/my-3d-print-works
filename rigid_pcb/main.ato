@@ -16,6 +16,7 @@ from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 from "parts.ato" import EdgeFingerPad
+from "parts.ato" import EdgeFingerPadDual
 
 
 component SGFK_ESP32C6N8_Cutout:
@@ -124,8 +125,14 @@ module PZTDock:
 
 
 
-module TailHarness:
-    pin BAT_PLUS
+module TailHarness6P2S:
+    """6 位×双面 PCB 金手指尾插。
+
+    F.Cu (正面) ×6: VBAT, GND, LED_PLUS, LED_DIN, BUTTON, USB_VBUS
+    B.Cu (背面) ×6: USB_DP, USB_DN, UART_TX, UART_RX, SPARE1, SPARE2
+    间距 2.54mm，总跨距 12.7mm。
+    """
+    pin VBAT
     pin GND
     pin LED_PLUS
     pin LED_DIN
@@ -133,24 +140,18 @@ module TailHarness:
     pin USB_VBUS
     pin USB_DP
     pin USB_DN
+    pin UART_TX
+    pin UART_RX
+    pin SPARE1
+    pin SPARE2
 
-    bat_plus_pad = new EdgeFingerPad
-    gnd_pad = new EdgeFingerPad
-    led_plus_pad = new EdgeFingerPad
-    led_din_pad = new EdgeFingerPad
-    button_pad = new EdgeFingerPad
-    usb_vbus_pad = new EdgeFingerPad
-    usb_dp_pad = new EdgeFingerPad
-    usb_dn_pad = new EdgeFingerPad
+    pos1 = new EdgeFingerPadDual;  pos1.front ~ VBAT;     pos1.back ~ USB_DP
+    pos2 = new EdgeFingerPadDual;  pos2.front ~ GND;      pos2.back ~ USB_DN
+    pos3 = new EdgeFingerPadDual;  pos3.front ~ LED_PLUS;  pos3.back ~ UART_TX
+    pos4 = new EdgeFingerPadDual;  pos4.front ~ LED_DIN;   pos4.back ~ UART_RX
+    pos5 = new EdgeFingerPadDual;  pos5.front ~ BUTTON;    pos5.back ~ SPARE1
+    pos6 = new EdgeFingerPadDual;  pos6.front ~ USB_VBUS;  pos6.back ~ SPARE2
 
-    bat_plus_pad.contact ~ BAT_PLUS
-    gnd_pad.contact ~ GND
-    led_plus_pad.contact ~ LED_PLUS
-    led_din_pad.contact ~ LED_DIN
-    button_pad.contact ~ BUTTON
-    usb_vbus_pad.contact ~ USB_VBUS
-    usb_dp_pad.contact ~ USB_DP
-    usb_dn_pad.contact ~ USB_DN
 
 
 module PowerLatchAndRegulator:
@@ -306,7 +307,7 @@ module SmartPaddleRigid:
     mcu = new SGFK_ESP32C6N8_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
-    tail = new TailHarness
+    tail = new TailHarness6P2S
     bringup = new TestPads
     battery = new BatterySense
 
@@ -349,7 +350,7 @@ module SmartPaddleRigid:
     signal pzt_bl_signal
 
     # Power rails.
-    tail.BAT_PLUS ~ vbat_in
+    tail.VBAT ~ vbat_in
     tail.GND ~ gnd
     power.VBAT_IN ~ vbat_in
     power.VBAT_SW ~ vbat_sw
@@ -404,6 +405,12 @@ module SmartPaddleRigid:
     led_r_data.p1 ~ led_data
     led_r_data.p2 ~ led_din
     mcu.GPIO8_LED_DATA ~ led_data
+
+    # Extra debug signals on tail B-side (UART shared with IMU — disconnect IMU before tail debug)
+    tail.UART_TX ~ uart_tx
+    tail.UART_RX ~ uart_rx
+    tail.SPARE1 ~ gnd
+    tail.SPARE2 ~ gnd
 
     # Switched battery measurement for low-battery LED feedback.
     battery.VBAT_SW ~ vbat_sw

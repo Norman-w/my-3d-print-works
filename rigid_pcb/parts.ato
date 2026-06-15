@@ -105,3 +105,13 @@ component EdgeFingerPad:
     signal contact
     contact ~ pin 1
     footprint = "SmartPaddle:EdgeFingerPad_P2.54mm"
+
+component EdgeFingerPadDual:
+    """金手指焊盘（双面），pad "F" 在 F.Cu，pad "B" 在 B.Cu，独立网络。"""
+    designator_prefix = "J"
+    value = "GoldFinger"
+    signal front
+    signal back
+    front ~ pin "F"
+    back ~ pin "B"
+    footprint = "SmartPaddle:EdgeFingerPad_P2.54mm_Dual"

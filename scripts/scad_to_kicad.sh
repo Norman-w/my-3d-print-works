@@ -127,16 +127,15 @@ READABLE_REFS = {
     'battery.r_top': ('BAT_R_TOP_1M', '1M'),
     'battery.r_bottom': ('BAT_R_BOT_1M', '1M'),
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
-    'led.r_data': ('LED_R_DATA_330R', '330R'),
-    'led.c_supply': ('LED_C_SUP_100N', '100nF'),
-    'tail.bat_plus_pad': ('TAIL_BAT_PLUS', 'BAT+ finger'),
-    'tail.gnd_pad': ('TAIL_GND', 'GND finger'),
-    'tail.led_plus_pad': ('TAIL_LED_PLUS', 'LED+ finger'),
-    'tail.led_din_pad': ('TAIL_LED_DIN', 'LED DIN finger'),
-    'tail.button_pad': ('TAIL_BTN', 'button finger'),
-    'tail.usb_vbus_pad': ('TAIL_USB_VBUS', 'USB VBUS finger'),
-    'tail.usb_dp_pad': ('TAIL_USB_DP', 'USB D+ finger'),
-    'tail.usb_dn_pad': ('TAIL_USB_DN', 'USB D- finger'),
+    'led_r_data': ('LED_R_DATA_330R', '330R'),
+    'led_c_supply': ('LED_C_SUP_100N', '100nF'),
+    # 双面金手指尾巴 (6P×2)
+    'tail.pos1': ('TAIL01_VBAT+USBDP', 'VBAT/DP'),
+    'tail.pos2': ('TAIL02_GND+USBDN', 'GND/DN'),
+    'tail.pos3': ('TAIL03_LED+URTX', 'LED+/TX'),
+    'tail.pos4': ('TAIL04_LEDI+URRX', 'LED_DIN/RX'),
+    'tail.pos5': ('TAIL05_BTN+SPR1', 'BTN/SP1'),
+    'tail.pos6': ('TAIL06_VBUS+SPR2', 'VBUS/SP2'),
     'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
     'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
     'bringup.gnd_pad': ('TP_GND', 'GND test'),
@@ -326,8 +325,8 @@ sense_led_zone = {
     'battery.r_top': (-18.0, -20.6, 0),
     'battery.r_bottom': (-13.8, -20.6, 0),
     'battery.c_filter': (-18.0, -16.5, 0),
-    'led.c_supply': (-13.8, -16.5, 0),
-    'led.r_data': (-16.0, -12.4, 90),
+    'led_c_supply': (-13.8, -16.5, 0),
+    'led_r_data': (-16.0, -12.4, 90),
 }
 moved += place_map(fp_by_addr, sense_led_zone, False)
 
@@ -355,8 +354,7 @@ pzt_mainland = {
 }
 moved += place_map(fp_by_addr, pzt_mainland, False)
 
-tail_order = ['tail.bat_plus_pad','tail.gnd_pad','tail.led_plus_pad','tail.led_din_pad',
-              'tail.button_pad','tail.usb_vbus_pad','tail.usb_dp_pad','tail.usb_dn_pad']
+tail_order = ['tail.pos1','tail.pos2','tail.pos3','tail.pos4','tail.pos5','tail.pos6']
 pitch = 2.54
 span = (len(tail_order)-1)*pitch
 start_x = -span/2
