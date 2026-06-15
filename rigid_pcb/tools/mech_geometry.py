@@ -206,9 +206,9 @@ def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
 
 # 拍形外轮廓槽点 — 从 paddle_shell.scad 的 rigid_pcb_slot_points 解析。
 # 
-# 点分类（共 38 点）：
+# 点分类（共 42 点，尾巴凸字形 +4）：
 #   - 14 个大陆接壤点：从 pcb_cavity_center + pcb_cavity_size 自动推导
-#   - 24 个 PZT 码头/尾巴点：固定几何值（与 SCAD 中一致）
+#   - 28 个 PZT 码头/尾巴点：固定几何值（与 SCAD 中一致）
 #
 # SCAD 侧 rigid_pcb_slot_points 也使用相同的大陆边界变量（_ml_y_t 等），
 # 修改 pcb_cavity_center 或 pcb_cavity_size 后两边自动同步。
@@ -224,10 +224,12 @@ _GW_CORNER    = 1.61   # 栈道与大陆底角的内收量，避免锐角应力�
 _GW_BL_W      = 16.75  # 下栈道外缘 |X|，决定下栈道宽度 = _ML_X_R - _GW_BL_W = 4.25mm
 _GW_TL_OUTER  = 19.48  # 上栈道外缘 |X|
 _GW_TL_INNER  = 14.75  # 上栈道内缘 |X|
-# 尾巴半宽和尖端 Y — 从 paddle_shell.scad 的 _tail_hw / _tail_y 读取
-# 当 SCAD 连接器规格变化时自动跟随，无需改此文件
-_TAIL_HW      = float(_PARAMS.get("_tail_hw", 3.81))   # type: ignore[arg-type]
-_TAIL_TIP_Y   = float(_PARAMS.get("_tail_y", -122.0))  # type: ignore[arg-type]
+# 尾巴几何 — 从 paddle_shell.scad 自适应读取，零硬编码
+# 凸字形: 基部 9mm 半宽，末端 10mm 收窄到金手指宽度 3.81mm
+_TAIL_HW        = float(_PARAMS.get("_tail_hw", 3.81))        # type: ignore[arg-type]
+_TAIL_TIP_Y     = float(_PARAMS.get("_tail_y", -102.0))       # type: ignore[arg-type]
+_TAIL_NECK_Y    = float(_PARAMS.get("_tail_neck_y", -92.0))   # type: ignore[arg-type]
+_TAIL_BASE_HW   = float(_PARAMS.get("_tail_base_hw", 9.0))    # type: ignore[arg-type]
 
 # ── PZT 码头点（24 个固定几何点，与 paddle_shell.scad 相同） ──
 _DOCK_PTS_BL = [  # 左下栈道 → 左侧下 PZT 码头
@@ -247,34 +249,38 @@ _DOCK_PTS_BR = [  # 右下栈道 → 右侧下 PZT 码头
     (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
 ]
 
-# ── 组装完整 38 点轮廓 ──
+# ── 组装完整 42 点轮廓（凸字形尾巴: 基部宽 9mm，末端 10mm 收窄到金手指） ──
 SCAD_SLOT_POINTS = [
-    # 尾巴
-    ( _TAIL_HW,     _TAIL_TIP_Y),                    #  0
-    (-_TAIL_HW,     _TAIL_TIP_Y),                    #  1
-    (-_TAIL_HW,     _ML_Y_B),                        #  2
+    # 尾巴（凸字形：右窄→右宽→左宽→左窄）
+    ( _TAIL_HW,         _TAIL_TIP_Y),               #  0 尾巴右尖（金手指窄区）
+    (-_TAIL_HW,         _TAIL_TIP_Y),               #  1 尾巴左尖（金手指窄区）
+    (-_TAIL_HW,         _TAIL_NECK_Y),              #  2 窄区→宽区转折（左）
+    (-_TAIL_BASE_HW,    _TAIL_NECK_Y),              #  3 宽区起点（左）
+    (-_TAIL_BASE_HW,    _ML_Y_B),                   #  4 宽区→大陆下缘（左）
     # 左下栈道 → 码头
-    (-_GW_BL_W,     _ML_Y_B),                        #  3
-    *_DOCK_PTS_BL,                                    #  4-9
+    (-_GW_BL_W,         _ML_Y_B),                   #  5
+    *_DOCK_PTS_BL,                                    #  6-11
     # 大陆左侧边缘
-    (_ML_X_L,       _ML_Y_B + _GW_CORNER),           # 10
-    (_ML_X_L,       _ML_Y_T),                        # 11
+    (_ML_X_L,           _ML_Y_B + _GW_CORNER),      # 12
+    (_ML_X_L,           _ML_Y_T),                   # 13
     # 左上栈道 → 码头
-    (-_GW_TL_OUTER, _ML_Y_T),                        # 12
-    *_DOCK_PTS_TL,                                    # 13-18
-    (-_GW_TL_INNER, _ML_Y_T),                        # 19
+    (-_GW_TL_OUTER,     _ML_Y_T),                   # 14
+    *_DOCK_PTS_TL,                                    # 15-20
+    (-_GW_TL_INNER,     _ML_Y_T),                   # 21
     # 右上栈道 → 码头
-    ( _GW_TL_INNER, _ML_Y_T),                        # 20
-    *_DOCK_PTS_TR,                                    # 21-26
-    ( _GW_TL_OUTER, _ML_Y_T),                        # 27
+    ( _GW_TL_INNER,     _ML_Y_T),                   # 22
+    *_DOCK_PTS_TR,                                    # 23-28
+    ( _GW_TL_OUTER,     _ML_Y_T),                   # 29
     # 大陆右侧边缘
-    (_ML_X_R,       _ML_Y_T),                        # 28
-    (_ML_X_R,       _ML_Y_B + _GW_CORNER),           # 29
+    (_ML_X_R,           _ML_Y_T),                   # 30
+    (_ML_X_R,           _ML_Y_B + _GW_CORNER),      # 31
     # 右下栈道 → 码头
-    *_DOCK_PTS_BR,                                    # 30-35
-    ( _GW_BL_W,     _ML_Y_B),                        # 36
-    # 尾巴
-    (_TAIL_HW,      _ML_Y_B),                        # 37
+    *_DOCK_PTS_BR,                                    # 32-37
+    ( _GW_BL_W,         _ML_Y_B),                   # 38
+    # 尾巴（右宽→右窄）
+    (_TAIL_BASE_HW,     _ML_Y_B),                   # 39 宽区→大陆下缘（右）
+    (_TAIL_BASE_HW,     _TAIL_NECK_Y),              # 40 宽区→转折（右）
+    (_TAIL_HW,          _TAIL_NECK_Y),              # 41 窄区→宽区转折（右）
 ]
 
 # ===== 分区：几何工具函数 =====

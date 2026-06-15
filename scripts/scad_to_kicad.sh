@@ -353,7 +353,7 @@ span = (len(tail_order)-1)*pitch
 start_x = -span/2
 for i, addr in enumerate(tail_order):
     # 金手指放在尾巴尖端，距尾端 1.5mm（焊盘半长）留插拔导入边
-    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 109.0, 0, False)
+    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 90.0, 0, False)
 
 labelled, visible_labels = apply_readable_text(board)
 scaled = apply_model_scales(board)

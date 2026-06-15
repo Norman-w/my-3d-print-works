@@ -369,15 +369,19 @@ _gw_bl_w   = 16.75;     // 下栈道外缘 |X|，决定下栈道宽度 = _ml_x_r
 _gw_tl_outer = 19.48;   // 上栈道外缘 |X|，拍头左侧
 _gw_tl_inner = 14.75;   // 上栈道内缘 |X|，拍头左侧 (6.25mm 宽)
 // PCB 尾巴: 1.27mm×10P 金手指尾插, 深入拍柄空腔避开颈部螺丝 Y=-89
-// 尾巴半宽 = 连接器 PCB 宽度 (7.62mm) / 2 ≈ 3.81mm
-_tail_hw   = 3.81;      // 金手指区半宽（对映参数 tail_connector_pcb_w/2）
-_tail_y    = -122.00;   // 尖端伸入拍柄距螺丝 33mm, 留够金手指+插拔空间
+// 尾巴呈"凸"字形: 基部保持 9mm 半宽，末端 10mm 收窄到金手指宽度
+_tail_hw        = 3.81;  // 金手指区半宽（对映 tail_connector_pcb_w/2）
+_tail_base_hw   = 9.00;  // 尾巴基部半宽（原大陆区延续宽度）
+_tail_y         = -102.00; // 尖端 Y（伸入拍柄 13mm，螺丝已过）
+_tail_neck_y    = -92.00;  // 收窄转折点 Y（= tail_y + 10mm 金手指区长度）
 
 rigid_pcb_slot_points = [
-    // ─ 尾巴 (Y=tail_y → ml_y_b) ─
-    [ _tail_hw, _tail_y],                     //  0 尾巴右尖
-    [-_tail_hw, _tail_y],                     //  1 尾巴左尖
-    [-_tail_hw, _ml_y_b],                     //  2 尾巴左 → 大陆下缘
+    // ─ 尾巴 (凸字形: 尖端收窄 10mm → 基部恢复 9mm 半宽) ─
+    [ _tail_hw,      _tail_y],                //  0 尾巴右尖（金手指窄区）
+    [-_tail_hw,      _tail_y],                //  1 尾巴左尖（金手指窄区）
+    [-_tail_hw,      _tail_neck_y],           //  2 窄区→宽区转折（左）
+    [-_tail_base_hw, _tail_neck_y],           //  3 宽区起点（左）
+    [-_tail_base_hw, _ml_y_b],                //  4 宽区→大陆下缘（左）
     // ─ 左下栈道 → 左侧下 PZT 码头 ─
     [-_gw_bl_w,   _ml_y_b],                   //  3 下栈道入口
     [-29.99, -40.11],                        //  4 码头几何（固定）
@@ -417,9 +421,11 @@ rigid_pcb_slot_points = [
     [ 35.08, -49.05],                       // 33
     [ 28.24, -41.75],                       // 34
     [ 29.99, -40.11],                       // 35
-    [ _gw_bl_w,   _ml_y_b],                  // 36 下栈道入口（右）
-    // ─ 尾巴 ─
-    [_tail_hw,   _ml_y_b],                   // 37 尾巴右 → 大陆下缘
+    [ _gw_bl_w,        _ml_y_b],             // 36 下栈道入口（右）
+    // ─ 尾巴（宽区 → 窄区） ─
+    [_tail_base_hw,    _ml_y_b],             // 37 宽区→大陆下缘（右）
+    [_tail_base_hw,    _tail_neck_y],        // 38 宽区→转折（右）
+    [_tail_hw,         _tail_neck_y],        // 39 窄区→宽区转折（右）
 ];
 
 module rigid_pcb_profile_2d() {
