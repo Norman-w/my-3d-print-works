@@ -110,6 +110,15 @@ imu_module_offset     = [0, 12.5];
 //   X=-3 偏左 3mm；Y=-11.5 = 大陆中心 - 11.5mm 向拍柄
 mcu_module_offset     = [-3, -11.5];
 
+// ---- PCB 尾部金手指连接器 (10P, 1.27mm 间距) ----
+// 连接器规格: 1.27mm 间距 ×10P 单排, FPC/FFC 直插式
+// PCB 金手指区所需宽度: 7.62mm (含两端边距)
+// 金手指焊盘: 0.8mm × 3.0mm, 中心距 1.27mm
+// 10 信号: VBAT/GND/LED+/LED_DIN/BTN/USB_VBUS/USB_DP/USB_DN/UART_TX/UART_RX
+tail_connector_pitch  = 1.27;      // 金手指间距 (mm)
+tail_connector_pins   = 10;        // 总引脚数 (单排)
+tail_connector_pcb_w  = 7.62;      // 连接器所需 PCB 尾巴宽度 (mm)
+
 // ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----
 // 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。
 signal_trench_w       = 2.0;        // 槽宽 (VCC+GND 两条线)

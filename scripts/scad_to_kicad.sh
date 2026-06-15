@@ -129,27 +129,22 @@ READABLE_REFS = {
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
-    # 双面金手指尾巴 (6P×2)
-    'tail.pos1': ('TAIL01_VBAT+USBDP', 'VBAT/DP'),
-    'tail.pos2': ('TAIL02_GND+USBDN', 'GND/DN'),
-    'tail.pos3': ('TAIL03_LED+URTX', 'LED+/TX'),
-    'tail.pos4': ('TAIL04_LEDI+URRX', 'LED_DIN/RX'),
-    'tail.pos5': ('TAIL05_BTN+SPR1', 'BTN/SP1'),
-    'tail.pos6': ('TAIL06_VBUS+SPR2', 'VBUS/SP2'),
-    'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
-    'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
+    # 10P×1.27mm 金手指尾巴 (从左到右排列)
+    'tail.pos1':  ('TAIL01_VBAT',      'VBAT'),
+    'tail.pos2':  ('TAIL02_GND',       'GND'),
+    'tail.pos3':  ('TAIL03_LED_PLUS',  'LED+'),
+    'tail.pos4':  ('TAIL04_LED_DIN',   'LED DIN'),
+    'tail.pos5':  ('TAIL05_BTN',       'BTN'),
+    'tail.pos6':  ('TAIL06_USB_VBUS',  'USB VBUS'),
+    'tail.pos7':  ('TAIL07_USB_DP',    'USB D+'),
+    'tail.pos8':  ('TAIL08_USB_DN',    'USB D-'),
+    'tail.pos9':  ('TAIL09_UART_TX',   'UART TX'),
+    'tail.pos10': ('TAIL10_UART_RX',   'UART RX'),
     'bringup.gnd_pad': ('TP_GND', 'GND test'),
+    'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
+    'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
     'bringup.en_pad': ('TP_EN', 'EN test'),
     'bringup.boot_pad': ('TP_BOOT', 'BOOT test'),
-    'bringup.uart_tx_pad': ('TP_UART_TX', 'UART TX test'),
-    'bringup.uart_rx_pad': ('TP_UART_RX', 'UART RX test'),
-    'bringup.imu_key_pad': ('TP_IMU_KEY', 'IMU KEY test'),
-    'bringup.imu_gpio_pad': ('TP_IMU_GPIO', 'IMU GPIO test'),
-    'bringup.pwr_latch_pad': ('TP_PWR_LATCH', 'PWR_LATCH test'),
-    'bringup.led_data_pad': ('TP_LED_DATA', 'LED DATA test'),
-    'bringup.vbus_pad': ('TP_VBUS', 'VBUS test'),
-    'bringup.imu_vddio_pad': ('TP_IMU_VDDIO', 'IMU VDDIO test'),
-    'bringup.vbat_sense_pad': ('TP_VBAT_SENSE', 'battery sense test'),
 }
 
 PZT_READABLE_PREFIXES = {k: k.upper().replace('PZT_', 'PZT_') for k in ['pzt_tr','pzt_tl','pzt_br','pzt_bl']}
@@ -331,14 +326,11 @@ sense_led_zone = {
 moved += place_map(fp_by_addr, sense_led_zone, False)
 
 bringup = {
-    'bringup.gnd_pad': (-5.5, 38.0, 0), 'bringup.vcc_pad': (-5.5, 42.0, 0),
-    'bringup.vbat_pad': (-5.5, 46.0, 0), 'bringup.en_pad': (-5.5, 50.0, 0),
-    'bringup.boot_pad': (-5.5, 54.0, 0), 'bringup.pwr_latch_pad': (-5.5, 58.0, 0),
-    'bringup.imu_vddio_pad': (-5.5, 62.0, 0),
-    'bringup.uart_tx_pad': (5.5, 38.0, 0), 'bringup.uart_rx_pad': (5.5, 42.0, 0),
-    'bringup.imu_key_pad': (5.5, 46.0, 0), 'bringup.imu_gpio_pad': (5.5, 50.0, 0),
-    'bringup.vbus_pad': (5.5, 54.0, 0), 'bringup.vbat_sense_pad': (5.5, 58.0, 0),
-    'bringup.led_data_pad': (5.5, 62.0, 0),
+    'bringup.gnd_pad': (-5.5, 44.0, 0),
+    'bringup.vcc_pad': (-5.5, 49.0, 0),
+    'bringup.vbat_pad': (-5.5, 54.0, 0),
+    'bringup.en_pad': (-5.5, 59.0, 0),
+    'bringup.boot_pad': (-5.5, 64.0, 0),
 }
 moved += place_map(fp_by_addr, bringup, False)
 
@@ -354,12 +346,14 @@ pzt_mainland = {
 }
 moved += place_map(fp_by_addr, pzt_mainland, False)
 
-tail_order = ['tail.pos1','tail.pos2','tail.pos3','tail.pos4','tail.pos5','tail.pos6']
-pitch = 2.54
+tail_order = ['tail.pos1','tail.pos2','tail.pos3','tail.pos4','tail.pos5',
+              'tail.pos6','tail.pos7','tail.pos8','tail.pos9','tail.pos10']
+pitch = 1.27  # 1.27mm 间距 10P 单排
 span = (len(tail_order)-1)*pitch
 start_x = -span/2
 for i, addr in enumerate(tail_order):
-    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 69.0, 0, False)
+    # 金手指放在尾巴尖端，距尾端 1.5mm（焊盘半长）留插拔导入边
+    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 109.0, 0, False)
 
 labelled, visible_labels = apply_readable_text(board)
 scaled = apply_model_scales(board)

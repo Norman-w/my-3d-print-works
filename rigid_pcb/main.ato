@@ -16,7 +16,6 @@ from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 from "parts.ato" import EdgeFingerPad
-from "parts.ato" import EdgeFingerPadDual
 
 
 component SGFK_ESP32C6N8_Cutout:
@@ -125,12 +124,13 @@ module PZTDock:
 
 
 
-module TailHarness6P2S:
-    """6 位×双面 PCB 金手指尾插。
+module TailHarness10P:
+    """10P 单排 1.27mm 间距金手指尾插。
 
-    F.Cu (正面) ×6: VBAT, GND, LED_PLUS, LED_DIN, BUTTON, USB_VBUS
-    B.Cu (背面) ×6: USB_DP, USB_DN, UART_TX, UART_RX, SPARE1, SPARE2
-    间距 2.54mm，总跨距 12.7mm。
+    信号 (从左到右):
+      VBAT, GND, LED_PLUS, LED_DIN, BUTTON, USB_VBUS,
+      USB_DP, USB_DN, UART_TX, UART_RX
+    跨距 11.43mm, PCB 尾巴全宽 7.62mm。
     """
     pin VBAT
     pin GND
@@ -142,15 +142,17 @@ module TailHarness6P2S:
     pin USB_DN
     pin UART_TX
     pin UART_RX
-    pin SPARE1
-    pin SPARE2
 
-    pos1 = new EdgeFingerPadDual;  pos1.front ~ VBAT;     pos1.back ~ USB_DP
-    pos2 = new EdgeFingerPadDual;  pos2.front ~ GND;      pos2.back ~ USB_DN
-    pos3 = new EdgeFingerPadDual;  pos3.front ~ LED_PLUS;  pos3.back ~ UART_TX
-    pos4 = new EdgeFingerPadDual;  pos4.front ~ LED_DIN;   pos4.back ~ UART_RX
-    pos5 = new EdgeFingerPadDual;  pos5.front ~ BUTTON;    pos5.back ~ SPARE1
-    pos6 = new EdgeFingerPadDual;  pos6.front ~ USB_VBUS;  pos6.back ~ SPARE2
+    pos1  = new EdgeFingerPad;  pos1.contact  ~ VBAT
+    pos2  = new EdgeFingerPad;  pos2.contact  ~ GND
+    pos3  = new EdgeFingerPad;  pos3.contact  ~ LED_PLUS
+    pos4  = new EdgeFingerPad;  pos4.contact  ~ LED_DIN
+    pos5  = new EdgeFingerPad;  pos5.contact  ~ BUTTON
+    pos6  = new EdgeFingerPad;  pos6.contact  ~ USB_VBUS
+    pos7  = new EdgeFingerPad;  pos7.contact  ~ USB_DP
+    pos8  = new EdgeFingerPad;  pos8.contact  ~ USB_DN
+    pos9  = new EdgeFingerPad;  pos9.contact  ~ UART_TX
+    pos10 = new EdgeFingerPad;  pos10.contact ~ UART_RX
 
 
 
@@ -236,50 +238,22 @@ module LEDInterface:
 
 
 module TestPads:
-    pin VBAT_SW
-    pin VCC_3V3
+    """最少核心 bringup 测试点。其余信号从金手指尾巴或板上元件直接测。
+
+    保留 5 点：GND（地参考）、VCC_3V3（LDO 验证）、VBAT_SW（电池链路）、
+    EN（使能异常排查）、BOOT（烧录模式调试）。
+    """
     pin GND
+    pin VCC_3V3
+    pin VBAT_SW
     pin EN
     pin BOOT
-    pin UART_TX
-    pin UART_RX
-    pin IMU_KEY
-    pin IMU_GPIO
-    pin PWR_LATCH
-    pin LED_DATA
-    pin VBUS
-    pin IMU_VDDIO
-    pin VBAT_SENSE
 
-    vbat_pad = new SmallWirePad
-    vcc_pad = new SmallWirePad
-    gnd_pad = new SmallWirePad
-    en_pad = new SmallWirePad
-    boot_pad = new SmallWirePad
-    uart_tx_pad = new SmallWirePad
-    uart_rx_pad = new SmallWirePad
-    imu_key_pad = new SmallWirePad
-    imu_gpio_pad = new SmallWirePad
-    pwr_latch_pad = new SmallWirePad
-    led_data_pad = new SmallWirePad
-    vbus_pad = new SmallWirePad
-    imu_vddio_pad = new SmallWirePad
-    vbat_sense_pad = new SmallWirePad
-
-    vbat_pad.contact ~ VBAT_SW
-    vcc_pad.contact ~ VCC_3V3
-    gnd_pad.contact ~ GND
-    en_pad.contact ~ EN
-    boot_pad.contact ~ BOOT
-    uart_tx_pad.contact ~ UART_TX
-    uart_rx_pad.contact ~ UART_RX
-    imu_key_pad.contact ~ IMU_KEY
-    imu_gpio_pad.contact ~ IMU_GPIO
-    pwr_latch_pad.contact ~ PWR_LATCH
-    led_data_pad.contact ~ LED_DATA
-    vbus_pad.contact ~ VBUS
-    imu_vddio_pad.contact ~ IMU_VDDIO
-    vbat_sense_pad.contact ~ VBAT_SENSE
+    gnd_pad = new SmallWirePad;   gnd_pad.contact ~ GND
+    vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
+    vbat_pad = new SmallWirePad;  vbat_pad.contact ~ VBAT_SW
+    en_pad = new SmallWirePad;    en_pad.contact ~ EN
+    boot_pad = new SmallWirePad;  boot_pad.contact ~ BOOT
 
 
 module BatterySense:
@@ -307,7 +281,7 @@ module SmartPaddleRigid:
     mcu = new SGFK_ESP32C6N8_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
-    tail = new TailHarness6P2S
+    tail = new TailHarness10P
     bringup = new TestPads
     battery = new BatterySense
 
@@ -394,6 +368,8 @@ module SmartPaddleRigid:
     tail.USB_VBUS ~ vbus
     tail.USB_DP ~ usb_dp
     tail.USB_DN ~ usb_dn
+    tail.UART_TX ~ uart_tx
+    tail.UART_RX ~ uart_rx
     mcu.USB_DP ~ usb_dp
     mcu.USB_DN ~ usb_dn
 
@@ -406,33 +382,17 @@ module SmartPaddleRigid:
     led_r_data.p2 ~ led_din
     mcu.GPIO8_LED_DATA ~ led_data
 
-    # Extra debug signals on tail B-side (UART shared with IMU — disconnect IMU before tail debug)
-    tail.UART_TX ~ uart_tx
-    tail.UART_RX ~ uart_rx
-    tail.SPARE1 ~ gnd
-    tail.SPARE2 ~ gnd
-
     # Switched battery measurement for low-battery LED feedback.
     battery.VBAT_SW ~ vbat_sw
     battery.GND ~ gnd
     battery.SENSE ~ vbat_sense
 
-    # Bench bring-up pads. These are not intended as permanent user-facing
-    # connectors; they keep early firmware and power checks accessible.
+    # 最少 bringup 测试点（其余信号从金手指尾巴或板上元件测）
     bringup.VBAT_SW ~ vbat_sw
     bringup.VCC_3V3 ~ vcc
     bringup.GND ~ gnd
     bringup.EN ~ en
     bringup.BOOT ~ boot_btn
-    bringup.UART_TX ~ uart_tx
-    bringup.UART_RX ~ uart_rx
-    bringup.IMU_KEY ~ imu_key
-    bringup.IMU_GPIO ~ imu_gpio
-    bringup.PWR_LATCH ~ pwr_latch
-    bringup.LED_DATA ~ led_data
-    bringup.VBUS ~ vbus
-    bringup.IMU_VDDIO ~ imu_vddio
-    bringup.VBAT_SENSE ~ vbat_sense
 
     # Four PZT docks. The small front-end parts live at each dock.
     mcu.GPIO3_PZT_TR ~ pzt_tr_signal

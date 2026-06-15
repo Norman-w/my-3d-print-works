@@ -136,13 +136,11 @@ _HANDLE_JOIN_KICAD_Y = -_handle_join_y_scad + SCAD_TO_KICAD_Y_OFFSET
 # 值越小 PCB 越贴近外壳壁，越大则越保守
 SUBSTRATE_EDGE_CLEARANCE = 0.30
 
-# PCB 尾端向手柄空腔内的延伸量（mm）。
-# 从拍头-拍柄接合线再向手柄方向延伸此距离后截断。
-# 9.5mm：留出一个螺丝让位孔的深度，同时给电池导线预留出口空间。
-_TAIL_EXTEND_INTO_HANDLE = 9.5
-
-# PCB 尾端截断线 KiCad Y 坐标 — 从 SCAD handle_join_y 推导
-SUBSTRATE_TAIL_MAX_Y = _HANDLE_JOIN_KICAD_Y + _TAIL_EXTEND_INTO_HANDLE
+# PCB 尾端截断线 KiCad Y 坐标 — 从 SCAD _tail_y 参数自适应推导。
+# SCAD _tail_y 定义在 paddle_shell.scad 中，已包含连接器金手指所需深度。
+# 转换: y_kicad = -y_scad + SCAD_TO_KICAD_Y_OFFSET
+_tail_y_scad = float(_PARAMS.get("_tail_y", -108.0))  # type: ignore[arg-type]
+SUBSTRATE_TAIL_MAX_Y = -_tail_y_scad + SCAD_TO_KICAD_Y_OFFSET
 
 # PCB 轮廓边的采样步长（mm），用于在边上插入中间点以平滑 PZT 避让过渡
 SUBSTRATE_EDGE_SAMPLE = 1.0
@@ -221,13 +219,15 @@ _ML_X_R =  float(_cav_size[0]) / 2  # type: ignore[index]  # = +21
 _ML_Y_T =  float(_cav_center[1]) + float(_cav_size[1]) / 2  # type: ignore[index]  # = +24
 _ML_Y_B =  float(_cav_center[1]) - float(_cav_size[1]) / 2  # type: ignore[index]  # = -26
 
-# ── 栈道/尾巴几何常量（独立于大陆尺寸的设计选择） ──
+# ── 栈道/尾巴几何常量（从 SCAD 自适应读取，零硬编码） ──
 _GW_CORNER    = 1.61   # 栈道与大陆底角的内收量，避免锐角应力集中
 _GW_BL_W      = 16.75  # 下栈道外缘 |X|，决定下栈道宽度 = _ML_X_R - _GW_BL_W = 4.25mm
 _GW_TL_OUTER  = 19.48  # 上栈道外缘 |X|
 _GW_TL_INNER  = 14.75  # 上栈道内缘 |X|
-_TAIL_HW      = 9.00   # 拍柄尾巴半宽
-_TAIL_TIP_Y   = -108.0 # 拍柄尾巴末端 Y
+# 尾巴半宽和尖端 Y — 从 paddle_shell.scad 的 _tail_hw / _tail_y 读取
+# 当 SCAD 连接器规格变化时自动跟随，无需改此文件
+_TAIL_HW      = float(_PARAMS.get("_tail_hw", 3.81))   # type: ignore[arg-type]
+_TAIL_TIP_Y   = float(_PARAMS.get("_tail_y", -122.0))  # type: ignore[arg-type]
 
 # ── PZT 码头点（24 个固定几何点，与 paddle_shell.scad 相同） ──
 _DOCK_PTS_BL = [  # 左下栈道 → 左侧下 PZT 码头
@@ -284,16 +284,12 @@ def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
     """从 SCAD 槽参考线派生 PCB 基材轮廓（SCAD 坐标系）。
 
     保持码头/栈道/大陆区顶点与 SCAD 槽一致，确保 PCB 不会飘出黑色参考框。
-    仅缩短拍柄尾端 — 刚性 PCB 应止于手柄空腔内部。
-
-    截断 Y = handle_join_y - _TAIL_EXTEND_INTO_HANDLE
-    原尾端为 Y=-108（延伸到手柄底部），截断后尾端上移到手柄空腔内。
+    尾端 Y 直接从 SCAD _tail_y 参数自适应读取。
     """
     points = list(SCAD_SLOT_POINTS)
-    # 拍柄尾端截断：首尾两个点（SCAD 索引 0,1）的 Y 坐标截断到接合线以上
-    _tail_y_scad = _handle_join_y_scad - _TAIL_EXTEND_INTO_HANDLE
-    points[0] = (points[0][0], _tail_y_scad)
-    points[1] = (points[1][0], _tail_y_scad)
+    _tail_y_scad_val = float(_PARAMS.get("_tail_y", -108.0))  # type: ignore[arg-type]
+    points[0] = (points[0][0], _tail_y_scad_val)
+    points[1] = (points[1][0], _tail_y_scad_val)
     return points
 
 
