@@ -124,13 +124,12 @@ module PZTDock:
 
 
 
-module TailHarness10P:
-    """10P 单排 1.27mm 间距金手指尾插。
+module TailHarness5P2S:
+    """5P×2 双面 1.27mm 间距金手指尾插。
 
-    信号 (从左到右):
-      VBAT, GND, LED_PLUS, LED_DIN, BUTTON, USB_VBUS,
-      USB_DP, USB_DN, UART_TX, UART_RX
-    跨距 11.43mm, PCB 尾巴全宽 7.62mm。
+    正面 (F.Cu) 从左→右: VBAT, LED_PLUS, BUTTON, USB_DP, UART_TX
+    背面 (B.Cu) 从左→右: GND,  LED_DIN,  USB_VBUS, USB_DN, UART_RX
+    跨距 5.08mm (4×1.27), PCB 尾巴全宽 7.62mm，凸字形窄区刚好容纳。
     """
     pin VBAT
     pin GND
@@ -143,16 +142,11 @@ module TailHarness10P:
     pin UART_TX
     pin UART_RX
 
-    pos1  = new EdgeFingerPad;  pos1.contact  ~ VBAT
-    pos2  = new EdgeFingerPad;  pos2.contact  ~ GND
-    pos3  = new EdgeFingerPad;  pos3.contact  ~ LED_PLUS
-    pos4  = new EdgeFingerPad;  pos4.contact  ~ LED_DIN
-    pos5  = new EdgeFingerPad;  pos5.contact  ~ BUTTON
-    pos6  = new EdgeFingerPad;  pos6.contact  ~ USB_VBUS
-    pos7  = new EdgeFingerPad;  pos7.contact  ~ USB_DP
-    pos8  = new EdgeFingerPad;  pos8.contact  ~ USB_DN
-    pos9  = new EdgeFingerPad;  pos9.contact  ~ UART_TX
-    pos10 = new EdgeFingerPad;  pos10.contact ~ UART_RX
+    pos1 = new EdgeFingerPad;  pos1.front ~ VBAT;      pos1.back ~ GND
+    pos2 = new EdgeFingerPad;  pos2.front ~ LED_PLUS;   pos2.back ~ LED_DIN
+    pos3 = new EdgeFingerPad;  pos3.front ~ BUTTON;     pos3.back ~ USB_VBUS
+    pos4 = new EdgeFingerPad;  pos4.front ~ USB_DP;     pos4.back ~ USB_DN
+    pos5 = new EdgeFingerPad;  pos5.front ~ UART_TX;    pos5.back ~ UART_RX
 
 
 
@@ -281,7 +275,7 @@ module SmartPaddleRigid:
     mcu = new SGFK_ESP32C6N8_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
-    tail = new TailHarness10P
+    tail = new TailHarness5P2S
     bringup = new TestPads
     battery = new BatterySense
 

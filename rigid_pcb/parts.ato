@@ -100,8 +100,11 @@ component SmallWirePad:
 
 
 component EdgeFingerPad:
+    """金手指焊盘（双面），pad "F" 在 F.Cu，pad "B" 在 B.Cu，独立网络，适合 PCB 尾插。"""
     designator_prefix = "J"
     value = "GoldFinger"
-    signal contact
-    contact ~ pin 1
-    footprint = "SmartPaddle:EdgeFingerPad_P1.27mm"
+    signal front
+    signal back
+    front ~ pin "F"
+    back ~ pin "B"
+    footprint = "SmartPaddle:EdgeFingerPad_P1.27mm_Dual"

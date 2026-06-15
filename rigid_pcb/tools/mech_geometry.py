@@ -225,7 +225,7 @@ _GW_BL_W      = 16.75  # 下栈道外缘 |X|，决定下栈道宽度 = _ML_X_R -
 _GW_TL_OUTER  = 19.48  # 上栈道外缘 |X|
 _GW_TL_INNER  = 14.75  # 上栈道内缘 |X|
 # 尾巴几何 — 从 paddle_shell.scad 自适应读取，零硬编码
-# 凸字形: 基部 9mm 半宽，末端 10mm 收窄到金手指宽度 3.81mm
+# 凸字形: 基部 18mm 全宽 (= 2×9mm 半宽)，末端 10mm 收窄到金手指 7.62mm
 _TAIL_HW        = float(_PARAMS.get("_tail_hw", 3.81))        # type: ignore[arg-type]
 _TAIL_TIP_Y     = float(_PARAMS.get("_tail_y", -102.0))       # type: ignore[arg-type]
 _TAIL_NECK_Y    = float(_PARAMS.get("_tail_neck_y", -92.0))   # type: ignore[arg-type]

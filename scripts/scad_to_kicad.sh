@@ -129,17 +129,12 @@ READABLE_REFS = {
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
-    # 10P×1.27mm 金手指尾巴 (从左到右排列)
-    'tail.pos1':  ('TAIL01_VBAT',      'VBAT'),
-    'tail.pos2':  ('TAIL02_GND',       'GND'),
-    'tail.pos3':  ('TAIL03_LED_PLUS',  'LED+'),
-    'tail.pos4':  ('TAIL04_LED_DIN',   'LED DIN'),
-    'tail.pos5':  ('TAIL05_BTN',       'BTN'),
-    'tail.pos6':  ('TAIL06_USB_VBUS',  'USB VBUS'),
-    'tail.pos7':  ('TAIL07_USB_DP',    'USB D+'),
-    'tail.pos8':  ('TAIL08_USB_DN',    'USB D-'),
-    'tail.pos9':  ('TAIL09_UART_TX',   'UART TX'),
-    'tail.pos10': ('TAIL10_UART_RX',   'UART RX'),
+    # 5P×2 双面 1.27mm 金手指尾巴 (每个位置正/背面各一个信号)
+    'tail.pos1':  ('TAIL01_VBAT_GND',     'VBAT↑/GND↓'),
+    'tail.pos2':  ('TAIL02_LED+_DIN',     'LED+↑/DIN↓'),
+    'tail.pos3':  ('TAIL03_BTN_VBUS',     'BTN↑/VBUS↓'),
+    'tail.pos4':  ('TAIL04_DP_DN',        'D+↑/D-↓'),
+    'tail.pos5':  ('TAIL05_TX_RX',        'TX↑/RX↓'),
     'bringup.gnd_pad': ('TP_GND', 'GND test'),
     'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
     'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
@@ -346,10 +341,9 @@ pzt_mainland = {
 }
 moved += place_map(fp_by_addr, pzt_mainland, False)
 
-tail_order = ['tail.pos1','tail.pos2','tail.pos3','tail.pos4','tail.pos5',
-              'tail.pos6','tail.pos7','tail.pos8','tail.pos9','tail.pos10']
-pitch = 1.27  # 1.27mm 间距 10P 单排
-span = (len(tail_order)-1)*pitch
+tail_order = ['tail.pos1','tail.pos2','tail.pos3','tail.pos4','tail.pos5']
+pitch = 1.27  # 1.27mm 间距 5P×2 双面
+span = (len(tail_order)-1)*pitch  # = 5.08mm
 start_x = -span/2
 for i, addr in enumerate(tail_order):
     # 金手指放在尾巴尖端，距尾端 1.5mm（焊盘半长）留插拔导入边

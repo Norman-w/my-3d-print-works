@@ -320,3 +320,17 @@
 2026-06-15 16:22:41.668 [main] INFO  Settings were loaded from freerouting.json
 2026-06-15 16:22:44.700 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v2.2.4
 2026-06-15 16:22:46.832 [AWT-EventQueue-0] INFO  Opening 'board.dsn'...
+2026-06-15 16:34:47.962 [main] INFO  Freerouting v1.9.0 (build-date: 2023-10-30)
+2026-06-15 16:34:48.021 [main] INFO  Settings were loaded from freerouting.json
+2026-06-15 16:34:50.900 [ForkJoinPool.commonPool-worker-1] INFO  New version available: v2.2.4
+2026-06-15 16:35:04.603 [AWT-EventQueue-0] INFO  Opening 'board.dsn'...
+2026-06-15 16:35:04.800 [AWT-EventQueue-0] WARN  Non-ansi character '↑' found at position 14613 just after 'TAIL03_BTN_VBUS'.
+2026-06-15 16:35:04.801 [AWT-EventQueue-0] WARN  Non-ansi character '↓' found at position 14619 just after 'TAIL03_BTN_VBUS'.
+2026-06-15 16:35:04.802 [AWT-EventQueue-0] WARN  Non-ansi character '↑' found at position 14702 just after 'TAIL01_VBAT_GND'.
+2026-06-15 16:35:04.803 [AWT-EventQueue-0] WARN  Non-ansi character '↓' found at position 14707 just after 'TAIL01_VBAT_GND'.
+2026-06-15 16:35:04.804 [AWT-EventQueue-0] WARN  Non-ansi character '↑' found at position 14784 just after 'TAIL05_TX_RX'.
+2026-06-15 16:35:04.804 [AWT-EventQueue-0] WARN  Non-ansi character '↓' found at position 14788 just after 'TAIL05_TX_RX'.
+2026-06-15 16:35:04.805 [AWT-EventQueue-0] WARN  Non-ansi character '↑' found at position 14871 just after 'TAIL02_LED+_DIN'.
+2026-06-15 16:35:04.805 [AWT-EventQueue-0] WARN  Non-ansi character '↓' found at position 14876 just after 'TAIL02_LED+_DIN'.
+2026-06-15 16:35:17.716 [Thread-26] INFO  Starting auto-routing...
+2026-06-15 16:37:08.537 [Thread-26] WARN  There were only 19.90 changes in the last 20 passes, so it's very likely that autorouter can't improve the result much further. It is recommended to stop it and finish the board manually.
