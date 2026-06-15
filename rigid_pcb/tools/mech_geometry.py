@@ -207,33 +207,75 @@ def slot_scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
 
 
 # 拍形外轮廓槽点 — 从 paddle_shell.scad 的 rigid_pcb_slot_points 解析。
-# 该多边形定义了 PCB 在球拍壳体中的最大投影轮廓（38 个顶点）。
-# SCAD 中用 polygon(points=rigid_pcb_slot_points) 驱动腔体切割，
-# KiCad 中用同一组点（经 slot_scad_to_kicad 转换）绘制参考线和 Edge.Cuts。
-# 两边共享同一个数据源，修改 paddle_shell.scad 即可同步。
-_shell_pts = _PARAMS.get("rigid_pcb_slot_points")
-if _shell_pts is not None and len(_shell_pts) > 0:  # type: ignore[arg-type]
-    SCAD_SLOT_POINTS = [
-        (float(p[0]), float(p[1]))  # type: ignore[index]
-        for p in _shell_pts  # type: ignore[union-attr]
-    ]
-else:
-    # 回退：与 paddle_shell.scad 中当前值一致（2026-06-15）
-    SCAD_SLOT_POINTS = [
-        (9.00, -108.00), (-9.00, -108.00), (-9.00, -26.00),
-        (-16.75, -26.00), (-29.99, -40.11), (-28.24, -41.75),
-        (-35.08, -49.05), (-41.65, -42.90), (-34.81, -35.60),
-        (-33.06, -37.24), (-21.00, -24.39), (-21.00, 16.00),
-        (-19.48, 16.00), (-29.66, 35.62), (-31.62, 34.32),
-        (-37.17, 42.64), (-29.68, 47.63), (-24.13, 39.31),
-        (-26.15, 37.97), (-14.75, 16.00), (14.75, 16.00),
-        (26.15, 37.97), (24.13, 39.31), (29.68, 47.63),
-        (37.17, 42.64), (31.62, 34.32), (29.66, 35.62),
-        (19.48, 16.00), (21.00, 16.00), (21.00, -24.39),
-        (33.06, -37.24), (34.81, -35.60), (41.65, -42.90),
-        (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
-        (16.75, -26.00), (9.00, -26.00),
-    ]
+# 
+# 点分类（共 38 点）：
+#   - 14 个大陆接壤点：从 pcb_cavity_center + pcb_cavity_size 自动推导
+#   - 24 个 PZT 码头/尾巴点：固定几何值（与 SCAD 中一致）
+#
+# SCAD 侧 rigid_pcb_slot_points 也使用相同的大陆边界变量（_ml_y_t 等），
+# 修改 pcb_cavity_center 或 pcb_cavity_size 后两边自动同步。
+
+# ── 大陆边界（从 SCAD 参数自动推导，零硬编码） ──
+_ML_X_L = -float(_cav_size[0]) / 2  # type: ignore[index]  # = -21
+_ML_X_R =  float(_cav_size[0]) / 2  # type: ignore[index]  # = +21
+_ML_Y_T =  float(_cav_center[1]) + float(_cav_size[1]) / 2  # type: ignore[index]  # = +24
+_ML_Y_B =  float(_cav_center[1]) - float(_cav_size[1]) / 2  # type: ignore[index]  # = -26
+
+# ── 栈道/尾巴几何常量（独立于大陆尺寸的设计选择） ──
+_GW_CORNER    = 1.61   # 栈道与大陆底角的内收量，避免锐角应力集中
+_GW_BL_W      = 16.75  # 下栈道外缘 |X|，决定下栈道宽度 = _ML_X_R - _GW_BL_W = 4.25mm
+_GW_TL_OUTER  = 19.48  # 上栈道外缘 |X|
+_GW_TL_INNER  = 14.75  # 上栈道内缘 |X|
+_TAIL_HW      = 9.00   # 拍柄尾巴半宽
+_TAIL_TIP_Y   = -108.0 # 拍柄尾巴末端 Y
+
+# ── PZT 码头点（24 个固定几何点，与 paddle_shell.scad 相同） ──
+_DOCK_PTS_BL = [  # 左下栈道 → 左侧下 PZT 码头
+    (-29.99, -40.11), (-28.24, -41.75), (-35.08, -49.05),
+    (-41.65, -42.90), (-34.81, -35.60), (-33.06, -37.24),
+]
+_DOCK_PTS_TL = [  # 左上栈道 → 左侧上 PZT 码头
+    (-29.66, 35.62), (-31.62, 34.32), (-37.17, 42.64),
+    (-29.68, 47.63), (-24.13, 39.31), (-26.15, 37.97),
+]
+_DOCK_PTS_TR = [  # 右上栈道 → 右侧上 PZT 码头
+    (26.15, 37.97), (24.13, 39.31), (29.68, 47.63),
+    (37.17, 42.64), (31.62, 34.32), (29.66, 35.62),
+]
+_DOCK_PTS_BR = [  # 右下栈道 → 右侧下 PZT 码头
+    (33.06, -37.24), (34.81, -35.60), (41.65, -42.90),
+    (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
+]
+
+# ── 组装完整 38 点轮廓 ──
+SCAD_SLOT_POINTS = [
+    # 尾巴
+    ( _TAIL_HW,     _TAIL_TIP_Y),                    #  0
+    (-_TAIL_HW,     _TAIL_TIP_Y),                    #  1
+    (-_TAIL_HW,     _ML_Y_B),                        #  2
+    # 左下栈道 → 码头
+    (-_GW_BL_W,     _ML_Y_B),                        #  3
+    *_DOCK_PTS_BL,                                    #  4-9
+    # 大陆左侧边缘
+    (_ML_X_L,       _ML_Y_B + _GW_CORNER),           # 10
+    (_ML_X_L,       _ML_Y_T),                        # 11
+    # 左上栈道 → 码头
+    (-_GW_TL_OUTER, _ML_Y_T),                        # 12
+    *_DOCK_PTS_TL,                                    # 13-18
+    (-_GW_TL_INNER, _ML_Y_T),                        # 19
+    # 右上栈道 → 码头
+    ( _GW_TL_INNER, _ML_Y_T),                        # 20
+    *_DOCK_PTS_TR,                                    # 21-26
+    ( _GW_TL_OUTER, _ML_Y_T),                        # 27
+    # 大陆右侧边缘
+    (_ML_X_R,       _ML_Y_T),                        # 28
+    (_ML_X_R,       _ML_Y_B + _GW_CORNER),           # 29
+    # 右下栈道 → 码头
+    *_DOCK_PTS_BR,                                    # 30-35
+    ( _GW_BL_W,     _ML_Y_B),                        # 36
+    # 尾巴
+    (_TAIL_HW,      _ML_Y_B),                        # 37
+]
 
 # ===== 分区：几何工具函数 =====
 

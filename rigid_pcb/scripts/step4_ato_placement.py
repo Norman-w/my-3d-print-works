@@ -15,13 +15,6 @@ PZT signal/GND wire pads stay on the docks and are only re-snapped when
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
-# pcbnew 必须在所有其他 import 和 Board 操作之前导入。
-# KiCad 的 pcbnew Python 绑定底层依赖 wxWidgets App 单例，
-# 该单例在 `import pcbnew` 时由 C++ 侧初始化。
-# 若其他库先于 pcbnew 创建线程或修改运行时状态，
-# 可能引发 wxApp 竞态→segfault（"assert traits failed"）。
-import pcbnew
-
 import argparse
 import math
 import re
@@ -35,6 +28,10 @@ sys.path.insert(0, str(ROOT))
 
 from rigid_pcb.tools.kicad_update_utils import load_board, save_board, slot_basis, xy
 from rigid_pcb.tools.mech_geometry import ESP32_CUTOUT, IMU_CUTOUT
+
+# 注意：pcbnew 不在模块顶层导入！
+# macOS Rosetta 下模块顶层 import pcbnew 会触发 wxWidgets SIGBUS/SIGSEGV。
+# 所有使用 pcbnew 的函数都通过参数接收 pcbnew 实例，避免模块级导入。
 
 # ===== 分区：常量/配置 =====
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -368,6 +365,8 @@ def place_map(pcbnew, fp_by_addr: dict, placements: dict[str, tuple[float, float
 
 
 def main() -> None:
+    import pcbnew
+
     parser = argparse.ArgumentParser(description="Step 4: Normalize and place atopile footprints")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
     parser.add_argument("--force", action="store_true", help="re-snap already-placed footprints")
