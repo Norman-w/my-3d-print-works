@@ -129,7 +129,7 @@ module TailHarness5P2S:
 
     正面 (F.Cu) 从左→右: VBAT, LED_PLUS, BUTTON, USB_DP, UART_TX
     背面 (B.Cu) 从左→右: GND,  LED_DIN,  USB_VBUS, USB_DN, UART_RX
-    跨距 5.08mm (4×1.27), PCB 尾巴全宽 7.62mm，凸字形窄区刚好容纳。
+    跨距 5.08mm (4×1.27), 金手指区 8mm，PCB 尾巴全宽 7.62mm。
     """
     pin VBAT
     pin GND

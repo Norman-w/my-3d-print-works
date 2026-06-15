@@ -112,8 +112,8 @@ mcu_module_offset     = [-3, -11.5];
 
 // ---- PCB 尾部金手指连接器 (5P×2 双面, 1.27mm 间距) ----
 // 每个位置 F.Cu + B.Cu 各一个独立焊盘，共 10 个信号
-// 信号分配 (F↑/B↓): VBAT/GND · LED+/DIN · BTN/VBUS · D+/D- · TX/RX
-// 跨距 5.08mm (4×1.27)，PCB 窄区全宽 7.62mm (= tail_connector_pcb_w)
+// 信号分配 (F/B): VBAT/GND · LED+/DIN · BTN/VBUS · D+/D- · TX/RX
+// 跨距 5.08mm (4×1.27)，PCB 窄区全宽 7.62mm，金手指区长 8mm
 tail_connector_pitch  = 1.27;      // 金手指间距 (mm)
 tail_connector_pins   = 5;         // 物理位置数 ×2 面 = 10 信号
 tail_connector_pcb_w  = 7.62;      // 金手指区 PCB 尾巴宽度 (mm)

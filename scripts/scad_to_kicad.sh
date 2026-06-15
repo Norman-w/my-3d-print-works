@@ -130,11 +130,11 @@ READABLE_REFS = {
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
     # 5P×2 双面 1.27mm 金手指尾巴 (每个位置正/背面各一个信号)
-    'tail.pos1':  ('TAIL01_VBAT_GND',     'VBAT↑/GND↓'),
-    'tail.pos2':  ('TAIL02_LED+_DIN',     'LED+↑/DIN↓'),
-    'tail.pos3':  ('TAIL03_BTN_VBUS',     'BTN↑/VBUS↓'),
-    'tail.pos4':  ('TAIL04_DP_DN',        'D+↑/D-↓'),
-    'tail.pos5':  ('TAIL05_TX_RX',        'TX↑/RX↓'),
+    'tail.pos1':  ('TAIL01_VBAT_GND',     'VBAT F/GND B'),
+    'tail.pos2':  ('TAIL02_LED+_DIN',     'LED+ F/DIN B'),
+    'tail.pos3':  ('TAIL03_BTN_VBUS',     'BTN F/VBUS B'),
+    'tail.pos4':  ('TAIL04_DP_DN',        'D+ F/D- B'),
+    'tail.pos5':  ('TAIL05_TX_RX',        'TX F/RX B'),
     'bringup.gnd_pad': ('TP_GND', 'GND test'),
     'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
     'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
@@ -346,8 +346,8 @@ pitch = 1.27  # 1.27mm 间距 5P×2 双面
 span = (len(tail_order)-1)*pitch  # = 5.08mm
 start_x = -span/2
 for i, addr in enumerate(tail_order):
-    # 金手指放在尾巴尖端，距尾端 1.5mm（焊盘半长）留插拔导入边
-    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 90.0, 0, False)
+    # 金手指放在尾巴尖端，距尾端 2mm 留插拔导入边
+    moved += move_one(fp_by_addr, addr, round(start_x+i*pitch,2), 96.0, 0, False)
 
 labelled, visible_labels = apply_readable_text(board)
 scaled = apply_model_scales(board)
