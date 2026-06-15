@@ -80,6 +80,46 @@ def _parse_netlist(path: Path) -> dict[str, dict[str, str]]:
 # ===== 模型/类型 =====
 
 
+# ===== 常量/配置 =====
+# 金手指焊盘网络映射（5P×2 双面，1.27mm 间距）
+# ato 将 EdgeFingerPad 展开为独立 terminal，地址如 tail.bat_plus_pad，
+# 无法与板上 footprint 地址 tail.pos1 匹配。
+# 因此在此做显式 fallback 分配。
+TAIL_NET_ASSIGNMENTS = {
+    "tail.pos1": {"F": "vbat_in",  "B": "gnd"},
+    "tail.pos2": {"F": "vbat_sw",  "B": "led_din"},
+    "tail.pos3": {"F": "btn_sw",   "B": "vbus"},
+    "tail.pos4": {"F": "usb_dp",   "B": "usb_dn"},
+    "tail.pos5": {"F": "uart_tx",  "B": "uart_rx"},
+}
+
+
+def _assign_tail_nets(board):
+    """显式分配金手指焊盘网络（netlist 中 tail.*pad 与板上 footprint 命名不一致的 fallback）。"""
+    import pcbnew
+
+    assigned = 0
+    for fp in board.GetFootprints():
+        addr = ""
+        if fp.HasFieldByName("atopile_address"):
+            addr = fp.GetFieldByName("atopile_address").GetText()
+        if addr not in TAIL_NET_ASSIGNMENTS:
+            continue
+        pin_nets = TAIL_NET_ASSIGNMENTS[addr]
+        for pad in fp.Pads():
+            pn = pad.GetNumber()
+            if pn not in pin_nets:
+                continue
+            net_name = pin_nets[pn]
+            net = board.FindNet(net_name)
+            if net is None:
+                net = pcbnew.NETINFO_ITEM(board, net_name)
+                board.Add(net)
+            pad.SetNet(net)
+            assigned += 1
+    return assigned
+
+
 # ===== 公开 API =====
 def import_netlist(netlist_path: Path, board_path: Path):
     """导入网络表到 KiCad 板文件中。"""
@@ -140,6 +180,12 @@ def import_netlist(netlist_path: Path, board_path: Path):
                 assigned += 1
             else:
                 missed += 1
+
+    # 金手指 fallback（address 命名不一致）
+    tail_n = _assign_tail_nets(board)
+    if tail_n > 0:
+        assigned += tail_n
+        print(f"\n  金手指 fallback: 分配了 {tail_n} 个焊盘网络")
 
     print(f"\n  匹配封装: {matched}/{len(addr_nets)}")
     print(f"  分配焊盘: {assigned}, 未匹配: {missed}")

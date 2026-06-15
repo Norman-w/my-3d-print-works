@@ -57,6 +57,58 @@ def main() -> None:
     save_board(board, DEFAULT_BOARD)
     print(f"4.2 — 从 {SNAPSHOT.name} 恢复了 {moved} 个 PZT 码头组件位置")
 
+    # 注入螺丝孔 keepout zone（PCB_CLEARANCE_HOLES 从 SCAD 解析，无需手动维护）
+    _inject_keepout_from_mech(DEFAULT_BOARD)
+
+
+def _inject_keepout_from_mech(board_path: Path):
+    """在 pcbnew 保存后，文本注入螺丝孔 keepout zone（KiCadRoutingTools 自动识别）。"""
+    from rigid_pcb.tools.mech_geometry import PCB_CLEARANCE_HOLES
+
+    holes = PCB_CLEARANCE_HOLES
+    if not holes:
+        return
+
+    import math, re
+
+    content = board_path.read_text()
+    max_zid = max((int(m.group(1)) for m in re.finditer(r'\(zone_id (\d+)\)', content)), default=0)
+    keepout_blocks = []
+
+    for hx, hy, hr in holes:
+        n_seg = 48
+        pts = " ".join(
+            f"(xy {hx + hr * math.cos(2 * math.pi * i / n_seg):.6f} "
+            f"{hy + hr * math.sin(2 * math.pi * i / n_seg):.6f})"
+            for i in range(n_seg)
+        )
+        for layer in ("F.Cu", "B.Cu"):
+            max_zid += 1
+            keepout_blocks.append(
+                f"  (zone\n"
+                f"    (zone_id {max_zid})\n"
+                f"    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))\n"
+                f'    (layers "{layer}")\n'
+                f"    (hatch edge 0.508)\n"
+                f"    (priority 100)\n"
+                f"    (connect_pads no)\n"
+                f"    (min_thickness 0.15)\n"
+                f"    (filled_areas_thickness no)\n"
+                f"    (fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))\n"
+                f"    (polygon\n"
+                f"      (pts\n"
+                f"        {pts}\n"
+                f"      )\n"
+                f"    )\n"
+                f"  )"
+            )
+
+    insert_at = content.rfind(')\n')
+    if insert_at < 0:
+        insert_at = len(content)
+    board_path.write_text(content[:insert_at + 1] + "\n" + "\n".join(keepout_blocks) + "\n" + content[insert_at + 1:])
+    print(f"     螺丝孔 keepout: 注入了 {len(keepout_blocks)} 个 zone (F.Cu + B.Cu)")
+
 
 if __name__ == "__main__":
     main()

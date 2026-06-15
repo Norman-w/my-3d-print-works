@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Step 2 — Draw PCB substrate outline on Edge.Cuts.
+"""Step 2 — Draw PCB substrate outline on Edge.Cuts + inject screw-hole keepout zones.
 
 Derived from the SCAD slot reference with three mechanical adjustments:
   1. Edge inset — every edge shifted inward by SUBSTRATE_EDGE_CLEARANCE (0.30 mm)
@@ -9,15 +9,14 @@ Derived from the SCAD slot reference with three mechanical adjustments:
   3. Handle tail shorten — the handle-end PCB stops at Y=-88 (SCAD) instead of
      Y=-108 so the rigid PCB ends inside the handle cavity.
 
-This step ONLY clears and redraws Edge.Cuts.  It does not touch Dwgs.User
-(where Step 1 placed the SCAD reference contour and X±/Y± markers), so the
-coordinate frame remains visible for verification.
+This step clears and redraws Edge.Cuts, then injects KiCad native keepout zones
+around screw holes that pass through the PCB. Keepout zones are injected as
+text S-expressions after pcbnew save (to avoid pcbnew stripping them).
 """
 
-# ===== 分区：导入/依赖 =====
-from __future__ import annotations
-
 import argparse
+import math
+import re
 import sys
 from pathlib import Path
 
@@ -31,49 +30,93 @@ from rigid_pcb.tools.kicad_update_utils import (
     save_board,
 )
 from rigid_pcb.tools.mech_geometry import (
+    PCB_CLEARANCE_HOLES,
     PCB_SLOT_POINTS,
     SCAD_SLOT_POINTS,
     SUBSTRATE_EDGE_CLEARANCE,
     SUBSTRATE_TAIL_MAX_Y,
 )
 
-# ===== 分区：常量/配置 =====
 DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
 
 
-# ===== 分区：公开 API =====
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Step 2: Draw PCB substrate outline on Edge.Cuts")
+def _make_keepout_zone(zone_id, x, y, radius, layer):
+    n_seg = 48
+    pts = [f"(xy {x + radius * math.cos(2 * math.pi * i / n_seg):.6f} "
+           f"{y + radius * math.sin(2 * math.pi * i / n_seg):.6f})"
+           for i in range(n_seg)]
+    return f"""  (zone
+    (zone_id {zone_id})
+    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))
+    (layers "{layer}")
+    (hatch edge 0.508)
+    (priority 100)
+    (connect_pads no)
+    (min_thickness 0.15)
+    (filled_areas_thickness no)
+    (fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+    (polygon
+      (pts
+        {" ".join(pts)}
+      )
+    )
+  )"""
+
+
+def _inject_keepout_zones(board_path):
+    holes = PCB_CLEARANCE_HOLES
+    if not holes:
+        print("  (无螺丝孔穿过 PCB，跳过 keepout zone)")
+        return 0
+
+    content = board_path.read_text()
+    max_zid = 0
+    for m in re.finditer(r'\(zone_id (\d+)\)', content):
+        max_zid = max(max_zid, int(m.group(1)))
+
+    keepout_blocks = []
+    for hx, hy, hr in holes:
+        max_zid += 1
+        keepout_blocks.append(_make_keepout_zone(max_zid, hx, hy, hr, 'F.Cu'))
+        max_zid += 1
+        keepout_blocks.append(_make_keepout_zone(max_zid, hx, hy, hr, 'B.Cu'))
+
+    insert_at = content.rfind(')\n')
+    if insert_at < 0:
+        insert_at = len(content)
+    new_content = content[:insert_at + 1] + "\n" + "\n".join(keepout_blocks) + "\n" + content[insert_at + 1:]
+    board_path.write_text(new_content)
+    return len(keepout_blocks)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Step 2: Draw PCB substrate outline + keepout zones")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
     args = parser.parse_args()
 
     import pcbnew
 
     board = load_board(pcbnew, args.board)
-
-    # Clear only Edge.Cuts — preserve Dwgs.User (SCAD ref + X±/Y± markers)
     removed = remove_drawings_on_layers(board, {pcbnew.Edge_Cuts})
-
-    # Draw the processed PCB substrate polygon
     polyline(pcbnew, board, pcbnew.Edge_Cuts, PCB_SLOT_POINTS, 0.10)
-
     save_board(board, args.board)
+
+    n_keepout = _inject_keepout_zones(args.board)
 
     xs = [p[0] for p in PCB_SLOT_POINTS]
     ys = [p[1] for p in PCB_SLOT_POINTS]
-    scad_ys = [slot_scad_to_kicad_y(p[1]) for p in SCAD_SLOT_POINTS]
 
     print(f"=== Step 2 完成 ===")
     print(f"清除了 Edge.Cuts 上 {removed} 个旧图形")
     print(f"PCB 基材 BBox: X=[{min(xs):.2f}, {max(xs):.2f}] Y=[{min(ys):.2f}, {max(ys):.2f}]")
     print(f"PCB 轮廓采样点数: {len(PCB_SLOT_POINTS)}")
     print(f"语义: 每条边平行内缩 {SUBSTRATE_EDGE_CLEARANCE:.2f}mm + PZT码头缩回 + 拍柄截断 Ymax≤{SUBSTRATE_TAIL_MAX_Y:.2f}")
+    if n_keepout:
+        print(f"螺丝孔 keepout: 注入了 {n_keepout} 个 zone (F.Cu + B.Cu)")
 
 
-def slot_scad_to_kicad_y(y: float) -> float:
-    """Quick Y-only conversion for info display."""
+def slot_scad_to_kicad_y(y):
     from rigid_pcb.tools.mech_geometry import SCAD_TO_KICAD_Y_OFFSET
-
     return -y + SCAD_TO_KICAD_Y_OFFSET
 
 
