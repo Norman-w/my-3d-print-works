@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # ===== scad_to_kicad.sh =====
 # 交互式全链路 PCB 生成管线
-# SCAD → KiCad (step1→step4) + FreeRouting 自动布线 (step5)
+# SCAD → KiCad (step1→step4) + KiCadRoutingTools 自动布线 (step5)
 #
 # 依赖:
 #   - KiCad Python: $KIPY (自动检测)
-#   - atopile:     $ATO  (自动检测)
-#   - Java:        $JAVA (FreeRouting 必需)
+#   - atopile:      $ATO  (自动检测)
+#   - sys Python3:  $PY3  (用于 KiCadRoutingTools CLI)
 #
 # 用法: ./scripts/scad_to_kicad.sh
 # =====
@@ -17,15 +17,12 @@ SCRIPTS="$ROOT/rigid_pcb/scripts"
 OUTPUT="$ROOT/rigid_pcb/output"
 BOARD="$ROOT/rigid_pcb/layouts/default/default.kicad_pcb"
 ATO_PROJ="$ROOT/rigid_pcb"
+KRT="$ROOT/rigid_pcb/tools/KiCadRoutingTools"   # KiCadRoutingTools 目录
 
 # ---- 自动检测工具路径 ----
 KIPY="${KIPY:-/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3}"
 ATO="${ATO:-$HOME/.local/share/uv/tools/atopile/bin/ato}"
-JAVA="${JAVA:-$(which java 2>/dev/null || echo /opt/homebrew/opt/openjdk/bin/java)}"
-FR_JAR="$OUTPUT/freerouting.jar"       # v1.9 — GUI 模式（更稳定）
-FR2_JAR="$OUTPUT/freerouting2.jar"     # v2.x — 无头模式（内存大，可能不稳）
-DSN="$OUTPUT/board.dsn"
-SES="$OUTPUT/board.ses"
+PY3="${PY3:-$(which python3)}"
 
 # 颜色输出
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
@@ -37,18 +34,16 @@ title() { echo -e "\n${BLUE}━━━ $* ━━━${NC}"; }
 # ---- 工具检查 ----
 check_tools() {
     local ok=true
-    for tool in "$KIPY" "$ATO" "$JAVA"; do
+    for tool in "$KIPY" "$ATO"; do
         if ! command -v "$tool" &>/dev/null && ! test -x "$tool"; then
             err "找不到: $tool"
             ok=false
         fi
     done
-    for f in "$FR_JAR" "$FR2_JAR"; do
-        if ! test -f "$f"; then
-            err "找不到: $f"
-            ok=false
-        fi
-    done
+    if ! test -f "$KRT/rust_router/grid_router.so"; then
+        warn "KiCadRoutingTools 路由器未安装，step5 将跳过"
+        warn "安装: cd $KRT && python3 build_router.py"
+    fi
     $ok || exit 1
 }
 
@@ -421,92 +416,43 @@ run_step4_2() {
 }
 
 run_step5() {
-    title "Step 5 — FreeRouting 自动布线"
+    title "Step 5 — KiCadRoutingTools 自动布线"
     echo ""
-    echo "  [1] 使用 FreeRouting v2 无头模式 (推荐)"
-    echo "  [2] 使用 FreeRouting v1.9 GUI (需手动操作)"
-    echo "  [3] 仅导出 DSN (不布线)"
-    echo "  [4] 仅导入已有 SES"
+    echo "  [1] 布线全部网络 (route.py --overwrite)"
+    echo "  [2] 仅铺 GND 电源层 (route_planes.py)"
+    echo "  [3] 全部布线 + GND 电源层"
     echo ""
-    read -rp "  选择 [1-4]: " fr_choice
+    read -rp "  选择 [1-3]（默认 1）: " rt_choice
 
-    case "${fr_choice:-1}" in
-        1) run_step5_headless ;;
-        2) run_step5_gui ;;
-        3) run_step5_dsn_only ;;
-        4) run_step5_ses_import ;;
+    case "${rt_choice:-1}" in
+        1) run_step5_route_all ;;
+        2) run_step5_planes ;;
+        3) run_step5_route_all && run_step5_planes ;;
         *) warn "无效选择" ;;
     esac
 }
 
-run_step5_dsn_only() {
-    info "导出 DSN ..."
-    "$KIPY" -c "
-import sys; sys.path.insert(0,'$ROOT')
-import pcbnew
-board = pcbnew.LoadBoard('$BOARD')
-pcbnew.ExportSpecctraDSN(board, '$DSN')
-print(f'DSN → $DSN')
-" 2>&1 | grep -vE "Debug:|swig|stdpbase|assert"
-    info "DSN 导出完成 ✓"
-}
-
-run_step5_headless() {
-    run_step5_dsn_only
-    info "启动 FreeRouting v2 无头模式 ..."
-    cd "$OUTPUT"
-    "$JAVA" -Xmx4g -jar "$FR2_JAR" \
-        --gui.enabled=false \
-        -de "$DSN" \
-        -do "$SES" \
-        -mt 4 \
-        2>&1 | tail -20
-    if test -f "$SES" && grep -q "session" "$SES" 2>/dev/null; then
-        run_step5_ses_import
-    else
-        err "FreeRouting 未生成有效 SES 文件，请尝试 GUI 模式"
-    fi
-}
-
-run_step5_gui() {
-    run_step5_dsn_only
-    info "启动 FreeRouting v1.9 GUI ..."
-    cd "$OUTPUT"
-    echo ""
-    echo "  ┌────────────────────────────────────────────┐"
-    echo "  │  FreeRouting GUI 操作步骤:                  │"
-    echo "  │  1. File → Open → 选择 board.dsn           │"
-    echo "  │  2. Routing → Autorouting                  │"
-    echo "  │  3. File → Export Specctra Session File    │"
-    echo "  │     保存为 board.ses (覆盖已有)             │"
-    echo "  │  4. 关闭 FreeRouting 窗口                   │"
-    echo "  │  5. 回到此处按 [s] 导入 SES → KiCad         │"
-    echo "  └────────────────────────────────────────────┘"
-    echo ""
-    "$JAVA" -jar "$FR_JAR" "$DSN" > /dev/null 2>&1 &
-    FR_PID=$!
-    info "FreeRouting PID=$FR_PID，请在 GUI 中完成布线后..."
-    read -rp "  按 [s] 导入 SES 到 KiCad，其他键跳过: " do_import
-    if [[ "$do_import" == "s" ]]; then
-        run_step5_ses_import
-    fi
-}
-
-run_step5_ses_import() {
-    if ! test -f "$SES"; then
-        err "SES 文件不存在: $SES"
+run_step5_route_all() {
+    if ! test -f "$KRT/rust_router/grid_router.so"; then
+        err "KiCadRoutingTools Rust 路由器未安装，请先执行:"
+        err "  cd $KRT && python3 build_router.py"
         return 1
     fi
-    info "导入 SES → KiCad ..."
-    "$KIPY" -c "
-import sys; sys.path.insert(0,'$ROOT')
-import pcbnew
-board = pcbnew.LoadBoard('$BOARD')
-pcbnew.ImportSpecctraSES('$SES')
-pcbnew.SaveBoard('$BOARD', board)
-print(f'SES → $BOARD 导入完成')
-" 2>&1 | grep -vE "Debug:|swig|stdpbase|assert"
-    info "SES 导入完成 ✓"
+    info "KiCadRoutingTools 自动布线 (A* + rip-up/reroute) ..."
+    cd "$KRT"
+    "$PY3" route.py "$BOARD" --overwrite 2>&1 | tail -15
+    info "布线完成，文件已写回 $BOARD"
+}
+
+run_step5_planes() {
+    if ! test -f "$KRT/rust_router/grid_router.so"; then
+        err "KiCadRoutingTools Rust 路由器未安装"
+        return 1
+    fi
+    info "铺 GND 电源层 (route_planes.py) ..."
+    cd "$KRT"
+    "$PY3" route_planes.py "$BOARD" --overwrite --nets GND --plane-layers B.Cu 2>&1 | tail -10
+    info "GND 层铺设完成 ✓"
 }
 
 run_all() {
@@ -519,7 +465,7 @@ run_all() {
     run_step4
     run_step4_2
     echo ""
-    read -rp "  是否继续 FreeRouting 自动布线? [y/N]: " do_fr
+    read -rp "  是否继续 KiCadRoutingTools 自动布线? [y/N]: " do_fr
     if [[ "$do_fr" =~ ^[Yy]$ ]]; then
         run_step5
     fi
@@ -542,7 +488,7 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.2]${NC} step3.2 — 导入网络表                ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4]${NC}  step4 — ato 组件放置               ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
-        echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — FreeRouting 自动布线       ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — KiCadRoutingTools 自动布线    ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[q]${NC}  退出                              ${BLUE}║${NC}"
         echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
         echo ""
