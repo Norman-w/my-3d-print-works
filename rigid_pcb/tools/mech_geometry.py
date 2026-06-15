@@ -123,15 +123,26 @@ _PARAMS = {**_SHELL_PARAMS, **_PARAMS}
 # 公式: y_kicad = -y_scad + SCAD_TO_KICAD_Y_OFFSET
 SCAD_TO_KICAD_Y_OFFSET = float(_PARAMS.get("blade_ellipse_cy", -10.0))  # type: ignore[arg-type]
 
+# --- 手柄接合线（来自 SCAD，用于推导 PCB 尾端截断） ---
+
+# handle_join_y: 拍头-拍柄接合处 SCAD Y 坐标（parameters.scad，默认 -78.5）
+_handle_join_y_scad = float(_PARAMS.get("handle_join_y", -78.5))  # type: ignore[arg-type]
+# 转换为 KiCad Y: y_kicad = -y_scad + offset
+_HANDLE_JOIN_KICAD_Y = -_handle_join_y_scad + SCAD_TO_KICAD_Y_OFFSET
+
 # --- PCB 基材外形参数 ---
 
 # PCB 边缘相对于 SCAD 槽点参考线的平行内缩量（mm）
 # 值越小 PCB 越贴近外壳壁，越大则越保守
 SUBSTRATE_EDGE_CLEARANCE = 0.30
 
-# 拍柄端（Y+方向，即远离拍头方向）的 PCB 截断线 KiCad Y 坐标（mm）
-# PCB 应止于手柄空腔内，不延伸到拍柄底部
-SUBSTRATE_TAIL_MAX_Y = 78.0
+# PCB 尾端向手柄空腔内的延伸量（mm）。
+# 从拍头-拍柄接合线再向手柄方向延伸此距离后截断。
+# 9.5mm：留出一个螺丝让位孔的深度，同时给电池导线预留出口空间。
+_TAIL_EXTEND_INTO_HANDLE = 9.5
+
+# PCB 尾端截断线 KiCad Y 坐标 — 从 SCAD handle_join_y 推导
+SUBSTRATE_TAIL_MAX_Y = _HANDLE_JOIN_KICAD_Y + _TAIL_EXTEND_INTO_HANDLE
 
 # PCB 轮廓边的采样步长（mm），用于在边上插入中间点以平滑 PZT 避让过渡
 SUBSTRATE_EDGE_SAMPLE = 1.0
@@ -162,8 +173,9 @@ PZT_CAVITIES_SCAD = [
 # 螺丝孔 — screw_d_boss 决定让位半径，screw_positions 给出中心坐标
 # screw_d_boss: 螺丝柱外径（mm），/2 得柱半径
 _screw_boss_d = float(_PARAMS.get("screw_d_boss", 5.5))  # type: ignore[arg-type]
-# 螺丝柱外半径 + 0.75mm 额外间隙 — 防止 PCB 孔边缘与螺丝柱壁干涉
-SCREW_CLEARANCE_RADIUS = _screw_boss_d / 2.0 + 0.75
+# 螺丝柱外半径 + 额外间隙 — 防止 PCB 孔边缘与螺丝柱壁干涉
+_SCREW_EXTRA_CLEARANCE = 0.75
+SCREW_CLEARANCE_RADIUS = _screw_boss_d / 2.0 + _SCREW_EXTRA_CLEARANCE
 SCREW_HOLES_SCAD = [
     (float(p[0]), float(p[1]))  # type: ignore[index]
     for p in _PARAMS.get("screw_positions", [])  # type: ignore[union-attr]
@@ -175,10 +187,10 @@ SCREW_HOLES_SCAD = [
 # Y 轴转换: y_kicad = -(scad_y) + SCAD_TO_KICAD_Y_OFFSET
 _cav_center = _PARAMS.get("pcb_cavity_center", (0, -1))  # type: ignore
 _cav_size = _PARAMS.get("pcb_cavity_size", (42, 50))  # type: ignore
-_ki_y = -float(_cav_center[1]) + SCAD_TO_KICAD_Y_OFFSET  # type: ignore[index]
+_KICAD_MAINLAND_CENTER_Y = -float(_cav_center[1]) + SCAD_TO_KICAD_Y_OFFSET  # type: ignore[index]
 MAINLAND_RECT = (
     float(_cav_center[0]),  # type: ignore[index]
-    _ki_y,                  # KiCad Y 中心坐标
+    _KICAD_MAINLAND_CENTER_Y,
     float(_cav_size[0]),  # type: ignore[index]
     float(_cav_size[1]),  # type: ignore[index]
 )
@@ -231,14 +243,15 @@ def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
 
     保持码头/栈道/大陆区顶点与 SCAD 槽一致，确保 PCB 不会飘出黑色参考框。
     仅缩短拍柄尾端 — 刚性 PCB 应止于手柄空腔内部。
-    截断位置 Y=-88.00（相对于 blade_ellipse_cy）：
-    手柄接合处为 Y=-78.5，再缩 9.5mm 避免 PCB 伸出颈部进入手柄。
+
+    截断 Y = handle_join_y - _TAIL_EXTEND_INTO_HANDLE
+    原尾端为 Y=-108（延伸到手柄底部），截断后尾端上移到手柄空腔内。
     """
     points = list(SCAD_SLOT_POINTS)
-    # 拍柄尾端截断：首尾两个尾端点（SCAD 索引 0,1）Y 坐标截到 -88
-    # 原值为 -108（伸入手柄底部），截断到 -88 止于手柄空腔内
-    points[0] = (points[0][0], -88.00)
-    points[1] = (points[1][0], -88.00)
+    # 拍柄尾端截断：首尾两个点（SCAD 索引 0,1）的 Y 坐标截断到接合线以上
+    _tail_y_scad = _handle_join_y_scad - _TAIL_EXTEND_INTO_HANDLE
+    points[0] = (points[0][0], _tail_y_scad)
+    points[1] = (points[1][0], _tail_y_scad)
     return points
 
 
@@ -263,8 +276,10 @@ def _line_intersection(
 ) -> tuple[float, float] | None:
     """计算两条线段的交点，平行时返回 None。
 
-    ε=1e-9：小于此值的分母视为平行，防止浮点除零。
+    _FLOAT_EPSILON = 1e-9：小于此值视为平行/共线，防止浮点除零产生无穷大值。
+    此值不依赖于任何几何参数，是 IEEE 754 双精度浮点的合理容差。
     """
+    _FLOAT_EPSILON = 1e-9  # 浮点比较容差（纯算法保护，非几何参数）
     ax, ay = a1
     bx, by = a2
     cx, cy = b1
@@ -272,7 +287,7 @@ def _line_intersection(
     adx, ady = bx - ax, by - ay
     bdx, bdy = dx - cx, dy - cy
     denom = adx * bdy - ady * bdx
-    if abs(denom) < 1e-9:
+    if abs(denom) < _FLOAT_EPSILON:
         return None
     t = ((cx - ax) * bdy - (cy - ay) * bdx) / denom
     return (ax + adx * t, ay + ady * t)
@@ -334,30 +349,37 @@ def _retreat_from_pzt(
     """将靠近 PZT 腔体的码头点沿"码头→大陆区"方向回退，直至脱离禁区。
 
     不向外扩张码头，而是向内缩短 — 确保 PCB 轮廓不闯入 PZT 安装空间。
+
+    搜索参数：
+    - _PZT_RETREAT_SEARCH_STEP = 0.10 mm/步
+    - _PZT_RETREAT_MAX_STEPS = 100 步（= 最多回退 10mm）
     """
     px, py = point
     cx, cy, radius = pzt
-    keepout = radius + PZT_CAVITY_CLEARANCE  # PZT 禁区半径
+    keepout = radius + PZT_CAVITY_CLEARANCE  # PZT 禁区半径 = 腔体半径 + 间隙
     distance = math.hypot(px - cx, py - cy)
     if distance >= keepout + PZT_DOCK_RETREAT_BAND:
         return point  # 远离禁区，无需回退
 
     hx, hy = hub
     dx, dy = hx - px, hy - py  # 指向大陆区中心的方向向量
-    step_len = math.hypot(dx, dy) or 1.0  # 零长向量用 1.0 防除零
+    step_len = math.hypot(dx, dy) or 1.0  # 零长向量用 1.0 防除零（纯算法保护，非几何参数）
     ux, uy = dx / step_len, dy / step_len  # 单位方向向量
 
-    # 初始大步回退
+    # 初始大步回退（PZT_DOCK_RETREAT_STEP mm）
     initial_retreat = PZT_DOCK_RETREAT_STEP if distance >= keepout else 0.0
     px += ux * initial_retreat
     py += uy * initial_retreat
 
-    # 细粒度搜索（步长 0.10mm，最多 100 步 = 10mm）
-    for i in range(1, 100):
-        candidate = (px + ux * i * 0.10, py + uy * i * 0.10)
+    # 细粒度逐步回退搜索
+    _PZT_RETREAT_SEARCH_STEP = 0.10   # 每步前进 0.10mm（搜索精度/速度权衡，非几何参数）
+    _PZT_RETREAT_MAX_STEPS = 100      # 最多 100 步 = 10mm（算法边界保护，非几何参数）
+    for i in range(1, _PZT_RETREAT_MAX_STEPS):
+        candidate = (px + ux * i * _PZT_RETREAT_SEARCH_STEP,
+                     py + uy * i * _PZT_RETREAT_SEARCH_STEP)
         if math.hypot(candidate[0] - cx, candidate[1] - cy) >= keepout:
             return candidate
-    return point  # 兜底：100 步仍未脱离禁区，返回原始点
+    return point  # 兜底：达到最大步数仍未脱离禁区，返回原始点
 
 
 def _embedded_substrate_points() -> list[tuple[float, float]]:
@@ -383,6 +405,7 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
     )
 
     points: list[tuple[float, float]] = []
+    _POINT_MERGE_THRESHOLD = 0.05  # 去重距离阈值（mm，纯算法参数，非几何参数）
     for point_a, point_b in zip(base_points, base_points[1:] + base_points[:1]):
         ax, ay = point_a
         bx, by = point_b
@@ -397,13 +420,13 @@ def _embedded_substrate_points() -> list[tuple[float, float]]:
             # PZT 码头回退
             for pzt in pzt_keepouts:
                 point = _retreat_from_pzt(point, pzt, hub)
-            # 距上一点 > 0.05mm 才加入（去重）
+            # 距上一点 > _POINT_MERGE_THRESHOLD mm 才加入（去重）
             if (
                 not points
                 or math.hypot(
                     point[0] - points[-1][0], point[1] - points[-1][1]
                 )
-                > 0.05
+                > _POINT_MERGE_THRESHOLD
             ):
                 points.append(point)
 
@@ -419,22 +442,30 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ICM-948:          本体 18.5×13.0mm → 开孔 18.9×13.4mm
 MODULE_CUTOUT_CLEARANCE = 0.20
 
+# IMU 模块相对大陆区中心的 Y 轴偏移量（mm，负=拍头方向）。
+# IMU 放在大陆区上半部靠近拍头侧。
+_IMU_Y_OFFSET_FROM_MAINLAND_CENTER = -15.5
+
+# MCU 模块相对大陆区中心的 Y 轴偏移量（mm，正=拍柄方向）。
+# MCU 放在大陆区下半部靠近拍柄侧。
+_MCU_Y_OFFSET_FROM_MAINLAND_CENTER = 11.5
+
 # ESP32-C6-WROOM-1 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# 居中 X=0（大陆区中线），Y=2.5 偏拍柄侧，位于 IMU 下方
+# X 居中于大陆区中线（= PCB X 轴原点），Y 相对大陆区中心偏移
 ESP32_CUTOUT = (
-    0.0,                                             # X 居中
-    2.5,                                             # Y 偏拍柄方向
-    25.5 + MODULE_CUTOUT_CLEARANCE * 2,              # 宽 = 模块宽 + 双边间隙
-    18.0 + MODULE_CUTOUT_CLEARANCE * 2,              # 高 = 模块高 + 双边间隙
+    0.0,                                                            # X 居中
+    _KICAD_MAINLAND_CENTER_Y + _MCU_Y_OFFSET_FROM_MAINLAND_CENTER,  # Y = 大陆中心 + MCU 偏移
+    25.5 + MODULE_CUTOUT_CLEARANCE * 2,                             # 宽 = 模块宽 + 双边间隙
+    18.0 + MODULE_CUTOUT_CLEARANCE * 2,                             # 高 = 模块高 + 双边间隙
 )
 
 # ICM-948 IMU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# 居中 X=0，Y=-24.5 偏拍头侧，位于 MCU 上方
+# X 居中于大陆区中线，Y 相对大陆区中心偏移（负=拍头方向）
 IMU_CUTOUT = (
-    0.0,                                             # X 居中
-    -24.5,                                           # Y 偏拍头方向
-    18.5 + MODULE_CUTOUT_CLEARANCE * 2,              # 宽 = 模块宽 + 双边间隙
-    13.0 + MODULE_CUTOUT_CLEARANCE * 2,              # 高 = 模块高 + 双边间隙
+    0.0,                                                             # X 居中
+    _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_FROM_MAINLAND_CENTER,   # Y = 大陆中心 + IMU 偏移
+    18.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
+    13.0 + MODULE_CUTOUT_CLEARANCE * 2,                              # 高 = 模块高 + 双边间隙
 )
 
 # 参考线用全部 M2 螺丝孔（含板外的拍面螺丝，用于 Dwgs.User 可视对照）
@@ -444,8 +475,23 @@ M2_CLEARANCE_HOLES = [
     for x, y in SCREW_HOLES_SCAD
 ]
 
-# 实际 PCB Edge.Cuts 上的螺丝让位孔 — 仅保留穿过大陆区的那一颗
-# SCAD 坐标 (0, -33) 为 PCB 正下方（拍柄侧）螺丝，需在 PCB 上开孔让位
-PCB_CLEARANCE_HOLES = [
-    (*slot_scad_to_kicad((0.0, -33.0)), SCREW_CLEARANCE_RADIUS),
-]
+# 实际 PCB Edge.Cuts 上的螺丝让位孔 — 从 SCAD 螺丝列表中筛选穿过板体的螺丝。
+# 筛选规则：SCAD X=0 且 Y 在大陆区下方（拍柄侧）的螺丝。
+# 当前匹配到 SCAD 坐标 (0, -33) 的拍柄侧螺丝。
+def _pcb_clearance_holes() -> list[tuple[float, float, float]]:
+    """从 SCAD 螺丝列表中筛选穿过 PCB 板体的螺丝让位孔。"""
+    holes: list[tuple[float, float, float]] = []
+    for sx, sy in SCREW_HOLES_SCAD:
+        if sx != 0.0:  # 只取中轴线 (X=0) 上的螺丝
+            continue
+        ki_x, ki_y = slot_scad_to_kicad((sx, sy))
+        # 螺丝必须在大陆区下方（拍柄侧，KiCad Y > 大陆中心Y + 大陆半高 + 柱半径）
+        if ki_y <= _KICAD_MAINLAND_CENTER_Y + MAINLAND_RECT[3] / 2 + SCREW_CLEARANCE_RADIUS:
+            continue
+        # 螺丝不得超过手柄接合线以下太远（避免进入手柄深处）
+        if ki_y > SUBSTRATE_TAIL_MAX_Y:
+            continue
+        holes.append((ki_x, ki_y, SCREW_CLEARANCE_RADIUS))
+    return holes
+
+PCB_CLEARANCE_HOLES = _pcb_clearance_holes()
