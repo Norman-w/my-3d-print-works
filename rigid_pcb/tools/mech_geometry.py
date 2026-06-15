@@ -17,7 +17,7 @@ PZT_CAVITY_CLEARANCE = 0.32
 PZT_DOCK_RETREAT_BAND = 4.0
 PZT_DOCK_RETREAT_STEP = 3.0
 SUBSTRATE_EDGE_SAMPLE = 1.0
-MAINLAND_RECT = (0.0, -14.0, 42.0, 60.0)
+MAINLAND_RECT = (0.0, -9.0, 42.0, 50.0)
 
 PZT_CAVITIES_SCAD = [
     (38.0, 52.0, 20.5 / 2),
@@ -35,7 +35,7 @@ SCREW_HOLES_SCAD = [
     (-55.0, 0.0),
     (36.0, -65.0),
     (-36.0, -65.0),
-    (0.0, 34.0),
+    (0.0, 24.0),
     (0.0, -33.0),
 ]
 
@@ -240,7 +240,7 @@ ESP32_CUTOUT = (
 )
 IMU_CUTOUT = (
     0.0,
-    -34.5,
+    -24.5,
     18.5 + MODULE_CUTOUT_CLEARANCE * 2,
     13.0 + MODULE_CUTOUT_CLEARANCE * 2,
 )

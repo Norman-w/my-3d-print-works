@@ -774,6 +774,7 @@ module blade_front_part() {
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = true);
         rigid_pcb_cavity(front = true);
+        pcb_main_cavity(front = true);
     }
     difference() {
         union() {
@@ -803,6 +804,7 @@ module blade_back_part() {
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = false);
         rigid_pcb_cavity(front = false);
+        pcb_main_cavity(front = false);
     }
     difference() {
         union() {
@@ -848,6 +850,7 @@ module handle_front_part() {
             usb_c_left_clamp(front = true);
         }
         rigid_pcb_cavity(front = true);
+        pcb_main_cavity(front = true);
         screw_holes_clearance();
         plug_recesses();
         usb_c_cutout();
@@ -877,6 +880,7 @@ module handle_back_part() {
             usb_c_left_clamp(front = false);
         }
         rigid_pcb_cavity(front = false);
+        pcb_main_cavity(front = false);
         screw_holes_pilot();
         usb_c_cutout();
         button_cutout();
