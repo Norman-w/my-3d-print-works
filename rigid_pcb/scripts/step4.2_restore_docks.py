@@ -85,22 +85,22 @@ def _inject_keepout_from_mech(board_path: Path):
         for layer in ("F.Cu", "B.Cu"):
             max_zid += 1
             keepout_blocks.append(
-                f"  (zone\n"
-                f"    (zone_id {max_zid})\n"
-                f"    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))\n"
-                f'    (layers "{layer}")\n'
-                f"    (hatch edge 0.508)\n"
-                f"    (priority 100)\n"
-                f"    (connect_pads no)\n"
-                f"    (min_thickness 0.15)\n"
-                f"    (filled_areas_thickness no)\n"
-                f"    (fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))\n"
-                f"    (polygon\n"
-                f"      (pts\n"
-                f"        {pts}\n"
-                f"      )\n"
-                f"    )\n"
-                f"  )"
+                f"\t(zone\n"
+                f"\t\t(zone_id {max_zid})\n"
+                f"\t\t(keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))\n"
+                f'\t\t(layers "{layer}")\n'
+                f"\t\t(hatch edge 0.508)\n"
+                f"\t\t(priority 100)\n"
+                f"\t\t(connect_pads no)\n"
+                f"\t\t(min_thickness 0.15)\n"
+                f"\t\t(filled_areas_thickness no)\n"
+                f"\t\t(fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))\n"
+                f"\t\t(polygon\n"
+                f"\t\t\t(pts\n"
+                f"\t\t\t\t{pts}\n"
+                f"\t\t\t)\n"
+                f"\t\t)\n"
+                f"\t)"
             )
 
     insert_at = content.rfind(')\n')

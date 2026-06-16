@@ -344,7 +344,7 @@ def main():
     print(f'4d. 3D: 应用了 {scaled} 个模块模型缩放修正')
     print(f'4e. 金手指网络: 分配了 {tail_net_assigned} 个焊盘')
     print(f'    总共 {len(fp_by_addr)} 个带 atopile_address 的封装')
-    print(f'    ⚠ 无走线/过孔 — fanout 由 step4.5 独立处理')
+    print(f'    ⚠ 无走线/过孔 — 纯放置步骤')
 
 
 if __name__ == '__main__':

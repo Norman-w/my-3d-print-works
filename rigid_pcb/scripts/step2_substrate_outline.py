@@ -45,22 +45,22 @@ def _make_keepout_zone(zone_id, x, y, radius, layer):
     pts = [f"(xy {x + radius * math.cos(2 * math.pi * i / n_seg):.6f} "
            f"{y + radius * math.sin(2 * math.pi * i / n_seg):.6f})"
            for i in range(n_seg)]
-    return f"""  (zone
-    (zone_id {zone_id})
-    (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))
-    (layers "{layer}")
-    (hatch edge 0.508)
-    (priority 100)
-    (connect_pads no)
-    (min_thickness 0.15)
-    (filled_areas_thickness no)
-    (fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))
-    (polygon
-      (pts
-        {" ".join(pts)}
-      )
-    )
-  )"""
+    return f"""\t(zone
+\t\t(zone_id {zone_id})
+\t\t(keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))
+\t\t(layers "{layer}")
+\t\t(hatch edge 0.508)
+\t\t(priority 100)
+\t\t(connect_pads no)
+\t\t(min_thickness 0.15)
+\t\t(filled_areas_thickness no)
+\t\t(fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+\t\t(polygon
+\t\t\t(pts
+\t\t\t\t{" ".join(pts)}
+\t\t\t)
+\t\t)
+\t)"""
 
 
 def _inject_keepout_zones(board_path):
