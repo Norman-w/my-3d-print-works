@@ -22,7 +22,12 @@ KRT="$ROOT/rigid_pcb/tools/KiCadRoutingTools"   # KiCadRoutingTools 目录
 # ---- 自动检测工具路径 ----
 KIPY="${KIPY:-/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3}"
 ATO="${ATO:-$HOME/.local/share/uv/tools/atopile/bin/ato}"
-PY3="${PY3:-$(which python3)}"
+PY3="${PY3:-$HOME/.atopile-env/bin/python3}"
+
+# 如果 PY3 不存在，回退到 which python3
+if ! test -x "$PY3"; then
+    PY3="$(which python3)"
+fi
 
 # 颜色输出
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
@@ -132,6 +137,12 @@ run_step5_route_all() {
         return 1
     fi
 
+    # 确保 scipy 可用（KRT 依赖）
+    if ! "$PY3" -c "import scipy" 2>/dev/null; then
+        warn "scipy 未安装，正在自动安装..."
+        "$PY3" -m pip install scipy 2>&1 | tail -3
+    fi
+
     # 纯自动布线（keepout zone 已在 step4.2 注入，路由器自动避让螺丝孔）
     info "KiCadRoutingTools 自动布线 (A* + rip-up/reroute) ..."
     cd "$KRT"
@@ -148,6 +159,11 @@ run_step5_planes() {
     if ! test -f "$KRT/rust_router/grid_router.so"; then
         err "KiCadRoutingTools Rust 路由器未安装"
         return 1
+    fi
+    # 确保 scipy 可用
+    if ! "$PY3" -c "import scipy" 2>/dev/null; then
+        warn "scipy 未安装，正在自动安装..."
+        "$PY3" -m pip install scipy 2>&1 | tail -3
     fi
     info "铺 GND 电源层 (route_planes.py) ..."
     cd "$KRT"
