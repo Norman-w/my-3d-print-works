@@ -113,7 +113,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "0476e395-c4ff-4f01-a0f3-8f424642524b")
-		(at -5.46 33)
+		(at -5.46 54)
 		(property "Reference" "TP_VBAT_SW"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -236,7 +236,7 @@
 		(uuid "08f35031-be70-45a1-adec-f04f4642524b")
 		(at -34.925 36.068 130.79)
 		(property "Reference" "PZT_BL_SIG"
-			(at -0.908588 -0.78388 130.79)
+			(at -0.908531 -0.783946 130.79)
 			(layer "F.SilkS")
 			(uuid "56df4956-61eb-4698-8712-2fb120b46ffd")
 			(effects
@@ -356,7 +356,7 @@
 		(uuid "0a944911-d905-4aba-abe5-3ede4642524b")
 		(at 35.052 36.068 49.21)
 		(property "Reference" "PZT_BR_GND"
-			(at -0.908588 0.78388 49.21)
+			(at -0.908531 0.783946 49.21)
 			(layer "F.SilkS")
 			(uuid "65a90d2b-91b0-4201-832e-c6be4dc9f414")
 			(effects
@@ -476,7 +476,7 @@
 		(uuid "0ae065cc-e643-4f37-96c0-de394642524b")
 		(at 34.544 -51.943 -54.36)
 		(property "Reference" "PZT_TR_GND"
-			(at 0.975235 0.699225 305.64)
+			(at 0.975233 0.699229 305.64)
 			(layer "F.SilkS")
 			(uuid "759246ff-593f-4bb0-9ad6-3324577b8a97")
 			(effects
@@ -594,7 +594,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "0bd7d9d0-9bff-4aaf-8ff5-50264642524b")
-		(at -5.46 38)
+		(at -5.46 59)
 		(property "Reference" "TP_EN"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -934,7 +934,7 @@
 		(uuid "17a3cb40-768b-4a8e-8aa4-a4c64642524b")
 		(at -36.83 30.861 130.79)
 		(property "Reference" "PZT_BL_R_DIS_1M"
-			(at -0.908588 -0.78388 130.79)
+			(at -0.908531 -0.783946 130.79)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "7a059fa6-5200-4108-85c1-269535ce5bd3")
@@ -1585,7 +1585,7 @@
 		(uuid "1b8d9730-df79-433b-afe5-f4fb4642524b")
 		(at -32.2475 -49.9517 24.36)
 		(property "Reference" "PZT_TL_R_SER_4K7"
-			(at -0.494966 1.093165 24.36)
+			(at -0.494962 1.093166 24.36)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "d1219997-3da4-4469-80e8-c7c76bd4162e")
@@ -1802,7 +1802,7 @@
 		(uuid "1c7eb6fb-21bf-4909-9012-cd474642524b")
 		(at -33.4636 33.9207 130.79)
 		(property "Reference" "PZT_BL_R_SER_4K7"
-			(at -0.908588 -0.78388 130.79)
+			(at -0.908531 -0.783946 130.79)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "390579e9-f7d8-4daf-a090-6ecb26d29e1c")
@@ -2019,7 +2019,7 @@
 		(uuid "239afdd7-5555-43a8-bdf8-2f334642524b")
 		(at 38.989 32.766 49.21)
 		(property "Reference" "PZT_BR_SIG"
-			(at -0.908588 0.78388 49.21)
+			(at -0.908531 0.783946 49.21)
 			(layer "F.SilkS")
 			(uuid "986718e9-2763-4451-b918-1c9ae4a945fe")
 			(effects
@@ -2264,7 +2264,7 @@
 		(uuid "31be7660-0e07-4a68-9fec-9cc54642524b")
 		(at 28.9457 -48.4783 -174.36)
 		(property "Reference" "PZT_TR_D_CLAMP"
-			(at 0.117929 -1.194191 185.64)
+			(at 0.117933 -1.194191 185.64)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "ddad166e-cb99-4493-b89a-f72743344bb2")
@@ -2603,7 +2603,7 @@
 		(uuid "411ebdc7-21ca-4afe-9de5-10374642524b")
 		(at -39.116 32.512 130.79)
 		(property "Reference" "PZT_BL_GND"
-			(at -0.908588 -0.78388 130.79)
+			(at -0.908531 -0.783946 130.79)
 			(layer "F.SilkS")
 			(uuid "aa91678a-1286-437f-9f95-63e12ac513e2")
 			(effects
@@ -3135,7 +3135,7 @@
 		(uuid "4678e0a7-4692-4c01-b1f3-06ee4642524b")
 		(at -32.2818 30.0993 -4.21)
 		(property "Reference" "PZT_BL_D_CLAMP"
-			(at 0.08818 1.196756 355.79)
+			(at 0.088095 1.196762 355.79)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "3f918851-9b59-44bc-ab86-321014b36927")
@@ -4873,7 +4873,7 @@
 		(uuid "73eedeea-5561-42c6-ac0b-faa54642524b")
 		(at 28.829 -52.197 -54.36)
 		(property "Reference" "PZT_TR_R_SER_4K7"
-			(at 0.975235 0.699225 305.64)
+			(at 0.975233 0.699229 305.64)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "71a8b316-d3a4-4f3e-a456-c5c91d0854d8")
@@ -5090,7 +5090,7 @@
 		(uuid "75cf7a24-5081-4989-b585-e75f4642524b")
 		(at 33.0804 30.7541 -25.79)
 		(property "Reference" "PZT_BR_D_CLAMP"
-			(at 0.52201 1.080512 334.21)
+			(at 0.522089 1.080474 334.21)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "e332d892-22e0-46ca-b927-1bae5345d019")
@@ -5429,7 +5429,7 @@
 		(uuid "79452000-f344-475c-990f-4f904642524b")
 		(at -29.972 -55.245 -125.64)
 		(property "Reference" "PZT_TL_GND"
-			(at 0.975235 -0.699225 234.36)
+			(at 0.975233 -0.699229 234.36)
 			(layer "F.SilkS")
 			(uuid "a3f0d8b0-fcd8-400d-8f9c-4be245c30f54")
 			(effects
@@ -5549,7 +5549,7 @@
 		(uuid "8dfe1891-9f07-4540-b63e-3d154642524b")
 		(at 32.6193 -49.8617 -54.36)
 		(property "Reference" "PZT_TR_R_DIS_1M"
-			(at 0.975235 0.699225 305.64)
+			(at 0.975233 0.699229 305.64)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "7af59c5b-fb44-4a2c-8a8e-49d6589180f9")
@@ -6715,7 +6715,7 @@
 		(uuid "a4b81a1f-8b00-483a-ac15-49dc4642524b")
 		(at 33.4636 33.9207 -130.79)
 		(property "Reference" "PZT_BR_R_DIS_1M"
-			(at 0.908588 -0.78388 229.21)
+			(at 0.908531 -0.783946 229.21)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "33d0dfcb-6ef1-493b-aa35-b2da68ec15ec")
@@ -6930,7 +6930,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "a4e9275c-6368-4c62-a08d-5ef84642524b")
-		(at -5.46 23)
+		(at -5.46 44)
 		(property "Reference" "TP_GND"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -7053,7 +7053,7 @@
 		(uuid "b6b4c606-1707-4b45-85f1-ce144642524b")
 		(at -28.6514 -48.1908 -110.64)
 		(property "Reference" "PZT_TL_D_CLAMP"
-			(at 1.122978 -0.42299 249.36)
+			(at 1.122976 -0.422994 249.36)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "d905dac3-1353-4523-9647-1e8c2979621c")
@@ -8071,7 +8071,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "cb3095b5-01f2-4cad-b105-ffa54642524b")
-		(at -5.46 28)
+		(at -5.46 49)
 		(property "Reference" "TP_3V3"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -8194,7 +8194,7 @@
 		(uuid "cc791e31-a0b1-4ffe-bbe4-67794642524b")
 		(at 29.972 -55.245 -54.36)
 		(property "Reference" "PZT_TR_SIG"
-			(at 0.975235 0.699225 305.64)
+			(at 0.975233 0.699229 305.64)
 			(layer "F.SilkS")
 			(uuid "f856c7cd-7f7b-41cb-92c4-02851c5a895e")
 			(effects
@@ -8314,7 +8314,7 @@
 		(uuid "cd33f69c-497c-41a4-a4c2-da554642524b")
 		(at -29.083 -52.324 39.36)
 		(property "Reference" "PZT_TL_R_DIS_1M"
-			(at -0.761032 0.927809 39.36)
+			(at -0.761029 0.927812 39.36)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "68a47420-8cf9-4b21-a67a-a9465419ba19")
@@ -8531,7 +8531,7 @@
 		(uuid "ce5bad75-dfbe-42d7-b1f1-e8fa4642524b")
 		(at -34.417 -52.07 -125.64)
 		(property "Reference" "PZT_TL_SIG"
-			(at 0.975235 -0.699225 234.36)
+			(at 0.975233 -0.699229 234.36)
 			(layer "F.SilkS")
 			(uuid "43edc55c-61b4-4b61-97e8-5deff6cabd9b")
 			(effects
@@ -8990,7 +8990,7 @@
 		(uuid "da2abc81-a9a6-4a47-bbbb-03014642524b")
 		(at 36.8403 29.9411 139.21)
 		(property "Reference" "PZT_BR_R_SER_4K7"
-			(at -0.78388 -0.908588 139.21)
+			(at -0.783946 -0.908531 139.21)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "146f5e15-073b-4d62-a3cb-3ef77efbabb0")
@@ -9205,7 +9205,7 @@
 	(footprint "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 		(layer "F.Cu")
 		(uuid "dc9b098b-181c-40e4-bcd1-ec7e4642524b")
-		(at -5.46 43)
+		(at -5.46 64)
 		(property "Reference" "TP_BOOT"
 			(at 0 0 0)
 			(layer "F.SilkS")

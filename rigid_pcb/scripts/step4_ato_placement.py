@@ -303,17 +303,22 @@ def main():
     }
     moved += _place_map(fp_by_addr, sense_led_zone, False)
 
-    mainland_tail_edge = MAINLAND_RECT[1] + MAINLAND_RECT[3] / 2
-    test_x = MAINLAND_RECT[0] - MAINLAND_RECT[2] * 0.13
-    test_start_y = mainland_tail_edge + 7.0
+    handle_center_x = MAINLAND_RECT[0]
+    test_x = handle_center_x - MAINLAND_RECT[2] * 0.13
     test_pitch = 5.0
+    gold_finger_y = SUBSTRATE_TAIL_MAX_Y - 1.5
+    nearest_test_to_finger = 32.5
+    test_last_y = gold_finger_y - nearest_test_to_finger
+    bringup_addresses = (
+        'bringup.gnd_pad', 'bringup.vcc_pad', 'bringup.vbat_pad',
+        'bringup.en_pad', 'bringup.boot_pad',
+    )
+    test_start_y = test_last_y - (len(bringup_addresses) - 1) * test_pitch
     bringup = {
         address: (test_x, test_start_y + index * test_pitch, 0)
-        for index, address in enumerate((
-            'bringup.gnd_pad', 'bringup.vcc_pad', 'bringup.vbat_pad',
-            'bringup.en_pad', 'bringup.boot_pad'))
+        for index, address in enumerate(bringup_addresses)
     }
-    moved += _place_map(fp_by_addr, bringup, False)
+    moved += _place_map(fp_by_addr, bringup, True)
 
     pzt_mainland = {
         'pzt_tl.series_resistor': (-58.0, -78.0, 0),
