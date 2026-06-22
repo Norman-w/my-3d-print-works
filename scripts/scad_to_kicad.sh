@@ -23,6 +23,7 @@ KRT="$ROOT/rigid_pcb/tools/KiCadRoutingTools"   # KiCadRoutingTools 目录
 KIPY="${KIPY:-/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3}"
 ATO="${ATO:-$HOME/.local/share/uv/tools/atopile/bin/ato}"
 PY3="${PY3:-$HOME/.atopile-env/bin/python3}"
+KICAD_CLI="${KICAD_CLI:-/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli}"
 
 # 如果 PY3 不存在，回退到 which python3
 if ! test -x "$PY3"; then
@@ -113,10 +114,22 @@ run_step4_2() {
     info "Step 4.2 完成 ✓"
 }
 
+run_step4_1a() {
+    title "Step 4.1a — 备份 PZT 码头至大陆走线"
+    "$KIPY" "$SCRIPTS/step4.1a_backup_dock_routes.py" "$@"
+    info "Step 4.1a 完成 ✓"
+}
+
+run_step4_2a() {
+    title "Step 4.2a — 恢复 PZT 码头至大陆走线"
+    "$KIPY" "$SCRIPTS/step4.2a_restore_dock_routes.py" "$@"
+    info "Step 4.2a 完成 ✓"
+}
+
 run_step5() {
     title "Step 5 — KiCadRoutingTools 自动布线"
     echo ""
-    echo "  [1] 布线全部网络 (route.py --overwrite)"
+    echo "  [1] 布线全部网络 (局部 fanout + 联合 A*)"
     echo "  [2] 仅铺 GND 电源层 (route_planes.py)"
     echo "  [3] 全部布线 + GND 电源层"
     echo ""
@@ -143,16 +156,75 @@ run_step5_route_all() {
         "$PY3" -m pip install scipy 2>&1 | tail -3
     fi
 
-    # 纯自动布线（keepout zone 已在 step4.2 注入，路由器自动避让螺丝孔）
-    info "KiCadRoutingTools 自动布线 (A* + rip-up/reroute) ..."
+    local work="$OUTPUT/step5_routing_work.kicad_pcb"
+    local backup="$OUTPUT/step5_before_routing.kicad_pcb"
+    local route_log="$OUTPUT/step5_route.log"
+    local routed="$OUTPUT/step5_routing_result.kicad_pcb"
+    local check_log="$OUTPUT/step5_connectivity.log"
+    local kicad_drc_log="$OUTPUT/step5_kicad_drc.log"
+    local kicad_drc_report="$OUTPUT/step5_kicad_drc.rpt"
+
+    cp "$BOARD" "$backup"
+    cp "$BOARD" "$work"
+    "$KIPY" "$SCRIPTS/step5_controlled_escape.py" "$work"
+    "$KIPY" "$SCRIPTS/step5_routing_view.py" prepare "$work"
+    local global_nets
+    global_nets="$("$KIPY" "$SCRIPTS/step5_routing_view.py" list-global-nets "$work")"
+    info "全部网络联合自动布线 (A* + rip-up/reroute) ..."
     cd "$KRT"
-    "$PY3" route.py "$BOARD" \
-        --overwrite \
+    if ! "$PY3" route.py "$work" "$routed" \
+        --nets $global_nets \
+        --layers F.Cu B.Cu \
+        --track-width 0.20 --grid-step 0.05 --clearance 0.20 \
+        --power-nets gnd vcc vbus vbat_in vbat_sw \
+        --power-nets-widths 0.35 0.35 0.60 0.60 0.60 \
         --layer-costs 1.0 1.0 \
-        --max-ripup 10 \
-        --max-iterations 10000000 \
-        2>&1 | tail -20
-    info "布线完成，文件已写回 $BOARD"
+        --max-ripup 20 \
+        --max-iterations 2000000 \
+        --routing-clearance-margin 1.10 \
+        --board-edge-clearance 0.50 \
+        --keepout --keepout-layer User.2 \
+        --length-match-group usb_dp usb_dn --length-match-tolerance 0.50 \
+        >"$route_log" 2>&1; then
+        err "联合自动布线失败，详见 $route_log"
+        return 1
+    fi
+    cp "$routed" "$work"
+    "$KIPY" "$SCRIPTS/step5_routing_view.py" restore-pads "$work"
+    "$KIPY" "$SCRIPTS/step2_substrate_outline.py" --board "$work"
+    "$KIPY" "$SCRIPTS/step3_module_cutouts.py" --board "$work"
+
+    "$KIPY" "$SCRIPTS/step5_sanitize_uuids.py" "$work"
+
+    # KRT may exit zero with unrouted nets. Connectivity is the first gate.
+    if ! "$PY3" check_connected.py "$work" >"$check_log" 2>&1; then
+        err "布线结果仍有未连接网络，未覆盖正式 PCB"
+        tail -40 "$check_log"
+        warn "工作副本保留在 $work"
+        warn "正式板备份保留在 $backup"
+        return 1
+    fi
+
+    # KRT's geometric checker does not use KiCad's zone/connectivity engine.
+    # Reject shorts, clearance failures, and official unconnected items before
+    # the generated board is allowed to replace the formal layout.
+    if test -x "$KICAD_CLI"; then
+        "$KICAD_CLI" pcb drc "$work" -o "$kicad_drc_report" >"$kicad_drc_log" 2>&1 || true
+        if grep -qE '^\[(shorting_items|clearance|unconnected_items)\]:' "$kicad_drc_report"; then
+            err "KiCad 官方 DRC 发现短路、间距或未连接项目，未覆盖正式 PCB"
+            grep -E '^\[(shorting_items|clearance|unconnected_items)\]:' "$kicad_drc_report" | sort | uniq -c
+            warn "完整报告: $kicad_drc_report"
+            warn "工作副本保留在 $work"
+            return 1
+        fi
+    else
+        warn "未找到 kicad-cli，无法执行官方 DRC 验收"
+        return 1
+    fi
+
+    cp "$work" "$BOARD"
+    info "KRT 连通性与 KiCad 官方 DRC 双重检查通过，已写回 $BOARD"
+    info "布线前备份: $backup"
 }
 
 run_step5_planes() {
@@ -167,7 +239,7 @@ run_step5_planes() {
     fi
     info "铺 GND 电源层 (route_planes.py) ..."
     cd "$KRT"
-    "$PY3" route_planes.py "$BOARD" --overwrite --nets GND --plane-layers B.Cu 2>&1 | tail -10
+    "$PY3" route_planes.py "$BOARD" --overwrite --nets gnd --plane-layers B.Cu
     info "GND 层铺设完成 ✓"
 }
 
@@ -180,6 +252,7 @@ run_all() {
     run_step3_2
     run_step4
     run_step4_2
+    run_step4_2a
     echo ""
     read -rp "  是否继续 KiCadRoutingTools 自动布线? [y/N]: " do_fr
     if [[ "$do_fr" =~ ^[Yy]$ ]]; then
@@ -203,7 +276,10 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.1]${NC} ato build                        ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.2]${NC} step3.2 — 导入网络表                ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4]${NC}  step4 — ato 组件放置               ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.1]${NC} 备份码头位置                      ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.1a]${NC} 备份码头至大陆走线              ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.2a]${NC} 恢复码头至大陆走线              ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — KiCadRoutingTools 自动布线    ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[q]${NC}  退出                              ${BLUE}║${NC}"
         echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
@@ -219,7 +295,9 @@ menu() {
             3.2)  run_step3_2 ;;
             4)    run_step4 ;;
             4.1)  run_step4_1 ;;
+            4.1a) run_step4_1a ;;
             4.2)  run_step4_2 ;;
+            4.2a) run_step4_2a ;;
             5)    run_step5 ;;
             q|Q)  info "退出"; exit 0 ;;
             *)    warn "无效选择: $choice" ;;

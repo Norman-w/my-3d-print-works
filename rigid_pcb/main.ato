@@ -58,6 +58,7 @@ component SGFK_ESP32C6N8_Cutout:
 component IM948_Cutout:
     designator_prefix = "U"
     pin GND_1
+    pin GND_8
     pin VBUS
     pin VBAT_3
     pin VDDIO
@@ -76,6 +77,7 @@ component IM948_Cutout:
     VBAT_3 ~ pin 3
     VDDIO ~ pin 4
     ADIN ~ pin 7
+    GND_8 ~ pin 8
     LED_B ~ pin 9
     LED_R ~ pin 10
     GPIO ~ pin 11
@@ -125,12 +127,7 @@ module PZTDock:
 
 
 module TailHarness5P2S:
-    """5P×2 双面 1.27mm 间距金手指尾插。
-
-    正面 (F.Cu) 从左→右: VBAT, LED_PLUS, BUTTON, USB_DP, UART_TX
-    背面 (B.Cu) 从左→右: GND,  LED_DIN,  USB_VBUS, USB_DN, UART_RX
-    跨距 5.08mm (4×1.27), 金手指区 8mm，PCB 尾巴全宽 7.62mm。
-    """
+    """Ten independent, double-sided 1.27 mm edge fingers at the handle tip."""
     pin VBAT
     pin GND
     pin LED_PLUS
@@ -142,11 +139,11 @@ module TailHarness5P2S:
     pin UART_TX
     pin UART_RX
 
-    pos1 = new EdgeFingerPad;  pos1.front ~ VBAT;      pos1.back ~ GND
-    pos2 = new EdgeFingerPad;  pos2.front ~ LED_PLUS;   pos2.back ~ LED_DIN
-    pos3 = new EdgeFingerPad;  pos3.front ~ BUTTON;     pos3.back ~ USB_VBUS
-    pos4 = new EdgeFingerPad;  pos4.front ~ USB_DP;     pos4.back ~ USB_DN
-    pos5 = new EdgeFingerPad;  pos5.front ~ UART_TX;    pos5.back ~ UART_RX
+    power_finger = new EdgeFingerPad;  power_finger.front ~ VBAT; power_finger.back ~ GND
+    led_finger = new EdgeFingerPad;    led_finger.front ~ LED_PLUS; led_finger.back ~ LED_DIN
+    control_finger = new EdgeFingerPad; control_finger.front ~ BUTTON; control_finger.back ~ USB_VBUS
+    usb_finger = new EdgeFingerPad;    usb_finger.front ~ USB_DP; usb_finger.back ~ USB_DN
+    uart_finger = new EdgeFingerPad;   uart_finger.front ~ UART_TX; uart_finger.back ~ UART_RX
 
 
 
@@ -333,6 +330,7 @@ module SmartPaddleRigid:
     imu.VBAT_15 ~ vbat_sw
     imu.VBUS ~ vbus
     imu.GND_1 ~ gnd
+    imu.GND_8 ~ gnd
     imu.GND_16 ~ gnd
     # IM948 VDDIO is kept as its own IO-reference net per the module notes:
     # VBAT > 3.1V makes the module's internal LDO drive it around 3.0V.

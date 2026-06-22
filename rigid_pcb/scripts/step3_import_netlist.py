@@ -25,6 +25,26 @@ ADDR_REMAP: dict[str, str] = {
     "bat_r_bottom": "battery.r_bottom",
     "bat_c_filter": "battery.c_filter",
 }
+
+# Symbols use readable pin names while the physical module footprints use
+# numeric castellated-pad numbers. Keep this mapping explicit and reviewable.
+MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
+    "imu": {
+        "1": "GND_1", "2": "VBUS", "3": "VBAT_3", "4": "VDDIO",
+        "7": "ADIN", "8": "GND_8", "9": "LED_B", "10": "LED_R",
+        "11": "GPIO", "12": "KEY", "13": "RXD", "14": "TXD",
+        "15": "VBAT_15", "16": "GND_16",
+    },
+    "mcu": {
+        "1": "GND_1", "2": "VCC_3V3", "3": "EN",
+        "4": "GPIO2_PZT_TL", "5": "GPIO3_PZT_TR",
+        "6": "GPIO6_PZT_BL", "7": "GPIO7_PZT_BR",
+        "8": "GPIO8_LED_DATA", "9": "GPIO9_BOOT",
+        "10": "GPIO10_USER_BTN", "11": "PWR_LATCH",
+        "13": "USB_DP", "16": "USB_DN", "24": "UART_TX",
+        "25": "UART_RX", "28": "GND_28",
+    },
+}
 # ===== 常量/配置 =====
 
 
@@ -81,16 +101,12 @@ def _parse_netlist(path: Path) -> dict[str, dict[str, str]]:
 
 
 # ===== 常量/配置 =====
-# 金手指焊盘网络映射（5P×2 双面，1.27mm 间距）
-# ato 将 EdgeFingerPad 展开为独立 terminal，地址如 tail.bat_plus_pad，
-# 无法与板上 footprint 地址 tail.pos1 匹配。
-# 因此在此做显式 fallback 分配。
 TAIL_NET_ASSIGNMENTS = {
-    "tail.pos1": {"F": "vbat_in",  "B": "gnd"},
-    "tail.pos2": {"F": "vbat_sw",  "B": "led_din"},
-    "tail.pos3": {"F": "btn_sw",   "B": "vbus"},
-    "tail.pos4": {"F": "usb_dp",   "B": "usb_dn"},
-    "tail.pos5": {"F": "uart_tx",  "B": "uart_rx"},
+    "tail.power_finger": {"F": "vbat_in", "B": "gnd"},
+    "tail.led_finger": {"F": "vbat_sw", "B": "led_din"},
+    "tail.control_finger": {"F": "btn_sw", "B": "vbus"},
+    "tail.usb_finger": {"F": "usb_dp", "B": "usb_dn"},
+    "tail.uart_finger": {"F": "uart_tx", "B": "uart_rx"},
 }
 
 
@@ -152,9 +168,12 @@ def import_netlist(netlist_path: Path, board_path: Path):
             continue
 
         matched += 1
-        for pad in fp.Pads():
+        pads = list(fp.Pads())
+        sole_net = next(iter(pin_nets.values())) if len(pads) == 1 and len(pin_nets) == 1 else None
+        for pad in pads:
             pad_num = pad.GetNumber()
             pad_pname = getattr(pad, "GetPinName", lambda: "")() or ""
+            semantic_pin = MODULE_PIN_NAMES.get(addr, {}).get(pad_num, "")
 
             # 匹配 pin
             net_name = None
@@ -162,14 +181,13 @@ def import_netlist(netlist_path: Path, board_path: Path):
                 net_name = pin_nets[pad_num]
             elif pad_pname in pin_nets:
                 net_name = pin_nets[pad_pname]
-            else:
-                for pn, net in pin_nets.items():
-                    if pn == pad_num or pn == pad_pname:
-                        net_name = net
-                        break
-                    if pad_pname and (pad_num in pn or pn in pad_num or pad_pname in pn):
-                        net_name = net
-                        break
+            elif semantic_pin in pin_nets:
+                net_name = pin_nets[semantic_pin]
+            elif sole_net is not None:
+                net_name = sole_net
+            # Deliberately do not use substring matching here: pin "1" must
+            # never silently match pin "10". Footprint/netlist mismatches are
+            # reported via `missed` and fixed at their source.
 
             if net_name:
                 net = board.FindNet(net_name)

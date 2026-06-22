@@ -19,7 +19,13 @@ import yaml
 
 import pcbnew
 from rigid_pcb.tools.kicad_update_utils import load_board, save_board, xy
-from rigid_pcb.tools.mech_geometry import ESP32_CUTOUT, IMU_CUTOUT
+from rigid_pcb.tools.mech_geometry import (
+    ESP32_CUTOUT,
+    IMU_CUTOUT,
+    MAINLAND_RECT,
+    SUBSTRATE_TAIL_MAX_Y,
+    TAIL_HALF_WIDTH,
+)
 
 # ===== 分区：常量/配置 =====
 BOARD_FILE = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -50,11 +56,11 @@ READABLE_REFS = {
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
-    'tail.pos1':  ('TAIL01_VBAT_GND',     'VBAT F/GND B'),
-    'tail.pos2':  ('TAIL02_LED+_DIN',     'LED+ F/DIN B'),
-    'tail.pos3':  ('TAIL03_BTN_VBUS',     'BTN F/VBUS B'),
-    'tail.pos4':  ('TAIL04_DP_DN',        'D+ F/D- B'),
-    'tail.pos5':  ('TAIL05_TX_RX',        'TX F/RX B'),
+    'tail.power_finger': ('TAIL_PWR', 'F:VBAT B:GND'),
+    'tail.led_finger': ('TAIL_LED', 'F:LED+ B:DIN'),
+    'tail.control_finger': ('TAIL_CTL', 'F:BTN B:VBUS'),
+    'tail.usb_finger': ('TAIL_USB', 'F:D+ B:D-'),
+    'tail.uart_finger': ('TAIL_UART', 'F:TX B:RX'),
     'bringup.gnd_pad': ('TP_GND', 'GND test'),
     'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
     'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
@@ -73,13 +79,12 @@ PZT_PARTS = {
     'pzt_gnd_pad': ('GND', 'PZT GND wire'),
 }
 
-# 金手指网络显式映射（netlist 中 tail 地址与板上 footprint 命名不一致的补偿）
 TAIL_NET_MAP = {
-    'tail.pos1': {'F': 'vbat_in',  'B': 'gnd'},
-    'tail.pos2': {'F': 'vbat_sw',  'B': 'led_din'},
-    'tail.pos3': {'F': 'btn_sw',   'B': 'vbus'},
-    'tail.pos4': {'F': 'usb_dp',   'B': 'usb_dn'},
-    'tail.pos5': {'F': 'uart_tx',  'B': 'uart_rx'},
+    'tail.power_finger': {'F': 'vbat_in', 'B': 'gnd'},
+    'tail.led_finger': {'F': 'vbat_sw', 'B': 'led_din'},
+    'tail.control_finger': {'F': 'btn_sw', 'B': 'vbus'},
+    'tail.usb_finger': {'F': 'usb_dp', 'B': 'usb_dn'},
+    'tail.uart_finger': {'F': 'uart_tx', 'B': 'uart_rx'},
 }
 
 
@@ -298,12 +303,15 @@ def main():
     }
     moved += _place_map(fp_by_addr, sense_led_zone, False)
 
+    mainland_tail_edge = MAINLAND_RECT[1] + MAINLAND_RECT[3] / 2
+    test_x = MAINLAND_RECT[0] - MAINLAND_RECT[2] * 0.13
+    test_start_y = mainland_tail_edge + 7.0
+    test_pitch = 5.0
     bringup = {
-        'bringup.gnd_pad': (-5.5, 44.0, 0),
-        'bringup.vcc_pad': (-5.5, 49.0, 0),
-        'bringup.vbat_pad': (-5.5, 54.0, 0),
-        'bringup.en_pad': (-5.5, 59.0, 0),
-        'bringup.boot_pad': (-5.5, 64.0, 0),
+        address: (test_x, test_start_y + index * test_pitch, 0)
+        for index, address in enumerate((
+            'bringup.gnd_pad', 'bringup.vcc_pad', 'bringup.vbat_pad',
+            'bringup.en_pad', 'bringup.boot_pad'))
     }
     moved += _place_map(fp_by_addr, bringup, False)
 
@@ -323,12 +331,15 @@ def main():
     }
     moved += _place_map(fp_by_addr, pzt_mainland, False)
 
-    tail_order = ['tail.pos1', 'tail.pos2', 'tail.pos3', 'tail.pos4', 'tail.pos5']
-    pitch = 1.27
-    span = (len(tail_order) - 1) * pitch
-    start_x = -span / 2
-    for i, addr in enumerate(tail_order):
-        moved += _move_one(fp_by_addr, addr, round(start_x + i * pitch, 2), 96.0, 0, False)
+    tail_fingers = (
+        'tail.power_finger', 'tail.led_finger', 'tail.control_finger',
+        'tail.usb_finger', 'tail.uart_finger',
+    )
+    tail_pitch = 1.27
+    tail_y = SUBSTRATE_TAIL_MAX_Y - 1.5
+    first_x = -(len(tail_fingers) - 1) * tail_pitch / 2
+    for index, address in enumerate(tail_fingers):
+        moved += _move_one(fp_by_addr, address, first_x + index * tail_pitch, tail_y, 0, False)
 
     # 4e. 金手指网络
     tail_net_assigned = _assign_tail_nets(board)

@@ -1,15 +1,15 @@
 [
   {
     "addr": "pzt_bl.bleed_resistor",
-    "x": -37.5523,
-    "y": 30.3932,
+    "x": -36.83,
+    "y": 30.861,
     "rot": 130.79
   },
   {
     "addr": "pzt_bl.clamp_diode",
-    "x": -32.7644,
-    "y": 28.9769,
-    "rot": 130.79
+    "x": -32.2818,
+    "y": 30.0993,
+    "rot": -4.21
   },
   {
     "addr": "pzt_bl.pzt_gnd_pad",
@@ -33,13 +33,13 @@
     "addr": "pzt_br.bleed_resistor",
     "x": 33.4636,
     "y": 33.9207,
-    "rot": 49.21
+    "rot": -130.79
   },
   {
     "addr": "pzt_br.clamp_diode",
-    "x": 32.7644,
-    "y": 28.9769,
-    "rot": 49.21
+    "x": 33.0804,
+    "y": 30.7541,
+    "rot": -25.79
   },
   {
     "addr": "pzt_br.pzt_gnd_pad",
@@ -55,21 +55,21 @@
   },
   {
     "addr": "pzt_br.series_resistor",
-    "x": 37.5523,
-    "y": 30.3932,
-    "rot": 49.21
+    "x": 36.8403,
+    "y": 29.9411,
+    "rot": 139.21
   },
   {
     "addr": "pzt_tl.bleed_resistor",
-    "x": -28.2308,
-    "y": -53.0082,
-    "rot": -125.64
+    "x": -29.083,
+    "y": -52.324,
+    "rot": 39.36
   },
   {
     "addr": "pzt_tl.clamp_diode",
-    "x": -27.9778,
-    "y": -48.0216,
-    "rot": -125.64
+    "x": -28.6514,
+    "y": -48.1908,
+    "rot": -110.64
   },
   {
     "addr": "pzt_tl.pzt_gnd_pad",
@@ -85,9 +85,9 @@
   },
   {
     "addr": "pzt_tl.series_resistor",
-    "x": -32.6193,
-    "y": -49.8617,
-    "rot": -125.64
+    "x": -32.2475,
+    "y": -49.9517,
+    "rot": 24.36
   },
   {
     "addr": "pzt_tr.bleed_resistor",
@@ -97,9 +97,9 @@
   },
   {
     "addr": "pzt_tr.clamp_diode",
-    "x": 27.9778,
-    "y": -48.0216,
-    "rot": -54.36
+    "x": 28.9457,
+    "y": -48.4783,
+    "rot": -174.36
   },
   {
     "addr": "pzt_tr.pzt_gnd_pad",
@@ -115,8 +115,8 @@
   },
   {
     "addr": "pzt_tr.series_resistor",
-    "x": 28.2308,
-    "y": -53.0082,
+    "x": 28.829,
+    "y": -52.197,
     "rot": -54.36
   }
 ]
