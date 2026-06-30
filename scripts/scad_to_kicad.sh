@@ -126,6 +126,12 @@ run_step4_2a() {
     info "Step 4.2a 完成 ✓"
 }
 
+run_step4_3() {
+    title "Step 4.3 — PZT 换层补 via + B.Cu GND 铺铜"
+    "$KIPY" "$SCRIPTS/step4.3_pzt_bridge_electrical_finish.py" "$@"
+    info "Step 4.3 完成 ✓"
+}
+
 run_step5() {
     title "Step 5 — KiCadRoutingTools 自动布线"
     echo ""
@@ -182,7 +188,7 @@ run_step5_route_all() {
         --max-ripup 20 \
         --max-iterations 2000000 \
         --routing-clearance-margin 1.10 \
-        --board-edge-clearance 0.50 \
+        --board-edge-clearance 0.20 \
         --keepout --keepout-layer User.2 \
         --length-match-group usb_dp usb_dn --length-match-tolerance 0.50 \
         >"$route_log" 2>&1; then
@@ -253,6 +259,7 @@ run_all() {
     run_step4
     run_step4_2
     run_step4_2a
+    run_step4_3
     echo ""
     read -rp "  是否继续 KiCadRoutingTools 自动布线? [y/N]: " do_fr
     if [[ "$do_fr" =~ ^[Yy]$ ]]; then
@@ -280,6 +287,7 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.1a]${NC} 备份码头至大陆走线              ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2a]${NC} 恢复码头至大陆走线              ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.3]${NC} PZT 换层补 via + B.Cu GND 铺铜     ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[5]${NC}  step5 — KiCadRoutingTools 自动布线    ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[q]${NC}  退出                              ${BLUE}║${NC}"
         echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
@@ -298,6 +306,7 @@ menu() {
             4.1a) run_step4_1a ;;
             4.2)  run_step4_2 ;;
             4.2a) run_step4_2a ;;
+            4.3)  run_step4_3 ;;
             5)    run_step5 ;;
             q|Q)  info "退出"; exit 0 ;;
             *)    warn "无效选择: $choice" ;;
