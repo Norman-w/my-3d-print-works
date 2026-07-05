@@ -1,0 +1,16 @@
+(version 1)
+
+# Restore the normal milling tolerance everywhere else.  The project-level
+# minimum is kept at 0mm so the more specific embedded-module rule above can
+# legally allow edge overlap.
+(rule "Default board edge copper clearance"
+    (constraint edge_clearance (min 0.5mm))
+    (condition "true"))
+
+# The embedded IM948 module sits flush inside an internal routed cutout.  Its
+# castellated interface is intentionally milled through plated holes, so copper
+# and holes are allowed to intersect the local Edge.Cuts geometry.  KiCad
+# evaluates rules from bottom to top, so keep this rule after the default rule.
+(rule "Embedded IMU castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948')"))

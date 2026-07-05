@@ -8,7 +8,6 @@ dist/
 .env
 .DS_Store
 .codegraph/
-pcb/output/*
 enclosure/output/*
 enclosure/generated/profiles.scad
 enclosure/generated/bezier_geometry.scad
