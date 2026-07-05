@@ -18,10 +18,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board, mk, save_board, xy
-from rigid_pcb.tools.mech_geometry import PCB_SLOT_POINTS
+from pcb.tools.kicad_update_utils import load_board, mk, save_board, xy
+from pcb.tools.mech_geometry import PCB_SLOT_POINTS
 
-DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
+DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 
 ZONE_NAME = "B_GND_POUR"
 VIA_SIZE = 0.60
@@ -143,12 +143,16 @@ def _add_bcu_gnd_zone(pcbnew, board) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Step 4.3: PZT bridge electrical finish + B.Cu GND pour")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
+    parser.add_argument("--zone-only", action="store_true", help="只重建并填充 B.Cu GND zone，不改 PZT 信号补线")
     args = parser.parse_args()
 
     import pcbnew
 
     board = load_board(pcbnew, args.board)
-    added_tracks, added_vias = _finish_pzt_signal_entries(pcbnew, board)
+    added_tracks = 0
+    added_vias = 0
+    if not args.zone_only:
+        added_tracks, added_vias = _finish_pzt_signal_entries(pcbnew, board)
     removed_zones = _remove_generated_gnd_zone(board)
     _add_bcu_gnd_zone(pcbnew, board)
     save_board(board, args.board)
