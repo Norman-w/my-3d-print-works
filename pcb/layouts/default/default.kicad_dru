@@ -14,3 +14,16 @@
 (rule "Embedded IMU castellated edge interface"
     (constraint edge_clearance (min -1mm))
     (condition "A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948')"))
+
+# The ESP32 module is also soldered as an embedded edge/castellated interface.
+# Only this footprint is allowed to violate the normal board-edge clearance.
+(rule "Embedded MCU castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('MCU_SGFK_C6') || B.memberOfFootprint('MCU_SGFK_C6')"))
+
+# The PZT dock pads are intentional plated half-hole / edge solder pads.
+# Keep the exception on the explicit edge-pad footprints rather than disabling
+# edge clearance for the whole board.
+(rule "PZT castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('PZT_BL_SIG') || B.memberOfFootprint('PZT_BL_SIG') || A.memberOfFootprint('PZT_BL_GND') || B.memberOfFootprint('PZT_BL_GND') || A.memberOfFootprint('PZT_BR_SIG') || B.memberOfFootprint('PZT_BR_SIG') || A.memberOfFootprint('PZT_BR_GND') || B.memberOfFootprint('PZT_BR_GND') || A.memberOfFootprint('PZT_TL_SIG') || B.memberOfFootprint('PZT_TL_SIG') || A.memberOfFootprint('PZT_TL_GND') || B.memberOfFootprint('PZT_TL_GND') || A.memberOfFootprint('PZT_TR_SIG') || B.memberOfFootprint('PZT_TR_SIG') || A.memberOfFootprint('PZT_TR_GND') || B.memberOfFootprint('PZT_TR_GND')"))
