@@ -13,14 +13,13 @@ PCB substrate outline from Step 2 remains intact.
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from pcb.tools.kicad_update_utils import circle, load_board, rect, save_board
+from pcb.tools.kicad_update_utils import circle, load_board, rect, save_board, xy
 from pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
     IMU_CUTOUT,
@@ -32,6 +31,11 @@ from pcb.tools.mech_geometry import (
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 IMU_RULE_AREA_NAME = "IMU_EMBEDDED_CASTELLATED_EDGE"
 IMU_RULE_AREA_MARGIN = 1.0
+LEGACY_IMU_CUTOUTS = [
+    # Previous IMU opening only grazed the PTH annular rings.  Keep this here so
+    # one step3 rerun migrates existing boards to the true half-hole opening.
+    (IMU_CUTOUT[0], IMU_CUTOUT[1], IMU_CUTOUT[2], 13.0),
+]
 
 
 def _mm(value: int) -> float:
@@ -57,6 +61,8 @@ def _rect_edges(spec: tuple[float, float, float, float]):
 def remove_generated_cutouts(pcbnew, board) -> int:
     """Remove only the module cutouts and screw holes owned by this step."""
     expected_edges = _rect_edges(ESP32_CUTOUT) + _rect_edges(IMU_CUTOUT)
+    for legacy in LEGACY_IMU_CUTOUTS:
+        expected_edges += _rect_edges(legacy)
     removed = 0
 
     for drawing in list(board.GetDrawings()):
@@ -85,48 +91,63 @@ def remove_generated_cutouts(pcbnew, board) -> int:
     return removed
 
 
-def _zone_id_after(content: str) -> int:
-    ids = [int(match.group(1)) for match in re.finditer(r'\(zone_id (\d+)\)', content)]
-    return (max(ids) if ids else 0) + 1
+def _strip_named_zone_blocks(board_path: Path, zone_name: str) -> int:
+    """Remove generated top-level zone blocks by name before KiCad reloads them."""
+    lines = board_path.read_text(encoding="utf-8").splitlines(keepends=True)
+    out: list[str] = []
+    removed = 0
+
+    idx = 0
+    while idx < len(lines):
+        if lines[idx] != "\t(zone\n":
+            out.append(lines[idx])
+            idx += 1
+            continue
+
+        start = idx
+        idx += 1
+        while idx < len(lines) and lines[idx] != "\t)\n":
+            idx += 1
+        if idx < len(lines):
+            idx += 1
+
+        block = lines[start:idx]
+        if any(f'(name "{zone_name}")' in line for line in block):
+            removed += 1
+            continue
+        out.extend(block)
+
+    if removed:
+        board_path.write_text("".join(out), encoding="utf-8")
+    return removed
 
 
-def _inject_imu_rule_area(board_path: Path) -> None:
+def _add_imu_rule_area(pcbnew, board) -> None:
     """Keep the IMU custom-rule area aligned with the generated cutout."""
-    content = board_path.read_text()
-    content = re.sub(
-        rf'\n\t\(zone\n\t\t\(zone_id \d+\)\n\t\t\(name "{re.escape(IMU_RULE_AREA_NAME)}"\).*?\n\t\)',
-        '',
-        content,
-        flags=re.S,
-    )
-
     cx, cy, width, height = IMU_CUTOUT
     margin = IMU_RULE_AREA_MARGIN
     x1, x2 = cx - width / 2 - margin, cx + width / 2 + margin
     y1, y2 = cy - height / 2 - margin, cy + height / 2 + margin
-    zone_id = _zone_id_after(content)
-    block = f"""
-\t(zone
-\t\t(zone_id {zone_id})
-\t\t(name "{IMU_RULE_AREA_NAME}")
-\t\t(keepout)
-\t\t(layers "F.Cu" "B.Cu")
-\t\t(hatch edge 0.508)
-\t\t(priority 100)
-\t\t(connect_pads no)
-\t\t(min_thickness 0.15)
-\t\t(filled_areas_thickness no)
-\t\t(fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))
-\t\t(polygon
-\t\t\t(pts
-\t\t\t\t(xy {x1:.6f} {y1:.6f}) (xy {x2:.6f} {y1:.6f}) (xy {x2:.6f} {y2:.6f}) (xy {x1:.6f} {y2:.6f})
-\t\t\t)
-\t\t)
-\t)"""
-    insert_at = content.rfind(")\n")
-    if insert_at < 0:
-        raise RuntimeError(f"Unable to find PCB closing parenthesis in {board_path}")
-    board_path.write_text(content[:insert_at + 1] + block + "\n" + content[insert_at + 1:])
+
+    zone = pcbnew.ZONE(board)
+    zone.SetZoneName(IMU_RULE_AREA_NAME)
+    zone.SetIsRuleArea(True)
+    zone.SetAssignedPriority(100)
+    zone.SetDoNotAllowTracks(False)
+    zone.SetDoNotAllowVias(False)
+    zone.SetDoNotAllowPads(False)
+    zone.SetDoNotAllowCopperPour(False)
+    zone.SetDoNotAllowFootprints(False)
+    zone.SetRuleAreaPlacementEnabled(False)
+    layer_set = pcbnew.LSET()
+    layer_set.AddLayer(pcbnew.F_Cu)
+    layer_set.AddLayer(pcbnew.B_Cu)
+    zone.SetLayerSet(layer_set)
+    zone.AppendCorner(xy(pcbnew, x1, y1), -1)
+    zone.AppendCorner(xy(pcbnew, x2, y1), -1)
+    zone.AppendCorner(xy(pcbnew, x2, y2), -1)
+    zone.AppendCorner(xy(pcbnew, x1, y2), -1)
+    board.Add(zone)
 
 
 # ===== 分区：公开 API =====
@@ -137,6 +158,7 @@ def main() -> None:
 
     import pcbnew
 
+    removed_rule_areas = _strip_named_zone_blocks(args.board, IMU_RULE_AREA_NAME)
     board = load_board(pcbnew, args.board)
 
     removed = remove_generated_cutouts(pcbnew, board)
@@ -144,9 +166,9 @@ def main() -> None:
     rect(pcbnew, board, pcbnew.Edge_Cuts, *IMU_CUTOUT, 0.10)
     for hole_x, hole_y, hole_r in PCB_CLEARANCE_HOLES:
         circle(pcbnew, board, pcbnew.Edge_Cuts, hole_x, hole_y, hole_r, 0.10)
+    _add_imu_rule_area(pcbnew, board)
 
     save_board(board, args.board)
-    _inject_imu_rule_area(args.board)
 
     print(f"=== Step 3 完成 ===")
     print(f"模块开孔间隙 (单边): {MODULE_CUTOUT_CLEARANCE:.2f} mm")
@@ -156,6 +178,7 @@ def main() -> None:
           f"尺寸=({IMU_CUTOUT[2]:.2f}×{IMU_CUTOUT[3]:.2f}) mm")
     print(f"PCB螺丝让位孔: {len(PCB_CLEARANCE_HOLES)} 个")
     print(f"刷新旧开孔图元: {removed} 个")
+    print(f"刷新旧规则区域: {removed_rule_areas} 个")
     print(f"IMU规则区域: {IMU_RULE_AREA_NAME}")
     print(f"注意: 开孔已附加到 Edge.Cuts，基材轮廓保留不变")
 

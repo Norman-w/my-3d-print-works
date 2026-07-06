@@ -50,13 +50,13 @@ fpc/layouts/default/validate_erc.json
 fpc/layouts/default/output/
 fpc/*.lock
 
-# Rigid PCB generator byproducts
-rigid_pcb/build/
-rigid_pcb/layouts/default/*.lck
-rigid_pcb/layouts/default/drc.json
-rigid_pcb/layouts/default/default-backups/
-rigid_pcb/layouts/default/fp-info-cache
-rigid_pcb/preview/
+# PCB generator byproducts
+pcb/build/
+pcb/layouts/default/*.lck
+pcb/layouts/default/drc.json
+pcb/layouts/default/default-backups/
+pcb/layouts/default/fp-info-cache
+pcb/preview/
 
 # ESP-IDF build artifacts
 firmware/build/

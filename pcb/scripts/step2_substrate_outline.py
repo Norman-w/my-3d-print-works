@@ -38,6 +38,7 @@ from pcb.tools.mech_geometry import (
 )
 
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
+SCREW_KEEP_OUT_PREFIX = "SCREW_CLEARANCE_KEEP_OUT"
 
 
 def _make_keepout_zone(zone_id, x, y, radius, layer):
@@ -45,8 +46,10 @@ def _make_keepout_zone(zone_id, x, y, radius, layer):
     pts = [f"(xy {x + radius * math.cos(2 * math.pi * i / n_seg):.6f} "
            f"{y + radius * math.sin(2 * math.pi * i / n_seg):.6f})"
            for i in range(n_seg)]
+    name = f"{SCREW_KEEP_OUT_PREFIX}_{layer}_{x:.3f}_{y:.3f}"
     return f"""\t(zone
 \t\t(zone_id {zone_id})
+\t\t(name "{name}")
 \t\t(keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))
 \t\t(layers "{layer}")
 \t\t(hatch edge 0.508)
@@ -63,13 +66,22 @@ def _make_keepout_zone(zone_id, x, y, radius, layer):
 \t)"""
 
 
+def _remove_generated_keepouts(content: str) -> str:
+    return re.sub(
+        rf'\n\t\(zone\n\t\t\(zone_id \d+\)\n\t\t\(name "{re.escape(SCREW_KEEP_OUT_PREFIX)}[^"]+"\).*?\n\t\)',
+        '',
+        content,
+        flags=re.S,
+    )
+
+
 def _inject_keepout_zones(board_path):
     holes = PCB_CLEARANCE_HOLES
     if not holes:
         print("  (无螺丝孔穿过 PCB，跳过 keepout zone)")
         return 0
 
-    content = board_path.read_text()
+    content = _remove_generated_keepouts(board_path.read_text())
     max_zid = 0
     for m in re.finditer(r'\(zone_id (\d+)\)', content):
         max_zid = max(max_zid, int(m.group(1)))
@@ -81,10 +93,12 @@ def _inject_keepout_zones(board_path):
         max_zid += 1
         keepout_blocks.append(_make_keepout_zone(max_zid, hx, hy, hr, 'B.Cu'))
 
-    insert_at = content.rfind(')\n')
+    insert_at = content.rfind('\n\t(embedded_fonts')
     if insert_at < 0:
-        insert_at = len(content)
-    new_content = content[:insert_at + 1] + "\n" + "\n".join(keepout_blocks) + "\n" + content[insert_at + 1:]
+        insert_at = content.rfind(')\n')
+    if insert_at < 0:
+        raise RuntimeError(f"Unable to find PCB insertion point in {board_path}")
+    new_content = content[:insert_at] + "\n" + "\n".join(keepout_blocks) + "\n" + content[insert_at:]
     board_path.write_text(new_content)
     return len(keepout_blocks)
 

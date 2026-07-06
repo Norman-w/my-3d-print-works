@@ -13,11 +13,11 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SCRIPTS="$ROOT/rigid_pcb/scripts"
-OUTPUT="$ROOT/rigid_pcb/output"
-BOARD="$ROOT/rigid_pcb/layouts/default/default.kicad_pcb"
-ATO_PROJ="$ROOT/rigid_pcb"
-KRT="$ROOT/rigid_pcb/tools/KiCadRoutingTools"   # KiCadRoutingTools 目录
+SCRIPTS="$ROOT/pcb/scripts"
+OUTPUT="$ROOT/pcb/output"
+BOARD="$ROOT/pcb/layouts/default/default.kicad_pcb"
+ATO_PROJ="$ROOT/pcb"
+KRT="$ROOT/pcb/tools/KiCadRoutingTools"   # KiCadRoutingTools 目录
 
 # ---- 自动检测工具路径 ----
 KIPY="${KIPY:-/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3}"
@@ -36,6 +36,13 @@ info()  { echo -e "${GREEN}[+]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[!]${NC} $*"; }
 err()   { echo -e "${RED}[✗]${NC} $*"; }
 title() { echo -e "\n${BLUE}━━━ $* ━━━${NC}"; }
+require_script() {
+    local script="$SCRIPTS/$1"
+    if ! test -f "$script"; then
+        err "缺少脚本: $script"
+        return 1
+    fi
+}
 run_logged() {
     local log="$1"
     shift
@@ -126,6 +133,7 @@ run_step4_2() {
 
 run_step4_2b() {
     title "Step 4.2b — PZT 焊线焊盘安全内收"
+    require_script "step4.2b_pzt_wire_pad_safety.py" || return 1
     "$KIPY" "$SCRIPTS/step4.2b_pzt_wire_pad_safety.py" "$@"
     info "Step 4.2b 完成 ✓"
 }
@@ -151,21 +159,48 @@ run_step4_3() {
 run_step5() {
     title "Step 5 — KiCadRoutingTools 自动布线"
     echo ""
-    echo "  [1] 布线普通信号网络 (局部 fanout + 联合 A*)"
+    echo "  [1] 重填现有 copper zones"
     echo "  [2] 仅铺 GND 电源层 (route_planes.py)"
-    echo "  [3] 全部布线 + GND 电源层"
+    echo "  [3] 旧版逐网自动布线 (当前仓库缺少若干 step5 脚本，默认禁用)"
     echo ""
     read -rp "  选择 [1-3]（默认 1）: " rt_choice
 
     case "${rt_choice:-1}" in
-        1) run_step5_route_all ;;
+        1) run_step5_refill_zones ;;
         2) run_step5_planes ;;
-        3) run_step5_route_all && run_step5_planes ;;
+        3) run_step5_route_all ;;
         *) warn "无效选择" ;;
     esac
 }
 
+run_step5_refill_zones() {
+    title "Step 5.0 — 重填 copper zones"
+    "$KIPY" "$SCRIPTS/step5_refill_zones.py" "$BOARD"
+    info "Copper zones 已重填 ✓"
+}
+
 run_step5_route_all() {
+    local missing=()
+    for script in \
+        step5_clean_routing_input.py \
+        step4.2b_pzt_wire_pad_safety.py \
+        step5_controlled_escape.py \
+        step5_routing_view.py \
+        step5_geometry_gate.py \
+        step5_safe_post_route_closure.py \
+        step5_ground_stitch.py \
+        step5_sanitize_uuids.py
+    do
+        if ! test -f "$SCRIPTS/$script"; then
+            missing+=("$script")
+        fi
+    done
+    if ((${#missing[@]})); then
+        err "旧版逐网自动布线需要的脚本当前不在仓库中，已禁用以避免破坏 PCB。"
+        printf '  - %s\n' "${missing[@]}"
+        return 1
+    fi
+
     if ! test -f "$KRT/rust_router/grid_router.so"; then
         err "KiCadRoutingTools Rust 路由器未安装，请先执行:"
         err "  cd $KRT && python3 build_router.py"
@@ -555,7 +590,11 @@ run_all() {
     run_step3_2
     run_step4
     run_step4_2
-    run_step4_2b
+    if test -f "$SCRIPTS/step4.2b_pzt_wire_pad_safety.py"; then
+        run_step4_2b
+    else
+        warn "缺少 step4.2b_pzt_wire_pad_safety.py，跳过 PZT 焊线焊盘安全内收"
+    fi
     run_step4_2a --skip-pzt-raw --allow-module-entry-routes --allow-pad-conflicts
     run_step4_3
     echo ""

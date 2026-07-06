@@ -10,10 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board, save_board, xy
+from pcb.tools.kicad_update_utils import load_board, save_board, xy
 
-DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
-SNAPSHOT = ROOT / "rigid_pcb" / "layouts" / "default" / "dock_snapshot.json"
+DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
+SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "dock_snapshot.json"
 
 
 def _address(fp) -> str | None:

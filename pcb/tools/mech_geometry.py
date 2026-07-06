@@ -491,7 +491,7 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ICM-948:          X 向按本体宽度留装配间隙；Y 向边缘是 castellated 焊接接口，
 #                   开槽边应切过主板 PTH 焊盘边缘，不能再额外外扩。
 MODULE_CUTOUT_CLEARANCE = 0.20
-IMU_CASTELLATED_EDGE_SETBACK = 0.45
+IMU_CASTELLATED_EDGE_SETBACK = 0.0
 
 # IMU/MCU 在大陆区内的放置偏移 — 直接从 SCAD 参数解析（SCAD 坐标，相对 pcb_cavity_center）
 # SCAD Y+ = 拍头方向，SCAD Y- = 拍柄方向
@@ -519,7 +519,7 @@ IMU_CUTOUT = (
     _IMU_X_OFFSET_KICAD,                                             # X 从 SCAD imu_module_offset[0]
     _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_KICAD,                  # Y = 大陆中心 + SCAD 偏移（Y 取反）
     18.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
-    13.0,                                                            # 高 = 半孔焊盘中心距开槽边 0.45mm
+    13.9,                                                            # 高 = 开槽边穿过 PTH 焊盘中心线，形成真半孔
 )
 
 # 参考线用全部 M2 螺丝孔（含板外的拍面螺丝，用于 Dwgs.User 可视对照）

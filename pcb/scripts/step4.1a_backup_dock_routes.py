@@ -11,11 +11,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from rigid_pcb.tools.kicad_update_utils import load_board
-from rigid_pcb.tools.mech_geometry import MAINLAND_RECT, PZT_CAVITIES_SCAD, slot_scad_to_kicad
+from pcb.tools.kicad_update_utils import load_board
+from pcb.tools.mech_geometry import MAINLAND_RECT, PZT_CAVITIES_SCAD, slot_scad_to_kicad
 
-DEFAULT_BOARD = ROOT / "rigid_pcb" / "layouts" / "default" / "default.kicad_pcb"
-SNAPSHOT = ROOT / "rigid_pcb" / "layouts" / "default" / "dock_routes_snapshot.json"
+DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
+SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "dock_routes_snapshot.json"
 CORRIDOR_HALF_WIDTH = 4.0
 PZT_NET_PREFIX = "pzt_"
 
