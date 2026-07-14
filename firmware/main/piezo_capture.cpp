@@ -111,15 +111,20 @@ esp_err_t PiezoCapture::init() {
         return err;
     }
 
-    err = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
-        ESP_LOGE(TAG, "gpio_install_isr_service failed: %s", esp_err_to_name(err));
-        return err;
-    }
-
+    // reset_button 等可能已安装 ISR 服务；重复 install 会打 ERROR 日志
+    // （仍返回 ESP_ERR_INVALID_STATE）。先尝试挂 handler，仅在未安装时再装。
     for (uint32_t i = 0; i < kChannelCount; ++i) {
         err = gpio_isr_handler_add(
             PINS[i], piezo_gpio_isr, reinterpret_cast<void*>(static_cast<uintptr_t>(i)));
+        if (err == ESP_ERR_INVALID_STATE) {
+            err = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
+            if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
+                ESP_LOGE(TAG, "gpio_install_isr_service failed: %s", esp_err_to_name(err));
+                return err;
+            }
+            err = gpio_isr_handler_add(
+                PINS[i], piezo_gpio_isr, reinterpret_cast<void*>(static_cast<uintptr_t>(i)));
+        }
         if (err != ESP_OK) {
             ESP_LOGE(TAG, "gpio_isr_handler_add ch%" PRIu32 " failed: %s", i,
                      esp_err_to_name(err));
