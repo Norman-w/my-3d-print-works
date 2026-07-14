@@ -17,12 +17,12 @@ esp_err_t register_all_http_handlers(httpd_handle_t server) {
     ret = register_connection_api_handlers(server);
     if (ret != ESP_OK) return ret;
 
-    // 注册配网页面处理器 (通配符 "/*", 放在 API 之后)
-    ret = register_connection_page_handlers(server);
+    // /ws 必须在通配符 "/*" 之前注册，否则会被 captive portal 抢走
+    ret = register_ws_data_handler(server);
     if (ret != ESP_OK) return ret;
 
-    // 注册 WebSocket 数据推送端点 (/ws)
-    ret = register_ws_data_handler(server);
+    // 配网页通配符（业务 UI 在专用端，不烧进 ESP）
+    ret = register_connection_page_handlers(server);
     if (ret != ESP_OK) return ret;
 
     return ret;

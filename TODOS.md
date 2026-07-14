@@ -1,5 +1,23 @@
 # SmartPaddle TODOs
 
+## 已知限制 / 决策记录
+
+### 压电 4 通道 vs ESP32-C6 RMT（2026-07）
+
+**硬件已定：** 拍面四角 4× 压电 → GPIO2 / 3 / 6 / 7，必须同时采 4 路做 TDOA。
+
+**芯片限制：** ESP32-C6 RMT 共 4 通道，但仅 **2 个 RX 候选 + 2 个 TX 候选**（`SOC_RMT_RX_CANDIDATES_PER_GROUP=2`）。无法用 RMT 同时接收 4 路边沿；再叠加板载 WS2812 占用 1 路 RMT TX，冲突更明显。
+
+**当前方案（固件已落地）：** `piezo_capture` 改为 **GPIO 上升沿 ISR + `esp_cpu_get_cycle_count()` 锁存**，保留 4 路同时首边沿时间戳；LED 继续用 `led_strip` 新 RMT。相对原设计的纯硬件 RMT（~12.5ns、低抖动），现为 CPU cycle 相对时差（约 6–12ns 量化）+ ISR 进场抖动。
+
+**代码位置：** `firmware/main/piezo_capture.{h,cpp}`、`config.h` 注释。
+
+**后续可选升级（不改现板则无法回到 4×RMT）：**
+- [ ] 标定/实测：量化 ISR 抖动对定位 RMSE 的影响，确认现方案是否够用
+- [ ] 可选增强：GPIO glitch filter、或 GPTIMER 统一时基（仍非 RMT 波形捕获）
+- [ ] V2 换带更多 RMT RX 的 MCU（如 ESP32-S3 等）再评估迁回 RMT / 新 RMT RX API
+- [ ] 文档：`docs/README.md` 仍写「12.5ns RMT」——需与现实现对齐后更新
+
 ## 固件（firmware/）
 
 - [ ] **Phase 1: WiFi + WebSocket 客户端** — 将 Phase 0 的串口输出升级为 WiFi 连接，实现 IMU 二进制帧（MessagePack）和 Impact JSON 帧的 WebSocket 上行

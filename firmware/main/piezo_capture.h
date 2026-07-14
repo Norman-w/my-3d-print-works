@@ -1,40 +1,39 @@
 #pragma once
+
+#include <cstddef>
 #include <cstdint>
-#include "driver/rmt.h"
+
 #include "driver/gpio.h"
-#include "esp_timer.h"
+#include "esp_err.h"
+
+// ===== 分区：模型/类型 =====
 
 struct PiezoEvent {
-    uint32_t channel;          // 0-3: which piezo triggered
-    uint64_t timestamp_us;     // esp_timer_get_time() at first edge
-    uint32_t edge_count;       // number of edges captured in window
+    uint32_t channel;           // 0-3
+    uint64_t timestamp_us;      // esp_timer 墙钟（µs），用于窗口归并
+    uint64_t timestamp_cycles;  // CPU cycle，用于通道间 TDOA
+    uint32_t edge_count;        // 本窗口该通道累计边沿数（首边沿事件为 1）
 };
+
+// ===== 分区：公开 API =====
 
 class PiezoCapture {
 public:
-    // Initialize 4 RMT channels for piezo edge capture
-    // Each channel captures on posedge, 80MHz resolution, 256-edge buffer
+    // ESP32-C6 仅有 2 个 RMT RX 候选通道，无法用 RMT 同时采 4 路。
+    // 硬件已定 4 路压电，因此用 GPIO 边沿 ISR + CPU cycle 锁存时间戳。
     static esp_err_t init();
 
-    // Block until an impact event is detected on any channel.
-    // Returns the first channel to trigger and its timestamp.
-    // "Impact" = any channel sees a positive edge (piezo voltage crosses GPIO threshold)
     static esp_err_t wait_for_impact(PiezoEvent& event, uint32_t timeout_ms = 0);
-
-    // Non-blocking: check if any impact events are queued
     static bool has_pending_event();
-
-    // Read all pending events into buffer, returns count
     static size_t drain_events(PiezoEvent* buf, size_t max_count);
 
-    // For raw capture: start all 4 RMT channels listening
+    // 重新武装 4 路：允许下一击的首边沿入队
     static esp_err_t start_capture();
 
-    // Stop all channels, read raw RMT data for debugging
-    static esp_err_t read_raw(rmt_item32_t* items[4], size_t* counts);
+    // 将两事件的 cycle 差转为纳秒（相对 TDOA）
+    static int64_t delta_ns(uint64_t cycles_a, uint64_t cycles_b);
 
 private:
-    static const rmt_channel_t CHANNELS[4];
     static const gpio_num_t PINS[4];
     static bool initialized;
 };

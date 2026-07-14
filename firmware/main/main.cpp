@@ -138,7 +138,7 @@ extern "C" void app_main() {
     }
 
     ESP_LOGI(TAG, "SmartPaddle 固件启动");
-    ESP_LOGI(TAG, "RMT 分辨率: 12.5ns @ 80MHz APB");
+    ESP_LOGI(TAG, "压电: 4 通道 GPIO ISR + CPU cycle TDOA");
 
     // 2. 外设初始化（LED、Reset 按钮）
     init_peripherals();
@@ -149,11 +149,13 @@ extern "C" void app_main() {
     // 4. IMU 初始化（IM948 传感器）
     init_imu();
 
-    // 5. 压电传感器初始化
+    // 5. 压电传感器初始化（失败不阻断 IMU/网络）
+    bool piezo_ok = false;
     ret = PiezoCapture::init();
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "PiezoCapture 初始化失败: %d", ret);
-        return;
+        ESP_LOGE(TAG, "PiezoCapture 初始化失败: %d（继续运行 IMU）", ret);
+    } else {
+        piezo_ok = true;
     }
 
     ESP_LOGI(TAG, "等待击球事件... 连接到 SmartPaddle WiFi 或通过 IP 访问");
@@ -163,6 +165,11 @@ extern "C" void app_main() {
 
     // 7. 主循环：采集压电事件 + WebSocket 推送
     while (true) {
+        if (!piezo_ok) {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            continue;
+        }
+
         PiezoEvent first;
         ret = PiezoCapture::wait_for_impact(first, portMAX_DELAY);
         if (ret != ESP_OK) continue;
@@ -170,10 +177,14 @@ extern "C" void app_main() {
         // 10ms 窗口收集所有相关事件
         uint64_t window_start = first.timestamp_us;
         uint64_t window_end = window_start + 10000;
+        uint64_t cycles_base = first.timestamp_cycles;
 
         PiezoEvent batch[16];
         size_t count = 1;
         batch[0] = first;
+
+        // 短暂等待其余通道首边沿到达再 drain
+        vTaskDelay(pdMS_TO_TICKS(10));
 
         PiezoEvent pending[16];
         size_t pending_count = PiezoCapture::drain_events(pending, 16);
@@ -183,22 +194,23 @@ extern "C" void app_main() {
             }
         }
 
-        // 串口输出 TDOA 数据
+        // 串口输出 TDOA 数据（相对 ns 来自 CPU cycle）
         printf("=== IMPACT === ts_base=%" PRIu64 "\n", window_start);
         for (size_t i = 0; i < count; i++) {
-            printf("  ch%" PRIu32 ": ts=%" PRIu64 " (+%" PRIu64 " ns) edges=%" PRIu32 "\n",
+            printf("  ch%" PRIu32 ": ts=%" PRIu64 " (+%" PRId64 " ns) edges=%" PRIu32 "\n",
                 batch[i].channel,
                 batch[i].timestamp_us,
-                (batch[i].timestamp_us - window_start) * 1000,
+                PiezoCapture::delta_ns(batch[i].timestamp_cycles, cycles_base),
                 batch[i].edge_count);
         }
 
         if (count >= 2) {
             printf("  TDOA (ns):");
             for (size_t i = 1; i < count; i++) {
-                int64_t diff = (int64_t)(batch[i].timestamp_us - batch[0].timestamp_us) * 1000;
                 if (batch[i].channel != batch[0].channel) {
-                    printf(" ch%" PRIu32 "=%+" PRId64, batch[i].channel, diff);
+                    printf(" ch%" PRIu32 "=%+" PRId64, batch[i].channel,
+                           PiezoCapture::delta_ns(batch[i].timestamp_cycles,
+                                                  batch[0].timestamp_cycles));
                 }
             }
             printf("\n");
@@ -207,8 +219,6 @@ extern "C" void app_main() {
         // WebSocket 推送（如果有客户端连接）
         if (ws_data_has_client()) {
             status_led::notify_data_activity(300);
-            // TODO: Phase 1 定义具体的二进制帧格式
-            // 当前先推送简单的冲击事件通知
             char json_buf[256];
             snprintf(json_buf, sizeof(json_buf),
                 "{\"type\":\"impact\",\"ts_base\":%" PRIu64 ",\"channels\":%zu}",
@@ -216,7 +226,6 @@ extern "C" void app_main() {
             ws_data_send_text(json_buf, strlen(json_buf));
         }
 
-        // 重新启动采集
         PiezoCapture::start_capture();
     }
 }

@@ -29,6 +29,4 @@ CONFIG_MDNS_MAX_SERVICES=4
 # UART 配置（UART0 用于 USB 控制台，UART1 留给 IM948）
 CONFIG_ESP_CONSOLE_UART_NUM=0
 
-# piezo_capture 仍用 legacy RMT，status_led 用 led_strip(new RMT)；
-# IDF 5.x 默认禁止共存，启动会 abort。后续应迁 piezo 到新 RMT。
-CONFIG_RMT_SKIP_LEGACY_CONFLICT_CHECK=y
+# status_led 使用 led_strip(new RMT)；压电已改为 GPIO ISR，不再占用 RMT RX
