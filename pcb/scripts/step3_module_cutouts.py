@@ -33,9 +33,13 @@ DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 IMU_RULE_AREA_NAME = "IMU_EMBEDDED_CASTELLATED_EDGE"
 IMU_RULE_AREA_MARGIN = 1.0
 LEGACY_IMU_CUTOUTS = [
-    # Previous IMU opening only grazed the PTH annular rings.  Keep this here so
-    # one step3 rerun migrates existing boards to the true half-hole opening.
+    # 旧开窗高度，step3 重跑时清掉
     (IMU_CUTOUT[0], IMU_CUTOUT[1], IMU_CUTOUT[2], 13.0),
+    (IMU_CUTOUT[0], IMU_CUTOUT[1], IMU_CUTOUT[2], 13.4),
+    (IMU_CUTOUT[0], IMU_CUTOUT[1], IMU_CUTOUT[2], 13.9),
+]
+LEGACY_ESP32_CUTOUTS = [
+    (ESP32_CUTOUT[0], ESP32_CUTOUT[1], ESP32_CUTOUT[2], 18.4),
 ]
 
 
@@ -62,7 +66,7 @@ def _rect_edges(spec: tuple[float, float, float, float]):
 def remove_generated_cutouts(pcbnew, board) -> int:
     """Remove only the module cutouts and screw holes owned by this step."""
     expected_edges = _rect_edges(ESP32_CUTOUT) + _rect_edges(IMU_CUTOUT)
-    for legacy in LEGACY_IMU_CUTOUTS:
+    for legacy in LEGACY_IMU_CUTOUTS + LEGACY_ESP32_CUTOUTS:
         expected_edges += _rect_edges(legacy)
     removed = 0
 

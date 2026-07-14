@@ -493,7 +493,10 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ESP32-C6-N8: 本体 25.5×18.0mm；短边（天线±X）收紧，半孔长边（±Y）单独间隙
 # IM948: X 向短边收紧；Y 向半孔开槽高度单独保留
 MODULE_CUTOUT_CLEARANCE_SHORT = 0.10  # 非半孔边单边间隙（先 0.10，可再收到 0.05）
-MODULE_CUTOUT_CLEARANCE_LONG = 0.20   # 半孔边单边间隙
+MODULE_CUTOUT_CLEARANCE_LONG = 0.25   # 半孔边开窗单边间隙（相对模块本体）
+# 邮票孔焊盘相对本体边线外探量：让板上多留一截铜，便于烙铁
+CASTELLATED_PAD_OUTSET = 0.20
+IMU_BODY_HEIGHT = 13.0                # IM948 Fab 高（半孔边在 ±6.50）
 IMU_CASTELLATED_EDGE_SETBACK = 0.0
 
 # IMU/MCU 在大陆区内的放置偏移 — 直接从 SCAD 参数解析（SCAD 坐标，相对 pcb_cavity_center）
@@ -516,12 +519,12 @@ ESP32_CUTOUT = (
     18.0 + MODULE_CUTOUT_CLEARANCE_LONG * 2,
 )
 
-# ICM-948 IMU 模块开孔
+# ICM-948 IMU 模块开孔：短边收紧；半孔边 = 本体高 + 2×长边间隙（不再为外探焊盘加高）
 IMU_CUTOUT = (
     _IMU_X_OFFSET_KICAD,
     _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_KICAD,
     18.5 + MODULE_CUTOUT_CLEARANCE_SHORT * 2,
-    13.9,
+    IMU_BODY_HEIGHT + MODULE_CUTOUT_CLEARANCE_LONG * 2,
 )
 
 # 参考线用全部 M2 螺丝孔（含板外的拍面螺丝，用于 Dwgs.User 可视对照）
