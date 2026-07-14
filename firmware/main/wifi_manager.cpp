@@ -128,7 +128,7 @@ void wifi_manager_auto_connect_saved(void) {
     std::string ssid, password, device_id_str;
     device_storage_get_connection_info(ssid, password, device_id_str);
 
-    if (ssid.empty() || password.empty()) {
+    if (ssid.empty()) {
         ESP_LOGI(TAG, "没有找到保存的 WiFi 配置，保持 AP 模式");
         return;
     }

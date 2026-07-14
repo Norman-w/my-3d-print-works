@@ -42,18 +42,22 @@
         setTimeout(() => fetch('/sta_result_checking_page_loaded',{method:'POST'}).catch(()=>{}), 100);
     });
 
-    // 轮询检测设备状态
+    // 轮询：先打当前 AP 上的 /status（手机还连着 SmartPaddle 时可用），
+    // 成功后再提示切到家里 WiFi 用 .local 访问。
     function checkStatus() {
-        fetch('http://' + hostname + '/status').then(res => res.json()).then(data => {
+        fetch('/status').then(res => res.json()).then(data => {
             if (data.status === 'ok') {
                 let ipAddress = data.ip_address || '未知';
-                statusEl.innerHTML = '连接成功! 您现在可以通过 <a href=\"http://' + hostname + '\">' + hostname + '</a> 访问设备。 IP 地址: ' + ipAddress;
+                statusEl.innerHTML = '设备已连上路由器! IP: ' + ipAddress +
+                    '<br>请把手机改连家里的 WiFi（{{SSID}}），然后打开 <a href=\"http://' + hostname + '\">http://' + hostname + '</a>';
                 clearInterval(intervalId);
-                noticeEl.style.backgroundColor = '#d4edda'; // 绿色背景
-                noticeEl.style.color = '#155724'; // 深绿色文字
+                noticeEl.style.backgroundColor = '#d4edda';
+                noticeEl.style.color = '#155724';
+            } else {
+                statusEl.innerHTML = '状态: 设备正在连接路由器...';
             }
         }).catch(err => {
-            statusEl.innerHTML = '状态: 仍在尝试连接 ' + hostname + '...';
+            statusEl.innerHTML = '状态: 等待设备连接...';
         });
     }
 

@@ -62,7 +62,12 @@ static esp_err_t login_post_handler(httpd_req_t *req) {
 
     device_storage_set_connection_info(ssid, password, device_id);
 
-    // 发送 connecting 页面（连接任务由前端页面加载后触发）
+    // 提交后立刻开始连 STA，不依赖前端二次请求（captive portal 浏览器常拦 JS）
+    if (!is_sta_connected && !is_sta_connecting) {
+        start_wifi_connect_task(ssid, password);
+    }
+
+    // 发送 connecting 页面
     const size_t connecting_page_size = connecting_page_html_end - connecting_page_html_start;
     std::string connecting_page_content(reinterpret_cast<const char *>(connecting_page_html_start), connecting_page_size);
     replace_placeholder(connecting_page_content, "{{SSID}}", ssid);
@@ -75,8 +80,9 @@ static esp_err_t login_post_handler(httpd_req_t *req) {
     }
 
     memcpy(connecting_page_buffer, connecting_page_content.c_str(), connecting_page_content.length());
+    connecting_page_buffer[connecting_page_content.length()] = '\0';
 
-    httpd_resp_send(req, connecting_page_buffer, HTTPD_RESP_USE_STRLEN);
+    httpd_resp_send(req, connecting_page_buffer, connecting_page_content.length());
     free(connecting_page_buffer);
 
     return ESP_OK;
@@ -156,7 +162,7 @@ static esp_err_t try_connect_to_ap_handler(httpd_req_t *req) {
     std::string ssid, password, device_id_str;
     device_storage_get_connection_info(ssid, password, device_id_str);
 
-    if (ssid.empty() || password.empty()) {
+    if (ssid.empty()) {
         ESP_LOGE(TAG, "没有存储的连接信息");
         httpd_resp_send_err(req, HTTPD_400_BAD_REQUEST, "No stored connection info");
         return ESP_FAIL;
@@ -181,7 +187,7 @@ static esp_err_t sta_result_checking_page_loaded_handler(httpd_req_t *req) {
     std::string ssid, password, device_id_str;
     device_storage_get_connection_info(ssid, password, device_id_str);
 
-    if (ssid.empty() || password.empty()) {
+    if (ssid.empty()) {
         ESP_LOGW(TAG, "没有存储的连接信息，忽略 page_loaded 请求");
         httpd_resp_set_status(req, "204 No Content");
         return httpd_resp_send(req, NULL, 0);
