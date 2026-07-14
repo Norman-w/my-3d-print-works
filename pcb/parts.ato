@@ -108,3 +108,24 @@ component EdgeFingerPad:
     front ~ pin "F"
     back ~ pin "B"
     footprint = "SmartPaddle:EdgeFingerPad_P1.27mm_Dual"
+
+
+component LED_0603:
+    designator_prefix = "LED"
+    value = "LED"
+    signal a
+    signal c
+    a ~ pin 1
+    c ~ pin 2
+    footprint = "SmartPaddle:LED_0603"
+
+
+component TactileSwitch45:
+    """4.5×4.5 mm SPST 轻触开关（四脚 SMD；内部 1–1 / 2–2 短接，BOOT / EN / 电源键同规格）。"""
+    designator_prefix = "SW"
+    value = "4.5x4.5"
+    signal a
+    signal b
+    a ~ pin 1
+    b ~ pin 2
+    footprint = "SmartPaddle:SW_SPST_4.5x4.5"

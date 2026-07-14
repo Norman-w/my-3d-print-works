@@ -224,12 +224,13 @@ _GW_CORNER    = 1.61   # 栈道与大陆底角的内收量，避免锐角应力�
 _GW_BL_W      = 16.75  # 下栈道外缘 |X|，决定下栈道宽度 = _ML_X_R - _GW_BL_W = 4.25mm
 _GW_TL_OUTER  = 19.48  # 上栈道外缘 |X|
 _GW_TL_INNER  = 14.75  # 上栈道内缘 |X|
-# 尾巴几何 — 从 paddle_shell.scad 自适应读取，零硬编码
-# 凸字形: 基部 18mm 全宽 (= 2×9mm 半宽)，末端 8mm 收窄到金手指 7.62mm
+# 尾巴几何 — 凸字尖端 + 大陆入口漏斗（与 paddle_shell.scad 一致）
 _TAIL_HW        = float(_PARAMS.get("_tail_hw", 3.81))        # type: ignore[arg-type]
 _TAIL_TIP_Y     = float(_PARAMS.get("_tail_y", -108.0))       # type: ignore[arg-type]
 _TAIL_NECK_Y    = float(_PARAMS.get("_tail_neck_y", -100.0))  # type: ignore[arg-type]
+_TAIL_FUNNEL_Y  = float(_PARAMS.get("_tail_funnel_y", -36.0)) # type: ignore[arg-type]
 _TAIL_BASE_HW   = float(_PARAMS.get("_tail_base_hw", 9.0))    # type: ignore[arg-type]
+_TAIL_MOUTH_HW  = float(_PARAMS.get("_tail_mouth_hw", 14.0))  # type: ignore[arg-type]
 
 # ── PZT 码头点（24 个固定几何点，与 paddle_shell.scad 相同） ──
 _DOCK_PTS_BL = [  # 左下栈道 → 左侧下 PZT 码头
@@ -249,38 +250,40 @@ _DOCK_PTS_BR = [  # 右下栈道 → 右侧下 PZT 码头
     (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
 ]
 
-# ── 组装完整 42 点轮廓（凸字形尾巴: 基部宽 9mm，末端 10mm 收窄到金手指） ──
+# ── 组装完整轮廓（凸字尖端 + 大陆入口漏斗 + 大陆 + PZT 码头） ──
 SCAD_SLOT_POINTS = [
-    # 尾巴（凸字形：右窄→右宽→左宽→左窄）
-    ( _TAIL_HW,         _TAIL_TIP_Y),               #  0 尾巴右尖（金手指窄区）
-    (-_TAIL_HW,         _TAIL_TIP_Y),               #  1 尾巴左尖（金手指窄区）
-    (-_TAIL_HW,         _TAIL_NECK_Y),              #  2 窄区→宽区转折（左）
-    (-_TAIL_BASE_HW,    _TAIL_NECK_Y),              #  3 宽区起点（左）
-    (-_TAIL_BASE_HW,    _ML_Y_B),                   #  4 宽区→大陆下缘（左）
+    # 尾巴（凸字 → 粗栈道 → 入口漏斗）
+    ( _TAIL_HW,         _TAIL_TIP_Y),
+    (-_TAIL_HW,         _TAIL_TIP_Y),
+    (-_TAIL_HW,         _TAIL_NECK_Y),
+    (-_TAIL_BASE_HW,    _TAIL_NECK_Y),
+    (-_TAIL_BASE_HW,    _TAIL_FUNNEL_Y),
+    (-_TAIL_MOUTH_HW,   _ML_Y_B),
     # 左下栈道 → 码头
-    (-_GW_BL_W,         _ML_Y_B),                   #  5
-    *_DOCK_PTS_BL,                                    #  6-11
+    (-_GW_BL_W,         _ML_Y_B),
+    *_DOCK_PTS_BL,
     # 大陆左侧边缘
-    (_ML_X_L,           _ML_Y_B + _GW_CORNER),      # 12
-    (_ML_X_L,           _ML_Y_T),                   # 13
+    (_ML_X_L,           _ML_Y_B + _GW_CORNER),
+    (_ML_X_L,           _ML_Y_T),
     # 左上栈道 → 码头
-    (-_GW_TL_OUTER,     _ML_Y_T),                   # 14
-    *_DOCK_PTS_TL,                                    # 15-20
-    (-_GW_TL_INNER,     _ML_Y_T),                   # 21
+    (-_GW_TL_OUTER,     _ML_Y_T),
+    *_DOCK_PTS_TL,
+    (-_GW_TL_INNER,     _ML_Y_T),
     # 右上栈道 → 码头
-    ( _GW_TL_INNER,     _ML_Y_T),                   # 22
-    *_DOCK_PTS_TR,                                    # 23-28
-    ( _GW_TL_OUTER,     _ML_Y_T),                   # 29
+    ( _GW_TL_INNER,     _ML_Y_T),
+    *_DOCK_PTS_TR,
+    ( _GW_TL_OUTER,     _ML_Y_T),
     # 大陆右侧边缘
-    (_ML_X_R,           _ML_Y_T),                   # 30
-    (_ML_X_R,           _ML_Y_B + _GW_CORNER),      # 31
+    (_ML_X_R,           _ML_Y_T),
+    (_ML_X_R,           _ML_Y_B + _GW_CORNER),
     # 右下栈道 → 码头
-    *_DOCK_PTS_BR,                                    # 32-37
-    ( _GW_BL_W,         _ML_Y_B),                   # 38
-    # 尾巴（右宽→右窄）
-    (_TAIL_BASE_HW,     _ML_Y_B),                   # 39 宽区→大陆下缘（右）
-    (_TAIL_BASE_HW,     _TAIL_NECK_Y),              # 40 宽区→转折（右）
-    (_TAIL_HW,          _TAIL_NECK_Y),              # 41 窄区→宽区转折（右）
+    *_DOCK_PTS_BR,
+    ( _GW_BL_W,         _ML_Y_B),
+    # 尾巴（右）
+    (_TAIL_MOUTH_HW,    _ML_Y_B),
+    (_TAIL_BASE_HW,     _TAIL_FUNNEL_Y),
+    (_TAIL_BASE_HW,     _TAIL_NECK_Y),
+    (_TAIL_HW,          _TAIL_NECK_Y),
 ]
 
 # ===== 分区：几何工具函数 =====
@@ -487,39 +490,38 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ===== 分区：模块开孔与螺丝让位 =====
 
 # 模块开孔相对于模块外形尺寸的单边装配间隙（mm）
-# ESP32-C6-WROOM-1: 本体 25.5×18.0mm → 开孔 25.9×18.4mm
-# ICM-948:          X 向按本体宽度留装配间隙；Y 向边缘是 castellated 焊接接口，
-#                   开槽边应切过主板 PTH 焊盘边缘，不能再额外外扩。
-MODULE_CUTOUT_CLEARANCE = 0.20
+# ESP32-C6-N8: 本体 25.5×18.0mm；短边（天线±X）收紧，半孔长边（±Y）单独间隙
+# IM948: X 向短边收紧；Y 向半孔开槽高度单独保留
+MODULE_CUTOUT_CLEARANCE_SHORT = 0.10  # 非半孔边单边间隙（先 0.10，可再收到 0.05）
+MODULE_CUTOUT_CLEARANCE_LONG = 0.20   # 半孔边单边间隙
 IMU_CASTELLATED_EDGE_SETBACK = 0.0
 
 # IMU/MCU 在大陆区内的放置偏移 — 直接从 SCAD 参数解析（SCAD 坐标，相对 pcb_cavity_center）
 # SCAD Y+ = 拍头方向，SCAD Y- = 拍柄方向
 # KiCad 中 Y 反向：y_kicad_offset = -y_scad_offset
 _imu_module_offset = _PARAMS.get("imu_module_offset", [0, 18.5])
-_mcu_module_offset = _PARAMS.get("mcu_module_offset", [-3, -11.5])
+_mcu_module_offset = _PARAMS.get("mcu_module_offset", [-3, -8.0])
 
 _IMU_X_OFFSET_KICAD = float(_imu_module_offset[0])  # type: ignore[index]
 _IMU_Y_OFFSET_KICAD = -float(_imu_module_offset[1])  # type: ignore[index] — Y 取反
 _MCU_X_OFFSET_KICAD = float(_mcu_module_offset[0])  # type: ignore[index]
 _MCU_Y_OFFSET_KICAD = -float(_mcu_module_offset[1])  # type: ignore[index] — Y 取反
 
-# ESP32-C6-WROOM-1 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# 位置从 SCAD mcu_module_offset 推导
+# ESP32-C6-N8 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
+# 位置从 SCAD mcu_module_offset 推导；宽=短边方向，高=半孔长边方向
 ESP32_CUTOUT = (
-    _MCU_X_OFFSET_KICAD,                                             # X 从 SCAD mcu_module_offset[0]
-    _KICAD_MAINLAND_CENTER_Y + _MCU_Y_OFFSET_KICAD,                  # Y = 大陆中心 + SCAD 偏移（Y 取反）
-    25.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
-    18.0 + MODULE_CUTOUT_CLEARANCE * 2,                              # 高 = 模块高 + 双边间隙
+    _MCU_X_OFFSET_KICAD,
+    _KICAD_MAINLAND_CENTER_Y + _MCU_Y_OFFSET_KICAD,
+    25.5 + MODULE_CUTOUT_CLEARANCE_SHORT * 2,
+    18.0 + MODULE_CUTOUT_CLEARANCE_LONG * 2,
 )
 
-# ICM-948 IMU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
-# 位置从 SCAD imu_module_offset 推导
+# ICM-948 IMU 模块开孔
 IMU_CUTOUT = (
-    _IMU_X_OFFSET_KICAD,                                             # X 从 SCAD imu_module_offset[0]
-    _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_KICAD,                  # Y = 大陆中心 + SCAD 偏移（Y 取反）
-    18.5 + MODULE_CUTOUT_CLEARANCE * 2,                              # 宽 = 模块宽 + 双边间隙
-    13.9,                                                            # 高 = 开槽边穿过 PTH 焊盘中心线，形成真半孔
+    _IMU_X_OFFSET_KICAD,
+    _KICAD_MAINLAND_CENTER_Y + _IMU_Y_OFFSET_KICAD,
+    18.5 + MODULE_CUTOUT_CLEARANCE_SHORT * 2,
+    13.9,
 )
 
 # 参考线用全部 M2 螺丝孔（含板外的拍面螺丝，用于 Dwgs.User 可视对照）

@@ -23,7 +23,8 @@ from pcb.tools.kicad_update_utils import circle, load_board, rect, save_board, x
 from pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
     IMU_CUTOUT,
-    MODULE_CUTOUT_CLEARANCE,
+    MODULE_CUTOUT_CLEARANCE_LONG,
+    MODULE_CUTOUT_CLEARANCE_SHORT,
     PCB_CLEARANCE_HOLES,
 )
 
@@ -171,7 +172,8 @@ def main() -> None:
     save_board(board, args.board)
 
     print(f"=== Step 3 完成 ===")
-    print(f"模块开孔间隙 (单边): {MODULE_CUTOUT_CLEARANCE:.2f} mm")
+    print(f"模块开孔间隙: 短边={MODULE_CUTOUT_CLEARANCE_SHORT:.2f} mm, "
+          f"半孔长边={MODULE_CUTOUT_CLEARANCE_LONG:.2f} mm")
     print(f"ESP32 开孔: 中心=({ESP32_CUTOUT[0]:.1f}, {ESP32_CUTOUT[1]:.1f}) "
           f"尺寸=({ESP32_CUTOUT[2]:.2f}×{ESP32_CUTOUT[3]:.2f}) mm")
     print(f"IMU 开孔:  中心=({IMU_CUTOUT[0]:.1f}, {IMU_CUTOUT[1]:.1f}) "

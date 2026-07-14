@@ -1,0 +1,20 @@
+[
+  {
+    "addr": "bringup.vcc_pad",
+    "x": 19.05,
+    "y": -13.335,
+    "rot": 0.0
+  },
+  {
+    "addr": "debug_sw.sw_boot",
+    "x": 4.87,
+    "y": 49.706,
+    "rot": 0.0
+  },
+  {
+    "addr": "debug_sw.sw_en",
+    "x": 4.87,
+    "y": 56.72,
+    "rot": 0.0
+  }
+]

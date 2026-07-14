@@ -2,18 +2,18 @@
 #include <cstdint>
 
 // --- Piezo TDOA sensor pins ---
-// 4 piezo discs on blade corners, each through zener clamp → GPIO
+// 4 piezo discs on blade corners, each through clamp → GPIO
 // ESP32-C6 仅 2 路 RMT RX，4 通道用 GPIO ISR + CPU cycle 锁存
-// GPIO4/5 被 IMU UART1 占用，压电在 GPIO2/3/6/7
-#define PIEZO_PIN_1 GPIO_NUM_2   // Top-left blade corner
-#define PIEZO_PIN_2 GPIO_NUM_3   // Top-right blade corner
+// V2：PZT 在左排 IO4–7；IMU UART1 独占右排 IO2/3
+#define PIEZO_PIN_1 GPIO_NUM_4   // Top-left blade corner
+#define PIEZO_PIN_2 GPIO_NUM_5   // Top-right blade corner
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner
 #define PIEZO_PIN_4 GPIO_NUM_7   // Bottom-right blade corner
 
 // --- IMU pins (IM948, UART1) ---
 #define IMU_UART_NUM   UART_NUM_1
-#define IMU_UART_TX    GPIO_NUM_4
-#define IMU_UART_RX    GPIO_NUM_5
+#define IMU_UART_TX    GPIO_NUM_2
+#define IMU_UART_RX    GPIO_NUM_3
 #define IMU_UART_BAUD  115200       // 初始波特率，上电后升级到 230400
 #define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
 
@@ -35,3 +35,6 @@
 
 // --- LED ---
 #define LED_PIN GPIO_NUM_8  // WS2812C RGB LED
+
+// 电源自锁：硬件 PWR_LATCH 高电平保持开机（见 main.ato）。
+// 具体 GPIO 号随 SGFK 半孔映射，固件接好后在 power 模块里绑脚。

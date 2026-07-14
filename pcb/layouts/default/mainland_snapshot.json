@@ -1,0 +1,122 @@
+[
+  {
+    "addr": "battery.c_filter",
+    "x": -15.634,
+    "y": -23.368,
+    "rot": 0.0
+  },
+  {
+    "addr": "battery.r_bottom",
+    "x": -12.192,
+    "y": -25.273,
+    "rot": 0.0
+  },
+  {
+    "addr": "battery.r_top",
+    "x": -15.621,
+    "y": -25.273,
+    "rot": 180.0
+  },
+  {
+    "addr": "imu",
+    "x": 0.0,
+    "y": -21.5,
+    "rot": 0.0
+  },
+  {
+    "addr": "led_c_supply",
+    "x": -12.205,
+    "y": -23.368,
+    "rot": 0.0
+  },
+  {
+    "addr": "led_r_data",
+    "x": -12.128,
+    "y": -16.383,
+    "rot": 180.0
+  },
+  {
+    "addr": "mcu",
+    "x": -3.0,
+    "y": -1.0,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.c_in",
+    "x": 18.3,
+    "y": -20.6,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.c_out",
+    "x": 18.3,
+    "y": -16.5,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.d_ldo_bat",
+    "x": 15.587,
+    "y": -11.303,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.d_ldo_usb",
+    "x": 18.254,
+    "y": -23.368,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.ldo",
+    "x": 14.417,
+    "y": -22.2305,
+    "rot": 90.0
+  },
+  {
+    "addr": "power.q_latch",
+    "x": 16.576,
+    "y": -2.5885,
+    "rot": 90.0
+  },
+  {
+    "addr": "power.q_power",
+    "x": 18.796,
+    "y": -8.9685,
+    "rot": 90.0
+  },
+  {
+    "addr": "power.r_button_series",
+    "x": 19.431,
+    "y": -1.969,
+    "rot": 90.0
+  },
+  {
+    "addr": "power.r_en_pullup",
+    "x": 15.558,
+    "y": -13.335,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.r_gate",
+    "x": 18.733,
+    "y": -5.969,
+    "rot": 0.0
+  },
+  {
+    "addr": "power.r_latch_pd",
+    "x": 16.513,
+    "y": 0.411,
+    "rot": 0.0
+  },
+  {
+    "addr": "pwr_led.led",
+    "x": -12.117,
+    "y": -14.986,
+    "rot": 180.0
+  },
+  {
+    "addr": "pwr_led.r_lim",
+    "x": -15.368,
+    "y": -15.113,
+    "rot": 180.0
+  }
+]

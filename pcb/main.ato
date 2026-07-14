@@ -16,42 +16,52 @@ from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 from "parts.ato" import EdgeFingerPad
+from "parts.ato" import LED_0603
+from "parts.ato" import TactileSwitch45
 
 
 component SGFK_ESP32C6N8_Cutout:
+    """SGFK ESP32-C6-N8 半孔映射（手册：天线在上；左 1→14 向下；右底→上 15→28）。
+
+    V2 修正：IO8=pin10、IO9=pin15、USB=13/14、UART0=25/24、IO2/3=27/26。
+    """
     designator_prefix = "J"
     pin GND_1
     pin VCC_3V3
     pin EN
-    pin GPIO2_PZT_TL
-    pin GPIO3_PZT_TR
+    pin GPIO4_PZT_TL
+    pin GPIO5_PZT_TR
     pin GPIO6_PZT_BL
     pin GPIO7_PZT_BR
     pin GPIO8_LED_DATA
     pin GPIO9_BOOT
     pin GPIO10_USER_BTN
     pin PWR_LATCH
-    pin USB_DP
     pin USB_DN
-    pin UART_TX
+    pin USB_DP
     pin UART_RX
+    pin UART_TX
+    pin GPIO3_IMU_RX
+    pin GPIO2_IMU_TX
     pin GND_28
 
     GND_1 ~ pin 1
     VCC_3V3 ~ pin 2
     EN ~ pin 3
-    GPIO2_PZT_TL ~ pin 4
-    GPIO3_PZT_TR ~ pin 5
+    GPIO4_PZT_TL ~ pin 4
+    GPIO5_PZT_TR ~ pin 5
     GPIO6_PZT_BL ~ pin 6
     GPIO7_PZT_BR ~ pin 7
-    GPIO8_LED_DATA ~ pin 8
-    GPIO9_BOOT ~ pin 9
-    GPIO10_USER_BTN ~ pin 10
+    GPIO8_LED_DATA ~ pin 10
     PWR_LATCH ~ pin 11
-    USB_DP ~ pin 13
-    USB_DN ~ pin 16
-    UART_TX ~ pin 24
-    UART_RX ~ pin 25
+    USB_DN ~ pin 13
+    USB_DP ~ pin 14
+    GPIO9_BOOT ~ pin 15
+    GPIO10_USER_BTN ~ pin 16
+    UART_RX ~ pin 24
+    UART_TX ~ pin 25
+    GPIO3_IMU_RX ~ pin 26
+    GPIO2_IMU_TX ~ pin 27
     GND_28 ~ pin 28
     footprint = "SmartPaddle:SGFK_ESP32-C6-N8_CUTOUT"
 
@@ -148,6 +158,7 @@ module TailHarness5P2S:
 
 
 module PowerLatchAndRegulator:
+    """软开关 + LDO。V2：去 PW_D_BTN / 3V3 按键上拉；USB/电池二极管或进 LDO。"""
     pin VBAT_IN
     pin VBAT_SW
     pin VCC_3V3
@@ -157,25 +168,29 @@ module PowerLatchAndRegulator:
     pin BUTTON_RAW
     pin BUTTON_GPIO
     pin P_GATE
+    pin USB_VBUS
 
     q_power = new PChannelMOSFET_SOT23
     q_latch = new NChannelMOSFET_SOT23
     r_gate = new Resistor
     r_button_series = new Resistor
-    r_button_pullup = new Resistor
     r_latch_pd = new Resistor
     r_en_pullup = new Resistor
-    d_button = new Diode
+    d_ldo_bat = new Diode
+    d_ldo_usb = new Diode
     ldo = new AP2112K_3V3
     c_in = new Capacitor
     c_out = new Capacitor
     r_gate.value = "100k"
     r_button_series.value = "1k"
-    r_button_pullup.value = "10k"
     r_latch_pd.value = "100k"
     r_en_pullup.value = "10k"
+    d_ldo_bat.value = "BAT54"
+    d_ldo_usb.value = "BAT54"
     c_in.value = "10uF"
     c_out.value = "10uF"
+
+    signal ldo_vin
 
     q_power.gate ~ P_GATE
     q_power.source ~ VBAT_IN
@@ -187,23 +202,26 @@ module PowerLatchAndRegulator:
 
     r_gate.p1 ~ P_GATE
     r_gate.p2 ~ VBAT_IN
+    # 按键到 GND：经限流电阻拉低 P_GATE 开机；同网给 MCU 读键（内部上拉，无 3V3 外拉）
     r_button_series.p1 ~ BUTTON_RAW
-    r_button_series.p2 ~ BUTTON_GPIO
-    r_button_pullup.p1 ~ BUTTON_GPIO
-    r_button_pullup.p2 ~ VCC_3V3
+    r_button_series.p2 ~ P_GATE
+    BUTTON_GPIO ~ BUTTON_RAW
     r_latch_pd.p1 ~ PWR_LATCH
     r_latch_pd.p2 ~ GND
     r_en_pullup.p1 ~ EN
     r_en_pullup.p2 ~ VCC_3V3
-    d_button.anode ~ P_GATE
-    d_button.cathode ~ BUTTON_RAW
 
-    ldo.vin ~ VBAT_SW
-    ldo.en ~ VBAT_SW
+    # USB 5V 与电池开关轨二极管或，只喂 LDO（不灌 VBAT_SW）
+    d_ldo_bat.anode ~ VBAT_SW
+    d_ldo_bat.cathode ~ ldo_vin
+    d_ldo_usb.anode ~ USB_VBUS
+    d_ldo_usb.cathode ~ ldo_vin
+    ldo.vin ~ ldo_vin
+    ldo.en ~ ldo_vin
     ldo.gnd ~ GND
     ldo.vout ~ VCC_3V3
 
-    c_in.p1 ~ VBAT_SW
+    c_in.p1 ~ ldo_vin
     c_in.p2 ~ GND
     c_out.p1 ~ VCC_3V3
     c_out.p2 ~ GND
@@ -229,11 +247,7 @@ module LEDInterface:
 
 
 module TestPads:
-    """最少核心 bringup 测试点。其余信号从金手指尾巴或板上元件直接测。
-
-    保留 5 点：GND（地参考）、VCC_3V3（LDO 验证）、VBAT_SW（电池链路）、
-    EN（使能异常排查）、BOOT（烧录模式调试）。
-    """
+    """Bringup 测试点：GND / 3V3 / VBAT_SW / TP_MCU_EN / TP_MCU_BOOT。"""
     pin GND
     pin VCC_3V3
     pin VBAT_SW
@@ -243,8 +257,35 @@ module TestPads:
     gnd_pad = new SmallWirePad;   gnd_pad.contact ~ GND
     vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
     vbat_pad = new SmallWirePad;  vbat_pad.contact ~ VBAT_SW
-    en_pad = new SmallWirePad;    en_pad.contact ~ EN
-    boot_pad = new SmallWirePad;  boot_pad.contact ~ BOOT
+    tp_mcu_en = new SmallWirePad; tp_mcu_en.contact ~ EN
+    tp_mcu_boot = new SmallWirePad; tp_mcu_boot.contact ~ BOOT
+
+
+module McuDebugControls:
+    """宽栈道 BOOT/EN 轻触：按下分别把 BOOT、EN 拉到 GND。"""
+    pin BOOT
+    pin EN
+    pin GND
+
+    sw_boot = new TactileSwitch45
+    sw_en = new TactileSwitch45
+    sw_boot.a ~ BOOT
+    sw_boot.b ~ GND
+    sw_en.a ~ EN
+    sw_en.b ~ GND
+
+
+module McuPowerLed:
+    """MCU 旁可选 0603 电源指示（可 DNP）。"""
+    pin VCC_3V3
+    pin GND
+
+    led = new LED_0603
+    r_lim = new Resistor
+    r_lim.value = "1k"
+    led.a ~ VCC_3V3
+    led.c ~ r_lim.p1
+    r_lim.p2 ~ GND
 
 
 module BatterySense:
@@ -274,6 +315,8 @@ module SmartPaddleRigid:
     power = new PowerLatchAndRegulator
     tail = new TailHarness5P2S
     bringup = new TestPads
+    debug_sw = new McuDebugControls
+    pwr_led = new McuPowerLed
     battery = new BatterySense
 
     # Inline LED interface components (atopile 0.2.x module nesting bug workaround)
@@ -296,6 +339,8 @@ module SmartPaddleRigid:
     signal usb_dn
     signal uart_tx
     signal uart_rx
+    signal imu_uart_tx
+    signal imu_uart_rx
     signal led_data
     signal led_din
     signal btn_sw
@@ -321,28 +366,26 @@ module SmartPaddleRigid:
     power.VBAT_SW ~ vbat_sw
     power.VCC_3V3 ~ vcc
     power.GND ~ gnd
+    power.USB_VBUS ~ vbus
     mcu.VCC_3V3 ~ vcc
     mcu.GND_1 ~ gnd
     mcu.GND_28 ~ gnd
 
-    # IM948 module power and UART link.
+    # IM948：独占 UART1（IO2/IO3），与 MCU UART0 / 尾插调试口隔离。
     imu.VBAT_3 ~ vbat_sw
     imu.VBAT_15 ~ vbat_sw
     imu.VBUS ~ vbus
     imu.GND_1 ~ gnd
     imu.GND_8 ~ gnd
     imu.GND_16 ~ gnd
-    # IM948 VDDIO is kept as its own IO-reference net per the module notes:
-    # VBAT > 3.1V makes the module's internal LDO drive it around 3.0V.
-    # Tying it hard to the ESP32 3V3 rail may fight that internal regulator.
     imu.VDDIO ~ imu_vddio
     imu.ADIN ~ vbat_sense
-    imu.RXD ~ uart_tx
-    imu.TXD ~ uart_rx
+    imu.RXD ~ imu_uart_tx
+    imu.TXD ~ imu_uart_rx
     imu.KEY ~ imu_key
     imu.GPIO ~ imu_gpio
-    mcu.UART_TX ~ uart_tx
-    mcu.UART_RX ~ uart_rx
+    mcu.GPIO2_IMU_TX ~ imu_uart_tx
+    mcu.GPIO3_IMU_RX ~ imu_uart_rx
 
     # ESP32-C6 control, programming, and user input.
     mcu.EN ~ en
@@ -356,7 +399,14 @@ module SmartPaddleRigid:
     power.BUTTON_RAW ~ btn_sw
     power.BUTTON_GPIO ~ user_btn
 
-    # External USB pads for serial/programming/debug.
+    # 宽栈道 BOOT/EN 键 + TP；MCU 旁可选电源灯。
+    debug_sw.BOOT ~ boot_btn
+    debug_sw.EN ~ en
+    debug_sw.GND ~ gnd
+    pwr_led.VCC_3V3 ~ vcc
+    pwr_led.GND ~ gnd
+
+    # USB Serial/JTAG + 尾插 UART0 调试（不并 IMU）。
     tail.USB_VBUS ~ vbus
     tail.USB_DP ~ usb_dp
     tail.USB_DN ~ usb_dn
@@ -364,6 +414,8 @@ module SmartPaddleRigid:
     tail.UART_RX ~ uart_rx
     mcu.USB_DP ~ usb_dp
     mcu.USB_DN ~ usb_dn
+    mcu.UART_TX ~ uart_tx
+    mcu.UART_RX ~ uart_rx
 
     # External WS2812B-style LED wire interface.
     tail.LED_PLUS ~ vbat_sw
@@ -374,25 +426,23 @@ module SmartPaddleRigid:
     led_r_data.p2 ~ led_din
     mcu.GPIO8_LED_DATA ~ led_data
 
-    # Switched battery measurement for low-battery LED feedback.
     battery.VBAT_SW ~ vbat_sw
     battery.GND ~ gnd
     battery.SENSE ~ vbat_sense
 
-    # 最少 bringup 测试点（其余信号从金手指尾巴或板上元件测）
     bringup.VBAT_SW ~ vbat_sw
     bringup.VCC_3V3 ~ vcc
     bringup.GND ~ gnd
     bringup.EN ~ en
     bringup.BOOT ~ boot_btn
 
-    # Four PZT docks. The small front-end parts live at each dock.
-    mcu.GPIO3_PZT_TR ~ pzt_tr_signal
+    # PZT → IO4–IO7（左排，背对 IMU）。
+    mcu.GPIO5_PZT_TR ~ pzt_tr_signal
     pzt_tr.MCU_SIGNAL ~ pzt_tr_signal
     pzt_tr.gnd ~ gnd
     pzt_tr.vcc ~ vcc
 
-    mcu.GPIO2_PZT_TL ~ pzt_tl_signal
+    mcu.GPIO4_PZT_TL ~ pzt_tl_signal
     pzt_tl.MCU_SIGNAL ~ pzt_tl_signal
     pzt_tl.gnd ~ gnd
     pzt_tl.vcc ~ vcc

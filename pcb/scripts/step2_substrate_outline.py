@@ -106,6 +106,8 @@ def _inject_keepout_zones(board_path):
 def main():
     parser = argparse.ArgumentParser(description="Step 2: Draw PCB substrate outline + keepout zones")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
+    parser.add_argument("--skip-keepout", action="store_true",
+                        help="跳过螺丝孔 keepout 文本注入（KiCad 9 下注入可能损坏板文件）")
     args = parser.parse_args()
 
     import pcbnew
@@ -115,7 +117,9 @@ def main():
     polyline(pcbnew, board, pcbnew.Edge_Cuts, PCB_SLOT_POINTS, 0.10)
     save_board(board, args.board)
 
-    n_keepout = _inject_keepout_zones(args.board)
+    n_keepout = 0
+    if not args.skip_keepout:
+        n_keepout = _inject_keepout_zones(args.board)
 
     xs = [p[0] for p in PCB_SLOT_POINTS]
     ys = [p[1] for p in PCB_SLOT_POINTS]
@@ -127,6 +131,8 @@ def main():
     print(f"语义: 每条边平行内缩 {SUBSTRATE_EDGE_CLEARANCE:.2f}mm + PZT码头缩回 + 拍柄截断 Ymax≤{SUBSTRATE_TAIL_MAX_Y:.2f}")
     if n_keepout:
         print(f"螺丝孔 keepout: 注入了 {n_keepout} 个 zone (F.Cu + B.Cu)")
+    elif args.skip_keepout:
+        print("螺丝孔 keepout: 已跳过 (--skip-keepout)")
 
 
 def slot_scad_to_kicad_y(y):

@@ -36,7 +36,7 @@ isProject: false
 
 依据：[pcb/V1_BRINGUP_ISSUES.md](pcb/V1_BRINGUP_ISSUES.md)、[pcb/README.md](pcb/README.md)、[enclosure/parameters.scad](enclosure/parameters.scad) / [enclosure/paddle_shell.scad](enclosure/paddle_shell.scad)。
 
-**状态：** 计划已齐；含用户确认的 **USB→LDO 调试供电**（二极管或，非充电方案）。
+**状态：** Phase 0–4 / 6 源文件已落地；**Phase 5 KiCad 手收进行中**（外形/开窗已刷，新件已 ato 进板，出板铜与码头走线需清）。含 USB→LDO 二极管或供电。
 
 ```mermaid
 flowchart TD

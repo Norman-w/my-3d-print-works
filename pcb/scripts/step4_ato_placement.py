@@ -7,6 +7,7 @@
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
+import json
 import math
 import re
 import sys
@@ -24,12 +25,14 @@ from pcb.tools.mech_geometry import (
     IMU_CUTOUT,
     MAINLAND_RECT,
     SUBSTRATE_TAIL_MAX_Y,
-    TAIL_HALF_WIDTH,
 )
 
 # ===== 分区：常量/配置 =====
 BOARD_FILE = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 PARAMS_FILE = ROOT / "shared" / "board_params.yaml"
+DOCK_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "dock_snapshot.json"
+MAINLAND_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "mainland_snapshot.json"
+CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
 
 KEEPOUT = 1.5
 COL_SPACING_Y = 3.5
@@ -44,10 +47,10 @@ READABLE_REFS = {
     'power.q_latch': ('PW_Q_LATCH', 'N-MOS latch'),
     'power.r_gate': ('PW_R_GATE_100K', '100k'),
     'power.r_button_series': ('PW_R_BTN_SER_1K', '1k'),
-    'power.r_button_pullup': ('PW_R_BTN_PU_10K', '10k'),
     'power.r_latch_pd': ('PW_R_LATCH_PD_100K', '100k'),
     'power.r_en_pullup': ('PW_R_EN_PU_10K', '10k'),
-    'power.d_button': ('PW_D_BTN', 'Schottky'),
+    'power.d_ldo_bat': ('D_LDO_BAT', 'BAT54'),
+    'power.d_ldo_usb': ('D_LDO_USB', 'BAT54'),
     'power.ldo': ('PW_LDO_3V3', 'AP2112K-3.3'),
     'power.c_in': ('PW_C_IN_10U', '10uF'),
     'power.c_out': ('PW_C_OUT_10U', '10uF'),
@@ -56,16 +59,20 @@ READABLE_REFS = {
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
+    'pwr_led.led': ('LED_MCU_PWR', '0603 power'),
+    'pwr_led.r_lim': ('R_MCU_PWR_1K', '1k'),
+    'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
+    'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
     'tail.power_finger': ('TAIL_PWR', 'F:VBAT B:GND'),
     'tail.led_finger': ('TAIL_LED', 'F:LED+ B:DIN'),
     'tail.control_finger': ('TAIL_CTL', 'F:BTN B:VBUS'),
     'tail.usb_finger': ('TAIL_USB', 'F:D+ B:D-'),
     'tail.uart_finger': ('TAIL_UART', 'F:TX B:RX'),
-    'bringup.gnd_pad': ('TP_GND', 'GND test'),
-    'bringup.vcc_pad': ('TP_3V3', '3V3 test'),
-    'bringup.vbat_pad': ('TP_VBAT_SW', 'VBAT_SW test'),
-    'bringup.en_pad': ('TP_EN', 'EN test'),
-    'bringup.boot_pad': ('TP_BOOT', 'BOOT test'),
+    'bringup.gnd_pad': ('TP_GND', 'GND'),
+    'bringup.vcc_pad': ('TP_3V3', '3V3'),
+    'bringup.vbat_pad': ('TP_VBAT', 'VBAT_SW'),
+    'bringup.tp_mcu_en': ('TP_EN', 'EN'),
+    'bringup.tp_mcu_boot': ('TP_BOOT', 'BOOT'),
 }
 
 MODEL_SCALES = {'mcu': 0.3937008, 'imu': 0.3937008}
@@ -142,11 +149,26 @@ def _label_spec(addr, fp):
         return 0.38, (x, y + 1.4), 0
     if addr.startswith('pzt_'):
         return 0.38, (x, y + 1.2), fp.GetOrientationDegrees()
+    # BOOT/EN 键：丝印放在键体上方/下方，避免叠在焊盘上
+    if addr == 'debug_sw.sw_boot':
+        return 0.70, (x, y - 3.9), 0
+    if addr == 'debug_sw.sw_en':
+        return 0.70, (x, y + 3.9), 0
+    # 测试点：短丝印靠左，避免与键体重叠
+    if addr.startswith('bringup.'):
+        return 0.70, (x - 3.6, y), 0
     return 0.38, (x, y), 0
 
 
 def _should_show_reference(addr):
-    return addr in {'mcu', 'imu'} or addr.startswith('tail.') or addr.endswith('.pzt_signal_pad') or addr.endswith('.pzt_gnd_pad')
+    return (
+        addr in {'mcu', 'imu'}
+        or addr.startswith('tail.')
+        or addr.startswith('bringup.')
+        or addr.startswith('debug_sw.')
+        or addr.endswith('.pzt_signal_pad')
+        or addr.endswith('.pzt_gnd_pad')
+    )
 
 
 def _apply_readable_text(board):
@@ -204,6 +226,16 @@ def _is_initial_grid(fp):
     return math.isclose(x / 10, round(x / 10), abs_tol=1e-3) and math.isclose(y / 10, round(y / 10), abs_tol=1e-3)
 
 
+def _snapshot_map(path: Path) -> dict[str, tuple[float, float, float]] | None:
+    if not path.is_file():
+        return None
+    entries = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        str(entry["addr"]): (float(entry["x"]), float(entry["y"]), float(entry["rot"]))
+        for entry in entries
+    }
+
+
 def _move_one(fp_by_addr, addr, x, y, rot, force):
     fp = fp_by_addr.get(addr)
     if fp is None:
@@ -248,6 +280,13 @@ def _assign_tail_nets(board):
 # ===== 分区：公开 API =====
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Step 4: atopile placement")
+    parser.add_argument("--force", action="store_true",
+                        help="强制移动所有映射封装（含已手调位置）")
+    args = parser.parse_args()
+    force = args.force
+
     board = load_board(pcbnew, BOARD_FILE)
 
     # 4a. 规范化
@@ -270,81 +309,104 @@ def main():
         sys.exit(0)
 
     moved = 0
-    moved += _move_one(fp_by_addr, 'mcu', ESP32_CUTOUT[0], ESP32_CUTOUT[1], 0, False)
-    moved += _move_one(fp_by_addr, 'imu', IMU_CUTOUT[0], IMU_CUTOUT[1], 0, False)
 
-    power_x_a, power_x_b = 15.0, 19.2
-    power_y = [-7.2, -2.8, 1.6, 6.0]
-    power_zone = {
-        'power.q_power': (power_x_a, power_y[0], 90),
-        'power.d_button': (power_x_b, power_y[0], 0),
-        'power.q_latch': (power_x_a, power_y[1], 90),
-        'power.r_gate': (power_x_b, power_y[1], 0),
-        'power.r_latch_pd': (power_x_a, power_y[2], 0),
-        'power.r_button_series': (power_x_b, power_y[2], 90),
-        'power.r_button_pullup': (power_x_a, power_y[3], 90),
-        'power.r_en_pullup': (power_x_b, power_y[3], 90),
-    }
-    moved += _place_map(fp_by_addr, power_zone, False)
+    mainland_snap = _snapshot_map(MAINLAND_SNAPSHOT)
+    if mainland_snap:
+        moved += _place_map(fp_by_addr, mainland_snap, True)
+        print(f'4b. 大陆: 从 mainland_snapshot 恢复 {len(mainland_snap)} 个')
+    else:
+        moved += _move_one(fp_by_addr, 'mcu', ESP32_CUTOUT[0], ESP32_CUTOUT[1], 0, force)
+        moved += _move_one(fp_by_addr, 'imu', IMU_CUTOUT[0], IMU_CUTOUT[1], 0, force)
 
-    regulator_zone = {
-        'power.ldo': (14.0, -20.6, 90),
-        'power.c_in': (18.3, -20.6, 0),
-        'power.c_out': (18.3, -16.5, 0),
-    }
-    moved += _place_map(fp_by_addr, regulator_zone, False)
+        power_x_a, power_x_b = 15.0, 19.2
+        power_y = [-7.2, -2.8, 1.6, 6.0]
+        power_zone = {
+            'power.q_power': (power_x_a, power_y[0], 90),
+            'power.q_latch': (power_x_a, power_y[1], 90),
+            'power.r_gate': (power_x_b, power_y[1], 0),
+            'power.r_latch_pd': (power_x_a, power_y[2], 0),
+            'power.r_button_series': (power_x_b, power_y[2], 90),
+            'power.r_en_pullup': (power_x_b, power_y[3], 90),
+            'power.d_ldo_bat': (power_x_b, power_y[0], 0),
+            'power.d_ldo_usb': (power_x_a, power_y[3], 0),
+        }
+        moved += _place_map(fp_by_addr, power_zone, force)
 
-    sense_led_zone = {
-        'battery.r_top': (-18.0, -20.6, 0),
-        'battery.r_bottom': (-13.8, -20.6, 0),
-        'battery.c_filter': (-18.0, -16.5, 0),
-        'led_c_supply': (-13.8, -16.5, 0),
-        'led_r_data': (-16.0, -12.4, 90),
-    }
-    moved += _place_map(fp_by_addr, sense_led_zone, False)
+        regulator_zone = {
+            'power.ldo': (14.0, -20.6, 90),
+            'power.c_in': (18.3, -20.6, 0),
+            'power.c_out': (18.3, -16.5, 0),
+        }
+        moved += _place_map(fp_by_addr, regulator_zone, force)
 
-    handle_center_x = MAINLAND_RECT[0]
-    test_x = handle_center_x - MAINLAND_RECT[2] * 0.13
-    test_pitch = 5.0
-    gold_finger_y = SUBSTRATE_TAIL_MAX_Y - 1.5
-    nearest_test_to_finger = 32.5
-    test_last_y = gold_finger_y - nearest_test_to_finger
-    bringup_addresses = (
-        'bringup.gnd_pad', 'bringup.vcc_pad', 'bringup.vbat_pad',
-        'bringup.en_pad', 'bringup.boot_pad',
-    )
-    test_start_y = test_last_y - (len(bringup_addresses) - 1) * test_pitch
-    bringup = {
-        address: (test_x, test_start_y + index * test_pitch, 0)
-        for index, address in enumerate(bringup_addresses)
-    }
-    moved += _place_map(fp_by_addr, bringup, True)
+        sense_led_zone = {
+            'battery.r_top': (-18.0, -20.6, 0),
+            'battery.r_bottom': (-13.8, -20.6, 0),
+            'battery.c_filter': (-18.0, -16.5, 0),
+            'led_c_supply': (-13.8, -16.5, 0),
+            'led_r_data': (-16.0, -12.4, 90),
+            'pwr_led.led': (-17.0, 10.0, 0),
+            'pwr_led.r_lim': (-16.0, 10.5, 90),
+        }
+        moved += _place_map(fp_by_addr, sense_led_zone, force)
 
-    pzt_mainland = {
-        'pzt_tl.series_resistor': (-58.0, -78.0, 0),
-        'pzt_tl.bleed_resistor': (-54.0, -78.0, 0),
-        'pzt_tl.clamp_diode': (-50.0, -78.0, 0),
-        'pzt_tr.series_resistor': (50.0, -78.0, 0),
-        'pzt_tr.bleed_resistor': (54.0, -78.0, 0),
-        'pzt_tr.clamp_diode': (58.0, -78.0, 0),
-        'pzt_bl.series_resistor': (-64.0, 58.0, 0),
-        'pzt_bl.bleed_resistor': (-60.0, 58.0, 0),
-        'pzt_bl.clamp_diode': (-56.0, 58.0, 0),
-        'pzt_br.series_resistor': (56.0, 58.0, 0),
-        'pzt_br.bleed_resistor': (60.0, 58.0, 0),
-        'pzt_br.clamp_diode': (64.0, 58.0, 0),
-    }
-    moved += _place_map(fp_by_addr, pzt_mainland, False)
+    corridor_snap = _snapshot_map(CORRIDOR_SNAPSHOT)
+    if corridor_snap:
+        moved += _place_map(fp_by_addr, corridor_snap, True)
+        print(f'4b. 宽栈道: 从 corridor_snapshot 恢复 {len(corridor_snap)} 个')
+    else:
+        # 原纵向测试点列：GND/3V3/VBAT + TP_MCU_BOOT/EN 同列往拍柄方向延
+        handle_center_x = MAINLAND_RECT[0]
+        test_x = handle_center_x - MAINLAND_RECT[2] * 0.13
+        test_pitch = 5.0
+        gold_finger_y = SUBSTRATE_TAIL_MAX_Y - 4.0
+        nearest_test_to_finger = 28.0
+        test_last_y = gold_finger_y - nearest_test_to_finger
+        bringup_addresses = (
+            'bringup.gnd_pad',
+            'bringup.vcc_pad',
+            'bringup.vbat_pad',
+            'bringup.tp_mcu_boot',
+            'bringup.tp_mcu_en',
+        )
+        test_start_y = test_last_y - (len(bringup_addresses) - 1) * test_pitch
+        bringup = {
+            address: (test_x, test_start_y + index * test_pitch, 0)
+            for index, address in enumerate(bringup_addresses)
+        }
+        moved += _place_map(fp_by_addr, bringup, True)
+
+        boot_y = bringup['bringup.tp_mcu_boot'][1]
+        en_y = bringup['bringup.tp_mcu_en'][1]
+        sw_x = test_x + 8.0
+        debug_zone = {
+            'debug_sw.sw_boot': (sw_x, boot_y, 0),
+            'debug_sw.sw_en': (sw_x, en_y, 0),
+        }
+        moved += _place_map(fp_by_addr, debug_zone, True)
+
+    # PZT 前端：用 dock_snapshot 坐标（码头岛内），勿用 piezo 中心（在板外）
+    if DOCK_SNAPSHOT.is_file():
+        dock_entries = json.loads(DOCK_SNAPSHOT.read_text())
+        pzt_on_docks = {
+            entry['addr']: (float(entry['x']), float(entry['y']), float(entry['rot']))
+            for entry in dock_entries
+            if str(entry.get('addr', '')).startswith('pzt_')
+        }
+        moved += _place_map(fp_by_addr, pzt_on_docks, True)
+    else:
+        raise FileNotFoundError(f'missing dock snapshot: {DOCK_SNAPSHOT}')
 
     tail_fingers = (
         'tail.power_finger', 'tail.led_finger', 'tail.control_finger',
         'tail.usb_finger', 'tail.uart_finger',
     )
     tail_pitch = 1.27
-    tail_y = SUBSTRATE_TAIL_MAX_Y - 1.5
+    # 金手指中心靠脖子：8mm 焊盘覆盖窄区并伸进粗栈道
+    tail_y = SUBSTRATE_TAIL_MAX_Y - 4.0
     first_x = -(len(tail_fingers) - 1) * tail_pitch / 2
     for index, address in enumerate(tail_fingers):
-        moved += _move_one(fp_by_addr, address, first_x + index * tail_pitch, tail_y, 0, False)
+        moved += _move_one(fp_by_addr, address, first_x + index * tail_pitch, tail_y, 0, force)
 
     # 4e. 金手指网络
     tail_net_assigned = _assign_tail_nets(board)
