@@ -28,6 +28,7 @@ ADDR_REMAP: dict[str, str] = {
 
 # Symbols use readable pin names while the physical module footprints use
 # numeric castellated-pad numbers. Keep this mapping explicit and reviewable.
+# 与 main.ato SGFK_ESP32C6N8_Cutout 保持同步。
 MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
     "imu": {
         "1": "GND_1", "2": "VBUS", "3": "VBAT_3", "4": "VDDIO",
@@ -37,13 +38,29 @@ MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
     },
     "mcu": {
         "1": "GND_1", "2": "VCC_3V3", "3": "EN",
-        "4": "GPIO2_PZT_TL", "5": "GPIO3_PZT_TR",
+        "4": "GPIO4_IMU_TX", "5": "GPIO5_IMU_RX",
         "6": "GPIO6_PZT_BL", "7": "GPIO7_PZT_BR",
-        "8": "GPIO8_LED_DATA", "9": "GPIO9_BOOT",
-        "10": "GPIO10_USER_BTN", "11": "PWR_LATCH",
-        "13": "USB_DP", "16": "USB_DN", "24": "UART_TX",
-        "25": "UART_RX", "28": "GND_28",
+        "10": "GPIO8_LED_DATA", "11": "PWR_LATCH",
+        "13": "USB_DN", "14": "USB_DP",
+        "15": "GPIO9_BOOT", "16": "GPIO10_USER_BTN",
+        "24": "UART_RX", "25": "UART_TX",
+        "26": "GPIO3_PZT_TR", "27": "GPIO2_PZT_TL",
+        "28": "GND_28",
     },
+}
+
+# 模块脚名/网络表里常见大写名 → main.ato 顶层 signal（小写）
+NET_CANONICAL: dict[str, str] = {
+    "VBAT_SW": "vbat_sw",
+    "USB_DP": "usb_dp",
+    "USB_DN": "usb_dn",
+    "UART_TX": "uart_tx",
+    "UART_RX": "uart_rx",
+    "USB_VBUS": "vbus",
+    "PWR_LATCH": "pwr_latch",
+    "EN": "en",
+    "BOOT": "boot_btn",
+    "imu_vddio": "vcc",
 }
 # ===== 常量/配置 =====
 
@@ -126,7 +143,7 @@ def _assign_tail_nets(board):
             pn = pad.GetNumber()
             if pn not in pin_nets:
                 continue
-            net_name = pin_nets[pn]
+            net_name = NET_CANONICAL.get(pin_nets[pn], pin_nets[pn])
             net = board.FindNet(net_name)
             if net is None:
                 net = pcbnew.NETINFO_ITEM(board, net_name)
@@ -134,6 +151,37 @@ def _assign_tail_nets(board):
             pad.SetNet(net)
             assigned += 1
     return assigned
+
+
+def _merge_canonical_nets(board) -> int:
+    """把历史大写/别名网并到 main.ato 小写 signal，避免尾插与 MCU 各占半截。"""
+    import pcbnew
+
+    def ensure(name: str):
+        net = board.FindNet(name)
+        if net is None:
+            net = pcbnew.NETINFO_ITEM(board, name)
+            board.Add(net)
+        return net
+
+    moved = 0
+    for fp in board.GetFootprints():
+        for pad in fp.Pads():
+            old = pad.GetNetname()
+            if old in NET_CANONICAL:
+                pad.SetNet(ensure(NET_CANONICAL[old]))
+                moved += 1
+    for item in board.GetTracks():
+        old = item.GetNetname()
+        if old in NET_CANONICAL:
+            item.SetNet(ensure(NET_CANONICAL[old]))
+            moved += 1
+    for zone in board.Zones():
+        old = zone.GetNetname()
+        if old in NET_CANONICAL:
+            zone.SetNet(ensure(NET_CANONICAL[old]))
+            moved += 1
+    return moved
 
 
 # ===== 公开 API =====
@@ -190,6 +238,7 @@ def import_netlist(netlist_path: Path, board_path: Path):
             # reported via `missed` and fixed at their source.
 
             if net_name:
+                net_name = NET_CANONICAL.get(net_name, net_name)
                 net = board.FindNet(net_name)
                 if net is None:
                     net = pcbnew.NETINFO_ITEM(board, net_name)
@@ -205,16 +254,14 @@ def import_netlist(netlist_path: Path, board_path: Path):
         assigned += tail_n
         print(f"\n  金手指 fallback: 分配了 {tail_n} 个焊盘网络")
 
+    # 合并历史大小写分裂网（模块脚名大写 vs 顶层 signal 小写）
+    merged = _merge_canonical_nets(board)
+    if merged:
+        print(f"\n  规范网名合并: {merged} 个焊盘/走线")
+
     print(f"\n  匹配封装: {matched}/{len(addr_nets)}")
     print(f"  分配焊盘: {assigned}, 未匹配: {missed}")
     print(f"  创建网络: {board.GetNetCount() - 1}")  # 减掉默认 ""
-
-    # 网络列表统计
-    nets_with_assignments = 0
-    for n in range(board.GetNetCount()):
-        net_info = board.GetNetInfo().GetNetItem(n)
-        if net_info and net_info.GetNetname():
-            nets_with_assignments += 1
 
     board.BuildListOfNets()
     board.SanitizeNetcodes()

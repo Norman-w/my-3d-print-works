@@ -57,25 +57,23 @@
 - [ ] UART0 仅作调试焊盘/尾插可选
 - [ ] 尾插去掉与 IMU 共用的 UART，或改为独立调试口并丝印标明
 
-**IMU UART1 脚位选型（按实装：朝向 IMU 的是手册右排 GND/IO2/IO3，不是 GND/3V3/EN）：**
+**IMU UART1 脚位选型（2026-07-14 再更正，以实物为准）：**
 
-> 更正（2026-07）：V1 板上 MCU 靠近 IMU 的一侧，实物丝印为 **GND → IO2 → IO3 → TXD0 → RXD0 → …**。  
-> 此前按 footprint「天线在 −X、pin1–14=左排」推出来的「IO4/IO5 正对 IMU」与实装不符，作废。
+> 实物确认：MCU **靠近拍柄/IMU** 一侧丝印为 **GND → 3V3 → EN → IO4 → …**（footprint pin1–14，−Y）。  
+> **对侧**才是 IO2 / IO3 / UART0（pin15–28，+Y）。此前「IO2/IO3 正对 IMU」作废。  
+> **不旋转 MCU**，只改脚映射。
 
-| 候选 | 手册位置 | 相对 IMU（实装） | 结论 |
-|------|----------|------------------|------|
-| **IO2 / IO3** | 右排靠天线端 | **正对 IMU** | **推荐作 UART1**；走线最短 |
-| TXD0 / RXD0 | 同排稍后 | 正对 IMU | 留给烧录/日志，**禁止给 IMU** |
-| IO15 / IO18–23 / IO9 | 同排其余 | 正对 IMU | 备选（若 IO2/IO3 仍给 PZT） |
-| IO4 / IO5（及 IO6/7 等） | 左排 GND/3V3/EN 侧 | **背对 IMU** | 不宜再给 IMU（绕远） |
+| 候选 | 相对 IMU | 结论 |
+|------|----------|------|
+| **IO4 / IO5** | **正对 IMU（拍柄侧）** | **UART1**；走线最短 |
+| IO6 / IO7 | 同侧稍后 | PZT BL/BR |
+| IO2 / IO3 | 背对 IMU | PZT TL/TR（角上可绕） |
+| TXD0 / RXD0 | 对侧 | 仅调试，**禁止给 IMU** |
 
-**推荐分配（改板）：**
-- **IMU UART1：** `IO2 (TX) → IMU RXD`，`IO3 (RX) ← IMU TXD`
-- **4× PZT：** 改到左排 **IO4 / IO5 / IO6 / IO7**（角上本来就要拉长线，比 UART 绕远更可接受）
-- **UART0 TXD0/RXD0：** 仅调试；与 IMU 隔离
-- 固件：`config.h` 中 IMU 改为 GPIO2/3，压电改为 GPIO4/5/6/7
-
-若坚持 PZT 仍用 IO2/3，则 IMU 改用同排 **IO18+IO19**（或相邻对），仍比跨到左排短。
+**当前分配：**
+- **IMU UART1：** `IO4 (TX) → IMU RXD`，`IO5 (RX) ← IMU TXD`
+- **PZT：** TL=`IO2`，TR=`IO3`，BL=`IO6`，BR=`IO7`
+- 固件：`config.h` 与上表一致
 
 ## 4. MCU 开窗短边偏松，可再收窄
 

@@ -7,10 +7,10 @@
     (constraint edge_clearance (min 0.5mm))
     (condition "true"))
 
-# The embedded IM948 module sits flush inside an internal routed cutout.  Its
-# castellated interface is intentionally milled through plated holes, so copper
-# and holes are allowed to intersect the local Edge.Cuts geometry.  KiCad
-# evaluates rules from bottom to top, so keep this rule after the default rule.
+# The embedded IM948 / ESP32 modules sit in internal Edge.Cuts openings.
+# Castellated pads sit on those edges; default edge_clearance=0.5mm makes the
+# interactive router treat the cutout as a wall.  This rule area covers the
+# IMU cutout + the FR4 strip to the MCU south pads so UART can route.
 (rule "Embedded IMU castellated edge interface"
     (constraint edge_clearance (min -1mm))
     (condition "A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948')"))
