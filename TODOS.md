@@ -6,7 +6,8 @@
 
 装配 / 脚位 / 开窗 / UART 共总线 / 电源冷启动等已汇总到：
 
-→ **[`pcb/V1_BRINGUP_ISSUES.md`](pcb/V1_BRINGUP_ISSUES.md)**
+→ **[`pcb/V1_BRINGUP_ISSUES.md`](pcb/V1_BRINGUP_ISSUES.md)**  
+→ 改板实施计划：**[`pcb/V1_REWORK_PLAN.md`](pcb/V1_REWORK_PLAN.md)**
 
 其中与本次讨论直接相关：
 - [ ] MCU `.kicad_mod` 几何（1.5 mm 底边距）+ `main.ato` 脚位重绑（两者都要改）
