@@ -27,3 +27,13 @@
 (rule "PZT castellated edge interface"
     (constraint edge_clearance (min -1mm))
     (condition "A.memberOfFootprint('PZT_BL_SIG') || B.memberOfFootprint('PZT_BL_SIG') || A.memberOfFootprint('PZT_BL_GND') || B.memberOfFootprint('PZT_BL_GND') || A.memberOfFootprint('PZT_BR_SIG') || B.memberOfFootprint('PZT_BR_SIG') || A.memberOfFootprint('PZT_BR_GND') || B.memberOfFootprint('PZT_BR_GND') || A.memberOfFootprint('PZT_TL_SIG') || B.memberOfFootprint('PZT_TL_SIG') || A.memberOfFootprint('PZT_TL_GND') || B.memberOfFootprint('PZT_TL_GND') || A.memberOfFootprint('PZT_TR_SIG') || B.memberOfFootprint('PZT_TR_SIG') || A.memberOfFootprint('PZT_TR_GND') || B.memberOfFootprint('PZT_TR_GND')"))
+
+# 尾插金手指：半孔焊盘故意贴 Edge.Cuts。
+(rule "Tail finger castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART')"))
+
+# SGFK 半孔 1.27mm 间距、焊盘 Ø1.12 → 铜间隙约 0.15mm，低于 Default 0.20。
+(rule "MCU castellated pad pitch"
+    (constraint clearance (min 0.12mm))
+    (condition "A.memberOfFootprint('MCU_SGFK_C6') && B.memberOfFootprint('MCU_SGFK_C6')"))
