@@ -30,13 +30,13 @@ Embedded modules
 - Please inspect the embedded MCU/ESP edge-pad cutout and confirm edge solderability.
 - Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
 
-Tail gold fingers + F-side stiffener coupon (TAIL_STIFF)
+Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
 - Main handle tip has 5 plated castellations (TAIL_TIP) on F-side nets.
-- Tip outline extends into an 8x8 mm coupon with a milled break slot and L/R NPTH mouse-bite bridges.
-- Do NOT put mouse-bite circles on Edge.Cuts (breaks outline → preview becomes a big rectangle).
-- Coupon edges: Edge.Cuts semicircle scallops at tip/handle (visible castellation cut contour).
-- Coupon: single-sided F gold fingers + tip/handle castellations.
-- After depaneling: stack coupon onto main F fingers (fingers face up), solder tip castellations
+- Two breakaway 8x8 mm coupons hang from the handle side-walls (x=±8.7), not past the tip
+  (keeps billed bounding-box length; one spare if the other is damaged).
+- Each coupon: milled break slot + NPTH mouse-bite bridges (do NOT put mouse-bite circles on Edge.Cuts).
+- Coupon edges: Edge.Cuts semicircle scallops at tip/handle (castellation cut contour).
+- After depaneling: stack one coupon onto main F fingers (fingers face up), solder tip castellations
   aligned to TAIL_TIP, and solder handle castellations onto the original F gold-finger pads.
 - Goal: local thickness ~1.6 mm for the existing edge connector; B-side fingers stay on the main board.
 - Do not tin-bridge adjacent 1.27 mm fingers.
