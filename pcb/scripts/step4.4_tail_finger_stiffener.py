@@ -49,9 +49,11 @@ COUPON_Y_LO = COUPON_Y_HI - DAUGHTER
 COUPON_CY = COUPON_Y_HI - DAUGHTER / 2
 
 CASTEL_DRILL = 0.70
-CASTEL_PAD = 1.10
+CASTEL_PAD = 1.00  # 节距 1.27 → 间隙 0.27 ≥ 0.20 clearance
 CASTEL_R = CASTEL_DRILL / 2
 EDGE_W = 0.10
+TIP_SMD_W = 0.80
+TIP_SMD_H = 1.20
 
 
 # ===== 分区：私有成员 =====
@@ -185,11 +187,24 @@ def _add_detached_coupon_outline(pcbnew, board, side: int) -> None:
     shape_line(pcbnew, board, pcbnew.Edge_Cuts, (inner_x, y_lo), (inner_x, y_hi), EDGE_W)
 
 
+def _add_tip_castellation_footprint(pcbnew, board) -> None:
+    """主板尖端只做 F 面 SMD（禁止 PTH：会与 B 面异网金手指短路）。"""
+    _write_tip_fp(FP_LIB / "TailTipCastellation_5ch.kicad_mod")
+    fp = pcbnew.FOOTPRINT(board)
+    fp.SetReference("TAIL_TIP")
+    fp.SetValue("tip F pads for stiffener")
+    fp.SetPosition(xy(pcbnew, 0.0, MAIN_TIP_Y))
+    for i, (x, net_name) in enumerate(zip(FINGER_XS, FINGER_F_NETS), start=1):
+        # 焊盘中心在尖端边上，向板内偏半个高度，避免整颗掉出板外
+        pad = _add_pad_smd_f(pcbnew, fp, str(i), x, -TIP_SMD_H / 2, TIP_SMD_W, TIP_SMD_H)
+        pad.SetNet(_ensure_net(board, pcbnew, net_name))
+    board.Add(fp)
+
+
 def _write_tip_fp(path: Path) -> None:
     pads = [
-        f'  (pad "{i}" thru_hole circle (at {x:.2f} 0) '
-        f'(size {CASTEL_PAD} {CASTEL_PAD}) (drill {CASTEL_DRILL}) '
-        f'(layers "*.Cu" "*.Mask"))'
+        f'  (pad "{i}" smd rect (at {x:.2f} {-TIP_SMD_H / 2:.2f}) '
+        f'(size {TIP_SMD_W} {TIP_SMD_H}) (layers "F.Cu" "F.Mask"))'
         for i, x in enumerate(FINGER_XS, start=1)
     ]
     path.write_text(
@@ -197,12 +212,12 @@ def _write_tip_fp(path: Path) -> None:
   (version 20240108)
   (generator "SmartPaddle")
   (layer "F.Cu")
-  (descr "Main-board tip castellations for F-side stiffener stack")
-  (attr through_hole)
-  (fp_text reference "REF**" (at 0 -1.4) (layer "F.SilkS")
+  (descr "F-only tip pads for stiffener stack; NOT PTH (would short B-side fingers)")
+  (attr smd)
+  (fp_text reference "REF**" (at 0 -1.8) (layer "F.SilkS")
     (effects (font (size 0.5 0.5) (thickness 0.08)))
   )
-  (fp_text value "TIP_CASTEL" (at 0 1.4) (layer "F.Fab") hide
+  (fp_text value "TIP_F" (at 0 0.8) (layer "F.Fab") hide
     (effects (font (size 0.4 0.4) (thickness 0.07)))
   )
 {chr(10).join(pads)}
@@ -238,18 +253,6 @@ def _add_pad_smd_f(pcbnew, fp, number: str, x: float, y: float, w: float, h: flo
     pad.SetFPRelativePosition(xy(pcbnew, x, y))
     fp.Add(pad)
     return pad
-
-
-def _add_tip_castellation_footprint(pcbnew, board) -> None:
-    _write_tip_fp(FP_LIB / "TailTipCastellation_5ch.kicad_mod")
-    fp = pcbnew.FOOTPRINT(board)
-    fp.SetReference("TAIL_TIP")
-    fp.SetValue("tip castellation")
-    fp.SetPosition(xy(pcbnew, 0.0, MAIN_TIP_Y))
-    for i, (x, net_name) in enumerate(zip(FINGER_XS, FINGER_F_NETS), start=1):
-        pad = _add_pad_pth(pcbnew, fp, str(i), x, 0.0, CASTEL_PAD, CASTEL_DRILL)
-        pad.SetNet(_ensure_net(board, pcbnew, net_name))
-    board.Add(fp)
 
 
 def _add_stiffener_footprint(pcbnew, board, side: int, ref: str) -> None:

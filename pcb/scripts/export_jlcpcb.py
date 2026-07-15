@@ -31,12 +31,11 @@ Embedded modules
 - Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
 
 Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
-- Main handle tip has 5 plated castellations (TAIL_TIP) on F-side nets (pads on step2 tip edge).
+- Main handle tip has 5 F-only SMD pads (TAIL_TIP) on F-side nets for stacking (NOT PTH — PTH would short B-side fingers).
 - Two detached 8x8 mm coupons outside handle side-walls (x=±8.7), mill-gap separated (no shared Edge.Cuts).
-- step4.4 never edits the main substrate outline from step2; if outline was damaged, re-run step2→step3 first.
-- Coupon edges: Edge.Cuts semicircle scallops at tip/handle (castellation cut contour).
-- After depaneling: stack one coupon onto main F fingers (fingers face up), solder tip castellations
-  aligned to TAIL_TIP, and solder handle castellations onto the original F gold-finger pads.
+- Coupon edges: Edge.Cuts semicircle scallops + plated half-holes at tip/handle.
+- After depaneling: stack one coupon onto main F fingers (fingers face up), solder tip half-holes to TAIL_TIP,
+  and solder handle half-holes onto the original F gold-finger pads.
 - Goal: local thickness ~1.6 mm for the existing edge connector; B-side fingers stay on the main board.
 - Do not tin-bridge adjacent 1.27 mm fingers.
 """
