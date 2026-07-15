@@ -33,10 +33,22 @@
     (constraint edge_clearance (min -1mm))
     (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART')"))
 
-# 尾插加强小板 / 尖端叠焊焊盘：半孔与独立小板外形故意贴边。
+# 尾插加强垫片 / 尖端叠焊焊盘：半孔与侧墙共边故意贴边。
 (rule "Tail stiffener castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP')"))
+    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP') || A.memberOfFootprint('TAIL_MB_L') || B.memberOfFootprint('TAIL_MB_L') || A.memberOfFootprint('TAIL_MB_R') || B.memberOfFootprint('TAIL_MB_R')"))
+
+# 垫片铜条故意搭接 tip/handle 邮票孔；允许同封装内 clearance / 孔距。
+(rule "Tail stiffener strip meets castellation"
+    (constraint clearance (min -1mm))
+    (constraint hole_clearance (min -1mm))
+    (condition "(A.memberOfFootprint('TAIL_STIFF_L') && B.memberOfFootprint('TAIL_STIFF_L')) || (A.memberOfFootprint('TAIL_STIFF_R') && B.memberOfFootprint('TAIL_STIFF_R'))"))
+
+# 鼠咬 NPTH 打在共边内侧，允许贴近邻近走线/垫片铜条（掰开用，非电气）。
+(rule "Tail stiffener mousebite NPTH"
+    (constraint clearance (min 0mm))
+    (constraint hole_clearance (min 0mm))
+    (condition "A.memberOfFootprint('TAIL_MB_L') || B.memberOfFootprint('TAIL_MB_L') || A.memberOfFootprint('TAIL_MB_R') || B.memberOfFootprint('TAIL_MB_R')"))
 
 # SGFK 半孔 1.27mm 间距、焊盘 Ø1.12 → 铜间隙约 0.15mm，低于 Default 0.20。
 (rule "MCU castellated pad pitch"

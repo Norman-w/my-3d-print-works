@@ -35,7 +35,7 @@
   (pad "16" thru_hole circle (at 5.725 6.70) (size 1.15 1.15) (drill 0.60) (layers "*.Cu" "*.Mask"))
   (model "${KIPRJMOD}/../lib/3dmodels/IM948_CUTOUT.wrl"
     (offset (xyz 0 0 -0.8))
-    (scale (xyz 1 1 1))
+    (scale (xyz 0.3937008 0.3937008 0.3937008))
     (rotate (xyz 0 0 0))
   )
 )

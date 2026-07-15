@@ -37,10 +37,10 @@ SmartPaddle PCB manufacturing notes
 Board
 - PCB thickness: 0.8 mm
 - Surface finish: ENIG (gold fingers + castellations)
-- Delivery: this Gerber contains ONE main outline + TWO detached ~8x6.8 mm stiffener coupons
-  (mill-gap separated). Treat as Different Design = 3 / Panel-by-Customer if your DFM requires it.
-  Coupons are spare stiffeners, not a V-cut production panel of many copies.
-  *** Confirm with JLCPCB/JLC that multi-outline / Different Design = 3 is accepted before pay. ***
+- Delivery: this Gerber contains ONE main outline; left/right stiffener shims are
+  wall-attached (share handle side-walls at x=±8.7) with NPTH mousebites for breakaway.
+  Treat as a single design unless your DFM still wants Different Design notes.
+  *** Confirm with JLCPCB/JLC before pay if mousebite + castellated half-holes are OK. ***
 
 Embedded modules
 - IMU / MCU / PZT edge interfaces are intentional castellated / edge-solder structures.
@@ -49,14 +49,16 @@ Embedded modules
 - Please inspect the embedded MCU/ESP edge-pad cutout and confirm edge solderability.
 - Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
 
-Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
-- Main handle tip has 5 F-only SMD pads (TAIL_TIP) on F-side nets for stacking (NOT PTH).
-- Two detached ~8x6.8 mm coupons outside handle side-walls (x=±8.7), mill-gap separated.
-  Coupons are 1.2 mm shorter than the 8 mm gold fingers on the handle side so stacked H
-  castellations land mid-finger; tip edge stays flush for TAIL_TIP soldering.
-- *** MUST enable Castellated Holes / half-hole plating for coupon tip+handle PTH rows
-  (hole centers lie on Edge.Cuts with outward scallops). Do not ship as full enclosed drills. ***
-- After depaneling: stack one coupon onto main F fingers; do not discard coupons.
+Tail gold fingers + F-side stiffener shims (TAIL_STIFF_L / TAIL_STIFF_R)
+- Mechanical thickening shims ONLY — not a circuit. Pads use MECH_STIFF_* names
+  only so copper strips may meet castellations in DRC; do NOT wire these nets.
+- ~8x6.8 mm, tip flush for TAIL_TIP stack, handle side 1.2 mm shorter than gold fingers.
+- Copper strips meet tip/handle castellations; Edge.Cuts passes through hole centers.
+- Same board outline as the handle: peninsula off corridor walls at x=±8.7;
+  NPTH mousebites (TAIL_MB_L/R): 6×Ø0.60 mm, pitch 1.00 mm (edge gap 0.40),
+  JLCPCB-recommended style, on the shim side of the shared wall to snap off.
+- *** MUST enable Castellated Holes for tip/handle PTH rows on the shims. ***
+- After snap-off: stack one shim onto main F fingers; solder tip to TAIL_TIP, handle mid-finger.
 
 Power path (assembler note)
 - Sole system input: charger-module **5V OUT** → gold-finger SYS_5V_IN → PMOS → SYS_5V_SW → AP2112.
