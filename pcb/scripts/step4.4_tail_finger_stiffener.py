@@ -264,9 +264,81 @@ def _add_pad_smd_f(pcbnew, fp, number: str, x: float, y: float, w: float, h: flo
     return pad
 
 
+def _write_stiffener_fp(path: Path) -> None:
+    """同步库封装：半孔孔心在 ±CASTEL_EDGE_Y；Fab 边过孔心（看起来就是半孔，不是缩在框里）。"""
+    ey = CASTEL_EDGE_Y
+    smd_h = STIFF_SMD_H
+    pad_d = CASTEL_PAD
+    drill = CASTEL_DRILL
+    # Fab 顶/底边过孔心；CrtYd 再外扩半圆铣削余量
+    fab = f'  (fp_rect (start {-COUPON_W / 2:.2f} {-ey:.2f}) (end {COUPON_W / 2:.2f} {ey:.2f}) (stroke (width 0.10) (type solid)) (fill none) (layer "F.Fab"))'
+    crtyd = (
+        f'  (fp_rect (start {-COUPON_W / 2 - 0.2:.2f} {-ey - CASTEL_R - 0.15:.2f}) '
+        f'(end {COUPON_W / 2 + 0.2:.2f} {ey + CASTEL_R + 0.15:.2f}) '
+        f'(stroke (width 0.05) (type solid)) (fill none) (layer "F.CrtYd"))'
+    )
+    # Fab 半圆提示（与板上 Edge.Cuts 同向），避免只看到“整圆在框内”
+    scallop_bits: list[str] = []
+    for x in FINGER_XS:
+        scallop_bits.append(
+            f'  (fp_arc (start {x - CASTEL_R:.2f} {ey:.2f}) (mid {x:.2f} {ey + CASTEL_R:.2f}) '
+            f'(end {x + CASTEL_R:.2f} {ey:.2f}) (stroke (width 0.10) (type solid)) (layer "F.Fab"))'
+        )
+        scallop_bits.append(
+            f'  (fp_arc (start {x + CASTEL_R:.2f} {-ey:.2f}) (mid {x:.2f} {-ey - CASTEL_R:.2f}) '
+            f'(end {x - CASTEL_R:.2f} {-ey:.2f}) (stroke (width 0.10) (type solid)) (layer "F.Fab"))'
+        )
+    smd = [
+        f'  (pad "{i}" smd rect (at {x:.2f} 0) (size 0.8 {smd_h:.2f}) (layers "F.Cu" "F.Mask"))'
+        for i, x in enumerate(FINGER_XS, start=1)
+    ]
+    tip = [
+        f'  (pad "T{i}" thru_hole circle (at {x:.2f} {ey:.2f}) '
+        f'(size {pad_d:.2f} {pad_d:.2f}) (drill {drill:.2f}) (layers "*.Cu" "*.Mask"))'
+        for i, x in enumerate(FINGER_XS, start=1)
+    ]
+    handle = [
+        f'  (pad "H{i}" thru_hole circle (at {x:.2f} {-ey:.2f}) '
+        f'(size {pad_d:.2f} {pad_d:.2f}) (drill {drill:.2f}) (layers "*.Cu" "*.Mask"))'
+        for i, x in enumerate(FINGER_XS, start=1)
+    ]
+    path.write_text(
+        f"""(footprint "TailFingerStiffener_5ch_P1.27"
+  (version 20240108)
+  (generator "SmartPaddle")
+  (layer "F.Cu")
+  (descr "F-side stiffener {COUPON_W:.1f}x{COUPON_H:.1f}mm; tip/handle PTH centers ON edge for castellations")
+  (tags "gold finger stiffener castellation SmartPaddle")
+  (attr through_hole)
+  (fp_text reference "REF**" (at 0 0) (layer "F.SilkS")
+    (effects (font (size 0.6 0.6) (thickness 0.1)))
+  )
+  (fp_text value "STIFFENER F stack" (at 0 0) (layer "F.Fab")
+    (effects (font (size 0.45 0.45) (thickness 0.08)))
+  )
+{fab}
+{crtyd}
+{chr(10).join(scallop_bits)}
+  (fp_text user "TIP" (at 0 {ey - 0.9:.2f}) (layer "F.SilkS")
+    (effects (font (size 0.45 0.45) (thickness 0.08)))
+  )
+  (fp_text user "HANDLE" (at 0 {-ey + 0.9:.2f}) (layer "F.SilkS")
+    (effects (font (size 0.4 0.4) (thickness 0.07)))
+  )
+{chr(10).join(smd)}
+{chr(10).join(tip)}
+{chr(10).join(handle)}
+)
+""",
+        encoding="utf-8",
+    )
+
+
 def _add_stiffener_footprint(pcbnew, board, side: int, ref: str) -> None:
+    _write_stiffener_fp(FP_LIB / "TailFingerStiffener_5ch_P1.27.kicad_mod")
     _, inner_x, outer_x = _coupon_xs(side)
     cx = (inner_x + outer_x) / 2
+    ey = CASTEL_EDGE_Y
     fp = pcbnew.FOOTPRINT(board)
     fp.SetFPIDAsString("SmartPaddle:TailFingerStiffener_5ch_P1.27")
     fp.SetAttributes(pcbnew.FP_THROUGH_HOLE)
@@ -274,11 +346,13 @@ def _add_stiffener_footprint(pcbnew, board, side: int, ref: str) -> None:
     fp.SetValue("F stiffener coupon")
     fp.SetPosition(xy(pcbnew, cx, COUPON_CY))
     fp.SetOrientation(pcbnew.EDA_ANGLE(0, pcbnew.DEGREES_T))
+    # 不在板上手动画 Fab/CrtYd：KiCad Python 的 PCB_SHAPE 坐标易成绝对坐标，会误报 courtyard。
+    # 真实裁切以板级 Edge.Cuts 半圆为准（孔心压边）；库文件已同步 6.8mm 几何供对照。
     for i, (x, net_name) in enumerate(zip(FINGER_XS, FINGER_F_NETS), start=1):
         net = _ensure_net(board, pcbnew, net_name)
         pad = _add_pad_smd_f(pcbnew, fp, str(i), x, 0.0, 0.8, STIFF_SMD_H)
         pad.SetNet(net)
-        for pn, py in ((f"T{i}", CASTEL_EDGE_Y), (f"H{i}", -CASTEL_EDGE_Y)):
+        for pn, py in ((f"T{i}", ey), (f"H{i}", -ey)):
             p = _add_pad_pth(pcbnew, fp, pn, x, py, CASTEL_PAD, CASTEL_DRILL)
             p.SetNet(net)
     board.Add(fp)
