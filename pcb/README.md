@@ -8,7 +8,7 @@
 | 1 | `scripts/step1_clear_and_reference.py` | 清空全部元素，绘制 SCAD 参考轮廓、坐标十字、PZT 腔体圆、X±/Y± 方向标记 | `Dwgs.User` |
 | 2 | `scripts/step2_substrate_outline.py` | 清空 `Edge.Cuts`，绘制 PCB 基材外形（内缩 0.30mm、PZT 码头缩回、拍柄截断） | `Edge.Cuts` |
 | 3 | `scripts/step3_module_cutouts.py` | 刷新 ESP32 和 IMU 模块矩形开孔，并生成 IMU 嵌入焊接 rule area | `Edge.Cuts` + rule area |
-| 4 | `scripts/step4_ato_placement.py` | 规范化 ato 封装元数据，将元器件按相对坐标布置到各区 | 封装位置 / 属性 |
+| 4.4 | `scripts/step4.4_tail_finger_stiffener.py` | 左右独立 8×8 加强小板（不改主板外形） | 独立 Edge.Cuts + 封装 |
 
 Step1 是破坏性的（清空后重新开始），Step2~4 仅修改各自负责的层。
 
@@ -33,9 +33,12 @@ $KPY pcb/scripts/step4_ato_placement.py --force
 $KPY pcb/scripts/step1_clear_and_reference.py   # 清机械层+重绘参考线
 $KPY pcb/scripts/step2_substrate_outline.py      # 重绘基材外形
 $KPY pcb/scripts/step3_module_cutouts.py         # 重绘模块开孔和 IMU rule area
+$KPY pcb/scripts/step4.4_tail_finger_stiffener.py  # 可选：左右加强小板（不改主板外形）
 $KPY pcb/scripts/step4_ato_placement.py          # 仅移动仍位于 ato 网格位置的封装
 ```
 
+step4.4 只增删自己的独立小板外形与 `TAIL_*` 封装，**不会**改 step2 侧墙。若旧脚本挖坏了外形，先重跑 step2→step3。
+```
 ### 截图验证
 
 ```sh

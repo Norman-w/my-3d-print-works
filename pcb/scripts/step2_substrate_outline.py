@@ -42,22 +42,44 @@ SCREW_KEEP_OUT_PREFIX = "SCREW_CLEARANCE_KEEP_OUT"
 
 
 def _make_keepout_zone(zone_id, x, y, radius, layer):
+    """KiCad 9 兼容 keepout；缺 uuid/net 的旧格式会导致板文件无法加载。"""
+    import uuid
+
     n_seg = 48
-    pts = [f"(xy {x + radius * math.cos(2 * math.pi * i / n_seg):.6f} "
-           f"{y + radius * math.sin(2 * math.pi * i / n_seg):.6f})"
-           for i in range(n_seg)]
+    pts = [
+        f"(xy {x + radius * math.cos(2 * math.pi * i / n_seg):.6f} "
+        f"{y + radius * math.sin(2 * math.pi * i / n_seg):.6f})"
+        for i in range(n_seg)
+    ]
     name = f"{SCREW_KEEP_OUT_PREFIX}_{layer}_{x:.3f}_{y:.3f}"
     return f"""\t(zone
-\t\t(zone_id {zone_id})
-\t\t(name "{name}")
-\t\t(keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed))
+\t\t(net 0)
+\t\t(net_name "")
 \t\t(layers "{layer}")
-\t\t(hatch edge 0.508)
+\t\t(uuid "{uuid.uuid4()}")
+\t\t(name "{name}")
+\t\t(hatch edge 0.5)
 \t\t(priority 100)
-\t\t(connect_pads no)
-\t\t(min_thickness 0.15)
+\t\t(connect_pads
+\t\t\t(clearance 0)
+\t\t)
+\t\t(min_thickness 0.25)
 \t\t(filled_areas_thickness no)
-\t\t(fill yes (mode solid) (thermal_gap 0.508) (thermal_bridge_width 0.508))
+\t\t(keepout
+\t\t\t(tracks not_allowed)
+\t\t\t(vias not_allowed)
+\t\t\t(pads allowed)
+\t\t\t(copperpour not_allowed)
+\t\t\t(footprints allowed)
+\t\t)
+\t\t(placement
+\t\t\t(enabled no)
+\t\t\t(sheetname "")
+\t\t)
+\t\t(fill
+\t\t\t(thermal_gap 0.5)
+\t\t\t(thermal_bridge_width 0.5)
+\t\t)
 \t\t(polygon
 \t\t\t(pts
 \t\t\t\t{" ".join(pts)}
@@ -68,7 +90,9 @@ def _make_keepout_zone(zone_id, x, y, radius, layer):
 
 def _remove_generated_keepouts(content: str) -> str:
     return re.sub(
-        rf'\n\t\(zone\n\t\t\(zone_id \d+\)\n\t\t\(name "{re.escape(SCREW_KEEP_OUT_PREFIX)}[^"]+"\).*?\n\t\)',
+        rf'\n\t\(zone\n(?:\t\t\(zone_id \d+\)\n)?(?:\t\t\(net 0\)\n\t\t\(net_name ""\)\n)?'
+        rf'(?:\t\t\(layers "[FB]\.Cu"\)\n)?(?:\t\t\(uuid "[^"]+"\)\n)?'
+        rf'\t\t\(name "{re.escape(SCREW_KEEP_OUT_PREFIX)}[^"]+"\).*?\n\t\)',
         '',
         content,
         flags=re.S,
