@@ -33,6 +33,11 @@
     (constraint edge_clearance (min -1mm))
     (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART')"))
 
+# 尾插加强小板 / 尖端叠焊焊盘：半孔与独立小板外形故意贴边。
+(rule "Tail stiffener castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP')"))
+
 # SGFK 半孔 1.27mm 间距、焊盘 Ø1.12 → 铜间隙约 0.15mm，低于 Default 0.20。
 (rule "MCU castellated pad pitch"
     (constraint clearance (min 0.12mm))

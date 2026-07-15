@@ -36,7 +36,7 @@ DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 FP_LIB = ROOT / "pcb" / "layouts" / "lib" / "footprints.pretty"
 
 FINGER_XS = (-2.54, -1.27, 0.0, 1.27, 2.54)
-FINGER_F_NETS = ("SYS_5V_IN", "SYS_5V_SW", "btn_sw", "usb_dp", "uart_tx")
+FINGER_F_NETS = ("SYS_5V_IN", "SYS_5V_SW", "btn_sw", "USB_DP", "UART_TX")
 
 MAIN_TIP_Y = 97.7
 
