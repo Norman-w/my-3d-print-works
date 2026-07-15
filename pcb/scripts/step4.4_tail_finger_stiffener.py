@@ -69,7 +69,9 @@ MOUSE_DRILL = 0.60
 MOUSE_PAD = 0.60
 MOUSE_PITCH = 1.00  # 孔心距 → 孔边间隙 0.40mm
 MOUSE_COUNT = 6  # 一组 6 孔，沿共边均匀排布
-MOUSE_INSET = 0.55  # 墙与最近铜条之间，避免与手指条撞
+# 须满足 hole_clearance≥0.25：相对最近铜条边 ≥ drill/2+0.25
+# 右条 pad1 左缘≈9.76；相对大陆 bat_cell_p 也不能过近 → inset=0.45（间隙≈0.31）
+MOUSE_INSET = 0.50
 
 
 # ===== 分区：私有成员 =====

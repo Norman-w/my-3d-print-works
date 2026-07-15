@@ -1,56 +1,42 @@
 (version 1)
 
-# Restore the normal milling tolerance everywhere else.  The project-level
-# minimum is kept at 0mm so the more specific embedded-module rule above can
-# legally allow edge overlap.
+# 板级默认：普通铜皮/走线相对 Edge.Cuts ≥ 0.2mm。
+# 故意半孔仅通过具名封装 / courtyard / 局部 rule area 放行（无全局 castellation 豁免）。
 (rule "Default board edge copper clearance"
-    (constraint edge_clearance (min 0.5mm))
+    (constraint edge_clearance (min 0.2mm))
     (condition "true"))
 
-# The embedded IM948 / ESP32 modules sit in internal Edge.Cuts openings.
-# Castellated pads sit on those edges; default edge_clearance=0.5mm makes the
-# interactive router treat the cutout as a wall.  This rule area covers the
-# IMU cutout + the FR4 strip to the MCU south pads so UART can route.
 (rule "Embedded IMU castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948')"))
+    (condition "A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948') || A.intersectsCourtyard('IMU_IM948') || B.intersectsCourtyard('IMU_IM948') || A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE')"))
 
-# The ESP32 module is also soldered as an embedded edge/castellated interface.
-# Only this footprint is allowed to violate the normal board-edge clearance.
 (rule "Embedded MCU castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('MCU_SGFK_C6') || B.memberOfFootprint('MCU_SGFK_C6')"))
+    (condition "A.memberOfFootprint('MCU_SGFK_C6') || B.memberOfFootprint('MCU_SGFK_C6') || A.intersectsCourtyard('MCU_SGFK_C6') || B.intersectsCourtyard('MCU_SGFK_C6') || A.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || A.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE') || B.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE')"))
 
-# The PZT dock pads are intentional plated half-hole / edge solder pads.
-# Keep the exception on the explicit edge-pad footprints rather than disabling
-# edge clearance for the whole board.
 (rule "PZT castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('PZT_BL_SIG') || B.memberOfFootprint('PZT_BL_SIG') || A.memberOfFootprint('PZT_BL_GND') || B.memberOfFootprint('PZT_BL_GND') || A.memberOfFootprint('PZT_BR_SIG') || B.memberOfFootprint('PZT_BR_SIG') || A.memberOfFootprint('PZT_BR_GND') || B.memberOfFootprint('PZT_BR_GND') || A.memberOfFootprint('PZT_TL_SIG') || B.memberOfFootprint('PZT_TL_SIG') || A.memberOfFootprint('PZT_TL_GND') || B.memberOfFootprint('PZT_TL_GND') || A.memberOfFootprint('PZT_TR_SIG') || B.memberOfFootprint('PZT_TR_SIG') || A.memberOfFootprint('PZT_TR_GND') || B.memberOfFootprint('PZT_TR_GND')"))
+    (condition "A.memberOfFootprint('PZT_BL_SIG') || B.memberOfFootprint('PZT_BL_SIG') || A.intersectsCourtyard('PZT_BL_SIG') || B.intersectsCourtyard('PZT_BL_SIG') || A.intersectsArea('PZT_BL_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_BL_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_BL_GND') || B.memberOfFootprint('PZT_BL_GND') || A.intersectsCourtyard('PZT_BL_GND') || B.intersectsCourtyard('PZT_BL_GND') || A.memberOfFootprint('PZT_BR_SIG') || B.memberOfFootprint('PZT_BR_SIG') || A.intersectsCourtyard('PZT_BR_SIG') || B.intersectsCourtyard('PZT_BR_SIG') || A.intersectsArea('PZT_BR_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_BR_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_BR_GND') || B.memberOfFootprint('PZT_BR_GND') || A.intersectsCourtyard('PZT_BR_GND') || B.intersectsCourtyard('PZT_BR_GND') || A.memberOfFootprint('PZT_TL_SIG') || B.memberOfFootprint('PZT_TL_SIG') || A.intersectsCourtyard('PZT_TL_SIG') || B.intersectsCourtyard('PZT_TL_SIG') || A.intersectsArea('PZT_TL_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_TL_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_TL_GND') || B.memberOfFootprint('PZT_TL_GND') || A.intersectsCourtyard('PZT_TL_GND') || B.intersectsCourtyard('PZT_TL_GND') || A.memberOfFootprint('PZT_TR_SIG') || B.memberOfFootprint('PZT_TR_SIG') || A.intersectsCourtyard('PZT_TR_SIG') || B.intersectsCourtyard('PZT_TR_SIG') || A.intersectsArea('PZT_TR_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_TR_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_TR_GND') || B.memberOfFootprint('PZT_TR_GND') || A.intersectsCourtyard('PZT_TR_GND') || B.intersectsCourtyard('PZT_TR_GND') || A.memberOfFootprint('PZT_BL_D_CLAMP') || B.memberOfFootprint('PZT_BL_D_CLAMP') || A.intersectsCourtyard('PZT_BL_D_CLAMP') || B.intersectsCourtyard('PZT_BL_D_CLAMP') || A.memberOfFootprint('PZT_BR_D_CLAMP') || B.memberOfFootprint('PZT_BR_D_CLAMP') || A.intersectsCourtyard('PZT_BR_D_CLAMP') || B.intersectsCourtyard('PZT_BR_D_CLAMP') || A.memberOfFootprint('PZT_TL_D_CLAMP') || B.memberOfFootprint('PZT_TL_D_CLAMP') || A.intersectsCourtyard('PZT_TL_D_CLAMP') || B.intersectsCourtyard('PZT_TL_D_CLAMP') || A.memberOfFootprint('PZT_TR_D_CLAMP') || B.memberOfFootprint('PZT_TR_D_CLAMP') || A.intersectsCourtyard('PZT_TR_D_CLAMP') || B.intersectsCourtyard('PZT_TR_D_CLAMP')"))
 
-# 尾插金手指：半孔焊盘故意贴 Edge.Cuts。
 (rule "Tail finger castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART')"))
+    (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.intersectsCourtyard('TAIL_PWR') || B.intersectsCourtyard('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.intersectsCourtyard('TAIL_LED') || B.intersectsCourtyard('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.intersectsCourtyard('TAIL_CTL') || B.intersectsCourtyard('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.intersectsCourtyard('TAIL_USB') || B.intersectsCourtyard('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART') || A.intersectsCourtyard('TAIL_UART') || B.intersectsCourtyard('TAIL_UART') || A.intersectsArea('TAIL_FINGER_CASTELLATED_EDGE') || B.intersectsArea('TAIL_FINGER_CASTELLATED_EDGE') || A.intersectsArea('TAIL_SHOULDER_EDGE_INTERFACE') || B.intersectsArea('TAIL_SHOULDER_EDGE_INTERFACE')"))
 
-# 尾插加强垫片 / 尖端叠焊焊盘：半孔与侧墙共边故意贴边。
-(rule "Tail stiffener castellated edge interface"
+(rule "Tail stiffener / tip castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP') || A.memberOfFootprint('TAIL_MB_L') || B.memberOfFootprint('TAIL_MB_L') || A.memberOfFootprint('TAIL_MB_R') || B.memberOfFootprint('TAIL_MB_R')"))
+    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.intersectsCourtyard('TAIL_STIFF_L') || B.intersectsCourtyard('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.intersectsCourtyard('TAIL_STIFF_R') || B.intersectsCourtyard('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP') || A.intersectsCourtyard('TAIL_TIP') || B.intersectsCourtyard('TAIL_TIP') || A.intersectsArea('TAIL_STIFF_CASTELLATED_EDGE') || B.intersectsArea('TAIL_STIFF_CASTELLATED_EDGE') || A.intersectsArea('TAIL_STIFF_R_CASTELLATED_EDGE') || B.intersectsArea('TAIL_STIFF_R_CASTELLATED_EDGE')"))
 
-# 垫片铜条故意搭接 tip/handle 邮票孔；允许同封装内 clearance / 孔距。
+
+# PZT 坞信号网仅服务贴边半孔接口；允许其走线贴开窗/坞边（非全板全局豁免）。
+(rule "PZT dock signal net edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.NetName == 'pzt_bl_signal' || B.NetName == 'pzt_bl_signal' || A.NetName == 'pzt_br_signal' || B.NetName == 'pzt_br_signal' || A.NetName == 'pzt_tl_signal' || B.NetName == 'pzt_tl_signal' || A.NetName == 'pzt_tr_signal' || B.NetName == 'pzt_tr_signal' || A.NetName == 'bleed_resistor-SIGNAL_PAD-0' || B.NetName == 'bleed_resistor-SIGNAL_PAD-0' || A.NetName == 'bleed_resistor-SIGNAL_PAD-1' || B.NetName == 'bleed_resistor-SIGNAL_PAD-1' || A.NetName == 'bleed_resistor-SIGNAL_PAD-2' || B.NetName == 'bleed_resistor-SIGNAL_PAD-2' || A.NetName == 'bleed_resistor-SIGNAL_PAD-3' || B.NetName == 'bleed_resistor-SIGNAL_PAD-3'"))
+
 (rule "Tail stiffener strip meets castellation"
     (constraint clearance (min -1mm))
     (constraint hole_clearance (min -1mm))
     (condition "(A.memberOfFootprint('TAIL_STIFF_L') && B.memberOfFootprint('TAIL_STIFF_L')) || (A.memberOfFootprint('TAIL_STIFF_R') && B.memberOfFootprint('TAIL_STIFF_R'))"))
 
-# 鼠咬 NPTH 打在共边内侧，允许贴近邻近走线/垫片铜条（掰开用，非电气）。
-(rule "Tail stiffener mousebite NPTH"
-    (constraint clearance (min 0mm))
-    (constraint hole_clearance (min 0mm))
-    (condition "A.memberOfFootprint('TAIL_MB_L') || B.memberOfFootprint('TAIL_MB_L') || A.memberOfFootprint('TAIL_MB_R') || B.memberOfFootprint('TAIL_MB_R')"))
-
-# SGFK 半孔 1.27mm 间距、焊盘 Ø1.12 → 铜间隙约 0.15mm，低于 Default 0.20。
 (rule "MCU castellated pad pitch"
     (constraint clearance (min 0.12mm))
     (condition "A.memberOfFootprint('MCU_SGFK_C6') && B.memberOfFootprint('MCU_SGFK_C6')"))
