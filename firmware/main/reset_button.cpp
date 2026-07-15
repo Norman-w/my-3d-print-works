@@ -1,5 +1,6 @@
 #include "reset_button.h"
 #include "device_storage.h"
+#include "config.h"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "driver/gpio.h"
@@ -9,7 +10,8 @@
 #include "const.h"
 
 // ===== 常量/配置 =====
-#define RESET_BUTTON_GPIO          GPIO_NUM_9
+// 工程用 BOOT 键（GPIO9）；日常电源/长按关机见 power_control（GPIO18）
+#define RESET_BUTTON_GPIO          BOOT_BTN_GPIO
 #define RESET_BUTTON_ACTIVE_LEVEL  0
 #define SHORT_PRESS_MAX_MS         500     // 短按判定阈值(ms)
 #define LONG_PRESS_DURATION_MS     10000   // 长按触发重置的持续时间(ms)

@@ -9,6 +9,7 @@ being invented inside geometry scripts.
 from "parts.ato" import Resistor
 from "parts.ato" import Capacitor
 from "parts.ato" import Diode
+from "parts.ato" import Schottky1A_SOD123
 from "parts.ato" import BAT54S
 from "parts.ato" import PChannelMOSFET_SOT23
 from "parts.ato" import NChannelMOSFET_SOT23
@@ -36,7 +37,8 @@ component SGFK_ESP32C6N8_Cutout:
     pin GPIO7_PZT_BR
     pin GPIO8_LED_DATA
     pin GPIO9_BOOT
-    pin GPIO10_USER_BTN
+    # pad 11 = GPIO10 → 电源自锁；pad 16 = GPIO18 → 尾部读键（勿再叫 GPIO10）
+    pin GPIO18_USER_BTN
     pin PWR_LATCH
     pin USB_DN
     pin USB_DP
@@ -58,7 +60,7 @@ component SGFK_ESP32C6N8_Cutout:
     USB_DN ~ pin 13
     USB_DP ~ pin 14
     GPIO9_BOOT ~ pin 15
-    GPIO10_USER_BTN ~ pin 16
+    GPIO18_USER_BTN ~ pin 16
     UART_RX ~ pin 24
     UART_TX ~ pin 25
     GPIO3_PZT_TR ~ pin 26
@@ -159,7 +161,9 @@ module TailHarness5P2S:
 
 
 module PowerLatchAndRegulator:
-    """软开关 + LDO。V2：去 PW_D_BTN / 3V3 按键上拉；USB/电池二极管或进 LDO。"""
+    """软开关 + LDO。
+    V3：开机拉低 P_GATE 与 MCU 读键用二极管隔离；LDO 电源 OR 用 1A 肖特基（SS14）。
+    """
     pin VBAT_IN
     pin VBAT_SW
     pin VCC_3V3
@@ -177,8 +181,10 @@ module PowerLatchAndRegulator:
     r_button_series = new Resistor
     r_latch_pd = new Resistor
     r_en_pullup = new Resistor
-    d_ldo_bat = new Diode
-    d_ldo_usb = new Diode
+    # 开机隔离：阳极→P_GATE，阴极→BUTTON_RAW；按下按键时把门极拉低，不把 VBAT 灌进 MCU
+    d_btn_start = new Diode
+    d_ldo_bat = new Schottky1A_SOD123
+    d_ldo_usb = new Schottky1A_SOD123
     ldo = new AP2112K_3V3
     c_in = new Capacitor
     c_out = new Capacitor
@@ -186,8 +192,9 @@ module PowerLatchAndRegulator:
     r_button_series.value = "1k"
     r_latch_pd.value = "100k"
     r_en_pullup.value = "10k"
-    d_ldo_bat.value = "BAT54"
-    d_ldo_usb.value = "BAT54"
+    d_btn_start.value = "1N4148W"
+    d_ldo_bat.value = "SS14"
+    d_ldo_usb.value = "SS14"
     c_in.value = "10uF"
     c_out.value = "10uF"
 
@@ -203,10 +210,13 @@ module PowerLatchAndRegulator:
 
     r_gate.p1 ~ P_GATE
     r_gate.p2 ~ VBAT_IN
-    # 按键到 GND：经限流电阻拉低 P_GATE 开机；同网给 MCU 读键（内部上拉，无 3V3 外拉）
+
+    d_btn_start.anode ~ P_GATE
+    d_btn_start.cathode ~ BUTTON_RAW
+    # MCU 读键：经 1k 看 BUTTON_RAW；上电后用内部上拉（高=松开，低=按下）
     r_button_series.p1 ~ BUTTON_RAW
-    r_button_series.p2 ~ P_GATE
-    BUTTON_GPIO ~ BUTTON_RAW
+    r_button_series.p2 ~ BUTTON_GPIO
+
     r_latch_pd.p1 ~ PWR_LATCH
     r_latch_pd.p2 ~ GND
     r_en_pullup.p1 ~ EN
@@ -378,7 +388,7 @@ module SmartPaddleRigid:
     imu.GND_1 ~ gnd
     imu.GND_8 ~ gnd
     imu.GND_16 ~ gnd
-    imu.VDDIO ~ vcc
+    # VDDIO 悬空：锂电(~3.7V)供电时由模块内部产生约 3.0V；勿接 3V3 以免对顶
     imu.ADIN ~ vbat_sense
     imu.RXD ~ imu_uart_tx
     imu.TXD ~ imu_uart_rx
@@ -391,7 +401,7 @@ module SmartPaddleRigid:
     mcu.EN ~ en
     power.EN ~ en
     mcu.GPIO9_BOOT ~ boot_btn
-    mcu.GPIO10_USER_BTN ~ user_btn
+    mcu.GPIO18_USER_BTN ~ user_btn
     mcu.PWR_LATCH ~ pwr_latch
     power.PWR_LATCH ~ pwr_latch
     power.P_GATE ~ p_gate

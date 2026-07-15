@@ -22,13 +22,25 @@ component Capacitor:
 
 
 component Diode:
+    """小信号二极管（开机隔离等）。默认 1N4148W / BAS16，SOD-323。"""
     designator_prefix = "D"
-    value = "Schottky"
+    value = "1N4148W"
     signal anode
     signal cathode
     anode ~ pin 2
     cathode ~ pin 1
     footprint = "Diode_SMD:D_SOD-323"
+
+
+component Schottky1A_SOD123:
+    """主电源 OR 用 1A 肖特基（SS14 / MBR130 等），勿用 BAT54 串整机供电。"""
+    designator_prefix = "D"
+    value = "SS14"
+    signal anode
+    signal cathode
+    anode ~ pin 2
+    cathode ~ pin 1
+    footprint = "Diode_SMD:D_SOD-123"
 
 
 component BAT54S:

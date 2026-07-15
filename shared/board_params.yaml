@@ -1,3 +1,7 @@
+# DEPRECATED — 旧 V3 柔性板参数快照，勿再用于刚性 PCB 下单/采购/固件脚位。
+# 现行电源/半孔/GPIO 以 pcb/main.ato + firmware/main/config.h 为准。
+# 保留本文件仅供历史对照；新工作请改 enclosure/parameters.scad / pcb 流水线产物。
+#
 # SmartPaddle — 从 OpenSCAD parameters.scad 提取的 FPC 布局参数
 # 自动生成，与 enclosure/parameters.scad 保持同步
 # 所有坐标单位：mm，坐标系原点同 SCAD (椭圆中心 Y=0)

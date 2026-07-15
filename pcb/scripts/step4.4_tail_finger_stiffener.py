@@ -191,6 +191,8 @@ def _add_tip_castellation_footprint(pcbnew, board) -> None:
     """主板尖端只做 F 面 SMD（禁止 PTH：会与 B 面异网金手指短路）。"""
     _write_tip_fp(FP_LIB / "TailTipCastellation_5ch.kicad_mod")
     fp = pcbnew.FOOTPRINT(board)
+    fp.SetFPIDAsString("SmartPaddle:TailTipCastellation_5ch")
+    fp.SetAttributes(pcbnew.FP_SMD)
     fp.SetReference("TAIL_TIP")
     fp.SetValue("tip F pads for stiffener")
     fp.SetPosition(xy(pcbnew, 0.0, MAIN_TIP_Y))
@@ -259,6 +261,8 @@ def _add_stiffener_footprint(pcbnew, board, side: int, ref: str) -> None:
     _, inner_x, outer_x = _coupon_xs(side)
     cx = (inner_x + outer_x) / 2
     fp = pcbnew.FOOTPRINT(board)
+    fp.SetFPIDAsString("SmartPaddle:TailFingerStiffener_5ch_P1.27")
+    fp.SetAttributes(pcbnew.FP_THROUGH_HOLE)
     fp.SetReference(ref)
     fp.SetValue("F stiffener coupon")
     fp.SetPosition(xy(pcbnew, cx, COUPON_CY))

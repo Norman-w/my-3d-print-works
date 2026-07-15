@@ -15,6 +15,7 @@
 #include "esp_mac.h"
 #include "status_led.h"
 #include "reset_button.h"
+#include "power_control.h"
 #include "ws_data_server.h"
 #include "im948_sensor.h"
 #include "im948_data.h"
@@ -44,7 +45,7 @@ static void init_peripherals(void) {
     status_led::init();
     status_led::set_boot();
 
-    // Reset 按钮
+    // BOOT 键恢复出厂（工程用）；日常开关机走尾键 GPIO18（已在 app_main 开头锁存）
     reset_button_init();
 }
 
@@ -130,6 +131,9 @@ static void imu_loop(void *arg) {
 
 // ===== 主入口 =====
 extern "C" void app_main() {
+    // 0. 电源自锁必须最先拉高（松手尾键前完成）
+    ESP_ERROR_CHECK(power_control_init());
+
     // 1. NVS 初始化
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -140,7 +144,7 @@ extern "C" void app_main() {
     ESP_LOGI(TAG, "SmartPaddle 固件启动");
     ESP_LOGI(TAG, "压电: 4 通道 GPIO ISR + CPU cycle TDOA");
 
-    // 2. 外设初始化（LED、Reset 按钮）
+    // 2. 外设初始化（LED、BOOT Reset）
     init_peripherals();
 
     // 3. 网络初始化（WiFi AP → DNS → HTTP → WebSocket）

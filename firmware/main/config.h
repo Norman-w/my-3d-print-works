@@ -37,5 +37,13 @@
 // --- LED ---
 #define LED_PIN GPIO_NUM_8  // WS2812C RGB LED
 
-// 电源自锁：硬件 PWR_LATCH 高电平保持开机（见 main.ato）。
-// 具体 GPIO 号随 SGFK 半孔映射，固件接好后在 power 模块里绑脚。
+// --- 电源自锁 + 尾部用户键（ESP32-C6-WROOM-1）---
+// pad 11 = GPIO10 → PWR_LATCH（高电平保持开机）
+// pad 16 = GPIO18 → 尾键读回（经 1k，MCU 内部上拉）
+#define PWR_LATCH_GPIO       GPIO_NUM_10
+#define USER_BTN_GPIO        GPIO_NUM_18
+#define USER_BTN_ACTIVE_LEVEL 0
+#define POWER_OFF_HOLD_MS    2000
+
+// BOOT 键（pad 15 = GPIO9）仍用于工程恢复出厂等，见 reset_button.cpp
+#define BOOT_BTN_GPIO        GPIO_NUM_9

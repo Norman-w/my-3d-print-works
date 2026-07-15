@@ -22,6 +22,9 @@ SmartPaddle PCB manufacturing notes
 Board
 - PCB thickness: 0.8 mm
 - Surface finish: ENIG (gold fingers + castellations)
+- Delivery: this Gerber contains ONE main outline + TWO detached 8x8 mm stiffener coupons
+  (mill-gap separated). Treat as Different Design = 3 / Panel-by-Customer if your DFM requires it.
+  Coupons are spare stiffeners, not a V-cut production panel of many copies.
 
 Embedded modules
 - IMU / MCU / PZT edge interfaces are intentional castellated / edge-solder structures.
@@ -29,6 +32,7 @@ Embedded modules
 - Please process IMU and PZT PTH edge pads as castellated / plated half-hole features.
 - Please inspect the embedded MCU/ESP edge-pad cutout and confirm edge solderability.
 - Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
+- DRC copper_edge_clearance on those castellations / TAIL_TIP / coupon half-holes is intentional.
 
 Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
 - Main handle tip has 5 F-only SMD pads (TAIL_TIP) on F-side nets for stacking (NOT PTH — PTH would short B-side fingers).
@@ -38,6 +42,11 @@ Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
   and solder handle half-holes onto the original F gold-finger pads.
 - Goal: local thickness ~1.6 mm for the existing edge connector; B-side fingers stay on the main board.
 - Do not tin-bridge adjacent 1.27 mm fingers.
+- Do not discard the small coupons; bag them with the main boards.
+
+Power path (assembler note)
+- LDO input OR diodes are 1A Schottky SOD-123 (SS14 class), not BAT54.
+- Soft-start button diode isolates P_GATE from MCU sense net.
 """
 
 
@@ -108,10 +117,17 @@ def main() -> None:
     ])
 
     (out / "ORDER_NOTES.txt").write_text(ORDER_NOTES, encoding="utf-8")
-    zip_base = out / "smartpaddle_jlcpcb"
-    shutil.make_archive(str(zip_base), "zip", out)
+
+    # Zip contents only (gerbers/drill/reports/notes). Never nest the zip inside itself.
+    zip_path = out.parent / f"{out.name}_smartpaddle_jlcpcb.zip"
+    if zip_path.exists():
+        zip_path.unlink()
+    shutil.make_archive(str(zip_path.with_suffix("")), "zip", out)
     print(f"Export complete: {out}")
-    print(f"Upload archive: {zip_base.with_suffix('.zip')}")
+    print(f"Upload archive: {zip_path}")
+    error_n = sum(1 for v in json.loads((reports / "drc.json").read_text(encoding="utf-8")).get("violations", []) if v.get("severity") == "error")
+    if error_n:
+        print(f"WARNING: DRC still reports {error_n} error(s); review before ordering.")
 
 
 if __name__ == "__main__":

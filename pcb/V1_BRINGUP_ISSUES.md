@@ -99,7 +99,7 @@
 - [x] 半孔边单独 setback，避免「整圈 +0.2」导致短边过大空
 - [x] 同步改 `IM948_CUTOUT.kicad_mod` 焊盘中心与开窗一致性
 
-## 6. 电源软开关：`PW_D_BTN` 冷启动误开（已实测）
+## 6. 电源软开关：`PW_D_BTN` 冷启动误开（已实测）→ V3 隔离读键
 
 **现象：** 接电池不按键也会半开 / 常电；拆掉肖特基 `PW_D_BTN` 后门极可回到 ≈VBAT，开关恢复关断。
 
@@ -107,9 +107,18 @@
 
 **临时：** 本版可保持 `PW_D_BTN` 不装，用门极对地点触开机。
 
-**改板：**
-- [ ] 开机拉低门极 与 MCU 读键上拉 **隔离**（分路二极管/分网络/关断切断上拉）
-- [ ] 文档「拉低 GPIO 自锁」与电路极性对齐（实际高电平自锁）
+**改板（V3，`main.ato` PowerLatchAndRegulator）：**
+- [x] 开机拉低门极 与 MCU 读键 **二极管隔离**：`d_btn_start`（1N4148W）阳极=`P_GATE`、阴极=`BUTTON_RAW`；MCU 经 1k 读 `BUTTON_GPIO`
+- [x] 文档「拉高 GPIO 自锁」与电路极性对齐（`PWR_LATCH` 高 → NMOS 拉低 P-MOS 门极）
+- [x] 固件 `power_control`：上电尽早拉高 GPIO10；尾键 GPIO18 长按 ≥2s 关机
+- [x] pad 命名：`PWR_LATCH`=pad11/GPIO10；用户键=`GPIO18_USER_BTN`=pad16（勿再标成 GPIO10）
+
+## 6b. IM948 VDDIO / LDO 电源 OR（V3）
+
+- [x] `imu.VDDIO` **不再**接到板载 3V3（锂电供电时悬空，由模块内稳压约 3.0V）
+- [x] `D_LDO_BAT` / `D_LDO_USB` 改为 **SS14（SOD-123，1A 级）**，替换串主路径的 BAT54
+- [x] KiCad：`D_BTN_START`（原 D1）隔离 `p_gate`↔`btn_sw`；`PW_R_BTN_SER_1K`=`btn_sw`↔`user_btn`；LDO 二极管已为 SOD-123/`SS14`；IM948 pad4 `VDDIO` 已悬空
+- [ ] 若手上有旧焊板：可飞线/换件按上条手工改；新板以当前 `main.ato` + 布局为准
 
 ## 7. 大陆主出入口宽栈道上的 BOOT/EN 按键与 TP
 

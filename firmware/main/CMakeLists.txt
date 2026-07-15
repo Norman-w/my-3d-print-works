@@ -12,6 +12,7 @@ idf_component_register(
         "http.cpp"
         "status_led.cpp"
         "reset_button.cpp"
+        "power_control.cpp"
         "ws_data_server.cpp"
         "im948_sdk.cpp"
         "im948_sensor.cpp"

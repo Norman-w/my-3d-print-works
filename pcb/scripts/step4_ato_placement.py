@@ -49,8 +49,9 @@ READABLE_REFS = {
     'power.r_button_series': ('PW_R_BTN_SER_1K', '1k'),
     'power.r_latch_pd': ('PW_R_LATCH_PD_100K', '100k'),
     'power.r_en_pullup': ('PW_R_EN_PU_10K', '10k'),
-    'power.d_ldo_bat': ('D_LDO_BAT', 'BAT54'),
-    'power.d_ldo_usb': ('D_LDO_USB', 'BAT54'),
+    'power.d_btn_start': ('D_BTN_START', '1N4148W'),
+    'power.d_ldo_bat': ('D_LDO_BAT', 'SS14'),
+    'power.d_ldo_usb': ('D_LDO_USB', 'SS14'),
     'power.ldo': ('PW_LDO_3V3', 'AP2112K-3.3'),
     'power.c_in': ('PW_C_IN_10U', '10uF'),
     'power.c_out': ('PW_C_OUT_10U', '10uF'),
@@ -71,8 +72,8 @@ READABLE_REFS = {
     'bringup.gnd_pad': ('TP_GND', 'GND'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
     'bringup.vbat_pad': ('TP_VBAT', 'VBAT_SW'),
-    'bringup.tp_mcu_en': ('TP_EN', 'EN'),
-    'bringup.tp_mcu_boot': ('TP_BOOT', 'BOOT'),
+    'bringup.tp_mcu_en': ('TP_MCU_EN', 'EN'),
+    'bringup.tp_mcu_boot': ('TP_MCU_BOOT', 'BOOT'),
 }
 
 MODEL_SCALES = {'mcu': 0.3937008, 'imu': 0.3937008}

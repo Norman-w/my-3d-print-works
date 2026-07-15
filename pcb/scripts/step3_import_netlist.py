@@ -42,7 +42,7 @@ MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
         "6": "GPIO6_PZT_BL", "7": "GPIO7_PZT_BR",
         "10": "GPIO8_LED_DATA", "11": "PWR_LATCH",
         "13": "USB_DN", "14": "USB_DP",
-        "15": "GPIO9_BOOT", "16": "GPIO10_USER_BTN",
+        "15": "GPIO9_BOOT", "16": "GPIO18_USER_BTN",
         "24": "UART_RX", "25": "UART_TX",
         "26": "GPIO3_PZT_TR", "27": "GPIO2_PZT_TL",
         "28": "GND_28",
