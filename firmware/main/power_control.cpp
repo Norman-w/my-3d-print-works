@@ -88,3 +88,10 @@ void power_control_shutdown(void) {
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
+
+/*
+ * 复位行为（刻意故障安全）：
+ * 电池供电时 GPIO10 复位后变高阻，PWR_LATCH 被 100k 下拉 → 锁存释放 → 关机。
+ * esp_restart / WDT / panic / 恢复出厂后的重启都不会自动保持开机，需再按尾键。
+ * 若产品要“复位后仍开机”，需改硬件保持，不能只改固件。
+ */
