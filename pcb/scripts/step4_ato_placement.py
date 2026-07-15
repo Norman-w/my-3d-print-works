@@ -23,7 +23,6 @@ from pcb.tools.kicad_update_utils import load_board, save_board, xy
 from pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
     IMU_CUTOUT,
-    MAINLAND_RECT,
     SUBSTRATE_TAIL_MAX_Y,
 )
 
@@ -50,8 +49,6 @@ READABLE_REFS = {
     'power.r_latch_pd': ('PW_R_LATCH_PD_100K', '100k'),
     'power.r_en_pullup': ('PW_R_EN_PU_10K', '10k'),
     'power.d_btn_start': ('D_BTN_START', '1N4148W'),
-    'power.d_ldo_bat': ('D_LDO_BAT', 'SS14'),
-    'power.d_ldo_usb': ('D_LDO_USB', 'SS14'),
     'power.ldo': ('PW_LDO_3V3', 'AP2112K-3.3'),
     'power.c_in': ('PW_C_IN_10U', '10uF'),
     'power.c_out': ('PW_C_OUT_10U', '10uF'),
@@ -64,16 +61,13 @@ READABLE_REFS = {
     'pwr_led.r_lim': ('R_MCU_PWR_1K', '1k'),
     'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
     'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
-    'tail.power_finger': ('TAIL_PWR', 'F:VBAT B:GND'),
+    'tail.power_finger': ('TAIL_PWR', 'F:SYS_5V_IN B:GND'),
     'tail.led_finger': ('TAIL_LED', 'F:LED+ B:DIN'),
-    'tail.control_finger': ('TAIL_CTL', 'F:BTN B:VBUS'),
+    'tail.control_finger': ('TAIL_CTL', 'F:BTN B:BAT_CELL_P'),
     'tail.usb_finger': ('TAIL_USB', 'F:D+ B:D-'),
     'tail.uart_finger': ('TAIL_UART', 'F:TX B:RX'),
-    'bringup.gnd_pad': ('TP_GND', 'GND'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
-    'bringup.vbat_pad': ('TP_VBAT', 'VBAT_SW'),
-    'bringup.tp_mcu_en': ('TP_MCU_EN', 'EN'),
-    'bringup.tp_mcu_boot': ('TP_MCU_BOOT', 'BOOT'),
+    'bringup.sys5_pad': ('TP_SYS_5V_SW', 'SYS_5V_SW'),
 }
 
 MODEL_SCALES = {'mcu': 0.3937008, 'imu': 0.3937008}
@@ -88,9 +82,9 @@ PZT_PARTS = {
 }
 
 TAIL_NET_MAP = {
-    'tail.power_finger': {'F': 'vbat_in', 'B': 'gnd'},
-    'tail.led_finger': {'F': 'vbat_sw', 'B': 'led_din'},
-    'tail.control_finger': {'F': 'btn_sw', 'B': 'vbus'},
+    'tail.power_finger': {'F': 'sys_5v_in', 'B': 'gnd'},
+    'tail.led_finger': {'F': 'sys_5v_sw', 'B': 'led_din'},
+    'tail.control_finger': {'F': 'btn_sw', 'B': 'bat_cell_p'},
     'tail.usb_finger': {'F': 'usb_dp', 'B': 'usb_dn'},
     'tail.uart_finger': {'F': 'uart_tx', 'B': 'uart_rx'},
 }
@@ -328,8 +322,7 @@ def main():
             'power.r_latch_pd': (power_x_a, power_y[2], 0),
             'power.r_button_series': (power_x_b, power_y[2], 90),
             'power.r_en_pullup': (power_x_b, power_y[3], 90),
-            'power.d_ldo_bat': (power_x_b, power_y[0], 0),
-            'power.d_ldo_usb': (power_x_a, power_y[3], 0),
+            'power.d_btn_start': (power_x_b, power_y[0], 0),
         }
         moved += _place_map(fp_by_addr, power_zone, force)
 
@@ -351,38 +344,23 @@ def main():
         }
         moved += _place_map(fp_by_addr, sense_led_zone, force)
 
+    # 大陆快照缺失时，把两颗 bringup TP 放在电源区（与现行手布一致）
+    if not mainland_snap:
+        bringup_zone = {
+            'bringup.vcc_pad': (19.05, -13.335, 0),
+            'bringup.sys5_pad': (19.05, -25.781, 0),
+        }
+        moved += _place_map(fp_by_addr, bringup_zone, True)
+
     corridor_snap = _snapshot_map(CORRIDOR_SNAPSHOT)
     if corridor_snap:
         moved += _place_map(fp_by_addr, corridor_snap, True)
         print(f'4b. 宽栈道: 从 corridor_snapshot 恢复 {len(corridor_snap)} 个')
     else:
-        # 原纵向测试点列：GND/3V3/VBAT + TP_MCU_BOOT/EN 同列往拍柄方向延
-        handle_center_x = MAINLAND_RECT[0]
-        test_x = handle_center_x - MAINLAND_RECT[2] * 0.13
-        test_pitch = 5.0
-        gold_finger_y = SUBSTRATE_TAIL_MAX_Y - 4.0
-        nearest_test_to_finger = 28.0
-        test_last_y = gold_finger_y - nearest_test_to_finger
-        bringup_addresses = (
-            'bringup.gnd_pad',
-            'bringup.vcc_pad',
-            'bringup.vbat_pad',
-            'bringup.tp_mcu_boot',
-            'bringup.tp_mcu_en',
-        )
-        test_start_y = test_last_y - (len(bringup_addresses) - 1) * test_pitch
-        bringup = {
-            address: (test_x, test_start_y + index * test_pitch, 0)
-            for index, address in enumerate(bringup_addresses)
-        }
-        moved += _place_map(fp_by_addr, bringup, True)
-
-        boot_y = bringup['bringup.tp_mcu_boot'][1]
-        en_y = bringup['bringup.tp_mcu_en'][1]
-        sw_x = test_x + 8.0
+        # 宽栈道仅 BOOT/EN 轻触
         debug_zone = {
-            'debug_sw.sw_boot': (sw_x, boot_y, 0),
-            'debug_sw.sw_en': (sw_x, en_y, 0),
+            'debug_sw.sw_boot': (4.87, 49.706, 0),
+            'debug_sw.sw_en': (4.87, 56.72, 0),
         }
         moved += _place_map(fp_by_addr, debug_zone, True)
 

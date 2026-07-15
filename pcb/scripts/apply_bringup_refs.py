@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-"""Apply SW_/TP_ readable refs + corridor_snapshot positions only (no net/track edits)."""
+"""Apply SW_/TP_ readable refs + snapshot positions only (no net/track edits).
 
+- 宽栈道：SW_BOOT / SW_EN ← corridor_snapshot
+- 大陆：TP_3V3 / TP_SYS_5V_SW ← mainland_snapshot
+"""
+
+# ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
 import argparse
@@ -8,19 +13,26 @@ import json
 import sys
 from pathlib import Path
 
+# ===== 分区：常量/配置 =====
 ROOT = Path(__file__).resolve().parents[2]
-SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
+CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
+MAINLAND_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "mainland_snapshot.json"
 READABLE = {
     "debug_sw.sw_boot": ("SW_BOOT", "4.5x4.5"),
     "debug_sw.sw_en": ("SW_EN", "4.5x4.5"),
-    "bringup.gnd_pad": ("TP_GND", "GND"),
     "bringup.vcc_pad": ("TP_3V3", "3V3"),
-    "bringup.vbat_pad": ("TP_VBAT", "VBAT_SW"),
-    "bringup.tp_mcu_boot": ("TP_MCU_BOOT", "BOOT"),
-    "bringup.tp_mcu_en": ("TP_MCU_EN", "EN"),
+    "bringup.sys5_pad": ("TP_SYS_5V_SW", "SYS_5V_SW"),
 }
 
 
+# ===== 分区：私有成员 =====
+def _load_snap(path: Path) -> dict:
+    if not path.is_file():
+        return {}
+    return {e["addr"]: e for e in json.loads(path.read_text(encoding="utf-8"))}
+
+
+# ===== 分区：公开 API =====
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--board", type=Path, required=True)
@@ -32,7 +44,9 @@ def main() -> int:
     if board is None:
         print("LoadBoard failed", board_path)
         return 2
-    snap = {e["addr"]: e for e in json.loads(SNAPSHOT.read_text())}
+    snap = {}
+    snap.update(_load_snap(MAINLAND_SNAPSHOT))
+    snap.update(_load_snap(CORRIDOR_SNAPSHOT))  # SW 覆盖同名时以栈道为准
     for fp in list(board.GetFootprints()):
         addr = None
         try:

@@ -9,7 +9,6 @@ being invented inside geometry scripts.
 from "parts.ato" import Resistor
 from "parts.ato" import Capacitor
 from "parts.ato" import Diode
-from "parts.ato" import Schottky1A_SOD123
 from "parts.ato" import BAT54S
 from "parts.ato" import PChannelMOSFET_SOT23
 from "parts.ato" import NChannelMOSFET_SOT23
@@ -140,32 +139,35 @@ module PZTDock:
 
 
 module TailHarness5P2S:
-    """Ten independent, double-sided 1.27 mm edge fingers at the handle tip."""
-    pin VBAT
+    """柄尾金手指。SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
+    烧录走 USB D+/D− 金手指；充电仓 Type-C 通常无 D+/D−。
+    """
+    pin SYS_5V_IN
     pin GND
     pin LED_PLUS
     pin LED_DIN
     pin BUTTON
-    pin USB_VBUS
+    pin BAT_CELL_P
     pin USB_DP
     pin USB_DN
     pin UART_TX
     pin UART_RX
 
-    power_finger = new EdgeFingerPad;  power_finger.front ~ VBAT; power_finger.back ~ GND
+    power_finger = new EdgeFingerPad;  power_finger.front ~ SYS_5V_IN; power_finger.back ~ GND
     led_finger = new EdgeFingerPad;    led_finger.front ~ LED_PLUS; led_finger.back ~ LED_DIN
-    control_finger = new EdgeFingerPad; control_finger.front ~ BUTTON; control_finger.back ~ USB_VBUS
+    control_finger = new EdgeFingerPad; control_finger.front ~ BUTTON; control_finger.back ~ BAT_CELL_P
     usb_finger = new EdgeFingerPad;    usb_finger.front ~ USB_DP; usb_finger.back ~ USB_DN
     uart_finger = new EdgeFingerPad;   uart_finger.front ~ UART_TX; uart_finger.back ~ UART_RX
 
 
 
 module PowerLatchAndRegulator:
-    """软开关 + LDO。
-    V3：开机拉低 P_GATE 与 MCU 读键用二极管隔离；LDO 电源 OR 用 1A 肖特基（SS14）。
+    """软开关 + LDO（V4 最简可靠）。
+    唯一系统输入：充电总成 5V OUT → SYS_5V_IN → PMOS → SYS_5V_SW → AP2112。
+    不做 USB/电池二极管或；按键开机与 MCU 读键仍用 1N4148W 隔离。
     """
-    pin VBAT_IN
-    pin VBAT_SW
+    pin SYS_5V_IN
+    pin SYS_5V_SW
     pin VCC_3V3
     pin GND
     pin EN
@@ -173,7 +175,6 @@ module PowerLatchAndRegulator:
     pin BUTTON_RAW
     pin BUTTON_GPIO
     pin P_GATE
-    pin USB_VBUS
 
     q_power = new PChannelMOSFET_SOT23
     q_latch = new NChannelMOSFET_SOT23
@@ -181,10 +182,8 @@ module PowerLatchAndRegulator:
     r_button_series = new Resistor
     r_latch_pd = new Resistor
     r_en_pullup = new Resistor
-    # 开机隔离：阳极→P_GATE，阴极→BUTTON_RAW；按下按键时把门极拉低，不把 VBAT 灌进 MCU
+    # 开机隔离：阳极→P_GATE，阴极→BUTTON_RAW
     d_btn_start = new Diode
-    d_ldo_bat = new Schottky1A_SOD123
-    d_ldo_usb = new Schottky1A_SOD123
     ldo = new AP2112K_3V3
     c_in = new Capacitor
     c_out = new Capacitor
@@ -193,27 +192,22 @@ module PowerLatchAndRegulator:
     r_latch_pd.value = "100k"
     r_en_pullup.value = "10k"
     d_btn_start.value = "1N4148W"
-    d_ldo_bat.value = "SS14"
-    d_ldo_usb.value = "SS14"
     c_in.value = "10uF"
     c_out.value = "10uF"
 
-    signal ldo_vin
-
     q_power.gate ~ P_GATE
-    q_power.source ~ VBAT_IN
-    q_power.drain ~ VBAT_SW
+    q_power.source ~ SYS_5V_IN
+    q_power.drain ~ SYS_5V_SW
 
     q_latch.gate ~ PWR_LATCH
     q_latch.source ~ GND
     q_latch.drain ~ P_GATE
 
     r_gate.p1 ~ P_GATE
-    r_gate.p2 ~ VBAT_IN
+    r_gate.p2 ~ SYS_5V_IN
 
     d_btn_start.anode ~ P_GATE
     d_btn_start.cathode ~ BUTTON_RAW
-    # MCU 读键：经 1k 看 BUTTON_RAW；上电后用内部上拉（高=松开，低=按下）
     r_button_series.p1 ~ BUTTON_RAW
     r_button_series.p2 ~ BUTTON_GPIO
 
@@ -222,17 +216,13 @@ module PowerLatchAndRegulator:
     r_en_pullup.p1 ~ EN
     r_en_pullup.p2 ~ VCC_3V3
 
-    # USB 5V 与电池开关轨二极管或，只喂 LDO（不灌 VBAT_SW）
-    d_ldo_bat.anode ~ VBAT_SW
-    d_ldo_bat.cathode ~ ldo_vin
-    d_ldo_usb.anode ~ USB_VBUS
-    d_ldo_usb.cathode ~ ldo_vin
-    ldo.vin ~ ldo_vin
-    ldo.en ~ ldo_vin
+    # 开关后的 5V 直接进 LDO（充电总成已升压，无 OR 二极管压降问题）
+    ldo.vin ~ SYS_5V_SW
+    ldo.en ~ SYS_5V_SW
     ldo.gnd ~ GND
     ldo.vout ~ VCC_3V3
 
-    c_in.p1 ~ ldo_vin
+    c_in.p1 ~ SYS_5V_SW
     c_in.p2 ~ GND
     c_out.p1 ~ VCC_3V3
     c_out.p2 ~ GND
@@ -258,18 +248,12 @@ module LEDInterface:
 
 
 module TestPads:
-    """Bringup 测试点：GND / 3V3 / VBAT_SW / TP_MCU_EN / TP_MCU_BOOT。"""
-    pin GND
+    """Bringup：仅大陆两颗 — TP_3V3 / TP_SYS_5V_SW。BOOT/EN 用宽栈道轻触，不再留 TP。"""
     pin VCC_3V3
-    pin VBAT_SW
-    pin EN
-    pin BOOT
+    pin SYS_5V_SW
 
-    gnd_pad = new SmallWirePad;   gnd_pad.contact ~ GND
     vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
-    vbat_pad = new SmallWirePad;  vbat_pad.contact ~ VBAT_SW
-    tp_mcu_en = new SmallWirePad; tp_mcu_en.contact ~ EN
-    tp_mcu_boot = new SmallWirePad; tp_mcu_boot.contact ~ BOOT
+    sys5_pad = new SmallWirePad;  sys5_pad.contact ~ SYS_5V_SW
 
 
 module McuDebugControls:
@@ -300,7 +284,8 @@ module McuPowerLed:
 
 
 module BatterySense:
-    pin VBAT_SW
+    """可选电芯电压采样。必须接充电总成 B+（bat_cell_p），禁止接 SYS_5V_*。"""
+    pin BAT_CELL_P
     pin GND
     pin SENSE
 
@@ -311,7 +296,7 @@ module BatterySense:
     r_bottom.value = "1M"
     c_filter.value = "100nF"
 
-    r_top.p1 ~ VBAT_SW
+    r_top.p1 ~ BAT_CELL_P
     r_top.p2 ~ SENSE
     r_bottom.p1 ~ SENSE
     r_bottom.p2 ~ GND
@@ -342,8 +327,8 @@ module SmartPaddleRigid:
     pzt_bl = new PZTDock
 
     signal gnd
-    signal vbat_in
-    signal vbat_sw
+    signal sys_5v_in
+    signal sys_5v_sw
     signal vcc
     signal en
     signal usb_dp
@@ -361,35 +346,31 @@ module SmartPaddleRigid:
     signal p_gate
     signal imu_key
     signal imu_gpio
-    signal vbat_sense
-    signal vbus
+    signal bat_cell_p
+    signal bat_sense
 
     signal pzt_tr_signal
     signal pzt_tl_signal
     signal pzt_br_signal
     signal pzt_bl_signal
 
-    # Power rails.
-    tail.VBAT ~ vbat_in
+    # Power：充电总成 5V OUT 为唯一输入；无 USB/电池 OR。
+    tail.SYS_5V_IN ~ sys_5v_in
     tail.GND ~ gnd
-    power.VBAT_IN ~ vbat_in
-    power.VBAT_SW ~ vbat_sw
+    power.SYS_5V_IN ~ sys_5v_in
+    power.SYS_5V_SW ~ sys_5v_sw
     power.VCC_3V3 ~ vcc
     power.GND ~ gnd
-    power.USB_VBUS ~ vbus
     mcu.VCC_3V3 ~ vcc
     mcu.GND_1 ~ gnd
     mcu.GND_28 ~ gnd
 
-    # IM948：独占 UART1（IO2/IO3），与 MCU UART0 / 尾插调试口隔离。
-    imu.VBAT_3 ~ vbat_sw
-    imu.VBAT_15 ~ vbat_sw
-    imu.VBUS ~ vbus
+    # IM948：仅 VBUS←SYS_5V_SW；VBAT/VDDIO 悬空（模块内 IO 供电）。
+    imu.VBUS ~ sys_5v_sw
     imu.GND_1 ~ gnd
     imu.GND_8 ~ gnd
     imu.GND_16 ~ gnd
-    # VDDIO 悬空：锂电(~3.7V)供电时由模块内部产生约 3.0V；勿接 3V3 以免对顶
-    imu.ADIN ~ vbat_sense
+    imu.ADIN ~ bat_sense
     imu.RXD ~ imu_uart_tx
     imu.TXD ~ imu_uart_rx
     imu.KEY ~ imu_key
@@ -416,8 +397,7 @@ module SmartPaddleRigid:
     pwr_led.VCC_3V3 ~ vcc
     pwr_led.GND ~ gnd
 
-    # USB Serial/JTAG + 尾插 UART0 调试（不并 IMU）。
-    tail.USB_VBUS ~ vbus
+    # 烧录/调试金手指（与充电仓 Type-C 分离；仓口通常无 D+/D−）。
     tail.USB_DP ~ usb_dp
     tail.USB_DN ~ usb_dn
     tail.UART_TX ~ uart_tx
@@ -427,24 +407,23 @@ module SmartPaddleRigid:
     mcu.UART_TX ~ uart_tx
     mcu.UART_RX ~ uart_rx
 
-    # External WS2812B-style LED wire interface.
-    tail.LED_PLUS ~ vbat_sw
+    # 状态灯吃开关后 5V。
+    tail.LED_PLUS ~ sys_5v_sw
     tail.LED_DIN ~ led_din
-    led_c_supply.p1 ~ vbat_sw
+    led_c_supply.p1 ~ sys_5v_sw
     led_c_supply.p2 ~ gnd
     led_r_data.p1 ~ led_data
     led_r_data.p2 ~ led_din
     mcu.GPIO8_LED_DATA ~ led_data
 
-    battery.VBAT_SW ~ vbat_sw
+    # 低电采样：只接电芯 B+（金手指 BAT_CELL_P），绝不能接 SYS_5V_*。
+    tail.BAT_CELL_P ~ bat_cell_p
+    battery.BAT_CELL_P ~ bat_cell_p
     battery.GND ~ gnd
-    battery.SENSE ~ vbat_sense
+    battery.SENSE ~ bat_sense
 
-    bringup.VBAT_SW ~ vbat_sw
+    bringup.SYS_5V_SW ~ sys_5v_sw
     bringup.VCC_3V3 ~ vcc
-    bringup.GND ~ gnd
-    bringup.EN ~ en
-    bringup.BOOT ~ boot_btn
 
     # PZT：TL/TR 用对侧 IO2/IO3；BL/BR 仍在拍柄侧 IO6/IO7。
     mcu.GPIO3_PZT_TR ~ pzt_tr_signal

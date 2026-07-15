@@ -55,9 +55,11 @@ Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
 - After depaneling: stack one coupon onto main F fingers; do not discard coupons.
 
 Power path (assembler note)
-- LDO input OR diodes are 1A Schottky SOD-123 (SS14 class), not BAT54.
-- Soft-start button diode isolates P_GATE from MCU sense net.
-- SS14 does NOT fix Li-ion→3.3V dropout under Wi-Fi peaks — see V1_BRINGUP_ISSUES.md.
+- Sole system input: charger-module **5V OUT** → gold-finger SYS_5V_IN → PMOS → SYS_5V_SW → AP2112.
+- No USB/battery OR diodes (SS14 removed).
+- IM948 powered from SYS_5V_SW on VBUS only; VBAT/VDDIO pads must remain open.
+- Optional cell sense: wire charger B+ to BAT_CELL_P finger (not SYS_5V).
+- Programming: use gold-finger USB D+/D− (charger Type-C usually has no data). Power board via charger 5V OUT while flashing.
 """
 
 

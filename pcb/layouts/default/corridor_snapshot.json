@@ -10,35 +10,5 @@
     "x": 4.87,
     "y": 56.72,
     "rot": 0.0
-  },
-  {
-    "addr": "bringup.tp_mcu_boot",
-    "x": -3.13,
-    "y": 49.706,
-    "rot": 0.0
-  },
-  {
-    "addr": "bringup.tp_mcu_en",
-    "x": -3.13,
-    "y": 56.72,
-    "rot": 0.0
-  },
-  {
-    "addr": "bringup.gnd_pad",
-    "x": -3.13,
-    "y": 43.0,
-    "rot": 0.0
-  },
-  {
-    "addr": "bringup.vbat_pad",
-    "x": -3.13,
-    "y": 63.5,
-    "rot": 0.0
-  },
-  {
-    "addr": "bringup.vcc_pad",
-    "x": 19.05,
-    "y": -13.335,
-    "rot": 0.0
   }
 ]

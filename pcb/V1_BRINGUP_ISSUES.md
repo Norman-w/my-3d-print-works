@@ -117,27 +117,38 @@
 
 - [x] `imu.VDDIO` **不再**接到板载 3V3（锂电供电时悬空，由模块内稳压约 3.0V）
 - [x] `D_LDO_BAT` / `D_LDO_USB` 改为 **SS14（SOD-123，1A 级）**，替换串主路径的 BAT54
-- [x] KiCad：`D_BTN_START`（原 D1）隔离 `p_gate`↔`btn_sw`；`PW_R_BTN_SER_1K`=`btn_sw`↔`user_btn`；LDO 二极管已为 SOD-123/`SS14`；IM948 pad4 `VDDIO` 已悬空
-- [ ] 若手上有旧焊板：可飞线/换件按上条手工改；新板以当前 `main.ato` + 布局为准
+- [x] KiCad：`D_BTN_START` 隔离保留；**已删** `D_LDO_BAT`/`D_LDO_USB`；网名 `SYS_5V_IN`/`SYS_5V_SW`；IMU VBUS←SYS_5V_SW，VBAT/VDDIO 悬空；`BAT_CELL_P` 供可选 B+ 采样
+- [ ] **手布电源区**（本轮不自动布线）：见下方 V4 手布清单
 
-## 6c. SS14 未解决压差（打板前必须选型）
+### V4 手布清单（你来布）
 
-`SS14` 只解决 BAT54 **电流额定**不足，**不**解决：
+1. `TAIL_PWR.F (SYS_5V_IN)` → `PW_Q_LOAD` source → drain `SYS_5V_SW`
+2. `SYS_5V_SW` → `PW_LDO` VIN/EN、`PW_C_IN`、`IMU.VBUS`、`TAIL_LED.F`、状态灯电容
+3. 按键：`P_GATE` → `D_BTN_START` 阳极；阴极/`btn_sw` → `PW_R_BTN_SER` → `MCU pad16 (user_btn)`；`MCU pad11`=`PWR_LATCH`
+4. 可选：`BAT_CELL_P` → `BAT_R_TOP`（不要接到 SYS_5V）
+5. 清掉宽栈道里误穿的 USB/BOOT/UART 与旧 VBAT 残铜；`D_BTN_START` 勿压到 `PW_R_LATCH_PD`（btn_sw↔gnd 间距）
+6. 半孔 `copper_edge_clearance`：手布完成后对 **逐项** 加 KiCad exclusion（不要整类放行）
 
-`VBAT → PMOS_Rds(on) → SS14_Vf → AP2112 dropout ≥ 3.3V`
+目标：非豁免 error=0；主板本体 unconnected=0（加强片空气线可另计/单独下单说明）。
 
-粗算（Wi‑Fi 峰值）：
-- `VBAT_min`（单节锂电常用截止）≈ 3.3–3.5 V（按你们保护板为准）
-- PMOS 压降（峰值百 mA–A 级）可达数十 mV～百 mV+
-- SS14 Vf @ 峰值可达 ~0.3–0.5 V
-- AP2112K-3.3 dropout 典型约 0.2–0.4 V 量级（看电流）
+### V4 ECO 当前板况（手布前）
 
-合计后，在正常放电区间（例如 3.6–3.7 V）**经常不够**稳定 3.3 V。打板前必须三选一并写进设计：
-1. 理想二极管 / 电源 MUX（极低压降 OR）
-2. buck-boost（电池全区间稳 3.3 V）
-3. 降系统稳压目标并确认 ESP32-C6 / IM948 / 外设兼容
+- Bringup TP：仅 **`TP_3V3` / `TP_SYS_5V_SW`**（大陆电源区）；`TP_GND` / `TP_MCU_*` 已删。位置进 `mainland_snapshot`（step4.1b）。
+- 宽栈道快照仅剩 **SW_BOOT / SW_EN**（step4.1c）。
+- DRC：**error = 0，unconnected = 0**（手布完成）。剩余 warning 仅为丝印 + `lib_footprint_mismatch`。
+- 半孔：`default.kicad_dru` 已对 IMU/MCU/PZT/尾插做 edge_clearance 例外。
+- **勿用** `20260715-092443` 导包；正式 ZIP 在验收通过后再导出。
 
-在选定前，**禁止**把「已换 SS14」当成电源问题关闭。
+## 6c. SS14 未解决压差（打板前必须选型）→ **V4 已取消**
+
+业务已定：充电总成自带 4.2V 充 / 2.9V 过放 / ~1.2A 过流 / **5V 升压 OUT**。  
+**不做** USB/电池双路 OR，**删除** SS14。唯一系统输入：
+
+`充电总成 5V OUT → SYS_5V_IN → PMOS 软开关 → SYS_5V_SW → AP2112 → 3V3`
+
+IM948：`VBUS←SYS_5V_SW`；`VBAT`/`VDDIO` **悬空**。  
+低电采样若需要：另引电芯 **B+** → 金手指 `BAT_CELL_P` / 分压，**禁止**测 `SYS_5V_*`。  
+烧录：充电仓 Type-C **通常无 D+/D−**，用柄尾金手指 USB D+/D−（上电靠总成 5V OUT 或向 `SYS_5V_IN` 注入 5V）。
 
 ## 6d. 电源锁存 vs MCU 复位（故障安全）
 

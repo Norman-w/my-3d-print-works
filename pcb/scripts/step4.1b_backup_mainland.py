@@ -22,7 +22,8 @@ DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "mainland_snapshot.json"
 
 MAINLAND_EXACT = frozenset({"mcu", "imu", "led_r_data", "led_c_supply"})
-MAINLAND_PREFIXES = ("power.", "battery.", "pwr_led.")
+# bringup.* 现仅 TP_3V3 / TP_SYS_5V_SW，均在大陆电源区，一并备份。
+MAINLAND_PREFIXES = ("power.", "battery.", "pwr_led.", "bringup.")
 
 
 # ===== 分区：方法/工具 =====

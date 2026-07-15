@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Step 4.1c — Backup wide-corridor (宽栈道) component positions to a JSON snapshot.
 
-Covers BOOT/EN switches and bringup test pads in the handle funnel / corridor.
+Covers BOOT/EN switches only. Bringup TP 已迁到大陆，见 step4.1b。
 Restore later via step4.2c even after a full ato rebuild.
 """
 
@@ -21,7 +21,7 @@ from pcb.tools.kicad_update_utils import load_board
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
 
-CORRIDOR_PREFIXES = ("debug_sw.", "bringup.")
+CORRIDOR_PREFIXES = ("debug_sw.",)
 
 
 # ===== 分区：方法/工具 =====

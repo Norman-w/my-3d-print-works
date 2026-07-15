@@ -14,10 +14,11 @@ ESP32 启动后通过 GPIO 锁住 MOS 保持导通。
 - **读键隔离**：MCU 经 1k 看 `BUTTON_RAW`（GPIO18），不与 `P_GATE` 直连，避免关机时 GPIO 被抬到电池电压
 - **长按关机**：ESP32 检测尾键持续按下 ≥2s → **拉低** `PWR_LATCH` → MOS 截止断电
 
-> V3：开机路径用 `1N4148W` 隔离；LDO 电源 OR 用 `SS14`（1A），不用 BAT54 串主电流。
-> `SS14` **不**解决锂电→3.3V 压差；Wi‑Fi 峰值下仍可能掉轨，见 `pcb/V1_BRINGUP_ISSUES.md` §6c。
-> 尾插 USB 经二极管或可给 LDO/MCU 供电以便烧录；整机业务运行仍以电池+软开关为准。
-> IM948 `VDDIO` 在锂电供电时保持悬空（模块内约 3.0V），不要接到板载 3.3V。
+> V4：唯一输入=充电总成 **5V OUT** → `SYS_5V_IN` → 软开关 → `SYS_5V_SW` → AP2112；**无** SS14/双路 OR。
+> 按键开机用 `1N4148W` 隔离；读键 GPIO18。
+> IM948 仅 `VBUS←SYS_5V_SW`；VBAT/VDDIO 悬空。
+> 低电若需要：金手指 `BAT_CELL_P` 接电芯 B+，**不要**测 5V 输出。
+> 烧录走柄尾 USB D+/D− 金手指（充电仓 Type-C 多半无数据脚）；上电靠总成 5V。
 > **复位即关机（故障安全）**：`esp_restart` / WDT / 崩溃 / 恢复出厂重启会释放 `PWR_LATCH`，需再按尾键开机。
 
 ## LED 状态指示灯
