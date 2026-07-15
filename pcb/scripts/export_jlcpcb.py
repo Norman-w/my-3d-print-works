@@ -32,8 +32,10 @@ Embedded modules
 
 Tail gold fingers + F-side stiffener coupon (TAIL_STIFF)
 - Main handle tip has 5 plated castellations (TAIL_TIP) on F-side nets.
-- Outside the tip, a breakaway 8x8 mm coupon (TAIL_STIFF) is connected by mouse-bites.
-- Coupon: single-sided F gold fingers + tip/handle castellations; left/right mouse-bites only.
+- Tip outline extends into an 8x8 mm coupon with a milled break slot and L/R NPTH mouse-bite bridges.
+- Do NOT put mouse-bite circles on Edge.Cuts (breaks outline → preview becomes a big rectangle).
+- Coupon edges: Edge.Cuts semicircle scallops at tip/handle (visible castellation cut contour).
+- Coupon: single-sided F gold fingers + tip/handle castellations.
 - After depaneling: stack coupon onto main F fingers (fingers face up), solder tip castellations
   aligned to TAIL_TIP, and solder handle castellations onto the original F gold-finger pads.
 - Goal: local thickness ~1.6 mm for the existing edge connector; B-side fingers stay on the main board.

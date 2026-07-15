@@ -87,6 +87,25 @@ def circle(pcbnew, board, layer: int, cx: float, cy: float, r: float, width: flo
     return shape
 
 
+def shape_arc(
+    pcbnew,
+    board,
+    layer: int,
+    start: tuple[float, float],
+    mid: tuple[float, float],
+    end: tuple[float, float],
+    width: float = 0.1,
+):
+    """Edge.Cuts / graphic arc via start–mid–end geometry."""
+    shape = pcbnew.PCB_SHAPE(board)
+    shape.SetShape(pcbnew.SHAPE_T_ARC)
+    shape.SetLayer(layer)
+    shape.SetArcGeometry(xy(pcbnew, *start), xy(pcbnew, *mid), xy(pcbnew, *end))
+    shape.SetWidth(mk(width))
+    board.Add(shape)
+    return shape
+
+
 def scad_to_kicad(point: tuple[float, float]) -> tuple[float, float]:
     x, y = point
     return (x, -y)
