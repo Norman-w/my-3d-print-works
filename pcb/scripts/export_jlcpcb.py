@@ -13,6 +13,7 @@ import json
 import shutil
 import subprocess
 import sys
+import zipfile
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
@@ -276,7 +277,13 @@ def main() -> int:
     zip_path = out.parent / f"{out.name}_smartpaddle_jlcpcb.zip"
     if zip_path.exists():
         zip_path.unlink()
-    shutil.make_archive(str(zip_path.with_suffix("")), "zip", out)
+    # 嘉立创上传包保持扁平且只含制造数据；报告、订单说明和钻孔图留在导出目录供复核。
+    upload_files = sorted(gerbers.glob("*.gbr"))
+    upload_files += sorted(gerbers.glob("*.gbrjob"))
+    upload_files += sorted(drill.glob("*.drl"))
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in upload_files:
+            archive.write(path, arcname=path.name)
     if gate_fails:
         print("WARNING: ZIP written with --allow-errors; DO NOT ORDER:")
         for f in gate_fails:

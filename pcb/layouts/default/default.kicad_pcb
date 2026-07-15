@@ -24845,5 +24845,12 @@
 			)
 		)
 	)
+	(group "PZT_EDGE_TRANSITION_SEGMENTS"
+		(uuid "a44175d5-90c1-40c3-8ee4-a85d15aef0b5")
+		(members "4f8e2501-1d99-465d-bcd6-ad37e40defbe" "a025385b-53cd-4b00-818d-b10f9aac3c79"
+			"adeaa2b5-ac1e-4c2c-a05e-a2bf67c80eb0" "bc450371-3c16-4c6c-927e-aa57f7a651d0"
+			"d489a98f-ec70-4a8b-8771-cba172194755" "dcf5fc54-f009-4384-adcd-e7c729ca4296"
+		)
+	)
 	(embedded_fonts no)
 )
