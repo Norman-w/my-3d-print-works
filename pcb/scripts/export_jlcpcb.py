@@ -19,11 +19,25 @@ DEFAULT_KICAD_CLI = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
 ORDER_NOTES = """\
 SmartPaddle PCB manufacturing notes
 
+Board
+- PCB thickness: 0.8 mm
+- Surface finish: ENIG (gold fingers + castellations)
+
+Embedded modules
 - IMU / MCU / PZT edge interfaces are intentional castellated / edge-solder structures.
 - Edge.Cuts crossing PTH pads or edge pads in those areas is intentional.
 - Please process IMU and PZT PTH edge pads as castellated / plated half-hole features.
 - Please inspect the embedded MCU/ESP edge-pad cutout and confirm edge solderability.
 - Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
+
+Tail gold fingers + F-side stiffener coupon (TAIL_STIFF)
+- Main handle tip has 5 plated castellations (TAIL_TIP) on F-side nets.
+- Outside the tip, a breakaway 8x8 mm coupon (TAIL_STIFF) is connected by mouse-bites.
+- Coupon: single-sided F gold fingers + tip/handle castellations; left/right mouse-bites only.
+- After depaneling: stack coupon onto main F fingers (fingers face up), solder tip castellations
+  aligned to TAIL_TIP, and solder handle castellations onto the original F gold-finger pads.
+- Goal: local thickness ~1.6 mm for the existing edge connector; B-side fingers stay on the main board.
+- Do not tin-bridge adjacent 1.27 mm fingers.
 """
 
 
