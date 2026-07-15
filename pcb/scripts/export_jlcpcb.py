@@ -37,7 +37,7 @@ SmartPaddle PCB manufacturing notes
 Board
 - PCB thickness: 0.8 mm
 - Surface finish: ENIG (gold fingers + castellations)
-- Delivery: this Gerber contains ONE main outline + TWO detached 8x8 mm stiffener coupons
+- Delivery: this Gerber contains ONE main outline + TWO detached ~8x6.8 mm stiffener coupons
   (mill-gap separated). Treat as Different Design = 3 / Panel-by-Customer if your DFM requires it.
   Coupons are spare stiffeners, not a V-cut production panel of many copies.
   *** Confirm with JLCPCB/JLC that multi-outline / Different Design = 3 is accepted before pay. ***
@@ -51,7 +51,11 @@ Embedded modules
 
 Tail gold fingers + F-side stiffener coupons (TAIL_STIFF_L / TAIL_STIFF_R)
 - Main handle tip has 5 F-only SMD pads (TAIL_TIP) on F-side nets for stacking (NOT PTH).
-- Two detached 8x8 mm coupons outside handle side-walls (x=±8.7), mill-gap separated.
+- Two detached ~8x6.8 mm coupons outside handle side-walls (x=±8.7), mill-gap separated.
+  Coupons are 1.2 mm shorter than the 8 mm gold fingers on the handle side so stacked H
+  castellations land mid-finger; tip edge stays flush for TAIL_TIP soldering.
+- *** MUST enable Castellated Holes / half-hole plating for coupon tip+handle PTH rows
+  (hole centers lie on Edge.Cuts with outward scallops). Do not ship as full enclosed drills. ***
 - After depaneling: stack one coupon onto main F fingers; do not discard coupons.
 
 Power path (assembler note)

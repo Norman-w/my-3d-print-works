@@ -3,8 +3,9 @@
 
 几何原则：
   - 只增删本脚本产物；绝不改 step2 画的主板侧墙/尖端边
-  - 左右各一块 8×8 独立封闭外形（与侧墙留铣缝，不共边）
-  - 小板 tip/handle：半圆开窗 + PTH 半孔
+  - 左右各一块独立封闭外形（与侧墙留铣缝，不共边）
+  - 小板约 8×6.8：尖端与叠焊对齐，拍柄侧比金手指短 ~1.2mm，便于中段焊接
+  - 小板 tip/handle：半圆开窗 + PTH 半孔（孔心必须在 Edge.Cuts 上）
   - 主板尖端：只放 TAIL_TIP 焊盘（半孔靠 step2 尖端边切过孔心）
 
 若外形曾被旧版脚本挖坏：先跑 step2 → step3，再跑本脚本。
@@ -43,14 +44,20 @@ MAIN_TIP_Y = 97.7
 WALL_X = 8.70
 SHOULDER_Y = 89.70
 MILL_GAP = 1.2
-DAUGHTER = 8.0
+# 小板横向仍 8mm；纵向比金手指短 1.2mm（仅缩短拍柄侧），叠焊后 H 半孔落在手指中段。
+COUPON_W = 8.0
+COUPON_H = 6.8  # was 8.0; tip edge stays at SHOULDER_Y
 COUPON_Y_HI = SHOULDER_Y
-COUPON_Y_LO = COUPON_Y_HI - DAUGHTER
-COUPON_CY = COUPON_Y_HI - DAUGHTER / 2
+COUPON_Y_LO = COUPON_Y_HI - COUPON_H
+COUPON_CY = COUPON_Y_HI - COUPON_H / 2
+# cleanup 覆盖旧 8mm 与新 6.8mm 外形
+COUPON_CLEAN_Y_LO = SHOULDER_Y - 9.0
 
 CASTEL_DRILL = 0.70
 CASTEL_PAD = 1.00  # 节距 1.27 → 间隙 0.27 ≥ 0.20 clearance
 CASTEL_R = CASTEL_DRILL / 2
+CASTEL_EDGE_Y = COUPON_H / 2  # T/H 孔心相对封装中心
+STIFF_SMD_H = COUPON_H - 1.2  # 两端各留 0.6mm，避免盖住半孔
 EDGE_W = 0.10
 TIP_SMD_W = 0.80
 TIP_SMD_H = 1.20
@@ -69,7 +76,7 @@ def _coupon_xs(side: int) -> tuple[float, float, float]:
     """side=-1 左 / +1 右 → (wall_x, inner_x, outer_x)。"""
     wall_x = side * WALL_X
     inner_x = wall_x + side * MILL_GAP
-    outer_x = inner_x + side * DAUGHTER
+    outer_x = inner_x + side * COUPON_W
     return wall_x, inner_x, outer_x
 
 
@@ -105,7 +112,7 @@ def _remove_owned(board, pcbnew) -> tuple[int, int]:
             continue
 
         # 仅小板区域：完全在侧墙外侧（不删墙上的 step2 线段）
-        if y1 >= COUPON_Y_LO - 0.4 and y0 <= COUPON_Y_HI + 0.4:
+        if y1 >= COUPON_CLEAN_Y_LO - 0.4 and y0 <= COUPON_Y_HI + 0.4:
             if x1 < -WALL_X - 0.05 or x0 > WALL_X + 0.05:
                 to_remove.append(drawing)
 
@@ -269,9 +276,9 @@ def _add_stiffener_footprint(pcbnew, board, side: int, ref: str) -> None:
     fp.SetOrientation(pcbnew.EDA_ANGLE(0, pcbnew.DEGREES_T))
     for i, (x, net_name) in enumerate(zip(FINGER_XS, FINGER_F_NETS), start=1):
         net = _ensure_net(board, pcbnew, net_name)
-        pad = _add_pad_smd_f(pcbnew, fp, str(i), x, 0.0, 0.8, 7.2)
+        pad = _add_pad_smd_f(pcbnew, fp, str(i), x, 0.0, 0.8, STIFF_SMD_H)
         pad.SetNet(net)
-        for pn, py in ((f"T{i}", 4.0), (f"H{i}", -4.0)):
+        for pn, py in ((f"T{i}", CASTEL_EDGE_Y), (f"H{i}", -CASTEL_EDGE_Y)):
             p = _add_pad_pth(pcbnew, fp, pn, x, py, CASTEL_PAD, CASTEL_DRILL)
             p.SetNet(net)
     board.Add(fp)
@@ -333,11 +340,16 @@ def main() -> None:
     _, li, lo = _coupon_xs(-1)
     _, ri, ro = _coupon_xs(1)
     print("=== Step 4.4 完成 ===")
-    print("几何: 不改主板外形；左右独立 8×8（铣缝 {:.1f} mm）".format(MILL_GAP))
+    print(
+        "几何: 不改主板外形；左右独立 {:.1f}×{:.1f}（铣缝 {:.1f} mm；拍柄侧比金手指短 {:.1f} mm）".format(
+            COUPON_W, COUPON_H, MILL_GAP, 8.0 - COUPON_H
+        )
+    )
     print(f"左小板: x=[{lo:.2f},{li:.2f}] y=[{COUPON_Y_LO:.2f},{COUPON_Y_HI:.2f}]")
     print(f"右小板: x=[{ri:.2f},{ro:.2f}] y=[{COUPON_Y_LO:.2f},{COUPON_Y_HI:.2f}]")
+    print("半孔: tip/handle 孔心压在 Edge.Cuts；下单须选 Castellated/半孔电镀")
     print("若预览仍是矩形: 先 step2→step3 重绘主板外形，再跑本脚本")
-    print("装配: 取下一块 → 金手指朝上叠 F 面 → 尖端对焊 TAIL_TIP → 拍柄侧焊原 F 金手指")
+    print("装配: 取下一块 → 金手指朝上叠 F 面 → 尖端对焊 TAIL_TIP → 拍柄侧焊原 F 金手指中段")
 
 
 if __name__ == "__main__":
