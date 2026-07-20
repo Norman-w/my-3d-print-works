@@ -18,6 +18,21 @@
 - [ ] MCU 附近预留 0603 电源指示灯焊位（不占 GPIO；阻+灯可不贴）
 - [ ] 下单板厚选 **0.8 mm**（下单选项即可，工程文件通常不用为厚度单改）
 
+### MCU 长边脚位朝向绑错（2026-07-20 装配实测）
+
+> **实装意图（`V1_REWORK_PLAN` Phase1）**：朝 IMU = `GND / IO2 / IO3 / TXD / RXD`；IMU→IO2/IO3。  
+> **当前 `main.ato` / bringup 后来改成**：朝 IMU = `GND / 3V3 / EN / IO4 / IO5`，并把「IO2/IO3 正对 IMU」标成作废 —— **与实装意图和实物不符**。
+
+**实物（按机械意图焊好后）：**
+- 靠 IMU 一长边：`GND · IO2 · IO3 · TXD · RXD`
+- 另一长边：`GND · 3V3 · EN · IO4 · IO5`
+
+**通断实测：** 正面金手指最右指（设计以为 `UART_TX`→pad25）实际通到模块丝印 **IO4**；同指背面通到 **IO5**。  
+即板铜仍接到 footprint 的 pad24/25，但模块按正确朝向落入后，这两脚上是 IO4/IO5 丝印 —— **封装哪一长边是 pin1–14 与 `main.ato` 信号绑定需按实装重做**。
+
+- [ ] **纠正 SGFK 封装长边编号 / `main.ato` 脚位**：以「朝 IMU = IO2/IO3/TXD/RXD」为准；IMU UART1→IO2/IO3；尾插 UART 仍接 TXD0/RXD0；同步固件 `config.h` GPIO；更新 `V1_BRINGUP_ISSUES.md` 中错误的「IO4 朝 IMU」表述
+- [ ] **核对天线仍在 −X**：改脚位时勿把机械朝向（天线侧面）转错
+
 ### 第三版打板待改（装配实测 → 下一版一起改）
 
 > 来源：当前板装配反馈。改封装 / 布局 / 网络时一起做，勿零散改。
@@ -28,7 +43,7 @@
 - [ ] **测试开关改为插脚（THT）** — 现贴片测试开关改为插脚封装，便于反复插拔/飞线测试
 - [ ] **大陆焊盘增加 GND 引脚** — 大陆区焊盘（模块/接驳焊盘）补上 **GND** 引脚，方便测量与共地
 - [ ] **SCAD：穿过线路板的那两个孔补 boss 柱** — PCB 已按 `mech_geometry._pcb_clearance_holes` / Edge.Cuts 留孔，但 `paddle_shell.scad` 对应位置尚未做 `screw_bosses`；壳体与板孔对不齐、无法拧固。改 `enclosure/parameters.scad` 的 `screw_positions` / boss 生成逻辑，使穿过板体的两孔都有柱
-- [ ] **SCAD：分打时拍柄朝拍头端做成 U 型插口** — 拍柄与拍面分开打印（`handle_*` / `blade_*`）时，拍柄合模后朝向拍头那一侧目前四周严丝合缝，拍面插不进去。需在拍柄接触/接合处裁掉一圈（面向拍头的端面开口），让拍柄中段成 **U 型槽**，拍面颈部能「插」进拍柄，而不是两半柄合上后把接口封死。改 `paddle_shell.scad` 分零件布尔/接合面逻辑
+- [x] **SCAD：分打时拍柄朝拍头端做成 U 型插口** — 拍柄与拍面分开打印（`handle_*` / `blade_*`）时，拍柄合模后朝向拍头那一侧原先四周严丝合缝。已在 `handle_*` 零件上裁矩形通槽（`handle_blade_insert_socket`，参数见 `parameters.scad`），合模后成 U 型槽可插拍面；`front`/`back` 整半壳不启用，避免组装件留缝
 
 ### 压电 4 通道 vs ESP32-C6 RMT（2026-07）
 
