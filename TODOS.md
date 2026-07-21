@@ -42,8 +42,8 @@
 - [ ] **测试开关旁增加开机测试开关位** — 在现有测试开关位置附近，再预留一颗可用于**开机**的测试开关焊位（与尾键开机同网或并联到开机路径，具体接线改板时定）
 - [ ] **测试开关改为插脚（THT）** — 现贴片测试开关改为插脚封装，便于反复插拔/飞线测试
 - [ ] **大陆焊盘增加 GND 引脚** — 大陆区焊盘（模块/接驳焊盘）补上 **GND** 引脚，方便测量与共地
-- [ ] **SCAD：穿过线路板的那两个孔补 boss 柱** — PCB 已按 `mech_geometry._pcb_clearance_holes` / Edge.Cuts 留孔，但 `paddle_shell.scad` 对应位置尚未做 `screw_bosses`；壳体与板孔对不齐、无法拧固。改 `enclosure/parameters.scad` 的 `screw_positions` / boss 生成逻辑，使穿过板体的两孔都有柱
-- [x] **SCAD：分打时拍柄朝拍头端做成 U 型插口** — 拍柄与拍面分开打印（`handle_*` / `blade_*`）时，拍柄合模后朝向拍头那一侧原先四周严丝合缝。已在 `handle_*` 零件上裁矩形通槽（`handle_blade_insert_socket`，参数见 `parameters.scad`），合模后成 U 型槽可插拍面；`front`/`back` 整半壳不启用，避免组装件留缝
+- [x] **SCAD：穿过线路板的那两个孔补 boss 柱** — 已按 PCB Edge.Cuts 的两个让位孔补回**正面壳体** boss：大陆下方 SCAD `[0,-33]` / KiCad `(0,23)`，PCB 尾巴 SCAD `[0,-89]` / KiCad `(0,79)`；正面为带 M2 自攻底孔的 boss，背面改为螺杆间隙孔
+- [x] **SCAD：分打时拍柄朝拍头端做成 U 型插口** — `handle_blade_insert_socket` 现用“前后拍面合并后的完整拍面实体 + 0.4mm 装配间隙”直接减两个拍柄半壳；接口端环被完整打开，两个拍柄合并后形成夹口，可套住合并后的拍面
 
 ### 压电 4 通道 vs ESP32-C6 RMT（2026-07）
 

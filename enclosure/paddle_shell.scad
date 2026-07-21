@@ -13,6 +13,7 @@ USE_BEZIER_PROFILES = true; // false = 传统椭圆 + FL 手柄
 // 外部皮肤: OpenSCAD CSG 并集（水密）。实时 STL 合拢仅为预览。
 USE_IMPORTED_OUTER = false;
 // "front"/"back" = 半壳组装件; "blade_front"|"blade_back"|"handle_front"|"handle_back" = 四零件
+// "split_assembly" = 四个分打零件按装配位置叠放预览
 HALF = "front";
 TIP_LENGTH = 25;  // handle_back_tip 切片长度 (mm), 可由 -D 覆盖
 LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
@@ -84,6 +85,12 @@ function screw_position_ok(p) =
 function screw_in_blade(p) = screw_position_ok(p) && p[1] >= shoulder_bottom_y - 2;
 
 function screw_in_handle(p) = screw_position_ok(p) && p[1] <= shoulder_bottom_y - 10;
+
+function screw_throughs_pcb(p) =
+    len([
+        for (q = pcb_through_screw_positions)
+            if (p[0] == q[0] && p[1] == q[1]) 1
+    ]) > 0;
 
 // 压电槽必须完全在拍面胶皮区域内（不能越界到肩部/手柄）。
 function piezo_in_blade_ok(p) =
@@ -225,6 +232,65 @@ module screw_bosses_back() {
         }
 }
 
+// ═══ 穿过刚性 PCB 的两颗螺丝 boss ═══
+// PCB 板上已留 Ø7 让位孔；boss 实心柱穿孔而过，螺丝通道由零件外层 difference 重新钻出。
+
+// 拍面部分：填满 PCB 槽深并向拍面实心多伸 1mm 融合（两个孔位都在拍面轮廓内）。
+module pcb_through_bosses_blade(front = true) {
+    pocket_d = max(pcb_cavity_depth, piezo_trench_d, resistor_ear_d);
+    h = min(pocket_d + 1, blade_half_t);
+    for (p = pcb_through_screw_positions)
+        translate([p[0], p[1], front ? 0 : -h])
+            cylinder(d = screw_d_boss, h = h);
+}
+
+// 拍柄部分：从壳体内顶垂到拍面表面（留插装间隙），紧贴拍面而不悬空。
+// 顶端多伸 0.5mm 嵌入壁厚以保证融合；超出部分由外层塞坑/沉孔重切修平。
+module pcb_through_bosses_handle(front = true) {
+    z_base = blade_half_t + handle_blade_socket_clearance;
+    for (p = pcb_through_screw_positions)
+        if (screw_in_handle(p)) {
+            let(x = p[0], y = p[1], hz = half_z_at(y),
+                h = hz - wall_t - z_base + 0.5)
+            if (h > 0.5)
+                translate([x, y, front ? z_base : -z_base - h])
+                    cylinder(d = screw_d_boss, h = h);
+        }
+}
+
+// 拍面正面：沉头螺丝从正面穿入，只开沉头间隙孔。
+module blade_front_screw_channels() {
+    screw_holes_clearance_blade();
+    blade_pass_through_for_handle_screws();
+}
+
+// 拍面背面：保留外表皮，在 boss 内开盲引导孔供 M2 自攻。
+// 穿 PCB 的螺丝需要更长咬合，孔底仅保留 0.8mm 外表皮；
+// 其余拍面螺丝沿用原设计的较浅引导孔。
+module blade_back_screw_channels() {
+    blade_pass_through_for_handle_screws();
+    for (p = screw_positions)
+        if (screw_in_blade(p)) {
+            let(
+                x = p[0],
+                y = p[1],
+                hz = half_z_at(y),
+                drill_h = screw_throughs_pcb(p)
+                    ? hz - 0.8
+                    : (hz - wall_t) * 0.7
+            )
+            if (drill_h > 0.2)
+                translate([x, y, -drill_h])
+                    cylinder(d = screw_d_pilot, h = drill_h + eps);
+        }
+}
+
+module handle_screw_channels() {
+    screw_holes_clearance();
+    plug_recesses();
+    screw_holes_pilot();
+}
+
 // ═══ 螺丝孔 ═══
 
 module screw_holes_clearance() {
@@ -266,9 +332,9 @@ module blade_pass_through_for_handle_screws() {
             && abs(p[0]) < envelope_hx(p[1]) - 3) {
         x = p[0]; y = p[1];
         hz = half_z_at(y);
-        // 螺杆间隙过孔：从拍面穿过到达手柄。
-        translate([x, y, -eps])
-            cylinder(d = screw_d_clearance, h = hz + eps);
+        // 螺杆间隙过孔：贯穿前后拍面（±hz 全高，正/背零件各取其半）。
+        translate([x, y, -hz - eps])
+            cylinder(d = screw_d_clearance, h = 2 * hz + 2 * eps);
         }
 }
 
@@ -804,6 +870,26 @@ module screw_boss_column(h, direction) {
     }
 }
 
+// ═══ 分打拍柄：朝拍头端 U 型插口 ═══
+// 仅 handle_* / four 预览启用；front/back 整半壳仍靠 union(拍面) 填实，不留插装缝。
+
+function handle_open_blade_socket() =
+    HALF == "handle_front"
+    || HALF == "handle_back"
+    || HALF == "handle_back_tip"
+    || HALF == "four"
+    || HALF == "split_assembly";
+
+module handle_blade_insert_socket() {
+    // 用完整拍面（前后两半合并后的实体）直接减拍柄，得到与拍面颈部同形的夹持口。
+    // XY 用 offset 留装配间隙，Z 同步加厚；拍面轮廓延伸到柄内约 25mm，
+    // 因而相减后朝拍头端自然敞开，外围不会再残留闭合端环。
+    clr = handle_blade_socket_clearance;
+    linear_extrude(height = blade_core_t + 2 * clr, center = true)
+        offset(delta = clr)
+            polygon(points = BEZIER_BLADE_POLY);
+}
+
 // ═══ 四个可打印零件（拍面/拍柄 × 前/后） ═══
 
 module blade_front_part() {
@@ -816,10 +902,17 @@ module blade_front_part() {
     }
     difference() {
         union() {
-            bezier_blade_half(true);
-            blade_ribs();
+            difference() {
+                union() {
+                    bezier_blade_half(true);
+                    blade_ribs();
+                }
+                _cutouts();
+            }
+            // PCB 槽切完后补 boss，再由外层重钻螺丝通道（保住沉孔）。
+            pcb_through_bosses_blade(front = true);
         }
-        _cutouts();
+        blade_front_screw_channels();
     }
     for (p = pin_positions)
         if (pin_position_ok(p) && p[1] > shoulder_bottom_y) {
@@ -832,13 +925,6 @@ module blade_front_part() {
 
 module blade_back_part() {
     module _cutouts() {
-        // 贯穿螺丝孔：略过分型面，确保干净打通。
-        for (p = screw_positions)
-            if (screw_in_blade(p)) {
-                let(x = p[0], y = p[1], hz = half_z_at(y))
-                translate([x, y, -hz - eps])
-                    cylinder(d = screw_d_pilot, h = hz + 2 * eps);
-        }
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = false);
         rigid_pcb_cavity(front = false);
@@ -846,17 +932,25 @@ module blade_back_part() {
     }
     difference() {
         union() {
-            bezier_blade_half(false);
-            blade_ribs();
-            for (p = screw_positions)
-                if (screw_in_blade(p)) {
-                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    if (boss_h > 0.2)
-                        translate([x, y, -boss_h])
-                            cylinder(d = screw_d_boss, h = boss_h);
+            difference() {
+                union() {
+                    bezier_blade_half(false);
+                    blade_ribs();
+                    for (p = screw_positions)
+                        if (screw_in_blade(p)) {
+                            let(x = p[0], y = p[1], hz = half_z_at(y),
+                                boss_h = hz - wall_t)
+                            if (boss_h > 0.2)
+                                translate([x, y, -boss_h])
+                                    cylinder(d = screw_d_boss, h = boss_h);
+                        }
                 }
+                _cutouts();
+            }
+            // PCB 槽切完后补 boss，再由外层重钻贯穿引导孔。
+            pcb_through_bosses_blade(front = false);
         }
-        _cutouts();
+        blade_back_screw_channels();
     }
     for (p = pin_positions)
         if (pin_position_ok(p) && p[1] > shoulder_bottom_y) {
@@ -870,30 +964,38 @@ module blade_back_part() {
 module handle_front_part() {
     difference() {
         union() {
-            // 先挖空壳体，再加 boss 立柱，避免空腔把 boss 切掉。
             difference() {
-                bezier_handle_half(true);
-                handle_cavity();
-            }
-            for (p = screw_positions)
-                if (screw_in_handle(p)) {
-                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t - 3)
-                    if (boss_h > 0.5)
-                    translate([x, y, 0])
-                        screw_boss_column(boss_h, 1);
+                union() {
+                    // 先挖空壳体，再加 boss 立柱，避免空腔把 boss 切掉。
+                    difference() {
+                        bezier_handle_half(true);
+                        handle_cavity();
+                    }
+                    for (p = screw_positions)
+                        if (screw_in_handle(p) && !screw_throughs_pcb(p)) {
+                            let(x = p[0], y = p[1], hz = half_z_at(y),
+                                boss_h = hz - wall_t - 3)
+                            if (boss_h > 0.5)
+                            translate([x, y, 0])
+                                screw_boss_column(boss_h, 1);
+                        }
+                    // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
+                    usb_c_pcb_block(front = true);
+                    // USB-C 左侧夹持固定销
+                    usb_c_left_clamp(front = true);
                 }
-            // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
-            usb_c_pcb_block(front = true);
-            // USB-C 左侧夹持固定销
-            usb_c_left_clamp(front = true);
+                rigid_pcb_cavity(front = true);
+                pcb_main_cavity(front = true);
+                usb_c_cutout();
+                led_light_guide_holes();
+                button_cutout();
+                if (handle_open_blade_socket())
+                    handle_blade_insert_socket();
+            }
+            // PCB 螺丝 boss：从内顶垂到拍面表面，插口切完后再补。
+            pcb_through_bosses_handle(front = true);
         }
-        rigid_pcb_cavity(front = true);
-        pcb_main_cavity(front = true);
-        screw_holes_clearance();
-        plug_recesses();
-        usb_c_cutout();
-        led_light_guide_holes();
-        button_cutout();
+        handle_screw_channels();
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = true);
@@ -903,27 +1005,36 @@ module handle_back_part() {
     difference() {
         union() {
             difference() {
-                bezier_handle_half(false);
-                handle_cavity();
-            }
-            for (p = screw_positions)
-                if (screw_in_handle(p)) {
-                    let(x = p[0], y = p[1], hz = half_z_at(y), boss_h = hz - wall_t)
-                    translate([x, y, -boss_h])
-                        cylinder(d = screw_d_boss, h = boss_h);
+                union() {
+                    difference() {
+                        bezier_handle_half(false);
+                        handle_cavity();
+                    }
+                    for (p = screw_positions)
+                        if (screw_in_handle(p) && !screw_throughs_pcb(p)) {
+                            let(x = p[0], y = p[1], hz = half_z_at(y),
+                                boss_h = hz - wall_t)
+                            translate([x, y, -boss_h])
+                                cylinder(d = screw_d_boss, h = boss_h);
+                        }
+                    // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
+                    usb_c_pcb_block(front = false);
+                    // USB-C 左侧夹持固定销
+                    usb_c_left_clamp(front = false);
                 }
-            // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
-            usb_c_pcb_block(front = false);
-            // USB-C 左侧夹持固定销
-            usb_c_left_clamp(front = false);
+                rigid_pcb_cavity(front = false);
+                pcb_main_cavity(front = false);
+                usb_c_cutout();
+                button_cutout();
+                ws2812_led_hole();
+                soft_power_circuit_cavity();
+                if (handle_open_blade_socket())
+                    handle_blade_insert_socket();
+            }
+            // PCB 螺丝 boss：从内顶垂到拍面表面，插口切完后再补。
+            pcb_through_bosses_handle(front = false);
         }
-        rigid_pcb_cavity(front = false);
-        pcb_main_cavity(front = false);
-        screw_holes_pilot();
-        usb_c_cutout();
-        button_cutout();
-        ws2812_led_hole();
-        soft_power_circuit_cavity();
+        handle_screw_channels();
     }
     // 加固立柱：从开关槽后壁接到 Z 向外壳
     button_retention_column(front = false);
@@ -975,6 +1086,11 @@ if (HALF == "front") {
     translate([5, 0, 0]) blade_back_part();
     translate([-5, 120, 0]) handle_front_part();
     translate([5, 120, 0]) handle_back_part();
+} else if (HALF == "split_assembly") {
+    color([0.85, 0.20, 0.18]) blade_front_part();
+    color([0.45, 0.08, 0.06]) blade_back_part();
+    color([0.12, 0.45, 0.90, 0.72]) handle_front_part();
+    color([0.08, 0.25, 0.55, 0.72]) handle_back_part();
 }
 
 echo(str("=== SmartPaddle Shell ==="));

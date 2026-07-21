@@ -1,4 +1,3 @@
 #!/bin/bash
-. /Volumes/NormanData/sdk/esp-idf-v5.5.1/export.sh
-echo "已加载ESP-IDF环境变量,可以使用idf.py进行build, flash, monitor等操作。"
-exec "$SHELL"
+# 兼容旧入口：转发到 firmware/dev.sh
+exec "$(cd "$(dirname "$0")" && pwd)/dev.sh"
