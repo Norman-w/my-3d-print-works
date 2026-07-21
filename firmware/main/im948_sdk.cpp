@@ -16,10 +16,12 @@ static const char *TAG = "im948_sdk";
 static uart_port_t s_uart_num = UART_NUM_MAX;
 static uint8_t s_device_addr = 255;  // 默认广播地址
 static im948_rx_callback_t s_rx_callback = nullptr;
+static TaskHandle_t s_rx_task = nullptr;
 
-// 接收状态机变量
+// 接收状态机变量（对齐厂商 Cmd_GetPkt：边收边用写指针 i）
 static uint8_t s_rx_cs = 0;
 static uint8_t s_rx_idx = 0;
+static uint8_t s_rx_i = 0;
 static uint8_t s_rx_buf[5 + IM948_PKT_MAX_RX_DATA];
 
 // 内部便捷宏
@@ -53,6 +55,17 @@ static void mem_cpy(void *dst, const void *src, unsigned int n) {
 
 // ===== 分区：公开 API =====
 
+static void im948_rx_task(void *arg) {
+    (void)arg;
+    uint8_t buf[256];
+    while (true) {
+        int n = uart_read_bytes(s_uart_num, buf, sizeof(buf), pdMS_TO_TICKS(20));
+        for (int i = 0; i < n; ++i) {
+            im948_get_pkt(buf[i]);
+        }
+    }
+}
+
 esp_err_t im948_uart_init(uart_port_t uart_num, int tx_pin, int rx_pin,
                           int baud_rate, int rx_buf_size) {
     s_uart_num = uart_num;
@@ -69,6 +82,15 @@ esp_err_t im948_uart_init(uart_port_t uart_num, int tx_pin, int rx_pin,
     ESP_ERROR_CHECK(uart_param_config(uart_num, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(uart_num, tx_pin, rx_pin,
                                  UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
+
+    if (s_rx_task == nullptr) {
+        BaseType_t ok = xTaskCreatePinnedToCore(
+            im948_rx_task, "im948_rx", 3072, nullptr, 12, &s_rx_task, 0);
+        if (ok != pdPASS) {
+            ESP_LOGE(TAG, "创建 im948_rx 任务失败");
+            return ESP_FAIL;
+        }
+    }
 
     ESP_LOGI(TAG, "UART%d 初始化: TX=GPIO%d RX=GPIO%d baud=%d",
              uart_num, tx_pin, rx_pin, baud_rate);
@@ -115,19 +137,21 @@ int im948_pack_and_tx(const uint8_t *pdat, uint8_t dlen) {
 }
 
 uint8_t im948_get_pkt(uint8_t byte) {
+    // 边收边累加校验；起始码收到后清零，使 CS 从地址码起算（同厂商例程）
     s_rx_cs += byte;
 
     switch (s_rx_idx) {
     case 0:  // 等待起始码
         if (byte == IM948_PKT_BEGIN) {
-            s_rx_buf[0] = IM948_PKT_BEGIN;
-            s_rx_cs = 0;  // 从下一字节开始计算校验和
+            s_rx_i = 0;
+            s_rx_buf[s_rx_i++] = IM948_PKT_BEGIN;
+            s_rx_cs = 0;
             s_rx_idx = 1;
         }
         break;
 
     case 1:  // 地址码
-        s_rx_buf[1] = byte;
+        s_rx_buf[s_rx_i++] = byte;
         if (byte == 255) {
             // 广播地址，不应作为从机地址出现
             s_rx_idx = 0;
@@ -137,7 +161,7 @@ uint8_t im948_get_pkt(uint8_t byte) {
         break;
 
     case 2:  // 长度
-        s_rx_buf[2] = byte;
+        s_rx_buf[s_rx_i++] = byte;
         if ((byte > IM948_PKT_MAX_RX_DATA) || (byte == 0)) {
             s_rx_idx = 0;
             break;
@@ -145,18 +169,17 @@ uint8_t im948_get_pkt(uint8_t byte) {
         s_rx_idx++;
         break;
 
-    case 3: {  // 数据体
-        uint8_t data_pos = s_rx_idx - 2;  // 相对于数据体起始的索引
-        s_rx_buf[3 + data_pos] = byte;
-        if (data_pos + 1 >= RX_LEN) {
-            s_rx_idx++;  // 数据体收完
+    case 3:  // 数据体
+        s_rx_buf[s_rx_i++] = byte;
+        if (s_rx_i >= static_cast<uint8_t>(RX_LEN + 3)) {
+            s_rx_idx++;
         }
-    } break;
+        break;
 
     case 4:  // 校验码
         s_rx_cs -= byte;
         if (s_rx_cs == byte) {
-            s_rx_buf[3 + RX_LEN] = byte;
+            s_rx_buf[s_rx_i++] = byte;
             s_rx_idx++;
         } else {
             s_rx_idx = 0;
@@ -166,9 +189,7 @@ uint8_t im948_get_pkt(uint8_t byte) {
     case 5:  // 结束码
         s_rx_idx = 0;
         if (byte == IM948_PKT_END) {
-            uint8_t total = 4 + RX_LEN;
-            s_rx_buf[total] = byte;
-
+            s_rx_buf[s_rx_i++] = byte;
             if ((s_device_addr == RX_ADDRESS) || (s_device_addr == 255)) {
                 if (s_rx_callback) {
                     s_rx_callback(RX_DAT, RX_LEN);

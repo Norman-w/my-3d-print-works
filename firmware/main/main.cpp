@@ -118,11 +118,28 @@ static void init_imu(void) {
 // ===== IMU 数据轮询任务（独立 FreeRTOS 任务） =====
 static void imu_loop(void *arg) {
     ImuFrame frame;
+#if IMU_UART_REPORT_HZ > 0
+    const int64_t report_us = 1000000 / IMU_UART_REPORT_HZ;
+    int64_t last_report_us = 0;
+#endif
     while (true) {
         if (Im948Sensor::poll(frame)) {
             if (ws_data_has_client()) {
                 ws_data_send_imu_frame(&frame);
             }
+#if IMU_UART_REPORT_HZ > 0
+            const int64_t now = esp_timer_get_time();
+            if (now - last_report_us >= report_us) {
+                last_report_us = now;
+                ESP_LOGI(TAG,
+                         "IMU rpy=%.1f,%.1f,%.1f quat=%.3f,%.3f,%.3f,%.3f "
+                         "gyro=%.1f,%.1f,%.1f ag=%.2f,%.2f,%.2f",
+                         frame.euler_roll, frame.euler_pitch, frame.euler_yaw,
+                         frame.quat_w, frame.quat_x, frame.quat_y, frame.quat_z,
+                         frame.gyro_x, frame.gyro_y, frame.gyro_z,
+                         frame.accel_gx, frame.accel_gy, frame.accel_gz);
+            }
+#endif
         }
         // 适当让出 CPU，避免 busy-wait 饿死压电任务
         vTaskDelay(pdMS_TO_TICKS(1));

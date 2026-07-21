@@ -19,6 +19,8 @@
 #define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
 // 诊断：1=跳过 init_imu / imu_task（排查 rst:0x1 @ GPIO4/5）；确认后改回 0
 #define SKIP_IMU_INIT  0
+// 诊断：UART 低频打印 IMU（0=关；5≈每 200ms 一行，便于串口观察姿态）
+#define IMU_UART_REPORT_HZ  5
 
 // --- WiFi defaults (override via WebSocket config later) ---
 #define WIFI_SSID_DEFAULT   "SmartPaddle"
