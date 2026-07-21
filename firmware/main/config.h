@@ -18,7 +18,7 @@
 #define IMU_UART_BAUD  115200       // 初始波特率，上电后升级到 230400
 #define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
 // 诊断：1=跳过 init_imu / imu_task（排查 rst:0x1 @ GPIO4/5）；确认后改回 0
-#define SKIP_IMU_INIT  1
+#define SKIP_IMU_INIT  0
 
 // --- WiFi defaults (override via WebSocket config later) ---
 #define WIFI_SSID_DEFAULT   "SmartPaddle"
