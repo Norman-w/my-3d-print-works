@@ -1,12 +1,24 @@
+//#region 模型/类型
 interface Props {
-  imuData: { ax: number; ay: number; az: number; gx: number; gy: number; gz: number }[];
+  imuData: {
+    ax: number;
+    ay: number;
+    az: number;
+    gx: number;
+    gy: number;
+    gz: number;
+    roll?: number;
+    pitch?: number;
+    yaw?: number;
+  }[];
   impactData: { x_mm?: number; y_mm?: number; confidence?: number; ts?: number }[];
 }
+//#endregion
 
+//#region 公开 API / 视图层
 export default function TelemetryDashboard({ imuData, impactData }: Props) {
   const last = imuData.length > 0 ? imuData[imuData.length - 1] : null;
 
-  // Compute approximate speed magnitude from accelerometer
   const accelMag = last
     ? Math.sqrt(last.ax * last.ax + last.ay * last.ay + last.az * last.az)
     : 0;
@@ -21,8 +33,18 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h3 style={{ fontSize: 16, color: '#888', fontWeight: 600 }}>Telemetry</h3>
 
-      {/* Accelerometer */}
-      <MetricCard label="Accel Magnitude" value={accelMag.toFixed(1)} unit="mg" color="#4fc3f7" />
+      {last?.roll !== undefined && (
+        <>
+          <MetricCard
+            label="Euler (R/P/Y)"
+            value={`${last.roll.toFixed(1)} / ${last.pitch?.toFixed(1)} / ${last.yaw?.toFixed(1)}`}
+            unit="°"
+            color="#ce93d8"
+          />
+        </>
+      )}
+
+      <MetricCard label="Accel Magnitude" value={accelMag.toFixed(2)} unit="m/s²" color="#4fc3f7" />
       {last && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           <MiniMetric label="AX" value={last.ax} color="#e57373" />
@@ -31,13 +53,12 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
         </div>
       )}
 
-      {/* Gyroscope */}
       <MetricCard label="Gyro Magnitude" value={gyroMag.toFixed(0)} unit="dps" color="#ffb74d" />
       {last && (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-          <MiniMetric label="GX" value={last.gx} color="#ffab91" />
-          <MiniMetric label="GY" value={last.gy} color="#a5d6a7" />
-          <MiniMetric label="GZ" value={last.gz} color="#90caf9" />
+          <MiniMetric label="GX" value={Number(last.gx.toFixed(1))} color="#ffab91" />
+          <MiniMetric label="GY" value={Number(last.gy.toFixed(1))} color="#a5d6a7" />
+          <MiniMetric label="GZ" value={Number(last.gz.toFixed(1))} color="#90caf9" />
         </div>
       )}
 
@@ -82,7 +103,9 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
     </div>
   );
 }
+//#endregion
 
+//#region 方法/工具
 function MetricCard({ label, value, unit, color }: { label: string; value: string; unit: string; color: string }) {
   return (
     <div style={{
@@ -109,7 +132,9 @@ function MiniMetric({ label, value, color }: { label: string; value: number; col
       textAlign: 'center',
     }}>
       <div style={{ fontSize: 10, color: '#888' }}>{label}</div>
-      <div style={{ fontSize: 16, fontWeight: 600, color }}>{value}</div>
+      <div style={{ fontSize: 16, fontWeight: 600, color }}>{value.toFixed(2)}</div>
     </div>
   );
 }
+//#endregion
+

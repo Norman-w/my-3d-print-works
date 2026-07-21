@@ -14,7 +14,18 @@ function disposePaddleGroup(group: THREE.Group): void {
 }
 
 interface Props {
-  imuData: { ax: number; ay: number; az: number; gx: number; gy: number; gz: number }[];
+  imuData: {
+    ax: number;
+    ay: number;
+    az: number;
+    gx: number;
+    gy: number;
+    gz: number;
+    qw?: number;
+    qx?: number;
+    qy?: number;
+    qz?: number;
+  }[];
   impactData: { x_mm?: number; y_mm?: number; confidence?: number }[];
 }
 
@@ -101,13 +112,29 @@ export default function Paddle3D({ imuData, impactData }: Props) {
   }, []);
 
   useEffect(() => {
-    const r = refs.current; if (!r || imuData.length < 1) return;
-    const d = imuData[imuData.length - 1], gs = 0.0007;
-    r.paddle.rotation.x += d.gx * gs; r.paddle.rotation.y += d.gy * gs; r.paddle.rotation.z += d.gz * gs;
-    r.paddle.rotation.x = Math.max(-1.2, Math.min(1.2, r.paddle.rotation.x));
-    r.paddle.rotation.z = Math.max(-0.8, Math.min(0.8, r.paddle.rotation.z));
-    const p = new THREE.Vector3(); r.paddle.getWorldPosition(p);
-    r.trailPts.push(p); if (r.trailPts.length > 200) r.trailPts.shift();
+    const r = refs.current;
+    if (!r || imuData.length < 1) return;
+    const d = imuData[imuData.length - 1];
+    if (
+      d.qw !== undefined &&
+      d.qx !== undefined &&
+      d.qy !== undefined &&
+      d.qz !== undefined
+    ) {
+      // IM948: (w,x,y,z) → Three.js Quaternion(x,y,z,w)
+      r.paddle.quaternion.set(d.qx, d.qy, d.qz, d.qw);
+    } else {
+      const gs = 0.0007;
+      r.paddle.rotation.x += d.gx * gs;
+      r.paddle.rotation.y += d.gy * gs;
+      r.paddle.rotation.z += d.gz * gs;
+      r.paddle.rotation.x = Math.max(-1.2, Math.min(1.2, r.paddle.rotation.x));
+      r.paddle.rotation.z = Math.max(-0.8, Math.min(0.8, r.paddle.rotation.z));
+    }
+    const p = new THREE.Vector3();
+    r.paddle.getWorldPosition(p);
+    r.trailPts.push(p);
+    if (r.trailPts.length > 200) r.trailPts.shift();
   }, [imuData]);
 
   useEffect(() => {

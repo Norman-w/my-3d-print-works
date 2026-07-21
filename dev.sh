@@ -21,7 +21,25 @@ echo "[1/3] Starting Go server on :8000..."
 cd "$ROOT/server"
 go run . &
 SERVER_PID=$!
-sleep 1
+
+# Wait until API is actually listening (first run may compile deps)
+echo "  Waiting for http://127.0.0.1:8000 ..."
+for i in $(seq 1 90); do
+  if curl -sf -m 1 "http://127.0.0.1:8000/api/bezier-profiles/project" >/dev/null 2>&1; then
+    echo "  Go server ready."
+    break
+  fi
+  if ! kill -0 "$SERVER_PID" 2>/dev/null; then
+    echo "ERROR: Go server exited before becoming ready."
+    exit 1
+  fi
+  sleep 1
+  if [[ "$i" -eq 90 ]]; then
+    echo "ERROR: Go server did not become ready within 90s."
+    kill "$SERVER_PID" 2>/dev/null || true
+    exit 1
+  fi
+done
 
 # 2. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
 echo "[2/3] Starting Web UI on :5173 (strict)..."
