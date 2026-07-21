@@ -20,6 +20,9 @@
 
 ### MCU 长边脚位朝向绑错（2026-07-20 装配实测）
 
+> 商品图脚位 + 反焊/循环重启串口审计（2026-07-21）：  
+> → **[`docs/ESP32C6N8/`](docs/ESP32C6N8/README.md)**（尤其 `reverse-mount-and-reboot-audit.md`）
+
 > **实装意图（`V1_REWORK_PLAN` Phase1）**：朝 IMU = `GND / IO2 / IO3 / TXD / RXD`；IMU→IO2/IO3。  
 > **当前 `main.ato` / bringup 后来改成**：朝 IMU = `GND / 3V3 / EN / IO4 / IO5`，并把「IO2/IO3 正对 IMU」标成作废 —— **与实装意图和实物不符**。
 
