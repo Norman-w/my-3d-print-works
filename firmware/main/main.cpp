@@ -151,7 +151,11 @@ extern "C" void app_main() {
     init_network();
 
     // 4. IMU 初始化（IM948 传感器）
+#if SKIP_IMU_INIT
+    ESP_LOGW(TAG, "SKIP_IMU_INIT=1：跳过 IM948 / UART1(GPIO4/5)，仅验证是否还 POWERON 循环");
+#else
     init_imu();
+#endif
 
     // 5. 压电传感器初始化（失败不阻断 IMU/网络）
     bool piezo_ok = false;
@@ -164,8 +168,10 @@ extern "C" void app_main() {
 
     ESP_LOGI(TAG, "等待击球事件... 连接到 SmartPaddle WiFi 或通过 IP 访问");
 
+#if !SKIP_IMU_INIT
     // 6. 启动 IMU 轮询任务（高优先级、绑定核心 0）
     xTaskCreatePinnedToCore(imu_loop, "imu_task", 4096, nullptr, 10, nullptr, 0);
+#endif
 
     // 7. 主循环：采集压电事件 + WebSocket 推送
     while (true) {
