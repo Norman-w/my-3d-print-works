@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createPaddleModel } from '../lib/paddleModel';
+import { applyPaddleMountFrame, setPaddleQuaternionFromImu } from '../lib/imuOrientation';
 
 function disposePaddleGroup(group: THREE.Group): void {
   group.traverse(obj => {
@@ -32,7 +33,12 @@ interface Props {
 export default function Paddle3D({ imuData, impactData }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const refs = useRef<{ scene: THREE.Scene; paddle: THREE.Group; impacts: THREE.Group; trailPts: THREE.Vector3[] } | null>(null);
+  const hasImuRef = useRef(false);
   const [waitingTick, setWaitingTick] = useState(0);
+
+  useEffect(() => {
+    hasImuRef.current = imuData.length > 0;
+  }, [imuData.length]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -56,6 +62,7 @@ export default function Paddle3D({ imuData, impactData }: Props) {
     scene.add(grid);
 
     const paddle = createPaddleModel();
+    applyPaddleMountFrame(paddle);
     scene.add(paddle);
 
     const impacts = new THREE.Group();
@@ -79,7 +86,7 @@ export default function Paddle3D({ imuData, impactData }: Props) {
     let id: number;
     (function loop() {
       id = requestAnimationFrame(loop);
-      if (imuData.length < 8) paddle.rotation.y += 0.005;
+      if (!hasImuRef.current) paddle.rotation.y += 0.005;
       if (refs.current!.trailPts.length > 1) {
         trail.geometry.dispose();
         trail.geometry = new THREE.BufferGeometry().setFromPoints(refs.current!.trailPts);
@@ -98,6 +105,7 @@ export default function Paddle3D({ imuData, impactData }: Props) {
         r.scene.remove(r.paddle);
         disposePaddleGroup(r.paddle);
         r.paddle = createPaddleModel();
+        applyPaddleMountFrame(r.paddle);
         r.scene.add(r.paddle);
       } catch (err) {
         console.warn('Paddle3D rebuild failed', err);
@@ -121,8 +129,7 @@ export default function Paddle3D({ imuData, impactData }: Props) {
       d.qy !== undefined &&
       d.qz !== undefined
     ) {
-      // IM948: (w,x,y,z) → Three.js Quaternion(x,y,z,w)
-      r.paddle.quaternion.set(d.qx, d.qy, d.qz, d.qw);
+      setPaddleQuaternionFromImu(r.paddle, d.qw, d.qx, d.qy, d.qz);
     } else {
       const gs = 0.0007;
       r.paddle.rotation.x += d.gx * gs;
