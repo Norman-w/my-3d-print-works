@@ -26,8 +26,6 @@ from pcb.tools.mech_geometry import (
     MODULE_CUTOUT_CLEARANCE_LONG,
     MODULE_CUTOUT_CLEARANCE_SHORT,
     PCB_CLEARANCE_HOLES,
-    SCAD_TO_KICAD_Y_OFFSET,
-    SUBSTRATE_TAIL_MAX_Y,
 )
 
 # ===== 分区：常量/配置 =====
@@ -37,9 +35,10 @@ MCU_RULE_AREA_NAME = "MCU_EMBEDDED_CASTELLATED_EDGE"
 HANDLE_RULE_AREA_NAME = "HANDLE_CUTOUT_EDGE_INTERFACE"
 RULE_AREA_NAMES = (IMU_RULE_AREA_NAME, MCU_RULE_AREA_NAME, HANDLE_RULE_AREA_NAME)
 RULE_AREA_MARGIN = 1.0
-# 宽栈道半宽（与 SCAD _tail_base_hw 一致）+ margin → 贴侧墙放宽 edge_clearance
-_HANDLE_HALF_W = 9.0
-_HANDLE_FUNNEL_SCAD_Y = -36.0  # SCAD _tail_funnel_y
+# 宽栈道 Edge.Cuts 约 ±8.7（基材半宽 9 − 内缩 0.3）；规则区贴边、不撑出板外
+_HANDLE_HALF_W = 8.7
+_HANDLE_Y0 = 40.0   # 栈道收成常宽之后（漏斗以下）
+_HANDLE_Y1 = 68.0   # 盖过 SW_PWR，不伸进尾插
 # 半孔边历史间隙（含手改/旧版），用于清掉叠画的 Edge.Cuts
 _LEGACY_LONG_CLEARANCES = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35)
 _MCU_BODY = (25.5, 18.0)
@@ -270,19 +269,15 @@ def _add_module_rule_areas(pcbnew, board) -> None:
         y2=mcu_cy + mcu_h / 2 + margin,
     )
 
-    # 宽栈道：KiCad Y = SCAD_TO_KICAD_Y_OFFSET - scad_y
-    y_funnel = SCAD_TO_KICAD_Y_OFFSET - _HANDLE_FUNNEL_SCAD_Y
-    # 盖到尾键区外缘，不伸进尾插座（板尾 − 余量）
-    y_end = min(70.0, SUBSTRATE_TAIL_MAX_Y - 18.0)
-    hx = _HANDLE_HALF_W + margin
+    # 宽栈道侧墙：矩形贴 Edge.Cuts 常宽段（勿用 ±10，会撑出粉红板边）
     _add_rule_area_rect(
         pcbnew,
         board,
         name=HANDLE_RULE_AREA_NAME,
-        x1=-hx,
-        y1=y_funnel,
-        x2=hx,
-        y2=y_end,
+        x1=-_HANDLE_HALF_W,
+        y1=_HANDLE_Y0,
+        x2=_HANDLE_HALF_W,
+        y2=_HANDLE_Y1,
         priority=90,
     )
 

@@ -8,14 +8,14 @@
 | VBAT (3/15) | **悬空** | 不用模块锂电充电路径 |
 | VDDIO (4) | **悬空** | 由模块在 VBUS 场景下内部产生 ≈3.0 V IO |
 | GND | GND | |
-| RXD (13) | MCU **GPIO4**（UART1 TX） | MCU→IMU |
-| TXD (14) | MCU **GPIO5**（UART1 RX） | IMU→MCU |
+| RXD (13) | MCU **GPIO23**（UART1 TX，pad 21） | MCU→IMU；面对面左侧，平行交叉 |
+| TXD (14) | MCU **GPIO22**（UART1 RX，pad 20） | IMU→MCU；面对面右侧 |
 
 设计意图：IMU **独占 UART1**，与尾插 UART0（TXD0/RXD0）隔离，避免烧录抢线。  
 封装：`pcb/layouts/lib/footprints.pretty/IM948_CUTOUT.kicad_mod`。
 
 > 若 MCU 模块反焊/长边对调，板铜「IMU RX/TX」可能实际落到 ESP 的其它脚甚至 EN 附近网络。  
-> 当前诊断：开 `init_imu()`（配置 GPIO4/5）会触发 `rst:0x1 POWERON` 循环；`SKIP_IMU_INIT=1` 可稳定运行。详见 [`../ESP32C6N8/reverse-mount-and-reboot-audit.md`](../ESP32C6N8/reverse-mount-and-reboot-audit.md)。
+> 历史诊断：旧版接 GPIO4/5 时开 `init_imu()` 会触发 `rst:0x1 POWERON` 循环；现已改到 **GPIO23/22**（非 strapping）。详见 [`../ESP32C6N8/reverse-mount-and-reboot-audit.md`](../ESP32C6N8/reverse-mount-and-reboot-audit.md)。
 
 ## 固件路径
 

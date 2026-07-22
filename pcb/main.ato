@@ -31,8 +31,9 @@ component SGFK_ESP32C6N8_Cutout:
     pin GND_1
     pin VCC_3V3
     pin EN
-    pin GPIO4_IMU_TX
-    pin GPIO5_IMU_RX
+    # IMU UART1：pad21 IO23=TX、pad20 IO22=RX（拍头侧，与 IM948 RXD/TXD 面对面平行交叉）
+    pin GPIO23_IMU_TX
+    pin GPIO22_IMU_RX
     pin GPIO6_PZT_BL
     pin GPIO7_PZT_BR
     pin GPIO8_LED_DATA
@@ -52,8 +53,6 @@ component SGFK_ESP32C6N8_Cutout:
     GND_1 ~ pin 1
     VCC_3V3 ~ pin 2
     EN ~ pin 3
-    GPIO4_IMU_TX ~ pin 4
-    GPIO5_IMU_RX ~ pin 5
     GPIO6_PZT_BL ~ pin 6
     GPIO7_PZT_BR ~ pin 7
     GPIO8_LED_DATA ~ pin 10
@@ -62,6 +61,8 @@ component SGFK_ESP32C6N8_Cutout:
     USB_DP ~ pin 14
     GPIO9_BOOT ~ pin 15
     GPIO18_USER_BTN ~ pin 16
+    GPIO22_IMU_RX ~ pin 20
+    GPIO23_IMU_TX ~ pin 21
     UART_RX ~ pin 24
     UART_TX ~ pin 25
     GPIO3_PZT_TR ~ pin 26
@@ -395,8 +396,8 @@ module SmartPaddleRigid:
     imu.TXD ~ imu_uart_rx
     imu.KEY ~ imu_key
     imu.GPIO ~ imu_gpio
-    mcu.GPIO4_IMU_TX ~ imu_uart_tx
-    mcu.GPIO5_IMU_RX ~ imu_uart_rx
+    mcu.GPIO23_IMU_TX ~ imu_uart_tx
+    mcu.GPIO22_IMU_RX ~ imu_uart_rx
 
     # ESP32-C6 control, programming, and user input.
     mcu.EN ~ en

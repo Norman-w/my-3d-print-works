@@ -71,8 +71,6 @@ PROJECT_BINDINGS: dict[int, str] = {
     1: "GND_1",
     2: "VCC_3V3",
     3: "EN",
-    4: "GPIO4_IMU_TX",
-    5: "GPIO5_IMU_RX",
     6: "GPIO6_PZT_BL",
     7: "GPIO7_PZT_BR",
     10: "GPIO8_LED_DATA",
@@ -81,6 +79,8 @@ PROJECT_BINDINGS: dict[int, str] = {
     14: "USB_DP",
     15: "GPIO9_BOOT",
     16: "GPIO18_USER_BTN",
+    20: "GPIO22_IMU_RX",
+    21: "GPIO23_IMU_TX",
     24: "UART_RX",
     25: "UART_TX",
     26: "GPIO3_PZT_TR",
@@ -94,8 +94,8 @@ FIRMWARE_GPIO: dict[str, int] = {
     "PIEZO_PIN_2": 3,
     "PIEZO_PIN_3": 6,
     "PIEZO_PIN_4": 7,
-    "IMU_UART_TX": 4,
-    "IMU_UART_RX": 5,
+    "IMU_UART_TX": 23,  # pad 21 IO23 → IMU RXD（面对面左，平行交叉）
+    "IMU_UART_RX": 22,  # pad 20 IO22 ← IMU TXD（面对面右）
     "LED_PIN": 8,
     "PWR_LATCH_GPIO": 10,
     "USER_BTN_GPIO": 18,

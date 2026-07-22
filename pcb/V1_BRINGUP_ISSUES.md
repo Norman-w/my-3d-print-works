@@ -65,13 +65,14 @@
 
 | 候选 | 相对 IMU | 结论 |
 |------|----------|------|
-| **IO4 / IO5** | **正对 IMU（拍柄侧）** | **UART1**；走线最短 |
+| **IO22 / IO23** | **正对 IMU（拍头侧 pad20/21）** | **UART1**；面对面平行交叉，无过孔交叉 |
+| **IO4 / IO5** | 拍柄侧 | 空闲（strapping，勿强驱） |
 | IO6 / IO7 | 同侧稍后 | PZT BL/BR |
 | IO2 / IO3 | 背对 IMU | PZT TL/TR（角上可绕） |
 | TXD0 / RXD0 | 对侧 | 仅调试，**禁止给 IMU** |
 
 **当前分配：**
-- **IMU UART1：** `IO4 (TX) → IMU RXD`，`IO5 (RX) ← IMU TXD`
+- **IMU UART1：** `IO23 (TX) → IMU RXD`，`IO22 (RX) ← IMU TXD`（平行交叉）
 - **PZT：** TL=`IO2`，TR=`IO3`，BL=`IO6`，BR=`IO7`
 - 固件：`config.h` 与上表一致
 

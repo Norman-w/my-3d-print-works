@@ -169,7 +169,7 @@ extern "C" void app_main() {
 
     // 4. IMU 初始化（IM948 传感器）
 #if SKIP_IMU_INIT
-    ESP_LOGW(TAG, "SKIP_IMU_INIT=1：跳过 IM948 / UART1(GPIO4/5)，仅验证是否还 POWERON 循环");
+    ESP_LOGW(TAG, "SKIP_IMU_INIT=1：跳过 IM948 / UART1(GPIO23/22)，仅验证是否还 POWERON 循环");
 #else
     init_imu();
 #endif

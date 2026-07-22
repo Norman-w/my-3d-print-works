@@ -6,7 +6,7 @@
 // ESP32-C6 仅 2 路 RMT RX，4 通道用 GPIO ISR + CPU cycle 锁存
 // 脚位真理源：pcb/lib/esp32c6n8/pinmap.py（顶视/元件面、天线 −X）
 // 拍柄(+Y)=pad1–14=GND/3V3/EN/IO4…；拍头/IMU(−Y)=pad15–28=IO9…IO2/UART0
-// IMU UART1 → IO4/IO5（pad4/5）；PZT TL/TR → IO2/IO3；BL/BR → IO6/IO7
+// IMU UART1 → IO23/IO22（pad21/20，面对面平行交叉）；PZT TL/TR → IO2/IO3；BL/BR → IO6/IO7
 #define PIEZO_PIN_1 GPIO_NUM_2   // Top-left blade corner
 #define PIEZO_PIN_2 GPIO_NUM_3   // Top-right blade corner
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner
@@ -14,11 +14,11 @@
 
 // --- IMU pins (IM948, UART1) ---
 #define IMU_UART_NUM   UART_NUM_1
-#define IMU_UART_TX    GPIO_NUM_4
-#define IMU_UART_RX    GPIO_NUM_5
+#define IMU_UART_TX    GPIO_NUM_23  // pad 21 → IMU RXD
+#define IMU_UART_RX    GPIO_NUM_22  // pad 20 ← IMU TXD
 #define IMU_UART_BAUD  115200       // 初始波特率，上电后升级到 230400
 #define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
-// 诊断：1=跳过 init_imu / imu_task（排查 rst:0x1 @ GPIO4/5）；确认后改回 0
+// 诊断：1=跳过 init_imu / imu_task；确认后改回 0
 #define SKIP_IMU_INIT  0
 // 诊断：UART 低频打印 IMU（0=关；5≈每 200ms 一行，便于串口观察姿态）
 #define IMU_UART_REPORT_HZ  5
