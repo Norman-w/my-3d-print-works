@@ -121,6 +121,24 @@ function sampleButtCrossSectionRing(bottom: BezierProfile, ringSegments: number)
 }
 
 /**
+ * 真实球拍尾端是齐平切面。贝塞尔轮廓为了“封口”会收到中线（半宽≈0），
+ * 若从最尖点起 loft 就会长出针尖。这里在尾端几毫米内取半宽接近最大值的位置作为平底起点。
+ */
+export function flatButtStartY(front: BezierProfile, tipY: number, bandMm = 3): number {
+  let maxHw = 0;
+  const steps = 24;
+  for (let i = 0; i <= steps; i++) {
+    maxHw = Math.max(maxHw, halfWidthAtY(front, tipY + (bandMm * i) / steps));
+  }
+  const target = maxHw * 0.92;
+  for (let i = 0; i <= steps; i++) {
+    const y = tipY + (bandMm * i) / steps;
+    if (halfWidthAtY(front, y) >= target) return y;
+  }
+  return tipY + Math.min(bandMm, 0.5);
+}
+
+/**
  * Loft handle: cross-section shape from handle-bottom profile, scaled at each height
  * by handle-front (width) and side (thickness).
  */
@@ -136,7 +154,8 @@ export function createLoftedHandleGeometry(
   const joinY = DEFAULT_DIMS.handleJoinYMm;
   // Leave a small gap from blade neck to reduce depth-fighting / interpenetration artifacts.
   const topY = Math.min(Math.max(...handlePts.map(p => p.y)), joinY - 0.6);
-  const bottomY = Math.min(...handlePts.map(p => p.y));
+  const tipY = Math.min(...handlePts.map(p => p.y));
+  const bottomY = flatButtStartY(front, tipY);
   const ringTemplate = sampleButtCrossSectionRing(bottom, ringSegments);
   const sliceCount = Math.max(slices, 2);
 

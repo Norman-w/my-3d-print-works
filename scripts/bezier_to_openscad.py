@@ -37,6 +37,23 @@ HANDLE_SLICES = 256
 RING_SEGMENTS = 80
 JOIN_GAP_MM = 0.6  # match paddleFromBezier.ts — small gap at blade neck
 HANDLE_BUTT_SOLID_MM = 4.0  # minimal tail wall — just enough for USB-C opening & structural integrity
+# 真实球拍尾端是齐平切面；贝塞尔封口收到中线时，从尖点起 loft 会出针尖。
+HANDLE_BUTT_FLAT_BAND_MM = 3.0
+
+
+def flat_butt_start_y(handle: dict[str, Any], tip_y: float, band_mm: float = HANDLE_BUTT_FLAT_BAND_MM) -> float:
+    """在尾端 band 内取半宽接近最大值的 Y，作为平底起点（与 paddleFromBezier.ts 一致）。"""
+    steps = 24
+    max_hw = 0.0
+    for i in range(steps + 1):
+        y = tip_y + band_mm * i / steps
+        max_hw = max(max_hw, half_width_at_y(handle, y))
+    target = max_hw * 0.92
+    for i in range(steps + 1):
+        y = tip_y + band_mm * i / steps
+        if half_width_at_y(handle, y) >= target:
+            return y
+    return tip_y + min(band_mm, 0.5)
 
 
 def _smooth_series(values: list[float], passes: int = 2) -> list[float]:
@@ -211,7 +228,8 @@ def handle_loft_slices(
     base_hw = max(max(p[0] for p in ring), 1.0)
     base_ht = max(max(abs(p[1]) for p in ring), 1.0)
     hpts = sample_profile(handle, 48)
-    bottom_y = min(p[1] for p in hpts)
+    tip_y = min(p[1] for p in hpts)
+    bottom_y = flat_butt_start_y(handle, tip_y)
     top_y = min(max(p[1] for p in hpts), join_y - JOIN_GAP_MM)
     ys: list[float] = []
     hws: list[float] = []
@@ -223,18 +241,15 @@ def handle_loft_slices(
         hw = half_width_at_y(handle, y)
         hws.append(hw)
         if side:
-            ht_side = half_width_at_y(side, y)
-            # Smooth the neck transition so handle thickness eases into blade thickness.
-            neck_blend_mm = 10.0
-            neck_t = max(0.0, min(1.0, (y - (join_y - neck_blend_mm)) / neck_blend_mm))
-            ht = ht_side * (1.0 - neck_t) + blade_half_t * neck_t
+            # 与 paddleFromBezier.ts 一致：直接用侧视轮廓厚度，不做颈部混厚。
+            ht = half_width_at_y(side, y)
         else:
             ht = base_ht * (hw / base_hw)
         hts.append(ht)
 
-    # Smooth both width and thickness progression to reduce staircase artifacts.
-    hws = _smooth_series(hws, passes=2)
-    hts = _smooth_series(hts, passes=3)
+    # 轻量平滑台阶感；不做强平滑，避免肩部外形偏离 Three.js。
+    hws = _smooth_series(hws, passes=1)
+    hts = _smooth_series(hts, passes=1)
 
     out: list[tuple[float, list[tuple[float, float]]]] = []
     for y, hw, ht in zip(ys, hws, hts):
