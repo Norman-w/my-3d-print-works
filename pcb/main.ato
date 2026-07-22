@@ -250,26 +250,32 @@ module LEDInterface:
 
 
 module TestPads:
-    """Bringup：仅大陆两颗 — TP_3V3 / TP_SYS_5V_SW。BOOT/EN 用宽栈道轻触，不再留 TP。"""
+    """Bringup 大陆测试焊盘：TP_3V3 / TP_SYS_5V_SW / TP_GND。BOOT/EN/开机用宽栈道轻触。"""
     pin VCC_3V3
     pin SYS_5V_SW
+    pin GND
 
     vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
     sys5_pad = new SmallWirePad;  sys5_pad.contact ~ SYS_5V_SW
+    gnd_pad = new SmallWirePad;   gnd_pad.contact ~ GND
 
 
 module McuDebugControls:
-    """宽栈道 BOOT/EN 轻触：按下分别把 BOOT、EN 拉到 GND。"""
+    """宽栈道 4.5×4.5 THT 轻触（与尾键同规格）：BOOT / EN / 开机测试（并联 btn_sw↔GND）。"""
     pin BOOT
     pin EN
+    pin BUTTON
     pin GND
 
     sw_boot = new TactileSwitch45
     sw_en = new TactileSwitch45
+    sw_pwr = new TactileSwitch45
     sw_boot.a ~ BOOT
     sw_boot.b ~ GND
     sw_en.a ~ EN
     sw_en.b ~ GND
+    sw_pwr.a ~ BUTTON
+    sw_pwr.b ~ GND
 
 
 module McuPowerLed:
@@ -392,9 +398,10 @@ module SmartPaddleRigid:
     power.BUTTON_RAW ~ btn_sw
     power.BUTTON_GPIO ~ user_btn
 
-    # 宽栈道 BOOT/EN 键 + TP；MCU 旁可选电源灯。
+    # 宽栈道 BOOT/EN/开机测试键；MCU 旁可选电源灯。
     debug_sw.BOOT ~ boot_btn
     debug_sw.EN ~ en
+    debug_sw.BUTTON ~ btn_sw
     debug_sw.GND ~ gnd
     pwr_led.VCC_3V3 ~ vcc
     pwr_led.GND ~ gnd
@@ -426,6 +433,7 @@ module SmartPaddleRigid:
 
     bringup.SYS_5V_SW ~ sys_5v_sw
     bringup.VCC_3V3 ~ vcc
+    bringup.GND ~ gnd
 
     # PZT：TL/TR 用对侧 IO2/IO3；BL/BR 仍在拍柄侧 IO6/IO7。
     mcu.GPIO3_PZT_TR ~ pzt_tr_signal

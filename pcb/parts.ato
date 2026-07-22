@@ -22,14 +22,17 @@ component Capacitor:
 
 
 component Diode:
-    """小信号二极管（开机隔离等）。默认 1N4148W / BAS16，SOD-323。"""
+    """小信号二极管（开机隔离等）。默认 1N4148W / BAS16，SOD-323。
+
+    用官方 HandSoldering 加大焊盘，便于手焊（V3 装配反馈）。
+    """
     designator_prefix = "D"
     value = "1N4148W"
     signal anode
     signal cathode
     anode ~ pin 2
     cathode ~ pin 1
-    footprint = "Diode_SMD:D_SOD-323"
+    footprint = "SmartPaddle:D_SOD-323_HandSoldering"
 
 
 component Schottky1A_SOD123:
@@ -105,10 +108,11 @@ component WirePad:
 
 
 component SmallWirePad:
+    """大陆 / bringup 小测试点（含 TP_GND）；官方 TestPoint THT 校本化。"""
     designator_prefix = "TP"
     signal contact
     contact ~ pin 1
-    footprint = "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm"
+    footprint = "SmartPaddle:TestPoint_THTPad_D2.0mm_Drill1.0mm"
 
 
 component EdgeFingerPad:
@@ -133,7 +137,10 @@ component LED_0603:
 
 
 component TactileSwitch45:
-    """4.5×4.5 mm SPST 轻触开关（四脚 SMD；内部 1–1 / 2–2 短接，BOOT / EN / 电源键同规格）。"""
+    """4.5×4.5 mm SPST 轻触（与尾部电源键同规格；V3 测试键为 THT 插脚）。
+
+    焊盘几何：pcb/lib/tactile_45/params.py → generate_sw_spst_45_tht_mod.py
+    """
     designator_prefix = "SW"
     value = "4.5x4.5"
     signal a

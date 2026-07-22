@@ -61,6 +61,7 @@ READABLE_REFS = {
     'pwr_led.r_lim': ('R_MCU_PWR_1K', '1k'),
     'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
     'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
+    'debug_sw.sw_pwr': ('SW_PWR', '4.5x4.5'),
     'tail.power_finger': ('TAIL_PWR', 'F:SYS_5V_IN B:GND'),
     'tail.led_finger': ('TAIL_LED', 'F:LED+ B:DIN'),
     'tail.control_finger': ('TAIL_CTL', 'F:BTN B:BAT_CELL_P'),
@@ -68,6 +69,7 @@ READABLE_REFS = {
     'tail.uart_finger': ('TAIL_UART', 'F:TX B:RX'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
     'bringup.sys5_pad': ('TP_SYS_5V_SW', 'SYS_5V_SW'),
+    'bringup.gnd_pad': ('TP_GND', 'GND'),
 }
 
 MODEL_SCALES = {'mcu': 0.3937008, 'imu': 0.3937008}
@@ -359,8 +361,10 @@ def main():
     else:
         # 宽栈道仅 BOOT/EN 轻触
         debug_zone = {
+            # 4.5×4.5 THT（与尾键同规格）；宽栈道手布位
             'debug_sw.sw_boot': (4.87, 49.706, 0),
             'debug_sw.sw_en': (4.87, 56.72, 0),
+            'debug_sw.sw_pwr': (4.87, 63.73, 0),
         }
         moved += _place_map(fp_by_addr, debug_zone, True)
 

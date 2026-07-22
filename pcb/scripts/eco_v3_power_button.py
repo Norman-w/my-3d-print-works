@@ -19,10 +19,11 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb.eco-wip"
 CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
 
-# 宽栈道机械位：BOOT/EN 保持手布坐标；TP_MCU_* 在其左侧；TP_3V3 保持大陆历史位
+# 宽栈道机械位：4.5×4.5 THT（与尾键同规格）；旧 TP_MCU_* 脚本位保留勿覆盖
 BRINGUP_POS = {
     "debug_sw.sw_boot": (4.870, 49.706, 0.0),
     "debug_sw.sw_en": (4.870, 56.720, 0.0),
+    "debug_sw.sw_pwr": (4.870, 63.730, 0.0),
     "bringup.tp_mcu_boot": (-3.130, 49.706, 0.0),
     "bringup.tp_mcu_en": (-3.130, 56.720, 0.0),
     "bringup.gnd_pad": (-3.130, 43.000, 0.0),
