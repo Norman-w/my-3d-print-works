@@ -116,7 +116,7 @@ component SmallWirePad:
 
 
 component EdgeFingerPad:
-    """金手指焊盘（双面），pad "F" 在 F.Cu，pad "B" 在 B.Cu，独立网络，适合 PCB 尾插。"""
+    """金手指焊盘（双面），pad "F" 在 F.Cu，pad "B" 在 B.Cu（旧尾插；新板改用 MX1.25 卧贴）。"""
     designator_prefix = "J"
     value = "GoldFinger"
     signal front
@@ -124,6 +124,36 @@ component EdgeFingerPad:
     front ~ pin "F"
     back ~ pin "B"
     footprint = "SmartPaddle:EdgeFingerPad_P1.27mm_Dual"
+
+
+component MolexPicoBlade_53261_10P:
+    """MX1.25 / Molex PicoBlade 53261-1071：1.25 mm × 10P 卧贴 + 侧耳（替代尾插金手指）。
+
+    封装/3D：KiCad Connector_Molex 校本化，见 docs/1.25x10p/README.md
+    """
+    designator_prefix = "J"
+    value = "MX1.25-10P"
+    signal p1
+    signal p2
+    signal p3
+    signal p4
+    signal p5
+    signal p6
+    signal p7
+    signal p8
+    signal p9
+    signal p10
+    p1 ~ pin 1
+    p2 ~ pin 2
+    p3 ~ pin 3
+    p4 ~ pin 4
+    p5 ~ pin 5
+    p6 ~ pin 6
+    p7 ~ pin 7
+    p8 ~ pin 8
+    p9 ~ pin 9
+    p10 ~ pin 10
+    footprint = "SmartPaddle:Molex_PicoBlade_53261-1071_1x10-1MP_P1.25mm_Horizontal"
 
 
 component LED_0603:

@@ -111,16 +111,23 @@ def _parse_netlist(path: Path) -> dict[str, dict[str, str]]:
 
 # ===== 常量/配置 =====
 TAIL_NET_ASSIGNMENTS = {
-    "tail.power_finger": {"F": "vbat_in", "B": "gnd"},
-    "tail.led_finger": {"F": "vbat_sw", "B": "led_din"},
-    "tail.control_finger": {"F": "btn_sw", "B": "vbus"},
-    "tail.usb_finger": {"F": "usb_dp", "B": "usb_dn"},
-    "tail.uart_finger": {"F": "uart_tx", "B": "uart_rx"},
+    "tail.conn": {
+        "1": "sys_5v_in",
+        "2": "gnd",
+        "3": "sys_5v_sw",
+        "4": "led_din",
+        "5": "btn_sw",
+        "6": "bat_cell_p",
+        "7": "usb_dp",
+        "8": "usb_dn",
+        "9": "uart_tx",
+        "10": "uart_rx",
+    },
 }
 
 
 def _assign_tail_nets(board):
-    """显式分配金手指焊盘网络（netlist 中 tail.*pad 与板上 footprint 命名不一致的 fallback）。"""
+    """显式分配尾插焊盘网络（netlist 中 tail.*pad 与板上 footprint 命名不一致的 fallback）。"""
     import pcbnew
 
     assigned = 0
@@ -244,7 +251,7 @@ def import_netlist(netlist_path: Path, board_path: Path):
     tail_n = _assign_tail_nets(board)
     if tail_n > 0:
         assigned += tail_n
-        print(f"\n  金手指 fallback: 分配了 {tail_n} 个焊盘网络")
+        print(f"\n  尾插 fallback: 分配了 {tail_n} 个焊盘网络")
 
     # 合并历史大小写分裂网（模块脚名大写 vs 顶层 signal 小写）
     merged = _merge_canonical_nets(board)

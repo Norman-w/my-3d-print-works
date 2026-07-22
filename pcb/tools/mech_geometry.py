@@ -136,11 +136,10 @@ _HANDLE_JOIN_KICAD_Y = -_handle_join_y_scad + SCAD_TO_KICAD_Y_OFFSET
 # 值越小 PCB 越贴近外壳壁，越大则越保守
 SUBSTRATE_EDGE_CLEARANCE = 0.30
 
-# PCB 尾端截断线 KiCad Y 坐标 — 从 SCAD _tail_y 参数自适应推导。
-# SCAD _tail_y 定义在 paddle_shell.scad 中，已包含连接器金手指所需深度。
+# PCB 尾端截断线 KiCad Y — V3 起取消金手指窄尖，端头对齐 SCAD _tail_neck_y（粗栈道平收）。
 # 转换: y_kicad = -y_scad + SCAD_TO_KICAD_Y_OFFSET
-_tail_y_scad = float(_PARAMS.get("_tail_y", -108.0))  # type: ignore[arg-type]
-SUBSTRATE_TAIL_MAX_Y = -_tail_y_scad + SCAD_TO_KICAD_Y_OFFSET
+_tail_end_scad = float(_PARAMS.get("_tail_neck_y", -100.0))  # type: ignore[arg-type]
+SUBSTRATE_TAIL_MAX_Y = -_tail_end_scad + SCAD_TO_KICAD_Y_OFFSET
 
 # PCB 轮廓边的采样步长（mm），用于在边上插入中间点以平滑 PZT 避让过渡
 SUBSTRATE_EDGE_SAMPLE = 1.0
@@ -292,14 +291,16 @@ SCAD_SLOT_POINTS = [
 def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
     """从 SCAD 槽参考线派生 PCB 基材轮廓（SCAD 坐标系）。
 
-    保持码头/栈道/大陆区顶点与 SCAD 槽一致，确保 PCB 不会飘出黑色参考框。
-    尾端 Y 直接从 SCAD _tail_y 参数自适应读取。
+    V3：去掉金手指窄尖（原 _tail_hw × tip→neck），在 _tail_neck_y 以
+    _tail_base_hw 粗栈道宽度平收，供 MX1.25 卧贴尾插齐边。
     """
     points = list(SCAD_SLOT_POINTS)
-    _tail_y_scad_val = float(_PARAMS.get("_tail_y", -108.0))  # type: ignore[arg-type]
-    points[0] = (points[0][0], _tail_y_scad_val)
-    points[1] = (points[1][0], _tail_y_scad_val)
-    return points
+    neck = float(_PARAMS.get("_tail_neck_y", -100.0))  # type: ignore[arg-type]
+    base_hw = float(_PARAMS.get("_tail_base_hw", 9.0))  # type: ignore[arg-type]
+    # SCAD_SLOT_POINTS: [0] tipR,[1] tipL,[2] neck@tip_hw L,[3] neck@base L,
+    #   ... funnel ..., [-2] neck@base R,[-1] neck@tip_hw R
+    # → 平收：(±base, neck) + 中段（漏斗→大陆→码头）含右侧 (base, neck)
+    return [(base_hw, neck), (-base_hw, neck), *points[4:-1]]
 
 
 def _polygon_points(poly) -> list[tuple[float, float]]:

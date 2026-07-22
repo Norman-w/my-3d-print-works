@@ -15,7 +15,7 @@ from "parts.ato" import NChannelMOSFET_SOT23
 from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
-from "parts.ato" import EdgeFingerPad
+from "parts.ato" import MolexPicoBlade_53261_10P
 from "parts.ato" import LED_0603
 from "parts.ato" import TactileSwitch45
 
@@ -141,8 +141,11 @@ module PZTDock:
 
 
 module TailHarness5P2S:
-    """柄尾金手指。SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
-    烧录走 USB D+/D− 金手指；充电仓 Type-C 通常无 D+/D−。
+    """柄尾 MX1.25 卧贴 10P（Molex PicoBlade 53261-1071 同族）。
+
+    SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
+    烧录走 USB D+/D−；充电仓 Type-C 通常无 D+/D−。
+    引脚表：docs/1.25x10p/README.md
     """
     pin SYS_5V_IN
     pin GND
@@ -155,11 +158,17 @@ module TailHarness5P2S:
     pin UART_TX
     pin UART_RX
 
-    power_finger = new EdgeFingerPad;  power_finger.front ~ SYS_5V_IN; power_finger.back ~ GND
-    led_finger = new EdgeFingerPad;    led_finger.front ~ LED_PLUS; led_finger.back ~ LED_DIN
-    control_finger = new EdgeFingerPad; control_finger.front ~ BUTTON; control_finger.back ~ BAT_CELL_P
-    usb_finger = new EdgeFingerPad;    usb_finger.front ~ USB_DP; usb_finger.back ~ USB_DN
-    uart_finger = new EdgeFingerPad;   uart_finger.front ~ UART_TX; uart_finger.back ~ UART_RX
+    conn = new MolexPicoBlade_53261_10P
+    conn.p1 ~ SYS_5V_IN
+    conn.p2 ~ GND
+    conn.p3 ~ LED_PLUS
+    conn.p4 ~ LED_DIN
+    conn.p5 ~ BUTTON
+    conn.p6 ~ BAT_CELL_P
+    conn.p7 ~ USB_DP
+    conn.p8 ~ USB_DN
+    conn.p9 ~ UART_TX
+    conn.p10 ~ UART_RX
 
 
 
@@ -406,7 +415,7 @@ module SmartPaddleRigid:
     pwr_led.VCC_3V3 ~ vcc
     pwr_led.GND ~ gnd
 
-    # 烧录/调试金手指（与充电仓 Type-C 分离；仓口通常无 D+/D−）。
+    # 烧录/调试尾插（与充电仓 Type-C 分离；仓口通常无 D+/D−）。
     tail.USB_DP ~ usb_dp
     tail.USB_DN ~ usb_dn
     tail.UART_TX ~ uart_tx
@@ -425,7 +434,7 @@ module SmartPaddleRigid:
     led_r_data.p2 ~ led_din
     mcu.GPIO8_LED_DATA ~ led_data
 
-    # 低电采样：只接电芯 B+（金手指 BAT_CELL_P），绝不能接 SYS_5V_*。
+    # 低电采样：只接电芯 B+（尾插 BAT_CELL_P），绝不能接 SYS_5V_*。
     tail.BAT_CELL_P ~ bat_cell_p
     battery.BAT_CELL_P ~ bat_cell_p
     battery.GND ~ gnd

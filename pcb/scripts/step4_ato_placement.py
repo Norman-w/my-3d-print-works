@@ -2,7 +2,7 @@
 """Step 4 — atopile 组件放置 + Reference + 3D 修正 + 尾插网表分配。
 
 将 ato 生成的封装放入机械定位点，分配可读 Reference，修正 3D 模型缩放，
-显式分配金手指焊盘网络。不产生任何走线或过孔（fanout 由 step4.5 独立处理）。
+显式分配 MX1.25 尾插座焊盘网络。不产生任何走线或过孔（fanout 由 step4.5 独立处理）。
 """
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
@@ -23,6 +23,7 @@ from pcb.tools.kicad_update_utils import load_board, save_board, xy
 from pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
     IMU_CUTOUT,
+    SUBSTRATE_EDGE_CLEARANCE,
     SUBSTRATE_TAIL_MAX_Y,
 )
 
@@ -62,11 +63,7 @@ READABLE_REFS = {
     'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
     'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
     'debug_sw.sw_pwr': ('SW_PWR', '4.5x4.5'),
-    'tail.power_finger': ('TAIL_PWR', 'F:SYS_5V_IN B:GND'),
-    'tail.led_finger': ('TAIL_LED', 'F:LED+ B:DIN'),
-    'tail.control_finger': ('TAIL_CTL', 'F:BTN B:BAT_CELL_P'),
-    'tail.usb_finger': ('TAIL_USB', 'F:D+ B:D-'),
-    'tail.uart_finger': ('TAIL_UART', 'F:TX B:RX'),
+    'tail.conn': ('TAIL_MX125', 'MX1.25-10P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
     'bringup.sys5_pad': ('TP_SYS_5V_SW', 'SYS_5V_SW'),
     'bringup.gnd_pad': ('TP_GND', 'GND'),
@@ -84,11 +81,19 @@ PZT_PARTS = {
 }
 
 TAIL_NET_MAP = {
-    'tail.power_finger': {'F': 'sys_5v_in', 'B': 'gnd'},
-    'tail.led_finger': {'F': 'sys_5v_sw', 'B': 'led_din'},
-    'tail.control_finger': {'F': 'btn_sw', 'B': 'bat_cell_p'},
-    'tail.usb_finger': {'F': 'usb_dp', 'B': 'usb_dn'},
-    'tail.uart_finger': {'F': 'uart_tx', 'B': 'uart_rx'},
+    # MX1.25 / PicoBlade 53261-1071 — 见 docs/1.25x10p/README.md
+    'tail.conn': {
+        '1': 'sys_5v_in',
+        '2': 'gnd',
+        '3': 'sys_5v_sw',
+        '4': 'led_din',
+        '5': 'btn_sw',
+        '6': 'bat_cell_p',
+        '7': 'usb_dp',
+        '8': 'usb_dn',
+        '9': 'uart_tx',
+        '10': 'uart_rx',
+    },
 }
 
 
@@ -254,7 +259,7 @@ def _place_map(fp_by_addr, placements, force):
 # ===== 分区：私有成员 — 网表分配 =====
 
 def _assign_tail_nets(board):
-    """显式分配金手指焊盘网络（netlist 命名不一致的补偿）。"""
+    """显式分配尾插焊盘网络（netlist 命名不一致的补偿）。"""
     assigned = 0
     for fp in board.GetFootprints():
         addr = _address(fp)
@@ -380,18 +385,11 @@ def main():
     else:
         raise FileNotFoundError(f'missing dock snapshot: {DOCK_SNAPSHOT}')
 
-    tail_fingers = (
-        'tail.power_finger', 'tail.led_finger', 'tail.control_finger',
-        'tail.usb_finger', 'tail.uart_finger',
-    )
-    tail_pitch = 1.27
-    # 金手指中心靠脖子：8mm 焊盘覆盖窄区并伸进粗栈道
-    tail_y = SUBSTRATE_TAIL_MAX_Y - 4.0
-    first_x = -(len(tail_fingers) - 1) * tail_pitch / 2
-    for index, address in enumerate(tail_fingers):
-        moved += _move_one(fp_by_addr, address, first_x + index * tail_pitch, tail_y, 0, force)
+    # 尾插 MX1.25：拍尾 F.Fab(+Y=2.6) 与板尾边平齐（尾边≈TAIL_MAX−内缩）
+    tail_y = SUBSTRATE_TAIL_MAX_Y - SUBSTRATE_EDGE_CLEARANCE - 2.6
+    moved += _move_one(fp_by_addr, 'tail.conn', 0.0, tail_y, 0.0, force)
 
-    # 4e. 金手指网络
+    # 4e. 尾插网络
     tail_net_assigned = _assign_tail_nets(board)
 
     # 4c/4d. 标签与 3D
@@ -403,7 +401,7 @@ def main():
     print(f'4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点')
     print(f'4c. 文本: 应用了 {labelled} 个可读Reference, 显示 {visible_labels} 个关键标签')
     print(f'4d. 3D: 应用了 {scaled} 个模块模型缩放修正')
-    print(f'4e. 金手指网络: 分配了 {tail_net_assigned} 个焊盘')
+    print(f'4e. 尾插网络: 分配了 {tail_net_assigned} 个焊盘')
     print(f'    总共 {len(fp_by_addr)} 个带 atopile_address 的封装')
     print(f'    ⚠ 无走线/过孔 — 纯放置步骤')
 
