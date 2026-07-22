@@ -652,17 +652,21 @@ module usb_c_cutout() {
 // 前后壳各贡献一半, 合壳后形成完整块, 后续挖空容纳充电模块。
 
 module usb_c_pcb_block(front = true) {
-    hz = half_z_at(actual_butt_y);   // 拍柄尾端半高
+    // 方块按尾端半高生成，但外壳截面是圆角——必须裁进外形，否则角会戳出壳外。
+    hz = half_z_at(actual_butt_y);
     blk_y = actual_butt_y + 2;       // Y 起点 (台阶 1mm + 母座缝隙 1mm, 往 +Y)
 
     blk_x = -(usb_c_socket_x / 2);          // X 起点 (母座外圈左侧)
     blk_w = usb_c_socket_x + 1.6 + 2;      // X 宽 (母座 + 板厚 + 2mm 容差)
-    if (front) {
-        translate([blk_x, blk_y, 0])
-            cube([blk_w, 19, hz]);
-    } else {
-        translate([blk_x, blk_y, -hz])
-            cube([blk_w, 19, hz]);
+    intersection() {
+        bezier_handle_half(front);
+        if (front) {
+            translate([blk_x, blk_y, 0])
+                cube([blk_w, 19, hz]);
+        } else {
+            translate([blk_x, blk_y, -hz])
+                cube([blk_w, 19, hz]);
+        }
     }
 }
 
@@ -676,12 +680,15 @@ module usb_c_pcb_block(front = true) {
 module usb_c_left_clamp(front = true) {
     clamp_x = -(usb_c_socket_x / 2) - 1.5;   // X 起点 (母座左侧往 X- 1.5mm)
     clamp_y = actual_butt_y + usb_c_retain_t; // Y 起点 (墙体内侧)
-    if (front) {
-        translate([clamp_x, clamp_y, 0])
-            cube([1.5, 5, 3]);
-    } else {
-        translate([clamp_x, clamp_y, -3])
-            cube([1.5, 5, 3]);
+    intersection() {
+        bezier_handle_half(front);
+        if (front) {
+            translate([clamp_x, clamp_y, 0])
+                cube([1.5, 5, 3]);
+        } else {
+            translate([clamp_x, clamp_y, -3])
+                cube([1.5, 5, 3]);
+        }
     }
 }
 
@@ -736,14 +743,16 @@ module button_retention_column(front = true) {
     col_y = pocket_start + 3;        // 立柱 Y 起点 (开关体槽后壁)
     col_x = button_x - 1.5;          // 立柱 X 起點 (3mm 宽居中)
 
-    if (front) {
-        // 前壳: Z=0 → +hz，立柱接到前壳外壁
-        translate([col_x, col_y, 0])
-            cube([3, 5, hz]);
-    } else {
-        // 后壳: Z=-hz → 0，立柱接到后壳外壁
-        translate([col_x, col_y, -hz])
-            cube([3, 5, hz]);
+    // 方块裁进外壳，接到外壁但不戳破圆角外形。
+    intersection() {
+        bezier_handle_half(front);
+        if (front) {
+            translate([col_x, col_y, 0])
+                cube([3, 5, hz]);
+        } else {
+            translate([col_x, col_y, -hz])
+                cube([3, 5, hz]);
+        }
     }
 }
 
@@ -973,8 +982,11 @@ module handle_front_part() {
                             let(x = p[0], y = p[1], hz = half_z_at(y),
                                 boss_h = hz - wall_t - 3)
                             if (boss_h > 0.5)
-                            translate([x, y, 0])
-                                screw_boss_column(boss_h, 1);
+                            intersection() {
+                                bezier_handle_half(true);
+                                translate([x, y, 0])
+                                    screw_boss_column(boss_h, 1);
+                            }
                         }
                     // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
                     usb_c_pcb_block(front = true);
@@ -1011,8 +1023,11 @@ module handle_back_part() {
                         if (screw_in_handle(p) && !screw_throughs_pcb(p)) {
                             let(x = p[0], y = p[1], hz = half_z_at(y),
                                 boss_h = hz - wall_t)
-                            translate([x, y, -boss_h])
-                                cylinder(d = screw_d_boss, h = boss_h);
+                            intersection() {
+                                bezier_handle_half(false);
+                                translate([x, y, -boss_h])
+                                    cylinder(d = screw_d_boss, h = boss_h);
+                            }
                         }
                     // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
                     usb_c_pcb_block(front = false);
