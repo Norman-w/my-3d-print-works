@@ -343,7 +343,8 @@ def main():
 
         regulator_zone = {
             'power.ldo': (14.0, -20.6, 90),
-            'power.c_in': (18.3, -20.6, 0),
+            # 远离 TP_GND (19.05,-19.558)，避免与 PW_C_IN_10U 过近
+            'power.c_in': (18.402, -22.606, 0),
             'power.c_out': (18.3, -16.5, 0),
         }
         moved += _place_map(fp_by_addr, regulator_zone, force)

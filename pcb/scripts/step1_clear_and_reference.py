@@ -51,13 +51,23 @@ def add_text(pcbnew, board, text: str, x: float, y: float, size: float = 3.0) ->
     board.Add(item)
 
 
-def clear_board(board) -> dict[str, int]:
+def clear_board(board, *, keep_parts: bool = False) -> dict[str, int]:
+    """清空板。keep_parts=True 时只清 Dwgs.User 参考线，保留封装/走线/区。"""
+    import pcbnew
+
     footprints = list(board.GetFootprints())
     tracks = list(board.GetTracks())
     zones = [board.GetArea(i) for i in range(board.GetAreaCount())]
     drawings = list(board.GetDrawings())
 
     removed = {"footprints": 0, "tracks_vias": 0, "zones": 0, "drawings": 0}
+
+    if keep_parts:
+        for drawing in drawings:
+            if drawing.GetLayer() == pcbnew.Dwgs_User:
+                board.Remove(drawing)
+                removed["drawings"] += 1
+        return removed
 
     for track in tracks:
         board.Remove(track)
@@ -84,12 +94,17 @@ def clear_board(board) -> dict[str, int]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Step 1: 清空 PCB 并绘制 SCAD 腔体参考线 + X±/Y± 标记")
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
+    parser.add_argument(
+        "--keep-parts",
+        action="store_true",
+        help="只重绘 Dwgs.User 参考线，保留封装/走线/覆铜（不全盘清空）",
+    )
     args = parser.parse_args()
 
     import pcbnew
 
     board = load_board(pcbnew, args.board)
-    removed = clear_board(board)
+    removed = clear_board(board, keep_parts=args.keep_parts)
 
     # ---- SCAD 腔体形状 — 逐项从 SCAD 数据绘制到 Dwgs.User ----
     # 所有腔体形状直接从 SCAD 解析（paddle_shell.scad 中的 _cutouts 模块），

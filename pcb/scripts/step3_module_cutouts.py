@@ -26,12 +26,20 @@ from pcb.tools.mech_geometry import (
     MODULE_CUTOUT_CLEARANCE_LONG,
     MODULE_CUTOUT_CLEARANCE_SHORT,
     PCB_CLEARANCE_HOLES,
+    SCAD_TO_KICAD_Y_OFFSET,
+    SUBSTRATE_TAIL_MAX_Y,
 )
 
 # ===== 分区：常量/配置 =====
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 IMU_RULE_AREA_NAME = "IMU_EMBEDDED_CASTELLATED_EDGE"
-IMU_RULE_AREA_MARGIN = 1.0
+MCU_RULE_AREA_NAME = "MCU_EMBEDDED_CASTELLATED_EDGE"
+HANDLE_RULE_AREA_NAME = "HANDLE_CUTOUT_EDGE_INTERFACE"
+RULE_AREA_NAMES = (IMU_RULE_AREA_NAME, MCU_RULE_AREA_NAME, HANDLE_RULE_AREA_NAME)
+RULE_AREA_MARGIN = 1.0
+# 宽栈道半宽（与 SCAD _tail_base_hw 一致）+ margin → 贴侧墙放宽 edge_clearance
+_HANDLE_HALF_W = 9.0
+_HANDLE_FUNNEL_SCAD_Y = -36.0  # SCAD _tail_funnel_y
 # 半孔边历史间隙（含手改/旧版），用于清掉叠画的 Edge.Cuts
 _LEGACY_LONG_CLEARANCES = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35)
 _MCU_BODY = (25.5, 18.0)
@@ -170,8 +178,9 @@ def remove_generated_cutouts(pcbnew, board) -> int:
     return removed
 
 
-def _strip_named_zone_blocks(board_path: Path, zone_name: str) -> int:
+def _strip_named_zone_blocks(board_path: Path, zone_names: tuple[str, ...]) -> int:
     """Remove generated top-level zone blocks by name before KiCad reloads them."""
+    names = set(zone_names)
     lines = board_path.read_text(encoding="utf-8").splitlines(keepends=True)
     out: list[str] = []
     removed = 0
@@ -191,7 +200,7 @@ def _strip_named_zone_blocks(board_path: Path, zone_name: str) -> int:
             idx += 1
 
         block = lines[start:idx]
-        if any(f'(name "{zone_name}")' in line for line in block):
+        if any(any(f'(name "{n}")' in line for n in names) for line in block):
             removed += 1
             continue
         out.extend(block)
@@ -201,26 +210,21 @@ def _strip_named_zone_blocks(board_path: Path, zone_name: str) -> int:
     return removed
 
 
-def _add_imu_rule_area(pcbnew, board) -> None:
-    """放宽板边间隙的规则区：盖住 IMU 开窗 + MCU/IMU 之间 FR4 走廊（含两侧半孔焊盘）。
-
-    否则默认 edge_clearance=0.5mm 会把贴开窗边的半孔焊盘当成「墙」，
-    交互布线吸不住、走不过 MCU↔IMU 的 UART。
-    """
-    margin = IMU_RULE_AREA_MARGIN
-    imu_cx, imu_cy, imu_w, imu_h = IMU_CUTOUT
-    mcu_cx, mcu_cy, mcu_w, mcu_h = ESP32_CUTOUT
-
-    # 宽度取两开窗外包 + margin；纵向从 IMU 底边扩到 MCU 南沿焊盘外侧
-    x1 = min(imu_cx - imu_w / 2, mcu_cx - mcu_w / 2) - margin
-    x2 = max(imu_cx + imu_w / 2, mcu_cx + mcu_w / 2) + margin
-    y1 = imu_cy - imu_h / 2 - margin
-    y2 = mcu_cy - mcu_h / 2 + margin  # 伸进 MCU 开窗南缘，盖住 IO4/IO5 半孔
-
+def _add_rule_area_rect(
+    pcbnew,
+    board,
+    *,
+    name: str,
+    x1: float,
+    y1: float,
+    x2: float,
+    y2: float,
+    priority: int = 100,
+) -> None:
     zone = pcbnew.ZONE(board)
-    zone.SetZoneName(IMU_RULE_AREA_NAME)
+    zone.SetZoneName(name)
     zone.SetIsRuleArea(True)
-    zone.SetAssignedPriority(100)
+    zone.SetAssignedPriority(priority)
     zone.SetDoNotAllowTracks(False)
     zone.SetDoNotAllowVias(False)
     zone.SetDoNotAllowPads(False)
@@ -236,8 +240,51 @@ def _add_imu_rule_area(pcbnew, board) -> None:
     zone.AppendCorner(xy(pcbnew, x2, y2), -1)
     zone.AppendCorner(xy(pcbnew, x1, y2), -1)
     board.Add(zone)
-    print(f"  规则区 {IMU_RULE_AREA_NAME}: "
-          f"({x1:.2f},{y1:.2f})–({x2:.2f},{y2:.2f})")
+    print(f"  规则区 {name}: ({x1:.2f},{y1:.2f})–({x2:.2f},{y2:.2f}) "
+          f"[{x2 - x1:.2f}×{y2 - y1:.2f}]")
+
+
+def _add_module_rule_areas(pcbnew, board) -> None:
+    """IMU/MCU：各贴合开窗 + margin；HANDLE：贴宽栈道侧墙（漏斗→键位段）。"""
+    margin = RULE_AREA_MARGIN
+
+    imu_cx, imu_cy, imu_w, imu_h = IMU_CUTOUT
+    _add_rule_area_rect(
+        pcbnew,
+        board,
+        name=IMU_RULE_AREA_NAME,
+        x1=imu_cx - imu_w / 2 - margin,
+        y1=imu_cy - imu_h / 2 - margin,
+        x2=imu_cx + imu_w / 2 + margin,
+        y2=imu_cy + imu_h / 2 + margin,
+    )
+
+    mcu_cx, mcu_cy, mcu_w, mcu_h = ESP32_CUTOUT
+    _add_rule_area_rect(
+        pcbnew,
+        board,
+        name=MCU_RULE_AREA_NAME,
+        x1=mcu_cx - mcu_w / 2 - margin,
+        y1=mcu_cy - mcu_h / 2 - margin,
+        x2=mcu_cx + mcu_w / 2 + margin,
+        y2=mcu_cy + mcu_h / 2 + margin,
+    )
+
+    # 宽栈道：KiCad Y = SCAD_TO_KICAD_Y_OFFSET - scad_y
+    y_funnel = SCAD_TO_KICAD_Y_OFFSET - _HANDLE_FUNNEL_SCAD_Y
+    # 盖到尾键区外缘，不伸进尾插座（板尾 − 余量）
+    y_end = min(70.0, SUBSTRATE_TAIL_MAX_Y - 18.0)
+    hx = _HANDLE_HALF_W + margin
+    _add_rule_area_rect(
+        pcbnew,
+        board,
+        name=HANDLE_RULE_AREA_NAME,
+        x1=-hx,
+        y1=y_funnel,
+        x2=hx,
+        y2=y_end,
+        priority=90,
+    )
 
 
 # ===== 分区：公开 API =====
@@ -250,7 +297,7 @@ def main() -> None:
 
     import pcbnew
 
-    removed_rule_areas = _strip_named_zone_blocks(args.board, IMU_RULE_AREA_NAME)
+    removed_rule_areas = _strip_named_zone_blocks(args.board, RULE_AREA_NAMES)
     board = load_board(pcbnew, args.board)
 
     removed = remove_generated_cutouts(pcbnew, board)
@@ -258,7 +305,7 @@ def main() -> None:
     rect(pcbnew, board, pcbnew.Edge_Cuts, *IMU_CUTOUT, 0.10)
     for hole_x, hole_y, hole_r in PCB_CLEARANCE_HOLES:
         circle(pcbnew, board, pcbnew.Edge_Cuts, hole_x, hole_y, hole_r, 0.10)
-    _add_imu_rule_area(pcbnew, board)
+    _add_module_rule_areas(pcbnew, board)
 
     save_board(board, args.board)
 
@@ -271,8 +318,7 @@ def main() -> None:
           f"尺寸=({IMU_CUTOUT[2]:.2f}×{IMU_CUTOUT[3]:.2f}) mm")
     print(f"PCB螺丝让位孔: {len(PCB_CLEARANCE_HOLES)} 个")
     print(f"清除旧开孔图元: {removed} 个（替换，非叠加）")
-    print(f"刷新旧规则区域: {removed_rule_areas} 个")
-    print(f"IMU规则区域: {IMU_RULE_AREA_NAME}")
+    print(f"刷新旧规则区域: {removed_rule_areas} 个 → {', '.join(RULE_AREA_NAMES)}")
     print(f"注意: 模块开孔已替换；基材外轮廓（step2）保留不变")
 
 
