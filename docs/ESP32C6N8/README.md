@@ -3,6 +3,16 @@
 本目录根据商家商品描述图整理，供 SmartPaddle PCB 封装、固件 GPIO、装配朝向核对使用。  
 原始图在 [`images/`](images/)；文中引用稳定文件名副本。
 
+## 校本脚位（改板入口）
+
+| 路径 | 角色 |
+|------|------|
+| [`pcb/lib/esp32c6n8/pinmap.py`](../../pcb/lib/esp32c6n8/pinmap.py) | **唯一真理源**：顶视几何、pad→丝印、工程绑定、固件 GPIO（勿抄背面丝印） |
+| `python3 pcb/scripts/generate_sgfk_esp32c6n8_mod.py` | 由 pinmap 生成 `.kicad_mod`（不改 `.kicad_pcb`） |
+| `python3 pcb/scripts/validate_esp32c6n8_pinmap.py` | 校验 `main.ato` / mod / `config.h` / step3 与 pinmap 一致 |
+
+板上实例在 KiCad 对 `SGFK_ESP32-C6-N8_CUTOUT`「从库更新封装」。网络由 ato → netlist → `step3_import_netlist.py` 分配。
+
 | 文档 | 内容 |
 |------|------|
 | [`pinout-and-dimensions.md`](pinout-and-dimensions.md) | 外形尺寸、半孔编号、功能表（对照乐鑫 WROOM-1） |

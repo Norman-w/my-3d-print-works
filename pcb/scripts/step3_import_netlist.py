@@ -14,6 +14,9 @@ from pathlib import Path
 
 # ===== 常量/配置 =====
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT / "pcb"))
+from lib.esp32c6n8.pinmap import PROJECT_BINDINGS  # 校本 MCU 脚位
+
 BUILD_DIR = PROJECT_ROOT / "pcb" / "build"
 NETLIST_FILE = BUILD_DIR / "default.net"
 BOARD_FILE = PROJECT_ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
@@ -27,8 +30,7 @@ ADDR_REMAP: dict[str, str] = {
 }
 
 # Symbols use readable pin names while the physical module footprints use
-# numeric castellated-pad numbers. Keep this mapping explicit and reviewable.
-# 与 main.ato SGFK_ESP32C6N8_Cutout 保持同步。
+# numeric castellated-pad numbers. MCU 脚名来自校本 pinmap；IMU 仍就地维护。
 MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
     "imu": {
         "1": "GND_1", "2": "VBUS", "3": "VBAT_3", "4": "VDDIO",
@@ -36,17 +38,7 @@ MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
         "11": "GPIO", "12": "KEY", "13": "RXD", "14": "TXD",
         "15": "VBAT_15", "16": "GND_16",
     },
-    "mcu": {
-        "1": "GND_1", "2": "VCC_3V3", "3": "EN",
-        "4": "GPIO4_IMU_TX", "5": "GPIO5_IMU_RX",
-        "6": "GPIO6_PZT_BL", "7": "GPIO7_PZT_BR",
-        "10": "GPIO8_LED_DATA", "11": "PWR_LATCH",
-        "13": "USB_DN", "14": "USB_DP",
-        "15": "GPIO9_BOOT", "16": "GPIO18_USER_BTN",
-        "24": "UART_RX", "25": "UART_TX",
-        "26": "GPIO3_PZT_TR", "27": "GPIO2_PZT_TL",
-        "28": "GND_28",
-    },
+    "mcu": {str(pad): name for pad, name in PROJECT_BINDINGS.items()},
 }
 
 # 模块脚名/网络表里常见大写名 → main.ato 顶层 signal（小写）

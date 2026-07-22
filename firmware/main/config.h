@@ -4,8 +4,9 @@
 // --- Piezo TDOA sensor pins ---
 // 4 piezo discs on blade corners, each through clamp → GPIO
 // ESP32-C6 仅 2 路 RMT RX，4 通道用 GPIO ISR + CPU cycle 锁存
-// 实物：拍柄侧 GND/3V3/EN/IO4…；对侧 IO2/IO3。
-// IMU UART1 → IO4/IO5（贴 IMU）；PZT TL/TR → IO2/IO3；BL/BR → IO6/IO7
+// 脚位真理源：pcb/lib/esp32c6n8/pinmap.py（顶视/元件面、天线 −X）
+// 拍柄(+Y)=pad1–14=GND/3V3/EN/IO4…；拍头/IMU(−Y)=pad15–28=IO9…IO2/UART0
+// IMU UART1 → IO4/IO5（pad4/5）；PZT TL/TR → IO2/IO3；BL/BR → IO6/IO7
 #define PIEZO_PIN_1 GPIO_NUM_2   // Top-left blade corner
 #define PIEZO_PIN_2 GPIO_NUM_3   // Top-right blade corner
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner

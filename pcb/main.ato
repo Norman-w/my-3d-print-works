@@ -21,10 +21,11 @@ from "parts.ato" import TactileSwitch45
 
 
 component SGFK_ESP32C6N8_Cutout:
-    """SGFK ESP32-C6-N8 半孔映射（天线 −X；pin1–14 在 −Y 拍柄/IMU 侧；pin15–28 在 +Y）。
+    """SGFK ESP32-C6-N8 半孔映射 — 真理源 pcb/lib/esp32c6n8/pinmap.py。
 
-    实物确认：拍柄侧为 GND/3V3/EN/IO4…；对侧为 IO2/IO3/UART0。
-    IMU UART1 → IO4/IO5（pad 4/5，贴 IMU）；PZT TL/TR → IO2/IO3（对侧）；BL/BR 仍 IO6/7。
+    顶视（元件面）：天线 −X；pin1–14 在 +Y（拍柄）；pin15–28 在 −Y（拍头/IMU）。
+    拍柄丝印 GND/3V3/EN/IO4…；拍头侧 IO9/BOOT…IO2/IO3/UART0/GND。
+    勿按模块背面丝印抄坐标。改脚位只改 pinmap.py → generate + validate。
     """
     designator_prefix = "J"
     pin GND_1
@@ -47,6 +48,7 @@ component SGFK_ESP32C6N8_Cutout:
     pin GPIO2_PZT_TL
     pin GND_28
 
+    # 绑定与 pcb/lib/esp32c6n8/pinmap.py PROJECT_BINDINGS 一一对应（validate 脚本会核对）
     GND_1 ~ pin 1
     VCC_3V3 ~ pin 2
     EN ~ pin 3
