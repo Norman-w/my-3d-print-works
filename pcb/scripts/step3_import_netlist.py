@@ -111,17 +111,19 @@ def _parse_netlist(path: Path) -> dict[str, dict[str, str]]:
 
 # ===== 常量/配置 =====
 TAIL_NET_ASSIGNMENTS = {
-    "tail.conn": {
+    "tail.conn_f": {
         "1": "sys_5v_in",
-        "2": "gnd",
-        "3": "sys_5v_sw",
-        "4": "led_din",
-        "5": "btn_sw",
-        "6": "bat_cell_p",
-        "7": "usb_dp",
-        "8": "usb_dn",
-        "9": "uart_tx",
-        "10": "uart_rx",
+        "2": "sys_5v_sw",
+        "3": "btn_sw",
+        "4": "usb_dp",
+        "5": "uart_tx",
+    },
+    "tail.conn_b": {
+        "1": "gnd",
+        "2": "led_din",
+        "3": "bat_cell_p",
+        "4": "usb_dn",
+        "5": "uart_rx",
     },
 }
 

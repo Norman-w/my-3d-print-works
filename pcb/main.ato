@@ -15,7 +15,7 @@ from "parts.ato" import NChannelMOSFET_SOT23
 from "parts.ato" import AP2112K_3V3
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
-from "parts.ato" import MolexPicoBlade_53261_10P
+from "parts.ato" import MolexPicoBlade_53261_5P
 from "parts.ato" import LED_0603
 from "parts.ato" import TactileSwitch45
 
@@ -141,8 +141,9 @@ module PZTDock:
 
 
 module TailHarness5P2S:
-    """柄尾 MX1.25 卧贴 10P（Molex PicoBlade 53261-1071 同族）。
+    """柄尾 MX1.25 卧贴：正反各 1×5P（Molex PicoBlade 53261-0571）。
 
+    正面 = 原金手指 F 侧；背面 = 原金手指 B 侧。
     SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
     烧录走 USB D+/D−；充电仓 Type-C 通常无 D+/D−。
     引脚表：docs/1.25x10p/README.md
@@ -158,17 +159,19 @@ module TailHarness5P2S:
     pin UART_TX
     pin UART_RX
 
-    conn = new MolexPicoBlade_53261_10P
-    conn.p1 ~ SYS_5V_IN
-    conn.p2 ~ GND
-    conn.p3 ~ LED_PLUS
-    conn.p4 ~ LED_DIN
-    conn.p5 ~ BUTTON
-    conn.p6 ~ BAT_CELL_P
-    conn.p7 ~ USB_DP
-    conn.p8 ~ USB_DN
-    conn.p9 ~ UART_TX
-    conn.p10 ~ UART_RX
+    conn_f = new MolexPicoBlade_53261_5P
+    conn_f.p1 ~ SYS_5V_IN
+    conn_f.p2 ~ LED_PLUS
+    conn_f.p3 ~ BUTTON
+    conn_f.p4 ~ USB_DP
+    conn_f.p5 ~ UART_TX
+
+    conn_b = new MolexPicoBlade_53261_5P
+    conn_b.p1 ~ GND
+    conn_b.p2 ~ LED_DIN
+    conn_b.p3 ~ BAT_CELL_P
+    conn_b.p4 ~ USB_DN
+    conn_b.p5 ~ UART_RX
 
 
 

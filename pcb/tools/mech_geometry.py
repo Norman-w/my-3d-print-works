@@ -249,12 +249,10 @@ _DOCK_PTS_BR = [  # 右下栈道 → 右侧下 PZT 码头
     (35.08, -49.05), (28.24, -41.75), (29.99, -40.11),
 ]
 
-# ── 组装完整轮廓（凸字尖端 + 大陆入口漏斗 + 大陆 + PZT 码头） ──
+# ── 组装完整轮廓（平尾 + 大陆入口漏斗 + 大陆 + PZT 码头） ──
 SCAD_SLOT_POINTS = [
-    # 尾巴（凸字 → 粗栈道 → 入口漏斗）
-    ( _TAIL_HW,         _TAIL_TIP_Y),
-    (-_TAIL_HW,         _TAIL_TIP_Y),
-    (-_TAIL_HW,         _TAIL_NECK_Y),
+    # 尾巴（平收 → 粗栈道 → 入口漏斗）
+    ( _TAIL_BASE_HW,    _TAIL_NECK_Y),
     (-_TAIL_BASE_HW,    _TAIL_NECK_Y),
     (-_TAIL_BASE_HW,    _TAIL_FUNNEL_Y),
     (-_TAIL_MOUTH_HW,   _ML_Y_B),
@@ -282,7 +280,6 @@ SCAD_SLOT_POINTS = [
     (_TAIL_MOUTH_HW,    _ML_Y_B),
     (_TAIL_BASE_HW,     _TAIL_FUNNEL_Y),
     (_TAIL_BASE_HW,     _TAIL_NECK_Y),
-    (_TAIL_HW,          _TAIL_NECK_Y),
 ]
 
 # ===== 分区：几何工具函数 =====
@@ -291,16 +288,9 @@ SCAD_SLOT_POINTS = [
 def _embedded_substrate_scad_points() -> list[tuple[float, float]]:
     """从 SCAD 槽参考线派生 PCB 基材轮廓（SCAD 坐标系）。
 
-    V3：去掉金手指窄尖（原 _tail_hw × tip→neck），在 _tail_neck_y 以
-    _tail_base_hw 粗栈道宽度平收，供 MX1.25 卧贴尾插齐边。
+    V3：槽与板边均在 _tail_neck_y 以 _tail_base_hw 平收（无金手指窄尖）。
     """
-    points = list(SCAD_SLOT_POINTS)
-    neck = float(_PARAMS.get("_tail_neck_y", -100.0))  # type: ignore[arg-type]
-    base_hw = float(_PARAMS.get("_tail_base_hw", 9.0))  # type: ignore[arg-type]
-    # SCAD_SLOT_POINTS: [0] tipR,[1] tipL,[2] neck@tip_hw L,[3] neck@base L,
-    #   ... funnel ..., [-2] neck@base R,[-1] neck@tip_hw R
-    # → 平收：(±base, neck) + 中段（漏斗→大陆→码头）含右侧 (base, neck)
-    return [(base_hw, neck), (-base_hw, neck), *points[4:-1]]
+    return list(SCAD_SLOT_POINTS)
 
 
 def _polygon_points(poly) -> list[tuple[float, float]]:

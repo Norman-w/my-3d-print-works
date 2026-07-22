@@ -116,13 +116,11 @@ imu_module_offset     = [0, 12.5];
 //   X=-3 偏左 3mm；Y=-8 = 向 IMU/拍头靠拢（原 -11.5；与 IMU 短边间隙约 5mm）
 mcu_module_offset     = [-3, -8];
 
-// ---- PCB 尾部金手指连接器 (5P×2 双面, 1.27mm 间距) ----
-// 每个位置 F.Cu + B.Cu 各一个独立焊盘，共 10 个信号
-// 信号分配 (F/B): VBAT/GND · LED+/DIN · BTN/VBUS · D+/D- · TX/RX
-// 跨距 5.08mm (4×1.27)，PCB 窄区全宽 7.62mm，金手指区长 8mm
-tail_connector_pitch  = 1.27;      // 金手指间距 (mm)
-tail_connector_pins   = 5;         // 物理位置数 ×2 面 = 10 信号
-tail_connector_pcb_w  = 7.62;      // 金手指区 PCB 尾巴宽度 (mm)
+// ---- PCB 尾部连接器 (MX1.25 / PicoBlade 正反各 5P 卧贴) ----
+// 信号仍 10 路；壳体半宽对齐粗栈道 (~9mm)，无金手指窄尖
+tail_connector_pitch  = 1.25;      // MX1.25 间距 (mm)
+tail_connector_pins   = 5;         // 每面 5P ×2 = 10 信号
+tail_connector_pcb_w  = 18.00;     // 尾端 PCB 全宽 ≈ 2×_tail_base_hw (mm)
 
 // ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----
 // 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。

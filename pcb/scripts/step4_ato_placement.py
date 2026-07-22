@@ -33,6 +33,7 @@ PARAMS_FILE = ROOT / "shared" / "board_params.yaml"
 DOCK_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "dock_snapshot.json"
 MAINLAND_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "mainland_snapshot.json"
 CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
+TAIL_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "tail_snapshot.json"
 
 KEEPOUT = 1.5
 COL_SPACING_Y = 3.5
@@ -63,7 +64,8 @@ READABLE_REFS = {
     'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
     'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
     'debug_sw.sw_pwr': ('SW_PWR', '4.5x4.5'),
-    'tail.conn': ('TAIL_MX125', 'MX1.25-10P'),
+    'tail.conn_f': ('TAIL_MX125_F', 'MX1.25-5P'),
+    'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
     'bringup.sys5_pad': ('TP_SYS_5V_SW', 'SYS_5V_SW'),
     'bringup.gnd_pad': ('TP_GND', 'GND'),
@@ -81,18 +83,20 @@ PZT_PARTS = {
 }
 
 TAIL_NET_MAP = {
-    # MX1.25 / PicoBlade 53261-1071 — 见 docs/1.25x10p/README.md
-    'tail.conn': {
+    # MX1.25 / PicoBlade 53261-0571 ×2（F/B）— 见 docs/1.25x10p/README.md
+    'tail.conn_f': {
         '1': 'sys_5v_in',
-        '2': 'gnd',
-        '3': 'sys_5v_sw',
-        '4': 'led_din',
-        '5': 'btn_sw',
-        '6': 'bat_cell_p',
-        '7': 'usb_dp',
-        '8': 'usb_dn',
-        '9': 'uart_tx',
-        '10': 'uart_rx',
+        '2': 'sys_5v_sw',
+        '3': 'btn_sw',
+        '4': 'usb_dp',
+        '5': 'uart_tx',
+    },
+    'tail.conn_b': {
+        '1': 'gnd',
+        '2': 'led_din',
+        '3': 'bat_cell_p',
+        '4': 'usb_dn',
+        '5': 'uart_rx',
     },
 }
 
@@ -238,14 +242,18 @@ def _snapshot_map(path: Path) -> dict[str, tuple[float, float, float]] | None:
     }
 
 
-def _move_one(fp_by_addr, addr, x, y, rot, force):
+def _move_one(fp_by_addr, addr, x, y, rot, force, *, keep_flip: bool = False):
     fp = fp_by_addr.get(addr)
     if fp is None:
         return 0
     if not force and not _is_initial_grid(fp):
         return 0
+    was_flipped = bool(fp.IsFlipped()) if hasattr(fp, 'IsFlipped') else False
     fp.SetPosition(xy(pcbnew, x, y))
     fp.SetOrientationDegrees(rot)
+    if keep_flip or was_flipped:
+        if hasattr(fp, 'IsFlipped') and not fp.IsFlipped():
+            fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
     return 1
 
 
@@ -385,9 +393,30 @@ def main():
     else:
         raise FileNotFoundError(f'missing dock snapshot: {DOCK_SNAPSHOT}')
 
-    # 尾插 MX1.25：拍尾 F.Fab(+Y=2.6) 与板尾边平齐（尾边≈TAIL_MAX−内缩）
-    tail_y = SUBSTRATE_TAIL_MAX_Y - SUBSTRATE_EDGE_CLEARANCE - 2.6
-    moved += _move_one(fp_by_addr, 'tail.conn', 0.0, tail_y, 0.0, force)
+    # 尾插 MX1.25 正反 5P：优先 tail_snapshot（含 flip），否则齐边默认位
+    if TAIL_SNAPSHOT.is_file():
+        tail_entries = json.loads(TAIL_SNAPSHOT.read_text(encoding="utf-8"))
+        for entry in tail_entries:
+            addr = entry["addr"]
+            fp = fp_by_addr.get(addr)
+            if fp is None:
+                continue
+            fp.SetPosition(xy(pcbnew, float(entry["x"]), float(entry["y"])))
+            fp.SetOrientationDegrees(float(entry["rot"]))
+            want_flip = bool(entry.get("flip"))
+            if hasattr(fp, "IsFlipped"):
+                if want_flip and not fp.IsFlipped():
+                    fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+                elif (not want_flip) and fp.IsFlipped():
+                    fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+            moved += 1
+        print(f'4b. 尾插: 从 tail_snapshot 恢复 {len(tail_entries)} 个')
+    else:
+        tail_y = SUBSTRATE_TAIL_MAX_Y - SUBSTRATE_EDGE_CLEARANCE - 2.6
+        moved += _move_one(fp_by_addr, 'tail.conn_f', 0.0, tail_y, 0.0, force)
+        moved += _move_one(
+            fp_by_addr, 'tail.conn_b', 0.0, tail_y, 0.0, force, keep_flip=True
+        )
 
     # 4e. 尾插网络
     tail_net_assigned = _assign_tail_nets(board)

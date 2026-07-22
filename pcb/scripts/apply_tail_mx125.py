@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # ===== 分区：导入/依赖 =====
-"""用 MX1.25 / PicoBlade 53261-1071 替换尾插金手指（及加强垫片）。
+"""柄尾 MX1.25：正反各一颗 PicoBlade 53261-0571（1×5 + 侧耳）。
 
-不手搓封装：从 SmartPaddle 校本库加载官方 Molex 几何 + 本地 3D。
+替换旧金手指 / 单颗 10P。不手搓封装：校本库官方 Molex 几何 + 本地 3D。
 KiCad 9：Remove/Save 后 PCB_IO 会坏 → 清板与加件分两进程。
 """
 
@@ -18,26 +18,36 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 LOCAL_PRETTY = ROOT / "pcb" / "layouts" / "lib" / "footprints.pretty"
-FP_NAME = "Molex_PicoBlade_53261-1071_1x10-1MP_P1.25mm_Horizontal"
-ADDR = "tail.conn"
-REF = "TAIL_MX125"
-VALUE = "MX1.25-10P"
-# 居中；拍尾端面（F.Fab +Y=2.6）与板尾边平齐。
-# 板尾 ≈ SUBSTRATE_TAIL_MAX_Y(90) − 内缩 0.3 → 89.7；原点 Y = 89.7 − 2.6 = 87.1
+FP_NAME = "Molex_PicoBlade_53261-0571_1x05-1MP_P1.25mm_Horizontal"
+VALUE = "MX1.25-5P"
+# 拍尾 F.Fab +Y=2.6 与板尾边平齐 → 原点 Y = 89.7 − 2.6 = 87.1
 PLACE_XY = (0.0, 87.1)
 PLACE_ROT = 0.0
 
-PAD_NETS = {
-    "1": "sys_5v_in",
-    "2": "gnd",
-    "3": "sys_5v_sw",
-    "4": "led_din",
-    "5": "btn_sw",
-    "6": "bat_cell_p",
-    "7": "usb_dp",
-    "8": "usb_dn",
-    "9": "uart_tx",
-    "10": "uart_rx",
+# 正面 = 原金手指 F；背面 = 原金手指 B
+CONN_F = {
+    "addr": "tail.conn_f",
+    "ref": "TAIL_MX125_F",
+    "flip": False,
+    "nets": {
+        "1": "sys_5v_in",
+        "2": "sys_5v_sw",
+        "3": "btn_sw",
+        "4": "usb_dp",
+        "5": "uart_tx",
+    },
+}
+CONN_B = {
+    "addr": "tail.conn_b",
+    "ref": "TAIL_MX125_B",
+    "flip": True,
+    "nets": {
+        "1": "gnd",
+        "2": "led_din",
+        "3": "bat_cell_p",
+        "4": "usb_dn",
+        "5": "uart_rx",
+    },
 }
 
 REMOVE_REFS = {
@@ -51,7 +61,9 @@ REMOVE_REFS = {
     "TAIL_STIFF_R",
     "TAIL_MB_L",
     "TAIL_MB_R",
-    REF,
+    "TAIL_MX125",
+    "TAIL_MX125_F",
+    "TAIL_MX125_B",
 }
 
 # ===== 分区：私有成员 =====
@@ -109,16 +121,13 @@ def _clear(board_path: Path) -> int:
     return removed
 
 
-def _add(board_path: Path) -> None:
-    import pcbnew
-
-    board = pcbnew.LoadBoard(str(board_path))
+def _add_one(board, pcbnew, spec: dict) -> None:
     fp = _load_fp(pcbnew)
     pads = list(fp.Pads())
-    fp.SetReference(REF)
+    fp.SetReference(spec["ref"])
     fp.SetValue(VALUE)
     fp.SetFPIDAsString(f"SmartPaddle:{FP_NAME}")
-    _set_addr(fp, ADDR)
+    _set_addr(fp, spec["addr"])
     fp.SetPosition(
         pcbnew.VECTOR2I(
             pcbnew.FromMM(PLACE_XY[0]), pcbnew.FromMM(PLACE_XY[1])
@@ -126,13 +135,25 @@ def _add(board_path: Path) -> None:
     )
     fp.SetOrientation(pcbnew.EDA_ANGLE(PLACE_ROT, pcbnew.DEGREES_T))
     for pad in pads:
-        net_name = PAD_NETS.get(pad.GetNumber())
+        net_name = spec["nets"].get(pad.GetNumber())
         if net_name:
             pad.SetNet(_ensure_net(board, pcbnew, net_name))
     fp.SetParent(board)
     board.Add(fp)
+    if spec["flip"]:
+        # KiCad 9：必须先 Add 再 Flip，否则会崩
+        fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+    side = "B" if spec["flip"] else "F"
+    print(f"+ added {spec['ref']} ({side}) @ {PLACE_XY} rot={PLACE_ROT}")
+
+
+def _add(board_path: Path) -> None:
+    import pcbnew
+
+    board = pcbnew.LoadBoard(str(board_path))
+    _add_one(board, pcbnew, CONN_F)
+    _add_one(board, pcbnew, CONN_B)
     board.Save(str(board_path))
-    print(f"+ added {REF} @ {PLACE_XY} rot={PLACE_ROT}")
 
 
 # ===== 分区：公开 API =====
@@ -164,10 +185,9 @@ def main() -> int:
         return 0
     if args.phase == "add":
         _add(board_path)
-        print("  note: 拍尾 F.Fab 与板尾边齐平；courtyard 侧耳≈±9.7 vs 栈道±8.7")
+        print("  note: Fab 半宽≈5.7 vs 拍柄 cav_hx≈8.5 / 栈道±9.0")
         return 0
 
-    # all: clear in this process, add in a fresh subprocess
     _clear(board_path)
     env = os.environ.copy()
     cmd = [
@@ -181,7 +201,7 @@ def main() -> int:
     rc = subprocess.call(cmd, env=env)
     if rc != 0:
         return rc
-    print(f"✓ TAIL_MX125 ready → {board_path}")
+    print(f"✓ TAIL_MX125_F/B ready → {board_path}")
     return 0
 
 

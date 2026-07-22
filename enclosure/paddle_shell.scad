@@ -431,24 +431,21 @@ _gw_corner = 1.61;      // 栈道与大陆底角的内收量，避免锐角应�
 _gw_bl_w   = 16.75;     // 下栈道外缘 |X|，决定下栈道宽度 = _ml_x_r - _gw_bl_w = 4.25mm
 _gw_tl_outer = 19.48;   // 上栈道外缘 |X|，拍头左侧
 _gw_tl_inner = 14.75;   // 上栈道内缘 |X|，拍头左侧 (6.25mm 宽)
-// PCB 尾巴: 5P×2 双面 1.27mm 金手指尾插, 窄区全宽 7.62mm
-// 尾巴保持原「凸」字：窄金手指 8mm 后直角收到基部半宽 9mm（不在此做漏斗）
-// 漏斗放在「大陆 → 粗栈道」入口：基部半宽渐扩到嘴口半宽，给 BOOT/EN 左右空间
-_tail_hw        = 3.81;   // 金手指区半宽
-_tail_base_hw   = 9.00;   // 粗栈道常宽半宽（原凸字）
+// PCB 尾巴: MX1.25 正反各 5P 卧贴；粗栈道半宽 9mm，在 _tail_neck_y 平收（无金手指窄尖）
+_tail_base_hw   = 9.00;   // 粗栈道 / 尾端半宽
 _tail_mouth_hw  = 14.00;  // 大陆入口嘴口半宽（漏斗最宽）
-_tail_y         = -108.00; // 尖端 Y
-_tail_neck_y    = -100.00; // 窄区→粗栈道直角转折（金手指段长 8mm）
+_tail_neck_y    = -100.00; // 尾端平齐线（KiCad 板尾）
 _tail_funnel_y  = -36.00;  // 粗栈道开始漏斗（靠近大陆下缘 _ml_y_b=-26）
+// 兼容旧参数名（已不再画窄尖）
+_tail_hw        = _tail_base_hw;
+_tail_y         = _tail_neck_y;
 
 rigid_pcb_slot_points = [
-    // ─ 尾巴 (原凸字 + 大陆入口漏斗) ─
-    [ _tail_hw,       _tail_y],                 //  0 右尖
-    [-_tail_hw,       _tail_y],                 //  1 左尖
-    [-_tail_hw,       _tail_neck_y],            //  2 窄区结束（左）
-    [-_tail_base_hw,  _tail_neck_y],            //  3 凸字直角→粗栈道（左）
-    [-_tail_base_hw,  _tail_funnel_y],          //  4 漏斗起点（左，仍为基部宽）
-    [-_tail_mouth_hw, _ml_y_b],                 //  5 大陆入口嘴口（左）
+    // ─ 尾巴（平收 → 粗栈道 → 大陆入口漏斗） ─
+    [ _tail_base_hw,  _tail_neck_y],            //  0 右尾端
+    [-_tail_base_hw,  _tail_neck_y],            //  1 左尾端
+    [-_tail_base_hw,  _tail_funnel_y],          //  2 漏斗起点（左）
+    [-_tail_mouth_hw, _ml_y_b],                 //  3 大陆入口嘴口（左）
     // ─ 左下栈道 → 左侧下 PZT 码头 ─
     [-_gw_bl_w,   _ml_y_b],
     [-29.99, -40.11],
@@ -489,11 +486,10 @@ rigid_pcb_slot_points = [
     [ 28.24, -41.75],
     [ 29.99, -40.11],
     [ _gw_bl_w,         _ml_y_b],
-    // ─ 尾巴（右：嘴口 → 漏斗 → 凸字 → 窄区） ─
+    // ─ 尾巴（右：嘴口 → 漏斗 → 尾端） ─
     [_tail_mouth_hw,    _ml_y_b],
     [_tail_base_hw,     _tail_funnel_y],
     [_tail_base_hw,     _tail_neck_y],
-    [_tail_hw,          _tail_neck_y],
 ];
 
 module rigid_pcb_profile_2d() {
