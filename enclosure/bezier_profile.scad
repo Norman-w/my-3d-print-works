@@ -17,11 +17,14 @@ function _bezier_t(y, i) =
 // Legacy HX table removed — outer shape uses generated/bezier_geometry.scad
 
 function bezier_half_z_at(y) =
-    (y < BEZIER_Y0 || y > BEZIER_Y1) ? blade_half_t :
+    // 实体外沿夹到端点厚度，避免退回 blade_half_t 把尾端基台削扁。
+    y <= BEZIER_Y0 ? BEZIER_HZ[0] :
+    y >= BEZIER_Y1 ? BEZIER_HZ[BEZIER_N] :
     let(i = _bezier_idx(y), t = _bezier_t(y, i))
     _bezier_lerp(BEZIER_HZ[i], BEZIER_HZ[i + 1], t);
 
 function bezier_envelope_hx(y) =
-    (y < BEZIER_Y0 || y > BEZIER_Y1) ? tang_half_w :
+    y <= BEZIER_Y0 ? BEZIER_HX[0] :
+    y >= BEZIER_Y1 ? BEZIER_HX[BEZIER_N] :
     let(i = _bezier_idx(y), t = _bezier_t(y, i))
     _bezier_lerp(BEZIER_HX[i], BEZIER_HX[i + 1], t);

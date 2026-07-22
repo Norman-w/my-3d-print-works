@@ -22,14 +22,11 @@ LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 include <generated/bezier_geometry.scad>
 include <bezier_profile.scad>
 
-// 拍柄开孔基准 Y：取贝塞尔实际底部 (BEZIER_Y0) 与参数量级 (handle_butt_y) 二者更深者，
-// 再减 handle_extend_y 延伸量，确保 USB-C/按钮/LED 永远从外部切穿。
-handle_butt_cut_y = USE_BEZIER_PROFILES
-    ? min(handle_butt_y, BEZIER_Y0) - handle_extend_y
-    : handle_butt_y;
-
-// 壳体实际外表面 Y (还原延伸量)，用于开孔内段定位。
-actual_butt_y = handle_butt_cut_y + handle_extend_y;
+// 拍柄开孔基准：以外壳实体底面为准。
+// 平底裁切后 BEZIER_Y0 可能比参数 handle_butt_y 更靠拍头；若仍取 min() 会落到实体外，
+// half_z_at 退回拍面半厚，充电 PCB 基台/夹持会被切坏。
+actual_butt_y = USE_BEZIER_PROFILES ? BEZIER_Y0 : handle_butt_y;
+handle_butt_cut_y = actual_butt_y - handle_extend_y;
 
 $fn = 80;
 eps = 0.02;
