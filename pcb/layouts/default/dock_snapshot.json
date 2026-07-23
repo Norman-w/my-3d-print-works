@@ -7,9 +7,9 @@
   },
   {
     "addr": "pzt_bl.clamp_diode",
-    "x": -32.2818,
-    "y": 30.0993,
-    "rot": -118.3
+    "x": -32.647,
+    "y": 29.8923,
+    "rot": 46.7
   },
   {
     "addr": "pzt_bl.pzt_gnd_pad",
@@ -38,8 +38,8 @@
   {
     "addr": "pzt_br.clamp_diode",
     "x": 33.0804,
-    "y": 30.7541,
-    "rot": 23.33
+    "y": 30.1459,
+    "rot": 133.33
   },
   {
     "addr": "pzt_br.pzt_gnd_pad",
@@ -69,7 +69,7 @@
     "addr": "pzt_tl.clamp_diode",
     "x": -28.6514,
     "y": -48.1908,
-    "rot": 143.55
+    "rot": -51.45
   },
   {
     "addr": "pzt_tl.pzt_gnd_pad",
@@ -97,9 +97,9 @@
   },
   {
     "addr": "pzt_tr.clamp_diode",
-    "x": 28.9457,
-    "y": -48.4783,
-    "rot": 83.19
+    "x": 28.6497,
+    "y": -48.2056,
+    "rot": -126.81
   },
   {
     "addr": "pzt_tr.pzt_gnd_pad",

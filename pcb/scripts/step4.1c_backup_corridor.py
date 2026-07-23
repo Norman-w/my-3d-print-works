@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Step 4.1c — Backup wide-corridor (宽栈道) component positions to a JSON snapshot.
 
-Covers BOOT/EN switches only. Bringup TP 已迁到大陆，见 step4.1b。
-Restore later via step4.2c even after a full ato rebuild.
+Covers debug_sw.*：SW_BOOT / SW_EN / SW_PWR（含旋转）。Bringup TP 见 step4.1b。
+Restore later via step4.2c / step4_ato_placement 即使 ato 全量重建。
 """
 
 # ===== 分区：导入/依赖 =====

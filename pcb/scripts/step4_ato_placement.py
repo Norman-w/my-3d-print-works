@@ -376,9 +376,9 @@ def main():
         # 宽栈道仅 BOOT/EN 轻触
         debug_zone = {
             # 4.5×4.5 THT（与尾键同规格）；宽栈道手布位
-            'debug_sw.sw_boot': (4.87, 49.706, 0),
-            'debug_sw.sw_en': (4.87, 56.72, 0),
-            'debug_sw.sw_pwr': (4.87, 63.73, 0),
+            'debug_sw.sw_boot': (4.87, 49.706, 90),
+            'debug_sw.sw_en': (4.87, 57.995, 90),
+            'debug_sw.sw_pwr': (4.87, 66.294, 90),
         }
         moved += _place_map(fp_by_addr, debug_zone, True)
 

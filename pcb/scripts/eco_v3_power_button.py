@@ -21,9 +21,9 @@ CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.js
 
 # 宽栈道机械位：4.5×4.5 THT（与尾键同规格）；旧 TP_MCU_* 脚本位保留勿覆盖
 BRINGUP_POS = {
-    "debug_sw.sw_boot": (4.870, 49.706, 0.0),
-    "debug_sw.sw_en": (4.870, 56.720, 0.0),
-    "debug_sw.sw_pwr": (4.870, 63.730, 0.0),
+    "debug_sw.sw_boot": (4.870, 49.706, 90.0),
+    "debug_sw.sw_en": (4.870, 57.995, 90.0),
+    "debug_sw.sw_pwr": (4.870, 66.294, 90.0),
     "bringup.tp_mcu_boot": (-3.130, 49.706, 0.0),
     "bringup.tp_mcu_en": (-3.130, 56.720, 0.0),
     "bringup.gnd_pad": (-3.130, 43.000, 0.0),

@@ -210,7 +210,7 @@ def main() -> int:
     by_addr = _live_by_addr(board)
 
     if "debug_sw.sw_pwr" not in by_addr:
-        e = snap.get("debug_sw.sw_pwr", {"x": 4.87, "y": 63.73, "rot": 0.0})
+        e = snap.get("debug_sw.sw_pwr", {"x": 4.87, "y": 66.294, "rot": 90.0})
         _add_footprint(
             board,
             pcbnew,

@@ -3,18 +3,18 @@
     "addr": "debug_sw.sw_boot",
     "x": 4.87,
     "y": 49.706,
-    "rot": 0.0
+    "rot": 90.0
   },
   {
     "addr": "debug_sw.sw_en",
     "x": 4.87,
-    "y": 56.72,
-    "rot": 0.0
+    "y": 57.995,
+    "rot": 90.0
   },
   {
     "addr": "debug_sw.sw_pwr",
     "x": 4.87,
-    "y": 63.73,
-    "rot": 0.0
+    "y": 66.294,
+    "rot": 90.0
   }
 ]
