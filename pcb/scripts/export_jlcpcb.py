@@ -33,40 +33,31 @@ KICAD_PYTHON = (
 INTENTIONAL_DRC_TYPES = {"copper_edge_clearance"}
 
 ORDER_NOTES = """\
-SmartPaddle PCB manufacturing notes
+SmartPaddle PCB manufacturing notes (V2 rigid skeleton)
 
 Board
 - PCB thickness: 0.8 mm
-- Surface finish: ENIG (gold fingers + castellations)
-- Delivery: this Gerber contains ONE main outline; left/right stiffener shims are
-  wall-attached (share handle side-walls at x=±8.7) with NPTH mousebites for breakaway.
-  Treat as a single design unless your DFM still wants Different Design notes.
-  *** Confirm with JLCPCB/JLC before pay if mousebite + castellated half-holes are OK. ***
+- Layers: 2
+- Surface finish: ENIG
+- Outline: single design (drone-frame / paddle skeleton); flat tail, no gold-finger tip
+- Tail connectors: Molex PicoBlade 53261-0571 MX1.25 5P ×2 (front + back), hand-solder
 
-Embedded modules
-- IMU / MCU / PZT edge interfaces are intentional castellated / edge-solder structures.
-- Edge.Cuts crossing PTH pads or edge pads in those areas is intentional.
-- Please process IMU and PZT PTH edge pads as castellated / plated half-hole features.
-- Please inspect the embedded MCU/ESP edge-pad cutout and confirm edge solderability.
-- Confirm plated hole wall copper remains, no copper burrs, and no adjacent-pad shorts.
-
-Tail gold fingers + F-side stiffener shims (TAIL_STIFF_L / TAIL_STIFF_R)
-- Mechanical thickening shims ONLY — not a circuit. Pads use MECH_STIFF_* names
-  only so copper strips may meet castellations in DRC; do NOT wire these nets.
-- ~8x6.8 mm, tip flush for TAIL_TIP stack, handle side 1.2 mm shorter than gold fingers.
-- Copper strips meet tip/handle castellations; Edge.Cuts passes through hole centers.
-- Same board outline as the handle: peninsula off corridor walls at x=±8.7;
-  NPTH mousebites (TAIL_MB_L/R): 6×Ø0.60 mm, pitch 1.00 mm (edge gap 0.40),
-  JLCPCB-recommended style, on the shim side of the shared wall to snap off.
-- *** MUST enable Castellated Holes for tip/handle PTH rows on the shims. ***
-- After snap-off: stack one shim onto main F fingers; solder tip to TAIL_TIP, handle mid-finger.
+Embedded modules (castellated / edge solder)
+- ESP32-C6-N8 (MCU) and IM948 (IMU) sit in Edge.Cuts body cutouts with plated half-hole pads
+- PZT dock islands use edge pads toward piezo wires
+- Edge.Cuts crossing module PTH/edge pads in those areas is intentional
+- *** Enable Castellated Holes / half-hole process for MCU, IMU, and PZT edge pads ***
+- Confirm plated hole wall copper remains; no copper burrs; no adjacent-pad shorts
 
 Power path (assembler note)
-- Sole system input: charger-module **5V OUT** → gold-finger SYS_5V_IN → PMOS → SYS_5V_SW → AP2112.
-- No USB/battery OR diodes (SS14 removed).
-- IM948 powered from SYS_5V_SW on VBUS only; VBAT/VDDIO pads must remain open.
-- Optional cell sense: wire charger B+ to BAT_CELL_P finger (not SYS_5V).
-- Programming: use gold-finger USB D+/D− (charger Type-C usually has no data). Power board via charger 5V OUT while flashing.
+- Sole system input: charger-module 5V OUT → tail MX1.25 SYS_5V_IN → PMOS → SYS_5V_SW → AP2112 → 3V3
+- No USB/battery OR diodes on board
+- IM948: VBUS ← SYS_5V_SW only; leave VBAT / VDDIO open
+- Optional cell sense: charger B+ → BAT_CELL_P (do not probe SYS_5V_*)
+- Programming: USB D+/D− on tail MX1.25 (charger Type-C often has no data). Power via charger 5V OUT while flashing
+
+Deprecated (do NOT expect on this Gerber)
+- Gold fingers / TAIL_STIFF breakaway shims / mousebites — removed
 """
 
 
