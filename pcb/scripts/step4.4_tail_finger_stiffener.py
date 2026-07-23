@@ -39,7 +39,7 @@ FP_LIB = ROOT / "pcb" / "layouts" / "lib" / "footprints.pretty"
 
 FINGER_XS = (-2.54, -1.27, 0.0, 1.27, 2.54)
 # 仅 TAIL_TIP（主板尖端）需要金手指网络；垫片本身无网络。
-TIP_NETS = ("SYS_5V_IN", "SYS_5V_SW", "btn_sw", "USB_DP", "UART_TX")
+TIP_NETS = ("sys_5v_in", "sys_5v_sw", "btn_sw", "usb_dp", "uart_tx")
 
 MAIN_TIP_Y = 97.7
 WALL_X = 8.70

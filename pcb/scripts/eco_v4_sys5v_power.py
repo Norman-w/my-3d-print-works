@@ -14,14 +14,13 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 
 # old_name -> new_name (do NOT map USB_VBUS globally — control finger handled per-pad)
+# 历史旧网名 → 现行小写 signal（不是大小写兼容表）
 NET_RENAME = {
-    "vbat_in": "SYS_5V_IN",
-    "VBAT_IN": "SYS_5V_IN",
-    "VBAT_SW": "SYS_5V_SW",
-    "vbat_sw": "SYS_5V_SW",
-    "ldo_vin": "SYS_5V_SW",
-    "cathode": "SYS_5V_SW",
-    "vbus": "SYS_5V_SW",
+    "vbat_in": "sys_5v_in",
+    "vbat_sw": "sys_5v_sw",
+    "ldo_vin": "sys_5v_sw",
+    "cathode": "sys_5v_sw",
+    "vbus": "sys_5v_sw",
     "vbat_sense": "bat_sense",
 }
 
@@ -29,6 +28,8 @@ DELETE_REFS = {"D_LDO_BAT", "D_LDO_USB"}
 
 
 def _ensure_net(board, pcbnew, name: str):
+    if name != name.lower():
+        raise ValueError(f"网名必须小写: {name!r}")
     net = board.FindNet(name)
     if net is None:
         net = pcbnew.NETINFO_ITEM(board, name)
@@ -54,7 +55,7 @@ def _rename_nets(board, pcbnew) -> int:
         for pad in fp.Pads():
             old = pad.GetNetname() or ""
             if old in NET_RENAME:
-                # skip IMU VBUS pad — handled specially (vbus→SYS_5V_SW ok actually)
+                # skip IMU VBUS pad — handled specially below
                 pad.SetNet(_ensure_net(board, pcbnew, NET_RENAME[old]))
                 n += 1
     # tracks/vias
@@ -119,30 +120,29 @@ def main() -> int:
         ref = fp.GetReference()
         fpid = fp.GetFPIDAsString()
         if "IM948" in fpid or ref == "IMU_IM948":
-            # pad2 VBUS → SYS_5V_SW; 3/4/15 float
-            _set_pad(board, pcbnew, fp, "2", "SYS_5V_SW")
+            # pad2 VBUS → sys_5v_sw; 3/4/15 float
+            _set_pad(board, pcbnew, fp, "2", "sys_5v_sw")
             _set_pad(board, pcbnew, fp, "3", None)
             _set_pad(board, pcbnew, fp, "4", None)
             _set_pad(board, pcbnew, fp, "15", None)
-            print("IMU: VBUS=SYS_5V_SW; VBAT/VDDIO float")
+            print("IMU: VBUS=sys_5v_sw; VBAT/VDDIO float")
         if ref == "PW_Q_LOAD":
-            _set_pad(board, pcbnew, fp, "2", "SYS_5V_IN")  # source
-            _set_pad(board, pcbnew, fp, "3", "SYS_5V_SW")  # drain
+            _set_pad(board, pcbnew, fp, "2", "sys_5v_in")  # source
+            _set_pad(board, pcbnew, fp, "3", "sys_5v_sw")  # drain
         if ref == "PW_LDO_3V3":
-            _set_pad(board, pcbnew, fp, "1", "SYS_5V_SW")  # vin
-            _set_pad(board, pcbnew, fp, "3", "SYS_5V_SW")  # en
+            _set_pad(board, pcbnew, fp, "1", "sys_5v_sw")  # vin
+            _set_pad(board, pcbnew, fp, "3", "sys_5v_sw")  # en
         if ref == "PW_C_IN_10U":
-            _set_pad(board, pcbnew, fp, "1", "SYS_5V_SW")
+            _set_pad(board, pcbnew, fp, "1", "sys_5v_sw")
         if ref == "PW_R_GATE_100K":
-            # p2 should be SYS_5V_IN
             for pad in fp.Pads():
                 if pad.GetNumber() == "2":
-                    pad.SetNet(_ensure_net(board, pcbnew, "SYS_5V_IN"))
+                    pad.SetNet(_ensure_net(board, pcbnew, "sys_5v_in"))
         if ref == "TAIL_PWR":
-            _set_pad(board, pcbnew, fp, "F", "SYS_5V_IN")
+            _set_pad(board, pcbnew, fp, "F", "sys_5v_in")
             _set_pad(board, pcbnew, fp, "B", "gnd")
         if ref == "TAIL_LED":
-            _set_pad(board, pcbnew, fp, "F", "SYS_5V_SW")
+            _set_pad(board, pcbnew, fp, "F", "sys_5v_sw")
         if ref == "TAIL_CTL":
             _set_pad(board, pcbnew, fp, "B", "bat_cell_p")
         if ref == "BAT_R_TOP_1M":
@@ -151,14 +151,8 @@ def main() -> int:
         if ref == "BAT_R_BOT_1M":
             _set_pad(board, pcbnew, fp, "1", "bat_sense")
         if ref == "BAT_C_ADC_100N":
-            for pad in fp.Pads():
-                if (pad.GetNetname() or "") in ("vbat_sense", "bat_sense", "VBAT_SW", "SYS_5V_SW"):
-                    # keep sense side on bat_sense, gnd side gnd — set both carefully
-                    pass
-            # pad1 often sense, pad2 gnd — force
             pads = list(fp.Pads())
             if len(pads) >= 2:
-                # whichever was on sense network
                 for pad in pads:
                     n = pad.GetNetname() or ""
                     if n in ("gnd", "GND"):
@@ -170,14 +164,13 @@ def main() -> int:
             in ("bringup.vbat_pad", "bringup.sys5_pad")
         ):
             fp.SetReference("TP_SYS_5V_SW")
-            fp.SetValue("SYS_5V_SW")
-            _set_pad(board, pcbnew, fp, "1", "SYS_5V_SW")
-        # LED supply cap
+            fp.SetValue("sys_5v_sw")
+            _set_pad(board, pcbnew, fp, "1", "sys_5v_sw")
         if ref == "LED_C_SUP_100N":
             for pad in fp.Pads():
                 n = pad.GetNetname() or ""
                 if n not in ("gnd", "GND", ""):
-                    pad.SetNet(_ensure_net(board, pcbnew, "SYS_5V_SW"))
+                    pad.SetNet(_ensure_net(board, pcbnew, "sys_5v_sw"))
 
     # 4) remove obsolete USB_VBUS copper (was diode-OR / charge finger power)
     usb_dead = 0
@@ -201,7 +194,7 @@ def main() -> int:
 
     board.Save(str(board_path))
     print(f"V4 power ECO saved (no auto-routes): {board_path}")
-    print("HAND ROUTE: SYS_5V_IN→PMOS→SYS_5V_SW→LDO/C_IN; IMU VBUS; LED+; clear old VBAT copper")
+    print("HAND ROUTE: sys_5v_in→PMOS→sys_5v_sw→LDO/C_IN; IMU VBUS; LED+; clear old VBAT copper")
     return 0
 
 

@@ -261,7 +261,7 @@ def _fix_button_path(board, pcbnew) -> None:
     _set_pad_net(board, pcbnew, r_ser, "1", "btn_sw")
     _set_pad_net(board, pcbnew, r_ser, "2", "user_btn")
     _set_pad_net(board, pcbnew, mcu, "16", "user_btn")
-    _set_pad_net(board, pcbnew, mcu, "11", "PWR_LATCH")
+    _set_pad_net(board, pcbnew, mcu, "11", "pwr_latch")
 
     # Delete old copper that shorted wrong topology
     n1 = _delete_tracks_between_pads(board, pcbnew, r_ser, "2", mcu, "16")

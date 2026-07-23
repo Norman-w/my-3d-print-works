@@ -67,7 +67,7 @@ READABLE_REFS = {
     'tail.conn_f': ('TAIL_MX125_F', 'MX1.25-5P'),
     'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
-    'bringup.sys5_pad': ('TP_SYS_5V_SW', 'SYS_5V_SW'),
+    'bringup.sys5_pad': ('TP_SYS_5V_SW', 'sys_5v_sw'),
     'bringup.gnd_pad': ('TP_GND', 'GND'),
 }
 

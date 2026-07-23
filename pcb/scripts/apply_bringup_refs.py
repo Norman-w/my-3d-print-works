@@ -39,7 +39,7 @@ READABLE = {
     "debug_sw.sw_en": ("SW_EN", "4.5x4.5"),
     "debug_sw.sw_pwr": ("SW_PWR", "4.5x4.5"),
     "bringup.vcc_pad": ("TP_3V3", "3V3"),
-    "bringup.sys5_pad": ("TP_SYS_5V_SW", "SYS_5V_SW"),
+    "bringup.sys5_pad": ("TP_SYS_5V_SW", "sys_5v_sw"),
     "bringup.gnd_pad": ("TP_GND", "GND"),
 }
 

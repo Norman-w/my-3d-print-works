@@ -41,23 +41,23 @@ MODULE_PIN_NAMES: dict[str, dict[str, str]] = {
     "mcu": {str(pad): name for pad, name in PROJECT_BINDINGS.items()},
 }
 
-# 模块脚名/网络表里常见大写名 → main.ato 顶层 signal（小写）
-NET_CANONICAL: dict[str, str] = {
-    "VBAT_SW": "vbat_sw",
-    "USB_DP": "usb_dp",
-    "USB_DN": "usb_dn",
-    "UART_TX": "uart_tx",
-    "UART_RX": "uart_rx",
-    "USB_VBUS": "vbus",
-    "PWR_LATCH": "pwr_latch",
-    "EN": "en",
-    "BOOT": "boot_btn",
-    "imu_vddio": "vcc",
-}
+# 板上网名 = main.ato 顶层 signal，必须已是小写。不做别名、不做自动改写。
 # ===== 常量/配置 =====
 
 
 # ===== 模型/类型 =====
+def _board_net_name(name: str) -> str:
+    """校验网名：必须小写，与 main.ato signal 一致。"""
+    name = name.strip()
+    if not name:
+        raise ValueError("空网名")
+    if name != name.lower():
+        raise ValueError(
+            f"网名必须小写（与 main.ato signal 一致），收到: {name!r}"
+        )
+    return name
+
+
 def _parse_netlist(path: Path) -> dict[str, dict[str, str]]:
     """解析 ato 网络表，返回 {atopile_address → {pin_number → net_name}}。"""
     text = path.read_text(encoding="utf-8")
@@ -128,6 +128,15 @@ TAIL_NET_ASSIGNMENTS = {
 }
 
 
+def _ensure_net(board, pcbnew, name: str):
+    name = _board_net_name(name)
+    net = board.FindNet(name)
+    if net is None:
+        net = pcbnew.NETINFO_ITEM(board, name)
+        board.Add(net)
+    return net
+
+
 def _assign_tail_nets(board):
     """显式分配尾插焊盘网络（netlist 中 tail.*pad 与板上 footprint 命名不一致的 fallback）。"""
     import pcbnew
@@ -144,45 +153,9 @@ def _assign_tail_nets(board):
             pn = pad.GetNumber()
             if pn not in pin_nets:
                 continue
-            net_name = NET_CANONICAL.get(pin_nets[pn], pin_nets[pn])
-            net = board.FindNet(net_name)
-            if net is None:
-                net = pcbnew.NETINFO_ITEM(board, net_name)
-                board.Add(net)
-            pad.SetNet(net)
+            pad.SetNet(_ensure_net(board, pcbnew, pin_nets[pn]))
             assigned += 1
     return assigned
-
-
-def _merge_canonical_nets(board) -> int:
-    """把历史大写/别名网并到 main.ato 小写 signal，避免尾插与 MCU 各占半截。"""
-    import pcbnew
-
-    def ensure(name: str):
-        net = board.FindNet(name)
-        if net is None:
-            net = pcbnew.NETINFO_ITEM(board, name)
-            board.Add(net)
-        return net
-
-    moved = 0
-    for fp in board.GetFootprints():
-        for pad in fp.Pads():
-            old = pad.GetNetname()
-            if old in NET_CANONICAL:
-                pad.SetNet(ensure(NET_CANONICAL[old]))
-                moved += 1
-    for item in board.GetTracks():
-        old = item.GetNetname()
-        if old in NET_CANONICAL:
-            item.SetNet(ensure(NET_CANONICAL[old]))
-            moved += 1
-    for zone in board.Zones():
-        old = zone.GetNetname()
-        if old in NET_CANONICAL:
-            zone.SetNet(ensure(NET_CANONICAL[old]))
-            moved += 1
-    return moved
 
 
 # ===== 公开 API =====
@@ -211,7 +184,6 @@ def import_netlist(netlist_path: Path, board_path: Path):
     for addr, pin_nets in addr_nets.items():
         fp = fp_by_addr.get(addr)
         if not fp:
-            # 打印未匹配的地址（前几个）
             if matched < 5:
                 print(f"  ⚠ 板上未找到地址: {addr}")
             continue
@@ -224,7 +196,6 @@ def import_netlist(netlist_path: Path, board_path: Path):
             pad_pname = getattr(pad, "GetPinName", lambda: "")() or ""
             semantic_pin = MODULE_PIN_NAMES.get(addr, {}).get(pad_num, "")
 
-            # 匹配 pin
             net_name = None
             if pad_num in pin_nets:
                 net_name = pin_nets[pad_num]
@@ -234,40 +205,25 @@ def import_netlist(netlist_path: Path, board_path: Path):
                 net_name = pin_nets[semantic_pin]
             elif sole_net is not None:
                 net_name = sole_net
-            # Deliberately do not use substring matching here: pin "1" must
-            # never silently match pin "10". Footprint/netlist mismatches are
-            # reported via `missed` and fixed at their source.
 
             if net_name:
-                net_name = NET_CANONICAL.get(net_name, net_name)
-                net = board.FindNet(net_name)
-                if net is None:
-                    net = pcbnew.NETINFO_ITEM(board, net_name)
-                    board.Add(net)
-                pad.SetNet(net)
+                pad.SetNet(_ensure_net(board, pcbnew, net_name))
                 assigned += 1
             else:
                 missed += 1
 
-    # 金手指 fallback（address 命名不一致）
     tail_n = _assign_tail_nets(board)
     if tail_n > 0:
         assigned += tail_n
         print(f"\n  尾插 fallback: 分配了 {tail_n} 个焊盘网络")
 
-    # 合并历史大小写分裂网（模块脚名大写 vs 顶层 signal 小写）
-    merged = _merge_canonical_nets(board)
-    if merged:
-        print(f"\n  规范网名合并: {merged} 个焊盘/走线")
-
     print(f"\n  匹配封装: {matched}/{len(addr_nets)}")
     print(f"  分配焊盘: {assigned}, 未匹配: {missed}")
-    print(f"  创建网络: {board.GetNetCount() - 1}")  # 减掉默认 ""
+    print(f"  创建网络: {board.GetNetCount() - 1}")
 
     board.BuildListOfNets()
     board.SanitizeNetcodes()
 
-    # 两次保存确保持久化
     board.Save(str(board_path))
     board.Save(str(board_path))
     print(f"  已保存: {board_path}")
@@ -286,4 +242,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-# ===== 公开 API =====
