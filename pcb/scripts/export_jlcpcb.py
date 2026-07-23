@@ -33,13 +33,13 @@ KICAD_PYTHON = (
 INTENTIONAL_DRC_TYPES = {"copper_edge_clearance"}
 
 ORDER_NOTES = """\
-SmartPaddle PCB manufacturing notes (V2 rigid skeleton)
+SmartPaddle PCB manufacturing notes (circuit C3 rigid)
 
 Board
 - PCB thickness: 0.8 mm
 - Layers: 2
 - Surface finish: ENIG
-- Outline: single design (drone-frame / paddle skeleton); flat tail, no gold-finger tip
+- Outline: single design (paddle skeleton); flat tail, no gold-finger tip
 - Tail connectors: Molex PicoBlade 53261-0571 MX1.25 5P ×2 (front + back), hand-solder
 
 Embedded modules (castellated / edge solder)
