@@ -50,13 +50,24 @@ fpc/layouts/default/validate_erc.json
 fpc/layouts/default/output/
 fpc/*.lock
 
+# Scratch / local exports
+/output/
+/tmp/
+
 # PCB generator byproducts
 pcb/build/
+pcb/fab/
+pcb/output/
+pcb/preview/
+pcb/layouts/_eco_wip/
 pcb/layouts/default/*.lck
+pcb/layouts/default/*.kicad_prl
+pcb/layouts/default/*_eco_wip.*
 pcb/layouts/default/drc.json
 pcb/layouts/default/default-backups/
 pcb/layouts/default/fp-info-cache
-pcb/preview/
+pcb/layouts/default/*.kicad_pcb.bak*
+pcb/layouts/default/default.kicad_pcb.bak-*
 
 # ESP-IDF build artifacts
 firmware/build/
@@ -67,6 +78,7 @@ scripts/__pycache__/
 
 # Backup files
 *.bak
+*~
 
 # IMU support reference binaries (excluded to avoid large files)
 firmware/support/**/*.exe
