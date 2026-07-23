@@ -13,17 +13,15 @@
 **后续可选升级（不改现板则无法回到 4×RMT）：**
 - [ ] 标定/实测：量化 ISR 抖动对定位 RMSE 的影响，确认现方案是否够用
 - [ ] 可选增强：GPIO glitch filter、或 GPTIMER 统一时基（仍非 RMT 波形捕获）
-- [ ] V2 换带更多 RMT RX 的 MCU（如 ESP32-S3 等）再评估迁回 RMT / 新 RMT RX API
-- [ ] 文档：`docs/README.md` 仍写「12.5ns RMT」——需与现实现对齐后更新
+- [ ] 换带更多 RMT RX 的 MCU（如 ESP32-S3 等）再评估迁回 RMT / 新 RMT RX API
 
 ## 固件（firmware/）
 
 - [ ] **Phase 1: WiFi + WebSocket 客户端** — 将 Phase 0 的串口输出升级为 WiFi 连接，实现 IMU 二进制帧（MessagePack）和 Impact JSON 帧的 WebSocket 上行
-- [ ] **ICM-42688-P IMU 驱动** — SPI 初始化、FIFO 读取、1kHz 采样配置，与压电采集共用时间基准
 - [ ] **环形缓冲区管理** — 在 64KB ring buffer 中同时缓冲 IMU 帧和 Impact 事件，支持断线续传
 - [ ] **LED 反馈** — WS2812C 根据击球位置和定位置信度显示颜色反馈
 - [ ] **OTA 固件升级** — 通过 WiFi OTA 推送新固件
-- [ ] **电池电量上报** — ADC 读取电池电压，定期通过 WebSocket status 帧上报
+- [ ] **电池电量上报** — ADC 读取电池电压（`BAT_CELL_P` 分压），定期通过 WebSocket status 帧上报
 
 ## 服务端（server/）
 
@@ -49,14 +47,23 @@
 | 版本 | 方案 | 详情 |
 |------|------|------|
 | **V1 历史** | 第一次打板（已回板） | 初次装配暴露封装/脚位/开窗/UART 等问题 |
-| **V2 当前** | 刚性骨架 PCB + ESP32-C6-N8 + IM948 | 装配验证中；V2→V3 布局/封装反馈已落盘，待布线与打板 |
-| **V3 下一版** | 消化反馈后的打板 | 布局侧已改完（二极管 HandSolder、码头旋转、4.5 THT 测试键、TP_GND）；布线清理后出 Gerber |
+| **V2 当前** | 刚性骨架 PCB + ESP32-C6-N8 + IM948 + 正反 MX1.25 5P 尾插 | 布局/开窗/脚位已落盘；**待手布线 + DRC + 出 Gerber** |
+| **V3 下一版** | 消化回板反馈后的迭代 | 视 V2 装配结果再开 |
+
+### 已落地（不再跟踪）
+
+- 宽栈道 **SW_BOOT / SW_EN / SW_PWR**
+- MCU 旁可选电源灯 **`LED_MCU_PWR` + `R_MCU_PWR_1K`**（可不贴）
+- 尾插：**正反各一颗 MX1.25 5P**（Molex 53261-0571）；金手指 / `TAIL_STIFF` 加强片方案已废弃
+- IMU UART1：**GPIO23 TX / GPIO22 RX**（pad 21/20），与 IM948 面对面平行交叉
 
 ### 待办
 
+- [ ] **手布线 + DRC** — 电源区 / PZT / IMU UART / USB·UART0；清残铜与 BAT54S VCC↔GND 误碰；半孔 clearance 逐项 exclusion
+- [ ] **导出正式 Gerber 并下单** — 勿用旧 fab 包；板厚按需选（常见 **0.8 mm**）
 - [ ] **外壳 3D 打印试装** — 四零件(paddle_shell)打印与装配验证
 - [ ] **压电传感器选型与安装方案** — 20mm 陶瓷片 ×4，确定粘贴位置、引线走法
-- [ ] **电池选型** — 确定电池容量、尺寸、充电方案（USB-C, TP4056）
+- [ ] **电池/充电总成选型** — 容量、尺寸；5V OUT → `SYS_5V_IN`；可选 B+ → `BAT_CELL_P`
 - [ ] **远期：双 IMU + ESP32-S3** — 拍头+拍柄 IM948，拍柄 IMU 基台设计
 - [ ] **远期：柔性 PCB** — 分立芯片集成，柔性 FPC 铺满拍面消除空鼓感（`pcb_V3_flex_backup/`）
 

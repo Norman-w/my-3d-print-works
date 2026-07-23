@@ -17,8 +17,8 @@ ESP32 启动后通过 GPIO 锁住 MOS 保持导通。
 > V4：唯一输入=充电总成 **5V OUT** → `SYS_5V_IN` → 软开关 → `SYS_5V_SW` → AP2112；**无** SS14/双路 OR。
 > 按键开机用 `1N4148W` 隔离；读键 GPIO18。
 > IM948 仅 `VBUS←SYS_5V_SW`；VBAT/VDDIO 悬空。
-> 低电若需要：金手指 `BAT_CELL_P` 接电芯 B+，**不要**测 5V 输出。
-> 烧录走柄尾 USB D+/D− 金手指（充电仓 Type-C 多半无数据脚）；上电靠总成 5V。
+> 低电若需要：尾插 `BAT_CELL_P` 接电芯 B+，**不要**测 5V 输出。
+> 烧录走柄尾 MX1.25 的 USB D+/D−（充电仓 Type-C 多半无数据脚）；上电靠总成 5V。
 > **复位即关机（故障安全）**：`esp_restart` / WDT / 崩溃 / 恢复出厂重启会释放 `PWR_LATCH`，需再按尾键开机。
 
 ## LED 状态指示灯

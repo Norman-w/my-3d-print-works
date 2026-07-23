@@ -1,34 +1,34 @@
 ---
 name: V1 改板全流程
-overview: 以 V1 回板清单为准：先改 SCAD（MCU 靠 IMU、主出入口左右空间），再封装/ato/开窗；含 USB→LDO 二极管或供电（无电池可烧录）；审 step 后跑 step2+3；KiCad 收尾至可下单。
+overview: V1 回板改板计划（历史）。布局/开窗/尾插 MX1.25/IMU IO23·22 已落地；剩余手布线+DRC+出 Gerber。金手指/加强片方案已废弃。
 todos:
   - id: scad-layout
     content: "Phase0: SCAD — MCU 向 IMU 靠；主出入口左右空间（漏斗 vs 加 Y）；壳腔可装配复核"
-    status: pending
+    status: completed
   - id: mcu-footprint
     content: "Phase1: 重做 SGFK kicad_mod 几何+半孔+朝向/编号+3D"
-    status: pending
+    status: completed
   - id: finger-footprint
-    content: "Phase1: 加长 EdgeFingerPad 至窄区近全长"
-    status: pending
+    content: "Phase1: 金手指 — 已废弃，改 MX1.25 正反 5P"
+    status: cancelled
   - id: ato-electrical
-    content: "Phase2: main.ato 脚位/UART/PZT/软开关/USB数据+二极管或进LDO/按键TP/电源灯"
-    status: pending
+    content: "Phase2: main.ato 脚位/UART/PZT/软开关/USB/按键/电源灯/尾插 MX1.25"
+    status: completed
   - id: cutout-clearance
     content: "Phase3: mech_geometry 分边 clearance + CUTOUT 随 MCU 偏移"
-    status: pending
+    status: completed
   - id: step2-3-safe
     content: "Phase4: 审 step2/3 逻辑；备份后刷新外形+开窗（不跑 step1）"
-    status: pending
+    status: completed
   - id: kicad-finish
-    content: "Phase5: 入口布局、布线、金手指ENIG开窗、DRC、导出+ORDER_NOTES"
+    content: "Phase5: 手布线 + DRC + 导出 Gerber/ORDER_NOTES（金手指 ENIG 已不适用）"
     status: pending
   - id: firmware-docs
     content: "Phase6: config.h GPIO/读键/自锁；修正 button-operations 与 README 过时描述"
-    status: pending
+    status: completed
   - id: sync-bringup-md
-    content: 同步 V1_BRINGUP_ISSUES：MCU偏移、入口几何、USB二极管或供电、删矛盾「默认不改SCAD」
-    status: pending
+    content: 同步 V1_BRINGUP_ISSUES：删金手指/加强片待办，BOOT·EN·0603 标完成
+    status: completed
 isProject: false
 ---
 
@@ -36,7 +36,8 @@ isProject: false
 
 依据：[pcb/V1_BRINGUP_ISSUES.md](pcb/V1_BRINGUP_ISSUES.md)、[pcb/README.md](pcb/README.md)、[enclosure/parameters.scad](enclosure/parameters.scad) / [enclosure/paddle_shell.scad](enclosure/paddle_shell.scad)。
 
-**状态：** Phase 0–4 / 6 源文件已落地；**Phase 5 KiCad 手收进行中**（外形/开窗已刷，新件已 ato 进板，出板铜与码头走线需清）。含 USB→LDO 二极管或供电。
+**状态（2026-07）：** Phase 0–4 / 6 已完成；**仅剩 Phase 5 手布线 + DRC + 出板**。  
+尾插为 **MX1.25 正反 5P**；下文若仍写「金手指 / TAIL_STIFF」视为历史，勿再执行。
 
 ```mermaid
 flowchart TD
