@@ -33,31 +33,24 @@ KICAD_PYTHON = (
 INTENTIONAL_DRC_TYPES = {"copper_edge_clearance"}
 
 ORDER_NOTES = """\
-SmartPaddle PCB manufacturing notes (circuit C3 rigid)
+SmartPaddle PCB (circuit C3 rigid) — manufacturing notes
 
 Board
-- PCB thickness: 0.8 mm
-- Layers: 2
-- Surface finish: ENIG
-- Outline: single design (paddle skeleton); flat tail, no gold-finger tip
-- Tail connectors: Molex PicoBlade 53261-0571 MX1.25 5P ×2 (front + back), hand-solder
+- Thickness 0.8 mm, 2 layers, ENIG
+- Single outline; flat tail; MX1.25 5P ×2 (Molex 53261-0571), hand-solder
+- Programming: USB D+/D− on tail MX1.25; power via charger 5V OUT → sys_5v_in
 
-Embedded modules (castellated / edge solder)
-- ESP32-C6-N8 (MCU) and IM948 (IMU) sit in Edge.Cuts body cutouts with plated half-hole pads
-- PZT dock islands use edge pads toward piezo wires
-- Edge.Cuts crossing module PTH/edge pads in those areas is intentional
-- *** Enable Castellated Holes / half-hole process for MCU, IMU, and PZT edge pads ***
-- Confirm plated hole wall copper remains; no copper burrs; no adjacent-pad shorts
+Edge pads (MCU / IMU / PZT)
+- Edge.Cuts through PTH/edge pads is intentional
+- Prototype: do NOT require paid castellated process; ordinary routing OK
+  (accept burrs / exposed copper / incomplete hole walls). Contact before upcharge.
 
-Power path (assembler note)
-- Sole system input: charger-module 5V OUT → tail MX1.25 SYS_5V_IN → PMOS → SYS_5V_SW → AP2112 → 3V3
-- No USB/battery OR diodes on board
-- IM948: VBUS ← SYS_5V_SW only; leave VBAT / VDDIO open
-- Optional cell sense: charger B+ → BAT_CELL_P (do not probe SYS_5V_*)
-- Programming: USB D+/D− on tail MX1.25 (charger Type-C often has no data). Power via charger 5V OUT while flashing
+Outline internal corners
+- Do NOT straighten outline; add corner holes (工艺角孔) at sharp re-entrant corners,
+  then proceed without further confirmation.
 
-Deprecated (do NOT expect on this Gerber)
-- Gold fingers / TAIL_STIFF breakaway shims / mousebites — removed
+Suggested JLCPCB remark (CN):
+测试样板，按Gerber生产。板边及槽边穿过PTH，本次不要求标准半孔加工，接受普通锣板造成的毛刺、露铜及孔壁不完整。无需自动升级加价工艺；如无法按普通工艺生产或需要加价，请先联系确认。外形四臂与码头交接处有内凹尖角：请勿拉直/改外形；请在所有内凹尖角顶点按贵司工艺加角孔后直接生产。单板完整外形，不是拼板。
 """
 
 
