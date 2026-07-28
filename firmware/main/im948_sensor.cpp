@@ -5,6 +5,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 
 // ===== 分区：常量/配置 =====
@@ -18,6 +19,12 @@ Im948GyroRange  Im948Sensor::s_gyro_range  = Im948GyroRange::DPS2048;
 ImuFrame        Im948Sensor::s_latest_frame = {};
 volatile bool   Im948Sensor::s_has_new_data = false;
 uart_port_t     Im948Sensor::s_uart_num     = UART_NUM_MAX;
+volatile uint32_t Im948Sensor::s_rx_pkt_count = 0;
+static uint8_t s_dump_left = 0;
+static volatile bool s_status_fresh = false;
+static volatile bool s_sensor_on = false;
+static volatile bool s_report_on = false;
+static volatile uint16_t s_status_bat_mv = 0;
 
 // pow2 辅助宏
 #define pow2(x) ((x)*(x))
@@ -46,9 +53,67 @@ esp_err_t Im948Sensor::wake() {
         ESP_LOGE(TAG, "唤醒命令发送失败");
         return ESP_FAIL;
     }
-    ESP_LOGI(TAG, "唤醒命令已发送，等待 3s 稳定...");
-    vTaskDelay(pdMS_TO_TICKS(3000));
+    ESP_LOGI(TAG, "唤醒命令已发送，等待稳定...");
+    vTaskDelay(pdMS_TO_TICKS(500));
     return ESP_OK;
+}
+
+esp_err_t Im948Sensor::wake_quick() {
+    uint8_t cmd = 0x03;
+    if (im948_pack_and_tx(&cmd, 1) != 0) {
+        ESP_LOGE(TAG, "快速唤醒发送失败");
+        return ESP_FAIL;
+    }
+    vTaskDelay(pdMS_TO_TICKS(50));
+    return ESP_OK;
+}
+
+esp_err_t Im948Sensor::soft_reset() {
+    uint8_t cmd = 0x2A;
+    if (im948_pack_and_tx(&cmd, 1) != 0) {
+        ESP_LOGE(TAG, "Cmd_2A 软复位发送失败");
+        return ESP_FAIL;
+    }
+    ESP_LOGI(TAG, "IM948 软复位已发送，等待模块重启...");
+    vTaskDelay(pdMS_TO_TICKS(1500));
+    return ESP_OK;
+}
+
+bool Im948Sensor::is_sensor_on() {
+    return s_sensor_on;
+}
+
+esp_err_t Im948Sensor::refresh_status(uint32_t timeout_ms) {
+    s_status_fresh = false;
+    if (request_status() != ESP_OK) {
+        return ESP_FAIL;
+    }
+    const TickType_t deadline =
+        xTaskGetTickCount() + pdMS_TO_TICKS(timeout_ms);
+    while (!s_status_fresh) {
+        if (xTaskGetTickCount() >= deadline) {
+            return ESP_ERR_TIMEOUT;
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+    return ESP_OK;
+}
+
+esp_err_t Im948Sensor::ensure_sensor_on(int max_attempts) {
+    for (int i = 0; i < max_attempts; ++i) {
+        (void)wake_quick();
+        vTaskDelay(pdMS_TO_TICKS(200));
+        if (refresh_status(400) == ESP_OK && s_sensor_on) {
+            ESP_LOGI(TAG, "传感器已确认开启 (attempt %d, bat=%umV report=%u)",
+                     i + 1, (unsigned)s_status_bat_mv,
+                     (unsigned)s_report_on);
+            return ESP_OK;
+        }
+        ESP_LOGW(TAG, "唤醒后 sensor_on 仍为 0，重试 (%d/%d)",
+                 i + 1, max_attempts);
+    }
+    ESP_LOGE(TAG, "无法打开传感器（查 VBUS/模块供电）");
+    return ESP_ERR_INVALID_STATE;
 }
 
 esp_err_t Im948Sensor::configure(
@@ -60,7 +125,7 @@ esp_err_t Im948Sensor::configure(
     s_accel_range = accel_range;
     s_gyro_range  = gyro_range;
 
-    // Cmd_12: 设置设备参数
+    // 对齐厂商例程：只发 Cmd_12（量程用模块默认；Cmd_33 非必需）
     {
         uint8_t buf[11] = {};
         buf[0] = 0x12;
@@ -80,35 +145,9 @@ esp_err_t Im948Sensor::configure(
             return ESP_FAIL;
         }
     }
-
     vTaskDelay(pdMS_TO_TICKS(100));
 
-    // Cmd_33: 设置加速度和陀螺仪量程
-    {
-        uint8_t buf[3] = {};
-        buf[0] = 0x33;
-        buf[1] = static_cast<uint8_t>(accel_range);
-        buf[2] = static_cast<uint8_t>(gyro_range);
-
-        if (im948_pack_and_tx(buf, 3) != 0) {
-            ESP_LOGE(TAG, "Cmd_33 发送失败");
-            return ESP_FAIL;
-        }
-    }
-
-    vTaskDelay(pdMS_TO_TICKS(100));
-
-    // Cmd_40: 开机后自动载入配置并主动上报
-    {
-        uint8_t buf[2] = {};
-        buf[0] = 0x40;
-        buf[1] = 2;  // 载入配置 + 自动开启主动上报
-
-        im948_pack_and_tx(buf, 2);
-    }
-
-    ESP_LOGI(TAG, "配置完成: accel=%d gyro=%d hz=%d tags=0x%04X",
-             static_cast<int>(accel_range), static_cast<int>(gyro_range),
+    ESP_LOGI(TAG, "配置完成: hz=%d tags=0x%04X (默认量程)",
              report_hz, subscribe_tags);
     return ESP_OK;
 }
@@ -138,7 +177,127 @@ esp_err_t Im948Sensor::upgrade_baudrate(Im948BaudRate target) {
         case Im948BaudRate::B460800: target_baud = 460800; break;
     }
 
-    return im948_uart_set_baudrate(target_baud);
+    esp_err_t ret = im948_uart_set_baudrate(target_baud);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+    // 升波特后模块侧会话仍在；稍等再发后续 Cmd_12/19
+    vTaskDelay(pdMS_TO_TICKS(50));
+    return ESP_OK;
+}
+
+esp_err_t Im948Sensor::apply_subscribe(uint16_t subscribe_tags, uint8_t report_hz) {
+    uint8_t buf[11] = {};
+    buf[0] = 0x12;
+    buf[1] = 5;
+    buf[2] = 255;
+    buf[3] = 0;
+    buf[4] = 0;  // 不融合磁场
+    buf[5] = report_hz;
+    buf[6] = 0;
+    buf[7] = 0;
+    buf[8] = 9;
+    buf[9] = subscribe_tags & 0xFF;
+    buf[10] = (subscribe_tags >> 8) & 0xFF;
+
+    if (im948_pack_and_tx(buf, 11) != 0) {
+        ESP_LOGE(TAG, "重发 Cmd_12 失败");
+        return ESP_FAIL;
+    }
+    vTaskDelay(pdMS_TO_TICKS(50));
+    ESP_LOGI(TAG, "已重申订阅 tags=0x%04X hz=%u", subscribe_tags,
+             (unsigned)report_hz);
+    return ESP_OK;
+}
+
+esp_err_t Im948Sensor::request_status() {
+    uint8_t cmd = 0x10;
+    if (im948_pack_and_tx(&cmd, 1) != 0) {
+        ESP_LOGE(TAG, "Cmd_10 发送失败");
+        return ESP_FAIL;
+    }
+    return ESP_OK;
+}
+
+uint32_t Im948Sensor::rx_packet_count() {
+    return s_rx_pkt_count;
+}
+
+void Im948Sensor::reset_rx_packet_count() {
+    s_rx_pkt_count = 0;
+}
+
+void Im948Sensor::request_hex_dumps(uint8_t count) {
+    s_dump_left = count;
+}
+
+static int baud_of(Im948BaudRate b) {
+    switch (b) {
+        case Im948BaudRate::B9600:   return 9600;
+        case Im948BaudRate::B115200: return 115200;
+        case Im948BaudRate::B230400: return 230400;
+        case Im948BaudRate::B460800: return 460800;
+    }
+    return 115200;
+}
+
+esp_err_t Im948Sensor::ensure_baud_115200() {
+    const Im948BaudRate candidates[] = {
+        Im948BaudRate::B115200,
+        Im948BaudRate::B230400,
+        Im948BaudRate::B460800,
+    };
+
+    for (Im948BaudRate cand : candidates) {
+        const int baud = baud_of(cand);
+        ESP_LOGI(TAG, "探测 IM948 波特率 %d ...", baud);
+        esp_err_t err = im948_uart_set_baudrate(baud);
+        if (err != ESP_OK) {
+            continue;
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+        reset_rx_packet_count();
+        (void)request_status();
+        vTaskDelay(pdMS_TO_TICKS(300));
+        if (rx_packet_count() == 0) {
+            // 再试一次唤醒+状态
+            (void)wake_quick();
+            (void)request_status();
+            vTaskDelay(pdMS_TO_TICKS(300));
+        }
+        if (rx_packet_count() > 0) {
+            ESP_LOGI(TAG, "IM948 在 %d 有应答 (pkts=%lu)", baud,
+                     (unsigned long)rx_packet_count());
+            if (cand != Im948BaudRate::B115200) {
+                ESP_LOGW(TAG, "模块滞留在 %d，Cmd_47 拉回 115200", baud);
+                uint8_t buf[2] = {0x47, static_cast<uint8_t>(Im948BaudRate::B115200)};
+                if (im948_pack_and_tx(buf, 2) != 0) {
+                    ESP_LOGE(TAG, "Cmd_47→115200 发送失败");
+                    return ESP_FAIL;
+                }
+                vTaskDelay(pdMS_TO_TICKS(200));
+                err = im948_uart_set_baudrate(115200);
+                if (err != ESP_OK) {
+                    return err;
+                }
+                vTaskDelay(pdMS_TO_TICKS(50));
+                reset_rx_packet_count();
+                (void)request_status();
+                vTaskDelay(pdMS_TO_TICKS(300));
+                if (rx_packet_count() == 0) {
+                    ESP_LOGE(TAG, "拉回 115200 后仍无应答");
+                    return ESP_FAIL;
+                }
+                ESP_LOGI(TAG, "已恢复 115200 通信");
+            }
+            return ESP_OK;
+        }
+    }
+
+    ESP_LOGE(TAG, "115200/230400/460800 均无 IM948 应答（查接线/供电）");
+    // 回到默认
+    (void)im948_uart_set_baudrate(115200);
+    return ESP_ERR_NOT_FOUND;
 }
 
 esp_err_t Im948Sensor::start_streaming() {
@@ -209,11 +368,35 @@ float Im948Sensor::gyro_scale(Im948GyroRange range) {
 
 void Im948Sensor::on_rx_unpack(const uint8_t *buf, uint8_t dlen) {
     if (dlen == 0) return;
+    ++s_rx_pkt_count;
 
     switch (buf[0]) {
-    case 0x10:  // 模块属性和状态（收到回复，不处理数据，仅日志）
-        ESP_LOGI(TAG, "收到设备属性和状态");
+    case 0x10: {  // 模块属性和状态
+        if (dlen >= 11) {
+            const uint8_t flags = buf[4];
+            const uint16_t tags =
+                (uint16_t)(((uint16_t)buf[10] << 8) | buf[9]);
+            const uint16_t bat_mv = (dlen >= 15)
+                ? (uint16_t)(((uint16_t)buf[14] << 8) | buf[13])
+                : 0;
+            s_sensor_on = ((flags >> 3) & 1) != 0;
+            s_report_on = ((flags >> 4) & 1) != 0;
+            s_status_bat_mv = bat_mv;
+            s_status_fresh = true;
+            ESP_LOGI(TAG,
+                     "设备状态: sensor_on=%u report_on=%u hz=%u tags=0x%04X "
+                     "charge=%u bat=%u%% %umV",
+                     (unsigned)s_sensor_on,
+                     (unsigned)s_report_on,
+                     (unsigned)buf[5], tags,
+                     (unsigned)buf[11],
+                     dlen >= 13 ? (unsigned)buf[12] : 0u,
+                     (unsigned)bat_mv);
+        } else {
+            ESP_LOGI(TAG, "收到设备属性和状态 dlen=%u", dlen);
+        }
         break;
+    }
 
     case 0x11: {  // 订阅数据包
         uint16_t ctl = ((uint16_t)buf[2] << 8) | buf[1];
@@ -295,6 +478,29 @@ void Im948Sensor::on_rx_unpack(const uint8_t *buf, uint8_t dlen) {
 
         frame.is_valid = true;
 
+        // 仅在 request_hex_dumps() 后打印若干帧
+        if (s_dump_left > 0) {
+            --s_dump_left;
+            const uint8_t dump_n = dlen < 40 ? dlen : 40;
+            char hex[3 * 40 + 1];
+            size_t hp = 0;
+            for (uint8_t i = 0; i < dump_n && hp + 3 < sizeof(hex); ++i) {
+                hp += (size_t)snprintf(hex + hp, sizeof(hex) - hp, "%02X ", buf[i]);
+            }
+            int16_t raw_ax = 0, raw_ay = 0, raw_az = 0;
+            if (dlen >= 13 && (ctl & TAG_ACCEL_WITH_GRAVITY)) {
+                raw_ax = (int16_t)(((int16_t)buf[8] << 8) | buf[7]);
+                raw_ay = (int16_t)(((int16_t)buf[10] << 8) | buf[9]);
+                raw_az = (int16_t)(((int16_t)buf[12] << 8) | buf[11]);
+            }
+            ESP_LOGI(TAG,
+                     "0x11 dump dlen=%u ctl=0x%04X ts=%lu rawA=%d,%d,%d "
+                     "temp=%.2f | %s",
+                     dlen, ctl, (unsigned long)ts_ms,
+                     (int)raw_ax, (int)raw_ay, (int)raw_az,
+                     frame.temperature, hex);
+        }
+
         // 更新最新帧（临界区）
         taskDISABLE_INTERRUPTS();
         s_latest_frame = frame;
@@ -304,8 +510,14 @@ void Im948Sensor::on_rx_unpack(const uint8_t *buf, uint8_t dlen) {
     }
 
     case 0x12: ESP_LOGI(TAG, "参数设置成功"); break;
-    case 0x03: ESP_LOGI(TAG, "传感器已唤醒"); break;
+    case 0x03:
+        ESP_LOGI(TAG, "传感器已唤醒(ACK)");
+        s_sensor_on = true;
+        break;
     case 0x19: ESP_LOGI(TAG, "主动上报已确认"); break;
+    case 0x18: ESP_LOGI(TAG, "主动上报已关闭"); break;
+    case 0x2A: ESP_LOGI(TAG, "模块将重启"); break;
+    case 0x40: ESP_LOGI(TAG, "开机工作模式已设置"); break;
     case 0x05: ESP_LOGI(TAG, "Z轴已归零"); break;
     case 0x07: ESP_LOGI(TAG, "加速计校准中，等待 9 秒"); break;
 

@@ -2,6 +2,7 @@
 #include "const.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include <cstdlib>
 #include <cstring>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -12,20 +13,21 @@ static const char *TAG = LOG_TAG_WS_DATA_SERVER;
 static int s_client_fd = -1;
 static httpd_handle_t s_server_handle = NULL;
 
-// 关闭旧的 WebSocket 连接（单用户模式）
-static void close_existing_connection(void) {
-    if (s_client_fd >= 0 && s_server_handle) {
-        ESP_LOGI(TAG, "关闭旧的 WebSocket 连接: fd=%d", s_client_fd);
-        httpd_sess_trigger_close(s_server_handle, s_client_fd);
-        s_client_fd = -1;
-        s_server_handle = NULL;
+static bool client_still_alive(void) {
+    if (s_client_fd < 0 || !s_server_handle) {
+        return false;
     }
+    return httpd_ws_get_fd_info(s_server_handle, s_client_fd) == HTTPD_WS_CLIENT_WEBSOCKET;
 }
 
 esp_err_t ws_data_handler_fn(httpd_req_t *req) {
     if (req->method == HTTP_GET) {
-        // WebSocket 握手
-        close_existing_connection();
+        // 已有存活客户端时拒绝新人，避免多标签页互踢
+        if (client_still_alive()) {
+            ESP_LOGW(TAG, "已有 WebSocket 客户端 fd=%d，拒绝新连接", s_client_fd);
+            return ESP_FAIL;
+        }
+        s_client_fd = -1;
 
         s_server_handle = req->handle;
         s_client_fd = httpd_req_to_sockfd(req);
@@ -36,7 +38,31 @@ esp_err_t ws_data_handler_fn(httpd_req_t *req) {
         return ESP_OK;
     }
 
-    // 不处理从客户端接收的数据（单向推送模式）
+    // 客户端帧（含浏览器 ping/close）：必须收掉，否则会话易异常断开
+    httpd_ws_frame_t frame = {};
+    frame.type = HTTPD_WS_TYPE_TEXT;
+    esp_err_t ret = httpd_ws_recv_frame(req, &frame, 0);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+    if (frame.len > 0) {
+        uint8_t *buf = (uint8_t *)calloc(1, frame.len + 1);
+        if (!buf) {
+            return ESP_ERR_NO_MEM;
+        }
+        frame.payload = buf;
+        ret = httpd_ws_recv_frame(req, &frame, frame.len);
+        free(buf);
+        if (ret != ESP_OK) {
+            return ret;
+        }
+    }
+
+    if (frame.type == HTTPD_WS_TYPE_CLOSE) {
+        ESP_LOGI(TAG, "WebSocket 客户端主动关闭: fd=%d", s_client_fd);
+        s_client_fd = -1;
+    }
+
     return ESP_OK;
 }
 
@@ -46,7 +72,7 @@ esp_err_t ws_data_server_init(void) {
 }
 
 esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
-    if (!data || len == 0 || s_client_fd < 0 || !s_server_handle) {
+    if (!data || len == 0 || !client_still_alive()) {
         return ESP_ERR_INVALID_ARG;
     }
 
@@ -55,11 +81,16 @@ esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
     ws_pkt.len = len;
     ws_pkt.type = HTTPD_WS_TYPE_BINARY;
 
-    return httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "WS 发送失败 (%s)，清客户端 fd=%d", esp_err_to_name(ret), s_client_fd);
+        s_client_fd = -1;
+    }
+    return ret;
 }
 
 esp_err_t ws_data_send_text(const char *data, size_t len) {
-    if (!data || len == 0 || s_client_fd < 0 || !s_server_handle) {
+    if (!data || len == 0 || !client_still_alive()) {
         return ESP_ERR_INVALID_ARG;
     }
 
@@ -68,11 +99,16 @@ esp_err_t ws_data_send_text(const char *data, size_t len) {
     ws_pkt.len = len;
     ws_pkt.type = HTTPD_WS_TYPE_TEXT;
 
-    return httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    if (ret != ESP_OK) {
+        ESP_LOGW(TAG, "WS 文本发送失败 (%s)，清客户端 fd=%d", esp_err_to_name(ret), s_client_fd);
+        s_client_fd = -1;
+    }
+    return ret;
 }
 
 bool ws_data_has_client(void) {
-    return s_client_fd >= 0;
+    return client_still_alive();
 }
 
 // ===== 二进制帧构建辅助宏 =====
@@ -103,7 +139,14 @@ static inline void write_be64(uint8_t *buf, uint64_t val) {
 
 esp_err_t ws_data_send_imu_frame(const ImuFrame *frame) {
     if (!frame || !frame->is_valid) return ESP_ERR_INVALID_ARG;
-    if (s_client_fd < 0 || !s_server_handle) return ESP_ERR_INVALID_ARG;
+    if (!client_still_alive()) return ESP_ERR_INVALID_ARG;
+
+    // 只声明实际写入的字段，避免前端按 TAG_ALL 多读导致错位
+    const uint16_t tags =
+        frame->subscribe_tags &
+        (TAG_ACCEL_NO_GRAVITY | TAG_ACCEL_WITH_GRAVITY | TAG_ANGULAR_VELOCITY |
+         TAG_MAGNETIC | TAG_TEMP_PRESSURE_HEIGHT | TAG_QUATERNION |
+         TAG_EULER_ANGLES | TAG_DISPLACEMENT | TAG_ACCEL_NAV_FRAME);
 
     uint8_t buf[IMU_FRAME_MAX_SIZE] = {};
     size_t pos = 0;
@@ -120,7 +163,7 @@ esp_err_t ws_data_send_imu_frame(const ImuFrame *frame) {
     pos += 8;
 
     // Byte 13-14: subscribe_tags (uint16_t, big-endian)
-    write_be16(&buf[pos], frame->subscribe_tags);
+    write_be16(&buf[pos], tags);
     pos += 2;
 
     // Byte 15: 标志位
@@ -129,48 +172,48 @@ esp_err_t ws_data_send_imu_frame(const ImuFrame *frame) {
 
     // Byte 16+: 按 tag 位序排列的 float 数组
 
-    if (frame->subscribe_tags & TAG_ACCEL_NO_GRAVITY) {
+    if (tags & TAG_ACCEL_NO_GRAVITY) {
         memcpy(&buf[pos], &frame->accel_lx, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_ly, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_lz, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_ACCEL_WITH_GRAVITY) {
+    if (tags & TAG_ACCEL_WITH_GRAVITY) {
         memcpy(&buf[pos], &frame->accel_gx, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_gy, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_gz, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_ANGULAR_VELOCITY) {
+    if (tags & TAG_ANGULAR_VELOCITY) {
         memcpy(&buf[pos], &frame->gyro_x, 4); pos += 4;
         memcpy(&buf[pos], &frame->gyro_y, 4); pos += 4;
         memcpy(&buf[pos], &frame->gyro_z, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_MAGNETIC) {
+    if (tags & TAG_MAGNETIC) {
         memcpy(&buf[pos], &frame->mag_x, 4); pos += 4;
         memcpy(&buf[pos], &frame->mag_y, 4); pos += 4;
         memcpy(&buf[pos], &frame->mag_z, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_TEMP_PRESSURE_HEIGHT) {
+    if (tags & TAG_TEMP_PRESSURE_HEIGHT) {
         memcpy(&buf[pos], &frame->temperature, 4); pos += 4;
         memcpy(&buf[pos], &frame->air_pressure, 4); pos += 4;
         memcpy(&buf[pos], &frame->height, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_QUATERNION) {
+    if (tags & TAG_QUATERNION) {
         memcpy(&buf[pos], &frame->quat_w, 4); pos += 4;
         memcpy(&buf[pos], &frame->quat_x, 4); pos += 4;
         memcpy(&buf[pos], &frame->quat_y, 4); pos += 4;
         memcpy(&buf[pos], &frame->quat_z, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_EULER_ANGLES) {
+    if (tags & TAG_EULER_ANGLES) {
         memcpy(&buf[pos], &frame->euler_roll, 4); pos += 4;
         memcpy(&buf[pos], &frame->euler_pitch, 4); pos += 4;
         memcpy(&buf[pos], &frame->euler_yaw, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_DISPLACEMENT) {
+    if (tags & TAG_DISPLACEMENT) {
         memcpy(&buf[pos], &frame->offset_x, 4); pos += 4;
         memcpy(&buf[pos], &frame->offset_y, 4); pos += 4;
         memcpy(&buf[pos], &frame->offset_z, 4); pos += 4;
     }
-    if (frame->subscribe_tags & TAG_ACCEL_NAV_FRAME) {
+    if (tags & TAG_ACCEL_NAV_FRAME) {
         memcpy(&buf[pos], &frame->accel_nav_x, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_nav_y, 4); pos += 4;
         memcpy(&buf[pos], &frame->accel_nav_z, 4); pos += 4;

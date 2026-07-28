@@ -33,6 +33,21 @@ public:
      */
     static esp_err_t wake();
 
+    /** 仅发 Cmd_03，不等待 3s（用于丢流重试） */
+    static esp_err_t wake_quick();
+
+    /** Cmd_2A 软复位模块（一般不用；易丢唤醒态） */
+    static esp_err_t soft_reset();
+
+    /** 发 Cmd_10 并等待状态回复 */
+    static esp_err_t refresh_status(uint32_t timeout_ms = 500);
+
+    /** 最近一次状态：传感器是否开启 */
+    static bool is_sensor_on();
+
+    /** 重复 Cmd_03 直到 Cmd_10 报告 sensor_on=1 */
+    static esp_err_t ensure_sensor_on(int max_attempts = 5);
+
     // ---- 配置 ----
 
     /**
@@ -63,6 +78,25 @@ public:
      * @return ESP_OK 成功
      */
     static esp_err_t upgrade_baudrate(Im948BaudRate target = Im948BaudRate::B230400);
+
+    /** 重发 Cmd_12 订阅（升波特 / 防 flash 默认 tags=0 覆盖后调用） */
+    static esp_err_t apply_subscribe(uint16_t subscribe_tags, uint8_t report_hz);
+
+    /** 查询模块状态 Cmd_10（传感器开/关、订阅位等） */
+    static esp_err_t request_status();
+
+    /** 自上次清零后收到的 IM948 包数量（任意命令应答/上报） */
+    static uint32_t rx_packet_count();
+    static void reset_rx_packet_count();
+
+    /** 再 dump 接下来 N 个 0x11 帧的 hex（诊断用） */
+    static void request_hex_dumps(uint8_t count = 3);
+
+    /**
+     * 若模块被旧固件留在 230400/460800，ESP 用 115200 会对不上。
+     * 探测并 Cmd_47 拉回 115200。
+     */
+    static esp_err_t ensure_baud_115200();
 
     // ---- 数据流 ----
 
@@ -123,6 +157,7 @@ private:
     // 最新解析帧
     static ImuFrame s_latest_frame;
     static volatile bool s_has_new_data;
+    static volatile uint32_t s_rx_pkt_count;
 
     // UART 端口
     static uart_port_t s_uart_num;

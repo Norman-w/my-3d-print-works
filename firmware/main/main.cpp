@@ -14,7 +14,6 @@
 #include "web_server.h"
 #include "esp_mac.h"
 #include "status_led.h"
-#include "reset_button.h"
 #include "power_control.h"
 #include "ws_data_server.h"
 #include "im948_sensor.h"
@@ -45,8 +44,7 @@ static void init_peripherals(void) {
     status_led::init();
     status_led::set_boot();
 
-    // BOOT 键恢复出厂（工程用）；日常开关机走尾键 GPIO18（已在 app_main 开头锁存）
-    reset_button_init();
+    // 用户键手势（关机 / 恢复出厂）已在 power_control_init 中启动
 }
 
 static void init_network(void) {
@@ -76,72 +74,116 @@ static void init_imu(void) {
         return;
     }
 
-    // 唤醒传感器（发送 Cmd_03 后等待 3 秒）
-    ret = Im948Sensor::wake();
+    ret = Im948Sensor::ensure_baud_115200();
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "IM948 唤醒失败: %d", ret);
+        ESP_LOGW(TAG, "波特率探测失败，仍按 115200 继续（可断电重试）");
+    }
+
+    // 先停掉「传感器睡眠却仍上报」的空流，再确认真正唤醒
+    (void)Im948Sensor::stop_streaming();
+    vTaskDelay(pdMS_TO_TICKS(50));
+
+    ret = Im948Sensor::ensure_sensor_on(6);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "IM948 传感器未能开启 — 请测 IMU VBUS(≈5V) 与半孔焊接");
         return;
     }
 
-    // 配置传感器参数
     ret = Im948Sensor::configure(
         Im948AccelRange::G16,
         Im948GyroRange::DPS2048,
         IMU_REPORT_HZ,
-        Im948ReportTag::TAG_ALL,
-        0,   // gyro_filter=0: 最小滤波
-        0,   // accel_filter=0: 最小滤波
-        9,   // compass_filter=9: 默认
-        false // 不融合磁场
+        IM948_TAGS_STREAM,
+        0,
+        0,
+        9,
+        false
     );
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "IM948 配置失败: %d", ret);
         return;
     }
 
-    // 升级波特率：115200 → 230400
-    ret = Im948Sensor::upgrade_baudrate(Im948BaudRate::B230400);
-    if (ret != ESP_OK) {
-        ESP_LOGW(TAG, "IM948 波特率升级失败，继续使用 115200");
+    // 配置后再次确认仍处于唤醒（防止被冲掉）
+    if (Im948Sensor::refresh_status(400) != ESP_OK ||
+        !Im948Sensor::is_sensor_on()) {
+        ESP_LOGW(TAG, "配置后 sensor_on 丢失，再次唤醒");
+        (void)Im948Sensor::ensure_sensor_on(3);
     }
 
-    // 开启主动上报
     ret = Im948Sensor::start_streaming();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "IM948 主动上报启动失败: %d", ret);
         return;
     }
 
-    ESP_LOGI(TAG, "IM948 初始化完成，%dHz 主动上报中", IMU_REPORT_HZ);
+    Im948Sensor::request_hex_dumps(5);
+    (void)Im948Sensor::refresh_status(400);
+    vTaskDelay(pdMS_TO_TICKS(200));
+
+    ESP_LOGI(TAG, "IM948 初始化完成，%dHz tags=0x%04X @115200 sensor_on=%d",
+             IMU_REPORT_HZ, IM948_TAGS_STREAM,
+             Im948Sensor::is_sensor_on() ? 1 : 0);
 }
 
 // ===== IMU 数据轮询任务（独立 FreeRTOS 任务） =====
 static void imu_loop(void *arg) {
     ImuFrame frame;
+    uint32_t ws_ok = 0;
+    uint32_t ws_fail = 0;
+    uint32_t poll_ok = 0;
+    int64_t last_frame_us = esp_timer_get_time();
+    int64_t last_idle_log_us = 0;
 #if IMU_UART_REPORT_HZ > 0
     const int64_t report_us = 1000000 / IMU_UART_REPORT_HZ;
     int64_t last_report_us = 0;
 #endif
     while (true) {
         if (Im948Sensor::poll(frame)) {
+            ++poll_ok;
+            last_frame_us = esp_timer_get_time();
             if (ws_data_has_client()) {
-                ws_data_send_imu_frame(&frame);
+                if (ws_data_send_imu_frame(&frame) == ESP_OK) {
+                    ++ws_ok;
+                } else {
+                    ++ws_fail;
+                }
             }
 #if IMU_UART_REPORT_HZ > 0
             const int64_t now = esp_timer_get_time();
             if (now - last_report_us >= report_us) {
                 last_report_us = now;
                 ESP_LOGI(TAG,
-                         "IMU rpy=%.1f,%.1f,%.1f quat=%.3f,%.3f,%.3f,%.3f "
-                         "gyro=%.1f,%.1f,%.1f ag=%.2f,%.2f,%.2f",
+                         "IMU tags=0x%04X rpy=%.1f,%.1f,%.1f quat=%.3f,%.3f,%.3f,%.3f "
+                         "gyro=%.1f,%.1f,%.1f ag=%.2f,%.2f,%.2f | poll=%lu ws_ok=%lu ws_fail=%lu client=%d",
+                         frame.subscribe_tags,
                          frame.euler_roll, frame.euler_pitch, frame.euler_yaw,
                          frame.quat_w, frame.quat_x, frame.quat_y, frame.quat_z,
                          frame.gyro_x, frame.gyro_y, frame.gyro_z,
-                         frame.accel_gx, frame.accel_gy, frame.accel_gz);
+                         frame.accel_gx, frame.accel_gy, frame.accel_gz,
+                         (unsigned long)poll_ok, (unsigned long)ws_ok,
+                         (unsigned long)ws_fail, ws_data_has_client() ? 1 : 0);
+                poll_ok = 0;
+                ws_ok = 0;
+                ws_fail = 0;
             }
 #endif
+        } else {
+            const int64_t now = esp_timer_get_time();
+            if (now - last_frame_us > 2000000 && now - last_idle_log_us > 2000000) {
+                last_idle_log_us = now;
+                ESP_LOGW(TAG, "IMU 超过 2s 无帧，重探波特率并重新配置开流");
+                (void)Im948Sensor::ensure_baud_115200();
+                (void)Im948Sensor::stop_streaming();
+                (void)Im948Sensor::ensure_sensor_on(3);
+                (void)Im948Sensor::configure(
+                    Im948AccelRange::G16, Im948GyroRange::DPS2048,
+                    IMU_REPORT_HZ, IM948_TAGS_STREAM, 0, 0, 9, false);
+                (void)Im948Sensor::start_streaming();
+                (void)Im948Sensor::refresh_status(400);
+                last_frame_us = now;
+            }
         }
-        // 适当让出 CPU，避免 busy-wait 饿死压电任务
         vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
@@ -161,7 +203,7 @@ extern "C" void app_main() {
     ESP_LOGI(TAG, "SmartPaddle 固件启动");
     ESP_LOGI(TAG, "压电: 4 通道 GPIO ISR + CPU cycle TDOA");
 
-    // 2. 外设初始化（LED、BOOT Reset）
+    // 2. 外设初始化（LED；用户键已在 power_control_init）
     init_peripherals();
 
     // 3. 网络初始化（WiFi AP → DNS → HTTP → WebSocket）

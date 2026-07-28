@@ -11,7 +11,6 @@ idf_component_register(
         "web_server.cpp"
         "http.cpp"
         "status_led.cpp"
-        "reset_button.cpp"
         "power_control.cpp"
         "ws_data_server.cpp"
         "im948_sdk.cpp"

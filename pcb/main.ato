@@ -144,10 +144,11 @@ module PZTDock:
 module TailHarness5P2S:
     """柄尾 MX1.25 卧贴：正反各 1×5P（Molex PicoBlade 53261-0571）。
 
-    正面 = 原金手指 F 侧；背面 = 原金手指 B 侧。
+    正面 F @ rot0；背面 B @ Flip+rot180（开口朝外）→ 板坐标 X 上 pad 号左右对调：
+    F.p5(TX) 与 B.p1(GND) 同 X；B.p5(RX) 与 F.p1(5V) 同 X。勿按金手指「上下同号」理解。
     SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
     烧录走 USB D+/D−；充电仓 Type-C 通常无 D+/D−。
-    引脚表：docs/1.25x10p/README.md
+    引脚表 / 端面图：docs/1.25x10p/README.md 、output/assembly/smartpaddle_tail_wiring.html
     """
     pin SYS_5V_IN
     pin GND

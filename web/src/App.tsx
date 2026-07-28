@@ -139,6 +139,8 @@ export default function App() {
           />
           <datalist id="device-host-suggestions">
             <option value={DEFAULT_DEVICE_HOST} />
+            <option value="192.168.7.52" />
+            <option value="192.168.7.80" />
             <option value="SP-FE9C.local" />
             <option value="192.168.4.1" />
           </datalist>
@@ -177,7 +179,7 @@ export default function App() {
             />
             <span style={{ color: '#888' }}>
               {connected
-                ? `已连接 · ${activeHost}`
+                ? `已连接 · ${activeHost} · IMU ${imuData.length}`
                 : lastError
                   ? '重连中…'
                   : '未连接'}

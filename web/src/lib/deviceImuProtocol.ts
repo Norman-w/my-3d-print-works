@@ -13,7 +13,7 @@ export const DEVICE_TAG = {
   ACCEL_NAV_FRAME: 0x0200,
 } as const;
 
-export const DEFAULT_DEVICE_HOST = '192.168.7.80';
+export const DEFAULT_DEVICE_HOST = '192.168.7.52';
 export const DEVICE_HOST_STORAGE_KEY = 'smartpaddle.deviceHost';
 
 //#endregion

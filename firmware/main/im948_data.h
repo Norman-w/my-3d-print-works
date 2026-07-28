@@ -18,8 +18,8 @@ constexpr float IM948_SCALE_HEIGHT        = 0.0010728836f;       // 高度 [-900
 constexpr uint8_t IM948_PKT_BEGIN = 0x49;
 constexpr uint8_t IM948_PKT_END   = 0x4D;
 
-// 协议帧最大长度
-constexpr uint8_t IM948_PKT_MAX_RX_DATA = 73;
+// 协议帧最大长度（TAG_ALL 时 0x11 数据体可达 ~73+；留余量避免整帧被丢）
+constexpr uint8_t IM948_PKT_MAX_RX_DATA = 120;
 constexpr uint8_t IM948_PKT_MAX_TX_DATA = 31;
 
 // ===== 分区：模型/类型 =====
@@ -62,6 +62,11 @@ enum Im948ReportTag : uint16_t {
     TAG_GPIO1                 = 0x0800,  // GPIO1 状态
     TAG_ALL                   = 0x0FFF,  // 订阅全部
 };
+
+/** 可视化/WS 常用订阅：加速度(含g)+陀螺+四元数+欧拉+温压（温压用于确认模块传感是否全死） */
+constexpr uint16_t IM948_TAGS_STREAM =
+    TAG_ACCEL_WITH_GRAVITY | TAG_ANGULAR_VELOCITY | TAG_TEMP_PRESSURE_HEIGHT |
+    TAG_QUATERNION | TAG_EULER_ANGLES;
 
 // 单帧完整 IMU 数据
 struct ImuFrame {

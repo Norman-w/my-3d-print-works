@@ -16,7 +16,6 @@
 #define LOG_TAG_DNS_SERVER        "dns_server"
 #define LOG_TAG_WS_DATA_SERVER    "ws_data_server"
 #define LOG_TAG_STATUS_LED        "status_led"
-#define LOG_TAG_RESET_BUTTON      "reset_button"
 #define LOG_TAG_POWER             "power"
 #define LOG_TAG_PIEZO             "piezo_capture"
 #define LOG_TAG_IMU_SDK           "im948_sdk"

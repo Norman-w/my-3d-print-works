@@ -16,8 +16,8 @@
 #define IMU_UART_NUM   UART_NUM_1
 #define IMU_UART_TX    GPIO_NUM_23  // pad 21 → IMU RXD
 #define IMU_UART_RX    GPIO_NUM_22  // pad 20 ← IMU TXD
-#define IMU_UART_BAUD  115200       // 初始波特率，上电后升级到 230400
-#define IMU_UART_BAUD_HIGH 230400   // 升级后的波特率
+#define IMU_UART_BAUD  115200       // 固定 115200（升 230400 会在软复位后错位）
+#define IMU_UART_BAUD_HIGH 230400   // 保留常量；当前固件不再自动升级
 // 诊断：1=跳过 init_imu / imu_task；确认后改回 0
 #define SKIP_IMU_INIT  0
 // 诊断：UART 低频打印 IMU（0=关；5≈每 200ms 一行，便于串口观察姿态）
@@ -33,7 +33,7 @@
 #define WS_PATH             "/ws/paddle"
 
 // --- IM948 Timing ---
-#define IMU_REPORT_HZ       250    // IM948 主动上报频率
+#define IMU_REPORT_HZ       100    // 115200 + 精简订阅；TAG_ALL@250 需 230400
 #define IMU_RX_BUF_SIZE     4096   // UART 接收缓冲区
 
 // --- Ring buffer ---
@@ -42,13 +42,17 @@
 // --- LED ---
 #define LED_PIN GPIO_NUM_8  // WS2812C RGB LED
 
-// --- 电源自锁 + 尾部用户键（ESP32-C6-WROOM-1）---
+// --- 电源自锁 + 唯一用户键 SW_PWR（ESP32-C6-WROOM-1）---
 // pad 11 = GPIO10 → PWR_LATCH（高电平保持开机）
-// pad 16 = GPIO18 → 尾键读回（经 1k，MCU 内部上拉）
-#define PWR_LATCH_GPIO       GPIO_NUM_10
-#define USER_BTN_GPIO        GPIO_NUM_18
-#define USER_BTN_ACTIVE_LEVEL 0
-#define POWER_OFF_HOLD_MS    2000
+// pad 16 = GPIO18 → SW_PWR 读回（经 1k，MCU 内部上拉）
+// 产品只暴露 SW_PWR：长按关机；短按后再长按 → 恢复出厂（见 power_control）
+// SW_BOOT(GPIO9/pad15) 与 SW_EN 仅维护烧录/复位，固件不监测
+#define PWR_LATCH_GPIO              GPIO_NUM_10
+#define USER_BTN_GPIO               GPIO_NUM_18
+#define USER_BTN_ACTIVE_LEVEL       0
+#define POWER_OFF_HOLD_MS           2000
+#define FACTORY_RESET_SHORT_MAX_MS  500
+#define FACTORY_RESET_HOLD_MS       10000
+#define FACTORY_RESET_COMBO_WINDOW_MS 3000
 
-// BOOT 键（pad 15 = GPIO9）仍用于工程恢复出厂等，见 reset_button.cpp
-#define BOOT_BTN_GPIO        GPIO_NUM_9
+#define BOOT_BTN_GPIO        GPIO_NUM_9  // 硬件下载模式脚；勿当用户键
