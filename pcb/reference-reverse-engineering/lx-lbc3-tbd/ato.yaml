@@ -1,0 +1,9 @@
+requires-atopile: "0.12.5"
+
+paths:
+  src: ./
+  layout: ./
+
+builds:
+  reference_tbd:
+    entry: reference.ato:LXLBC3ReferenceTBD
