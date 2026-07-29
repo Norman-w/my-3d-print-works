@@ -20,7 +20,9 @@
 #define IMU_UART_BAUD_HIGH 230400   // 保留常量；当前固件不再自动升级
 // 诊断：1=跳过 init_imu / imu_task；确认后改回 0
 #define SKIP_IMU_INIT  0
-// 诊断：UART 低频打印 IMU（0=关；5≈每 200ms 一行，便于串口观察姿态）
+// 诊断：串口打印 IMU 姿态（0=关；1=开）。IMU 未修好前保持关闭，避免刷屏；PZT 敲击日志不受影响
+#define IMU_UART_LOG_ENABLE 0
+// 开启后的打印频率（Hz）；仅当 IMU_UART_LOG_ENABLE=1 时生效
 #define IMU_UART_REPORT_HZ  5
 
 // --- WiFi defaults (override via WebSocket config later) ---

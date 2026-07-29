@@ -134,7 +134,7 @@ static void imu_loop(void *arg) {
     uint32_t poll_ok = 0;
     int64_t last_frame_us = esp_timer_get_time();
     int64_t last_idle_log_us = 0;
-#if IMU_UART_REPORT_HZ > 0
+#if IMU_UART_LOG_ENABLE
     const int64_t report_us = 1000000 / IMU_UART_REPORT_HZ;
     int64_t last_report_us = 0;
 #endif
@@ -149,7 +149,7 @@ static void imu_loop(void *arg) {
                     ++ws_fail;
                 }
             }
-#if IMU_UART_REPORT_HZ > 0
+#if IMU_UART_LOG_ENABLE
             const int64_t now = esp_timer_get_time();
             if (now - last_report_us >= report_us) {
                 last_report_us = now;
@@ -172,7 +172,9 @@ static void imu_loop(void *arg) {
             const int64_t now = esp_timer_get_time();
             if (now - last_frame_us > 2000000 && now - last_idle_log_us > 2000000) {
                 last_idle_log_us = now;
+#if IMU_UART_LOG_ENABLE
                 ESP_LOGW(TAG, "IMU 超过 2s 无帧，重探波特率并重新配置开流");
+#endif
                 (void)Im948Sensor::ensure_baud_115200();
                 (void)Im948Sensor::stop_streaming();
                 (void)Im948Sensor::ensure_sensor_on(3);
@@ -240,7 +242,18 @@ extern "C" void app_main() {
         }
 
         PiezoEvent first;
-        ret = PiezoCapture::wait_for_impact(first, portMAX_DELAY);
+        // 短超时轮询：空闲时采 ADC 峰值；约 2s 打一行诊断
+        ret = PiezoCapture::wait_for_impact(first, 50);
+        if (ret == ESP_ERR_TIMEOUT) {
+            PiezoCapture::sample_adc_peaks();
+            static int64_t s_last_diag_us = 0;
+            const int64_t now = esp_timer_get_time();
+            if (now - s_last_diag_us > 2000000) {
+                s_last_diag_us = now;
+                PiezoCapture::log_diag();
+            }
+            continue;
+        }
         if (ret != ESP_OK) continue;
 
         // 10ms 窗口收集所有相关事件
@@ -263,21 +276,28 @@ extern "C" void app_main() {
             }
         }
 
-        // 串口输出 TDOA 数据（相对 ns 来自 CPU cycle）
-        printf("=== IMPACT === ts_base=%" PRIu64 "\n", window_start);
+        // 串口输出敲击通道（ch0=TL ch1=TR ch2=BL ch3=BR；first=最早边沿）
+        static const char* kChName[4] = {"TL", "TR", "BL", "BR"};
+        const char* first_name =
+            (first.channel < 4) ? kChName[first.channel] : "?";
+        printf("=== IMPACT === first=%s(ch%" PRIu32 ") n=%zu ts_base=%" PRIu64 "\n",
+               first_name, first.channel, count, window_start);
         for (size_t i = 0; i < count; i++) {
-            printf("  ch%" PRIu32 ": ts=%" PRIu64 " (+%" PRId64 " ns) edges=%" PRIu32 "\n",
-                batch[i].channel,
-                batch[i].timestamp_us,
-                PiezoCapture::delta_ns(batch[i].timestamp_cycles, cycles_base),
-                batch[i].edge_count);
+            const char* name =
+                (batch[i].channel < 4) ? kChName[batch[i].channel] : "?";
+            printf("  %s(ch%" PRIu32 "): +%" PRId64 " ns edges=%" PRIu32 "\n",
+                   name, batch[i].channel,
+                   PiezoCapture::delta_ns(batch[i].timestamp_cycles, cycles_base),
+                   batch[i].edge_count);
         }
 
         if (count >= 2) {
             printf("  TDOA (ns):");
             for (size_t i = 1; i < count; i++) {
                 if (batch[i].channel != batch[0].channel) {
-                    printf(" ch%" PRIu32 "=%+" PRId64, batch[i].channel,
+                    const char* name =
+                        (batch[i].channel < 4) ? kChName[batch[i].channel] : "?";
+                    printf(" %s=%+" PRId64, name,
                            PiezoCapture::delta_ns(batch[i].timestamp_cycles,
                                                   batch[0].timestamp_cycles));
                 }
@@ -285,14 +305,38 @@ extern "C" void app_main() {
             printf("\n");
         }
 
-        // WebSocket 推送（如果有客户端连接）
+        // WebSocket 推送：带通道号，便于敲击对照 TL/TR/BL/BR
+        // ch0=TL(IO2) ch1=TR(IO3) ch2=BL(IO6) ch3=BR(IO7)；first=最早边沿
         if (ws_data_has_client()) {
             status_led::notify_data_activity(300);
-            char json_buf[256];
-            snprintf(json_buf, sizeof(json_buf),
-                "{\"type\":\"impact\",\"ts_base\":%" PRIu64 ",\"channels\":%zu}",
-                window_start, count);
-            ws_data_send_text(json_buf, strlen(json_buf));
+            char json_buf[384];
+            size_t off = 0;
+            int n = snprintf(
+                json_buf, sizeof(json_buf),
+                "{\"type\":\"impact\",\"ts_base\":%" PRIu64
+                ",\"first\":%" PRIu32 ",\"n\":%zu,\"hits\":[",
+                window_start, first.channel, count);
+            if (n > 0) {
+                off = static_cast<size_t>(n);
+            }
+            for (size_t i = 0; i < count && off + 48 < sizeof(json_buf); i++) {
+                n = snprintf(
+                    json_buf + off, sizeof(json_buf) - off,
+                    "%s{\"ch\":%" PRIu32 ",\"dt_ns\":%" PRId64 ",\"edges\":%" PRIu32 "}",
+                    i ? "," : "", batch[i].channel,
+                    PiezoCapture::delta_ns(batch[i].timestamp_cycles, cycles_base),
+                    batch[i].edge_count);
+                if (n < 0) {
+                    break;
+                }
+                off += static_cast<size_t>(n);
+            }
+            if (off + 2 < sizeof(json_buf)) {
+                json_buf[off++] = ']';
+                json_buf[off++] = '}';
+                json_buf[off] = '\0';
+                ws_data_send_text(json_buf, off);
+            }
         }
 
         PiezoCapture::start_capture();

@@ -24,6 +24,8 @@ export type DeviceWsHandlers = {
   onImpact?: (evt: {
     ts: number;
     tdoa_ns: number[];
+    first_ch?: number;
+    hits?: { ch: number; dt_ns: number; edges: number }[];
     x_mm?: number;
     y_mm?: number;
     confidence?: number;
@@ -116,17 +118,33 @@ function attach(socket: WebSocket, url: string) {
           setStatus({ sessionId: msg.session_id ?? url });
           break;
         case 'impact_ack':
-        case 'impact':
+        case 'impact': {
+          const hits = Array.isArray(msg.hits)
+            ? msg.hits.map(
+                (h: { ch?: number; dt_ns?: number; edges?: number }) => ({
+                  ch: Number(h.ch ?? 0),
+                  dt_ns: Number(h.dt_ns ?? 0),
+                  edges: Number(h.edges ?? 0),
+                }),
+              )
+            : [];
+          const tdoa =
+            msg.tdoa_ns ??
+            hits.map((h: { dt_ns: number }) => h.dt_ns);
           for (const sub of subscribers.values()) {
             sub.handlers.onImpact?.({
-              ts: msg.ts ?? Date.now(),
-              tdoa_ns: msg.tdoa_ns ?? [],
+              ts: msg.ts ?? msg.ts_base ?? Date.now(),
+              tdoa_ns: tdoa,
+              first_ch:
+                msg.first !== undefined ? Number(msg.first) : hits[0]?.ch,
+              hits,
               x_mm: msg.x_mm,
               y_mm: msg.y_mm,
               confidence: msg.confidence,
             });
           }
           break;
+        }
         default:
           break;
       }

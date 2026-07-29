@@ -33,6 +33,12 @@ public:
     // 将两事件的 cycle 差转为纳秒（相对 TDOA）
     static int64_t delta_ns(uint64_t cycles_a, uint64_t cycles_b);
 
+    /** 诊断：累计边沿 + 当前 GPIO 电平（敲击排查用） */
+    static void log_diag();
+
+    /** 空闲时调用：对有 ADC 的脚采样，更新峰值（BR=IO7 无 ADC） */
+    static void sample_adc_peaks();
+
 private:
     static const gpio_num_t PINS[4];
     static bool initialized;

@@ -13,6 +13,8 @@ export type IMUFrame = DeviceImuFrame;
 export interface ImpactEvent {
   ts: number;
   tdoa_ns: number[];
+  first_ch?: number;
+  hits?: { ch: number; dt_ns: number; edges: number }[];
   x_mm?: number;
   y_mm?: number;
   confidence?: number;

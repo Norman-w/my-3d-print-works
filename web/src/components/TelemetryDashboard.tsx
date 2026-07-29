@@ -1,3 +1,11 @@
+//#region 导入/依赖
+import type { ImpactEvent } from '../hooks/useWebSocket';
+//#endregion
+
+//#region 常量/配置
+const CH_NAME = ['TL', 'TR', 'BL', 'BR'] as const;
+//#endregion
+
 //#region 模型/类型
 interface Props {
   imuData: {
@@ -11,7 +19,14 @@ interface Props {
     pitch?: number;
     yaw?: number;
   }[];
-  impactData: { x_mm?: number; y_mm?: number; confidence?: number; ts?: number }[];
+  impactData: ImpactEvent[];
+}
+//#endregion
+
+//#region 私有成员
+function channelLabel(ch?: number): string {
+  if (ch === undefined || ch < 0 || ch > 3) return '?';
+  return `${CH_NAME[ch]}(ch${ch})`;
 }
 //#endregion
 
@@ -28,20 +43,25 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
     : 0;
 
   const lastImpact = impactData.length > 0 ? impactData[impactData.length - 1] : null;
+  const hitSummary = lastImpact?.hits?.length
+    ? lastImpact.hits
+        .map((h) => `${channelLabel(h.ch)} +${h.dt_ns}ns`)
+        .join(' · ')
+    : lastImpact?.first_ch !== undefined
+      ? channelLabel(lastImpact.first_ch)
+      : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h3 style={{ fontSize: 16, color: '#888', fontWeight: 600 }}>Telemetry</h3>
 
       {last?.roll !== undefined && (
-        <>
-          <MetricCard
-            label="Euler (R/P/Y)"
-            value={`${last.roll.toFixed(1)} / ${last.pitch?.toFixed(1)} / ${last.yaw?.toFixed(1)}`}
-            unit="°"
-            color="#ce93d8"
-          />
-        </>
+        <MetricCard
+          label="Euler (R/P/Y)"
+          value={`${last.roll.toFixed(1)} / ${last.pitch?.toFixed(1)} / ${last.yaw?.toFixed(1)}`}
+          unit="°"
+          color="#ce93d8"
+        />
       )}
 
       <MetricCard label="Accel Magnitude" value={accelMag.toFixed(2)} unit="m/s²" color="#4fc3f7" />
@@ -62,20 +82,43 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
         </div>
       )}
 
-      {/* Impact */}
       <div style={{ borderTop: '1px solid #2a2a3a', paddingTop: 16 }}>
         <h3 style={{ fontSize: 16, color: '#888', fontWeight: 600, marginBottom: 8 }}>Last Impact</h3>
-        {lastImpact?.x_mm !== undefined ? (
+        {lastImpact ? (
           <>
-            <MetricCard label="Position" value={`(${lastImpact.x_mm?.toFixed(1)}, ${lastImpact.y_mm?.toFixed(1)})`} unit="mm" color="#4caf50" />
-            <MetricCard label="Confidence" value={(lastImpact.confidence || 0).toFixed(2)} unit="" color="#ff9800" />
+            <MetricCard
+              label="First channel"
+              value={channelLabel(lastImpact.first_ch)}
+              unit=""
+              color="#4caf50"
+            />
+            {hitSummary && (
+              <div style={{ color: '#bbb', fontSize: 13, lineHeight: 1.4, marginBottom: 8 }}>
+                {hitSummary}
+              </div>
+            )}
+            {lastImpact.x_mm !== undefined && (
+              <>
+                <MetricCard
+                  label="Position"
+                  value={`(${lastImpact.x_mm?.toFixed(1)}, ${lastImpact.y_mm?.toFixed(1)})`}
+                  unit="mm"
+                  color="#4caf50"
+                />
+                <MetricCard
+                  label="Confidence"
+                  value={(lastImpact.confidence || 0).toFixed(2)}
+                  unit=""
+                  color="#ff9800"
+                />
+              </>
+            )}
           </>
         ) : (
-          <div style={{ color: '#666', fontSize: 14 }}>No impacts detected yet</div>
+          <div style={{ color: '#666', fontSize: 14 }}>No impacts detected yet — 敲击四角 PZT</div>
         )}
       </div>
 
-      {/* Recent impacts list */}
       {impactData.length > 0 && (
         <div style={{ borderTop: '1px solid #2a2a3a', paddingTop: 16 }}>
           <h3 style={{ fontSize: 16, color: '#888', fontWeight: 600, marginBottom: 8 }}>
@@ -83,17 +126,25 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
           </h3>
           <div style={{ maxHeight: 150, overflowY: 'auto', fontSize: 12 }}>
             {[...impactData].reverse().slice(0, 10).map((imp, i) => (
-              <div key={i} style={{
-                padding: '4px 8px',
-                background: i % 2 === 0 ? '#14141e' : 'transparent',
-                borderRadius: 4,
-                display: 'flex',
-                justifyContent: 'space-between',
-                color: '#aaa',
-              }}>
-                <span>({imp.x_mm?.toFixed(1)}, {imp.y_mm?.toFixed(1)})</span>
-                <span style={{ color: imp.confidence && imp.confidence > 0.8 ? '#4caf50' : '#888' }}>
-                  {(imp.confidence || 0).toFixed(2)}
+              <div
+                key={i}
+                style={{
+                  padding: '4px 8px',
+                  background: i % 2 === 0 ? '#14141e' : 'transparent',
+                  borderRadius: 4,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  color: '#aaa',
+                }}
+              >
+                <span style={{ color: '#4caf50', fontWeight: 600 }}>
+                  {channelLabel(imp.first_ch)}
+                </span>
+                <span>
+                  {imp.hits?.map((h) => CH_NAME[h.ch] ?? h.ch).join(',') ||
+                    (imp.x_mm !== undefined
+                      ? `(${imp.x_mm.toFixed(1)}, ${imp.y_mm?.toFixed(1)})`
+                      : '—')}
                 </span>
               </div>
             ))}
@@ -106,14 +157,26 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
 //#endregion
 
 //#region 方法/工具
-function MetricCard({ label, value, unit, color }: { label: string; value: string; unit: string; color: string }) {
+function MetricCard({
+  label,
+  value,
+  unit,
+  color,
+}: {
+  label: string;
+  value: string;
+  unit: string;
+  color: string;
+}) {
   return (
-    <div style={{
-      background: '#14141e',
-      borderRadius: 8,
-      padding: '12px 16px',
-      borderLeft: `3px solid ${color}`,
-    }}>
+    <div
+      style={{
+        background: '#14141e',
+        borderRadius: 8,
+        padding: '12px 16px',
+        borderLeft: `3px solid ${color}`,
+      }}
+    >
       <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>{label}</div>
       <div style={{ fontSize: 24, fontWeight: 700, color }}>
         {value}
@@ -123,18 +186,27 @@ function MetricCard({ label, value, unit, color }: { label: string; value: strin
   );
 }
 
-function MiniMetric({ label, value, color }: { label: string; value: number; color: string }) {
+function MiniMetric({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: number;
+  color: string;
+}) {
   return (
-    <div style={{
-      background: '#14141e',
-      borderRadius: 6,
-      padding: '6px 10px',
-      textAlign: 'center',
-    }}>
+    <div
+      style={{
+        background: '#14141e',
+        borderRadius: 6,
+        padding: '6px 10px',
+        textAlign: 'center',
+      }}
+    >
       <div style={{ fontSize: 10, color: '#888' }}>{label}</div>
       <div style={{ fontSize: 16, fontWeight: 600, color }}>{value.toFixed(2)}</div>
     </div>
   );
 }
 //#endregion
-

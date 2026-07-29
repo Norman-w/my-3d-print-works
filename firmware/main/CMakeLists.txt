@@ -29,6 +29,7 @@ idf_component_register(
         esp_http_server
         esp_netif
         esp_event
+        esp_adc
         mdns
         led_strip
 )

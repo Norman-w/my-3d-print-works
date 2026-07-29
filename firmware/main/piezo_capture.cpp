@@ -1,6 +1,7 @@
 #include "piezo_capture.h"
 
 #include "config.h"
+#include "esp_adc/adc_oneshot.h"
 #include "esp_cpu.h"
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -25,11 +26,20 @@ static constexpr int kCpuMhz =
     160;
 #endif
 
+// IO2/3/6 有 ADC；IO7(BR) 无
+static constexpr bool kAdcCapable[4] = {true, true, true, false};
+
 // ===== 分区：私有成员 =====
 
 static QueueHandle_t s_event_queue = nullptr;
 static std::atomic<uint32_t> s_armed_mask{kAllArmedMask};
 static std::atomic<uint32_t> s_edge_counts[kChannelCount];
+static std::atomic<uint32_t> s_edge_total[kChannelCount];
+
+static adc_oneshot_unit_handle_t s_adc = nullptr;
+static adc_channel_t s_adc_ch[4] = {};
+static bool s_adc_ch_ok[4] = {};
+static int s_peak_mv[4] = {};
 
 const gpio_num_t PiezoCapture::PINS[4] = {
     PIEZO_PIN_1,
@@ -46,6 +56,8 @@ static void IRAM_ATTR piezo_gpio_isr(void* arg) {
         return;
     }
 
+    s_edge_total[channel].fetch_add(1, std::memory_order_relaxed);
+
     const uint32_t bit = 1u << channel;
     uint32_t armed = s_armed_mask.load(std::memory_order_relaxed);
     if ((armed & bit) == 0) {
@@ -53,7 +65,6 @@ static void IRAM_ATTR piezo_gpio_isr(void* arg) {
         return;
     }
 
-    // 仅首边沿入队；后续边沿只计数，直到 start_capture 重新武装
     while (!s_armed_mask.compare_exchange_weak(
             armed, armed & ~bit, std::memory_order_relaxed)) {
         if ((armed & bit) == 0) {
@@ -76,6 +87,51 @@ static void IRAM_ATTR piezo_gpio_isr(void* arg) {
     }
 }
 
+static void init_adc_diag() {
+    if (s_adc) {
+        return;
+    }
+
+    adc_oneshot_unit_init_cfg_t unit_cfg = {
+        .unit_id = ADC_UNIT_1,
+    };
+    if (adc_oneshot_new_unit(&unit_cfg, &s_adc) != ESP_OK) {
+        ESP_LOGW(TAG, "ADC oneshot init failed（仅影响峰值诊断）");
+        s_adc = nullptr;
+        return;
+    }
+
+    adc_oneshot_chan_cfg_t chan_cfg = {
+        .atten = ADC_ATTEN_DB_12,
+        .bitwidth = ADC_BITWIDTH_DEFAULT,
+    };
+    for (uint32_t i = 0; i < kChannelCount; ++i) {
+        if (!kAdcCapable[i]) {
+            continue;
+        }
+        adc_unit_t unit = ADC_UNIT_1;
+        adc_channel_t ch = ADC_CHANNEL_0;
+        const gpio_num_t pin = kAdcCapable[i]
+            ? (i == 0   ? PIEZO_PIN_1
+               : i == 1 ? PIEZO_PIN_2
+               : i == 2 ? PIEZO_PIN_3
+                        : PIEZO_PIN_4)
+            : GPIO_NUM_NC;
+        if (pin == GPIO_NUM_NC) {
+            continue;
+        }
+        if (adc_oneshot_io_to_channel(static_cast<int>(pin), &unit, &ch) != ESP_OK) {
+            continue;
+        }
+        if (adc_oneshot_config_channel(s_adc, ch, &chan_cfg) != ESP_OK) {
+            continue;
+        }
+        s_adc_ch[i] = ch;
+        s_adc_ch_ok[i] = true;
+    }
+    ESP_LOGI(TAG, "ADC peak diag: TL/TR/BL ok, BR=IO7 n/a");
+}
+
 // ===== 分区：公开 API =====
 
 esp_err_t PiezoCapture::init() {
@@ -91,6 +147,8 @@ esp_err_t PiezoCapture::init() {
 
     for (uint32_t i = 0; i < kChannelCount; ++i) {
         s_edge_counts[i].store(0, std::memory_order_relaxed);
+        s_edge_total[i].store(0, std::memory_order_relaxed);
+        s_peak_mv[i] = 0;
     }
     s_armed_mask.store(kAllArmedMask, std::memory_order_relaxed);
 
@@ -104,14 +162,13 @@ esp_err_t PiezoCapture::init() {
     io_conf.mode = GPIO_MODE_INPUT;
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
     io_conf.pull_down_en = GPIO_PULLDOWN_ENABLE;
-    io_conf.intr_type = GPIO_INTR_POSEDGE;
+    io_conf.intr_type = GPIO_INTR_ANYEDGE;
     esp_err_t err = gpio_config(&io_conf);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "gpio_config failed: %s", esp_err_to_name(err));
         return err;
     }
 
-    // 其他模块可能已安装 ISR 服务；先确保服务存在再挂 handler
     err = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
     if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
         ESP_LOGE(TAG, "gpio_install_isr_service failed: %s", esp_err_to_name(err));
@@ -125,12 +182,17 @@ esp_err_t PiezoCapture::init() {
                      esp_err_to_name(err));
             return err;
         }
+        gpio_intr_enable(PINS[i]);
     }
+
+    init_adc_diag();
 
     initialized = true;
     ESP_LOGI(TAG,
-             "Piezo capture ready: 4 GPIO channels, CPU cycle TDOA (~%dns @ %dMHz)",
-             1000 / kCpuMhz, kCpuMhz);
+             "Piezo ready: TL=IO%d TR=IO%d BL=IO%d BR=IO%d ANYEDGE (~%dns)",
+             static_cast<int>(PINS[0]), static_cast<int>(PINS[1]),
+             static_cast<int>(PINS[2]), static_cast<int>(PINS[3]),
+             1000 / kCpuMhz);
     return ESP_OK;
 }
 
@@ -171,4 +233,45 @@ size_t PiezoCapture::drain_events(PiezoEvent* buf, size_t max_count) {
 int64_t PiezoCapture::delta_ns(uint64_t cycles_a, uint64_t cycles_b) {
     const int64_t delta_cycles = static_cast<int64_t>(cycles_a - cycles_b);
     return (delta_cycles * 1000) / kCpuMhz;
+}
+
+void PiezoCapture::sample_adc_peaks() {
+    if (!s_adc) {
+        return;
+    }
+    for (uint32_t i = 0; i < kChannelCount; ++i) {
+        if (!s_adc_ch_ok[i]) {
+            continue;
+        }
+        for (int n = 0; n < 40; ++n) {
+            int raw = 0;
+            if (adc_oneshot_read(s_adc, s_adc_ch[i], &raw) != ESP_OK) {
+                continue;
+            }
+            const int mv = (raw * 3300) / 4095;
+            if (mv > s_peak_mv[i]) {
+                s_peak_mv[i] = mv;
+            }
+        }
+    }
+}
+
+void PiezoCapture::log_diag() {
+    static const char* kName[4] = {"TL", "TR", "BL", "BR"};
+    printf("PZT diag armed=0x%X |", (unsigned)s_armed_mask.load());
+    for (uint32_t i = 0; i < kChannelCount; ++i) {
+        const int level = gpio_get_level(PINS[i]);
+        const uint32_t total = s_edge_total[i].load(std::memory_order_relaxed);
+        printf(" %s(IO%d)=%d edges=%" PRIu32, kName[i], static_cast<int>(PINS[i]),
+               level, total);
+        if (s_adc_ch_ok[i]) {
+            printf(" peak=%dmV", s_peak_mv[i]);
+        } else {
+            printf(" peak=n/a");
+        }
+    }
+    printf("\n");
+    for (uint32_t i = 0; i < kChannelCount; ++i) {
+        s_peak_mv[i] = 0;
+    }
 }
