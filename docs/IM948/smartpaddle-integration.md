@@ -8,14 +8,13 @@
 | VBAT (3/15) | **悬空** | 不用模块锂电充电路径 |
 | VDDIO (4) | **悬空** | 由模块在 VBUS 场景下内部产生 ≈3.0 V IO |
 | GND | GND | |
-| RXD (13) | MCU **GPIO23**（UART1 TX，pad 21） | MCU→IMU；面对面左侧，平行交叉 |
-| TXD (14) | MCU **GPIO22**（UART1 RX，pad 20） | IMU→MCU；面对面右侧 |
+| RXD (13) | C4 MCU **GPIO40**（UART1 TX，pad 33） | MCU→IMU |
+| TXD (14) | C4 MCU **GPIO41**（UART1 RX，pad 34） | IMU→MCU |
 
 设计意图：IMU **独占 UART1**，与尾插 UART0（TXD0/RXD0）隔离，避免烧录抢线。  
 封装：`pcb/layouts/lib/footprints.pretty/IM948_CUTOUT.kicad_mod`。
 
-> 若 MCU 模块反焊/长边对调，板铜「IMU RX/TX」可能实际落到 ESP 的其它脚甚至 EN 附近网络。  
-> 历史诊断：旧版接 GPIO4/5 时开 `init_imu()` 会触发 `rst:0x1 POWERON` 循环；现已改到 **GPIO23/22**（非 strapping）。详见 [`../ESP32C6N8/reverse-mount-and-reboot-audit.md`](../ESP32C6N8/reverse-mount-and-reboot-audit.md)。
+> C3 历史板使用 ESP32-C6 GPIO23/22；不要把这组编号套到 C4。旧版反焊/接 GPIO4/5 的诊断见 [`../ESP32C6N8/reverse-mount-and-reboot-audit.md`](../ESP32C6N8/reverse-mount-and-reboot-audit.md)。
 
 ## 固件路径
 
@@ -31,7 +30,7 @@
 
 ## 推荐订阅（击球分析）
 
-至少包含：含重力加速度、角速度、四元数或欧拉角；帧率目标 **250 Hz**（受带宽与订阅量限制，需实测）。  
+至少包含：含重力加速度、角速度、四元数或欧拉角。当前固件在 115200 baud 下配置 **100 Hz**；精简订阅后的 **250 Hz** 仍是待实测目标。
 不需要的 bit 不要订，避免蓝灯三闪带宽告警。
 
 ## 校准建议（产品级）

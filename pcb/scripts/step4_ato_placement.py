@@ -34,6 +34,9 @@ DOCK_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "dock_snapshot.json"
 MAINLAND_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "mainland_snapshot.json"
 CORRIDOR_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "corridor_snapshot.json"
 TAIL_SNAPSHOT = ROOT / "pcb" / "layouts" / "default" / "tail_snapshot.json"
+FULL_PLACEMENT_SNAPSHOT = (
+    ROOT / "pcb" / "layouts" / "default" / "c4_placement_snapshot.json"
+)
 
 KEEPOUT = 1.5
 COL_SPACING_Y = 3.5
@@ -42,7 +45,7 @@ TEXT_THICKNESS = 0.10
 
 # 可读 Reference 映射（atopile_address → (Reference, Value)）
 READABLE_REFS = {
-    'mcu': ('MCU_SGFK_C6', 'SGFK ESP32-C6-N8'),
+    'mcu': ('MCU_ESP32_S3', 'ESP32-S3-WROOM-1-N16R8'),
     'imu': ('IMU_IM948', 'IM948'),
     'power.q_power': ('PW_Q_LOAD', 'P-MOS load switch'),
     'power.q_latch': ('PW_Q_LATCH', 'N-MOS latch'),
@@ -59,6 +62,23 @@ READABLE_REFS = {
     'battery.c_filter': ('BAT_C_ADC_100N', '100nF'),
     'led_r_data': ('LED_R_DATA_330R', '330R'),
     'led_c_supply': ('LED_C_SUP_100N', '100nF'),
+    'mcu_c_bulk': ('MCU_C_BULK_10U', '10uF'),
+    'mcu_c_dec': ('MCU_C_DEC_100N', '100nF'),
+    'en_c_delay': ('MCU_C_EN_1U', '1uF'),
+    'pzt_frontend.dac': ('PZT_DAC_MCP4728', 'MCP4728-E/UN'),
+    'pzt_frontend.comparator': ('PZT_CMP_TLV1814', 'TLV1814PWR'),
+    'pzt_frontend.r_sda_pullup': ('PZT_R_SDA_PU_4K7', '4.7k'),
+    'pzt_frontend.r_scl_pullup': ('PZT_R_SCL_PU_4K7', '4.7k'),
+    'pzt_frontend.c_dac': ('PZT_C_DAC_100N', '100nF'),
+    'pzt_frontend.c_comparator': ('PZT_C_CMP_100N', '100nF'),
+    'pzt_frontend.r_adc_tl': ('PZT_R_ADC_TL_1M', '1M'),
+    'pzt_frontend.r_adc_tr': ('PZT_R_ADC_TR_1M', '1M'),
+    'pzt_frontend.r_adc_bl': ('PZT_R_ADC_BL_1M', '1M'),
+    'pzt_frontend.r_adc_br': ('PZT_R_ADC_BR_1M', '1M'),
+    'pzt_frontend.jp_adc_tl': ('JP_ADC_TL', '0R DNP'),
+    'pzt_frontend.jp_adc_tr': ('JP_ADC_TR', '0R DNP'),
+    'pzt_frontend.jp_adc_bl': ('JP_ADC_BL', '0R DNP'),
+    'pzt_frontend.jp_adc_br': ('JP_ADC_BR', '0R DNP'),
     'pwr_led.led': ('LED_MCU_PWR', '0603 power'),
     'pwr_led.r_lim': ('R_MCU_PWR_1K', '1k'),
     'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
@@ -67,11 +87,13 @@ READABLE_REFS = {
     'tail.conn_f': ('TAIL_MX125_F', 'MX1.25-5P'),
     'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
-    'bringup.sys5_pad': ('TP_SYS_5V_SW', 'sys_5v_sw'),
+    'bringup.sys5_pad': ('TP_5VSW', 'sys_5v_sw'),
     'bringup.gnd_pad': ('TP_GND', 'GND'),
 }
 
-MODEL_SCALES = {'mcu': 0.3937008, 'imu': 0.3937008}
+# The C4 S3 model is a native STEP in millimetres. The legacy IM948 WRL
+# still needs the inch-to-mm correction.
+MODEL_SCALES = {'imu': 0.3937008}
 
 PZT_PREFIX = {'pzt_tr': 'PZT_TR', 'pzt_tl': 'PZT_TL', 'pzt_br': 'PZT_BR', 'pzt_bl': 'PZT_BL'}
 PZT_PARTS = {
@@ -92,11 +114,11 @@ TAIL_NET_MAP = {
         '5': 'uart_tx',
     },
     'tail.conn_b': {
-        '1': 'gnd',
-        '2': 'led_din',
+        '1': 'uart_rx',
+        '2': 'usb_dn',
         '3': 'bat_cell_p',
-        '4': 'usb_dn',
-        '5': 'uart_rx',
+        '4': 'led_din',
+        '5': 'gnd',
     },
 }
 
@@ -153,16 +175,17 @@ def _label_spec(addr, fp):
         return 0.60, (x, y - IMU_CUTOUT[3] / 2 - 1.2), 0
     if addr.startswith('tail.'):
         return 0.38, (x, y + 1.4), 0
+    if addr.startswith('pzt_frontend.jp_adc_'):
+        return 0.38, (x, y + 1.2), fp.GetOrientationDegrees()
     if addr.startswith('pzt_'):
         return 0.38, (x, y + 1.2), fp.GetOrientationDegrees()
-    # BOOT/EN 键：丝印放在键体上方/下方，避免叠在焊盘上
-    if addr == 'debug_sw.sw_boot':
-        return 0.70, (x, y - 3.9), 0
-    if addr == 'debug_sw.sw_en':
-        return 0.70, (x, y + 3.9), 0
+    # Three handle switches share a narrow corridor; put their labels on the
+    # handle centreline rather than across the THT pads.
+    if addr.startswith('debug_sw.'):
+        return 0.70, (0.0, y), 0
     # 测试点：短丝印靠左，避免与键体重叠
     if addr.startswith('bringup.'):
-        return 0.70, (x - 3.6, y), 0
+        return 0.70, (x - 4.8, y), 0
     return 0.38, (x, y), 0
 
 
@@ -177,9 +200,10 @@ def _should_show_reference(addr):
     )
 
 
-def _apply_readable_text(board):
+def _apply_readable_text(board, footprints=None):
     used, changed, visible = set(), 0, 0
-    for fp in board.GetFootprints():
+    source = board.GetFootprints() if footprints is None else footprints
+    for fp in source:
         addr = _address(fp)
         if not addr:
             continue
@@ -197,8 +221,13 @@ def _apply_readable_text(board):
         show_ref = _should_show_reference(addr)
         ref_field.SetVisible(show_ref)
         value_field.SetVisible(False)
-        ref_field.SetLayer(pcbnew.F_SilkS)
-        value_field.SetLayer(pcbnew.F_Fab)
+        is_back = bool(fp.IsFlipped()) if hasattr(fp, 'IsFlipped') else False
+        ref_field.SetLayer(pcbnew.B_SilkS if is_back else pcbnew.F_SilkS)
+        value_field.SetLayer(pcbnew.B_Fab if is_back else pcbnew.F_Fab)
+        if hasattr(ref_field, 'SetMirrored'):
+            ref_field.SetMirrored(is_back)
+        if hasattr(value_field, 'SetMirrored'):
+            value_field.SetMirrored(is_back)
         _set_text_size(ref_field, size)
         _set_text_size(value_field, 0.45)
         _set_text_at(ref_field, tx, ty, angle)
@@ -207,9 +236,10 @@ def _apply_readable_text(board):
     return changed, visible
 
 
-def _apply_model_scales(board):
+def _apply_model_scales(board, footprints=None):
     changed = 0
-    for fp in board.GetFootprints():
+    source = board.GetFootprints() if footprints is None else footprints
+    for fp in source:
         addr = _address(fp)
         if addr not in MODEL_SCALES:
             continue
@@ -224,6 +254,23 @@ def _apply_model_scales(board):
             models.append(model)
             changed += 1
     return changed
+
+
+def _move_embedded_body_silk_to_fab(fp_by_addr):
+    """Keep embedded-module outlines on F.Fab, not across their cutouts."""
+    moved = 0
+    for addr in ('mcu', 'imu'):
+        fp = fp_by_addr.get(addr)
+        if fp is None:
+            continue
+        for item in list(fp.GraphicalItems()):
+            if item.IsOnLayer(pcbnew.F_SilkS):
+                # Removing footprint children through KiCad 9's SWIG API
+                # invalidates the wrapper. Moving them preserves geometry for
+                # assembly while keeping fabrication silk off the cutout.
+                item.SetLayer(pcbnew.F_Fab)
+                moved += 1
+    return moved
 
 
 def _is_initial_grid(fp):
@@ -264,6 +311,45 @@ def _place_map(fp_by_addr, placements, force):
     return moved
 
 
+def _restore_full_placement_snapshot(fp_by_addr, path: Path) -> int:
+    """Restore the accepted C4 manual placement after all legacy defaults."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or data.get("schema_version") != 1:
+        raise RuntimeError(f"unsupported C4 placement snapshot: {path}")
+    entries = data.get("placements")
+    if not isinstance(entries, list):
+        raise RuntimeError(f"C4 placement snapshot has no placements list: {path}")
+    by_addr = {
+        str(entry.get("addr", "")): entry
+        for entry in entries
+        if isinstance(entry, dict) and entry.get("addr")
+    }
+    if len(by_addr) != len(entries):
+        raise RuntimeError(f"C4 placement snapshot has duplicate/invalid addresses: {path}")
+    if data.get("component_count") != len(entries) or len(entries) != 64:
+        raise RuntimeError(
+            f"C4 placement snapshot expected 64 entries, got "
+            f"metadata={data.get('component_count')!r} entries={len(entries)}"
+        )
+    if set(by_addr) != set(fp_by_addr):
+        raise RuntimeError(
+            "C4 placement address set differs: "
+            f"board-only={sorted(set(fp_by_addr) - set(by_addr))}, "
+            f"snapshot-only={sorted(set(by_addr) - set(fp_by_addr))}"
+        )
+
+    for addr, entry in by_addr.items():
+        fp = fp_by_addr[addr]
+        fp.SetPosition(xy(pcbnew, float(entry["x"]), float(entry["y"])))
+        want_flip = bool(entry["flip"])
+        if hasattr(fp, "IsFlipped") and bool(fp.IsFlipped()) != want_flip:
+            fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+        # Set the recorded absolute angle after any layer flip; flipping can
+        # otherwise mirror the orientation that was set immediately before it.
+        fp.SetOrientationDegrees(float(entry["rot"]))
+    return len(entries)
+
+
 # ===== 分区：私有成员 — 网表分配 =====
 
 def _assign_tail_nets(board):
@@ -292,17 +378,29 @@ def _assign_tail_nets(board):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Step 4: atopile placement")
+    parser.add_argument("--board", type=Path, default=BOARD_FILE,
+                        help="要更新的 KiCad 板文件（默认项目 C4 板）")
     parser.add_argument("--force", action="store_true",
                         help="强制移动所有映射封装（含已手调位置）")
+    parser.add_argument(
+        "--placement-snapshot",
+        type=Path,
+        default=FULL_PLACEMENT_SNAPSHOT,
+        help="最终 C4 全板手工摆放快照（存在时优先于区域默认值）",
+    )
     args = parser.parse_args()
     force = args.force
+    board_file = args.board.resolve()
 
-    board = load_board(pcbnew, BOARD_FILE)
+    board = load_board(pcbnew, board_file)
 
     # 4a. 规范化
     changed = 0
     for fp in board.GetFootprints():
         ref = fp.GetReference() or 'Generated'
+        for private_field in ('atopile_address', '__atopile_lib_fp_hash__'):
+            if fp.HasFieldByName(private_field):
+                fp.GetFieldByName(private_field).SetVisible(False)
         if not fp.GetFPIDAsString():
             fp.SetFPIDAsString(f'SmartPaddle:{_safe_id(ref)}')
             changed += 1
@@ -315,7 +413,7 @@ def main():
     fp_by_addr = {addr: fp for fp in board.GetFootprints() if (addr := _address(fp))}
     if not fp_by_addr:
         print('4b. 警告: 未找到带 atopile_address 属性的封装')
-        save_board(board, BOARD_FILE)
+        save_board(board, board_file)
         sys.exit(0)
 
     moved = 0
@@ -359,6 +457,44 @@ def main():
             'pwr_led.r_lim': (-16.0, 10.5, 90),
         }
         moved += _place_map(fp_by_addr, sense_led_zone, force)
+
+    # C4-only parts deliberately override the C3 mainland snapshot.  The
+    # threshold front-end fits in the free lower-left mainland quadrant; all
+    # ADC jumpers remain reachable for DNP/bring-up decisions.  MCU bypass
+    # parts sit immediately above the module perimeter pads.
+    c4_mainland_zone = {
+        'mcu_c_bulk': (-9.0, 11.0, 0),
+        'mcu_c_dec': (-6.0, 11.0, 0),
+        'en_c_delay': (-3.0, 11.0, 0),
+        'pzt_frontend.comparator': (-17.5, -25.3, 90),
+        'pzt_frontend.dac': (-12.3, -25.3, 90),
+        'pzt_frontend.c_comparator': (-18.2, -20.3, 0),
+        'pzt_frontend.c_dac': (-15.2, -20.3, 0),
+        'pzt_frontend.r_sda_pullup': (-12.2, -20.3, 0),
+        'pzt_frontend.r_scl_pullup': (-12.2, -17.3, 0),
+        'pzt_frontend.r_adc_tl': (-18.7, -14.5, 0),
+        'pzt_frontend.jp_adc_tl': (-18.7, -11.7, 0),
+        'pzt_frontend.r_adc_tr': (-18.7, -8.9, 0),
+        'pzt_frontend.jp_adc_tr': (-18.7, -6.1, 0),
+        'pzt_frontend.r_adc_bl': (-18.7, -3.3, 0),
+        'pzt_frontend.jp_adc_bl': (-18.7, -0.5, 0),
+        'pzt_frontend.r_adc_br': (-18.7, 2.3, 0),
+        'pzt_frontend.jp_adc_br': (-18.7, 5.1, 0),
+        'pwr_led.led': (-12.0, 12.0, 180),
+        'pwr_led.r_lim': (-14.5, 12.0, 180),
+    }
+    moved += _place_map(fp_by_addr, c4_mainland_zone, True)
+
+    # C4 tail-local wiring: divider and LED interface sit between SW_PWR and
+    # the two MX1.25 connectors, shortening all five off-board conductors.
+    c4_tail_local_zone = {
+        'battery.r_top': (-6.0, 72.0, 0),
+        'battery.r_bottom': (-3.0, 72.0, 0),
+        'battery.c_filter': (0.0, 72.0, 0),
+        'led_r_data': (3.0, 72.0, 0),
+        'led_c_supply': (6.0, 72.0, 0),
+    }
+    moved += _place_map(fp_by_addr, c4_tail_local_zone, True)
 
     # 大陆快照缺失时，把两颗 bringup TP 放在电源区（与现行手布一致）
     if not mainland_snap:
@@ -419,17 +555,28 @@ def main():
             fp_by_addr, 'tail.conn_b', 0.0, tail_y, 0.0, force, keep_flip=True
         )
 
+    # The final accepted manual placement is the last and strongest placement
+    # source.  It intentionally overrides every historical regional snapshot
+    # and C4 provisional hard-coded position above.
+    full_snapshot = args.placement_snapshot.resolve()
+    if full_snapshot.is_file():
+        restored = _restore_full_placement_snapshot(fp_by_addr, full_snapshot)
+        moved = restored
+        print(f'4b. C4 全板: 从 {full_snapshot.name} 恢复 {restored} 个器件')
+
     # 4e. 尾插网络
     tail_net_assigned = _assign_tail_nets(board)
 
     # 4c/4d. 标签与 3D
+    moved_body_silk = _move_embedded_body_silk_to_fab(fp_by_addr)
     labelled, visible_labels = _apply_readable_text(board)
     scaled = _apply_model_scales(board)
 
-    save_board(board, BOARD_FILE)
+    save_board(board, board_file)
 
     print(f'4b. 放置: 移动了 {moved} 个 atopile 封装到机械定位点')
     print(f'4c. 文本: 应用了 {labelled} 个可读Reference, 显示 {visible_labels} 个关键标签')
+    print(f'4c. 嵌入模块: 将 {moved_body_silk} 个跨开孔丝印图元移到 F.Fab')
     print(f'4d. 3D: 应用了 {scaled} 个模块模型缩放修正')
     print(f'4e. 尾插网络: 分配了 {tail_net_assigned} 个焊盘')
     print(f'    总共 {len(fp_by_addr)} 个带 atopile_address 的封装')

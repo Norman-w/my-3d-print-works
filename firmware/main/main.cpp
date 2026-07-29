@@ -7,6 +7,7 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "piezo_capture.h"
+#include "pzt_frontend.h"
 #include "config.h"
 #include "const.h"
 #include "wifi_manager.h"
@@ -203,7 +204,7 @@ extern "C" void app_main() {
     }
 
     ESP_LOGI(TAG, "SmartPaddle 固件启动");
-    ESP_LOGI(TAG, "压电: 4 通道 GPIO ISR + CPU cycle TDOA");
+    ESP_LOGI(TAG, "C4 压电: MCP4728 门槛 + TLV1814 四比较器 + GPIO ISR TDOA");
 
     // 2. 外设初始化（LED；用户键已在 power_control_init）
     init_peripherals();
@@ -213,18 +214,23 @@ extern "C" void app_main() {
 
     // 4. IMU 初始化（IM948 传感器）
 #if SKIP_IMU_INIT
-    ESP_LOGW(TAG, "SKIP_IMU_INIT=1：跳过 IM948 / UART1(GPIO23/22)，仅验证是否还 POWERON 循环");
+    ESP_LOGW(TAG, "SKIP_IMU_INIT=1：跳过 IM948 / UART1(GPIO40/41)");
 #else
     init_imu();
 #endif
 
-    // 5. 压电传感器初始化（失败不阻断 IMU/网络）
+    // 5. 可调门槛与压电边沿初始化（失败不阻断 IMU/网络）
     bool piezo_ok = false;
-    ret = PiezoCapture::init();
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "PiezoCapture 初始化失败: %d（继续运行 IMU）", ret);
+    const esp_err_t frontend_err = pzt_frontend::init();
+    if (frontend_err != ESP_OK) {
+        ESP_LOGE(TAG, "PZT MCP4728 初始化失败: %d（禁用碰撞采集）", frontend_err);
     } else {
-        piezo_ok = true;
+        ret = PiezoCapture::init();
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "PiezoCapture 初始化失败: %d（继续运行 IMU）", ret);
+        } else {
+            piezo_ok = true;
+        }
     }
 
     ESP_LOGI(TAG, "等待击球事件... 连接到 SmartPaddle WiFi 或通过 IP 访问");
@@ -306,7 +312,7 @@ extern "C" void app_main() {
         }
 
         // WebSocket 推送：带通道号，便于敲击对照 TL/TR/BL/BR
-        // ch0=TL(IO2) ch1=TR(IO3) ch2=BL(IO6) ch3=BR(IO7)；first=最早边沿
+        // ch0=TL(IO15) ch1=TR(IO16) ch2=BL(IO6) ch3=BR(IO7)
         if (ws_data_has_client()) {
             status_led::notify_data_activity(300);
             char json_buf[384];

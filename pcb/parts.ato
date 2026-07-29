@@ -100,6 +100,72 @@ component AP2112K_3V3:
     footprint = "Package_TO_SOT_SMD:SOT-23-5"
 
 
+component MCP4728_MSOP10:
+    """Microchip MCP4728 quad 12-bit I2C DAC, 10-lead MSOP."""
+    designator_prefix = "U"
+    value = "MCP4728-E/UN"
+    signal vout_a
+    signal vout_b
+    signal vout_c
+    signal vout_d
+    signal vss
+    signal ldac_n
+    signal scl
+    signal sda
+    signal vdd
+    signal rdy_n
+    vout_a ~ pin 1
+    vout_b ~ pin 2
+    vout_c ~ pin 3
+    vout_d ~ pin 4
+    vss ~ pin 5
+    ldac_n ~ pin 6
+    scl ~ pin 7
+    sda ~ pin 8
+    vdd ~ pin 9
+    rdy_n ~ pin 10
+    footprint = "Package_SO:MSOP-10_3x3mm_P0.5mm"
+
+
+component TLV1814_TSSOP14:
+    """TI TLV1814 quad rail-to-rail comparator with push-pull outputs.
+
+    TLV1804 in the early C4 notes was a typo; TLV1814 is the released
+    four-channel push-pull member. Pin numbers follow TI's PW package.
+    """
+    designator_prefix = "U"
+    value = "TLV1814PWR"
+    signal out_2
+    signal out_1
+    signal vcc
+    signal in_1_n
+    signal in_1_p
+    signal in_2_n
+    signal in_2_p
+    signal in_3_n
+    signal in_3_p
+    signal in_4_n
+    signal in_4_p
+    signal gnd
+    signal out_4
+    signal out_3
+    out_2 ~ pin 1
+    out_1 ~ pin 2
+    vcc ~ pin 3
+    in_1_n ~ pin 4
+    in_1_p ~ pin 5
+    in_2_n ~ pin 6
+    in_2_p ~ pin 7
+    in_3_n ~ pin 8
+    in_3_p ~ pin 9
+    in_4_n ~ pin 10
+    in_4_p ~ pin 11
+    gnd ~ pin 12
+    out_4 ~ pin 13
+    out_3 ~ pin 14
+    footprint = "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+
+
 component WirePad:
     designator_prefix = "TP"
     signal contact

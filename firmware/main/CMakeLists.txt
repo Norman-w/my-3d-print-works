@@ -4,6 +4,7 @@ idf_component_register(
     SRCS
         "main.cpp"
         "piezo_capture.cpp"
+        "pzt_frontend.cpp"
         "utils.cpp"
         "device_storage.cpp"
         "dns_server.cpp"

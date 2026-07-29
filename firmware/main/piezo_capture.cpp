@@ -26,9 +26,6 @@ static constexpr int kCpuMhz =
     160;
 #endif
 
-// IO2/3/6 有 ADC；IO7(BR) 无
-static constexpr bool kAdcCapable[4] = {true, true, true, false};
-
 // ===== 分区：私有成员 =====
 
 static QueueHandle_t s_event_queue = nullptr;
@@ -36,10 +33,18 @@ static std::atomic<uint32_t> s_armed_mask{kAllArmedMask};
 static std::atomic<uint32_t> s_edge_counts[kChannelCount];
 static std::atomic<uint32_t> s_edge_total[kChannelCount];
 
+#if PZT_ADC_PEEK_ENABLE
 static adc_oneshot_unit_handle_t s_adc = nullptr;
 static adc_channel_t s_adc_ch[4] = {};
+#endif
 static bool s_adc_ch_ok[4] = {};
 static int s_peak_mv[4] = {};
+static constexpr gpio_num_t kAdcPins[kChannelCount] = {
+    PZT_ADC_PIN_1,
+    PZT_ADC_PIN_2,
+    PZT_ADC_PIN_3,
+    PZT_ADC_PIN_4,
+};
 
 const gpio_num_t PiezoCapture::PINS[4] = {
     PIEZO_PIN_1,
@@ -88,6 +93,10 @@ static void IRAM_ATTR piezo_gpio_isr(void* arg) {
 }
 
 static void init_adc_diag() {
+#if !PZT_ADC_PEEK_ENABLE
+    ESP_LOGI(TAG, "ADC peeks disabled; leave JP_ADC_TL/TR/BL/BR DNP");
+    return;
+#else
     if (s_adc) {
         return;
     }
@@ -106,21 +115,17 @@ static void init_adc_diag() {
         .bitwidth = ADC_BITWIDTH_DEFAULT,
     };
     for (uint32_t i = 0; i < kChannelCount; ++i) {
-        if (!kAdcCapable[i]) {
-            continue;
-        }
         adc_unit_t unit = ADC_UNIT_1;
         adc_channel_t ch = ADC_CHANNEL_0;
-        const gpio_num_t pin = kAdcCapable[i]
-            ? (i == 0   ? PIEZO_PIN_1
-               : i == 1 ? PIEZO_PIN_2
-               : i == 2 ? PIEZO_PIN_3
-                        : PIEZO_PIN_4)
-            : GPIO_NUM_NC;
-        if (pin == GPIO_NUM_NC) {
+        const gpio_num_t pin = kAdcPins[i];
+        if (adc_oneshot_io_to_channel(static_cast<int>(pin), &unit, &ch) != ESP_OK) {
+            ESP_LOGW(TAG, "ADC peek ch%" PRIu32 " GPIO%d has no ADC channel", i,
+                     static_cast<int>(pin));
             continue;
         }
-        if (adc_oneshot_io_to_channel(static_cast<int>(pin), &unit, &ch) != ESP_OK) {
+        if (unit != ADC_UNIT_1) {
+            ESP_LOGW(TAG, "ADC peek ch%" PRIu32 " GPIO%d is not ADC1", i,
+                     static_cast<int>(pin));
             continue;
         }
         if (adc_oneshot_config_channel(s_adc, ch, &chan_cfg) != ESP_OK) {
@@ -129,7 +134,10 @@ static void init_adc_diag() {
         s_adc_ch[i] = ch;
         s_adc_ch_ok[i] = true;
     }
-    ESP_LOGI(TAG, "ADC peak diag: TL/TR/BL ok, BR=IO7 n/a");
+    ESP_LOGI(TAG, "ADC peeks: TL=IO%d TR=IO%d BL=IO%d BR=IO%d",
+             static_cast<int>(kAdcPins[0]), static_cast<int>(kAdcPins[1]),
+             static_cast<int>(kAdcPins[2]), static_cast<int>(kAdcPins[3]));
+#endif
 }
 
 // ===== 分区：公开 API =====
@@ -161,8 +169,8 @@ esp_err_t PiezoCapture::init() {
     io_conf.pin_bit_mask = pin_mask;
     io_conf.mode = GPIO_MODE_INPUT;
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
-    io_conf.pull_down_en = GPIO_PULLDOWN_ENABLE;
-    io_conf.intr_type = GPIO_INTR_ANYEDGE;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.intr_type = GPIO_INTR_POSEDGE;
     esp_err_t err = gpio_config(&io_conf);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "gpio_config failed: %s", esp_err_to_name(err));
@@ -189,7 +197,7 @@ esp_err_t PiezoCapture::init() {
 
     initialized = true;
     ESP_LOGI(TAG,
-             "Piezo ready: TL=IO%d TR=IO%d BL=IO%d BR=IO%d ANYEDGE (~%dns)",
+             "Comparator edges ready: TL=IO%d TR=IO%d BL=IO%d BR=IO%d POSEDGE (~%dns)",
              static_cast<int>(PINS[0]), static_cast<int>(PINS[1]),
              static_cast<int>(PINS[2]), static_cast<int>(PINS[3]),
              1000 / kCpuMhz);
@@ -236,6 +244,7 @@ int64_t PiezoCapture::delta_ns(uint64_t cycles_a, uint64_t cycles_b) {
 }
 
 void PiezoCapture::sample_adc_peaks() {
+#if PZT_ADC_PEEK_ENABLE
     if (!s_adc) {
         return;
     }
@@ -254,6 +263,7 @@ void PiezoCapture::sample_adc_peaks() {
             }
         }
     }
+#endif
 }
 
 void PiezoCapture::log_diag() {
@@ -264,10 +274,10 @@ void PiezoCapture::log_diag() {
         const uint32_t total = s_edge_total[i].load(std::memory_order_relaxed);
         printf(" %s(IO%d)=%d edges=%" PRIu32, kName[i], static_cast<int>(PINS[i]),
                level, total);
-        if (s_adc_ch_ok[i]) {
+        if (PZT_ADC_PEEK_ENABLE && s_adc_ch_ok[i]) {
             printf(" peak=%dmV", s_peak_mv[i]);
         } else {
-            printf(" peak=n/a");
+            printf(" peak=off");
         }
     }
     printf("\n");

@@ -10,9 +10,9 @@
     (constraint edge_clearance (min -1mm))
     (condition "A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948') || A.intersectsCourtyard('IMU_IM948') || B.intersectsCourtyard('IMU_IM948') || A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE')"))
 
-(rule "Embedded MCU castellated edge interface"
+(rule "Embedded ESP32-S3 castellated edge interface"
     (constraint edge_clearance (min -1mm))
-    (condition "A.memberOfFootprint('MCU_SGFK_C6') || B.memberOfFootprint('MCU_SGFK_C6') || A.intersectsCourtyard('MCU_SGFK_C6') || B.intersectsCourtyard('MCU_SGFK_C6') || A.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || A.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE') || B.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE')"))
+    (condition "A.memberOfFootprint('MCU_ESP32_S3') || B.memberOfFootprint('MCU_ESP32_S3') || A.intersectsCourtyard('MCU_ESP32_S3') || B.intersectsCourtyard('MCU_ESP32_S3') || A.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || A.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE') || B.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE')"))
 
 (rule "PZT castellated edge interface"
     (constraint edge_clearance (min -1mm))
@@ -39,4 +39,8 @@
 
 (rule "MCU castellated pad pitch"
     (constraint clearance (min 0.12mm))
-    (condition "A.memberOfFootprint('MCU_SGFK_C6') && B.memberOfFootprint('MCU_SGFK_C6')"))
+    (condition "A.memberOfFootprint('MCU_ESP32_S3') && B.memberOfFootprint('MCU_ESP32_S3')"))
+
+(rule "C4 fine-pitch analog packages"
+    (constraint clearance (min 0.12mm))
+    (condition "(A.memberOfFootprint('PZT_DAC_MCP4728') && B.memberOfFootprint('PZT_DAC_MCP4728')) || (A.memberOfFootprint('PZT_CMP_TLV1814') && B.memberOfFootprint('PZT_CMP_TLV1814'))"))

@@ -13,7 +13,7 @@
 static const char *TAG = LOG_TAG_POWER;
 
 // ===== 模型/类型 =====
-/** 唯一用户键（SW_PWR / GPIO18）的手势阶段 */
+/** C4 唯一用户键（SW_PWR / GPIO48）的手势阶段 */
 enum class BtnPhase {
     Idle = 0,           // 等待操作
     Pressed,            // 首次按下中（短按候选 / 长按关机）
@@ -169,7 +169,7 @@ void power_control_shutdown(void) {
 
 /*
  * 复位行为（刻意故障安全）：
- * 电池供电时 GPIO10 复位后变高阻，PWR_LATCH 被 100k 下拉 → 锁存释放 → 关机。
+ * GPIO47 becomes high-Z after reset; the 100k pulldown then releases the latch.
  * esp_restart / WDT / panic / 恢复出厂后的重启都不会自动保持开机，需再按尾键。
  * 若产品要“复位后仍开机”，需改硬件保持，不能只改固件。
  */

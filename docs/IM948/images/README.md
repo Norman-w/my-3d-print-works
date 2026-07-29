@@ -26,8 +26,8 @@
 | **2** | **VBUS** | **主电源输入（通常 5V）— SmartPaddle 接 `SYS_5V_SW`** |
 | 3 | VBAT | 电池（本板悬空） |
 | 4 | VDDIO | IO 电平（本板悬空） |
-| 13 | RXD | ← MCU TX (GPIO23) |
-| 14 | TXD | → MCU RX (GPIO22) |
+| 13 | RXD | ← C4 MCU TX（GPIO40 / S3 pad33） |
+| 14 | TXD | → C4 MCU RX（GPIO41 / S3 pad34） |
 | 16 | VSS | GND |
 
 ## 完整清单

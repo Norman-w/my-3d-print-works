@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-/** 尽早拉高 PWR_LATCH（GPIO10），避免松手掉电。 */
+/** Pull C4 PWR_LATCH (GPIO47) high before the user releases the key. */
 esp_err_t power_control_init(void);
 
 /** 拉低锁存，整机断电（调用后不再返回有效执行）。 */

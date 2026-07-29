@@ -57,7 +57,7 @@ run_logged() {
 # ---- 工具检查 ----
 check_tools() {
     local ok=true
-    for tool in "$KIPY" "$ATO"; do
+    for tool in "$KIPY"; do
         if ! command -v "$tool" &>/dev/null && ! test -x "$tool"; then
             err "找不到: $tool"
             ok=false
@@ -92,14 +92,40 @@ run_step3() {
 
 run_step3_1() {
     title "Step 3.1 — ato build"
+    local ato_version build_log
+    if ! command -v "$ATO" &>/dev/null && ! test -x "$ATO"; then
+        err "找不到 atopile: $ATO"
+        err "仅 Step 3.1 暂停；其他标准 Python 步骤仍可从菜单运行"
+        return 1
+    fi
+    ato_version="$("$ATO" --version)"
+    info "atopile 可执行文件: $ATO"
+    info "atopile 实际版本: $ato_version"
+    if [[ "$ato_version" != *"0.12.5"* ]]; then
+        err "版本不符：pcb/ato.yaml 锁定 0.12.5，拒绝用其他版本生成"
+        return 1
+    fi
     cd "$ATO_PROJ"
-    "$ATO" build
+    build_log="$(mktemp -t smartpaddle-ato-build.XXXXXX)"
+    if ! "$ATO" build 2>&1 | tee "$build_log"; then
+        err "ato build 命令失败（日志: $build_log）"
+        return 1
+    fi
+    # atopile 0.12.5 may return zero even after reporting a build-stopping
+    # decode error, so its explicit success marker is the authoritative gate.
+    if ! grep -q "Build successful" "$build_log"; then
+        err "ato build 未出现成功标记（日志: $build_log）"
+        return 1
+    fi
+    rm -f "$build_log"
     info "ato build 完成 ✓"
 }
 
 run_step3_2() {
     title "Step 3.2 — 导入 ato 网络表到 KiCad"
+    "$KIPY" "$SCRIPTS/validate_esp32s3wroom1_pinmap.py"
     "$KIPY" "$SCRIPTS/step3_import_netlist.py"
+    "$KIPY" "$SCRIPTS/step3_finalize_generated_board.py"
     info "Step 3.2 完成 ✓"
 }
 
@@ -123,6 +149,12 @@ run_step4_1() {
     title "Step 4.1 — 备份 PZT 码头组件位置"
     "$KIPY" "$SCRIPTS/step4.1_backup_docks.py" "$@"
     info "Step 4.1 完成 ✓"
+}
+
+run_step4_1e() {
+    title "Step 4.1e — 备份 C4 全部器件位置"
+    "$KIPY" "$SCRIPTS/step4.1e_backup_c4_placement.py" "$@"
+    info "Step 4.1e 完成 ✓"
 }
 
 run_step4_2() {
@@ -621,6 +653,7 @@ menu() {
         echo -e "${BLUE}║${NC}  ${YELLOW}[3.2]${NC} step3.2 — 导入网络表                ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4]${NC}  step4 — ato 组件放置               ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.1]${NC} 备份码头位置                      ${BLUE}║${NC}"
+        echo -e "${BLUE}║${NC}  ${YELLOW}[4.1e]${NC} 备份 C4 全部器件位置              ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.1a]${NC} 备份码头至大陆走线              ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2]${NC} step4.2 — 恢复码头位置            ${BLUE}║${NC}"
         echo -e "${BLUE}║${NC}  ${YELLOW}[4.2b]${NC} PZT 焊线焊盘安全内收             ${BLUE}║${NC}"
@@ -637,10 +670,11 @@ menu() {
             1)    run_step1 ;;
             2)    run_step2 ;;
             3)    run_step3 ;;
-            3.1)  run_step3_1 ;;
+            3.1)  if ! run_step3_1; then warn "Step 3.1 未完成，菜单继续可用"; fi ;;
             3.2)  run_step3_2 ;;
             4)    run_step4 ;;
             4.1)  run_step4_1 ;;
+            4.1e) run_step4_1e ;;
             4.1a) run_step4_1a ;;
             4.2)  run_step4_2 ;;
             4.2b) run_step4_2b ;;

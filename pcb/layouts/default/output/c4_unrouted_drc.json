@@ -1,0 +1,3916 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-07-29T21:27:15+0800",
+    "kicad_version": "9.0.6",
+    "schematic_parity": [],
+    "source": "default.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 3 [p_gate]",
+                    "pos": {
+                        "x": 16.576,
+                        "y": -3.526
+                    },
+                    "uuid": "9ffbeaad-b82a-4281-ab98-885cd97b3b81"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_GATE_100K 的焊盘 1 [p_gate]",
+                    "pos": {
+                        "x": 17.908,
+                        "y": -5.969
+                    },
+                    "uuid": "fbbbb8d4-2a7a-41d0-99ec-1ac8b5da55f3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 3 [p_gate]",
+                    "pos": {
+                        "x": 16.576,
+                        "y": -3.526
+                    },
+                    "uuid": "9ffbeaad-b82a-4281-ab98-885cd97b3b81"
+                },
+                {
+                    "description": "F.Cu 上 D_BTN_START 的焊盘 2 [p_gate]",
+                    "pos": {
+                        "x": 17.292,
+                        "y": 3.302
+                    },
+                    "uuid": "41e1d9b8-ef28-46f1-8f52-7a4f0aaa066b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_R_GATE_100K 的焊盘 1 [p_gate]",
+                    "pos": {
+                        "x": 17.908,
+                        "y": -5.969
+                    },
+                    "uuid": "fbbbb8d4-2a7a-41d0-99ec-1ac8b5da55f3"
+                },
+                {
+                    "description": "F.Cu 上 PW_Q_LOAD 的焊盘 1 [p_gate]",
+                    "pos": {
+                        "x": 17.846,
+                        "y": -8.031
+                    },
+                    "uuid": "5c4a6903-c4a9-458b-8253-1f8837cab039"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "B.Cu 上 TAIL_MX125_B 的焊盘 4 [led_din]",
+                    "pos": {
+                        "x": -1.25,
+                        "y": 84.7
+                    },
+                    "uuid": "a08ec4e9-79b5-4e14-877d-8a89351d9d8f"
+                },
+                {
+                    "description": "F.Cu 上 LED_R_DATA_330R 的焊盘 2 [led_din]",
+                    "pos": {
+                        "x": 3.825,
+                        "y": 72.0
+                    },
+                    "uuid": "e7a04678-face-4b24-80fa-ceaa5588feb3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 R_MCU_PWR_1K 的焊盘 1 [c]",
+                    "pos": {
+                        "x": -13.675,
+                        "y": 12.0
+                    },
+                    "uuid": "2a11e91c-80cc-4581-b62d-2a6406b3bd3d"
+                },
+                {
+                    "description": "F.Cu 上 LED_MCU_PWR 的焊盘 2 [c]",
+                    "pos": {
+                        "x": -12.75,
+                        "y": 12.0
+                    },
+                    "uuid": "51aa8431-6363-4f4d-a682-5c19c1dd54cf"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 28.45082,
+                        "y": -49.525393
+                    },
+                    "uuid": "2b0fde97-65ea-4813-9060-5ef9ff2a3e46"
+                },
+                {
+                    "description": "F.Cu 上 LED_MCU_PWR 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -11.25,
+                        "y": 12.0
+                    },
+                    "uuid": "b2b9ac8f-e233-412d-92a2-21492722a567"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 3 [vcc]",
+                    "pos": {
+                        "x": -18.15,
+                        "y": -22.4375
+                    },
+                    "uuid": "8aa041c9-444d-46fb-8b92-9988aaf41dc8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 2 [vcc]",
+                    "pos": {
+                        "x": -6.99,
+                        "y": 8.2
+                    },
+                    "uuid": "b9221268-87b5-5deb-91cb-db3829224d2a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 9 [vcc]",
+                    "pos": {
+                        "x": -12.8,
+                        "y": -27.4125
+                    },
+                    "uuid": "87b99970-60d8-4de9-aeea-e413fd471837"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 9 [vcc]",
+                    "pos": {
+                        "x": -12.8,
+                        "y": -27.4125
+                    },
+                    "uuid": "87b99970-60d8-4de9-aeea-e413fd471837"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 28.45082,
+                        "y": -49.525393
+                    },
+                    "uuid": "2b0fde97-65ea-4813-9060-5ef9ff2a3e46"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "F.Cu 上 LED_MCU_PWR 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -11.25,
+                        "y": 12.0
+                    },
+                    "uuid": "b2b9ac8f-e233-412d-92a2-21492722a567"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 2 [vcc]",
+                    "pos": {
+                        "x": -6.99,
+                        "y": 8.2
+                    },
+                    "uuid": "b9221268-87b5-5deb-91cb-db3829224d2a"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 28.45082,
+                        "y": -49.525393
+                    },
+                    "uuid": "2b0fde97-65ea-4813-9060-5ef9ff2a3e46"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 5 [vcc]",
+                    "pos": {
+                        "x": 13.467,
+                        "y": -23.368
+                    },
+                    "uuid": "6f753aeb-5ec4-4f91-8a35-719be5fb103b"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 9 [vcc]",
+                    "pos": {
+                        "x": -12.8,
+                        "y": -27.4125
+                    },
+                    "uuid": "87b99970-60d8-4de9-aeea-e413fd471837"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_R_EN_PU_10K 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 16.383,
+                        "y": -13.335
+                    },
+                    "uuid": "6aef7667-df64-441b-8af5-875ae6cc6694"
+                },
+                {
+                    "description": "F.Cu 上 PW_C_OUT_10U 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": 17.525,
+                        "y": -16.5
+                    },
+                    "uuid": "215c60ae-62da-4320-b9a0-694357810c8c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_C_OUT_10U 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": 17.525,
+                        "y": -16.5
+                    },
+                    "uuid": "215c60ae-62da-4320-b9a0-694357810c8c"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 5 [vcc]",
+                    "pos": {
+                        "x": 13.467,
+                        "y": -23.368
+                    },
+                    "uuid": "6f753aeb-5ec4-4f91-8a35-719be5fb103b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "TP_3V3 的PTH 焊盘 1 [vcc]",
+                    "pos": {
+                        "x": 19.05,
+                        "y": -13.335
+                    },
+                    "uuid": "8c92b01d-3cd6-4d29-bbc5-d84ec69ecb0e"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_EN_PU_10K 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 16.383,
+                        "y": -13.335
+                    },
+                    "uuid": "6aef7667-df64-441b-8af5-875ae6cc6694"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 2 [vcc]",
+                    "pos": {
+                        "x": 28.45082,
+                        "y": -49.525393
+                    },
+                    "uuid": "2b0fde97-65ea-4813-9060-5ef9ff2a3e46"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 5 [vcc]",
+                    "pos": {
+                        "x": 13.467,
+                        "y": -23.368
+                    },
+                    "uuid": "6f753aeb-5ec4-4f91-8a35-719be5fb103b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TL_R_SER_4K7 的焊盘 2 [pzt_cmp_in_tl]",
+                    "pos": {
+                        "x": -31.495948,
+                        "y": -50.291987
+                    },
+                    "uuid": "5525e09d-dfb6-4788-8867-143bfa1388c8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 5 [pzt_cmp_in_tl]",
+                    "pos": {
+                        "x": -16.85,
+                        "y": -22.4375
+                    },
+                    "uuid": "bcba22a1-f745-4ab1-ace0-61636075da51"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 5 [pzt_cmp_in_tl]",
+                    "pos": {
+                        "x": -16.85,
+                        "y": -22.4375
+                    },
+                    "uuid": "bcba22a1-f745-4ab1-ace0-61636075da51"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 7 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": -15.55,
+                        "y": -22.4375
+                    },
+                    "uuid": "090f7a6b-dd02-4a71-97ba-75458dd38baa"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_R_SER_4K7 的焊盘 2 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 29.30972,
+                        "y": -51.526527
+                    },
+                    "uuid": "b54beafc-3ef5-423d-bfa9-5aef455a0840"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                },
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 7 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": -15.55,
+                        "y": -22.4375
+                    },
+                    "uuid": "090f7a6b-dd02-4a71-97ba-75458dd38baa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_BL_R_SER_4K7 的焊盘 2 [pzt_cmp_in_bl]",
+                    "pos": {
+                        "x": -34.002563,
+                        "y": 33.296085
+                    },
+                    "uuid": "27bbef9a-5d7a-4ef0-964a-a9a3a872f250"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 9 [pzt_cmp_in_bl]",
+                    "pos": {
+                        "x": -16.2,
+                        "y": -28.1625
+                    },
+                    "uuid": "675df676-23ef-4dc5-aef9-01ef9dca8a79"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 11 [pzt_cmp_in_br]",
+                    "pos": {
+                        "x": -17.5,
+                        "y": -28.1625
+                    },
+                    "uuid": "625794f2-0b2c-44b6-9c95-9d928d54f569"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 3 [pzt_cmp_in_tr]",
+                    "pos": {
+                        "x": 28.087984,
+                        "y": -47.455012
+                    },
+                    "uuid": "e1752f2e-bdc5-40eb-b12b-240180ca4132"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BR_R_SER_4K7 的焊盘 2 [pzt_cmp_in_br]",
+                    "pos": {
+                        "x": 36.215685,
+                        "y": 29.402137
+                    },
+                    "uuid": "d345fa1d-6fbc-4c80-a848-09e2d75c7c96"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 38 [pzt_adc_tr]",
+                    "pos": {
+                        "x": -5.72,
+                        "y": -10.2
+                    },
+                    "uuid": "4ae03a80-c53a-5c15-85cd-b5194aea9a7f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 1 [pwr_latch]",
+                    "pos": {
+                        "x": 15.626,
+                        "y": -1.651
+                    },
+                    "uuid": "144ba92c-9e56-4eea-9630-d39352449b64"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 24 [pwr_latch]",
+                    "pos": {
+                        "x": 10.0,
+                        "y": -5.445
+                    },
+                    "uuid": "52997e78-82c4-52ca-9e3c-905be435afb1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_R_LATCH_PD_100K 的焊盘 1 [pwr_latch]",
+                    "pos": {
+                        "x": 15.688,
+                        "y": 0.411
+                    },
+                    "uuid": "4ab52b80-6c4e-4e39-803e-c8587db1d317"
+                },
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 1 [pwr_latch]",
+                    "pos": {
+                        "x": 15.626,
+                        "y": -1.651
+                    },
+                    "uuid": "144ba92c-9e56-4eea-9630-d39352449b64"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 13 [pzt_edge_br]",
+                    "pos": {
+                        "x": -18.8,
+                        "y": -28.1625
+                    },
+                    "uuid": "7e3df659-6e2c-4c1b-a0aa-17ca822004fa"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 7 [pzt_edge_br]",
+                    "pos": {
+                        "x": -0.64,
+                        "y": 8.2
+                    },
+                    "uuid": "cbe7e22e-0a9e-5b80-b7ad-c58a34edab97"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 2 [pzt_edge_tl]",
+                    "pos": {
+                        "x": -18.8,
+                        "y": -22.4375
+                    },
+                    "uuid": "91f9e81f-51e1-4805-ac10-e76513e09fca"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 8 [pzt_edge_tl]",
+                    "pos": {
+                        "x": 0.63,
+                        "y": 8.2
+                    },
+                    "uuid": "95b39420-31b8-51c8-8ab6-92796c07a5d6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 5 [pzt_adc_br]",
+                    "pos": {
+                        "x": -3.18,
+                        "y": 8.2
+                    },
+                    "uuid": "c08b78f6-7603-52e2-a2b0-0eaf7dbe57d7"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 25 [user_btn]",
+                    "pos": {
+                        "x": 10.0,
+                        "y": -6.715
+                    },
+                    "uuid": "d84bbd3d-bbb9-52ed-b9f9-fc93d678cdff"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_BTN_SER_1K 的焊盘 2 [user_btn]",
+                    "pos": {
+                        "x": 19.431,
+                        "y": -2.794
+                    },
+                    "uuid": "d8901eb3-0a92-48db-8f1b-f70912867b21"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 14 [pzt_edge_bl]",
+                    "pos": {
+                        "x": -19.45,
+                        "y": -28.1625
+                    },
+                    "uuid": "030244c4-c315-4967-ae24-a365ba580781"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 6 [pzt_edge_bl]",
+                    "pos": {
+                        "x": -1.91,
+                        "y": 8.2
+                    },
+                    "uuid": "e991952c-7ecf-5587-a276-eb9663f58c73"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 8 [i2c_sda]",
+                    "pos": {
+                        "x": -12.3,
+                        "y": -27.4125
+                    },
+                    "uuid": "4fa07bff-8dab-405c-ae66-336d400476ad"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 10 [i2c_sda]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 8.2
+                    },
+                    "uuid": "e895ec1c-e5be-5c36-ae6a-b89d1c72de92"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 7 [i2c_scl]",
+                    "pos": {
+                        "x": -11.8,
+                        "y": -27.4125
+                    },
+                    "uuid": "063719e8-043c-43e8-a8ed-a4cb67d54387"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 11 [i2c_scl]",
+                    "pos": {
+                        "x": 4.44,
+                        "y": 8.2
+                    },
+                    "uuid": "33380413-46de-5490-b2b4-44b6a6045968"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 34 [imu_uart_rx]",
+                    "pos": {
+                        "x": -0.64,
+                        "y": -10.2
+                    },
+                    "uuid": "f9466537-765e-5616-8d8f-63b49664c498"
+                },
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 14 [imu_uart_rx]",
+                    "pos": {
+                        "x": 1.725,
+                        "y": -14.8
+                    },
+                    "uuid": "e9f9da20-a28a-452b-a940-6a2f5d880468"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 60.745
+                    },
+                    "uuid": "48708aaa-1314-5868-a853-b5fe385b5b89"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 27 [boot_btn]",
+                    "pos": {
+                        "x": 8.25,
+                        "y": -10.2
+                    },
+                    "uuid": "aa678f1c-7fd6-54e6-be12-507092b9caeb"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 LED_R_DATA_330R 的焊盘 1 [led_data]",
+                    "pos": {
+                        "x": 2.175,
+                        "y": 72.0
+                    },
+                    "uuid": "727cd6ec-2292-4a42-b1ea-8d7cc84545a6"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 23 [led_data]",
+                    "pos": {
+                        "x": 10.0,
+                        "y": -4.175
+                    },
+                    "uuid": "6477e221-b5dc-50e4-b019-20dc11d6cbab"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_R_TOP_1M 的焊盘 2 [bat_sense]",
+                    "pos": {
+                        "x": -5.175,
+                        "y": 72.0
+                    },
+                    "uuid": "c422c77e-6ed9-4e98-a97a-3dbda548da51"
+                },
+                {
+                    "description": "F.Cu 上 BAT_R_BOT_1M 的焊盘 1 [bat_sense]",
+                    "pos": {
+                        "x": -3.825,
+                        "y": 72.0
+                    },
+                    "uuid": "091db9df-5c53-48d3-b756-d49ce622094a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_R_BOT_1M 的焊盘 1 [bat_sense]",
+                    "pos": {
+                        "x": -3.825,
+                        "y": 72.0
+                    },
+                    "uuid": "091db9df-5c53-48d3-b756-d49ce622094a"
+                },
+                {
+                    "description": "F.Cu 上 BAT_C_ADC_100N 的焊盘 1 [bat_sense]",
+                    "pos": {
+                        "x": -0.775,
+                        "y": 72.0
+                    },
+                    "uuid": "7109d25d-d4d1-4b97-9d0c-fec052ad996f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_C_ADC_100N 的焊盘 1 [bat_sense]",
+                    "pos": {
+                        "x": -0.775,
+                        "y": 72.0
+                    },
+                    "uuid": "7109d25d-d4d1-4b97-9d0c-fec052ad996f"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 17 [bat_sense]",
+                    "pos": {
+                        "x": 10.0,
+                        "y": 3.445
+                    },
+                    "uuid": "e93b2169-78e8-5896-a8cd-6136bb3b2ddb"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 17 [bat_sense]",
+                    "pos": {
+                        "x": 10.0,
+                        "y": 3.445
+                    },
+                    "uuid": "e93b2169-78e8-5896-a8cd-6136bb3b2ddb"
+                },
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 7 [bat_sense]",
+                    "pos": {
+                        "x": 3.725,
+                        "y": -28.2
+                    },
+                    "uuid": "631363c1-4b13-46c5-ae66-4ffde31045a4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 4 [pzt_adc_bl]",
+                    "pos": {
+                        "x": -4.45,
+                        "y": 8.2
+                    },
+                    "uuid": "81579993-f2fc-5747-b6f8-c78a35d19ec7"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 1 [pzt_edge_tr]",
+                    "pos": {
+                        "x": -19.45,
+                        "y": -22.4375
+                    },
+                    "uuid": "a8e24582-1f4f-42ad-97ed-b543d99b2faf"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 9 [pzt_edge_tr]",
+                    "pos": {
+                        "x": 1.9,
+                        "y": 8.2
+                    },
+                    "uuid": "a625b5d6-0d57-5a04-b812-924fd5bdf266"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 13 [imu_uart_tx]",
+                    "pos": {
+                        "x": -0.275,
+                        "y": -14.8
+                    },
+                    "uuid": "f129377b-e780-476f-88cf-d68c90136efb"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 33 [imu_uart_tx]",
+                    "pos": {
+                        "x": 0.63,
+                        "y": -10.2
+                    },
+                    "uuid": "bbaef123-aada-5aa0-8e1a-7e788556f072"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 39 [pzt_adc_tl]",
+                    "pos": {
+                        "x": -6.99,
+                        "y": -10.2
+                    },
+                    "uuid": "2010848b-cd8e-5840-8b93-f2e88041a3c6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_BL_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -39.116,
+                        "y": 32.512
+                    },
+                    "uuid": "f754a7fe-7bb6-4224-a8d9-56c9d5574f84"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BL_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -37.368963,
+                        "y": 30.236385
+                    },
+                    "uuid": "a9ff8211-86b8-41fa-a851-13dfdb1f845d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BL_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -37.368963,
+                        "y": 30.236385
+                    },
+                    "uuid": "a9ff8211-86b8-41fa-a851-13dfdb1f845d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TL_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -28.445129,
+                        "y": -52.847207
+                    },
+                    "uuid": "4ebe9025-f3e7-4103-b762-5cbb3f7045f9"
+                },
+                {
+                    "description": "PZT_TL_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "35429aa6-24b2-4a9a-8f72-9f70c78f6de0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TL_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -28.445129,
+                        "y": -52.847207
+                    },
+                    "uuid": "4ebe9025-f3e7-4103-b762-5cbb3f7045f9"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 12 [gnd]",
+                    "pos": {
+                        "x": -18.15,
+                        "y": -28.1625
+                    },
+                    "uuid": "116ffbf4-acac-4a53-8cbf-003ce7cbc16b"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 6 [gnd]",
+                    "pos": {
+                        "x": -11.3,
+                        "y": -27.4125
+                    },
+                    "uuid": "9d4d0a4f-ddb5-4143-952a-aa0d33b0387b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 12 [gnd]",
+                    "pos": {
+                        "x": -18.15,
+                        "y": -28.1625
+                    },
+                    "uuid": "116ffbf4-acac-4a53-8cbf-003ce7cbc16b"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 R_MCU_PWR_1K 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -15.325,
+                        "y": 12.0
+                    },
+                    "uuid": "578a9e7b-9320-4589-a25a-b8abc4b7316d"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 R_MCU_PWR_1K 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -15.325,
+                        "y": 12.0
+                    },
+                    "uuid": "578a9e7b-9320-4589-a25a-b8abc4b7316d"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 6 [gnd]",
+                    "pos": {
+                        "x": -11.3,
+                        "y": -27.4125
+                    },
+                    "uuid": "9d4d0a4f-ddb5-4143-952a-aa0d33b0387b"
+                },
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -8.275,
+                        "y": -28.2
+                    },
+                    "uuid": "82c15e79-6ca0-474b-87b6-dc516c3c78dc"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 6 [gnd]",
+                    "pos": {
+                        "x": -11.3,
+                        "y": -27.4125
+                    },
+                    "uuid": "9d4d0a4f-ddb5-4143-952a-aa0d33b0387b"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 5 [gnd]",
+                    "pos": {
+                        "x": -11.3,
+                        "y": -23.1875
+                    },
+                    "uuid": "afb9e90c-0ee4-4d72-9699-b139102754ca"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 5 [gnd]",
+                    "pos": {
+                        "x": -11.3,
+                        "y": -23.1875
+                    },
+                    "uuid": "afb9e90c-0ee4-4d72-9699-b139102754ca"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 40 [gnd]",
+                    "pos": {
+                        "x": -8.26,
+                        "y": -10.2
+                    },
+                    "uuid": "49cce166-007f-5e02-9a73-0684e7d7d591"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -8.26,
+                        "y": 8.2
+                    },
+                    "uuid": "030e3580-b6a5-54c0-a596-a79b332368a5"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 40 [gnd]",
+                    "pos": {
+                        "x": -8.26,
+                        "y": -10.2
+                    },
+                    "uuid": "49cce166-007f-5e02-9a73-0684e7d7d591"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -8.26,
+                        "y": 8.2
+                    },
+                    "uuid": "030e3580-b6a5-54c0-a596-a79b332368a5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "B.Cu 上 TAIL_MX125_B 的焊盘 5 [gnd]",
+                    "pos": {
+                        "x": -2.5,
+                        "y": 84.7
+                    },
+                    "uuid": "ddd18ca8-aaae-4ca1-903d-ad6caaef6ece"
+                },
+                {
+                    "description": "F.Cu 上 BAT_R_BOT_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.175,
+                        "y": 72.0
+                    },
+                    "uuid": "efcfb379-9471-4c7a-b630-c6e49bca2222"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_C_ADC_100N 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 0.775,
+                        "y": 72.0
+                    },
+                    "uuid": "52ea7860-4ee3-4edd-a0de-cfa65cf13e20"
+                },
+                {
+                    "description": "F.Cu 上 BAT_R_BOT_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.175,
+                        "y": 72.0
+                    },
+                    "uuid": "efcfb379-9471-4c7a-b630-c6e49bca2222"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_C_ADC_100N 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 0.775,
+                        "y": 72.0
+                    },
+                    "uuid": "52ea7860-4ee3-4edd-a0de-cfa65cf13e20"
+                },
+                {
+                    "description": "F.Cu 上 LED_C_SUP_100N 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.775,
+                        "y": 72.0
+                    },
+                    "uuid": "af1ee075-3aa1-4bb6-89a4-b34480dbec9a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 8 [gnd]",
+                    "pos": {
+                        "x": 5.725,
+                        "y": -28.2
+                    },
+                    "uuid": "31f35de3-6054-45e1-b2b1-1f9a3a80544f"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 14.417,
+                        "y": -21.093
+                    },
+                    "uuid": "7482ad4c-3294-4e65-b87e-3a954fc598f3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 8 [gnd]",
+                    "pos": {
+                        "x": 5.725,
+                        "y": -28.2
+                    },
+                    "uuid": "31f35de3-6054-45e1-b2b1-1f9a3a80544f"
+                },
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": -8.275,
+                        "y": -28.2
+                    },
+                    "uuid": "82c15e79-6ca0-474b-87b6-dc516c3c78dc"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 16 [gnd]",
+                    "pos": {
+                        "x": 5.725,
+                        "y": -14.8
+                    },
+                    "uuid": "17d9190e-2ad8-4bbe-a3c8-205f236a8720"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 14.417,
+                        "y": -21.093
+                    },
+                    "uuid": "7482ad4c-3294-4e65-b87e-3a954fc598f3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BR_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 32.924637,
+                        "y": 34.545315
+                    },
+                    "uuid": "b477161f-76eb-4e9f-b003-73059a0f02a9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 55.245
+                    },
+                    "uuid": "391ba0da-25d0-592f-9bd4-a5f16c5e0801"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 LED_C_SUP_100N 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.775,
+                        "y": 72.0
+                    },
+                    "uuid": "af1ee075-3aa1-4bb6-89a4-b34480dbec9a"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 60.745
+                    },
+                    "uuid": "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 14.417,
+                        "y": -21.093
+                    },
+                    "uuid": "7482ad4c-3294-4e65-b87e-3a954fc598f3"
+                },
+                {
+                    "description": "TP_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 19.05,
+                        "y": -19.558
+                    },
+                    "uuid": "89e425b7-7ac9-4512-ba98-94aa32b4624a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 17.526,
+                        "y": -1.651
+                    },
+                    "uuid": "0674dbea-bdc8-4d02-a612-2e5d27f7ee18"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_LATCH_PD_100K 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 17.338,
+                        "y": 0.411
+                    },
+                    "uuid": "5e83b797-2038-4e1f-aadd-c9f1b0299e02"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LATCH 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 17.526,
+                        "y": -1.651
+                    },
+                    "uuid": "0674dbea-bdc8-4d02-a612-2e5d27f7ee18"
+                },
+                {
+                    "description": "F.Cu 上 PW_C_OUT_10U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 19.075,
+                        "y": -16.5
+                    },
+                    "uuid": "7b1424bf-1f52-4e68-9efb-bafcfac32340"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "TP_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 19.05,
+                        "y": -19.558
+                    },
+                    "uuid": "89e425b7-7ac9-4512-ba98-94aa32b4624a"
+                },
+                {
+                    "description": "F.Cu 上 PW_C_OUT_10U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 19.075,
+                        "y": -16.5
+                    },
+                    "uuid": "7b1424bf-1f52-4e68-9efb-bafcfac32340"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "TP_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 19.05,
+                        "y": -19.558
+                    },
+                    "uuid": "89e425b7-7ac9-4512-ba98-94aa32b4624a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": -2.225,
+                        "y": 11.0
+                    },
+                    "uuid": "34f15a27-56c2-4000-be72-2f49c252367c"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 33.10002,
+                        "y": -49.191227
+                    },
+                    "uuid": "2bbe1ba2-0e88-432e-862a-d02394139003"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_BR_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 32.924637,
+                        "y": 34.545315
+                    },
+                    "uuid": "b477161f-76eb-4e9f-b003-73059a0f02a9"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_D_CLAMP 的焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 29.972011,
+                        "y": -48.386982
+                    },
+                    "uuid": "d5353db9-d181-4f5c-af65-b79dd9632c6c"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_LATCH_PD_100K 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 17.338,
+                        "y": 0.411
+                    },
+                    "uuid": "5e83b797-2038-4e1f-aadd-c9f1b0299e02"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 33.10002,
+                        "y": -49.191227
+                    },
+                    "uuid": "2bbe1ba2-0e88-432e-862a-d02394139003"
+                },
+                {
+                    "description": "PZT_TR_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -51.943
+                    },
+                    "uuid": "35e0e8e5-f3ec-4536-b0bc-c669e8c778a6"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_BR_GND 的PTH 焊盘 1 [gnd]",
+                    "pos": {
+                        "x": 35.052,
+                        "y": 36.068
+                    },
+                    "uuid": "3cc0e013-1796-4934-9ada-8dacf9843be0"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BR_R_DIS_1M 的焊盘 2 [gnd]",
+                    "pos": {
+                        "x": 32.924637,
+                        "y": 34.545315
+                    },
+                    "uuid": "b477161f-76eb-4e9f-b003-73059a0f02a9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 3 [en]",
+                    "pos": {
+                        "x": -5.72,
+                        "y": 8.2
+                    },
+                    "uuid": "98da7341-b611-5a78-a5e7-391a281da1d1"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 60.745
+                    },
+                    "uuid": "48708aaa-1314-5868-a853-b5fe385b5b89"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_R_EN_PU_10K 的焊盘 1 [en]",
+                    "pos": {
+                        "x": 14.733,
+                        "y": -13.335
+                    },
+                    "uuid": "ff97abc0-0ca2-4932-b7f9-e971094ec7c6"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 3 [en]",
+                    "pos": {
+                        "x": -5.72,
+                        "y": 8.2
+                    },
+                    "uuid": "98da7341-b611-5a78-a5e7-391a281da1d1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "B.Cu 上 TAIL_MX125_B 的焊盘 2 [usb_dn]",
+                    "pos": {
+                        "x": 1.25,
+                        "y": 84.7
+                    },
+                    "uuid": "0f090efb-02a2-40a4-b66b-65afe5c19d4f"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 13 [usb_dn]",
+                    "pos": {
+                        "x": 6.98,
+                        "y": 8.2
+                    },
+                    "uuid": "91304c47-6f9f-5d1f-9415-c73e35a6c58b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 TAIL_MX125_F 的焊盘 4 [usb_dp]",
+                    "pos": {
+                        "x": 1.25,
+                        "y": 84.7
+                    },
+                    "uuid": "bd740e4d-3c16-41c6-8197-eeaac36c2a01"
+                },
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 14 [usb_dp]",
+                    "pos": {
+                        "x": 8.25,
+                        "y": 8.2
+                    },
+                    "uuid": "b68831a2-0c8d-5374-9b59-b7da45bf4371"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 36 [uart_rx]",
+                    "pos": {
+                        "x": -3.18,
+                        "y": -10.2
+                    },
+                    "uuid": "6c0315e5-d626-5a89-858d-965fc892ff69"
+                },
+                {
+                    "description": "B.Cu 上 TAIL_MX125_B 的焊盘 1 [uart_rx]",
+                    "pos": {
+                        "x": 2.5,
+                        "y": 84.7
+                    },
+                    "uuid": "3fc1e972-7b0f-44f0-9ba6-19590a3b92a3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "MCU_ESP32_S3 的PTH 焊盘 37 [uart_tx]",
+                    "pos": {
+                        "x": -4.45,
+                        "y": -10.2
+                    },
+                    "uuid": "f8aa0c09-3b76-5996-84da-e49782cd9284"
+                },
+                {
+                    "description": "F.Cu 上 TAIL_MX125_F 的焊盘 5 [uart_tx]",
+                    "pos": {
+                        "x": 2.5,
+                        "y": 84.7
+                    },
+                    "uuid": "411923df-cd1d-4a12-a57a-604c7e55f809"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 4 [pzt_vref_tl]",
+                    "pos": {
+                        "x": -17.5,
+                        "y": -22.4375
+                    },
+                    "uuid": "cb699c13-913b-43eb-9c47-f5a778cde39e"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 1 [pzt_vref_tl]",
+                    "pos": {
+                        "x": -13.3,
+                        "y": -23.1875
+                    },
+                    "uuid": "e2dfb046-10c5-47c7-8b4b-5dbc136f74c9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 6 [pzt_vref_tr]",
+                    "pos": {
+                        "x": -16.2,
+                        "y": -22.4375
+                    },
+                    "uuid": "8af5ff9e-af9d-4286-b885-05873eeed2b3"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 2 [pzt_vref_tr]",
+                    "pos": {
+                        "x": -12.8,
+                        "y": -23.1875
+                    },
+                    "uuid": "ace2e4d4-c6e7-4d76-9617-885e01611c84"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 8 [pzt_vref_bl]",
+                    "pos": {
+                        "x": -15.55,
+                        "y": -28.1625
+                    },
+                    "uuid": "de57b2e9-4756-4859-a6d1-1583829ccd1e"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 3 [pzt_vref_bl]",
+                    "pos": {
+                        "x": -12.3,
+                        "y": -23.1875
+                    },
+                    "uuid": "b0c59b94-9d6b-43e5-9da7-bd050f38609f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_CMP_TLV1814 的焊盘 10 [pzt_vref_br]",
+                    "pos": {
+                        "x": -16.85,
+                        "y": -28.1625
+                    },
+                    "uuid": "c05d3494-da20-4ae4-914e-dd0378e08dea"
+                },
+                {
+                    "description": "F.Cu 上 PZT_DAC_MCP4728 的焊盘 4 [pzt_vref_br]",
+                    "pos": {
+                        "x": -11.8,
+                        "y": -23.1875
+                    },
+                    "uuid": "6e4f7860-c497-4134-bd26-429edeb5e9a1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 TAIL_MX125_F 的焊盘 1 [sys_5v_in]",
+                    "pos": {
+                        "x": -2.5,
+                        "y": 84.7
+                    },
+                    "uuid": "a6a5ea4a-92d8-4cb2-a546-79ffe32024e0"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_GATE_100K 的焊盘 2 [sys_5v_in]",
+                    "pos": {
+                        "x": 19.558,
+                        "y": -5.969
+                    },
+                    "uuid": "c91ed3a6-49c5-4085-a9a6-f46f24f3033b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_R_GATE_100K 的焊盘 2 [sys_5v_in]",
+                    "pos": {
+                        "x": 19.558,
+                        "y": -5.969
+                    },
+                    "uuid": "c91ed3a6-49c5-4085-a9a6-f46f24f3033b"
+                },
+                {
+                    "description": "F.Cu 上 PW_Q_LOAD 的焊盘 2 [sys_5v_in]",
+                    "pos": {
+                        "x": 19.746,
+                        "y": -8.031
+                    },
+                    "uuid": "33bc58fc-d66f-448f-9518-58ea848b8b47"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 TAIL_MX125_F 的焊盘 2 [sys_5v_sw]",
+                    "pos": {
+                        "x": -1.25,
+                        "y": 84.7
+                    },
+                    "uuid": "fce9cb99-8c40-4bfd-9323-f1512ed9aad6"
+                },
+                {
+                    "description": "F.Cu 上 LED_C_SUP_100N 的焊盘 1 [sys_5v_sw]",
+                    "pos": {
+                        "x": 5.225,
+                        "y": 72.0
+                    },
+                    "uuid": "5bde230c-36a4-4317-9209-8f950b7a8099"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 LED_C_SUP_100N 的焊盘 1 [sys_5v_sw]",
+                    "pos": {
+                        "x": 5.225,
+                        "y": 72.0
+                    },
+                    "uuid": "5bde230c-36a4-4317-9209-8f950b7a8099"
+                },
+                {
+                    "description": "F.Cu 上 PW_Q_LOAD 的焊盘 3 [sys_5v_sw]",
+                    "pos": {
+                        "x": 18.796,
+                        "y": -9.906
+                    },
+                    "uuid": "852fe73f-474f-4907-bbd9-717b3539416d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 1 [sys_5v_sw]",
+                    "pos": {
+                        "x": 13.467,
+                        "y": -21.093
+                    },
+                    "uuid": "b0d061d7-35e7-45d0-a839-ef51ac8a3142"
+                },
+                {
+                    "description": "IMU_IM948 的PTH 焊盘 2 [sys_5v_sw]",
+                    "pos": {
+                        "x": -6.275,
+                        "y": -28.2
+                    },
+                    "uuid": "7c78bd0d-30b6-4144-a52d-76f7985ab3c0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 3 [sys_5v_sw]",
+                    "pos": {
+                        "x": 15.367,
+                        "y": -21.093
+                    },
+                    "uuid": "7d9437ca-c527-4b73-93a7-a2c10ee83c35"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 1 [sys_5v_sw]",
+                    "pos": {
+                        "x": 13.467,
+                        "y": -21.093
+                    },
+                    "uuid": "b0d061d7-35e7-45d0-a839-ef51ac8a3142"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 3 [sys_5v_sw]",
+                    "pos": {
+                        "x": 15.367,
+                        "y": -21.093
+                    },
+                    "uuid": "7d9437ca-c527-4b73-93a7-a2c10ee83c35"
+                },
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 MCU_C_EN_1U 的焊盘 1 [en]",
+                    "pos": {
+                        "x": -3.775,
+                        "y": 11.0
+                    },
+                    "uuid": "9c9e0a08-2887-4e0f-856a-9c84d02d43d0"
+                },
+                {
+                    "description": "TP_5VSW 的PTH 焊盘 1 [sys_5v_sw]",
+                    "pos": {
+                        "x": 19.05,
+                        "y": -25.781
+                    },
+                    "uuid": "dbd297fb-069c-4204-a7a9-68065ca70a71"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PW_Q_LOAD 的焊盘 3 [sys_5v_sw]",
+                    "pos": {
+                        "x": 18.796,
+                        "y": -9.906
+                    },
+                    "uuid": "852fe73f-474f-4907-bbd9-717b3539416d"
+                },
+                {
+                    "description": "F.Cu 上 PW_LDO_3V3 的焊盘 3 [sys_5v_sw]",
+                    "pos": {
+                        "x": 15.367,
+                        "y": -21.093
+                    },
+                    "uuid": "7d9437ca-c527-4b73-93a7-a2c10ee83c35"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 TAIL_MX125_F 的焊盘 3 [btn_sw]",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 84.7
+                    },
+                    "uuid": "6e38d01d-c2f0-458f-be18-155b38fb9dd9"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 60.745
+                    },
+                    "uuid": "48708aaa-1314-5868-a853-b5fe385b5b89"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 60.745
+                    },
+                    "uuid": "48708aaa-1314-5868-a853-b5fe385b5b89"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 D_BTN_START 的焊盘 1 [btn_sw]",
+                    "pos": {
+                        "x": 19.792,
+                        "y": 3.302
+                    },
+                    "uuid": "7092298a-d763-48b1-9012-e5f6789661cc"
+                },
+                {
+                    "description": "F.Cu 上 PW_R_BTN_SER_1K 的焊盘 1 [btn_sw]",
+                    "pos": {
+                        "x": 19.431,
+                        "y": -1.144
+                    },
+                    "uuid": "efbdb6d8-ebbb-4e49-b4df-152966bf423f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 D_BTN_START 的焊盘 1 [btn_sw]",
+                    "pos": {
+                        "x": 19.792,
+                        "y": 3.302
+                    },
+                    "uuid": "7092298a-d763-48b1-9012-e5f6789661cc"
+                },
+                {
+                    "description": "SW_EN 的PTH 焊盘 1 [en]",
+                    "pos": {
+                        "x": 3.17,
+                        "y": 55.245
+                    },
+                    "uuid": "408baeee-c1f2-5769-acb8-06776d0a3f0e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 BAT_R_TOP_1M 的焊盘 1 [bat_cell_p]",
+                    "pos": {
+                        "x": -6.825,
+                        "y": 72.0
+                    },
+                    "uuid": "36726e38-f565-43f2-9982-5ac7aa0b2c7b"
+                },
+                {
+                    "description": "B.Cu 上 TAIL_MX125_B 的焊盘 3 [bat_cell_p]",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 84.7
+                    },
+                    "uuid": "f87ee83e-46ad-46ca-ab4e-6d228ec9bb66"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_TL_SIG 的PTH 焊盘 1 [pzt_raw_tl]",
+                    "pos": {
+                        "x": -34.417,
+                        "y": -52.07
+                    },
+                    "uuid": "3a80aa7f-2be2-4706-bf64-f991edd9504b"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TL_R_SER_4K7 的焊盘 1 [pzt_raw_tl]",
+                    "pos": {
+                        "x": -32.999052,
+                        "y": -49.611413
+                    },
+                    "uuid": "5df9255f-f524-4456-88ba-89d4aeb8968c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TL_R_SER_4K7 的焊盘 1 [pzt_raw_tl]",
+                    "pos": {
+                        "x": -32.999052,
+                        "y": -49.611413
+                    },
+                    "uuid": "5df9255f-f524-4456-88ba-89d4aeb8968c"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TL_R_DIS_1M 的焊盘 1 [pzt_raw_tl]",
+                    "pos": {
+                        "x": -29.720871,
+                        "y": -51.800793
+                    },
+                    "uuid": "71afddf4-7964-443f-a735-f9e7117a1fcb"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_TR_R_SER_4K7 的焊盘 1 [pzt_raw_tr]",
+                    "pos": {
+                        "x": 28.34828,
+                        "y": -52.867473
+                    },
+                    "uuid": "6640c689-8ec0-45de-b541-084d5f0bb0e3"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_R_DIS_1M 的焊盘 1 [pzt_raw_tr]",
+                    "pos": {
+                        "x": 32.13858,
+                        "y": -50.532173
+                    },
+                    "uuid": "f0a69e3d-2f93-41bf-8cab-826e6216a61b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_TR_SIG 的PTH 焊盘 1 [pzt_raw_tr]",
+                    "pos": {
+                        "x": 29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "96865cc9-600b-437f-93aa-119fce29f316"
+                },
+                {
+                    "description": "F.Cu 上 PZT_TR_R_SER_4K7 的焊盘 1 [pzt_raw_tr]",
+                    "pos": {
+                        "x": 28.34828,
+                        "y": -52.867473
+                    },
+                    "uuid": "6640c689-8ec0-45de-b541-084d5f0bb0e3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_BL_SIG 的PTH 焊盘 1 [pzt_raw_bl]",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 36.068
+                    },
+                    "uuid": "22207b20-b6de-4c3c-b25b-30757dbab4dc"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BL_R_SER_4K7 的焊盘 1 [pzt_raw_bl]",
+                    "pos": {
+                        "x": -32.924637,
+                        "y": 34.545315
+                    },
+                    "uuid": "d11763d0-da74-4c63-aa67-7ba991085adc"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_BL_R_SER_4K7 的焊盘 1 [pzt_raw_bl]",
+                    "pos": {
+                        "x": -32.924637,
+                        "y": 34.545315
+                    },
+                    "uuid": "d11763d0-da74-4c63-aa67-7ba991085adc"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BL_R_DIS_1M 的焊盘 1 [pzt_raw_bl]",
+                    "pos": {
+                        "x": -36.291037,
+                        "y": 31.485615
+                    },
+                    "uuid": "a21f8d65-6607-4384-bc37-3e1aa1523ad1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_BR_R_SER_4K7 的焊盘 1 [pzt_raw_br]",
+                    "pos": {
+                        "x": 37.464915,
+                        "y": 30.480063
+                    },
+                    "uuid": "15aac1aa-702f-4f83-a3ee-8ffa069dbe8f"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BR_R_DIS_1M 的焊盘 1 [pzt_raw_br]",
+                    "pos": {
+                        "x": 34.002563,
+                        "y": 33.296085
+                    },
+                    "uuid": "b4bb5b02-f17c-4150-8a42-5400e381e0d9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "PZT_BR_SIG 的PTH 焊盘 1 [pzt_raw_br]",
+                    "pos": {
+                        "x": 38.989,
+                        "y": 32.766
+                    },
+                    "uuid": "ec82fbc1-f5ee-4b76-8d0e-f07f8f186676"
+                },
+                {
+                    "description": "F.Cu 上 PZT_BR_R_SER_4K7 的焊盘 1 [pzt_raw_br]",
+                    "pos": {
+                        "x": 37.464915,
+                        "y": 30.480063
+                    },
+                    "uuid": "15aac1aa-702f-4f83-a3ee-8ffa069dbe8f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "项目之间的连接缺失",
+            "items": [
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 1 [vcc]",
+                    "pos": {
+                        "x": -13.025,
+                        "y": -17.3
+                    },
+                    "uuid": "9b5f4d9f-13a5-400b-bcc7-423d5c970749"
+                },
+                {
+                    "description": "F.Cu 上 PZT_R_SCL_PU_4K7 的焊盘 2 [i2c_scl]",
+                    "pos": {
+                        "x": -11.375,
+                        "y": -17.3
+                    },
+                    "uuid": "9167a477-e814-4ecf-9597-2f62ec51dd70"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -33.702,
+                        "y": -48.631
+                    },
+                    "uuid": "0e6618e6-529d-4099-893d-4db30c2a74dd"
+                },
+                {
+                    "description": "PZT_TL_SIG 的参考字段",
+                    "pos": {
+                        "x": -34.417,
+                        "y": -50.87
+                    },
+                    "uuid": "56df4956-61eb-4698-8712-2fb120b46ffd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -33.21,
+                        "y": -52.519
+                    },
+                    "uuid": "03300bde-ea39-4fe5-a756-fa670bcbbd35"
+                },
+                {
+                    "description": "PZT_TL_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -34.417,
+                        "y": -52.07
+                    },
+                    "uuid": "ea406dd1-8b40-433f-a22b-4bf8ad3ea846"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -34.273,
+                        "y": 37.698
+                    },
+                    "uuid": "056ef0ae-6302-4366-80bd-9ac9690f8aac"
+                },
+                {
+                    "description": "PZT_BL_SIG 的参考字段",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 37.268
+                    },
+                    "uuid": "3d78d11a-83bb-443c-b2bd-7b67c14935b6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -34.323,
+                        "y": 37.58
+                    },
+                    "uuid": "16f526b3-2402-4d74-8563-4ce9204128b9"
+                },
+                {
+                    "description": "PZT_BL_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 36.068
+                    },
+                    "uuid": "a84cf667-fab0-46df-af17-219946ca5a6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -30.96,
+                        "y": -54.014
+                    },
+                    "uuid": "c2430102-41dc-44e6-ad42-7bcd7b8b5e92"
+                },
+                {
+                    "description": "PZT_TL_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "eeb94e6d-c668-4e04-937f-e9de7773ad17"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 36.469,
+                        "y": 34.466
+                    },
+                    "uuid": "4ab88581-f5fd-4938-8f7a-77969c9802cf"
+                },
+                {
+                    "description": "PZT_BR_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 35.052,
+                        "y": 36.068
+                    },
+                    "uuid": "639c06ec-a5f8-4307-9afd-1127ac2ecf68"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 27.095,
+                        "y": -53.01
+                    },
+                    "uuid": "9681be3c-b067-4653-aee3-b6bbb3c45c74"
+                },
+                {
+                    "description": "PZT_TR_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "904cbbc1-229d-4a17-b8c4-69fdd0bf4fba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 36.038,
+                        "y": -51.546
+                    },
+                    "uuid": "661af765-3a38-4a43-846e-30d89baae42f"
+                },
+                {
+                    "description": "PZT_TR_GND 的参考字段",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -50.743
+                    },
+                    "uuid": "a6a7def2-a9b4-46c4-8f93-d83818b00b9a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 35.915,
+                        "y": -51.563
+                    },
+                    "uuid": "231c5344-1358-4f4d-bfb2-5e6e0ea2571a"
+                },
+                {
+                    "description": "PZT_TR_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -51.943
+                    },
+                    "uuid": "c3620121-0a06-48f4-b36c-a7afc38f5a86"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -37.125,
+                        "y": 33.85
+                    },
+                    "uuid": "ad9469ce-3996-4b8d-96fc-10c0c0cc1562"
+                },
+                {
+                    "description": "PZT_BL_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -39.116,
+                        "y": 32.512
+                    },
+                    "uuid": "bf59e0f5-7792-4da4-9e7c-01b67bf64ac2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -3.783,
+                        "y": 89.742
+                    },
+                    "uuid": "bbf5ad20-3ef6-4ca8-8838-b7132fe7f165"
+                },
+                {
+                    "description": "TAIL_MX125_F 的 线段, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -4.11,
+                        "y": 89.36
+                    },
+                    "uuid": "6188fe37-d68c-495f-9904-beb49e9f68c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 1.133,
+                        "y": 89.783
+                    },
+                    "uuid": "140535b1-59e6-45cc-9b2b-912782ba8a66"
+                },
+                {
+                    "description": "TAIL_MX125_F 的 线段, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -4.11,
+                        "y": 89.81
+                    },
+                    "uuid": "80dd6f59-33dc-4c5f-93be-f9c2fa3f0f60"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 4.083,
+                        "y": 89.808
+                    },
+                    "uuid": "5fdf259c-4d47-4bde-8616-14b6aa43a4b5"
+                },
+                {
+                    "description": "TAIL_MX125_F 的 线段, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 4.11,
+                        "y": 89.81
+                    },
+                    "uuid": "4231e281-ce80-4b7c-84c7-61337e11e3b1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 37.848,
+                        "y": 33.309
+                    },
+                    "uuid": "3f9d4b50-b25c-4897-8e09-2adcd291c337"
+                },
+                {
+                    "description": "PZT_BR_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 38.989,
+                        "y": 32.766
+                    },
+                    "uuid": "7973523f-2c7c-4980-887a-b61396b6be96"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": -3.783,
+                        "y": 89.742
+                    },
+                    "uuid": "bbf5ad20-3ef6-4ca8-8838-b7132fe7f165"
+                },
+                {
+                    "description": "TAIL_MX125_B 的 线段, 位于 B.Silkscreen",
+                    "pos": {
+                        "x": -4.11,
+                        "y": 89.81
+                    },
+                    "uuid": "0b72b113-b2e0-4a30-b41e-0f0d8abd03d4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 4.083,
+                        "y": 89.808
+                    },
+                    "uuid": "5fdf259c-4d47-4bde-8616-14b6aa43a4b5"
+                },
+                {
+                    "description": "TAIL_MX125_B 的 线段, 位于 B.Silkscreen",
+                    "pos": {
+                        "x": 4.11,
+                        "y": 89.36
+                    },
+                    "uuid": "5865be8d-577e-4563-b0c9-3ec28d107939"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被板边截断的丝印",
+            "items": [
+                {
+                    "description": "Edge.Cuts 上的 线段",
+                    "pos": {
+                        "x": 1.133,
+                        "y": 89.783
+                    },
+                    "uuid": "140535b1-59e6-45cc-9b2b-912782ba8a66"
+                },
+                {
+                    "description": "TAIL_MX125_B 的 线段, 位于 B.Silkscreen",
+                    "pos": {
+                        "x": 4.11,
+                        "y": 89.81
+                    },
+                    "uuid": "22114b96-a990-42e9-9cdd-f8db439a7ee5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_TL_SIG 的参考字段",
+                    "pos": {
+                        "x": -34.417,
+                        "y": -50.87
+                    },
+                    "uuid": "56df4956-61eb-4698-8712-2fb120b46ffd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_BL_SIG 的参考字段",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 37.268
+                    },
+                    "uuid": "3d78d11a-83bb-443c-b2bd-7b67c14935b6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_TL_GND 的参考字段",
+                    "pos": {
+                        "x": -29.972,
+                        "y": -54.045
+                    },
+                    "uuid": "c2c629c3-7acf-4805-95d2-817f815a11db"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "LED_MCU_PWR 的 线段, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -11.45,
+                        "y": 12.55
+                    },
+                    "uuid": "cdaadb80-1a3f-4afd-bde3-1a2f2be45df3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "SW_EN 的 矩形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 2.52,
+                        "y": 60.345
+                    },
+                    "uuid": "a514ce1b-03bc-40d9-835f-e0a688671954"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "SW_EN 的 矩形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 2.52,
+                        "y": 60.345
+                    },
+                    "uuid": "a514ce1b-03bc-40d9-835f-e0a688671954"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_BR_GND 的参考字段",
+                    "pos": {
+                        "x": 35.052,
+                        "y": 37.268
+                    },
+                    "uuid": "1507517f-e595-422f-b1e8-865d3b11d232"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_TR_SIG 的参考字段",
+                    "pos": {
+                        "x": 29.972,
+                        "y": -54.045
+                    },
+                    "uuid": "e66a5224-585d-4f6a-a17e-0b43b9e706dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_TR_GND 的参考字段",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -50.743
+                    },
+                    "uuid": "a6a7def2-a9b4-46c4-8f93-d83818b00b9a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_BL_GND 的参考字段",
+                    "pos": {
+                        "x": -39.116,
+                        "y": 33.712
+                    },
+                    "uuid": "f8d15757-31d1-4a20-8bb3-fb39f2b86bc3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "SW_EN 的 矩形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 2.52,
+                        "y": 60.345
+                    },
+                    "uuid": "a514ce1b-03bc-40d9-835f-e0a688671954"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "PZT_BR_SIG 的参考字段",
+                    "pos": {
+                        "x": 38.989,
+                        "y": 33.966
+                    },
+                    "uuid": "dc9bfaf0-7022-4009-b558-c7d69d040b9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [
+                {
+                    "description": "TP_3V3 的参考字段",
+                    "pos": {
+                        "x": 14.25,
+                        "y": -13.335
+                    },
+                    "uuid": "dbabf78d-ead9-4f6a-b366-5aebd882f830"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "被阻焊层截断的丝印",
+            "items": [],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_TL_GND 的参考字段",
+                    "pos": {
+                        "x": -29.972,
+                        "y": -54.045
+                    },
+                    "uuid": "c2c629c3-7acf-4805-95d2-817f815a11db"
+                },
+                {
+                    "description": "PZT_TL_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "eeb94e6d-c668-4e04-937f-e9de7773ad17"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_BL_SIG 的参考字段",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 37.268
+                    },
+                    "uuid": "3d78d11a-83bb-443c-b2bd-7b67c14935b6"
+                },
+                {
+                    "description": "PZT_BL_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -34.925,
+                        "y": 36.068
+                    },
+                    "uuid": "a84cf667-fab0-46df-af17-219946ca5a6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_BL_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": -39.116,
+                        "y": 32.512
+                    },
+                    "uuid": "bf59e0f5-7792-4da4-9e7c-01b67bf64ac2"
+                },
+                {
+                    "description": "PZT_BL_GND 的参考字段",
+                    "pos": {
+                        "x": -39.116,
+                        "y": 33.712
+                    },
+                    "uuid": "f8d15757-31d1-4a20-8bb3-fb39f2b86bc3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_BR_GND 的参考字段",
+                    "pos": {
+                        "x": 35.052,
+                        "y": 37.268
+                    },
+                    "uuid": "1507517f-e595-422f-b1e8-865d3b11d232"
+                },
+                {
+                    "description": "PZT_BR_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 35.052,
+                        "y": 36.068
+                    },
+                    "uuid": "639c06ec-a5f8-4307-9afd-1127ac2ecf68"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_BR_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 38.989,
+                        "y": 32.766
+                    },
+                    "uuid": "7973523f-2c7c-4980-887a-b61396b6be96"
+                },
+                {
+                    "description": "PZT_BR_SIG 的参考字段",
+                    "pos": {
+                        "x": 38.989,
+                        "y": 33.966
+                    },
+                    "uuid": "dc9bfaf0-7022-4009-b558-c7d69d040b9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_TR_SIG 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 29.972,
+                        "y": -55.245
+                    },
+                    "uuid": "904cbbc1-229d-4a17-b8c4-69fdd0bf4fba"
+                },
+                {
+                    "description": "PZT_TR_SIG 的参考字段",
+                    "pos": {
+                        "x": 29.972,
+                        "y": -54.045
+                    },
+                    "uuid": "e66a5224-585d-4f6a-a17e-0b43b9e706dc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "丝印重叠",
+            "items": [
+                {
+                    "description": "PZT_TR_GND 的参考字段",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -50.743
+                    },
+                    "uuid": "a6a7def2-a9b4-46c4-8f93-d83818b00b9a"
+                },
+                {
+                    "description": "PZT_TR_GND 的 圆形, 位于 F.Silkscreen",
+                    "pos": {
+                        "x": 34.544,
+                        "y": -51.943
+                    },
+                    "uuid": "c3620121-0a06-48f4-b36c-a7afc38f5a86"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

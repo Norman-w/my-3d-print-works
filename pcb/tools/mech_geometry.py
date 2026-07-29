@@ -481,7 +481,7 @@ PCB_SLOT_POINTS = _embedded_substrate_points()
 # ===== 分区：模块开孔与螺丝让位 =====
 
 # 模块开孔相对于模块外形尺寸的单边装配间隙（mm）
-# ESP32-C6-N8: 本体 25.5×18.0mm；短边（天线±X）收紧，半孔长边（±Y）单独间隙
+# ESP32-S3-WROOM-1: C4 旋转后本体 25.5×18.0mm；短边（天线±X）收紧，半孔长边（±Y）单独间隙
 # IM948: X 向短边收紧；Y 向半孔开槽高度单独保留
 MODULE_CUTOUT_CLEARANCE_SHORT = 0.10  # 非半孔边单边间隙（先 0.10，可再收到 0.05）
 MODULE_CUTOUT_CLEARANCE_LONG = 0.05   # 半孔边开窗单边间隙（再收紧，焊盘外露到 FR4 便于手布）
@@ -501,7 +501,7 @@ _IMU_Y_OFFSET_KICAD = -float(_imu_module_offset[1])  # type: ignore[index] — Y
 _MCU_X_OFFSET_KICAD = float(_mcu_module_offset[0])  # type: ignore[index]
 _MCU_Y_OFFSET_KICAD = -float(_mcu_module_offset[1])  # type: ignore[index] — Y 取反
 
-# ESP32-C6-N8 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
+# ESP32-S3-WROOM-1 MCU 模块开孔（KiCad 坐标: x_center, y_center, width, height）
 # 位置从 SCAD mcu_module_offset 推导；宽=短边方向，高=半孔长边方向
 ESP32_CUTOUT = (
     _MCU_X_OFFSET_KICAD,

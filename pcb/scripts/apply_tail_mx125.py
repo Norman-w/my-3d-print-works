@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ===== 分区：导入/依赖 =====
-"""柄尾 MX1.25：正反各一颗 PicoBlade 53261-0571（1×5 + 侧耳）。
+"""C4 柄尾 MX1.25：正反各一颗 PicoBlade 53261-0571（1×5 + 侧耳）。
 
 替换旧金手指 / 单颗 10P。不手搓封装：校本库官方 Molex 几何 + 本地 3D。
 KiCad 9：Remove/Save 后 PCB_IO 会坏 → 清板与加件分两进程。
@@ -42,11 +42,11 @@ CONN_B = {
     "ref": "TAIL_MX125_B",
     "flip": True,
     "nets": {
-        "1": "gnd",
-        "2": "led_din",
+        "1": "uart_rx",
+        "2": "usb_dn",
         "3": "bat_cell_p",
-        "4": "usb_dn",
-        "5": "uart_rx",
+        "4": "led_din",
+        "5": "gnd",
     },
 }
 

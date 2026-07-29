@@ -1,5 +1,6 @@
 #include "status_led.h"
 
+#include "config.h"
 #include "led_strip.h"
 #include <esp_log.h>
 #include <esp_timer.h>
@@ -17,7 +18,6 @@ struct Color {
 };
 
 constexpr char kTag[] = "status_led";
-constexpr int kLedGpio = 8; // 板载 RGB LED 数据脚
 constexpr uint32_t kBlinkPeriodUs = 500'000; // 500ms
 constexpr float kBrightness = 0.05f; // 亮度控制因子 (0.0-1.0)，最低亮度，减少刺眼感
 
@@ -117,7 +117,7 @@ esp_err_t init() {
     }
 
     led_strip_config_t strip_config = {};
-    strip_config.strip_gpio_num = kLedGpio;
+    strip_config.strip_gpio_num = LED_PIN;
     strip_config.max_leds = 1;
     strip_config.led_pixel_format = LED_PIXEL_FORMAT_GRB;
     strip_config.led_model = LED_MODEL_WS2812;
@@ -141,7 +141,7 @@ esp_err_t init() {
     s_blink_on = true;
     update_output();
 
-    ESP_LOGI(kTag, "Status LED initialized on GPIO%d", kLedGpio);
+    ESP_LOGI(kTag, "Status LED initialized on GPIO%d", LED_PIN);
     return ESP_OK;
 }
 
@@ -258,4 +258,3 @@ void notify_data_activity(uint32_t hold_ms) {
 }
 
 } // namespace status_led
-

@@ -13,6 +13,8 @@ from "parts.ato" import BAT54S
 from "parts.ato" import PChannelMOSFET_SOT23
 from "parts.ato" import NChannelMOSFET_SOT23
 from "parts.ato" import AP2112K_3V3
+from "parts.ato" import MCP4728_MSOP10
+from "parts.ato" import TLV1814_TSSOP14
 from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 from "parts.ato" import MolexPicoBlade_53261_5P
@@ -20,55 +22,67 @@ from "parts.ato" import LED_0603
 from "parts.ato" import TactileSwitch45
 
 
-component SGFK_ESP32C6N8_Cutout:
-    """SGFK ESP32-C6-N8 半孔映射 — 真理源 pcb/lib/esp32c6n8/pinmap.py。
+component ESP32S3WROOM1_Cutout:
+    """C4 ESP32-S3-WROOM-1-N16R8 embedded half-hole interface.
 
-    顶视（元件面）：天线 −X；pin1–14 在 +Y（拍柄）；pin15–28 在 −Y（拍头/IMU）。
-    拍柄丝印 GND/3V3/EN/IO4…；拍头侧 IO9/BOOT…IO2/IO3/UART0/GND。
-    勿按模块背面丝印抄坐标。改脚位只改 pinmap.py → generate + validate。
+    Truth source: pcb/lib/esp32s3wroom1/pinmap.py. Top/component view,
+    antenna -X. GPIO35..37 are reserved by octal PSRAM and remain unused.
+    The cutout assembly cannot land underside EP41, so both perimeter GND
+    pads must be bonded with short, via-rich ground connections.
     """
     designator_prefix = "J"
     pin GND_1
     pin VCC_3V3
     pin EN
-    # IMU UART1：pad21 IO23=TX、pad20 IO22=RX（拍头侧，与 IM948 RXD/TXD 面对面平行交叉）
-    pin GPIO23_IMU_TX
-    pin GPIO22_IMU_RX
-    pin GPIO6_PZT_BL
-    pin GPIO7_PZT_BR
-    pin GPIO8_LED_DATA
-    pin GPIO9_BOOT
-    # pad 11 = GPIO10 → 电源自锁；pad 16 = GPIO18 → 尾部读键（勿再叫 GPIO10）
-    pin GPIO18_USER_BTN
-    pin PWR_LATCH
+    pin GPIO4_PZT_ADC_BL
+    pin GPIO5_PZT_ADC_BR
+    pin GPIO6_PZT_EDGE_BL
+    pin GPIO7_PZT_EDGE_BR
+    pin GPIO15_PZT_EDGE_TL
+    pin GPIO16_PZT_EDGE_TR
+    pin GPIO17_I2C_SDA
+    pin GPIO18_I2C_SCL
     pin USB_DN
     pin USB_DP
+    pin GPIO9_BAT_SENSE
+    pin GPIO21_LED_DATA
+    pin GPIO47_PWR_LATCH
+    pin GPIO48_USER_BTN
+    pin GPIO0_BOOT
+    pin GPIO40_IMU_TX
+    pin GPIO41_IMU_RX
     pin UART_RX
     pin UART_TX
-    pin GPIO3_PZT_TR
-    pin GPIO2_PZT_TL
-    pin GND_28
+    pin GPIO2_PZT_ADC_TR
+    pin GPIO1_PZT_ADC_TL
+    pin GND_40
 
-    # 绑定与 pcb/lib/esp32c6n8/pinmap.py PROJECT_BINDINGS 一一对应（validate 脚本会核对）
     GND_1 ~ pin 1
     VCC_3V3 ~ pin 2
     EN ~ pin 3
-    GPIO6_PZT_BL ~ pin 6
-    GPIO7_PZT_BR ~ pin 7
-    GPIO8_LED_DATA ~ pin 10
-    PWR_LATCH ~ pin 11
+    GPIO4_PZT_ADC_BL ~ pin 4
+    GPIO5_PZT_ADC_BR ~ pin 5
+    GPIO6_PZT_EDGE_BL ~ pin 6
+    GPIO7_PZT_EDGE_BR ~ pin 7
+    GPIO15_PZT_EDGE_TL ~ pin 8
+    GPIO16_PZT_EDGE_TR ~ pin 9
+    GPIO17_I2C_SDA ~ pin 10
+    GPIO18_I2C_SCL ~ pin 11
     USB_DN ~ pin 13
     USB_DP ~ pin 14
-    GPIO9_BOOT ~ pin 15
-    GPIO18_USER_BTN ~ pin 16
-    GPIO22_IMU_RX ~ pin 20
-    GPIO23_IMU_TX ~ pin 21
-    UART_RX ~ pin 24
-    UART_TX ~ pin 25
-    GPIO3_PZT_TR ~ pin 26
-    GPIO2_PZT_TL ~ pin 27
-    GND_28 ~ pin 28
-    footprint = "SmartPaddle:SGFK_ESP32-C6-N8_CUTOUT"
+    GPIO9_BAT_SENSE ~ pin 17
+    GPIO21_LED_DATA ~ pin 23
+    GPIO47_PWR_LATCH ~ pin 24
+    GPIO48_USER_BTN ~ pin 25
+    GPIO0_BOOT ~ pin 27
+    GPIO40_IMU_TX ~ pin 33
+    GPIO41_IMU_RX ~ pin 34
+    UART_RX ~ pin 36
+    UART_TX ~ pin 37
+    GPIO2_PZT_ADC_TR ~ pin 38
+    GPIO1_PZT_ADC_TL ~ pin 39
+    GND_40 ~ pin 40
+    footprint = "SmartPaddle:ESP32-S3-WROOM-1_CUTOUT"
 
 component IM948_Cutout:
     designator_prefix = "U"
@@ -106,7 +120,7 @@ component IM948_Cutout:
 module PZTDock:
     pin SIGNAL_PAD
     pin GND_PAD
-    pin MCU_SIGNAL
+    pin CMP_INPUT
     pin CLAMP_GND
     pin CLAMP_VCC
 
@@ -116,7 +130,7 @@ module PZTDock:
     signal vcc
 
     SIGNAL_PAD ~ pzt_raw
-    MCU_SIGNAL ~ pzt_mcu
+    CMP_INPUT ~ pzt_mcu
     GND_PAD ~ gnd
     CLAMP_GND ~ gnd
     CLAMP_VCC ~ vcc
@@ -132,20 +146,133 @@ module PZTDock:
     pzt_signal_pad.contact ~ SIGNAL_PAD
     pzt_gnd_pad.contact ~ GND_PAD
     series_resistor.p1 ~ pzt_raw
-    series_resistor.p2 ~ MCU_SIGNAL
+    series_resistor.p2 ~ CMP_INPUT
     bleed_resistor.p1 ~ pzt_raw
     bleed_resistor.p2 ~ CLAMP_GND
-    clamp_diode.signal_node ~ MCU_SIGNAL
+    clamp_diode.signal_node ~ CMP_INPUT
     clamp_diode.low_rail ~ CLAMP_GND
     clamp_diode.high_rail ~ CLAMP_VCC
+
+
+module PztThresholdFrontend:
+    """Four PZT thresholds: MCP4728 DAC + TLV1814 push-pull comparator.
+
+    The ADC peeks are DNP by default. Fitting JP_ADC_* connects the
+    comparator input through 1M to a dedicated ADC1 pin; comparator timing
+    remains independent of the ADC path.
+    """
+    pin VCC_3V3
+    pin GND
+    pin I2C_SDA
+    pin I2C_SCL
+    pin CMP_IN_TL
+    pin CMP_IN_TR
+    pin CMP_IN_BL
+    pin CMP_IN_BR
+    pin EDGE_TL
+    pin EDGE_TR
+    pin EDGE_BL
+    pin EDGE_BR
+    pin ADC_TL
+    pin ADC_TR
+    pin ADC_BL
+    pin ADC_BR
+
+    signal vref_tl
+    signal vref_tr
+    signal vref_bl
+    signal vref_br
+    signal adc_iso_tl
+    signal adc_iso_tr
+    signal adc_iso_bl
+    signal adc_iso_br
+
+    dac = new MCP4728_MSOP10
+    comparator = new TLV1814_TSSOP14
+    r_sda_pullup = new Resistor
+    r_scl_pullup = new Resistor
+    c_dac = new Capacitor
+    c_comparator = new Capacitor
+    r_adc_tl = new Resistor
+    r_adc_tr = new Resistor
+    r_adc_bl = new Resistor
+    r_adc_br = new Resistor
+    jp_adc_tl = new Resistor
+    jp_adc_tr = new Resistor
+    jp_adc_bl = new Resistor
+    jp_adc_br = new Resistor
+
+    r_sda_pullup.value = "4.7k"
+    r_scl_pullup.value = "4.7k"
+    c_dac.value = "100nF"
+    c_comparator.value = "100nF"
+    r_adc_tl.value = "1M"
+    r_adc_tr.value = "1M"
+    r_adc_bl.value = "1M"
+    r_adc_br.value = "1M"
+    jp_adc_tl.value = "0R DNP"
+    jp_adc_tr.value = "0R DNP"
+    jp_adc_bl.value = "0R DNP"
+    jp_adc_br.value = "0R DNP"
+
+    dac.vout_a ~ vref_tl
+    dac.vout_b ~ vref_tr
+    dac.vout_c ~ vref_bl
+    dac.vout_d ~ vref_br
+    dac.vss ~ GND
+    dac.ldac_n ~ GND
+    dac.scl ~ I2C_SCL
+    dac.sda ~ I2C_SDA
+    dac.vdd ~ VCC_3V3
+
+    comparator.vcc ~ VCC_3V3
+    comparator.gnd ~ GND
+    comparator.in_1_n ~ vref_tl
+    comparator.in_1_p ~ CMP_IN_TL
+    comparator.out_1 ~ EDGE_TL
+    comparator.in_2_n ~ vref_tr
+    comparator.in_2_p ~ CMP_IN_TR
+    comparator.out_2 ~ EDGE_TR
+    comparator.in_3_n ~ vref_bl
+    comparator.in_3_p ~ CMP_IN_BL
+    comparator.out_3 ~ EDGE_BL
+    comparator.in_4_n ~ vref_br
+    comparator.in_4_p ~ CMP_IN_BR
+    comparator.out_4 ~ EDGE_BR
+
+    r_sda_pullup.p1 ~ VCC_3V3
+    r_sda_pullup.p2 ~ I2C_SDA
+    r_scl_pullup.p1 ~ VCC_3V3
+    r_scl_pullup.p2 ~ I2C_SCL
+    c_dac.p1 ~ VCC_3V3
+    c_dac.p2 ~ GND
+    c_comparator.p1 ~ VCC_3V3
+    c_comparator.p2 ~ GND
+
+    r_adc_tl.p1 ~ CMP_IN_TL
+    r_adc_tl.p2 ~ adc_iso_tl
+    jp_adc_tl.p1 ~ adc_iso_tl
+    jp_adc_tl.p2 ~ ADC_TL
+    r_adc_tr.p1 ~ CMP_IN_TR
+    r_adc_tr.p2 ~ adc_iso_tr
+    jp_adc_tr.p1 ~ adc_iso_tr
+    jp_adc_tr.p2 ~ ADC_TR
+    r_adc_bl.p1 ~ CMP_IN_BL
+    r_adc_bl.p2 ~ adc_iso_bl
+    jp_adc_bl.p1 ~ adc_iso_bl
+    jp_adc_bl.p2 ~ ADC_BL
+    r_adc_br.p1 ~ CMP_IN_BR
+    r_adc_br.p2 ~ adc_iso_br
+    jp_adc_br.p1 ~ adc_iso_br
+    jp_adc_br.p2 ~ ADC_BR
 
 
 
 module TailHarness5P2S:
     """柄尾 MX1.25 卧贴：正反各 1×5P（Molex PicoBlade 53261-0571）。
 
-    正面 F @ rot0；背面 B @ Flip+rot180（开口朝外）→ 板坐标 X 上 pad 号左右对调：
-    F.p5(TX) 与 B.p1(GND) 同 X；B.p5(RX) 与 F.p1(5V) 同 X。勿按金手指「上下同号」理解。
+    C4 正面 F @ rot0；背面 B @ Flip+rot180（开口朝外），板坐标 X 上：
+    F.p1(5V) 对 B.p5(GND)，F.p4(D+) 对 B.p2(D-)，F.p5(TX) 对 B.p1(RX)。
     SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
     烧录走 USB D+/D−；充电仓 Type-C 通常无 D+/D−。
     引脚表 / 端面图：docs/1.25x10p/README.md 、output/assembly/smartpaddle_tail_wiring.html
@@ -169,11 +296,11 @@ module TailHarness5P2S:
     conn_f.p5 ~ UART_TX
 
     conn_b = new MolexPicoBlade_53261_5P
-    conn_b.p1 ~ GND
-    conn_b.p2 ~ LED_DIN
+    conn_b.p1 ~ UART_RX
+    conn_b.p2 ~ USB_DN
     conn_b.p3 ~ BAT_CELL_P
-    conn_b.p4 ~ USB_DN
-    conn_b.p5 ~ UART_RX
+    conn_b.p4 ~ LED_DIN
+    conn_b.p5 ~ GND
 
 
 
@@ -328,7 +455,7 @@ module BatterySense:
 
 
 module SmartPaddleRigid:
-    mcu = new SGFK_ESP32C6N8_Cutout
+    mcu = new ESP32S3WROOM1_Cutout
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
     tail = new TailHarness5P2S
@@ -336,12 +463,19 @@ module SmartPaddleRigid:
     debug_sw = new McuDebugControls
     pwr_led = new McuPowerLed
     battery = new BatterySense
+    pzt_frontend = new PztThresholdFrontend
 
-    # Inline LED interface components (atopile 0.2.x module nesting bug workaround)
+    # Inline LED and MCU bypass parts keep stable top-level addresses.
     led_r_data = new Resistor
     led_c_supply = new Capacitor
+    mcu_c_bulk = new Capacitor
+    mcu_c_dec = new Capacitor
+    en_c_delay = new Capacitor
     led_r_data.value = "330R"
     led_c_supply.value = "100nF"
+    mcu_c_bulk.value = "10uF"
+    mcu_c_dec.value = "100nF"
+    en_c_delay.value = "1uF"
 
     pzt_tr = new PZTDock
     pzt_tl = new PZTDock
@@ -359,6 +493,8 @@ module SmartPaddleRigid:
     signal uart_rx
     signal imu_uart_tx
     signal imu_uart_rx
+    signal i2c_sda
+    signal i2c_scl
     signal led_data
     signal led_din
     signal btn_sw
@@ -371,12 +507,20 @@ module SmartPaddleRigid:
     signal bat_cell_p
     signal bat_sense
 
-    signal pzt_tr_signal
-    signal pzt_tl_signal
-    signal pzt_br_signal
-    signal pzt_bl_signal
+    signal pzt_cmp_in_tr
+    signal pzt_cmp_in_tl
+    signal pzt_cmp_in_br
+    signal pzt_cmp_in_bl
+    signal pzt_edge_tr
+    signal pzt_edge_tl
+    signal pzt_edge_br
+    signal pzt_edge_bl
+    signal pzt_adc_tr
+    signal pzt_adc_tl
+    signal pzt_adc_br
+    signal pzt_adc_bl
 
-    # Power：充电总成 5V OUT 为唯一输入；无 USB/电池 OR。
+    # Power: charging assembly 5V OUT is the only system input.
     tail.SYS_5V_IN ~ sys_5v_in
     tail.GND ~ gnd
     power.SYS_5V_IN ~ sys_5v_in
@@ -385,9 +529,13 @@ module SmartPaddleRigid:
     power.GND ~ gnd
     mcu.VCC_3V3 ~ vcc
     mcu.GND_1 ~ gnd
-    mcu.GND_28 ~ gnd
+    mcu.GND_40 ~ gnd
+    mcu_c_bulk.p1 ~ vcc
+    mcu_c_bulk.p2 ~ gnd
+    mcu_c_dec.p1 ~ vcc
+    mcu_c_dec.p2 ~ gnd
 
-    # IM948：仅 VBUS←SYS_5V_SW；VBAT/VDDIO 悬空（模块内 IO 供电）。
+    # IM948 remains on switched 5V and UART1.
     imu.VBUS ~ sys_5v_sw
     imu.GND_1 ~ gnd
     imu.GND_8 ~ gnd
@@ -397,22 +545,23 @@ module SmartPaddleRigid:
     imu.TXD ~ imu_uart_rx
     imu.KEY ~ imu_key
     imu.GPIO ~ imu_gpio
-    mcu.GPIO23_IMU_TX ~ imu_uart_tx
-    mcu.GPIO22_IMU_RX ~ imu_uart_rx
+    mcu.GPIO40_IMU_TX ~ imu_uart_tx
+    mcu.GPIO41_IMU_RX ~ imu_uart_rx
 
-    # ESP32-C6 control, programming, and user input.
+    # ESP32-S3 control, programming and user input.
     mcu.EN ~ en
     power.EN ~ en
-    mcu.GPIO9_BOOT ~ boot_btn
-    mcu.GPIO18_USER_BTN ~ user_btn
-    mcu.PWR_LATCH ~ pwr_latch
+    en_c_delay.p1 ~ en
+    en_c_delay.p2 ~ gnd
+    mcu.GPIO0_BOOT ~ boot_btn
+    mcu.GPIO48_USER_BTN ~ user_btn
+    mcu.GPIO47_PWR_LATCH ~ pwr_latch
     power.PWR_LATCH ~ pwr_latch
     power.P_GATE ~ p_gate
     tail.BUTTON ~ btn_sw
     power.BUTTON_RAW ~ btn_sw
     power.BUTTON_GPIO ~ user_btn
 
-    # 宽栈道 BOOT/EN/开机测试键；MCU 旁可选电源灯。
     debug_sw.BOOT ~ boot_btn
     debug_sw.EN ~ en
     debug_sw.BUTTON ~ btn_sw
@@ -420,7 +569,7 @@ module SmartPaddleRigid:
     pwr_led.VCC_3V3 ~ vcc
     pwr_led.GND ~ gnd
 
-    # 烧录/调试尾插（与充电仓 Type-C 分离；仓口通常无 D+/D−）。
+    # Native USB and UART0 are exposed at the C4 paired tail pins.
     tail.USB_DP ~ usb_dp
     tail.USB_DN ~ usb_dn
     tail.UART_TX ~ uart_tx
@@ -430,42 +579,64 @@ module SmartPaddleRigid:
     mcu.UART_TX ~ uart_tx
     mcu.UART_RX ~ uart_rx
 
-    # 状态灯吃开关后 5V。
+    # Tail-local LED interface: supply/data components are placed near MX1.25.
     tail.LED_PLUS ~ sys_5v_sw
     tail.LED_DIN ~ led_din
     led_c_supply.p1 ~ sys_5v_sw
     led_c_supply.p2 ~ gnd
     led_r_data.p1 ~ led_data
     led_r_data.p2 ~ led_din
-    mcu.GPIO8_LED_DATA ~ led_data
+    mcu.GPIO21_LED_DATA ~ led_data
 
-    # 低电采样：只接电芯 B+（尾插 BAT_CELL_P），绝不能接 SYS_5V_*。
+    # Tail-local battery divider; S3 GPIO9 and IM948 ADIN can both observe it.
     tail.BAT_CELL_P ~ bat_cell_p
     battery.BAT_CELL_P ~ bat_cell_p
     battery.GND ~ gnd
     battery.SENSE ~ bat_sense
+    mcu.GPIO9_BAT_SENSE ~ bat_sense
 
     bringup.SYS_5V_SW ~ sys_5v_sw
     bringup.VCC_3V3 ~ vcc
     bringup.GND ~ gnd
 
-    # PZT：TL/TR 用对侧 IO2/IO3；BL/BR 仍在拍柄侧 IO6/IO7。
-    mcu.GPIO3_PZT_TR ~ pzt_tr_signal
-    pzt_tr.MCU_SIGNAL ~ pzt_tr_signal
+    # Dock clamps feed the comparator, never the MCU edge inputs directly.
+    pzt_tr.CMP_INPUT ~ pzt_cmp_in_tr
     pzt_tr.gnd ~ gnd
     pzt_tr.vcc ~ vcc
-
-    mcu.GPIO2_PZT_TL ~ pzt_tl_signal
-    pzt_tl.MCU_SIGNAL ~ pzt_tl_signal
+    pzt_tl.CMP_INPUT ~ pzt_cmp_in_tl
     pzt_tl.gnd ~ gnd
     pzt_tl.vcc ~ vcc
-
-    mcu.GPIO7_PZT_BR ~ pzt_br_signal
-    pzt_br.MCU_SIGNAL ~ pzt_br_signal
+    pzt_br.CMP_INPUT ~ pzt_cmp_in_br
     pzt_br.gnd ~ gnd
     pzt_br.vcc ~ vcc
-
-    mcu.GPIO6_PZT_BL ~ pzt_bl_signal
-    pzt_bl.MCU_SIGNAL ~ pzt_bl_signal
+    pzt_bl.CMP_INPUT ~ pzt_cmp_in_bl
     pzt_bl.gnd ~ gnd
     pzt_bl.vcc ~ vcc
+
+    pzt_frontend.VCC_3V3 ~ vcc
+    pzt_frontend.GND ~ gnd
+    pzt_frontend.I2C_SDA ~ i2c_sda
+    pzt_frontend.I2C_SCL ~ i2c_scl
+    pzt_frontend.CMP_IN_TL ~ pzt_cmp_in_tl
+    pzt_frontend.CMP_IN_TR ~ pzt_cmp_in_tr
+    pzt_frontend.CMP_IN_BL ~ pzt_cmp_in_bl
+    pzt_frontend.CMP_IN_BR ~ pzt_cmp_in_br
+    pzt_frontend.EDGE_TL ~ pzt_edge_tl
+    pzt_frontend.EDGE_TR ~ pzt_edge_tr
+    pzt_frontend.EDGE_BL ~ pzt_edge_bl
+    pzt_frontend.EDGE_BR ~ pzt_edge_br
+    pzt_frontend.ADC_TL ~ pzt_adc_tl
+    pzt_frontend.ADC_TR ~ pzt_adc_tr
+    pzt_frontend.ADC_BL ~ pzt_adc_bl
+    pzt_frontend.ADC_BR ~ pzt_adc_br
+
+    mcu.GPIO17_I2C_SDA ~ i2c_sda
+    mcu.GPIO18_I2C_SCL ~ i2c_scl
+    mcu.GPIO15_PZT_EDGE_TL ~ pzt_edge_tl
+    mcu.GPIO16_PZT_EDGE_TR ~ pzt_edge_tr
+    mcu.GPIO6_PZT_EDGE_BL ~ pzt_edge_bl
+    mcu.GPIO7_PZT_EDGE_BR ~ pzt_edge_br
+    mcu.GPIO1_PZT_ADC_TL ~ pzt_adc_tl
+    mcu.GPIO2_PZT_ADC_TR ~ pzt_adc_tr
+    mcu.GPIO4_PZT_ADC_BL ~ pzt_adc_bl
+    mcu.GPIO5_PZT_ADC_BR ~ pzt_adc_br

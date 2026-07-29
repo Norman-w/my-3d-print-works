@@ -7,12 +7,12 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 ## 核心功能
 
 ### 精准击球定位
-- 球拍四角各布一枚压电陶瓷传感器，以 GPIO ISR + CPU cycle 锁存采集振动波到达时间差（TDOA；ESP32-C6 仅 2 路 RMT RX，四通道不走 RMT）
+- 球拍四角各布一枚压电陶瓷传感器；C4 由 MCP4728 设四路门槛、TLV1814 输出数字边沿，再以 GPIO ISR + CPU cycle 锁存振动波到达时间差
 - 通过多项式回归模型将 TDOA 转换为拍面毫米级 XY 坐标
 - 支持 **每副球拍独立标定**，消除个体制造偏差，标定 RMSE < 3mm
 
 ### 挥拍姿态追踪
-- 内置 IM948 十轴 IMU（陀螺仪+加速度计+磁力计+气压计），250Hz 输出
+- 内置 IM948 十轴 IMU（陀螺仪+加速度计+磁力计+气压计）；当前固件 100 Hz 输出，250 Hz 为精简订阅后的待实测目标
 - 服务端运行 **Madgwick AHRS 姿态滤波器** + 零速更新（ZUPT）轨迹重建
 - 实时输出球拍三维方向、挥拍速度与空间轨迹
 
@@ -35,7 +35,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 ## 系统架构
 
 ```
-球拍硬件（ESP32-C6）         云端 / 本地服务器（Go）          Web 前端（React + Three.js）
+球拍硬件（C4 ESP32-S3）      云端 / 本地服务器（Go）          Web 前端（React + Three.js）
 ┌─────────────────┐       ┌────────────────────┐       ┌─────────────────────────┐
 │ 4× Piezo 传感器  │       │                    │       │                         │
 │ IM948 十轴 IMU   │──WiFi/WebSocket──▶│  SQLite (WAL)       │──REST API／WebSocket──▶│  Live · Shape · Sessions │
@@ -46,7 +46,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 | 层级 | 技术栈 | 说明 |
 |------|--------|------|
-| **传感器/固件** | C3: ESP32-C6；C4 起: ESP32-S3（或更强） | 压电 TDOA + 十轴 IMU；C6 无 4 路 RMT RX |
+| **传感器/固件** | C3: ESP32-C6；C4: ESP32-S3-WROOM-1-N16R8 | MCP4728 + TLV1814 四路边沿 TDOA + 十轴 IMU |
 | **外壳（模型）** | OpenSCAD（`enclosure/`） | 四零件分体壳；版本见下方「模型」线 |
 | **电路板** | 飞线 → FPC → 刚性骨架 PCB | 版本见下方「电路」线；与模型线独立编号 |
 | **后端** | Go, SQLite, WebSocket | REST API / 实时数据管道 / 定位算法 / 标定管理 |
@@ -71,7 +71,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 | 主线 | 能力 | 状态 |
 |------|------|------|
-| **V1** | **单 IMU**（拍面/甜区 IM948）+ ESP32-C6 | ✅ 当前主线 |
+| **V1** | **单 IMU**（拍面/甜区 IM948）；C3 用 C6、C4 升 S3 | ✅ 当前主线 |
 | **V2** | **双 IMU**（拍头+拍柄）+ 预计 ESP32-S3 等 | 规划中 |
 
 ### 模型（SCAD / 外壳）
@@ -91,7 +91,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 | **V1** | 成品模块 **飞线** | 历史 |
 | **V2** | **柔性 FPC**（备份见 `pcb_V3_flex_backup/`，目录名历史遗留） | 历史 / 备份 |
 | **V3** | **刚性 PCB**（ESP32-C6；MX1.25；USB/UART/电源网已修正） | 🔄 **已下单** Gerber `20260724-081156`，待回板 / bringup |
-| **V4** | PZT 比较器前端 + **ESP32-S3（或更强）** + 尾插线序重排（5V 正对 GND）+ 电池/LED 拉尾 | 📋 规划中，见 [`pcb/C4_PLAN.md`](../pcb/C4_PLAN.md) |
+| **V4** | MCP4728 + TLV1814 PZT 前端 + **ESP32-S3-WROOM-1-N16R8** + 尾插重排 + 电池/LED 拉尾 | 🛠️ 电气、固件及 atopile 0.12.5 Step 3.1→3.2 生成/复核完成；待 Norman 手工摆放、布线，摆放后由 Codex 回存脚本，见 [`pcb/C4_PLAN.md`](../pcb/C4_PLAN.md) |
 
 ### 软件
 
@@ -102,9 +102,9 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 ## 当前状态
 
-**当前组合：** 主线 **V1** · 模型 **M4** · 电路 **C3**（已下单，bringup 中）· 下一电路 **C4**（规划）· 软件仍早期。
+**当前组合：** 主线 **V1** · 模型 **M4** · 已下单实物 **C3**（bringup 中）· 当前设计目标 **C4**（待手工布线）· 软件仍早期。
 
-**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 见 [`pcb/C4_PLAN.md`](../pcb/C4_PLAN.md)。资料：[ESP32C6N8](ESP32C6N8/README.md) · [IM948](IM948/README.md) · [1.25x10p 尾插](1.25x10p/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
+**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814。资料：[C4 计划](../pcb/C4_PLAN.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
 
 ---
 
@@ -132,11 +132,11 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 |------|------|
 | TDOA 时间分辨率 | CPU cycle 锁存（非 12.5 ns RMT） |
 | 定位 RMSE（标定后）| < 3 mm |
-| IMU 采样率 | 250 Hz（IM948 输出频率） |
-| ADC 采样率 | 100 kSPS（ESP32-C6 内置 SAR ADC） |
+| IMU 上报率 | 当前固件 100 Hz @115200；250 Hz 为精简订阅后的待实测目标 |
+| PZT 时间源 | C4 TLV1814 推挽边沿 + CPU cycle；ADC 仅 DNP 调试窥探 |
 | WebSocket 延迟 | < 10 ms (本地) |
 | 数据库 | SQLite WAL，支持 10万+ 击球记录 |
 
-### ⚠️ ESP32-C6 定点数限制
+### C3 / C4 算力差异
 
-ESP32-C6 无硬件 FPU，浮点 cos() 比 ESP32-S3 慢 20×。IMU 传感器融合必须用定点数实现。主线 **V2（双 IMU）** 预计改用 ESP32-S3 等带 FPU/更强算力的 MCU。
+C3 的 ESP32-C6 无硬件 FPU，板端融合需控制浮点开销；C4 已升级到带硬件浮点的 ESP32-S3-N16R8。主线仍是单 IMU V1，升级 MCU 不等同于切换到双 IMU V2。

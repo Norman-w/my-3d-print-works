@@ -19,8 +19,8 @@ struct PiezoEvent {
 
 class PiezoCapture {
 public:
-    // ESP32-C6 仅有 2 个 RMT RX 候选通道，无法用 RMT 同时采 4 路。
-    // 硬件已定 4 路压电，因此用 GPIO 边沿 ISR + CPU cycle 锁存时间戳。
+    // C4 listens to four TLV1814 push-pull outputs. GPIO rising-edge ISR +
+    // CPU cycle timestamps remain the production TDOA source.
     static esp_err_t init();
 
     static esp_err_t wait_for_impact(PiezoEvent& event, uint32_t timeout_ms = 0);
@@ -36,7 +36,7 @@ public:
     /** 诊断：累计边沿 + 当前 GPIO 电平（敲击排查用） */
     static void log_diag();
 
-    /** 空闲时调用：对有 ADC 的脚采样，更新峰值（BR=IO7 无 ADC） */
+    /** Sample four dedicated ADC peeks when PZT_ADC_PEEK_ENABLE=1. */
     static void sample_adc_peaks();
 
 private:
