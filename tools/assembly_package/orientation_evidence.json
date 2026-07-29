@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "description": "Conservative, source-gated orientation evidence. Overrides are accepted only when the current PCB footprint description contains evidence_contains.",
+  "overrides": {
+    "LED_MCU_PWR": {
+      "status": "VERIFIED",
+      "instruction": "Pad 1 = A, Pad 2 = K. Match the LED package mark to the red Pad 1 marker on the map.",
+      "evidence_contains": "anode pad 1, cathode pad 2",
+      "evidence": "Current PCB footprint description"
+    }
+  }
+}
