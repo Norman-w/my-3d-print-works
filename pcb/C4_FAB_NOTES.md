@@ -34,3 +34,7 @@ ESP32-S3 与 IM948 都嵌入主板内部矩形开窗。开窗 `Edge.Cuts` 穿过
 6. S3 pinmap、固件 S3 构建、MX1.25 尾插线序、3D 半孔方向未完成最终复核。
 
 制造导出入口为 `pcb/scripts/export_jlcpcb.py`。`--preflight-only` 永不写 Gerber/钻孔/ZIP；`--skip-netlist-gate` 仅供诊断旧/损坏构建产物，永远不构成生产放行。当前 C4 已有 atopile 0.12.5 新网表，正式预检不得跳过该门禁。
+
+## 当前放行记录
+
+2026-07-30 针对板 SHA256 `86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70` 完成正式试导出：制造门禁 `OK`、DRC 0 error / 0 未连接、ZIP 解压完整、Fab 图和 176 孔钻孔图人工复核。该结论只放行小批量裸板工程样板，不放行未做 bring-up 的整机或量产。完整证据、风险和回板顺序见 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md)。

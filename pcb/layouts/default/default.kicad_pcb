@@ -2134,7 +2134,7 @@
 				)
 			)
 		)
-		(property "Value" "P-MOS load switch"
+		(property "Value" "AO3401A"
 			(at 0.000002 2.400003 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -11440,7 +11440,7 @@
 				)
 			)
 		)
-		(property "Value" "N-MOS latch"
+		(property "Value" "AO3400A"
 			(at -0.000005 2.400006 0)
 			(layer "F.Fab")
 			(hide yes)

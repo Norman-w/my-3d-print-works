@@ -61,8 +61,14 @@ component BAT54S:
 
 
 component PChannelMOSFET_SOT23:
+    """AOS AO3401A, -30 V P-channel load switch.
+
+    The exact part number is intentional: its SOT-23 pinout is
+    1=G, 2=S, 3=D, matching the C4 routed board.  Do not substitute a
+    differently pinned generic P-MOSFET without reviewing the footprint.
+    """
     designator_prefix = "Q"
-    value = "P-MOSFET"
+    value = "AO3401A"
     signal gate
     signal source
     signal drain
@@ -73,8 +79,13 @@ component PChannelMOSFET_SOT23:
 
 
 component NChannelMOSFET_SOT23:
+    """AOS AO3400A, 30 V logic-level N-channel latch transistor.
+
+    The exact part number is intentional: its SOT-23 pinout is
+    1=G, 2=S, 3=D, matching the C4 routed board.
+    """
     designator_prefix = "Q"
-    value = "N-MOSFET"
+    value = "AO3400A"
     signal gate
     signal source
     signal drain

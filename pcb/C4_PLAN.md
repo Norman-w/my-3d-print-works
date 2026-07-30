@@ -11,7 +11,7 @@ C3（刚性 PCB，Gerber `20260724-081156`）已下单。下一版电路升为 *
 
 外壳 SCAD 本轮不改（比较器/DAC 放大陆区）。版本表见 [`docs/README.md`](../docs/README.md)。
 
-当前交接状态：电气源、封装/脚位、固件及 atopile 0.12.5 的 Step 3.1→3.2 生成/复核由 Codex 完成；ESP-IDF 5.5.1 的 `esp32s3` 干净构建已通过。Norman 已开始在 KiCad 手工摆放/布线，并确认取消独立 `TP_GND`，故最终 C4 为 63 件；TL/TR 比较器通道按 2/1 对调以消除输入交叉。摆放完成后再由 Codex 回存 snapshot/放置脚本；KiCad 铜线仍由 Norman 手工完成，清单见 [`C4_ROUTING_HANDOFF.md`](C4_ROUTING_HANDOFF.md)。C3 铜线不迁移到 C4。
+当前交接状态：电气源、封装/脚位、固件及 atopile 0.12.5 的 Step 3.1→3.2 生成/复核由 Codex 完成；ESP-IDF 5.5.1 的 `esp32s3` 干净构建已通过。Norman 已完成 KiCad 手工摆放、布线和铺铜；最终 C4 为 63 件，TL/TR 比较器通道按 2/1 对调以消除输入交叉。全板位置快照、物理焊盘网络门禁、最终 DRC、Gerber/钻孔试导出和装配包均已完成。裸板可作为工程样板投板，整机仍须按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成电源、热、USB、内部 PTH 锣槽和回板 bring-up。C3 铜线从未迁移到 C4。
 
 ## 1. PZT 比较器前端
 
@@ -39,11 +39,13 @@ C3（刚性 PCB，Gerber `20260724-081156`）已下单。下一版电路升为 *
 - [x] 零件库：MCP4728 / TLV1814 / I²C 上拉 / 去耦
 - [x] 以受审 C4 pad→net 表迁移板文件、加入元件并清空 C3 铜线；`validate_c4_unrouted_board.py` 复核交接态
 - [x] 收口 Step 3.2 C4 安全导入器：实际历史 `.net` 格式/嵌套路径解析、源文件时效门禁、63 地址 + 182 已连接焊盘号拓扑核对、旧 C3/拆网/并网/已有铜线拒绝
-- [x] 生成并渲染复核摆放前 C4 可打印装配包（16 页 A4、DNP/Pad 1/顶底面/检查清单）及 MX1.25 尾插图；PCB 标题栏写入 C4；取消 `TP_GND` 后的 63 件最终包待摆放回存后重生成
+- [x] 生成并渲染复核摆放前 C4 可打印装配包（16 页 A4）及 MX1.25 尾插图；最终摆放/布线完成后已另生成当前 SHA 对应的 14 页、63 件装配包
 - [x] 经项目标准入口 `scripts/scad_to_kicad.sh` 的 Step 3.1，用标准路径实际版本 atopile 0.12.5 生成新 C4 网表；Step 3.2 自动复核/导入及无摆放元数据收尾均通过
 - [x] C4 制造说明、`Cmts.User` Fab 注释与安全导出门禁完成；A4 Fab 图渲染复核通过，未布线状态只产预检报告且禁止 Gerber/钻孔/ZIP
-- [ ] KiCad 手工摆放器件（Norman）；完成后由 Codex 用 Step 4.1e 回存 63 器件 `c4_placement_snapshot.json`、接入放置脚本并重生成装配资料
-- [ ] KiCad 手工布线、铺铜与最终 DRC（Norman）
+- [x] KiCad 手工摆放器件（Norman）；Step 4.1e 已回存并只读复核 63 器件 `c4_placement_snapshot.json`
+- [x] KiCad 手工布线、B.Cu GND 铺铜与最终 DRC；KiCad 9.0.6 为 0 error / 0 未连接
+- [x] 最终制造审计：当前物理焊盘逐一对网、Gerber/钻孔/ZIP 试导出、Fab/钻孔图和 63 件装配包人工复核
+- [ ] 回板 bring-up：外置 5 V 模块瞬态、AP2112 温升、完整 USB 数据尾线、PZT 门槛、射频和内部槽焊接
 - [x] 固件：I²C 设门槛；独立 ADC 窥探；边沿只听比较器输出脚
 
 ### 验收

@@ -28,9 +28,9 @@
 
 同日进一步把 BR ADC 从 GPIO5/pad5 移到更靠右的 GPIO8/pad12，并在 MCU 侧交换 IMU UART 角色以消除飞线交叉：GPIO41/pad34 为 TX，GPIO40/pad33 为 RX。项目锁定的 ESP-IDF 5.5.1 `esp32s3` 干净构建通过：16 MB Flash、80 MHz、Octal PSRAM 配置生效，`smartpaddle.bin` 为 873,488 字节，最小 2 MB app 分区剩余 58%。QIO 选择下烧录参数显示 DIO 是 ESP-IDF 的预期行为：ROM/首段以 DIO 装载，二级 bootloader 再切换 Quad 模式。
 
-Norman 确认手工摆放完成后，由 Codex 从项目菜单运行 **Step 4.1e**，一次备份全部 63 个 `atopile_address` 的坐标、绝对角度和正反面到 `layouts/default/c4_placement_snapshot.json`。快照默认拒绝覆盖；确需替换时必须显式使用 `--replace`。Step 4 在最终保存前会优先恢复这份全板快照，覆盖旧大陆/码头/栈道/尾插区域默认值；制造预检也会拒绝缺失或与当前板不一致的全板快照。
+Norman 确认手工摆放完成后，Codex 已从项目菜单运行 **Step 4.1e**，一次备份全部 63 个 `atopile_address` 的坐标、绝对角度和正反面到 `layouts/default/c4_placement_snapshot.json`。快照默认拒绝覆盖；确需替换时必须显式使用 `--replace`。Step 4 在最终保存前会优先恢复这份全板快照，覆盖旧大陆/码头/栈道/尾插区域默认值；制造预检也会拒绝缺失或与当前板不一致的全板快照。
 
-可打印 C4 装配包见 [`output/pdf/assembly-package/`](../output/pdf/assembly-package/)；现有文件是摆放前快照，不能作为最终装配依据。Norman 完成摆放并由 Codex 回存位置后须重新生成；完成布线后还需再生成一次，不能沿用 C3/V3 装配图。
+Norman 已完成摆放、布线和铺铜；本文件以下顺序保留作设计记录。Step 4.1e 已回存并复核 63 件全板快照，最终 14 页装配包已按当前 PCB SHA 生成到本地 `output/pdf/smartpaddle-ai-assembly/`。不能沿用摆放前 16 页包，也不能混用 C3/V3 装配图。可制造性与回板测试边界见 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md)。
 
 ## 建议顺序
 
@@ -45,13 +45,14 @@ Norman 确认手工摆放完成后，由 Codex 从项目菜单运行 **Step 4.1e
 7. 拍尾局部：电池分压、LED 供电/数据到 MX1.25；确认 `bat_cell_p` 绝不是 5V 网。
 8. 最后处理四路 1M+`JP_ADC_*`；BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用。跳线标注 DNP，不能把 ADC 接到比较器输出。
 
-## 收尾门禁
+## 收尾门禁（2026-07-30 已完成机器项）
 
-- 更新铺铜后 DRC 0 error；逐项解释或消除 warning。
-- USB D+/D−、四路比较器边沿、四路 ADC、I²C、UART 与全部电源网逐网连通。
-- 无悬空铜、无意外同网短接、无跨开槽铜皮。
-- 用 3D Viewer 检查 S3/IM948 半孔、正反 MX1.25 与拍尾器件的面/朝向。
-- 生产文件导出前重新运行 S3 pinmap 校验与固件 S3 构建。
+- [x] 更新铺铜后 DRC 0 error / 0 未连接；72 项 warning 已分类复核。
+- [x] USB D+/D−、四路比较器边沿、四路 ADC、I²C、UART 与全部电源网由网表、物理焊盘和 DRC 三层门禁复核。
+- [x] 无无网络铜；63 件位置快照与当前板一致。
+- [x] S3/IM948 内部开槽、正反 MX1.25、Fab 图与钻孔图人工复核。
+- [x] S3 pinmap、Atopile 0.12.5 安全构建和 ESP-IDF 5.5.1 干净构建通过。
+- [ ] 回板后验证实际焊点、供电、USB、PZT、射频和热；机器门禁不能替代这些实物项。
 
 先运行只产报告/Fab 图的生产预检：
 

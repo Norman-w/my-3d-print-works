@@ -91,7 +91,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 | **V1** | 成品模块 **飞线** | 历史 |
 | **V2** | **柔性 FPC**（备份见 `pcb_V3_flex_backup/`，目录名历史遗留） | 历史 / 备份 |
 | **V3** | **刚性 PCB**（ESP32-C6；MX1.25；USB/UART/电源网已修正） | 🔄 **已下单** Gerber `20260724-081156`，待回板 / bringup |
-| **V4** | MCP4728 + TLV1814 PZT 前端 + **ESP32-S3-WROOM-1-N16R8** + 尾插重排 + 电池/LED 拉尾 | 🧪 手工布线/铺铜已回存；KiCad 9.0.6 为 0 未连接、0 error，仍需位置快照、最终电气/制造审计和生产包，见 [`pcb/C4_PLAN.md`](../pcb/C4_PLAN.md) |
+| **V4** | MCP4728 + TLV1814 PZT 前端 + **ESP32-S3-WROOM-1-N16R8** + 尾插重排 + 电池/LED 拉尾 | ✅ 裸板工程样板门禁通过：63 件快照、物理焊盘对网、0 error/0 未连接、Gerber/钻孔试导出；整机仍待回板电源/热/USB/PZT/射频验证，见 [制造就绪审计](../pcb/C4_FAB_READINESS.md) |
 | **V5** | 从 C4 派生；独立 IP5305T 一体尾板、完整 USB 2.0、单 8P 线束、可换保护电池匣，主板 AP2112 改 TPS62162 | 📋 仅规划，必须与 M5 同步；见 [`pcb/C5_PLAN.md`](../pcb/C5_PLAN.md) |
 
 ### 软件
@@ -103,9 +103,9 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 ## 当前状态
 
-**当前组合：** 主线 **V1** · 模型 **M4** · 已下单实物 **C3**（bringup 中）· 当前设计目标 **C4**（手工布线已完成，进入最终打板审计）· 软件仍早期。下一代 `M5.C5` 已形成完整整机计划和可执行 SCAD 计划，但尚未进入原理图/SCAD实施和实物验证。
+**当前组合：** 主线 **V1** · 模型 **M4** · 已下单实物 **C3**（bringup 中）· 当前设计目标 **C4**（裸板工程样板审计通过，待小批量回板 bring-up）· 软件仍早期。下一代 `M5.C5` 已形成完整整机计划和可执行 SCAD 计划，但尚未进入原理图/SCAD实施和实物验证。
 
-**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814；C5 = 规划中的独立一体尾板与抽屉电池匣版本。资料：[C4 计划](../pcb/C4_PLAN.md) · [C5/M5 整机计划](../pcb/C5_PLAN.md) · [M5 SCAD 实施计划](../enclosure/M5_SCAD_PLAN.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
+**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814；C5 = 规划中的独立一体尾板与抽屉电池匣版本。资料：[C4 计划](../pcb/C4_PLAN.md) · [C4 制造就绪审计](../pcb/C4_FAB_READINESS.md) · [C5/M5 整机计划](../pcb/C5_PLAN.md) · [M5 SCAD 实施计划](../enclosure/M5_SCAD_PLAN.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
 
 ---
 

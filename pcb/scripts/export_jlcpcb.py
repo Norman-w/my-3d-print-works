@@ -86,11 +86,13 @@ def _board_gates(board: Path) -> list[str]:
     scripts = ROOT / "pcb" / "scripts"
     script = "import sys\nsys.path.insert(0, " + repr(str(scripts)) + ")\n" + r"""
 import pcbnew
-from collections import Counter
+from collections import Counter, defaultdict
 from migrate_c3_to_c4_unrouted import DNP_ADDRESSES, PAD_NETS, _addr
 board = pcbnew.LoadBoard(sys.argv[1])
 fails = []
 fps = list(board.GetFootprints())
+if len(fps) != 63:
+    fails.append(f"footprint_count={len(fps)} expected=63")
 refs = [fp.GetReference() for fp in fps]
 c = Counter(refs)
 if c.get('REF**', 0) or c.get('', 0):
@@ -98,11 +100,50 @@ if c.get('REF**', 0) or c.get('', 0):
 dups = [f"{r}x{n}" for r,n in c.items() if n>1 and r not in ('',)]
 if dups:
     fails.append("duplicate_refs=" + ",".join(dups[:12]))
-by_addr = {_addr(fp): fp for fp in fps if _addr(fp)}
+by_addr_all = defaultdict(list)
+for fp in fps:
+    if _addr(fp):
+        by_addr_all[_addr(fp)].append(fp)
+duplicate_addresses = sorted(
+    f"{addr}x{len(items)}" for addr, items in by_addr_all.items()
+    if len(items) != 1
+)
+if duplicate_addresses:
+    fails.append("duplicate_atopile_addresses=" + ",".join(duplicate_addresses[:12]))
+by_addr = {addr: items[0] for addr, items in by_addr_all.items()}
 missing = sorted(set(PAD_NETS) - set(by_addr))
 unexpected = sorted(set(by_addr) - set(PAD_NETS))
 if missing or unexpected:
     fails.append(f"c4_addresses missing={missing} unexpected={unexpected}")
+
+# A fresh generated netlist proves the source topology, but it does not prove
+# that the hand-routed board still assigns every physical pad to that topology.
+# Check all repeated/stacked physical pads as well as the canonical pad-number
+# set before allowing Gerber export.
+pad_net_errors = []
+for addr, expected_pads in sorted(PAD_NETS.items()):
+    fp = by_addr.get(addr)
+    if fp is None:
+        continue
+    actual_pads = defaultdict(list)
+    for pad in fp.Pads():
+        actual_pads[pad.GetNumber()].append(pad.GetNetname() or "")
+    if set(actual_pads) != set(expected_pads):
+        pad_net_errors.append(
+            f"{addr}.padset expected={sorted(expected_pads)} actual={sorted(actual_pads)}"
+        )
+        continue
+    for pad_number, expected_net in expected_pads.items():
+        for physical_index, actual_net in enumerate(actual_pads[pad_number]):
+            if actual_net != expected_net:
+                pad_net_errors.append(
+                    f"{addr}.pad{pad_number}[{physical_index}] "
+                    f"expected={expected_net or '<none>'} actual={actual_net or '<none>'}"
+                )
+if pad_net_errors:
+    fails.append(
+        f"board_pad_nets={len(pad_net_errors)} " + " | ".join(pad_net_errors[:12])
+    )
 title = board.GetTitleBlock().GetTitle()
 revision = board.GetTitleBlock().GetRevision()
 if title != 'SmartPaddle Rigid PCB' or revision != 'C4':
@@ -129,6 +170,13 @@ copper_zones = [board.GetArea(i) for i in range(board.GetAreaCount())
                 if not board.GetArea(i).GetIsRuleArea()]
 if not copper_zones:
     fails.append("copper_zones=0")
+elif not any((zone.GetNetname() or '') == 'gnd' for zone in copper_zones):
+    fails.append("gnd_copper_zone=0")
+if board.GetCopperLayerCount() != 2:
+    fails.append(f"copper_layers={board.GetCopperLayerCount()} expected=2")
+thickness_mm = pcbnew.ToMM(board.GetDesignSettings().GetBoardThickness())
+if abs(thickness_mm - 0.8) > 0.001:
+    fails.append(f"board_thickness_mm={thickness_mm:.6f} expected=0.8")
 nn = sum(1 for t in board.GetTracks() if not (t.GetNetname() or ''))
 if nn:
     fails.append(f"no_net_copper={nn}")
@@ -140,6 +188,9 @@ print("\n".join(fails))
         capture_output=True,
         text=True,
     )
+    if proc.returncode != 0:
+        detail = (proc.stderr or proc.stdout or "no diagnostic output").strip()
+        return [f"board_gate_executor_failed rc={proc.returncode}: {detail[-500:]}"]
     out = (proc.stdout or "").strip()
     return [line for line in out.splitlines() if line.strip()]
 
@@ -262,6 +313,7 @@ def main() -> int:
     gerbers.mkdir(parents=True, exist_ok=True)
     drill.mkdir(parents=True, exist_ok=True)
     reports.mkdir(parents=True, exist_ok=True)
+    board_sha = hashlib.sha256(args.board.read_bytes()).hexdigest()
 
     gate_fails: list[str] = []
     gate_fails.extend(_board_gates(args.board))
@@ -341,7 +393,15 @@ def main() -> int:
         )
     finally:
         shutil.rmtree(shifted_fab_dir, ignore_errors=True)
-    board_sha = hashlib.sha256(args.board.read_bytes()).hexdigest()
+    board_sha_after_preflight = hashlib.sha256(args.board.read_bytes()).hexdigest()
+    if board_sha_after_preflight != board_sha:
+        gate_fails.append(
+            "board_changed_during_preflight "
+            f"before={board_sha} after={board_sha_after_preflight}"
+        )
+        (reports / "export_gates.txt").write_text(
+            "\n".join(gate_fails) + "\n", encoding="utf-8"
+        )
     manifest = {
         "schema_version": 1,
         "board": str(args.board.resolve()),
@@ -408,6 +468,20 @@ def main() -> int:
             str(args.board),
         ]
     )
+
+    board_sha_after_export = hashlib.sha256(args.board.read_bytes()).hexdigest()
+    if board_sha_after_export != board_sha:
+        failure = (
+            "board_changed_during_export "
+            f"before={board_sha} after={board_sha_after_export}"
+        )
+        if failure not in gate_fails:
+            gate_fails.append(failure)
+        (reports / "export_gates.txt").write_text(
+            "\n".join(gate_fails) + "\n", encoding="utf-8"
+        )
+        manifest["gate_failures"] = gate_fails
+        manifest["production_ready"] = False
 
     if gate_fails:
         print("DEBUG export complete with failed gates; no upload ZIP is permitted:")

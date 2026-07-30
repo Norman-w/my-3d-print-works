@@ -48,8 +48,8 @@ TEXT_THICKNESS = 0.10
 READABLE_REFS = {
     'mcu': ('MCU_ESP32_S3', 'ESP32-S3-WROOM-1-N16R8'),
     'imu': ('IMU_IM948', 'IM948'),
-    'power.q_power': ('PW_Q_LOAD', 'P-MOS load switch'),
-    'power.q_latch': ('PW_Q_LATCH', 'N-MOS latch'),
+    'power.q_power': ('PW_Q_LOAD', 'AO3401A'),
+    'power.q_latch': ('PW_Q_LATCH', 'AO3400A'),
     'power.r_gate': ('PW_R_GATE_100K', '100k'),
     'power.r_button_series': ('PW_R_BTN_SER_1K', '1k'),
     'power.r_latch_pd': ('PW_R_LATCH_PD_100K', '100k'),

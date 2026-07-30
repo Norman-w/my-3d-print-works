@@ -57,7 +57,7 @@ $KPY pcb/scripts/step4_ato_placement.py          # 仅移动仍位于 ato 网格
 
 ### 当前 C4 手工布线板
 
-当前 `layouts/default/default.kicad_pcb` 的手工布线/铺铜已于提交 `828f6e1` 回存；KiCad 9.0.6 DRC 为 0 未连接、0 error，剩余项为丝印和库封装一致性 warning。原交接板的独立 `TP_GND` 已按 Norman 确认取消；2026-07-30 的 atopile 0.12.5 新网表与当前板均为 63 个封装。正式位置快照和最终制造审计尚未完成前不要选择 Step 4，也不得再运行 Step 3.2 写入或带 `--yes-clear-copper` 的迁移命令。
+当前 `layouts/default/default.kicad_pcb` 的手工布线/铺铜已于提交 `828f6e1` 回存；KiCad 9.0.6 DRC 为 0 未连接、0 error，剩余 72 项均为已复核的丝印/库封装一致性 warning。原交接板的独立 `TP_GND` 已按 Norman 确认取消；2026-07-30 的 atopile 0.12.5 新网表、当前板和全板快照均为 63 个封装。最终物理焊盘对网、Gerber/钻孔/ZIP 试导出和装配包已通过；裸板可投工程样板，但整机仍有电源、热、USB、内部 PTH 锣槽和回板实测条件，见 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md)。不得再运行 Step 3.2 写入或带 `--yes-clear-copper` 的迁移命令。
 
 ```sh
 # 校验器名称保留历史的 unrouted；当前有铜板只能先使用其显式 check-only/允许铜线模式。
@@ -118,11 +118,11 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 
 ## Status
 
-当前分支已包含 C4 手工布线/铺铜 PCB。后续工作:
+当前分支已包含 C4 手工布线/铺铜 PCB、63 件全板快照和最终制造审计。后续工作:
 
-- 用 Step 4.1e 回存 `c4_placement_snapshot.json`，并在副本上复测恢复；禁止用恢复过程覆盖当前权威板
-- 复核 atopile→网表→PCB 拓扑、电源/USB/关键焊盘、铜区和制造约束，再生成生产包
-- C4 嵌入模块制造说明与板上 Fab 注释已完成；正式生产包仍由布线/铺铜/连通/DRC/新网表门禁共同锁定
+- 当前 `c4_placement_snapshot.json` 已经 Step 4.1e 只读复核；禁止无意使用 `--replace` 覆盖接受基线
+- 下单时重新运行 `export_jlcpcb.py`，不得复用临时审计 ZIP；生产包仍由放置/铜线/连通/DRC/新网表/物理焊盘门禁共同锁定
+- 按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成小批量回板 bring-up；未通过外置 5 V、AP2112 热、USB、PZT、射频和槽边焊接前不得转量产
 - C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 和 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
 
-当前 C4 快照的可打印装配包已生成到 `output/pdf/assembly-package/`，16 页渲染 QA 通过；尾插 HTML/端面图位于 `output/assembly/`。现有装配包是摆放前快照；应在摆放回存后和最终布线后分别重新生成。
+当前 C4 最终可打印装配包已生成到本地 `output/pdf/smartpaddle-ai-assembly/`：14 页 A4，63 个封装各映射一次，顶/底面、Pad 1、DNP、安装顺序、检查单和 BOM 均已渲染复核。旧 `output/pdf/assembly-package/` 16 页文件是摆放前快照，只能作历史资料；尾插 HTML/端面图位于 `output/assembly/`。
