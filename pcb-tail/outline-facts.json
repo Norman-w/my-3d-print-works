@@ -1,0 +1,38 @@
+{
+  "butt_y": -178.0961678557074,
+  "wall_t": 2.0,
+  "cavity_inset": 1.5,
+  "board_clearance": 0.3,
+  "total_inset": 3.8,
+  "board_thickness": 1.0,
+  "point_count": 96,
+  "layout_pcb": "pcb-tail/layouts/default/default.kicad_pcb",
+  "ato_entry": "main.ato:SmartPaddleTail",
+  "outer": {
+    "min_x": -16.430955139401863,
+    "max_x": 16.43095513940186,
+    "min_y": -12.178923995137213,
+    "max_y": 10.558591945907319,
+    "width": 32.86191027880372,
+    "height": 22.73751594104453,
+    "half_x": 16.430955139401863,
+    "half_y": 12.178923995137213
+  },
+  "edge": {
+    "min_x": -12.629327573906643,
+    "max_x": 12.629327573906641,
+    "min_y": -8.377341990030367,
+    "max_y": 6.758047252474494,
+    "width": 25.258655147813286,
+    "height": 15.13538924250486,
+    "half_x": 12.629327573906643,
+    "half_y": 8.377341990030367
+  },
+  "orientation": {
+    "plane": "XZ",
+    "front": "handle_end_-Y",
+    "back": "paddle_head_+Y",
+    "kicad_x": "handle_X",
+    "kicad_y": "handle_Z"
+  }
+}

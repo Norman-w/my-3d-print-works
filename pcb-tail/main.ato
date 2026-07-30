@@ -1,0 +1,11 @@
+"""SmartPaddle M5 尾部线路板（固定电池首版）。
+
+板面 = 拍柄尾端 XZ 截面；板厚沿世界 Y。
+正面 F.Cu 朝拍柄末端（−Y）；背面 B.Cu 朝拍头（+Y）。
+KiCad：X = 柄 X，Y = 柄 Z。
+
+本模块当前为裸板外形阶段，器件在外形冻结后再加。
+"""
+
+module SmartPaddleTail:
+    """M5 fixed-battery tail PCB — bare outline stage."""

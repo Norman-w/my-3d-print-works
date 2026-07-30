@@ -1,0 +1,31 @@
+SmartPaddle M5 tail PCB bare-board geometry report
+STATUS: BARE OUTLINE / ATO MODULE PRESENT / NOT FOR FABRICATION
+
+Entry: main.ato:SmartPaddleTail
+Layout: layouts/default/default.kicad_pcb
+
+Source profile: web/src/data/userBezierProfiles.json (handle loft butt slice)
+Butt world Y (DATUM_A): -178.0962 mm
+
+Orientation:
+  Board plane = handle XZ
+  F.Cu / front → handle end (−Y)
+  B.Cu / back  → paddle head (+Y)
+  KiCad X = handle X
+  KiCad Y = handle Z
+
+Inset stack (per side):
+  wall_t              = 2.00 mm
+  handle_cavity_inset = 1.50 mm
+  board_clearance     = 0.30 mm
+  total_inset         = 3.80 mm
+
+Outer butt (shell) extents (bbox):
+  width×height = 32.862 × 22.738 mm
+  |x|_max = 16.431 mm   |z|_max = 12.179 mm
+
+PCB Edge.Cuts extents (bbox):
+  width×height = 25.259 × 15.135 mm
+  |x|_max = 12.629 mm   |z|_max = 8.377 mm
+  points = 96
+  thickness = 1.00 mm
