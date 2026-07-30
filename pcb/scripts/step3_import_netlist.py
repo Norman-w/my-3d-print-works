@@ -6,7 +6,7 @@ does not assume ``pcb/build/default.net``.  It finds the newest
 ``default.net`` below ``pcb/build`` and refuses to use it when it predates the
 C4 electrical sources.
 
-Before touching KiCad, the importer verifies all 64 physical component
+Before touching KiCad, the importer verifies all 63 physical component
 addresses and the complete expected pad connectivity topology.  This rejects
 the checked-in C3 history netlist and prevents an old ESP32-C6 build from being
 applied to the C4 ESP32-S3 handoff board.  Applying nets is allowed only while

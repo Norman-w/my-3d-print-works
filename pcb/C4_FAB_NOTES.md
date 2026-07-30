@@ -27,8 +27,8 @@ ESP32-S3 与 IM948 都嵌入主板内部矩形开窗。开窗 `Edge.Cuts` 穿过
 以下任一条件存在时，只能生成预检报告，不能生成上传 ZIP：
 
 1. Step 3.1 尚未产生晚于 C4 电气源/S3 pinmap 的新网表，或 Step 3.2 `--check-only` 未通过。
-2. 标题栏不是 `SmartPaddle Rigid PCB / C4`，存在 C6 封装、缺少 64 个 C4 `atopile_address`，或 DNP 状态不符。
-3. 缺少已确认的 `c4_placement_snapshot.json`，或其 64 个器件坐标/角度/正反面与当前板不一致。
+2. 标题栏不是 `SmartPaddle Rigid PCB / C4`，存在 C6 封装、缺少 63 个 C4 `atopile_address`，或 DNP 状态不符。
+3. 缺少已确认的 `c4_placement_snapshot.json`，或其 63 个器件坐标/角度/正反面与当前板不一致。
 4. 板上没有手工走线/过孔，或没有至少一个非 rule-area 铜区。
 5. KiCad DRC 存在 error，或仍有任何 unconnected item。
 6. S3 pinmap、固件 S3 构建、MX1.25 尾插线序、3D 半孔方向未完成最终复核。

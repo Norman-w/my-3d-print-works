@@ -77,13 +77,16 @@ PROJECT_BINDINGS: dict[int, str] = {
     2: "VCC_3V3",
     3: "EN",
     4: "GPIO4_PZT_ADC_BL",
-    5: "GPIO5_PZT_ADC_BR",
     6: "GPIO6_PZT_EDGE_BL",
     7: "GPIO7_PZT_EDGE_BR",
-    8: "GPIO15_PZT_EDGE_TL",
-    9: "GPIO16_PZT_EDGE_TR",
+    # TLV1814 channel 1 is TR and channel 2 is TL so the top CMP_IN traces
+    # approach pins 5/7 without crossing.
+    8: "GPIO15_PZT_EDGE_TR",
+    9: "GPIO16_PZT_EDGE_TL",
     10: "GPIO17_I2C_SDA",
     11: "GPIO18_I2C_SCL",
+    # BR ADC moves right to avoid the long return across the MCU edge.
+    12: "GPIO8_PZT_ADC_BR",
     13: "USB_DN",
     14: "USB_DP",
     17: "GPIO9_BAT_SENSE",
@@ -91,8 +94,9 @@ PROJECT_BINDINGS: dict[int, str] = {
     24: "GPIO47_PWR_LATCH",
     25: "GPIO48_USER_BTN",
     27: "GPIO0_BOOT",
-    33: "GPIO40_IMU_TX",
-    34: "GPIO41_IMU_RX",
+    # Swap the MCU UART roles so the two short IMU links do not cross.
+    33: "GPIO40_IMU_RX",
+    34: "GPIO41_IMU_TX",
     36: "UART_RX",
     37: "UART_TX",
     38: "GPIO2_PZT_ADC_TR",
@@ -101,18 +105,19 @@ PROJECT_BINDINGS: dict[int, str] = {
 }
 
 FIRMWARE_GPIO: dict[str, int] = {
-    "PIEZO_PIN_1": 15,
-    "PIEZO_PIN_2": 16,
+    # Firmware channel order remains TL/TR/BL/BR.
+    "PIEZO_PIN_1": 16,
+    "PIEZO_PIN_2": 15,
     "PIEZO_PIN_3": 6,
     "PIEZO_PIN_4": 7,
     "PZT_ADC_PIN_1": 1,
     "PZT_ADC_PIN_2": 2,
     "PZT_ADC_PIN_3": 4,
-    "PZT_ADC_PIN_4": 5,
+    "PZT_ADC_PIN_4": 8,
     "PZT_I2C_SDA": 17,
     "PZT_I2C_SCL": 18,
-    "IMU_UART_TX": 40,
-    "IMU_UART_RX": 41,
+    "IMU_UART_TX": 41,
+    "IMU_UART_RX": 40,
     "LED_PIN": 21,
     "BAT_SENSE_GPIO": 9,
     "PWR_LATCH_GPIO": 47,

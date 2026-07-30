@@ -18,12 +18,15 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from pcb.tools.kicad_update_utils import load_board  # noqa: E402
+from pcb.scripts.migrate_c3_to_c4_unrouted import (  # noqa: E402
+    EXPECTED_C4_COMPONENTS,
+)
 
 DEFAULT_BOARD = ROOT / "pcb" / "layouts" / "default" / "default.kicad_pcb"
 DEFAULT_SNAPSHOT = (
     ROOT / "pcb" / "layouts" / "default" / "c4_placement_snapshot.json"
 )
-EXPECTED_COMPONENTS = 64
+EXPECTED_COMPONENTS = EXPECTED_C4_COMPONENTS
 
 
 def _address(fp) -> str:
@@ -98,7 +101,9 @@ def _compare(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Backup all 64 C4 placements")
+    parser = argparse.ArgumentParser(
+        description=f"Backup all {EXPECTED_COMPONENTS} C4 placements"
+    )
     parser.add_argument("--board", type=Path, default=DEFAULT_BOARD)
     parser.add_argument("--output", type=Path, default=DEFAULT_SNAPSHOT)
     parser.add_argument(

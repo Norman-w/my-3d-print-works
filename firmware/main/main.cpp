@@ -312,7 +312,7 @@ extern "C" void app_main() {
         }
 
         // WebSocket 推送：带通道号，便于敲击对照 TL/TR/BL/BR
-        // ch0=TL(IO15) ch1=TR(IO16) ch2=BL(IO6) ch3=BR(IO7)
+        // ch0=TL(IO16) ch1=TR(IO15) ch2=BL(IO6) ch3=BR(IO7)
         if (ws_data_has_client()) {
             status_led::notify_data_activity(300);
             char json_buf[384];

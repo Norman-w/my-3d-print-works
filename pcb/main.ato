@@ -35,13 +35,13 @@ component ESP32S3WROOM1_Cutout:
     pin VCC_3V3
     pin EN
     pin GPIO4_PZT_ADC_BL
-    pin GPIO5_PZT_ADC_BR
     pin GPIO6_PZT_EDGE_BL
     pin GPIO7_PZT_EDGE_BR
-    pin GPIO15_PZT_EDGE_TL
-    pin GPIO16_PZT_EDGE_TR
+    pin GPIO15_PZT_EDGE_TR
+    pin GPIO16_PZT_EDGE_TL
     pin GPIO17_I2C_SDA
     pin GPIO18_I2C_SCL
+    pin GPIO8_PZT_ADC_BR
     pin USB_DN
     pin USB_DP
     pin GPIO9_BAT_SENSE
@@ -49,8 +49,8 @@ component ESP32S3WROOM1_Cutout:
     pin GPIO47_PWR_LATCH
     pin GPIO48_USER_BTN
     pin GPIO0_BOOT
-    pin GPIO40_IMU_TX
-    pin GPIO41_IMU_RX
+    pin GPIO40_IMU_RX
+    pin GPIO41_IMU_TX
     pin UART_RX
     pin UART_TX
     pin GPIO2_PZT_ADC_TR
@@ -61,13 +61,13 @@ component ESP32S3WROOM1_Cutout:
     VCC_3V3 ~ pin 2
     EN ~ pin 3
     GPIO4_PZT_ADC_BL ~ pin 4
-    GPIO5_PZT_ADC_BR ~ pin 5
     GPIO6_PZT_EDGE_BL ~ pin 6
     GPIO7_PZT_EDGE_BR ~ pin 7
-    GPIO15_PZT_EDGE_TL ~ pin 8
-    GPIO16_PZT_EDGE_TR ~ pin 9
+    GPIO15_PZT_EDGE_TR ~ pin 8
+    GPIO16_PZT_EDGE_TL ~ pin 9
     GPIO17_I2C_SDA ~ pin 10
     GPIO18_I2C_SCL ~ pin 11
+    GPIO8_PZT_ADC_BR ~ pin 12
     USB_DN ~ pin 13
     USB_DP ~ pin 14
     GPIO9_BAT_SENSE ~ pin 17
@@ -75,8 +75,8 @@ component ESP32S3WROOM1_Cutout:
     GPIO47_PWR_LATCH ~ pin 24
     GPIO48_USER_BTN ~ pin 25
     GPIO0_BOOT ~ pin 27
-    GPIO40_IMU_TX ~ pin 33
-    GPIO41_IMU_RX ~ pin 34
+    GPIO40_IMU_RX ~ pin 33
+    GPIO41_IMU_TX ~ pin 34
     UART_RX ~ pin 36
     UART_TX ~ pin 37
     GPIO2_PZT_ADC_TR ~ pin 38
@@ -215,8 +215,10 @@ module PztThresholdFrontend:
     jp_adc_bl.value = "0R DNP"
     jp_adc_br.value = "0R DNP"
 
-    dac.vout_a ~ vref_tl
-    dac.vout_b ~ vref_tr
+    # TL/TR intentionally use channels 2/1 respectively.  This keeps the
+    # left/right CMP_IN traces from crossing at TLV1814 pins 5 and 7.
+    dac.vout_a ~ vref_tr
+    dac.vout_b ~ vref_tl
     dac.vout_c ~ vref_bl
     dac.vout_d ~ vref_br
     dac.vss ~ GND
@@ -227,12 +229,12 @@ module PztThresholdFrontend:
 
     comparator.vcc ~ VCC_3V3
     comparator.gnd ~ GND
-    comparator.in_1_n ~ vref_tl
-    comparator.in_1_p ~ CMP_IN_TL
-    comparator.out_1 ~ EDGE_TL
-    comparator.in_2_n ~ vref_tr
-    comparator.in_2_p ~ CMP_IN_TR
-    comparator.out_2 ~ EDGE_TR
+    comparator.in_1_n ~ vref_tr
+    comparator.in_1_p ~ CMP_IN_TR
+    comparator.out_1 ~ EDGE_TR
+    comparator.in_2_n ~ vref_tl
+    comparator.in_2_p ~ CMP_IN_TL
+    comparator.out_2 ~ EDGE_TL
     comparator.in_3_n ~ vref_bl
     comparator.in_3_p ~ CMP_IN_BL
     comparator.out_3 ~ EDGE_BL
@@ -391,14 +393,12 @@ module LEDInterface:
 
 
 module TestPads:
-    """Bringup 大陆测试焊盘：TP_3V3 / TP_SYS_5V_SW / TP_GND。BOOT/EN/开机用宽栈道轻触。"""
+    """Bringup 大陆测试焊盘：TP_3V3 / TP_SYS_5V_SW。BOOT/EN/开机用宽栈道轻触。"""
     pin VCC_3V3
     pin SYS_5V_SW
-    pin GND
 
     vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
     sys5_pad = new SmallWirePad;  sys5_pad.contact ~ SYS_5V_SW
-    gnd_pad = new SmallWirePad;   gnd_pad.contact ~ GND
 
 
 module McuDebugControls:
@@ -545,8 +545,8 @@ module SmartPaddleRigid:
     imu.TXD ~ imu_uart_rx
     imu.KEY ~ imu_key
     imu.GPIO ~ imu_gpio
-    mcu.GPIO40_IMU_TX ~ imu_uart_tx
-    mcu.GPIO41_IMU_RX ~ imu_uart_rx
+    mcu.GPIO41_IMU_TX ~ imu_uart_tx
+    mcu.GPIO40_IMU_RX ~ imu_uart_rx
 
     # ESP32-S3 control, programming and user input.
     mcu.EN ~ en
@@ -597,7 +597,6 @@ module SmartPaddleRigid:
 
     bringup.SYS_5V_SW ~ sys_5v_sw
     bringup.VCC_3V3 ~ vcc
-    bringup.GND ~ gnd
 
     # Dock clamps feed the comparator, never the MCU edge inputs directly.
     pzt_tr.CMP_INPUT ~ pzt_cmp_in_tr
@@ -632,11 +631,11 @@ module SmartPaddleRigid:
 
     mcu.GPIO17_I2C_SDA ~ i2c_sda
     mcu.GPIO18_I2C_SCL ~ i2c_scl
-    mcu.GPIO15_PZT_EDGE_TL ~ pzt_edge_tl
-    mcu.GPIO16_PZT_EDGE_TR ~ pzt_edge_tr
+    mcu.GPIO15_PZT_EDGE_TR ~ pzt_edge_tr
+    mcu.GPIO16_PZT_EDGE_TL ~ pzt_edge_tl
     mcu.GPIO6_PZT_EDGE_BL ~ pzt_edge_bl
     mcu.GPIO7_PZT_EDGE_BR ~ pzt_edge_br
     mcu.GPIO1_PZT_ADC_TL ~ pzt_adc_tl
     mcu.GPIO2_PZT_ADC_TR ~ pzt_adc_tr
     mcu.GPIO4_PZT_ADC_BL ~ pzt_adc_bl
-    mcu.GPIO5_PZT_ADC_BR ~ pzt_adc_br
+    mcu.GPIO8_PZT_ADC_BR ~ pzt_adc_br

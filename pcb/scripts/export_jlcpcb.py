@@ -175,7 +175,7 @@ def _netlist_gate_ok(board: Path) -> bool:
 
 
 def _placement_snapshot_gate_ok(board: Path) -> bool:
-    """Require the accepted 64-part placement and prove the board still matches it."""
+    """Require the accepted 63-part placement and prove the board still matches it."""
     if not PLACEMENT_SNAPSHOT.is_file():
         return False
     proc = subprocess.run(

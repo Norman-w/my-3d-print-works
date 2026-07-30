@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "pcb"))
+sys.path.insert(0, str(ROOT / "pcb" / "scripts"))
 
 from lib.esp32s3wroom1.pinmap import (  # noqa: E402
     FIRMWARE_GPIO,
@@ -16,6 +17,7 @@ from lib.esp32s3wroom1.pinmap import (  # noqa: E402
     PROJECT_BINDINGS,
     pad_xy,
 )
+from migrate_c3_to_c4_unrouted import PAD_NETS  # noqa: E402
 
 ATO = ROOT / "pcb" / "main.ato"
 MOD = ROOT / "pcb" / "layouts" / "lib" / "footprints.pretty" / "ESP32-S3-WROOM-1_CUTOUT.kicad_mod"
@@ -58,6 +60,19 @@ EXPECTED_PARTITIONS = {
     "ota_0": (0x210000, 0x400000),
     "ota_1": (0x610000, 0x400000),
     "storage": (0xA10000, 0x5F0000),
+}
+
+EXPECTED_TOP_CHANNEL_PADS = {
+    "mcu": {"8": "pzt_edge_tr", "9": "pzt_edge_tl"},
+    "pzt_frontend.dac": {"1": "pzt_vref_tr", "2": "pzt_vref_tl"},
+    "pzt_frontend.comparator": {
+        "1": "pzt_edge_tl",
+        "2": "pzt_edge_tr",
+        "4": "pzt_vref_tr",
+        "5": "pzt_cmp_in_tr",
+        "6": "pzt_vref_tl",
+        "7": "pzt_cmp_in_tl",
+    },
 }
 
 
@@ -180,6 +195,7 @@ def check_pzt_firmware() -> list[str]:
         "PZT_THRESHOLD_MV_BL",
         "PZT_THRESHOLD_MV_BR",
         "i2c_master_transmit",
+        "kDacChannelForLogical[kChannelCount] = {1, 0, 2, 3}",
     ):
         if token not in frontend:
             errors.append(f"pzt_frontend.cpp: missing {token}")
@@ -218,6 +234,36 @@ def check_pzt_firmware() -> list[str]:
     return errors
 
 
+def check_pzt_top_channel_order() -> list[str]:
+    """Keep the routing-driven TL/TR channel swap consistent everywhere."""
+    errors: list[str] = []
+    for address, expected in EXPECTED_TOP_CHANNEL_PADS.items():
+        actual = PAD_NETS.get(address, {})
+        for pad, net in expected.items():
+            if actual.get(pad) != net:
+                errors.append(
+                    f"PAD_NETS {address}.pad{pad}={actual.get(pad)!r}, expected {net!r}"
+                )
+
+    ato = ATO.read_text(encoding="utf-8")
+    required_ato = (
+        "dac.vout_a ~ vref_tr",
+        "dac.vout_b ~ vref_tl",
+        "comparator.in_1_n ~ vref_tr",
+        "comparator.in_1_p ~ CMP_IN_TR",
+        "comparator.out_1 ~ EDGE_TR",
+        "comparator.in_2_n ~ vref_tl",
+        "comparator.in_2_p ~ CMP_IN_TL",
+        "comparator.out_2 ~ EDGE_TL",
+        "mcu.GPIO15_PZT_EDGE_TR ~ pzt_edge_tr",
+        "mcu.GPIO16_PZT_EDGE_TL ~ pzt_edge_tl",
+    )
+    for token in required_ato:
+        if token not in ato:
+            errors.append(f"main.ato: missing routed TL/TR mapping {token!r}")
+    return errors
+
+
 def main() -> int:
     errors: list[str] = []
     if ORIENTATION["view"] != "top_component_side":
@@ -228,6 +274,7 @@ def main() -> int:
     errors.extend(check_consumers())
     errors.extend(check_firmware_target())
     errors.extend(check_pzt_firmware())
+    errors.extend(check_pzt_top_channel_order())
     if "esp32s3wroom1" not in STEP3.read_text(encoding="utf-8"):
         errors.append("step3_import_netlist.py does not import the C4 S3 pin map")
     if errors:

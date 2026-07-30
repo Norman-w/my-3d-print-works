@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = ROOT / "pcb" / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
-from migrate_c3_to_c4_unrouted import DNP_ADDRESSES
+from migrate_c3_to_c4_unrouted import DNP_ADDRESSES, EXPECTED_C4_COMPONENTS
 from step4_ato_placement import (
     BOARD_FILE,
     _address,
@@ -117,7 +117,7 @@ def main() -> int:
     missing_metadata = sorted(
         address for address in addressed if _readable_ref(address) is None
     )
-    if len(addressed) != 64 or missing_metadata:
+    if len(addressed) != EXPECTED_C4_COMPONENTS or missing_metadata:
         raise RuntimeError(
             "refusing partial C4 metadata update: "
             f"addresses={len(addressed)}, missing={missing_metadata}"

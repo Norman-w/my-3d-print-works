@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT))
 import yaml
 
 import pcbnew
+from migrate_c3_to_c4_unrouted import EXPECTED_C4_COMPONENTS
 from pcb.tools.kicad_update_utils import load_board, save_board, xy
 from pcb.tools.mech_geometry import (
     ESP32_CUTOUT,
@@ -88,7 +89,6 @@ READABLE_REFS = {
     'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
     'bringup.sys5_pad': ('TP_5VSW', 'sys_5v_sw'),
-    'bringup.gnd_pad': ('TP_GND', 'GND'),
 }
 
 # The C4 S3 model is a native STEP in millimetres. The legacy IM948 WRL
@@ -326,9 +326,12 @@ def _restore_full_placement_snapshot(fp_by_addr, path: Path) -> int:
     }
     if len(by_addr) != len(entries):
         raise RuntimeError(f"C4 placement snapshot has duplicate/invalid addresses: {path}")
-    if data.get("component_count") != len(entries) or len(entries) != 64:
+    if (
+        data.get("component_count") != len(entries)
+        or len(entries) != EXPECTED_C4_COMPONENTS
+    ):
         raise RuntimeError(
-            f"C4 placement snapshot expected 64 entries, got "
+            f"C4 placement snapshot expected {EXPECTED_C4_COMPONENTS} entries, got "
             f"metadata={data.get('component_count')!r} entries={len(entries)}"
         )
     if set(by_addr) != set(fp_by_addr):
@@ -441,7 +444,6 @@ def main():
 
         regulator_zone = {
             'power.ldo': (14.0, -20.6, 90),
-            # 远离 TP_GND (19.05,-19.558)，避免与 PW_C_IN_10U 过近
             'power.c_in': (18.402, -22.606, 0),
             'power.c_out': (18.3, -16.5, 0),
         }

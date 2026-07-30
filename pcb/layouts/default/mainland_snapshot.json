@@ -18,12 +18,6 @@
     "rot": 180.0
   },
   {
-    "addr": "bringup.gnd_pad",
-    "x": 19.05,
-    "y": -19.558,
-    "rot": 0.0
-  },
-  {
     "addr": "bringup.sys5_pad",
     "x": 19.05,
     "y": -25.781,

@@ -7,8 +7,8 @@
 // GPIO0 is used, exclusively for the BOOT switch.
 
 // --- Piezo comparator edges (TLV1814 push-pull outputs) ---
-#define PIEZO_PIN_1 GPIO_NUM_15  // Top-left blade corner
-#define PIEZO_PIN_2 GPIO_NUM_16  // Top-right blade corner
+#define PIEZO_PIN_1 GPIO_NUM_16  // Top-left; TLV1814 channel 2
+#define PIEZO_PIN_2 GPIO_NUM_15  // Top-right; TLV1814 channel 1
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner
 #define PIEZO_PIN_4 GPIO_NUM_7   // Bottom-right blade corner
 
@@ -17,7 +17,7 @@
 #define PZT_ADC_PIN_1 GPIO_NUM_1
 #define PZT_ADC_PIN_2 GPIO_NUM_2
 #define PZT_ADC_PIN_3 GPIO_NUM_4
-#define PZT_ADC_PIN_4 GPIO_NUM_5
+#define PZT_ADC_PIN_4 GPIO_NUM_8
 #define PZT_ADC_PEEK_ENABLE 0
 
 // MCP4728 programmable thresholds (internal 2.048V reference, gain x1).
@@ -31,8 +31,8 @@
 
 // --- IMU pins (IM948, UART1) ---
 #define IMU_UART_NUM   UART_NUM_1
-#define IMU_UART_TX    GPIO_NUM_40  // pad 33 → IMU RXD
-#define IMU_UART_RX    GPIO_NUM_41  // pad 34 ← IMU TXD
+#define IMU_UART_TX    GPIO_NUM_41  // pad 34 → IMU RXD
+#define IMU_UART_RX    GPIO_NUM_40  // pad 33 ← IMU TXD
 #define IMU_UART_BAUD  115200       // 固定 115200（升 230400 会在软复位后错位）
 #define IMU_UART_BAUD_HIGH 230400   // 保留常量；当前固件不再自动升级
 // 诊断：1=跳过 init_imu / imu_task；确认后改回 0

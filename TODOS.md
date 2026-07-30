@@ -39,12 +39,12 @@
   - [x] MCU 换 ESP32-S3-WROOM-1-N16R8；固件 target / 分区 / PSRAM / 脚位同步
   - [x] 尾插 MX1.25 线序重排：板坐标上 5V 正对 GND，USB/UART 成对（见 `docs/1.25x10p`）
   - [x] 电池分压、LED 数据串阻/去耦移到拍尾
-  - [x] C4 64 个器件生成、受审 pad→net 表和无铜线 KiCad 交接板
-  - [x] Step 3.2 C4 网表安全导入/复核器：真实 `.net` 解析、64 地址全拓扑门禁、旧/过时网表与已有铜线拒绝
-  - [x] C4 PCB 标题栏、16 页可打印装配包与 MX1.25 尾插装配图（渲染 QA 通过）
-  - [x] 经 `scripts/scad_to_kicad.sh` Step 3.1 用标准路径的 atopile 0.12.5 生成新 C4 网表；Step 3.2 完成 64 地址/183 连接焊盘号复核、189 实体焊盘赋网及无摆放元数据收尾
+  - [x] C4 63 个器件生成、受审 pad→net 表和无铜线 KiCad 交接板；独立 `TP_GND` 经 Norman 确认取消
+  - [x] Step 3.2 C4 网表安全导入/复核器：真实 `.net` 解析、63 地址全拓扑门禁、旧/过时网表与已有铜线拒绝
+  - [x] C4 PCB 标题栏、摆放前 16 页可打印装配包与 MX1.25 尾插装配图（渲染 QA 通过；63 件最终包待摆放回存后重生成）
+  - [x] 经 `scripts/scad_to_kicad.sh` Step 3.1 用标准路径的 atopile 0.12.5 生成新 C4 网表；Step 3.2 完成 63 地址/182 连接焊盘号复核、188 实体焊盘对网及无摆放元数据流程
   - [x] C4 制造说明、板上 Fab 注释和安全导出门禁；未布线/未铺铜/未连通时禁止生产 ZIP
-  - [ ] KiCad 手工摆放器件（Norman）；摆放完成后交给 Codex 以 Step 4.1e 备份 64 器件到 `c4_placement_snapshot.json`/放置脚本
+  - [ ] KiCad 手工摆放器件（Norman）；摆放完成后交给 Codex 以 Step 4.1e 备份 63 器件到 `c4_placement_snapshot.json`/放置脚本
   - [ ] KiCad 手工布线、铺铜、最终 DRC 与生产文件（Norman）
 - [ ] **M5 外壳** — 拍头↔拍柄连接优化；评估充电板 Type-C 卡槽
 - [ ] **主线 V2** — 双 IMU + 更强 MCU；拍柄 IMU 基台与模型/电路协同

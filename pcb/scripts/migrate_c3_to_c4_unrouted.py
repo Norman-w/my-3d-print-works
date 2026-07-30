@@ -96,13 +96,13 @@ REFRESH_PARTS = (
 PAD_NETS: dict[str, dict[str, str]] = {
     "mcu": {
         "1": "gnd", "2": "vcc", "3": "en",
-        "4": "pzt_adc_bl", "5": "pzt_adc_br",
+        "4": "pzt_adc_bl", "5": "",
         "6": "pzt_edge_bl", "7": "pzt_edge_br",
-        "8": "pzt_edge_tl", "9": "pzt_edge_tr",
-        "10": "i2c_sda", "11": "i2c_scl",
+        "8": "pzt_edge_tr", "9": "pzt_edge_tl",
+        "10": "i2c_sda", "11": "i2c_scl", "12": "pzt_adc_br",
         "13": "usb_dn", "14": "usb_dp", "17": "bat_sense",
         "23": "led_data", "24": "pwr_latch", "25": "user_btn",
-        "27": "boot_btn", "33": "imu_uart_tx", "34": "imu_uart_rx",
+        "27": "boot_btn", "33": "imu_uart_rx", "34": "imu_uart_tx",
         "36": "uart_rx", "37": "uart_tx",
         "38": "pzt_adc_tr", "39": "pzt_adc_tl", "40": "gnd",
     },
@@ -110,15 +110,15 @@ PAD_NETS: dict[str, dict[str, str]] = {
     "mcu_c_dec": {"1": "vcc", "2": "gnd"},
     "en_c_delay": {"1": "en", "2": "gnd"},
     "pzt_frontend.dac": {
-        "1": "pzt_vref_tl", "2": "pzt_vref_tr",
+        "1": "pzt_vref_tr", "2": "pzt_vref_tl",
         "3": "pzt_vref_bl", "4": "pzt_vref_br", "5": "gnd",
         "6": "gnd", "7": "i2c_scl", "8": "i2c_sda", "9": "vcc",
         "10": "",
     },
     "pzt_frontend.comparator": {
-        "1": "pzt_edge_tr", "2": "pzt_edge_tl", "3": "vcc",
-        "4": "pzt_vref_tl", "5": "pzt_cmp_in_tl",
-        "6": "pzt_vref_tr", "7": "pzt_cmp_in_tr",
+        "1": "pzt_edge_tl", "2": "pzt_edge_tr", "3": "vcc",
+        "4": "pzt_vref_tr", "5": "pzt_cmp_in_tr",
+        "6": "pzt_vref_tl", "7": "pzt_cmp_in_tl",
         "8": "pzt_vref_bl", "9": "pzt_cmp_in_bl",
         "10": "pzt_vref_br", "11": "pzt_cmp_in_br", "12": "gnd",
         "13": "pzt_edge_br", "14": "pzt_edge_bl",
@@ -146,7 +146,6 @@ PAD_NETS: dict[str, dict[str, str]] = {
     "battery.c_filter": {"1": "bat_sense", "2": "gnd"},
     "bringup.vcc_pad": {"1": "vcc"},
     "bringup.sys5_pad": {"1": "sys_5v_sw"},
-    "bringup.gnd_pad": {"1": "gnd"},
     "debug_sw.sw_boot": {"1": "boot_btn", "2": "gnd"},
     "debug_sw.sw_en": {"1": "en", "2": "gnd"},
     "debug_sw.sw_pwr": {"1": "btn_sw", "2": "gnd"},
@@ -171,7 +170,7 @@ PAD_NETS: dict[str, dict[str, str]] = {
 
 # Explicitly clear every unused S3 perimeter pad.  In particular, pads
 # 28..30 are GPIO35..37 and belong to the N16R8 octal-PSRAM interface.
-for unused_mcu_pad in (12, 15, 16, 18, 19, 20, 21, 22, 26, 28, 29, 30, 31, 32, 35):
+for unused_mcu_pad in (15, 16, 18, 19, 20, 21, 22, 26, 28, 29, 30, 31, 32, 35):
     PAD_NETS["mcu"][str(unused_mcu_pad)] = ""
 
 
@@ -193,6 +192,10 @@ for corner in ("tl", "tr", "bl", "br"):
     PAD_NETS[f"pzt_frontend.jp_adc_{corner}"] = {
         "1": f"pzt_adc_iso_{corner}", "2": f"pzt_adc_{corner}"
     }
+
+
+EXPECTED_C4_COMPONENTS = len(PAD_NETS)
+RETIRED_C4_ADDRESSES = frozenset({"bringup.gnd_pad"})
 
 
 DNP_ADDRESSES = frozenset(
@@ -274,6 +277,11 @@ def migrate(board_path: Path, clear_copper: bool) -> None:
         board.Remove(zone)
 
     by_addr = {_addr(fp): fp for fp in board.GetFootprints() if _addr(fp)}
+    retired = 0
+    for address in RETIRED_C4_ADDRESSES:
+        if footprint := by_addr.pop(address, None):
+            board.Remove(footprint)
+            retired += 1
     # Refresh the embedded interfaces and the five stale C3 library copies.
     # Embedded body silk belongs on F.Fab because it coincides with an internal
     # cutout. Copper has already been proven empty above, so replacing these
@@ -339,7 +347,7 @@ def migrate(board_path: Path, clear_copper: bool) -> None:
     print(
         f"C4 migration: removed {len(tracks)} tracks/vias + "
         f"{len(copper_zones)} copper zones; refreshed {refreshed} footprints + "
-        f"added {added} footprints; "
+        f"added {added} footprints; retired {retired} footprints; "
         f"assigned {assigned} pads"
     )
 

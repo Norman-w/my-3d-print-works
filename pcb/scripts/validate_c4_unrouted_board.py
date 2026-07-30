@@ -23,6 +23,7 @@ from migrate_c3_to_c4_unrouted import (
     BOARD,
     C4_PARTS,
     DNP_ADDRESSES,
+    EXPECTED_C4_COMPONENTS,
     PAD_NETS,
     _addr,
     _source_guard,
@@ -210,9 +211,9 @@ def validate_board(board_path: Path, drc_path: Path | None) -> int:
             }
             if (
                 snapshot.get("schema_version") != 1
-                or snapshot.get("component_count") != 64
-                or len(entries) != 64
-                or len(snapshot_by_addr) != 64
+                or snapshot.get("component_count") != EXPECTED_C4_COMPONENTS
+                or len(entries) != EXPECTED_C4_COMPONENTS
+                or len(snapshot_by_addr) != EXPECTED_C4_COMPONENTS
             ):
                 fail(errors, "C4 placement snapshot schema/count is invalid")
             elif set(snapshot_by_addr) != set(by_addr):
@@ -239,8 +240,11 @@ def validate_board(board_path: Path, drc_path: Path | None) -> int:
         except (AttributeError, json.JSONDecodeError, TypeError, ValueError) as exc:
             fail(errors, f"cannot read C4 placement snapshot: {exc}")
 
-    if len(footprints) != 64:
-        fail(errors, f"expected 64 footprints, found {len(footprints)}")
+    if len(footprints) != EXPECTED_C4_COMPONENTS:
+        fail(
+            errors,
+            f"expected {EXPECTED_C4_COMPONENTS} footprints, found {len(footprints)}",
+        )
 
     title_block = board.GetTitleBlock()
     if title_block.GetTitle() != "SmartPaddle Rigid PCB":

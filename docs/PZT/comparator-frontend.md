@@ -34,14 +34,16 @@ CMP_INx ── 1M ── JP_ADC_x（0R，默认 DNP）── S3 独立 ADC1 GPIO
 
 | 位置 | MCP4728 | TLV1814 通道 | 比较器边沿 GPIO | ADC 窥探 GPIO |
 |---|---|---:|---:|---:|
-| TL | A / VOUTA pin 1 | 1：IN− pin 4、IN+ pin 5、OUT pin 2 | GPIO15 | GPIO1 / ADC1_CH0 |
-| TR | B / VOUTB pin 2 | 2：IN− pin 6、IN+ pin 7、OUT pin 1 | GPIO16 | GPIO2 / ADC1_CH1 |
+| TL | B / VOUTB pin 2 | 2：IN− pin 6、IN+ pin 7、OUT pin 1 | GPIO16 | GPIO1 / ADC1_CH0 |
+| TR | A / VOUTA pin 1 | 1：IN− pin 4、IN+ pin 5、OUT pin 2 | GPIO15 | GPIO2 / ADC1_CH1 |
 | BL | C / VOUTC pin 3 | 3：IN− pin 8、IN+ pin 9、OUT pin 14 | GPIO6 | GPIO4 / ADC1_CH3 |
-| BR | D / VOUTD pin 4 | 4：IN− pin 10、IN+ pin 11、OUT pin 13 | GPIO7 | GPIO5 / ADC1_CH4 |
+| BR | D / VOUTD pin 4 | 4：IN− pin 10、IN+ pin 11、OUT pin 13 | GPIO7 | GPIO8 / ADC1_CH7 |
 
 公共脚：MCP4728 pin 5=GND、6=`/LDAC`→GND、7=SCL/GPIO18、8=SDA/GPIO17、9=3V3、10=`/RDY`悬空；TLV1814 pin 3=3V3、12=GND。
 
 MCU 全表以 `pcb/lib/esp32s3wroom1/pinmap.py` 为准。N16R8 的 GPIO35–37 被八线 PSRAM 占用，不得分配。
+
+TL/TR 的比较器通道有意按 **2/1** 排列：左侧 TL 的 `CMP_IN_TL` 落到更靠左的 TLV1814 pin 7，右侧 TR 的 `CMP_IN_TR` 落到 pin 5，避免两条长模拟线在比较器前交叉。DAC A/B 和边沿 GPIO15/16 同步按 TR/TL 排列；固件对外仍保持通道顺序 TL/TR/BL/BR。独立 ADC 支路不随比较器通道交换。
 
 ## 固件行为
 

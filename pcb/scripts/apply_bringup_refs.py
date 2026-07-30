@@ -10,7 +10,7 @@
 
 动作：
   1. 二极管 → HandSoldering；BOOT/EN/PWR → 4.5×4.5 THT
-  2. 缺则补 SW_PWR、TP_GND，并接到 btn_sw / gnd
+  2. 缺则补 SW_PWR，并接到 btn_sw / gnd
   3. 从 snapshot 恢复位置/旋转（含 PZT clamp 朝向校正）
   4. 写可读 Reference
 
@@ -40,7 +40,6 @@ READABLE = {
     "debug_sw.sw_pwr": ("SW_PWR", "4.5x4.5"),
     "bringup.vcc_pad": ("TP_3V3", "3V3"),
     "bringup.sys5_pad": ("TP_SYS_5V_SW", "sys_5v_sw"),
-    "bringup.gnd_pad": ("TP_GND", "GND"),
 }
 
 # 校本库：HandSoldering 二极管 + 4.5×4.5 THT 轻触
@@ -225,24 +224,6 @@ def main() -> int:
         )
         board.Save(str(board_path))
         print("+ added SW_PWR (btn_sw↔gnd); rerun")
-        return 2
-
-    if "bringup.gnd_pad" not in by_addr:
-        e = snap.get("bringup.gnd_pad", {"x": 19.05, "y": -19.558, "rot": 0.0})
-        _add_footprint(
-            board,
-            pcbnew,
-            "TestPoint_THTPad_D2.0mm_Drill1.0mm",
-            addr="bringup.gnd_pad",
-            ref="TP_GND",
-            value="GND",
-            x=float(e["x"]),
-            y=float(e["y"]),
-            rot=float(e.get("rot", 0)),
-            pad_nets={"1": "gnd"},
-        )
-        board.Save(str(board_path))
-        print("+ added TP_GND; rerun")
         return 2
 
     for addr, fp_name in FP_EXCHANGE.items():

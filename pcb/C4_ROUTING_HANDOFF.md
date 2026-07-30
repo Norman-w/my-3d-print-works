@@ -16,9 +16,9 @@
   pcb/scripts/validate_c4_unrouted_board.py
 ```
 
-当前基线结果为 64/64 个 `atopile_address` 全 pad 对网、0 track/via、0 非规则铜区。[DRC 基线](layouts/default/output/c4_unrouted_drc.json)记录 0 个非布线 error、137 个预期未连接项和 38 个 warning（17×板边丝印、14×丝印压阻焊、7×丝印相交）；不含间距、短路、封装重叠、库版本差异或镜像文本错误。剩余警告来自必须保留识别文字的 PZT 边缘焊盘，以及尾插/开关等跨阻焊的元件轮廓。
+最初的无布线交接板为 64 件；Norman 开始手工工作后明确取消仅供 bringup 的独立 `TP_GND`，当前电气源、网表与板统一为 63/63 个 `atopile_address`。已归档的 [DRC 基线](layouts/default/output/c4_unrouted_drc.json)仍是取消测试盘前的 64 件历史快照，只用于说明当时不存在非布线 error；当前在制板必须以实时 DRC 为准。
 
-板文件标题栏已经写入 `SmartPaddle Rigid PCB / C4`。2026-07-29 已由项目标准入口实际运行 atopile 0.12.5，Step 3.1 明确 `Build successful`；Step 3.2 随后通过 64 地址/183 个已连接焊盘号门禁，给 189 个实体焊盘赋网，并在不改变任何元件坐标/角度/板层的前提下恢复可读字段、DNP 和背面尾插几何。Norman 手工摆放完成后应先让 Codex 回存 snapshot/放置脚本，再开始布线。若已经开始布线，只做只读拓扑核对，避免写板：
+板文件标题栏已经写入 `SmartPaddle Rigid PCB / C4`。2026-07-30 用项目标准路径实际运行 atopile 0.12.5，Step 3.1 明确 `Build successful`；取消 `TP_GND` 及对调 TL/TR 通道后，Step 3.2 只读门禁通过 63 地址/182 个已连接焊盘号，当前板 188 个相应实体焊盘全部对网。Atopile 安全包装器构建前后保持 PCB 字节哈希一致。Norman 已开始布线，因此后续只运行 pinmap 校验与 `--check-only`，不得让 Step 3.2 改写板文件：
 
 ```sh
 /usr/bin/env python3 pcb/scripts/validate_esp32s3wroom1_pinmap.py
@@ -26,9 +26,9 @@
   pcb/scripts/step3_import_netlist.py --check-only
 ```
 
-同日用项目锁定的 ESP-IDF 5.5.1 完成 `esp32s3` 干净构建：16 MB Flash、80 MHz、Octal PSRAM 配置生效，`smartpaddle.bin` 为 873,456 字节，最小 2 MB app 分区剩余 58%。QIO 选择下烧录参数显示 DIO 是 ESP-IDF 的预期行为：ROM/首段以 DIO 装载，二级 bootloader 再切换 Quad 模式。
+同日进一步把 BR ADC 从 GPIO5/pad5 移到更靠右的 GPIO8/pad12，并在 MCU 侧交换 IMU UART 角色以消除飞线交叉：GPIO41/pad34 为 TX，GPIO40/pad33 为 RX。项目锁定的 ESP-IDF 5.5.1 `esp32s3` 干净构建通过：16 MB Flash、80 MHz、Octal PSRAM 配置生效，`smartpaddle.bin` 为 873,488 字节，最小 2 MB app 分区剩余 58%。QIO 选择下烧录参数显示 DIO 是 ESP-IDF 的预期行为：ROM/首段以 DIO 装载，二级 bootloader 再切换 Quad 模式。
 
-Norman 确认手工摆放完成后，由 Codex 从项目菜单运行 **Step 4.1e**，一次备份全部 64 个 `atopile_address` 的坐标、绝对角度和正反面到 `layouts/default/c4_placement_snapshot.json`。快照默认拒绝覆盖；确需替换时必须显式使用 `--replace`。Step 4 在最终保存前会优先恢复这份全板快照，覆盖旧大陆/码头/栈道/尾插区域默认值；制造预检也会拒绝缺失或与当前板不一致的全板快照。
+Norman 确认手工摆放完成后，由 Codex 从项目菜单运行 **Step 4.1e**，一次备份全部 63 个 `atopile_address` 的坐标、绝对角度和正反面到 `layouts/default/c4_placement_snapshot.json`。快照默认拒绝覆盖；确需替换时必须显式使用 `--replace`。Step 4 在最终保存前会优先恢复这份全板快照，覆盖旧大陆/码头/栈道/尾插区域默认值；制造预检也会拒绝缺失或与当前板不一致的全板快照。
 
 可打印 C4 装配包见 [`output/pdf/assembly-package/`](../output/pdf/assembly-package/)；现有文件是摆放前快照，不能作为最终装配依据。Norman 完成摆放并由 Codex 回存位置后须重新生成；完成布线后还需再生成一次，不能沿用 C3/V3 装配图。
 
@@ -40,10 +40,10 @@ Norman 确认手工摆放完成后，由 Codex 从项目菜单运行 **Step 4.1e
 2. S3 perimeter GND pad 1、pad 40 分别短接地并就近打接地过孔。嵌入开孔无法接 EP41，不可漏做。
 3. 原生 USB：F.p4 D+ ↔ S3 GPIO20/pad14；B.p2 D− ↔ GPIO19/pad13。成对、等环境、少过孔。
 4. PZT 模拟：四个 `CMP_IN_*` 到 TLV1814 IN+；四个 DAC VREF 到 IN−。避开 LED/电源开关网。
-5. PZT 数字边沿：TL/TR/BL/BR → GPIO15/16/6/7，保持短且环境相近。
-6. I²C GPIO17/18、IMU UART GPIO40/41、UART0 GPIO43/44、控制键与 LED。
+5. PZT 数字边沿：TL/TR/BL/BR → GPIO16/15/6/7，保持短且环境相近。TL/TR 有意使用 TLV1814 通道 2/1，使 `CMP_IN_TL/TR` 分别落到 pin 7/5，避免比较器前交叉。
+6. I²C GPIO17/18；IMU UART 为 GPIO41/pad34 TX→IMU RXD/pad13、GPIO40/pad33 RX←IMU TXD/pad14；再处理 UART0 GPIO43/44、控制键与 LED。
 7. 拍尾局部：电池分压、LED 供电/数据到 MX1.25；确认 `bat_cell_p` 绝不是 5V 网。
-8. 最后处理四路 1M+`JP_ADC_*`；跳线标注 DNP，不能把 ADC 接到比较器输出。
+8. 最后处理四路 1M+`JP_ADC_*`；BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用。跳线标注 DNP，不能把 ADC 接到比较器输出。
 
 ## 收尾门禁
 

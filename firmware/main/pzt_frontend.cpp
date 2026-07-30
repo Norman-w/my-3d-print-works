@@ -17,6 +17,11 @@ i2c_master_bus_handle_t s_bus = nullptr;
 i2c_master_dev_handle_t s_dac = nullptr;
 uint16_t s_threshold_mv[kChannelCount] = {};
 
+// Public channel order is TL/TR/BL/BR.  On the PCB, TL/TR deliberately use
+// MCP4728 B/A and TLV1814 channels 2/1 so the two top CMP_IN traces do not
+// cross at the comparator.  BL/BR retain channels C/D and 3/4.
+constexpr uint8_t kDacChannelForLogical[kChannelCount] = {1, 0, 2, 3};
+
 uint16_t mv_to_code(uint16_t millivolts) {
     const uint32_t bounded = std::min<uint32_t>(millivolts, kInternalReferenceMv);
     const uint32_t rounded =
@@ -68,20 +73,21 @@ esp_err_t set_threshold_mv(uint8_t channel, uint16_t millivolts) {
 
     const uint16_t bounded = std::min<uint16_t>(millivolts, kInternalReferenceMv);
     const uint16_t code = mv_to_code(bounded);
+    const uint8_t dac_channel = kDacChannelForLogical[channel];
 
     // MCP4728 multi-write command:
     //   byte0 = 01000 DAC1 DAC0 UDAC (UDAC=0; /LDAC is tied low)
     //   byte1 = VREF PD1 PD0 Gx D11..D8 (internal ref, normal, gain x1)
     //   byte2 = D7..D0
     const uint8_t data[3] = {
-        static_cast<uint8_t>(0x40u | (channel << 1u)),
+        static_cast<uint8_t>(0x40u | (dac_channel << 1u)),
         static_cast<uint8_t>(0x80u | ((code >> 8u) & 0x0fu)),
         static_cast<uint8_t>(code & 0xffu),
     };
     err = i2c_master_transmit(s_dac, data, sizeof(data), kI2cTimeoutMs);
     if (err != ESP_OK) {
-        ESP_LOGE(kTag, "MCP4728 ch%u write failed: %s", channel,
-                 esp_err_to_name(err));
+        ESP_LOGE(kTag, "MCP4728 logical ch%u / DAC ch%u write failed: %s",
+                 channel, dac_channel, esp_err_to_name(err));
         return err;
     }
     s_threshold_mv[channel] = bounded;
