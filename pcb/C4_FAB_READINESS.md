@@ -8,6 +8,8 @@
 
 **C4 裸板已经达到“小批量工程样板可投板”的门槛；C4 整机尚未达到“无需实测即可确认稳定工作”的门槛。**
 
+实际去嘉立创下单的逐步操作（各版本共用）见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)。
+
 - 可以下单：当前板的 Atopile 拓扑、63 件放置、当前物理焊盘网络、走线、铺铜、DRC、Gerber、钻孔与压缩包门禁均已通过机器检查。
 - 建议只下工程样板：先做 5 片或厂家最低样板数量，不直接量产。
 - 首次 bring-up 必须先用限流台式 5 V 电源，不要先接照片中的充放电小板。
@@ -313,9 +315,10 @@ python3 pcb/scripts/check_tail_mx125_shell_fit.py
 python3 pcb/scripts/export_jlcpcb.py --preflight-only
 
 # 正式重新导出到明确的新目录；成功时才生成上传 ZIP
+# 需要嘉立创部分 SMT 时加 --smt（见 JLCPCB_ORDERING.md）
 OUT="$(mktemp -d /tmp/smartpaddle-c4-jlc.XXXXXX)"
-python3 pcb/scripts/export_jlcpcb.py --output "$OUT"
-unzip -t "${OUT}_smartpaddle_c4_jlcpcb.zip"
+python3 pcb/scripts/export_jlcpcb.py --smt --output "$OUT"
+unzip -t "${OUT}"*_jlcpcb.zip
 ```
 
 固件干净构建应使用 ESP-IDF 5.5.1 和新的临时 build 目录；不能用已有 `firmware/build/` 的缓存结果替代。

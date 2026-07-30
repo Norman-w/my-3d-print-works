@@ -296,6 +296,16 @@ def main() -> int:
         action="store_true",
         help="Write reports and fabrication drawing only; never Gerber, drill or ZIP",
     )
+    parser.add_argument(
+        "--smt",
+        action="store_true",
+        help="Also export partial JLCPCB SMT BOM/CPL (excludes modules/tail/PZT pads/THT/DNP)",
+    )
+    parser.add_argument(
+        "--smt-require-lcsc",
+        action="store_true",
+        help="With --smt, drop candidates that lack an LCSC C-number in smt_parts_map.yaml",
+    )
     args = parser.parse_args()
 
     if args.output is None:
@@ -420,6 +430,36 @@ def main() -> int:
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
+    def _maybe_export_smt() -> None:
+        if not args.smt:
+            return
+        smt_script = Path(__file__).resolve().parent / "export_jlc_smt.py"
+        cmd = [
+            KICAD_PYTHON,
+            str(smt_script),
+            "--board",
+            str(args.board.resolve()),
+            "--output",
+            str(out.resolve()),
+            "--parts-map",
+            str(ROOT / "pcb" / "jlcpcb" / "smt_parts_map.yaml"),
+        ]
+        if args.smt_require_lcsc:
+            cmd.append("--require-lcsc")
+        run(cmd)
+        smt_manifest = reports / "smt_manifest.json"
+        if smt_manifest.is_file():
+            manifest["smt"] = json.loads(smt_manifest.read_text(encoding="utf-8"))
+            (reports / "manufacturing_manifest.json").write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            smt_summary = manifest["smt"]
+            print(
+                f"SMT package: {smt_summary['smt_count']} place / "
+                f"{smt_summary['hand_count']} hand-solder → {out / 'smt'}"
+            )
+
     if args.preflight_only:
         if gate_fails:
             print("PREFLIGHT BLOCKED — expected until routing/netlist gates are complete:")
@@ -427,6 +467,7 @@ def main() -> int:
                 print(f"  - {failure}")
             print(f"Reports and fabrication drawing kept under {out}; no Gerber/drill/ZIP written.")
             return 1
+        _maybe_export_smt()
         print(f"Preflight OK: {out}; no Gerber/drill/ZIP written by request.")
         return 0
 
@@ -508,6 +549,7 @@ def main() -> int:
     (reports / "manufacturing_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    _maybe_export_smt()
     print(f"Export complete: {out}")
     print(f"Upload archive: {zip_path}")
     return 0

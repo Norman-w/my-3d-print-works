@@ -2,6 +2,8 @@
 
 本文件只适用于标题栏为 **SmartPaddle Rigid PCB / C4** 的板文件。C3 Gerber `20260724-081156` 是已下单历史参考，禁止混入 C4 上传包。
 
+嘉立创网站怎么点、导出命令、部分 SMT 上传步骤见通用小本 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；本文只写 C4 专属参数与备注。
+
 ## 固定制造参数
 
 - 单板、2 层、板厚 **0.8 mm**、沉金（ENIG）。
@@ -33,7 +35,7 @@ ESP32-S3 与 IM948 都嵌入主板内部矩形开窗。开窗 `Edge.Cuts` 穿过
 5. KiCad DRC 存在 error，或仍有任何 unconnected item。
 6. S3 pinmap、固件 S3 构建、MX1.25 尾插线序、3D 半孔方向未完成最终复核。
 
-制造导出入口为 `pcb/scripts/export_jlcpcb.py`。`--preflight-only` 永不写 Gerber/钻孔/ZIP；`--skip-netlist-gate` 仅供诊断旧/损坏构建产物，永远不构成生产放行。当前 C4 已有 atopile 0.12.5 新网表，正式预检不得跳过该门禁。
+制造导出入口为 `pcb/scripts/export_jlcpcb.py`（可选 `--smt`）。网站操作与各版本共用流程见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)。`--preflight-only` 永不写 Gerber/钻孔/ZIP；`--skip-netlist-gate` 仅供诊断旧/损坏构建产物，永远不构成生产放行。当前 C4 已有 atopile 0.12.5 新网表，正式预检不得跳过该门禁。
 
 ## 当前放行记录
 

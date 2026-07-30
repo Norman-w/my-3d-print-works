@@ -121,7 +121,7 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 当前分支已包含 C4 手工布线/铺铜 PCB、63 件全板快照和最终制造审计。后续工作:
 
 - 当前 `c4_placement_snapshot.json` 已经 Step 4.1e 只读复核；禁止无意使用 `--replace` 覆盖接受基线
-- 下单时重新运行 `export_jlcpcb.py`，不得复用临时审计 ZIP；生产包仍由放置/铜线/连通/DRC/新网表/物理焊盘门禁共同锁定
+- 嘉立创每次打板（裸板 / 部分 SMT）的通用操作见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；下单时重新运行 `export_jlcpcb.py`（需要贴片时加 `--smt`），不得复用临时审计 ZIP
 - 按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成小批量回板 bring-up；未通过外置 5 V、AP2112 热、USB、PZT、射频和槽边焊接前不得转量产
 - C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 和 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
 
