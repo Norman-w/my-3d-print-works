@@ -2,6 +2,12 @@
 
 拍面 + 手柄一体分壳，PETG 打印。外形来自 `web/src/data/userBezierProfiles.json` → OpenSCAD 水密 CSG。
 
+## 模型版本边界
+
+- 当前目录中的 `parameters.scad`、`paddle_shell.scad` 和 `scripts/export-stl.sh` 默认行为是 **M4**，继续配套 C3/C4。
+- 下一代 **M5.C5** 改为固定窄尾板 + `Y− → Y+` 抽屉式保护 14500 电池匣 + `X+` 侧横向机械滑扣。它必须使用独立 SCAD 入口和带 `m5` 的输出名，不能覆盖 M4。
+- M5 的文件结构、参数、建模顺序、接口合同、打印样块和验收门禁详见 [`M5_SCAD_PLAN.md`](M5_SCAD_PLAN.md)；整机电气基线见 [`../pcb/C5_PLAN.md`](../pcb/C5_PLAN.md)。两者都尚未实物验证。
+
 ## 本目录只放「源文件」
 
 ```

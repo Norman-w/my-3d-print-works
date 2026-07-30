@@ -1,6 +1,6 @@
 ## PCB 生成管线
 
-> **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务正在手工布线的 **C4**。下一代 **C5/M5** 已确定为“独立固定尾板 + 单8P线束 + Y向抽屉式可换14500电池匣”，完整交接见 [`C5_PLAN.md`](C5_PLAN.md)。C5 尚未进入电气/SCAD实施；不得用 C5 试验重建、导入或改写 C4 板。
+> **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务进入最终打板审计的 **C4**。下一代 **C5/M5** 已确定为“独立固定尾板 + 单8P线束 + Y向抽屉式可换14500电池匣”，整机交接见 [`C5_PLAN.md`](C5_PLAN.md)，机械实施见 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md)。C5 尚未进入电气/SCAD实施；不得用 C5 试验重建、导入或改写 C4 板。
 
 管线的机械基准来自 `enclosure/paddle_shell.scad` 的 `rigid_pcb_slot_points`（V3 起尾端平收，无金手指窄尖）。
 每一步都是独立的 Python 脚本，按顺序执行：
@@ -55,13 +55,14 @@ $KPY pcb/scripts/step3_module_cutouts.py         # 重绘模块开孔和 IMU rul
 $KPY pcb/scripts/step4_ato_placement.py          # 仅移动仍位于 ato 网格位置的封装
 ```
 
-### 当前 C4 无布线交接板
+### 当前 C4 手工布线板
 
-当前 `layouts/default/default.kicad_pcb` 已进入 Norman 手工摆放/布线阶段。原交接板的独立 `TP_GND` 已按 Norman 确认取消；2026-07-30 的 atopile 0.12.5 新网表与当前板均为 63 个封装。正式快照尚未生成前不要选择 Step 4，也不得再运行 Step 3.2 写入或带 `--yes-clear-copper` 的迁移命令。
+当前 `layouts/default/default.kicad_pcb` 的手工布线/铺铜已于提交 `828f6e1` 回存；KiCad 9.0.6 DRC 为 0 未连接、0 error，剩余项为丝印和库封装一致性 warning。原交接板的独立 `TP_GND` 已按 Norman 确认取消；2026-07-30 的 atopile 0.12.5 新网表与当前板均为 63 个封装。正式位置快照和最终制造审计尚未完成前不要选择 Step 4，也不得再运行 Step 3.2 写入或带 `--yes-clear-copper` 的迁移命令。
 
 ```sh
-# 只读校验板上 C4 pad→net、器件、尾插、DNP、S3 保留脚和无铜线状态：
-$KPY pcb/scripts/validate_c4_unrouted_board.py
+# 校验器名称保留历史的 unrouted；当前有铜板只能先使用其显式 check-only/允许铜线模式。
+# 未确认参数前不要直接运行默认写入或“要求无铜线”的模式。
+$KPY pcb/scripts/validate_c4_unrouted_board.py --help
 ```
 
 迁移脚本不替代 atopile 编译器。仓库 `ato.yaml` 自 2026-06-13 起锁定 `0.12.5`；提交 `c9df0aa` 写明“适配 atopile 0.12.5”，`f10342b` 写明“ato build 刷新”。这些是强版本意图证据，但没有 C3 出板时的运行日志/工具指纹能证明当时实际可执行文件版本。C4 于 2026-07-30 从标准路径 `~/.local/share/uv/tools/atopile/bin/ato` 实测版本 0.12.5，并由项目 Step 3.1 明确 `Build successful`；旧 `~/.atopile-env` 的 0.2.69 未参与生成。新 `.net` 为 63 个 C4 地址，旧 48 地址 C3 `.net` 仍只作历史产物。
@@ -117,11 +118,11 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 
 ## Status
 
-当前分支已包含 C4 无铜线交接 PCB。后续工作:
+当前分支已包含 C4 手工布线/铺铜 PCB。后续工作:
 
-- Norman 正按 `C4_ROUTING_HANDOFF.md` 手工摆放/布线；完成后由 Codex 用 Step 4.1e 回存 `c4_placement_snapshot.json`、复测恢复并重新生成装配资料
-- Norman 完成铺铜并清零最终 DRC；期间禁止运行会改写当前板的 Step 3.2、全链路重建或 C5 迁移
+- 用 Step 4.1e 回存 `c4_placement_snapshot.json`，并在副本上复测恢复；禁止用恢复过程覆盖当前权威板
+- 复核 atopile→网表→PCB 拓扑、电源/USB/关键焊盘、铜区和制造约束，再生成生产包
 - C4 嵌入模块制造说明与板上 Fab 注释已完成；正式生产包仍由布线/铺铜/连通/DRC/新网表门禁共同锁定
-- C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
+- C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 和 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
 
 当前 C4 快照的可打印装配包已生成到 `output/pdf/assembly-package/`，16 页渲染 QA 通过；尾插 HTML/端面图位于 `output/assembly/`。现有装配包是摆放前快照；应在摆放回存后和最终布线后分别重新生成。
