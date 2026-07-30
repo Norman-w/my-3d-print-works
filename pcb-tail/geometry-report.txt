@@ -4,28 +4,31 @@ STATUS: BARE OUTLINE / ATO MODULE PRESENT / NOT FOR FABRICATION
 Entry: main.ato:SmartPaddleTail
 Layout: layouts/default/default.kicad_pcb
 
-Source profile: web/src/data/userBezierProfiles.json (handle loft butt slice)
-Butt world Y (DATUM_A): -178.0962 mm
+Source profile: web/src/data/userBezierProfiles.json (handle loft)
+Butt world Y (outer face): -178.0962 mm
+PCB plane Y (F.Cu):        -172.2962 mm
+  = butt_y + USB_BODY_HEIGHT (5.80 mm)
+  docs: docs/usb-c-vertical-16p-short/ (H_typec=5.8)
 
 Orientation:
-  Board plane = handle XZ
+  Board plane = handle XZ at Y_pcb
   F.Cu / front → handle end (−Y)
   B.Cu / back  → paddle head (+Y)
   KiCad X = handle X
   KiCad Y = handle Z
 
-Inset stack (per side):
+Inset stack (per side, from outer shell at Y_pcb → ≈inner wall):
   wall_t              = 2.00 mm
   handle_cavity_inset = 1.50 mm
-  board_clearance     = 0.30 mm
-  total_inset         = 3.80 mm
+  board_clearance     = 0.20 mm
+  total_inset         = 3.70 mm
 
-Outer butt (shell) extents (bbox):
-  width×height = 32.862 × 22.738 mm
-  |x|_max = 16.431 mm   |z|_max = 12.179 mm
+Outer shell at Y_pcb extents (bbox):
+  width×height = 34.338 × 23.921 mm
+  |x|_max = 17.169 mm   |z|_max = 12.813 mm
 
 PCB Edge.Cuts extents (bbox):
-  width×height = 25.259 × 15.135 mm
-  |x|_max = 12.629 mm   |z|_max = 8.377 mm
+  width×height = 26.935 × 16.519 mm
+  |x|_max = 13.467 mm   |z|_max = 9.111 mm
   points = 96
   thickness = 1.00 mm

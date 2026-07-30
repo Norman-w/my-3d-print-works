@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate M5 fixed-battery tail PCB bare Edge.Cuts from the real handle butt.
+"""Generate M5 fixed-battery tail PCB bare Edge.Cuts from the real handle loft.
+
+板面不在最尾端：Type-C 超短体立贴身体高度 H_typec=5.8mm，外壳口与母座平齐时
+  Y_pcb = Y_butt + H_typec
+在该 Y 取外壳 XZ，再按 wall_t+cavity_inset 得到内壁，并加微小装配间隙。
 
 Writes into the atopile layout board:
   pcb-tail/layouts/default/default.kicad_pcb
@@ -8,6 +12,8 @@ Board plane = handle XZ (thickness along Y).
   F.Cu / front  → handle butt end (−Y)
   B.Cu / back   → paddle head (+Y)
 KiCad X = handle X ; KiCad Y = handle Z
+
+参考：docs/usb-c-vertical-16p-short/
 """
 
 # ===== 分区：导入/依赖 =====
@@ -37,10 +43,12 @@ from bezier_to_openscad import (  # noqa: E402
 HERE = Path(__file__).resolve().parent
 LAYOUT_DIR = HERE / "layouts" / "default"
 LAYOUT_PCB = LAYOUT_DIR / "default.kicad_pcb"
-BOARD_CLEARANCE_MM = 0.30
+BOARD_CLEARANCE_MM = 0.20  # 内壁外再留的装配间隙（外形≈内壁）
 BOARD_THICKNESS_MM = 1.00
+# 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/
+USB_BODY_HEIGHT_MM = 5.80
 EDGE_WIDTH_MM = 0.10  # match C4 Edge.Cuts visibility
-SAMPLE_SLICES = 64
+SAMPLE_SLICES = 96  # denser loft sampling near butt for Y_pcb slice
 OUTLINE_MAX_POINTS = 96
 PREVIEW_SVG = HERE / "m5-tail-outline-preview.svg"
 PREVIEW_PNG = HERE / "m5-tail-outline-preview.png"
@@ -158,7 +166,39 @@ def _kicad_edge_poly(pts: list[tuple[float, float]]) -> str:
     )
 
 
-def _load_butt_outer() -> tuple[float, list[tuple[float, float]], dict[str, float]]:
+def _lerp_poly(
+    a: list[tuple[float, float]],
+    b: list[tuple[float, float]],
+    t: float,
+) -> list[tuple[float, float]]:
+    if len(a) != len(b):
+        raise RuntimeError("loft polygons must share vertex count")
+    return [
+        (ax + (bx - ax) * t, az + (bz - az) * t)
+        for (ax, az), (bx, bz) in zip(a, b)
+    ]
+
+
+def _outer_at_y(
+    slices: list[tuple[float, list[tuple[float, float]]]],
+    y: float,
+) -> list[tuple[float, float]]:
+    """Interpolate outer XZ shell polygon at world Y."""
+    if y <= slices[0][0]:
+        return list(slices[0][1])
+    if y >= slices[-1][0]:
+        return list(slices[-1][1])
+    for (y0, p0), (y1, p1) in zip(slices, slices[1:]):
+        if y0 <= y <= y1:
+            if y1 <= y0:
+                return list(p0)
+            t = (y - y0) / (y1 - y0)
+            return _lerp_poly(p0, p1, t)
+    return list(slices[-1][1])
+
+
+def _load_pcb_plane_outer() -> tuple[float, float, list[tuple[float, float]], list[tuple[float, float]], dict[str, float]]:
+    """Return (butt_y, pcb_y, outer_at_butt, outer_at_pcb, params)."""
     data = json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
     params = parse_params(DEFAULT_PARAMS)
     side = data.get("side") or DEFAULT_SIDE
@@ -170,8 +210,11 @@ def _load_butt_outer() -> tuple[float, list[tuple[float, float]], dict[str, floa
         params["blade_core_t"] / 2.0,
         SAMPLE_SLICES,
     )
-    butt_y, outer_xz = slices[0]
-    return butt_y, outer_xz, params
+    butt_y = slices[0][0]
+    pcb_y = butt_y + USB_BODY_HEIGHT_MM
+    outer_butt = slices[0][1]
+    outer_pcb = _outer_at_y(slices, pcb_y)
+    return butt_y, pcb_y, outer_butt, outer_pcb, params
 
 
 def _inset_board_outline(
@@ -360,7 +403,7 @@ def _write_svg(
 <polygon points="{edge_poly}" fill="#2d9c5a" fill-opacity="0.85" stroke="#0d5f36" stroke-width="2"/>
 <line x1="{sx(0):.2f}" y1="{sy(min_y+1):.2f}" x2="{sx(0):.2f}" y2="{sy(max_y-1):.2f}" stroke="#64748b" stroke-width="0.8"/>
 <line x1="{sx(min_x+1):.2f}" y1="{sy(0):.2f}" x2="{sx(max_x-1):.2f}" y2="{sy(0):.2f}" stroke="#64748b" stroke-width="0.8"/>
-<text x="16" y="{height-18:.1f}" font-size="12" fill="#334e68">虚线=外壳尾端 · 实心=裸板 {e['width']:.2f}×{e['height']:.2f} mm · t={BOARD_THICKNESS_MM:.1f}</text>
+<text x="16" y="{height-18:.1f}" font-size="12" fill="#334e68">虚线=Y_pcb外壳 · 实心=内壁≈裸板 {e['width']:.2f}×{e['height']:.2f} mm · H_usb={USB_BODY_HEIGHT_MM:.1f} · t={BOARD_THICKNESS_MM:.1f}</text>
 </svg>
 '''
     PREVIEW_SVG.write_text(svg, encoding="utf-8")
@@ -375,23 +418,26 @@ STATUS: BARE OUTLINE / ATO MODULE PRESENT / NOT FOR FABRICATION
 Entry: main.ato:SmartPaddleTail
 Layout: layouts/default/default.kicad_pcb
 
-Source profile: web/src/data/userBezierProfiles.json (handle loft butt slice)
-Butt world Y (DATUM_A): {facts['butt_y']:.4f} mm
+Source profile: web/src/data/userBezierProfiles.json (handle loft)
+Butt world Y (outer face): {facts['butt_y']:.4f} mm
+PCB plane Y (F.Cu):        {facts['pcb_y']:.4f} mm
+  = butt_y + USB_BODY_HEIGHT ({facts['usb_body_height']:.2f} mm)
+  docs: docs/usb-c-vertical-16p-short/ (H_typec=5.8)
 
 Orientation:
-  Board plane = handle XZ
+  Board plane = handle XZ at Y_pcb
   F.Cu / front → handle end (−Y)
   B.Cu / back  → paddle head (+Y)
   KiCad X = handle X
   KiCad Y = handle Z
 
-Inset stack (per side):
+Inset stack (per side, from outer shell at Y_pcb → ≈inner wall):
   wall_t              = {facts['wall_t']:.2f} mm
   handle_cavity_inset = {facts['cavity_inset']:.2f} mm
   board_clearance     = {facts['board_clearance']:.2f} mm
   total_inset         = {facts['total_inset']:.2f} mm
 
-Outer butt (shell) extents (bbox):
+Outer shell at Y_pcb extents (bbox):
   width×height = {o['width']:.3f} × {o['height']:.3f} mm
   |x|_max = {o['half_x']:.3f} mm   |z|_max = {o['half_y']:.3f} mm
 
@@ -407,10 +453,11 @@ PCB Edge.Cuts extents (bbox):
 
 # ===== 分区：公开 API =====
 def main() -> int:
-    butt_y, outer_xz, params = _load_butt_outer()
+    butt_y, pcb_y, _outer_butt, outer_pcb, params = _load_pcb_plane_outer()
+    # 内壁 = 外壳 − (wall + cavity)；再减微小装配间隙
     total_inset = params["wall_t"] + params["handle_cavity_inset"] + BOARD_CLEARANCE_MM
-    outer_kicad = _ccw(_resample_ring([(x, z) for x, z in outer_xz], OUTLINE_MAX_POINTS))
-    edge_pts = _inset_board_outline(outer_xz, total_inset)
+    outer_kicad = _ccw(_resample_ring([(x, z) for x, z in outer_pcb], OUTLINE_MAX_POINTS))
+    edge_pts = _inset_board_outline(outer_pcb, total_inset)
 
     ring = LinearRing(edge_pts + [edge_pts[0]])
     if not ring.is_simple:
@@ -418,6 +465,8 @@ def main() -> int:
 
     facts = {
         "butt_y": butt_y,
+        "pcb_y": pcb_y,
+        "usb_body_height": USB_BODY_HEIGHT_MM,
         "wall_t": params["wall_t"],
         "cavity_inset": params["handle_cavity_inset"],
         "board_clearance": BOARD_CLEARANCE_MM,
@@ -426,6 +475,7 @@ def main() -> int:
         "point_count": len(edge_pts),
         "layout_pcb": str(LAYOUT_PCB.relative_to(ROOT)),
         "ato_entry": "main.ato:SmartPaddleTail",
+        "usb_ref": "docs/usb-c-vertical-16p-short/",
         "outer": _extent(outer_kicad),
         "edge": _extent(edge_pts),
         "orientation": {
@@ -449,8 +499,9 @@ def main() -> int:
         print(f"✓ {PREVIEW_PNG.relative_to(ROOT)}")
     print(f"✓ {REPORT_TXT.relative_to(ROOT)}")
     print(
-        f"  Edge.Cuts {facts['edge']['width']:.2f}×{facts['edge']['height']:.2f} mm "
-        f"(inset {total_inset:.2f} mm)"
+        f"  Y_pcb=butt+{USB_BODY_HEIGHT_MM:.1f}  "
+        f"Edge.Cuts {facts['edge']['width']:.2f}×{facts['edge']['height']:.2f} mm "
+        f"(inset {total_inset:.2f} mm from shell at Y_pcb)"
     )
     return 0
 
