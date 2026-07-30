@@ -1,5 +1,7 @@
 ## PCB 生成管线
 
+> **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务正在手工布线的 **C4**。下一代 **C5/M5** 已确定为“独立固定尾板 + 单8P线束 + Y向抽屉式可换14500电池匣”，完整交接见 [`C5_PLAN.md`](C5_PLAN.md)。C5 尚未进入电气/SCAD实施；不得用 C5 试验重建、导入或改写 C4 板。
+
 管线的机械基准来自 `enclosure/paddle_shell.scad` 的 `rigid_pcb_slot_points`（V3 起尾端平收，无金手指窄尖）。
 每一步都是独立的 Python 脚本，按顺序执行：
 
@@ -117,8 +119,9 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 
 当前分支已包含 C4 无铜线交接 PCB。后续工作:
 
-- Norman 手工摆放 63 个器件；完成后由 Codex 用 Step 4.1e 回存 `c4_placement_snapshot.json`、复测恢复并重新生成装配资料
-- Norman 按 `C4_ROUTING_HANDOFF.md` 手工布线、铺铜并清零最终 DRC
+- Norman 正按 `C4_ROUTING_HANDOFF.md` 手工摆放/布线；完成后由 Codex 用 Step 4.1e 回存 `c4_placement_snapshot.json`、复测恢复并重新生成装配资料
+- Norman 完成铺铜并清零最终 DRC；期间禁止运行会改写当前板的 Step 3.2、全链路重建或 C5 迁移
 - C4 嵌入模块制造说明与板上 Fab 注释已完成；正式生产包仍由布线/铺铜/连通/DRC/新网表门禁共同锁定
+- C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
 
 当前 C4 快照的可打印装配包已生成到 `output/pdf/assembly-package/`，16 页渲染 QA 通过；尾插 HTML/端面图位于 `output/assembly/`。现有装配包是摆放前快照；应在摆放回存后和最终布线后分别重新生成。
