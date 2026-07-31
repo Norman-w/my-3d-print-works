@@ -6,8 +6,9 @@
 	(descr "2.0mm x 2.0mm Addressable RGB LED NeoPixel Nano, 12 mA, https://cdn-shop.adafruit.com/product-files/4684/4684_WS2812B-2020_V1.3_EN.pdf")
 	(tags "LED RGB NeoPixel Nano PLCC-4 2020")
 	(property "Reference" "REF**"
+		(hide yes)
 		(at 0 -2 0)
-		(layer "F.SilkS")
+		(layer "F.Fab")
 		(uuid "29976fa0-918e-48c1-ba81-319324267df7")
 		(effects
 			(font
@@ -17,6 +18,7 @@
 		)
 	)
 	(property "Value" "LED_WS2812B-2020_PLCC4_2.0x2.0mm"
+		(hide yes)
 		(at 0 2.2 0)
 		(layer "F.Fab")
 		(uuid "11f34c85-b80f-46bd-b71d-beeef7ef25a2")
@@ -54,56 +56,6 @@
 		)
 	)
 	(attr smd)
-	(fp_line
-		(start -1.6 1.15)
-		(end -1.6 -0.85)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "d37c6377-951d-4d04-9693-8a3fb0a23d66")
-	)
-	(fp_line
-		(start -1.6 1.15)
-		(end 1.6 1.15)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "571f38c6-33f4-415c-a57c-9d7511e650a7")
-	)
-	(fp_line
-		(start -1.3 -1.15)
-		(end -1.6 -0.85)
-		(stroke
-			(width 0.12)
-			(type default)
-		)
-		(layer "F.SilkS")
-		(uuid "7c1c9e90-f5d8-4fe6-a573-54c8423c8496")
-	)
-	(fp_line
-		(start -1.3 -1.15)
-		(end 1.6 -1.15)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "a797ac28-8503-4aaf-8df3-1f197c2f9897")
-	)
-	(fp_line
-		(start 1.6 -1.15)
-		(end 1.6 1.15)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "4cff9c9c-cd82-4ee3-b24d-30855b03bdf8")
-	)
 	(fp_line
 		(start -1.52 -1.25)
 		(end -1.52 1.25)
@@ -252,12 +204,12 @@
 		(uuid "e6e3b1bc-4064-4031-9b80-d1df61337d0a")
 	)
 	(embedded_fonts no)
-	(model "${KICAD9_3DMODEL_DIR}/LED_SMD.3dshapes/LED_WS2812B-2020_PLCC4_2.0x2.0mm.step"
+	(model "${KIPRJMOD}/../../lib/3dmodels/LED_WS2812B-2020_PLCC4_2.0x2.0mm.wrl"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
-			(xyz 1 1 1)
+			(xyz 0.03937 0.03937 0.03937)
 		)
 		(rotate
 			(xyz 0 0 0)

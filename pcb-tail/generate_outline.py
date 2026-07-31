@@ -6,6 +6,9 @@
 在该 Y 取外壳 XZ，再按 wall_t+cavity_inset 得到内壁。
 板外形比内腔略大（负 clearance），嵌入壳体内壁环槽以卡位。
 
+壁厚/内缩以 M5 为准（enclosure/m5/parameters_m5.scad），
+不要再用旧 enclosure/parameters.scad 的 handle_cavity_inset=1.5。
+
 Writes into the atopile layout board:
   pcb-tail/layouts/default/default.kicad_pcb
 
@@ -44,11 +47,12 @@ from bezier_to_openscad import (  # noqa: E402
 HERE = Path(__file__).resolve().parent
 LAYOUT_DIR = HERE / "layouts" / "default"
 LAYOUT_PCB = LAYOUT_DIR / "default.kicad_pcb"
+M5_PARAMS = ROOT / "enclosure" / "m5" / "parameters_m5.scad"
 # 负值 = 板比内腔大，嵌入壁内环槽（与壳体 ring groove 深度对齐）
 BOARD_CLEARANCE_MM = -0.50
 BOARD_THICKNESS_MM = 1.00
-RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度
-# 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/
+RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度；= m5_tail_board_ring_groove_radial
+# 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/；= m5_tail_board_y_from_butt
 USB_BODY_HEIGHT_MM = 5.80
 EDGE_WIDTH_MM = 0.10  # match C4 Edge.Cuts visibility
 SAMPLE_SLICES = 96  # denser loft sampling near butt for Y_pcb slice
@@ -200,10 +204,38 @@ def _outer_at_y(
     return list(slices[-1][1])
 
 
+def _parse_m5_wall_params(path: Path) -> tuple[float, float, float]:
+    """Read m5_wall_t / m5_cavity_inset / m5_tail_board_y_from_butt from parameters_m5.scad."""
+    text = path.read_text(encoding="utf-8")
+
+    def _num(key: str) -> float:
+        m = re.search(rf"^{key}\s*=\s*([-\d.]+)\s*;", text, re.M)
+        if not m:
+            raise ValueError(f"missing {key} in {path}")
+        return float(m.group(1))
+
+    return (
+        _num("m5_wall_t"),
+        _num("m5_cavity_inset"),
+        _num("m5_tail_board_y_from_butt"),
+    )
+
+
 def _load_pcb_plane_outer() -> tuple[float, float, list[tuple[float, float]], list[tuple[float, float]], dict[str, float]]:
-    """Return (butt_y, pcb_y, outer_at_butt, outer_at_pcb, params)."""
+    """Return (butt_y, pcb_y, outer_at_butt, outer_at_pcb, params).
+
+    Loft join / blade thickness still from enclosure/parameters.scad；
+    壁厚与内缩覆盖为 M5（parameters_m5.scad），与壳体环槽一致。
+    """
     data = json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
     params = parse_params(DEFAULT_PARAMS)
+    wall_t, cavity_inset, y_from_butt = _parse_m5_wall_params(M5_PARAMS)
+    if abs(y_from_butt - USB_BODY_HEIGHT_MM) > 1e-6:
+        raise RuntimeError(
+            f"m5_tail_board_y_from_butt={y_from_butt} != USB_BODY_HEIGHT_MM={USB_BODY_HEIGHT_MM}"
+        )
+    params["wall_t"] = wall_t
+    params["handle_cavity_inset"] = cavity_inset
     side = data.get("side") or DEFAULT_SIDE
     slices = handle_loft_slices(
         data["handle-front"],
