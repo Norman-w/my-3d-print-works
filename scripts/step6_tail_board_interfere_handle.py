@@ -40,7 +40,17 @@ KICAD_PY = Path(
     "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
     "Python.framework/Versions/Current/bin/python3"
 )
-VENV_PY = ROOT / "scripts" / ".venv-m5" / "bin" / "python"
+VENV_PY = next(
+    (
+        p
+        for p in (
+            ROOT / "scripts" / ".venv-stl" / "bin" / "python",
+            ROOT / "scripts" / ".venv-m5" / "bin" / "python",
+        )
+        if p.is_file()
+    ),
+    Path(sys.executable),
+)
 
 BUTT_Y = -178.0962
 TIP_LENGTH = 25.0
@@ -156,9 +166,20 @@ def _extrude_xz_along_y(points_xz, y0: float, y1: float):
     return _map_extrude_xy_to_handle_y(mesh, y0)
 
 
-def _stadium_y(cx: float, cz: float, w: float, d: float, y0: float, y1: float, n: int = 48):
+def _stadium_y(
+    cx: float,
+    cz: float,
+    w: float,
+    d: float,
+    y0: float,
+    y1: float,
+    rot_deg: float = 0.0,
+    n: int = 48,
+):
+    """Type-C 等跑道孔：局部 X=w 长轴，再按 footprint rot 转到 handle XZ。"""
     import trimesh
     from shapely.geometry import Polygon
+    from shapely import affinity
 
     r = min(d / 2.0, w / 2.0)
     straight = max(0.0, w - 2 * r)
@@ -172,6 +193,9 @@ def _stadium_y(cx: float, cz: float, w: float, d: float, y0: float, y1: float, n
     poly = Polygon(pts)
     if not poly.is_valid:
         poly = poly.buffer(0)
+    # KiCad rot：绕板法向；映射到 handle XZ 后同为绕 Y
+    if abs(rot_deg) > 1e-6:
+        poly = affinity.rotate(poly, rot_deg, origin=(0.0, 0.0), use_radians=False)
     mesh = trimesh.creation.extrude_polygon(poly, height=y1 - y0)
     mesh.apply_translation([cx, cz, 0.0])
     return _map_extrude_xy_to_handle_y(mesh, y0)
@@ -181,17 +205,13 @@ def _run_kicad_export() -> dict:
     if not PCB.is_file():
         raise FileNotFoundError(f"missing {PCB}")
     kpy = str(KICAD_PY if KICAD_PY.is_file() else sys.executable)
-    # export script writes to enclosure/m5/build by default — redirect via env later;
-    # for now run and copy.
     r = subprocess.run([kpy, str(EXPORT_SCRIPT)], cwd=str(ROOT))
     if r.returncode != 0:
         raise RuntimeError("export_tail_interference.py failed")
-    src = ROOT / "enclosure" / "m5" / "build" / "tail_interference.json"
     INTER_DIR.mkdir(parents=True, exist_ok=True)
-    data = json.loads(src.read_text(encoding="utf-8"))
-    INTERFERENCE_JSON.write_text(json.dumps(data, indent=2), encoding="utf-8")
-    # keep generated scad next to m5 for OpenSCAD includes
-    return data
+    if not INTERFERENCE_JSON.is_file():
+        raise FileNotFoundError(f"missing {INTERFERENCE_JSON}")
+    return json.loads(INTERFERENCE_JSON.read_text(encoding="utf-8"))
 
 
 def _board_and_ui_cutters(info: dict):
@@ -205,7 +225,7 @@ def _board_and_ui_cutters(info: dict):
 
     usb = info["usb"]
     clear = float(usb["clear"])
-    # 只挖拍尾端壁：从壳外到板面，绝不贯穿整段拍柄
+    # 只挖拍尾端壁：从壳外到板面；跑道长轴跟 J1 rot（0°=口宽沿 handle X）
     usb_cut = _stadium_y(
         float(usb["x"]),
         float(usb["y"]),
@@ -213,6 +233,7 @@ def _board_and_ui_cutters(info: dict):
         float(usb["shell_d"]) + 2 * clear,
         butt_y - 1.5,
         pcb_y + 0.35,
+        rot_deg=float(usb.get("rot_deg", 0.0)),
     )
 
     btn = info["button"]
@@ -326,14 +347,12 @@ def main() -> int:
 
     butt_y = float(info.get("butt_y", BUTT_Y))
     try:
-        tip = _crop_tip(back, butt_y)
-        _export(tip, STL / "paddle_handle_back_tip.stl")
-        # 兼容旧 m5 预览路径（只镜像 tip + 诊断，不再独立挖孔）
-        m5_build = ROOT / "enclosure" / "m5" / "build"
-        m5_build.mkdir(parents=True, exist_ok=True)
-        _export(tip, m5_build / "m5_handle_tail.stl")
-        _export(board, m5_build / "m5_tail_board_slot.stl")
-        _export(trimesh.util.concatenate(ui), m5_build / "m5_tail_ui_cuts.stl")
+        # 打印试片：后半壳 tip
+        tip_back = _crop_tip(back, butt_y)
+        _export(tip_back, STL / "paddle_handle_back_tip.stl")
+        # 预览用完整截面尾段（前+后），避免 Type-C 落在分型面被劈成半孔、看起来像转了 90°
+        tip_full = _crop_tip(trimesh.util.concatenate([front, back]), butt_y)
+        _export(tip_full, STL / "paddle_handle_tail.stl")
     except Exception as exc:
         print(f"  tip 裁切跳过: {exc}")
 

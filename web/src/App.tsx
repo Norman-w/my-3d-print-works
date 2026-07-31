@@ -6,7 +6,6 @@ import SessionBrowser from './components/SessionBrowser';
 import CalibrationWizard from './components/CalibrationWizard';
 import { useWebSocket } from './hooks/useWebSocket';
 import PaddleShapePreview from './components/PaddleShapePreview';
-import M5Preview from './components/M5Preview';
 import {
   DEFAULT_DEVICE_HOST,
   loadSavedDeviceHost,
@@ -15,11 +14,11 @@ import {
 //#endregion
 
 //#region 模型/类型
-type Tab = 'live' | 'shape' | 'm5' | 'sessions' | 'calibrate';
+type Tab = 'live' | 'shape' | 'sessions' | 'calibrate';
 //#endregion
 
 //#region 常量/配置
-const TABS: Tab[] = ['live', 'shape', 'm5', 'sessions', 'calibrate'];
+const TABS: Tab[] = ['live', 'shape', 'sessions', 'calibrate'];
 //#endregion
 
 //#region 私有成员
@@ -99,11 +98,9 @@ export default function App() {
                 ? 'Live'
                 : t === 'shape'
                   ? 'Shape'
-                  : t === 'm5'
-                    ? 'M5'
-                    : t === 'sessions'
-                      ? 'Sessions'
-                      : 'Calibrate'}
+                  : t === 'sessions'
+                    ? 'Sessions'
+                    : 'Calibrate'}
             </button>
           ))}
         </div>
@@ -217,7 +214,6 @@ export default function App() {
           </div>
         )}
         {tab === 'shape' && <PaddleShapePreview />}
-        {tab === 'm5' && <M5Preview />}
         {tab === 'sessions' && <SessionBrowser />}
         {tab === 'calibrate' && <CalibrationWizard />}
       </main>

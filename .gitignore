@@ -12,7 +12,14 @@ enclosure/output/*
 enclosure/generated/profiles.scad
 enclosure/generated/bezier_geometry.scad
 enclosure/stl/*.stl
+enclosure/stl/interference/*.stl
 !enclosure/stl/.gitkeep
+enclosure/stl/.preview-http.pid
+enclosure/stl/.preview-http.log
+enclosure/m5/.preview-http.pid
+enclosure/m5/.preview-http.log
+enclosure/m5/build/*.stl
+scripts/.venv-stl
 enclosure/analysis/*
 !enclosure/analysis/.gitkeep
 scripts/.venv-analyze/
