@@ -2,6 +2,7 @@
 include <../parameters.scad>
 include <../bezier_profile.scad>
 include <parameters_m5.scad>
+include <tail_board_cuts_m5.scad>
 use <battery_cartridge_m5.scad>
 use <latch_m5.scad>
 
@@ -102,16 +103,11 @@ module m5_feature_cuts() {
             m5_cartridge_outer_z + 2 * m5_cartridge_clearance_xy
         ], center = true);
 
-    // 尾板：满截面环槽，或旧窄矩形槽
+    // 尾板 + USB/按钮/LED：由 KiCad Edge.Cuts/器件位姿生成（无旧充电板窄槽）
+    m5_tail_board_interference_cuts();
+    // 环槽：平滑内腔局部放大，板边卡死 Y 向
     if (m5_tail_board_full_section)
         m5_tail_board_ring_groove_cut();
-    else
-        translate([m5_board_cx(), actual_butt_y + 7, 0])
-            cube([
-                m5_tail_board_t + 2 * m5_tail_board_slot_clear,
-                15,
-                m5_tail_board_z + 2 * m5_tail_board_slot_clear
-            ], center = true);
 
     // 滑扣通道（勿切穿整壳）
     pocket_y = actual_butt_y + m5_cartridge_total_y * 0.42;
@@ -121,17 +117,6 @@ module m5_feature_cuts() {
         0
     ])
         cube([6.5, m5_latch_body_y + 1.2, m5_latch_body_z + 1.2], center = true);
-
-    // 尾端面 UI 开口
-    translate([m5_board_cx(), actual_butt_y - 0.5, 0])
-        rotate([90, 0, 0])
-            linear_extrude(4)
-                offset(r = 0.3)
-                    square([m5_usb_opening_x, m5_usb_opening_z], center = true);
-
-    translate([m5_board_cx() + m5_sx() * (-3.2), actual_butt_y - 0.5, 0])
-        rotate([90, 0, 0])
-            cylinder(d = m5_button_cap_d + 0.3, h = 4);
 
     // 拍尾清口（只切端面外延，不吞掉整段）
     translate([0, actual_butt_y - 2.5, 0])
@@ -175,9 +160,8 @@ module m5_assembly_preview(state = ASSEMBLY_STATE) {
     if (state != "removed")
         m5_battery_cartridge_placed(_dy(state), true);
     m5_latch_placed(_lx(state));
-    color([0.15, 0.55, 0.28])
-        translate([m5_board_cx(), actual_butt_y + 7, 0])
-            cube([m5_tail_board_t, m5_tail_board_x, m5_tail_board_z], center = true);
+    color([0.15, 0.55, 0.28, 0.55])
+        m5_tail_board_interference_cuts();
 }
 
 // ===== 分区：公开 API =====

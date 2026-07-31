@@ -1,52 +1,80 @@
-// USB-C 16P vertical short H=5.8 — pads match USB_C_Receptacle_16P_Vertical_SMT_Short
-// Fab 9.75×4.12; shell ~8.94×3.40; SMT y=±1.10; shield x=±4.325
-$fn = 24;
+// USB-C 16P vertical short H=5.8 — 焊盘/腰圆与封装一致
+// 短脚系列：屏蔽脚板下约 0.7mm（见 docs/usb-c-vertical-16p-short）
+$fn = 32;
 
 fab_w = 9.75;
 fab_d = 4.12;
 shell_w = 8.94;
-shell_d = 3.40;
+shell_d = 3.26;
 h = 5.80;
+wall = 0.35;
+mouth_w = 8.25;
+mouth_d = 2.56;
+mouth_r = mouth_d / 2;
+tongue_w = 2.40;
+tongue_d = 0.70;
+tongue_h = 3.80;
 pad_w = 0.29;
 pad_h = 1.10;
-pad_t = 0.15;
+pad_t = 0.10;
 row_y = 1.10;
 pad_xs = [-2.73, -1.95, -1.17, -0.39, 0.39, 1.17, 1.95, 2.73];
 slot_x = 4.325;
 slot_w = 0.40;
-slot_d = 1.00;
-slot_below = 2.80;
+slot_d = 0.90;
+// 短脚：板下只留 ~0.7mm（原先 2.8 过长）
+slot_below = 0.70;
+
+module stadium_2d(w, d, r) {
+  rr = min(r, d / 2, w / 2);
+  hull()
+    for (sx = [-1, 1])
+      translate([sx * (w / 2 - rr), 0])
+        circle(r = rr);
+}
+
+module shell_body(w, d, hh) {
+  linear_extrude(height = hh, center = false)
+    stadium_2d(w, d, d / 2);
+}
 
 module smt_stub(x, y) {
+  // 贴片脚贴在板面，几乎不向下伸
   translate([x, y, pad_t / 2]) cube([pad_w, pad_h, pad_t], center = true);
 }
 
 module shield(x) {
-  z0 = -slot_below;
-  z1 = h * 0.45;
-  translate([x, 0, (z0 + z1) / 2])
-    cube([slot_w, slot_d, z1 - z0], center = true);
+  // 腰圆屏蔽脚：壳体侧壁向下短插
+  translate([x, 0, -slot_below / 2])
+    cube([slot_w, slot_d, slot_below + 0.35], center = true);
+  // 与壳体连接的短桥（板面上）
+  translate([x, 0, 0.25])
+    cube([slot_w, slot_d, 0.50], center = true);
 }
 
-// Plastic frame to fab envelope
-color("ivory")
-  difference() {
-    translate([0, 0, h / 2]) cube([fab_w, fab_d, h], center = true);
-    translate([0, 0, h / 2 + 0.05])
-      cube([shell_w + 0.2, shell_d + 0.2, h], center = true);
-  }
-
-// Metal shell + mouth on -Y (plug toward board butt)
 color("silver")
   difference() {
-    translate([0, 0, h / 2]) cube([shell_w, shell_d, h - 0.15], center = true);
-    translate([0, -shell_d / 2 + 0.15, h * 0.55])
-      cube([shell_w * 0.78, 0.55, h * 0.72], center = true);
+    shell_body(shell_w, shell_d, h);
+    translate([0, 0, 0.55])
+      linear_extrude(height = h)
+        stadium_2d(mouth_w, mouth_d, mouth_r);
+    translate([0, 0, h - 0.22])
+      linear_extrude(height = 0.30)
+        stadium_2d(mouth_w + 0.35, mouth_d + 0.25, mouth_r + 0.12);
   }
 
 color("black")
-  translate([0, -0.15, h * 0.52])
-    cube([shell_w * 0.42, shell_d * 0.35, h * 0.55], center = true);
+  translate([0, 0, 0.55 + tongue_h / 2])
+    cube([tongue_w, tongue_d, tongue_h], center = true);
+
+color("Ivory")
+  difference() {
+    linear_extrude(height = 1.15)
+      stadium_2d(fab_w, fab_d, 0.6);
+    translate([0, 0, -0.05])
+      linear_extrude(height = 1.40)
+        stadium_2d(shell_w + 0.05, shell_d + 0.05, shell_d / 2);
+  }
 
 color("gold") {
   for (y = [-row_y, row_y])

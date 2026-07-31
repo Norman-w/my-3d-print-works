@@ -235,12 +235,12 @@
 		(uuid "145cab5d-46b0-49a2-a856-6f45d9d4f6f7")
 	)
 	(embedded_fonts no)
-	(model "${KIPRJMOD}/../../lib/3dmodels/USB_C_Receptacle_16P_Vertical_SMT_Short.wrl"
+	(model "${KIPRJMOD}/../../lib/3dmodels/USB_C_Receptacle_16P_Vertical_SMT_Short.step"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
-			(xyz 0.03937 0.03937 0.03937)
+			(xyz 1 1 1)
 		)
 		(rotate
 			(xyz 0 0 0)

@@ -15,12 +15,12 @@
   (pad "1" thru_hole circle (at 2.75 -1.7) (size 1.6 1.6) (drill 0.9) (layers "*.Cu" "*.Mask") (uuid "408baeee-c1f2-5769-acb8-06776d0a3f0e"))
   (pad "2" thru_hole circle (at 2.75 1.7) (size 1.6 1.6) (drill 0.9) (layers "*.Cu" "*.Mask") (uuid "391ba0da-25d0-592f-9bd4-a5f16c5e0801"))
   (pad "2" thru_hole circle (at -2.75 1.7) (size 1.6 1.6) (drill 0.9) (layers "*.Cu" "*.Mask") (uuid "1721eaf4-b871-5f90-82a4-dcbfb4b5148f"))
-	(model "${KIPRJMOD}/../../lib/3dmodels/SW_SPST_4.5x4.5_THT.wrl"
+	(model "${KIPRJMOD}/../../lib/3dmodels/SW_SPST_4.5x4.5_THT.step"
 		(offset
 			(xyz 0 0 0)
 		)
 		(scale
-			(xyz 0.03937 0.03937 0.03937)
+			(xyz 1 1 1)
 		)
 		(rotate
 			(xyz 0 0 0)
