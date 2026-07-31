@@ -3,7 +3,8 @@
 
 板面不在最尾端：Type-C 超短体立贴身体高度 H_typec=5.8mm，外壳口与母座平齐时
   Y_pcb = Y_butt + H_typec
-在该 Y 取外壳 XZ，再按 wall_t+cavity_inset 得到内壁，并加微小装配间隙。
+在该 Y 取外壳 XZ，再按 wall_t+cavity_inset 得到内壁。
+板外形比内腔略大（负 clearance），嵌入壳体内壁环槽以卡位。
 
 Writes into the atopile layout board:
   pcb-tail/layouts/default/default.kicad_pcb
@@ -43,8 +44,10 @@ from bezier_to_openscad import (  # noqa: E402
 HERE = Path(__file__).resolve().parent
 LAYOUT_DIR = HERE / "layouts" / "default"
 LAYOUT_PCB = LAYOUT_DIR / "default.kicad_pcb"
-BOARD_CLEARANCE_MM = 0.20  # 内壁外再留的装配间隙（外形≈内壁）
+# 负值 = 板比内腔大，嵌入壁内环槽（与壳体 ring groove 深度对齐）
+BOARD_CLEARANCE_MM = -0.50
 BOARD_THICKNESS_MM = 1.00
+RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度
 # 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/
 USB_BODY_HEIGHT_MM = 5.80
 EDGE_WIDTH_MM = 0.10  # match C4 Edge.Cuts visibility
@@ -454,8 +457,10 @@ PCB Edge.Cuts extents (bbox):
 # ===== 分区：公开 API =====
 def main() -> int:
     butt_y, pcb_y, _outer_butt, outer_pcb, params = _load_pcb_plane_outer()
-    # 内壁 = 外壳 − (wall + cavity)；再减微小装配间隙
+    # 内壁 = 外壳 − (wall + cavity)；负 clearance → 板伸入壁内环槽
     total_inset = params["wall_t"] + params["handle_cavity_inset"] + BOARD_CLEARANCE_MM
+    if total_inset <= 0:
+        raise RuntimeError(f"total_inset {total_inset} invalid — wall too thin for groove")
     outer_kicad = _ccw(_resample_ring([(x, z) for x, z in outer_pcb], OUTLINE_MAX_POINTS))
     edge_pts = _inset_board_outline(outer_pcb, total_inset)
 
@@ -470,6 +475,8 @@ def main() -> int:
         "wall_t": params["wall_t"],
         "cavity_inset": params["handle_cavity_inset"],
         "board_clearance": BOARD_CLEARANCE_MM,
+        "ring_groove_radial": RING_GROOVE_RADIAL_MM,
+        "fit": "cavity_ring_groove",
         "total_inset": total_inset,
         "board_thickness": BOARD_THICKNESS_MM,
         "point_count": len(edge_pts),

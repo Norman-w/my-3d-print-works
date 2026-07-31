@@ -4,8 +4,10 @@
   "usb_body_height": 5.8,
   "wall_t": 2.0,
   "cavity_inset": 1.5,
-  "board_clearance": 0.2,
-  "total_inset": 3.7,
+  "board_clearance": -0.5,
+  "ring_groove_radial": 0.5,
+  "fit": "cavity_ring_groove",
+  "total_inset": 3.0,
   "board_thickness": 1.0,
   "point_count": 96,
   "layout_pcb": "pcb-tail/layouts/default/default.kicad_pcb",
@@ -22,14 +24,14 @@
     "half_y": 12.812771754715685
   },
   "edge": {
-    "min_x": -13.467488799775042,
-    "max_x": 13.46748879977504,
-    "min_y": -9.111210318731876,
-    "max_y": 7.407572488992094,
-    "width": 26.93497759955008,
-    "height": 16.51878280772397,
-    "half_x": 13.467488799775042,
-    "half_y": 9.111210318731876
+    "min_x": -14.167786484471668,
+    "max_x": 14.167786484471664,
+    "min_y": -9.811505725539627,
+    "max_y": 8.107674199440238,
+    "width": 28.33557296894333,
+    "height": 17.919179924979865,
+    "half_x": 14.167786484471668,
+    "half_y": 9.811505725539627
   },
   "orientation": {
     "plane": "XZ",

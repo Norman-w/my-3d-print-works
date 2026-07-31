@@ -20,15 +20,15 @@ Orientation:
 Inset stack (per side, from outer shell at Y_pcb → ≈inner wall):
   wall_t              = 2.00 mm
   handle_cavity_inset = 1.50 mm
-  board_clearance     = 0.20 mm
-  total_inset         = 3.70 mm
+  board_clearance     = -0.50 mm
+  total_inset         = 3.00 mm
 
 Outer shell at Y_pcb extents (bbox):
   width×height = 34.338 × 23.921 mm
   |x|_max = 17.169 mm   |z|_max = 12.813 mm
 
 PCB Edge.Cuts extents (bbox):
-  width×height = 26.935 × 16.519 mm
-  |x|_max = 13.467 mm   |z|_max = 9.111 mm
+  width×height = 28.336 × 17.919 mm
+  |x|_max = 14.168 mm   |z|_max = 9.812 mm
   points = 96
   thickness = 1.00 mm

@@ -47,8 +47,8 @@ ato build
 入口：`main.ato:SmartPaddleTail`（`ato.yaml`）。
 
 外形输入：`web/src/data/userBezierProfiles.json` + `enclosure/parameters.scad`  
-内缩：`wall_t + handle_cavity_inset + 0.30 mm`。  
-Edge.Cuts 使用**单个闭合 `gr_poly`**（非散段落线）。
+内缩：`wall_t + handle_cavity_inset + board_clearance`（`board_clearance = -0.50`）。  
+板比内腔大 **0.50 mm**，嵌入壳体内壁**环槽**卡位；Edge.Cuts 为单个闭合 `gr_poly`。
 
 ## 文件
 
