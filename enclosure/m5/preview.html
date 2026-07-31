@@ -1,194 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartPaddle M5 — 真实拍柄合壳换电预览</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SmartPaddle M5 — 尾板干涉预览</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#161b22;color:#e6edf3;font-family:"PingFang SC",system-ui,sans-serif;overflow:hidden}
-#view{width:100vw;height:100vh}
-.panel{position:fixed;z-index:2;top:14px;left:14px;width:min(420px,calc(100vw - 28px));padding:14px 16px;border:1px solid #ffffff18;border-radius:12px;background:#161b22f0;backdrop-filter:blur(10px)}
-h1{font-size:16px;margin:0 0 4px}
-.sub{font-size:12px;color:#9aa8b5;line-height:1.45;margin:0 0 8px}
-.note{font-size:12px;color:#ffc76b;line-height:1.5;margin:0 0 8px}
-.legend{font-size:11px;color:#aebec8;margin:6px 0}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px 0 8px}
-.legend i:first-child{margin-left:0}
-.stats{font:12px ui-monospace,monospace;color:#9fb0bc;margin:8px 0}
-button{margin:5px 4px 0 0;padding:7px 11px;border:1px solid #5d7180;border-radius:6px;background:#26323b;color:#dbe7ed;cursor:pointer;font-size:12px}
-button.active{color:#ffd166;border-color:#ffd166;background:#463d22}
-.hint{position:fixed;z-index:2;bottom:16px;left:50%;transform:translateX(-50%);padding:8px 14px;border-radius:999px;background:#161b22dd;color:#8294a0;font-size:11px}
-#loading{position:fixed;z-index:3;inset:50% auto auto 50%;transform:translate(-50%,-50%);color:#a9bac5}
-.warn{color:#ff8e8e;font-size:12px;line-height:1.45;display:none;margin-top:8px}
+  :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+  body { margin: 0; background: #0b0d12; color: #d7dde8; }
+  #bar { display:flex; gap:8px; flex-wrap:wrap; padding:10px 12px; align-items:center;
+         border-bottom:1px solid #243044; background:#121722; }
+  button { background:#1c2433; color:#e8eef8; border:1px solid #334155; border-radius:8px;
+           padding:6px 10px; cursor:pointer; }
+  button.on { background:#2563eb; border-color:#3b82f6; }
+  #c { width:100vw; height:calc(100vh - 52px); display:block; }
+  #hint { opacity:.7; font-size:12px; margin-left:auto; }
 </style>
 </head>
 <body>
-<div class="panel">
-  <h1>M5 真实拍柄合壳</h1>
-  <div class="sub">真实前后半壳合模挖仓。蓝=电池匣（电芯在匣内）；橙=拍尾端面滑扣。</div>
-  <div class="note">螺丝：M4 的 (±7,Y=-160) 正在电池行程里——会干涉拆装。已清除并迁到 (±11,Y=-108)。红=旧冲突位，绿=新位。</div>
-  <div class="legend">
-    <i style="background:#8ea5b2"></i>拍柄
-    <i style="background:#3a7fd4"></i>电池匣
-    <i style="background:#d98a28"></i>尾面滑扣
-    <i style="background:#ff5555"></i>旧螺丝(冲突)
-    <i style="background:#55cc77"></i>新螺丝
-  </div>
-  <div class="stats">状态: <span id="st">锁住</span><br>三角面: <span id="tris">—</span></div>
-  <div>
-    <button data-s="locked" class="active">锁住</button>
-    <button data-s="latch">开扣</button>
-    <button data-s="eject">顶出 4mm</button>
-    <button data-s="out">抽出</button>
-    <button data-s="cut">半透明壳</button>
-  </div>
-  <div class="warn" id="warn"></div>
+<div id="bar">
+  <strong>M5 尾板</strong>
+  <button data-k="shell" class="on">拍柄尾段</button>
+  <button data-k="board">板槽外形</button>
+  <button data-k="ui">UI 开孔</button>
+  <button data-k="all">全部</button>
+  <span id="hint">需 HTTP：./scripts/preview-m5.sh · 无电池匣</span>
 </div>
-<div class="hint">左键旋转 · 滚轮缩放 · 右键平移 · 无自动旋转</div>
-<div id="loading">载入真实拍柄网格…</div>
-<div id="view"></div>
-
-<script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
-</script>
+<canvas id="c"></canvas>
 <script type="module">
-import * as THREE from "three";
-import {OrbitControls} from "three/addons/controls/OrbitControls.js";
-import {STLLoader} from "three/addons/loaders/STLLoader.js";
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 
-const urls = {
-  handle: "build/m5_handle_tail.stl",
-  cart: "build/m5_battery_cartridge.stl",
-  latch: "build/m5_latch.stl",
-  screwOld: "build/m5_screws_conflict_old.stl",
-  screwNew: "build/m5_screws_migrated_new.stl",
+const files = {
+  shell: 'build/m5_handle_tail.stl',
+  board: 'build/m5_tail_board_slot.stl',
+  ui: 'build/m5_tail_ui_cuts.stl',
 };
-const motion = {
-  locked: {dy:0, lx:0},
-  latch:  {dy:0, lx:1.8},
-  eject:  {dy:-4, lx:1.8},
-  out:    {dy:-48, lx:1.8},
-  cut:    {dy:0, lx:0},
-};
-const labels = {locked:"锁住", latch:"开扣", eject:"顶出 4mm", out:"抽出", cut:"半透明壳"};
+const colors = { shell: 0x8b93a7, board: 0x22c55e, ui: 0xf59e0b };
+const meshes = {};
+let mode = 'shell';
 
-const host = document.querySelector("#view");
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x161b22);
-const camera = new THREE.PerspectiveCamera(40, innerWidth/innerHeight, 0.5, 800);
-camera.up.set(0,0,1);
-camera.position.set(80, -120, 55);
-const renderer = new THREE.WebGLRenderer({antialias:true});
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.setSize(innerWidth, innerHeight);
-host.appendChild(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xdcecff, 0x26313a, 2.2));
-const key = new THREE.DirectionalLight(0xffffff, 3.2); key.position.set(60,-40,120); scene.add(key);
-scene.add(new THREE.DirectionalLight(0x8dbfff, 1.3)).position.set(-80,50,40);
-const grid = new THREE.GridHelper(220, 22, 0x465966, 0x26333c);
-grid.rotation.x = Math.PI/2; grid.position.z = -20; scene.add(grid);
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.autoRotate = false;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0d12);
+const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 500);
+cam.position.set(45, -70, 35);
+const controls = new OrbitControls(cam, canvas);
 controls.target.set(0, -150, 0);
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const key = new THREE.DirectionalLight(0xffffff, 1.1);
+key.position.set(40, -20, 60);
+scene.add(key);
 
 const loader = new STLLoader();
-const loading = document.querySelector("#loading");
-const warn = document.querySelector("#warn");
-let handleMesh, cartMesh, latchMesh, screwOldMesh, screwNewMesh;
-let tris = 0;
-
-function mat(color, opacity=1){
-  return new THREE.MeshStandardMaterial({
-    color, roughness:0.55, metalness:0.12,
-    transparent: opacity<1, opacity, depthWrite: opacity>0.9
+async function load(key) {
+  const geo = await new Promise((res, rej) => loader.load(files[key], res, undefined, rej));
+  geo.computeVertexNormals();
+  const mat = new THREE.MeshStandardMaterial({
+    color: colors[key],
+    metalness: 0.1,
+    roughness: 0.55,
+    transparent: key !== 'shell',
+    opacity: key === 'shell' ? 1 : 0.75,
   });
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+  meshes[key] = mesh;
 }
 
-function load(url){
-  return new Promise((resolve, reject)=>{
-    loader.load(url+"?v="+Date.now(), g=>{
-      g.computeVertexNormals();
-      const n = g.index ? g.index.count/3 : g.attributes.position.count/3;
-      tris += n;
-      resolve(g);
-    }, undefined, reject);
-  });
-}
-
-function fit(){
-  const box = new THREE.Box3();
-  if(handleMesh) box.expandByObject(handleMesh);
-  if(cartMesh) box.expandByObject(cartMesh);
-  const c = box.getCenter(new THREE.Vector3());
-  const s = box.getSize(new THREE.Vector3());
-  const r = Math.max(s.x,s.y,s.z);
-  controls.target.copy(c);
-  camera.position.set(c.x + r*0.9, c.y - r*1.1, c.z + r*0.55);
-  camera.near = Math.max(0.1, r/200);
-  camera.far = r*20;
-  camera.updateProjectionMatrix();
-  grid.position.set(c.x, c.y, box.min.z - 2);
-}
-
-async function boot(){
-  try{
-    const [hg, cg, lg, og, ng] = await Promise.all([
-      load(urls.handle), load(urls.cart), load(urls.latch),
-      load(urls.screwOld), load(urls.screwNew),
-    ]);
-    handleMesh = new THREE.Mesh(hg, mat(0x8ea5b2, 0.5));
-    cartMesh = new THREE.Mesh(cg, mat(0x3a7fd4, 1));
-    latchMesh = new THREE.Mesh(lg, mat(0xd98a28, 1));
-    screwOldMesh = new THREE.Mesh(og, mat(0xff4444, 0.9));
-    screwNewMesh = new THREE.Mesh(ng, mat(0x44cc66, 0.95));
-    scene.add(handleMesh, cartMesh, latchMesh, screwOldMesh, screwNewMesh);
-    placeParts("locked");
-    document.getElementById("tris").textContent = Math.round(tris).toLocaleString();
-    fit();
-    loading.style.display = "none";
-  }catch(e){
-    loading.style.display = "none";
-    warn.style.display = "block";
-    warn.innerHTML = "缺少网格。请运行：<br><code>./scripts/export-m5-preview.sh</code><br>再 <code>./scripts/preview-m5.sh</code><br>"+String(e.message||e);
-  }
-}
-
-function placeParts(state){
-  if(!handleMesh || !cartMesh || !latchMesh) return;
-  const mv = motion[state];
-  cartMesh.visible = state !== "out";
-  cartMesh.position.set(0, mv.dy, 0);
-  latchMesh.position.set(mv.lx, 0, 0);
-  handleMesh.material.opacity = state === "cut" ? 0.18 : 0.45;
-  handleMesh.material.transparent = true;
-  handleMesh.material.depthWrite = state !== "cut";
-  if(screwOldMesh) screwOldMesh.visible = true;
-  if(screwNewMesh) screwNewMesh.visible = true;
-  document.getElementById("st").textContent = labels[state];
-}
-
-document.querySelectorAll("button[data-s]").forEach(btn=>{
-  btn.onclick = ()=>{
-    document.querySelectorAll("button[data-s]").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    placeParts(btn.dataset.s);
+function applyMode() {
+  const show = {
+    shell: mode === 'shell' || mode === 'all',
+    board: mode === 'board' || mode === 'all',
+    ui: mode === 'ui' || mode === 'all',
   };
+  for (const k of Object.keys(meshes)) meshes[k].visible = !!show[k];
+  document.querySelectorAll('#bar button[data-k]').forEach(b => {
+    b.classList.toggle('on', b.dataset.k === mode);
+  });
+}
+
+document.querySelectorAll('#bar button[data-k]').forEach(b => {
+  b.onclick = () => { mode = b.dataset.k; applyMode(); };
 });
 
-addEventListener("resize", ()=>{
-  const w=Math.min(innerWidth,4096), h=Math.min(innerHeight,4096);
-  camera.aspect=w/Math.max(h,1); camera.updateProjectionMatrix();
-  renderer.setSize(w,h);
-});
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  renderer.setSize(w, h, false);
+  cam.aspect = w / h; cam.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+resize();
 
-(function loop(){
-  requestAnimationFrame(loop);
+function tick() {
   controls.update();
-  renderer.render(scene, camera);
-})();
+  renderer.render(scene, cam);
+  requestAnimationFrame(tick);
+}
+tick();
 
-boot();
+try {
+  await Promise.all(['shell','board','ui'].map(load));
+  applyMode();
+} catch (e) {
+  document.getElementById('hint').textContent =
+    '加载失败：先跑 export-m5-preview.sh 与 step6，并用 HTTP 打开';
+  console.error(e);
+}
 </script>
 </body>
 </html>

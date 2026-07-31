@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-"""Step 6 — 用 pcb-tail 尾板干涉真实拍柄尾段（独立于 step1–5）。
+"""Step 6 — 用 pcb-tail 干涉「已导出」的拍柄，写出最终可打印 STL。
 
-前置（可不依赖尾板布局完成）：
-  ./scripts/export-m5-preview.sh
-  → 写出 enclosure/m5/build/m5_handle_tail_pre_board.stl
+输入（须已由 export-stl.sh / OpenSCAD 生成）：
+  enclosure/stl/paddle_handle_{front,back}.stl
+  enclosure/stl/paddle_blade_{front,back}.stl   （用于重拼半壳/整装）
 
-本步（需要尾板 Edge.Cuts + J1/SW1/D1/LED1 已就位）：
-  1) 从 KiCad 导出干涉事实 JSON / SCAD
-  2) 从 pre_board 网格减去板槽 + Type-C/按钮/LED 开孔
-  3) 写出 m5_handle_tail.stl + m5_tail_interference.stl
+输出（覆盖最终打印件）：
+  paddle_handle_{front,back}.stl
+  paddle_shell_{front,back}.stl
+  paddle_split_assembly.stl
+  paddle_handle_back_tip.stl（若可裁切）
+
+诊断（不覆盖打印件）：
+  enclosure/stl/interference/board_slot.stl
+  enclosure/stl/interference/ui_cuts.stl
 
   python3 scripts/step6_tail_board_interfere_handle.py
 """
@@ -18,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -25,19 +31,55 @@ from pathlib import Path
 
 # ===== 分区：常量/配置 =====
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "enclosure" / "m5" / "build"
-PRE_BOARD = OUT_DIR / "m5_handle_tail_pre_board.stl"
-OUT_HANDLE = OUT_DIR / "m5_handle_tail.stl"
-OUT_CUTTERS = OUT_DIR / "m5_tail_interference.stl"
-INTERFERENCE = OUT_DIR / "tail_interference.json"
+STL = ROOT / "enclosure" / "stl"
+INTER_DIR = STL / "interference"
+INTERFERENCE_JSON = INTER_DIR / "tail_interference.json"
 EXPORT_SCRIPT = ROOT / "pcb-tail" / "scripts" / "export_tail_interference.py"
+PCB = ROOT / "pcb-tail" / "layouts" / "default" / "default.kicad_pcb"
 KICAD_PY = Path(
     "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
     "Python.framework/Versions/Current/bin/python3"
 )
+VENV_PY = ROOT / "scripts" / ".venv-m5" / "bin" / "python"
+
+BUTT_Y = -178.0962
+TIP_LENGTH = 25.0
 
 
 # ===== 分区：私有成员 =====
+def _py() -> str:
+    return str(VENV_PY) if VENV_PY.is_file() else sys.executable
+
+
+def _ensure_trimesh():
+    try:
+        import trimesh  # noqa: F401
+        import shapely  # noqa: F401
+    except ImportError:
+        if VENV_PY.is_file() and Path(sys.executable) != VENV_PY:
+            raise SystemExit(
+                subprocess.call([str(VENV_PY), str(Path(__file__).resolve()), *sys.argv[1:]])
+            )
+        venv = ROOT / "scripts" / ".venv-m5"
+        subprocess.check_call(["uv", "venv", str(venv)])
+        subprocess.check_call(
+            [
+                "uv",
+                "pip",
+                "install",
+                "--python",
+                str(venv / "bin" / "python"),
+                "trimesh",
+                "manifold3d",
+                "numpy",
+                "shapely",
+            ]
+        )
+        raise SystemExit(
+            subprocess.call([str(venv / "bin" / "python"), str(Path(__file__).resolve()), *sys.argv[1:]])
+        )
+
+
 def _load_stl(path: Path):
     import trimesh
 
@@ -65,7 +107,7 @@ def _box(center, extents):
     )
 
 
-def _cyl_y(radius: float, height: float, center, sections: int = 28):
+def _cyl_y(radius: float, height: float, center, sections: int = 48):
     import numpy as np
     import trimesh
 
@@ -90,8 +132,6 @@ def _map_extrude_xy_to_handle_y(mesh, y0: float):
     mesh.apply_transform(t)
     mesh.invert()
     mesh.remove_unreferenced_vertices()
-    if not mesh.is_watertight:
-        raise RuntimeError("cutter not watertight after transform")
     if not mesh.is_volume:
         mesh = trimesh.Trimesh(
             vertices=mesh.vertices.copy(), faces=mesh.faces.copy(), process=True
@@ -99,7 +139,7 @@ def _map_extrude_xy_to_handle_y(mesh, y0: float):
         if mesh.volume < 0:
             mesh.invert()
     if not mesh.is_volume:
-        raise RuntimeError(f"cutter still not a volume (V={mesh.volume})")
+        raise RuntimeError(f"cutter not a volume (V={getattr(mesh, 'volume', '?')})")
     return mesh
 
 
@@ -107,81 +147,98 @@ def _extrude_xz_along_y(points_xz, y0: float, y1: float):
     import trimesh
     from shapely.geometry import Polygon
 
-    if y1 <= y0:
-        raise ValueError("y1 must be > y0")
     poly = Polygon([(float(p[0]), float(p[1])) for p in points_xz])
-    if not poly.is_valid or poly.area < 1.0:
+    if not poly.is_valid:
+        poly = poly.buffer(0)
+    if poly.area < 1.0:
         raise RuntimeError("invalid Edge.Cuts polygon")
     mesh = trimesh.creation.extrude_polygon(poly, height=y1 - y0)
     return _map_extrude_xy_to_handle_y(mesh, y0)
 
 
-def _stadium_y(cx: float, cz: float, w: float, d: float, y0: float, y1: float):
+def _stadium_y(cx: float, cz: float, w: float, d: float, y0: float, y1: float, n: int = 48):
     import trimesh
-    from shapely.geometry import Point, box
+    from shapely.geometry import Polygon
 
-    r = min(d / 2, w / 2)
-    core = Point(0, 0).buffer(r)
-    if w > 2 * r:
-        core = core.union(box(-(w / 2 - r), -r, (w / 2 - r), r)).convex_hull
-    mesh = trimesh.creation.extrude_polygon(core, height=y1 - y0)
+    r = min(d / 2.0, w / 2.0)
+    straight = max(0.0, w - 2 * r)
+    pts = []
+    for i in range(n // 2 + 1):
+        a = -math.pi / 2 + math.pi * i / (n // 2)
+        pts.append((straight / 2 + r * math.cos(a), r * math.sin(a)))
+    for i in range(n // 2 + 1):
+        a = math.pi / 2 + math.pi * i / (n // 2)
+        pts.append((-straight / 2 + r * math.cos(a), r * math.sin(a)))
+    poly = Polygon(pts)
+    if not poly.is_valid:
+        poly = poly.buffer(0)
+    mesh = trimesh.creation.extrude_polygon(poly, height=y1 - y0)
     mesh.apply_translation([cx, cz, 0.0])
     return _map_extrude_xy_to_handle_y(mesh, y0)
 
 
-def _tail_board_cutters(info: dict):
+def _run_kicad_export() -> dict:
+    if not PCB.is_file():
+        raise FileNotFoundError(f"missing {PCB}")
+    kpy = str(KICAD_PY if KICAD_PY.is_file() else sys.executable)
+    # export script writes to enclosure/m5/build by default — redirect via env later;
+    # for now run and copy.
+    r = subprocess.run([kpy, str(EXPORT_SCRIPT)], cwd=str(ROOT))
+    if r.returncode != 0:
+        raise RuntimeError("export_tail_interference.py failed")
+    src = ROOT / "enclosure" / "m5" / "build" / "tail_interference.json"
+    INTER_DIR.mkdir(parents=True, exist_ok=True)
+    data = json.loads(src.read_text(encoding="utf-8"))
+    INTERFERENCE_JSON.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    # keep generated scad next to m5 for OpenSCAD includes
+    return data
+
+
+def _board_and_ui_cutters(info: dict):
     pcb_y = float(info["pcb_y"])
     butt_y = float(info["butt_y"])
     t = float(info["board_thickness"])
     axial = float(info["board_axial_clear"])
-    y0 = pcb_y - axial
-    y1 = pcb_y + t + axial
-    board = _extrude_xz_along_y(info["edge_cuts_xy"], y0, y1)
+    board = _extrude_xz_along_y(
+        info["edge_cuts_xy"], pcb_y - axial, pcb_y + t + axial
+    )
 
     usb = info["usb"]
     clear = float(usb["clear"])
+    # 只挖拍尾端壁：从壳外到板面，绝不贯穿整段拍柄
     usb_cut = _stadium_y(
         float(usb["x"]),
         float(usb["y"]),
         float(usb["shell_w"]) + 2 * clear,
         float(usb["shell_d"]) + 2 * clear,
-        butt_y - 3.0,
-        pcb_y + 0.8,
+        butt_y - 1.5,
+        pcb_y + 0.35,
     )
 
     btn = info["button"]
-    btn_cut = _cyl_y(
+    y0, y1 = butt_y - 1.5, pcb_y + 0.35
+    btn_hole = _cyl_y(
         float(btn["hole_d"]) / 2,
-        (pcb_y + 1.0) - (butt_y - 3.0),
-        [float(btn["x"]), (butt_y - 3.0 + pcb_y + 1.0) / 2, float(btn["y"])],
+        y1 - y0,
+        [float(btn["x"]), (y0 + y1) / 2, float(btn["y"])],
     )
     btn_pocket = _box(
         [float(btn["x"]), pcb_y - float(btn["body_h"]) / 2, float(btn["y"])],
-        [float(btn["pocket"]), float(btn["body_h"]) + 0.6, float(btn["pocket"])],
+        [float(btn["pocket"]), float(btn["body_h"]) + 0.35, float(btn["pocket"])],
     )
 
-    cuts = [board, usb_cut, btn_cut, btn_pocket]
+    cuts = [board, usb_cut, btn_hole, btn_pocket]
     for key in ("led_rgb", "led_status"):
         led = info[key]
+        ly0, ly1 = butt_y - 1.2, pcb_y + 0.25
         cuts.append(
             _cyl_y(
                 float(led["hole_d"]) / 2,
-                (pcb_y + 0.5) - (butt_y - 2.5),
-                [float(led["x"]), (butt_y - 2.5 + pcb_y + 0.5) / 2, float(led["y"])],
+                ly1 - ly0,
+                [float(led["x"]), (ly0 + ly1) / 2, float(led["y"])],
             )
         )
-    return cuts
-
-
-def _run_export_interference() -> dict:
-    py = str(KICAD_PY if KICAD_PY.is_file() else Path(sys.executable))
-    print(f"→ 从 KiCad 导出尾板干涉事实 ({py})…")
-    r = subprocess.run([py, str(EXPORT_SCRIPT)], cwd=str(ROOT))
-    if r.returncode != 0:
-        raise RuntimeError("export_tail_interference.py failed")
-    if not INTERFERENCE.is_file():
-        raise FileNotFoundError(INTERFERENCE)
-    return json.loads(INTERFERENCE.read_text(encoding="utf-8"))
+    return board, cuts[1:], cuts
 
 
 def _difference_all(mesh, cutters):
@@ -192,61 +249,95 @@ def _difference_all(mesh, cutters):
         except TypeError:
             out = out.difference(cutter)
         if out is None or getattr(out, "is_empty", False):
-            raise RuntimeError(f"布尔挖空后网格为空 (cutter#{i})")
+            raise RuntimeError(f"boolean empty after cutter#{i}")
     return out
 
 
+def _crop_tip(handle_back, butt_y: float, tip_len: float = TIP_LENGTH):
+    y0 = butt_y - 1.0
+    y1 = butt_y + tip_len
+    box = _box([0.0, (y0 + y1) / 2, 0.0], [120.0, y1 - y0, 80.0])
+    return handle_back.intersection(box)
+
+
 # ===== 分区：公开 API =====
+def pcb_ready() -> bool:
+    return PCB.is_file()
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Step 6: pcb-tail 尾板干涉拍柄（独立于 step1–5）"
-    )
-    parser.add_argument(
-        "--pre-board",
-        type=Path,
-        default=PRE_BOARD,
-        help="未挖尾板的拍柄尾段 STL（由 export-m5-preview / build-m5 生成）",
-    )
-    parser.add_argument(
-        "--skip-export",
-        action="store_true",
-        help="复用已有 tail_interference.json，不重新跑 KiCad 导出",
-    )
+    parser = argparse.ArgumentParser(description="Step6: pcb-tail 干涉已导出拍柄")
+    parser.add_argument("--skip-export", action="store_true")
+    parser.add_argument("--check-only", action="store_true", help="仅检查 pcb-tail 是否可干涉")
     args = parser.parse_args()
 
-    if not args.pre_board.is_file():
-        print(
-            f"缺少 {args.pre_board}\n"
-            "请先跑不影响尾板布局的预览生成：\n"
-            "  ./scripts/export-m5-preview.sh\n"
-            "它会写出 m5_handle_tail_pre_board.stl",
-            file=sys.stderr,
-        )
-        return 1
+    if args.check_only:
+        print("pcb-tail ready" if pcb_ready() else "pcb-tail missing")
+        return 0 if pcb_ready() else 2
+
+    if not pcb_ready():
+        print(f"跳过 Step6：无 {PCB}", file=sys.stderr)
+        return 2
+
+    _ensure_trimesh()
+    import trimesh
+
+    hf = STL / "paddle_handle_front.stl"
+    hb = STL / "paddle_handle_back.stl"
+    bf = STL / "paddle_blade_front.stl"
+    bb = STL / "paddle_blade_back.stl"
+    for p in (hf, hb):
+        if not p.is_file():
+            print(f"缺少已导出拍柄: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
+            return 1
 
     info = (
-        json.loads(INTERFERENCE.read_text(encoding="utf-8"))
-        if args.skip_export and INTERFERENCE.is_file()
-        else _run_export_interference()
+        json.loads(INTERFERENCE_JSON.read_text(encoding="utf-8"))
+        if args.skip_export and INTERFERENCE_JSON.is_file()
+        else _run_kicad_export()
     )
 
     print(
-        f"  pcb_y={info['pcb_y']:.3f}  "
+        f"→ Step6 干涉拍柄  Edge.Cuts={len(info['edge_cuts_xy'])}pts  "
         f"usb=({info['usb']['x']:.2f},{info['usb']['y']:.2f})  "
         f"sw=({info['button']['x']:.2f},{info['button']['y']:.2f})"
     )
 
-    print(f"→ 加载预挖尾板拍柄 {args.pre_board.name}…")
-    base = _load_stl(args.pre_board)
-    cutters = _tail_board_cutters(info)
-    import trimesh
+    board, ui, all_cuts = _board_and_ui_cutters(info)
+    INTER_DIR.mkdir(parents=True, exist_ok=True)
+    _export(board, INTER_DIR / "board_slot.stl")
+    _export(trimesh.util.concatenate(ui), INTER_DIR / "ui_cuts.stl")
+    _export(trimesh.util.concatenate(all_cuts), INTER_DIR / "all_cuts.stl")
 
-    _export(trimesh.util.concatenate(cutters), OUT_CUTTERS)
+    print("→ 干涉 paddle_handle_front/back …")
+    front = _difference_all(_load_stl(hf), all_cuts)
+    back = _difference_all(_load_stl(hb), all_cuts)
+    _export(front, hf)
+    _export(back, hb)
 
-    print("→ 减去尾板 Edge.Cuts 卡槽 + Type-C/按钮/LED 开孔…")
-    dug = _difference_all(base, cutters)
-    _export(dug, OUT_HANDLE)
-    print("Step 6 完成 ✓  （预览: ./scripts/preview-m5.sh）")
+    if bf.is_file() and bb.is_file():
+        print("→ 重拼半壳与 split_assembly …")
+        shell_f = trimesh.util.concatenate([_load_stl(bf), front])
+        shell_b = trimesh.util.concatenate([_load_stl(bb), back])
+        split = trimesh.util.concatenate([_load_stl(bf), _load_stl(bb), front, back])
+        _export(shell_f, STL / "paddle_shell_front.stl")
+        _export(shell_b, STL / "paddle_shell_back.stl")
+        _export(split, STL / "paddle_split_assembly.stl")
+
+    butt_y = float(info.get("butt_y", BUTT_Y))
+    try:
+        tip = _crop_tip(back, butt_y)
+        _export(tip, STL / "paddle_handle_back_tip.stl")
+        # 兼容旧 m5 预览路径（只镜像 tip + 诊断，不再独立挖孔）
+        m5_build = ROOT / "enclosure" / "m5" / "build"
+        m5_build.mkdir(parents=True, exist_ok=True)
+        _export(tip, m5_build / "m5_handle_tail.stl")
+        _export(board, m5_build / "m5_tail_board_slot.stl")
+        _export(trimesh.util.concatenate(ui), m5_build / "m5_tail_ui_cuts.stl")
+    except Exception as exc:
+        print(f"  tip 裁切跳过: {exc}")
+
+    print("Step6 完成 ✓  最终打印件已写入 enclosure/stl/")
     return 0
 
 

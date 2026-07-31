@@ -1,14 +1,11 @@
-// SmartPaddle M5 — 真实拍柄尾段合壳挖仓（可导出预览网格）
+// SmartPaddle M5 — 拍柄尾段：环槽卡满截面尾板（无电池匣）
 include <../parameters.scad>
 include <../bezier_profile.scad>
 include <parameters_m5.scad>
 include <tail_board_cuts_m5.scad>
-use <battery_cartridge_m5.scad>
-use <latch_m5.scad>
 
 // ===== 分区：常量/配置 =====
 PART = "tail_coupon";
-ASSEMBLY_STATE = "cartridge_locked";
 $fn = 32;
 eps = 0.08;
 BIG = 500;
@@ -17,12 +14,6 @@ TAIL_LEN = m5_tail_active_length_y;
 LOFT_STEPS = 22;
 
 m5_echo_feasibility();
-
-function _dy(s) =
-    s == "removed" ? -48 :
-    s == "ejected" || s == "latch_pressed" ? -m5_eject_travel_y : 0;
-function _lx(s) =
-    s == "latch_pressed" || s == "ejected" || s == "removed" ? m5_latch_travel_x : 0;
 
 function _flare_t(y) =
     let(d = y - actual_butt_y)
@@ -81,7 +72,6 @@ module m5_shell_hollow() {
 }
 
 module m5_tail_board_ring_groove_cut() {
-    // 满截面尾板环槽：在板平面把内腔局部加大 radial，合模后板边卡进凹槽
     y_c = actual_butt_y + m5_tail_board_y_from_butt;
     half_y = m5_tail_board_t / 2 + m5_tail_board_ring_groove_axial_clear;
     cavity_inset = m5_wall_t + m5_cavity_inset;
@@ -91,53 +81,17 @@ module m5_tail_board_ring_groove_cut() {
 }
 
 module m5_feature_cuts() {
-    // 电池仓
-    translate([
-        m5_cartridge_cx(),
-        actual_butt_y + m5_housing_bay_depth_y() / 2,
-        0
-    ])
-        cube([
-            m5_cartridge_outer_x + 2 * m5_cartridge_clearance_xy,
-            m5_housing_bay_depth_y() + 2,
-            m5_cartridge_outer_z + 2 * m5_cartridge_clearance_xy
-        ], center = true);
-
-    // 尾板 + USB/按钮/LED：由 KiCad Edge.Cuts/器件位姿生成（无旧充电板窄槽）
     m5_tail_board_interference_cuts();
-    // 环槽：平滑内腔局部放大，板边卡死 Y 向
     if (m5_tail_board_full_section)
         m5_tail_board_ring_groove_cut();
-
-    // 滑扣通道（勿切穿整壳）
-    pocket_y = actual_butt_y + m5_cartridge_total_y * 0.42;
-    translate([
-        m5_cartridge_cx() + m5_sx() * (m5_cartridge_outer_x / 2 + 3.2),
-        pocket_y,
-        0
-    ])
-        cube([6.5, m5_latch_body_y + 1.2, m5_latch_body_z + 1.2], center = true);
-
-    // 拍尾清口（只切端面外延，不吞掉整段）
     translate([0, actual_butt_y - 2.5, 0])
         cube([2 * m5_outer_hx_butt + 4, 4, 2 * m5_outer_hz_butt + 4], center = true);
 }
 
-module m5_internals_add() {
-    translate([m5_divider_cx(), actual_butt_y + m5_housing_bay_depth_y() / 2, 0])
-        cube([m5_divider_min_t, m5_housing_bay_depth_y() - 3, m5_tail_board_z - 2], center = true);
-
-    translate([m5_cartridge_cx(), actual_butt_y + m5_housing_bay_depth_y() - 1.6, 0])
-        cube([m5_cartridge_outer_x - 2, 2.6, m5_cartridge_outer_z - 2], center = true);
-}
-
 module m5_handle_united() {
-    union() {
-        difference() {
-            m5_shell_hollow();
-            m5_feature_cuts();
-        }
-        m5_internals_add();
+    difference() {
+        m5_shell_hollow();
+        m5_feature_cuts();
     }
 }
 
@@ -155,21 +109,10 @@ module m5_handle_half(front = true) {
     }
 }
 
-module m5_assembly_preview(state = ASSEMBLY_STATE) {
-    color([0.75, 0.79, 0.84, 0.45]) m5_handle_united();
-    if (state != "removed")
-        m5_battery_cartridge_placed(_dy(state), true);
-    m5_latch_placed(_lx(state));
-    color([0.15, 0.55, 0.28, 0.55])
-        m5_tail_board_interference_cuts();
-}
-
 // ===== 分区：公开 API =====
-if (PART == "assembly_preview") m5_assembly_preview(ASSEMBLY_STATE);
-else if (PART == "tail_coupon") m5_handle_united();
+if (PART == "tail_coupon") m5_handle_united();
 else if (PART == "handle_front") m5_handle_half(true);
 else if (PART == "handle_back") m5_handle_half(false);
-else if (PART == "cartridge_world") m5_battery_cartridge_placed(0, true);
-else if (PART == "latch_world") m5_latch_placed(0);
+else if (PART == "board_cuts_only") m5_tail_board_interference_cuts();
 
 echo(str("M5 PART=", PART, " buttY=", actual_butt_y));

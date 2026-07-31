@@ -4,77 +4,40 @@
 
 ## 模型版本边界
 
-- 当前目录中的 `parameters.scad`、`paddle_shell.scad` 和 `scripts/export-stl.sh` 默认行为是 **M4**，继续配套 C3/C4。
-- 下一代 **M5.C5** 改为固定窄尾板 + `Y− → Y+` 抽屉式保护 14500 电池匣 + `X+` 侧横向机械滑扣。它必须使用独立 SCAD 入口和带 `m5` 的输出名，不能覆盖 M4。
-- M5 的文件结构、参数、建模顺序、接口合同、打印样块和验收门禁详见 [`M5_SCAD_PLAN.md`](M5_SCAD_PLAN.md)；整机电气基线见 [`../pcb/C5_PLAN.md`](../pcb/C5_PLAN.md)。两者都尚未实物验证。
+- `parameters.scad` / `paddle_shell.scad` / `scripts/export-stl.sh` 是可打印壳体源。
+- 尾板开孔：**不在 SCAD 硬编码**。若存在 `pcb-tail/layouts/default/default.kicad_pcb`，`export-stl.sh` 会在 OpenSCAD 导出后自动跑 **Step6**，用 Edge.Cuts + USB/按钮/LED 干涉已导出拍柄，覆盖 `enclosure/stl/` 最终件。
+- 旧外购充电总成固定件已从拍柄 SCAD 移除；电池匣方案已废弃。
 
-## M5 预览（轻量）
+## 导出（唯一入口）
 
 ```bash
-open enclosure/m5/preview.html
+./scripts/export-stl.sh
 ```
 
-单文件 HTML，不启 `./dev.sh`、不导出 STL。详见 [`m5/`](m5/)。
+会生成：
+
+- `paddle_blade_{front,back}.stl`
+- `paddle_handle_{front,back}.stl`（Step6 后含尾板干涉）
+- `paddle_shell_{front,back}.stl`
+- `paddle_split_assembly.stl`
+- `paddle_handle_back_tip.stl`
+- 诊断：`stl/interference/{board_slot,ui_cuts,all_cuts}.stl`
+
+跳过尾板干涉：`SKIP_STEP6=1 ./scripts/export-stl.sh`  
+快速预览：`QUALITY_MODE=quick ./scripts/export-stl.sh`  
+仅 tip：`./scripts/export-stl.sh tip`
 
 ## 本目录只放「源文件」
 
 ```
 enclosure/
 ├── README.md
-├── parameters.scad      # 孔位、壁厚、螺丝/压电/USB
-├── paddle_shell.scad    # 主文件：前壳 / 后壳（HALF=front|back|both）
-├── bezier_profile.scad  # 腔体 Z 查表
-├── export_outer.scad    # 可选：仅导出整件外壳实体
+├── parameters.scad
+├── paddle_shell.scad
+├── bezier_profile.scad
+├── export_outer.scad
 ├── generated/           # bezier_to_openscad.py 输出（勿手改）
-└── stl/                 # export-stl.sh 输出（切片用）
+└── stl/                 # export-stl.sh 最终打印件
 ```
 
-**不在此目录常驻：** `analysis/` 下的 PNG、尺寸表 — 由脚本生成到仓库外路径或自行跑分析（见下）。
-
-## 看模型 / 打印
-
-```bash
-./scripts/export-stl.sh
-```
-
-产出：
-
-| 文件 | 用途 |
-|------|------|
-| `stl/paddle_blade_front.stl` | 拍面前半（Z≥0） |
-| `stl/paddle_blade_back.stl` | 拍面后半（Z≤0） |
-| `stl/paddle_handle_front.stl` | 拍柄前半 |
-| `stl/paddle_handle_back.stl` | 拍柄后半（含 USB 开孔） |
-| `stl/paddle_shell_front.stl` | 前壳组装 = 拍面前 + 拍柄前 |
-| `stl/paddle_shell_back.stl` | 后壳组装 = 拍面后 + 拍柄后 |
-
-```bash
-open enclosure/stl/paddle_shell_front.stl enclosure/stl/paddle_shell_back.stl
-```
-
-可选整件外壳（无腔、无分型）：
-
-```bash
-openscad -o enclosure/stl/outer_envelope.stl enclosure/export_outer.scad
-```
-
-## 2D 轮廓核对（贝塞尔 JSON）
-
-```bash
-./scripts/.venv-analyze/bin/python scripts/analyze_bezier_views.py \
-  --out /tmp/smartpaddle-bezier-design
-open /tmp/smartpaddle-bezier-design/blade_silhouette.png
-```
-
-默认曾写入 `enclosure/analysis/bezier_design/`；该目录已从仓库清理，避免与源文件混在一起。
-
-## 数据流
-
-```
-userBezierProfiles.json → bezier_to_openscad.py → generated/*.scad
-                    → paddle_shell.scad → stl/paddle_shell_*.stl
-```
-
-设计预览：Web Shape / Live。打印几何：上表 OpenSCAD 链路。
-
-详见 `docs/print-prep.md`。
+可选本地预览：`./scripts/preview-m5.sh`（读 Step6 镜像到 `m5/build/` 的 tip/诊断）。

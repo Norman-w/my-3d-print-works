@@ -984,16 +984,11 @@ module handle_front_part() {
                                     screw_boss_column(boss_h, 1);
                             }
                         }
-                    // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
-                    usb_c_pcb_block(front = true);
-                    // USB-C 左侧夹持固定销
-                    usb_c_left_clamp(front = true);
+                    // 旧外购充电总成基台/夹持已废弃：充电在 pcb-tail 自研尾板实现。
+                    // USB/按钮/LED 开孔由 M5 Step6 按 KiCad 位姿干涉，不再在此硬编码。
                 }
                 rigid_pcb_cavity(front = true);
                 pcb_main_cavity(front = true);
-                usb_c_cutout();
-                led_light_guide_holes();
-                button_cutout();
                 if (handle_open_blade_socket())
                     handle_blade_insert_socket();
             }
@@ -1002,8 +997,6 @@ module handle_front_part() {
         }
         handle_screw_channels();
     }
-    // 加固立柱：从开关槽后壁接到 Z 向外壳
-    button_retention_column(front = true);
 }
 
 module handle_back_part() {
@@ -1025,17 +1018,10 @@ module handle_back_part() {
                                     cylinder(d = screw_d_boss, h = boss_h);
                             }
                         }
-                    // 充电 PCB 实心基台 (放在 union 内，受 usb_c_cutout 减法作用)
-                    usb_c_pcb_block(front = false);
-                    // USB-C 左侧夹持固定销
-                    usb_c_left_clamp(front = false);
+                    // 旧外购充电总成基台/夹持/软开关槽已废弃（见 handle_front_part）。
                 }
                 rigid_pcb_cavity(front = false);
                 pcb_main_cavity(front = false);
-                usb_c_cutout();
-                button_cutout();
-                ws2812_led_hole();
-                soft_power_circuit_cavity();
                 if (handle_open_blade_socket())
                     handle_blade_insert_socket();
             }
@@ -1044,8 +1030,6 @@ module handle_back_part() {
         }
         handle_screw_channels();
     }
-    // 加固立柱：从开关槽后壁接到 Z 向外壳
-    button_retention_column(front = false);
 }
 
 // ═══ 组装半壳（拍面 + 拍柄，同侧 Z 分割） ═══

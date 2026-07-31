@@ -186,7 +186,7 @@ export_part() {
   fi
 }
 
-echo "=== SmartPaddle STL 导出（四零件 + 半壳组装）==="
+echo "=== SmartPaddle STL 完整导出 ==="
 echo "源: $SCAD"
 echo "输出: $OUT/"
 echo ""
@@ -214,30 +214,56 @@ if [[ "${1:-}" == "tip" ]]; then
   exit 0
 fi
 
+# 默认导出全部可打印件（可用 EXPORT_ASSEMBLED_HALVES=0 跳过半壳/整装）
+EXPORT_ASSEMBLED_HALVES="${EXPORT_ASSEMBLED_HALVES:-1}"
+SKIP_STEP6="${SKIP_STEP6:-0}"
+
 export_part blade_front "$OUT/paddle_blade_front.stl"
 export_part blade_back  "$OUT/paddle_blade_back.stl"
 export_part handle_front "$OUT/paddle_handle_front.stl"
 export_part handle_back  "$OUT/paddle_handle_back.stl"
 
-if [[ "${EXPORT_ASSEMBLED_HALVES:-0}" == "1" ]]; then
-  echo "→ 额外导出半壳组装件（较慢）…"
-  # 兼容旧流程：前壳 = 拍面前半 + 拍柄前半
+if [[ "$EXPORT_ASSEMBLED_HALVES" == "1" ]]; then
+  echo "→ 半壳组装 + split_assembly …"
   export_part front "$OUT/paddle_shell_front.stl"
   export_part back  "$OUT/paddle_shell_back.stl"
+  export_part split_assembly "$OUT/paddle_split_assembly.stl"
+fi
+
+TIP_LENGTH="${TIP_LENGTH:-25}"
+echo "→ 拍柄后壳尾部切片 ${TIP_LENGTH}mm …"
+$OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_handle_back_tip.stl" \
+  ${SCAD_DEFS[@]+"${SCAD_DEFS[@]}"} \
+  -D "HALF=\"handle_back_tip\"" \
+  -D "TIP_LENGTH=${TIP_LENGTH}" \
+  "$SCAD" || true
+
+# Step6：若 pcb-tail 存在，用尾板干涉已导出拍柄，覆盖最终打印件
+if [[ "$SKIP_STEP6" != "1" ]]; then
+  STEP6="$ROOT/scripts/step6_tail_board_interfere_handle.py"
+  PCB_TAIL="$ROOT/pcb-tail/layouts/default/default.kicad_pcb"
+  if [[ -f "$STEP6" && -f "$PCB_TAIL" ]]; then
+    echo ""
+    echo "→ Step6：pcb-tail 干涉拍柄（覆盖 enclosure/stl 最终件）…"
+    STEP6_PY="$ROOT/scripts/.venv-m5/bin/python"
+    if [[ ! -x "$STEP6_PY" ]]; then
+      STEP6_PY="${PYTHON_CMD[0]:-python3}"
+    fi
+    if ! "$STEP6_PY" "$STEP6"; then
+      echo "警告: Step6 失败；OpenSCAD 基线 STL 仍保留（未含尾板开孔）" >&2
+    fi
+  else
+    echo ""
+    echo "→ 跳过 Step6（无 pcb-tail 板文件）；输出为无尾板干涉的基线壳"
+  fi
 fi
 
 echo ""
-echo "完成。四零件:"
-echo "  paddle_blade_front.stl / paddle_blade_back.stl"
-echo "  paddle_handle_front.stl / paddle_handle_back.stl"
-if [[ "${EXPORT_ASSEMBLED_HALVES:-0}" == "1" ]]; then
-  echo "半壳组装（前后各一片）:"
-  echo "  paddle_shell_front.stl / paddle_shell_back.stl"
-else
-  echo "如需半壳组装件（较慢），运行:"
-  echo "  EXPORT_ASSEMBLED_HALVES=1 ./scripts/export-stl.sh"
-fi
-echo "如需快速预览模式，运行:"
-echo "  QUALITY_MODE=quick ./scripts/export-stl.sh"
-echo "如需拍柄尾部切片（装配验证），运行:"
-echo "  ./scripts/export-stl.sh tip"
+echo "完成。最终打印件（enclosure/stl/）:"
+echo "  paddle_blade_{front,back}.stl"
+echo "  paddle_handle_{front,back}.stl   ← Step6 后含尾板/USB/按钮/LED 开孔"
+echo "  paddle_shell_{front,back}.stl"
+echo "  paddle_split_assembly.stl"
+echo "  paddle_handle_back_tip.stl"
+echo "跳过尾板干涉: SKIP_STEP6=1 ./scripts/export-stl.sh"
+echo "快速预览:     QUALITY_MODE=quick ./scripts/export-stl.sh"
