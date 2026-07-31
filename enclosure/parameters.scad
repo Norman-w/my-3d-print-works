@@ -59,6 +59,12 @@ rib_t                = 2.0;       // 内部加强筋厚度
 rib_spacing          = 18;        // 拍头区加强筋间距 (mm)
 blade_inner_floor    = 1.5;       // 压电槽上方底板厚度
 
+// ---- 尾板（pcb-tail）机械接口：外形/环槽/Step6 共用 ----
+tail_board_t                    = 1.00;  // 板厚
+tail_board_y_from_butt          = 5.80;  // F.Cu 距拍尾 = Type-C 身体高度
+tail_board_ring_groove_radial   = 0.50;  // 内壁环槽径向深度
+tail_cavity_inset               = 0.80;  // 尾端截面内缩（板外形用；异于下面 handle_cavity_inset）
+
 // ---- 螺丝孔与硅胶塞 (M2 自攻螺丝，PETG 材质) ----
 screw_d_clearance    = 2.2;       // 螺丝过孔直径 (M2 光杆 2.0 + 容差 0.2)
 screw_d_boss         = 5.5;       // 螺丝柱外径
@@ -220,7 +226,7 @@ handle_extend_y      = 5;         // 尾端延伸量 (mm)，开孔 = min(handle_
 // ════════════════════════════════════════════════════════════════
 // DEPRECATED：外购充电总成已废弃；充电/USB/按键/LED 改由 pcb-tail 自研尾板实现。
 // paddle_shell.scad 的 handle_*_part 不再调用下列开孔/基台/夹持模块。
-// 参数暂留以免其他脚本引用断裂；新开孔请走 M5 Step6（KiCad 干涉）。
+// 参数暂留以免其他脚本引用断裂；新开孔请走 Step6（pcb-tail KiCad 干涉）。
 
 // ---- USB-C 母座两段式台阶开口 ═══
 //

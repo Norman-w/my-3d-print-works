@@ -82,7 +82,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 | **V2** | 适配柔性线路板 | 历史 |
 | **V3** | 适配 PCB 硬板（刚性骨架） | 历史 |
 | **V4** | **优化拍柄**（当前在用） | ✅ 当前 |
-| **V5** | **C5 配套拍柄**：固定窄尾板 + Y 向抽屉式可换 14500 电池匣 + 侧面横向滑扣；USB/按键/灯孔位全部随新结构重做 | 📋 已规划，见 [整机计划](../pcb/C5_PLAN.md) 与 [SCAD实施计划](../enclosure/M5_SCAD_PLAN.md) |
+| **V5** | **配套拍柄**：固定尾板 + 可换电池等；USB/按键/灯随新结构 | 📋 规划见 [C5_PLAN](../pcb/C5_PLAN.md)；现行尾板见 [pcb-tail](../pcb-tail/) / [enclosure](../enclosure/README.md) |
 
 ### 电路（PCB）
 
@@ -105,7 +105,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 **当前组合：** 主线 **V1** · 模型 **M4** · 已下单实物 **C3**（bringup 中）· 当前设计目标 **C4**（裸板工程样板审计通过，待小批量回板 bring-up）· 软件仍早期。下一代 `M5.C5` 已形成完整整机计划和可执行 SCAD 计划，但尚未进入原理图/SCAD实施和实物验证。
 
-**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814；C5 = 规划中的独立一体尾板与抽屉电池匣版本。资料：[C4 计划](../pcb/C4_PLAN.md) · [C4 制造就绪审计](../pcb/C4_FAB_READINESS.md) · [嘉立创打板小本](../pcb/JLCPCB_ORDERING.md) · [C5/M5 整机计划](../pcb/C5_PLAN.md) · [M5 SCAD 实施计划](../enclosure/M5_SCAD_PLAN.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md) · [尾板 Type-C 超短体 16P](usb-c-vertical-16p-short/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
+**硬件：** C3 = 单 IM948 + ESP32-C6-N8 + MX1.25；C4 = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814；尾板现行 = [`pcb-tail`](../pcb-tail/)。资料：[C4 计划](../pcb/C4_PLAN.md) · [C4 制造就绪审计](../pcb/C4_FAB_READINESS.md) · [嘉立创打板小本](../pcb/JLCPCB_ORDERING.md) · [后续规划](../pcb/C5_PLAN.md) · [外壳](../enclosure/README.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md) · [尾板 Type-C](usb-c-vertical-16p-short/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
 
 ---
 

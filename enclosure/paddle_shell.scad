@@ -985,7 +985,7 @@ module handle_front_part() {
                             }
                         }
                     // 旧外购充电总成基台/夹持已废弃：充电在 pcb-tail 自研尾板实现。
-                    // USB/按钮/LED 开孔由 M5 Step6 按 KiCad 位姿干涉，不再在此硬编码。
+                    // USB/按钮/LED 开孔由 Step6 按 KiCad 位姿干涉，不再在此硬编码。
                 }
                 rigid_pcb_cavity(front = true);
                 pcb_main_cavity(front = true);

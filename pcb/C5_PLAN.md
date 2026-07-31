@@ -533,7 +533,7 @@ UI位置需要与 M5 尾盖同步确定；USB、按键和两颗灯的导光/开�
 
 M5 必须在保留 M4 可复现性的前提下修改；不要直接覆盖唯一一套参数而失去 C4 外壳基准。
 
-本节定义整机合同；可直接执行的目录结构、参数名、派生公式、模块职责、打印 coupon、机械接口 JSON 和逐阶段验收见 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md)。没有上下文的接手人必须同时阅读两份文档，不能只按本节十条概述开始挖孔。
+本节为规划合同。现行可执行路径：[`../pcb-tail/`](../pcb-tail/) + [`../enclosure/README.md`](../enclosure/README.md)（`export-stl.sh` / Step6）。旧独立 `enclosure/m5/` 入口已废弃。
 
 ### 13.1 必须新增/参数化的几何
 
@@ -721,7 +721,7 @@ enclosure/
 没有历史上下文时必须按以下顺序：
 
 1. 阅读本文、`docs/README.md`、`TODOS.md`、`pcb/C4_PLAN.md`。
-2. 若任务涉及外壳，完整阅读 `enclosure/M5_SCAD_PLAN.md`，先冻结 M4 回归基线。
+2. 若任务涉及外壳，阅读 `enclosure/README.md` / `pcb-tail/`，先保证现有拍柄可复现。
 3. 确认当前任务是 C4 收口还是 C5 开发；C4未冻结前不得改C4。
 4. 检查 M4/C4 是否已经冻结和归档。
 5. 先做 M5 尾段截面和电池匣机械样块，不先画正式尾板外形。

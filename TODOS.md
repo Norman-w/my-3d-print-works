@@ -48,13 +48,13 @@
   - [x] 手工布线完成后以 Step 4.1e 备份并只读复核 63 器件到 `c4_placement_snapshot.json`/放置脚本
   - [x] 铺铜、最终 DRC、物理焊盘连通性、Gerber/钻孔/ZIP 试导出与最终 14 页装配包；详见 [`pcb/C4_FAB_READINESS.md`](pcb/C4_FAB_READINESS.md)
   - [ ] C4 小批量回板 bring-up：内部槽边焊接、外置 5 V 瞬态、AP2112 温升、完整 USB 数据尾线、PZT/IMU、射频与功耗
-- [ ] **M5.C5 一体尾板与抽屉式可换电池** — 整机/电气基线见 [`pcb/C5_PLAN.md`](pcb/C5_PLAN.md)，可直接执行的机械/SCAD计划见 [`enclosure/M5_SCAD_PLAN.md`](enclosure/M5_SCAD_PLAN.md)；C4 收口前只做独立规划/样块，不修改 C4 源和板
+- [ ] **一体尾板与可换电池（规划）** — 整机/电气见 [`pcb/C5_PLAN.md`](pcb/C5_PLAN.md)；现行满截面尾板+壳体见 [`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)
   - [x] 冻结总体架构：主板不延长；固定窄尾板与封闭14500电池匣沿 X 并排；电池匣从 `Y−` 向 `Y+` 推入
   - [x] 冻结交互：一个用户电气按键；侧面横向机械滑扣解锁；内端弱弹簧只顶出 3–5mm
   - [x] 冻结电气基线：IP5305T + 完整16P USB 2.0 Type-C + 单8P线束；D+/D−直达ESP32-S3；AP2112改TPS62162
   - [x] 冻结电池包基线：单节14500候选 K10；匣内 DW01A-G + FS8205A；禁止裸电芯直接供用户插拔
   - [ ] Gate 0：C4 布线、铺铜、DRC 和生产审计已完成；还需小批量回板关键 bring-up，再正式派生 C5
-  - [ ] Gate 1：按 `M5_SCAD_PLAN.md` 先冻结M4回归基线，再建立独立M5入口；打印尾部70mm、电池匣、导轨、滑扣和触点座机械样块，冻结 `m5_tail_interface.json`
+  - [ ] Gate 1：机械样块与接口尺寸冻结（现行路径：`export-stl.sh` + `pcb-tail`）
   - [ ] Gate 2：新建独立 `pcb/c5-tail/` 原理图/PCB，验证充电、升压、USB、按键、灯显、温升和轻载关机
   - [ ] Gate 3：从已冻结 C4 派生 C5 主板，更新 TPS62162、8P接口、USB串阻和生产门禁
   - [ ] Gate 4：M5.C5 整机换电、振动、汗液、USB、无线、跌落和插拔寿命验证

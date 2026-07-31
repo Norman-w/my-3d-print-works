@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Generate M5 fixed-battery tail PCB bare Edge.Cuts from the real handle loft.
+"""Generate pcb-tail bare Edge.Cuts from the real handle loft.
 
 板面不在最尾端：Type-C 超短体立贴身体高度 H_typec=5.8mm，外壳口与母座平齐时
   Y_pcb = Y_butt + H_typec
-在该 Y 取外壳 XZ，再按 wall_t+cavity_inset 得到内壁。
+在该 Y 取外壳 XZ，再按 wall_t + tail_cavity_inset 得到内壁。
 板外形比内腔略大（负 clearance），嵌入壳体内壁环槽以卡位。
 
-壁厚/内缩以 M5 为准（enclosure/m5/parameters_m5.scad），
-不要再用旧 enclosure/parameters.scad 的 handle_cavity_inset=1.5。
+壁厚/尾端内缩读 enclosure/parameters.scad（tail_cavity_inset，非拍柄通用 handle_cavity_inset）。
 
 Writes into the atopile layout board:
   pcb-tail/layouts/default/default.kicad_pcb
@@ -47,21 +46,21 @@ from bezier_to_openscad import (  # noqa: E402
 HERE = Path(__file__).resolve().parent
 LAYOUT_DIR = HERE / "layouts" / "default"
 LAYOUT_PCB = LAYOUT_DIR / "default.kicad_pcb"
-M5_PARAMS = ROOT / "enclosure" / "m5" / "parameters_m5.scad"
+ENC_PARAMS = ROOT / "enclosure" / "parameters.scad"
 # 负值 = 板比内腔大，嵌入壁内环槽（与壳体 ring groove 深度对齐）
 BOARD_CLEARANCE_MM = -0.50
 BOARD_THICKNESS_MM = 1.00
-RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度；= m5_tail_board_ring_groove_radial
-# 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/；= m5_tail_board_y_from_butt
+RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度
+# 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/
 USB_BODY_HEIGHT_MM = 5.80
 EDGE_WIDTH_MM = 0.10  # match C4 Edge.Cuts visibility
 SAMPLE_SLICES = 96  # denser loft sampling near butt for Y_pcb slice
 OUTLINE_MAX_POINTS = 96
-PREVIEW_SVG = HERE / "m5-tail-outline-preview.svg"
-PREVIEW_PNG = HERE / "m5-tail-outline-preview.png"
+PREVIEW_SVG = HERE / "tail-outline-preview.svg"
+PREVIEW_PNG = HERE / "tail-outline-preview.png"
 REPORT_TXT = HERE / "geometry-report.txt"
 OUTLINE_JSON = HERE / "outline-facts.json"
-LEGACY_OUTLINE_PCB = HERE / "m5-tail-outline.kicad_pcb"
+LEGACY_OUTLINE_PCB = HERE / "tail-outline.kicad_pcb"
 
 ATO_BARE_SHELL = """(kicad_pcb
     (version 20241229)
@@ -73,9 +72,9 @@ ATO_BARE_SHELL = """(kicad_pcb
     )
     (paper "A4")
     (title_block
-        (title "SmartPaddle M5 Tail")
+        (title "SmartPaddle Tail")
         (date "")
-        (rev "M5-TAIL-BARE")
+        (rev "TAIL-BARE")
         (company "SmartPaddle")
     )
     (layers
@@ -204,8 +203,8 @@ def _outer_at_y(
     return list(slices[-1][1])
 
 
-def _parse_m5_wall_params(path: Path) -> tuple[float, float, float]:
-    """Read m5_wall_t / m5_cavity_inset / m5_tail_board_y_from_butt from parameters_m5.scad."""
+def _parse_tail_shell_params(path: Path) -> tuple[float, float, float]:
+    """Read wall_t / tail_cavity_inset / tail_board_y_from_butt from parameters.scad."""
     text = path.read_text(encoding="utf-8")
 
     def _num(key: str) -> float:
@@ -215,24 +214,23 @@ def _parse_m5_wall_params(path: Path) -> tuple[float, float, float]:
         return float(m.group(1))
 
     return (
-        _num("m5_wall_t"),
-        _num("m5_cavity_inset"),
-        _num("m5_tail_board_y_from_butt"),
+        _num("wall_t"),
+        _num("tail_cavity_inset"),
+        _num("tail_board_y_from_butt"),
     )
 
 
 def _load_pcb_plane_outer() -> tuple[float, float, list[tuple[float, float]], list[tuple[float, float]], dict[str, float]]:
     """Return (butt_y, pcb_y, outer_at_butt, outer_at_pcb, params).
 
-    Loft join / blade thickness still from enclosure/parameters.scad；
-    壁厚与内缩覆盖为 M5（parameters_m5.scad），与壳体环槽一致。
+    尾端板外形用 wall_t + tail_cavity_inset（非拍柄通用 handle_cavity_inset）。
     """
     data = json.loads(DEFAULT_JSON.read_text(encoding="utf-8"))
     params = parse_params(DEFAULT_PARAMS)
-    wall_t, cavity_inset, y_from_butt = _parse_m5_wall_params(M5_PARAMS)
+    wall_t, cavity_inset, y_from_butt = _parse_tail_shell_params(ENC_PARAMS)
     if abs(y_from_butt - USB_BODY_HEIGHT_MM) > 1e-6:
         raise RuntimeError(
-            f"m5_tail_board_y_from_butt={y_from_butt} != USB_BODY_HEIGHT_MM={USB_BODY_HEIGHT_MM}"
+            f"tail_board_y_from_butt={y_from_butt} != USB_BODY_HEIGHT_MM={USB_BODY_HEIGHT_MM}"
         )
     params["wall_t"] = wall_t
     params["handle_cavity_inset"] = cavity_inset
@@ -350,9 +348,9 @@ def _set_thickness(text: str, thickness: float) -> str:
 def _ensure_title_block(text: str) -> str:
     block = (
         "    (title_block\n"
-        '        (title "SmartPaddle M5 Tail")\n'
+        '        (title "SmartPaddle Tail")\n'
         '        (date "")\n'
-        '        (rev "M5-TAIL-BARE")\n'
+        '        (rev "TAIL-BARE")\n'
         '        (company "SmartPaddle")\n'
         "    )"
     )
@@ -401,7 +399,7 @@ def _write_png(
     ax.legend(loc="upper right")
     ax.set_xlabel("KiCad X = handle X (mm)")
     ax.set_ylabel("KiCad Y = handle Z (mm)")
-    ax.set_title("M5 tail bare PCB (front = handle end)")
+    ax.set_title("pcb-tail bare Edge.Cuts (front = handle end)")
     fig.tight_layout()
     fig.savefig(PREVIEW_PNG, dpi=140)
     plt.close(fig)
@@ -432,7 +430,7 @@ def _write_svg(
     e = facts["edge"]
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.2f} {height:.2f}">
 <rect width="100%" height="100%" fill="#f4f6f8"/>
-<text x="16" y="22" font-size="16" font-weight="700" fill="#102a43">M5 尾部裸板 Edge.Cuts</text>
+<text x="16" y="22" font-size="16" font-weight="700" fill="#102a43">尾部裸板 Edge.Cuts</text>
 <text x="16" y="42" font-size="12" fill="#334e68">正面→拍柄末端  背面→拍头  ·  KiCad X=柄X  Y=柄Z</text>
 <polygon points="{outer_poly}" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
 <polygon points="{edge_poly}" fill="#2d9c5a" fill-opacity="0.85" stroke="#0d5f36" stroke-width="2"/>
@@ -447,7 +445,7 @@ def _write_svg(
 def _write_report(facts: dict) -> None:
     o = facts["outer"]
     e = facts["edge"]
-    report = f"""SmartPaddle M5 tail PCB bare-board geometry report
+    report = f"""SmartPaddle pcb-tail bare-board geometry report
 STATUS: BARE OUTLINE / ATO MODULE PRESENT / NOT FOR FABRICATION
 
 Entry: main.ato:SmartPaddleTail

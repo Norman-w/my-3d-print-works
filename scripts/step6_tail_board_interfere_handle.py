@@ -40,16 +40,10 @@ KICAD_PY = Path(
     "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
     "Python.framework/Versions/Current/bin/python3"
 )
-VENV_PY = next(
-    (
-        p
-        for p in (
-            ROOT / "scripts" / ".venv-stl" / "bin" / "python",
-            ROOT / "scripts" / ".venv-m5" / "bin" / "python",
-        )
-        if p.is_file()
-    ),
-    Path(sys.executable),
+VENV_PY = (
+    ROOT / "scripts" / ".venv-stl" / "bin" / "python"
+    if (ROOT / "scripts" / ".venv-stl" / "bin" / "python").is_file()
+    else Path(sys.executable)
 )
 
 BUTT_Y = -178.0962
@@ -70,7 +64,7 @@ def _ensure_trimesh():
             raise SystemExit(
                 subprocess.call([str(VENV_PY), str(Path(__file__).resolve()), *sys.argv[1:]])
             )
-        venv = ROOT / "scripts" / ".venv-m5"
+        venv = ROOT / "scripts" / ".venv-stl"
         subprocess.check_call(["uv", "venv", str(venv)])
         subprocess.check_call(
             [

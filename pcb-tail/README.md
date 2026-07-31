@@ -1,12 +1,6 @@
-# SmartPaddle M5 尾部线路板（`pcb-tail`）
+# SmartPaddle 尾部线路板（`pcb-tail`）
 
-> 状态：**外形 + 电源岛器件已入板，按功能组扎堆摆放（未布线）**。  
-> 与 `pcb/`（C4 主线）隔离。
-
-## 阶段策略
-
-1. **本阶段**：电池先固定不可换，尾板占满拍柄尾端 **XZ 截面**。
-2. **下一阶段**：再做可换电池匣 + 窄侧尾板（原 `M5.C5`）。
+> 与 `pcb/`（C4 主线）隔离。满截面尾板；充电/USB/按键/LED 在本板。
 
 ## 方向约定
 
@@ -19,21 +13,11 @@
 - `KiCad Y` = 柄 `Z`
 - 板厚沿世界 `Y`（1.0 mm）
 
-## 正确打开路径
-
-不要打开已删除的 `m5-tail-outline.kicad_pcb`。请打开：
+## 打开
 
 ```text
 pcb-tail/layouts/default/default.kicad_pro
 ```
-
-或同目录下的 `default.kicad_pcb`。
-
-在 PCB 编辑器中：
-
-1. 右侧图层打开 **Edge.Cuts**
-2. 按 `F` / Zoom to Fit 缩放到板
-3. 裸板只有边界 + 阻焊填充，无器件铜皮
 
 ## 工作流
 
@@ -46,19 +30,17 @@ ato build
 
 入口：`main.ato:SmartPaddleTail`（`ato.yaml`）。
 
-外形输入：`web/src/data/userBezierProfiles.json` + `enclosure/parameters.scad`  
-内缩：`wall_t + handle_cavity_inset + board_clearance`（`board_clearance = -0.50`）。  
-板比内腔大 **0.50 mm**，嵌入壳体内壁**环槽**卡位；Edge.Cuts 为单个闭合 `gr_poly`。
+外形：`web/src/data/userBezierProfiles.json` + `enclosure/parameters.scad`  
+内缩：`wall_t + tail_cavity_inset`；`board_clearance = -0.50` 嵌入环槽。
+
+壳体开孔：`./scripts/export-stl.sh`（含 Step6，按本板位姿干涉）。
 
 ## 文件
 
 | 文件 | 说明 |
 |------|------|
-| `main.ato` | atopile 入口模块 |
-| `ato.yaml` | atopile 0.12.5 工程配置 |
-| `layouts/default/default.kicad_pro` | **用这个打开工程** |
-| `layouts/default/default.kicad_pcb` | 裸板（闭合 Edge.Cuts） |
-| `generate_outline.py` | 从真实尾端截面生成边界 |
-| `m5-tail-outline-preview.svg` / `.png` | 2D 预览 |
-| `m5-tail-outline-preview-3d.png` | KiCad 3D 渲染核对 |
-| `geometry-report.txt` | 尺寸报告 |
+| `main.ato` | atopile 入口 |
+| `layouts/default/default.kicad_pro` | 工程 |
+| `generate_outline.py` | 从尾端截面生成 Edge.Cuts |
+| `tail-outline-preview.svg` / `.png` | 2D 预览 |
+| `geometry-report.txt` / `outline-facts.json` | 尺寸事实 |

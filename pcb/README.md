@@ -1,6 +1,6 @@
 ## PCB 生成管线
 
-> **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务进入最终打板审计的 **C4**。下一代 **C5/M5** 已确定为“独立固定尾板 + 单8P线束 + Y向抽屉式可换14500电池匣”，整机交接见 [`C5_PLAN.md`](C5_PLAN.md)，机械实施见 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md)。C5 尚未进入电气/SCAD实施；不得用 C5 试验重建、导入或改写 C4 板。
+> **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务进入最终打板审计的 **C4**。尾板现行实现见 [`../pcb-tail/`](../pcb-tail/)；后续可换电池等规划见 [`C5_PLAN.md`](C5_PLAN.md)。不得用试验板改写 C4。
 
 管线的机械基准来自 `enclosure/paddle_shell.scad` 的 `rigid_pcb_slot_points`（V3 起尾端平收，无金手指窄尖）。
 每一步都是独立的 Python 脚本，按顺序执行：
@@ -123,6 +123,6 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 - 当前 `c4_placement_snapshot.json` 已经 Step 4.1e 只读复核；禁止无意使用 `--replace` 覆盖接受基线
 - 嘉立创每次打板（裸板 / 部分 SMT）的通用操作见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；下单时重新运行 `export_jlcpcb.py`（需要贴片时加 `--smt`），不得复用临时审计 ZIP
 - 按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成小批量回板 bring-up；未通过外置 5 V、AP2112 热、USB、PZT、射频和槽边焊接前不得转量产
-- C5/M5 只按 [`C5_PLAN.md`](C5_PLAN.md) 和 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md) 做独立规划；旧的主板延长/14500中间开窗预览已废弃，不是下一版源文件
+- 尾板壳体：[`../enclosure/README.md`](../enclosure/README.md) + [`../pcb-tail/`](../pcb-tail/)；规划见 [`C5_PLAN.md`](C5_PLAN.md)。旧主板延长/中间开窗预览已废弃
 
 当前 C4 最终可打印装配包已生成到本地 `output/pdf/smartpaddle-ai-assembly/`：14 页 A4，63 个封装各映射一次，顶/底面、Pad 1、DNP、安装顺序、检查单和 BOM 均已渲染复核。旧 `output/pdf/assembly-package/` 16 页文件是摆放前快照，只能作历史资料；尾插 HTML/端面图位于 `output/assembly/`。

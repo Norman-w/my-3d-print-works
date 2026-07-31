@@ -336,4 +336,4 @@ unzip -t "${OUT}"*_jlcpcb.zip
 
 ## 14. 后续版本边界
 
-C4 现在冻结为“工程样板审计基线”。不得为了修 C5/M5 的电源、USB 或可换电池设计而继续无版本升级地改写 C4。C5 应从通过 bring-up 的 C4 证据派生，按 [`C5_PLAN.md`](C5_PLAN.md) 和 [`../enclosure/M5_SCAD_PLAN.md`](../enclosure/M5_SCAD_PLAN.md) 独立实现；M4/C4 的回归基线保留。
+C4 现在冻结为“工程样板审计基线”。不得为了修尾板电源/USB 或可换电池设计而继续无版本升级地改写 C4。派生方案见 [`C5_PLAN.md`](C5_PLAN.md)；现行尾板见 [`../pcb-tail/`](../pcb-tail/)。

@@ -247,9 +247,6 @@ if [[ "$SKIP_STEP6" != "1" ]]; then
     echo "→ Step6：pcb-tail 干涉拍柄（覆盖 enclosure/stl 最终件）…"
     STEP6_PY="$ROOT/scripts/.venv-stl/bin/python"
     if [[ ! -x "$STEP6_PY" ]]; then
-      STEP6_PY="$ROOT/scripts/.venv-m5/bin/python"
-    fi
-    if [[ ! -x "$STEP6_PY" ]]; then
       STEP6_PY="${PYTHON_CMD[0]:-python3}"
     fi
     if ! "$STEP6_PY" "$STEP6"; then
