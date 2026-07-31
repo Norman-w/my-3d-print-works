@@ -39,9 +39,17 @@ Y_pcb      = Y_butt + H_typec          # F.Cu 所在截面；母座口与外壳�
 | `height-5.8-annotated.jpg` | 实物标注身体高度 5.8 |
 | `pinout-16p.jpg` | 接点定义 |
 | `series-height-options.jpg` | 同系列多高度文案 |
-| `footprint-pads-family-ref.jpg` | 同族立贴焊盘示意（采购后仍须对实物图纸） |
+| `footprint-pads-family-ref.jpg` | 同族立贴焊盘示意 |
+| `pcb-layout-family-longpin.png` | **推荐 PCB**（16 贴片 + 左右腰圆；生成封装用） |
+
+## KiCad 封装
+
+- 生成脚本：`pcb-tail/scripts/gen_usb_16p_vert_smt_fp.py`
+- 封装：`pcb-tail/lib/footprints.pretty/USB_C_Receptacle_16P_Vertical_SMT_Short.kicad_mod`
+- 同族高度（5.0/5.5/5.8/6.0/6.5/6.8）共用焊盘；本板机械按 **H=5.8**。
+- 旧 `USB_C_Receptacle_GCT_USB4120-03-C_VERT*`（USB4115 四角圆孔）已弃用。
 
 ## 注意
 
-- 焊盘几何以**实际采购批次图纸**为准；仓库里旧 KiCad 封装来自 GCT USB4115 近似件，投板前必须核对。  
-- 同系列 6.5 mm 尺寸图**不要**再当本档高度用。
+- 下单仍须核对卖家图纸与 `pcb-layout-family-longpin.png` 一致。  
+- 身体高度选 5.8；不要用 6.5 尺寸图当板位高度。

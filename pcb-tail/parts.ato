@@ -89,11 +89,12 @@ component WS2812B_2020:
 
 
 component USB4120_03_C_Vertical:
-    """16P Type-C 立贴超短体（身体高度 5.8 mm）。
+    """16P Type-C 立贴超短体（优选身体高度 5.8 mm）。
 
-    选型与图纸：docs/usb-c-vertical-16p-short/。
-    当前封装几何仍为 GCT USB4115 立式近似，投板前对照采购图纸。
-    焊盘号（atopile 数字焊盘）：
+    选型与图纸：docs/usb-c-vertical-16p-short/（同族 H=5.0…6.8 共用焊盘）。
+    封装由 scripts/gen_usb_16p_vert_smt_fp.py 按推荐 PCB 生成：
+    16×贴片 + 左右腰圆孔；无 USB4115 四角圆孔。
+    焊盘号（atopile 数字焊盘；A8/B8 在封装中为命名焊盘，本板 NC）：
       1=A1  2=A4  3=A5  4=A6  5=A7  6=A9  7=A12
       8=B1  9=B4 10=B5 11=B6 12=B7 13=B9 14=B12  15=S1
     """
@@ -129,7 +130,7 @@ component USB4120_03_C_Vertical:
     B9 ~ pin 13
     B12 ~ pin 14
     S1 ~ pin 15
-    footprint = "SmartPaddleTail:USB_C_Receptacle_GCT_USB4120-03-C_VERT_N"
+    footprint = "SmartPaddleTail:USB_C_Receptacle_16P_Vertical_SMT_Short"
 
 
 component MolexPicoBlade_53398_4P_Vertical:

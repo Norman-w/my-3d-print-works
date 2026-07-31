@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Deliverable exploded clusters for pcb-tail (sexpr; no pcbnew required).
+"""Recommended-relative cluster parking for pcb-tail (sexpr; no pcbnew).
 
-After open in KiCad: select each group → shrink spacing / drag into Edge.Cuts → route.
+Not random: each pile uses pin-aware relative offsets; front piles sit south of
+Edge.Cuts, back piles north. KiCad groups: side_front / side_back + functional piles.
+
+After open: drag a side group or a pile → nudge spacing → route.
 
   python3 pcb-tail/scripts/cluster_place.py
 """
@@ -22,39 +25,86 @@ HERE = Path(__file__).resolve().parent
 PCB = HERE.parent / "layouts" / "default" / "default.kicad_pcb"
 PREVIEW = HERE.parent / "cluster-exploded-preview.png"
 
-# ref -> (x, y, rot_deg, side)  — board-outside parking, pin-aware
-PLACEMENT: dict[str, tuple[float, float, float, str]] = {
-    # usb_front
-    "J1": (-40.0, -40.0, 0, "F"),
-    "U2": (-40.0, -45.0, 180, "F"),
-    "R1": (-45.5, -40.8, 90, "F"),
-    "R2": (-34.5, -39.2, 90, "F"),
-    # ui_front
-    "SW1": (40.0, -35.0, 0, "F"),
-    "D1": (40.0, -42.0, 0, "F"),
-    "C1": (44.0, -42.0, 0, "F"),
-    "LED1": (35.5, -42.0, 90, "F"),
-    # power_back (U3-centric)
-    "U3": (0.0, 48.0, 0, "B"),
-    "L1": (7.0, 48.0, 90, "B"),
-    "C4": (-5.8, 50.2, 90, "B"),
-    "R7": (-5.8, 47.5, 0, "B"),
-    "C5": (-5.8, 44.8, 90, "B"),
-    "C6": (7.0, 51.5, 0, "B"),
-    "C7": (10.2, 48.0, 0, "B"),
-    "C3": (7.0, 44.5, 0, "B"),
-    "R5": (-8.8, 49.2, 90, "B"),
-    "R6": (-8.8, 46.6, 90, "B"),
-    "R4": (3.0, 44.5, 0, "B"),
-    # harness
-    "J2": (-50.0, 30.0, 90, "B"),
-    "J3": (50.0, 30.0, -90, "B"),
-    "U1": (43.5, 30.0, 90, "B"),
-    "R3": (43.5, 26.5, 0, "B"),
-    "C2": (43.5, 33.5, 0, "B"),
+# Local (dx, dy, rot) relative to pile origin — recommended topology, ~2–3 mm air gap.
+# World = pile_origin + local. Front zone Y<0 (south of board); back zone Y>0 (north).
+_PILE_LOCAL: dict[str, dict[str, tuple[float, float, float]]] = {
+    # USB: U2 on A-row (−Y) rot=-90; R1@cc1 left; R2@cc2 +Y
+    "usb_front": {
+        "J1": (0.0, 0.0, 0),
+        "U2": (0.0, -8.5, -90),
+        "R1": (-9.5, -1.5, 90),
+        "R2": (3.5, 7.5, 90),
+    },
+    # UI: SW primary; WS2812+C beside; status LED left of SW (front-visible)
+    "ui_front": {
+        "SW1": (0.0, 0.0, 0),
+        "D1": (0.0, -7.0, 0),
+        "C1": (4.0, -7.0, 0),
+        "LED1": (-6.0, 0.0, 90),
+    },
+    # PMIC: VIN island −X; L1/SW/BAT +X; VOUT caps around L1
+    "power_back": {
+        "U3": (0.0, 0.0, 0),
+        "L1": (6.5, 0.0, 90),
+        "C4": (-5.5, 2.5, 90),
+        "C5": (-5.5, -2.5, 90),
+        "R7": (-5.5, 0.0, 0),
+        "C6": (6.5, 3.5, 0),
+        "C3": (6.5, -3.5, 0),
+        "C7": (10.0, 0.0, 0),
+        "R4": (2.5, -4.0, 0),
+        "R5": (-8.5, 1.5, 90),
+        "R6": (-8.5, -1.5, 90),
+    },
+    # MX power: pins face +X (toward board/power)
+    "jpwr_back": {
+        "J2": (0.0, 0.0, 90),
+    },
+    # MX signal: pins face −X; AHCT+RC on pin side
+    "jsig_back": {
+        "J3": (0.0, 0.0, -90),
+        "U1": (-6.5, 0.0, 90),
+        "R3": (-6.5, -3.5, 0),
+        "C2": (-6.5, 3.5, 0),
+    },
 }
 
+# Pile origin on the canvas (outside Edge.Cuts)
+_PILE_ORIGIN: dict[str, tuple[float, float, str]] = {
+    "usb_front": (-18.0, -38.0, "F"),
+    "ui_front": (18.0, -38.0, "F"),
+    "jpwr_back": (-40.0, 40.0, "B"),
+    "power_back": (0.0, 45.0, "B"),
+    "jsig_back": (40.0, 40.0, "B"),
+}
+
+PLACEMENT: dict[str, tuple[float, float, float, str]] = {}
+for _pile, _locals in _PILE_LOCAL.items():
+    _ox, _oy, _side = _PILE_ORIGIN[_pile]
+    for _ref, (_dx, _dy, _rot) in _locals.items():
+        PLACEMENT[_ref] = (_ox + _dx, _oy + _dy, _rot, _side)
+
+# Functional piles + whole-side groups (drag all front / all back)
 GROUPS: dict[str, list[str]] = {
+    "side_front": ["J1", "U2", "R1", "R2", "SW1", "D1", "C1", "LED1"],
+    "side_back": [
+        "U3",
+        "L1",
+        "C4",
+        "R7",
+        "C5",
+        "C6",
+        "C7",
+        "C3",
+        "R5",
+        "R6",
+        "R4",
+        "J2",
+        "J3",
+        "U1",
+        "R3",
+        "C2",
+    ],
     "usb_front": ["J1", "U2", "R1", "R2"],
     "ui_front": ["SW1", "D1", "C1", "LED1"],
     "power_back": ["U3", "L1", "C4", "R7", "C5", "C6", "C7", "C3", "R5", "R6", "R4"],
@@ -219,7 +269,7 @@ def _render(text: str) -> list[tuple[str, float]]:
         font = font_s = font_t = ImageFont.load_default()
     d.text(
         (20, 12),
-        "pcb-tail deliverable clusters — shrink / drag / route",
+        "pcb-tail: front=south / back=north — recommended relative piles",
         fill=(15, 23, 42),
         font=font_t,
     )
@@ -227,20 +277,37 @@ def _render(text: str) -> list[tuple[str, float]]:
     for _n, p, q in wires:
         d.line([sx(p[0]), sy(p[1]), sx(q[0]), sy(q[1])], fill=(148, 163, 184), width=1)
     colors = {
+        "side_front": (59, 130, 246),
+        "side_back": (239, 68, 68),
         "usb_front": (37, 99, 235),
         "ui_front": (5, 150, 105),
         "power_back": (220, 38, 38),
         "jpwr_back": (217, 119, 6),
         "jsig_back": (147, 51, 234),
     }
+    # Draw side envelopes first (wide), then functional piles
     for gname, refs in GROUPS.items():
+        if gname.startswith("side_"):
+            continue
         col = colors[gname]
         xs = [PLACEMENT[r][0] for r in refs]
         ys = [PLACEMENT[r][1] for r in refs]
-        rect = [sx(min(xs) - 6), sy(max(ys) + 6), sx(max(xs) + 6), sy(min(ys) - 6)]
+        rect = [sx(min(xs) - 4), sy(max(ys) + 4), sx(max(xs) + 4), sy(min(ys) - 4)]
         ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
         od = ImageDraw.Draw(ov)
-        od.rectangle(rect, outline=col + (255,), width=3, fill=col + (40,))
+        od.rectangle(rect, outline=col + (255,), width=2, fill=col + (35,))
+        img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
+        d = ImageDraw.Draw(img)
+        d.text((rect[0] + 4, rect[1] + 2), gname, fill=col, font=font_s)
+    for gname in ("side_front", "side_back"):
+        refs = GROUPS[gname]
+        col = colors[gname]
+        xs = [PLACEMENT[r][0] for r in refs]
+        ys = [PLACEMENT[r][1] for r in refs]
+        rect = [sx(min(xs) - 8), sy(max(ys) + 8), sx(max(xs) + 8), sy(min(ys) - 8)]
+        ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        od = ImageDraw.Draw(ov)
+        od.rectangle(rect, outline=col + (255,), width=3)
         img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
         d = ImageDraw.Draw(img)
         d.text((rect[0] + 6, rect[1] + 4), gname, fill=col, font=font)
@@ -265,7 +332,7 @@ def _render(text: str) -> list[tuple[str, float]]:
     )
     d.text(
         (20, h - 34),
-        "Ready: shrink groups -> drag into Edge.Cuts -> nudge -> route",
+        "Drag side_front / side_back or a pile → nudge spacing → route",
         fill=(71, 85, 105),
         font=font_s,
     )
@@ -273,8 +340,59 @@ def _render(text: str) -> list[tuple[str, float]]:
     return lens
 
 
+# ===== 分区：业务逻辑 =====
+def _check_usb_front_clearance() -> None:
+    """Fail fast if usb_front satellites sit inside J1 courtyard."""
+    jx, jy, _, _ = PLACEMENT["J1"]
+    # Land-pattern courtyard ~ pads+slots (+clearance), centered on J1
+    half_w, half_d, gap = 5.1, 2.6, 1.0
+    for ref in ("U2", "R1", "R2"):
+        x, y, _, _ = PLACEMENT[ref]
+        if abs(x - jx) <= half_w + gap and abs(y - jy) <= half_d + gap:
+            raise RuntimeError(
+                f"{ref} at ({x},{y}) overlaps J1 courtyard — "
+                "cluster means nearby, not stacked pads"
+            )
+    print("usb_front clearance OK")
+
+
+def _check_usblc6_facing() -> None:
+    """Fail fast if U2 conn-side pins are not a row facing J1."""
+    _jx, jy, _, _ = PLACEMENT["J1"]
+    ux, uy, rot, _ = PLACEMENT["U2"]
+    # SOT-23-6 local pads 1/2/3
+    local = {1: (-1.137, -0.950), 2: (-1.137, 0.0), 3: (-1.137, 0.950)}
+    a = math.radians(rot)
+    c, s = math.cos(a), math.sin(a)
+
+    def world(px: float, py: float) -> tuple[float, float]:
+        return ux + c * px - s * py, uy + s * px + c * py
+
+    pts = {n: world(*xy) for n, xy in local.items()}
+    ys = [pts[n][1] for n in (1, 2, 3)]
+    xs = [pts[n][0] for n in (1, 2, 3)]
+    row_span_x = max(xs) - min(xs)
+    row_span_y = max(ys) - min(ys)
+    toward_j1 = (jy - uy)  # >0 means J1 is +Y of U2
+    edge_y = sum(ys) / 3.0
+    facing_plus_y = edge_y > uy
+    if row_span_x < 1.5 or row_span_y > 0.4:
+        raise RuntimeError(
+            f"U2 rot={rot}: pins 1/2/3 not a horizontal row "
+            f"(span_x={row_span_x:.2f}, span_y={row_span_y:.2f})"
+        )
+    if toward_j1 > 0 and not facing_plus_y:
+        raise RuntimeError(f"U2 rot={rot}: pins 1/2/3 face away from J1 (+Y)")
+    if toward_j1 < 0 and facing_plus_y:
+        raise RuntimeError(f"U2 rot={rot}: pins 1/2/3 face away from J1 (−Y)")
+    order = sorted((1, 2, 3), key=lambda n: pts[n][0])
+    print(f"U2 facing OK: rot={rot} pins L→R {order} toward J1")
+
+
 # ===== 分区：公开 API =====
 def main() -> int:
+    _check_usb_front_clearance()
+    _check_usblc6_facing()
     raw = PCB.read_text(encoding="utf-8")
     raw = _strip_top_level(raw, ["segment", "via", "arc", "group"])
     body, uuid_by_ref = _apply_placement(raw)
