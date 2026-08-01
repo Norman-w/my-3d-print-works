@@ -7,7 +7,6 @@ ENC="$ROOT/enclosure"
 OUT="$ENC/stl"
 SCAD="$ENC/paddle_shell.scad"
 QUALITY_MODE="${QUALITY_MODE:-normal}"
-M6_PROCESS="${M6_PROCESS:-print}"
 SCAD_DEFS=()
 
 is_windows() {
@@ -155,16 +154,6 @@ setup_quality_mode() {
       exit 1
       ;;
   esac
-  case "$M6_PROCESS" in
-    print|cnc)
-      SCAD_DEFS+=(-D "m6_process=\"${M6_PROCESS}\"")
-      echo "→ M6 工艺公差: $M6_PROCESS"
-      ;;
-    *)
-      echo "错误: 未知 M6_PROCESS=$M6_PROCESS（可选: print / cnc）" >&2
-      exit 1
-      ;;
-  esac
 }
 
 echo "→ 生成 OpenSCAD 腔体/外壳放样 …"
@@ -283,4 +272,3 @@ echo "  paddle_m6_{assembly,exploded}.stl"
 echo "  paddle_m6_handle_back_tip.stl"
 echo "跳过尾板干涉: SKIP_STEP6=1 ./scripts/export-stl.sh"
 echo "快速预览:     QUALITY_MODE=quick ./scripts/export-stl.sh"
-echo "CNC 榫槽:     M6_PROCESS=cnc ./scripts/export-stl.sh"

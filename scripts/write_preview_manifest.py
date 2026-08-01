@@ -69,10 +69,10 @@ def main() -> int:
                 "camera": "exploded_layers",
             },
             {
-                "id": "tongue",
-                "label": "第2/3层榫槽连接",
-                "components": present("core_front", "core_back"),
-                "camera": "tongue_joint",
+                "id": "handle_fasteners",
+                "label": "正反大件螺丝压紧",
+                "components": present("monolithic_front", "monolithic_back"),
+                "camera": "handle_fasteners",
             },
             {
                 "id": "tail_interference",
@@ -95,8 +95,8 @@ def main() -> int:
         "cameraPresets": [
             {"id": "full_paddle", "label": "整拍", "target": [0, -50, 0], "position": [170, -270, 150]},
             {"id": "head_handle_joint", "label": "头柄连接", "target": [0, -82, 0], "position": [65, -135, 45]},
-            {"id": "tongue_joint", "label": "榫槽", "target": [0, -105, 0], "position": [45, -145, 30]},
-            {"id": "hidden_screws", "label": "隐藏螺丝", "target": [0, -122, 0], "position": [38, -150, 24]},
+            {"id": "handle_fasteners", "label": "拍柄螺丝", "target": [0, -122, 0], "position": [42, -158, 28]},
+            {"id": "tail_fasteners", "label": "尾端抗变形螺丝", "target": [0, -166, 0], "position": [35, -205, 22]},
             {"id": "tail_pcb", "label": "尾板/USB", "target": [0, -174, 0], "position": [0, -230, 0]},
             {"id": "exploded_layers", "label": "四层爆炸", "target": [0, -70, 0], "position": [180, -260, 120]},
         ],

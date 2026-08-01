@@ -21,6 +21,7 @@ LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 // 由 scripts/bezier_to_openscad.py 生成（USE_BEZIER_PROFILES=true 时必须）
 include <generated/bezier_geometry.scad>
 include <bezier_profile.scad>
+include <stl/interference/tail_board_cuts.scad>
 
 // 拍柄开孔基准：以外壳实体底面为准。
 // 平底裁切后 BEZIER_Y0 可能比参数 handle_butt_y 更靠拍头；若仍取 min() 会落到实体外，
@@ -1064,33 +1065,95 @@ module m6_full_planform_prism() {
         m6_full_planform_2d();
 }
 
-module m6_tongue_2d(clearance = 0) {
-    outer_inset = max(0.2, m6_tongue_edge_inset - clearance);
-    inner_inset = m6_tongue_edge_inset + m6_tongue_width + clearance;
-    difference() {
-        offset(delta = -outer_inset)
-            bezier_handle_planform_2d();
-        offset(delta = -inner_inset)
-            bezier_handle_planform_2d();
+// M6 最终装配是 Z=0 分型的正/反两个大件，不再在第 2/3 层间使用榫槽。
+// 拍柄螺丝从正面沉入、贯穿正面大件，并自攻咬合反面大件。
+m6_tail_screw_y = max(actual_butt_y + 12.5, tail_if_pcb_y + 6.5);
+m6_tail_screw_x = envelope_hx(m6_tail_screw_y) - m6_handle_boss_d / 2 - 0.5;
+m6_tail_screw_positions = [
+    [-m6_tail_screw_x, m6_tail_screw_y],
+    [ m6_tail_screw_x, m6_tail_screw_y],
+];
+
+function m6_existing_handle_screw_positions() = [
+    for (p = screw_positions)
+        if (screw_in_handle(p)) p
+];
+
+function m6_extra_handle_screw_positions() =
+    concat(m6_handle_mid_screw_positions, m6_tail_screw_positions);
+
+function m6_all_handle_screw_positions() =
+    concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
+
+function m6_handle_screw_length_at(y) =
+    max(
+        6,
+        2 * floor(
+            (2 * half_z_at(y) - plug_recess_depth - m6_handle_back_skin_min) / 2
+        )
+    );
+
+module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions()) {
+    for (p = positions) {
+        x = p[0];
+        y = p[1];
+        hz = half_z_at(y);
+        cone_top = hz - plug_recess_depth;
+        translate([x, y, -eps])
+            cylinder(
+                d = m6_handle_screw_clearance,
+                h = cone_top - m6_handle_screw_head_h + eps
+            );
+        translate([x, y, cone_top - m6_handle_screw_head_h])
+            cylinder(
+                d1 = m6_handle_screw_clearance,
+                d2 = m6_handle_screw_head_d,
+                h = m6_handle_screw_head_h + eps
+            );
+        translate([x, y, hz - plug_recess_depth + eps])
+            cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
     }
 }
 
-module m6_hidden_bosses(front = true) {
-    for (p = m6_hidden_screw_positions)
-        translate([p[0], p[1], front ? 0 : -m6_core_half_t])
-            cylinder(d = m6_hidden_boss_d, h = m6_core_half_t);
+module m6_handle_back_screw_channels(positions = m6_all_handle_screw_positions()) {
+    for (p = positions) {
+        x = p[0];
+        y = p[1];
+        hz = half_z_at(y);
+        screw_l = m6_handle_screw_length_at(y);
+        front_to_split = hz - plug_recess_depth;
+        pilot_h = min(
+            hz - m6_handle_back_skin_min,
+            max(2, screw_l - front_to_split)
+        );
+        translate([x, y, -pilot_h])
+            cylinder(d = m6_handle_screw_pilot, h = pilot_h + eps);
+    }
 }
 
-module m6_hidden_screw_channels(front = true) {
-    for (p = m6_hidden_screw_positions) {
+module m6_handle_screw_bosses(front = true) {
+    for (p = m6_all_handle_screw_positions()) {
+        x = p[0];
+        y = p[1];
+        hz = half_z_at(y);
         if (front) {
-            translate([p[0], p[1], -eps])
-                cylinder(d = m6_hidden_screw_d_pilot, h = m6_core_half_t * 0.82);
+            intersection() {
+                bezier_handle_half(true);
+                translate([x, y, -eps])
+                    cylinder(
+                        d = m6_handle_boss_d,
+                        h = hz - wall_t + 0.5 + eps
+                    );
+            }
         } else {
-            translate([p[0], p[1], -m6_core_half_t - eps])
-                cylinder(d = m6_hidden_screw_d_clear, h = m6_core_half_t + 2 * eps);
-            translate([p[0], p[1], -m6_core_half_t - eps])
-                cylinder(d = m6_hidden_screw_head_d, h = m6_hidden_screw_head_h + eps);
+            intersection() {
+                bezier_handle_half(false);
+                translate([x, y, -hz + wall_t - 0.5])
+                    cylinder(
+                        d = m6_handle_boss_d,
+                        h = hz - wall_t + 0.5 + eps
+                    );
+            }
         }
     }
 }
@@ -1103,45 +1166,29 @@ module m6_core_blank(front = true) {
 
 module m6_core_front() {
     difference() {
-        union() {
-            difference() {
-                m6_core_blank(true);
-                handle_cavity();
-                piezo_pockets(front = true);
-                rigid_pcb_cavity(front = true);
-                pcb_main_cavity(front = true);
-            }
-            m6_hidden_bosses(true);
+        difference() {
+            m6_core_blank(true);
+            handle_cavity();
+            piezo_pockets(front = true);
+            rigid_pcb_cavity(front = true);
+            pcb_main_cavity(front = true);
         }
         blade_front_screw_channels();
-        handle_screw_channels();
-        m6_hidden_screw_channels(true);
-        // 背面主板的榫舌进入此槽；槽仅开在 Z=0 内表面。
-        translate([0, 0, -eps])
-            linear_extrude(height = m6_tongue_depth + eps)
-                m6_tongue_2d(m6_joint_clearance);
+        m6_handle_front_screw_channels();
     }
 }
 
 module m6_core_back() {
     difference() {
-        union() {
-            difference() {
-                m6_core_blank(false);
-                handle_cavity();
-                piezo_pockets(front = false);
-                rigid_pcb_cavity(front = false);
-                pcb_main_cavity(front = false);
-            }
-            m6_hidden_bosses(false);
-            // 连续榫舌跨过 Z=0，覆盖拍柄及肩颈承力路径。
-            translate([0, 0, -eps])
-                linear_extrude(height = m6_tongue_depth + eps)
-                    m6_tongue_2d();
+        difference() {
+            m6_core_blank(false);
+            handle_cavity();
+            piezo_pockets(front = false);
+            rigid_pcb_cavity(front = false);
+            pcb_main_cavity(front = false);
         }
         blade_back_screw_channels();
-        handle_screw_channels();
-        m6_hidden_screw_channels(false);
+        m6_handle_back_screw_channels();
     }
 }
 
@@ -1164,16 +1211,24 @@ module m6_handle_skin_back(overlap = 0) {
 }
 
 module m6_monolithic_front() {
-    union() {
-        m6_core_front();
-        m6_handle_skin_front(m6_union_overlap);
+    difference() {
+        union() {
+            m6_core_front();
+            m6_handle_skin_front(m6_union_overlap);
+            m6_handle_screw_bosses(true);
+        }
+        m6_handle_front_screw_channels();
     }
 }
 
 module m6_monolithic_back() {
-    union() {
-        m6_core_back();
-        m6_handle_skin_back(m6_union_overlap);
+    difference() {
+        union() {
+            m6_core_back();
+            m6_handle_skin_back(m6_union_overlap);
+            m6_handle_screw_bosses(false);
+        }
+        m6_handle_back_screw_channels();
     }
 }
 
@@ -1228,3 +1283,13 @@ echo(str("Blade: ", blade_width, "mm wide × ", blade_core_t, "mm thick"));
 echo(str("Handle: ", handle_thickness, "mm thick, butt Y=", handle_butt_y));
 echo(str("Half: ", HALF));
 echo(str("Screws: ", len(screw_positions), "× M2"));
+echo(str(
+    "M6 handle wall: ", m6_handle_wall_t,
+    "mm → M", m6_handle_screw_d,
+    " countersunk, boss Ø", m6_handle_boss_d, "mm"
+));
+for (p = m6_all_handle_screw_positions())
+    echo(str(
+        "M6 handle screw [", p[0], ",", p[1], "]: M",
+        m6_handle_screw_d, "×", m6_handle_screw_length_at(p[1]), "mm"
+    ));
