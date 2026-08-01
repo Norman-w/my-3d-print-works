@@ -278,6 +278,7 @@ def parse_params(path: Path) -> dict[str, float]:
         "m6_handle_screw_station_count",
         "m6_handle_screw_top_clearance",
         "m6_handle_screw_bottom_clearance",
+        "m6_handle_screw_tail_edge_clearance",
     ]
     out: dict[str, float] = {}
     for k in keys:
@@ -308,8 +309,9 @@ def m6_screw_positions_on_midcurve(
     count: int,
     top_clearance: float,
     bottom_clearance: float,
+    tail_edge_clearance: float,
 ) -> list[tuple[float, float]]:
-    """等弧长采样外贝塞尔与内腔偏置线之间的中线，并镜像成左右孔位。"""
+    """等弧长排布常规站，并在尾边增加一个由同一中线推导的加强站。"""
     bottom_y = y0 + bottom_clearance
     top_y = join_y - top_clearance
     if count < 1 or top_y <= bottom_y:
@@ -336,7 +338,12 @@ def m6_screw_positions_on_midcurve(
         ax, ay = samples[j - 1]
         bx, by = samples[j]
         right.append((ax + (bx - ax) * t, ay + (by - ay) * t))
-    return [point for x, y in right for point in ((-x, y), (x, y))]
+    tail_y = y0 + tail_edge_clearance
+    tail_outer_x = half_width_at_y(handle, tail_y)
+    tail_inner_x = max(tail_outer_x - cavity_margin, 0.5)
+    tail_x = (tail_outer_x + tail_inner_x) / 2
+    stations = [(tail_x, tail_y), *right]
+    return [point for x, y in stations for point in ((-x, y), (x, y))]
 
 
 def inset_xz_poly(
@@ -497,6 +504,7 @@ def main() -> int:
         int(p["m6_handle_screw_station_count"]),
         p["m6_handle_screw_top_clearance"],
         p["m6_handle_screw_bottom_clearance"],
+        p["m6_handle_screw_tail_edge_clearance"],
     )
     write_scad(blade_poly, handle_slices, blade_core_t, join_y, cavity_margin, json_path)
 
