@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>拍柄尾部干涉预览</title>
+<title>M6 轻量 STL 预览</title>
 <script type="importmap">
 {
   "imports": {
@@ -28,12 +28,13 @@
 <body>
 <!-- region: 视图层 -->
 <div id="bar">
-  <strong>尾部干涉</strong>
-  <button data-k="shell" class="on">拍柄尾段</button>
+  <strong>M6 轻量预览</strong>
+  <button data-k="shell" class="on">正面无缝合体</button>
   <button data-k="board">板槽</button>
   <button data-k="ui">USB/键/灯</button>
   <button data-k="all">全部</button>
   <button data-k="butt" type="button" id="btn-butt">拍尾正视</button>
+  <a href="http://localhost:5173/?tab=process" style="color:#93c5fd">进入完整工艺预览</a>
   <span id="hint">加载中…</span>
 </div>
 <canvas id="c"></canvas>
@@ -48,7 +49,7 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 // ===== 分区：常量/配置 =====
 // 相对本页：../ 为 enclosure/stl/
 const FILES = {
-  shell: '../paddle_handle_tail.stl',
+  shell: '../paddle_m6_monolithic_front.stl',
   board: '../interference/board_slot.stl',
   ui: '../interference/ui_cuts.stl',
 };
@@ -198,7 +199,7 @@ try {
   setHint(`就绪 · 尾段 ${s.x.toFixed(1)}×${s.y.toFixed(1)}×${s.z.toFixed(1)} mm · 默认拍尾正视`);
 } catch (e) {
   console.error(e);
-  setHint('加载失败：先 ./scripts/export-stl.sh，再 ./scripts/preview-stl.sh — ' + e, true);
+  setHint('加载失败：先 ./scripts/export-stl.sh；完整预览请运行 ./dev.sh — ' + e, true);
 }
 </script>
 </body>

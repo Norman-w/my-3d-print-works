@@ -152,8 +152,9 @@ export function createLoftedHandleGeometry(
   const { baseHalfW, baseHalfT } = bottomProfileExtents(bottom);
   const handlePts = sampleProfilePoints(front, 48);
   const joinY = DEFAULT_DIMS.handleJoinYMm;
-  // Leave a small gap from blade neck to reduce depth-fighting / interpenetration artifacts.
-  const topY = Math.min(Math.max(...handlePts.map(p => p.y)), joinY - 0.6);
+  // M6: the handle reaches the blade join datum. A visual anti-z-fighting gap
+  // here previously became a real structural break in exported geometry.
+  const topY = joinY;
   const tipY = Math.min(...handlePts.map(p => p.y));
   const bottomY = flatButtStartY(front, tipY);
   const ringTemplate = sampleButtCrossSectionRing(bottom, ringSegments);

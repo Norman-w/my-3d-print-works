@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""Step 6 — 用 pcb-tail 干涉「已导出」的拍柄，写出最终可打印 STL。
+"""Step 6 — 用 pcb-tail 干涉已导出的 M6 四层与合体件。
 
 输入（须已由 export-stl.sh / OpenSCAD 生成）：
-  enclosure/stl/paddle_handle_{front,back}.stl
-  enclosure/stl/paddle_blade_{front,back}.stl   （用于重拼半壳/整装）
+  enclosure/stl/paddle_m6_layer{1..4}_*.stl
+  enclosure/stl/paddle_m6_monolithic_{front,back}.stl
 
-输出（覆盖最终打印件）：
-  paddle_handle_{front,back}.stl
-  paddle_shell_{front,back}.stl
-  paddle_split_assembly.stl
-  paddle_handle_back_tip.stl（若可裁切）
+输出会覆盖上述打印件，并重建 M6 装配、爆炸图和尾段试片。
 
 诊断（不覆盖打印件）：
   enclosure/stl/interference/board_slot.stl
@@ -77,6 +73,8 @@ def _ensure_trimesh():
                 "manifold3d",
                 "numpy",
                 "shapely",
+                "networkx",
+                "mapbox-earcut",
             ]
         )
         raise SystemExit(
@@ -281,7 +279,7 @@ def pcb_ready() -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Step6: pcb-tail 干涉已导出拍柄")
+    parser = argparse.ArgumentParser(description="Step6: pcb-tail 干涉已导出 M6 拍体")
     parser.add_argument("--skip-export", action="store_true")
     parser.add_argument("--check-only", action="store_true", help="仅检查 pcb-tail 是否可干涉")
     args = parser.parse_args()
@@ -297,13 +295,17 @@ def main() -> int:
     _ensure_trimesh()
     import trimesh
 
-    hf = STL / "paddle_handle_front.stl"
-    hb = STL / "paddle_handle_back.stl"
-    bf = STL / "paddle_blade_front.stl"
-    bb = STL / "paddle_blade_back.stl"
-    for p in (hf, hb):
+    parts = {
+        "skin_front": STL / "paddle_m6_layer1_handle_skin_front.stl",
+        "core_front": STL / "paddle_m6_layer2_core_front.stl",
+        "core_back": STL / "paddle_m6_layer3_core_back.stl",
+        "skin_back": STL / "paddle_m6_layer4_handle_skin_back.stl",
+        "monolithic_front": STL / "paddle_m6_monolithic_front.stl",
+        "monolithic_back": STL / "paddle_m6_monolithic_back.stl",
+    }
+    for p in parts.values():
         if not p.is_file():
-            print(f"缺少已导出拍柄: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
+            print(f"缺少已导出 M6 零件: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
             return 1
 
     info = (
@@ -324,33 +326,40 @@ def main() -> int:
     _export(trimesh.util.concatenate(ui), INTER_DIR / "ui_cuts.stl")
     _export(trimesh.util.concatenate(all_cuts), INTER_DIR / "all_cuts.stl")
 
-    print("→ 干涉 paddle_handle_front/back …")
-    front = _difference_all(_load_stl(hf), all_cuts)
-    back = _difference_all(_load_stl(hb), all_cuts)
-    _export(front, hf)
-    _export(back, hb)
+    print("→ 干涉 M6 四层与正反合体件 …")
+    cut_parts = {
+        name: _difference_all(_load_stl(path), all_cuts)
+        for name, path in parts.items()
+    }
+    for name, path in parts.items():
+        _export(cut_parts[name], path)
 
-    if bf.is_file() and bb.is_file():
-        print("→ 重拼半壳与 split_assembly …")
-        shell_f = trimesh.util.concatenate([_load_stl(bf), front])
-        shell_b = trimesh.util.concatenate([_load_stl(bb), back])
-        split = trimesh.util.concatenate([_load_stl(bf), _load_stl(bb), front, back])
-        _export(shell_f, STL / "paddle_shell_front.stl")
-        _export(shell_b, STL / "paddle_shell_back.stl")
-        _export(split, STL / "paddle_split_assembly.stl")
+    assembly_order = ("skin_front", "core_front", "core_back", "skin_back")
+    assembly = trimesh.util.concatenate([cut_parts[name] for name in assembly_order])
+    _export(assembly, STL / "paddle_m6_assembly.stl")
+
+    exploded_parts = []
+    for name, dz in zip(assembly_order, (12.0, 4.0, -4.0, -12.0)):
+        mesh = cut_parts[name].copy()
+        mesh.apply_translation([0.0, 0.0, dz])
+        exploded_parts.append(mesh)
+    _export(trimesh.util.concatenate(exploded_parts), STL / "paddle_m6_exploded.stl")
 
     butt_y = float(info.get("butt_y", BUTT_Y))
     try:
-        # 打印试片：后半壳 tip
-        tip_back = _crop_tip(back, butt_y)
-        _export(tip_back, STL / "paddle_handle_back_tip.stl")
-        # 预览用完整截面尾段（前+后），避免 Type-C 落在分型面被劈成半孔、看起来像转了 90°
-        tip_full = _crop_tip(trimesh.util.concatenate([front, back]), butt_y)
-        _export(tip_full, STL / "paddle_handle_tail.stl")
+        tip_back = _crop_tip(cut_parts["monolithic_back"], butt_y)
+        _export(tip_back, STL / "paddle_m6_handle_back_tip.stl")
+        tip_full = _crop_tip(
+            trimesh.util.concatenate(
+                [cut_parts["monolithic_front"], cut_parts["monolithic_back"]]
+            ),
+            butt_y,
+        )
+        _export(tip_full, STL / "paddle_m6_handle_tail.stl")
     except Exception as exc:
         print(f"  tip 裁切跳过: {exc}")
 
-    print("Step6 完成 ✓  最终打印件已写入 enclosure/stl/")
+    print("Step6 完成 ✓  M6 最终打印件已写入 enclosure/stl/")
     return 0
 
 

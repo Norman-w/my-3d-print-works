@@ -210,6 +210,29 @@ handle_butt_y        = -178.5;    // 拍柄尾端 Y 坐标
 // ---- 内腔与壁厚 ----
 handle_cavity_inset  = 1.5;       // 内腔额外内缩量 (总壁厚 = wall_t + inset)
 
+// ---- M6 四层连续承力结构 ----
+// Z+ → Z-：拍柄正面外贴 / 正面主承力层 / 背面主承力层 / 拍柄背面外贴。
+// 主承力层沿 XY 覆盖拍头和完整拍柄；拍柄中控腔与尾板空间仍按原参数切除。
+m6_core_half_t            = blade_core_t / 2;  // 每块主承力层厚度
+m6_union_overlap          = 0.15; // 合体导出时外贴层压入主层，避免零厚度接触
+m6_tongue_depth           = 0.80; // 第 2/3 层连续榫槽深度
+m6_tongue_width           = 2.20; // 榫宽
+m6_tongue_edge_inset      = 2.40; // 榫中心距拍柄轮廓边缘
+m6_print_clearance        = 0.20; // FDM 榫槽单边装配间隙
+m6_cnc_clearance          = 0.00; // 木板/CNC 工艺预设
+m6_process                = "print"; // print / cnc，可用 openscad -D 覆盖
+m6_joint_clearance        =
+    m6_process == "cnc" ? m6_cnc_clearance : m6_print_clearance;
+m6_hidden_screw_d_clear   = 2.20; // 腔内隐藏 M2 连接螺丝过孔
+m6_hidden_screw_d_pilot   = 1.50; // 隐藏 M2 自攻底孔
+m6_hidden_screw_head_d    = 4.20; // 螺丝头沉孔
+m6_hidden_screw_head_h    = 1.80;
+m6_hidden_boss_d          = 6.50;
+m6_hidden_screw_positions = [
+    [-7, -122],
+    [ 7, -122],
+];
+
 // ---- 分打拍柄：朝拍头端 U 型插口（仅 handle_* 零件） ----
 // 拍柄合模后朝拍头一侧原先四周严丝合缝，拍面颈部插不进。
 // 分打时用完整拍面颈部实体（带间隙）直接减拍柄，成同形夹口让拍面插入。

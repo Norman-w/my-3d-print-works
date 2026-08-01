@@ -7,6 +7,7 @@ cleanup() {
     echo "Shutting down..."
     kill $SERVER_PID 2>/dev/null || true
     kill $WEB_PID 2>/dev/null || true
+    kill $PREVIEW_PID 2>/dev/null || true
     exit 0
 }
 trap cleanup INT TERM
@@ -17,7 +18,7 @@ echo "============================================"
 echo ""
 
 # 1. Start Go server
-echo "[1/3] Starting Go server on :8000..."
+echo "[1/4] Starting Go server on :8000..."
 cd "$ROOT/server"
 go run . &
 SERVER_PID=$!
@@ -41,8 +42,14 @@ for i in $(seq 1 90); do
   fi
 done
 
-# 2. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
-echo "[2/3] Starting Web UI on :5173 (strict)..."
+# 2. Serve exported STL and manifest for the unified process preview.
+echo "[2/4] Starting STL asset server on :8765..."
+cd "$ROOT/enclosure/stl"
+python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/smartpaddle-stl-preview.log 2>&1 &
+PREVIEW_PID=$!
+
+# 3. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
+echo "[3/4] Starting Web UI on :5173 (strict)..."
 if command -v lsof >/dev/null 2>&1; then
   PIDS=$(lsof -ti:5173 2>/dev/null || true)
   if [[ -n "$PIDS" ]]; then
@@ -56,16 +63,19 @@ npm run dev -- --host --port 5173 --strictPort &
 WEB_PID=$!
 sleep 2
 
-# 3. Open browser
-echo "[3/3] Ready!"
+# 4. Open browser
+echo "[4/4] Ready!"
 echo ""
 echo "  Server:  http://localhost:8000  (API + WebSocket)"
 echo "  Web UI:  http://localhost:5173"
+echo "  M6:      http://localhost:5173/?tab=process"
 echo "  Models:  $ROOT/enclosure/stl/"
 echo ""
 echo "Press Ctrl+C to stop all services."
 
-open "http://localhost:5173"
-open "$ROOT/enclosure/stl" 2>/dev/null || true
+if [[ "$(uname -s)" == "Darwin" ]] && command -v open >/dev/null 2>&1; then
+  open "http://localhost:5173/?tab=process"
+  open "$ROOT/enclosure/stl" 2>/dev/null || true
+fi
 
 wait
