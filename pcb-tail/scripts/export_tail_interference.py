@@ -39,6 +39,12 @@ def _kicad_python() -> str:
     )
     if mac.is_file():
         return str(mac)
+    # Linux KiCad packages install pcbnew for the system interpreter, while
+    # Step6 itself normally runs from scripts/.venv-stl.
+    linux = Path("/usr/bin/python3")
+    dist_packages = Path("/usr/lib/python3/dist-packages")
+    if linux.is_file() and any(dist_packages.glob("pcbnew*")):
+        return str(linux)
     return sys.executable
 
 
