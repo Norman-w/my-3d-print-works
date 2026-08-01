@@ -1100,7 +1100,7 @@ module m6_stage_voids() {
 }
 
 // M6 最终装配是 Z=0 分型的正/反两个大件，不再在第 2/3 层间使用榫槽。
-// 四层螺丝从中间向外安装：第 2 层攻入第 1 层，第 3 层攻入第 4 层。
+// 拍柄由第 1 层外表面贯穿 1/2/3 层并攻入第 4 层；拍面由第 2 层攻入第 3 层。
 m6_tail_screw_y = max(actual_butt_y + 12.5, tail_if_pcb_y + 6.5);
 m6_tail_screw_x = envelope_hx(m6_tail_screw_y) - m6_handle_boss_d / 2 - 0.5;
 m6_tail_screw_positions = [
@@ -1127,6 +1127,11 @@ function m6_all_handle_screw_positions() =
         ? BEZIER_M6_SCREW_POSITIONS
         : concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
 
+function m6_blade_screw_positions() = [
+    for (p = screw_positions)
+        if (screw_in_blade(p)) p
+];
+
 function m6_safe_screw_lengths() = [
     for (l = m6_handle_screw_lengths)
         if (
@@ -1140,40 +1145,52 @@ function m6_split_screw_length() =
         ? min(m6_safe_screw_lengths())
         : max(2, floor(2 * m6_core_half_t - m6_handle_back_skin_min));
 
-function m6_screw_outer_engagement() =
-    m6_split_screw_length() - m6_core_half_t;
+function m6_handle_back_engagement(p) =
+    max(0.5, min(m6_handle_engagement_max,
+        half_z_at(p[1]) - m6_core_half_t - m6_handle_back_skin_min));
 
-// 第 2 层：螺丝从 Z=0 中间贴合面朝 Z+ 穿出，并攻入第 1 层。
-module m6_core_outward_screw_channels(positions) {
+function m6_handle_through_screw_length(p) =
+    2 * half_z_at(p[1]) - m6_handle_back_skin_min;
+
+// 拍柄合壳孔：第 1 层外表面沉头，1/2/3 层为过孔，第 4 层为盲底孔。
+module m6_handle_through_screw_channels(positions = m6_all_handle_screw_positions()) {
     for (p = positions) {
-        translate([p[0], p[1], m6_handle_screw_head_h - eps])
+        hz = half_z_at(p[1]);
+        engagement = m6_handle_back_engagement(p);
+        translate([p[0], p[1], -m6_core_half_t - eps])
             cylinder(
                 d = m6_handle_screw_clearance,
-                h = m6_core_half_t - m6_handle_screw_head_h + 2 * eps
+                h = hz - m6_handle_screw_head_h + m6_core_half_t + 2 * eps
             );
-        translate([p[0], p[1], -eps])
+        translate([p[0], p[1], hz - m6_handle_screw_head_h])
             cylinder(
-                d1 = m6_handle_screw_head_d,
-                d2 = m6_handle_screw_clearance,
+                d1 = m6_handle_screw_clearance,
+                d2 = m6_handle_screw_head_d,
                 h = m6_handle_screw_head_h + eps
             );
+        translate([p[0], p[1], -m6_core_half_t - engagement])
+            cylinder(d = m6_handle_screw_pilot, h = engagement + 2 * eps);
     }
 }
 
-module m6_outer_skin_pilot_channels(positions) {
-    engagement = m6_screw_outer_engagement();
+// 拍面孔：第 2 层正面沉头并贯穿，第 3 层保留 0.8mm 背皮作盲底孔。
+module m6_blade_front_screw_channels(positions = m6_blade_screw_positions()) {
+    for (p = positions) {
+        translate([p[0], p[1], -eps])
+            cylinder(d = m6_handle_screw_clearance,
+                h = m6_core_half_t - m6_handle_screw_head_h + 2 * eps);
+        translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
+            cylinder(d1 = m6_handle_screw_clearance,
+                d2 = m6_handle_screw_head_d,
+                h = m6_handle_screw_head_h + eps);
+    }
+}
+
+module m6_blade_back_screw_channels(positions = m6_blade_screw_positions()) {
+    engagement = m6_core_half_t - m6_handle_back_skin_min;
     for (p = positions)
-        translate([p[0], p[1], m6_core_half_t - eps])
+        translate([p[0], p[1], -engagement])
             cylinder(d = m6_handle_screw_pilot, h = engagement + eps);
-}
-
-module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions()) {
-    m6_core_outward_screw_channels(positions);
-    m6_outer_skin_pilot_channels(positions);
-}
-
-module m6_handle_back_screw_channels(positions = m6_all_handle_screw_positions()) {
-    mirror([0, 0, 1]) m6_handle_front_screw_channels(positions);
 }
 
 module m6_handle_screw_bosses(front = true) {
@@ -1243,7 +1260,8 @@ module m6_core_front() {
             // 内腔挖空后补回第 2 层螺丝承力柱，否则螺丝会悬空。
             m6_core_screw_supports(true);
         }
-        m6_handle_front_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_front_screw_channels();
     }
 }
 
@@ -1260,7 +1278,8 @@ module m6_core_back() {
             // 第 3 层镜像承力柱，供螺丝穿过后向第 4 层攻丝。
             m6_core_screw_supports(false);
         }
-        m6_handle_back_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_back_screw_channels();
     }
 }
 
@@ -1279,7 +1298,7 @@ module m6_handle_skin_front(overlap = 0) {
                     cube([BIG * 2, BIG * 2, BIG]);
             }
         }
-        m6_handle_front_screw_channels();
+        m6_handle_through_screw_channels();
     }
 }
 
@@ -1298,7 +1317,7 @@ module m6_handle_skin_back(overlap = 0) {
                     cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
             }
         }
-        m6_handle_back_screw_channels();
+        m6_handle_through_screw_channels();
     }
 }
 
@@ -1309,7 +1328,8 @@ module m6_monolithic_front() {
             m6_handle_skin_front(m6_union_overlap);
             m6_handle_screw_bosses(true);
         }
-        m6_handle_front_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_front_screw_channels();
     }
 }
 
@@ -1320,22 +1340,24 @@ module m6_monolithic_back() {
             m6_handle_skin_back(m6_union_overlap);
             m6_handle_screw_bosses(false);
         }
-        m6_handle_back_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_back_screw_channels();
     }
 }
 
 module m6_front_fasteners() {
-    screw_l = m6_split_screw_length();
-    shank_h = screw_l - m6_handle_screw_head_h;
     for (p = m6_all_handle_screw_positions()) {
+        hz = half_z_at(p[1]);
+        screw_l = m6_handle_through_screw_length(p);
+        shank_h = screw_l - m6_handle_screw_head_h;
         color([0.72, 0.75, 0.78])
         union() {
-            translate([p[0], p[1], m6_handle_screw_head_h])
-                cylinder(d = m6_handle_screw_d, h = shank_h);
-            translate([p[0], p[1], 0])
+            translate([p[0], p[1], hz - screw_l])
+                cylinder(d = m6_handle_screw_d, h = shank_h + eps);
+            translate([p[0], p[1], hz - m6_handle_screw_head_h])
                 cylinder(
-                    d1 = m6_handle_screw_head_d,
-                    d2 = m6_handle_screw_d,
+                    d1 = m6_handle_screw_d,
+                    d2 = m6_handle_screw_head_d,
                     h = m6_handle_screw_head_h
                 );
         }
@@ -1343,7 +1365,19 @@ module m6_front_fasteners() {
 }
 
 module m6_back_fasteners() {
-    mirror([0, 0, 1]) m6_front_fasteners();
+    screw_l = 2 * m6_core_half_t - m6_handle_back_skin_min;
+    shank_h = screw_l - m6_handle_screw_head_h;
+    for (p = m6_blade_screw_positions()) {
+        color([0.72, 0.75, 0.78])
+        union() {
+            translate([p[0], p[1], m6_core_half_t - screw_l])
+                cylinder(d = m6_handle_screw_d, h = shank_h + eps);
+            translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
+                cylinder(d1 = m6_handle_screw_d,
+                    d2 = m6_handle_screw_head_d,
+                    h = m6_handle_screw_head_h);
+        }
+    }
 }
 
 module m6_fasteners() {
@@ -1422,8 +1456,7 @@ echo(str(
     " countersunk self-tapping stainless"
 ));
 echo(str(
-    "M6 outward engagement per side: ", m6_screw_outer_engagement(),
-    "mm (layer 2→1 and layer 3→4)"
+    "M6 fastening: handle layer 1→4 through-screws; blade layer 2→3 screws"
 ));
 for (l = [5, 6, 7])
     echo(str(

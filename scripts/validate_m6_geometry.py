@@ -98,11 +98,10 @@ def main() -> int:
     fasteners = meshes.get("fasteners")
     if fasteners is not None:
         z_min, z_max = fasteners.bounds[:, 2]
-        expected_tip = CORE_HALF_T + 2.0
-        if abs(z_min + expected_tip) > 0.05 or abs(z_max - expected_tip) > 0.05:
+        if z_min >= -CORE_HALF_T or z_max <= CORE_HALF_T:
             errors.append(
-                "fasteners: expected mirrored 2→1 / 3→4 tips at "
-                f"±{expected_tip:.2f}mm, got [{z_min:.2f}, {z_max:.2f}]"
+                "fasteners: expected layer 1→4 handle screws spanning both cores, "
+                f"got Z=[{z_min:.2f}, {z_max:.2f}]"
             )
 
     if errors:
