@@ -141,7 +141,7 @@ export default function StlProcessPreview() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controlsRef.current = controls;
-    const initialPreset = cameraById(manifest, manifest.processSteps[0]?.camera)
+    const initialPreset = cameraById(manifest, 'full_paddle')
       ?? manifest.cameraPresets[0];
     if (initialPreset) {
       controls.target.set(...initialPreset.target);
@@ -181,7 +181,14 @@ export default function StlProcessPreview() {
       mesh.userData.component = component;
       meshesRef.current.set(component.id, mesh);
       scene.add(mesh);
-      if (!disposed) setLoadedCount((count) => count + 1);
+      if (!disposed) {
+        setLoadedCount((count) => count + 1);
+        if (visibleIdsRef.current.has(component.id)) {
+          requestAnimationFrame(() => {
+            if (!disposed) fitMeshes(camera, controls, meshesRef.current);
+          });
+        }
+      }
     })).then(() => {
       if (!disposed) {
         meshesRef.current.forEach((mesh, id) => {

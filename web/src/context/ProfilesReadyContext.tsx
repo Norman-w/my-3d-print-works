@@ -9,6 +9,7 @@ type ProfilesReadyContextValue = {
 };
 
 const ProfilesReadyContext = createContext<ProfilesReadyContextValue>({ ready: false });
+let didToastProfilesLoaded = false;
 
 export function useProfilesReady(): ProfilesReadyContextValue {
   return useContext(ProfilesReadyContext);
@@ -25,7 +26,8 @@ export default function ProfilesReadyProvider({ children }: { children: ReactNod
     void ensureProfilesLoaded()
       .then(bundle => {
         const keys = ALL_DRAW_TARGETS.filter(t => bundle[t] != null);
-        if (keys.length > 0) {
+        if (keys.length > 0 && !didToastProfilesLoaded) {
+          didToastProfilesLoaded = true;
           toast(`已从服务端加载：${labelTargets(keys)}`, 'info');
         }
         setReady(true);

@@ -17,8 +17,28 @@ echo "  SmartPaddle Dev Server"
 echo "============================================"
 echo ""
 
-# 1. Start Go server
-echo "[1/4] Starting Go server on :8000..."
+# 1. Keep ignored/generated STL assets in sync with the checked-out source.
+echo "[1/5] Checking M6 STL assets..."
+M6_FRONT="$ROOT/enclosure/stl/paddle_m6_monolithic_front.stl"
+STALE_STL=0
+for SOURCE in \
+  "$ROOT/enclosure/paddle_shell.scad" \
+  "$ROOT/enclosure/parameters.scad" \
+  "$ROOT/scripts/bezier_to_openscad.py" \
+  "$ROOT/pcb-tail/layouts/default/default.kicad_pcb"; do
+  if [[ ! -f "$M6_FRONT" || "$SOURCE" -nt "$M6_FRONT" ]]; then
+    STALE_STL=1
+  fi
+done
+if [[ "${SKIP_STL_EXPORT:-0}" != "1" && "$STALE_STL" == "1" ]]; then
+  echo "  M6 源文件有更新，执行快速 STL 导出（可用 SKIP_STL_EXPORT=1 跳过）..."
+  QUALITY_MODE=quick "$ROOT/scripts/export-stl.sh"
+else
+  python3 "$ROOT/scripts/write_preview_manifest.py"
+fi
+
+# 2. Start Go server
+echo "[2/5] Starting Go server on :8000..."
 cd "$ROOT/server"
 go run . &
 SERVER_PID=$!
@@ -42,14 +62,14 @@ for i in $(seq 1 90); do
   fi
 done
 
-# 2. Serve exported STL and manifest for the unified process preview.
-echo "[2/4] Starting STL asset server on :8765..."
+# 3. Serve exported STL and manifest for the unified process preview.
+echo "[3/5] Starting STL asset server on :8765..."
 cd "$ROOT/enclosure/stl"
 python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/smartpaddle-stl-preview.log 2>&1 &
 PREVIEW_PID=$!
 
-# 3. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
-echo "[3/4] Starting Web UI on :5173 (strict)..."
+# 4. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
+echo "[4/5] Starting Web UI on :5173 (strict)..."
 if command -v lsof >/dev/null 2>&1; then
   PIDS=$(lsof -ti:5173 2>/dev/null || true)
   if [[ -n "$PIDS" ]]; then
@@ -63,8 +83,8 @@ npm run dev -- --host --port 5173 --strictPort &
 WEB_PID=$!
 sleep 2
 
-# 4. Open browser
-echo "[4/4] Ready!"
+# 5. Open browser
+echo "[5/5] Ready!"
 echo ""
 echo "  Server:  http://localhost:8000  (API + WebSocket)"
 echo "  Web UI:  http://localhost:5173"
