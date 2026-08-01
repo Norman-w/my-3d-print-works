@@ -56,8 +56,8 @@ ensure_assets() {
     echo "错误: 缺少 preview/vendor/three" >&2
     exit 1
   fi
-  if [[ ! -f "$DIR/paddle_handle_tail.stl" ]]; then
-    echo "→ 缺少 paddle_handle_tail.stl，先导出…"
+  if [[ ! -f "$DIR/paddle_m6_monolithic_front.stl" ]]; then
+    echo "→ 缺少 M6 STL，先导出…"
     "$ROOT/scripts/export-stl.sh"
   fi
 }
