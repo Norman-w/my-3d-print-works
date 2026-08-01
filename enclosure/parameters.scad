@@ -66,10 +66,13 @@ tail_board_ring_groove_radial   = 0.50;  // 内壁环槽径向深度
 tail_cavity_inset               = 0.80;  // 尾端截面内缩（板外形用；异于下面 handle_cavity_inset）
 
 // ---- 螺丝孔与硅胶塞 (M2 自攻螺丝，PETG 材质) ----
+screw_d_nominal      = 2.0;       // 已采购 M2：拍柄 1→4 与拍面 2→3 固定使用
 screw_d_clearance    = 2.2;       // 螺丝过孔直径 (M2 光杆 2.0 + 容差 0.2)
 screw_d_boss         = 5.5;       // 螺丝柱外径
 screw_d_pilot        = 1.5;       // 自攻底孔直径 (M2 PETG 塑料自攻，75% 啮合率)
 screw_head_d         = 3.8;       // M2 沉头螺钉头部直径 (标准 ~3.8mm)
+screw_head_h         = 1.8;       // M2 沉头高度
+screw_blade_length   = 5.0;       // 拍面优先 M2×5；M2×6 会到达/穿平背面
 plug_recess_d        = 6.0;       // 硅胶塞凹槽直径
 plug_recess_depth    = 2.0;       // 硅胶塞凹槽深度
 

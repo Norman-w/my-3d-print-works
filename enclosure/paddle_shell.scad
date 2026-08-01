@@ -1193,17 +1193,17 @@ module m6_handle_through_screw_channels(positions = m6_handle_through_screw_posi
         engagement = m6_handle_back_engagement(p);
         translate([p[0], p[1], -m6_core_half_t - eps])
             cylinder(
-                d = m6_handle_screw_clearance,
-                h = hz - m6_handle_screw_head_h + m6_core_half_t + 2 * eps
+                d = screw_d_clearance,
+                h = hz - screw_head_h + m6_core_half_t + 2 * eps
             );
-        translate([p[0], p[1], hz - m6_handle_screw_head_h])
+        translate([p[0], p[1], hz - screw_head_h])
             cylinder(
-                d1 = m6_handle_screw_clearance,
-                d2 = m6_handle_screw_head_d,
-                h = m6_handle_screw_head_h + eps
+                d1 = screw_d_clearance,
+                d2 = screw_head_d,
+                h = screw_head_h + eps
             );
         translate([p[0], p[1], -m6_core_half_t - engagement])
-            cylinder(d = m6_handle_screw_pilot, h = engagement + 2 * eps);
+            cylinder(d = screw_d_pilot, h = engagement + 2 * eps);
     }
 }
 
@@ -1211,24 +1211,24 @@ module m6_handle_through_screw_channels(positions = m6_handle_through_screw_posi
 module m6_blade_front_screw_channels(positions = m6_blade_screw_positions()) {
     for (p = positions) {
         translate([p[0], p[1], -eps])
-            cylinder(d = m6_handle_screw_clearance,
-                h = m6_core_half_t - m6_handle_screw_head_h + 2 * eps);
-        translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
-            cylinder(d1 = m6_handle_screw_clearance,
-                d2 = m6_handle_screw_head_d,
-                h = m6_handle_screw_head_h + eps);
+            cylinder(d = screw_d_clearance,
+                h = m6_core_half_t - screw_head_h + 2 * eps);
+        translate([p[0], p[1], m6_core_half_t - screw_head_h])
+            cylinder(d1 = screw_d_clearance,
+                d2 = screw_head_d,
+                h = screw_head_h + eps);
     }
 }
 
 module m6_blade_back_screw_channels(positions = m6_blade_screw_positions()) {
-    engagement = m6_core_half_t - m6_handle_back_skin_min;
+    engagement = screw_blade_length - m6_core_half_t;
     for (p = positions)
         translate([p[0], p[1], -engagement])
-            cylinder(d = m6_handle_screw_pilot, h = engagement + eps);
+            cylinder(d = screw_d_pilot, h = engagement + eps);
 }
 
-module m6_handle_screw_bosses(front = true) {
-    for (p = concat(m6_all_handle_screw_positions(), m6_handle_through_screw_positions())) {
+module m6_handle_screw_boss_group(front, positions, boss_d) {
+    for (p = positions) {
         x = p[0];
         y = p[1];
         hz = half_z_at(y);
@@ -1237,7 +1237,7 @@ module m6_handle_screw_bosses(front = true) {
                 bezier_handle_half(true);
                 translate([x, y, -eps])
                     cylinder(
-                        d = m6_handle_boss_d,
+                        d = boss_d,
                         h = hz - wall_t + 0.5 + eps
                     );
             }
@@ -1246,10 +1246,30 @@ module m6_handle_screw_bosses(front = true) {
                 bezier_handle_half(false);
                 translate([x, y, -hz + wall_t - 0.5])
                     cylinder(
-                        d = m6_handle_boss_d,
+                        d = boss_d,
                         h = hz - wall_t + 0.5 + eps
                     );
             }
+        }
+    }
+}
+
+module m6_handle_screw_bosses(front = true) {
+    m6_handle_screw_boss_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
+    m6_handle_screw_boss_group(front, m6_handle_through_screw_positions(), screw_d_boss);
+}
+
+module m6_core_screw_support_group(front, positions, boss_d) {
+    for (p = positions) {
+        x = p[0];
+        y = p[1];
+        side = x < 0 ? -1 : 1;
+        anchor_x = side * (envelope_hx(y) - m6_handle_wall_t / 2);
+        hull() {
+            translate([x, y, front ? 0 : -m6_core_half_t])
+                cylinder(d = boss_d, h = m6_core_half_t);
+            translate([anchor_x, y, front ? 0 : -m6_core_half_t])
+                cylinder(d = boss_d, h = m6_core_half_t);
         }
     }
 }
@@ -1258,19 +1278,9 @@ module m6_core_screw_supports(front = true) {
     intersection() {
         m6_core_blank(front);
         union() {
-            for (p = concat(m6_all_handle_screw_positions(), m6_handle_through_screw_positions())) {
-                x = p[0];
-                y = p[1];
-                side = x < 0 ? -1 : 1;
-                // 把腔内柱用窄桥接到最近侧壁；否则柱只是切片中的独立孤岛。
-                anchor_x = side * (envelope_hx(y) - m6_handle_wall_t / 2);
-            hull() {
-                translate([x, y, front ? 0 : -m6_core_half_t])
-                    cylinder(d = m6_handle_boss_d, h = m6_core_half_t);
-                translate([anchor_x, y, front ? 0 : -m6_core_half_t])
-                    cylinder(d = m6_handle_boss_d, h = m6_core_half_t);
-            }
-            }
+            // 侧边细螺丝与中轴 M2 使用各自柱径，并桥接到最近侧壁。
+            m6_core_screw_support_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
+            m6_core_screw_support_group(front, m6_handle_through_screw_positions(), screw_d_boss);
         }
     }
 }
@@ -1411,30 +1421,30 @@ module m6_through_fasteners() {
     for (p = m6_handle_through_screw_positions()) {
         hz = half_z_at(p[1]);
         screw_l = m6_handle_through_screw_length(p);
-        shank_h = screw_l - m6_handle_screw_head_h;
+        shank_h = screw_l - screw_head_h;
         color([0.78, 0.81, 0.84]) union() {
             translate([p[0], p[1], hz - screw_l])
-                cylinder(d = m6_handle_screw_d, h = shank_h + eps);
-            translate([p[0], p[1], hz - m6_handle_screw_head_h])
-                cylinder(d1 = m6_handle_screw_d,
-                    d2 = m6_handle_screw_head_d,
-                    h = m6_handle_screw_head_h);
+                cylinder(d = screw_d_nominal, h = shank_h + eps);
+            translate([p[0], p[1], hz - screw_head_h])
+                cylinder(d1 = screw_d_nominal,
+                    d2 = screw_head_d,
+                    h = screw_head_h);
         }
     }
 }
 
 module m6_blade_fasteners() {
-    screw_l = 2 * m6_core_half_t - m6_handle_back_skin_min;
-    shank_h = screw_l - m6_handle_screw_head_h;
+    screw_l = screw_blade_length;
+    shank_h = screw_l - screw_head_h;
     for (p = m6_blade_screw_positions()) {
         color([0.72, 0.75, 0.78])
         union() {
             translate([p[0], p[1], m6_core_half_t - screw_l])
-                cylinder(d = m6_handle_screw_d, h = shank_h + eps);
-            translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
-                cylinder(d1 = m6_handle_screw_d,
-                    d2 = m6_handle_screw_head_d,
-                    h = m6_handle_screw_head_h);
+                cylinder(d = screw_d_nominal, h = shank_h + eps);
+            translate([p[0], p[1], m6_core_half_t - screw_head_h])
+                cylinder(d1 = screw_d_nominal,
+                    d2 = screw_head_d,
+                    h = screw_head_h);
         }
     }
 }
