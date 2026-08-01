@@ -169,7 +169,9 @@ export default function StlProcessPreview() {
       const material = new THREE.MeshStandardMaterial({
         color: component.color,
         roughness: 0.55,
-        metalness: component.kind === 'interference' ? 0.2 : 0.05,
+        metalness: component.kind === 'fastener'
+          ? 0.78
+          : component.kind === 'interference' ? 0.2 : 0.05,
         transparent: true,
         opacity: component.opacity,
         side: THREE.DoubleSide,

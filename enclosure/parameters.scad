@@ -216,17 +216,24 @@ handle_cavity_inset  = 1.5;       // 内腔额外内缩量 (总壁厚 = wall_t +
 m6_core_half_t            = blade_core_t / 2;  // 每块主承力层厚度
 m6_union_overlap          = 0.15; // 合体导出时外贴层压入主层，避免零厚度接触
 m6_handle_wall_t          = wall_t + handle_cavity_inset;
-// 依据可用内腔壁厚选择紧固件；当前 3.5mm 壁厚得到 M2。
+// 沉头自攻不锈钢螺丝坐落在 Z=+3 的正面主层上，不贯穿拍柄全部厚度。
+// 依据核心层/腔壁中较薄者选择通用直径；当前 3mm 可用壁厚得到 M1.2。
+m6_fastener_available_wall = min(m6_core_half_t, m6_handle_wall_t);
 m6_handle_screw_d         =
-    m6_handle_wall_t >= 3.0 ? 2.0 :
-    m6_handle_wall_t >= 2.4 ? 1.6 : 1.4;
+    m6_fastener_available_wall < 2.0 ? 1.0 :
+    m6_fastener_available_wall < 3.5 ? 1.2 :
+    m6_fastener_available_wall < 4.5 ? 1.4 : 1.6;
 m6_handle_screw_clearance = m6_handle_screw_d + 0.20;
 m6_handle_screw_pilot     = m6_handle_screw_d * 0.75;
 m6_handle_screw_head_d    = m6_handle_screw_d * 1.90;
-m6_handle_screw_head_h    = m6_handle_screw_d * 0.90;
+m6_handle_screw_head_h    = m6_handle_screw_d * 0.60;
+m6_handle_screw_access_d  = m6_handle_screw_head_d + 0.40;
 m6_handle_boss_d          =
-    m6_handle_screw_d + 2 * min(1.75, m6_handle_wall_t - 0.5);
-m6_handle_back_skin_min   = 0.80; // 自攻孔后方保留的最小外皮
+    m6_handle_screw_d + 2 * min(1.40, m6_handle_wall_t - 0.5);
+m6_handle_back_skin_min   = 0.80; // 螺丝尖端与反面外表面间的安全余量
+m6_handle_engagement_min  = 2.0;
+m6_handle_engagement_max  = 4.0;
+m6_handle_screw_lengths   = [4, 5, 6, 7, 8, 10]; // 常见 M1.x 沉头自攻长度
 // 拍柄中段附加压紧点；旧有 y=-89、y=-160 螺丝仍继续使用。
 m6_handle_mid_screw_positions = [
     [-7, -122],

@@ -4,6 +4,7 @@
 输入（须已由 export-stl.sh / OpenSCAD 生成）：
   enclosure/stl/paddle_m6_layer{1..4}_*.stl
   enclosure/stl/paddle_m6_monolithic_{front,back}.stl
+  enclosure/stl/paddle_m6_fasteners.stl
 
 输出会覆盖上述打印件，并重建 M6 装配、爆炸图和尾段试片。
 
@@ -303,7 +304,8 @@ def main() -> int:
         "monolithic_front": STL / "paddle_m6_monolithic_front.stl",
         "monolithic_back": STL / "paddle_m6_monolithic_back.stl",
     }
-    for p in parts.values():
+    fasteners_path = STL / "paddle_m6_fasteners.stl"
+    for p in (*parts.values(), fasteners_path):
         if not p.is_file():
             print(f"缺少已导出 M6 零件: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
             return 1
@@ -335,7 +337,10 @@ def main() -> int:
         _export(cut_parts[name], path)
 
     assembly_order = ("skin_front", "core_front", "core_back", "skin_back")
-    assembly = trimesh.util.concatenate([cut_parts[name] for name in assembly_order])
+    fasteners = _load_stl(fasteners_path)
+    assembly = trimesh.util.concatenate(
+        [cut_parts[name] for name in assembly_order] + [fasteners]
+    )
     _export(assembly, STL / "paddle_m6_assembly.stl")
 
     exploded_parts = []
@@ -343,6 +348,7 @@ def main() -> int:
         mesh = cut_parts[name].copy()
         mesh.apply_translation([0.0, 0.0, dz])
         exploded_parts.append(mesh)
+    exploded_parts.append(fasteners)
     _export(trimesh.util.concatenate(exploded_parts), STL / "paddle_m6_exploded.stl")
 
     butt_y = float(info.get("butt_y", BUTT_Y))

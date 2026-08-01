@@ -20,6 +20,7 @@ PARTS = [
     ("skin_back", "第4层·拍柄背面外贴", "paddle_m6_layer4_handle_skin_back.stl", "#1d4ed8", "skin"),
     ("monolithic_front", "正面无缝合体打印件", "paddle_m6_monolithic_front.stl", "#f59e0b", "monolithic"),
     ("monolithic_back", "背面无缝合体打印件", "paddle_m6_monolithic_back.stl", "#d97706", "monolithic"),
+    ("fasteners", "沉头自攻不锈钢螺丝", "paddle_m6_fasteners.stl", "#d1d5db", "fastener"),
     ("assembly", "M6 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
     ("exploded", "M6 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
     ("tail", "M6 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
@@ -59,7 +60,7 @@ def main() -> int:
             {
                 "id": "monolithic",
                 "label": "合体打印·头柄无缝",
-                "components": present("monolithic_front", "monolithic_back"),
+                "components": present("monolithic_front", "monolithic_back", "fasteners"),
                 "camera": "head_handle_joint",
             },
             {
@@ -71,7 +72,7 @@ def main() -> int:
             {
                 "id": "handle_fasteners",
                 "label": "正反大件螺丝压紧",
-                "components": present("monolithic_front", "monolithic_back"),
+                "components": present("monolithic_front", "monolithic_back", "fasteners"),
                 "camera": "handle_fasteners",
             },
             {

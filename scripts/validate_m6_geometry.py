@@ -20,8 +20,10 @@ PARTS = {
     "skin_back": "paddle_m6_layer4_handle_skin_back.stl",
     "monolithic_front": "paddle_m6_monolithic_front.stl",
     "monolithic_back": "paddle_m6_monolithic_back.stl",
+    "fasteners": "paddle_m6_fasteners.stl",
 }
 JOIN_Y = -78.5
+CORE_HALF_T = 3.0
 
 
 # ===== 分区：私有成员 =====
@@ -92,6 +94,14 @@ def main() -> int:
         size = mesh.bounds[1] - mesh.bounds[0]
         if size[1] < 245 or size[0] < 145:
             errors.append(f"{name}: core does not span full paddle outline: {size}")
+
+    fasteners = meshes.get("fasteners")
+    if fasteners is not None:
+        z_min, z_max = fasteners.bounds[:, 2]
+        if z_min < -CORE_HALF_T - 0.05:
+            errors.append(f"fasteners: screw tips break through back by {-CORE_HALF_T - z_min:.2f}mm")
+        if z_max > CORE_HALF_T + 0.05:
+            errors.append(f"fasteners: countersunk heads protrude front by {z_max - CORE_HALF_T:.2f}mm")
 
     if errors:
         print("\nM6 geometry validation failed:")

@@ -1076,7 +1076,7 @@ m6_tail_screw_positions = [
 
 function m6_existing_handle_screw_positions() = [
     for (p = screw_positions)
-        if (screw_in_handle(p)) p
+        if (screw_in_handle(p) && !screw_throughs_pcb(p)) p
 ];
 
 function m6_extra_handle_screw_positions() =
@@ -1085,50 +1085,74 @@ function m6_extra_handle_screw_positions() =
 function m6_all_handle_screw_positions() =
     concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
 
-function m6_handle_screw_length_at(y) =
-    max(
-        6,
-        2 * floor(
-            (2 * half_z_at(y) - plug_recess_depth - m6_handle_back_skin_min) / 2
-        )
-    );
+function m6_blade_screw_positions() = [
+    for (p = screw_positions)
+        if (screw_in_blade(p)) p
+];
 
-module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions()) {
+function m6_all_split_screw_positions() =
+    concat(m6_blade_screw_positions(), m6_all_handle_screw_positions());
+
+function m6_safe_screw_lengths() = [
+    for (l = m6_handle_screw_lengths)
+        if (
+            l >= m6_core_half_t + m6_handle_engagement_min
+            && l <= 2 * m6_core_half_t - m6_handle_back_skin_min
+        ) l
+];
+
+function m6_split_screw_length() =
+    len(m6_safe_screw_lengths()) > 0
+        ? min(m6_safe_screw_lengths())
+        : max(2, floor(2 * m6_core_half_t - m6_handle_back_skin_min));
+
+function m6_screw_back_engagement() =
+    m6_split_screw_length() - m6_core_half_t;
+
+function m6_screw_tip_z() =
+    m6_core_half_t - m6_split_screw_length();
+
+function m6_screw_breakthrough() =
+    max(0, -m6_core_half_t - m6_screw_tip_z());
+
+module m6_core_front_screw_channels(positions) {
     for (p = positions) {
-        x = p[0];
-        y = p[1];
-        hz = half_z_at(y);
-        cone_top = hz - plug_recess_depth;
-        translate([x, y, -eps])
+        translate([p[0], p[1], -eps])
             cylinder(
                 d = m6_handle_screw_clearance,
-                h = cone_top - m6_handle_screw_head_h + eps
+                h = m6_core_half_t - m6_handle_screw_head_h + eps
             );
-        translate([x, y, cone_top - m6_handle_screw_head_h])
+        translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
             cylinder(
                 d1 = m6_handle_screw_clearance,
                 d2 = m6_handle_screw_head_d,
                 h = m6_handle_screw_head_h + eps
             );
-        translate([x, y, hz - plug_recess_depth + eps])
-            cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
+    }
+}
+
+module m6_core_back_screw_channels(positions) {
+    engagement = m6_screw_back_engagement();
+    for (p = positions)
+        translate([p[0], p[1], -engagement])
+            cylinder(d = m6_handle_screw_pilot, h = engagement + eps);
+}
+
+module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions()) {
+    m6_core_front_screw_channels(positions);
+    for (p = positions) {
+        hz = half_z_at(p[1]);
+        // 深孔只提供批头通道；沉头实际坐落在 Z=+3 主承力层表面。
+        translate([p[0], p[1], m6_core_half_t - eps])
+            cylinder(
+                d = m6_handle_screw_access_d,
+                h = hz - m6_core_half_t + 2 * eps
+            );
     }
 }
 
 module m6_handle_back_screw_channels(positions = m6_all_handle_screw_positions()) {
-    for (p = positions) {
-        x = p[0];
-        y = p[1];
-        hz = half_z_at(y);
-        screw_l = m6_handle_screw_length_at(y);
-        front_to_split = hz - plug_recess_depth;
-        pilot_h = min(
-            hz - m6_handle_back_skin_min,
-            max(2, screw_l - front_to_split)
-        );
-        translate([x, y, -pilot_h])
-            cylinder(d = m6_handle_screw_pilot, h = pilot_h + eps);
-    }
+    m6_core_back_screw_channels(positions);
 }
 
 module m6_handle_screw_bosses(front = true) {
@@ -1173,7 +1197,7 @@ module m6_core_front() {
             rigid_pcb_cavity(front = true);
             pcb_main_cavity(front = true);
         }
-        blade_front_screw_channels();
+        m6_core_front_screw_channels(m6_blade_screw_positions());
         m6_handle_front_screw_channels();
     }
 }
@@ -1187,7 +1211,7 @@ module m6_core_back() {
             rigid_pcb_cavity(front = false);
             pcb_main_cavity(front = false);
         }
-        blade_back_screw_channels();
+        m6_core_back_screw_channels(m6_blade_screw_positions());
         m6_handle_back_screw_channels();
     }
 }
@@ -1252,11 +1276,34 @@ module m6_monolithic_back() {
     }
 }
 
+module m6_fasteners() {
+    screw_l = m6_split_screw_length();
+    shank_h = screw_l - m6_handle_screw_head_h;
+    for (p = m6_all_split_screw_positions()) {
+        color([0.72, 0.75, 0.78])
+        union() {
+            translate([p[0], p[1], m6_core_half_t - screw_l])
+                cylinder(d = m6_handle_screw_d, h = shank_h);
+            translate([
+                p[0],
+                p[1],
+                m6_core_half_t - m6_handle_screw_head_h
+            ])
+                cylinder(
+                    d1 = m6_handle_screw_d,
+                    d2 = m6_handle_screw_head_d,
+                    h = m6_handle_screw_head_h
+                );
+        }
+    }
+}
+
 module m6_assembly() {
     color([0.12, 0.45, 0.90, 0.80]) m6_handle_skin_front();
     color([0.85, 0.20, 0.18]) m6_core_front();
     color([0.45, 0.08, 0.06]) m6_core_back();
     color([0.08, 0.25, 0.55, 0.80]) m6_handle_skin_back();
+    m6_fasteners();
 }
 
 module m6_exploded() {
@@ -1264,6 +1311,7 @@ module m6_exploded() {
     translate([0, 0, 4]) m6_core_front();
     translate([0, 0, -4]) m6_core_back();
     translate([0, 0, -12]) m6_handle_skin_back();
+    m6_fasteners();
 }
 
 // ═══ 渲染 ═══
@@ -1290,6 +1338,8 @@ if (HALF == "m6_core_front") {
     m6_assembly();
 } else if (HALF == "m6_exploded") {
     m6_exploded();
+} else if (HALF == "m6_fasteners") {
+    m6_fasteners();
 } else {
     echo(str("Unknown M6 HALF: ", HALF));
 }
@@ -1302,14 +1352,25 @@ echo(str("Total height: ", blade_tip_y - handle_butt_cut_y, "mm"));
 echo(str("Blade: ", blade_width, "mm wide × ", blade_core_t, "mm thick"));
 echo(str("Handle: ", handle_thickness, "mm thick, butt Y=", handle_butt_y));
 echo(str("Half: ", HALF));
-echo(str("Screws: ", len(screw_positions), "× M2"));
 echo(str(
-    "M6 handle wall: ", m6_handle_wall_t,
+    "M6 available screw wall: ", m6_fastener_available_wall,
     "mm → M", m6_handle_screw_d,
-    " countersunk, boss Ø", m6_handle_boss_d, "mm"
+    "×", m6_split_screw_length(),
+    " countersunk self-tapping stainless"
 ));
-for (p = m6_all_handle_screw_positions())
+echo(str(
+    "M6 back engagement: ", m6_screw_back_engagement(),
+    "mm; remaining back skin: ",
+    m6_core_half_t + m6_screw_tip_z(),
+    "mm; breakthrough: ", m6_screw_breakthrough(), "mm"
+));
+for (l = [5, 6, 7])
     echo(str(
-        "M6 handle screw [", p[0], ",", p[1], "]: M",
-        m6_handle_screw_d, "×", m6_handle_screw_length_at(p[1]), "mm"
+        "M", m6_handle_screw_d, "×", l, ": ",
+        l < m6_core_half_t + m6_handle_engagement_min ? "engagement too short" :
+        l > 2 * m6_core_half_t
+            ? str("breakthrough ", l - 2 * m6_core_half_t, "mm") :
+        l > 2 * m6_core_half_t - m6_handle_back_skin_min
+            ? str("unsafe back skin ", 2 * m6_core_half_t - l, "mm")
+            : "safe"
     ));
