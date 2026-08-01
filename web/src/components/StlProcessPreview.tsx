@@ -261,6 +261,7 @@ export default function StlProcessPreview() {
     const overlays = new Set(activeView?.overlays ?? []);
     const internalStudy = activeId === 'hollowing';
     const fastenerStudy = activeId === 'handle_fasteners';
+    const assembledFastenerStudy = activeId === 'assembled' && showFasteners;
     const clipping = sectioned
       ? [new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)]
       : [];
@@ -274,7 +275,7 @@ export default function StlProcessPreview() {
         ? 1
         : kind === 'interference'
           ? (internalStudy ? 0.38 : 0.82)
-          : (transparent || internalStudy || fastenerStudy) ? 0.22 : 1;
+          : (transparent || internalStudy || fastenerStudy || assembledFastenerStudy) ? 0.22 : 1;
       if (kind === 'fastener') {
         material.metalness = 0.5;
         material.roughness = 0.28;
