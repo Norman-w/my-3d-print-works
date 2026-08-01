@@ -1193,20 +1193,40 @@ module m6_core_back() {
 }
 
 module m6_handle_skin_front(overlap = 0) {
-    intersection() {
-        handle_front_part();
-        m6_full_planform_prism();
-        translate([-BIG, -BIG, m6_core_half_t - overlap])
-            cube([BIG * 2, BIG * 2, BIG]);
+    difference() {
+        union() {
+            intersection() {
+                handle_front_part();
+                m6_full_planform_prism();
+                translate([-BIG, -BIG, m6_core_half_t - overlap])
+                    cube([BIG * 2, BIG * 2, BIG]);
+            }
+            intersection() {
+                m6_handle_screw_bosses(true);
+                translate([-BIG, -BIG, m6_core_half_t - overlap])
+                    cube([BIG * 2, BIG * 2, BIG]);
+            }
+        }
+        m6_handle_front_screw_channels();
     }
 }
 
 module m6_handle_skin_back(overlap = 0) {
-    intersection() {
-        handle_back_part();
-        m6_full_planform_prism();
-        translate([-BIG, -BIG, -BIG])
-            cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
+    difference() {
+        union() {
+            intersection() {
+                handle_back_part();
+                m6_full_planform_prism();
+                translate([-BIG, -BIG, -BIG])
+                    cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
+            }
+            intersection() {
+                m6_handle_screw_bosses(false);
+                translate([-BIG, -BIG, -BIG])
+                    cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
+            }
+        }
+        m6_handle_back_screw_channels();
     }
 }
 
