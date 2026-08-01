@@ -73,7 +73,7 @@ echo "  Models:  $ROOT/enclosure/stl/"
 echo ""
 echo "Press Ctrl+C to stop all services."
 
-if command -v open >/dev/null 2>&1; then
+if [[ "$(uname -s)" == "Darwin" ]] && command -v open >/dev/null 2>&1; then
   open "http://localhost:5173/?tab=process"
   open "$ROOT/enclosure/stl" 2>/dev/null || true
 fi
