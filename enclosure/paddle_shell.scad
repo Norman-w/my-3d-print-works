@@ -1256,7 +1256,33 @@ module m6_handle_screw_boss_group(front, positions, boss_d) {
 
 module m6_handle_screw_bosses(front = true) {
     m6_handle_screw_boss_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
-    m6_handle_screw_boss_group(front, m6_handle_through_screw_positions(), screw_d_boss);
+}
+
+// 中轴 M2 boss 属于第 1/4 层：像插柱一样穿过第 2/3 层，在 Z=0 分型面相接。
+// 不再横向桥接侧壁，以免形成侵占 PCB 深入空间的“爪子”。
+module m6_handle_through_boss_columns(front = true) {
+    for (p = m6_handle_through_screw_positions()) {
+        hz = half_z_at(p[1]);
+        if (front)
+            intersection() {
+                bezier_handle_half(true);
+                translate([p[0], p[1], -eps])
+                    cylinder(d = screw_d_boss, h = hz - wall_t + 0.5 + eps);
+            }
+        else
+            intersection() {
+                bezier_handle_half(false);
+                translate([p[0], p[1], -hz + wall_t - 0.5])
+                    cylinder(d = screw_d_boss, h = hz - wall_t + 0.5 + eps);
+            }
+    }
+}
+
+module m6_handle_through_boss_clearance() {
+    for (p = m6_handle_through_screw_positions())
+        translate([p[0], p[1], -m6_core_half_t - eps])
+            cylinder(d = screw_d_boss + 0.20,
+                h = 2 * m6_core_half_t + 2 * eps);
 }
 
 module m6_core_screw_support_group(front, positions, boss_d) {
@@ -1280,7 +1306,6 @@ module m6_core_screw_supports(front = true) {
         union() {
             // 侧边细螺丝与中轴 M2 使用各自柱径，并桥接到最近侧壁。
             m6_core_screw_support_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
-            m6_core_screw_support_group(front, m6_handle_through_screw_positions(), screw_d_boss);
         }
     }
 }
@@ -1305,6 +1330,7 @@ module m6_core_front() {
             m6_core_screw_supports(true);
         }
         m6_side_front_screw_channels();
+        m6_handle_through_boss_clearance();
         m6_handle_through_screw_channels();
         m6_blade_front_screw_channels();
     }
@@ -1324,6 +1350,7 @@ module m6_core_back() {
             m6_core_screw_supports(false);
         }
         m6_side_back_screw_channels();
+        m6_handle_through_boss_clearance();
         m6_handle_through_screw_channels();
         m6_blade_back_screw_channels();
     }
@@ -1343,6 +1370,7 @@ module m6_handle_skin_front(overlap = 0) {
                 translate([-BIG, -BIG, m6_core_half_t - overlap])
                     cube([BIG * 2, BIG * 2, BIG]);
             }
+            m6_handle_through_boss_columns(true);
         }
         m6_side_front_screw_channels();
         m6_handle_through_screw_channels();
@@ -1363,6 +1391,7 @@ module m6_handle_skin_back(overlap = 0) {
                 translate([-BIG, -BIG, -BIG])
                     cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
             }
+            m6_handle_through_boss_columns(false);
         }
         m6_side_back_screw_channels();
         m6_handle_through_screw_channels();
