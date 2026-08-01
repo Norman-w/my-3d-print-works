@@ -54,6 +54,31 @@ function cameraById(
 ): CameraPreset | undefined {
   return manifest.cameraPresets.find((preset) => preset.id === id);
 }
+
+function fitMeshes(
+  camera: THREE.PerspectiveCamera,
+  controls: OrbitControls,
+  meshes: Map<string, THREE.Mesh>,
+) {
+  const box = new THREE.Box3();
+  meshes.forEach((mesh) => {
+    if (mesh.visible) box.expandByObject(mesh);
+  });
+  if (box.isEmpty()) return;
+  const center = box.getCenter(new THREE.Vector3());
+  const size = box.getSize(new THREE.Vector3());
+  const radius = Math.max(size.x, size.y, size.z, 1) * 0.72;
+  controls.target.copy(center);
+  camera.position.set(
+    center.x + radius * 1.15,
+    center.y - radius * 1.35,
+    center.z + radius * 0.85,
+  );
+  camera.near = Math.max(0.05, radius / 200);
+  camera.far = Math.max(3000, radius * 30);
+  camera.updateProjectionMatrix();
+  controls.update();
+}
 //#endregion
 
 //#region 视图层
@@ -62,9 +87,11 @@ export default function StlProcessPreview() {
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const controlsRef = useRef<OrbitControls>();
   const meshesRef = useRef(new Map<string, THREE.Mesh>());
+  const fitRef = useRef<() => void>(() => undefined);
   const [manifest, setManifest] = useState<ProcessPreviewManifest>();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [loadedCount, setLoadedCount] = useState(0);
   const [mode, setMode] = useState<BrowseMode>('steps');
   const [activeId, setActiveId] = useState('');
   const [visibleIds, setVisibleIds] = useState<Set<string>>(new Set());
@@ -93,9 +120,20 @@ export default function StlProcessPreview() {
     const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 3000);
     camera.up.set(0, 0, 1);
     cameraRef.current = camera;
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+    } catch (reason) {
+      setError(`无法创建 WebGL 预览：${String(reason)}。请启用浏览器硬件加速后刷新。`);
+      setLoading(false);
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.localClippingEnabled = true;
+    renderer.domElement.addEventListener('webglcontextlost', (event) => {
+      event.preventDefault();
+      setError('WebGL 上下文已丢失，请刷新页面或启用浏览器硬件加速。');
+    });
     host.appendChild(renderer.domElement);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -118,6 +156,10 @@ export default function StlProcessPreview() {
     scene.add(grid);
 
     let disposed = false;
+    const initialVisibleIds = idsForDefault(manifest);
+    fitRef.current = () => {
+      fitMeshes(camera, controls, meshesRef.current);
+    };
     const loader = new STLLoader();
     Promise.all(manifest.components.map(async (component) => {
       const geometry = await loader.loadAsync(component.path);
@@ -131,14 +173,21 @@ export default function StlProcessPreview() {
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.visible = visibleIds.has(component.id);
+      mesh.visible = initialVisibleIds.has(component.id);
       mesh.userData.component = component;
       meshesRef.current.set(component.id, mesh);
       scene.add(mesh);
+      if (!disposed) setLoadedCount((count) => count + 1);
     })).then(() => {
-      if (!disposed) setLoading(false);
+      if (!disposed) {
+        fitMeshes(camera, controls, meshesRef.current);
+        setLoading(false);
+      }
     }).catch((reason: unknown) => {
-      if (!disposed) setError(`STL 加载失败：${String(reason)}`);
+      if (!disposed) {
+        setError(`STL 加载失败：${String(reason)}`);
+        setLoading(false);
+      }
     });
 
     const resize = () => {
@@ -169,6 +218,7 @@ export default function StlProcessPreview() {
         (mesh.material as THREE.Material).dispose();
       });
       meshesRef.current.clear();
+      fitRef.current = () => undefined;
       renderer.dispose();
       renderer.domElement.remove();
     };
@@ -289,6 +339,9 @@ export default function StlProcessPreview() {
           <button type="button" style={BUTTON} onClick={() => setSectioned((value) => !value)}>
             {sectioned ? '取消剖切' : 'X=0 剖切'}
           </button>
+          <button type="button" style={BUTTON} onClick={() => fitRef.current()}>
+            适配模型
+          </button>
         </div>
 
         <h3 style={{ fontSize: 14, marginBottom: 7 }}>特写</h3>
@@ -300,9 +353,29 @@ export default function StlProcessPreview() {
           ))}
         </div>
         {error && <p style={{ color: '#fca5a5', fontSize: 12 }}>{error}</p>}
-        {loading && <p style={{ color: '#93c5fd', fontSize: 12 }}>正在加载 STL…</p>}
       </aside>
-      <div ref={hostRef} style={{ flex: 1, minWidth: 0, position: 'relative' }} />
+      <div style={{ flex: 1, minWidth: 0, position: 'relative' }}>
+        <div ref={hostRef} style={{ position: 'absolute', inset: 0 }} />
+        {(loading || error) && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              zIndex: 2,
+              maxWidth: 420,
+              padding: '9px 12px',
+              borderRadius: 7,
+              border: `1px solid ${error ? '#7f1d1d' : '#1d4ed8'}`,
+              background: error ? '#2a1515ee' : '#172554ee',
+              color: error ? '#fca5a5' : '#bfdbfe',
+              fontSize: 12,
+            }}
+          >
+            {error || `正在加载 STL：${loadedCount}/${manifest?.components.length ?? 0}`}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
