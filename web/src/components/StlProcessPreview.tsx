@@ -43,6 +43,7 @@ const EXPLODE_Z: Record<string, number> = {
   fasteners_back: -4,
   fasteners_through: 0,
   fasteners_blade: 0,
+  silicone_plugs: 0,
 };
 //#endregion
 
@@ -270,10 +271,11 @@ export default function StlProcessPreview() {
     meshesRef.current.forEach((mesh, id) => {
       const requested = visibleIds.has(id) || overlays.has(id);
       const kind = mesh.userData.component?.kind as string | undefined;
-      mesh.visible = requested && (kind !== 'fastener' || showFasteners);
+      const fastenerAccessory = kind === 'fastener' || kind === 'plug';
+      mesh.visible = requested && (!fastenerAccessory || showFasteners);
       mesh.position.z = exploded ? (EXPLODE_Z[id] ?? 0) : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      material.opacity = kind === 'fastener'
+      material.opacity = fastenerAccessory
         ? 1
         : kind === 'interference'
           ? (internalStudy ? 0.38 : 0.82)
@@ -283,6 +285,11 @@ export default function StlProcessPreview() {
         material.roughness = 0.28;
         material.emissive.setHex(0x263445);
         material.emissiveIntensity = 0.55;
+      } else if (kind === 'plug') {
+        material.metalness = 0;
+        material.roughness = 0.92;
+        material.emissive.setHex(0x000000);
+        material.emissiveIntensity = 0;
       } else {
         material.emissive.setHex(0x000000);
         material.emissiveIntensity = 0;
@@ -290,7 +297,7 @@ export default function StlProcessPreview() {
       material.depthWrite = material.opacity >= 1;
       material.clippingPlanes = clipping;
       material.needsUpdate = true;
-      mesh.renderOrder = kind === 'fastener' ? 2 : kind === 'interference' ? 1 : 0;
+      mesh.renderOrder = fastenerAccessory ? 2 : kind === 'interference' ? 1 : 0;
     });
   }, [activeId, exploded, sectioned, showFasteners, transparent, visibleIds, manifest]);
 

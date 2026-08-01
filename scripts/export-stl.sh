@@ -236,6 +236,7 @@ export_part m6_fasteners_front "$OUT/preview/fasteners_front.stl"
 export_part m6_fasteners_back "$OUT/preview/fasteners_back.stl"
 export_part m6_fasteners_through "$OUT/preview/fasteners_through.stl"
 export_part m6_fasteners_blade "$OUT/preview/fasteners_blade.stl"
+export_part m6_silicone_plugs "$OUT/preview/silicone_plugs.stl"
 
 echo ""
 echo "→ 导出工程推演预览体（非打印件）…"

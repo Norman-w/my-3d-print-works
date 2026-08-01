@@ -28,6 +28,7 @@ PARTS = [
     ("fasteners_back", "拍柄侧边第3层→第4层螺丝", "preview/fasteners_back.stl", "#aeb8c6", "fastener"),
     ("fasteners_through", "拍柄中轴第1层→第4层贯穿螺丝", "preview/fasteners_through.stl", "#d1fae5", "fastener"),
     ("fasteners_blade", "拍面第2层→第3层沉头螺丝", "preview/fasteners_blade.stl", "#f8fafc", "fastener"),
+    ("silicone_plugs", "拍柄中轴M2硅胶盖", "preview/silicone_plugs.stl", "#111827", "plug"),
     ("assembly", "M6 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
     ("exploded", "M6 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
     ("tail", "M6 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
@@ -58,7 +59,8 @@ def main() -> int:
         return [ident for ident in ids if ident in available]
 
     fastener_overlays = present(
-        "fasteners_front", "fasteners_back", "fasteners_through", "fasteners_blade"
+        "fasteners_front", "fasteners_back", "fasteners_through", "fasteners_blade",
+        "silicone_plugs"
     )
 
     manifest = {

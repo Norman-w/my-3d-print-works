@@ -1155,7 +1155,7 @@ function m6_handle_back_engagement(p) =
         half_z_at(p[1]) - m6_core_half_t - m6_handle_back_skin_min));
 
 function m6_handle_through_screw_length(p) =
-    2 * half_z_at(p[1]) - m6_handle_back_skin_min;
+    2 * half_z_at(p[1]) - plug_recess_depth - m6_handle_back_skin_min;
 
 // 侧边阵列：从第 2/3 层贴合面分别向第 1/4 层安装短沉头螺丝。
 module m6_core_outward_screw_channels(positions) {
@@ -1191,17 +1191,21 @@ module m6_handle_through_screw_channels(positions = m6_handle_through_screw_posi
     for (p = positions) {
         hz = half_z_at(p[1]);
         engagement = m6_handle_back_engagement(p);
+        head_top = hz - plug_recess_depth;
         translate([p[0], p[1], -m6_core_half_t - eps])
             cylinder(
                 d = screw_d_clearance,
-                h = hz - screw_head_h + m6_core_half_t + 2 * eps
+                h = head_top - screw_head_h + m6_core_half_t + 2 * eps
             );
-        translate([p[0], p[1], hz - screw_head_h])
+        translate([p[0], p[1], head_top - screw_head_h])
             cylinder(
                 d1 = screw_d_clearance,
                 d2 = screw_head_d,
                 h = screw_head_h + eps
             );
+        // 硅胶盖凹位位于沉头之上，盖面装好后与拍柄外表面齐平。
+        translate([p[0], p[1], head_top])
+            cylinder(d = plug_recess_d, h = plug_recess_depth + eps);
         translate([p[0], p[1], -m6_core_half_t - engagement])
             cylinder(d = screw_d_pilot, h = engagement + 2 * eps);
     }
@@ -1451,14 +1455,24 @@ module m6_through_fasteners() {
         hz = half_z_at(p[1]);
         screw_l = m6_handle_through_screw_length(p);
         shank_h = screw_l - screw_head_h;
+        head_top = hz - plug_recess_depth;
         color([0.78, 0.81, 0.84]) union() {
-            translate([p[0], p[1], hz - screw_l])
+            translate([p[0], p[1], head_top - screw_l])
                 cylinder(d = screw_d_nominal, h = shank_h + eps);
-            translate([p[0], p[1], hz - screw_head_h])
+            translate([p[0], p[1], head_top - screw_head_h])
                 cylinder(d1 = screw_d_nominal,
                     d2 = screw_head_d,
                     h = screw_head_h);
         }
+    }
+}
+
+module m6_silicone_plugs() {
+    for (p = m6_handle_through_screw_positions()) {
+        hz = half_z_at(p[1]);
+        color([0.08, 0.10, 0.12])
+            translate([p[0], p[1], hz - plug_recess_depth])
+                cylinder(d = plug_recess_d - 0.15, h = plug_recess_depth);
     }
 }
 
@@ -1533,6 +1547,8 @@ if (HALF == "m6_core_front") {
     m6_through_fasteners();
 } else if (HALF == "m6_fasteners_blade") {
     m6_blade_fasteners();
+} else if (HALF == "m6_silicone_plugs") {
+    m6_silicone_plugs();
 } else if (HALF == "m6_stage_planform") {
     m6_stage_planform();
 } else if (HALF == "m6_stage_handle_envelope") {
