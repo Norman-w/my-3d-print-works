@@ -1146,7 +1146,14 @@ module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions(
         translate([p[0], p[1], m6_core_half_t - eps])
             cylinder(
                 d = m6_handle_screw_access_d,
-                h = hz - m6_core_half_t + 2 * eps
+                h = max(0, hz - m6_core_half_t - m6_handle_access_chamfer_h) + 2 * eps
+            );
+        // 恢复外表面的锥形沉头入口，避免导出后退化成无特征直筒孔。
+        translate([p[0], p[1], hz - m6_handle_access_chamfer_h])
+            cylinder(
+                d1 = m6_handle_screw_access_d,
+                d2 = m6_handle_access_chamfer_d,
+                h = m6_handle_access_chamfer_h + eps
             );
     }
 }

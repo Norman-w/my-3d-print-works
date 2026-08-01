@@ -66,16 +66,19 @@ function fitMeshes(
   });
   if (box.isEmpty()) return;
   const center = box.getCenter(new THREE.Vector3());
-  const size = box.getSize(new THREE.Vector3());
-  const radius = Math.max(size.x, size.y, size.z, 1) * 0.72;
+  const sphere = box.getBoundingSphere(new THREE.Sphere());
+  const radius = Math.max(sphere.radius, 1);
+  const verticalFov = THREE.MathUtils.degToRad(camera.fov);
+  const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect);
+  const limitingFov = Math.max(Math.min(verticalFov, horizontalFov), 0.01);
+  const distance = radius / Math.sin(limitingFov / 2) * 1.08;
+  const direction = camera.position.clone().sub(controls.target);
+  if (direction.lengthSq() < 0.001) direction.set(1, -1.2, 0.8);
+  direction.normalize();
   controls.target.copy(center);
-  camera.position.set(
-    center.x + radius * 1.15,
-    center.y - radius * 1.35,
-    center.z + radius * 0.85,
-  );
-  camera.near = Math.max(0.05, radius / 200);
-  camera.far = Math.max(3000, radius * 30);
+  camera.position.copy(center).addScaledVector(direction, distance);
+  camera.near = Math.max(0.05, distance - radius * 1.5);
+  camera.far = Math.max(3000, distance + radius * 4);
   camera.updateProjectionMatrix();
   controls.update();
 }
@@ -140,8 +143,11 @@ export default function StlProcessPreview() {
     host.appendChild(renderer.domElement);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.zoomToCursor = false;
+    controls.screenSpacePanning = true;
     controlsRef.current = controls;
-    const initialPreset = cameraById(manifest, 'full_paddle')
+    const initialPreset = cameraById(manifest, manifest.processSteps[0]?.camera)
       ?? manifest.cameraPresets[0];
     if (initialPreset) {
       controls.target.set(...initialPreset.target);
@@ -183,18 +189,21 @@ export default function StlProcessPreview() {
       scene.add(mesh);
       if (!disposed) {
         setLoadedCount((count) => count + 1);
-        if (visibleIdsRef.current.has(component.id)) {
-          requestAnimationFrame(() => {
-            if (!disposed) fitMeshes(camera, controls, meshesRef.current);
-          });
-        }
       }
     })).then(() => {
       if (!disposed) {
         meshesRef.current.forEach((mesh, id) => {
           mesh.visible = visibleIdsRef.current.has(id);
         });
-        fitMeshes(camera, controls, meshesRef.current);
+        if (initialPreset) {
+          controls.target.set(...initialPreset.target);
+          camera.position.set(...initialPreset.position);
+          camera.lookAt(controls.target);
+          controls.update();
+          controls.saveState();
+        } else {
+          fitMeshes(camera, controls, meshesRef.current);
+        }
         setLoading(false);
       }
     }).catch((reason: unknown) => {
@@ -208,6 +217,9 @@ export default function StlProcessPreview() {
       const width = Math.max(host.clientWidth, 1);
       const height = Math.max(host.clientHeight, 1);
       renderer.setSize(width, height, false);
+      renderer.domElement.style.width = `${width}px`;
+      renderer.domElement.style.height = `${height}px`;
+      renderer.domElement.style.display = 'block';
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     };
@@ -270,7 +282,9 @@ export default function StlProcessPreview() {
     cameraRef.current.near = 0.1;
     cameraRef.current.far = 3000;
     cameraRef.current.updateProjectionMatrix();
+    cameraRef.current.lookAt(controlsRef.current.target);
     controlsRef.current.update();
+    controlsRef.current.saveState();
   };
 
   const selectView = (view: ProcessView) => {

@@ -228,6 +228,10 @@ m6_handle_screw_pilot     = m6_handle_screw_d * 0.75;
 m6_handle_screw_head_d    = m6_handle_screw_d * 1.90;
 m6_handle_screw_head_h    = m6_handle_screw_d * 0.60;
 m6_handle_screw_access_d  = m6_handle_screw_head_d + 0.40;
+// 外贴层入口保留上一版可辨识的沉头轮廓；下方直孔仍只是批头通道，
+// 实际短螺丝头坐落在正面主承力层，不改变反面剩余壁厚。
+m6_handle_access_chamfer_h = 0.80;
+m6_handle_access_chamfer_d = m6_handle_screw_access_d + 1.60;
 m6_handle_boss_d          =
     m6_handle_screw_d + 2 * min(1.40, m6_handle_wall_t - 0.5);
 m6_handle_back_skin_min   = 0.80; // 螺丝尖端与反面外表面间的安全余量
