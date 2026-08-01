@@ -88,6 +88,7 @@ export default function StlProcessPreview() {
   const controlsRef = useRef<OrbitControls>();
   const meshesRef = useRef(new Map<string, THREE.Mesh>());
   const fitRef = useRef<() => void>(() => undefined);
+  const visibleIdsRef = useRef<Set<string>>(new Set());
   const [manifest, setManifest] = useState<ProcessPreviewManifest>();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -102,8 +103,10 @@ export default function StlProcessPreview() {
   useEffect(() => {
     loadProcessManifest()
       .then((next) => {
+        const initialIds = idsForDefault(next);
+        visibleIdsRef.current = initialIds;
         setManifest(next);
-        setVisibleIds(idsForDefault(next));
+        setVisibleIds(initialIds);
         setActiveId(next.processSteps[0]?.id ?? '');
       })
       .catch((reason: unknown) => {
@@ -156,7 +159,6 @@ export default function StlProcessPreview() {
     scene.add(grid);
 
     let disposed = false;
-    const initialVisibleIds = idsForDefault(manifest);
     fitRef.current = () => {
       fitMeshes(camera, controls, meshesRef.current);
     };
@@ -173,13 +175,16 @@ export default function StlProcessPreview() {
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.visible = initialVisibleIds.has(component.id);
+      mesh.visible = visibleIdsRef.current.has(component.id);
       mesh.userData.component = component;
       meshesRef.current.set(component.id, mesh);
       scene.add(mesh);
       if (!disposed) setLoadedCount((count) => count + 1);
     })).then(() => {
       if (!disposed) {
+        meshesRef.current.forEach((mesh, id) => {
+          mesh.visible = visibleIdsRef.current.has(id);
+        });
         fitMeshes(camera, controls, meshesRef.current);
         setLoading(false);
       }
@@ -225,6 +230,7 @@ export default function StlProcessPreview() {
   }, [manifest]);
 
   useEffect(() => {
+    visibleIdsRef.current = visibleIds;
     const clipping = sectioned
       ? [new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)]
       : [];
