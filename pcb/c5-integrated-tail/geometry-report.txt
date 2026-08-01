@@ -1,0 +1,14 @@
+SmartPaddle C5 integrated-tail geometry report
+STATUS: MECHANICAL DRAFT / NOT FOR FABRICATION / NOT ASSEMBLY TESTED
+
+Existing C4 tail join Y: 90.00 mm
+Proposed PCB tail Y:      167.10 mm
+Added board length:       77.10 mm
+Battery window:           14.80 x 51.00 mm, R1.50
+Window Y range:           94.50 .. 145.50 mm
+Minimum calculated rail:  1.65 mm at Y=108.50 mm
+Tail component platform:  21.60 mm long
+
+The last portion of the PCB requires a new shell pocket. The current shell
+cavity stops before the butt wall. Final dimensions require the purchased cell
+and USB-C connector samples.
