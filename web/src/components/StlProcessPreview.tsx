@@ -41,6 +41,8 @@ const EXPLODE_Z: Record<string, number> = {
   skin_back: -12,
   fasteners_front: 4,
   fasteners_back: -4,
+  fasteners_through: 0,
+  fasteners_blade: 0,
 };
 //#endregion
 

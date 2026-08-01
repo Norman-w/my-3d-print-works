@@ -24,8 +24,10 @@ PARTS = [
     ("skin_back", "第4层·拍柄背面外贴", "paddle_m6_layer4_handle_skin_back.stl", "#1d4ed8", "skin"),
     ("monolithic_front", "正面无缝合体打印件", "paddle_m6_monolithic_front.stl", "#f59e0b", "monolithic"),
     ("monolithic_back", "背面无缝合体打印件", "paddle_m6_monolithic_back.stl", "#d97706", "monolithic"),
-    ("fasteners_front", "拍柄第1层→第4层贯穿沉头螺丝", "preview/fasteners_front.stl", "#e5e7eb", "fastener"),
-    ("fasteners_back", "拍面第2层→第3层沉头螺丝", "preview/fasteners_back.stl", "#aeb8c6", "fastener"),
+    ("fasteners_front", "拍柄侧边第2层→第1层螺丝", "preview/fasteners_front.stl", "#e5e7eb", "fastener"),
+    ("fasteners_back", "拍柄侧边第3层→第4层螺丝", "preview/fasteners_back.stl", "#aeb8c6", "fastener"),
+    ("fasteners_through", "拍柄中轴第1层→第4层贯穿螺丝", "preview/fasteners_through.stl", "#d1fae5", "fastener"),
+    ("fasteners_blade", "拍面第2层→第3层沉头螺丝", "preview/fasteners_blade.stl", "#f8fafc", "fastener"),
     ("assembly", "M6 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
     ("exploded", "M6 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
     ("tail", "M6 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
@@ -55,7 +57,9 @@ def main() -> int:
     def present(*ids: str) -> list[str]:
         return [ident for ident in ids if ident in available]
 
-    fastener_overlays = present("fasteners_front", "fasteners_back")
+    fastener_overlays = present(
+        "fasteners_front", "fasteners_back", "fasteners_through", "fasteners_blade"
+    )
 
     manifest = {
         "schemaVersion": 1,
@@ -103,8 +107,8 @@ def main() -> int:
             },
             {
                 "id": "handle_fasteners",
-                "label": "06 紧固闭环：拍柄1→4 / 拍面2→3",
-                "description": "拍柄由第 1 层外表面贯穿并攻入第 4 层；拍面由第 2 层正面沉头并攻入第 3 层。",
+                "label": "06 紧固闭环：侧边2→1/3→4 · 中轴1→4",
+                "description": "侧边阵列从第 2/3 层向外攻丝，中轴三孔从第 1 层贯穿到第 4 层；拍面由第 2 层攻入第 3 层。",
                 "components": present("skin_front", "core_front", "core_back", "skin_back"),
                 "overlays": fastener_overlays,
                 "camera": "handle_fasteners",
