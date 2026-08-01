@@ -238,6 +238,7 @@ m6_handle_screw_station_count = 4; // 每个面沿长度方向的左右成对站
 m6_handle_screw_top_clearance = 10; // 距头柄接合线的净距
 m6_handle_screw_bottom_clearance = 8; // 距拍柄尾端的净距
 m6_handle_screw_tail_edge_clearance = 2.8; // 尾端加强站中心距尾边；X 仍取内外贝塞尔中线
+m6_handle_screw_tail_inset = 1.5; // 尾端加强站相对贝塞尔中线向拍柄中心内收
 
 // ---- 分打拍柄：朝拍头端 U 型插口（仅 handle_* 零件） ----
 // 拍柄合模后朝拍头一侧原先四周严丝合缝，拍面颈部插不进。

@@ -279,6 +279,7 @@ def parse_params(path: Path) -> dict[str, float]:
         "m6_handle_screw_top_clearance",
         "m6_handle_screw_bottom_clearance",
         "m6_handle_screw_tail_edge_clearance",
+        "m6_handle_screw_tail_inset",
     ]
     out: dict[str, float] = {}
     for k in keys:
@@ -310,6 +311,7 @@ def m6_screw_positions_on_midcurve(
     top_clearance: float,
     bottom_clearance: float,
     tail_edge_clearance: float,
+    tail_inset: float,
 ) -> list[tuple[float, float]]:
     """等弧长排布常规站，并在尾边增加一个由同一中线推导的加强站。"""
     bottom_y = y0 + bottom_clearance
@@ -341,7 +343,7 @@ def m6_screw_positions_on_midcurve(
     tail_y = y0 + tail_edge_clearance
     tail_outer_x = half_width_at_y(handle, tail_y)
     tail_inner_x = max(tail_outer_x - cavity_margin, 0.5)
-    tail_x = (tail_outer_x + tail_inner_x) / 2
+    tail_x = max((tail_outer_x + tail_inner_x) / 2 - tail_inset, 0.5)
     stations = [(tail_x, tail_y), *right]
     return [point for x, y in stations for point in ((-x, y), (x, y))]
 
@@ -505,6 +507,7 @@ def main() -> int:
         p["m6_handle_screw_top_clearance"],
         p["m6_handle_screw_bottom_clearance"],
         p["m6_handle_screw_tail_edge_clearance"],
+        p["m6_handle_screw_tail_inset"],
     )
     write_scad(blade_poly, handle_slices, blade_core_t, join_y, cavity_margin, json_path)
 
