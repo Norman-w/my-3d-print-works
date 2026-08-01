@@ -339,7 +339,7 @@ def main() -> int:
     assembly_order = ("skin_front", "core_front", "core_back", "skin_back")
     fasteners = _load_stl(fasteners_path)
     assembly = trimesh.util.concatenate(
-        [cut_parts[name] for name in assembly_order] + [fasteners]
+        [cut_parts[name] for name in assembly_order]
     )
     _export(assembly, STL / "paddle_m6_assembly.stl")
 
@@ -348,7 +348,6 @@ def main() -> int:
         mesh = cut_parts[name].copy()
         mesh.apply_translation([0.0, 0.0, dz])
         exploded_parts.append(mesh)
-    exploded_parts.append(fasteners)
     _export(trimesh.util.concatenate(exploded_parts), STL / "paddle_m6_exploded.stl")
 
     butt_y = float(info.get("butt_y", BUTT_Y))

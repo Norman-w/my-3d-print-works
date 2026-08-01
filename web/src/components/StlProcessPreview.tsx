@@ -39,6 +39,8 @@ const EXPLODE_Z: Record<string, number> = {
   core_front: 4,
   core_back: -4,
   skin_back: -12,
+  fasteners_front: 4,
+  fasteners_back: -4,
 };
 //#endregion
 
@@ -102,6 +104,7 @@ export default function StlProcessPreview() {
   const [transparent, setTransparent] = useState(false);
   const [exploded, setExploded] = useState(false);
   const [sectioned, setSectioned] = useState(false);
+  const [showFasteners, setShowFasteners] = useState(true);
 
   useEffect(() => {
     loadProcessManifest()
@@ -252,21 +255,41 @@ export default function StlProcessPreview() {
 
   useEffect(() => {
     visibleIdsRef.current = visibleIds;
+    const activeView = manifest
+      ? [...manifest.processSteps, ...manifest.processTypes].find((view) => view.id === activeId)
+      : undefined;
+    const overlays = new Set(activeView?.overlays ?? []);
+    const internalStudy = activeId === 'hollowing';
+    const fastenerStudy = activeId === 'handle_fasteners';
     const clipping = sectioned
       ? [new THREE.Plane(new THREE.Vector3(1, 0, 0), 0)]
       : [];
     meshesRef.current.forEach((mesh, id) => {
-      mesh.visible = visibleIds.has(id);
+      const requested = visibleIds.has(id) || overlays.has(id);
+      const kind = mesh.userData.component?.kind as string | undefined;
+      mesh.visible = requested && (kind !== 'fastener' || showFasteners);
       mesh.position.z = exploded ? (EXPLODE_Z[id] ?? 0) : 0;
       const material = mesh.material as THREE.MeshStandardMaterial;
-      const kind = mesh.userData.component?.kind as string | undefined;
-      material.opacity = kind === 'interference'
-        ? 0.82
-        : transparent ? 0.28 : 1;
+      material.opacity = kind === 'fastener'
+        ? 1
+        : kind === 'interference'
+          ? (internalStudy ? 0.38 : 0.82)
+          : (transparent || internalStudy || fastenerStudy) ? 0.22 : 1;
+      if (kind === 'fastener') {
+        material.metalness = 0.5;
+        material.roughness = 0.28;
+        material.emissive.setHex(0x263445);
+        material.emissiveIntensity = 0.55;
+      } else {
+        material.emissive.setHex(0x000000);
+        material.emissiveIntensity = 0;
+      }
+      material.depthWrite = material.opacity >= 1;
       material.clippingPlanes = clipping;
       material.needsUpdate = true;
+      mesh.renderOrder = kind === 'fastener' ? 2 : kind === 'interference' ? 1 : 0;
     });
-  }, [exploded, sectioned, transparent, visibleIds, manifest]);
+  }, [activeId, exploded, sectioned, showFasteners, transparent, visibleIds, manifest]);
 
   const views = useMemo<ProcessView[]>(() => {
     if (!manifest) return [];
@@ -291,6 +314,7 @@ export default function StlProcessPreview() {
     setActiveId(view.id);
     setVisibleIds(new Set(view.components));
     setExploded(view.id === 'four_layers');
+    setSectioned(view.id === 'hollowing');
     if (manifest) applyCamera(cameraById(manifest, view.camera));
   };
 
@@ -336,7 +360,12 @@ export default function StlProcessPreview() {
                 style={{ ...BUTTON, borderColor: activeId === view.id ? '#60a5fa' : '#374151' }}
                 onClick={() => selectView(view)}
               >
-                {view.label}
+                <div>{view.label}</div>
+                {view.description && (
+                  <div style={{ marginTop: 3, color: '#94a3b8', fontSize: 11, lineHeight: 1.35 }}>
+                    {view.description}
+                  </div>
+                )}
               </button>
             ))}
           </div>
@@ -370,6 +399,13 @@ export default function StlProcessPreview() {
           </button>
           <button type="button" style={BUTTON} onClick={() => fitRef.current()}>
             适配模型
+          </button>
+          <button
+            type="button"
+            style={{ ...BUTTON, borderColor: showFasteners ? '#60a5fa' : '#374151' }}
+            onClick={() => setShowFasteners((value) => !value)}
+          >
+            {showFasteners ? '隐藏螺丝' : '显示螺丝'}
           </button>
         </div>
 

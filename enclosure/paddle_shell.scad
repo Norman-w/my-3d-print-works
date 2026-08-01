@@ -1065,8 +1065,42 @@ module m6_full_planform_prism() {
         m6_full_planform_2d();
 }
 
+// ═══ 工程推演预览体（非打印件） ═══
+// 这些实体把最终模型的设计依据拆开，供“按步骤”模式解释实际建模思路。
+module m6_stage_planform() {
+    linear_extrude(height = 0.8, center = true)
+        m6_full_planform_2d();
+}
+
+module m6_stage_handle_envelope() {
+    union() {
+        bezier_handle_half(true);
+        bezier_handle_half(false);
+    }
+}
+
+module m6_stage_continuous_blank() {
+    union() {
+        m6_core_blank(true);
+        m6_core_blank(false);
+    }
+}
+
+module m6_stage_voids() {
+    intersection() {
+        union() {
+            handle_cavity();
+            rigid_pcb_cavity(front = true);
+            rigid_pcb_cavity(front = false);
+            pcb_main_cavity(front = true);
+            pcb_main_cavity(front = false);
+        }
+        m6_full_planform_prism();
+    }
+}
+
 // M6 最终装配是 Z=0 分型的正/反两个大件，不再在第 2/3 层间使用榫槽。
-// 拍柄螺丝从正面沉入、贯穿正面大件，并自攻咬合反面大件。
+// 四层螺丝从中间向外安装：第 2 层攻入第 1 层，第 3 层攻入第 4 层。
 m6_tail_screw_y = max(actual_butt_y + 12.5, tail_if_pcb_y + 6.5);
 m6_tail_screw_x = envelope_hx(m6_tail_screw_y) - m6_handle_boss_d / 2 - 0.5;
 m6_tail_screw_positions = [
@@ -1074,30 +1108,30 @@ m6_tail_screw_positions = [
     [ m6_tail_screw_x, m6_tail_screw_y],
 ];
 
-function m6_existing_handle_screw_positions() = [
-    for (p = screw_positions)
-        if (screw_in_handle(p) && !screw_throughs_pcb(p)) p
+function m6_side_screw_x(y) =
+    envelope_hx(y) - m6_handle_boss_d / 2 - 0.6;
+
+function m6_move_screw_to_side(p) = [
+    (p[0] < 0 ? -1 : 1) * m6_side_screw_x(p[1]),
+    p[1]
 ];
+
+// 旧 y=-160 内侧螺丝与尾端抗变形螺丝过近，删除这组重复紧固点。
+function m6_existing_handle_screw_positions() = [];
 
 function m6_extra_handle_screw_positions() =
-    concat(m6_handle_mid_screw_positions, m6_tail_screw_positions);
+    m6_tail_screw_positions;
 
 function m6_all_handle_screw_positions() =
-    concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
-
-function m6_blade_screw_positions() = [
-    for (p = screw_positions)
-        if (screw_in_blade(p)) p
-];
-
-function m6_all_split_screw_positions() =
-    concat(m6_blade_screw_positions(), m6_all_handle_screw_positions());
+    USE_BEZIER_PROFILES
+        ? BEZIER_M6_SCREW_POSITIONS
+        : concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
 
 function m6_safe_screw_lengths() = [
     for (l = m6_handle_screw_lengths)
         if (
             l >= m6_core_half_t + m6_handle_engagement_min
-            && l <= 2 * m6_core_half_t - m6_handle_back_skin_min
+            && l <= m6_core_half_t + m6_handle_engagement_max
         ) l
 ];
 
@@ -1106,60 +1140,40 @@ function m6_split_screw_length() =
         ? min(m6_safe_screw_lengths())
         : max(2, floor(2 * m6_core_half_t - m6_handle_back_skin_min));
 
-function m6_screw_back_engagement() =
+function m6_screw_outer_engagement() =
     m6_split_screw_length() - m6_core_half_t;
 
-function m6_screw_tip_z() =
-    m6_core_half_t - m6_split_screw_length();
-
-function m6_screw_breakthrough() =
-    max(0, -m6_core_half_t - m6_screw_tip_z());
-
-module m6_core_front_screw_channels(positions) {
+// 第 2 层：螺丝从 Z=0 中间贴合面朝 Z+ 穿出，并攻入第 1 层。
+module m6_core_outward_screw_channels(positions) {
     for (p = positions) {
-        translate([p[0], p[1], -eps])
+        translate([p[0], p[1], m6_handle_screw_head_h - eps])
             cylinder(
                 d = m6_handle_screw_clearance,
-                h = m6_core_half_t - m6_handle_screw_head_h + eps
+                h = m6_core_half_t - m6_handle_screw_head_h + 2 * eps
             );
-        translate([p[0], p[1], m6_core_half_t - m6_handle_screw_head_h])
+        translate([p[0], p[1], -eps])
             cylinder(
-                d1 = m6_handle_screw_clearance,
-                d2 = m6_handle_screw_head_d,
+                d1 = m6_handle_screw_head_d,
+                d2 = m6_handle_screw_clearance,
                 h = m6_handle_screw_head_h + eps
             );
     }
 }
 
-module m6_core_back_screw_channels(positions) {
-    engagement = m6_screw_back_engagement();
+module m6_outer_skin_pilot_channels(positions) {
+    engagement = m6_screw_outer_engagement();
     for (p = positions)
-        translate([p[0], p[1], -engagement])
+        translate([p[0], p[1], m6_core_half_t - eps])
             cylinder(d = m6_handle_screw_pilot, h = engagement + eps);
 }
 
 module m6_handle_front_screw_channels(positions = m6_all_handle_screw_positions()) {
-    m6_core_front_screw_channels(positions);
-    for (p = positions) {
-        hz = half_z_at(p[1]);
-        // 深孔只提供批头通道；沉头实际坐落在 Z=+3 主承力层表面。
-        translate([p[0], p[1], m6_core_half_t - eps])
-            cylinder(
-                d = m6_handle_screw_access_d,
-                h = max(0, hz - m6_core_half_t - m6_handle_access_chamfer_h) + 2 * eps
-            );
-        // 恢复外表面的锥形沉头入口，避免导出后退化成无特征直筒孔。
-        translate([p[0], p[1], hz - m6_handle_access_chamfer_h])
-            cylinder(
-                d1 = m6_handle_screw_access_d,
-                d2 = m6_handle_access_chamfer_d,
-                h = m6_handle_access_chamfer_h + eps
-            );
-    }
+    m6_core_outward_screw_channels(positions);
+    m6_outer_skin_pilot_channels(positions);
 }
 
 module m6_handle_back_screw_channels(positions = m6_all_handle_screw_positions()) {
-    m6_core_back_screw_channels(positions);
+    mirror([0, 0, 1]) m6_handle_front_screw_channels(positions);
 }
 
 module m6_handle_screw_bosses(front = true) {
@@ -1189,6 +1203,27 @@ module m6_handle_screw_bosses(front = true) {
     }
 }
 
+module m6_core_screw_supports(front = true) {
+    intersection() {
+        m6_core_blank(front);
+        union() {
+            for (p = m6_all_handle_screw_positions()) {
+                x = p[0];
+                y = p[1];
+                side = x < 0 ? -1 : 1;
+                // 把腔内柱用窄桥接到最近侧壁；否则柱只是切片中的独立孤岛。
+                anchor_x = side * (envelope_hx(y) - m6_handle_wall_t / 2);
+            hull() {
+                translate([x, y, front ? 0 : -m6_core_half_t])
+                    cylinder(d = m6_handle_boss_d, h = m6_core_half_t);
+                translate([anchor_x, y, front ? 0 : -m6_core_half_t])
+                    cylinder(d = m6_handle_boss_d, h = m6_core_half_t);
+            }
+            }
+        }
+    }
+}
+
 module m6_core_blank(front = true) {
     translate([0, 0, front ? 0 : -m6_core_half_t])
         linear_extrude(height = m6_core_half_t)
@@ -1197,28 +1232,34 @@ module m6_core_blank(front = true) {
 
 module m6_core_front() {
     difference() {
-        difference() {
-            m6_core_blank(true);
-            handle_cavity();
-            piezo_pockets(front = true);
-            rigid_pcb_cavity(front = true);
-            pcb_main_cavity(front = true);
+        union() {
+            difference() {
+                m6_core_blank(true);
+                handle_cavity();
+                piezo_pockets(front = true);
+                rigid_pcb_cavity(front = true);
+                pcb_main_cavity(front = true);
+            }
+            // 内腔挖空后补回第 2 层螺丝承力柱，否则螺丝会悬空。
+            m6_core_screw_supports(true);
         }
-        m6_core_front_screw_channels(m6_blade_screw_positions());
         m6_handle_front_screw_channels();
     }
 }
 
 module m6_core_back() {
     difference() {
-        difference() {
-            m6_core_blank(false);
-            handle_cavity();
-            piezo_pockets(front = false);
-            rigid_pcb_cavity(front = false);
-            pcb_main_cavity(front = false);
+        union() {
+            difference() {
+                m6_core_blank(false);
+                handle_cavity();
+                piezo_pockets(front = false);
+                rigid_pcb_cavity(front = false);
+                pcb_main_cavity(front = false);
+            }
+            // 第 3 层镜像承力柱，供螺丝穿过后向第 4 层攻丝。
+            m6_core_screw_supports(false);
         }
-        m6_core_back_screw_channels(m6_blade_screw_positions());
         m6_handle_back_screw_channels();
     }
 }
@@ -1283,26 +1324,31 @@ module m6_monolithic_back() {
     }
 }
 
-module m6_fasteners() {
+module m6_front_fasteners() {
     screw_l = m6_split_screw_length();
     shank_h = screw_l - m6_handle_screw_head_h;
-    for (p = m6_all_split_screw_positions()) {
+    for (p = m6_all_handle_screw_positions()) {
         color([0.72, 0.75, 0.78])
         union() {
-            translate([p[0], p[1], m6_core_half_t - screw_l])
+            translate([p[0], p[1], m6_handle_screw_head_h])
                 cylinder(d = m6_handle_screw_d, h = shank_h);
-            translate([
-                p[0],
-                p[1],
-                m6_core_half_t - m6_handle_screw_head_h
-            ])
+            translate([p[0], p[1], 0])
                 cylinder(
-                    d1 = m6_handle_screw_d,
-                    d2 = m6_handle_screw_head_d,
+                    d1 = m6_handle_screw_head_d,
+                    d2 = m6_handle_screw_d,
                     h = m6_handle_screw_head_h
                 );
         }
     }
+}
+
+module m6_back_fasteners() {
+    mirror([0, 0, 1]) m6_front_fasteners();
+}
+
+module m6_fasteners() {
+    m6_front_fasteners();
+    m6_back_fasteners();
 }
 
 module m6_assembly() {
@@ -1310,7 +1356,6 @@ module m6_assembly() {
     color([0.85, 0.20, 0.18]) m6_core_front();
     color([0.45, 0.08, 0.06]) m6_core_back();
     color([0.08, 0.25, 0.55, 0.80]) m6_handle_skin_back();
-    m6_fasteners();
 }
 
 module m6_exploded() {
@@ -1318,7 +1363,6 @@ module m6_exploded() {
     translate([0, 0, 4]) m6_core_front();
     translate([0, 0, -4]) m6_core_back();
     translate([0, 0, -12]) m6_handle_skin_back();
-    m6_fasteners();
 }
 
 // ═══ 渲染 ═══
@@ -1347,6 +1391,18 @@ if (HALF == "m6_core_front") {
     m6_exploded();
 } else if (HALF == "m6_fasteners") {
     m6_fasteners();
+} else if (HALF == "m6_fasteners_front") {
+    m6_front_fasteners();
+} else if (HALF == "m6_fasteners_back") {
+    m6_back_fasteners();
+} else if (HALF == "m6_stage_planform") {
+    m6_stage_planform();
+} else if (HALF == "m6_stage_handle_envelope") {
+    m6_stage_handle_envelope();
+} else if (HALF == "m6_stage_continuous_blank") {
+    m6_stage_continuous_blank();
+} else if (HALF == "m6_stage_voids") {
+    m6_stage_voids();
 } else {
     echo(str("Unknown M6 HALF: ", HALF));
 }
@@ -1366,18 +1422,14 @@ echo(str(
     " countersunk self-tapping stainless"
 ));
 echo(str(
-    "M6 back engagement: ", m6_screw_back_engagement(),
-    "mm; remaining back skin: ",
-    m6_core_half_t + m6_screw_tip_z(),
-    "mm; breakthrough: ", m6_screw_breakthrough(), "mm"
+    "M6 outward engagement per side: ", m6_screw_outer_engagement(),
+    "mm (layer 2→1 and layer 3→4)"
 ));
 for (l = [5, 6, 7])
     echo(str(
         "M", m6_handle_screw_d, "×", l, ": ",
         l < m6_core_half_t + m6_handle_engagement_min ? "engagement too short" :
-        l > 2 * m6_core_half_t
-            ? str("breakthrough ", l - 2 * m6_core_half_t, "mm") :
-        l > 2 * m6_core_half_t - m6_handle_back_skin_min
-            ? str("unsafe back skin ", 2 * m6_core_half_t - l, "mm")
+        l > m6_core_half_t + m6_handle_engagement_max
+            ? str("outer engagement too deep: ", l - m6_core_half_t, "mm")
             : "safe"
     ));

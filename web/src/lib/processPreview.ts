@@ -11,7 +11,9 @@ export interface ProcessComponent {
 export interface ProcessView {
   id: string;
   label: string;
+  description?: string;
   components: string[];
+  overlays?: string[];
   camera?: string;
 }
 

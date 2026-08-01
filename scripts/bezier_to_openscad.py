@@ -275,6 +275,9 @@ def parse_params(path: Path) -> dict[str, float]:
         "blade_tip_y",
         "wall_t",
         "handle_cavity_inset",
+        "m6_handle_screw_station_count",
+        "m6_handle_screw_top_clearance",
+        "m6_handle_screw_bottom_clearance",
     ]
     out: dict[str, float] = {}
     for k in keys:
@@ -295,6 +298,45 @@ def fmt_num(v: float) -> str:
 
 def fmt_poly(poly: list[tuple[float, float]]) -> str:
     return "[" + ", ".join(fmt_pt(x, y) for x, y in poly) + "]"
+
+
+def m6_screw_positions_on_midcurve(
+    handle: dict[str, Any],
+    y0: float,
+    join_y: float,
+    cavity_margin: float,
+    count: int,
+    top_clearance: float,
+    bottom_clearance: float,
+) -> list[tuple[float, float]]:
+    """等弧长采样外贝塞尔与内腔偏置线之间的中线，并镜像成左右孔位。"""
+    bottom_y = y0 + bottom_clearance
+    top_y = join_y - top_clearance
+    if count < 1 or top_y <= bottom_y:
+        return []
+    samples: list[tuple[float, float]] = []
+    for i in range(241):
+        y = bottom_y + (top_y - bottom_y) * i / 240
+        outer_x = half_width_at_y(handle, y)
+        inner_x = max(outer_x - cavity_margin, 0.5)
+        samples.append(((outer_x + inner_x) / 2, y))
+    cumulative = [0.0]
+    for a, b in zip(samples, samples[1:]):
+        cumulative.append(cumulative[-1] + math.hypot(b[0] - a[0], b[1] - a[1]))
+    total = cumulative[-1]
+    right: list[tuple[float, float]] = []
+    for station in range(count):
+        target = total * (station / (count - 1) if count > 1 else 0.5)
+        j = next((i for i, value in enumerate(cumulative) if value >= target), len(samples) - 1)
+        if j == 0:
+            right.append(samples[0])
+            continue
+        span = cumulative[j] - cumulative[j - 1]
+        t = 0.0 if span <= 1e-9 else (target - cumulative[j - 1]) / span
+        ax, ay = samples[j - 1]
+        bx, by = samples[j]
+        right.append((ax + (bx - ax) * t, ay + (by - ay) * t))
+    return [point for x, y in right for point in ((-x, y), (x, y))]
 
 
 def inset_xz_poly(
@@ -447,6 +489,15 @@ def main() -> int:
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     cavity_margin = p["wall_t"] + p["handle_cavity_inset"]
+    screw_positions = m6_screw_positions_on_midcurve(
+        handle,
+        min(s[0] for s in handle_slices),
+        join_y,
+        cavity_margin,
+        int(p["m6_handle_screw_station_count"]),
+        p["m6_handle_screw_top_clearance"],
+        p["m6_handle_screw_bottom_clearance"],
+    )
     write_scad(blade_poly, handle_slices, blade_core_t, join_y, cavity_margin, json_path)
 
     profiles_path = OUT_DIR / "profiles.scad"
@@ -475,6 +526,8 @@ def main() -> int:
                 f"BEZIER_DH = {fmt_num(dh)};",
                 f"BEZIER_HZ = [{', '.join(fmt_num(z) for z in hzs)}];",
                 f"BEZIER_HX = [{', '.join(fmt_num(x) for x in hxs)}];",
+                "// AUTO-GENERATED — M6 screw centers on the midcurve between outer and cavity profiles",
+                f"BEZIER_M6_SCREW_POSITIONS = {fmt_poly(screw_positions)};",
                 "",
             ]
         ),
