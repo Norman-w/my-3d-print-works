@@ -51,12 +51,12 @@ def _validate_load_path(name: str, mesh: trimesh.Trimesh) -> list[str]:
     significant = [body for body in bodies if abs(float(body.volume)) > 5.0]
     if len(significant) != 1:
         errors.append(f"{name}: {len(significant)} disconnected significant bodies")
+    triangles_y = mesh.vertices[mesh.faces][:, :, 1]
     for y in (JOIN_Y - 1.0, JOIN_Y, JOIN_Y + 1.0):
-        section = mesh.section(
-            plane_origin=np.array([0.0, y, 0.0]),
-            plane_normal=np.array([0.0, 1.0, 0.0]),
+        crossing = np.count_nonzero(
+            (triangles_y.min(axis=1) <= y) & (triangles_y.max(axis=1) >= y)
         )
-        if section is None or len(section.entities) == 0:
+        if crossing == 0:
             errors.append(f"{name}: no material section at join y={y:.1f}")
     return errors
 

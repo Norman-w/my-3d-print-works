@@ -1119,7 +1119,7 @@ module m6_core_front() {
         // 背面主板的榫舌进入此槽；槽仅开在 Z=0 内表面。
         translate([0, 0, -eps])
             linear_extrude(height = m6_tongue_depth + eps)
-                m6_tongue_2d(m6_print_clearance);
+                m6_tongue_2d(m6_joint_clearance);
     }
 }
 

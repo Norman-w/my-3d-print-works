@@ -73,6 +73,8 @@ def _ensure_trimesh():
                 "manifold3d",
                 "numpy",
                 "shapely",
+                "networkx",
+                "mapbox-earcut",
             ]
         )
         raise SystemExit(

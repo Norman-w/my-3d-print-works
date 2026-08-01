@@ -220,6 +220,9 @@ m6_tongue_width           = 2.20; // 榫宽
 m6_tongue_edge_inset      = 2.40; // 榫中心距拍柄轮廓边缘
 m6_print_clearance        = 0.20; // FDM 榫槽单边装配间隙
 m6_cnc_clearance          = 0.00; // 木板/CNC 工艺预设
+m6_process                = "print"; // print / cnc，可用 openscad -D 覆盖
+m6_joint_clearance        =
+    m6_process == "cnc" ? m6_cnc_clearance : m6_print_clearance;
 m6_hidden_screw_d_clear   = 2.20; // 腔内隐藏 M2 连接螺丝过孔
 m6_hidden_screw_d_pilot   = 1.50; // 隐藏 M2 自攻底孔
 m6_hidden_screw_head_d    = 4.20; // 螺丝头沉孔

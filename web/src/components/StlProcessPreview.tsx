@@ -100,6 +100,13 @@ export default function StlProcessPreview() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controlsRef.current = controls;
+    const initialPreset = cameraById(manifest, manifest.processSteps[0]?.camera)
+      ?? manifest.cameraPresets[0];
+    if (initialPreset) {
+      controls.target.set(...initialPreset.target);
+      camera.position.set(...initialPreset.position);
+      controls.update();
+    }
 
     scene.add(new THREE.HemisphereLight(0xffffff, 0x223047, 1.3));
     const key = new THREE.DirectionalLight(0xffffff, 1.4);
@@ -124,7 +131,7 @@ export default function StlProcessPreview() {
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.visible = false;
+      mesh.visible = visibleIds.has(component.id);
       mesh.userData.component = component;
       meshesRef.current.set(component.id, mesh);
       scene.add(mesh);
