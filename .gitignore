@@ -16,6 +16,7 @@ enclosure/stl/interference/*.stl
 !enclosure/stl/.gitkeep
 enclosure/stl/.preview-http.pid
 enclosure/stl/.preview-http.log
+enclosure/stl/preview/manifest.json
 scripts/.venv-stl/
 enclosure/analysis/*
 !enclosure/analysis/.gitkeep

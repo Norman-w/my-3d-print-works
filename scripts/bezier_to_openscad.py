@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import sys
 from pathlib import Path
@@ -33,7 +34,9 @@ DEFAULT_SIDE = {
     ],
 }
 
-HANDLE_SLICES = 256
+HANDLE_SLICES = int(
+    os.environ.get("HANDLE_SLICES", "48" if os.environ.get("QUALITY_MODE") == "quick" else "256")
+)
 RING_SEGMENTS = 80
 JOIN_GAP_MM = 0.0  # M6: handle must meet the blade neck without a structural gap
 HANDLE_BUTT_SOLID_MM = 4.0  # minimal tail wall — just enough for USB-C opening & structural integrity
