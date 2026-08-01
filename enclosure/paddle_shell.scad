@@ -1048,41 +1048,175 @@ module back_half() {
     }
 }
 
-// ═══ 渲染 ═══
+// ═══ M6 四层连续承力结构 ═══
+// 第 2/3 层都是“拍头 + 完整拍柄”主板；第 1/4 层仅为拍柄外贴层。
+// 旧 blade_* / handle_* 模块保留为电子槽和螺丝结构的实现细节，不再直接导出。
 
-if (HALF == "front") {
-    front_half();
-} else if (HALF == "back") {
-    back_half();
-} else if (HALF == "blade_front") {
-    blade_front_part();
-} else if (HALF == "blade_back") {
-    blade_back_part();
-} else if (HALF == "handle_front") {
-    handle_front_part();
-} else if (HALF == "handle_back") {
-    handle_back_part();
-} else if (HALF == "handle_back_tip") {
-    // 拍柄后壳尾部切片，用于快速打印验证装配。
-    // 长度由 TIP_LENGTH 变量控制，默认 25mm。
+module m6_full_planform_2d() {
+    union() {
+        polygon(points = BEZIER_BLADE_POLY);
+        bezier_handle_planform_2d();
+    }
+}
+
+module m6_full_planform_prism() {
+    linear_extrude(height = BIG * 2, center = true)
+        m6_full_planform_2d();
+}
+
+module m6_tongue_2d(clearance = 0) {
+    outer_inset = max(0.2, m6_tongue_edge_inset - clearance);
+    inner_inset = m6_tongue_edge_inset + m6_tongue_width + clearance;
+    difference() {
+        offset(delta = -outer_inset)
+            bezier_handle_planform_2d();
+        offset(delta = -inner_inset)
+            bezier_handle_planform_2d();
+    }
+}
+
+module m6_hidden_bosses(front = true) {
+    for (p = m6_hidden_screw_positions)
+        translate([p[0], p[1], front ? 0 : -m6_core_half_t])
+            cylinder(d = m6_hidden_boss_d, h = m6_core_half_t);
+}
+
+module m6_hidden_screw_channels(front = true) {
+    for (p = m6_hidden_screw_positions) {
+        if (front) {
+            translate([p[0], p[1], -eps])
+                cylinder(d = m6_hidden_screw_d_pilot, h = m6_core_half_t * 0.82);
+        } else {
+            translate([p[0], p[1], -m6_core_half_t - eps])
+                cylinder(d = m6_hidden_screw_d_clear, h = m6_core_half_t + 2 * eps);
+            translate([p[0], p[1], -m6_core_half_t - eps])
+                cylinder(d = m6_hidden_screw_head_d, h = m6_hidden_screw_head_h + eps);
+        }
+    }
+}
+
+module m6_core_blank(front = true) {
+    translate([0, 0, front ? 0 : -m6_core_half_t])
+        linear_extrude(height = m6_core_half_t)
+            m6_full_planform_2d();
+}
+
+module m6_core_front() {
+    difference() {
+        union() {
+            difference() {
+                m6_core_blank(true);
+                handle_cavity();
+                piezo_pockets(front = true);
+                rigid_pcb_cavity(front = true);
+                pcb_main_cavity(front = true);
+            }
+            m6_hidden_bosses(true);
+        }
+        blade_front_screw_channels();
+        handle_screw_channels();
+        m6_hidden_screw_channels(true);
+        // 背面主板的榫舌进入此槽；槽仅开在 Z=0 内表面。
+        translate([0, 0, -eps])
+            linear_extrude(height = m6_tongue_depth + eps)
+                m6_tongue_2d(m6_print_clearance);
+    }
+}
+
+module m6_core_back() {
+    difference() {
+        union() {
+            difference() {
+                m6_core_blank(false);
+                handle_cavity();
+                piezo_pockets(front = false);
+                rigid_pcb_cavity(front = false);
+                pcb_main_cavity(front = false);
+            }
+            m6_hidden_bosses(false);
+            // 连续榫舌跨过 Z=0，覆盖拍柄及肩颈承力路径。
+            translate([0, 0, -eps])
+                linear_extrude(height = m6_tongue_depth + eps)
+                    m6_tongue_2d();
+        }
+        blade_back_screw_channels();
+        handle_screw_channels();
+        m6_hidden_screw_channels(false);
+    }
+}
+
+module m6_handle_skin_front(overlap = 0) {
+    intersection() {
+        handle_front_part();
+        m6_full_planform_prism();
+        translate([-BIG, -BIG, m6_core_half_t - overlap])
+            cube([BIG * 2, BIG * 2, BIG]);
+    }
+}
+
+module m6_handle_skin_back(overlap = 0) {
     intersection() {
         handle_back_part();
+        m6_full_planform_prism();
+        translate([-BIG, -BIG, -BIG])
+            cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
+    }
+}
+
+module m6_monolithic_front() {
+    union() {
+        m6_core_front();
+        m6_handle_skin_front(m6_union_overlap);
+    }
+}
+
+module m6_monolithic_back() {
+    union() {
+        m6_core_back();
+        m6_handle_skin_back(m6_union_overlap);
+    }
+}
+
+module m6_assembly() {
+    color([0.12, 0.45, 0.90, 0.80]) m6_handle_skin_front();
+    color([0.85, 0.20, 0.18]) m6_core_front();
+    color([0.45, 0.08, 0.06]) m6_core_back();
+    color([0.08, 0.25, 0.55, 0.80]) m6_handle_skin_back();
+}
+
+module m6_exploded() {
+    translate([0, 0, 12]) m6_handle_skin_front();
+    translate([0, 0, 4]) m6_core_front();
+    translate([0, 0, -4]) m6_core_back();
+    translate([0, 0, -12]) m6_handle_skin_back();
+}
+
+// ═══ 渲染 ═══
+
+if (HALF == "m6_core_front") {
+    m6_core_front();
+} else if (HALF == "m6_core_back") {
+    m6_core_back();
+} else if (HALF == "m6_skin_front") {
+    m6_handle_skin_front();
+} else if (HALF == "m6_skin_back") {
+    m6_handle_skin_back();
+} else if (HALF == "m6_monolithic_front") {
+    m6_monolithic_front();
+} else if (HALF == "m6_monolithic_back") {
+    m6_monolithic_back();
+} else if (HALF == "m6_handle_back_tip") {
+    intersection() {
+        m6_monolithic_back();
         translate([-BIG, handle_butt_cut_y, -BIG])
             cube([BIG*2, TIP_LENGTH, BIG*2]);
     }
-} else if (HALF == "both") {
-    %front_half();
-    back_half();
-} else if (HALF == "four") {
-    translate([-5, 0, 0]) blade_front_part();
-    translate([5, 0, 0]) blade_back_part();
-    translate([-5, 120, 0]) handle_front_part();
-    translate([5, 120, 0]) handle_back_part();
-} else if (HALF == "split_assembly") {
-    color([0.85, 0.20, 0.18]) blade_front_part();
-    color([0.45, 0.08, 0.06]) blade_back_part();
-    color([0.12, 0.45, 0.90, 0.72]) handle_front_part();
-    color([0.08, 0.25, 0.55, 0.72]) handle_back_part();
+} else if (HALF == "m6_assembly") {
+    m6_assembly();
+} else if (HALF == "m6_exploded") {
+    m6_exploded();
+} else {
+    echo(str("Unknown M6 HALF: ", HALF));
 }
 
 echo(str("=== SmartPaddle Shell ==="));
