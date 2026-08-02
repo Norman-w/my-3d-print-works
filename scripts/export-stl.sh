@@ -210,7 +210,7 @@ fi
 
 echo ""
 echo "→ 基于最终四层生成第1+2块 / 第3+4块同板打印 STL（刚体排版，装配几何不变）…"
-"${PYTHON_CMD[@]}" "$ROOT/scripts/build_m6_print_plates.py"
+"${PYTHON_CMD[@]}" "$ROOT/scripts/build_print_plates.py"
 
 echo ""
 echo "→ 写入 M6 工艺预览 manifest …"

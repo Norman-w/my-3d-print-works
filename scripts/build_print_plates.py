@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Build two M6 print-bed STL files using rigid transforms only.
+"""Build paired print-bed STL files using rigid transforms only.
 
 The assembly geometry is never rescaled, remeshed, welded, or booleaned. Each
-plate contains two independent source meshes positioned inside a 256 mm cube.
+plate contains two independent source meshes positioned inside the configured
+printer build volume. Model-specific source names remain data inputs; the
+layout/export mechanism itself is shared tooling.
 """
 
 from __future__ import annotations
