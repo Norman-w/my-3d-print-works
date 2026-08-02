@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STL = ROOT / "enclosure" / "stl"
 OUT = STL / "preview" / "manifest.json"
+SCREW_SAFETY_REPORT = ROOT / "enclosure" / "generated" / "m6_screw_safety.json"
 
 PARTS = [
     ("stage_planform", "01·整拍贝塞尔平面轮廓", "preview/stage_planform.stl", "#38bdf8", "inspection"),
@@ -36,6 +38,21 @@ PARTS = [
     ("ui_cuts", "USB/按键/LED 干涉体", "interference/ui_cuts.stl", "#f97316", "interference"),
 ]
 
+PRINT_PLATES = [
+    (
+        "layers_1_2",
+        "拼板 A：第1块 + 第2块",
+        "print/paddle_m6_print_plate_layers_1_2.stl",
+        "第1+2层修复版：已恢复大镂空区靠拍头PCB穿透M2承力柱；保持既有摆放，尚未按X1C左前禁区重新排版，请导入后人工确认，不能作为X1C最终免检文件",
+    ),
+    (
+        "layers_3_4",
+        "拼板 B：第3块 + 第4块",
+        "print/paddle_m6_print_plate_layers_3_4.stl",
+        "X1C验证拼板：第3层长承力板平放45°并自动左移，第4层上下翻正、以自动识别的物理底座面落床竖立并自动右移到肩颈区域；真实投影独立且避开左前禁区，装配接口原尺寸；请为竖立件开启树状自动支撑",
+    ),
+]
+
 
 # ===== 分区：私有成员 =====
 def _component(item: tuple[str, str, str, str, str]) -> dict[str, object]:
@@ -50,6 +67,14 @@ def _component(item: tuple[str, str, str, str, str]) -> dict[str, object]:
     }
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 # ===== 分区：公开 API =====
 def main() -> int:
     components = [_component(item) for item in PARTS if (STL / item[2]).is_file()]
@@ -62,6 +87,11 @@ def main() -> int:
         "fasteners_front", "fasteners_back", "fasteners_through", "fasteners_blade",
         "silicone_plugs"
     )
+    screw_safety = (
+        json.loads(SCREW_SAFETY_REPORT.read_text(encoding="utf-8"))
+        if SCREW_SAFETY_REPORT.is_file()
+        else {}
+    )
 
     manifest = {
         "schemaVersion": 1,
@@ -69,6 +99,20 @@ def main() -> int:
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "coordinateSystem": {"x": "拍宽", "y": "拍长", "z": "层叠/厚度"},
         "components": components,
+        "printPlates": [
+            {
+                "id": ident,
+                "label": label,
+                "path": f"/stl/{path}?v={_sha256(STL / path)[:16]}",
+                "description": description,
+            }
+            for ident, label, path, description in PRINT_PLATES
+            if (STL / path).is_file()
+        ],
+        "fastenerSafetyMap": [
+            item for item in screw_safety.get("directionChecks", [])
+            if item.get("visualCallout") is not None
+        ],
         "processSteps": [
             {
                 "id": "profile_intent",

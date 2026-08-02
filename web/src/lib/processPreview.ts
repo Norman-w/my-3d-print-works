@@ -24,11 +24,19 @@ export interface CameraPreset {
   position: [number, number, number];
 }
 
+export interface ProcessPrintPlate {
+  id: string;
+  label: string;
+  path: string;
+  description: string;
+}
+
 export interface ProcessPreviewManifest {
   schemaVersion: number;
   modelVersion: string;
   generatedAt: string;
   components: ProcessComponent[];
+  printPlates?: ProcessPrintPlate[];
   processSteps: ProcessView[];
   processTypes: ProcessView[];
   cameraPresets: CameraPreset[];

@@ -60,6 +60,11 @@ function cameraById(
   return manifest.cameraPresets.find((preset) => preset.id === id);
 }
 
+function downloadName(path: string): string {
+  const name = path.split('/').filter(Boolean).pop();
+  return name && name.toLowerCase().endsWith('.stl') ? name : 'smartpaddle.stl';
+}
+
 function fitMeshes(
   camera: THREE.PerspectiveCamera,
   controls: OrbitControls,
@@ -108,6 +113,7 @@ export default function StlProcessPreview() {
   const [exploded, setExploded] = useState(false);
   const [sectioned, setSectioned] = useState(false);
   const [showFasteners, setShowFasteners] = useState(true);
+  const [downloadOpen, setDownloadOpen] = useState(false);
 
   useEffect(() => {
     loadProcessManifest()
@@ -308,6 +314,21 @@ export default function StlProcessPreview() {
     return [];
   }, [manifest, mode]);
 
+  const downloadableComponents = useMemo(() => {
+    if (!manifest) return [];
+    const ids = new Set(visibleIds);
+    if (mode !== 'components') {
+      const activeView = [...manifest.processSteps, ...manifest.processTypes]
+        .find((view) => view.id === activeId);
+      if (showFasteners) {
+        activeView?.overlays?.forEach((id) => ids.add(id));
+      }
+    }
+    return manifest.components.filter((component) => ids.has(component.id));
+  }, [activeId, manifest, mode, showFasteners, visibleIds]);
+  const printPlates = manifest?.printPlates ?? [];
+  const hasDownloads = printPlates.length > 0 || downloadableComponents.length > 0;
+
   const applyCamera = (preset?: CameraPreset) => {
     if (!preset || !cameraRef.current || !controlsRef.current) return;
     controlsRef.current.target.set(...preset.target);
@@ -431,11 +452,81 @@ export default function StlProcessPreview() {
       </aside>
       <div style={{ flex: 1, minWidth: 0, position: 'relative' }}>
         <div ref={hostRef} style={{ position: 'absolute', inset: 0 }} />
+        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 3 }}>
+          <button
+            type="button"
+            style={{
+              ...BUTTON,
+              minWidth: 116,
+              borderColor: downloadOpen ? '#60a5fa' : '#374151',
+              opacity: hasDownloads ? 1 : 0.55,
+            }}
+            disabled={!hasDownloads}
+            title={hasDownloads
+              ? `可下载 ${printPlates.length} 张打印拼板及当前视图真实 STL`
+              : '当前视图没有可下载的 STL 数据源'}
+            aria-expanded={downloadOpen}
+            aria-controls="stl-download-menu"
+            onClick={() => setDownloadOpen((value) => !value)}
+          >
+            下载 STL
+          </button>
+          {downloadOpen && hasDownloads && (
+            <div
+              id="stl-download-menu"
+              style={{
+                width: 280,
+                marginTop: 6,
+                padding: 8,
+                borderRadius: 7,
+                border: '1px solid #374151',
+                background: '#111827f5',
+                boxShadow: '0 12px 28px #0008',
+              }}
+            >
+              <div style={{ display: 'grid', gap: 5, maxHeight: 360, overflowY: 'auto' }}>
+                {printPlates.length > 0 && (
+                  <div style={{ margin: '1px 3px 2px', color: '#93c5fd', fontSize: 11 }}>
+                    3D 打印拼板
+                  </div>
+                )}
+                {printPlates.map((plate) => (
+                  <a
+                    key={plate.id}
+                    href={plate.path}
+                    download={downloadName(plate.path)}
+                    style={{ ...BUTTON, display: 'block', textDecoration: 'none', fontSize: 12 }}
+                  >
+                    <div>{plate.label}</div>
+                    <div style={{ marginTop: 3, color: '#94a3b8', fontSize: 10 }}>
+                      {plate.description}
+                    </div>
+                  </a>
+                ))}
+                {downloadableComponents.length > 0 && (
+                  <div style={{ margin: '5px 3px 2px', color: '#94a3b8', fontSize: 11 }}>
+                    当前视图单件
+                  </div>
+                )}
+                {downloadableComponents.map((component) => (
+                  <a
+                    key={component.id}
+                    href={component.path}
+                    download={downloadName(component.path)}
+                    style={{ ...BUTTON, display: 'block', textDecoration: 'none', fontSize: 12 }}
+                  >
+                    {component.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
         {(loading || error) && (
           <div
             style={{
               position: 'absolute',
-              top: 12,
+              top: 58,
               right: 12,
               zIndex: 2,
               maxWidth: 420,

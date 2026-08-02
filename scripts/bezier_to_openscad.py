@@ -20,6 +20,8 @@ DEFAULT_JSON = ROOT / "web/src/data/userBezierProfiles.json"
 DEFAULT_PARAMS = ROOT / "enclosure/parameters.scad"
 OUT_DIR = ROOT / "enclosure/generated"
 OUT_SCAD = OUT_DIR / "bezier_geometry.scad"
+TAIL_INTERFERENCE = ROOT / "enclosure/stl/interference/tail_interference.json"
+SCREW_SAFETY_REPORT = OUT_DIR / "m6_screw_safety.json"
 
 DEFAULT_SIDE = {
     "target": "side",
@@ -280,6 +282,9 @@ def parse_params(path: Path) -> dict[str, float]:
         "m6_handle_screw_bottom_clearance",
         "m6_handle_screw_tail_edge_clearance",
         "m6_handle_screw_tail_inset",
+        "m6_pcb_slot_min_ligament",
+        "m6_tail_slot_min_ligament",
+        "m6_core_edge_min_ligament",
     ]
     out: dict[str, float] = {}
     for k in keys:
@@ -312,6 +317,7 @@ def m6_screw_positions_on_midcurve(
     bottom_clearance: float,
     tail_edge_clearance: float,
     tail_inset: float,
+    pcb_avoidance: dict[str, float] | None = None,
 ) -> list[tuple[float, float]]:
     """等弧长排布常规站，并在尾边增加一个由同一中线推导的加强站。"""
     bottom_y = y0 + bottom_clearance
@@ -345,6 +351,57 @@ def m6_screw_positions_on_midcurve(
     tail_inner_x = max(tail_outer_x - cavity_margin, 0.5)
     tail_x = max((tail_outer_x + tail_inner_x) / 2 - tail_inset, 0.5)
     stations = [(tail_x, tail_y), *right]
+    if pcb_avoidance:
+        x_limit = pcb_avoidance["x_limit"]
+        y_min = pcb_avoidance["y_min"]
+        y_max = pcb_avoidance["y_max"]
+        required = pcb_avoidance["required_center_clearance"]
+        min_pitch = pcb_avoidance["min_station_pitch"]
+
+        def clearance(point: tuple[float, float]) -> float:
+            x, y = point
+            dx = max(abs(x) - x_limit, 0.0)
+            dy = y_min - y if y < y_min else y - y_max if y > y_max else 0.0
+            return math.hypot(dx, dy)
+
+        safe: list[tuple[float, float]] = []
+        moves: list[dict[str, object]] = []
+        for station_index, original in enumerate(stations):
+            candidate = original
+            required_here = (
+                pcb_avoidance["tail_required_center_clearance"]
+                if station_index == 0
+                else required
+            )
+            # Follow the actual midcurve toward the paddle head (+Y), never a
+            # fixed world-coordinate offset. Also retain boss-to-boss pitch.
+            for step in range(4001):
+                y = original[1] + step * 0.05
+                if step == 0:
+                    candidate = original
+                else:
+                    outer_x = half_width_at_y(handle, y)
+                    inner_x = max(outer_x - cavity_margin, 0.5)
+                    candidate = ((outer_x + inner_x) / 2, y)
+                pitch_ok = not safe or y - safe[-1][1] >= min_pitch
+                # The first station is the user-confirmed tail pair: preserve
+                # its exact original location when it satisfies the dedicated
+                # two-perimeter tail ligament. Only PCB-region stations move.
+                if clearance(candidate) >= required_here and pitch_ok:
+                    break
+            else:
+                raise ValueError(f"cannot place M6 screw safely toward head from {original}")
+            safe.append(candidate)
+            moves.append({
+                "original": [original[0], original[1]],
+                "final": [candidate[0], candidate[1]],
+                "pcbSlotCenterClearanceMm": clearance(candidate),
+                "requiredCenterClearanceMm": required_here,
+                "classification": "preserved_tail_pair" if station_index == 0 else "pcb_region",
+                "moved": math.dist(original, candidate) > 1e-6,
+            })
+        stations = safe
+        pcb_avoidance["moves"] = moves
     return [point for x, y in stations for point in ((-x, y), (x, y))]
 
 
@@ -498,6 +555,28 @@ def main() -> int:
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     cavity_margin = p["wall_t"] + p["handle_cavity_inset"]
+    tail_info = json.loads(TAIL_INTERFERENCE.read_text(encoding="utf-8"))
+    available_wall = min(blade_core_t / 2, cavity_margin)
+    screw_d = 1.0 if available_wall < 2.0 else 1.2 if available_wall < 3.5 else 1.4 if available_wall < 4.5 else 1.6
+    boss_d = screw_d + 2 * min(1.40, cavity_margin - 0.5)
+    head_d = screw_d * 1.90
+    board_x_limit = max(abs(float(point[0])) for point in tail_info["edge_cuts_xy"])
+    board_y_min = float(tail_info["pcb_y"]) - float(tail_info["board_axial_clear"])
+    board_y_max = (
+        float(tail_info["pcb_y"])
+        + float(tail_info["board_thickness"])
+        + float(tail_info["board_axial_clear"])
+    )
+    pcb_avoidance: dict[str, Any] = {
+        "x_limit": board_x_limit,
+        "y_min": board_y_min,
+        "y_max": board_y_max,
+        "bossDiameterMm": boss_d,
+        "petgLigamentMm": p["m6_pcb_slot_min_ligament"],
+        "required_center_clearance": boss_d / 2 + p["m6_pcb_slot_min_ligament"],
+        "tail_required_center_clearance": boss_d / 2 + p["m6_tail_slot_min_ligament"],
+        "min_station_pitch": boss_d + p["m6_core_edge_min_ligament"],
+    }
     screw_positions = m6_screw_positions_on_midcurve(
         handle,
         min(s[0] for s in handle_slices),
@@ -508,6 +587,67 @@ def main() -> int:
         p["m6_handle_screw_bottom_clearance"],
         p["m6_handle_screw_tail_edge_clearance"],
         p["m6_handle_screw_tail_inset"],
+        pcb_avoidance,
+    )
+    edge_checks = []
+    direction_checks = []
+    moved_y = [float(item["final"][1]) for item in pcb_avoidance["moves"] if item["moved"]]
+    for position_index, (x, y) in enumerate(screw_positions):
+        outer_margin = half_width_at_y(handle, y) - abs(x) - head_d / 2
+        edge_checks.append({"position": [x, y], "outerEdgeLigamentMm": outer_margin})
+        if outer_margin + 1e-6 < p["m6_core_edge_min_ligament"]:
+            raise ValueError(
+                f"M6 screw at {(x, y)} leaves {outer_margin:.3f}mm to core edge; "
+                f"requires {p['m6_core_edge_min_ligament']:.3f}mm"
+            )
+        dx = max(abs(x) - board_x_limit, 0.0)
+        dy = board_y_min - y if y < board_y_min else y - board_y_max if y > board_y_max else 0.0
+        pcb_clearance = math.hypot(dx, dy)
+        relocated = any(abs(y - value) < 1e-5 for value in moved_y)
+        station_number = position_index // 2 + 1
+        required_here = (
+            pcb_avoidance["tail_required_center_clearance"]
+            if station_number == 1
+            else pcb_avoidance["required_center_clearance"]
+        )
+        for direction, z_side in (("layer2_to_layer1", "positive_z"), ("layer3_to_layer4", "negative_z")):
+            direction_checks.append({
+                "station": station_number,
+                "visualCallout": (
+                    "left_small_circles_tail_edge"
+                    if position_index // 2 + 1 == 1
+                    else "center_large_circle_pcb_slot_pair"
+                    if position_index // 2 + 1 == 2
+                    else None
+                ),
+                "side": "left" if x < 0 else "right",
+                "direction": direction,
+                "zSide": z_side,
+                "position": [x, y],
+                "relocatedForPcbSlot": relocated,
+                "pcbSlotCenterClearanceMm": pcb_clearance,
+                "requiredPcbSlotCenterClearanceMm": required_here,
+                "outerEdgeLigamentMm": outer_margin,
+                "passed": (
+                    pcb_clearance + 1e-6 >= required_here
+                    and outer_margin + 1e-6 >= p["m6_core_edge_min_ligament"]
+                ),
+            })
+    SCREW_SAFETY_REPORT.write_text(
+        json.dumps({
+            "screwDiameterMm": screw_d,
+            "headDiameterMm": head_d,
+            "bossDiameterMm": boss_d,
+            "pcbSlot": {"xLimitMm": board_x_limit, "yRangeMm": [board_y_min, board_y_max]},
+            "requiredPcbSlotCenterClearanceMm": pcb_avoidance["required_center_clearance"],
+            "requiredTailSlotCenterClearanceMm": pcb_avoidance["tail_required_center_clearance"],
+            "requiredCoreEdgeLigamentMm": p["m6_core_edge_min_ligament"],
+            "finalPositions": [[x, y] for x, y in screw_positions],
+            "moves": pcb_avoidance["moves"],
+            "edgeChecks": edge_checks,
+            "directionChecks": direction_checks,
+        }, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
     )
     write_scad(blade_poly, handle_slices, blade_core_t, join_y, cavity_margin, json_path)
 

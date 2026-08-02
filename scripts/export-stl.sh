@@ -26,89 +26,24 @@ setup_proxy_if_needed() {
 }
 
 ensure_openscad() {
-  local default_paths=(
-    "/c/Program Files/OpenSCAD/openscad.exe"
-    "/c/Program Files (x86)/OpenSCAD/openscad.exe"
-  )
-  local p
-
-  # Prefer snapshot (Manifold backend, ~400x faster) on macOS.
-  if [[ -x /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD ]]; then
-    OPENSCAD_BIN="/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD"
-    OPENSCAD_FLAGS="--backend=Manifold"
-    return 0
-  elif [[ -x /opt/homebrew/bin/openscad ]]; then
-    OPENSCAD_BIN="/opt/homebrew/bin/openscad"
-    OPENSCAD_FLAGS=""
-    return 0
-  fi
-
-  if command -v openscad >/dev/null 2>&1; then
-    OPENSCAD_BIN="openscad"
-    OPENSCAD_FLAGS=""
-    return 0
-  fi
-
-  for p in "${default_paths[@]}"; do
-    if [[ -x "$p" ]]; then
-      export PATH="$(dirname "$p"):$PATH"
-      OPENSCAD_BIN="openscad"
-      OPENSCAD_FLAGS=""
-      return 0
-    fi
-  done
-
-  if ! is_windows; then
-    echo "错误: 未找到 openscad。请安装 OpenSCAD 并加入 PATH。" >&2
+  local app_bin="/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD"
+  local app_version
+  if [[ ! -x "$app_bin" ]]; then
+    echo "错误: 正式导出要求 $app_bin" >&2
     return 1
   fi
-
-  echo "→ 未检测到 openscad，尝试在 Windows 下自动安装…"
-
-  if command -v choco >/dev/null 2>&1; then
-    echo "→ 使用 Chocolatey 安装 OpenSCAD（先直连）…"
-    if ! choco install openscad -y; then
-      echo "警告: Chocolatey 直连安装失败，改用代理重试…"
-      setup_proxy_if_needed
-      choco install openscad -y || echo "警告: Chocolatey 安装失败，尝试其他方式…"
-    fi
-  fi
-
-  if ! command -v openscad >/dev/null 2>&1; then
-    for p in "${default_paths[@]}"; do
-      if [[ -x "$p" ]]; then
-        export PATH="$(dirname "$p"):$PATH"
-        OPENSCAD_BIN="openscad"
-        OPENSCAD_FLAGS=""
-        break
-      fi
-    done
-  fi
-
-  if ! command -v openscad >/dev/null 2>&1 && command -v winget >/dev/null 2>&1; then
-    echo "→ 使用 winget 安装 OpenSCAD …"
-    winget install --id OpenSCAD.OpenSCAD --exact --accept-source-agreements --accept-package-agreements || {
-      echo "警告: winget 安装失败，改用代理重试…"
-      setup_proxy_if_needed
-      winget install --id OpenSCAD.OpenSCAD --exact --accept-source-agreements --accept-package-agreements || \
-        echo "警告: winget 安装失败。"
-    }
-    for p in "${default_paths[@]}"; do
-      if [[ -x "$p" ]]; then
-        export PATH="$(dirname "$p"):$PATH"
-        OPENSCAD_BIN="openscad"
-        OPENSCAD_FLAGS=""
-        break
-      fi
-    done
-  fi
-
-  if ! command -v openscad >/dev/null 2>&1; then
-    echo "错误: 仍未找到 openscad。请手动安装 OpenSCAD 并加入 PATH。" >&2
+  app_version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' /Applications/OpenSCAD.app/Contents/Info.plist)"
+  if [[ "$app_version" != "2026.04.26" ]]; then
+    echo "错误: OpenSCAD 版本为 $app_version，正式导出要求 2026.04.26" >&2
     return 1
   fi
-  OPENSCAD_BIN="openscad"
-  OPENSCAD_FLAGS=""
+  if ! lipo -archs "$app_bin" | tr ' ' '\n' | grep -qx arm64; then
+    echo "错误: OpenSCAD 2026.04.26 不含 arm64 架构" >&2
+    return 1
+  fi
+  OPENSCAD_BIN="/usr/bin/arch"
+  OPENSCAD_FLAGS="-arm64 $app_bin --backend=Manifold --export-format binstl"
+  echo "→ OpenSCAD: 2026.04.26 arm64 + Manifold + binary STL"
 }
 
 ensure_openscad
@@ -274,12 +209,17 @@ if [[ "$SKIP_STEP6" != "1" ]]; then
 fi
 
 echo ""
+echo "→ 基于最终四层生成第1+2块 / 第3+4块同板打印 STL（刚体排版，装配几何不变）…"
+"${PYTHON_CMD[@]}" "$ROOT/scripts/build_m6_print_plates.py"
+
+echo ""
 echo "→ 写入 M6 工艺预览 manifest …"
 "${PYTHON_CMD[@]}" "$ROOT/scripts/write_preview_manifest.py"
 
 echo ""
 echo "完成。最终打印件（enclosure/stl/）:"
 echo "  paddle_m6_layer{1..4}_*.stl      ← 四层分制"
+echo "  print/paddle_m6_print_plate_layers_{1_2,3_4}.stl ← 两件独立同板排版"
 echo "  paddle_m6_monolithic_{front,back}.stl"
 echo "  paddle_m6_{assembly,exploded}.stl"
 echo "  paddle_m6_fasteners.stl          ← 侧边动态 M1.x + 中轴/拍面 M2 装配模拟"

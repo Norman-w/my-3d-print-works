@@ -1314,6 +1314,20 @@ module m6_core_screw_supports(front = true) {
     }
 }
 
+// 大镂空区中的 PCB 穿透 M2 位必须在第 2/3 层补回完整承力柱。
+// 腔体先被 difference 切除，因此该柱必须与侧边承力柱一样在切腔后
+// 重新 union；最后再由对应的过孔/盲底孔通道钻孔。
+module m6_blade_pcb_screw_supports(front = true) {
+    intersection() {
+        m6_core_blank(front);
+        union()
+            for (p = pcb_through_screw_positions)
+                if (screw_in_blade(p))
+                    translate([p[0], p[1], front ? 0 : -m6_core_half_t])
+                        cylinder(d = screw_d_boss, h = m6_core_half_t);
+    }
+}
+
 module m6_core_blank(front = true) {
     translate([0, 0, front ? 0 : -m6_core_half_t])
         linear_extrude(height = m6_core_half_t)
@@ -1332,6 +1346,7 @@ module m6_core_front() {
             }
             // 内腔挖空后补回第 2 层螺丝承力柱，否则螺丝会悬空。
             m6_core_screw_supports(true);
+            m6_blade_pcb_screw_supports(true);
         }
         m6_side_front_screw_channels();
         m6_handle_through_boss_clearance();
@@ -1352,6 +1367,7 @@ module m6_core_back() {
             }
             // 第 3 层镜像承力柱，供螺丝穿过后向第 4 层攻丝。
             m6_core_screw_supports(false);
+            m6_blade_pcb_screw_supports(false);
         }
         m6_side_back_screw_channels();
         m6_handle_through_boss_clearance();

@@ -242,6 +242,15 @@ m6_handle_screw_top_clearance = 10; // 距头柄接合线的净距
 m6_handle_screw_bottom_clearance = 8; // 距拍柄尾端的净距
 m6_handle_screw_tail_edge_clearance = 2.8; // 尾端加强站中心距尾边；X 仍取内外贝塞尔中线
 m6_handle_screw_tail_inset = 3.0; // 尾端加强站相对贝塞尔中线向拍柄中心内收
+// PCB 卡槽邻近螺丝的 PETG 制造安全韧带。M1.2 boss 外径 4.0mm，
+// boss 外缘到槽边至少再保留一个螺丝公称直径，避免自攻胀裂槽边。
+m6_pcb_slot_min_ligament = 1.2;
+// 尾端左右加强孔必须保留；该处不属于 PCB 固定站，按 0.4mm 喷嘴双轮廓
+// 取 0.8mm 最小槽边韧带。PCB 区站位仍使用上面的 1.2mm 严格值。
+m6_tail_slot_min_ligament = 0.8;
+// 沉头外缘到承力层外轮廓至少保留 0.5mm；这是 0.4×M1.2 向上取整，
+// 同时匹配当前 0.5mm FDM 外轮廓安全下限。
+m6_core_edge_min_ligament = 0.5;
 
 // ---- 分打拍柄：朝拍头端 U 型插口（仅 handle_* 零件） ----
 // 拍柄合模后朝拍头一侧原先四周严丝合缝，拍面颈部插不进。

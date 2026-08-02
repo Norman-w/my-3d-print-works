@@ -1,0 +1,319 @@
+{
+  "generatedAt": "2026-08-02T03:50:30.303303+00:00",
+  "assemblyGeometryUnchanged": true,
+  "plates": [
+    {
+      "label": "第1+2块：长承力板平放45° + 加厚外贴件竖立",
+      "path": "print/paddle_m6_print_plate_layers_1_2.stl",
+      "buildVolumeMm": [
+        256.0,
+        256.0,
+        256.0
+      ],
+      "gapMm": 5.0,
+      "assemblyGeometryUnchanged": true,
+      "sha256": "5fd4459125fc948cbab1a1a644813f4449c31a46e9460aff67f713b647cb21d7",
+      "parts": [
+        {
+          "source": "paddle_m6_layer1_handle_skin_front.stl",
+          "sourceSha256": "9ccbb25a7c9ab5c9c071c883788992c2f28a51219bd4022b2b86f2225ca9778e",
+          "triangleCount": 71036,
+          "rotationMatrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0
+            ]
+          ],
+          "translationAfterRotation": [
+            18.6253014615705,
+            223.71539868796566,
+            -78.48999786376953
+          ],
+          "orientation": {
+            "bedContact": "detectedShoulderNeckPlane",
+            "contactSourceY": -78.48999786376953,
+            "contactAreaMm2": 36.2840658635094,
+            "contactWidthMm": 23.994672775268555,
+            "contactDepthMm": 1.9113998413085938,
+            "uprightAlongZ": true,
+            "outsideDirectionCorrected": false,
+            "uprightRotationZDeg": 0.0,
+            "supportRecommendation": "在 Bambu Studio 中为此竖立件开启树状自动支撑"
+          },
+          "sourceBounds": [
+            [
+              -17.216981887817383,
+              -178.09620666503906,
+              -0.019999999552965164
+            ],
+            [
+              17.216981887817383,
+              -78.48999786376953,
+              11.159299850463867
+            ]
+          ],
+          "finalBounds": [
+            [
+              1.4083195737531184,
+              223.6953986884127,
+              0.0
+            ],
+            [
+              35.842283349387884,
+              234.87469853842953,
+              99.60620880126953
+            ]
+          ]
+        },
+        {
+          "source": "paddle_m6_layer2_core_front.stl",
+          "sourceSha256": "560295e4b9191ec9517b4eda7377c6239baeceefc8ed3ad136c41bde9ecd723c",
+          "triangleCount": 31408,
+          "rotationMatrix": [
+            [
+              0.7071067811865476,
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.7071067811865475,
+              -0.7071067811865476,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              -1.0
+            ]
+          ],
+          "translationAfterRotation": [
+            178.42489653213025,
+            97.29208535568715,
+            3.0
+          ],
+          "orientation": {
+            "flatOnBed": true,
+            "bedRotationZDeg": 45.0,
+            "threadEntryFacesPositiveZ": true,
+            "faceFlipped": true
+          },
+          "sourceBounds": [
+            [
+              -74.18190002441406,
+              -178.09620666503906,
+              0.0
+            ],
+            [
+              74.18190002441406,
+              78.5,
+              3.0
+            ]
+          ],
+          "finalBounds": [
+            [
+              40.842283349387884,
+              21.125301461570487,
+              0.0
+            ],
+            [
+              254.59168042624688,
+              234.87469853842953,
+              3.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "label": "第3+4块：长承力板平放45° + 加厚外贴件竖立",
+      "path": "print/paddle_m6_print_plate_layers_3_4.stl",
+      "buildVolumeMm": [
+        256.0,
+        256.0,
+        256.0
+      ],
+      "gapMm": 5.0,
+      "assemblyGeometryUnchanged": true,
+      "sha256": "a301d8cbb75fa20484f149c5834356bf6713e27dbeb103343ceac4357b41b16d",
+      "parts": [
+        {
+          "source": "paddle_m6_layer4_handle_skin_back.stl",
+          "sourceSha256": "2f750c67690b4c210470e2d6ccd6986cebb457eee69a94456469de5bb7ab25ba",
+          "triangleCount": 75426,
+          "rotationMatrix": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.2246467991473532e-16,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              1.2246467991473532e-16
+            ]
+          ],
+          "translationAfterRotation": [
+            228,
+            133,
+            178.09620666503906
+          ],
+          "orientation": {
+            "bedContact": "detectedPhysicalBasePlane",
+            "contactSourceY": -178.09620666503906,
+            "contactAreaMm2": 225.93931602824233,
+            "contactWidthMm": 32.72509002685547,
+            "contactDepthMm": 9.178899765014648,
+            "uprightAlongZ": true,
+            "baseFacesBed": true,
+            "verticalFlipXDeg": 180.0,
+            "supportRecommendation": "在 Bambu Studio 中为此竖立件开启树状自动支撑"
+          },
+          "sourceBounds": [
+            [
+              -17.50266456604004,
+              -178.09620666503906,
+              -12.871899604797363
+            ],
+            [
+              17.50266456604004,
+              -78.48999786376953,
+              0.019999999552965164
+            ]
+          ],
+          "finalBounds": [
+            [
+              210.49733543395996,
+              132.980000000447,
+              0.0
+            ],
+            [
+              245.50266456604004,
+              145.87189960479733,
+              99.60620880126953
+            ]
+          ]
+        },
+        {
+          "source": "paddle_m6_layer3_core_back.stl",
+          "sourceSha256": "02260a108ebbfbfeb4fb7957d41415af1b8dfc1dab774925e6528313a7717f08",
+          "triangleCount": 28554,
+          "rotationMatrix": [
+            [
+              0.7071067811865476,
+              -0.7071067811865475,
+              0.0
+            ],
+            [
+              0.7071067811865475,
+              0.7071067811865476,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "translationAfterRotation": [
+            107,
+            148,
+            3.0
+          ],
+          "orientation": {
+            "flatOnBed": true,
+            "bedRotationZDeg": 45.0,
+            "threadEntryFacesPositiveZ": false,
+            "faceFlipped": false
+          },
+          "sourceBounds": [
+            [
+              -74.18190002441406,
+              -178.09620666503906,
+              -3.0
+            ],
+            [
+              74.18190002441406,
+              78.5,
+              0.0
+            ]
+          ],
+          "finalBounds": [
+            [
+              30.833216105883352,
+              10.417386817257636,
+              0.0
+            ],
+            [
+              244.58261318274236,
+              224.16678389411666,
+              3.0
+            ]
+          ]
+        }
+      ],
+      "x1cValidation": {
+        "printer": "Bambu Lab X1 Carbon 0.4 nozzle",
+        "profileSource": "Bambu Studio 01.10.02.76 / Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "printableArea": [
+          [
+            0,
+            0
+          ],
+          [
+            256,
+            0
+          ],
+          [
+            256,
+            256
+          ],
+          [
+            0,
+            256
+          ]
+        ],
+        "bedExcludeArea": [
+          [
+            0,
+            0
+          ],
+          [
+            18,
+            0
+          ],
+          [
+            18,
+            28
+          ],
+          [
+            0,
+            28
+          ]
+        ],
+        "edgeMarginMm": 5.0,
+        "supportReserveMm": 5.0,
+        "partClearanceMm": 15.318909019817047,
+        "excludedAreaOverlapMm2": 0.0,
+        "solver": "actual-mesh-footprints, detected bed-contact plane, 2mm deterministic search",
+        "candidateCount": 207618,
+        "passed": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,523 @@
+{
+  "screwDiameterMm": 1.2,
+  "headDiameterMm": 2.28,
+  "bossDiameterMm": 4.0,
+  "pcbSlot": {
+    "xLimitMm": 14.8681,
+    "yRangeMm": [
+      -172.4461678557074,
+      -171.14616785570738
+    ]
+  },
+  "requiredPcbSlotCenterClearanceMm": 3.2,
+  "requiredTailSlotCenterClearanceMm": 2.8,
+  "requiredCoreEdgeLigamentMm": 0.5,
+  "finalPositions": [
+    [
+      -12.762405156731475,
+      -175.29616785570738
+    ],
+    [
+      12.762405156731475,
+      -175.29616785570738
+    ],
+    [
+      -14.929349184149903,
+      -167.9461678557074
+    ],
+    [
+      14.929349184149903,
+      -167.9461678557074
+    ],
+    [
+      -12.325825813451214,
+      -143.01614275556085
+    ],
+    [
+      12.325825813451214,
+      -143.01614275556085
+    ],
+    [
+      -11.313255554185563,
+      -115.76066175652034
+    ],
+    [
+      11.313255554185563,
+      -115.76066175652034
+    ],
+    [
+      -12.367370504121967,
+      -88.5
+    ],
+    [
+      12.367370504121967,
+      -88.5
+    ]
+  ],
+  "moves": [
+    {
+      "original": [
+        12.762405156731475,
+        -175.29616785570738
+      ],
+      "final": [
+        12.762405156731475,
+        -175.29616785570738
+      ],
+      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "requiredCenterClearanceMm": 2.8,
+      "classification": "preserved_tail_pair",
+      "moved": false
+    },
+    {
+      "original": [
+        15.175625782130322,
+        -170.0961678557074
+      ],
+      "final": [
+        14.929349184149903,
+        -167.9461678557074
+      ],
+      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "requiredCenterClearanceMm": 3.2,
+      "classification": "pcb_region",
+      "moved": true
+    },
+    {
+      "original": [
+        12.325825813451214,
+        -143.01614275556085
+      ],
+      "final": [
+        12.325825813451214,
+        -143.01614275556085
+      ],
+      "pcbSlotCenterClearanceMm": 28.130025100146526,
+      "requiredCenterClearanceMm": 3.2,
+      "classification": "pcb_region",
+      "moved": false
+    },
+    {
+      "original": [
+        11.313255554185563,
+        -115.76066175652034
+      ],
+      "final": [
+        11.313255554185563,
+        -115.76066175652034
+      ],
+      "pcbSlotCenterClearanceMm": 55.38550609918704,
+      "requiredCenterClearanceMm": 3.2,
+      "classification": "pcb_region",
+      "moved": false
+    },
+    {
+      "original": [
+        12.367370504121967,
+        -88.5
+      ],
+      "final": [
+        12.367370504121967,
+        -88.5
+      ],
+      "pcbSlotCenterClearanceMm": 82.64616785570738,
+      "requiredCenterClearanceMm": 3.2,
+      "classification": "pcb_region",
+      "moved": false
+    }
+  ],
+  "edgeChecks": [
+    {
+      "position": [
+        -12.762405156731475,
+        -175.29616785570738
+      ],
+      "outerEdgeLigamentMm": 3.6100000000000003
+    },
+    {
+      "position": [
+        12.762405156731475,
+        -175.29616785570738
+      ],
+      "outerEdgeLigamentMm": 3.6100000000000003
+    },
+    {
+      "position": [
+        -14.929349184149903,
+        -167.9461678557074
+      ],
+      "outerEdgeLigamentMm": 0.6100000000000001
+    },
+    {
+      "position": [
+        14.929349184149903,
+        -167.9461678557074
+      ],
+      "outerEdgeLigamentMm": 0.6100000000000001
+    },
+    {
+      "position": [
+        -12.325825813451214,
+        -143.01614275556085
+      ],
+      "outerEdgeLigamentMm": 0.6050740129583854
+    },
+    {
+      "position": [
+        12.325825813451214,
+        -143.01614275556085
+      ],
+      "outerEdgeLigamentMm": 0.6050740129583854
+    },
+    {
+      "position": [
+        -11.313255554185563,
+        -115.76066175652034
+      ],
+      "outerEdgeLigamentMm": 0.6105722542313579
+    },
+    {
+      "position": [
+        11.313255554185563,
+        -115.76066175652034
+      ],
+      "outerEdgeLigamentMm": 0.6105722542313579
+    },
+    {
+      "position": [
+        -12.367370504121967,
+        -88.5
+      ],
+      "outerEdgeLigamentMm": 0.6100000000000001
+    },
+    {
+      "position": [
+        12.367370504121967,
+        -88.5
+      ],
+      "outerEdgeLigamentMm": 0.6100000000000001
+    }
+  ],
+  "directionChecks": [
+    {
+      "station": 1,
+      "visualCallout": "left_small_circles_tail_edge",
+      "side": "left",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        -12.762405156731475,
+        -175.29616785570738
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "requiredPcbSlotCenterClearanceMm": 2.8,
+      "outerEdgeLigamentMm": 3.6100000000000003,
+      "passed": true
+    },
+    {
+      "station": 1,
+      "visualCallout": "left_small_circles_tail_edge",
+      "side": "left",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        -12.762405156731475,
+        -175.29616785570738
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "requiredPcbSlotCenterClearanceMm": 2.8,
+      "outerEdgeLigamentMm": 3.6100000000000003,
+      "passed": true
+    },
+    {
+      "station": 1,
+      "visualCallout": "left_small_circles_tail_edge",
+      "side": "right",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        12.762405156731475,
+        -175.29616785570738
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "requiredPcbSlotCenterClearanceMm": 2.8,
+      "outerEdgeLigamentMm": 3.6100000000000003,
+      "passed": true
+    },
+    {
+      "station": 1,
+      "visualCallout": "left_small_circles_tail_edge",
+      "side": "right",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        12.762405156731475,
+        -175.29616785570738
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "requiredPcbSlotCenterClearanceMm": 2.8,
+      "outerEdgeLigamentMm": 3.6100000000000003,
+      "passed": true
+    },
+    {
+      "station": 2,
+      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "side": "left",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        -14.929349184149903,
+        -167.9461678557074
+      ],
+      "relocatedForPcbSlot": true,
+      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 2,
+      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "side": "left",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        -14.929349184149903,
+        -167.9461678557074
+      ],
+      "relocatedForPcbSlot": true,
+      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 2,
+      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "side": "right",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        14.929349184149903,
+        -167.9461678557074
+      ],
+      "relocatedForPcbSlot": true,
+      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 2,
+      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "side": "right",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        14.929349184149903,
+        -167.9461678557074
+      ],
+      "relocatedForPcbSlot": true,
+      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 3,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        -12.325825813451214,
+        -143.01614275556085
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 28.130025100146526,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6050740129583854,
+      "passed": true
+    },
+    {
+      "station": 3,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        -12.325825813451214,
+        -143.01614275556085
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 28.130025100146526,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6050740129583854,
+      "passed": true
+    },
+    {
+      "station": 3,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        12.325825813451214,
+        -143.01614275556085
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 28.130025100146526,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6050740129583854,
+      "passed": true
+    },
+    {
+      "station": 3,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        12.325825813451214,
+        -143.01614275556085
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 28.130025100146526,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6050740129583854,
+      "passed": true
+    },
+    {
+      "station": 4,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        -11.313255554185563,
+        -115.76066175652034
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 55.38550609918704,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6105722542313579,
+      "passed": true
+    },
+    {
+      "station": 4,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        -11.313255554185563,
+        -115.76066175652034
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 55.38550609918704,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6105722542313579,
+      "passed": true
+    },
+    {
+      "station": 4,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        11.313255554185563,
+        -115.76066175652034
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 55.38550609918704,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6105722542313579,
+      "passed": true
+    },
+    {
+      "station": 4,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        11.313255554185563,
+        -115.76066175652034
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 55.38550609918704,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6105722542313579,
+      "passed": true
+    },
+    {
+      "station": 5,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        -12.367370504121967,
+        -88.5
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 82.64616785570738,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 5,
+      "visualCallout": null,
+      "side": "left",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        -12.367370504121967,
+        -88.5
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 82.64616785570738,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 5,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer2_to_layer1",
+      "zSide": "positive_z",
+      "position": [
+        12.367370504121967,
+        -88.5
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 82.64616785570738,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    },
+    {
+      "station": 5,
+      "visualCallout": null,
+      "side": "right",
+      "direction": "layer3_to_layer4",
+      "zSide": "negative_z",
+      "position": [
+        12.367370504121967,
+        -88.5
+      ],
+      "relocatedForPcbSlot": false,
+      "pcbSlotCenterClearanceMm": 82.64616785570738,
+      "requiredPcbSlotCenterClearanceMm": 3.2,
+      "outerEdgeLigamentMm": 0.6100000000000001,
+      "passed": true
+    }
+  ]
+}
