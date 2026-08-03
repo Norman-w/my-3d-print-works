@@ -1,6 +1,8 @@
 ## PCB 生成管线
 
 > **版本边界：** 本管线和 `layouts/default/default.kicad_pcb` 当前只服务进入最终打板审计的 **C4**。尾板现行实现见 [`../pcb-tail/`](../pcb-tail/)；后续可换电池等规划见 [`C5_PLAN.md`](C5_PLAN.md)。不得用试验板改写 C4。
+>
+> **实物状态（2026-08）：** **C4 刚性裸板已回板**，为当前装配与 bring-up 用的主板（标题栏 Revision **C4**，审计 SHA256 `86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70`）。C3 Gerber 批次仅作历史对照。焊接图与位号 CSV 见本地 `output/pdf/smartpaddle-ai-assembly/`（未进 Git，`/output/` 在 `.gitignore`）。
 
 管线的机械基准来自 `enclosure/paddle_shell.scad` 的 `rigid_pcb_slot_points`（V3 起尾端平收，无金手指窄尖）。
 每一步都是独立的 Python 脚本，按顺序执行：

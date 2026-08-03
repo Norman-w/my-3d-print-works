@@ -33,8 +33,8 @@
 
 ## 硬件
 
-- [ ] **C3 回板焊接 / bringup** — Gerber `20260724-081156` 已下单；通电、烧录、软开关、IMU UART、PZT、WS2812
-- [ ] **C4 电路** — 见 [`pcb/C4_PLAN.md`](pcb/C4_PLAN.md)
+- [ ] **C3 回板焊接 / bringup** — 历史批次（Gerber `20260724-081156`）；**当前以 C4 为主**，除非仍有一块 C3 待焊
+- [ ] **C4 电路（当前刚性主板）** — 见 [`pcb/C4_PLAN.md`](pcb/C4_PLAN.md)；**裸板已到手**（Revision C4，PCB SHA `86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70`）
   - [x] PZT I²C 可调门槛比较器前端（MCP4728 + TLV1814 + 高阻 ADC 窥探 / 0Ω DNP）
   - [x] MCU 换 ESP32-S3-WROOM-1-N16R8；固件 target / 分区 / PSRAM / 脚位同步
   - [x] 尾插 MX1.25 线序重排：板坐标上 5V 正对 GND，USB/UART 成对（见 `docs/1.25x10p`）
@@ -47,7 +47,7 @@
   - [x] C4 KiCad 手工布线/铺铜已回存（`828f6e1`）；KiCad 9.0.6 检查为 0 未连接、0 error，72 项丝印/库封装一致性 warning 已分类复核
   - [x] 手工布线完成后以 Step 4.1e 备份并只读复核 63 器件到 `c4_placement_snapshot.json`/放置脚本
   - [x] 铺铜、最终 DRC、物理焊盘连通性、Gerber/钻孔/ZIP 试导出与最终 14 页装配包；详见 [`pcb/C4_FAB_READINESS.md`](pcb/C4_FAB_READINESS.md)
-  - [ ] C4 小批量回板 bring-up：内部槽边焊接、外置 5 V 瞬态、AP2112 温升、完整 USB 数据尾线、PZT/IMU、射频与功耗
+  - [ ] C4 回板 bring-up（进行中）：对照 `output/pdf/smartpaddle-ai-assembly/smartpaddle-c4-solder-assembly.pdf` 手焊；内部槽边焊接、限流 5 V 上电、AP2112 温升、USB 数据尾线、MCP4728/TLV1814 PZT 链、IMU UART、射频与功耗
 - [ ] **一体尾板与可换电池（规划）** — 整机/电气见 [`pcb/C5_PLAN.md`](pcb/C5_PLAN.md)；现行满截面尾板+壳体见 [`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)
   - [x] 冻结总体架构：主板不延长；固定窄尾板与封闭14500电池匣沿 X 并排；电池匣从 `Y−` 向 `Y+` 推入
   - [x] 冻结交互：一个用户电气按键；侧面横向机械滑扣解锁；内端弱弹簧只顶出 3–5mm
