@@ -10,9 +10,11 @@ import StlProcessPreview from './components/StlProcessPreview';
 import PcbOrderPackages from './components/PcbOrderPackages';
 import {
   DEFAULT_DEVICE_HOST,
-  loadSavedDeviceHost,
+  DEFAULT_DEVICE_MDNS,
+  resolveInitialDeviceHost,
   saveDeviceHost,
 } from './lib/deviceImuProtocol';
+import { reconnectDeviceWs } from './lib/deviceWsSingleton';
 //#endregion
 
 //#region 模型/类型
@@ -36,8 +38,8 @@ function tabFromUrl(): Tab {
 //#region 公开 API / 视图层
 export default function App() {
   const [tab, setTab] = useState<Tab>(tabFromUrl);
-  const [hostDraft, setHostDraft] = useState(() => loadSavedDeviceHost());
-  const [activeHost, setActiveHost] = useState(() => loadSavedDeviceHost());
+  const [hostDraft, setHostDraft] = useState(() => resolveInitialDeviceHost());
+  const [activeHost, setActiveHost] = useState(() => resolveInitialDeviceHost());
   const { connected, imuData, impactData, lastError } = useWebSocket(
     activeHost,
     true,
@@ -61,6 +63,7 @@ export default function App() {
     setHostDraft(next);
     saveDeviceHost(next);
     setActiveHost(next);
+    reconnectDeviceWs(next);
   };
 
   return (
@@ -145,9 +148,7 @@ export default function App() {
           />
           <datalist id="device-host-suggestions">
             <option value={DEFAULT_DEVICE_HOST} />
-            <option value="192.168.7.52" />
-            <option value="192.168.7.80" />
-            <option value="SP-FE9C.local" />
+            <option value={DEFAULT_DEVICE_MDNS} />
             <option value="192.168.4.1" />
           </datalist>
           <button
@@ -187,7 +188,7 @@ export default function App() {
               {connected
                 ? `已连接 · ${activeHost} · IMU ${imuData.length}`
                 : lastError
-                  ? '重连中…'
+                  ? `重连中… · ${lastError}`
                   : '未连接'}
             </span>
           </div>

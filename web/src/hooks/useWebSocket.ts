@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { DeviceImuFrame } from '../lib/deviceImuProtocol';
 import {
-  retargetDeviceWs,
+  reconnectDeviceWs,
   subscribeDeviceWs,
 } from '../lib/deviceWsSingleton';
 //#endregion
@@ -46,7 +46,6 @@ export function useWebSocket(hostOrUrl: string, enabled = true) {
       return;
     }
 
-    retargetDeviceWs(hostOrUrl);
     const unsubscribe = subscribeDeviceWs(hostOrUrl, {
       onStatus: (s) => {
         setState((prev) => ({

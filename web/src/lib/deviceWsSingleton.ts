@@ -155,13 +155,24 @@ function attach(socket: WebSocket, url: string) {
 
   socket.onerror = () => {
     if (ws !== socket) return;
-    setStatus({ lastError: `连接失败: ${url}` });
+    setStatus({
+      lastError: `WebSocket 失败: ${url}（请确认与板子同一 WiFi，或刷新后重试）`,
+    });
   };
 
-  socket.onclose = () => {
+  socket.onclose = (ev) => {
     if (ws === socket) {
       ws = null;
-      setStatus({ connected: false });
+      const hint =
+        ev.code !== 1000 && ev.reason
+          ? `${ev.code}: ${ev.reason}`
+          : ev.code !== 1000
+            ? `code ${ev.code}`
+            : null;
+      setStatus({
+        connected: false,
+        lastError: hint ? `连接关闭 (${hint})` : status.lastError,
+      });
     }
     if (intentionalClose || subscribers.size === 0) return;
     clearReconnect();
@@ -173,6 +184,15 @@ function attach(socket: WebSocket, url: string) {
 }
 
 function openSocket(url: string) {
+  if (
+    ws &&
+    activeUrl === url &&
+    (ws.readyState === WebSocket.OPEN ||
+      ws.readyState === WebSocket.CONNECTING)
+  ) {
+    return;
+  }
+
   clearReconnect();
   intentionalClose = false;
   activeUrl = url;
@@ -210,45 +230,27 @@ function ensureConnected(hostOrUrl: string) {
 //#endregion
 
 //#region 公开 API
+
 export function subscribeDeviceWs(
   hostOrUrl: string,
   handlers: DeviceWsHandlers,
 ): () => void {
   const id = nextSubId++;
   subscribers.set(id, { id, handlers });
-  ensureConnected(hostOrUrl);
-  // 立刻同步当前状态给新订阅者
+  const url = buildDeviceWsUrl(hostOrUrl);
+  if (url !== activeUrl || !ws || ws.readyState === WebSocket.CLOSED) {
+    openSocket(url);
+  } else if (ws.readyState === WebSocket.OPEN) {
+    activeUrl = url;
+  } else {
+    activeUrl = url;
+    ensureConnected(hostOrUrl);
+  }
   handlers.onStatus?.(status);
 
   return () => {
     subscribers.delete(id);
-    if (subscribers.size > 0) return;
-
-    // 最后一个订阅者离开：延迟关闭，躲开 React StrictMode 双挂载
-    window.setTimeout(() => {
-      if (subscribers.size > 0) return;
-      intentionalClose = true;
-      clearReconnect();
-      if (flushTimer != null) {
-        window.clearTimeout(flushTimer);
-        flushTimer = null;
-      }
-      pendingImu = null;
-      if (ws) {
-        const sock = ws;
-        sock.onclose = null;
-        sock.onopen = null;
-        sock.onmessage = null;
-        sock.onerror = null;
-        try {
-          sock.close();
-        } catch {
-          /* ignore */
-        }
-        ws = null;
-      }
-      setStatus({ connected: false, sessionId: null });
-    }, 300);
+    // 不在 unmount 时关 WebSocket：StrictMode 会双挂载，关连接会把板子单例 WS 踢掉
   };
 }
 
@@ -267,5 +269,61 @@ export function retargetDeviceWs(hostOrUrl: string) {
 
 export function getDeviceWsStatus(): DeviceWsStatus {
   return status;
+}
+
+export function reconnectDeviceWs(hostOrUrl: string): void {
+  const url = buildDeviceWsUrl(hostOrUrl);
+  intentionalClose = true;
+  clearReconnect();
+  if (ws) {
+    const prev = ws;
+    prev.onclose = null;
+    prev.onopen = null;
+    prev.onmessage = null;
+    prev.onerror = null;
+    try {
+      prev.close();
+    } catch {
+      /* ignore */
+    }
+    ws = null;
+  }
+  intentionalClose = false;
+  activeUrl = url;
+  setStatus({ connected: false, lastError: null, sessionId: null });
+  if (subscribers.size > 0) {
+    openSocket(url);
+  }
+}
+
+export function disconnectDeviceWs(): void {
+  intentionalClose = true;
+  clearReconnect();
+  if (flushTimer != null) {
+    window.clearTimeout(flushTimer);
+    flushTimer = null;
+  }
+  pendingImu = null;
+  if (ws) {
+    const sock = ws;
+    sock.onclose = null;
+    sock.onopen = null;
+    sock.onmessage = null;
+    sock.onerror = null;
+    try {
+      sock.close();
+    } catch {
+      /* ignore */
+    }
+    ws = null;
+  }
+  setStatus({ connected: false, sessionId: null, lastError: null });
+  intentionalClose = false;
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => {
+    disconnectDeviceWs();
+  });
 }
 //#endregion

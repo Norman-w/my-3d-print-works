@@ -2,6 +2,44 @@
 set -e
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
+SP_API_PORT="${SP_API_PORT:-8000}"
+SP_WEB_PORT="${SP_WEB_PORT:-5173}"
+SP_STL_PORT="${SP_STL_PORT:-8775}"
+SP_DEV_KILL_PORTS="${SP_DEV_KILL_PORTS:-0}"
+SP_OPEN_TAB="${SP_OPEN_TAB:-process}"
+SP_DEVICE_HOST="${SP_DEVICE_HOST:-}"
+export SP_API_PORT SP_WEB_PORT SP_STL_PORT
+
+port_listen_pids() {
+  command -v lsof >/dev/null 2>&1 || return 0
+  lsof -tiTCP:"$1" -sTCP:LISTEN 2>/dev/null || true
+}
+
+require_free_port() {
+  local port="$1" label="$2"
+  local pids
+  pids=$(port_listen_pids "$port")
+  if [[ -n "$pids" ]]; then
+    echo "ERROR: 端口 :$port（$label）已被占用 PID: $pids"
+    echo "  乒云等其它任务请继续用默认端口；SmartPaddle 可用: ./dev-sim.sh（8010/5183/8775）"
+    echo "  或自定义: SP_API_PORT=8020 SP_WEB_PORT=5190 SP_DEV_KILL_PORTS=0 ./dev.sh"
+    exit 1
+  fi
+}
+
+maybe_release_web_port() {
+  if [[ "$SP_DEV_KILL_PORTS" != "1" ]]; then
+    return 0
+  fi
+  local pids
+  pids=$(port_listen_pids "$SP_WEB_PORT")
+  if [[ -n "$pids" ]]; then
+    echo "  SP_DEV_KILL_PORTS=1：释放占用 :$SP_WEB_PORT 的进程…"
+    echo "$pids" | xargs kill -9 2>/dev/null || true
+    sleep 1
+  fi
+}
+
 cleanup() {
     echo ""
     echo "Shutting down..."
@@ -38,15 +76,16 @@ else
 fi
 
 # 2. Start Go server
-echo "[2/5] Starting Go server on :8000..."
+require_free_port "$SP_API_PORT" "Go API"
+echo "[2/5] Starting Go server on :$SP_API_PORT..."
 cd "$ROOT/server"
-go run . &
+PORT="$SP_API_PORT" go run . &
 SERVER_PID=$!
 
 # Wait until API is actually listening (first run may compile deps)
-echo "  Waiting for http://127.0.0.1:8000 ..."
+echo "  Waiting for http://127.0.0.1:$SP_API_PORT ..."
 for i in $(seq 1 90); do
-  if curl -sf -m 1 "http://127.0.0.1:8000/api/bezier-profiles/project" >/dev/null 2>&1; then
+  if curl -sf -m 1 "http://127.0.0.1:$SP_API_PORT/api/bezier-profiles/project" >/dev/null 2>&1; then
     echo "  Go server ready."
     break
   fi
@@ -63,38 +102,38 @@ for i in $(seq 1 90); do
 done
 
 # 3. Serve exported STL and manifest for the unified process preview.
-echo "[3/5] Starting STL asset server on :8765..."
+require_free_port "$SP_STL_PORT" "STL preview"
+echo "[3/5] Starting STL asset server on :$SP_STL_PORT..."
 cd "$ROOT/enclosure/stl"
-python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/smartpaddle-stl-preview.log 2>&1 &
+python3 -m http.server "$SP_STL_PORT" --bind 127.0.0.1 >/tmp/smartpaddle-stl-preview.log 2>&1 &
 PREVIEW_PID=$!
 
 # 4. Start Web dev server (fixed port — localStorage is per-origin; curves live on server)
-echo "[4/5] Starting Web UI on :5173 (strict)..."
-if command -v lsof >/dev/null 2>&1; then
-  PIDS=$(lsof -ti:5173 2>/dev/null || true)
-  if [[ -n "$PIDS" ]]; then
-    echo "  释放占用 5173 的进程…"
-    echo "$PIDS" | xargs kill -9 2>/dev/null || true
-    sleep 1
-  fi
-fi
+maybe_release_web_port
+require_free_port "$SP_WEB_PORT" "Web UI"
+echo "[4/5] Starting Web UI on :$SP_WEB_PORT (strict)..."
 cd "$ROOT/web"
-npm run dev -- --host --port 5173 --strictPort &
+npm run dev -- --host --port "$SP_WEB_PORT" --strictPort &
 WEB_PID=$!
 sleep 2
 
 # 5. Open browser
+WEB_URL="http://localhost:$SP_WEB_PORT/?tab=$SP_OPEN_TAB"
+if [[ -n "$SP_DEVICE_HOST" ]]; then
+  WEB_URL="${WEB_URL}&device=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$SP_DEVICE_HOST'''))")"
+fi
 echo "[5/5] Ready!"
 echo ""
-echo "  Server:  http://localhost:8000  (API + WebSocket)"
-echo "  Web UI:  http://localhost:5173"
-echo "  M6:      http://localhost:5173/?tab=process"
+echo "  Server:  http://localhost:$SP_API_PORT  (API + WebSocket)"
+echo "  Web UI:  http://localhost:$SP_WEB_PORT"
+echo "  Live:    http://localhost:$SP_WEB_PORT/?tab=live"
+echo "  M6:      http://localhost:$SP_WEB_PORT/?tab=process"
 echo "  Models:  $ROOT/enclosure/stl/"
 echo ""
 echo "Press Ctrl+C to stop all services."
 
 if [[ "$(uname -s)" == "Darwin" ]] && command -v open >/dev/null 2>&1; then
-  open "http://localhost:5173/?tab=process"
+  open "$WEB_URL"
   open "$ROOT/enclosure/stl" 2>/dev/null || true
 fi
 

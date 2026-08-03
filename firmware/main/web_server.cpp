@@ -10,7 +10,9 @@ httpd_handle_t start_webserver(void)
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.uri_match_fn = httpd_uri_match_wildcard;
-    config.max_uri_handlers = 16;// 默认的只有8个,当前我们已经超过了这个数量的URI处理器,如果不调整这个值,会导致注册URI处理器失败部分功能无法使用
+    config.max_uri_handlers = 16;
+    config.lru_purge_enable = true;
+    config.keep_alive_enable = true;
 
     ESP_LOGI(TAG, "启动Web服务器...");
     if (httpd_start(&server, &config) == ESP_OK) {

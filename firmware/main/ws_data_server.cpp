@@ -1,6 +1,7 @@
 #include "ws_data_server.h"
 #include "const.h"
 #include "esp_log.h"
+#include "esp_http_server.h"
 #include "esp_timer.h"
 #include <cstdlib>
 #include <cstring>
@@ -22,15 +23,16 @@ static bool client_still_alive(void) {
 
 esp_err_t ws_data_handler_fn(httpd_req_t *req) {
     if (req->method == HTTP_GET) {
-        // 已有存活客户端时拒绝新人，避免多标签页互踢
-        if (client_still_alive()) {
-            ESP_LOGW(TAG, "已有 WebSocket 客户端 fd=%d，拒绝新连接", s_client_fd);
-            return ESP_FAIL;
-        }
-        s_client_fd = -1;
-
         s_server_handle = req->handle;
-        s_client_fd = httpd_req_to_sockfd(req);
+        const int new_fd = httpd_req_to_sockfd(req);
+
+        if (client_still_alive() && s_client_fd != new_fd) {
+            ESP_LOGW(TAG, "关闭旧 WebSocket fd=%d，接纳 fd=%d", s_client_fd, new_fd);
+            (void)httpd_sess_trigger_close(s_server_handle, s_client_fd);
+            s_client_fd = -1;
+        }
+
+        s_client_fd = new_fd;
 
         ESP_LOGI(TAG, "WebSocket 客户端已连接: fd=%d", s_client_fd);
 
@@ -83,8 +85,10 @@ esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
 
     esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
     if (ret != ESP_OK) {
-        ESP_LOGW(TAG, "WS 发送失败 (%s)，清客户端 fd=%d", esp_err_to_name(ret), s_client_fd);
-        s_client_fd = -1;
+        ESP_LOGW(TAG, "WS 发送失败 (%s)，fd=%d", esp_err_to_name(ret), s_client_fd);
+        if (ret == ESP_ERR_INVALID_STATE || ret == ESP_ERR_HTTPD_INVALID_REQ) {
+            s_client_fd = -1;
+        }
     }
     return ret;
 }
@@ -101,8 +105,10 @@ esp_err_t ws_data_send_text(const char *data, size_t len) {
 
     esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
     if (ret != ESP_OK) {
-        ESP_LOGW(TAG, "WS 文本发送失败 (%s)，清客户端 fd=%d", esp_err_to_name(ret), s_client_fd);
-        s_client_fd = -1;
+        ESP_LOGW(TAG, "WS 文本发送失败 (%s)，fd=%d", esp_err_to_name(ret), s_client_fd);
+        if (ret == ESP_ERR_INVALID_STATE || ret == ESP_ERR_HTTPD_INVALID_REQ) {
+            s_client_fd = -1;
+        }
     }
     return ret;
 }
@@ -228,6 +234,7 @@ static const httpd_uri_t ws_data_uri = {
     .handler = ws_data_handler_fn,
     .user_ctx = nullptr,
     .is_websocket = true,
+    .handle_ws_control_frames = true,
 };
 
 esp_err_t register_ws_data_handler(httpd_handle_t server) {
