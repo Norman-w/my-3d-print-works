@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { DeviceImuFrame } from '../lib/deviceImuProtocol';
 import {
-  reconnectDeviceWs,
   subscribeDeviceWs,
 } from '../lib/deviceWsSingleton';
 //#endregion
