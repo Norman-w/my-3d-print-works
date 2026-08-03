@@ -40,6 +40,9 @@ func main() {
 	http.HandleFunc("/api/bezier-profiles/store", handleBezierProfilesStoreRoute)
 	http.HandleFunc("/api/bezier-profiles/reimport-file", handleBezierReimportFileRoute)
 	http.HandleFunc("/api/bezier-profiles/", handleBezierProfilesRouter)
+	http.HandleFunc("/api/pcb-orders", handlePCBOrders)
+	http.HandleFunc("/api/pcb-orders/export", handlePCBOrderExport)
+	http.HandleFunc("/api/pcb-orders/download", handlePCBOrderDownload)
 
 	// Static: OpenAPI spec + calibration grid PDFs
 	http.Handle("/api/openapi.yaml", http.FileServer(http.Dir(".")))

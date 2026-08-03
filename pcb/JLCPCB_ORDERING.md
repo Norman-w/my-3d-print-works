@@ -31,6 +31,25 @@
 
 ## 3. 导出命令（通用）
 
+### 推荐：按板选择订单资料
+
+现在统一从仓库根目录使用选择器；它不会把两种 PCB 默认混进同一个 Gerber：
+
+```sh
+python3 pcb/scripts/export_order_packages.py --target main      # 只导出 C4 主板
+python3 pcb/scripts/export_order_packages.py --target tail      # 只导出实验性尾板
+python3 pcb/scripts/export_order_packages.py --target separate  # 两个独立订单 ZIP
+python3 pcb/scripts/export_order_packages.py --target panel     # 当前会拒绝：无正式拼板工程
+```
+
+`*_jlcpcb.zip` / `*_jlcpcb_upload.zip` 才上传嘉立创。主板和尾板都会另生成 `*_review_bundle.zip`，其中包含订单 README、DRC、Fab PDF、制造说明与 C4↔尾板线序；审阅包不代替上传包。
+
+网页入口：运行 `./dev.sh` 后打开 `http://localhost:5173/?tab=pcb`，可生成、下载并复制本地路径。
+
+当前没有经过评审的拼板源文件、工艺边、定位孔、Mark 点、邮票孔或 V 割合同，所以 `panel` 只报告阻塞，不会临时把不同设计拼成一个 Gerber。
+
+### 旧的 C4 专用入口
+
 ```sh
 # 输出目录每次用新路径，避免覆盖旧包
 OUT="$(mktemp -d /tmp/smartpaddle-jlc.XXXXXX)"

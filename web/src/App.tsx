@@ -7,6 +7,7 @@ import CalibrationWizard from './components/CalibrationWizard';
 import { useWebSocket } from './hooks/useWebSocket';
 import PaddleShapePreview from './components/PaddleShapePreview';
 import StlProcessPreview from './components/StlProcessPreview';
+import PcbOrderPackages from './components/PcbOrderPackages';
 import {
   DEFAULT_DEVICE_HOST,
   loadSavedDeviceHost,
@@ -15,11 +16,11 @@ import {
 //#endregion
 
 //#region 模型/类型
-type Tab = 'live' | 'shape' | 'process' | 'sessions' | 'calibrate';
+type Tab = 'live' | 'shape' | 'process' | 'pcb' | 'sessions' | 'calibrate';
 //#endregion
 
 //#region 常量/配置
-const TABS: Tab[] = ['live', 'shape', 'process', 'sessions', 'calibrate'];
+const TABS: Tab[] = ['live', 'shape', 'process', 'pcb', 'sessions', 'calibrate'];
 //#endregion
 
 //#region 私有成员
@@ -101,6 +102,8 @@ export default function App() {
                   ? 'Shape'
                   : t === 'process'
                     ? '工艺预览'
+                  : t === 'pcb'
+                    ? 'PCB 下单'
                   : t === 'sessions'
                     ? 'Sessions'
                     : 'Calibrate'}
@@ -218,6 +221,7 @@ export default function App() {
         )}
         {tab === 'shape' && <PaddleShapePreview />}
         {tab === 'process' && <StlProcessPreview />}
+        {tab === 'pcb' && <PcbOrderPackages />}
         {tab === 'sessions' && <SessionBrowser />}
         {tab === 'calibrate' && <CalibrationWizard />}
       </main>
