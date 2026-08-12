@@ -1,79 +1,137 @@
 // ============================================================
-// 调速器模组座 — 型腔 / 开窗 / 占位（Synairy ESC-Adaptor V02）
-// 坐标：板心在原点，长边沿 X，元件面朝 +Z
-// 螺丝：盒内穿过 PCB 锁入下半 Boss（上盖无外露螺孔）
+// v3 功率调速板 — 端壁开孔与可视化占位
+// 坐标：PCB 长边 X，线缆 Y，元件面 +Z，旋钮在 X-。
 // ============================================================
 include <parameters.scad>
 
-// ===== 分区：常量/配置 =====
-MCAV_L = MODULE_LENGTH + MODULE_CLEARANCE * 2;
-MCAV_W = MODULE_WIDTH  + MODULE_CLEARANCE * 2;
+// ===== 分区：端壁避让 =====
 
-DISP_WIN_X = DISPLAY_SIZE_X + DISPLAY_WINDOW_GAP * 2;
-DISP_WIN_Y = DISPLAY_SIZE_Y + DISPLAY_WINDOW_GAP * 2;
+// 上下壳各切一半，合盖后组成完整的旋钮螺纹套筒孔。
+module module_knob_end_cuts() {
+    wall_center_x = BOX_INNER_MIN_X - SIDE_WALL_THICKNESS/2;
+    cut_len = SIDE_WALL_THICKNESS + 2.0;
 
-// ===== 分区：公开 API =====
-
-module module_cavity_bottom() {
-    depth = MODULE_PCB_THICK + 0.3;
-    translate([0, 0, PCB_TOP_Z - depth / 2])
-        cube([MCAV_L, MCAV_W, depth + 0.1], center = true);
+    translate([wall_center_x, KNOB_AXIS_Y, KNOB_AXIS_Z])
+        rotate([0, 90, 0])
+            cylinder(d = KNOB_WINDOW_DIAM, h = cut_len,
+                     center = true, $fn = 48);
 }
 
-// 上半：壳内元器件净空（电位器柱高 KNOB_CAVITY_H；数码管高度可调）
-module module_cavity_top() {
-    clearance_h = 2.0;
-    translate([0, 0, PCB_TOP_Z + clearance_h / 2])
-        cube([MCAV_L, MCAV_W, clearance_h + 0.1], center = true);
-
-    // 数码管（DISPLAY_HEIGHT_ABOVE 可调，勿超过 KNOB_CAVITY_H）
-    translate([DISPLAY_CENTER_X, DISPLAY_CENTER_Y,
-               PCB_TOP_Z + DISPLAY_HEIGHT_ABOVE / 2])
-        cube([DISPLAY_SIZE_X + 0.6, DISPLAY_SIZE_Y + 0.6,
-              DISPLAY_HEIGHT_ABOVE + 0.2], center = true);
-
-    // 电位器本体：占满罗马柱顶以上到顶盖内壁的 7.5mm 净高
-    translate([KNOB_CENTER_X, KNOB_CENTER_Y, PCB_TOP_Z])
-        cylinder(d = KNOB_BODY_DIAM + 0.8, h = KNOB_CAVITY_H + 0.2, $fn = 48);
-}
-
-// 上盖开窗：轴孔 + 数码窗 + 按键（贯穿至外壳顶）
-module module_windows_top() {
-    top_outer_z = BOX_HALF_INNER_H + WALL_THICKNESS + 0.2;
-    cut_h = top_outer_z - PCB_TOP_Z + 0.4;
-
-    translate([KNOB_CENTER_X, KNOB_CENTER_Y, PCB_TOP_Z - 0.2])
-        cylinder(d = KNOB_WINDOW_DIAM, h = cut_h, $fn = 48);
-
-    translate([DISPLAY_CENTER_X, DISPLAY_CENTER_Y,
-               PCB_TOP_Z + cut_h / 2 - 0.2])
-        cube([DISP_WIN_X, DISP_WIN_Y, cut_h], center = true);
-}
+// ===== 分区：装配占位 =====
 
 module module_placeholder() {
-    color("black")
-    translate([0, 0, PCB_BOTTOM_Z + MODULE_PCB_THICK / 2])
-        cube([MODULE_LENGTH, MODULE_WIDTH, MODULE_PCB_THICK], center = true);
+    _pcb_placeholder();
+    _potentiometer_placeholder();
+    _heatsink_placeholder();
+    _terminal_placeholder();
+    _capacitor_placeholders();
+}
 
-    // 壳内电位器本体
-    color("dimgray")
-    translate([KNOB_CENTER_X, KNOB_CENTER_Y, PCB_TOP_Z])
-        cylinder(d = KNOB_BODY_DIAM, h = KNOB_BODY_HEIGHT, $fn = 48);
+// M2 沉头不得直接压在 PCB 的约 3mm 平孔上；此垫圈把载荷摊平。
+// 90°锥座让按总长标注的 M2×5 沉头嵌入，保留足够螺纹咬合。
+module module_screw_washer() {
+    difference() {
+        cylinder(d = MODULE_WASHER_OD, h = MODULE_WASHER_H, $fn = 48);
+        translate([0, 0, -0.1])
+            cylinder(d = MODULE_WASHER_ID,
+                     h = MODULE_WASHER_H + 0.2, $fn = 32);
+        translate([0, 0, MODULE_WASHER_H - MODULE_WASHER_CS_DEPTH])
+            cylinder(d1 = MODULE_WASHER_ID,
+                     d2 = MODULE_WASHER_CS_DIAM,
+                     h = MODULE_WASHER_CS_DEPTH + 0.1, $fn = 48);
+    }
+}
 
-    // 轴伸出上盖
-    top_z = BOX_HALF_INNER_H + WALL_THICKNESS;
+module _pcb_placeholder() {
+    color("seagreen")
+    difference() {
+        translate([MODULE_CENTER_X, MODULE_CENTER_Y,
+                   PCB_BOTTOM_Z + MODULE_PCB_THICK/2])
+            cube([MODULE_LENGTH, MODULE_WIDTH, MODULE_PCB_THICK],
+                 center = true);
+
+        for (p = MODULE_HOLES)
+            translate([p[0], p[1], PCB_BOTTOM_Z - 0.1])
+                cylinder(d = MODULE_HOLE_DIAM,
+                         h = MODULE_PCB_THICK + 0.2, $fn = 24);
+    }
+}
+
+module _potentiometer_placeholder() {
+    board_knob_edge_x = MODULE_CENTER_X - MODULE_LENGTH/2;
+    body_center_x = MODULE_CENTER_X + POT_BODY_CENTER_X_REL;
+
+    color("mediumseagreen")
+        translate([body_center_x, KNOB_AXIS_Y,
+                   PCB_TOP_Z + POT_BODY_SIZE_Z/2])
+            cube([POT_BODY_SIZE_X, POT_BODY_SIZE_Y, POT_BODY_SIZE_Z],
+                 center = true);
+
+    // 固定螺纹套筒：从 PCB 边向 X- 伸出。
     color("silver")
-    translate([KNOB_CENTER_X, KNOB_CENTER_Y, PCB_TOP_Z])
-        cylinder(d = KNOB_SHAFT_DIAM - 0.2, h = top_z + 2, $fn = 24);
+        translate([board_knob_edge_x - KNOB_THREAD_LENGTH,
+                   KNOB_AXIS_Y, KNOB_AXIS_Z])
+            rotate([0, 90, 0])
+                cylinder(d = KNOB_THREAD_DIAM, h = KNOB_THREAD_LENGTH,
+                         $fn = 36);
 
-    // 壳外旋钮帽
-    color("gold")
-    translate([KNOB_CENTER_X, KNOB_CENTER_Y, top_z])
-        cylinder(d = KNOB_CAP_DIAM, h = KNOB_CAP_HEIGHT, $fn = 48);
+    color("gray")
+        translate([board_knob_edge_x - KNOB_THREAD_LENGTH - KNOB_SHAFT_LENGTH,
+                   KNOB_AXIS_Y, KNOB_AXIS_Z])
+            rotate([0, 90, 0])
+                cylinder(d = KNOB_SHAFT_DIAM, h = KNOB_SHAFT_LENGTH,
+                         $fn = 32);
 
-    color("dimgray")
-    translate([DISPLAY_CENTER_X, DISPLAY_CENTER_Y,
-               PCB_TOP_Z + DISPLAY_HEIGHT_ABOVE / 2])
-        cube([DISPLAY_SIZE_X, DISPLAY_SIZE_Y, DISPLAY_HEIGHT_ABOVE],
-             center = true);
+    color("gainsboro")
+        translate([board_knob_edge_x - KNOB_THREAD_LENGTH
+                   - KNOB_SHAFT_LENGTH - KNOB_CAP_LENGTH,
+                   KNOB_AXIS_Y, KNOB_AXIS_Z])
+            rotate([0, 90, 0])
+                cylinder(d = KNOB_CAP_DIAM, h = KNOB_CAP_LENGTH, $fn = 48);
+
+    // 该下巴沿 X- 仅突出 1mm，停留在内腔中，不需要切穿端壁。
+    color("silver")
+        translate([board_knob_edge_x - POT_CHIN_PROTRUSION_X,
+                   KNOB_AXIS_Y - POT_CHIN_WIDTH_Y/2, PCB_TOP_Z])
+            cube([POT_CHIN_PROTRUSION_X,
+                  POT_CHIN_WIDTH_Y, POT_CHIN_HEIGHT_Z]);
+}
+
+module _heatsink_placeholder() {
+    base_z = PCB_TOP_Z;
+    fin_h = HEATSINK_HEIGHT - HEATSINK_BASE_HEIGHT;
+    fin_pitch = HEATSINK_SIZE_Y / HEATSINK_FIN_COUNT;
+
+    color("silver") {
+        translate([HEATSINK_CENTER_X, HEATSINK_CENTER_Y,
+                   base_z + HEATSINK_BASE_HEIGHT/2])
+            cube([HEATSINK_SIZE_X, HEATSINK_SIZE_Y,
+                  HEATSINK_BASE_HEIGHT], center = true);
+
+        for (i = [0 : HEATSINK_FIN_COUNT - 1]) {
+            fy = HEATSINK_CENTER_Y - HEATSINK_SIZE_Y/2
+                 + fin_pitch/2 + i * fin_pitch;
+            translate([HEATSINK_CENTER_X, fy,
+                       base_z + HEATSINK_BASE_HEIGHT + fin_h/2])
+                cube([HEATSINK_SIZE_X, HEATSINK_FIN_THICK, fin_h],
+                     center = true);
+        }
+    }
+}
+
+module _terminal_placeholder() {
+    color("royalblue")
+        translate([MODULE_CENTER_X + TERMINAL_CENTER_X_REL,
+                   MODULE_CENTER_Y,
+                   PCB_TOP_Z + TERMINAL_HEIGHT/2])
+            cube([TERMINAL_SIZE_X, TERMINAL_SIZE_Y, TERMINAL_HEIGHT],
+                 center = true);
+}
+
+module _capacitor_placeholders() {
+    color("black")
+    for (cy = CAP_Y_POSITIONS)
+        translate([MODULE_CENTER_X + CAP_CENTER_X_REL,
+                   MODULE_CENTER_Y + cy, PCB_TOP_Z])
+            cylinder(d = CAP_DIAMETER, h = CAP_HEIGHT, $fn = 32);
 }

@@ -27,12 +27,34 @@
   .hint { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(22,22,44,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 8px 20px; color: #667788; font-size: 11px; z-index: 10; }
   .loading { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); color: #8899aa; font-size: 14px; z-index: 100; }
   .loading.hidden { display: none; }
+  .file-protocol-notice { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; background: #1a1a2e; color: #dbe6f2; }
+  .file-protocol-notice[hidden] { display: none; }
+  .file-protocol-card { width: min(560px, 100%); padding: 28px; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; background: rgba(22,22,44,0.96); box-shadow: 0 18px 60px rgba(0,0,0,0.35); }
+  .file-protocol-card h2 { margin-bottom: 12px; color: #fff; font-size: 20px; }
+  .file-protocol-card p { margin-top: 10px; color: #aabbcc; line-height: 1.7; }
+  .file-protocol-card code { display: block; margin: 14px 0; padding: 12px 14px; overflow-x: auto; border-radius: 8px; background: rgba(0,0,0,0.28); color: #ffd166; font-size: 13px; }
+  .file-protocol-card a { display: inline-block; margin-top: 8px; padding: 9px 14px; border: 1px solid rgba(100,180,255,0.35); border-radius: 7px; background: rgba(100,180,255,0.14); color: #b9d7ff; text-decoration: none; }
+  body.file-protocol #canvas-container,
+  body.file-protocol .info-panel,
+  body.file-protocol .dl-panel,
+  body.file-protocol .hint,
+  body.file-protocol .loading { display: none; }
 </style>
 </head>
 <body>
+<div class="file-protocol-notice" id="file-protocol-notice" hidden>
+  <div class="file-protocol-card">
+    <h2>请通过本地服务预览模型</h2>
+    <p>直接打开这个 HTML 会绕过 SCAD → STL 自动同步，可能继续显示旧模型。</p>
+    <p>请在项目根目录运行：</p>
+    <code>python3 web/server.py</code>
+    <p>服务启动时会检查并重新导出过期的 STL，然后打开：</p>
+    <a href="http://localhost:8080">http://localhost:8080</a>
+  </div>
+</div>
 <div class="info-panel">
   <h1>🧊 therapy-cable-inline-box-for-physio</h1>
-  <div class="subtitle">理疗仪线缆串联保护盒 · v2 调速器</div>
+  <div class="subtitle">理疗仪线缆串联保护盒 · v3 功率调速板 · 十字走线</div>
   <div class="stats">Model: <span id="model-name">—</span><br>Triangles: <span id="tri-count">—</span><br>Size: <span id="bbox-size">—</span></div>
   <div class="switcher">
     <button id="btn-bottom" onclick="switchModel('bottom')">🔽 下半</button>
@@ -49,6 +71,13 @@
 <div class="hint" id="hint">🖱 左键旋转 | 滚轮缩放 | 右键平移</div>
 <div class="loading" id="loading">加载模型中...</div>
 <div id="canvas-container"></div>
+<script>
+  const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
+  if (IS_FILE_PROTOCOL) {
+    document.body.classList.add('file-protocol');
+    document.getElementById('file-protocol-notice').hidden = false;
+  }
+</script>
 <script type="importmap">
 { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
 </script>
@@ -150,6 +179,7 @@ window.switchModel = function(part) {
 };
 
 (async function(){
+  if (IS_FILE_PROTOCOL) return;
   try { const r = await fetch(URLS.bottom, {method:'HEAD'}); if(r.ok){ switchModel('bottom'); return; } } catch(e){}
   lel.textContent = '模型加载失败，请刷新重试'; lel.classList.remove('hidden');
 })();
