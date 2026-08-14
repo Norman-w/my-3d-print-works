@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Generate 16P vertical SMT Type-C land pattern matching the datasheet PCB drawing.
+"""Generate the exact H=5.8 short-pin 16P vertical Type-C land pattern.
 
 Only what the recommended PCB shows: 16 SMT pads + 2 oval slots + courtyard/silk.
 No decorative 'mouth' oval through the pads (that was misleading).
 
-Source: docs/usb-c-vertical-16p-short/pcb-layout-family-longpin.png
-  0.32×1.72 pads, P0.78, span 5.46, row edge-gap 0.48
-  oval slots 0.50×1.20, centers 8.65
+Primary source:
+  docs/usb-c-vertical-16p-short/Type-C-16PIN-vertical-H5.8-short-datasheet.pdf
+  page 1, "16P立贴PCB板焊盘位置图"
+
+  0.43×1.40 pads, P0.78, span 5.46, row outer span 3.70
+  oval slots 0.50×1.25, centers 8.68, outer copper R0.40
   F.Fab / F.CrtYd concentric around copper (same aspect)
 
   python3 pcb-tail/scripts/gen_usb_16p_vert_smt_fp.py
@@ -23,47 +26,59 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "lib" / "footprints.pretty" / "USB_C_Receptacle_16P_Vertical_SMT_Short.kicad_mod"
 PREVIEW = HERE.parent / "layouts" / "default" / "export-preview" / "fp-usb16p-selfcheck.png"
-DATASHEET = (
+DATASHEET_PDF = (
     HERE.parents[1]
     / "docs"
     / "usb-c-vertical-16p-short"
-    / "pcb-layout-family-longpin.png"
+    / "Type-C-16PIN-vertical-H5.8-short-datasheet.pdf"
+)
+DATASHEET_DETAIL = (
+    HERE.parents[1]
+    / "docs"
+    / "usb-c-vertical-16p-short"
+    / "Type-C-16PIN-vertical-H5.8-short-footprint-detail.png"
 )
 NAME = "USB_C_Receptacle_16P_Vertical_SMT_Short"
 
-PAD_W = 0.32
-PAD_H = 1.72
+PAD_W = 0.43
+PAD_H = 1.40
 PITCH = 0.78
 SPAN = 5.46
-ROW_EDGE_GAP = 0.48
+ROW_OUTER_SPAN = 3.70
 SLOT_W = 0.50
-SLOT_H = 1.20
-SLOT_SPAN = 8.65
-SLOT_PAD_W = SLOT_W + 0.4  # copper around oval drill
-SLOT_PAD_H = SLOT_H + 0.4
+SLOT_H = 1.25
+SLOT_SPAN = 8.68
+SLOT_PAD_W = 0.80  # PDF outer copper radius R0.40
+SLOT_PAD_H = 1.55  # same 0.15 mm annulus and straight section as the slot
 FAB_CLEAR = 0.10
 CRT_CLEAR = 0.25
 
-ROW_C2C = PAD_H + ROW_EDGE_GAP
+ROW_C2C = ROW_OUTER_SPAN - PAD_H
+ROW_EDGE_GAP = ROW_C2C - PAD_H
 YA = -ROW_C2C / 2.0
 YB = ROW_C2C / 2.0
 XS = [-SPAN / 2.0 + i * PITCH for i in range(8)]
 SLOT_X = SLOT_SPAN / 2.0
 # Fab / courtyard both hug copper (same center & aspect) — no separate mismatched shell box
 COPPER_W = 2 * (SLOT_X + SLOT_PAD_W / 2)
-COPPER_D = ROW_C2C + PAD_H  # outer edges of both pad rows
+COPPER_D = ROW_OUTER_SPAN
 FAB_W = COPPER_W + 2 * FAB_CLEAR
 FAB_D = COPPER_D + 2 * FAB_CLEAR
 CRT_W = FAB_W + 2 * CRT_CLEAR
 CRT_D = FAB_D + 2 * CRT_CLEAR
 
-A_PADS = ["1", "2", "3", "4", "5", "A8", "6", "7"]
-B_PADS = ["14", "13", "B8", "12", "11", "10", "9", "8"]
+A_PADS = ["A1", "A4", "A5", "A6", "A7", "A8", "A9", "A12"]
+B_PADS = ["B12", "B9", "B8", "B7", "B6", "B5", "B4", "B1"]
+SHIELD_PAD = "S1"
+_UID_INDEX = 0
 
 
 # ===== 分区：私有成员 =====
 def _uid() -> str:
-    return str(uuid.uuid4())
+    global _UID_INDEX
+    value = uuid.uuid5(uuid.NAMESPACE_URL, f"SmartPaddle/{NAME}/{_UID_INDEX}")
+    _UID_INDEX += 1
+    return str(value)
 
 
 def _line(x1: float, y1: float, x2: float, y2: float, layer: str, width: float = 0.12) -> str:
@@ -114,6 +129,8 @@ def _slot(name: str, x: float) -> str:
 
 
 def _build() -> str:
+    global _UID_INDEX
+    _UID_INDEX = 0
     assert abs(7 * PITCH - SPAN) < 1e-9
     chw, chd = CRT_W / 2, CRT_D / 2
     fhw, fhd = FAB_W / 2, FAB_D / 2
@@ -123,7 +140,7 @@ def _build() -> str:
 \t(generator "gen_usb_16p_vert_smt_fp.py")
 \t(generator_version "9.0")
 \t(layer "F.Cu")
-\t(descr "TYPE-C 16P vertical SMT. Land pattern = datasheet recommended PCB (16 pads + 2 oval slots). docs/usb-c-vertical-16p-short/pcb-layout-family-longpin.png")
+\t(descr "TYPE-C 16P vertical SMT, H=5.8 short pin. Exact land pattern and contact order from docs/usb-c-vertical-16p-short/Type-C-16PIN-vertical-H5.8-short-datasheet.pdf")
 \t(tags "USB C Type-C Receptacle SMD Vertical 16P")
 \t(property "Reference" "REF**"
 \t\t(at 0 {-chd - 1.0:.2f} 0)
@@ -147,7 +164,7 @@ def _build() -> str:
 \t\t\t)
 \t\t)
 \t)
-\t(property "Datasheet" "docs/usb-c-vertical-16p-short/pcb-layout-family-longpin.png"
+\t(property "Datasheet" "${{KIPRJMOD}}/../../../docs/usb-c-vertical-16p-short/Type-C-16PIN-vertical-H5.8-short-datasheet.pdf"
 \t\t(at 0 0 0)
 \t\t(layer "F.Fab")
 \t\t(hide yes)
@@ -173,9 +190,24 @@ def _build() -> str:
         parts.append(_smd(name, x, YA))
     for name, x in zip(B_PADS, XS, strict=True):
         parts.append(_smd(name, x, YB))
-    parts.append(_slot("15", -SLOT_X))
-    parts.append(_slot("15", SLOT_X))
-    parts.append("\t(embedded_fonts no)\n)\n")
+    parts.append(_slot(SHIELD_PAD, -SLOT_X))
+    parts.append(_slot(SHIELD_PAD, SLOT_X))
+    parts.append(
+        """\t(embedded_fonts no)
+\t(model "${KIPRJMOD}/../../lib/3dmodels/USB_C_Receptacle_16P_Vertical_SMT_Short.step"
+\t\t(offset
+\t\t\t(xyz 0 0 0)
+\t\t)
+\t\t(scale
+\t\t\t(xyz 1 1 1)
+\t\t)
+\t\t(rotate
+\t\t\t(xyz 0 0 0)
+\t\t)
+\t)
+)
+"""
+    )
     return "".join(parts)
 
 
@@ -190,47 +222,72 @@ def _selfcheck_preview() -> None:
     fh = int((maxy - miny) * scale)
 
     def xy(x: float, y: float) -> tuple[int, int]:
-        return int((x - minx) * scale), int((maxy - y) * scale)
+        # KiCad board view uses +Y downward, so A (negative Y) stays above B.
+        return int((x - minx) * scale), int((y - miny) * scale)
+
+    try:
+        font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 18)
+        font_s = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 13)
+        font_pin = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 10)
+    except Exception:
+        font = font_s = font_pin = ImageFont.load_default()
 
     left = Image.new("RGB", (fw, fh), (255, 255, 255))
     d = ImageDraw.Draw(left)
     d.rectangle(
-        [xy(-CRT_W / 2, CRT_D / 2), xy(CRT_W / 2, -CRT_D / 2)],
+        [xy(-CRT_W / 2, -CRT_D / 2), xy(CRT_W / 2, CRT_D / 2)],
         outline=(200, 80, 200),
         width=2,
     )
     d.rectangle(
-        [xy(-FAB_W / 2, FAB_D / 2), xy(FAB_W / 2, -FAB_D / 2)],
+        [xy(-FAB_W / 2, -FAB_D / 2), xy(FAB_W / 2, FAB_D / 2)],
         outline=(40, 40, 40),
         width=2,
     )
     for x in XS:
         for y in (YA, YB):
             d.rectangle(
-                [xy(x - PAD_W / 2, y + PAD_H / 2), xy(x + PAD_W / 2, y - PAD_H / 2)],
+                [xy(x - PAD_W / 2, y - PAD_H / 2), xy(x + PAD_W / 2, y + PAD_H / 2)],
                 fill=(200, 40, 40),
                 outline=(120, 10, 10),
             )
+    for name, x in zip(A_PADS, XS, strict=True):
+        d.text(
+            xy(x, YA - PAD_H / 2 - 0.12),
+            name,
+            anchor="ms",
+            fill=(20, 20, 20),
+            font=font_pin,
+        )
+    for name, x in zip(B_PADS, XS, strict=True):
+        d.text(
+            xy(x, YB + PAD_H / 2 + 0.12),
+            name,
+            anchor="mt",
+            fill=(20, 20, 20),
+            font=font_pin,
+        )
     for x in (-SLOT_X, SLOT_X):
         d.ellipse(
-            [xy(x - SLOT_W / 2, SLOT_H / 2), xy(x + SLOT_W / 2, -SLOT_H / 2)],
+            [
+                xy(x - SLOT_PAD_W / 2, -SLOT_PAD_H / 2),
+                xy(x + SLOT_PAD_W / 2, SLOT_PAD_H / 2),
+            ],
             outline=(0, 120, 40),
             width=2,
             fill=(220, 255, 220),
         )
+        d.ellipse(
+            [xy(x - SLOT_W / 2, -SLOT_H / 2), xy(x + SLOT_W / 2, SLOT_H / 2)],
+            outline=(0, 80, 30),
+            width=1,
+            fill=(255, 255, 255),
+        )
 
-    ds = Image.open(DATASHEET).convert("RGB")
-    w, h = ds.size
-    crop = ds.crop((int(w * 0.52), int(h * 0.48), int(w * 0.97), int(h * 0.92)))
+    crop = Image.open(DATASHEET_DETAIL).convert("RGB")
     rh = fh
     rw = int(crop.width * (rh / crop.height))
     crop = crop.resize((rw, rh), Image.Resampling.LANCZOS)
-
-    try:
-        font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 18)
-        font_s = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 13)
-    except Exception:
-        font = font_s = ImageFont.load_default()
 
     margin = 70
     canvas = Image.new("RGB", (fw + rw + margin * 3, fh + margin * 2 + 36), (245, 246, 248))
@@ -238,21 +295,36 @@ def _selfcheck_preview() -> None:
     canvas.paste(crop, (margin * 2 + fw, margin + 28))
     cd = ImageDraw.Draw(canvas)
     cd.text((margin, 6), "GENERATED land pattern", fill=(0, 0, 0), font=font)
-    cd.text((margin * 2 + fw, 6), "DATASHEET recommended PCB", fill=(0, 0, 0), font=font)
+    cd.text((margin * 2 + fw, 6), "H=5.8 SHORT-PIN PDF (page 1)", fill=(0, 0, 0), font=font)
     cd.text(
         (margin, margin + 28 + fh + 4),
-        f"16x {PAD_W}x{PAD_H}  P{PITCH}  span{SPAN}  rowGap{ROW_EDGE_GAP}  "
-        f"slot {SLOT_W}x{SLOT_H} @ {SLOT_SPAN}  courtyard {CRT_W:.2f}x{CRT_D:.2f}",
+        f"16x {PAD_W}x{PAD_H}  P{PITCH}  span{SPAN}  rowOuter{ROW_OUTER_SPAN}  "
+        f"slot {SLOT_W}x{SLOT_H} @ {SLOT_SPAN}; outer {SLOT_PAD_W}x{SLOT_PAD_H}",
         fill=(30, 30, 30),
         font=font_s,
     )
     PREVIEW.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(PREVIEW)
 
-    # geometric self-check vs datasheet numbers
+    # Geometric and semantic self-check vs the H=5.8 short-pin PDF.
     checks = [
+        ("datasheet_pdf_present", DATASHEET_PDF.is_file()),
+        ("datasheet_detail_present", DATASHEET_DETAIL.is_file()),
+        (
+            "16_unique_contacts",
+            len(A_PADS + B_PADS) == 16 and len(set(A_PADS + B_PADS)) == 16,
+        ),
+        (
+            "contact_order",
+            A_PADS[0] == "A1"
+            and A_PADS[-1] == "A12"
+            and B_PADS[0] == "B12"
+            and B_PADS[-1] == "B1",
+        ),
         ("pitch*7", abs(7 * PITCH - SPAN) < 1e-9),
-        ("row_c2c", abs(ROW_C2C - (PAD_H + ROW_EDGE_GAP)) < 1e-9),
+        ("row_outer_span", abs(ROW_C2C + PAD_H - ROW_OUTER_SPAN) < 1e-9),
+        ("slot_span", abs(2 * SLOT_X - SLOT_SPAN) < 1e-9),
+        ("slot_annulus", SLOT_PAD_W > SLOT_W and SLOT_PAD_H > SLOT_H),
         ("fab_contains_copper", FAB_W >= COPPER_W - 1e-9 and FAB_D >= COPPER_D - 1e-9),
         ("crt_contains_fab", CRT_W >= FAB_W - 1e-9 and CRT_D >= FAB_D - 1e-9),
         ("concentric", abs(CRT_W - FAB_W - 2 * CRT_CLEAR) < 1e-9),

@@ -7,6 +7,8 @@
   enclosure/stl/paddle_m6_fasteners.stl
 
 输出会覆盖上述打印件，并重建 M6 装配、爆炸图和尾段试片。
+另输出独立安装的 B3U 导向活动推杆：
+  enclosure/stl/paddle_m6_tail_button_plunger.stl
 
 诊断（不覆盖打印件）：
   enclosure/stl/interference/board_slot.stl
@@ -108,6 +110,20 @@ def _box(center, extents):
         extents=extents,
         transform=trimesh.transformations.translation_matrix(center),
     )
+
+
+def _box_xz_rotated(center, extents, rot_deg: float):
+    """Create a box and rotate its XZ footprint around the handle Y axis."""
+    import trimesh
+
+    mesh = _box(center, extents)
+    if abs(rot_deg) > 1e-9:
+        mesh.apply_transform(
+            trimesh.transformations.rotation_matrix(
+                math.radians(rot_deg), [0, 1, 0], point=center
+            )
+        )
+    return mesh
 
 
 def _cyl_y(radius: float, height: float, center, sections: int = 48):
@@ -236,9 +252,10 @@ def _board_and_ui_cutters(info: dict):
         y1 - y0,
         [float(btn["x"]), (y0 + y1) / 2, float(btn["y"])],
     )
-    btn_pocket = _box(
+    btn_pocket = _box_xz_rotated(
         [float(btn["x"]), pcb_y - float(btn["body_h"]) / 2, float(btn["y"])],
-        [float(btn["pocket"]), float(btn["body_h"]) + 0.35, float(btn["pocket"])],
+        [float(btn["pocket_w"]), float(btn["body_h"]) + 0.35, float(btn["pocket_d"])],
+        float(btn.get("rot_deg", 0.0)),
     )
 
     cuts = [board, usb_cut, btn_hole, btn_pocket]
@@ -253,6 +270,41 @@ def _board_and_ui_cutters(info: dict):
             )
         )
     return board, cuts[1:], cuts
+
+
+def _button_plunger(info: dict):
+    """Build the separate, inside-loaded B3U guided plunger in its rest pose."""
+
+    import trimesh
+
+    btn = info["button"]
+    butt_y = float(info["butt_y"])
+    pcb_y = float(info["pcb_y"])
+    outer_y = butt_y - float(btn["plunger_outer_projection"])
+    tip_y = pcb_y - float(btn["operation_h"]) - float(btn["plunger_rest_gap"])
+    if tip_y <= outer_y:
+        raise RuntimeError("button plunger has non-positive shaft length")
+
+    center_xz = [float(btn["x"]), float(btn["y"])]
+    shaft = _cyl_y(
+        float(btn["plunger_shaft_d"]) / 2,
+        tip_y - outer_y,
+        [center_xz[0], (outer_y + tip_y) / 2, center_xz[1]],
+    )
+    flange_y0 = butt_y + float(btn["wall_t"]) + 0.05
+    flange_h = float(btn["plunger_flange_h"])
+    flange = _cyl_y(
+        float(btn["plunger_flange_d"]) / 2,
+        flange_h,
+        [center_xz[0], flange_y0 + flange_h / 2, center_xz[1]],
+    )
+    try:
+        plunger = trimesh.boolean.union([shaft, flange], check_volume=False)
+    except TypeError:
+        plunger = trimesh.boolean.union([shaft, flange])
+    if plunger is None or getattr(plunger, "is_empty", False):
+        raise RuntimeError("button plunger union failed")
+    return plunger
 
 
 def _difference_all(mesh, cutters):
@@ -323,10 +375,13 @@ def main() -> int:
     )
 
     board, ui, all_cuts = _board_and_ui_cutters(info)
+    plunger = _button_plunger(info)
     INTER_DIR.mkdir(parents=True, exist_ok=True)
     _export(board, INTER_DIR / "board_slot.stl")
     _export(trimesh.util.concatenate(ui), INTER_DIR / "ui_cuts.stl")
     _export(trimesh.util.concatenate(all_cuts), INTER_DIR / "all_cuts.stl")
+    _export(plunger, INTER_DIR / "button_plunger.stl")
+    _export(plunger, STL / "paddle_m6_tail_button_plunger.stl")
 
     print("→ 干涉 M6 四层与正反合体件 …")
     cut_parts = {
@@ -364,7 +419,8 @@ def main() -> int:
     except Exception as exc:
         print(f"  tip 裁切跳过: {exc}")
 
-    print("Step6 完成 ✓  M6 最终打印件已写入 enclosure/stl/")
+    print("Step6 完成 ✓  M6 最终打印件与独立按钮推杆已写入 enclosure/stl/")
+    print("  推杆须从壳内装入；量产前先打印尾段试片确认 0.05 mm 间隙与 0.15 mm 行程。")
     return 0
 
 

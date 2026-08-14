@@ -14,9 +14,19 @@ tail_if_usb_rot = -90.000;
 
 tail_if_btn_x = -1.65100;
 tail_if_btn_z = -5.46100;
-tail_if_btn_hole_d = 2.900;
-tail_if_btn_pocket = 5.100;
-tail_if_btn_body_h = 3.200;
+tail_if_btn_rot = -90.000;
+tail_if_btn_hole_d = 2.000;
+tail_if_btn_pocket_w = 3.600;
+tail_if_btn_pocket_d = 3.100;
+tail_if_btn_body_h = 1.200;
+tail_if_btn_operation_h = 1.600;
+tail_if_btn_pretravel = 0.150;
+tail_if_btn_wall_t = 2.000;
+tail_if_btn_plunger_d = 1.600;
+tail_if_btn_flange_d = 3.000;
+tail_if_btn_flange_h = 0.500;
+tail_if_btn_outer_projection = 0.300;
+tail_if_btn_rest_gap = 0.050;
 
 tail_if_d1_x = 2.45499;
 tail_if_d1_z = -3.78400;
@@ -149,12 +159,13 @@ module tail_board_interference_cuts() {
                 rotate(tail_if_usb_rot)
                     tail_if_stadium_2d(tail_if_usb_w, tail_if_usb_d);
 
-    // 按钮孔（比按柱粗）+ 开关体凹坑
+    // B3U 导向活动推杆孔 + 随 footprint 旋转的开关体凹坑
     translate([tail_if_btn_x, tail_if_butt_y - 3, tail_if_btn_z])
         rotate([-90, 0, 0])
             cylinder(d = tail_if_btn_hole_d, h = (tail_if_pcb_y + 1) - (tail_if_butt_y - 3), $fn = 28);
     translate([tail_if_btn_x, tail_if_pcb_y - tail_if_btn_body_h / 2, tail_if_btn_z])
-        cube([tail_if_btn_pocket, tail_if_btn_body_h + 0.6, tail_if_btn_pocket], center = true);
+        rotate([0, tail_if_btn_rot, 0])
+            cube([tail_if_btn_pocket_w, tail_if_btn_body_h + 0.35, tail_if_btn_pocket_d], center = true);
 
     // LED 透光孔
     translate([tail_if_d1_x, tail_if_butt_y - 2.5, tail_if_d1_z])
@@ -163,4 +174,19 @@ module tail_board_interference_cuts() {
     translate([tail_if_led1_x, tail_if_butt_y - 2.5, tail_if_led1_z])
         rotate([-90, 0, 0])
             cylinder(d = tail_if_led1_hole_d, h = (tail_if_pcb_y + 0.5) - (tail_if_butt_y - 2.5), $fn = 24);
+}
+
+// 独立打印、从壳内装入；内侧法兰防止推杆向壳外脱出。
+// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm；先做尾段试片。
+module tail_if_button_plunger() {
+    y_outer = tail_if_butt_y - tail_if_btn_outer_projection;
+    y_tip = tail_if_pcb_y - tail_if_btn_operation_h - tail_if_btn_rest_gap;
+    union() {
+        translate([tail_if_btn_x, y_outer, tail_if_btn_z])
+            rotate([-90, 0, 0])
+                cylinder(d = tail_if_btn_plunger_d, h = y_tip - y_outer, $fn = 32);
+        translate([tail_if_btn_x, tail_if_butt_y + tail_if_btn_wall_t + 0.05, tail_if_btn_z])
+            rotate([-90, 0, 0])
+                cylinder(d = tail_if_btn_flange_d, h = tail_if_btn_flange_h, $fn = 32);
+    }
 }

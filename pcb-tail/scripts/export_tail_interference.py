@@ -26,7 +26,7 @@ OUT_SCAD = ROOT / "enclosure" / "stl" / "interference" / "tail_board_cuts.scad"
 
 # 开孔相对器件的间隙（mm）
 USB_CLEAR = 0.35
-BTN_HOLE_OVER = 0.50          # 按钮孔比按柱粗
+BTN_HOLE_OVER = 0.40          # Ø1.6 推杆配 Ø2.0 导向孔（径向间隙 0.2）
 LED_HOLE_OVER = 0.40
 BOARD_AXIAL_CLEAR = 0.15      # 板厚向每侧
 
@@ -90,7 +90,7 @@ def _extract() -> dict:
     d1 = fp_pose("D1")
     led1 = fp_pose("LED1")
 
-    # 器件包络（与 lib/3dmodels/*.scad 对齐）
+    # 器件包络（J1 来自主数据表；SW1 来自 Omron B3U 数据表 A162-E1）
     usb = {
         **j1,
         "shell_w": 8.94,
@@ -100,13 +100,22 @@ def _extract() -> dict:
     }
     button = {
         **sw1,
-        "body": 4.5,
-        "body_h": 3.20,
-        "stem_d": 1.70,
-        "act_d": 2.40,
-        "act_h": 1.10,
-        "hole_d": 2.40 + BTN_HOLE_OVER,
-        "pocket": 4.5 + 0.6,
+        "part": "Omron B3U-1000P",
+        "body_w": 3.00,
+        "body_d": 2.50,
+        "body_h": 1.20,
+        "operation_h": 1.60,
+        "act_d": 1.50,
+        "pretravel": 0.15,
+        "hole_d": 1.60 + BTN_HOLE_OVER,
+        "pocket_w": 3.00 + 0.60,
+        "pocket_d": 2.50 + 0.60,
+        "wall_t": float(facts["wall_t"]),
+        "plunger_shaft_d": 1.60,
+        "plunger_flange_d": 3.00,
+        "plunger_flange_h": 0.50,
+        "plunger_outer_projection": 0.30,
+        "plunger_rest_gap": 0.05,
     }
     led_rgb = {
         **d1,
@@ -164,9 +173,19 @@ tail_if_usb_rot = {usb['rot_deg']:.3f};
 
 tail_if_btn_x = {btn['x']:.5f};
 tail_if_btn_z = {btn['y']:.5f};
+tail_if_btn_rot = {btn['rot_deg']:.3f};
 tail_if_btn_hole_d = {btn['hole_d']:.3f};
-tail_if_btn_pocket = {btn['pocket']:.3f};
+tail_if_btn_pocket_w = {btn['pocket_w']:.3f};
+tail_if_btn_pocket_d = {btn['pocket_d']:.3f};
 tail_if_btn_body_h = {btn['body_h']:.3f};
+tail_if_btn_operation_h = {btn['operation_h']:.3f};
+tail_if_btn_pretravel = {btn['pretravel']:.3f};
+tail_if_btn_wall_t = {btn['wall_t']:.3f};
+tail_if_btn_plunger_d = {btn['plunger_shaft_d']:.3f};
+tail_if_btn_flange_d = {btn['plunger_flange_d']:.3f};
+tail_if_btn_flange_h = {btn['plunger_flange_h']:.3f};
+tail_if_btn_outer_projection = {btn['plunger_outer_projection']:.3f};
+tail_if_btn_rest_gap = {btn['plunger_rest_gap']:.3f};
 
 tail_if_d1_x = {d1['x']:.5f};
 tail_if_d1_z = {d1['y']:.5f};
@@ -203,12 +222,13 @@ module tail_board_interference_cuts() {{
                 rotate(tail_if_usb_rot)
                     tail_if_stadium_2d(tail_if_usb_w, tail_if_usb_d);
 
-    // 按钮孔（比按柱粗）+ 开关体凹坑
+    // B3U 导向活动推杆孔 + 随 footprint 旋转的开关体凹坑
     translate([tail_if_btn_x, tail_if_butt_y - 3, tail_if_btn_z])
         rotate([-90, 0, 0])
             cylinder(d = tail_if_btn_hole_d, h = (tail_if_pcb_y + 1) - (tail_if_butt_y - 3), $fn = 28);
     translate([tail_if_btn_x, tail_if_pcb_y - tail_if_btn_body_h / 2, tail_if_btn_z])
-        cube([tail_if_btn_pocket, tail_if_btn_body_h + 0.6, tail_if_btn_pocket], center = true);
+        rotate([0, tail_if_btn_rot, 0])
+            cube([tail_if_btn_pocket_w, tail_if_btn_body_h + 0.35, tail_if_btn_pocket_d], center = true);
 
     // LED 透光孔
     translate([tail_if_d1_x, tail_if_butt_y - 2.5, tail_if_d1_z])
@@ -218,6 +238,21 @@ module tail_board_interference_cuts() {{
         rotate([-90, 0, 0])
             cylinder(d = tail_if_led1_hole_d, h = (tail_if_pcb_y + 0.5) - (tail_if_butt_y - 2.5), $fn = 24);
 }}
+
+// 独立打印、从壳内装入；内侧法兰防止推杆向壳外脱出。
+// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm；先做尾段试片。
+module tail_if_button_plunger() {{
+    y_outer = tail_if_butt_y - tail_if_btn_outer_projection;
+    y_tip = tail_if_pcb_y - tail_if_btn_operation_h - tail_if_btn_rest_gap;
+    union() {{
+        translate([tail_if_btn_x, y_outer, tail_if_btn_z])
+            rotate([-90, 0, 0])
+                cylinder(d = tail_if_btn_plunger_d, h = y_tip - y_outer, $fn = 32);
+        translate([tail_if_btn_x, tail_if_butt_y + tail_if_btn_wall_t + 0.05, tail_if_btn_z])
+            rotate([-90, 0, 0])
+                cylinder(d = tail_if_btn_flange_d, h = tail_if_btn_flange_h, $fn = 32);
+    }}
+}}
 """
     OUT_SCAD.write_text(text, encoding="utf-8")
 
@@ -226,7 +261,7 @@ module tail_board_interference_cuts() {{
 def main() -> int:
     data = _extract()
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    OUT.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     _write_scad(data)
     print(f"wrote {OUT}  edge_pts={len(data['edge_cuts_xy'])}")
     print(f"wrote {OUT_SCAD}")

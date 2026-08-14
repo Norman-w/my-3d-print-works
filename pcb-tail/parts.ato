@@ -59,15 +59,19 @@ component LED_0603:
     footprint = "LED_SMD:LED_0603_1608Metric"
 
 
-component TactileSwitch45:
-    """4.5×4.5 mm SPST 轻触（与 C4 / 柄尾电源键同规格，THT）。"""
+component Omron_B3U_1000P:
+    """Omron B3U-1000P 超小型顶按 SPST-NO 贴片轻触开关（无定位柱）。
+
+    3.0×2.5 mm 本体、1.6 mm 操作高度、1.5 N；配合拍柄导向活动推杆，
+    不再使用旧 4.5×4.5 mm THT 开关的四个大通孔。
+    """
     designator_prefix = "SW"
-    value = "4.5x4.5"
+    value = "B3U-1000P"
     signal a
     signal b
     a ~ pin 1
     b ~ pin 2
-    footprint = "SmartPaddleTail:SW_SPST_4.5x4.5"
+    footprint = "Button_Switch_SMD:SW_SPST_B3U-1000P"
 
 
 component WS2812B_2020:
@@ -91,45 +95,31 @@ component WS2812B_2020:
 component USB4120_03_C_Vertical:
     """16P Type-C 立贴超短体（优选身体高度 5.8 mm）。
 
-    选型与图纸：docs/usb-c-vertical-16p-short/（同族 H=5.0…6.8 共用焊盘）。
-    封装由 scripts/gen_usb_16p_vert_smt_fp.py 按推荐 PCB 生成：
+    主图纸：docs/usb-c-vertical-16p-short/
+      Type-C-16PIN-vertical-H5.8-short-datasheet.pdf
+    封装由 scripts/gen_usb_16p_vert_smt_fp.py 按该 PDF 的推荐 PCB 生成：
     16×贴片 + 左右腰圆孔；无 USB4115 四角圆孔。
-    焊盘号（atopile 数字焊盘；A8/B8 在封装中为命名焊盘，本板 NC）：
-      1=A1  2=A4  3=A5  4=A6  5=A7  6=A9  7=A12
-      8=B1  9=B4 10=B5 11=B6 12=B7 13=B9 14=B12  15=S1
+    焊盘直接使用数据表触点名 A1…B12；A8/B8 在本板明确 NC，S1 为外壳。
     """
     designator_prefix = "J"
     value = "USB-C-16P-VERT-5.8"
-    signal A1
-    signal A4
-    signal A5
-    signal A6
-    signal A7
-    signal A9
-    signal A12
-    signal B1
-    signal B4
-    signal B5
-    signal B6
-    signal B7
-    signal B9
-    signal B12
-    signal S1
-    A1 ~ pin 1
-    A4 ~ pin 2
-    A5 ~ pin 3
-    A6 ~ pin 4
-    A7 ~ pin 5
-    A9 ~ pin 6
-    A12 ~ pin 7
-    B1 ~ pin 8
-    B4 ~ pin 9
-    B5 ~ pin 10
-    B6 ~ pin 11
-    B7 ~ pin 12
-    B9 ~ pin 13
-    B12 ~ pin 14
-    S1 ~ pin 15
+    pin "A1"
+    pin "A4"
+    pin "A5"
+    pin "A6"
+    pin "A7"
+    pin "A8"
+    pin "A9"
+    pin "A12"
+    pin "B1"
+    pin "B4"
+    pin "B5"
+    pin "B6"
+    pin "B7"
+    pin "B8"
+    pin "B9"
+    pin "B12"
+    pin "S1"
     footprint = "SmartPaddleTail:USB_C_Receptacle_16P_Vertical_SMT_Short"
 
 
@@ -149,6 +139,26 @@ component MolexPicoBlade_53398_4P_Vertical:
     p3 ~ pin 3
     p4 ~ pin 4
     footprint = "Connector_Molex:Molex_PicoBlade_53398-0471_1x04-1MP_P1.25mm_Vertical"
+
+
+component JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery:
+    """Dedicated 1-cell battery connector, JST ACH 1.2 mm SMT top-entry.
+
+    Exact board header: BM02B-ACHSS-GAN-ETF, mating housing ACHR-02V-S,
+    contact SACH-003G-P0.2 with 28 AWG finished cable.
+    Pin 1 is BAT_P/red; pin 2 is GND/black.
+
+    Primary source:
+      docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf
+      SHA-256 d1f9e9375b1c0dfc4814d5f633997484d84da6c0b03f712104df3bbdf462131b
+    """
+    designator_prefix = "J"
+    value = "BM02B-ACHSS-GAN-ETF"
+    signal BAT_P
+    signal GND
+    BAT_P ~ pin 1
+    GND ~ pin 2
+    footprint = "Connector_JST:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical"
 
 
 component IP5305T:

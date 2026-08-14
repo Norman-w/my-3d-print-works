@@ -4,7 +4,7 @@
 KiCad：X = 柄 X，Y = 柄 Z。
 
 器件与网络对齐 C5_PLAN：IP5305T 充放电、USB 2.0、两组 MX1.25 4P 立插线束、
-WS2812B-2020。build 后在 KiCad 中摆放布线。
+专用 JST ACH 2P 电池入口、WS2812B-2020。build 后在 KiCad 中摆放布线。
 """
 
 from "parts.ato" import Resistor
@@ -12,10 +12,11 @@ from "parts.ato" import Capacitor
 from "parts.ato" import Capacitor0805
 from "parts.ato" import InductorXFL4020
 from "parts.ato" import LED_0603
-from "parts.ato" import TactileSwitch45
+from "parts.ato" import Omron_B3U_1000P
 from "parts.ato" import WS2812B_2020
 from "parts.ato" import USB4120_03_C_Vertical
 from "parts.ato" import MolexPicoBlade_53398_4P_Vertical
+from "parts.ato" import JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery
 from "parts.ato" import IP5305T
 from "parts.ato" import USBLC6_2SC6
 from "parts.ato" import SN74AHCT1G125
@@ -28,7 +29,8 @@ module SmartPaddleTail:
     usb = new USB4120_03_C_Vertical
     j_pwr = new MolexPicoBlade_53398_4P_Vertical
     j_sig = new MolexPicoBlade_53398_4P_Vertical
-    sw_user = new TactileSwitch45
+    j_bat = new JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery
+    sw_user = new Omron_B3U_1000P
     led_rgb = new WS2812B_2020
     led_stat = new LED_0603
     led_stat.value = "LTST-C190KGKT"
@@ -122,6 +124,8 @@ module SmartPaddleTail:
     usb.A7 ~ usb_dn_conn
     usb.B7 ~ usb_dn_conn
 
+    # SBU1/SBU2 are not used by this USB 2.0 sink: A8 and B8 intentionally NC.
+
     # ========== USB ESD（靠近 Type-C）==========
     u_esd.VBUS ~ vbus
     u_esd.GND ~ gnd
@@ -130,7 +134,7 @@ module SmartPaddleTail:
     u_esd.IO2A ~ usb_dn_conn
     u_esd.IO2B ~ usb_dn
 
-    # ========== 用户键（按下接地；兼 IP5305T KEY + 线束）==========
+    # ========== 用户键（B3U-1000P SMD；按下接地；兼 IP5305T KEY + 线束）==========
     sw_user.a ~ user_btn
     sw_user.b ~ gnd
 
@@ -182,6 +186,12 @@ module SmartPaddleTail:
     j_pwr.p2 ~ gnd
     j_pwr.p3 ~ bat_p
     j_pwr.p4 ~ v5_sw_return
+
+    # j_bat：JST ACH 专用 1S 电池入口；Pin 1=BAT_P/red，Pin 2=GND/black。
+    # J2.3 继续把同一 BAT_P 网送往主板采样；电池不得接 vout_5v。
+    j_bat.BAT_P ~ bat_p
+    j_bat.GND ~ gnd
+
     # j_sig：USB 差分 + 按键 + RGB
     j_sig.p1 ~ usb_dn
     j_sig.p2 ~ usb_dp

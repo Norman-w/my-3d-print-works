@@ -5,6 +5,8 @@
   (lib (name "LED_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/LED_SMD.pretty")(options "")(descr ""))
   (lib (name "Inductor_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Inductor_SMD.pretty")(options "")(descr ""))
   (lib (name "Connector_Molex")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_Molex.pretty")(options "")(descr ""))
+  (lib (name "Connector_JST")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty")(options "")(descr ""))
+  (lib (name "Button_Switch_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Button_Switch_SMD.pretty")(options "")(descr ""))
   (lib (name "Package_TO_SOT_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty")(options "")(descr ""))
   (lib (name "Package_SO")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty")(options "")(descr ""))
   (lib (name "SmartPaddleTail")(type "KiCad")(uri "${KIPRJMOD}/../../lib/footprints.pretty")(options "")(descr ""))

@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 MAIN_EXPORTER = ROOT / "pcb" / "scripts" / "export_jlcpcb.py"
 TAIL_BOARD = ROOT / "pcb-tail" / "layouts" / "default" / "default.kicad_pcb"
+TAIL_J1_AUDITOR = ROOT / "pcb-tail" / "scripts" / "audit_usb_16p_j1.py"
 TAIL_CONNECTION = ROOT / "pcb-tail" / "C4_ADAPTER_HARNESS.md"
 MAIN_FAB_NOTES = ROOT / "pcb" / "C4_FAB_NOTES.md"
 MAIN_FAB_READINESS = ROOT / "pcb" / "C4_FAB_READINESS.md"
@@ -117,6 +118,7 @@ def zip_files(destination: Path, files: list[Path], base: Path | None = None) ->
 
 
 def export_tail(out: Path, kicad_cli: str) -> tuple[Path, Path]:
+    run([sys.executable, str(TAIL_J1_AUDITOR)])
     if out.exists() and any(out.iterdir()):
         raise RuntimeError(f"tail output is not empty: {out}")
     gerbers = out / "gerbers"
