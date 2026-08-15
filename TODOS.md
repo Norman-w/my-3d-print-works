@@ -33,8 +33,8 @@
 
 ## 硬件
 
-- [ ] **C3 回板焊接 / bringup** — 历史批次（Gerber `20260724-081156`）；**当前以 C4 为主**，除非仍有一块 C3 待焊
-- [ ] **C4 电路（当前刚性主板）** — 见 [`pcb/C4_PLAN.md`](pcb/C4_PLAN.md)；**裸板已到手**（Revision C4，PCB SHA `86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70`）
+- [ ] **C3 回板焊接 / bringup** — 历史批次（Gerber `20260724-081156`）；仅在仍有待焊 C3 时继续
+- [ ] **C4 已回板实物 bring-up（历史批次）** — 见 [`pcb/C4_PLAN.md`](pcb/C4_PLAN.md)；裸板 Revision C4，PCB SHA `86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70`
   - [x] PZT I²C 可调门槛比较器前端（MCP4728 + TLV1814 + 高阻 ADC 窥探 / 0Ω DNP）
   - [x] MCU 换 ESP32-S3-WROOM-1-N16R8；固件 target / 分区 / PSRAM / 脚位同步
   - [x] 尾插 MX1.25 线序重排：板坐标上 5V 正对 GND，USB/UART 成对（见 `docs/1.25x10p`）
@@ -48,17 +48,16 @@
   - [x] 手工布线完成后以 Step 4.1e 备份并只读复核 63 器件到 `c4_placement_snapshot.json`/放置脚本
   - [x] 铺铜、最终 DRC、物理焊盘连通性、Gerber/钻孔/ZIP 试导出与最终 14 页装配包；详见 [`pcb/C4_FAB_READINESS.md`](pcb/C4_FAB_READINESS.md)
   - [ ] C4 回板 bring-up（进行中）：对照 `output/pdf/smartpaddle-ai-assembly/smartpaddle-c4-solder-assembly.pdf` 手焊；内部槽边焊接、限流 5 V 上电、AP2112 温升、USB 数据尾线、MCP4728/TLV1814 PZT 链、IMU UART、射频与功耗
-- [ ] **一体尾板与可换电池（规划）** — 整机/电气见 [`pcb/C5_PLAN.md`](pcb/C5_PLAN.md)；现行满截面尾板+壳体见 [`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)
-  - [x] 冻结总体架构：主板不延长；固定窄尾板与封闭14500电池匣沿 X 并排；电池匣从 `Y−` 向 `Y+` 推入
-  - [x] 冻结交互：一个用户电气按键；侧面横向机械滑扣解锁；内端弱弹簧只顶出 3–5mm
-  - [x] 冻结电气基线：IP5305T + 完整16P USB 2.0 Type-C + 单8P线束；D+/D−直达ESP32-S3；AP2112改TPS62162
-  - [x] 冻结电池包基线：单节14500候选 K10；匣内 DW01A-G + FS8205A；禁止裸电芯直接供用户插拔
-  - [ ] Gate 0：C4 布线、铺铜、DRC 和生产审计已完成；还需小批量回板关键 bring-up，再正式派生 C5
-  - [ ] Gate 1：机械样块与接口尺寸冻结（现行路径：`export-stl.sh` + `pcb-tail`）
-  - [ ] Gate 2：新建独立 `pcb/c5-tail/` 原理图/PCB，验证充电、升压、USB、按键、灯显、温升和轻载关机
-  - [ ] Gate 3：从已冻结 C4 派生 C5 主板，更新 TPS62162、8P接口、USB串阻和生产门禁
-  - [ ] Gate 4：M5.C5 整机换电、振动、汗液、USB、无线、跌落和插拔寿命验证
-  - [ ] Gate 5：电芯批次/温度/运输资料、保护阈值、DFM和量产测试全部完成后移除“未验证”标记
+- [ ] **M6.C5 当前硬件（待布线）** — 现行真理源见 [`docs/power-architecture-rework/README.md`](docs/power-architecture-rework/README.md)、[`pcb/ROUTING_HANDOFF.md`](pcb/ROUTING_HANDOFF.md)、[`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)；`pcb/C5_PLAN.md` 仅保留早期 M5/单 8P 历史方案
+  - [x] M6 连续承力外壳、尾板卡槽、Type-C/按键开孔、紧固与干涉模型进入同一生成链
+  - [x] C5 主板：TPS62162、按键/锁存隔离、USB 串阻、电池 ADC 与现行 2×5P 接口已同步
+  - [x] C5 尾板：IP5305T、修正后的 H=5.8 16P USB-C、双 TPS2553、KEY 隔离、ACH 电池接口、B3U 与现行 2×4P 接口已同步
+  - [x] Atopile、PCB pad/net、J1 逐触点、主尾板线束、固件脚位和 M6 机械门禁均通过；两板为 69/33 件无铜交接态
+  - [ ] 按 [`pcb/ROUTING_HANDOFF.md`](pcb/ROUTING_HANDOFF.md) 完成两板布线与 GND 覆铜；不得复用 C4 铜线
+  - [ ] 两板达到 DRC 0 规则违规、0 未连接，并通过 `python3 scripts/validate_power_rework.py --release-gate`
+  - [ ] 生成前重新检查 3D、板框、开槽、装配方向、BOM/CPL 与制造参数；当前不得生成/复用制造文件
+  - [ ] M6.C5 工程样机验证：限流上电、充放电、关机、USB、PZT、IMU、无线、LED、温升、换电、振动、汗液、跌落和插拔寿命
+  - [ ] 电芯批次/温度/运输资料、保护阈值、DFM 和量产测试全部完成后移除“未验证”标记
 - [ ] **主线 V2** — 双 IMU + 更强 MCU；拍柄 IMU 基台与模型/电路协同
 - [ ] **软件自动发版** — SemVer + CI（固件/服务端/前端）
 

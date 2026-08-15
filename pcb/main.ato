@@ -26,7 +26,7 @@ from "parts.ato" import TactileSwitch45
 
 
 component ESP32S3WROOM1_Cutout:
-    """C4 ESP32-S3-WROOM-1-N16R8 embedded half-hole interface.
+    """ESP32-S3-WROOM-1-N16R8 embedded half-hole interface.
 
     Truth source: pcb/lib/esp32s3wroom1/pinmap.py. Top/component view,
     antenna -X. GPIO35..37 are reserved by octal PSRAM and remain unused.
@@ -276,7 +276,7 @@ module PztThresholdFrontend:
 module TailHarness5P2S:
     """柄尾 MX1.25 卧贴：正反各 1×5P（Molex PicoBlade 53261-0571）。
 
-    C4 正面 F @ rot0；背面 B @ Flip+rot180（开口朝外），板坐标 X 上：
+    正面 F @ rot0；背面 B @ Flip+rot180（开口朝外），板坐标 X 上：
     F.p1(5V) 对 B.p5(GND)，F.p4(D+) 对 B.p2(D-)，F.p5(TX) 对 B.p1(RX)。
     SYS_5V_IN=充电总成 5V OUT；BAT_CELL_P=可选电芯 B+ 采样（非 5V）。
     烧录走 USB D+/D−；充电仓 Type-C 通常无 D+/D−。
@@ -607,7 +607,7 @@ module SmartPaddleRigid:
     pwr_led.VCC_3V3 ~ vcc
     pwr_led.GND ~ gnd
 
-    # Native USB and UART0 are exposed at the C4 paired tail pins.
+    # Native USB and UART0 are exposed at the paired tail pins.
     tail.USB_DP ~ usb_dp_conn
     tail.USB_DN ~ usb_dn_conn
     usb_r_dp.p1 ~ usb_dp_conn

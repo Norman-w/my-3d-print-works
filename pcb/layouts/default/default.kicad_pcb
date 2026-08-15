@@ -8,9 +8,9 @@
 	)
 	(paper "A4")
 	(title_block
-		(title "SmartPaddle Rigid PCB")
-		(date "2026-07-29")
-		(rev "C4")
+		(title "SmartPaddle Main PCB")
+		(date "2026-08-15")
+		(rev "C5")
 		(company "SmartPaddle")
 	)
 	(layers
@@ -1150,7 +1150,7 @@
 		(uuid "130a3039-6955-437c-99df-df93e3f46f88")
 		(at -3 -1)
 		(descr "ESP32-S3-WROOM-1-N16R8 embedded half-hole interface; top view; antenna -X; pitch 1.27 mm; underside EP41 is unavailable in the cutout assembly")
-		(tags "ESP32-S3-WROOM-1 N16R8 embedded cutout SmartPaddle C4")
+		(tags "ESP32-S3-WROOM-1 N16R8 embedded cutout SmartPaddle")
 		(property "Reference" "MCU_ESP32_S3"
 			(at 0 -10.45 0)
 			(layer "F.SilkS")
@@ -22815,7 +22815,7 @@
 			)
 		)
 	)
-	(gr_text "C4 FAB NOTE 1: 0.8 mm / 2-layer / ENIG / single board.\nC4 FAB NOTE 2: MCU and IMU INTERNAL ROUTED CUTOUTS intentionally cross PTH centers.\nC4 FAB NOTE 3: Do not straighten or alter the outline; contact before any process change/upcharge.\nC4 FAB NOTE 4: Prototype may use ordinary routing at internal PTH edges if castellations are unavailable.\nC4 FAB NOTE 5: ESP32-S3 EP41 has no host land; assembly must ground perimeter pads 1 and 40.\nC4 FAB NOTE 6: JP_ADC_TL/TR/BL/BR are DNP; tail connector map is the C4 MX1.25 map."
+	(gr_text "CURRENT PCB NOTE 1: Circuit revision C5; 0.8 mm / 2-layer / ENIG / single board.\nCURRENT PCB NOTE 2: MCU and IMU INTERNAL ROUTED CUTOUTS intentionally cross PTH centers.\nCURRENT PCB NOTE 3: Do not straighten or alter the outline; contact before any process change/upcharge.\nCURRENT PCB NOTE 4: Prototype may use ordinary routing at internal PTH edges if castellations are unavailable.\nCURRENT PCB NOTE 5: ESP32-S3 EP41 has no host land; assembly must ground perimeter pads 1 and 40.\nCURRENT PCB NOTE 6: JP_ADC_TL/TR/BL/BR are DNP; use the current MX1.25 tail map."
 		(at 46 -50.5 0)
 		(layer "Cmts.User")
 		(uuid "72be15a1-b05e-43bc-902e-191817fa89c4")
@@ -22827,7 +22827,7 @@
 			(justify left top)
 		)
 	)
-	(gr_text "C4 FABRICATION NOTES"
+	(gr_text "CURRENT PCB ENGINEERING NOTES"
 		(at 46 -55 0)
 		(layer "Cmts.User")
 		(uuid "8ab1cea7-fad3-42af-88de-75e9780b4f52")

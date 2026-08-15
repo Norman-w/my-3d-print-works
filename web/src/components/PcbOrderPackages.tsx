@@ -14,8 +14,8 @@ type OrderFile = {
 type ListResponse = { files: OrderFile[] };
 
 const targetCards: Array<{ target: Target; title: string; note: string }> = [
-  { target: 'main', title: '只导出 C4 主板', note: '2 层 / 0.8 mm / ENIG；严格制造门禁。' },
-  { target: 'tail', title: '只导出 M5 尾板', note: '2 层 / 1.0 mm；实验样板，尚未实物验证。' },
+  { target: 'main', title: '只导出主板', note: '2 层 / 0.8 mm / ENIG；严格制造门禁。' },
+  { target: 'tail', title: '只导出尾板', note: '2 层 / 1.0 mm；实验样板，尚未实物验证。' },
   { target: 'separate', title: '主板 + 尾板（推荐）', note: '生成两个独立上传 ZIP，不混成一个订单。' },
   { target: 'panel', title: '正式拼板', note: '当前无拼板工程，会明确报告阻塞。' },
 ];
@@ -124,4 +124,3 @@ export default function PcbOrderPackages() {
     </div>
   );
 }
-

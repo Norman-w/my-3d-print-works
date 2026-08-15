@@ -8,7 +8,9 @@
     )
     (paper "A4")
     (title_block
-        (title "SmartPaddle M5 Tail")
+        (title "SmartPaddle Tail PCB")
+        (date "2026-08-15")
+        (rev "C5")
         (company "SmartPaddle")
     )
     (layers

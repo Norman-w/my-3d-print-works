@@ -1,4 +1,4 @@
-SmartPaddle M5 tail PCB bare-board geometry report
+SmartPaddle pcb-tail bare-board geometry report
 STATUS: BARE OUTLINE / ATO MODULE PRESENT / NOT FOR FABRICATION
 
 Entry: main.ato:SmartPaddleTail

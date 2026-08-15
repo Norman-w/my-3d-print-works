@@ -1,8 +1,8 @@
 # SmartPaddle 尾部线路板（`pcb-tail`）
 
-> 与 `pcb/`（C4 主线）隔离。满截面尾板；充电/USB/按键/LED 在本板。
+> 当前 **M6.C5** 组合的独立满截面尾板，与 `pcb/` 主板分开维护；充电、USB、按键和 LED 均在本板。版本只记录在说明与 KiCad 标题栏，工程、PCB、同步脚本和交接文件使用跨版本通用名称。
 
-> **当前设计与旧板安全状态（2026-08-15）：** J1 的 H=5.8 短脚封装和 16 个物理触点映射已按用户数据表修正；J4、B3U、两级 TPS2553 和 KEY 隔离也已同步。当前板为 33 个封装、0 条走线/0 个过孔/0 个覆铜区，DRC 为 0 个规则违规、79 个预期未连接，**不能制造**。所有按旧 J1 错误映射制造或已焊接的尾板及旧制造文件仍不得上电、插 USB 或再次下单，不得现场飞线返修。详见 [`../docs/usb-c-vertical-16p-short/M5-J1-PINOUT-AUDIT.md`](../docs/usb-c-vertical-16p-short/M5-J1-PINOUT-AUDIT.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **当前设计与旧板安全状态（2026-08-15）：** J1 的 H=5.8 短脚封装和 16 个物理触点映射已按用户数据表修正；J4、B3U、两级 TPS2553 和 KEY 隔离也已同步。当前 C5 尾板为 33 个封装、0 条走线/0 个过孔/0 个覆铜区，DRC 为 0 个规则违规、79 个预期未连接，**可以开始手工布线，但不能制造**。所有按旧 J1 错误映射制造或已焊接的尾板及旧制造文件仍不得上电、插 USB 或再次下单，不得现场飞线返修。详见 [`../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md`](../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >
 > `layouts/default/export-preview/` 中除重新生成的 `fp-usb16p-selfcheck.png` 外，其余图像是本次审计前的历史预览，不是当前 J1 或制造状态的证据。
 
@@ -17,7 +17,7 @@
 - `KiCad Y` = 柄 `Z`
 - 板厚沿世界 `Y`（1.0 mm）
 
-## 专用电池接口（已布局/布线）
+## 专用电池接口（已放置、待布线）
 
 - 板端：JST ACH `BM02B-ACHSS-GAN-ETF`，1.20 mm、2P、SMT 顶插；配套线端 `ACHR-02V-S` + `SACH-003G-P0.2`，成品线固定为 AWG28。
 - J4 footprint：`Connector_JST:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical`。电气定义固定为 **Pin 1=`BAT_P`/red**、**Pin 2=`GND`/black**；它与现有 `J2.3 BAT_P` / `J2.2 GND` 并联，电池不得接主板 `SYS_5V_IN`。
@@ -77,11 +77,11 @@ python3 scripts/validate_power_rework.py
 | `generate_outline.py` | 从尾端截面生成 Edge.Cuts |
 | `tail-outline-preview.svg` / `.png` | 2D 预览 |
 | `geometry-report.txt` / `outline-facts.json` | 尺寸事实 |
-| `C4_ADAPTER_HARNESS.md` | 当前 C4 主板与本尾板的 4P→5P 转接、装配及验证 |
-| `harness/c4-adapter.json` | 由两块实际 PCB 焊盘网络校验的线束真理源 |
+| `ADAPTER_HARNESS.md` | 当前主板与本尾板的 4P→5P 转接、装配及验证 |
+| `harness/adapter.json` | 由两块实际 PCB 焊盘网络校验的线束真理源 |
 
-> 注意：本尾板为 2×4P，当前 C4 主板栈道为正反 2×5P，不能直接插接。
-> 使用上述转接线束；C4 的 UART TX/RX 保留为独立调试口。
+> 注意：本尾板为 2×4P，当前主板栈道为正反 2×5P，不能直接插接。
+> 使用上述转接线束；主板的 UART TX/RX 保留为独立调试口。
 
 ## 已知瑕疵
 

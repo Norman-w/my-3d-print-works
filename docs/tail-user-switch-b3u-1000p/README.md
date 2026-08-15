@@ -1,4 +1,4 @@
-# M5 尾板用户键：Omron B3U-1000P
+# 尾板用户键：Omron B3U-1000P
 
 状态：**Atopile 与 PCB footprint 已换成 B3U-1000P；SW1 保持原锚点与角度，当前 PCB 已清除全部铜并待重新布线，拍柄制造 STL 没有在本次生成。**
 

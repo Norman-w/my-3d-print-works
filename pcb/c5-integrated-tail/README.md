@@ -9,12 +9,15 @@
 - 不再让电池、USB和主板共用一块长板。
 - 本目录中的 `.kicad_pcb`、预览图、生成脚本和尺寸报告即使仍存在，也只能作为废弃概念的历史证据；不得作为新板外形、封装坐标、SCAD尺寸或布线输入。
 
-当前 C5/M5 的唯一设计真理源是：
+当前 M6.C5 的设计真理源是：
 
-- [`../C5_PLAN.md`](../C5_PLAN.md)
+- [`../../docs/power-architecture-rework/README.md`](../../docs/power-architecture-rework/README.md)
+- [`../ROUTING_HANDOFF.md`](../ROUTING_HANDOFF.md)
+- [`../../pcb-tail/README.md`](../../pcb-tail/README.md)
+- [`../../enclosure/README.md`](../../enclosure/README.md)
 
 现行方向为：
 
-> 固定窄尾板与封闭14500电池匣沿 X 方向并排；电池匣沿 Y 方向从拍尾推入，以侧面横向滑扣解锁、内端弱弹簧顶出；尾板用完整 USB 2.0 Type-C 和 IP5305T，经单根8P线束连接从 C4 派生的 C5 主板。
+> 主板保持现有大陆/栈道结构；独立满截面尾板集成完整 USB 2.0 Type-C、IP5305T、ACH 电池接口、B3U 与两级限流，通过现行 2×4P→2×5P 线束连接 C5 主板，并由 M6 连续承力外壳与尾段干涉模型约束。
 
-新实现应在 C4 收口后建立独立的 `pcb/c5-tail/` 和 C5 主板派生目录，不得复用本目录的长板文件。
+现行实现已经位于通用 `pcb/` 与 `pcb-tail/`，不得再建立版本号专用实施目录，也不得复用本目录的长板文件。

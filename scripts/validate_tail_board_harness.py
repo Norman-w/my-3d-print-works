@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the C4-to-tail-board harness against both actual KiCad boards."""
+"""Validate the main-to-tail-board harness against both actual KiCad boards."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = ROOT / "pcb-tail/harness/c4-adapter.json"
+SPEC = ROOT / "pcb-tail/harness/adapter.json"
 TAIL_INTERFERENCE = ROOT / "enclosure/stl/interference/tail_interference.json"
 SCREW_SAFETY = ROOT / "enclosure/generated/m6_screw_safety.json"
 MAIN_FIT_REPORT = ROOT / "pcb/output/tail_mx125_fit/fit_report.txt"
@@ -106,12 +106,12 @@ def main() -> int:
         errors.append("insufficient service-loop allowance")
 
     # Mechanical values are checked against generated geometry reports rather
-    # than trusted as prose. The C4 connector Y range comes from the shell-fit
+    # than trusted as prose. The main-board connector Y range comes from the shell-fit
     # calculation; the tail-board plane comes from the actual KiCad interference export.
     fit_text = MAIN_FIT_REPORT.read_text(encoding="utf-8")
     match = re.search(r"Fab SCAD X\[[^]]+\] Y\[([-.0-9]+),([-.0-9]+)\]", fit_text)
     if not match:
-        errors.append("cannot parse C4 connector world-Y range")
+        errors.append("cannot parse main-board connector world-Y range")
     else:
         main_center_y = sum(map(float, match.groups())) / 2
         tail = json.loads(TAIL_INTERFERENCE.read_text(encoding="utf-8"))

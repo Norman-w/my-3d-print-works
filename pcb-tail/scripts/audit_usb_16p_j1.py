@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit M5 tail-board J1 against the archived H=5.8 short-pin PDF.
+"""Audit tail-board J1 against the archived H=5.8 short-pin PDF.
 
 KiCad DRC cannot know a supplier connector's physical contact semantics.  This
 gate therefore checks all 16 contacts by name, local position, land size and

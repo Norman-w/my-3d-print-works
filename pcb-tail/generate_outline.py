@@ -53,7 +53,7 @@ BOARD_THICKNESS_MM = 1.00
 RING_GROOVE_RADIAL_MM = 0.50  # 文档用：壳体内壁环槽径向深度
 # 16P 立贴超短体「身体高度」— docs/usb-c-vertical-16p-short/
 USB_BODY_HEIGHT_MM = 5.80
-EDGE_WIDTH_MM = 0.10  # match C4 Edge.Cuts visibility
+EDGE_WIDTH_MM = 0.10  # match main-board Edge.Cuts visibility
 SAMPLE_SLICES = 96  # denser loft sampling near butt for Y_pcb slice
 OUTLINE_MAX_POINTS = 96
 PREVIEW_SVG = HERE / "tail-outline-preview.svg"
@@ -72,9 +72,9 @@ ATO_BARE_SHELL = """(kicad_pcb
     )
     (paper "A4")
     (title_block
-        (title "SmartPaddle Tail")
+        (title "SmartPaddle Tail PCB")
         (date "")
-        (rev "TAIL-BARE")
+        (rev "")
         (company "SmartPaddle")
     )
     (layers
@@ -348,14 +348,14 @@ def _set_thickness(text: str, thickness: float) -> str:
 def _ensure_title_block(text: str) -> str:
     block = (
         "    (title_block\n"
-        '        (title "SmartPaddle Tail")\n'
+        '        (title "SmartPaddle Tail PCB")\n'
         '        (date "")\n'
-        '        (rev "TAIL-BARE")\n'
+        '        (rev "")\n'
         '        (company "SmartPaddle")\n'
         "    )"
     )
     if "(title_block" in text:
-        return re.sub(r"\(title_block\b(?:[^()]|\([^()]*\))*\)", block, text, count=1, flags=re.S)
+        return text
     return text.replace("(paper \"A4\")", f'(paper "A4")\n{block}', 1)
 
 

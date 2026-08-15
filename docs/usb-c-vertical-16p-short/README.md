@@ -8,9 +8,9 @@
 - 主证据：[`Type-C-16PIN-vertical-H5.8-short-datasheet.pdf`](Type-C-16PIN-vertical-H5.8-short-datasheet.pdf)
 - 来源：用户于 2026-08-13 提供的本地文件 `/Users/norman/Downloads/Type-C 母座16PIN立贴 H=5.8 副本.pdf`；本目录文件为原样复制。
 - SHA-256：`8d8f9afa88a8fc6049e041b519745d119b16f8eccdcf78de7f4090ee294dff23`
-- 用途：作为 M5 独立尾部电源小板 J1 的机械尺寸、16 个物理触点顺序及引脚定义的首要依据。下方旧商品图仅作选型背景或辅助说明；如有冲突，以该 PDF 为准。
+- 用途：作为当前独立尾部电源小板 J1 的机械尺寸、16 个物理触点顺序及引脚定义的首要依据。下方旧商品图仅作选型背景或辅助说明；如有冲突，以该 PDF 为准。
 - 派生局部图：[`Type-C-16PIN-vertical-H5.8-short-footprint-detail.png`](Type-C-16PIN-vertical-H5.8-short-footprint-detail.png)，由上述 PDF 第 1 页以 600 dpi 渲染后仅裁出推荐 PCB 图；SHA-256 `d5d6ead0e190da5bb2ac3242848733a270ed4addb6261e7ea451a1fcdcd6ac34`。
-- J1 逐触点结论与安全状态：[`M5-J1-PINOUT-AUDIT.md`](M5-J1-PINOUT-AUDIT.md)
+- J1 逐触点结论与安全状态：[`J1-PINOUT-AUDIT.md`](J1-PINOUT-AUDIT.md)
 
 ## 关键尺寸（本档）
 

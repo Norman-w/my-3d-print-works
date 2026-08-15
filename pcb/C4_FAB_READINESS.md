@@ -3,7 +3,7 @@
 > **历史审计，当前已失效（2026-08-15）：** 本文的 GO 结论只绑定下面列出的旧板 SHA256 和 63 件布线状态。当前 `pcb/layouts/default/default.kicad_pcb` 已扩展为 69 件并清除所有铜，存在 149 个预期未连接，**不可制造**。现行放行条件见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 
 > 审计日期：2026-07-30（Asia/Shanghai）  
-> 适用对象：`pcb/layouts/default/default.kicad_pcb`，标题栏 **SmartPaddle Rigid PCB / C4**  
+> 适用对象：审计当时的 `pcb/layouts/default/default.kicad_pcb` 历史对象，标题栏 **SmartPaddle Rigid PCB / C4**；不适用于当前同路径 C5
 > 审计板 SHA256：`86389d959e48d7393d59ea44571635a1011f239213585d538611171193bb0b70`
 
 ## 1. 一句话结论
@@ -22,7 +22,7 @@
 
 | 对象 | 状态 | 含义 |
 |---|---|---|
-| C4 裸 PCB 工程样板 | **GO** | 可用当前门禁重新导出后投 0.8 mm、2 层、ENIG 样板 |
+| C4 裸 PCB 工程样板 | **历史 GO** | 只对所列 SHA 的当时导出成立；当前通用源/门禁不再复现该板 |
 | C4 首件装配 | **CONDITIONAL GO** | 按本文装配与限流上电顺序进行 |
 | 使用现成充放电模块的完整整机 | **HOLD FOR TEST** | 先验证 5 V 瞬态/压降、AP2112 温升、USB 独立尾线与机械装配 |
 | 批量生产 | **NO-GO** | 回板、射频、热、功耗、振动、汗液和内部开槽工艺都尚未验证 |

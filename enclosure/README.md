@@ -1,5 +1,7 @@
 # SmartPaddle M6 外壳（OpenSCAD）
 
+当前硬件组合登记为 **M6.C5**：本目录定义模型版本 M6，`pcb/` 与 `pcb-tail/` 的现行源定义电路版本 C5。两条版本线独立编号；M6 已形成现行机械生成闭环，不因 C5 布线而改写脚本或产物命名。
+
 M6 将拍体改为传统球拍式连续承力结构。外形来自
 `web/src/data/userBezierProfiles.json`，拍柄 loft 在 `handle_join_y`
 与拍头实体相交，不再保留用于预览的结构缝。

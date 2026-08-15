@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cross-check the C4 S3 pin map across ato, footprint, firmware and importer."""
+"""Cross-check the S3 pin map across ato, footprint, firmware and importer."""
 
 from __future__ import annotations
 
@@ -146,14 +146,14 @@ def check_firmware_target() -> list[str]:
         text = path.read_text(encoding="utf-8")
         missing = sorted(token for token in REQUIRED_S3_CONFIG if token not in text)
         if missing:
-            errors.append(f"{path.name}: missing required C4 settings {missing}")
+            errors.append(f"{path.name}: missing required S3 settings {missing}")
     sdkconfig_text = SDKCONFIG.read_text(encoding="utf-8")
     missing_generated = sorted(
         token for token in REQUIRED_GENERATED_CONFIG if token not in sdkconfig_text
     )
     if missing_generated:
         errors.append(
-            f"sdkconfig: generated flash settings conflict with C4: {missing_generated}"
+            f"sdkconfig: generated flash settings conflict with the current S3 design: {missing_generated}"
         )
 
     rows: dict[str, tuple[int, int]] = {}
@@ -185,7 +185,7 @@ def check_firmware_target() -> list[str]:
 
 
 def check_pzt_firmware() -> list[str]:
-    """Prove that C4 uses DAC thresholds, GPIO edges and optional ADC peeks."""
+    """Prove that the current design uses DAC thresholds, GPIO edges and optional ADC peeks."""
     errors: list[str] = []
     frontend = PZT_FRONTEND_CPP.read_text(encoding="utf-8")
     for token in (
@@ -276,14 +276,14 @@ def main() -> int:
     errors.extend(check_pzt_firmware())
     errors.extend(check_pzt_top_channel_order())
     if "esp32s3wroom1" not in STEP3.read_text(encoding="utf-8"):
-        errors.append("step3_import_netlist.py does not import the C4 S3 pin map")
+        errors.append("step3_import_netlist.py does not import the S3 pin map")
     if errors:
-        print("ESP32-S3-WROOM-1 C4 pin-map validation failed:")
+        print("ESP32-S3-WROOM-1 pin-map validation failed:")
         for error in errors:
             print(f"  x {error}")
         return 1
     print(
-        "ESP32-S3-WROOM-1 C4 OK: ato / footprint / pin map / importer; "
+        "ESP32-S3-WROOM-1 OK: ato / footprint / pin map / importer; "
         "ESP-IDF target, N16 partition map, octal PSRAM and PZT firmware"
     )
     return 0

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent end-to-end audit of the unrouted M5 tail power redesign.
+"""Independent end-to-end audit of the unrouted tail-board power redesign.
 
 This deliberately checks design intent that KiCad DRC cannot infer: the
 source-PDF identities, every physical pad-to-net assignment, true NC pads,

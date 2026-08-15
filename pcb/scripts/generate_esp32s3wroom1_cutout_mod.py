@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the C4 ESP32-S3-WROOM-1 embedded cutout footprint."""
+"""Generate the ESP32-S3-WROOM-1 embedded cutout footprint."""
 
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ def build_mod() -> str:
         '  (descr "ESP32-S3-WROOM-1-N16R8 embedded half-hole interface; '
         f'top view; antenna {ORIENTATION["antenna"]}; pitch {PITCH_MM} mm; '
         'underside EP41 is unavailable in the cutout assembly")',
-        '  (tags "ESP32-S3-WROOM-1 N16R8 embedded cutout SmartPaddle C4")',
+        '  (tags "ESP32-S3-WROOM-1 N16R8 embedded cutout SmartPaddle")',
         "  (attr through_hole)",
         '  (fp_text reference "REF**" (at 0 -11.1) (layer "F.SilkS")',
         "    (effects (font (size 0.8 0.8) (thickness 0.12)))",

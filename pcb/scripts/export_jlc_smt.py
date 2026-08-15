@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export JLCPCB SMT BOM + CPL for C4, excluding hand-assembly parts.
+"""Export JLCPCB SMT BOM + CPL for the current main board, excluding hand-assembly parts.
 
 Default exclusions (not placed by SMT):
   - ESP32-S3 / IM948 embedded modules
@@ -236,7 +236,7 @@ def export_smt(
 
     if any(row.flip for row, _ in smt_pairs):
         raise RuntimeError(
-            "C4 SMT export expects top-only Economic SMT; found bottom SMD parts"
+            "Main-board SMT export expects top-only Economic SMT; found bottom SMD parts"
         )
 
     bom_rows = _group_bom(smt_pairs)

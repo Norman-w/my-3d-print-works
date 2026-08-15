@@ -1,9 +1,9 @@
-"""SmartPaddle M5 尾部线路板（固定电池首版）。
+"""SmartPaddle 独立尾部线路板。
 
 板面 = 拍柄尾端 XZ；F.Cu 朝拍柄末端（−Y）；B.Cu 朝拍头（+Y）。
 KiCad：X = 柄 X，Y = 柄 Z。
 
-器件与网络对齐 C5_PLAN：IP5305T 充放电、USB 2.0、两组 MX1.25 4P 立插线束、
+器件与网络按当前电源架构：IP5305T 充放电、USB 2.0、两组 MX1.25 4P 立插线束、
 专用 JST ACH 2P 电池入口、WS2812B-2020。build 后在 KiCad 中摆放布线。
 """
 
@@ -26,7 +26,7 @@ from "parts.ato" import SN74AHCT1G125
 
 
 module SmartPaddleTail:
-    """M5 butt-face UI + power island for KiCad place/route."""
+    """Butt-face UI + power island for KiCad place/route."""
 
     # ---- 连接器 / 开关 / 指示 ----
     usb = new USB4120_03_C_Vertical
@@ -175,7 +175,7 @@ module SmartPaddleTail:
     sw_user.a ~ user_btn
     sw_user.b ~ gnd
 
-    # ========== IP5305T 一灯模式（C5_PLAN §8.3）==========
+    # ========== IP5305T 一灯模式（见电源架构说明）==========
     u_pmic.VIN ~ vbus_limited
     u_pmic.BAT ~ bat_p
     u_pmic.SW ~ sw_node

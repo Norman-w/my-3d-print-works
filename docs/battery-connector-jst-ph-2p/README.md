@@ -1,4 +1,4 @@
-# M5 尾板 2P 电池接口：JST PH 历史候选（已停用）
+# 尾板 2P 电池接口：JST PH 历史候选（已停用）
 
 状态：**不再用于当前 Atopile 或 PCB。** 早期曾把 J4 定义为 `S2B-PH-K-S(LF)(SN)` 通孔侧插；实物空间复核后，已由更小的 [JST ACH 1.2 2P 顶插方案](../battery-connector-jst-ach-2p/README.md)替代。旧 PH footprint、F.Cu 待摆坐标和相关 DRC 数字均不得作为当前板依据。
 

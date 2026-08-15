@@ -23,7 +23,7 @@ from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "output" / "pdf"
-OUT_PDF = OUT_DIR / "smartpaddle_m5_tail_procurement_drawing.pdf"
+OUT_PDF = OUT_DIR / "smartpaddle_tail_procurement_drawing.pdf"
 BOARD_IMAGE = ROOT / "pcb-tail" / "layouts" / "default" / "export-preview" / "board-3d-top.png"
 
 PAGE_W, PAGE_H = landscape(A4)
@@ -125,7 +125,7 @@ def header(c: canvas.Canvas, title: str, subtitle: str, page: int) -> None:
     c.rect(0, PAGE_H - 54, PAGE_W, 54, stroke=0, fill=1)
     txt(c, MARGIN, PAGE_H - 25, title, 16, colors.white, True)
     txt(c, MARGIN, PAGE_H - 42, subtitle, 8.2, colors.HexColor("#d9edf4"))
-    txt(c, PAGE_W - MARGIN, PAGE_H - 25, "M5-TAIL-BARE", 8.5, colors.white, True, "right")
+    txt(c, PAGE_W - MARGIN, PAGE_H - 25, "TAIL PCB", 8.5, colors.white, True, "right")
     txt(c, PAGE_W - MARGIN, PAGE_H - 42, f"采购参考图 / 第 {page} 页", 8.0, colors.HexColor("#d9edf4"), align="right")
 
 
@@ -404,7 +404,7 @@ def table(c: canvas.Canvas, x: float, y_top: float, widths: list[float], rows: l
 
 
 def page_one(c: canvas.Canvas) -> None:
-    header(c, "SmartPaddle M5 尾板器件采购图纸", "按当前 pcb-tail KiCad 封装与 main.ato BOM 生成", 1)
+    header(c, "SmartPaddle 尾板器件采购图纸", "按当前 pcb-tail KiCad 封装与 main.ato BOM 生成", 1)
     section_label(c, MARGIN, PAGE_H - 83, "采购概览")
     txt(c, MARGIN, PAGE_H - 105, "这份图纸用于采购和贴片厂封装核对。器件外形示意均为顶视图，尺寸以标注为准。", 8.5, MUTED)
 
@@ -602,7 +602,7 @@ def build() -> None:
     )
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(OUT_PDF), pagesize=landscape(A4), pageCompression=1)
-    c.setTitle("SmartPaddle M5 Tail Board Procurement Drawing")
+    c.setTitle("SmartPaddle Tail Board Procurement Drawing")
     c.setAuthor("SmartPaddle project")
     page_one(c)
     page_two(c)

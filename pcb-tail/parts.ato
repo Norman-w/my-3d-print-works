@@ -1,6 +1,6 @@
-"""pcb-tail physical parts — M5 fixed-battery butt board.
+"""pcb-tail physical parts — independent fixed-battery butt board.
 
-电源管理基线仍为 C5 的 IP5305T（未换料）；线束为两组 MX1.25 4P 立插。
+电源管理基线为 IP5305T；线束为两组 MX1.25 4P 立插。
 """
 
 # ===== 分区：公开 API =====

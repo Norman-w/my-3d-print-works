@@ -41,7 +41,7 @@ _HANDLE_Y0 = 40.0   # 栈道收成常宽之后（漏斗以下）
 _HANDLE_Y1 = 68.0   # 盖过 SW_PWR，不伸进尾插
 # 半孔边历史间隙（含手改/旧版），用于清掉叠画的 Edge.Cuts
 _LEGACY_LONG_CLEARANCES = (0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35)
-_MCU_BODY = (25.5, 18.0)  # C4 S3-WROOM-1 rotated, antenna toward -X
+_MCU_BODY = (25.5, 18.0)  # S3-WROOM-1 rotated, antenna toward -X
 _IMU_BODY = (18.5, 13.0)
 
 

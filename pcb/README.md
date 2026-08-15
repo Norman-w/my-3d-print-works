@@ -1,8 +1,22 @@
-## PCB 生成管线
+# SmartPaddle 主板
 
-> **当前仓库状态（2026-08-15）：** `layouts/default/default.kicad_pcb` 已进入电源架构重整后的 **69 封装、0 走线、0 过孔、0 覆铜**交接态，当前 149 个未连接为预期结果，**不得制造**。现行同步、逐脚审计和放行命令见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)；本页下方 Step 1–4 与 63 件 C4 描述保留为历史管线说明，不能再用来判定当前板可制造。
+> **当前仓库状态（2026-08-15）：** 当前硬件组合为 **M6.C5**。`layouts/default/default.kicad_pcb` 标题栏为 `SmartPaddle Main PCB / C5`，已进入电源架构重整后的 **69 封装、0 走线、0 过孔、0 覆铜**交接态；149 个未连接为预期结果，**可以开始手工布线，但不得制造**。现行布线顺序见 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md)，同步、逐脚审计和放行命令见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >
 > **实物与源文件必须区分：** 已回板的旧 C4（SHA256 `86389d…`）仍可作为历史 bring-up 对象，但它不再等于当前 KiCad 源板；旧装配图、Gerber 与制造就绪结论不得套用到当前 69 件重整版。
+
+## 当前 C5 布线入口
+
+电气真理源仍是通用文件 `main.ato`，当前 PCB 仍是通用路径 `layouts/default/default.kicad_pcb`；版本号只记录在说明和 KiCad 标题栏，不另建 `C5_*` PCB、同步脚本或快照入口。开始布线前运行：
+
+```sh
+python3 scripts/validate_power_rework.py
+```
+
+门禁应报告主板 69 件、尾板 33 件、两板 0 铜以及 route-free handoff PASS。用户完成布线和铺地后，再运行 `python3 scripts/validate_power_rework.py --release-gate`；在 0 未连接和全部跨层审计通过以前不会放行制造导出。
+
+## 历史 C4 PCB 生成管线（归档）
+
+以下 Step 1–4、63 件快照和 C4 制造说明只解释已回板 C4 的生成历史；它们不是当前 C5 的同步或布线入口。
 
 管线的机械基准来自 `enclosure/paddle_shell.scad` 的 `rigid_pcb_slot_points`（V3 起尾端平收，无金手指窄尖）。
 每一步都是独立的 Python 脚本，按顺序执行：
@@ -57,7 +71,7 @@ $KPY pcb/scripts/step3_module_cutouts.py         # 重绘模块开孔和 IMU rul
 $KPY pcb/scripts/step4_ato_placement.py          # 仅移动仍位于 ato 网格位置的封装
 ```
 
-### 当前 C4 手工布线板
+### 历史 C4 手工布线板
 
 当前 `layouts/default/default.kicad_pcb` 的手工布线/铺铜已于提交 `828f6e1` 回存；KiCad 9.0.6 DRC 为 0 未连接、0 error，剩余 72 项均为已复核的丝印/库封装一致性 warning。原交接板的独立 `TP_GND` 已按 Norman 确认取消；2026-07-30 的 atopile 0.12.5 新网表、当前板和全板快照均为 63 个封装。最终物理焊盘对网、Gerber/钻孔/ZIP 试导出和装配包已通过；裸板可投工程样板，但整机仍有电源、热、USB、内部 PTH 锣槽和回板实测条件，见 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md)。不得再运行 Step 3.2 写入或带 `--yes-clear-copper` 的迁移命令。
 
@@ -118,13 +132,13 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 - `layouts/default/default.kicad_dru` 用 `IMU_EMBEDDED_CASTELLATED_EDGE` rule area 仅在 IMU 嵌入接口附近放宽 `edge_clearance`；普通板边仍按 0.5mm 检查。
 - `layouts/default/default.kicad_pro` 的工程级 `min_copper_edge_clearance` 保持为 0mm，这是为了允许 custom rule 对 IMU 区域设置负的 edge clearance。不要删除 `.kicad_dru`，否则普通板边的 0.5mm 规则不会被恢复。
 
-## Status
+## 历史 C4 状态
 
-当前分支已包含 C4 手工布线/铺铜 PCB、63 件全板快照和最终制造审计。后续工作:
+仓库历史仍包含 C4 手工布线/铺铜快照、63 件全板快照和最终制造审计；当前 C5 已回到无铜交接态，不能用下列历史结果替代现行门禁。C4 历史后续工作记录：
 
 - 当前 `c4_placement_snapshot.json` 已经 Step 4.1e 只读复核；禁止无意使用 `--replace` 覆盖接受基线
 - 嘉立创每次打板（裸板 / 部分 SMT）的通用操作见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；下单时重新运行 `export_jlcpcb.py`（需要贴片时加 `--smt`），不得复用临时审计 ZIP
 - 按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成小批量回板 bring-up；未通过外置 5 V、AP2112 热、USB、PZT、射频和槽边焊接前不得转量产
 - 尾板壳体：[`../enclosure/README.md`](../enclosure/README.md) + [`../pcb-tail/`](../pcb-tail/)；规划见 [`C5_PLAN.md`](C5_PLAN.md)。旧主板延长/中间开窗预览已废弃
 
-当前 C4 最终可打印装配包已生成到本地 `output/pdf/smartpaddle-ai-assembly/`：14 页 A4，63 个封装各映射一次，顶/底面、Pad 1、DNP、安装顺序、检查单和 BOM 均已渲染复核。旧 `output/pdf/assembly-package/` 16 页文件是摆放前快照，只能作历史资料；尾插 HTML/端面图位于 `output/assembly/`。
+历史 C4 最终可打印装配包曾生成到本地 `output/pdf/smartpaddle-ai-assembly/`：14 页 A4，63 个封装各映射一次，顶/底面、Pad 1、DNP、安装顺序、检查单和 BOM 均已渲染复核。`output/pdf/assembly-package/` 16 页文件是更早的摆放前快照；二者都只能作历史资料，不能用于当前 C5。尾插历史 HTML/端面图位于 `output/assembly/`。

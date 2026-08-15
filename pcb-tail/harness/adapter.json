@@ -1,5 +1,5 @@
 {
-  "name": "SmartPaddle C4 mainboard to tail-board adapter harness",
+  "name": "SmartPaddle mainboard to tail-board adapter harness",
   "status": "engineering-prototype",
   "mainBoard": "pcb/layouts/default/default.kicad_pcb",
   "tailBoard": "pcb-tail/layouts/default/default.kicad_pcb",

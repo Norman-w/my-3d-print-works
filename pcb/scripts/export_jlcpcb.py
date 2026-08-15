@@ -30,11 +30,11 @@ KICAD_PYTHON = (
 POWER_REWORK_GATE = ROOT / "scripts" / "validate_power_rework.py"
 
 ORDER_NOTES = """\
-SmartPaddle PCB (circuit C4 rigid) — manufacturing notes
+SmartPaddle main PCB — manufacturing notes
 
 Board
 - Thickness 0.8 mm, 2 layers, ENIG
-- Title/revision: SmartPaddle Rigid PCB / C4
+- Confirm the title/revision shown in the fabrication drawing matches the current PCB
 - Single outline; flat tail; MX1.25 5P x2 (Molex 53261-0571), hand-solder
 - Programming: USB D+/D− on tail MX1.25; power via charger 5V OUT → sys_5v_in
 - JP_ADC_TL/TR/BL/BR are DNP
@@ -51,7 +51,7 @@ Outline internal corners
   then proceed without further confirmation.
 
 Suggested JLCPCB remark (CN):
-C4测试样板，按Gerber生产。MCU/IMU内部槽边故意穿过PTH中心，不要移动孔或修改开窗；若无法做内部半孔，可按普通锣槽生产，接受毛刺、露铜和孔壁不完整。无需自动升级加价工艺，如需改外形或加价请先联系。四臂与码头交接的内凹尖角请勿拉直，可按贵司工艺加角孔。0.8mm、2层、沉金、单板，不是拼板。
+SmartPaddle 主板工程样板，按Gerber生产。MCU/IMU内部槽边故意穿过PTH中心，不要移动孔或修改开窗；若无法做内部半孔，可按普通锣槽生产，接受毛刺、露铜和孔壁不完整。无需自动升级加价工艺，如需改外形或加价请先联系。四臂与码头交接的内凹尖角请勿拉直，可按贵司工艺加角孔。0.8mm、2层、沉金、单板，不是拼板。
 """
 
 
@@ -77,7 +77,7 @@ def summarize_drc(path: Path) -> str:
 
 
 def _board_gates(board: Path) -> list[str]:
-    """Return current C4 identity, metadata, routing and copper failures.
+    """Return current main-board identity, metadata, routing and copper failures.
 
     Exact source/footprint/pad semantics are checked by the cross-layer power
     audit.  This local check deliberately contains no legacy C3 migration map.
@@ -113,7 +113,7 @@ if duplicate_addresses:
     fails.append("duplicate_atopile_addresses=" + ",".join(duplicate_addresses[:12]))
 title = board.GetTitleBlock().GetTitle()
 revision = board.GetTitleBlock().GetRevision()
-if title != 'SmartPaddle Rigid PCB' or revision != 'C4':
+if title != 'SmartPaddle Main PCB' or not revision:
     fails.append(f"title_block title={title!r} revision={revision!r}")
 legacy = [fp.GetReference() for fp in fps if 'ESP32-C6' in (fp.GetValue() + ' ' + fp.GetFPIDAsString())]
 if legacy:
@@ -212,7 +212,7 @@ def main() -> int:
     parser.add_argument(
         "--allow-intentional-castellation",
         action="store_true",
-        help="Deprecated and refused for C4; local .kicad_dru rules must yield zero DRC errors",
+        help="Deprecated and refused; local .kicad_dru rules must yield zero DRC errors",
     )
     parser.add_argument(
         "--skip-netlist-gate",
@@ -315,7 +315,7 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    fab_drawing = out / "C4_fabrication_drawing.pdf"
+    fab_drawing = out / "main_fabrication_drawing.pdf"
     shifted_fab_dir = reports / "_fab_drawing_source"
     shifted_fab_dir.mkdir(parents=True, exist_ok=True)
     # Keep the original basename so the PDF title block identifies the real
@@ -473,7 +473,7 @@ def main() -> int:
         )
         return 1
 
-    zip_path = out.parent / f"{out.name}_smartpaddle_c4_jlcpcb.zip"
+    zip_path = out.parent / f"{out.name}_smartpaddle_main_jlcpcb.zip"
     if zip_path.exists():
         zip_path.unlink()
     # 嘉立创上传包保持扁平且只含制造数据；报告、订单说明和钻孔图留在导出目录供复核。

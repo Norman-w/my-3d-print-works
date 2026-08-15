@@ -1,7 +1,7 @@
 # 嘉立创打板操作小本（全版本通用）
 
 > 适用：本仓库每一次向嘉立创（JLCPCB）下 PCB / 部分 SMT 订单。  
-> **不绑定某一电路版本。** C4、C5 或以后任何修订，都按本页流程走；版本专属备注、门禁结论去对应 `*_FAB_NOTES.md` / `*_FAB_READINESS.md`。
+> **不绑定某一电路版本。** 当前及以后修订都按本页通用入口走；版本记录读取 PCB 标题栏与硬件说明，不再新增版本号专用的导出脚本、输出目录或文件名。
 
 ## 1. 先分清三种订单
 
@@ -19,9 +19,10 @@
 
 1. **确认投的是哪一版**  
    KiCad 标题栏 Title / Revision、板文件路径、对应 FAB 备注文件。禁止把旧版 Gerber ZIP 混进新版订单。
-2. **读该版专属备注**（若有）  
-   - 例：C4 → [`C4_FAB_NOTES.md`](C4_FAB_NOTES.md)、[`C4_FAB_READINESS.md`](C4_FAB_READINESS.md)  
-   - 以后 C5 → 预期会有 `C5_FAB_NOTES.md` / readiness；没有就先别盲投。
+2. **读当前通用说明**
+   - [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md) 记录当前布线与收尾门禁。
+   - [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md) 记录跨层电气、机械与安全依据。
+   - `C4_FAB_NOTES.md` / `C4_FAB_READINESS.md` 只适用于明确标为 C4 的已回板历史对象。
 3. **门禁绿了再导出**  
    DRC 0 error、0 unconnected；放置快照/网表门禁按该版脚本要求通过。
 4. **用当前工作树重新导出**  
@@ -36,19 +37,19 @@
 现在统一从仓库根目录使用选择器；它不会把两种 PCB 默认混进同一个 Gerber：
 
 ```sh
-python3 pcb/scripts/export_order_packages.py --target main      # 只导出 C4 主板
+python3 pcb/scripts/export_order_packages.py --target main      # 只导出当前主板
 python3 pcb/scripts/export_order_packages.py --target tail      # 只导出实验性尾板
 python3 pcb/scripts/export_order_packages.py --target separate  # 两个独立订单 ZIP
 python3 pcb/scripts/export_order_packages.py --target panel     # 当前会拒绝：无正式拼板工程
 ```
 
-`*_jlcpcb.zip` / `*_jlcpcb_upload.zip` 才上传嘉立创。主板和尾板都会另生成 `*_review_bundle.zip`，其中包含订单 README、DRC、Fab PDF、制造说明与 C4↔尾板线序；审阅包不代替上传包。
+`*_jlcpcb.zip` / `*_jlcpcb_upload.zip` 才上传嘉立创。主板和尾板都会另生成 `*_review_bundle.zip`，其中包含订单 README、DRC、Fab PDF、制造说明与主板↔尾板线序；审阅包不代替上传包。
 
 网页入口：运行 `./dev.sh` 后打开 `http://localhost:5173/?tab=pcb`，可生成、下载并复制本地路径。
 
 当前没有经过评审的拼板源文件、工艺边、定位孔、Mark 点、邮票孔或 V 割合同，所以 `panel` 只报告阻塞，不会临时把不同设计拼成一个 Gerber。
 
-### 旧的 C4 专用入口
+### 主板通用导出入口
 
 ```sh
 # 输出目录每次用新路径，避免覆盖旧包
@@ -75,7 +76,7 @@ $OUT/
   gerbers/ …          # 进 ZIP 的源
   drill/ …
   ORDER_NOTES.txt     # 英文工艺要点；中文订单备注见该版 FAB_NOTES
-  C4_fabrication_drawing.pdf   # 文件名随板；人工看外形/开槽
+  main_fabrication_drawing.pdf # 人工看外形/开槽与标题栏版本
   reports/…           # DRC、门禁、manifest（勿上传）
   smt/                # 仅 --smt 时
     bom.csv
@@ -101,7 +102,7 @@ unzip -t "${OUT}"*_jlcpcb.zip   # 或看脚本打印的 Upload archive 路径
    | 项 | 常见选择 | 说明 |
    |---|---|---|
    | Layers | 2 | 除非该版写明多层 |
-   | PCB Thickness | **0.8 mm** | C4 及当前拍内板默认；改厚必须改文档 |
+   | PCB Thickness | **0.8 mm** | 当前拍内主板默认；改厚必须改文档 |
    | Surface Finish | **ENIG / 沉金** | 嵌入半孔/手焊友好 |
    | PCB Qty | 5（或厂最低） | 工程样板，勿一口气量产 |
    | Board Outline | 跟随 Gerber | 不要让系统“拉直”内凹尖角 |

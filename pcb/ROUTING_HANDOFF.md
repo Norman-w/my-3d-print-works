@@ -1,6 +1,6 @@
-# C4 KiCad 手工布线交接
+# 主板与尾板 KiCad 手工布线交接
 
-本文件是 2026-08-15 电源架构重整后的手工布线清单。电气真理源为 `main.ato`；MCU 脚位为 `lib/esp32s3wroom1/pinmap.py`；尾插为 `docs/1.25x10p/README.md`；跨层依据见 `docs/power-architecture-rework/README.md`。
+本文件是当前 **M6.C5** 组合在 2026-08-15 电源架构重整后的手工布线清单。版本号只记录在标题栏与说明中；本文件名、同步脚本和 PCB 文件名均保持跨版本通用。电气真理源为 `main.ato`；MCU 脚位为 `lib/esp32s3wroom1/pinmap.py`；尾插为 `docs/1.25x10p/README.md`；跨层依据见 `docs/power-architecture-rework/README.md`。
 
 ## 开始前门禁
 
@@ -17,7 +17,7 @@ python3 scripts/validate_power_rework.py
 
 旧 C4 无布线交接曾为 63/64 件；这些数字及 `c4_unrouted_drc.json` 都是历史快照。当前电源、按键、USB 和 MCU 支撑器件扩展后，Atopile/PCB 均为 69 个唯一 `atopile_address`，必须使用新的同步与审计脚本。
 
-板文件标题栏为 `SmartPaddle Rigid PCB / C4`。Atopile 0.12.5 只允许构建 `layouts/staging/`，连续构建两次后再由 `sync_power_architecture.py` 按地址和 pad 显式同步；不能运行旧 `step3_import_netlist.py` 改写当前板。同步后运行：
+板文件标题栏为 `SmartPaddle Main PCB / C5`，尾板标题栏为 `SmartPaddle Tail PCB / C5`。Atopile 0.12.5 只允许构建 `layouts/staging/`，连续构建两次后再由 `sync_power_architecture.py` 按地址和 pad 显式同步；不能运行旧 `step3_import_netlist.py` 改写当前板。同步后运行：
 
 ```sh
 /usr/bin/env python3 pcb/scripts/validate_esp32s3wroom1_pinmap.py
@@ -33,6 +33,8 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 
 先完成全部元件手工摆放并回存位置脚本，确认尾插正反面、S3/IMU 半孔和 PZT 焊线焊盘方向，再进入以下布线顺序。
 
+### 主板
+
 1. 先布 TPS62162 开关回路：`SYS_5V_SW -> C_IN/VIN`、`SW -> XFL3012 -> C_OUT/3V3`、PGND/AGND/EP 与电容地最短闭环；再布 `sys_5v_in`、`sys_5v_sw` 与其余 3V3/GND。
 2. S3 perimeter GND pad 1、pad 40 分别短接地并就近打接地过孔。嵌入开孔无法接 EP41，不可漏做。
 3. 原生 USB：F.p4 `usb_dp_conn` / B.p2 `usb_dn_conn` 成对走到靠近 MCU 的 22Ω；阻后 `usb_dp/usb_dn` 再分别短接 S3 pad14/pad13。成对、等环境、少过孔。
@@ -41,6 +43,16 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 6. I²C GPIO17/18；IMU UART 为 GPIO41/pad34 TX→IMU RXD/pad13、GPIO40/pad33 RX←IMU TXD/pad14；再处理 UART0 GPIO43/44、控制键与 LED。
 7. 拍尾局部：电池分压、LED 供电/数据到 MX1.25；确认 `bat_cell_p` 绝不是 5V 网。
 8. 最后处理四路 1M+`JP_ADC_*`；BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用。跳线标注 DNP，不能把 ADC 接到比较器输出。
+
+### 尾板
+
+1. 先布 USB 入口电源：J1 VBUS 四触点汇合后到 `u_vbus_limit`、输入 100nF 与 59k ILIM；GND 触点与外壳就近回地。A8/B8、两颗 `/FAULT` 均保持 NC。
+2. 再布 IP5305T 充电/升压功率环：`vbus_limited -> VIN` 及两级输入电容；`BAT_P -> c_bat/J4/J2.3/L_boost`；`SW -> L_boost -> BAT_P` 与 `VOUT -> c_vout/c_vout2` 均按最短高电流闭环处理，SW 铜岛不得靠近 USB 数据线、CC、按键或 LED 数据。
+3. 布系统 5V 限流：`vout_5v_raw -> u_system_limit -> vout_5v/J2.1`，43.2k ILIM 和输入/输出 100nF 紧贴芯片；不要把 `BAT_P`、`vout_5v_raw`、`vout_5v` 混成同一铜岛。
+4. 完成上述功率区的连续 GND 回流和 IP5305T EP 散热/接地，再处理其 LED1/LED2/LED3 指示支路与 KEY 单向隔离。
+5. J1 D+/D− 从触点对先到 USBLC6，再由 `usb_dp/usb_dn` 成对走到 J3；保持等环境、少过孔，远离 SW 节点、两颗限流器 ILIM 与 LED 开关电流。
+6. 布 B3U `user_btn`、J3.3、KEY 隔离，再布 AHCT/WS2812 的 `v5_sw_return`、去耦和 `led_data`。AHCT 去耦与尾灯去耦各自贴近供电脚。
+7. 最后收尾 J2/J3/J4，并逐芯复核 [`../pcb-tail/ADAPTER_HARNESS.md`](../pcb-tail/ADAPTER_HARNESS.md)：J4.1/J2.3 只能是 `BAT_P`，J4.2/J2.2 为 GND，J2.4 是主板开关后的 5V 回线。
 
 ## 收尾门禁（当前全部重新开放）
 

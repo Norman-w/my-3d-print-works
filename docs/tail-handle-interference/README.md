@@ -1,4 +1,4 @@
-# M5 尾板与拍柄尾部 3D 干涉审计
+# 尾板与 M6 拍柄尾部 3D 干涉审计
 
 状态（2026-08-15）：已用当前 `pcb-tail/layouts/default/default.kicad_pcb` 的完整 KiCad 3D 装配，与当前 Step6 拍柄尾部壳体做实体布尔相交。拍尾底平面本身不会挡住 USB-C J1 或 SW1；原壳体存在 12 处局部环槽/侧壁干涉，加入按 KiCad courtyard 生成的小避让后，完整装配交集降为约 `4.97e-08mm³`，可视为布尔数值噪声。
 
