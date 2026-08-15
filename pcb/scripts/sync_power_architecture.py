@@ -42,6 +42,21 @@ class Part:
 
 
 CHANGED_PARTS = {
+    "debug_sw.sw_boot": Part(
+        "SW_BOOT", "B3U-1000P DNP",
+        "${KIPRJMOD}/../../../docs/tail-user-switch-b3u-1000p/"
+        "Omron-B3U-A162-E1-07-official.pdf",
+    ),
+    "debug_sw.sw_en": Part(
+        "SW_EN", "B3U-1000P DNP",
+        "${KIPRJMOD}/../../../docs/tail-user-switch-b3u-1000p/"
+        "Omron-B3U-A162-E1-07-official.pdf",
+    ),
+    "debug_sw.sw_pwr": Part(
+        "SW_PWR", "B3U-1000P DNP",
+        "${KIPRJMOD}/../../../docs/tail-user-switch-b3u-1000p/"
+        "Omron-B3U-A162-E1-07-official.pdf",
+    ),
     "power.ldo": Part(
         "PW_BUCK_3V3",
         "TPS62162DSGR",
@@ -128,6 +143,7 @@ FORCED_NC = {
 # pad numbers.  Refreshing them from the route-free stage is safe because the
 # synchronizer restores side, position, orientation, public fields and nets.
 ALWAYS_REFRESH_FROM_LIBRARY = {
+    "mcu",
     "debug_sw.sw_boot",
     "debug_sw.sw_en",
     "debug_sw.sw_pwr",
@@ -228,6 +244,11 @@ def _ensure_net(board: "pcbnew.BOARD", name: str) -> "pcbnew.NETINFO_ITEM":
 
 
 def _stock_library(name: str, item: str) -> Path:
+    if name == "Button_Switch_SMD" and item == "SW_SPST_B3U-1000P":
+        archived = REPO / "docs/tail-user-switch-b3u-1000p/kicad"
+        if (archived / f"{item}.kicad_mod").is_file():
+            return archived
+        raise SyncError("archived KiCad 9 B3U footprint was not found")
     if name == "SmartPaddle":
         local = REPO / "pcb/layouts/lib/footprints.pretty"
         if (local / f"{item}.kicad_mod").is_file():
@@ -363,6 +384,7 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
     legacy_poses = {address: _pose(target_parts[address]) for address in legacy_addresses}
 
     replacements = {
+        "mcu": ("SmartPaddle", "ESP32-S3-WROOM-1_CUTOUT"),
         "power.ldo": (
             "Package_SON",
             "Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm",
@@ -377,9 +399,9 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
         "pzt_bl.pzt_gnd_pad": ("SmartPaddle", "PZT_WirePad_THT_D2.5mm_Drill1.2mm"),
         "pzt_br.pzt_signal_pad": ("SmartPaddle", "PZT_WirePad_THT_D2.5mm_Drill1.2mm"),
         "pzt_br.pzt_gnd_pad": ("SmartPaddle", "PZT_WirePad_THT_D2.5mm_Drill1.2mm"),
-        "debug_sw.sw_boot": ("SmartPaddle", "SW_SPST_4.5x4.5"),
-        "debug_sw.sw_en": ("SmartPaddle", "SW_SPST_4.5x4.5"),
-        "debug_sw.sw_pwr": ("SmartPaddle", "SW_SPST_4.5x4.5"),
+        "debug_sw.sw_boot": ("Button_Switch_SMD", "SW_SPST_B3U-1000P"),
+        "debug_sw.sw_en": ("Button_Switch_SMD", "SW_SPST_B3U-1000P"),
+        "debug_sw.sw_pwr": ("Button_Switch_SMD", "SW_SPST_B3U-1000P"),
         "pwr_led.led": ("SmartPaddle", "LED_0603"),
         "tail.conn_f": (
             "SmartPaddle",
@@ -559,7 +581,8 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
     print("  TPS62162 + 0805 input + 1206 output footprints applied")
     print("  6 added parts retained at existing poses (parked only on first add)")
     print("  stable public net names and deliberate NC pads preserved")
-    print("  69 footprints; 0 tracks/vias; 0 zones")
+    print("  69 footprints; 0 tracks/vias; 0 copper zones")
+    print("  MCU footprint antenna rule area refreshed from the audited project library")
 
 
 def main() -> int:

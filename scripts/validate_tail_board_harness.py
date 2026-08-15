@@ -99,6 +99,17 @@ def main() -> int:
         errors.append(f"tail connector coverage mismatch: {sorted(tail_signal_pins ^ seen_tail)}")
 
     mech = spec["mechanical"]
+    wire = spec.get("wireConstruction", {})
+    if (
+        wire.get("marking") != "UL1571 28AWG"
+        or wire.get("conductor") != "7 x 0.12 mm tinned copper"
+        or abs(float(wire.get("outerDiameterMm", 0)) - 0.9) > 1e-6
+        or abs(float(wire.get("tinnedFreeEndMm", 0)) - 3.0) > 1e-6
+        or {int(item["wireAwg"]) for item in spec["conductors"]} != {28}
+    ):
+        errors.append("finished-wire construction differs from purchased UL1571 28AWG leads")
+    else:
+        print("✓ wire construction=UL1571 28AWG, 7x0.12mm, OD0.9mm, tinned 3mm")
     allowed = mech["allowedHarnessLengthMm"]
     if not (allowed[0] <= mech["finishedHarnessLengthMm"] <= allowed[1]):
         errors.append("finished harness length outside allowed range")
@@ -139,6 +150,18 @@ def main() -> int:
             errors.append(f"{label} bundle-to-screw clearance {clearance:.3f}mm")
         else:
             print(f"✓ {label} bundle-to-screw envelope clearance={clearance:.3f}mm")
+
+    bypass_size = float(route["batteryBypassCorridorSizeMm"])
+    bypass_center = float(route["batteryBypassCenterXmm"])
+    if bypass_size + 1e-6 < 2 * float(wire.get("outerDiameterMm", 0)):
+        errors.append("battery-bypass passage is too small for a 2x2 wire branch")
+    if not (
+        abs(bypass_center - 8.2) < 1e-6
+        and route["batteryBypassYRangeMm"] == [-164.25, -111.75]
+    ):
+        errors.append("battery-bypass route differs from the enclosure mechanical contract")
+    else:
+        print(f"✓ battery bypass=two {bypass_size:.1f}mm square corridors at X=±{bypass_center:.1f}mm")
 
     if errors:
         print("\nTail harness validation failed:")

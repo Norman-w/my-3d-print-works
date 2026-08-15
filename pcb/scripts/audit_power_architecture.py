@@ -46,6 +46,9 @@ SOURCE_HASHES = {
 }
 
 EXPECTED = {
+    "SW_BOOT": {"1": "boot_btn", "2": "gnd"},
+    "SW_EN": {"1": "en", "2": "gnd"},
+    "SW_PWR": {"1": "btn_sw", "2": "gnd"},
     "TAIL_MX125_F": {
         "1": "sys_5v_in", "2": "sys_5v_sw", "3": "btn_sw",
         "4": "usb_dp_conn", "5": "uart_tx", "MP": None,
@@ -85,6 +88,10 @@ EXPECTED = {
 }
 
 FPIDS = {
+    "SW_BOOT": "Button_Switch_SMD:SW_SPST_B3U-1000P",
+    "SW_EN": "Button_Switch_SMD:SW_SPST_B3U-1000P",
+    "SW_PWR": "Button_Switch_SMD:SW_SPST_B3U-1000P",
+    "MCU_ESP32_S3": "SmartPaddle:ESP32-S3-WROOM-1_CUTOUT",
     "PW_BUCK_3V3":
         "Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm",
     "PW_L_BUCK_2U2": "SmartPaddle:L_Coilcraft_XFL3012",
@@ -105,6 +112,9 @@ FPIDS = {
 }
 
 VALUES = {
+    "SW_BOOT": "B3U-1000P DNP",
+    "SW_EN": "B3U-1000P DNP",
+    "SW_PWR": "B3U-1000P DNP",
     "PW_BUCK_3V3": "TPS62162DSGR",
     "PW_L_BUCK_2U2": "XFL3012-222MEC 2.2uH",
     "PW_C_IN_10U": "10uF 10V X5R/X7R",
@@ -299,6 +309,55 @@ def _assert_xfl3012_land(fp: "pcbnew.FOOTPRINT") -> None:
         )
 
 
+def _assert_antenna_rule_area(fp: "pcbnew.FOOTPRINT") -> None:
+    zones = list(fp.Zones())
+    if len(zones) != 1:
+        raise AuditError(
+            f"{fp.GetReference()} expected one footprint rule area, got {len(zones)}"
+        )
+    zone = zones[0]
+    if not zone.GetIsRuleArea() or zone.GetZoneName() != "ESP32_ANTENNA_HOST_KEEP_OUT":
+        raise AuditError("MCU antenna footprint rule-area identity is wrong")
+    layer_names = {
+        fp.GetBoard().GetLayerName(layer) for layer in zone.GetLayerSet().Seq()
+    }
+    if layer_names != {"F.Cu", "B.Cu"}:
+        raise AuditError(f"MCU antenna rule-area layers are {sorted(layer_names)}")
+    if not all((
+        zone.GetDoNotAllowTracks(), zone.GetDoNotAllowVias(),
+        zone.GetDoNotAllowPads(), zone.GetDoNotAllowCopperPour(),
+        zone.GetDoNotAllowFootprints(),
+    )):
+        raise AuditError("MCU antenna rule area does not block every host-board object")
+    expected = (-21.000, -11.000, -8.700, 9.000)
+    box = zone.GetBoundingBox()
+    actual = (
+        box.GetX() / 1e6,
+        box.GetY() / 1e6,
+        (box.GetX() + box.GetWidth()) / 1e6,
+        (box.GetY() + box.GetHeight()) / 1e6,
+    )
+    if any(not math.isclose(a, b, abs_tol=0.001) for a, b in zip(actual, expected)):
+        raise AuditError(f"MCU antenna rule-area box {actual} != {expected}")
+    outline = zone.Outline().COutline(0)
+    actual_points = [
+        (outline.CPoint(i).x / 1e6, outline.CPoint(i).y / 1e6)
+        for i in range(outline.PointCount())
+    ]
+    expected_points = [
+        (-21.0, -11.0), (-9.3, -11.0), (-9.3, -9.6), (-8.7, -9.6),
+        (-8.7, 7.6), (-9.3, 7.6), (-9.3, 9.0), (-21.0, 9.0),
+    ]
+    if len(actual_points) != len(expected_points) or any(
+        not (math.isclose(a[0], b[0], abs_tol=0.001)
+             and math.isclose(a[1], b[1], abs_tol=0.001))
+        for a, b in zip(actual_points, expected_points)
+    ):
+        raise AuditError(
+            f"MCU antenna rule-area polygon {actual_points} != {expected_points}"
+        )
+
+
 def _courtyard(fp: "pcbnew.FOOTPRINT") -> tuple[float, float, float, float]:
     layer = pcbnew.F_CrtYd if fp.GetLayer() == pcbnew.F_Cu else pcbnew.B_CrtYd
     boxes = []
@@ -364,6 +423,7 @@ def audit(require_route_free: bool = True) -> None:
             raise AuditError(f"{reference} value {actual!r} != {expected_value!r}")
 
     _assert_xfl3012_land(fps["PW_L_BUCK_2U2"])
+    _assert_antenna_rule_area(fps["MCU_ESP32_S3"])
 
     mcu = fps["MCU_ESP32_S3"]
     mcu_contract = {
@@ -510,7 +570,7 @@ def audit(require_route_free: bool = True) -> None:
     print("  critical package library IDs and populated values verified")
     print("  BAT_P -> 1M/1M + 100nF -> GPIO9 ADC and web estimate verified; no charging telemetry")
     if require_route_free:
-        print("  69 footprints; 0 tracks/vias; 0 zones")
+        print("  69 footprints; 0 tracks/vias; 0 copper zones; 1 footprint antenna rule area")
     else:
         print("  copper allowed; electrical/physical semantics audited independently of routing")
 

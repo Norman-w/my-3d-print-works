@@ -471,6 +471,22 @@
     "height": 0.8,
     "hole_d": 2.0
   },
+  "battery_connector": {
+    "ref": "J4",
+    "x": -2.794,
+    "y": -5.969,
+    "rot_deg": 90.0,
+    "layer": "B.Cu",
+    "part": "JST BM02B-ACHSS-GAN-ETF",
+    "body_w": 4.2,
+    "body_d": 4.3,
+    "body_h": 1.4,
+    "source": "docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf",
+    "handle_y_range": [
+      -171.29616785570738,
+      -169.89616785570738
+    ]
+  },
   "front_component_cavity_depth": 3.8000000000000114,
   "front_power_parts": [
     {

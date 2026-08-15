@@ -143,6 +143,7 @@ def _extract() -> dict:
     sw1 = fp_pose("SW1")
     d1 = fp_pose("D1")
     led1 = fp_pose("LED1")
+    j4 = fp_pose("J4")
 
     # 器件包络（J1 来自主数据表；SW1 来自 Omron B3U 数据表 A162-E1）
     usb = {
@@ -202,6 +203,17 @@ def _extract() -> dict:
         "height": 0.8,
         "hole_d": 1.6 + LED_HOLE_OVER,
     }
+    battery_connector = {
+        **j4,
+        "part": "JST BM02B-ACHSS-GAN-ETF",
+        "body_w": 4.20,
+        "body_d": 4.30,
+        "body_h": 1.40,
+        "source": "docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf",
+        # J4 is on B.Cu, which faces the handle interior.  These Y limits are
+        # used to prove the protected-cell end cannot crush the connector.
+        "handle_y_range": [pcb_y + board_t, pcb_y + board_t + 1.40],
+    }
 
     # F.Cu faces the butt cap.  The shell inner wall is wall_t inward from the
     # butt plane, so this is the nominal axial cavity available above F-side
@@ -259,6 +271,7 @@ def _extract() -> dict:
         "button": button,
         "led_rgb": led_rgb,
         "led_status": led_status,
+        "battery_connector": battery_connector,
         "front_component_cavity_depth": front_cavity_depth,
         "front_power_parts": front_power_parts,
         "component_keepouts": component_keepouts,

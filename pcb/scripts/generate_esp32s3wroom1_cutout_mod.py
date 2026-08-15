@@ -30,6 +30,22 @@ OUT = (
     / "ESP32-S3-WROOM-1_CUTOUT.kicad_mod"
 )
 
+# Largest practical host-board clearance around the embedded antenna without
+# touching the first module pads.  The module body is x=-12.75..12.75 and the
+# PCB antenna is x=-12.75..-6.20.  Espressif's ideal 15 mm end-product
+# clearance is not achievable in this mainland geometry; the bounded
+# deviation and mandatory RF acceptance test live in
+# docs/mechanical-handoff/README.md.
+ANTENNA_RULE_X0_MM = -18.0
+ANTENNA_RULE_X1_MM = -5.7
+ANTENNA_RULE_Y0_MM = -10.0
+ANTENNA_RULE_Y1_MM = 10.0
+# Pads 1 and 40 sit just beyond the two antenna-side corners.  KiCad applies a
+# footprint rule area to pads of the same footprint too, so recess those two
+# corners while retaining the wider X1 boundary alongside the antenna body.
+ANTENNA_RULE_CORNER_X_MM = -6.3
+ANTENNA_RULE_CORNER_Y_MM = 8.6
+
 
 def _uid(tag: str) -> str:
     return str(uuid.uuid5(_NS, f"esp32-s3-wroom-1-cutout:{tag}"))
@@ -96,6 +112,38 @@ def build_mod() -> str:
         f'  (fp_text user "EP41: no host land (embedded)" (at 0 0 90) '
         f'(layer "F.Fab") (uuid "{_uid("ep41-note")}")',
         "    (effects (font (size 0.6 0.6) (thickness 0.08)))",
+        "  )",
+        "  (zone",
+        "    (net 0)",
+        '    (net_name "")',
+        '    (layers "F.Cu" "B.Cu")',
+        f'    (uuid "{_uid("antenna-host-rule-area")}")',
+        '    (name "ESP32_ANTENNA_HOST_KEEP_OUT")',
+        "    (hatch edge 0.508)",
+        "    (connect_pads (clearance 0))",
+        "    (min_thickness 0.254)",
+        "    (filled_areas_thickness no)",
+        "    (keepout",
+        "      (tracks not_allowed)",
+        "      (vias not_allowed)",
+        "      (pads not_allowed)",
+        "      (copperpour not_allowed)",
+        "      (footprints not_allowed)",
+        "    )",
+        '    (placement (enabled no) (sheetname ""))',
+        "    (fill (thermal_gap 0.508) (thermal_bridge_width 0.508))",
+        "    (polygon",
+        "      (pts",
+        f"        (xy {_fmt(ANTENNA_RULE_X0_MM)} {_fmt(ANTENNA_RULE_Y0_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_CORNER_X_MM)} {_fmt(ANTENNA_RULE_Y0_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_CORNER_X_MM)} {_fmt(-ANTENNA_RULE_CORNER_Y_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_X1_MM)} {_fmt(-ANTENNA_RULE_CORNER_Y_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_X1_MM)} {_fmt(ANTENNA_RULE_CORNER_Y_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_CORNER_X_MM)} {_fmt(ANTENNA_RULE_CORNER_Y_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_CORNER_X_MM)} {_fmt(ANTENNA_RULE_Y1_MM)})",
+        f"        (xy {_fmt(ANTENNA_RULE_X0_MM)} {_fmt(ANTENNA_RULE_Y1_MM)})",
+        "      )",
+        "    )",
         "  )",
     ]
     for pad in range(1, 41):

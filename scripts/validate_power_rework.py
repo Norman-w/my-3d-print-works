@@ -31,7 +31,7 @@ BOARDS = {
     "tail": ROOT / "pcb-tail/layouts/default/default.kicad_pcb",
 }
 EXPECTED_UNROUTED = {
-    "main": {"footprints": 69, "unconnected": 149},
+    "main": {"footprints": 69, "unconnected": 143},
     "tail": {"footprints": 33, "unconnected": 79},
 }
 MECHANICAL_REPORT = ROOT / "enclosure/stl/interference/tail_interference.json"
@@ -73,6 +73,7 @@ def run_semantic_audits(release_gate: bool) -> None:
         "pcb-tail/scripts/audit_power_architecture.py",
         "pcb-tail/scripts/audit_usb_16p_j1.py",
         "pcb-tail/scripts/audit_battery_connector_j4.py",
+        "scripts/validate_mechanical_handoff.py",
     ):
         command = [python, str(ROOT / script)]
         if release_gate and (
@@ -135,7 +136,7 @@ def validate(release_gate: bool) -> None:
                     )
             print(
                 f"{name}: footprints={counts['footprints']} segments={counts['segments']} "
-                f"vias={counts['vias']} zones={counts['zones']} "
+                f"vias={counts['vias']} copper_zones={counts['zones']} "
                 f"DRC violations={violations} unconnected={unconnected}"
             )
 

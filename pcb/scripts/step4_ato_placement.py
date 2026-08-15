@@ -82,9 +82,9 @@ READABLE_REFS = {
     'pzt_frontend.jp_adc_br': ('JP_ADC_BR', '0R DNP'),
     'pwr_led.led': ('LED_MCU_PWR', '0603 power'),
     'pwr_led.r_lim': ('R_MCU_PWR_1K', '1k'),
-    'debug_sw.sw_boot': ('SW_BOOT', '4.5x4.5'),
-    'debug_sw.sw_en': ('SW_EN', '4.5x4.5'),
-    'debug_sw.sw_pwr': ('SW_PWR', '4.5x4.5'),
+    'debug_sw.sw_boot': ('SW_BOOT', 'B3U-1000P DNP'),
+    'debug_sw.sw_en': ('SW_EN', 'B3U-1000P DNP'),
+    'debug_sw.sw_pwr': ('SW_PWR', 'B3U-1000P DNP'),
     'tail.conn_f': ('TAIL_MX125_F', 'MX1.25-5P'),
     'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
     'bringup.vcc_pad': ('TP_3V3', '3V3'),
@@ -180,7 +180,7 @@ def _label_spec(addr, fp):
     if addr.startswith('pzt_'):
         return 0.38, (x, y + 1.2), fp.GetOrientationDegrees()
     # Three handle switches share a narrow corridor; put their labels on the
-    # handle centreline rather than across the THT pads.
+    # handle centreline rather than across the compact SMD pads.
     if addr.startswith('debug_sw.'):
         return 0.70, (0.0, y), 0
     # 测试点：短丝印靠左，避免与键体重叠

@@ -7,6 +7,7 @@
 //   HALF = "both"   → 组装预览
 
 include <parameters.scad>
+include <../docs/mechanical-handoff/mechanical-contract.scad>
 
 // ═══ 配置 ═══
 USE_BEZIER_PROFILES = true; // false = 传统椭圆 + FL 手柄
@@ -170,34 +171,68 @@ module paddle_outer() {
 
 // ═══ 内部空腔（从外部几何中减去） ═══
 
+module protected_battery_fit_cavity() {
+    fit_d = protected_14500_max_d + 2 * protected_14500_fit_radial_clearance;
+    fit_l = protected_14500_max_l + 2 * protected_14500_fit_axial_clearance;
+    translate(protected_14500_center)
+        rotate([90, 0, 0])
+            cylinder(d = fit_d, h = fit_l, center = true);
+}
+
+module handle_wire_corridor_cavities() {
+    y_mid = (handle_wire_corridor_y0 + handle_wire_corridor_y1) / 2;
+    y_len = handle_wire_corridor_y1 - handle_wire_corridor_y0;
+    for (sx = [-1, 1]) {
+        // Straight 2×2-conductor passage beside the protected 14500.
+        translate([sx * handle_wire_corridor_center_x, y_mid, 0])
+            cube([
+                handle_wire_corridor_size,
+                y_len,
+                handle_wire_corridor_size,
+            ], center = true);
+        // Fan into the existing ±4 mm neck branches above the cell.
+        hull() {
+            translate([sx * handle_wire_corridor_center_x, handle_wire_corridor_y1, 0])
+                cube([handle_wire_corridor_size, 0.2, handle_wire_corridor_size], center = true);
+            translate([sx * handle_wire_neck_center_x, handle_wire_neck_y, 0])
+                cube([handle_wire_corridor_size, 0.2, handle_wire_corridor_size], center = true);
+        }
+    }
+}
+
 module handle_cavity() {
-    // 仅手柄中空；拍面保持实心。
-    if (USE_BEZIER_PROFILES) {
-        bezier_handle_cavity();
-    } else {
-        steps = 80;
-        y0 = handle_butt_y + wall_t;
-        y1 = shoulder_top_y + 5;
-        dh = (y1 - y0) / steps;
-        for (i = [0:steps-1]) {
-            ym = y0 + (i + 0.5) * dh;
-            outer_hx = paddle_hx(ym);
-            outer_hz = half_z_at(ym);
-            inner_hx = outer_hx - wall_t - handle_cavity_inset;
-            inner_hz = outer_hz - wall_t - handle_cavity_inset;
-            if (inner_hx > 0.5 && inner_hz > 0.5) {
-                translate([0, ym, 0])
-                rotate([90, 0, 0])
-                    linear_extrude(height = dh + eps, center = true) {
-                        if (ym >= shoulder_top_y) {
-                            scale([inner_hx, inner_hz]) circle(r = 1);
-                        } else {
-                            rounded_rect(inner_hx * 2, inner_hz * 2,
-                                max(1.5, handle_corner_r - 1));
+    // 仅手柄中空；拍面保持实心。受保护 14500 和两束线只局部扩大
+    // 原空腔；不整体放大拍柄外轮廓。
+    union() {
+        if (USE_BEZIER_PROFILES) {
+            bezier_handle_cavity();
+        } else {
+            steps = 80;
+            y0 = handle_butt_y + wall_t;
+            y1 = shoulder_top_y + 5;
+            dh = (y1 - y0) / steps;
+            for (i = [0:steps-1]) {
+                ym = y0 + (i + 0.5) * dh;
+                outer_hx = paddle_hx(ym);
+                outer_hz = half_z_at(ym);
+                inner_hx = outer_hx - wall_t - handle_cavity_inset;
+                inner_hz = outer_hz - wall_t - handle_cavity_inset;
+                if (inner_hx > 0.5 && inner_hz > 0.5) {
+                    translate([0, ym, 0])
+                    rotate([90, 0, 0])
+                        linear_extrude(height = dh + eps, center = true) {
+                            if (ym >= shoulder_top_y) {
+                                scale([inner_hx, inner_hz]) circle(r = 1);
+                            } else {
+                                rounded_rect(inner_hx * 2, inner_hz * 2,
+                                    max(1.5, handle_corner_r - 1));
+                            }
                         }
-                    }
+                }
             }
         }
+        protected_battery_fit_cavity();
+        handle_wire_corridor_cavities();
     }
 }
 
@@ -507,6 +542,15 @@ module rigid_pcb_cavity(front = true) {
         translate([0, 0, -d / 2])
             linear_extrude(height = d + 2 * overcut + eps, center = true)
                 rigid_pcb_profile_2d();
+}
+
+module pzt_solder_reliefs(front = true) {
+    base_d = max(pcb_cavity_depth, piezo_trench_d, resistor_ear_d);
+    total_d = base_d + pzt_solder_relief_extra_depth;
+    z0 = front ? -overcut : -total_d - overcut;
+    for (p = pzt_solder_pad_centers_scad)
+        translate([p[0], p[1], z0])
+            cylinder(d = pzt_solder_relief_d, h = total_d + 2 * overcut + eps);
 }
 
 // ═══ 导线通道 ═══
@@ -900,8 +944,11 @@ module blade_front_part() {
         screw_holes_clearance_blade();
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = true);
+        wire_channels(front = true);
+        signal_bus_to_handle(front = true);
         rigid_pcb_cavity(front = true);
         pcb_main_cavity(front = true);
+        pzt_solder_reliefs(front = true);
     }
     difference() {
         union() {
@@ -930,8 +977,11 @@ module blade_back_part() {
     module _cutouts() {
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = false);
+        wire_channels(front = false);
+        signal_bus_to_handle(front = false);
         rigid_pcb_cavity(front = false);
         pcb_main_cavity(front = false);
+        pzt_solder_reliefs(front = false);
     }
     difference() {
         union() {
@@ -1090,10 +1140,16 @@ module m6_stage_voids() {
     intersection() {
         union() {
             handle_cavity();
+            wire_channels(front = true);
+            wire_channels(front = false);
+            signal_bus_to_handle(front = true);
+            signal_bus_to_handle(front = false);
             rigid_pcb_cavity(front = true);
             rigid_pcb_cavity(front = false);
             pcb_main_cavity(front = true);
             pcb_main_cavity(front = false);
+            pzt_solder_reliefs(front = true);
+            pzt_solder_reliefs(front = false);
         }
         m6_full_planform_prism();
     }
@@ -1341,8 +1397,11 @@ module m6_core_front() {
                 m6_core_blank(true);
                 handle_cavity();
                 piezo_pockets(front = true);
+                wire_channels(front = true);
+                signal_bus_to_handle(front = true);
                 rigid_pcb_cavity(front = true);
                 pcb_main_cavity(front = true);
+                pzt_solder_reliefs(front = true);
             }
             // 内腔挖空后补回第 2 层螺丝承力柱，否则螺丝会悬空。
             m6_core_screw_supports(true);
@@ -1362,8 +1421,11 @@ module m6_core_back() {
                 m6_core_blank(false);
                 handle_cavity();
                 piezo_pockets(front = false);
+                wire_channels(front = false);
+                signal_bus_to_handle(front = false);
                 rigid_pcb_cavity(front = false);
                 pcb_main_cavity(front = false);
+                pzt_solder_reliefs(front = false);
             }
             // 第 3 层镜像承力柱，供螺丝穿过后向第 4 层攻丝。
             m6_core_screw_supports(false);
@@ -1529,6 +1591,90 @@ module m6_exploded() {
     translate([0, 0, -12]) m6_handle_skin_back();
 }
 
+// Non-manufacturing inspection scenes used by docs/mechanical-handoff.
+module protected_battery_preview() {
+    color([0.15, 0.65, 0.28])
+        translate(protected_14500_center)
+            rotate([90, 0, 0])
+                cylinder(d = protected_14500_max_d, h = protected_14500_max_l, center = true);
+    // The user's circular protection PCB is contained within the same diameter
+    // and within the 52 mm total envelope; mark the final 2 mm only for visual
+    // orientation, not as an additional length.
+    color([0.12, 0.35, 0.16])
+        translate([0, protected_14500_center[1] - protected_14500_max_l / 2 + 1, 0])
+            rotate([90, 0, 0])
+                cylinder(d = protected_14500_max_d, h = 2, center = true);
+}
+
+module harness_preview() {
+    colors = [
+        [0.90, 0.10, 0.08], [0.05, 0.05, 0.05],
+        [0.95, 0.70, 0.05], [0.95, 0.35, 0.05],
+        [0.92, 0.92, 0.92], [0.10, 0.65, 0.20],
+        [0.12, 0.35, 0.90], [0.55, 0.20, 0.80],
+    ];
+    wire_len = handle_wire_corridor_y1 - handle_wire_corridor_y0;
+    for (branch = [0, 1], ix = [-1, 1], iz = [-1, 1]) {
+        index = branch * 4 + (ix > 0 ? 2 : 0) + (iz > 0 ? 1 : 0);
+        sx = branch == 0 ? -1 : 1;
+        color(colors[index])
+            translate([
+                sx * handle_wire_corridor_center_x + ix * handle_wire_od / 2,
+                (handle_wire_corridor_y0 + handle_wire_corridor_y1) / 2,
+                iz * handle_wire_od / 2,
+            ])
+                rotate([90, 0, 0])
+                    cylinder(d = handle_wire_od, h = wire_len, center = true, $fn = 24);
+    }
+}
+
+module mechanical_fit_preview() {
+    // Handle-only cutaway: keep the real back-side shell, remove the front
+    // half, and place the battery/wires at their contractual coordinates.
+    // Opaque geometry renders consistently in both OpenCSG and Manifold and
+    // makes the deliberately tight two-corridor fit readable in screenshots.
+    color([0.68, 0.75, 0.84])
+        intersection() {
+            union() {
+                m6_core_back();
+                m6_handle_skin_back();
+            }
+            translate([-30, -172, -20]) cube([60, 78, 20]);
+        }
+    protected_battery_preview();
+    harness_preview();
+}
+
+module mechanical_pzt_relief_preview() {
+    // Diagnostic overlay on the actual rigid-PCB planform.  Green is the
+    // board, gold is the current Ø2.5/Ø1.2 plated pad, and orange is the
+    // Ø3.5 shell relief envelope (0.5 mm radial clearance).
+    color([0.10, 0.42, 0.25])
+        difference() {
+            linear_extrude(height = 0.8, center = true)
+                rigid_pcb_profile_2d();
+            for (p = pzt_solder_pad_centers_scad)
+                translate([p[0], p[1], -1])
+                    cylinder(d = pzt_wire_pad_drill, h = 2, $fn = 36);
+        }
+    for (p = pzt_solder_pad_centers_scad) {
+        color([1.0, 0.42, 0.02])
+            translate([p[0], p[1], 0.42])
+                difference() {
+                    cylinder(d = pzt_solder_relief_d, h = 0.12, $fn = 48);
+                    translate([0, 0, -0.02])
+                        cylinder(d = pzt_wire_pad_d, h = 0.16, $fn = 48);
+                }
+        color([0.94, 0.70, 0.12])
+            translate([p[0], p[1], 0.42])
+                difference() {
+                    cylinder(d = pzt_wire_pad_d, h = 0.16, $fn = 48);
+                    translate([0, 0, -0.02])
+                        cylinder(d = pzt_wire_pad_drill, h = 0.20, $fn = 36);
+                }
+    }
+}
+
 // ═══ 渲染 ═══
 
 if (HALF == "m6_core_front") {
@@ -1573,6 +1719,10 @@ if (HALF == "m6_core_front") {
     m6_stage_continuous_blank();
 } else if (HALF == "m6_stage_voids") {
     m6_stage_voids();
+} else if (HALF == "mechanical_fit_preview") {
+    mechanical_fit_preview();
+} else if (HALF == "mechanical_pzt_relief_preview") {
+    mechanical_pzt_relief_preview();
 } else {
     echo(str("Unknown M6 HALF: ", HALF));
 }

@@ -1,6 +1,6 @@
-# SmartPaddle M6 外壳（OpenSCAD）
+# SmartPaddle 外壳（OpenSCAD）
 
-当前硬件组合登记为 **M6.C5**：本目录定义模型版本 M6，`pcb/` 与 `pcb-tail/` 的现行源定义电路版本 C5。两条版本线独立编号；M6 已形成现行机械生成闭环，不因 C5 布线而改写脚本或产物命名。
+当前硬件组合登记为 **M7.C5**：本目录在 M6 连续承力结构上加入受保护 14500 电池局部适配、两束 4 芯线通道与 8 个 PZT 焊点让位，故模型线由 M6 前进到 M7；`pcb/` 与 `pcb-tail/` 的电气拓扑仍为 C5。版本只记录在说明中，既有 `m6_*` 模块/产物名作为结构生成链的历史内部标识保留，不为版本号复制脚本或文件。
 
 M6 将拍体改为传统球拍式连续承力结构。外形来自
 `web/src/data/userBezierProfiles.json`，拍柄 loft 在 `handle_join_y`
@@ -20,6 +20,13 @@ Z+ 到 Z- 的四层为：
 较薄者动态选径，当前可用 3 mm 采用 M1.2。中轴第 1→4 层贯穿螺丝和拍面
 第 2→3 层螺丝沿用已采购的 M2 规格。
 Type-C 尾端开口左右侧各有一个附加紧固点，防止开口两侧受力变形。
+
+## M7 机械输入与预览
+
+- 14500 实物约束：保护板位于电芯端部、整件比 50 mm 电芯增加不超过 2 mm；设计实物上限 Ø14.0×52.0 mm，装配腔按 Ø14.3×52.5 mm。
+- 线束实物：左右各一束 MX1.25 4P；每芯 UL1571 28AWG、7×0.12 mm 镀锡铜、外径约 0.9 mm、尾端上锡 3 mm。每束使用 2.0×2.0 mm 通道，本轮不额外计弯曲半径。
+- PZT：壳体让位以当前 PCB 八个 Ø1.2 mm 圆孔圆心为准，Ø3.5 mm 局部凹位相对 Ø2.5 mm 焊盘提供 0.5 mm 径向余量，并向两面各加深 0.5 mm。
+- 这些参数由 [`../docs/mechanical-handoff/mechanical-contract.scad`](../docs/mechanical-handoff/mechanical-contract.scad) 驱动，并由 `scripts/validate_mechanical_handoff.py` 对当前 KiCad、线束和外壳同时复核。诊断图见 [`../docs/mechanical-handoff/README.md`](../docs/mechanical-handoff/README.md)；不是制造 STL。
 
 ## 导出（唯一入口）
 

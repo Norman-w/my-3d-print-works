@@ -131,10 +131,11 @@ tail_connector_pitch  = 1.25;      // MX1.25 间距 (mm)
 tail_connector_pins   = 5;         // 每面 5P ×2 = 10 信号
 tail_connector_pcb_w  = 18.00;     // 尾端 PCB 全宽 ≈ 2×_tail_base_hw (mm)
 
-// ---- 电源通道 (电池在拍柄 → ESP32 在拍面甜区) ----
-// 左右各一条槽走 VCC+GND，经由拍面-手柄连接处进入手柄空腔。
-signal_trench_w       = 2.0;        // 槽宽 (VCC+GND 两条线)
-signal_trench_d       = 1.0;        // 槽深 (信号线槽，剩余壁厚 ≥2mm)
+// ---- 主尾板线束通道 ----
+// 左右各一条槽衔接一束 4×UL1571 28AWG；电池段的精确 2×2 线束
+// 包络由 docs/mechanical-handoff/mechanical-contract.scad 定义。
+signal_trench_w       = 2.0;        // 每束 2×2 根 Ø0.9 线的颈部净宽
+signal_trench_d       = 1.0;        // 每半壳深 1.0，合壳净深 2.0
 
 // ---- 压电片传感器槽位 (PZT-5A 陶瓷裸片) ----
 // 选用 PZT-5A 翻边型裸陶瓷片 (家铭电子), 20mmØ × 1mm 厚

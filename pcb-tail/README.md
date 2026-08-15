@@ -1,6 +1,6 @@
 # SmartPaddle 尾部线路板（`pcb-tail`）
 
-> 当前 **M6.C5** 组合的独立满截面尾板，与 `pcb/` 主板分开维护；充电、USB、按键和 LED 均在本板。版本只记录在说明与 KiCad 标题栏，工程、PCB、同步脚本和交接文件使用跨版本通用名称。
+> 当前 **M7.C5** 组合的独立满截面尾板，与 `pcb/` 主板分开维护；充电、USB、按键和 LED 均在本板。版本只记录在说明与 KiCad 标题栏，工程、PCB、同步脚本和交接文件使用跨版本通用名称。
 
 > **当前设计与旧板安全状态（2026-08-15）：** J1 的 H=5.8 短脚封装和 16 个物理触点映射已按用户数据表修正；J4、B3U、两级 TPS2553 和 KEY 隔离也已同步。当前 C5 尾板为 33 个封装、0 条走线/0 个过孔/0 个覆铜区，DRC 为 0 个规则违规、79 个预期未连接，**可以开始手工布线，但不能制造**。所有按旧 J1 错误映射制造或已焊接的尾板及旧制造文件仍不得上电、插 USB 或再次下单，不得现场飞线返修。详见 [`../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md`](../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >

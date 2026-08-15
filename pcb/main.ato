@@ -22,7 +22,7 @@ from "parts.ato" import WirePad
 from "parts.ato" import SmallWirePad
 from "parts.ato" import MolexPicoBlade_53261_5P
 from "parts.ato" import LED_0603
-from "parts.ato" import TactileSwitch45
+from "parts.ato" import Omron_B3U_1000P_Debug
 
 
 component ESP32S3WROOM1_Cutout:
@@ -434,15 +434,15 @@ module TestPads:
 
 
 module McuDebugControls:
-    """宽栈道 4.5×4.5 THT 轻触（与尾键同规格）：BOOT / EN / 开机测试（并联 btn_sw↔GND）。"""
+    """默认 DNP 的 B3U-1000P：BOOT / EN / 开机测试（并联 btn_sw↔GND）。"""
     pin BOOT
     pin EN
     pin BUTTON
     pin GND
 
-    sw_boot = new TactileSwitch45
-    sw_en = new TactileSwitch45
-    sw_pwr = new TactileSwitch45
+    sw_boot = new Omron_B3U_1000P_Debug
+    sw_en = new Omron_B3U_1000P_Debug
+    sw_pwr = new Omron_B3U_1000P_Debug
     sw_boot.a ~ BOOT
     sw_boot.b ~ GND
     sw_en.a ~ EN

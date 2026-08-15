@@ -1,13 +1,15 @@
 # 主板与尾板 KiCad 手工布线交接
 
-本文件是当前 **M6.C5** 组合在 2026-08-15 电源架构重整后的手工布线清单。版本号只记录在标题栏与说明中；本文件名、同步脚本和 PCB 文件名均保持跨版本通用。电气真理源为 `main.ato`；MCU 脚位为 `lib/esp32s3wroom1/pinmap.py`；尾插为 `docs/1.25x10p/README.md`；跨层依据见 `docs/power-architecture-rework/README.md`。
+本文件是当前 **M7.C5** 组合在 2026-08-15 电源架构重整及机械/射频固化后的手工布线清单。版本号只记录在标题栏与说明中；本文件名、同步脚本和 PCB 文件名均保持跨版本通用。电气真理源为 `main.ato`；MCU 脚位为 `lib/esp32s3wroom1/pinmap.py`；尾插为 `docs/1.25x10p/README.md`；跨层依据见 `docs/power-architecture-rework/README.md` 与 `docs/mechanical-handoff/README.md`。
 
 ## 开始前门禁
 
 - 板上 MCU 必须是 `MCU_ESP32_S3` / ESP32-S3-WROOM-1-N16R8，不得残留 C6 封装。
+- MCU footprint 必须含且只含一个 `ESP32_ANTENNA_HOST_KEEP_OUT`：覆盖 F.Cu/B.Cu，并同时禁止 tracks、vias、pads、copper pour 和 footprints；它是规则区，不计入 copper-zone 数量。
 - `PZT_DAC_MCP4728`、`PZT_CMP_TLV1814`、四颗 `JP_ADC_*` 与两颗去耦必须都在板上。
 - 尾插背面必须为 B.p1=`uart_rx`、B.p2=`usb_dn_conn`、B.p3=`bat_cell_p`、B.p4=`led_din`、B.p5=`gnd`。
-- 开始布线时应为 69 个封装、0 track、0 via、0 copper zone；当前 DRC 的 149 个未连接是这一交接态的预期值。
+- `SW_BOOT`、`SW_EN`、`SW_PWR` 必须均为 Omron `B3U-1000P` SMD 且 Value 含 DNP；不得为三只调试键另开壳孔。
+- 开始布线时应为 69 个封装、0 track、0 via、0 copper zone、143 个未连接；该数字必须与 `validate_power_rework.py` 门禁基线一致。
 
 当前无铜交接态复核命令：
 
@@ -36,11 +38,11 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 ### 主板
 
 1. 先布 TPS62162 开关回路：`SYS_5V_SW -> C_IN/VIN`、`SW -> XFL3012 -> C_OUT/3V3`、PGND/AGND/EP 与电容地最短闭环；再布 `sys_5v_in`、`sys_5v_sw` 与其余 3V3/GND。
-2. S3 perimeter GND pad 1、pad 40 分别短接地并就近打接地过孔。嵌入开孔无法接 EP41，不可漏做。
+2. S3 perimeter GND pad 1、pad 40 分别短接地并就近打接地过孔。嵌入开孔无法接 EP41，不可漏做。模块天线朝 `−X`；任何铜、焊盘、过孔或器件都不得进入 `ESP32_ANTENNA_HOST_KEEP_OUT`，也不得用天线侧绕 TPS62162 或数字线。
 3. 原生 USB：F.p4 `usb_dp_conn` / B.p2 `usb_dn_conn` 成对走到靠近 MCU 的 22Ω；阻后 `usb_dp/usb_dn` 再分别短接 S3 pad14/pad13。成对、等环境、少过孔。
 4. PZT 模拟：四个 `CMP_IN_*` 到 TLV1814 IN+；四个 DAC VREF 到 IN−。避开 LED/电源开关网。
 5. PZT 数字边沿：TL/TR/BL/BR → GPIO16/15/6/7，保持短且环境相近。TL/TR 有意使用 TLV1814 通道 2/1，使 `CMP_IN_TL/TR` 分别落到 pin 7/5，避免比较器前交叉。
-6. I²C GPIO17/18；IMU UART 为 GPIO41/pad34 TX→IMU RXD/pad13、GPIO40/pad33 RX←IMU TXD/pad14；再处理 UART0 GPIO43/44、控制键与 LED。
+6. I²C GPIO17/18；IMU UART 为 GPIO41/pad34 TX→IMU RXD/pad13、GPIO40/pad33 RX←IMU TXD/pad14；再处理 UART0 GPIO43/44、控制键与 LED。三只主板 B3U 均为 DNP 调试件，不为其布置外壳日常操作结构。
 7. 拍尾局部：电池分压、LED 供电/数据到 MX1.25；确认 `bat_cell_p` 绝不是 5V 网。
 8. 最后处理四路 1M+`JP_ADC_*`；BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用。跳线标注 DNP，不能把 ADC 接到比较器输出。
 
@@ -60,6 +62,8 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 - [ ] TPS62162 高频回路、USB 差分、PZT 模拟/数字、两板电源和地回流逐网人工复核。
 - [ ] 无无网络铜；69 件位姿未被意外移动；S3/IM948 开槽和尾插机械复核。
 - [x] Atopile 源、关键物理 pin/net、J1 16 触点、线束和 ESP-IDF 5.5.1 构建已通过自动审计。
+- [x] 受保护 14500 最大包络、左右两束 4×28AWG 通道和 8 个 PZT 圆孔中心让位已写入同一机械契约，并由当前 PCB 坐标反查通过；预览见 [`../docs/mechanical-handoff/README.md`](../docs/mechanical-handoff/README.md)。
+- [x] 主板三只 B3U 的 DNP/位姿与 ESP32 双面天线规则区已纳入同步审计；布线过程中不得移动既有元件或删掉规则区。
 - [x] B3U 中心 Ø2.0mm 直通针孔已与当前 SW1 位姿和 3D 壳体核对，可作为独立操作基准。
 - [ ] 若产品采用可选 B3U 防脱推杆，再用尾段试片闭合其最坏行程公差；该附件不替代针孔基准。
 - [ ] 回板后验证实际焊点、供电、USB、PZT、射频和热；机器门禁不能替代这些实物项。

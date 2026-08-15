@@ -302,15 +302,17 @@ component LED_0603:
     footprint = "SmartPaddle:LED_0603"
 
 
-component TactileSwitch45:
-    """4.5×4.5 mm SPST 轻触（与尾部电源键同规格；V3 测试键为 THT 插脚）。
+component Omron_B3U_1000P_Debug:
+    """Omron B3U-1000P 超小型顶按 SPST-NO 贴片调试键，默认 DNP。
 
-    焊盘几何：pcb/lib/tactile_45/params.py → generate_sw_spst_45_tht_mod.py
+    三只主板键只在裸板调试时选焊；成品不焊、壳体不开操作孔。尺寸与
+    焊盘依据项目归档的 Omron A162-E1-07 数据表以及 KiCad 9 stock
+    `Button_Switch_SMD:SW_SPST_B3U-1000P`，与尾板日常用户键同一料号。
     """
     designator_prefix = "SW"
-    value = "4.5x4.5"
+    value = "B3U-1000P DNP"
     signal a
     signal b
     a ~ pin 1
     b ~ pin 2
-    footprint = "SmartPaddle:SW_SPST_4.5x4.5"
+    footprint = "Button_Switch_SMD:SW_SPST_B3U-1000P"

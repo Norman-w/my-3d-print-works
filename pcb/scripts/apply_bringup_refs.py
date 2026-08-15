@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # ===== 分区：导入/依赖 =====
-"""应用 V3 装配反馈到板（不手搓焊盘几何）。
+"""历史 C4/V3 装配迁移器（不用于当前通用同步流程）。
 
 来源：
   - parts.ato / main.ato 脚位与网络约定
   - corridor_snapshot / mainland_snapshot / dock_snapshot 放置
   - KiCad 官方库：D_SOD-323_HandSoldering、TestPoint
-  - 校本 4.5×4.5 THT：SW_SPST_4.5x4.5（与尾键同规格）
+  - 历史校本 4.5×4.5 THT：SW_SPST_4.5x4.5
 
 动作：
   1. 二极管 → HandSoldering；BOOT/EN/PWR → 4.5×4.5 THT
@@ -206,6 +206,11 @@ def main() -> int:
 
     # KiCad 9：Save/Reload 后 PCB_IO 句柄会坏 → 每次只做一步突变，exit 2 让外层重跑
     board = _open(pcbnew, board_path)
+    if len(board.GetFootprints()) != 63:
+        raise RuntimeError(
+            "archived C4/V3 helper refuses a non-63-footprint board; "
+            "use pcb/scripts/sync_power_architecture.py for the current design"
+        )
     by_addr = _live_by_addr(board)
 
     if "debug_sw.sw_pwr" not in by_addr:
