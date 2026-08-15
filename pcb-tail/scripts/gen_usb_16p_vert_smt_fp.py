@@ -69,6 +69,8 @@ CRT_D = FAB_D + 2 * CRT_CLEAR
 
 A_PADS = ["A1", "A4", "A5", "A6", "A7", "A8", "A9", "A12"]
 B_PADS = ["B12", "B9", "B8", "B7", "B6", "B5", "B4", "B1"]
+if len(A_PADS) != len(XS) or len(B_PADS) != len(XS):
+    raise RuntimeError("USB contact-order tables must match the eight X positions")
 SHIELD_PAD = "S1"
 _UID_INDEX = 0
 
@@ -186,9 +188,9 @@ def _build() -> str:
         _line(XS[0] - 0.3, YA - PAD_H / 2 - 0.25, XS[0] + 0.3, YA - PAD_H / 2 - 0.25, "F.SilkS")
     )
 
-    for name, x in zip(A_PADS, XS, strict=True):
+    for name, x in zip(A_PADS, XS):
         parts.append(_smd(name, x, YA))
-    for name, x in zip(B_PADS, XS, strict=True):
+    for name, x in zip(B_PADS, XS):
         parts.append(_smd(name, x, YB))
     parts.append(_slot(SHIELD_PAD, -SLOT_X))
     parts.append(_slot(SHIELD_PAD, SLOT_X))
@@ -251,7 +253,7 @@ def _selfcheck_preview() -> None:
                 fill=(200, 40, 40),
                 outline=(120, 10, 10),
             )
-    for name, x in zip(A_PADS, XS, strict=True):
+    for name, x in zip(A_PADS, XS):
         d.text(
             xy(x, YA - PAD_H / 2 - 0.12),
             name,
@@ -259,7 +261,7 @@ def _selfcheck_preview() -> None:
             fill=(20, 20, 20),
             font=font_pin,
         )
-    for name, x in zip(B_PADS, XS, strict=True):
+    for name, x in zip(B_PADS, XS):
         d.text(
             xy(x, YB + PAD_H / 2 + 0.12),
             name,

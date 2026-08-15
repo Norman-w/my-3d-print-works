@@ -13,6 +13,7 @@ idf_component_register(
         "http.cpp"
         "status_led.cpp"
         "power_control.cpp"
+        "battery_monitor.cpp"
         "ws_data_server.cpp"
         "im948_sdk.cpp"
         "im948_sensor.cpp"

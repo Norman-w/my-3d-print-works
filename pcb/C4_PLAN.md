@@ -1,5 +1,7 @@
 # 电路 C4 改板计划
 
+> **历史文档提示（2026-08-15）：** 下文记录 63 件、已布线 C4 的形成过程，不是当前 `pcb/layouts/default/default.kicad_pcb` 的状态。当前源板已扩展为 69 件并主动清除全部铜，正等待重新布线；制造真理源改为 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+
 ## 范围
 
 C3（刚性 PCB，Gerber `20260724-081156`）已下单。下一版电路升为 **C4**：
@@ -11,7 +13,7 @@ C3（刚性 PCB，Gerber `20260724-081156`）已下单。下一版电路升为 *
 
 外壳 SCAD 本轮不改（比较器/DAC 放大陆区）。版本表见 [`docs/README.md`](../docs/README.md)。
 
-当前交接状态：电气源、封装/脚位、固件及 atopile 0.12.5 的 Step 3.1→3.2 生成/复核由 Codex 完成；ESP-IDF 5.5.1 的 `esp32s3` 干净构建已通过。Norman 已完成 KiCad 手工摆放、布线和铺铜；最终 C4 为 63 件，TL/TR 比较器通道按 2/1 对调以消除输入交叉。全板位置快照、物理焊盘网络门禁、最终 DRC、Gerber/钻孔试导出和装配包均已完成。裸板可作为工程样板投板，整机仍须按 [`C4_FAB_READINESS.md`](C4_FAB_READINESS.md) 完成电源、热、USB、内部 PTH 锣槽和回板 bring-up。C3 铜线从未迁移到 C4。
+历史交接状态（截至 2026-07-30）：电气源、封装/脚位、固件及 atopile 0.12.5 的 Step 3.1→3.2 生成/复核由 Codex 完成；ESP-IDF 5.5.1 的 `esp32s3` 干净构建通过。Norman 当时完成 KiCad 手工摆放、布线和铺铜；该 C4 为 63 件，TL/TR 比较器通道按 2/1 对调以消除输入交叉。全板位置快照、物理焊盘网络门禁、最终 DRC、Gerber/钻孔试导出和装配包均对应当时板 SHA。该结论现只适用于历史板，不放行当前重整版源文件。
 
 ## 1. PZT 比较器前端
 

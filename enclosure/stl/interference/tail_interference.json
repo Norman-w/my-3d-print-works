@@ -426,6 +426,8 @@
     "operation_h": 1.6,
     "act_d": 1.5,
     "pretravel": 0.15,
+    "pretravel_min": 0.05,
+    "pretravel_max": 0.35,
     "hole_d": 2.0,
     "pocket_w": 3.6,
     "pocket_d": 3.1,
@@ -434,7 +436,12 @@
     "plunger_flange_d": 3.0,
     "plunger_flange_h": 0.5,
     "plunger_outer_projection": 0.3,
-    "plunger_rest_gap": 0.05
+    "plunger_rest_gap": 0.05,
+    "plunger_max_travel": 0.3,
+    "activation_travel_nominal": 0.2,
+    "activation_travel_worst_case": 0.4,
+    "tolerance_closed": false,
+    "manufacturing_blocker": "B3U plunger stop/travel requires measured tail-section coupon"
   },
   "led_rgb": {
     "ref": "D1",
@@ -457,6 +464,129 @@
     "height": 0.8,
     "hole_d": 2.0
   },
+  "front_component_cavity_depth": 3.8000000000000114,
+  "front_power_parts": [
+    {
+      "ref": "U4",
+      "x": 8.5,
+      "y": -4.5,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        6.425,
+        -6.225,
+        10.575,
+        -2.775
+      ],
+      "height_max": 1.45,
+      "nominal_shell_headroom": 2.350000000000011
+    },
+    {
+      "ref": "U5",
+      "x": 7.0,
+      "y": 4.8,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        4.925,
+        3.075,
+        9.075,
+        6.525
+      ],
+      "height_max": 1.45,
+      "nominal_shell_headroom": 2.350000000000011
+    },
+    {
+      "ref": "C8",
+      "x": 5.3,
+      "y": -4.5,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        4.545,
+        -6.005,
+        6.055,
+        -2.995
+      ],
+      "height_max": 0.95,
+      "nominal_shell_headroom": 2.850000000000011
+    },
+    {
+      "ref": "C9",
+      "x": 11.7,
+      "y": -5.2,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        10.945,
+        -6.705,
+        12.455,
+        -3.695
+      ],
+      "height_max": 0.95,
+      "nominal_shell_headroom": 2.850000000000011
+    },
+    {
+      "ref": "C10",
+      "x": 3.8,
+      "y": 4.8,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        3.045,
+        3.295,
+        4.555,
+        6.305
+      ],
+      "height_max": 0.95,
+      "nominal_shell_headroom": 2.850000000000011
+    },
+    {
+      "ref": "R8",
+      "x": 11.7,
+      "y": -1.5,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        10.195,
+        -2.255,
+        13.205,
+        -0.745
+      ],
+      "height_max": 0.65,
+      "nominal_shell_headroom": 3.1500000000000115
+    },
+    {
+      "ref": "R9",
+      "x": 10.0,
+      "y": 4.8,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        9.245,
+        3.295,
+        10.755,
+        6.305
+      ],
+      "height_max": 0.65,
+      "nominal_shell_headroom": 3.1500000000000115
+    },
+    {
+      "ref": "D2",
+      "x": 7.5,
+      "y": -8.3,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        5.875,
+        -9.275,
+        9.125,
+        -7.325
+      ],
+      "height_max": 1.0,
+      "nominal_shell_headroom": 2.8000000000000114
+    }
+  ],
   "transform": {
     "comment": "handle(x,y,z) = (kicad_x, pcb_y - kicad_z, kicad_y)",
     "kicad_z_toward_butt": true

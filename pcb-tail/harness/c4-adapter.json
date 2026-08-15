@@ -18,7 +18,7 @@
       "signalBundleCenterXmm": 4.0,
       "bundleEnvelopeRadiusMm": 1.5,
       "minimumScrewEnvelopeClearanceMm": 1.0,
-      "usbPair": "usb_dp and usb_dn twisted together inside signal bundle",
+      "usbPair": "tail usb_dp/usb_dn to main usb_dp_conn/usb_dn_conn, twisted together inside signal bundle",
       "strainRelief": "heat-shrink both 4-wire breakouts; retain each housing latch; lace the two trunk branches together 15-25 mm from the main-board connectors, leaving a service loop toward the tail board",
       "keepOut": "Do not cross the tail-board ring groove, PCB slot edge, or any layer 2->1 / layer 3->4 screw envelope"
     }
@@ -28,8 +28,8 @@
     {"tailRef":"J2","tailPin":"2","tailNet":"GND","mainRef":"TAIL_MX125_B","mainPin":"5","mainNet":"gnd","function":"power and signal return","wireAwg":26,"color":"black"},
     {"tailRef":"J2","tailPin":"3","tailNet":"bat_p","mainRef":"TAIL_MX125_B","mainPin":"3","mainNet":"bat_cell_p","function":"battery-cell voltage sense","wireAwg":28,"color":"yellow"},
     {"tailRef":"J2","tailPin":"4","tailNet":"v5_sw_return","mainRef":"TAIL_MX125_F","mainPin":"2","mainNet":"sys_5v_sw","function":"switched 5 V return for tail LED","wireAwg":26,"color":"orange"},
-    {"tailRef":"J3","tailPin":"1","tailNet":"usb_dn","mainRef":"TAIL_MX125_B","mainPin":"2","mainNet":"usb_dn","function":"USB 2.0 D-","wireAwg":28,"color":"white","twistedWith":"usb_dp"},
-    {"tailRef":"J3","tailPin":"2","tailNet":"usb_dp","mainRef":"TAIL_MX125_F","mainPin":"4","mainNet":"usb_dp","function":"USB 2.0 D+","wireAwg":28,"color":"green","twistedWith":"usb_dn"},
+    {"tailRef":"J3","tailPin":"1","tailNet":"usb_dn","mainRef":"TAIL_MX125_B","mainPin":"2","mainNet":"usb_dn_conn","function":"USB 2.0 D- before main-board 22R","wireAwg":28,"color":"white","twistedWith":"usb_dp"},
+    {"tailRef":"J3","tailPin":"2","tailNet":"usb_dp","mainRef":"TAIL_MX125_F","mainPin":"4","mainNet":"usb_dp_conn","function":"USB 2.0 D+ before main-board 22R","wireAwg":28,"color":"green","twistedWith":"usb_dn"},
     {"tailRef":"J3","tailPin":"3","tailNet":"user_btn","mainRef":"TAIL_MX125_F","mainPin":"3","mainNet":"btn_sw","function":"user/power button, active low","wireAwg":28,"color":"blue"},
     {"tailRef":"J3","tailPin":"4","tailNet":"led_data","mainRef":"TAIL_MX125_B","mainPin":"4","mainNet":"led_din","function":"addressable LED data","wireAwg":28,"color":"violet"}
   ],

@@ -40,7 +40,7 @@ export default function App() {
   const [tab, setTab] = useState<Tab>(tabFromUrl);
   const [hostDraft, setHostDraft] = useState(() => resolveInitialDeviceHost());
   const [activeHost, setActiveHost] = useState(() => resolveInitialDeviceHost());
-  const { connected, imuData, impactData, lastError } = useWebSocket(
+  const { connected, imuData, impactData, power, lastError } = useWebSocket(
     activeHost,
     true,
   );
@@ -216,7 +216,11 @@ export default function App() {
               <Paddle3D imuData={imuData} impactData={impactData} />
             </div>
             <div style={{ width: 340, borderLeft: '1px solid #2a2a3a', padding: 16 }}>
-              <TelemetryDashboard imuData={imuData} impactData={impactData} />
+              <TelemetryDashboard
+                imuData={imuData}
+                impactData={impactData}
+                power={power}
+              />
             </div>
           </div>
         )}

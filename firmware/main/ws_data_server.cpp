@@ -7,12 +7,14 @@
 #include <cstring>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 
 static const char *TAG = LOG_TAG_WS_DATA_SERVER;
 
 // WebSocket 客户端状态（单用户模式）
 static int s_client_fd = -1;
 static httpd_handle_t s_server_handle = NULL;
+static SemaphoreHandle_t s_send_mutex = nullptr;
 
 static bool client_still_alive(void) {
     if (s_client_fd < 0 || !s_server_handle) {
@@ -69,13 +71,21 @@ esp_err_t ws_data_handler_fn(httpd_req_t *req) {
 }
 
 esp_err_t ws_data_server_init(void) {
+    if (!s_send_mutex) {
+        s_send_mutex = xSemaphoreCreateMutex();
+        if (!s_send_mutex) return ESP_ERR_NO_MEM;
+    }
     ESP_LOGI(TAG, "WebSocket 数据推送服务已初始化");
     return ESP_OK;
 }
 
 esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
-    if (!data || len == 0 || !client_still_alive()) {
+    if (!data || len == 0 || !client_still_alive() || !s_send_mutex) {
         return ESP_ERR_INVALID_ARG;
+    }
+
+    if (xSemaphoreTake(s_send_mutex, pdMS_TO_TICKS(250)) != pdTRUE) {
+        return ESP_ERR_TIMEOUT;
     }
 
     httpd_ws_frame_t ws_pkt = {};
@@ -84,6 +94,7 @@ esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
     ws_pkt.type = HTTPD_WS_TYPE_BINARY;
 
     esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    xSemaphoreGive(s_send_mutex);
     if (ret != ESP_OK) {
         ESP_LOGW(TAG, "WS 发送失败 (%s)，fd=%d", esp_err_to_name(ret), s_client_fd);
         if (ret == ESP_ERR_INVALID_STATE || ret == ESP_ERR_HTTPD_INVALID_REQ) {
@@ -94,8 +105,12 @@ esp_err_t ws_data_send_binary(const uint8_t *data, size_t len) {
 }
 
 esp_err_t ws_data_send_text(const char *data, size_t len) {
-    if (!data || len == 0 || !client_still_alive()) {
+    if (!data || len == 0 || !client_still_alive() || !s_send_mutex) {
         return ESP_ERR_INVALID_ARG;
+    }
+
+    if (xSemaphoreTake(s_send_mutex, pdMS_TO_TICKS(250)) != pdTRUE) {
+        return ESP_ERR_TIMEOUT;
     }
 
     httpd_ws_frame_t ws_pkt = {};
@@ -104,6 +119,7 @@ esp_err_t ws_data_send_text(const char *data, size_t len) {
     ws_pkt.type = HTTPD_WS_TYPE_TEXT;
 
     esp_err_t ret = httpd_ws_send_frame_async(s_server_handle, s_client_fd, &ws_pkt);
+    xSemaphoreGive(s_send_mutex);
     if (ret != ESP_OK) {
         ESP_LOGW(TAG, "WS 文本发送失败 (%s)，fd=%d", esp_err_to_name(ret), s_client_fd);
         if (ret == ESP_ERR_INVALID_STATE || ret == ESP_ERR_HTTPD_INVALID_REQ) {

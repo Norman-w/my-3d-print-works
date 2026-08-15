@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Generate the current SmartPaddle M5 tail-board procurement drawing.
+"""Archived legacy drawing generator; deliberately blocked.
 
-The drawing is intentionally based on the checked-in KiCad land patterns and
-the current pcb-tail/main.ato values.  It is a procurement/fit reference, not
-a substitute for the connector vendor's final datasheet approval.
+Its hand-drawn USB, IP5305T, switch and BOM geometry predates the 2026-08-15
+power/footprint redesign.  Keeping it executable would create a plausible but
+unsafe procurement document, so callers are redirected to the locked source
+PDFs and live cross-layer audits.
 """
 
 from __future__ import annotations
@@ -594,6 +595,11 @@ def page_four(c: canvas.Canvas) -> None:
 
 
 def build() -> None:
+    raise SystemExit(
+        "REFUSED: this legacy procurement drawing contains obsolete USB/U3/SW1/BOM "
+        "geometry. Use docs/power-architecture-rework/README.md and the archived "
+        "vendor PDFs; regenerate a new drawing only after routing and release-gate closure."
+    )
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(OUT_PDF), pagesize=landscape(A4), pageCompression=1)
     c.setTitle("SmartPaddle M5 Tail Board Procurement Drawing")

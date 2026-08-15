@@ -16,6 +16,7 @@
 #include "esp_mac.h"
 #include "status_led.h"
 #include "power_control.h"
+#include "battery_monitor.h"
 #include "ws_data_server.h"
 #include "im948_sensor.h"
 #include "im948_data.h"
@@ -211,6 +212,13 @@ extern "C" void app_main() {
 
     // 3. 网络初始化（WiFi AP → DNS → HTTP → WebSocket）
     init_network();
+
+    // 3a. 电芯电压：GPIO9/ADC1_CH8，1M/1M 分压。当前线束没有 PMIC
+    // 充电状态脚，因此只发布校准电压与明确标注的电量估算。
+    ret = battery_monitor::init();
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "电芯电压监测初始化失败: %s", esp_err_to_name(ret));
+    }
 
     // 4. IMU 初始化（IM948 传感器）
 #if SKIP_IMU_INIT

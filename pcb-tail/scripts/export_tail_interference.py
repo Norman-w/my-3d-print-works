@@ -4,6 +4,8 @@
 Writes enclosure/stl/interference/tail_interference.json (+ optional .scad):
   - Edge.Cuts polygon (KiCad XY = handle XZ)
   - J1 / SW1 / D1 / LED1 poses + cut envelopes for shell boolean
+  - new F-side TPS2553 support-part envelopes and shell headroom
+  - an explicit tolerance gate for the guided B3U plunger
 
   python3 pcb-tail/scripts/export_tail_interference.py
 """
@@ -29,6 +31,13 @@ USB_CLEAR = 0.35
 BTN_HOLE_OVER = 0.40          # Ø1.6 推杆配 Ø2.0 导向孔（径向间隙 0.2）
 LED_HOLE_OVER = 0.40
 BOARD_AXIAL_CLEAR = 0.15      # 板厚向每侧
+
+FRONT_POWER_HEIGHT_MM = {
+    "U4": 1.45, "U5": 1.45,       # TPS2553 DBV package maximum
+    "C8": 0.95, "C9": 0.95, "C10": 0.95,
+    "R8": 0.65, "R9": 0.65,
+    "D2": 1.00,
+}
 
 
 # ===== 分区：私有成员 =====
@@ -85,6 +94,29 @@ def _extract() -> dict:
             "layer": board.GetLayerName(fp.GetLayer()),
         }
 
+    def courtyard_box(ref: str) -> list[float]:
+        fp = board.FindFootprintByReference(ref)
+        layer_name = "F.Courtyard" if fp.GetLayer() == pcbnew.F_Cu else "B.Courtyard"
+        boxes = []
+        for item in fp.GraphicalItems():
+            if board.GetLayerName(item.GetLayer()) != layer_name:
+                continue
+            box = item.GetBoundingBox()
+            boxes.append(
+                [
+                    box.GetX() / 1e6,
+                    box.GetY() / 1e6,
+                    (box.GetX() + box.GetWidth()) / 1e6,
+                    (box.GetY() + box.GetHeight()) / 1e6,
+                ]
+            )
+        if not boxes:
+            raise RuntimeError(f"missing courtyard for {ref}")
+        return [
+            min(box[0] for box in boxes), min(box[1] for box in boxes),
+            max(box[2] for box in boxes), max(box[3] for box in boxes),
+        ]
+
     j1 = fp_pose("J1")
     sw1 = fp_pose("SW1")
     d1 = fp_pose("D1")
@@ -107,6 +139,8 @@ def _extract() -> dict:
         "operation_h": 1.60,
         "act_d": 1.50,
         "pretravel": 0.15,
+        "pretravel_min": 0.05,
+        "pretravel_max": 0.35,
         "hole_d": 1.60 + BTN_HOLE_OVER,
         "pocket_w": 3.00 + 0.60,
         "pocket_d": 2.50 + 0.60,
@@ -116,6 +150,15 @@ def _extract() -> dict:
         "plunger_flange_h": 0.50,
         "plunger_outer_projection": 0.30,
         "plunger_rest_gap": 0.05,
+        # Current fixed geometry can actuate the nominal switch but cannot
+        # cover the full Omron pretravel tolerance without an unspecified
+        # overtravel risk.  Keep it prototype-only until a printed coupon is
+        # measured; manufacturing gates consume this flag.
+        "plunger_max_travel": 0.30,
+        "activation_travel_nominal": 0.20,
+        "activation_travel_worst_case": 0.40,
+        "tolerance_closed": False,
+        "manufacturing_blocker": "B3U plunger stop/travel requires measured tail-section coupon",
     }
     led_rgb = {
         **d1,
@@ -131,6 +174,27 @@ def _extract() -> dict:
         "hole_d": 1.6 + LED_HOLE_OVER,
     }
 
+    # F.Cu faces the butt cap.  The shell inner wall is wall_t inward from the
+    # butt plane, so this is the nominal axial cavity available above F-side
+    # packages before any local pocket is needed.
+    front_cavity_depth = pcb_y - (butt_y + float(facts["wall_t"]))
+    front_power_parts = []
+    for ref, height in FRONT_POWER_HEIGHT_MM.items():
+        pose = fp_pose(ref)
+        if pose["layer"] != "F.Cu":
+            raise RuntimeError(f"{ref} unexpectedly left F.Cu")
+        clearance = front_cavity_depth - height
+        if clearance < 1.0:
+            raise RuntimeError(f"{ref} has only {clearance:.2f} mm nominal shell headroom")
+        front_power_parts.append(
+            {
+                **pose,
+                "courtyard_xy": courtyard_box(ref),
+                "height_max": height,
+                "nominal_shell_headroom": clearance,
+            }
+        )
+
     return {
         "source_pcb": str(PCB.relative_to(ROOT)),
         "butt_y": butt_y,
@@ -144,6 +208,8 @@ def _extract() -> dict:
         "button": button,
         "led_rgb": led_rgb,
         "led_status": led_status,
+        "front_component_cavity_depth": front_cavity_depth,
+        "front_power_parts": front_power_parts,
         "transform": {
             "comment": "handle(x,y,z) = (kicad_x, pcb_y - kicad_z, kicad_y)",
             "kicad_z_toward_butt": True,
@@ -180,12 +246,20 @@ tail_if_btn_pocket_d = {btn['pocket_d']:.3f};
 tail_if_btn_body_h = {btn['body_h']:.3f};
 tail_if_btn_operation_h = {btn['operation_h']:.3f};
 tail_if_btn_pretravel = {btn['pretravel']:.3f};
+tail_if_btn_pretravel_min = {btn['pretravel_min']:.3f};
+tail_if_btn_pretravel_max = {btn['pretravel_max']:.3f};
 tail_if_btn_wall_t = {btn['wall_t']:.3f};
 tail_if_btn_plunger_d = {btn['plunger_shaft_d']:.3f};
 tail_if_btn_flange_d = {btn['plunger_flange_d']:.3f};
 tail_if_btn_flange_h = {btn['plunger_flange_h']:.3f};
 tail_if_btn_outer_projection = {btn['plunger_outer_projection']:.3f};
 tail_if_btn_rest_gap = {btn['plunger_rest_gap']:.3f};
+tail_if_btn_max_travel = {btn['plunger_max_travel']:.3f};
+tail_if_btn_tolerance_closed = false;
+
+// F-side TPS2553 support parts fit the common board cavity without new holes.
+// Nominal cavity depth = {data['front_component_cavity_depth']:.3f} mm;
+// minimum audited package headroom = {min(p['nominal_shell_headroom'] for p in data['front_power_parts']):.3f} mm.
 
 tail_if_d1_x = {d1['x']:.5f};
 tail_if_d1_z = {d1['y']:.5f};
@@ -240,7 +314,9 @@ module tail_board_interference_cuts() {{
 }}
 
 // 独立打印、从壳内装入；内侧法兰防止推杆向壳外脱出。
-// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm；先做尾段试片。
+// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm。
+// 这只覆盖 0.15 mm 名义预行程，不能覆盖 0.35 mm 最坏值；必须先做
+// 尾段试片并冻结止挡/实际行程，tail_if_btn_tolerance_closed=false 时禁产。
 module tail_if_button_plunger() {{
     y_outer = tail_if_butt_y - tail_if_btn_outer_projection;
     y_tip = tail_if_pcb_y - tail_if_btn_operation_h - tail_if_btn_rest_gap;

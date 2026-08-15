@@ -27,12 +27,7 @@ KICAD_PYTHON = (
     "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
     "Python.framework/Versions/Current/bin/python3"
 )
-PLACEMENT_SNAPSHOT = (
-    ROOT / "pcb" / "layouts" / "default" / "c4_placement_snapshot.json"
-)
-PLACEMENT_SNAPSHOT_SCRIPT = (
-    ROOT / "pcb" / "scripts" / "step4.1e_backup_c4_placement.py"
-)
+POWER_REWORK_GATE = ROOT / "scripts" / "validate_power_rework.py"
 
 ORDER_NOTES = """\
 SmartPaddle PCB (circuit C4 rigid) — manufacturing notes
@@ -82,17 +77,20 @@ def summarize_drc(path: Path) -> str:
 
 
 def _board_gates(board: Path) -> list[str]:
-    """Return C4 identity, metadata, routing and copper gate failures."""
-    scripts = ROOT / "pcb" / "scripts"
-    script = "import sys\nsys.path.insert(0, " + repr(str(scripts)) + ")\n" + r"""
+    """Return current C4 identity, metadata, routing and copper failures.
+
+    Exact source/footprint/pad semantics are checked by the cross-layer power
+    audit.  This local check deliberately contains no legacy C3 migration map.
+    """
+    script = r"""
+import sys
 import pcbnew
-from collections import Counter, defaultdict
-from migrate_c3_to_c4_unrouted import DNP_ADDRESSES, PAD_NETS, _addr
+from collections import Counter
 board = pcbnew.LoadBoard(sys.argv[1])
 fails = []
 fps = list(board.GetFootprints())
-if len(fps) != 63:
-    fails.append(f"footprint_count={len(fps)} expected=63")
+if len(fps) != 69:
+    fails.append(f"footprint_count={len(fps)} expected=69")
 refs = [fp.GetReference() for fp in fps]
 c = Counter(refs)
 if c.get('REF**', 0) or c.get('', 0):
@@ -100,50 +98,19 @@ if c.get('REF**', 0) or c.get('', 0):
 dups = [f"{r}x{n}" for r,n in c.items() if n>1 and r not in ('',)]
 if dups:
     fails.append("duplicate_refs=" + ",".join(dups[:12]))
-by_addr_all = defaultdict(list)
+addresses = []
 for fp in fps:
-    if _addr(fp):
-        by_addr_all[_addr(fp)].append(fp)
-duplicate_addresses = sorted(
-    f"{addr}x{len(items)}" for addr, items in by_addr_all.items()
-    if len(items) != 1
-)
+    if not fp.HasFieldByName('atopile_address'):
+        fails.append(f"missing_atopile_address={fp.GetReference()}")
+        continue
+    address = fp.GetFieldByName('atopile_address').GetText()
+    if not address:
+        fails.append(f"empty_atopile_address={fp.GetReference()}")
+    addresses.append(address)
+address_counts = Counter(addresses)
+duplicate_addresses = [f"{a}x{n}" for a,n in address_counts.items() if n > 1]
 if duplicate_addresses:
     fails.append("duplicate_atopile_addresses=" + ",".join(duplicate_addresses[:12]))
-by_addr = {addr: items[0] for addr, items in by_addr_all.items()}
-missing = sorted(set(PAD_NETS) - set(by_addr))
-unexpected = sorted(set(by_addr) - set(PAD_NETS))
-if missing or unexpected:
-    fails.append(f"c4_addresses missing={missing} unexpected={unexpected}")
-
-# A fresh generated netlist proves the source topology, but it does not prove
-# that the hand-routed board still assigns every physical pad to that topology.
-# Check all repeated/stacked physical pads as well as the canonical pad-number
-# set before allowing Gerber export.
-pad_net_errors = []
-for addr, expected_pads in sorted(PAD_NETS.items()):
-    fp = by_addr.get(addr)
-    if fp is None:
-        continue
-    actual_pads = defaultdict(list)
-    for pad in fp.Pads():
-        actual_pads[pad.GetNumber()].append(pad.GetNetname() or "")
-    if set(actual_pads) != set(expected_pads):
-        pad_net_errors.append(
-            f"{addr}.padset expected={sorted(expected_pads)} actual={sorted(actual_pads)}"
-        )
-        continue
-    for pad_number, expected_net in expected_pads.items():
-        for physical_index, actual_net in enumerate(actual_pads[pad_number]):
-            if actual_net != expected_net:
-                pad_net_errors.append(
-                    f"{addr}.pad{pad_number}[{physical_index}] "
-                    f"expected={expected_net or '<none>'} actual={actual_net or '<none>'}"
-                )
-if pad_net_errors:
-    fails.append(
-        f"board_pad_nets={len(pad_net_errors)} " + " | ".join(pad_net_errors[:12])
-    )
 title = board.GetTitleBlock().GetTitle()
 revision = board.GetTitleBlock().GetRevision()
 if title != 'SmartPaddle Rigid PCB' or revision != 'C4':
@@ -151,18 +118,6 @@ if title != 'SmartPaddle Rigid PCB' or revision != 'C4':
 legacy = [fp.GetReference() for fp in fps if 'ESP32-C6' in (fp.GetValue() + ' ' + fp.GetFPIDAsString())]
 if legacy:
     fails.append("legacy_c6=" + ",".join(legacy))
-dnp_bad = []
-for addr in sorted(DNP_ADDRESSES):
-    fp = by_addr.get(addr)
-    if fp is None or not fp.IsDNP() or 'DNP' not in fp.GetValue().upper():
-        dnp_bad.append(addr)
-if dnp_bad:
-    fails.append("dnp_metadata=" + ",".join(dnp_bad))
-fab_notes = [d.GetText() for d in board.GetDrawings()
-             if d.GetLayer() == pcbnew.Cmts_User and d.GetClass() == 'PCB_TEXT'
-             and d.GetText().startswith('C4 FAB')]
-if len(fab_notes) != 2:
-    fails.append(f"c4_fab_notes={len(fab_notes)} expected=2")
 tracks = list(board.GetTracks())
 if not tracks:
     fails.append("routing_items=0")
@@ -195,6 +150,21 @@ print("\n".join(fails))
     return [line for line in out.splitlines() if line.strip()]
 
 
+def _power_rework_gate_ok() -> bool:
+    proc = subprocess.run(
+        [sys.executable, str(POWER_REWORK_GATE), "--release-gate"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        detail = (proc.stderr or proc.stdout or "no diagnostic output").strip()
+        print(detail)
+        return False
+    return True
+
+
 def _drc_gates(drc_json: Path) -> list[str]:
     data = json.loads(drc_json.read_text(encoding="utf-8"))
     violations = data.get("violations", [])
@@ -207,46 +177,6 @@ def _drc_gates(drc_json: Path) -> list[str]:
     if unconnected:
         fails.append(f"unconnected={len(unconnected)}")
     return fails
-
-
-def _netlist_gate_ok(board: Path) -> bool:
-    """Validate the fresh Step 3.1 output without invoking or mutating atopile."""
-    script = ROOT / "pcb" / "scripts" / "step3_import_netlist.py"
-    proc = subprocess.run(
-        [KICAD_PYTHON, str(script), "--board", str(board), "--check-only"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    text = proc.stdout + proc.stderr
-    ok = proc.returncode == 0 and "C4 拓扑门禁通过" in text
-    if not ok:
-        print(text[-2500:])
-    return ok
-
-
-def _placement_snapshot_gate_ok(board: Path) -> bool:
-    """Require the accepted 63-part placement and prove the board still matches it."""
-    if not PLACEMENT_SNAPSHOT.is_file():
-        return False
-    proc = subprocess.run(
-        [
-            KICAD_PYTHON,
-            str(PLACEMENT_SNAPSHOT_SCRIPT),
-            "--board",
-            str(board),
-            "--output",
-            str(PLACEMENT_SNAPSHOT),
-            "--check-only",
-        ],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if proc.returncode != 0:
-        print((proc.stdout + proc.stderr)[-2500:])
-        return False
-    return True
 
 
 def _write_shifted_fab_copy(source: Path, destination: Path) -> None:
@@ -289,7 +219,7 @@ def main() -> int:
         "--skip-ato-build-gate",
         dest="skip_netlist_gate",
         action="store_true",
-        help="Diagnostic only: skip fresh Step 3.1/Step 3.2 netlist evidence",
+        help="Deprecated diagnostic flag; requesting it forces manufacturing refusal",
     )
     parser.add_argument(
         "--preflight-only",
@@ -320,20 +250,29 @@ def main() -> int:
         print(f"Output directory is not empty; refusing to delete it: {out}")
         print("Choose a new --output path or pass --keep-existing deliberately.")
         return 2
+
+    gate_fails: list[str] = []
+    gate_fails.extend(_board_gates(args.board))
+    if not _power_rework_gate_ok():
+        gate_fails.append("cross_layer_power_rework_release_gate_failed")
+    if args.allow_intentional_castellation:
+        gate_fails.append("deprecated_castellation_override_requested")
+    if args.skip_netlist_gate:
+        gate_fails.append("deprecated_netlist_gate_override_requested")
+
+    # Normal manufacturing mode is fail-closed before creating even an output
+    # directory.  Explicit preflight/debug modes may retain diagnostic files,
+    # but can never write an upload ZIP while a gate is red.
+    if gate_fails and not args.preflight_only and not args.allow_errors:
+        print("EXPORT REFUSED BEFORE OUTPUT CREATION — gates failed:")
+        for failure in gate_fails:
+            print(f"  - {failure}")
+        return 2
+
     gerbers.mkdir(parents=True, exist_ok=True)
     drill.mkdir(parents=True, exist_ok=True)
     reports.mkdir(parents=True, exist_ok=True)
     board_sha = hashlib.sha256(args.board.read_bytes()).hexdigest()
-
-    gate_fails: list[str] = []
-    gate_fails.extend(_board_gates(args.board))
-    if not _placement_snapshot_gate_ok(args.board):
-        gate_fails.append("c4_placement_snapshot_missing_or_stale")
-    if args.allow_intentional_castellation:
-        gate_fails.append("deprecated_castellation_override_requested")
-    if not args.skip_netlist_gate:
-        if not _netlist_gate_ok(args.board):
-            gate_fails.append("fresh_c4_netlist_gate_failed")
 
     drc_json = reports / "drc.json"
     drc_report = reports / "drc.rpt"

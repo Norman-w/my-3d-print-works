@@ -21,12 +21,20 @@ tail_if_btn_pocket_d = 3.100;
 tail_if_btn_body_h = 1.200;
 tail_if_btn_operation_h = 1.600;
 tail_if_btn_pretravel = 0.150;
+tail_if_btn_pretravel_min = 0.050;
+tail_if_btn_pretravel_max = 0.350;
 tail_if_btn_wall_t = 2.000;
 tail_if_btn_plunger_d = 1.600;
 tail_if_btn_flange_d = 3.000;
 tail_if_btn_flange_h = 0.500;
 tail_if_btn_outer_projection = 0.300;
 tail_if_btn_rest_gap = 0.050;
+tail_if_btn_max_travel = 0.300;
+tail_if_btn_tolerance_closed = false;
+
+// F-side TPS2553 support parts fit the common board cavity without new holes.
+// Nominal cavity depth = 3.800 mm;
+// minimum audited package headroom = 2.350 mm.
 
 tail_if_d1_x = 2.45499;
 tail_if_d1_z = -3.78400;
@@ -177,7 +185,9 @@ module tail_board_interference_cuts() {
 }
 
 // 独立打印、从壳内装入；内侧法兰防止推杆向壳外脱出。
-// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm；先做尾段试片。
+// 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm。
+// 这只覆盖 0.15 mm 名义预行程，不能覆盖 0.35 mm 最坏值；必须先做
+// 尾段试片并冻结止挡/实际行程，tail_if_btn_tolerance_closed=false 时禁产。
 module tail_if_button_plunger() {
     y_outer = tail_if_butt_y - tail_if_btn_outer_projection;
     y_tip = tail_if_pcb_y - tail_if_btn_operation_h - tail_if_btn_rest_gap;

@@ -138,6 +138,8 @@ esp_err_t power_control_init(void) {
     gpio_config_t btn_cfg = {
         .pin_bit_mask = (1ULL << USER_BTN_GPIO),
         .mode = GPIO_MODE_INPUT,
+        // 板上已有 100k 上拉；内部上拉作为启动阶段冗余。按键经 NMOS
+        // 反相隔离后按下为高，GPIO 不再与 5V 的 P_GATE 共节点。
         .pull_up_en = GPIO_PULLUP_ENABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_DISABLE,

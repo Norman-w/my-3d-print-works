@@ -1,5 +1,6 @@
 //#region 导入/依赖
 import type { ImpactEvent } from '../hooks/useWebSocket';
+import type { PowerTelemetry } from '../lib/deviceWsSingleton';
 //#endregion
 
 //#region 常量/配置
@@ -20,6 +21,7 @@ interface Props {
     yaw?: number;
   }[];
   impactData: ImpactEvent[];
+  power: PowerTelemetry | null;
 }
 //#endregion
 
@@ -31,7 +33,7 @@ function channelLabel(ch?: number): string {
 //#endregion
 
 //#region 公开 API / 视图层
-export default function TelemetryDashboard({ imuData, impactData }: Props) {
+export default function TelemetryDashboard({ imuData, impactData, power }: Props) {
   const last = imuData.length > 0 ? imuData[imuData.length - 1] : null;
 
   const accelMag = last
@@ -54,6 +56,8 @@ export default function TelemetryDashboard({ imuData, impactData }: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <h3 style={{ fontSize: 16, color: '#888', fontWeight: 600 }}>Telemetry</h3>
+
+      <BatteryCard power={power} />
 
       {last?.roll !== undefined && (
         <MetricCard
@@ -207,6 +211,65 @@ function MiniMetric({
       <div style={{ fontSize: 10, color: '#888' }}>{label}</div>
       <div style={{ fontSize: 16, fontWeight: 600, color }}>{value.toFixed(2)}</div>
     </div>
+  );
+}
+
+function BatteryCard({ power }: { power: PowerTelemetry | null }) {
+  const percent = power ? Math.round(power.batteryPercent) : 0;
+  const color = percent <= 15 ? '#ef5350' : percent <= 35 ? '#ffb74d' : '#81c784';
+  return (
+    <section
+      aria-label="电池状态"
+      style={{
+        background: '#14141e',
+        borderRadius: 8,
+        padding: '12px 16px',
+        borderLeft: `3px solid ${power ? color : '#555'}`,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          justifyContent: 'space-between',
+          gap: 12,
+        }}
+      >
+        <div style={{ fontSize: 11, color: '#888' }}>Battery</div>
+        <div style={{ fontSize: 12, color: power ? color : '#666' }}>
+          {power
+            ? `${(power.batteryMv / 1000).toFixed(2)} V · ${percent}%${power.percentIsEstimate ? ' 估算' : ''}`
+            : '等待 ADC 数据'}
+        </div>
+      </div>
+      <div
+        role="progressbar"
+        aria-label="估算剩余电量"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={power ? percent : undefined}
+        style={{
+          height: 6,
+          marginTop: 9,
+          borderRadius: 999,
+          overflow: 'hidden',
+          background: '#292938',
+        }}
+      >
+        <div
+          style={{
+            width: `${power ? percent : 0}%`,
+            height: '100%',
+            background: color,
+            transition: 'width 180ms ease',
+          }}
+        />
+      </div>
+      <div style={{ marginTop: 8, fontSize: 10, color: '#777', lineHeight: 1.35 }}>
+        电压曲线估算，不用于充电或保护判断
+        {power && !power.adcCalibrated ? ' · ADC 未校准' : ''}
+      </div>
+    </section>
   );
 }
 //#endregion

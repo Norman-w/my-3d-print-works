@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import type { DeviceImuFrame } from '../lib/deviceImuProtocol';
 import {
   subscribeDeviceWs,
+  type PowerTelemetry,
 } from '../lib/deviceWsSingleton';
 //#endregion
 
@@ -23,6 +24,7 @@ interface WebSocketState {
   connected: boolean;
   imuData: IMUFrame[];
   impactData: ImpactEvent[];
+  power: PowerTelemetry | null;
   sessionId: string | null;
   lastError: string | null;
 }
@@ -35,6 +37,7 @@ export function useWebSocket(hostOrUrl: string, enabled = true) {
     connected: false,
     imuData: [],
     impactData: [],
+    power: null,
     sessionId: null,
     lastError: null,
   });
@@ -65,6 +68,9 @@ export function useWebSocket(hostOrUrl: string, enabled = true) {
           ...prev,
           impactData: [...prev.impactData.slice(-50), evt],
         }));
+      },
+      onPower: (power) => {
+        setState((prev) => ({ ...prev, power }));
       },
     });
 

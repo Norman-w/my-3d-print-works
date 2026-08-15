@@ -1,6 +1,9 @@
 #pragma once
 #include <cstdint>
 
+#include "driver/gpio.h"
+#include "driver/uart.h"
+
 // --- C4 ESP32-S3-WROOM-1-N16R8 pin map ---
 // Truth source: pcb/lib/esp32s3wroom1/pinmap.py (top view, antenna -X).
 // GPIO35..37 are reserved by octal PSRAM. GPIO0/3/45/46 are straps; only
@@ -66,12 +69,12 @@
 
 // --- 电源自锁 + 唯一用户键 SW_PWR（ESP32-S3-WROOM-1）---
 // pad 24 = GPIO47 → PWR_LATCH（高电平保持开机）
-// pad 25 = GPIO48 → SW_PWR 读回（经 1k，MCU 内部上拉）
+// pad 25 = GPIO48 → 独立 NMOS 隔离后的 SW_PWR 读回（按下为高）
 // 产品只暴露 SW_PWR：长按关机；短按后再长按 → 恢复出厂（见 power_control）
 // SW_BOOT(GPIO0/pad27) 与 SW_EN 仅维护烧录/复位，固件不监测
 #define PWR_LATCH_GPIO              GPIO_NUM_47
 #define USER_BTN_GPIO               GPIO_NUM_48
-#define USER_BTN_ACTIVE_LEVEL       0
+#define USER_BTN_ACTIVE_LEVEL       1
 #define POWER_OFF_HOLD_MS           2000
 #define FACTORY_RESET_SHORT_MAX_MS  500
 #define FACTORY_RESET_HOLD_MS       10000

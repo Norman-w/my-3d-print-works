@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MAIN_EXPORTER = ROOT / "pcb" / "scripts" / "export_jlcpcb.py"
 TAIL_BOARD = ROOT / "pcb-tail" / "layouts" / "default" / "default.kicad_pcb"
 TAIL_J1_AUDITOR = ROOT / "pcb-tail" / "scripts" / "audit_usb_16p_j1.py"
+POWER_REWORK_GATE = ROOT / "scripts" / "validate_power_rework.py"
 TAIL_CONNECTION = ROOT / "pcb-tail" / "C4_ADAPTER_HARNESS.md"
 MAIN_FAB_NOTES = ROOT / "pcb" / "C4_FAB_NOTES.md"
 MAIN_FAB_READINESS = ROOT / "pcb" / "C4_FAB_READINESS.md"
@@ -35,7 +36,7 @@ IDENTITY / STATUS
 - Board: SmartPaddle M5 Tail (repository title currently M5-TAIL-BARE)
 - Order type: single-board engineering prototype; NOT a panel
 - Recommended quantity: 5 pcs or the manufacturer's minimum prototype quantity
-- Status: experimental; DRC-clean at export time, but not physically assembled,
+- Status: experimental; electrically/physically gated at export time, but not physically assembled,
   powered, charged, enumerated over USB, thermally tested, or production-qualified
 
 KNOWN BOARD PARAMETERS FROM THE PCB FILE
@@ -51,14 +52,16 @@ ORDER-PAGE CHECKS
 1. Confirm the viewer detects exactly one closed outline, about 29.736 x 19.320 mm.
 2. Confirm 2 copper layers and 1.00 mm thickness.
 3. Confirm F/B copper, solder mask, silkscreen, Edge_Cuts and Excellon drill are present.
-4. Confirm the vertical USB-C shell slots and THT switch holes appear in drill preview.
+4. Confirm the vertical USB-C shell slots appear in drill preview; SW1 is SMD and
+   must not create the obsolete four-hole switch pattern.
 5. Do not accept automatic outline repair, panelization, copper-weight or finish changes
    without recording the choice and checking mechanical/electrical consequences.
 6. This package is PCB-only. Component assembly/BOM/CPL is not qualified for the tail board.
 
 Suggested Chinese order remark:
 SmartPaddle M5 尾板工程样板，单板、2层、板厚1.0mm，按Gerber板框生产，不拼板。
-USB-C外壳槽孔及按键通孔按钻孔文件加工；如需修改板框、槽孔或加价工艺请先联系。
+USB-C外壳槽孔按钻孔文件加工；SW1 为贴片，不应出现旧四孔开关钻孔。
+如需修改板框、槽孔或加价工艺请先联系。
 铜厚、表面处理及颜色由下单人在页面确认并记录，本项目当前未冻结这些选项。
 
 UPLOAD
@@ -244,6 +247,15 @@ def main() -> int:
     if args.target == "panel":
         print("PANEL EXPORT REFUSED: no reviewed panel project, rails, tabs, fiducials, or V-score/mouse-bite contract exists.")
         print("Use --target separate; it produces two independent Gerber upload archives.")
+        return 2
+
+    # This cross-layer gate intentionally runs before creating an output
+    # directory.  DRC alone cannot validate supplier pin semantics, harness
+    # mapping, source values, or the B3U plunger tolerance contract.
+    try:
+        run([sys.executable, str(POWER_REWORK_GATE), "--release-gate"])
+    except subprocess.CalledProcessError:
+        print("ORDER EXPORT REFUSED: cross-layer release gate failed; no output directory created.")
         return 2
 
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")

@@ -14,12 +14,12 @@
 | J2.2 | `GND` | 背面 5P.5 | `gnd` | 26 AWG |
 | J2.3 | `bat_p` | 背面 5P.3 | `bat_cell_p` | 28 AWG |
 | J2.4 | `v5_sw_return` | 正面 5P.2 | `sys_5v_sw` | 26 AWG |
-| J3.1 | `usb_dn` | 背面 5P.2 | `usb_dn` | 28 AWG 白 |
-| J3.2 | `usb_dp` | 正面 5P.4 | `usb_dp` | 28 AWG 绿 |
+| J3.1 | `usb_dn` | 背面 5P.2 | `usb_dn_conn` | 28 AWG 白 |
+| J3.2 | `usb_dp` | 正面 5P.4 | `usb_dp_conn` | 28 AWG 绿 |
 | J3.3 | `user_btn` | 正面 5P.3 | `btn_sw` | 28 AWG |
 | J3.4 | `led_data` | 背面 5P.4 | `led_din` | 28 AWG |
 
-严禁把 `bat_p` 接到任一 5V 线。USB D+/D−从尾板 USBLC6-2SC6 后直接去主板 ESP32-S3；不得绕进 IP5305T。尾板已提供 CC1/CC2 的 5.1kΩ Rd、USB ESD 和共地。
+严禁把 `bat_p` 接到任一 5V 线。USB D+/D−从尾板 USBLC6-2SC6 后，经线束进入主板连接器侧网络 `usb_*_conn`，再通过靠近 ESP32-S3 的 22Ω 串阻进入 `usb_dp/usb_dn`；不得绕进 IP5305T。尾板已提供 CC1/CC2 的 5.1kΩ Rd、USB ESD 和共地。
 
 主板正面 5P.5 `uart_tx` 与背面 5P.1 `uart_rx` 留空。若要调试，使用单独的短测试尾线，不得把它们误接到尾板按键或 LED。
 

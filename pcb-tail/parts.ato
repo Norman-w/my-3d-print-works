@@ -37,6 +37,28 @@ component Capacitor0805:
     footprint = "Capacitor_SMD:C_0805_2012Metric"
 
 
+component Capacitor1206:
+    """1206 功率电容；用于需要保留直流偏压后有效容量的 22 uF 节点。"""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_1206_3216Metric"
+
+
+component Diode_1N4148W:
+    """1N4148W 小信号隔离二极管，SOD-323；pad1=K、pad2=A。"""
+    designator_prefix = "D"
+    value = "1N4148W"
+    signal anode
+    signal cathode
+    anode ~ pin 2
+    cathode ~ pin 1
+    footprint = "Diode_SMD:D_SOD-323"
+
+
 component InductorXFL4020:
     """Coilcraft XFL4020-222MEC 类 2.2µH（4×4×2 mm）。"""
     designator_prefix = "L"
@@ -158,7 +180,7 @@ component JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery:
     signal GND
     BAT_P ~ pin 1
     GND ~ pin 2
-    footprint = "Connector_JST:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical"
+    footprint = "SmartPaddleTail:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical"
 
 
 component IP5305T:
@@ -188,6 +210,34 @@ component IP5305T:
     VOUT ~ pin 8
     EPAD ~ pin 9
     footprint = "SmartPaddleTail:IP5305T_HSOP-8-1EP"
+
+
+component TPS2553DBV:
+    """TI TPS2553DBVR 可调恒流 USB 电源开关，DBV/SOT-23-6。
+
+    1=IN, 2=GND, 3=EN(active high), 4=/FAULT(open drain),
+    5=ILIM, 6=OUT。RILIM 必须为 1%，并紧靠 ILIM/GND。
+
+    Primary source:
+      docs/power-architecture-rework/sources/TPS2553-RevF.pdf
+    """
+    designator_prefix = "U"
+    value = "TPS2553DBVR"
+    signal IN
+    signal GND
+    signal EN
+    signal FAULT_N
+    # Avoid the legacy parser's ILIM identifier collision: expose pin 5 under
+    # an unambiguous interface name and retain the datasheet name in comments.
+    signal LIMIT_SET
+    signal OUT
+    IN ~ pin 1
+    GND ~ pin 2
+    EN ~ pin 3
+    FAULT_N ~ pin 4
+    LIMIT_SET ~ pin 5
+    OUT ~ pin 6
+    footprint = "Package_TO_SOT_SMD:SOT-23-6"
 
 
 component USBLC6_2SC6:

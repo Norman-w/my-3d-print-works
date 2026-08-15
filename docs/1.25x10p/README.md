@@ -37,10 +37,10 @@ Pad 号以封装丝印 / KiCad pad 为准。
 | F `TAIL_MX125_F` | 1 | `sys_5v_in` | 充电总成 5V OUT |
 | F | 2 | `sys_5v_sw` | 开关后 5V / LED 供电 |
 | F | 3 | `btn_sw` | 电源键，对地短接开机 |
-| F | 4 | `usb_dp` | USB D+ |
+| F | 4 | `usb_dp_conn` | USB D+（连接器侧，主板 22Ω 前） |
 | F | 5 | `uart_tx` | S3 GPIO43 / U0TXD |
 | B `TAIL_MX125_B` | 1 | `uart_rx` | S3 GPIO44 / U0RXD |
-| B | 2 | `usb_dn` | USB D− |
+| B | 2 | `usb_dn_conn` | USB D−（连接器侧，主板 22Ω 前） |
 | B | 3 | `bat_cell_p` | 可选电芯 B+ 采样，绝不是 5V |
 | B | 4 | `led_din` | WS2812 DIN |
 | B | 5 | `gnd` | 系统地 |
@@ -67,7 +67,7 @@ atopile 地址为 `tail.conn_f` / `tail.conn_b`；导入、放置、补尾与 C4
 | −2.5 | F.p1 `sys_5v_in` | B.p5 `gnd` | 电源对 |
 | −1.25 | F.p2 `sys_5v_sw` | B.p4 `led_din` | LED 供电/数据 |
 | 0 | F.p3 `btn_sw` | B.p3 `bat_cell_p` | 中位低速信号 |
-| +1.25 | F.p4 `usb_dp` | B.p2 `usb_dn` | USB 差分对 |
+| +1.25 | F.p4 `usb_dp_conn` | B.p2 `usb_dn_conn` | USB 差分对（22Ω 前） |
 | +2.5 | F.p5 `uart_tx` | B.p1 `uart_rx` | UART 对 |
 
 ## 烧录与外接速查
@@ -90,4 +90,6 @@ C3 Gerber `20260724-081156` 仅作回板参考。C3 正面与 C4 相同，背面
 - PCB 尾端保持粗栈道平收；旧金手指、`TAIL_TIP`、`TAIL_STIFF` 已废弃。
 - 插座 Fab 半宽约 5.7 mm，栈道半宽约 9.0 mm；正反各高约 3.5 mm。
 - C4 电池分压与 LED 串阻/去耦放在尾插前方，优先在拍尾就近布线。
-- USB D+/D−必须按 F.p4↔B.p2 成对走线；`bat_cell_p` 不得与任一 5V 网混淆。
+- USB D+/D−必须按 F.p4↔B.p2 成对走到靠近 ESP32-S3 的 22Ω 串阻，串阻 MCU 侧才叫 `usb_dp/usb_dn`；`bat_cell_p` 不得与任一 5V 网混淆。
+
+当前主板为 69 个封装、0 走线/0 过孔/0 覆铜的重新布线交接态，本页只定义连接器物理线序，不表示已经连通或可以制造。

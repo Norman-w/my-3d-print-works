@@ -18,6 +18,13 @@ export type DeviceWsStatus = {
   sessionId: string | null;
 };
 
+export type PowerTelemetry = {
+  batteryMv: number;
+  batteryPercent: number;
+  percentIsEstimate: boolean;
+  adcCalibrated: boolean;
+};
+
 export type DeviceWsHandlers = {
   onStatus?: (s: DeviceWsStatus) => void;
   onImu?: (frame: DeviceImuFrame) => void;
@@ -30,6 +37,7 @@ export type DeviceWsHandlers = {
     y_mm?: number;
     confidence?: number;
   }) => void;
+  onPower?: (power: PowerTelemetry) => void;
 };
 //#endregion
 
@@ -142,6 +150,26 @@ function attach(socket: WebSocket, url: string) {
               y_mm: msg.y_mm,
               confidence: msg.confidence,
             });
+          }
+          break;
+        }
+        case 'power': {
+          const power: PowerTelemetry = {
+            batteryMv: Number(msg.battery_mv),
+            batteryPercent: Math.max(
+              0,
+              Math.min(100, Number(msg.battery_percent)),
+            ),
+            percentIsEstimate: msg.percent_is_estimate === true,
+            adcCalibrated: msg.adc_calibrated === true,
+          };
+          if (
+            Number.isFinite(power.batteryMv) &&
+            Number.isFinite(power.batteryPercent)
+          ) {
+            for (const sub of subscribers.values()) {
+              sub.handlers.onPower?.(power);
+            }
           }
           break;
         }

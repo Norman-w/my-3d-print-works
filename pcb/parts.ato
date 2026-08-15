@@ -21,6 +21,28 @@ component Capacitor:
     footprint = "Capacitor_SMD:C_0603_1608Metric"
 
 
+component Capacitor0805:
+    """Power-path ceramic capacitor, 0805."""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_0805_2012Metric"
+
+
+component Capacitor1206:
+    """Power-path ceramic capacitor, 1206, for DC-bias margin."""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_1206_3216Metric"
+
+
 component Diode:
     """小信号二极管（开机隔离等）。默认 1N4148W / BAS16，SOD-323。
 
@@ -111,6 +133,52 @@ component AP2112K_3V3:
     footprint = "Package_TO_SOT_SMD:SOT-23-5"
 
 
+component TPS62162_3V3:
+    """TI TPS62162 fixed 3.3 V / 1 A synchronous buck, DSG WSON-8.
+
+    Top-view pin map from TI SLVSAM2E: 1=PGND, 2=VIN, 3=EN,
+    4=AGND, 5=FB, 6=VOS, 7=SW, 8=PG, EP=AGND.  For the fixed
+    3.3 V version FB is tied to AGND; PG may be left open.
+    """
+    designator_prefix = "U"
+    value = "TPS62162DSGR"
+    signal PGND
+    signal VIN
+    signal EN
+    signal AGND
+    signal FB
+    signal VOS
+    signal SW
+    signal PG
+    signal EPAD
+    PGND ~ pin 1
+    VIN ~ pin 2
+    EN ~ pin 3
+    AGND ~ pin 4
+    FB ~ pin 5
+    VOS ~ pin 6
+    SW ~ pin 7
+    PG ~ pin 8
+    EPAD ~ pin 9
+    footprint = "Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm"
+
+
+component InductorXFL3012_2u2:
+    """Coilcraft XFL3012-222MEC, 2.2 uH ±20%, 3.0×3.0×1.3 mm.
+
+    DCR 0.097 ohm max; Isat 1.0/1.3/1.6 A at 10/20/30% drop;
+    Irms 1.9 A at 40°C rise.  Source is archived under
+    docs/power-architecture-rework/sources/Coilcraft-XFL3012-Doc747.pdf.
+    """
+    designator_prefix = "L"
+    value = "XFL3012-222MEC 2.2uH"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "SmartPaddle:L_Coilcraft_XFL3012"
+
+
 component MCP4728_MSOP10:
     """Microchip MCP4728 quad 12-bit I2C DAC, 10-lead MSOP."""
     designator_prefix = "U"
@@ -178,10 +246,11 @@ component TLV1814_TSSOP14:
 
 
 component WirePad:
+    """PZT 引线焊盘；板边不放丝印，避免成品丝印被外形裁切。"""
     designator_prefix = "TP"
     signal contact
     contact ~ pin 1
-    footprint = "TestPoint:TestPoint_THTPad_D2.5mm_Drill1.2mm"
+    footprint = "SmartPaddle:PZT_WirePad_THT_D2.5mm_Drill1.2mm"
 
 
 component SmallWirePad:

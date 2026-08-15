@@ -10,6 +10,8 @@ KiCad：X = 柄 X，Y = 柄 Z。
 from "parts.ato" import Resistor
 from "parts.ato" import Capacitor
 from "parts.ato" import Capacitor0805
+from "parts.ato" import Capacitor1206
+from "parts.ato" import Diode_1N4148W
 from "parts.ato" import InductorXFL4020
 from "parts.ato" import LED_0603
 from "parts.ato" import Omron_B3U_1000P
@@ -18,6 +20,7 @@ from "parts.ato" import USB4120_03_C_Vertical
 from "parts.ato" import MolexPicoBlade_53398_4P_Vertical
 from "parts.ato" import JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery
 from "parts.ato" import IP5305T
+from "parts.ato" import TPS2553DBV
 from "parts.ato" import USBLC6_2SC6
 from "parts.ato" import SN74AHCT1G125
 
@@ -37,6 +40,8 @@ module SmartPaddleTail:
 
     # ---- 电源 / 接口 IC ----
     u_pmic = new IP5305T
+    u_vbus_limit = new TPS2553DBV
+    u_system_limit = new TPS2553DBV
     u_esd = new USBLC6_2SC6
     u_ahct = new SN74AHCT1G125
     l_boost = new InductorXFL4020
@@ -49,24 +54,39 @@ module SmartPaddleTail:
 
     # ---- IP5305T 周边 ----
     r_vin_damp = new Resistor
+    r_vbus_ilim = new Resistor
+    r_system_ilim = new Resistor
     r_key = new Resistor
     r_led1 = new Resistor
     r_led23 = new Resistor
     r_vin_damp.value = "2R"
+    # TPS2553 Rev.F: 59k keeps IOS(max) <= 500mA; 43.2k gives
+    # 544...673mA system range around the 600mA nominal row.
+    r_vbus_ilim.value = "59k 1%"
+    r_system_ilim.value = "43.2k 1%"
     r_key.value = "10k"
     r_led1.value = "200R"
     r_led23.value = "1k"
 
     c_vin = new Capacitor0805
     c_vin_damp = new Capacitor0805
-    c_vout = new Capacitor0805
+    c_vout = new Capacitor1206
     c_vout2 = new Capacitor0805
     c_bat = new Capacitor0805
-    c_vin.value = "10uF"
-    c_vin_damp.value = "10uF"
-    c_vout.value = "22uF"
-    c_vout2.value = "10uF"
-    c_bat.value = "10uF"
+    c_vbus_limit = new Capacitor
+    c_system_limit_in = new Capacitor
+    c_system_limit_out = new Capacitor
+    c_vin.value = "10uF 10V X5R/X7R"
+    c_vin_damp.value = "10uF 10V X5R/X7R"
+    c_vout.value = "22uF 10V X5R/X7R"
+    c_vout2.value = "10uF 10V X5R/X7R"
+    c_bat.value = "10uF 10V X5R/X7R"
+    c_vbus_limit.value = "100nF 10V X7R"
+    c_system_limit_in.value = "100nF 10V X7R"
+    c_system_limit_out.value = "100nF 10V X7R"
+
+    # KEY/WLED 是复用低边输出，必须单向隔离，避免 WLED 状态反拉用户键。
+    d_key_isolate = new Diode_1N4148W
 
     # ---- RGB 路径 ----
     r_led = new Resistor
@@ -79,8 +99,12 @@ module SmartPaddleTail:
     # ---- 网络（全部用具名 signal，避免 pin↔pin 匿名网）----
     signal gnd
     signal vbus
+    signal vbus_limited
+    signal vbus_ilim
     signal bat_p
+    signal vout_5v_raw
     signal vout_5v
+    signal system_ilim
     signal sw_node
     signal user_btn
     signal v5_sw_return
@@ -95,6 +119,7 @@ module SmartPaddleTail:
     signal led_din
     signal led_dout
     signal pmic_key
+    signal pmic_key_isolated
     signal pmic_led1
     signal pmic_led23
     signal led_stat_a
@@ -134,15 +159,27 @@ module SmartPaddleTail:
     u_esd.IO2A ~ usb_dn_conn
     u_esd.IO2B ~ usb_dn
 
+    # VBUS 输入硬限流：普通 Type-C default/USB2 主机不会被 IP5305 的
+    # 1.2A 充电设定直接过载。/FAULT 预留 NC，不能伪装成已上报状态。
+    u_vbus_limit.IN ~ vbus
+    u_vbus_limit.EN ~ vbus
+    u_vbus_limit.GND ~ gnd
+    u_vbus_limit.OUT ~ vbus_limited
+    u_vbus_limit.LIMIT_SET ~ vbus_ilim
+    r_vbus_ilim.p1 ~ vbus_ilim
+    r_vbus_ilim.p2 ~ gnd
+    c_vbus_limit.p1 ~ vbus
+    c_vbus_limit.p2 ~ gnd
+
     # ========== 用户键（B3U-1000P SMD；按下接地；兼 IP5305T KEY + 线束）==========
     sw_user.a ~ user_btn
     sw_user.b ~ gnd
 
     # ========== IP5305T 一灯模式（C5_PLAN §8.3）==========
-    u_pmic.VIN ~ vbus
+    u_pmic.VIN ~ vbus_limited
     u_pmic.BAT ~ bat_p
     u_pmic.SW ~ sw_node
-    u_pmic.VOUT ~ vout_5v
+    u_pmic.VOUT ~ vout_5v_raw
     u_pmic.EPAD ~ gnd
     u_pmic.KEY ~ pmic_key
     u_pmic.LED1 ~ pmic_led1
@@ -152,19 +189,33 @@ module SmartPaddleTail:
     l_boost.p1 ~ sw_node
     l_boost.p2 ~ bat_p
 
-    c_vin.p1 ~ vbus
+    c_vin.p1 ~ vbus_limited
     c_vin.p2 ~ gnd
-    r_vin_damp.p1 ~ vbus
+    r_vin_damp.p1 ~ vbus_limited
     r_vin_damp.p2 ~ vin_damp_mid
     c_vin_damp.p1 ~ vin_damp_mid
     c_vin_damp.p2 ~ gnd
 
-    c_vout.p1 ~ vout_5v
+    c_vout.p1 ~ vout_5v_raw
     c_vout.p2 ~ gnd
-    c_vout2.p1 ~ vout_5v
+    c_vout2.p1 ~ vout_5v_raw
     c_vout2.p2 ~ gnd
     c_bat.p1 ~ bat_p
     c_bat.p2 ~ gnd
+
+    # 系统 5V 硬限流保护：最坏约 673mA，低电芯电压下仍把 ACH 电流
+    # 控制在项目 1.5A 连续门槛附近，并给 J2 的 1A/触点留余量。
+    u_system_limit.IN ~ vout_5v_raw
+    u_system_limit.EN ~ vout_5v_raw
+    u_system_limit.GND ~ gnd
+    u_system_limit.OUT ~ vout_5v
+    u_system_limit.LIMIT_SET ~ system_ilim
+    r_system_ilim.p1 ~ system_ilim
+    r_system_ilim.p2 ~ gnd
+    c_system_limit_in.p1 ~ vout_5v_raw
+    c_system_limit_in.p2 ~ gnd
+    c_system_limit_out.p1 ~ vout_5v
+    c_system_limit_out.p2 ~ gnd
 
     # LED1/VSET：200Ω + 绿 LED → GND（4.2V 电芯，无 RVSET）
     r_led1.p1 ~ pmic_led1
@@ -176,9 +227,12 @@ module SmartPaddleTail:
     r_led23.p1 ~ pmic_led23
     r_led23.p2 ~ bat_p
 
-    # KEY：经 10k 到按键节点；不装照明灯支路
+    # KEY：经 10k + 单向二极管到按键。按下仍可拉低 KEY；若长按把
+    # KEY/WLED 切为低边照明输出，二极管反偏，不能持续拉低 user_btn。
     r_key.p1 ~ pmic_key
-    r_key.p2 ~ user_btn
+    r_key.p2 ~ pmic_key_isolated
+    d_key_isolate.anode ~ pmic_key_isolated
+    d_key_isolate.cathode ~ user_btn
 
     # ========== MX1.25 两组 4P 立插（原 8P 按电源/信号拆分）==========
     # j_pwr：粗线 / 功率与采样

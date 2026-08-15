@@ -1,5 +1,7 @@
 # C4 制造说明与下单门禁
 
+> **已封存（2026-08-15）：** 本文仅对应旧 63 件、已布线 C4。当前主板源文件为 69 件、0 铜、149 个未连接，制造导出会被跨层门禁拒绝；不得用本文或旧 C4 Gerber 绕过。当前状态见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+
 本文件只适用于标题栏为 **SmartPaddle Rigid PCB / C4** 的板文件。C3 Gerber `20260724-081156` 是已下单历史参考，禁止混入 C4 上传包。
 
 嘉立创网站怎么点、导出命令、部分 SMT 上传步骤见通用小本 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；本文只写 C4 专属参数与备注。

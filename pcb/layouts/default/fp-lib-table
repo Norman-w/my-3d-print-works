@@ -4,6 +4,7 @@
   (lib (name "Diode_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Diode_SMD.pretty")(options "")(descr ""))
   (lib (name "Package_TO_SOT_SMD")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty")(options "")(descr ""))
   (lib (name "Package_SO")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty")(options "")(descr ""))
+  (lib (name "Package_SON")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty")(options "")(descr ""))
   (lib (name "TestPoint")(type "KiCad")(uri "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/TestPoint.pretty")(options "")(descr ""))
   (lib (name "SmartPaddle")(type "KiCad")(uri "${KIPRJMOD}/../lib/footprints.pretty")(options "")(descr ""))
 )

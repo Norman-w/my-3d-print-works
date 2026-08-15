@@ -48,6 +48,8 @@ TOL = 1e-6
 
 A_ORDER = ("A1", "A4", "A5", "A6", "A7", "A8", "A9", "A12")
 B_ORDER = ("B12", "B9", "B8", "B7", "B6", "B5", "B4", "B1")
+if len(A_ORDER) != len(XS) or len(B_ORDER) != len(XS):
+    raise RuntimeError("USB contact-order tables must match the eight X positions")
 CONTACT_NETS = {
     "A1": "GND",
     "A4": "vbus",
@@ -233,12 +235,14 @@ def main() -> int:
         failures.append("J1 has no footprint position")
     else:
         actual_at = tuple(float(at_match.group(i) or 0) for i in range(1, 4))
-        if any(not _close(a, e) for a, e in zip(actual_at, J1_AT, strict=True)):
+        if len(actual_at) != len(J1_AT) or any(
+            not _close(a, e) for a, e in zip(actual_at, J1_AT)
+        ):
             failures.append(f"J1 moved/rotated: {actual_at} != {J1_AT}")
 
     expected_positions = {
-        **{name: (x, YA) for name, x in zip(A_ORDER, XS, strict=True)},
-        **{name: (x, YB) for name, x in zip(B_ORDER, XS, strict=True)},
+        **{name: (x, YA) for name, x in zip(A_ORDER, XS)},
+        **{name: (x, YB) for name, x in zip(B_ORDER, XS)},
     }
 
     for label, text, require_nets in (
@@ -276,7 +280,7 @@ def main() -> int:
             failures.append(f"{label}: S1 count={len(shell)}, expected 2")
         else:
             shell.sort(key=lambda pad: pad.at[0])
-            for pad, expected_x in zip(shell, (-4.34, 4.34), strict=True):
+            for pad, expected_x in zip(shell, (-4.34, 4.34)):
                 if not _pair_close(pad.at, (expected_x, 0.0)):
                     failures.append(f"{label}: S1 at={pad.at}, expected={(expected_x, 0.0)}")
                 if not _pair_close(pad.size, (0.80, 1.55)):

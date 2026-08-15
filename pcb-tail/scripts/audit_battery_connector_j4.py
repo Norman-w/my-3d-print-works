@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only audit for routed JST ACH J4 and the B3U-1000P SW1 replacement."""
+"""Read-only audit for JST ACH J4 and the B3U-1000P SW1 replacement."""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ SW1_MODEL_PATH = (
     "SW_SPST_B3U-1000P.step"
 )
 J4_FOOTPRINT_ID = (
-    "Connector_JST:"
+    "SmartPaddleTail:"
     "JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical"
 )
 SW1_FOOTPRINT_ID = "Button_Switch_SMD:SW_SPST_B3U-1000P"
@@ -136,7 +136,7 @@ def footprint_by_ref(forms: list[tuple[str, int, int, str]], ref: str):
     return matches[0]
 
 
-def audit(pcb_path: Path) -> None:
+def audit(pcb_path: Path, require_route_free: bool = True) -> None:
     text = pcb_path.read_text()
     forms = child_forms(text)
     footprints = [item for item in forms if item[0] == "footprint"]
@@ -149,7 +149,7 @@ def audit(pcb_path: Path) -> None:
     expect(re.search(r'^\s*\(layer "B\.Cu"\)$', j4, re.MULTILINE) is not None, "J4 must be on B.Cu")
     expect(
         re.search(r'^\s*\(at -2\.794 -5\.969 90\)$', j4, re.MULTILINE) is not None,
-        "J4 routed pose mismatch",
+        "J4 pose mismatch",
     )
     expect(len(pad_forms(j4, "1")) == 1 and len(pad_forms(j4, "2")) == 1, "J4 signal pad set mismatch")
     expect(len(pad_forms(j4, "MP")) == 2, "J4 must have two unnumbered mechanical tabs")
@@ -188,10 +188,11 @@ def audit(pcb_path: Path) -> None:
         expect("(size 0.9 1.7)" in pad, f"SW1.{number} land mismatch")
         expect(f"(net {net})" in pad, f"SW1.{number} net mismatch")
 
-    expect(len(footprints) == 25, f"expected 25 footprints, found {len(footprints)}")
-    expect(sum(item[0] == "segment" for item in forms) == 367, "routed track count changed")
-    expect(sum(item[0] == "via" for item in forms) == 58, "routed via count changed")
-    expect(sum(item[0] == "zone" for item in forms) == 2, "zone count changed")
+    expect(len(footprints) == 33, f"expected 33 footprints, found {len(footprints)}")
+    if require_route_free:
+        expect(sum(item[0] == "segment" for item in forms) == 0, "tail board must be unrouted")
+        expect(sum(item[0] == "via" for item in forms) == 0, "tail board must have no vias")
+        expect(sum(item[0] == "zone" for item in forms) == 0, "tail board must have no zones")
 
     main = MAIN_ATO.read_text()
     parts = PARTS_ATO.read_text()
@@ -227,21 +228,29 @@ def audit(pcb_path: Path) -> None:
 
     print("J4 battery connector + SW1 switch audit")
     print(f"  PCB: {pcb_path}")
-    print(f"  J4: {J4_FOOTPRINT_ID}, B.Cu, routed at (-2.794, -5.969, 90 deg)")
+    print(f"  J4: {J4_FOOTPRINT_ID}, B.Cu, at (-2.794, -5.969, 90 deg)")
     print("  J4.1 = bat_p / BAT_P / red; J4.2 = GND / black; MP x2 = NC")
     print(f"  SW1: {SW1_FOOTPRINT_ID}, F.Cu, original pose (-1.651, -5.461, -90 deg)")
     print("  SW1.1 = user_btn; SW1.2 = GND")
     print("  J4/SW1 footprints, PDFs and 3D preview assets resolve from docs/")
-    print("  routed PCB baseline: 25 footprints, 367 segments, 58 vias, 2 zones")
+    if require_route_free:
+        print("  power-rework PCB: 33 footprints, 0 segments, 0 vias, 0 zones")
+        print("  intentionally not manufacturable until placement and routing are complete")
+    else:
+        print("  copper allowed; J4/SW1 physical semantics audited independently of routing")
     print("AUDIT PASS")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--pcb", type=Path, default=DEFAULT_PCB)
+    parser.add_argument(
+        "--allow-copper", action="store_true",
+        help="skip the route-free-state assertion while retaining semantic checks",
+    )
     args = parser.parse_args()
     try:
-        audit(args.pcb.resolve())
+        audit(args.pcb.resolve(), require_route_free=not args.allow_copper)
     except (AuditError, FileNotFoundError, ValueError, AttributeError) as error:
         print(f"AUDIT FAIL: {error}", file=sys.stderr)
         return 1

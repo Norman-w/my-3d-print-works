@@ -7,3 +7,9 @@ paths:
 builds:
   default:
     entry: main.ato:SmartPaddleTail
+    paths:
+      # Atopile 0.12.5 can rewrite the internal geometry of already-flipped
+      # B.Cu footprints.  Build into this non-manufacturing staging board;
+      # scripts/sync_power_architecture.py is the only supported path from
+      # logical nets to the user-layout PCB.
+      layout: ./layouts/staging/default.atopile.kicad_pcb
