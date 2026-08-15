@@ -45,8 +45,14 @@ const Q_MODEL_TO_IMU = new THREE.Quaternion().setFromRotationMatrix(
   ),
 );
 
+/** 拍柄/拍头沿桨长轴对调（C4 实装丝印与文档差 180°；俯仰/滚转不变） */
+const Q_MODEL_HEAD_TAIL_FLIP = new THREE.Quaternion().setFromEuler(
+  new THREE.Euler(0, 0, Math.PI, 'XYZ'),
+);
+
 const _qImu = new THREE.Quaternion();
 const _qOut = new THREE.Quaternion();
+const _qMount = new THREE.Quaternion();
 
 //#endregion
 
@@ -68,7 +74,8 @@ export function setPaddleQuaternionFromImu(
 ): void {
   applyPaddleMountFrame(paddle);
   _qImu.set(qx, qy, qz, qw);
-  _qOut.copy(Q_ENU_TO_THREE).multiply(_qImu).multiply(Q_MODEL_TO_IMU);
+  _qMount.copy(Q_MODEL_TO_IMU).multiply(Q_MODEL_HEAD_TAIL_FLIP);
+  _qOut.copy(Q_ENU_TO_THREE).multiply(_qImu).multiply(_qMount);
   paddle.quaternion.copy(_qOut);
 }
 
