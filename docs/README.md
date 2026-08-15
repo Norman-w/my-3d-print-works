@@ -107,7 +107,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 **当前组合：** 主线 **V1** · 模型 **M4** · 电路 **C4（V4，刚性 PCB 已到手）** · 软件仍早期。整机标识可记 **M4.C4**；C3 板仅作历史对照，不再作为当前装配目标。下一代 `M5.C5` 已形成完整整机计划和可执行 SCAD 计划，但尚未进入原理图/SCAD 实施和实物验证。
 
-**硬件（当前）：** **C4** = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814 PZT 前端 + MX1.25 正反尾插；尾板现行 = [`pcb-tail`](../pcb-tail/)。C3（C6）不再列为在制主线。资料：[C4 计划](../pcb/C4_PLAN.md) · [C4 制造就绪审计](../pcb/C4_FAB_READINESS.md) · [嘉立创打板小本](../pcb/JLCPCB_ORDERING.md) · [后续规划](../pcb/C5_PLAN.md) · [外壳](../enclosure/README.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md) · [尾板 Type-C](usb-c-vertical-16p-short/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
+**硬件（当前）：** **C4** = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814 PZT 前端 + MX1.25 正反尾插；尾板现行 = [`pcb-tail`](../pcb-tail/)。C3（C6）不再列为在制主线。资料：[C4 计划](../pcb/C4_PLAN.md) · [C4 制造就绪审计](../pcb/C4_FAB_READINESS.md) · [嘉立创打板小本](../pcb/JLCPCB_ORDERING.md) · [后续规划](../pcb/C5_PLAN.md) · [外壳](../enclosure/README.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [C4 尾插](1.25x10p/README.md) · [尾板 Type-C](usb-c-vertical-16p-short/README.md) · [尾板/拍柄 3D 干涉](tail-handle-interference/README.md)。待办见 [`TODOS.md`](../TODOS.md)。
 
 ---
 

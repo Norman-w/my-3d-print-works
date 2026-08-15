@@ -12,7 +12,7 @@
 4. 当前 PCB 的 pad-to-net 映射与机械位姿；
 5. 主尾板线束逐芯对应；
 6. 固件引脚极性、ADC 量测语义和网页显示语义；
-7. 机械空腔、按键推杆公差与最终 DRC/连通性。
+7. KiCad 整板 3D、机械空腔、按键可达性与最终 DRC/连通性。
 
 DRC 只理解板文件内已经声明的网络，不知道供应商连接器触点的真实语义。旧 J1 就是在 DRC 为 0 的情况下发生 VBUS–GND 硬短，因此制造门禁必须运行 `scripts/validate_power_rework.py --release-gate`，不能单独以 KiCad 绿色状态放行。
 
@@ -71,7 +71,8 @@ USB-C VBUS
 
 - 同步脚本使用独立 staging 板，按 `atopile_address + pad number/name` 映射，并在替换前后保护既有位姿；不能用一次 `ato build` 成功代替物理焊盘审计。
 - 主板开关回路、MCU 去耦/EN 和 USB 22R 已移到对应器件附近；尾板新增两颗 TPS2553 及外围位于 F 面公共空腔，名义最小顶部余量 2.35mm。
-- B3U-1000P 活动推杆尚未闭合最坏公差：0.05mm 静止间隙 + 0.35mm 最大预行程 = 0.40mm，而当前最大行程 0.30mm。必须先打印并实测尾段试片，再冻结止挡/行程。该项是制造阻塞，不得用名义 0.20mm 触发行程代替。
+- 拍尾端面本身不挡 J1 或 SW1；完整 KiCad 3D 装配与原 Step6 壳体曾在 12 个器件处出现约 9.73mm³ 的局部环槽/侧壁相交。当前按每个器件的 KiCad courtyard 和保守高度生成独立小避让，复核总交集约 `4.97e-08mm³`，属于布尔数值噪声。方法、逐件结果和预览见 [`../tail-handle-interference/README.md`](../tail-handle-interference/README.md)。
+- B3U-1000P 的基准操作方式改为执行头中心 **Ø2.0mm 直通针孔**，可用针尖/笔尖操作，因此不再由推杆行程阻塞壳体放行。项目仍提供从壳内装入、Ø3.0mm 法兰防外脱的可选推杆；其 0.05mm 间隙和最坏 0.40mm 触发行程仍应先做尾段试片，未验证前不得把可选推杆当作唯一操作方式。
 - 当前没有生成或更新任何 Gerber、钻孔、BOM/CPL、下单 ZIP 或壳体制造 STL。
 - 当前主/尾板 3D 视觉检查图见 [`previews/README.md`](previews/README.md)；它们展示无铜交接态，不是制造预览。
 
@@ -97,7 +98,7 @@ python3 scripts/validate_power_rework.py
 python3 scripts/validate_power_rework.py --release-gate
 ```
 
-它要求逐触点/线束/数据表审计通过、两板存在铜、DRC 无规则违规且无未连接、B3U `tolerance_closed=true`。任何一项失败都不会生成上传 ZIP。
+它要求逐触点/线束/数据表审计通过、两板存在铜、DRC 无规则违规且无未连接，并确认 Ø2.0mm 针孔基准仍有效。可选 B3U 推杆的试片状态会被明确保留，但不再阻塞针孔基准方案；任何电气或基准机械条件失败都不会生成上传 ZIP。
 
 ## 旧板结论
 

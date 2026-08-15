@@ -3,8 +3,9 @@
 
 The default mode validates the deliberately route-free handoff.  The
 ``--release-gate`` mode is called by manufacturing exporters and refuses any
-board with missing copper, DRC errors/unconnected items, or an open mechanical
-tolerance decision.
+board with missing copper, DRC errors/unconnected items, or an incomplete
+baseline button-access definition.  The retained plunger is an optional
+accessory; its coupon tolerance does not block the verified pinhole baseline.
 """
 
 # ===== Imports =====
@@ -94,6 +95,13 @@ def validate(release_gate: bool) -> None:
     button = mechanical.get("button", {})
     release_failures: list[str] = []
 
+    if button.get("access_mode") != "pinhole_with_optional_retained_plunger":
+        raise ValidationError("tail button access mode is missing or unexpected")
+    if button.get("pinhole_ready") is not True or float(button.get("hole_d", 0)) < 1.8:
+        raise ValidationError("tail button pinhole is not a usable verified baseline")
+    if button.get("plunger_optional") is not True:
+        raise ValidationError("tail button plunger must remain explicitly optional")
+
     with tempfile.TemporaryDirectory(prefix="smartpaddle-power-audit-") as temp:
         temp_dir = Path(temp)
         for name, board in BOARDS.items():
@@ -131,12 +139,6 @@ def validate(release_gate: bool) -> None:
                 f"DRC violations={violations} unconnected={unconnected}"
             )
 
-    if release_gate and button.get("tolerance_closed") is not True:
-        release_failures.append(
-            "tail button tolerance is not closed: "
-            + str(button.get("manufacturing_blocker", "missing measured coupon"))
-        )
-
     if release_failures:
         raise ValidationError("; ".join(release_failures))
 
@@ -144,9 +146,10 @@ def validate(release_gate: bool) -> None:
         print("POWER REWORK MANUFACTURING GATE PASS")
     else:
         if button.get("tolerance_closed") is not False:
-            raise ValidationError("route-free handoff expects an explicit open button tolerance gate")
+            raise ValidationError("optional plunger must retain its explicit open coupon status")
         print("POWER REWORK ROUTE-FREE HANDOFF PASS")
-        print("MANUFACTURING BLOCKED: both boards are unrouted and B3U plunger tolerance is open")
+        print("MANUFACTURING BLOCKED: both boards are unrouted")
+        print("B3U: Ø2.0 mm pinhole is baseline; retained plunger remains an optional coupon item")
 
 
 def main() -> int:

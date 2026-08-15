@@ -27,9 +27,15 @@ tail_if_btn_wall_t = 2.000;
 tail_if_btn_plunger_d = 1.600;
 tail_if_btn_flange_d = 3.000;
 tail_if_btn_flange_h = 0.500;
+tail_if_btn_flange_pocket_d = 3.400;
+tail_if_btn_flange_pocket_depth = 0.800;
+tail_if_btn_flange_pocket_wall_overlap = 0.100;
 tail_if_btn_outer_projection = 0.300;
 tail_if_btn_rest_gap = 0.050;
 tail_if_btn_max_travel = 0.300;
+tail_if_btn_access_mode = "pinhole_with_optional_retained_plunger";
+tail_if_btn_pinhole_ready = true;
+tail_if_btn_plunger_optional = true;
 tail_if_btn_tolerance_closed = false;
 
 // F-side TPS2553 support parts fit the common board cavity without new holes.
@@ -144,6 +150,23 @@ tail_if_edge_pts = [
     [-0.86390, 8.79300]
 ];
 
+// [x0, y0, z0, x1, y1, z1] local pockets derived from the current KiCad
+// component courtyards and conservative 3D package heights.
+tail_if_component_keepouts = [
+    [6.95300, -171.44617, 4.28200, 11.60300, -169.39617, 6.63200],
+    [-13.47400, -171.44617, -6.64000, -7.52400, -166.29617, 5.37000],
+    [0.85300, -171.44617, -7.92800, 12.86300, -166.29617, -1.97800],
+    [5.87500, -173.69617, -9.27500, 9.12500, -172.14617, -7.32500],
+    [10.94500, -173.39617, -6.70500, 12.45500, -172.14617, -3.69500],
+    [-4.49602, -174.19617, 2.62950, -1.04602, -172.14617, 6.77950],
+    [6.42500, -174.19617, -6.22500, 10.57500, -172.14617, -2.77500],
+    [4.92500, -174.19617, 3.07500, 9.07500, -172.14617, 6.52500],
+    [9.24500, -173.09617, 3.29500, 10.75500, -172.14617, 6.30500],
+    [-8.80800, -171.44617, 5.46800, -5.79800, -170.49617, 6.97800],
+    [6.79300, -171.44617, -0.38000, 11.36300, -168.89617, 4.19000],
+    [11.31400, -171.44617, -1.79101, 13.32400, -169.74617, 1.65899]
+];
+
 module tail_if_stadium_2d(w, d) {
     r = min(d / 2, w / 2);
     hull() for (sx = [-1, 1])
@@ -160,6 +183,11 @@ module tail_board_interference_cuts() {
             linear_extrude(height = y1 - y0)
                 polygon(tail_if_edge_pts);
 
+    // 靠板边器件的局部避让；只切实际相交的 12 个包络，不扩大公共内腔。
+    for (k = tail_if_component_keepouts)
+        translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
+            cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
+
     // Type-C 穿出拍尾（跑道长轴跟 J1 rot；0°=口宽沿 handle X）
     translate([tail_if_usb_x, tail_if_pcb_y + 0.8, tail_if_usb_z])
         rotate([90, 0, 0])
@@ -171,6 +199,17 @@ module tail_board_interference_cuts() {
     translate([tail_if_btn_x, tail_if_butt_y - 3, tail_if_btn_z])
         rotate([-90, 0, 0])
             cylinder(d = tail_if_btn_hole_d, h = (tail_if_pcb_y + 1) - (tail_if_butt_y - 3), $fn = 28);
+    translate([
+        tail_if_btn_x,
+        tail_if_butt_y + tail_if_btn_wall_t - tail_if_btn_flange_pocket_wall_overlap,
+        tail_if_btn_z
+    ])
+        rotate([-90, 0, 0])
+            cylinder(
+                d = tail_if_btn_flange_pocket_d,
+                h = tail_if_btn_flange_pocket_depth + tail_if_btn_flange_pocket_wall_overlap,
+                $fn = 32
+            );
     translate([tail_if_btn_x, tail_if_pcb_y - tail_if_btn_body_h / 2, tail_if_btn_z])
         rotate([0, tail_if_btn_rot, 0])
             cube([tail_if_btn_pocket_w, tail_if_btn_body_h + 0.35, tail_if_btn_pocket_d], center = true);
@@ -184,10 +223,10 @@ module tail_board_interference_cuts() {
             cylinder(d = tail_if_led1_hole_d, h = (tail_if_pcb_y + 0.5) - (tail_if_butt_y - 2.5), $fn = 24);
 }
 
-// 独立打印、从壳内装入；内侧法兰防止推杆向壳外脱出。
+// 可选独立打印、从壳内装入；内侧法兰防止装配后向壳外脱出。
 // 静止端面与 B3U 执行头留 0.05 mm 名义间隙，外露 0.30 mm。
-// 这只覆盖 0.15 mm 名义预行程，不能覆盖 0.35 mm 最坏值；必须先做
-// 尾段试片并冻结止挡/实际行程，tail_if_btn_tolerance_closed=false 时禁产。
+// 壳体本身的 Ø2.0 mm 针孔是基准操作方式；推杆仅为便利附件。
+// 推杆覆盖 0.15 mm 名义预行程，但未覆盖 0.35 mm 最坏值，批量采用前仍须试片。
 module tail_if_button_plunger() {
     y_outer = tail_if_butt_y - tail_if_btn_outer_projection;
     y_tip = tail_if_pcb_y - tail_if_btn_operation_h - tail_if_btn_rest_gap;

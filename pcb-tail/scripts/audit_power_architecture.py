@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import math
 import sys
 from pathlib import Path
@@ -30,6 +31,12 @@ PCB = REPO / "pcb-tail/layouts/default/default.kicad_pcb"
 STAGING = REPO / "pcb-tail/layouts/staging/default.atopile.kicad_pcb"
 MAIN_ATO = REPO / "pcb-tail/main.ato"
 PARTS_ATO = REPO / "pcb-tail/parts.ato"
+MECHANICAL_JSON = REPO / "enclosure/stl/interference/tail_interference.json"
+
+EXPECTED_SHELL_KEEPOUT_REFS = {
+    "C6", "J2", "J3", "D2", "C9", "U2",
+    "U4", "U5", "R9", "R5", "L1", "C7",
+}
 
 SOURCE_HASHES = {
     REPO / "docs/power-architecture-rework/sources/IP5305T-V1.4.pdf":
@@ -387,6 +394,57 @@ def _audit_source_fragments() -> None:
         _expect(fragment in parts, f"parts.ato missing {fragment}")
 
 
+def _audit_mechanical_contract(parts: dict[str, "pcbnew.FOOTPRINT"]) -> None:
+    _expect(MECHANICAL_JSON.is_file(), "tail mechanical interference JSON is missing")
+    facts = json.loads(MECHANICAL_JSON.read_text(encoding="utf-8"))
+    _expect(
+        facts.get("source_pcb") == "pcb-tail/layouts/default/default.kicad_pcb",
+        "tail mechanical facts point at the wrong PCB",
+    )
+
+    button = facts.get("button", {})
+    _expect(
+        button.get("access_mode") == "pinhole_with_optional_retained_plunger",
+        "SW1 access must use the verified pinhole baseline",
+    )
+    _expect(button.get("pinhole_ready") is True, "SW1 pinhole is not release-ready")
+    _expect(_close(float(button.get("hole_d", 0)), 2.0), "SW1 pinhole must be 2.0 mm")
+    _expect(button.get("plunger_optional") is True, "SW1 plunger must remain optional")
+    _expect(
+        float(button.get("plunger_flange_d", 0))
+        > float(button.get("hole_d", 0)),
+        "SW1 plunger flange cannot retain against the pinhole",
+    )
+    _expect(
+        float(button.get("plunger_flange_pocket_d", 0))
+        > float(button.get("plunger_flange_d", 0)),
+        "SW1 flange recess has no diametral clearance",
+    )
+
+    keepouts = facts.get("component_keepouts", [])
+    _expect(len(keepouts) == 12, "tail shell must carry exactly 12 local component keepouts")
+    _expect(
+        {item.get("ref") for item in keepouts} == EXPECTED_SHELL_KEEPOUT_REFS,
+        "tail shell component-keepout reference set changed",
+    )
+    by_ref = {fp.GetReference(): fp for fp in parts.values()}
+    for item in keepouts:
+        ref = item["ref"]
+        _expect(ref in by_ref, f"mechanical keepout {ref} is absent from current PCB")
+        expected_pose = (
+            float(item["x"]),
+            float(item["y"]),
+            float(item["rot_deg"]),
+            str(item["layer"]),
+        )
+        _expect_pose(_pose_mm(by_ref[ref]), expected_pose, f"mechanical keepout {ref}")
+        box = item.get("handle_box_xyz", [])
+        _expect(
+            len(box) == 6 and all(float(box[i + 3]) > float(box[i]) for i in range(3)),
+            f"mechanical keepout {ref} has an invalid 3D box",
+        )
+
+
 # ===== 分区：公开 API =====
 def audit(require_route_free: bool = True) -> None:
     for path, expected in SOURCE_HASHES.items():
@@ -417,6 +475,7 @@ def audit(require_route_free: bool = True) -> None:
         _expect_pose(_pose_mm(parts[address]), expected, address)
 
     _audit_critical_geometry(parts)
+    _audit_mechanical_contract(parts)
 
     print("Tail power architecture end-to-end audit PASS")
     print("  6 archived primary PDFs match their locked SHA-256 hashes")
@@ -425,6 +484,7 @@ def audit(require_route_free: bool = True) -> None:
     print("  8 new low-profile parts match their in-board F.Cu placement contract")
     print("  U3 no-via EP, XFL4020 exact land, power values, ILIM and deliberate NC pads verified")
     print("  IP5305T Figure-6 one-LED status path and populated LED/resistor values verified")
+    print("  SW1 pinhole baseline and 12 KiCad-derived shell keepouts match current poses")
     if require_route_free:
         print("  0 tracks/vias; 0 zones: this board is intentionally NOT manufacturable")
     else:

@@ -13,6 +13,7 @@
 诊断（不覆盖打印件）：
   enclosure/stl/interference/board_slot.stl
   enclosure/stl/interference/ui_cuts.stl
+  enclosure/stl/interference/component_keepouts.stl
 
   python3 scripts/step6_tail_board_interfere_handle.py
 """
@@ -258,18 +259,49 @@ def _board_and_ui_cutters(info: dict):
         float(btn.get("rot_deg", 0.0)),
     )
 
-    cuts = [board, usb_cut, btn_hole, btn_pocket]
+    flange_y0 = (
+        butt_y
+        + float(btn["wall_t"])
+        - float(btn["plunger_flange_pocket_wall_overlap"])
+    )
+    flange_y1 = (
+        butt_y
+        + float(btn["wall_t"])
+        + float(btn["plunger_flange_pocket_depth"])
+    )
+    flange_pocket = _cyl_y(
+        float(btn["plunger_flange_pocket_d"]) / 2,
+        flange_y1 - flange_y0,
+        [float(btn["x"]), (flange_y0 + flange_y1) / 2, float(btn["y"])],
+        sections=48,
+    )
+
+    ui_cuts = [usb_cut, btn_hole, flange_pocket, btn_pocket]
     for key in ("led_rgb", "led_status"):
         led = info[key]
         ly0, ly1 = butt_y - 1.2, pcb_y + 0.25
-        cuts.append(
+        ui_cuts.append(
             _cyl_y(
                 float(led["hole_d"]) / 2,
                 ly1 - ly0,
                 [float(led["x"]), (ly0 + ly1) / 2, float(led["y"])],
             )
         )
-    return board, cuts[1:], cuts
+
+    component_cuts = []
+    for item in info.get("component_keepouts", []):
+        x0, ky0, z0, x1, ky1, z1 = map(float, item["handle_box_xyz"])
+        component_cuts.append(
+            _box(
+                [(x0 + x1) / 2, (ky0 + ky1) / 2, (z0 + z1) / 2],
+                [x1 - x0, ky1 - ky0, z1 - z0],
+            )
+        )
+    if len(component_cuts) != 12:
+        raise RuntimeError(
+            f"expected 12 KiCad-derived component keepouts, got {len(component_cuts)}"
+        )
+    return board, ui_cuts, component_cuts, [board, *ui_cuts, *component_cuts]
 
 
 def _button_plunger(info: dict):
@@ -374,11 +406,15 @@ def main() -> int:
         f"sw=({info['button']['x']:.2f},{info['button']['y']:.2f})"
     )
 
-    board, ui, all_cuts = _board_and_ui_cutters(info)
+    board, ui, component_cuts, all_cuts = _board_and_ui_cutters(info)
     plunger = _button_plunger(info)
     INTER_DIR.mkdir(parents=True, exist_ok=True)
     _export(board, INTER_DIR / "board_slot.stl")
     _export(trimesh.util.concatenate(ui), INTER_DIR / "ui_cuts.stl")
+    _export(
+        trimesh.util.concatenate(component_cuts),
+        INTER_DIR / "component_keepouts.stl",
+    )
     _export(trimesh.util.concatenate(all_cuts), INTER_DIR / "all_cuts.stl")
     _export(plunger, INTER_DIR / "button_plunger.stl")
     _export(plunger, STL / "paddle_m6_tail_button_plunger.stl")
@@ -419,8 +455,8 @@ def main() -> int:
     except Exception as exc:
         print(f"  tip 裁切跳过: {exc}")
 
-    print("Step6 完成 ✓  M6 最终打印件与独立按钮推杆已写入 enclosure/stl/")
-    print("  推杆须从壳内装入；量产前先打印尾段试片确认 0.05 mm 间隙与 0.15 mm 行程。")
+    print("Step6 完成 ✓  M6 最终打印件与可选按钮推杆已写入 enclosure/stl/")
+    print("  Ø2.0 mm 针孔可直接操作；推杆须从壳内装入，采用前先做尾段行程试片。")
     return 0
 
 

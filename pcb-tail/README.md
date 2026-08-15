@@ -24,11 +24,11 @@
 - J4 位于 B.Cu `(-2.794,-5.969) mm`、90°；Pad 1 全局 `(-0.919,-5.369) mm`，Pad 2 `(-0.919,-6.569) mm`，两个 `MP` 固定焊盘均 NC。当前两脚都待用户重新布线。
 - 选型、采购词、电流门禁和官方资料见 [`../docs/battery-connector-jst-ach-2p/README.md`](../docs/battery-connector-jst-ach-2p/README.md)。旧 PH 方案已明确停用；官方 XH 2.50 与市售“XH2.54”不能凭名称保证互配。
 
-## 用户按键（已换 footprint/布线，待机械试片）
+## 用户按键（已换 footprint，针孔可用；推杆可选）
 
 - SW1 已由 4.5×4.5 mm THT 换成 Omron `B3U-1000P` SMD，footprint 为 `Button_Switch_SMD:SW_SPST_B3U-1000P`；保持原锚点 `(-1.651,-5.461) mm` 和 `-90°`，没有移动或旋转其他器件。
 - Pad 1=`user_btn`、Pad 2=`GND`，当前待用户重新布线。
-- 拍柄采用导向活动推杆，不用固定柱长期压住开关。参数化源已更新为 Ø1.6 mm 推杆/Ø2.0 mm 导向孔、0.05 mm 名义静止间隙；必须先做尾段试片。详见 [`../docs/tail-user-switch-b3u-1000p/README.md`](../docs/tail-user-switch-b3u-1000p/README.md)。本次没有生成或覆盖 STL。
+- 拍柄基准操作方式为 SW1 中心 Ø2.0 mm 直通针孔，可用针尖/笔尖操作，不用固定柱长期压住开关。另有从壳内装入、Ø3.0 mm 法兰防外脱的 Ø1.6 mm 可选活动推杆；推杆批量使用前仍须做行程试片。详见 [`../docs/tail-user-switch-b3u-1000p/README.md`](../docs/tail-user-switch-b3u-1000p/README.md) 和 [`../docs/tail-handle-interference/README.md`](../docs/tail-handle-interference/README.md)。本次没有生成或覆盖用户现有制造 STL。
 - `python3 pcb-tail/scripts/audit_battery_connector_j4.py` 同时核对 J4 与 SW1 的位姿、针脚网络和项目内资料；铜完整性由跨层制造门禁另行检查。
 
 ## 打开
@@ -91,7 +91,7 @@ python3 scripts/validate_power_rework.py
 
 ## 嘉立创实验样板资料
 
-> 当前没有运行 `--target tail` / `--target separate`，也没有生成新的尾板 Gerber/ZIP。制造脚本会因无布线、79 个未连接和 B3U 推杆最坏公差未闭合而拒绝导出；此前所有尾板制造包仍禁止继续使用。
+> 当前没有运行 `--target tail` / `--target separate`，也没有生成新的尾板 Gerber/ZIP。制造脚本会因无布线和 79 个未连接而拒绝导出；Ø2.0 mm 针孔已经是独立可用的按键基准，可选推杆的试片状态不会掩盖电气阻塞。此前所有尾板制造包仍禁止继续使用。
 
 从仓库根目录运行：
 
@@ -103,4 +103,4 @@ python3 pcb/scripts/export_order_packages.py --target tail
 python3 pcb/scripts/export_order_packages.py --target separate
 ```
 
-尾板为 2 层、板厚 1.00 mm；铜厚、表面处理及颜色尚未冻结。只有两板布线/铺地完成、0 未连接、B3U 尾段试片实测闭合公差且跨层 release gate 通过后，才可考虑工程样板。DRC 通过不等于实物验证或量产放行。
+尾板为 2 层、板厚 1.00 mm；铜厚、表面处理及颜色尚未冻结。只有两板布线/铺地完成、0 未连接、跨层 release gate 通过后，才可考虑工程样板；若要日常使用可选推杆，还应先用尾段试片闭合其行程公差。DRC 通过不等于实物验证或量产放行。

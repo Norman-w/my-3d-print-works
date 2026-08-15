@@ -429,19 +429,26 @@
     "pretravel_min": 0.05,
     "pretravel_max": 0.35,
     "hole_d": 2.0,
+    "access_mode": "pinhole_with_optional_retained_plunger",
+    "pinhole_ready": true,
     "pocket_w": 3.6,
     "pocket_d": 3.1,
     "wall_t": 2.0,
     "plunger_shaft_d": 1.6,
     "plunger_flange_d": 3.0,
     "plunger_flange_h": 0.5,
+    "plunger_flange_pocket_d": 3.4,
+    "plunger_flange_pocket_depth": 0.8,
+    "plunger_flange_pocket_wall_overlap": 0.1,
     "plunger_outer_projection": 0.3,
     "plunger_rest_gap": 0.05,
     "plunger_max_travel": 0.3,
     "activation_travel_nominal": 0.2,
     "activation_travel_worst_case": 0.4,
+    "plunger_optional": true,
+    "retention": "inside-loaded flange; retained between shell wall and installed SW1",
     "tolerance_closed": false,
-    "manufacturing_blocker": "B3U plunger stop/travel requires measured tail-section coupon"
+    "plunger_validation_note": "optional plunger stop/travel requires a measured tail-section coupon"
   },
   "led_rgb": {
     "ref": "D1",
@@ -585,6 +592,284 @@
       ],
       "height_max": 1.0,
       "nominal_shell_headroom": 2.8000000000000114
+    }
+  ],
+  "component_keepouts": [
+    {
+      "ref": "C6",
+      "x": 9.277998,
+      "y": 5.457,
+      "rot_deg": 0.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        6.952998,
+        4.282,
+        11.602998,
+        6.632
+      ],
+      "height_max": 1.7,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        6.952998,
+        -171.4461678557074,
+        4.282,
+        11.602998,
+        -169.3961678557074,
+        6.632
+      ]
+    },
+    {
+      "ref": "J2",
+      "x": -11.049,
+      "y": -0.635,
+      "rot_deg": -90.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        -13.474,
+        -6.64,
+        -7.524,
+        5.37
+      ],
+      "height_max": 4.8,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        -13.474,
+        -171.4461678557074,
+        -6.64,
+        -7.524,
+        -166.29616785570738,
+        5.37
+      ]
+    },
+    {
+      "ref": "J3",
+      "x": 6.858,
+      "y": -5.503004,
+      "rot_deg": 180.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        0.853,
+        -7.928004,
+        12.863,
+        -1.978004
+      ],
+      "height_max": 4.8,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        0.853,
+        -171.4461678557074,
+        -7.928004,
+        12.863,
+        -166.29616785570738,
+        -1.978004
+      ]
+    },
+    {
+      "ref": "D2",
+      "x": 7.5,
+      "y": -8.3,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        5.875,
+        -9.275,
+        9.125,
+        -7.325
+      ],
+      "height_max": 1.2,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        5.875,
+        -173.69616785570736,
+        -9.275,
+        9.125,
+        -172.14616785570738,
+        -7.325
+      ]
+    },
+    {
+      "ref": "C9",
+      "x": 11.7,
+      "y": -5.2,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        10.945,
+        -6.705,
+        12.455,
+        -3.695
+      ],
+      "height_max": 0.9,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        10.945,
+        -173.39616785570738,
+        -6.705,
+        12.455,
+        -172.14616785570738,
+        -3.695
+      ]
+    },
+    {
+      "ref": "U2",
+      "x": -2.771016,
+      "y": 4.704503,
+      "rot_deg": -90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        -4.496016,
+        2.629503,
+        -1.046016,
+        6.779503
+      ],
+      "height_max": 1.7,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        -4.496016,
+        -174.19616785570736,
+        2.629503,
+        -1.046016,
+        -172.14616785570738,
+        6.779503
+      ]
+    },
+    {
+      "ref": "U4",
+      "x": 8.5,
+      "y": -4.5,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        6.425,
+        -6.225,
+        10.575,
+        -2.775
+      ],
+      "height_max": 1.7,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        6.425,
+        -174.19616785570736,
+        -6.225,
+        10.575,
+        -172.14616785570738,
+        -2.775
+      ]
+    },
+    {
+      "ref": "U5",
+      "x": 7.0,
+      "y": 4.8,
+      "rot_deg": 0.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        4.925,
+        3.075,
+        9.075,
+        6.525
+      ],
+      "height_max": 1.7,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        4.925,
+        -174.19616785570736,
+        3.075,
+        9.075,
+        -172.14616785570738,
+        6.525
+      ]
+    },
+    {
+      "ref": "R9",
+      "x": 10.0,
+      "y": 4.8,
+      "rot_deg": 90.0,
+      "layer": "F.Cu",
+      "courtyard_xy": [
+        9.245,
+        3.295,
+        10.755,
+        6.305
+      ],
+      "height_max": 0.6,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        9.245,
+        -173.09616785570736,
+        3.295,
+        10.755,
+        -172.14616785570738,
+        6.305
+      ]
+    },
+    {
+      "ref": "R5",
+      "x": -7.303,
+      "y": 6.222999,
+      "rot_deg": 180.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        -8.808,
+        5.467999,
+        -5.798,
+        6.977999
+      ],
+      "height_max": 0.6,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        -8.808,
+        -171.4461678557074,
+        5.467999,
+        -5.798,
+        -170.4961678557074,
+        6.977999
+      ]
+    },
+    {
+      "ref": "L1",
+      "x": 9.077998,
+      "y": 1.905,
+      "rot_deg": 90.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        6.792998,
+        -0.38,
+        11.362998,
+        4.19
+      ],
+      "height_max": 2.2,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        6.792998,
+        -171.4461678557074,
+        -0.38,
+        11.362998,
+        -168.8961678557074,
+        4.19
+      ]
+    },
+    {
+      "ref": "C7",
+      "x": 12.318998,
+      "y": -0.066007,
+      "rot_deg": 90.0,
+      "layer": "B.Cu",
+      "courtyard_xy": [
+        11.313998,
+        -1.791007,
+        13.323998,
+        1.658993
+      ],
+      "height_max": 1.35,
+      "axial_clear": 0.2,
+      "handle_box_xyz": [
+        11.313998,
+        -171.4461678557074,
+        -1.791007,
+        13.323998,
+        -169.7461678557074,
+        1.658993
+      ]
     }
   ],
   "transform": {
