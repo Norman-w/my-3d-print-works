@@ -301,6 +301,25 @@ def _board_and_ui_cutters(info: dict):
         raise RuntimeError(
             f"expected 12 KiCad-derived component keepouts, got {len(component_cuts)}"
         )
+    mated_housing_cuts = []
+    housing_refs = set()
+    for item in info.get("harness_connectors", []):
+        values = item.get("housing_keepout_handle_box_xyz", [])
+        if len(values) != 6:
+            raise RuntimeError(f"invalid inserted-housing keepout for {item.get('ref')}")
+        x0, ky0, z0, x1, ky1, z1 = map(float, values)
+        mated_housing_cuts.append(
+            _box(
+                [(x0 + x1) / 2, (ky0 + ky1) / 2, (z0 + z1) / 2],
+                [x1 - x0, ky1 - ky0, z1 - z0],
+            )
+        )
+        housing_refs.add(str(item.get("ref")))
+    if housing_refs != {"J2", "J3"} or len(mated_housing_cuts) != 2:
+        raise RuntimeError(
+            "expected inserted 51021 housing keepouts for exactly J2/J3"
+        )
+    component_cuts.extend(mated_housing_cuts)
     return board, ui_cuts, component_cuts, [board, *ui_cuts, *component_cuts]
 
 

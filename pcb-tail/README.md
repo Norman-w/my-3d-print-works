@@ -2,7 +2,7 @@
 
 > 当前 **M7.C5** 组合的独立满截面尾板，与 `pcb/` 主板分开维护；充电、USB、按键和 LED 均在本板。版本只记录在说明与 KiCad 标题栏，工程、PCB、同步脚本和交接文件使用跨版本通用名称。
 
-> **当前设计与旧板安全状态（2026-08-15）：** J1 的 H=5.8 短脚封装和 16 个物理触点映射已按用户数据表修正；J4、B3U、两级 TPS2553 和 KEY 隔离也已同步。当前 C5 尾板为 33 个封装、0 条走线/0 个过孔/0 个覆铜区，DRC 为 0 个规则违规、79 个预期未连接，**可以开始手工布线，但不能制造**。所有按旧 J1 错误映射制造或已焊接的尾板及旧制造文件仍不得上电、插 USB 或再次下单，不得现场飞线返修。详见 [`../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md`](../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **当前设计与旧板安全状态（2026-08-16）：** J1 的 H=5.8 短脚封装和 16 个物理触点映射已按用户数据表修正；J4、B3U、两级 TPS2553 和 KEY 隔离也已同步。J2/J3 已换成 Molex 53261-0471 卧插 SMT并采用审计后的位姿；除此之外，按“板端 + 已插 51021 线端”完整包络只调整 C2、低电流状态电阻 R6，并把 J4 向板边平移 1.031 mm；C3/U3/L1 保持原位。当前 C5 尾板为 33 个封装、0 条走线/0 个过孔/0 个覆铜区，**可以开始手工布线，但不能制造**。所有按旧 J1 错误映射制造或已焊接的尾板及旧制造文件仍不得上电、插 USB 或再次下单，不得现场飞线返修。详见 [`../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md`](../docs/usb-c-vertical-16p-short/J1-PINOUT-AUDIT.md)、[`../docs/molex-picoblade-53261-4p-horizontal/README.md`](../docs/molex-picoblade-53261-4p-horizontal/README.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >
 > `layouts/default/export-preview/` 中除重新生成的 `fp-usb16p-selfcheck.png` 外，其余图像是本次审计前的历史预览，不是当前 J1 或制造状态的证据。
 
@@ -21,7 +21,7 @@
 
 - 板端：JST ACH `BM02B-ACHSS-GAN-ETF`，1.20 mm、2P、SMT 顶插；配套线端 `ACHR-02V-S` + `SACH-003G-P0.2`，成品线固定为 AWG28。
 - J4 footprint：`Connector_JST:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical`。电气定义固定为 **Pin 1=`BAT_P`/red**、**Pin 2=`GND`/black**；它与现有 `J2.3 BAT_P` / `J2.2 GND` 并联，电池不得接主板 `SYS_5V_IN`。
-- J4 位于 B.Cu `(-2.794,-5.969) mm`、90°；Pad 1 全局 `(-0.919,-5.369) mm`，Pad 2 `(-0.919,-6.569) mm`，两个 `MP` 固定焊盘均 NC。当前两脚都待用户重新布线。
+- J4 位于 B.Cu `(-2.794,-7.000) mm`、90°；Pad 1 全局 `(-0.919,-6.400) mm`，Pad 2 `(-0.919,-7.600) mm`，两个 `MP` 固定焊盘均 NC。它只沿 KiCad Y 平移 1.031 mm，为插合后的 J2 线端留出净空；当前两脚都待用户重新布线。
 - 选型、采购词、电流门禁和官方资料见 [`../docs/battery-connector-jst-ach-2p/README.md`](../docs/battery-connector-jst-ach-2p/README.md)。旧 PH 方案已明确停用；官方 XH 2.50 与市售“XH2.54”不能凭名称保证互配。
 
 ## 用户按键（已换 footprint，针孔可用；推杆可选）
@@ -30,6 +30,13 @@
 - Pad 1=`user_btn`、Pad 2=`GND`，当前待用户重新布线。
 - 拍柄基准操作方式为 SW1 中心 Ø2.0 mm 直通针孔，可用针尖/笔尖操作，不用固定柱长期压住开关。另有从壳内装入、Ø3.0 mm 法兰防外脱的 Ø1.6 mm 可选活动推杆；推杆批量使用前仍须做行程试片。详见 [`../docs/tail-user-switch-b3u-1000p/README.md`](../docs/tail-user-switch-b3u-1000p/README.md) 和 [`../docs/tail-handle-interference/README.md`](../docs/tail-handle-interference/README.md)。本次没有生成或覆盖用户现有制造 STL。
 - `python3 pcb-tail/scripts/audit_battery_connector_j4.py` 同时核对 J4 与 SW1 的位姿、针脚网络和项目内资料；铜完整性由跨层制造门禁另行检查。
+
+## 主板线束接口（卧插、待布线）
+
+- J2/J3 均为 Molex PicoBlade `53261-0471`、1.25 mm、4P、卧插 SMT；与原 53398 立插使用同一 `51021-0400` 4P 线端体系，但两种板端 footprint 不能互换。
+- J2 位于 B.Cu `(-11.300,-0.600) mm`、−90°；J3 位于 B.Cu `(+6.300,-5.800) mm`、180°。两只插口均朝板内侧，线束平行 PCB 离开；逐脚网络仍以 [`ADAPTER_HARNESS.md`](ADAPTER_HARNESS.md) 为准。
+- 为完整插合包络将 C2 移到 F.Cu `(2.000,1.000) mm`、0°，并将低电流状态脚电阻 R6 移到 B.Cu `(-10.500,6.200) mm`、0°；J4 的小幅平移见上节。C1/C2 同为 `V5_SW_RETURN–GND` 的 100 nF，现分别就近服务 D1 与 U1。C3、U3、L1 不动，避免扩大 IP5305T 电池/开关高脉冲电流回路。
+- 原厂证据、封装快照、Pin 1 方向及机械说明见 [`../docs/molex-picoblade-53261-4p-horizontal/README.md`](../docs/molex-picoblade-53261-4p-horizontal/README.md)。
 
 ## 打开
 
@@ -86,8 +93,8 @@ python3 scripts/validate_power_rework.py
 ## 已知瑕疵
 
 - 当前 KiCad 3D Viewer 及导出的 3D 预览中，部分器件模型的比例/尺度与实物不一致；这只影响 3D 外观预览，不代表 PCB 焊盘、板框或器件采购尺寸发生变化。
-- 3D 模型比例问题本身不用于判断焊盘；但这条说明不适用于 J1。本次已用 H=5.8 短脚主数据表独立纠正 J1 land pattern，旧 J1 板批不可用。
-- 下一版装配图或下单前，应按供应商机械图和实物重新校准 `pcb-tail/lib/3dmodels/` 下的模型比例、原点和高度，并重新检查 Type-C、MX1.25 和按键的壳体干涉。
+- 3D 模型比例问题本身不用于判断焊盘；但这条说明不适用于 J1 或 J2/J3。J1 已按 H=5.8 短脚主数据表逐触点纠正；J2/J3 使用 KiCad 9 stock 53261 footprint/STEP，并另按 Molex 销售图审计 land 与 3.40 mm 配合高度。
+- 下一版装配图或下单前，仍应按供应商机械图和首件实物重新检查 Type-C、卧插线束的弯曲半径、按键孔和打印公差。
 
 ## 嘉立创实验样板资料
 

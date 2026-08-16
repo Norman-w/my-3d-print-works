@@ -154,8 +154,8 @@ tail_if_edge_pts = [
 // component courtyards and conservative 3D package heights.
 tail_if_component_keepouts = [
     [6.95300, -171.44617, 4.28200, 11.60300, -169.39617, 6.63200],
-    [-13.47400, -171.44617, -6.64000, -7.52400, -166.29617, 5.37000],
-    [0.85300, -171.44617, -7.92800, 12.86300, -166.29617, -1.97800],
+    [-15.02500, -171.44617, -6.60500, -8.17500, -167.69617, 5.40500],
+    [0.29500, -171.44617, -9.52500, 12.30500, -167.69617, -2.67500],
     [5.87500, -173.69617, -9.27500, 9.12500, -172.14617, -7.32500],
     [10.94500, -173.39617, -6.70500, 12.45500, -172.14617, -3.69500],
     [-4.49602, -174.19617, 2.62950, -1.04602, -172.14617, 6.77950],
@@ -165,6 +165,14 @@ tail_if_component_keepouts = [
     [-8.80800, -171.44617, 5.46800, -5.79800, -170.49617, 6.97800],
     [6.79300, -171.44617, -0.38000, 11.36300, -168.89617, 4.19000],
     [11.31400, -171.44617, -1.79101, 13.32400, -169.74617, 1.65899]
+];
+
+// Inserted 51021 wire housings extend beyond the board-header courtyards.
+// Keep these two evidence-derived boxes separate so the shell audit cannot
+// silently regress to checking the bare 53261 headers only.
+tail_if_mated_housing_keepouts = [
+    [-9.10000, -171.44617, -4.22500, -4.65000, -167.69617, 3.02500],
+    [2.67500, -171.44617, -12.45000, 9.92500, -167.69617, -8.00000]
 ];
 
 module tail_if_stadium_2d(w, d) {
@@ -185,6 +193,11 @@ module tail_board_interference_cuts() {
 
     // 靠板边器件的局部避让；只切实际相交的 12 个包络，不扩大公共内腔。
     for (k = tail_if_component_keepouts)
+        translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
+            cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
+
+    // 已插线端外壳的包络不属于 PCB footprint courtyard，单独避让。
+    for (k = tail_if_mated_housing_keepouts)
         translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
             cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
 

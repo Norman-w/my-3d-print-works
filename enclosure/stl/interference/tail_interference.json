@@ -474,7 +474,7 @@
   "battery_connector": {
     "ref": "J4",
     "x": -2.794,
-    "y": -5.969,
+    "y": -7.0,
     "rot_deg": 90.0,
     "layer": "B.Cu",
     "part": "JST BM02B-ACHSS-GAN-ETF",
@@ -482,11 +482,125 @@
     "body_d": 4.3,
     "body_h": 1.4,
     "source": "docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf",
+    "body_pcb_box_xy": [
+      -4.944,
+      -9.1,
+      -0.6440000000000001,
+      -4.9
+    ],
     "handle_y_range": [
       -171.29616785570738,
       -169.89616785570738
     ]
   },
+  "harness_connectors": [
+    {
+      "ref": "J2",
+      "x": -11.3,
+      "y": -0.6,
+      "rot_deg": -90.0,
+      "layer": "B.Cu",
+      "part": "Molex 53261-0471",
+      "mating_housing": "Molex 51021-0400",
+      "pitch": 1.25,
+      "mated_height": 3.4,
+      "housing_height": 3.2,
+      "mount": "right-angle SMT",
+      "header_local_box_xy": [
+        -5.075,
+        -2.6,
+        5.075,
+        2.6
+      ],
+      "housing_local_box_xy": [
+        -3.375,
+        2.45,
+        3.375,
+        6.4
+      ],
+      "header_pcb_box_xy": [
+        -13.9,
+        -5.675,
+        -8.700000000000001,
+        4.4750000000000005
+      ],
+      "housing_pcb_box_xy": [
+        -8.850000000000001,
+        -3.975,
+        -4.9,
+        2.7750000000000004
+      ],
+      "housing_keepout_pcb_box_xy": [
+        -9.100000000000001,
+        -4.225,
+        -4.65,
+        3.0250000000000004
+      ],
+      "housing_keepout_handle_box_xyz": [
+        -9.100000000000001,
+        -171.4461678557074,
+        -4.225,
+        -4.65,
+        -167.6961678557074,
+        3.0250000000000004
+      ],
+      "source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/532/53261/532610271_sd.pdf",
+      "housing_source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/510/51021/510210500_sd.pdf"
+    },
+    {
+      "ref": "J3",
+      "x": 6.3,
+      "y": -5.8,
+      "rot_deg": 180.0,
+      "layer": "B.Cu",
+      "part": "Molex 53261-0471",
+      "mating_housing": "Molex 51021-0400",
+      "pitch": 1.25,
+      "mated_height": 3.4,
+      "housing_height": 3.2,
+      "mount": "right-angle SMT",
+      "header_local_box_xy": [
+        -5.075,
+        -2.6,
+        5.075,
+        2.6
+      ],
+      "housing_local_box_xy": [
+        -3.375,
+        2.45,
+        3.375,
+        6.4
+      ],
+      "header_pcb_box_xy": [
+        1.2249999999999994,
+        -8.4,
+        11.375,
+        -3.199999999999999
+      ],
+      "housing_pcb_box_xy": [
+        2.924999999999999,
+        -12.2,
+        9.675,
+        -8.25
+      ],
+      "housing_keepout_pcb_box_xy": [
+        2.674999999999999,
+        -12.45,
+        9.925,
+        -8.0
+      ],
+      "housing_keepout_handle_box_xyz": [
+        2.674999999999999,
+        -171.4461678557074,
+        -12.45,
+        9.925,
+        -167.6961678557074,
+        -8.0
+      ],
+      "source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/532/53261/532610271_sd.pdf",
+      "housing_source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/510/51021/510210500_sd.pdf"
+    }
+  ],
   "front_component_cavity_depth": 3.8000000000000114,
   "front_power_parts": [
     {
@@ -636,48 +750,48 @@
     },
     {
       "ref": "J2",
-      "x": -11.049,
-      "y": -0.635,
+      "x": -11.3,
+      "y": -0.6,
       "rot_deg": -90.0,
       "layer": "B.Cu",
       "courtyard_xy": [
-        -13.474,
-        -6.64,
-        -7.524,
-        5.37
+        -15.025,
+        -6.605,
+        -8.175,
+        5.405
       ],
-      "height_max": 4.8,
+      "height_max": 3.4,
       "axial_clear": 0.2,
       "handle_box_xyz": [
-        -13.474,
+        -15.025,
         -171.4461678557074,
-        -6.64,
-        -7.524,
-        -166.29616785570738,
-        5.37
+        -6.605,
+        -8.175,
+        -167.6961678557074,
+        5.405
       ]
     },
     {
       "ref": "J3",
-      "x": 6.858,
-      "y": -5.503004,
+      "x": 6.3,
+      "y": -5.8,
       "rot_deg": 180.0,
       "layer": "B.Cu",
       "courtyard_xy": [
-        0.853,
-        -7.928004,
-        12.863,
-        -1.978004
+        0.295,
+        -9.525,
+        12.305,
+        -2.675
       ],
-      "height_max": 4.8,
+      "height_max": 3.4,
       "axial_clear": 0.2,
       "handle_box_xyz": [
-        0.853,
+        0.295,
         -171.4461678557074,
-        -7.928004,
-        12.863,
-        -166.29616785570738,
-        -1.978004
+        -9.525,
+        12.305,
+        -167.6961678557074,
+        -2.675
       ]
     },
     {

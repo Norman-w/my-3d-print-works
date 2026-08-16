@@ -250,7 +250,7 @@ def draw_molex(c: canvas.Canvas, cx: float, cy: float, scale: float = 15) -> Non
         pad(c, cx + x * scale, cy + 1.5 * scale, 2.1 * scale, 3 * scale, fill=COPPER, radius=2)
     dim_h(c, cx - 1.875 * scale, cx - 0.625 * scale, cy - 3.25 * scale, "P1.25", ext_y1=cy - 1.9 * scale, ext_y2=cy - 1.9 * scale)
     dim_h(c, cx - 4.425 * scale, cx + 4.425 * scale, cy + 3.75 * scale, "MP C-C 8.85", ext_y1=cy + 3.0 * scale, ext_y2=cy + 3.0 * scale)
-    txt(c, cx, cy - 3.9 * scale, "53398-0471 / 1x04 vertical SMT", 7.7, NAVY, True, "center")
+    txt(c, cx, cy - 3.9 * scale, "53261-0471 / 1x04 right-angle SMT", 7.7, NAVY, True, "center")
 
 
 def draw_switch(c: canvas.Canvas, cx: float, cy: float, scale: float = 17) -> None:
@@ -419,7 +419,7 @@ def page_one(c: canvas.Canvas) -> None:
     rows = [
         ["类别", "采购件", "数量", "封装 / 采购关键词"],
         ["连接器", "USB-C 母座", "1", "16P 立式 SMT，短体，H=5.8"],
-        ["连接器", "Molex PicoBlade 53398-0471", "2", "MX1.25，1x04，立插 SMT"],
+        ["连接器", "Molex PicoBlade 53261-0471", "2", "MX1.25，1x04，卧插 SMT"],
         ["按键", "4.5 x 4.5 轻触开关", "1", "THT SPST，四孔"],
         ["电源 IC", "IP5305T", "1", "HSOP-8 + EP，必须带散热焊盘"],
         ["USB 保护", "USBLC6-2SC6", "1", "SOT-23-6"],
@@ -472,9 +472,9 @@ def page_two(c: canvas.Canvas) -> None:
     x2, y2, w2, h2 = 450, 250, PAGE_W - 450 - MARGIN, 230
     round_rect(c, x2, y2, w2, h2, fill=colors.white, stroke=GRID)
     pill(c, x2 + 16, y2 + h2 - 31, "J2 / J3", fill=PALE_BLUE, color=BLUE)
-    txt(c, x2 + 16, y2 + h2 - 55, "MX1.25 4P 立插线束座", 10, NAVY, True)
+    txt(c, x2 + 16, y2 + h2 - 55, "MX1.25 4P 卧插线束座", 10, NAVY, True)
     draw_molex(c, x2 + 146, y2 + 107, scale=13)
-    text_block(c, x2 + 292, y2 + 142, "采购型号\nMolex PicoBlade\n53398-0471\n1x04, P1.25 mm\nvertical SMT + MP", 100, 7.5, leading=10.5, color=INK)
+    text_block(c, x2 + 292, y2 + 142, "采购型号\nMolex PicoBlade\n53261-0471\n1x04, P1.25 mm\nright-angle SMT + MP", 100, 7.5, leading=10.5, color=INK)
     text_block(c, x2 + 292, y2 + 80, "板上有两只\nJ2: 电源/电池采样\nJ3: USB/按键/RGB\n板端座不等于线端壳", 100, 7.5, leading=10.5, color=MUTED)
 
     # Switch card

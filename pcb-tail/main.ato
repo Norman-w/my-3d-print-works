@@ -3,7 +3,7 @@
 板面 = 拍柄尾端 XZ；F.Cu 朝拍柄末端（−Y）；B.Cu 朝拍头（+Y）。
 KiCad：X = 柄 X，Y = 柄 Z。
 
-器件与网络按当前电源架构：IP5305T 充放电、USB 2.0、两组 MX1.25 4P 立插线束、
+器件与网络按当前电源架构：IP5305T 充放电、USB 2.0、两组 MX1.25 4P 卧插线束、
 专用 JST ACH 2P 电池入口、WS2812B-2020。build 后在 KiCad 中摆放布线。
 """
 
@@ -17,7 +17,7 @@ from "parts.ato" import LED_0603
 from "parts.ato" import Omron_B3U_1000P
 from "parts.ato" import WS2812B_2020
 from "parts.ato" import USB4120_03_C_Vertical
-from "parts.ato" import MolexPicoBlade_53398_4P_Vertical
+from "parts.ato" import MolexPicoBlade_53261_4P_Horizontal
 from "parts.ato" import JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery
 from "parts.ato" import IP5305T
 from "parts.ato" import TPS2553DBV
@@ -30,8 +30,8 @@ module SmartPaddleTail:
 
     # ---- 连接器 / 开关 / 指示 ----
     usb = new USB4120_03_C_Vertical
-    j_pwr = new MolexPicoBlade_53398_4P_Vertical
-    j_sig = new MolexPicoBlade_53398_4P_Vertical
+    j_pwr = new MolexPicoBlade_53261_4P_Horizontal
+    j_sig = new MolexPicoBlade_53261_4P_Horizontal
     j_bat = new JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery
     sw_user = new Omron_B3U_1000P
     led_rgb = new WS2812B_2020
@@ -234,7 +234,7 @@ module SmartPaddleTail:
     d_key_isolate.anode ~ pmic_key_isolated
     d_key_isolate.cathode ~ user_btn
 
-    # ========== MX1.25 两组 4P 立插（原 8P 按电源/信号拆分）==========
+    # ========== MX1.25 两组 4P 卧插（原 8P 按电源/信号拆分）==========
     # j_pwr：粗线 / 功率与采样
     j_pwr.p1 ~ vout_5v
     j_pwr.p2 ~ gnd

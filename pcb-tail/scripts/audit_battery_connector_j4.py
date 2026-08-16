@@ -148,7 +148,7 @@ def audit(pcb_path: Path, require_route_free: bool = True) -> None:
     expect(property_value(j4, "atopile_address") == "j_bat", "J4 atopile_address mismatch")
     expect(re.search(r'^\s*\(layer "B\.Cu"\)$', j4, re.MULTILINE) is not None, "J4 must be on B.Cu")
     expect(
-        re.search(r'^\s*\(at -2\.794 -5\.969 90\)$', j4, re.MULTILINE) is not None,
+        re.search(r'^\s*\(at -2\.794 -7 90\)$', j4, re.MULTILINE) is not None,
         "J4 pose mismatch",
     )
     expect(len(pad_forms(j4, "1")) == 1 and len(pad_forms(j4, "2")) == 1, "J4 signal pad set mismatch")
@@ -228,7 +228,7 @@ def audit(pcb_path: Path, require_route_free: bool = True) -> None:
 
     print("J4 battery connector + SW1 switch audit")
     print(f"  PCB: {pcb_path}")
-    print(f"  J4: {J4_FOOTPRINT_ID}, B.Cu, at (-2.794, -5.969, 90 deg)")
+    print(f"  J4: {J4_FOOTPRINT_ID}, B.Cu, at (-2.794, -7.000, 90 deg)")
     print("  J4.1 = bat_p / BAT_P / red; J4.2 = GND / black; MP x2 = NC")
     print(f"  SW1: {SW1_FOOTPRINT_ID}, F.Cu, original pose (-1.651, -5.461, -90 deg)")
     print("  SW1.1 = user_btn; SW1.2 = GND")

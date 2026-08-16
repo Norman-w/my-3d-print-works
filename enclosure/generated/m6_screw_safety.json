@@ -9,25 +9,249 @@
       -171.14616785570738
     ]
   },
+  "assemblyObstacleBoxes": [
+    {
+      "label": "C6",
+      "box": [
+        6.952998,
+        -171.4461678557074,
+        11.602998,
+        -169.3961678557074
+      ]
+    },
+    {
+      "label": "J2",
+      "box": [
+        -15.025,
+        -171.4461678557074,
+        -8.175,
+        -167.6961678557074
+      ]
+    },
+    {
+      "label": "J3",
+      "box": [
+        0.295,
+        -171.4461678557074,
+        12.305,
+        -167.6961678557074
+      ]
+    },
+    {
+      "label": "D2",
+      "box": [
+        5.875,
+        -173.69616785570736,
+        9.125,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "C9",
+      "box": [
+        10.945,
+        -173.39616785570738,
+        12.455,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "U2",
+      "box": [
+        -4.496016,
+        -174.19616785570736,
+        -1.046016,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "U4",
+      "box": [
+        6.425,
+        -174.19616785570736,
+        10.575,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "U5",
+      "box": [
+        4.925,
+        -174.19616785570736,
+        9.075,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "R9",
+      "box": [
+        9.245,
+        -173.09616785570736,
+        10.755,
+        -172.14616785570738
+      ]
+    },
+    {
+      "label": "R5",
+      "box": [
+        -8.808,
+        -171.4461678557074,
+        -5.798,
+        -170.4961678557074
+      ]
+    },
+    {
+      "label": "L1",
+      "box": [
+        6.792998,
+        -171.4461678557074,
+        11.362998,
+        -168.8961678557074
+      ]
+    },
+    {
+      "label": "C7",
+      "box": [
+        11.313998,
+        -171.4461678557074,
+        13.323998,
+        -169.7461678557074
+      ]
+    },
+    {
+      "label": "J2 inserted 51021 housing",
+      "box": [
+        -9.100000000000001,
+        -171.4461678557074,
+        -4.65,
+        -167.6961678557074
+      ]
+    },
+    {
+      "label": "J3 inserted 51021 housing",
+      "box": [
+        2.674999999999999,
+        -171.4461678557074,
+        9.925,
+        -167.6961678557074
+      ]
+    }
+  ],
+  "fixedBossObstacles": [
+    {
+      "label": "M2 through boss 1",
+      "center": [
+        -11.9,
+        -162.4
+      ],
+      "radius": 2.75,
+      "clearance": 1.0
+    },
+    {
+      "label": "M2 through boss 2",
+      "center": [
+        11.9,
+        -162.4
+      ],
+      "radius": 2.75,
+      "clearance": 1.0
+    },
+    {
+      "label": "M2 through boss 3",
+      "center": [
+        0.0,
+        -89.0
+      ],
+      "radius": 2.75,
+      "clearance": 1.0
+    }
+  ],
+  "batteryAndWireObstacles": [
+    {
+      "label": "protected 14500 envelope",
+      "start": [
+        0.0,
+        -159.25
+      ],
+      "end": [
+        0.0,
+        -106.75
+      ],
+      "radius": 7.15,
+      "clearance": 0.5
+    },
+    {
+      "label": "left wire corridor",
+      "start": [
+        -8.2,
+        -159.25
+      ],
+      "end": [
+        -8.2,
+        -106.75
+      ],
+      "radius": 1.0,
+      "clearance": 0.05
+    },
+    {
+      "label": "left wire neck",
+      "start": [
+        -8.2,
+        -106.75
+      ],
+      "end": [
+        -4.0,
+        -98.5
+      ],
+      "radius": 1.0,
+      "clearance": 0.05
+    },
+    {
+      "label": "right wire corridor",
+      "start": [
+        8.2,
+        -159.25
+      ],
+      "end": [
+        8.2,
+        -106.75
+      ],
+      "radius": 1.0,
+      "clearance": 0.05
+    },
+    {
+      "label": "right wire neck",
+      "start": [
+        8.2,
+        -106.75
+      ],
+      "end": [
+        4.0,
+        -98.5
+      ],
+      "radius": 1.0,
+      "clearance": 0.05
+    }
+  ],
   "requiredPcbSlotCenterClearanceMm": 3.2,
   "requiredTailSlotCenterClearanceMm": 2.8,
   "requiredCoreEdgeLigamentMm": 0.5,
   "finalPositions": [
     [
-      -12.762405156731475,
+      -15.062405156731476,
       -175.29616785570738
     ],
     [
-      12.762405156731475,
+      15.062405156731476,
       -175.29616785570738
     ],
     [
-      -14.929349184149903,
-      -167.9461678557074
+      -13.5676986547145,
+      -156.8961678557074
     ],
     [
-      14.929349184149903,
-      -167.9461678557074
+      13.5676986547145,
+      -156.8961678557074
     ],
     [
       -12.325825813451214,
@@ -57,15 +281,18 @@
   "moves": [
     {
       "original": [
-        12.762405156731475,
+        15.062405156731476,
         -175.29616785570738
       ],
       "final": [
-        12.762405156731475,
+        15.062405156731476,
         -175.29616785570738
       ],
-      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredCenterClearanceMm": 2.8,
+      "componentBossGapMm": 1.2262302539263858,
+      "fixedBossClearanceMarginMm": 7.528251079788406,
+      "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "classification": "preserved_tail_pair",
       "moved": false
     },
@@ -75,11 +302,14 @@
         -170.0961678557074
       ],
       "final": [
-        14.929349184149903,
-        -167.9461678557074
+        13.5676986547145,
+        -156.8961678557074
       ],
-      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "pcbSlotCenterClearanceMm": 14.249999999999972,
       "requiredCenterClearanceMm": 3.2,
+      "componentBossGapMm": 8.799999999999983,
+      "fixedBossClearanceMarginMm": 0.0009466242945652681,
+      "batteryAndWireClearanceMarginMm": 2.3176986547145004,
       "classification": "pcb_region",
       "moved": true
     },
@@ -94,6 +324,9 @@
       ],
       "pcbSlotCenterClearanceMm": 28.130025100146526,
       "requiredCenterClearanceMm": 3.2,
+      "componentBossGapMm": 22.680025100146537,
+      "fixedBossClearanceMarginMm": 13.638533964593552,
+      "batteryAndWireClearanceMarginMm": 1.0758258134512146,
       "classification": "pcb_region",
       "moved": false
     },
@@ -108,6 +341,9 @@
       ],
       "pcbSlotCenterClearanceMm": 55.38550609918704,
       "requiredCenterClearanceMm": 3.2,
+      "componentBossGapMm": 49.93550609918705,
+      "fixedBossClearanceMarginMm": 23.303790955419235,
+      "batteryAndWireClearanceMarginMm": 0.06325555418556376,
       "classification": "pcb_region",
       "moved": false
     },
@@ -122,6 +358,9 @@
       ],
       "pcbSlotCenterClearanceMm": 82.64616785570738,
       "requiredCenterClearanceMm": 3.2,
+      "componentBossGapMm": 77.19616785570739,
+      "fixedBossClearanceMarginMm": 6.627473618886288,
+      "batteryAndWireClearanceMarginMm": 9.988899077500765,
       "classification": "pcb_region",
       "moved": false
     }
@@ -129,29 +368,29 @@
   "edgeChecks": [
     {
       "position": [
-        -12.762405156731475,
+        -15.062405156731476,
         -175.29616785570738
       ],
-      "outerEdgeLigamentMm": 3.6100000000000003
+      "outerEdgeLigamentMm": 1.3099999999999994
     },
     {
       "position": [
-        12.762405156731475,
+        15.062405156731476,
         -175.29616785570738
       ],
-      "outerEdgeLigamentMm": 3.6100000000000003
+      "outerEdgeLigamentMm": 1.3099999999999994
     },
     {
       "position": [
-        -14.929349184149903,
-        -167.9461678557074
+        -13.5676986547145,
+        -156.8961678557074
       ],
       "outerEdgeLigamentMm": 0.6100000000000001
     },
     {
       "position": [
-        14.929349184149903,
-        -167.9461678557074
+        13.5676986547145,
+        -156.8961678557074
       ],
       "outerEdgeLigamentMm": 0.6100000000000001
     },
@@ -201,128 +440,152 @@
   "directionChecks": [
     {
       "station": 1,
-      "visualCallout": "left_small_circles_tail_edge",
+      "visualCallout": "tail_edge_side_pair",
       "side": "left",
       "direction": "layer2_to_layer1",
       "zSide": "positive_z",
       "position": [
-        -12.762405156731475,
+        -15.062405156731476,
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "componentBossGapMm": 1.2262302539263858,
+      "fixedBossClearanceMarginMm": 7.528251079788406,
+      "batteryAndWireClearanceMarginMm": 12.358079242838704,
+      "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredPcbSlotCenterClearanceMm": 2.8,
-      "outerEdgeLigamentMm": 3.6100000000000003,
+      "outerEdgeLigamentMm": 1.3099999999999994,
       "passed": true
     },
     {
       "station": 1,
-      "visualCallout": "left_small_circles_tail_edge",
+      "visualCallout": "tail_edge_side_pair",
       "side": "left",
       "direction": "layer3_to_layer4",
       "zSide": "negative_z",
       "position": [
-        -12.762405156731475,
+        -15.062405156731476,
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "componentBossGapMm": 1.2262302539263858,
+      "fixedBossClearanceMarginMm": 7.528251079788406,
+      "batteryAndWireClearanceMarginMm": 12.358079242838704,
+      "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredPcbSlotCenterClearanceMm": 2.8,
-      "outerEdgeLigamentMm": 3.6100000000000003,
+      "outerEdgeLigamentMm": 1.3099999999999994,
       "passed": true
     },
     {
       "station": 1,
-      "visualCallout": "left_small_circles_tail_edge",
+      "visualCallout": "tail_edge_side_pair",
       "side": "right",
       "direction": "layer2_to_layer1",
       "zSide": "positive_z",
       "position": [
-        12.762405156731475,
+        15.062405156731476,
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "componentBossGapMm": 1.2262302539263858,
+      "fixedBossClearanceMarginMm": 7.528251079788406,
+      "batteryAndWireClearanceMarginMm": 12.358079242838704,
+      "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredPcbSlotCenterClearanceMm": 2.8,
-      "outerEdgeLigamentMm": 3.6100000000000003,
+      "outerEdgeLigamentMm": 1.3099999999999994,
       "passed": true
     },
     {
       "station": 1,
-      "visualCallout": "left_small_circles_tail_edge",
+      "visualCallout": "tail_edge_side_pair",
       "side": "right",
       "direction": "layer3_to_layer4",
       "zSide": "negative_z",
       "position": [
-        12.762405156731475,
+        15.062405156731476,
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "pcbSlotCenterClearanceMm": 2.8499999999999943,
+      "componentBossGapMm": 1.2262302539263858,
+      "fixedBossClearanceMarginMm": 7.528251079788406,
+      "batteryAndWireClearanceMarginMm": 12.358079242838704,
+      "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredPcbSlotCenterClearanceMm": 2.8,
-      "outerEdgeLigamentMm": 3.6100000000000003,
+      "outerEdgeLigamentMm": 1.3099999999999994,
       "passed": true
     },
     {
       "station": 2,
-      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "visualCallout": "headward_relief_side_pair",
       "side": "left",
       "direction": "layer2_to_layer1",
       "zSide": "positive_z",
       "position": [
-        -14.929349184149903,
-        -167.9461678557074
+        -13.5676986547145,
+        -156.8961678557074
       ],
       "relocatedForPcbSlot": true,
-      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "componentBossGapMm": 8.799999999999983,
+      "fixedBossClearanceMarginMm": 0.0009466242945652681,
+      "batteryAndWireClearanceMarginMm": 2.3176986547145004,
+      "pcbSlotCenterClearanceMm": 14.249999999999972,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
       "passed": true
     },
     {
       "station": 2,
-      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "visualCallout": "headward_relief_side_pair",
       "side": "left",
       "direction": "layer3_to_layer4",
       "zSide": "negative_z",
       "position": [
-        -14.929349184149903,
-        -167.9461678557074
+        -13.5676986547145,
+        -156.8961678557074
       ],
       "relocatedForPcbSlot": true,
-      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "componentBossGapMm": 8.799999999999983,
+      "fixedBossClearanceMarginMm": 0.0009466242945652681,
+      "batteryAndWireClearanceMarginMm": 2.3176986547145004,
+      "pcbSlotCenterClearanceMm": 14.249999999999972,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
       "passed": true
     },
     {
       "station": 2,
-      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "visualCallout": "headward_relief_side_pair",
       "side": "right",
       "direction": "layer2_to_layer1",
       "zSide": "positive_z",
       "position": [
-        14.929349184149903,
-        -167.9461678557074
+        13.5676986547145,
+        -156.8961678557074
       ],
       "relocatedForPcbSlot": true,
-      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "componentBossGapMm": 8.799999999999983,
+      "fixedBossClearanceMarginMm": 0.0009466242945652681,
+      "batteryAndWireClearanceMarginMm": 2.3176986547145004,
+      "pcbSlotCenterClearanceMm": 14.249999999999972,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
       "passed": true
     },
     {
       "station": 2,
-      "visualCallout": "center_large_circle_pcb_slot_pair",
+      "visualCallout": "headward_relief_side_pair",
       "side": "right",
       "direction": "layer3_to_layer4",
       "zSide": "negative_z",
       "position": [
-        14.929349184149903,
-        -167.9461678557074
+        13.5676986547145,
+        -156.8961678557074
       ],
       "relocatedForPcbSlot": true,
-      "pcbSlotCenterClearanceMm": 3.200586112348636,
+      "componentBossGapMm": 8.799999999999983,
+      "fixedBossClearanceMarginMm": 0.0009466242945652681,
+      "batteryAndWireClearanceMarginMm": 2.3176986547145004,
+      "pcbSlotCenterClearanceMm": 14.249999999999972,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
       "passed": true
@@ -338,6 +601,9 @@
         -143.01614275556085
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 22.680025100146537,
+      "fixedBossClearanceMarginMm": 13.638533964593552,
+      "batteryAndWireClearanceMarginMm": 1.0758258134512146,
       "pcbSlotCenterClearanceMm": 28.130025100146526,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6050740129583854,
@@ -354,6 +620,9 @@
         -143.01614275556085
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 22.680025100146537,
+      "fixedBossClearanceMarginMm": 13.638533964593552,
+      "batteryAndWireClearanceMarginMm": 1.0758258134512146,
       "pcbSlotCenterClearanceMm": 28.130025100146526,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6050740129583854,
@@ -370,6 +639,9 @@
         -143.01614275556085
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 22.680025100146537,
+      "fixedBossClearanceMarginMm": 13.638533964593552,
+      "batteryAndWireClearanceMarginMm": 1.0758258134512146,
       "pcbSlotCenterClearanceMm": 28.130025100146526,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6050740129583854,
@@ -386,6 +658,9 @@
         -143.01614275556085
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 22.680025100146537,
+      "fixedBossClearanceMarginMm": 13.638533964593552,
+      "batteryAndWireClearanceMarginMm": 1.0758258134512146,
       "pcbSlotCenterClearanceMm": 28.130025100146526,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6050740129583854,
@@ -402,6 +677,9 @@
         -115.76066175652034
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 49.93550609918705,
+      "fixedBossClearanceMarginMm": 23.303790955419235,
+      "batteryAndWireClearanceMarginMm": 0.06325555418556376,
       "pcbSlotCenterClearanceMm": 55.38550609918704,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6105722542313579,
@@ -418,6 +696,9 @@
         -115.76066175652034
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 49.93550609918705,
+      "fixedBossClearanceMarginMm": 23.303790955419235,
+      "batteryAndWireClearanceMarginMm": 0.06325555418556376,
       "pcbSlotCenterClearanceMm": 55.38550609918704,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6105722542313579,
@@ -434,6 +715,9 @@
         -115.76066175652034
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 49.93550609918705,
+      "fixedBossClearanceMarginMm": 23.303790955419235,
+      "batteryAndWireClearanceMarginMm": 0.06325555418556376,
       "pcbSlotCenterClearanceMm": 55.38550609918704,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6105722542313579,
@@ -450,6 +734,9 @@
         -115.76066175652034
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 49.93550609918705,
+      "fixedBossClearanceMarginMm": 23.303790955419235,
+      "batteryAndWireClearanceMarginMm": 0.06325555418556376,
       "pcbSlotCenterClearanceMm": 55.38550609918704,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6105722542313579,
@@ -466,6 +753,9 @@
         -88.5
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 77.19616785570739,
+      "fixedBossClearanceMarginMm": 6.627473618886288,
+      "batteryAndWireClearanceMarginMm": 9.988899077500765,
       "pcbSlotCenterClearanceMm": 82.64616785570738,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
@@ -482,6 +772,9 @@
         -88.5
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 77.19616785570739,
+      "fixedBossClearanceMarginMm": 6.627473618886288,
+      "batteryAndWireClearanceMarginMm": 9.988899077500765,
       "pcbSlotCenterClearanceMm": 82.64616785570738,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
@@ -498,6 +791,9 @@
         -88.5
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 77.19616785570739,
+      "fixedBossClearanceMarginMm": 6.627473618886288,
+      "batteryAndWireClearanceMarginMm": 9.988899077500765,
       "pcbSlotCenterClearanceMm": 82.64616785570738,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,
@@ -514,6 +810,9 @@
         -88.5
       ],
       "relocatedForPcbSlot": false,
+      "componentBossGapMm": 77.19616785570739,
+      "fixedBossClearanceMarginMm": 6.627473618886288,
+      "batteryAndWireClearanceMarginMm": 9.988899077500765,
       "pcbSlotCenterClearanceMm": 82.64616785570738,
       "requiredPcbSlotCenterClearanceMm": 3.2,
       "outerEdgeLigamentMm": 0.6100000000000001,

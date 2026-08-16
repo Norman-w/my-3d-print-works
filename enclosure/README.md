@@ -27,9 +27,12 @@ Type-C 尾端开口左右侧各有一个附加紧固点，防止开口两侧受�
 - 线束实物：左右各一束 MX1.25 4P；每芯 UL1571 28AWG、7×0.12 mm 镀锡铜、外径约 0.9 mm、尾端上锡 3 mm。每束使用 2.0×2.0 mm 通道，本轮不额外计弯曲半径。
 - PZT：壳体让位以当前 PCB 八个 Ø1.2 mm 圆孔圆心为准，Ø3.5 mm 局部凹位相对 Ø2.5 mm 焊盘提供 0.5 mm 径向余量，并向两面各加深 0.5 mm。
 - 拍柄贯穿紧固：三颗 M2 保持第 1→4 层合壳闭环；尾端一对迁到 `X=±11.9 / Y=-162.4` 避开电池、线槽与尾板器件，中轴一颗仍在 `[0,-89]`。
+- 侧向 M1.2 阵列：尾端一对为 `X=±15.062 / Y=-175.296`，避开 C9；相邻一对为 `X=±13.568 / Y=-156.896`，越过插入后的 51021 外壳和尾端 M2 贯穿柱。坐标由真实障碍物门禁生成，不是手工版本特例。
 - 这些参数由 [`../docs/mechanical-handoff/mechanical-contract.scad`](../docs/mechanical-handoff/mechanical-contract.scad) 驱动，并由 `scripts/validate_mechanical_handoff.py` 对当前 KiCad、线束和外壳同时复核。诊断图见 [`../docs/mechanical-handoff/README.md`](../docs/mechanical-handoff/README.md)；不是制造 STL。
 
 ## 导出（唯一入口）
+
+当前 M7.C5 只在隔离临时目录完成了实体诊断，**尚未重导仓库内的制造 STL**；`enclosure/stl/print/` 中现有文件属于前一检查点，不得按当前结构直接打印。等 PCB 布线、机械首件和 release gate 完成后，再通过下述唯一入口整体重导，不能局部混用旧 STL。
 
 ```bash
 ./scripts/export-stl.sh

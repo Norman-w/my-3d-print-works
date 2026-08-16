@@ -1,6 +1,6 @@
 """pcb-tail physical parts — independent fixed-battery butt board.
 
-电源管理基线为 IP5305T；线束为两组 MX1.25 4P 立插。
+电源管理基线为 IP5305T；线束为两组 MX1.25 4P 卧插。
 """
 
 # ===== 分区：公开 API =====
@@ -145,13 +145,18 @@ component USB4120_03_C_Vertical:
     footprint = "SmartPaddleTail:USB_C_Receptacle_16P_Vertical_SMT_Short"
 
 
-component MolexPicoBlade_53398_4P_Vertical:
-    """MX1.25 4P 立插（Molex PicoBlade 53398-0471，SMT+侧耳）。
+component MolexPicoBlade_53261_4P_Horizontal:
+    """MX1.25 4P 卧插（Molex PicoBlade 53261-0471，SMT+侧耳）。
 
     本板两组：j_pwr（电源）与 j_sig（信号），替代原单颗 8P。
+    与旧 53398 立插同属 PicoBlade，均配 51021 4P 线端外壳；
+    引脚电气顺序不变，但 PCB land pattern 不可互换。
+
+    主证据与封装版本记录：
+      docs/molex-picoblade-53261-4p-horizontal/README.md
     """
     designator_prefix = "J"
-    value = "MX1.25-4P-VERT"
+    value = "Molex 53261-0471"
     signal p1
     signal p2
     signal p3
@@ -160,7 +165,7 @@ component MolexPicoBlade_53398_4P_Vertical:
     p2 ~ pin 2
     p3 ~ pin 3
     p4 ~ pin 4
-    footprint = "Connector_Molex:Molex_PicoBlade_53398-0471_1x04-1MP_P1.25mm_Vertical"
+    footprint = "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal"
 
 
 component JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery:

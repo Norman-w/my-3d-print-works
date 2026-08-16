@@ -4,6 +4,22 @@
   "mainBoard": "pcb/layouts/default/default.kicad_pcb",
   "tailBoard": "pcb-tail/layouts/default/default.kicad_pcb",
   "connectorFamily": "Molex PicoBlade 1.25 mm",
+  "tailBoardConnectors": {
+    "J2": {
+      "manufacturerPartNumber": "53261-0471",
+      "mount": "right-angle SMT",
+      "matingHousing": "51021-0400",
+      "footprint": "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal",
+      "pose": {"xMm": -11.3, "yMm": -0.6, "rotationDeg": -90, "layer": "B.Cu"}
+    },
+    "J3": {
+      "manufacturerPartNumber": "53261-0471",
+      "mount": "right-angle SMT",
+      "matingHousing": "51021-0400",
+      "footprint": "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal",
+      "pose": {"xMm": 6.3, "yMm": -5.8, "rotationDeg": 180, "layer": "B.Cu"}
+    }
+  },
   "wireConstruction": {
     "marking": "UL1571 28AWG",
     "conductor": "7 x 0.12 mm tinned copper",
@@ -30,6 +46,7 @@
       "minimumScrewEnvelopeClearanceMm": 1.0,
       "usbPair": "tail usb_dp/usb_dn to main usb_dp_conn/usb_dn_conn, twisted together inside signal bundle",
       "strainRelief": "heat-shrink both 4-wire breakouts; retain each housing latch; lace the two trunk branches together 15-25 mm from the main-board connectors, leaving a service loop toward the tail board",
+      "tailConnectorExit": "J2/J3 use 53261-0471 right-angle SMT headers; both mating openings face inward and the 51021-0400 leads leave parallel to the PCB",
       "keepOut": "Do not cross the tail-board ring groove, PCB slot edge, or any layer 2->1 / layer 3->4 screw envelope"
     }
   },

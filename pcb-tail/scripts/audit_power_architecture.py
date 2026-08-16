@@ -32,6 +32,34 @@ STAGING = REPO / "pcb-tail/layouts/staging/default.atopile.kicad_pcb"
 MAIN_ATO = REPO / "pcb-tail/main.ato"
 PARTS_ATO = REPO / "pcb-tail/parts.ato"
 MECHANICAL_JSON = REPO / "enclosure/stl/interference/tail_interference.json"
+MOLEX_53261_SNAPSHOT = (
+    REPO
+    / "docs/molex-picoblade-53261-4p-horizontal/kicad/"
+    "Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal.kicad_mod"
+)
+MOLEX_53261_SNAPSHOT_SHA256 = (
+    "b177546df583a5dd26f4014428716db6733ab55483712201ca3afc315c415253"
+)
+MOLEX_53261_STEP_SNAPSHOT = (
+    REPO
+    / "docs/molex-picoblade-53261-4p-horizontal/kicad/"
+    "Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal.step"
+)
+MOLEX_53261_STEP_SNAPSHOT_SHA256 = (
+    "9c491a4fe35352e64f0576351c8f9e371e406bd158a0c6610bedb3421f8972d2"
+)
+EXPECTED_MATED_CONNECTOR_BOXES = {
+    "J2": {
+        "header_pcb_box_xy": (-13.900, -5.675, -8.700, 4.475),
+        "housing_pcb_box_xy": (-8.850, -3.975, -4.900, 2.775),
+        "housing_keepout_pcb_box_xy": (-9.100, -4.225, -4.650, 3.025),
+    },
+    "J3": {
+        "header_pcb_box_xy": (1.225, -8.400, 11.375, -3.200),
+        "housing_pcb_box_xy": (2.925, -12.200, 9.675, -8.250),
+        "housing_keepout_pcb_box_xy": (2.675, -12.450, 9.925, -8.000),
+    },
+}
 
 EXPECTED_SHELL_KEEPOUT_REFS = {
     "C6", "J2", "J3", "D2", "C9", "U2",
@@ -161,12 +189,14 @@ EXPECTED_PAD_NETS: dict[str, dict[str, str | None]] = {
     },
 }
 
-# Approved placement contract after the routed-board checkpoint.  Twenty-four
-# legacy poses are unchanged; C6 alone moved +0.20/+0.25 mm to clear the larger
-# corrected U3 and 1206 courtyards.  New parts are listed separately below.
+# Approved placement contract after the route-free handoff.  The complete
+# right-angle header + inserted 51021 housing envelope requires C2 to change
+# side and small nearby relief moves for J4/R6.  C3/U3/L1 stay fixed so the
+# IP5305T BAT/SW high-current loop is unchanged.
+# New power-protection parts are listed separately below.
 ORIGINAL_POSES = {
     "c_ahct": (2.552997, -6.477002, 180.0, "F.Cu"),
-    "c_led": (2.413000, -8.001000, 180.0, "B.Cu"),
+    "c_led": (2.000000, 1.000000, 0.0, "F.Cu"),
     "c_bat": (8.001000, -1.397002, 0.0, "B.Cu"),
     "c_vin": (-2.325000, 5.675000, 90.0, "B.Cu"),
     "c_vin_damp": (-2.606002, 1.270002, 0.0, "B.Cu"),
@@ -174,9 +204,9 @@ ORIGINAL_POSES = {
     "c_vout2": (12.318998, -0.066007, 90.0, "B.Cu"),
     "led_rgb": (2.454994, -3.783996, -90.0, "F.Cu"),
     "usb": (-6.858008, -0.381000, -90.0, "F.Cu"),
-    "j_pwr": (-11.049000, -0.635000, -90.0, "B.Cu"),
-    "j_sig": (6.858000, -5.503004, 180.0, "B.Cu"),
-    "j_bat": (-2.794000, -5.969000, 90.0, "B.Cu"),
+    "j_pwr": (-11.300000, -0.600000, -90.0, "B.Cu"),
+    "j_sig": (6.300000, -5.800000, 180.0, "B.Cu"),
+    "j_bat": (-2.794000, -7.000000, 90.0, "B.Cu"),
     "l_boost": (9.077998, 1.905000, 90.0, "B.Cu"),
     "led_stat": (-5.943500, -6.350000, 0.0, "F.Cu"),
     "r_cc1": (-2.984011, -0.762000, 0.0, "F.Cu"),
@@ -184,7 +214,7 @@ ORIGINAL_POSES = {
     "r_led": (-1.206000, -2.413000, 0.0, "B.Cu"),
     "r_key": (5.270000, 0.889000, 0.0, "B.Cu"),
     "r_led1": (-7.303000, 6.222999, 180.0, "B.Cu"),
-    "r_led23": (-5.325000, 1.675000, 90.0, "B.Cu"),
+    "r_led23": (-10.500000, 6.200000, 0.0, "B.Cu"),
     "r_vin_damp": (-2.325000, 3.175000, 0.0, "B.Cu"),
     "sw_user": (-1.651000, -5.461000, -90.0, "F.Cu"),
     "u_ahct": (1.391500, -0.127000, 0.0, "B.Cu"),
@@ -204,6 +234,9 @@ NEW_POSES = {
 }
 
 CRITICAL_FPIDS = {
+    "c_led": "SmartPaddleTail:C_0603_1608Metric",
+    "j_pwr": "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal",
+    "j_sig": "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal",
     "u_pmic": "SmartPaddleTail:IP5305T_HSOP-8-1EP",
     "l_boost": "SmartPaddleTail:L_Coilcraft_XxL4020",
     "c_bat": "SmartPaddleTail:C_0805_2012Metric",
@@ -223,6 +256,9 @@ CRITICAL_FPIDS = {
 }
 
 CRITICAL_VALUES = {
+    "c_led": "100nF",
+    "j_pwr": "Molex 53261-0471",
+    "j_sig": "Molex 53261-0471",
     "u_pmic": "IP5305T",
     "l_boost": "XFL4020-222MEC 2.2uH",
     "c_bat": "10uF 10V X5R/X7R",
@@ -301,6 +337,12 @@ def _expect_pose(actual: tuple[float, float, float, str], expected, address: str
     )
 
 
+def _box_gap(a: list[float] | tuple[float, ...], b: list[float] | tuple[float, ...]) -> float:
+    dx = max(float(a[0]) - float(b[2]), float(b[0]) - float(a[2]), 0.0)
+    dy = max(float(a[1]) - float(b[3]), float(b[1]) - float(a[3]), 0.0)
+    return math.hypot(dx, dy)
+
+
 def _audit_critical_geometry(parts: dict[str, "pcbnew.FOOTPRINT"]) -> None:
     for address, expected in CRITICAL_FPIDS.items():
         _expect(
@@ -309,6 +351,62 @@ def _audit_critical_geometry(parts: dict[str, "pcbnew.FOOTPRINT"]) -> None:
         )
     for address, expected in CRITICAL_VALUES.items():
         _expect(parts[address].GetValue() == expected, f"{address} value mismatch")
+
+    for address in ("j_pwr", "j_sig"):
+        fp = parts[address]
+        pads: dict[str, list["pcbnew.PAD"]] = {}
+        for pad in fp.Pads():
+            pads.setdefault(pad.GetNumber(), []).append(pad)
+        _expect(set(pads) == {"1", "2", "3", "4", "MP"}, f"{address} pad inventory")
+        _expect(len(pads["MP"]) == 2, f"{address} must have two SMT hold-downs")
+        signal_pads = [pads[str(number)][0] for number in range(1, 5)]
+        _expect(
+            all(pad.GetAttribute() == pcbnew.PAD_ATTRIB_SMD for pad in signal_pads + pads["MP"]),
+            f"{address} 53261 must be fully SMT",
+        )
+        _expect(
+            all(
+                sorted((pcbnew.ToMM(pad.GetSize().x), pcbnew.ToMM(pad.GetSize().y)))
+                == [0.8, 1.6]
+                for pad in signal_pads
+            ),
+            f"{address} signal lands must be 0.8 x 1.6 mm",
+        )
+        signal_centers = [pad.GetPosition() for pad in signal_pads]
+        pitches = [
+            math.hypot(a.x - b.x, a.y - b.y) / 1_000_000
+            for a, b in zip(signal_centers, signal_centers[1:])
+        ]
+        _expect(all(_close(pitch, 1.25) for pitch in pitches), f"{address} pitch changed")
+        _expect(
+            all(
+                sorted((pcbnew.ToMM(pad.GetSize().x), pcbnew.ToMM(pad.GetSize().y)))
+                == [2.1, 3.0]
+                for pad in pads["MP"]
+            ),
+            f"{address} hold-down lands must be 2.1 x 3.0 mm",
+        )
+        mount_centers = [pad.GetPosition() for pad in pads["MP"]]
+        mount_spacing = math.hypot(
+            mount_centers[0].x - mount_centers[1].x,
+            mount_centers[0].y - mount_centers[1].y,
+        ) / 1_000_000
+        _expect(_close(mount_spacing, 8.85), f"{address} hold-down spacing changed")
+
+    def anchor_distance(a: str, b: str) -> float:
+        pa = parts[a].GetPosition()
+        pb = parts[b].GetPosition()
+        return math.hypot(pa.x - pb.x, pa.y - pb.y) / 1_000_000
+
+    _expect(parts["c_led"].GetLayer() == pcbnew.F_Cu, "C2 must use the F-side relief pose")
+    _expect(
+        anchor_distance("c_led", "u_ahct") <= 1.50,
+        "C2 no longer provides local V5_SW_RETURN decoupling for U1",
+    )
+    _expect(
+        anchor_distance("c_ahct", "led_rgb") <= 3.00,
+        "C1 no longer provides local V5_SW_RETURN decoupling for D1",
+    )
 
     u3 = parts["u_pmic"]
     _expect(
@@ -387,6 +485,8 @@ def _audit_source_fragments() -> None:
         "component Diode_1N4148W:",
         "anode ~ pin 2",
         "cathode ~ pin 1",
+        "component MolexPicoBlade_53261_4P_Horizontal:",
+        "Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal",
     )
     for fragment in required_main:
         _expect(fragment in main, f"main.ato missing {fragment}")
@@ -444,6 +544,71 @@ def _audit_mechanical_contract(parts: dict[str, "pcbnew.FOOTPRINT"]) -> None:
             f"mechanical keepout {ref} has an invalid 3D box",
         )
 
+    connectors = facts.get("harness_connectors", [])
+    _expect(len(connectors) == 2, "mechanical facts must contain J2/J3 mated assemblies")
+    by_connector_ref = {item.get("ref"): item for item in connectors}
+    _expect(set(by_connector_ref) == {"J2", "J3"}, "mated connector reference set changed")
+    for ref, expected_boxes in EXPECTED_MATED_CONNECTOR_BOXES.items():
+        item = by_connector_ref[ref]
+        _expect(item.get("part") == "Molex 53261-0471", f"{ref} header identity changed")
+        _expect(item.get("mating_housing") == "Molex 51021-0400", f"{ref} mate changed")
+        _expect(_close(float(item.get("mated_height", 0)), 3.40), f"{ref} mated height")
+        _expect(_close(float(item.get("housing_height", 0)), 3.20), f"{ref} housing height")
+        _expect(
+            tuple(float(value) for value in item.get("header_local_box_xy", []))
+            == (-5.075, -2.600, 5.075, 2.600),
+            f"{ref} header local envelope changed",
+        )
+        _expect(
+            tuple(float(value) for value in item.get("housing_local_box_xy", []))
+            == (-3.375, 2.450, 3.375, 6.400),
+            f"{ref} 51021 local envelope changed",
+        )
+        for key, expected in expected_boxes.items():
+            actual = item.get(key, [])
+            _expect(
+                len(actual) == 4 and all(_close(float(a), e) for a, e in zip(actual, expected)),
+                f"{ref} {key} changed: {actual} != {expected}",
+            )
+        handle_box = item.get("housing_keepout_handle_box_xyz", [])
+        _expect(
+            len(handle_box) == 6
+            and all(float(handle_box[index + 3]) > float(handle_box[index]) for index in range(3)),
+            f"{ref} inserted-housing keepout is invalid",
+        )
+
+    j4_box = facts.get("battery_connector", {}).get("body_pcb_box_xy", [])
+    _expect(len(j4_box) == 4, "J4 body box is missing")
+    _expect(
+        _box_gap(by_connector_ref["J2"]["housing_pcb_box_xy"], j4_box) >= 0.50,
+        "inserted J2 housing lacks 0.5 mm physical clearance from J4",
+    )
+
+    # J2's cable housing passes beside the two plated shell slots of J1.  DRC
+    # cannot see this plastic-to-through-hole relationship, so bind the 0.3 mm
+    # physical clearance directly to the actual KiCad pad geometry.
+    usb_shell_pads = [pad for pad in parts["usb"].Pads() if pad.GetNumber() == "S1"]
+    _expect(len(usb_shell_pads) == 2, "J1 shell-slot inventory changed")
+    shell_boxes = []
+    for pad in usb_shell_pads:
+        box = pad.GetBoundingBox()
+        shell_boxes.append(
+            (
+                pcbnew.ToMM(box.GetX()),
+                pcbnew.ToMM(box.GetY()),
+                pcbnew.ToMM(box.GetX() + box.GetWidth()),
+                pcbnew.ToMM(box.GetY() + box.GetHeight()),
+            )
+        )
+    _expect(
+        min(
+            _box_gap(by_connector_ref["J2"]["housing_pcb_box_xy"], shell_box)
+            for shell_box in shell_boxes
+        )
+        >= 0.30,
+        "inserted J2 housing is too close to a J1 plated shell slot",
+    )
+
 
 # ===== 分区：公开 API =====
 def audit(require_route_free: bool = True) -> None:
@@ -451,6 +616,18 @@ def audit(require_route_free: bool = True) -> None:
         _expect(path.is_file(), f"missing source PDF {path}")
         actual = hashlib.sha256(path.read_bytes()).hexdigest()
         _expect(actual == expected, f"source PDF checksum mismatch: {path}")
+    _expect(MOLEX_53261_SNAPSHOT.is_file(), "missing archived Molex 53261 footprint")
+    _expect(
+        hashlib.sha256(MOLEX_53261_SNAPSHOT.read_bytes()).hexdigest()
+        == MOLEX_53261_SNAPSHOT_SHA256,
+        "archived Molex 53261 footprint checksum mismatch",
+    )
+    _expect(MOLEX_53261_STEP_SNAPSHOT.is_file(), "missing archived Molex 53261 STEP")
+    _expect(
+        hashlib.sha256(MOLEX_53261_STEP_SNAPSHOT.read_bytes()).hexdigest()
+        == MOLEX_53261_STEP_SNAPSHOT_SHA256,
+        "archived Molex 53261 STEP checksum mismatch",
+    )
 
     _audit_source_fragments()
     _expect(PCB.is_file() and STAGING.is_file(), "PCB or staging board is missing")
@@ -478,13 +655,16 @@ def audit(require_route_free: bool = True) -> None:
     _audit_mechanical_contract(parts)
 
     print("Tail power architecture end-to-end audit PASS")
-    print("  6 archived primary PDFs match their locked SHA-256 hashes")
+    print("  6 archived primary PDFs plus Molex 53261 footprint/STEP snapshots match locked hashes")
     print("  Atopile topology fragments and all 33 physical footprint maps agree")
-    print("  24 legacy poses unchanged; approved C6 clearance shift verified")
+    print("  C2/J2/J3/J4/R6 use complete-connector relief poses; C3/U3/L1 stay fixed")
+    print("  J2/J3 53261 land geometry, 1.25 mm pitch, hold-downs and pad nets verified")
+    print("  C2 is local to U1; C1 remains local to D1; C3/U3/L1 power loop is unchanged")
     print("  8 new low-profile parts match their in-board F.Cu placement contract")
     print("  U3 no-via EP, XFL4020 exact land, power values, ILIM and deliberate NC pads verified")
     print("  IP5305T Figure-6 one-LED status path and populated LED/resistor values verified")
-    print("  SW1 pinhole baseline and 12 KiCad-derived shell keepouts match current poses")
+    print("  SW1 pinhole, 12 component keepouts and both inserted 51021 envelopes match")
+    print("  inserted J2 housing clears J4 and both J1 plated shell slots")
     if require_route_free:
         print("  0 tracks/vias; 0 zones: this board is intentionally NOT manufacturable")
     else:

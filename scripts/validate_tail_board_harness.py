@@ -54,6 +54,14 @@ def pad_nets(board: Path, reference: str) -> dict[str, str]:
     return result
 
 
+def footprint_id(board: Path, reference: str) -> str:
+    block = footprint_block(board.read_text(encoding="utf-8"), reference)
+    match = re.match(r'\(footprint\s+"([^"]+)"', block)
+    if not match:
+        raise ValueError(f"cannot parse footprint id for {reference}")
+    return match.group(1)
+
+
 def main() -> int:
     spec = json.loads(SPEC.read_text(encoding="utf-8"))
     main_board = ROOT / spec["mainBoard"]
@@ -66,6 +74,24 @@ def main() -> int:
     errors: list[str] = []
     seen_main: set[tuple[str, str]] = set()
     seen_tail: set[tuple[str, str]] = set()
+    connector_contract = spec.get("tailBoardConnectors", {})
+    if set(connector_contract) != {"J2", "J3"}:
+        errors.append("tail connector metadata must cover exactly J2/J3")
+    for reference, contract in connector_contract.items():
+        actual_fpid = footprint_id(tail_board, reference)
+        if actual_fpid != contract.get("footprint"):
+            errors.append(
+                f"tail {reference} footprint: {actual_fpid!r} != "
+                f"{contract.get('footprint')!r}"
+            )
+        if (
+            contract.get("manufacturerPartNumber") != "53261-0471"
+            or contract.get("mount") != "right-angle SMT"
+            or contract.get("matingHousing") != "51021-0400"
+        ):
+            errors.append(f"tail {reference} is not the approved 53261/51021 system")
+        else:
+            print(f"✓ {reference}=Molex 53261-0471 right-angle SMT -> 51021-0400")
     for wire in spec["conductors"]:
         for side, ref_key, pin_key, net_key in (
             ("tail", "tailRef", "tailPin", "tailNet"),
@@ -132,6 +158,32 @@ def main() -> int:
                 f"harness span stale: spec={mech['nominalSpanMm']:.3f}, actual={actual_span:.3f}"
             )
         print(f"✓ mechanical span={actual_span:.3f}mm service allowance={mech['finishedHarnessLengthMm'] - actual_span:.3f}mm")
+
+        mechanical_connectors = {
+            item.get("ref"): item for item in tail.get("harness_connectors", [])
+        }
+        if set(mechanical_connectors) != {"J2", "J3"}:
+            errors.append("tail mechanical facts do not cover J2/J3 harness connectors")
+        for reference, contract in connector_contract.items():
+            item = mechanical_connectors.get(reference, {})
+            pose = contract.get("pose", {})
+            actual_pose = (
+                float(item.get("x", 999)),
+                float(item.get("y", 999)),
+                float(item.get("rot_deg", 999)),
+                item.get("layer"),
+            )
+            expected_pose = (
+                float(pose.get("xMm", 999)),
+                float(pose.get("yMm", 999)),
+                float(pose.get("rotationDeg", 999)),
+                pose.get("layer"),
+            )
+            if actual_pose != expected_pose or float(item.get("mated_height", 0)) != 3.4:
+                errors.append(
+                    f"tail {reference} mechanical pose/envelope is stale: "
+                    f"{actual_pose!r} != {expected_pose!r}"
+                )
 
     screw = json.loads(SCREW_SAFETY.read_text(encoding="utf-8"))
     boss_radius = float(screw["bossDiameterMm"]) / 2

@@ -22,6 +22,8 @@ HARNESS = ROOT / "pcb-tail/harness/adapter.json"
 TAIL_FACTS = ROOT / "enclosure/stl/interference/tail_interference.json"
 SCREW_FACTS = ROOT / "enclosure/generated/m6_screw_safety.json"
 BEZIER = ROOT / "scripts/bezier_to_openscad.py"
+TAIL_CUTS = ROOT / "enclosure/stl/interference/tail_board_cuts.scad"
+STEP6 = ROOT / "scripts/step6_tail_board_interfere_handle.py"
 
 PZT_ADDRESSES = {
     "pzt_bl.pzt_gnd_pad", "pzt_bl.pzt_signal_pad",
@@ -138,9 +140,20 @@ def main() -> int:
     contract = CONTRACT.read_text(encoding="utf-8")
     parameters = PARAMETERS.read_text(encoding="utf-8")
     shell = SHELL.read_text(encoding="utf-8")
+    tail_cuts = TAIL_CUTS.read_text(encoding="utf-8")
+    step6 = STEP6.read_text(encoding="utf-8")
     harness = json.loads(HARNESS.read_text(encoding="utf-8"))
     tail = json.loads(TAIL_FACTS.read_text(encoding="utf-8"))
     screw = json.loads(SCREW_FACTS.read_text(encoding="utf-8"))
+
+    if (
+        "tail_if_mated_housing_keepouts" not in tail_cuts
+        or 'info.get("harness_connectors", [])' not in step6
+        or '"housing_keepout_handle_box_xyz"' not in step6
+    ):
+        raise HandoffError(
+            "OpenSCAD and Step6 must both consume the inserted J2/J3 housing envelopes"
+        )
 
     battery_d = _scalar(contract, "protected_14500_max_d")
     battery_l = _scalar(contract, "protected_14500_max_l")
@@ -361,9 +374,30 @@ def main() -> int:
         )
         for item in tail.get("component_keepouts", [])
     ]
+    component_rectangles.extend(
+        (
+            f"{item['ref']} inserted 51021 housing",
+            (
+                float(item["housing_keepout_handle_box_xyz"][0]),
+                float(item["housing_keepout_handle_box_xyz"][1]),
+                float(item["housing_keepout_handle_box_xyz"][3]),
+                float(item["housing_keepout_handle_box_xyz"][4]),
+            ),
+        )
+        for item in tail.get("harness_connectors", [])
+    )
     board_y0, board_y1 = map(float, screw["pcbSlot"]["yRangeMm"])
     board_x = float(screw["pcbSlot"]["xLimitMm"])
     component_rectangles.append(("tail PCB", (-board_x, board_y0, board_x, board_y1)))
+    side_component_gap = min(
+        _point_rectangle_distance(point, rectangle) - side_boss_radius
+        for point in side_boss_centers
+        for _, rectangle in component_rectangles
+    )
+    if side_component_gap < 0.5:
+        raise HandoffError(
+            f"side screw boss hits tail PCB/component/mated housing: {side_component_gap:.3f} mm"
+        )
     m2_component_gap = min(
         _point_rectangle_distance(point, rectangle) - m2_boss_radius
         for point in m2_boss_centers
@@ -394,7 +428,9 @@ def main() -> int:
     print(
         f"  two 4-wire UL1571 28AWG branches: {corridor_size:.1f} mm square at "
         f"X=±{corridor_x:.1f}; battery gap={battery_wire_gap:.3f} mm; "
-        f"side-boss gap={side_wire_gap:.3f} mm"
+        f"side-boss battery gap={side_battery_gap:.3f} mm; "
+        f"side-boss wire gap={side_wire_gap:.3f} mm; "
+        f"side-boss assembly gap={side_component_gap:.3f} mm"
     )
     print(
         f"  three M2 layer-1→4 bosses {m2_boss_centers}: battery={m2_battery_gap:.3f}, "
@@ -405,6 +441,7 @@ def main() -> int:
         f"  J4-to-cell service gap={tail_service_gap:.3f} mm; "
         f"cell-to-main-connector gap={head_gap:.3f} mm"
     )
+    print("  OpenSCAD and Step6 both consume the two inserted 51021 housing keepouts")
     print(
         f"  8 PZT pad-center reliefs: Ø3.5 mm, +0.5 mm depth; "
         f"Edge.Cuts crosses every Ø{drill:.1f} mm drill (max center offset={max(pzt_edge_offsets.values()):.3f} mm)"

@@ -4,12 +4,13 @@
 Atopile 0.12.5 is allowed to rewrite ``layouts/staging`` only.  In particular,
 it can mirror the internal geometry of existing B.Cu footprints while still
 reporting a successful build.  This script transfers logical pad nets by
-``atopile_address`` + pad number, keeps every existing footprint pose, performs
-the two explicitly-approved footprint geometry upgrades (U3 and C6), and parks
-new parts outside the board for later manual placement/routing.
+``atopile_address`` + pad number, keeps every non-approved footprint pose,
+performs the explicitly-approved footprint geometry upgrades, applies the
+documented connector-relief poses, and parks new parts outside the
+board for later manual placement/routing.
 
 Run with KiCad's Python, for example on macOS:
-  /Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/Current/bin/python3 \
+  /Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3 \
       pcb-tail/scripts/sync_power_architecture.py
 """
 
@@ -40,6 +41,13 @@ DEFAULT_STAGING = REPO / "pcb-tail/layouts/staging/default.atopile.kicad_pcb"
 TAIL_FP_LIB = REPO / "pcb-tail/lib/footprints.pretty"
 J4_SYNC_DESCRIPTION = (
     "JST ACH 1.2mm 2P SMT top-entry; project footprint/docs preview revision 1"
+)
+MOLEX_53261_DRAWING_URL = (
+    "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/"
+    "en-us/salesdrawingpdf/532/53261/532610271_sd.pdf"
+)
+MOLEX_53261_FOOTPRINT = (
+    "Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal"
 )
 
 
@@ -72,8 +80,8 @@ PARTS: dict[str, Part] = {
         "${KIPRJMOD}/../../../docs/usb-c-vertical-16p-short/"
         "Type-C-16PIN-vertical-H5.8-short-datasheet.pdf",
     ),
-    "j_pwr": Part("J2", "Molex 53398-0471"),
-    "j_sig": Part("J3", "Molex 53398-0471"),
+    "j_pwr": Part("J2", "Molex 53261-0471", MOLEX_53261_DRAWING_URL),
+    "j_sig": Part("J3", "Molex 53261-0471", MOLEX_53261_DRAWING_URL),
     "j_bat": Part(
         "J4",
         "BM02B-ACHSS-GAN-ETF",
@@ -162,6 +170,19 @@ PARK_MM: dict[str, tuple[float, float]] = {
     "d_key_isolate": (21.0, 10.0),
 }
 
+# Mechanical relief approved after checking the complete 53261 + 51021 mated
+# envelopes, not merely the PCB-header courtyards.  C2 changes side; the
+# low-current LED2/LED3 resistor and the battery connector move into nearby
+# free space.  C3/U3/L1 deliberately stay fixed so the IP5305T BAT/SW
+# high-current loop is not enlarged.
+APPROVED_POSES_MM: dict[str, tuple[float, float, float, str]] = {
+    "c_led": (2.000000, 1.000000, 0.0, "F.Cu"),
+    "j_pwr": (-11.300000, -0.600000, -90.0, "B.Cu"),
+    "j_sig": (6.300000, -5.800000, 180.0, "B.Cu"),
+    "j_bat": (-2.794000, -7.000000, 90.0, "B.Cu"),
+    "r_led23": (-10.500000, 6.200000, 0.0, "B.Cu"),
+}
+
 # These pads must remain truly NC.  Atopile may assign synthetic one-pad nets
 # after a repeated build, which is semantically different from an NC contact.
 FORCED_NC = {
@@ -239,6 +260,25 @@ def _find_stock_capacitor_library() -> Path:
     raise SyncError("KiCad 9 Capacitor_SMD.pretty library was not found")
 
 
+def _find_stock_molex_library() -> Path:
+    candidates = []
+    if path := os.environ.get("KICAD9_FOOTPRINT_DIR"):
+        candidates.append(Path(path) / "Connector_Molex.pretty")
+    candidates.extend(
+        [
+            Path(
+                "/Applications/KiCad/KiCad.app/Contents/SharedSupport/"
+                "footprints/Connector_Molex.pretty"
+            ),
+            Path("/usr/share/kicad/footprints/Connector_Molex.pretty"),
+        ]
+    )
+    for candidate in candidates:
+        if (candidate / f"{MOLEX_53261_FOOTPRINT}.kicad_mod").is_file():
+            return candidate
+    raise SyncError("KiCad 9 Connector_Molex.pretty library was not found")
+
+
 def _copy_fields(source: "pcbnew.FOOTPRINT") -> dict[str, str]:
     return {item.GetName(): item.GetText() for item in source.GetFields()}
 
@@ -259,7 +299,10 @@ def _replace_from_library(
     if replacement is None:
         raise SyncError(f"could not load footprint {library_nickname}:{item_name}")
 
-    board.Remove(old)
+    # KiCad 9.0.6's generic Remove() leaves other SWIG footprint handles in a
+    # corrupted state.  RemoveNative() keeps the board container iterable so
+    # multiple audited replacements can be performed in one synchronization.
+    board.RemoveNative(old)
     board.Add(replacement)
     replacement.SetPosition(position)
     if layer == pcbnew.B_Cu:
@@ -308,6 +351,41 @@ def _c6_geometry_is_current(fp: "pcbnew.FOOTPRINT") -> bool:
     )
 
 
+def _picoblade_53261_geometry_is_current(fp: "pcbnew.FOOTPRINT") -> bool:
+    pads: dict[str, list["pcbnew.PAD"]] = {}
+    for pad in fp.Pads():
+        pads.setdefault(pad.GetNumber(), []).append(pad)
+    if set(pads) != {"1", "2", "3", "4", "MP"}:
+        return False
+    if any(len(pads[number]) != 1 for number in ("1", "2", "3", "4")):
+        return False
+    if len(pads["MP"]) != 2:
+        return False
+    signal_size = pads["1"][0].GetSize()
+    mount_size = pads["MP"][0].GetSize()
+    return (
+        fp.GetFPIDAsString()
+        == f"Connector_Molex:{MOLEX_53261_FOOTPRINT}"
+        and sorted((signal_size.x, signal_size.y))
+        == sorted((pcbnew.FromMM(0.8), pcbnew.FromMM(1.6)))
+        and sorted((mount_size.x, mount_size.y))
+        == sorted((pcbnew.FromMM(2.1), pcbnew.FromMM(3.0)))
+    )
+
+
+def _set_pose_mm(
+    board: "pcbnew.BOARD",
+    fp: "pcbnew.FOOTPRINT",
+    pose: tuple[float, float, float, str],
+) -> None:
+    x, y, orientation, layer_name = pose
+    target_layer = {"F.Cu": pcbnew.F_Cu, "B.Cu": pcbnew.B_Cu}[layer_name]
+    if fp.GetLayer() != target_layer:
+        fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_TOP_BOTTOM)
+    fp.SetPosition(pcbnew.VECTOR2I_MM(x, y))
+    fp.SetOrientationDegrees(orientation)
+
+
 def _set_part_fields(fp: "pcbnew.FOOTPRINT", address: str) -> None:
     part = PARTS[address]
     fp.SetReference(part.reference)
@@ -316,6 +394,8 @@ def _set_part_fields(fp: "pcbnew.FOOTPRINT", address: str) -> None:
         fp.GetFieldByName("Datasheet").SetText(part.datasheet)
     if address == "j_bat" and fp.HasFieldByName("Description"):
         fp.GetFieldByName("Description").SetText(J4_SYNC_DESCRIPTION)
+        fp.Reference().SetVisible(False)
+    if address in {"j_pwr", "j_sig"}:
         fp.Reference().SetVisible(False)
     if fp.HasFieldByName("atopile_address"):
         address_field = fp.GetFieldByName("atopile_address")
@@ -341,6 +421,19 @@ def _validate_staging(
         )
     if list(stage.GetTracks()) or stage.GetAreaCount():
         raise SyncError("staging board must not contain routing, vias, or zones")
+
+    # Atopile 0.12.5 can keep stale embedded drawing primitives/descriptions
+    # while changing a footprint library identifier.  Require the intended
+    # logical FPID here, but deliberately import and audit the physical 53261
+    # geometry from KiCad's stock library in the target board below.
+    expected_connector_fpid = f"Connector_Molex:{MOLEX_53261_FOOTPRINT}"
+    for address in ("j_pwr", "j_sig"):
+        if stage_parts[address].GetFPIDAsString() != expected_connector_fpid:
+            raise SyncError(
+                f"staging {address} footprint is "
+                f"{stage_parts[address].GetFPIDAsString()!r}, expected "
+                f"{expected_connector_fpid!r}"
+            )
 
     maps = {address: _pad_net_map(fp) for address, fp in stage_parts.items()}
     required = {
@@ -414,6 +507,23 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
             "Capacitor_SMD",
         )
 
+    molex_library = _find_stock_molex_library()
+    for address in ("j_pwr", "j_sig"):
+        # Removing one footprint invalidates other SWIG object handles from the
+        # same board; refresh the address map before inspecting each connector.
+        target_parts = _by_address(target)
+        connector = target_parts[address]
+        if not _picoblade_53261_geometry_is_current(connector):
+            target_parts[address] = _replace_from_library(
+                target,
+                connector,
+                molex_library,
+                MOLEX_53261_FOOTPRINT,
+                "Connector_Molex",
+            )
+
+    target_parts = _by_address(target)
+
     j4 = target_parts["j_bat"]
     if _field(j4, "Description") != J4_SYNC_DESCRIPTION:
         target_parts["j_bat"] = _replace_from_library(
@@ -424,6 +534,8 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
             "SmartPaddleTail",
         )
 
+    target_parts = _by_address(target)
+
     for address in sorted(set(PARTS) - set(target_parts)):
         if address not in PARK_MM:
             raise SyncError(f"no first-add parking coordinate for {address}")
@@ -432,6 +544,11 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
         clone.SetPosition(pcbnew.VECTOR2I_MM(*PARK_MM[address]))
         clone.SetOrientationDegrees(0)
         target_parts[address] = clone
+
+    target_parts = _by_address(target)
+
+    for address, pose in APPROVED_POSES_MM.items():
+        _set_pose_mm(target, target_parts[address], pose)
 
     if set(target_parts) != set(PARTS):
         raise SyncError(
@@ -460,9 +577,22 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
     target.SanitizeNetcodes()
 
     for address, before in original_poses.items():
+        if address in APPROVED_POSES_MM:
+            continue
         after = _pose(target_parts[address])
         if after != before:
             raise SyncError(f"existing footprint pose changed: {address}: {before} -> {after}")
+    for address, pose in APPROVED_POSES_MM.items():
+        x, y, orientation, layer_name = pose
+        expected = (
+            pcbnew.FromMM(x),
+            pcbnew.FromMM(y),
+            orientation,
+            {"F.Cu": pcbnew.F_Cu, "B.Cu": pcbnew.B_Cu}[layer_name],
+        )
+        actual = _pose(target_parts[address])
+        if actual != expected:
+            raise SyncError(f"approved footprint pose mismatch: {address}: {actual} != {expected}")
 
     references = [fp.GetReference() for fp in target.GetFootprints()]
     if len(references) != len(set(references)):
@@ -497,8 +627,10 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
 
     print("Tail power-architecture synchronization PASS")
     print(f"  target: {target_path}")
-    print("  25 existing footprint poses preserved")
-    print("  U3 datasheet land/no-via EP and C6 1206 geometry applied")
+    print("  all non-approved existing footprint poses preserved")
+    print("  U3/C6 geometry and J2/J3 Molex 53261 right-angle footprints applied")
+    print("  C2/J2/J3/J4/R6 use the approved complete-connector relief poses")
+    print("  C3/U3/L1 remain fixed to preserve the IP5305T high-current loop")
     print("  8 added parts retained at their existing poses (parked only on first add)")
     print("  33 footprints; 0 tracks/vias; 0 zones")
     print("  J1 A8/B8 and TPS2553 /FAULT pads are true NC")

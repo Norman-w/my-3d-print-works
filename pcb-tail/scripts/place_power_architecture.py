@@ -4,7 +4,10 @@
 The eight added low-profile parts stay on F.Cu, where the board had an unused
 region and the enclosure provides 3.8 mm nominal component space between F.Cu
 and the inside of the 2 mm tail wall.  C6 moves only 0.20/0.25 mm to clear the
-corrected U3 and 1206 courtyards.  Every other footprint pose is immutable.
+corrected U3 and 1206 courtyards.  Every other footprint pose is immutable in
+this placement stage.  The preceding synchronization stage separately owns the
+approved C2/J2/J3/J4/R6 connector-relief poses; this script preserves those
+poses and never moves C3/U3/L1.
 """
 
 from __future__ import annotations
@@ -106,7 +109,7 @@ def place(pcb_path: Path) -> None:
     print("Tail power placement PASS")
     print("  8 new low-profile parts placed on F.Cu; no copper created")
     print("  C6 shifted +0.20 mm X / +0.25 mm Y for courtyard clearance")
-    print("  all other footprint poses preserved")
+    print("  synchronized C2/J2/J3/J4/R6 poses preserved; C3/U3/L1 unchanged")
 
 
 def main() -> int:

@@ -14,6 +14,7 @@ Writes enclosure/stl/interference/tail_interference.json (+ optional .scad):
 from __future__ import annotations
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -41,13 +42,14 @@ FRONT_POWER_HEIGHT_MM = {
 
 # Exact current KiCad 3D assembly versus the Step6 tail shell identified these
 # twelve local wall/ring-groove intersections.  Heights are conservative
-# package envelopes rounded up from the archived/stock 3D models.  Courtyards
-# supply the in-plane envelope, so the resulting pockets follow any later
-# footprint move instead of baking today's absolute coordinates into the shell.
+# package envelopes rounded up from the archived/stock 3D models.  J2/J3 use
+# Molex's 3.40 mm mated-height envelope for 53261 + 51021.  Courtyards supply
+# the in-plane envelope, so the resulting pockets follow any later footprint
+# move instead of baking today's absolute coordinates into the shell.
 SHELL_KEEPOUT_HEIGHT_MM = {
     "C6": 1.70,
-    "J2": 4.80,
-    "J3": 4.80,
+    "J2": 3.40,
+    "J3": 3.40,
     "D2": 1.20,
     "C9": 0.90,
     "U2": 1.70,
@@ -61,12 +63,23 @@ SHELL_KEEPOUT_HEIGHT_MM = {
 SHELL_KEEPOUT_AXIAL_CLEAR = 0.20
 SHELL_KEEPOUT_BOARD_OVERLAP = 0.15
 
+# Molex primary drawings, 4-circuit variants.  The header model/outline spans
+# 10.15 x 5.20 mm.  In the official 8.00 mm mated view the 6.75 x 3.95 mm
+# 51021-0400 housing occupies local Y=+2.45..+6.40 relative to the 53261
+# footprint origin.  These are in-plane boxes; height is handled separately.
+MOLEX_53261_HEADER_LOCAL_BOX = (-5.075, -2.600, 5.075, 2.600)
+MOLEX_51021_HOUSING_LOCAL_BOX = (-3.375, 2.450, 3.375, 6.400)
+MOLEX_51021_HOUSING_HEIGHT_MM = 3.20
+MOLEX_MATED_HEIGHT_MM = 3.40
+MOLEX_MATED_INPLANE_CLEAR_MM = 0.25
+JST_ACH_BODY_LOCAL_BOX = (-2.100, -2.150, 2.100, 2.150)
+
 
 # ===== 分区：私有成员 =====
 def _kicad_python() -> str:
     mac = Path(
         "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
-        "Python.framework/Versions/Current/bin/python3"
+        "Python.framework/Versions/3.9/bin/python3"
     )
     if mac.is_file():
         return str(mac)
@@ -139,6 +152,28 @@ def _extract() -> dict:
             max(box[2] for box in boxes), max(box[3] for box in boxes),
         ]
 
+    def transformed_box(local_box: tuple[float, float, float, float], pose: dict) -> list[float]:
+        """Transform an X-symmetric footprint-local box into KiCad XY."""
+        x0, y0, x1, y1 = local_box
+        angle = math.radians(float(pose["rot_deg"]))
+        cos_a, sin_a = math.cos(angle), math.sin(angle)
+        corners = []
+        for x in (x0, x1):
+            for y in (y0, y1):
+                corners.append(
+                    (
+                        float(pose["x"]) + x * cos_a - y * sin_a,
+                        float(pose["y"]) + x * sin_a + y * cos_a,
+                    )
+                )
+        return [
+            min(point[0] for point in corners), min(point[1] for point in corners),
+            max(point[0] for point in corners), max(point[1] for point in corners),
+        ]
+
+    def expanded_box(box: list[float], clearance: float) -> list[float]:
+        return [box[0] - clearance, box[1] - clearance, box[2] + clearance, box[3] + clearance]
+
     j1 = fp_pose("J1")
     sw1 = fp_pose("SW1")
     d1 = fp_pose("D1")
@@ -210,10 +245,53 @@ def _extract() -> dict:
         "body_d": 4.30,
         "body_h": 1.40,
         "source": "docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf",
+        "body_pcb_box_xy": transformed_box(JST_ACH_BODY_LOCAL_BOX, j4),
         # J4 is on B.Cu, which faces the handle interior.  These Y limits are
         # used to prove the protected-cell end cannot crush the connector.
         "handle_y_range": [pcb_y + board_t, pcb_y + board_t + 1.40],
     }
+    harness_connectors = []
+    for ref in ("J2", "J3"):
+        pose = fp_pose(ref)
+        if pose["layer"] != "B.Cu":
+            raise RuntimeError(f"{ref} unexpectedly left B.Cu")
+        header_box = transformed_box(MOLEX_53261_HEADER_LOCAL_BOX, pose)
+        housing_box = transformed_box(MOLEX_51021_HOUSING_LOCAL_BOX, pose)
+        housing_keepout = expanded_box(housing_box, MOLEX_MATED_INPLANE_CLEAR_MM)
+        harness_connectors.append(
+            {
+                **pose,
+                "part": "Molex 53261-0471",
+                "mating_housing": "Molex 51021-0400",
+                "pitch": 1.25,
+                "mated_height": MOLEX_MATED_HEIGHT_MM,
+                "housing_height": MOLEX_51021_HOUSING_HEIGHT_MM,
+                "mount": "right-angle SMT",
+                "header_local_box_xy": list(MOLEX_53261_HEADER_LOCAL_BOX),
+                "housing_local_box_xy": list(MOLEX_51021_HOUSING_LOCAL_BOX),
+                "header_pcb_box_xy": header_box,
+                "housing_pcb_box_xy": housing_box,
+                "housing_keepout_pcb_box_xy": housing_keepout,
+                "housing_keepout_handle_box_xyz": [
+                    housing_keepout[0],
+                    pcb_y + board_t - SHELL_KEEPOUT_BOARD_OVERLAP,
+                    housing_keepout[1],
+                    housing_keepout[2],
+                    pcb_y + board_t + MOLEX_MATED_HEIGHT_MM + SHELL_KEEPOUT_AXIAL_CLEAR,
+                    housing_keepout[3],
+                ],
+                "source": (
+                    "https://www.molex.com/content/dam/molex/molex-dot-com/"
+                    "products/automated/en-us/salesdrawingpdf/532/53261/"
+                    "532610271_sd.pdf"
+                ),
+                "housing_source": (
+                    "https://www.molex.com/content/dam/molex/molex-dot-com/"
+                    "products/automated/en-us/salesdrawingpdf/510/51021/"
+                    "510210500_sd.pdf"
+                ),
+            }
+        )
 
     # F.Cu faces the butt cap.  The shell inner wall is wall_t inward from the
     # butt plane, so this is the nominal axial cavity available above F-side
@@ -272,6 +350,7 @@ def _extract() -> dict:
         "led_rgb": led_rgb,
         "led_status": led_status,
         "battery_connector": battery_connector,
+        "harness_connectors": harness_connectors,
         "front_component_cavity_depth": front_cavity_depth,
         "front_power_parts": front_power_parts,
         "component_keepouts": component_keepouts,
@@ -291,6 +370,12 @@ def _write_scad(data: dict) -> None:
     keepouts = ",\n".join(
         "    [" + ", ".join(f"{value:.5f}" for value in item["handle_box_xyz"]) + "]"
         for item in data["component_keepouts"]
+    )
+    mated_keepouts = ",\n".join(
+        "    [" + ", ".join(
+            f"{value:.5f}" for value in item["housing_keepout_handle_box_xyz"]
+        ) + "]"
+        for item in data["harness_connectors"]
     )
     text = f"""// AUTO-GENERATED by pcb-tail/scripts/export_tail_interference.py — do not edit
 // KiCad XY → handle XZ；F.Cu @ pcb_y；+Z_kicad 朝拍尾 (−Y)
@@ -354,6 +439,13 @@ tail_if_component_keepouts = [
 {keepouts}
 ];
 
+// Inserted 51021 wire housings extend beyond the board-header courtyards.
+// Keep these two evidence-derived boxes separate so the shell audit cannot
+// silently regress to checking the bare 53261 headers only.
+tail_if_mated_housing_keepouts = [
+{mated_keepouts}
+];
+
 module tail_if_stadium_2d(w, d) {{
     r = min(d / 2, w / 2);
     hull() for (sx = [-1, 1])
@@ -372,6 +464,11 @@ module tail_board_interference_cuts() {{
 
     // 靠板边器件的局部避让；只切实际相交的 12 个包络，不扩大公共内腔。
     for (k = tail_if_component_keepouts)
+        translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
+            cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
+
+    // 已插线端外壳的包络不属于 PCB footprint courtyard，单独避让。
+    for (k = tail_if_mated_housing_keepouts)
         translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
             cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
 

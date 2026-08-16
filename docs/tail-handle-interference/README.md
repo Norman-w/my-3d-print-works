@@ -1,13 +1,14 @@
 # 尾板与 M6 拍柄尾部 3D 干涉审计
 
-状态（2026-08-15）：已用当前 `pcb-tail/layouts/default/default.kicad_pcb` 的完整 KiCad 3D 装配，与当前 Step6 拍柄尾部壳体做实体布尔相交。拍尾底平面本身不会挡住 USB-C J1 或 SW1；原壳体存在 12 处局部环槽/侧壁干涉，加入按 KiCad courtyard 生成的小避让后，完整装配交集降为约 `4.97e-08mm³`，可视为布尔数值噪声。
+状态（2026-08-16）：拍尾底平面仍不会挡住 USB-C J1 或 SW1。尾板 J2/J3 已改为 Molex 53261-0471 卧插，本轮不再只依赖裸板端的 KiCad 3D 模型：另以 Molex 51021-0400 官方 `6.75×3.95×3.20 mm` 外壳和 53261 官方 `3.40 mm` 插合高度建立两只已插线壳包络。OpenSCAD 切除源与最终 Step6 Python 布尔链均已纳入这两个包络；临时目录中从空白壳重新导出的四个分件、两个合体件和打印拼板全部通过 watertight/紧固位置/刚体拼板验证。本轮没有覆盖仓库制造 STL。
 
 ## 检查方法与坐标
 
 - KiCad CLI 将当前尾板导出为临时 STEP；检查在 `/private/tmp` 的隔离副本中完成，没有打开或操作用户 KiCad UI。
 - STEP 导出到拍柄坐标的实测变换为：`handle_x = step_x`、`handle_y = pcb_y + board_thickness - step_z`、`handle_z = -step_y`。这与参数化源中 KiCad 2D 到拍柄的映射一致，但额外计入了 STEP 导出对板坐标 Y 的翻转。
 - 壳体、KiCad 整板、单独 J1/SW1、板槽、按键柱均做了实体交集；最终打印分件另做 watertight/winding 一致性检查。
-- J4 的库模型为 WRL，KiCad STEP 未带出；另按官方最大包络 `4.2×4.3×1.4mm`、当前旋转与位置做保守盒体复核，交集为 0。
+- J4 的库模型为 WRL，KiCad STEP 未带出；另按官方最大包络 `4.2×4.3×1.4mm`、当前旋转与位置做保守盒体复核。J4 已沿 KiCad Y 平移到 `-7.000 mm`，与插入后的 J2 外壳保持至少 0.5 mm 门禁净距。
+- J2 插入后的物理外壳到最近 J1 镀铜外壳槽 land 为约 `0.346 mm`；该关系不属于 KiCad 电气 DRC，已由尾板电源审计直接读取实际 pad bounding box 核对。
 
 ## 底平面与接口结论
 
@@ -17,7 +18,7 @@
 
 ## 原局部碰壳与修正
 
-原壳体的真实交集均位于环槽/侧壁，不是拍尾底平面堵住接口：
+下面是 2026-08-15 立插/旧位姿检查时的历史交集，用来解释 12 个局部器件 pocket 的来源；数值和图片**不是**当前卧插 J2/J3 的完整插合外形：
 
 | 器件 | 原交集体积 mm³ | 器件 | 原交集体积 mm³ |
 | --- | ---: | --- | ---: |
@@ -28,17 +29,17 @@
 | R9 | 0.170714 | R5 | 0.057615 |
 | L1 | 0.035320 | C7 | 0.002032 |
 
-合计约 `9.73mm³`。`pcb-tail/scripts/export_tail_interference.py` 现在从这 12 个器件的当前 courtyard、所在铜面和保守器件高度生成局部包络；`scripts/step6_tail_board_interfere_handle.py` 只切这些小包络，不扩大整段公共内腔。最终完整 KiCad 3D 装配与壳体交集约 `4.97e-08mm³`；J1、SW1、J4 保守包络和板槽分别为 0。
+历史合计约 `9.73mm³`。当前 `pcb-tail/scripts/export_tail_interference.py` 从这 12 个器件的 courtyard、所在铜面和保守高度生成局部包络，并额外输出 J2/J3 两个已插 51021 外壳包络；`scripts/step6_tail_board_interfere_handle.py` 对同一组 `12+2` 包络做最终布尔切除，不扩大整段公共内腔。侧向螺柱也读取相同包络逐项避让，当前到任一尾板/插合件的最小净距为 `0.857 mm`。
 
-### 修正前
+### 历史修正前
 
 ![修正前，红色为真实相交体](before-iso.png)
 
-### 局部避让包络
+### 历史 12 器件局部避让包络
 
 ![12 个由 KiCad 位姿驱动的局部避让](keepout-pockets.png)
 
-### 修正后
+### 历史立插方案修正后
 
 ![修正后完整尾板装配](after-iso.png)
 
@@ -60,6 +61,6 @@
 - 自动生成的切除源：`enclosure/stl/interference/tail_board_cuts.scad`
 - KiCad 事实导出：`pcb-tail/scripts/export_tail_interference.py`
 - Step6 实体切除与可选推杆：`scripts/step6_tail_board_interfere_handle.py`
-- 自动审计会锁定 12 个器件引用、当前位姿、针孔尺寸和防脱关系。
+- 自动审计会锁定 12 个器件引用、J2/J3 两个已插 51021 外壳、当前位姿、针孔尺寸和防脱关系。
 
 本次 3D 实体诊断只在临时目录生成 STL；没有覆盖仓库中用户当前的制造/预览 STL，也没有生成 Gerber、钻孔、BOM/CPL 或下单包。当前两块 PCB 仍处于无铜交接态，不能制造。

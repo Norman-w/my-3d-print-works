@@ -33,7 +33,6 @@ CORE_HALF_T = 3.0
 BUILD_MM = 256.0
 PLATE_GAP_MM = 5.0
 SCREW_SAFETY_REPORT = ROOT / "enclosure/generated/m6_screw_safety.json"
-PRINT_PLATE_REPORT = STL / "print/print_plates.json"
 
 
 # ===== 分区：私有成员 =====
@@ -160,8 +159,8 @@ def main() -> int:
             if check.get("visualCallout") is not None
         ]
         expected_visual = {
-            "left_small_circles_tail_edge",
-            "center_large_circle_pcb_slot_pair",
+            "tail_edge_side_pair",
+            "headward_relief_side_pair",
         }
         if len(visual_checks) != 8 or {check["visualCallout"] for check in visual_checks} != expected_visual:
             errors.append(
@@ -205,11 +204,12 @@ def main() -> int:
         )
 
     plate_metadata: dict[str, dict] = {}
-    if PRINT_PLATE_REPORT.is_file():
-        report = json.loads(PRINT_PLATE_REPORT.read_text(encoding="utf-8"))
+    print_plate_report = args.stl / "print/print_plates.json"
+    if print_plate_report.is_file():
+        report = json.loads(print_plate_report.read_text(encoding="utf-8"))
         plate_metadata = {str(item["path"]): item for item in report.get("plates", [])}
     else:
-        errors.append(f"missing print plate metadata: {PRINT_PLATE_REPORT}")
+        errors.append(f"missing print plate metadata: {print_plate_report}")
 
     for name, (filename, source_names) in PRINT_PLATES.items():
         path = args.stl / filename

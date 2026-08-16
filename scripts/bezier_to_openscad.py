@@ -7,6 +7,7 @@ Export web Bezier profiles → OpenSCAD geometry matching paddleFromBezier.ts:
 
 from __future__ import annotations
 
+import ast
 import json
 import math
 import os
@@ -22,6 +23,7 @@ OUT_DIR = ROOT / "enclosure/generated"
 OUT_SCAD = OUT_DIR / "bezier_geometry.scad"
 TAIL_INTERFERENCE = ROOT / "enclosure/stl/interference/tail_interference.json"
 SCREW_SAFETY_REPORT = OUT_DIR / "m6_screw_safety.json"
+MECHANICAL_CONTRACT = ROOT / "docs/mechanical-handoff/mechanical-contract.scad"
 
 DEFAULT_SIDE = {
     "target": "side",
@@ -285,6 +287,10 @@ def parse_params(path: Path) -> dict[str, float]:
         "m6_pcb_slot_min_ligament",
         "m6_tail_slot_min_ligament",
         "m6_core_edge_min_ligament",
+        "m6_side_boss_component_clearance",
+        "m6_side_boss_to_m2_clearance",
+        "m6_side_boss_battery_clearance",
+        "m6_side_boss_wire_clearance",
     ]
     out: dict[str, float] = {}
     for k in keys:
@@ -293,6 +299,58 @@ def parse_params(path: Path) -> dict[str, float]:
             raise ValueError(f"missing {k}")
         out[k] = float(m.group(1))
     return out
+
+
+def parse_array_param(path: Path, name: str) -> list[Any]:
+    """Read a literal OpenSCAD array without evaluating arbitrary SCAD code."""
+    text = path.read_text(encoding="utf-8")
+    match = re.search(
+        rf"(?ms)^\s*{re.escape(name)}\s*=\s*(\[.*?\])\s*;",
+        text,
+    )
+    if not match:
+        raise ValueError(f"missing {name}")
+    clean = re.sub(r"//[^\n]*", "", match.group(1))
+    value = ast.literal_eval(clean)
+    if not isinstance(value, list):
+        raise ValueError(f"{name} is not an array")
+    return value
+
+
+def parse_scalar_param(path: Path, name: str) -> float:
+    text = path.read_text(encoding="utf-8")
+    match = re.search(
+        rf"(?m)^\s*{re.escape(name)}\s*=\s*([-+0-9.]+)\s*;",
+        text,
+    )
+    if not match:
+        raise ValueError(f"missing {name}")
+    return float(match.group(1))
+
+
+def _point_segment_distance(
+    point: tuple[float, float],
+    start: tuple[float, float],
+    end: tuple[float, float],
+) -> float:
+    px, py = point
+    ax, ay = start
+    bx, by = end
+    dx, dy = bx - ax, by - ay
+    if dx == 0 and dy == 0:
+        return math.hypot(px - ax, py - ay)
+    t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)))
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def _point_rectangle_distance(
+    point: tuple[float, float], rectangle: tuple[float, float, float, float]
+) -> float:
+    x, y = point
+    x0, y0, x1, y1 = rectangle
+    dx = max(x0 - x, 0.0, x - x1)
+    dy = max(y0 - y, 0.0, y - y1)
+    return math.hypot(dx, dy)
 
 
 def fmt_pt(x: float, y: float) -> str:
@@ -317,7 +375,7 @@ def m6_screw_positions_on_midcurve(
     bottom_clearance: float,
     tail_edge_clearance: float,
     tail_inset: float,
-    pcb_avoidance: dict[str, float] | None = None,
+    pcb_avoidance: dict[str, Any] | None = None,
 ) -> list[tuple[float, float]]:
     """等弧长排布常规站，并在尾边增加一个由同一中线推导的加强站。"""
     bottom_y = y0 + bottom_clearance
@@ -352,17 +410,74 @@ def m6_screw_positions_on_midcurve(
     tail_x = max((tail_outer_x + tail_inner_x) / 2 - tail_inset, 0.5)
     stations = [(tail_x, tail_y), *right]
     if pcb_avoidance:
-        x_limit = pcb_avoidance["x_limit"]
-        y_min = pcb_avoidance["y_min"]
-        y_max = pcb_avoidance["y_max"]
+        x_limit = float(pcb_avoidance["x_limit"])
+        y_min = float(pcb_avoidance["y_min"])
+        y_max = float(pcb_avoidance["y_max"])
         required = pcb_avoidance["required_center_clearance"]
         min_pitch = pcb_avoidance["min_station_pitch"]
+        boss_radius = float(pcb_avoidance["boss_radius"])
+        component_clearance = float(pcb_avoidance["component_clearance"])
+        rectangles = pcb_avoidance.get("rectangles", [])
+        circles = pcb_avoidance.get("circles", [])
+        segments = pcb_avoidance.get("segments", [])
+        head_radius = float(pcb_avoidance["head_radius"])
+        edge_ligament = float(pcb_avoidance["edge_ligament"])
 
-        def clearance(point: tuple[float, float]) -> float:
+        def slot_center_clearance(point: tuple[float, float]) -> float:
             x, y = point
             dx = max(abs(x) - x_limit, 0.0)
             dy = y_min - y if y < y_min else y - y_max if y > y_max else 0.0
             return math.hypot(dx, dy)
+
+        def pair(point: tuple[float, float]) -> tuple[tuple[float, float], tuple[float, float]]:
+            return ((-point[0], point[1]), point)
+
+        def component_gap(point: tuple[float, float]) -> float:
+            if not rectangles:
+                return math.inf
+            return min(
+                _point_rectangle_distance(side_point, tuple(rectangle["box"])) - boss_radius
+                for side_point in pair(point)
+                for rectangle in rectangles
+            )
+
+        def circle_margin(point: tuple[float, float]) -> float:
+            if not circles:
+                return math.inf
+            return min(
+                math.dist(side_point, tuple(circle["center"]))
+                - boss_radius
+                - float(circle["radius"])
+                - float(circle.get("clearance", 0.0))
+                for side_point in pair(point)
+                for circle in circles
+            )
+
+        def segment_margin(point: tuple[float, float]) -> float:
+            if not segments:
+                return math.inf
+            return min(
+                _point_segment_distance(
+                    side_point, tuple(segment["start"]), tuple(segment["end"])
+                )
+                - boss_radius
+                - float(segment["radius"])
+                - float(segment.get("clearance", 0.0))
+                for side_point in pair(point)
+                for segment in segments
+            )
+
+        def pair_is_safe(
+            point: tuple[float, float], required_slot_clearance: float
+        ) -> bool:
+            outer_ligament = half_width_at_y(handle, point[1]) - point[0] - head_radius
+            return (
+                slot_center_clearance(point) + 1e-9 >= required_slot_clearance
+                and component_gap(point) + 1e-9 >= component_clearance
+                and circle_margin(point) + 1e-9 >= 0.0
+                and segment_margin(point) + 1e-9 >= 0.0
+                and outer_ligament + 1e-9 >= edge_ligament
+            )
 
         safe: list[tuple[float, float]] = []
         moves: list[dict[str, object]] = []
@@ -373,21 +488,21 @@ def m6_screw_positions_on_midcurve(
                 if station_index == 0
                 else required
             )
-            # Follow the actual midcurve toward the paddle head (+Y), never a
-            # fixed world-coordinate offset. Also retain boss-to-boss pitch.
+            # The tail closure pair stays at the tail plane and searches only
+            # outward in X when a real component envelope needs relief. Other
+            # stations follow the actual midcurve toward the paddle head (+Y).
             for step in range(4001):
-                y = original[1] + step * 0.05
-                if step == 0:
+                if station_index == 0:
+                    candidate = (original[0] + step * 0.05, original[1])
+                elif step == 0:
                     candidate = original
                 else:
+                    y = original[1] + step * 0.05
                     outer_x = half_width_at_y(handle, y)
                     inner_x = max(outer_x - cavity_margin, 0.5)
                     candidate = ((outer_x + inner_x) / 2, y)
-                pitch_ok = not safe or y - safe[-1][1] >= min_pitch
-                # The first station is the user-confirmed tail pair: preserve
-                # its exact original location when it satisfies the dedicated
-                # two-perimeter tail ligament. Only PCB-region stations move.
-                if clearance(candidate) >= required_here and pitch_ok:
+                pitch_ok = not safe or candidate[1] - safe[-1][1] >= min_pitch
+                if pair_is_safe(candidate, required_here) and pitch_ok:
                     break
             else:
                 raise ValueError(f"cannot place M6 screw safely toward head from {original}")
@@ -395,8 +510,11 @@ def m6_screw_positions_on_midcurve(
             moves.append({
                 "original": [original[0], original[1]],
                 "final": [candidate[0], candidate[1]],
-                "pcbSlotCenterClearanceMm": clearance(candidate),
+                "pcbSlotCenterClearanceMm": slot_center_clearance(candidate),
                 "requiredCenterClearanceMm": required_here,
+                "componentBossGapMm": component_gap(candidate),
+                "fixedBossClearanceMarginMm": circle_margin(candidate),
+                "batteryAndWireClearanceMarginMm": segment_margin(candidate),
                 "classification": "preserved_tail_pair" if station_index == 0 else "pcb_region",
                 "moved": math.dist(original, candidate) > 1e-6,
             })
@@ -561,21 +679,114 @@ def main() -> int:
     boss_d = screw_d + 2 * min(1.40, cavity_margin - 0.5)
     head_d = screw_d * 1.90
     board_x_limit = max(abs(float(point[0])) for point in tail_info["edge_cuts_xy"])
-    board_y_min = float(tail_info["pcb_y"]) - float(tail_info["board_axial_clear"])
-    board_y_max = (
+    board_slot_y_min = float(tail_info["pcb_y"]) - float(tail_info["board_axial_clear"])
+    board_slot_y_max = (
         float(tail_info["pcb_y"])
         + float(tail_info["board_thickness"])
         + float(tail_info["board_axial_clear"])
     )
+    assembly_rectangles = [
+        {
+            "label": str(item["ref"]),
+            "box": [
+                float(item["handle_box_xyz"][0]),
+                float(item["handle_box_xyz"][1]),
+                float(item["handle_box_xyz"][3]),
+                float(item["handle_box_xyz"][4]),
+            ],
+        }
+        for item in tail_info.get("component_keepouts", [])
+    ]
+    assembly_rectangles.extend(
+        {
+            "label": f"{item['ref']} inserted 51021 housing",
+            "box": [
+                float(item["housing_keepout_handle_box_xyz"][0]),
+                float(item["housing_keepout_handle_box_xyz"][1]),
+                float(item["housing_keepout_handle_box_xyz"][3]),
+                float(item["housing_keepout_handle_box_xyz"][4]),
+            ],
+        }
+        for item in tail_info.get("harness_connectors", [])
+    )
+
+    m2_boss_radius = parse_scalar_param(DEFAULT_PARAMS, "screw_d_boss") / 2
+    fixed_bosses = [
+        {
+            "label": f"M2 through boss {index + 1}",
+            "center": [float(point[0]), float(point[1])],
+            "radius": m2_boss_radius,
+            "clearance": p["m6_side_boss_to_m2_clearance"],
+        }
+        for index, point in enumerate(
+            parse_array_param(DEFAULT_PARAMS, "m6_handle_through_screw_centers")
+        )
+    ]
+
+    battery_d = parse_scalar_param(MECHANICAL_CONTRACT, "protected_14500_max_d")
+    battery_l = parse_scalar_param(MECHANICAL_CONTRACT, "protected_14500_max_l")
+    battery_radial_clearance = parse_scalar_param(
+        MECHANICAL_CONTRACT, "protected_14500_fit_radial_clearance"
+    )
+    battery_axial_clearance = parse_scalar_param(
+        MECHANICAL_CONTRACT, "protected_14500_fit_axial_clearance"
+    )
+    battery_center = parse_array_param(MECHANICAL_CONTRACT, "protected_14500_center")
+    battery_radius = battery_d / 2 + battery_radial_clearance
+    battery_half_length = battery_l / 2 + battery_axial_clearance
+    obstacle_segments = [
+        {
+            "label": "protected 14500 envelope",
+            "start": [float(battery_center[0]), float(battery_center[1]) - battery_half_length],
+            "end": [float(battery_center[0]), float(battery_center[1]) + battery_half_length],
+            "radius": battery_radius,
+            "clearance": p["m6_side_boss_battery_clearance"],
+        }
+    ]
+    corridor_size = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_corridor_size")
+    corridor_x = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_corridor_center_x")
+    corridor_y0 = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_corridor_y0")
+    corridor_y1 = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_corridor_y1")
+    neck_x = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_neck_center_x")
+    neck_y = parse_scalar_param(MECHANICAL_CONTRACT, "handle_wire_neck_y")
+    for branch_side in (-1, 1):
+        corridor_start = [branch_side * corridor_x, corridor_y0]
+        corridor_end = [branch_side * corridor_x, corridor_y1]
+        obstacle_segments.extend(
+            (
+                {
+                    "label": f"{'left' if branch_side < 0 else 'right'} wire corridor",
+                    "start": corridor_start,
+                    "end": corridor_end,
+                    "radius": corridor_size / 2,
+                    "clearance": p["m6_side_boss_wire_clearance"],
+                },
+                {
+                    "label": f"{'left' if branch_side < 0 else 'right'} wire neck",
+                    "start": corridor_end,
+                    "end": [branch_side * neck_x, neck_y],
+                    "radius": corridor_size / 2,
+                    "clearance": p["m6_side_boss_wire_clearance"],
+                },
+            )
+        )
+
     pcb_avoidance: dict[str, Any] = {
         "x_limit": board_x_limit,
-        "y_min": board_y_min,
-        "y_max": board_y_max,
+        "y_min": board_slot_y_min,
+        "y_max": board_slot_y_max,
         "bossDiameterMm": boss_d,
+        "boss_radius": boss_d / 2,
+        "head_radius": head_d / 2,
+        "edge_ligament": p["m6_core_edge_min_ligament"],
         "petgLigamentMm": p["m6_pcb_slot_min_ligament"],
         "required_center_clearance": boss_d / 2 + p["m6_pcb_slot_min_ligament"],
         "tail_required_center_clearance": boss_d / 2 + p["m6_tail_slot_min_ligament"],
         "min_station_pitch": boss_d + p["m6_core_edge_min_ligament"],
+        "component_clearance": p["m6_side_boss_component_clearance"],
+        "rectangles": assembly_rectangles,
+        "circles": fixed_bosses,
+        "segments": obstacle_segments,
     }
     screw_positions = m6_screw_positions_on_midcurve(
         handle,
@@ -591,7 +802,6 @@ def main() -> int:
     )
     edge_checks = []
     direction_checks = []
-    moved_y = [float(item["final"][1]) for item in pcb_avoidance["moves"] if item["moved"]]
     for position_index, (x, y) in enumerate(screw_positions):
         outer_margin = half_width_at_y(handle, y) - abs(x) - head_d / 2
         edge_checks.append({"position": [x, y], "outerEdgeLigamentMm": outer_margin})
@@ -601,10 +811,17 @@ def main() -> int:
                 f"requires {p['m6_core_edge_min_ligament']:.3f}mm"
             )
         dx = max(abs(x) - board_x_limit, 0.0)
-        dy = board_y_min - y if y < board_y_min else y - board_y_max if y > board_y_max else 0.0
+        dy = (
+            board_slot_y_min - y
+            if y < board_slot_y_min
+            else y - board_slot_y_max
+            if y > board_slot_y_max
+            else 0.0
+        )
         pcb_clearance = math.hypot(dx, dy)
-        relocated = any(abs(y - value) < 1e-5 for value in moved_y)
         station_number = position_index // 2 + 1
+        move = pcb_avoidance["moves"][station_number - 1]
+        relocated = bool(move["moved"])
         required_here = (
             pcb_avoidance["tail_required_center_clearance"]
             if station_number == 1
@@ -614,9 +831,9 @@ def main() -> int:
             direction_checks.append({
                 "station": station_number,
                 "visualCallout": (
-                    "left_small_circles_tail_edge"
+                    "tail_edge_side_pair"
                     if position_index // 2 + 1 == 1
-                    else "center_large_circle_pcb_slot_pair"
+                    else "headward_relief_side_pair"
                     if position_index // 2 + 1 == 2
                     else None
                 ),
@@ -625,12 +842,19 @@ def main() -> int:
                 "zSide": z_side,
                 "position": [x, y],
                 "relocatedForPcbSlot": relocated,
+                "componentBossGapMm": move["componentBossGapMm"],
+                "fixedBossClearanceMarginMm": move["fixedBossClearanceMarginMm"],
+                "batteryAndWireClearanceMarginMm": move["batteryAndWireClearanceMarginMm"],
                 "pcbSlotCenterClearanceMm": pcb_clearance,
                 "requiredPcbSlotCenterClearanceMm": required_here,
                 "outerEdgeLigamentMm": outer_margin,
                 "passed": (
                     pcb_clearance + 1e-6 >= required_here
                     and outer_margin + 1e-6 >= p["m6_core_edge_min_ligament"]
+                    and float(move["componentBossGapMm"]) + 1e-6
+                    >= p["m6_side_boss_component_clearance"]
+                    and float(move["fixedBossClearanceMarginMm"]) + 1e-6 >= 0.0
+                    and float(move["batteryAndWireClearanceMarginMm"]) + 1e-6 >= 0.0
                 ),
             })
     SCREW_SAFETY_REPORT.write_text(
@@ -638,7 +862,13 @@ def main() -> int:
             "screwDiameterMm": screw_d,
             "headDiameterMm": head_d,
             "bossDiameterMm": boss_d,
-            "pcbSlot": {"xLimitMm": board_x_limit, "yRangeMm": [board_y_min, board_y_max]},
+            "pcbSlot": {
+                "xLimitMm": board_x_limit,
+                "yRangeMm": [board_slot_y_min, board_slot_y_max],
+            },
+            "assemblyObstacleBoxes": assembly_rectangles,
+            "fixedBossObstacles": fixed_bosses,
+            "batteryAndWireObstacles": obstacle_segments,
             "requiredPcbSlotCenterClearanceMm": pcb_avoidance["required_center_clearance"],
             "requiredTailSlotCenterClearanceMm": pcb_avoidance["tail_required_center_clearance"],
             "requiredCoreEdgeLigamentMm": p["m6_core_edge_min_ligament"],
