@@ -16,6 +16,7 @@ import pcbnew
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = ROOT / "docs/mechanical-handoff/mechanical-contract.scad"
 PARAMETERS = ROOT / "enclosure/parameters.scad"
+SHELL = ROOT / "enclosure/paddle_shell.scad"
 BOARD = ROOT / "pcb/layouts/default/default.kicad_pcb"
 HARNESS = ROOT / "pcb-tail/harness/adapter.json"
 TAIL_FACTS = ROOT / "enclosure/stl/interference/tail_interference.json"
@@ -52,6 +53,20 @@ def _array(text: str, name: str):
     return ast.literal_eval(clean)
 
 
+def _literal_coordinate_pairs(text: str, name: str) -> list[tuple[float, float]]:
+    match = re.search(
+        rf"(?ms)^\s*{re.escape(name)}\s*=\s*(\[.*?\])\s*;",
+        text,
+    )
+    if not match:
+        raise HandoffError(f"missing coordinate list {name}")
+    clean = re.sub(r"//[^\n]*", "", match.group(1))
+    return [
+        (float(x), float(y))
+        for x, y in re.findall(r"\[\s*([-+0-9.]+)\s*,\s*([-+0-9.]+)\s*\]", clean)
+    ]
+
+
 def _field(fp: "pcbnew.FOOTPRINT", name: str) -> str:
     return fp.GetFieldByName(name).GetText() if fp.HasFieldByName(name) else ""
 
@@ -84,6 +99,29 @@ def _boundary_distance(point, polygon) -> float:
     )
 
 
+def _xy_mm(point) -> tuple[float, float]:
+    return point.x / 1e6, point.y / 1e6
+
+
+def _edge_distance(point: tuple[float, float], drawings) -> float:
+    distances: list[float] = []
+    for drawing in drawings:
+        shape = drawing.GetShape()
+        if shape == pcbnew.SHAPE_T_SEGMENT:
+            distances.append(
+                _point_segment_distance(point, _xy_mm(drawing.GetStart()), _xy_mm(drawing.GetEnd()))
+            )
+        elif shape == pcbnew.SHAPE_T_CIRCLE:
+            center = _xy_mm(drawing.GetCenter())
+            radius = drawing.GetRadius() / 1e6
+            distances.append(abs(math.dist(point, center) - radius))
+        else:
+            raise HandoffError(f"unsupported Edge.Cuts shape {shape}; extend the physical-edge audit")
+    if not distances:
+        raise HandoffError("current PCB has no usable Edge.Cuts geometry")
+    return min(distances)
+
+
 def _load_bezier_module():
     spec = importlib.util.spec_from_file_location("smartpaddle_bezier", BEZIER)
     if spec is None or spec.loader is None:
@@ -105,6 +143,7 @@ def _rect_perimeter(cx: float, size: float) -> list[tuple[float, float]]:
 def main() -> int:
     contract = CONTRACT.read_text(encoding="utf-8")
     parameters = PARAMETERS.read_text(encoding="utf-8")
+    shell = SHELL.read_text(encoding="utf-8")
     harness = json.loads(HARNESS.read_text(encoding="utf-8"))
     tail = json.loads(TAIL_FACTS.read_text(encoding="utf-8"))
     screw = json.loads(SCREW_FACTS.read_text(encoding="utf-8"))
@@ -124,6 +163,15 @@ def main() -> int:
     wire_od = _scalar(contract, "handle_wire_od")
     corridor_size = _scalar(contract, "handle_wire_corridor_size")
     corridor_x = _scalar(contract, "handle_wire_corridor_center_x")
+    corridor_y0 = _scalar(contract, "handle_wire_corridor_y0")
+    corridor_y1 = _scalar(contract, "handle_wire_corridor_y1")
+    neck_x = _scalar(contract, "handle_wire_neck_center_x")
+    neck_y = _scalar(contract, "handle_wire_neck_y")
+    if not (
+        math.isclose(corridor_y0, battery_y0)
+        and math.isclose(corridor_y1, battery_y1)
+    ):
+        raise HandoffError("battery-side wire corridor no longer spans the protected-cell envelope")
     if corridor_size + 1e-6 < 2 * wire_od:
         raise HandoffError("a 2x2 wire branch cannot fit the documented corridor")
     wire = harness.get("wireConstruction", {})
@@ -139,6 +187,7 @@ def main() -> int:
 
     board = pcbnew.LoadBoard(str(BOARD))
     actual_pzt = []
+    actual_pzt_kicad: dict[str, tuple[float, float]] = {}
     pad_d = _scalar(contract, "pzt_wire_pad_d")
     drill = _scalar(contract, "pzt_wire_pad_drill")
     scad_y_offset = _scalar(parameters, "blade_ellipse_cy")
@@ -161,6 +210,7 @@ def main() -> int:
             raise HandoffError(f"{address} pad/drill geometry changed")
         pos = pad.GetPosition()
         actual_pzt.append((pos.x / 1e6, -pos.y / 1e6 + scad_y_offset))
+        actual_pzt_kicad[address] = _xy_mm(pos)
         seen.add(address)
     if seen != PZT_ADDRESSES:
         raise HandoffError(f"PZT wire-pad inventory differs: {sorted(PZT_ADDRESSES ^ seen)}")
@@ -171,6 +221,23 @@ def main() -> int:
     extra_depth = _scalar(contract, "pzt_solder_relief_extra_depth")
     if not math.isclose((relief_d - pad_d) / 2, 0.5) or not math.isclose(extra_depth, 0.5):
         raise HandoffError("PZT relief must remain 0.5 mm radial and 0.5 mm deeper")
+    edge_drawings = [
+        drawing for drawing in board.GetDrawings()
+        if drawing.GetLayer() == pcbnew.Edge_Cuts
+    ]
+    pzt_edge_offsets = {
+        address: _edge_distance(position, edge_drawings)
+        for address, position in actual_pzt_kicad.items()
+    }
+    outside_drill = {
+        address: offset for address, offset in pzt_edge_offsets.items()
+        if offset > drill / 2 + 0.001
+    }
+    if outside_drill:
+        raise HandoffError(
+            "PZT Edge.Cuts no longer crosses every drilled wire pad: "
+            + ", ".join(f"{address}={offset:.3f}mm" for address, offset in sorted(outside_drill.items()))
+        )
 
     bezier = _load_bezier_module()
     design = json.loads(bezier.DEFAULT_JSON.read_text(encoding="utf-8"))
@@ -207,14 +274,70 @@ def main() -> int:
     battery_wire_gap = corridor_x - corridor_size / 2 - fit_radius
     if battery_wire_gap < 0.049:
         raise HandoffError(f"wire corridor overlaps protected-cell envelope by {-battery_wire_gap:.3f} mm")
-    boss_radius = float(screw["bossDiameterMm"]) / 2
-    screw_gap = min(
-        abs(abs(float(move["final"][0])) - corridor_x) - boss_radius - corridor_size / 2
-        for move in screw["moves"]
-        if battery_y0 <= float(move["final"][1]) <= battery_y1
+    wire_segments = []
+    for side in (-1, 1):
+        straight_start = (side * corridor_x, corridor_y0)
+        straight_end = (side * corridor_x, corridor_y1)
+        neck_end = (side * neck_x, neck_y)
+        wire_segments.extend(((straight_start, straight_end), (straight_end, neck_end)))
+
+    side_boss_radius = float(screw["bossDiameterMm"]) / 2
+    side_boss_centers = [tuple(map(float, point)) for point in screw["finalPositions"]]
+    side_battery_gap = min(
+        _point_segment_distance(point, (battery_center[0], battery_y0), (battery_center[0], battery_y1))
+        - fit_radius - side_boss_radius
+        for point in side_boss_centers
     )
-    if screw_gap < 0.05:
-        raise HandoffError(f"straight battery-side wire corridor hits a screw boss: {screw_gap:.3f} mm")
+    side_wire_gap = min(
+        _point_segment_distance(point, start, end) - side_boss_radius - corridor_size / 2
+        for point in side_boss_centers
+        for start, end in wire_segments
+    )
+    if side_battery_gap < 0.5:
+        raise HandoffError(f"protected cell hits a side screw boss: {side_battery_gap:.3f} mm")
+    if side_wire_gap < 0.05:
+        raise HandoffError(f"battery-side wire corridor hits a side screw boss: {side_wire_gap:.3f} mm")
+
+    through_function = re.search(
+        r"function\s+m6_handle_through_screw_positions\(\)\s*=\s*\[(.*?)\];",
+        shell,
+        flags=re.DOTALL,
+    )
+    if (
+        through_function is None
+        or "for (p = pcb_through_screw_positions)" not in through_function.group(1)
+        or re.search(r"for\s*\(p\s*=\s*screw_positions\)", through_function.group(1))
+    ):
+        raise HandoffError("M6 handle through-boss inventory is not tied only to PCB through-screw positions")
+    shoulder_bottom_y = _scalar(parameters, "shoulder_bottom_y")
+    m2_boss_radius = _scalar(parameters, "screw_d_boss") / 2
+    required_m2_boss_centers = [
+        tuple(map(float, point))
+        for point in _array(parameters, "pcb_through_screw_positions")
+        if float(point[1]) <= shoulder_bottom_y - 10
+    ]
+    if not required_m2_boss_centers:
+        raise HandoffError("no required handle PCB-through M2 boss remains")
+    legacy_m2_boss_centers = [
+        point for point in _literal_coordinate_pairs(parameters, "screw_positions")
+        if point[1] <= shoulder_bottom_y - 10
+    ]
+    m2_boss_centers = required_m2_boss_centers + legacy_m2_boss_centers
+    m2_battery_gap = min(
+        _point_segment_distance(point, (battery_center[0], battery_y0), (battery_center[0], battery_y1))
+        - fit_radius - m2_boss_radius
+        for point in m2_boss_centers
+    )
+    m2_wire_gap = min(
+        _point_segment_distance(point, start, end) - m2_boss_radius - corridor_size / 2
+        for point in m2_boss_centers
+        for start, end in wire_segments
+    )
+    if m2_battery_gap < 0.5 or m2_wire_gap < 0.5:
+        raise HandoffError(
+            f"protected cell/wire hits a required M2 boss: battery={m2_battery_gap:.3f}, "
+            f"wire={m2_wire_gap:.3f} mm"
+        )
 
     j4 = tail.get("battery_connector", {})
     connector_y1 = float(j4.get("handle_y_range", [0, 0])[1])
@@ -233,13 +356,20 @@ def main() -> int:
     print(
         f"  two 4-wire UL1571 28AWG branches: {corridor_size:.1f} mm square at "
         f"X=±{corridor_x:.1f}; battery gap={battery_wire_gap:.3f} mm; "
-        f"screw-boss gap={screw_gap:.3f} mm"
+        f"side-boss gap={side_wire_gap:.3f} mm"
+    )
+    print(
+        f"  boss clearance: cell-to-side={side_battery_gap:.3f} mm; "
+        f"cell-to-required-M2={m2_battery_gap:.3f} mm; wire-to-required-M2={m2_wire_gap:.3f} mm"
     )
     print(
         f"  J4-to-cell service gap={tail_service_gap:.3f} mm; "
         f"cell-to-main-connector gap={head_gap:.3f} mm"
     )
-    print("  8 PZT pad-center reliefs: Ø3.5 mm, +0.5 mm depth, live PCB match")
+    print(
+        f"  8 PZT pad-center reliefs: Ø3.5 mm, +0.5 mm depth; "
+        f"Edge.Cuts crosses every Ø{drill:.1f} mm drill (max center offset={max(pzt_edge_offsets.values()):.3f} mm)"
+    )
     return 0
 
 

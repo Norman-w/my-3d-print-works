@@ -1184,7 +1184,9 @@ function m6_all_handle_screw_positions() =
         : concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
 
 function m6_handle_through_screw_positions() = [
-    for (p = screw_positions)
+    // 仅保留确实穿过刚性 PCB 的 M2 位。旧的 ±7/-160 手柄位已经由
+    // 贝塞尔侧边螺丝体系替代，不能再从 legacy screw_positions 补回 boss。
+    for (p = pcb_through_screw_positions)
         if (screw_in_handle(p)) p
 ];
 
@@ -1646,9 +1648,10 @@ module mechanical_fit_preview() {
 }
 
 module mechanical_pzt_relief_preview() {
-    // Diagnostic overlay on the actual rigid-PCB planform.  Green is the
-    // board, gold is the current Ø2.5/Ø1.2 plated pad, and orange is the
-    // Ø3.5 shell relief envelope (0.5 mm radial clearance).
+    // OpenSCAD diagnostic overlay on the shell's rigid-PCB cavity profile.
+    // Copper is clipped by that profile so the intended half-hole form is not
+    // hidden by a complete gold annulus.  The documentation PNG is generated
+    // separately from live KiCad Edge.Cuts and is the authoritative 2D view.
     color([0.10, 0.42, 0.25])
         difference() {
             linear_extrude(height = 0.8, center = true)
@@ -1666,12 +1669,17 @@ module mechanical_pzt_relief_preview() {
                         cylinder(d = pzt_wire_pad_d, h = 0.16, $fn = 48);
                 }
         color([0.94, 0.70, 0.12])
-            translate([p[0], p[1], 0.42])
-                difference() {
-                    cylinder(d = pzt_wire_pad_d, h = 0.16, $fn = 48);
-                    translate([0, 0, -0.02])
-                        cylinder(d = pzt_wire_pad_drill, h = 0.20, $fn = 36);
-                }
+            intersection() {
+                translate([p[0], p[1], 0.42])
+                    difference() {
+                        cylinder(d = pzt_wire_pad_d, h = 0.16, $fn = 48);
+                        translate([0, 0, -0.02])
+                            cylinder(d = pzt_wire_pad_drill, h = 0.20, $fn = 36);
+                    }
+                translate([0, 0, 0.40])
+                    linear_extrude(height = 0.20)
+                        rigid_pcb_profile_2d();
+            }
     }
 }
 

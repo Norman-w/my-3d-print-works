@@ -26,7 +26,7 @@
       "bundleEnvelopeRadiusMm": 1.5,
       "batteryBypassCenterXmm": 8.2,
       "batteryBypassCorridorSizeMm": 2.0,
-      "batteryBypassYRangeMm": [-164.25, -111.75],
+      "batteryBypassYRangeMm": [-159.25, -106.75],
       "minimumScrewEnvelopeClearanceMm": 1.0,
       "usbPair": "tail usb_dp/usb_dn to main usb_dp_conn/usb_dn_conn, twisted together inside signal bundle",
       "strainRelief": "heat-shrink both 4-wire breakouts; retain each housing latch; lace the two trunk branches together 15-25 mm from the main-board connectors, leaving a service loop toward the tail board",

@@ -93,8 +93,6 @@ screw_positions = [
     [-36, -65],   // 左下
     [0,   32],   // 拍面中轴（不穿 PCB）
     pcb_through_screw_positions[0],
-    [7,  -160],   // 手柄右侧
-    [-7, -160],   // 手柄左侧
     pcb_through_screw_positions[1],
 ];
 

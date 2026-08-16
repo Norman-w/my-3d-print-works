@@ -157,7 +157,7 @@ def main() -> int:
         errors.append("battery-bypass passage is too small for a 2x2 wire branch")
     if not (
         abs(bypass_center - 8.2) < 1e-6
-        and route["batteryBypassYRangeMm"] == [-164.25, -111.75]
+        and route["batteryBypassYRangeMm"] == [-159.25, -106.75]
     ):
         errors.append("battery-bypass route differs from the enclosure mechanical contract")
     else:

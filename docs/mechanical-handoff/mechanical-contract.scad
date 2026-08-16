@@ -9,7 +9,9 @@ protected_14500_max_d = 14.0;
 protected_14500_max_l = 52.0;
 protected_14500_fit_radial_clearance = 0.15;
 protected_14500_fit_axial_clearance = 0.25;
-protected_14500_center = [0, -138.0, 0];
+// Move the protected cell 5 mm toward the paddle head (+Y).  The former
+// center at Y=-138 crossed the obsolete pair of M2 boss columns at Y=-160.
+protected_14500_center = [0, -133.0, 0];
 
 // Two purchased MX1.25 finished-wire branches.  Each branch contains four
 // UL1571 28 AWG conductors (7 x 0.12 mm tinned copper), OD about 0.9 mm,
@@ -21,8 +23,8 @@ handle_wire_branch_count = 2;
 handle_wire_tinned_end_l = 3.0;
 handle_wire_corridor_size = 2.0;
 handle_wire_corridor_center_x = 8.2;
-handle_wire_corridor_y0 = -164.25;
-handle_wire_corridor_y1 = -111.75;
+handle_wire_corridor_y0 = -159.25;
+handle_wire_corridor_y1 = -106.75;
 handle_wire_neck_center_x = 4.0;
 handle_wire_neck_y = -98.5;
 
