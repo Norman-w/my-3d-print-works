@@ -1156,7 +1156,7 @@ module m6_stage_voids() {
 }
 
 // M6 最终装配是 Z=0 分型的正/反两个大件，不再在第 2/3 层间使用榫槽。
-// 侧边阵列由第 2→1 / 3→4 层向外攻丝；中轴孔由第 1→4 层贯穿；拍面由第 2→3 层。
+// 侧边阵列由第 2→1 / 3→4 层向外攻丝；三颗 M2 由第 1→4 层贯穿；拍面由第 2→3 层。
 m6_tail_screw_y = max(actual_butt_y + 12.5, tail_if_pcb_y + 6.5);
 m6_tail_screw_x = envelope_hx(m6_tail_screw_y) - m6_handle_boss_d / 2 - 0.5;
 m6_tail_screw_positions = [
@@ -1172,7 +1172,8 @@ function m6_move_screw_to_side(p) = [
     p[1]
 ];
 
-// 旧 y=-160 内侧螺丝与尾端抗变形螺丝过近，删除这组重复紧固点。
+// 旧 ±7/-160 贯穿位不再混入侧边短螺丝阵列；迁位后的三颗贯穿 M2
+// 由 parameters.scad 的 m6_handle_through_screw_centers 单独管理。
 function m6_existing_handle_screw_positions() = [];
 
 function m6_extra_handle_screw_positions() =
@@ -1184,9 +1185,8 @@ function m6_all_handle_screw_positions() =
         : concat(m6_existing_handle_screw_positions(), m6_extra_handle_screw_positions());
 
 function m6_handle_through_screw_positions() = [
-    // 仅保留确实穿过刚性 PCB 的 M2 位。旧的 ±7/-160 手柄位已经由
-    // 贝塞尔侧边螺丝体系替代，不能再从 legacy screw_positions 补回 boss。
-    for (p = pcb_through_screw_positions)
+    // 三点第 1→4 层贯穿闭环：尾部迁位后的左右两点 + PCB 尾部中轴点。
+    for (p = m6_handle_through_screw_centers)
         if (screw_in_handle(p)) p
 ];
 
@@ -1320,7 +1320,7 @@ module m6_handle_screw_bosses(front = true) {
     m6_handle_screw_boss_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
 }
 
-// 中轴 M2 boss 属于第 1/4 层：像插柱一样穿过第 2/3 层，在 Z=0 分型面相接。
+// 三颗贯穿 M2 boss 属于第 1/4 层：像插柱一样穿过第 2/3 层，在 Z=0 分型面相接。
 // 不再横向桥接侧壁，以免形成侵占 PCB 深入空间的“爪子”。
 module m6_handle_through_boss_columns(front = true) {
     for (p = m6_handle_through_screw_positions()) {
@@ -1366,7 +1366,7 @@ module m6_core_screw_supports(front = true) {
     intersection() {
         m6_core_blank(front);
         union() {
-            // 侧边细螺丝与中轴 M2 使用各自柱径，并桥接到最近侧壁。
+            // 侧边细螺丝与贯穿 M2 使用各自柱径，并桥接到最近侧壁。
             m6_core_screw_support_group(front, m6_all_handle_screw_positions(), m6_handle_boss_d);
         }
     }
@@ -1643,6 +1643,12 @@ module mechanical_fit_preview() {
             }
             translate([-30, -172, -20]) cube([60, 78, 20]);
         }
+    // Only the two tail M2 fasteners fall inside this crop.  Showing them in
+    // metal makes the layer-1→4 closure visible without adding fake geometry.
+    intersection() {
+        m6_through_fasteners();
+        translate([-30, -172, -20]) cube([60, 78, 40]);
+    }
     protected_battery_preview();
     harness_preview();
 }
@@ -1684,6 +1690,11 @@ module mechanical_pzt_relief_preview() {
 }
 
 // ═══ 渲染 ═══
+
+assert(
+    len(m6_handle_through_screw_positions()) == 3,
+    "M6/M7 handle closure requires exactly three layer-1→4 M2 fasteners"
+);
 
 if (HALF == "m6_core_front") {
     m6_core_front();
@@ -1750,7 +1761,7 @@ echo(str(
     " countersunk self-tapping stainless"
 ));
 echo(str(
-    "M6 fastening: side 2→1 / 3→4; handle center 1→4; blade 2→3"
+    "M6 fastening: side 2→1 / 3→4; three M2 points 1→4; blade 2→3"
 ));
 for (l = [5, 6, 7])
     echo(str(

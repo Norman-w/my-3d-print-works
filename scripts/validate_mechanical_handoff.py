@@ -53,20 +53,6 @@ def _array(text: str, name: str):
     return ast.literal_eval(clean)
 
 
-def _literal_coordinate_pairs(text: str, name: str) -> list[tuple[float, float]]:
-    match = re.search(
-        rf"(?ms)^\s*{re.escape(name)}\s*=\s*(\[.*?\])\s*;",
-        text,
-    )
-    if not match:
-        raise HandoffError(f"missing coordinate list {name}")
-    clean = re.sub(r"//[^\n]*", "", match.group(1))
-    return [
-        (float(x), float(y))
-        for x, y in re.findall(r"\[\s*([-+0-9.]+)\s*,\s*([-+0-9.]+)\s*\]", clean)
-    ]
-
-
 def _field(fp: "pcbnew.FOOTPRINT", name: str) -> str:
     return fp.GetFieldByName(name).GetText() if fp.HasFieldByName(name) else ""
 
@@ -90,6 +76,14 @@ def _point_segment_distance(point, a, b) -> float:
         return math.hypot(px - ax, py - ay)
     t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)))
     return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def _point_rectangle_distance(point, rectangle) -> float:
+    x, y = point
+    x0, y0, x1, y1 = rectangle
+    dx = max(x0 - x, 0.0, x - x1)
+    dy = max(y0 - y, 0.0, y - y1)
+    return math.hypot(dx, dy)
 
 
 def _boundary_distance(point, polygon) -> float:
@@ -305,12 +299,13 @@ def main() -> int:
     )
     if (
         through_function is None
-        or "for (p = pcb_through_screw_positions)" not in through_function.group(1)
+        or "for (p = m6_handle_through_screw_centers)" not in through_function.group(1)
         or re.search(r"for\s*\(p\s*=\s*screw_positions\)", through_function.group(1))
     ):
-        raise HandoffError("M6 handle through-boss inventory is not tied only to PCB through-screw positions")
+        raise HandoffError("M6 handle through-boss inventory is not tied to its three-point contract")
     shoulder_bottom_y = _scalar(parameters, "shoulder_bottom_y")
     m2_boss_radius = _scalar(parameters, "screw_d_boss") / 2
+    m2_outer_recess_radius = max(m2_boss_radius, _scalar(parameters, "plug_recess_d") / 2)
     required_m2_boss_centers = [
         tuple(map(float, point))
         for point in _array(parameters, "pcb_through_screw_positions")
@@ -318,11 +313,22 @@ def main() -> int:
     ]
     if not required_m2_boss_centers:
         raise HandoffError("no required handle PCB-through M2 boss remains")
-    legacy_m2_boss_centers = [
-        point for point in _literal_coordinate_pairs(parameters, "screw_positions")
-        if point[1] <= shoulder_bottom_y - 10
+    m2_boss_centers = [
+        tuple(map(float, point))
+        for point in _array(parameters, "m6_handle_through_screw_centers")
     ]
-    m2_boss_centers = required_m2_boss_centers + legacy_m2_boss_centers
+    if len(m2_boss_centers) != 3 or not set(required_m2_boss_centers).issubset(m2_boss_centers):
+        raise HandoffError(
+            f"handle closure needs three M2 through bosses including {required_m2_boss_centers}: "
+            f"got {m2_boss_centers}"
+        )
+    tail_m2 = [point for point in m2_boss_centers if point not in required_m2_boss_centers]
+    if not (
+        len(tail_m2) == 2
+        and math.isclose(tail_m2[0][0], -tail_m2[1][0], abs_tol=0.001)
+        and math.isclose(tail_m2[0][1], tail_m2[1][1], abs_tol=0.001)
+    ):
+        raise HandoffError(f"tail M2 through-boss pair is not symmetric: {tail_m2}")
     m2_battery_gap = min(
         _point_segment_distance(point, (battery_center[0], battery_y0), (battery_center[0], battery_y1))
         - fit_radius - m2_boss_radius
@@ -333,10 +339,42 @@ def main() -> int:
         for point in m2_boss_centers
         for start, end in wire_segments
     )
-    if m2_battery_gap < 0.5 or m2_wire_gap < 0.5:
+    m2_side_gap = min(
+        math.dist(point, side_point) - m2_boss_radius - side_boss_radius
+        for point in m2_boss_centers
+        for side_point in side_boss_centers
+    )
+    m2_outer_gap = min(
+        max(abs(x) for x, _ in min(slices, key=lambda item: abs(item[0] - point[1]))[1])
+        - abs(point[0]) - m2_outer_recess_radius
+        for point in m2_boss_centers
+    )
+    component_rectangles = [
+        (
+            str(item["ref"]),
+            (
+                float(item["handle_box_xyz"][0]),
+                float(item["handle_box_xyz"][1]),
+                float(item["handle_box_xyz"][3]),
+                float(item["handle_box_xyz"][4]),
+            ),
+        )
+        for item in tail.get("component_keepouts", [])
+    ]
+    board_y0, board_y1 = map(float, screw["pcbSlot"]["yRangeMm"])
+    board_x = float(screw["pcbSlot"]["xLimitMm"])
+    component_rectangles.append(("tail PCB", (-board_x, board_y0, board_x, board_y1)))
+    m2_component_gap = min(
+        _point_rectangle_distance(point, rectangle) - m2_boss_radius
+        for point in m2_boss_centers
+        for _, rectangle in component_rectangles
+    )
+    if min(m2_battery_gap, m2_wire_gap, m2_side_gap, m2_outer_gap, m2_component_gap) < 1.0:
         raise HandoffError(
-            f"protected cell/wire hits a required M2 boss: battery={m2_battery_gap:.3f}, "
-            f"wire={m2_wire_gap:.3f} mm"
+            "three-point M2 closure lacks 1 mm mechanical clearance: "
+            f"battery={m2_battery_gap:.3f}, wire={m2_wire_gap:.3f}, "
+            f"side={m2_side_gap:.3f}, outer={m2_outer_gap:.3f}, "
+            f"tail-components={m2_component_gap:.3f} mm"
         )
 
     j4 = tail.get("battery_connector", {})
@@ -359,8 +397,9 @@ def main() -> int:
         f"side-boss gap={side_wire_gap:.3f} mm"
     )
     print(
-        f"  boss clearance: cell-to-side={side_battery_gap:.3f} mm; "
-        f"cell-to-required-M2={m2_battery_gap:.3f} mm; wire-to-required-M2={m2_wire_gap:.3f} mm"
+        f"  three M2 layer-1→4 bosses {m2_boss_centers}: battery={m2_battery_gap:.3f}, "
+        f"wire={m2_wire_gap:.3f}, side={m2_side_gap:.3f}, outer={m2_outer_gap:.3f}, "
+        f"tail-components={m2_component_gap:.3f} mm"
     )
     print(
         f"  J4-to-cell service gap={tail_service_gap:.3f} mm; "
