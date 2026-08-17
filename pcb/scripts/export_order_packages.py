@@ -248,11 +248,15 @@ def main() -> int:
         print("Use --target separate; it produces two independent Gerber upload archives.")
         return 2
 
-    # This cross-layer gate intentionally runs before creating an output
-    # directory.  DRC alone cannot validate supplier pin semantics, harness
-    # mapping, source values, or the B3U plunger tolerance contract.
+    # Run the release gate for exactly the board(s) being exported.  A tail-only
+    # engineering order must not be blocked by an unrouted main board, while
+    # ``separate`` still requires both independent boards to pass.
+    gate_target = "all" if args.target == "separate" else args.target
     try:
-        run([sys.executable, str(POWER_REWORK_GATE), "--release-gate"])
+        run([
+            sys.executable, str(POWER_REWORK_GATE), "--release-gate",
+            "--target", gate_target,
+        ])
     except subprocess.CalledProcessError:
         print("ORDER EXPORT REFUSED: cross-layer release gate failed; no output directory created.")
         return 2

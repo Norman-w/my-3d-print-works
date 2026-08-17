@@ -57,24 +57,31 @@ def board_counts(path: Path) -> dict[str, int]:
     }
 
 
-def drc(path: Path, output: Path) -> tuple[int, int]:
+def drc(path: Path, output: Path) -> tuple[int, int, int]:
     run([
         str(KICAD_CLI), "pcb", "drc", "--format", "json", "--units", "mm",
         "--severity-all", "--output", str(output), str(path),
     ])
     data = json.loads(output.read_text(encoding="utf-8"))
-    return len(data.get("violations", [])), len(data.get("unconnected_items", []))
+    violations = data.get("violations", [])
+    errors = sum(item.get("severity") == "error" for item in violations)
+    warnings = sum(item.get("severity") == "warning" for item in violations)
+    return errors, warnings, len(data.get("unconnected_items", []))
 
 
-def run_semantic_audits(release_gate: bool) -> None:
+def run_semantic_audits(release_gate: bool, target: str) -> None:
     python = str(KICAD_PYTHON)
-    for script in (
-        "pcb/scripts/audit_power_architecture.py",
-        "pcb-tail/scripts/audit_power_architecture.py",
-        "pcb-tail/scripts/audit_usb_16p_j1.py",
-        "pcb-tail/scripts/audit_battery_connector_j4.py",
-        "scripts/validate_mechanical_handoff.py",
-    ):
+    scripts: list[str] = []
+    if target in ("all", "main"):
+        scripts.append("pcb/scripts/audit_power_architecture.py")
+    if target in ("all", "tail"):
+        scripts.extend((
+            "pcb-tail/scripts/audit_power_architecture.py",
+            "pcb-tail/scripts/audit_usb_16p_j1.py",
+            "pcb-tail/scripts/audit_battery_connector_j4.py",
+            "scripts/validate_mechanical_handoff.py",
+        ))
+    for script in scripts:
         command = [python, str(ROOT / script)]
         if release_gate and (
             script.endswith("audit_power_architecture.py")
@@ -82,37 +89,45 @@ def run_semantic_audits(release_gate: bool) -> None:
         ):
             command.append("--allow-copper")
         run(command)
-    run([sys.executable, str(ROOT / "scripts/validate_tail_board_harness.py")])
+    if target in ("all", "main", "tail"):
+        run([sys.executable, str(ROOT / "scripts/validate_tail_board_harness.py")])
 
 
 # ===== Public validation =====
-def validate(release_gate: bool) -> None:
-    for required in (KICAD_CLI, KICAD_PYTHON, MECHANICAL_REPORT, *BOARDS.values()):
+def validate(release_gate: bool, target: str = "all") -> None:
+    selected_boards = BOARDS if target == "all" else {target: BOARDS[target]}
+    required_inputs = [KICAD_CLI, KICAD_PYTHON, *selected_boards.values()]
+    if target in ("all", "tail"):
+        required_inputs.append(MECHANICAL_REPORT)
+    for required in required_inputs:
         if not required.exists():
             raise ValidationError(f"missing required input: {required}")
 
-    run_semantic_audits(release_gate)
-    mechanical = json.loads(MECHANICAL_REPORT.read_text(encoding="utf-8"))
-    button = mechanical.get("button", {})
+    run_semantic_audits(release_gate, target)
+    button: dict[str, object] = {}
+    if target in ("all", "tail"):
+        mechanical = json.loads(MECHANICAL_REPORT.read_text(encoding="utf-8"))
+        button = mechanical.get("button", {})
     release_failures: list[str] = []
 
-    if button.get("access_mode") != "pinhole_with_optional_retained_plunger":
-        raise ValidationError("tail button access mode is missing or unexpected")
-    if button.get("pinhole_ready") is not True or float(button.get("hole_d", 0)) < 1.8:
-        raise ValidationError("tail button pinhole is not a usable verified baseline")
-    if button.get("plunger_optional") is not True:
-        raise ValidationError("tail button plunger must remain explicitly optional")
+    if target in ("all", "tail"):
+        if button.get("access_mode") != "pinhole_with_optional_retained_plunger":
+            raise ValidationError("tail button access mode is missing or unexpected")
+        if button.get("pinhole_ready") is not True or float(button.get("hole_d", 0)) < 1.8:
+            raise ValidationError("tail button pinhole is not a usable verified baseline")
+        if button.get("plunger_optional") is not True:
+            raise ValidationError("tail button plunger must remain explicitly optional")
 
     with tempfile.TemporaryDirectory(prefix="smartpaddle-power-audit-") as temp:
         temp_dir = Path(temp)
-        for name, board in BOARDS.items():
+        for name, board in selected_boards.items():
             counts = board_counts(board)
-            violations, unconnected = drc(board, temp_dir / f"{name}-drc.json")
-            if violations:
+            errors, warnings, unconnected = drc(board, temp_dir / f"{name}-drc.json")
+            if errors:
                 if release_gate:
-                    release_failures.append(f"{name}: DRC has {violations} violation(s)")
+                    release_failures.append(f"{name}: DRC has {errors} error(s)")
                 else:
-                    raise ValidationError(f"{name}: DRC has {violations} violation(s)")
+                    raise ValidationError(f"{name}: DRC has {errors} error(s)")
 
             if release_gate:
                 if counts["segments"] == 0:
@@ -137,7 +152,7 @@ def validate(release_gate: bool) -> None:
             print(
                 f"{name}: footprints={counts['footprints']} segments={counts['segments']} "
                 f"vias={counts['vias']} copper_zones={counts['zones']} "
-                f"DRC violations={violations} unconnected={unconnected}"
+                f"DRC errors={errors} warnings={warnings} unconnected={unconnected}"
             )
 
     if release_failures:
@@ -146,7 +161,7 @@ def validate(release_gate: bool) -> None:
     if release_gate:
         print("POWER REWORK MANUFACTURING GATE PASS")
     else:
-        if button.get("tolerance_closed") is not False:
+        if target in ("all", "tail") and button.get("tolerance_closed") is not False:
             raise ValidationError("optional plunger must retain its explicit open coupon status")
         print("POWER REWORK ROUTE-FREE HANDOFF PASS")
         print("MANUFACTURING BLOCKED: both boards are unrouted")
@@ -159,9 +174,13 @@ def main() -> int:
         "--release-gate", action="store_true",
         help="require routed, connected boards and closed mechanical tolerance",
     )
+    parser.add_argument(
+        "--target", choices=("all", "main", "tail"), default="all",
+        help="validate both boards (default) or one independently fabricated board",
+    )
     args = parser.parse_args()
     try:
-        validate(args.release_gate)
+        validate(args.release_gate, args.target)
     except (ValidationError, subprocess.CalledProcessError) as exc:
         print(f"VALIDATION FAIL: {exc}", file=sys.stderr)
         return 2

@@ -13,9 +13,9 @@
     {
       "label": "C6",
       "box": [
-        6.952998,
+        -0.075,
         -171.4461678557074,
-        11.602998,
+        4.575,
         -169.3961678557074
       ]
     },
@@ -31,27 +31,27 @@
     {
       "label": "J3",
       "box": [
-        0.295,
+        0.294999,
         -171.4461678557074,
-        12.305,
+        12.305001,
         -167.6961678557074
       ]
     },
     {
       "label": "D2",
       "box": [
-        5.875,
+        0.275,
         -173.69616785570736,
-        9.125,
+        2.225,
         -172.14616785570738
       ]
     },
     {
       "label": "C9",
       "box": [
-        10.945,
+        4.225,
         -173.39616785570738,
-        12.455,
+        5.735,
         -172.14616785570738
       ]
     },
@@ -67,55 +67,55 @@
     {
       "label": "U4",
       "box": [
-        6.425,
+        6.025,
         -174.19616785570736,
-        10.575,
+        9.475,
         -172.14616785570738
       ]
     },
     {
       "label": "U5",
       "box": [
-        4.925,
+        5.175,
         -174.19616785570736,
-        9.075,
+        9.325,
         -172.14616785570738
       ]
     },
     {
       "label": "R9",
       "box": [
-        9.245,
+        9.615,
         -173.09616785570736,
-        10.755,
+        11.125,
         -172.14616785570738
       ]
     },
     {
       "label": "R5",
       "box": [
-        -8.808,
+        -9.505,
         -171.4461678557074,
-        -5.798,
+        -6.495,
         -170.4961678557074
       ]
     },
     {
       "label": "L1",
       "box": [
-        6.792998,
+        -3.785,
         -171.4461678557074,
-        11.362998,
+        0.785,
         -168.8961678557074
       ]
     },
     {
       "label": "C7",
       "box": [
-        11.313998,
-        -171.4461678557074,
-        13.323998,
-        -169.7461678557074
+        6.025,
+        -173.84616785570736,
+        9.475,
+        -172.14616785570738
       ]
     },
     {
@@ -290,7 +290,7 @@
       ],
       "pcbSlotCenterClearanceMm": 2.856615916417958,
       "requiredCenterClearanceMm": 2.8,
-      "componentBossGapMm": 1.2262302539263858,
+      "componentBossGapMm": 1.8501817029524803,
       "fixedBossClearanceMarginMm": 7.528251079788406,
       "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "classification": "preserved_tail_pair",
@@ -449,7 +449,7 @@
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "componentBossGapMm": 1.2262302539263858,
+      "componentBossGapMm": 1.8501817029524803,
       "fixedBossClearanceMarginMm": 7.528251079788406,
       "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "pcbSlotCenterClearanceMm": 2.856615916417958,
@@ -468,7 +468,7 @@
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "componentBossGapMm": 1.2262302539263858,
+      "componentBossGapMm": 1.8501817029524803,
       "fixedBossClearanceMarginMm": 7.528251079788406,
       "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "pcbSlotCenterClearanceMm": 2.856615916417958,
@@ -487,7 +487,7 @@
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "componentBossGapMm": 1.2262302539263858,
+      "componentBossGapMm": 1.8501817029524803,
       "fixedBossClearanceMarginMm": 7.528251079788406,
       "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "pcbSlotCenterClearanceMm": 2.856615916417958,
@@ -506,7 +506,7 @@
         -175.29616785570738
       ],
       "relocatedForPcbSlot": false,
-      "componentBossGapMm": 1.2262302539263858,
+      "componentBossGapMm": 1.8501817029524803,
       "fixedBossClearanceMarginMm": 7.528251079788406,
       "batteryAndWireClearanceMarginMm": 12.358079242838704,
       "pcbSlotCenterClearanceMm": 2.856615916417958,

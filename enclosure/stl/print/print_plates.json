@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T03:50:30.303303+00:00",
+  "generatedAt": "2026-08-17T08:49:41.132316+00:00",
   "assemblyGeometryUnchanged": true,
   "plates": [
     {
@@ -12,12 +12,12 @@
       ],
       "gapMm": 5.0,
       "assemblyGeometryUnchanged": true,
-      "sha256": "5fd4459125fc948cbab1a1a644813f4449c31a46e9460aff67f713b647cb21d7",
+      "sha256": "eba504220a7e1d48f94229db25be3fd71895dfc32bd7e525e5b425fbd3b5fb94",
       "parts": [
         {
           "source": "paddle_m6_layer1_handle_skin_front.stl",
-          "sourceSha256": "9ccbb25a7c9ab5c9c071c883788992c2f28a51219bd4022b2b86f2225ca9778e",
-          "triangleCount": 71036,
+          "sourceSha256": "12f948938a166a7d3b664e648b480f43635356dd191feace551f18a235e1fe6f",
+          "triangleCount": 63910,
           "rotationMatrix": [
             [
               1.0,
@@ -47,8 +47,8 @@
             "contactWidthMm": 23.994672775268555,
             "contactDepthMm": 1.9113998413085938,
             "uprightAlongZ": true,
-            "outsideDirectionCorrected": false,
-            "uprightRotationZDeg": 0.0,
+            "baseFacesBed": false,
+            "verticalFlipXDeg": 0.0,
             "supportRecommendation": "在 Bambu Studio 中为此竖立件开启树状自动支撑"
           },
           "sourceBounds": [
@@ -78,8 +78,8 @@
         },
         {
           "source": "paddle_m6_layer2_core_front.stl",
-          "sourceSha256": "560295e4b9191ec9517b4eda7377c6239baeceefc8ed3ad136c41bde9ecd723c",
-          "triangleCount": 31408,
+          "sourceSha256": "c4ba5fb2638343b59cc58ea30dd4d2eb358f1b0e73c6a8b5ac83dc7fc173af78",
+          "triangleCount": 34146,
           "rotationMatrix": [
             [
               0.7071067811865476,
@@ -145,12 +145,12 @@
       ],
       "gapMm": 5.0,
       "assemblyGeometryUnchanged": true,
-      "sha256": "a301d8cbb75fa20484f149c5834356bf6713e27dbeb103343ceac4357b41b16d",
+      "sha256": "269740a67103896fa4043fa30a4f7d9b6e7055af8141ac414f9523e200da0c7a",
       "parts": [
         {
           "source": "paddle_m6_layer4_handle_skin_back.stl",
-          "sourceSha256": "2f750c67690b4c210470e2d6ccd6986cebb457eee69a94456469de5bb7ab25ba",
-          "triangleCount": 75426,
+          "sourceSha256": "38da6eb139b042256de5e058f19845bc2f6d8114075b5e8829c732a795610374",
+          "triangleCount": 75396,
           "rotationMatrix": [
             [
               1.0,
@@ -176,7 +176,7 @@
           "orientation": {
             "bedContact": "detectedPhysicalBasePlane",
             "contactSourceY": -178.09620666503906,
-            "contactAreaMm2": 225.93931602824233,
+            "contactAreaMm2": 229.39303894216226,
             "contactWidthMm": 32.72509002685547,
             "contactDepthMm": 9.178899765014648,
             "uprightAlongZ": true,
@@ -211,8 +211,8 @@
         },
         {
           "source": "paddle_m6_layer3_core_back.stl",
-          "sourceSha256": "02260a108ebbfbfeb4fb7957d41415af1b8dfc1dab774925e6528313a7717f08",
-          "triangleCount": 28554,
+          "sourceSha256": "5951e4da136db0ce85a17efdc2b33f221f7067e7812f5ac3f146752dae531200",
+          "triangleCount": 31192,
           "rotationMatrix": [
             [
               0.7071067811865476,
@@ -311,7 +311,7 @@
         "partClearanceMm": 15.318909019817047,
         "excludedAreaOverlapMm2": 0.0,
         "solver": "actual-mesh-footprints, detected bed-contact plane, 2mm deterministic search",
-        "candidateCount": 207618,
+        "candidateCount": 206551,
         "passed": true
       }
     }
