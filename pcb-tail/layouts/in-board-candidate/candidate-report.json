@@ -1,0 +1,26 @@
+{
+  "status": "candidate_only_not_for_fabrication",
+  "footprints": 33,
+  "pcb_groups": 8,
+  "zones": 0,
+  "tracks_and_vias": 119,
+  "drc": {
+    "rule_errors": 0,
+    "warnings": 23,
+    "unconnected_items": 53
+  },
+  "safe_local_copper": {
+    "G2_USB_INPUT_LIMIT": 37,
+    "G3_IP5305_POWER_CORE": 31,
+    "G4_SYSTEM_5V_LIMIT": 51,
+    "G8_SIGNAL_INTERFACE": 0
+  },
+  "incomplete_local_groups": [
+    "G1_USB_C_CC_ESD",
+    "G5_PMIC_KEY_STATUS",
+    "G6_RGB_BUFFER_PIXEL",
+    "G7_POWER_BAT_INTERFACES"
+  ],
+  "production_sha256_unchanged": "bf3debd22961eb797a6e2e488d365b77627f230a493b4901b5f8fab4fd6f97ef",
+  "manufacturing_outputs_generated": false
+}
