@@ -1,49 +1,49 @@
-# C4 PZT 可调门槛比较器前端
+# C5 PZT 可调门槛比较器前端
 
 ## 目标与边界
 
-C4 仍以四路比较器输出的上升沿做 TDOA。片内 ADC 只用于调试窥探，不能作为正式时间源，也不能与比较器输出复用脚位。
+C5 仍以四路比较器输出的上升沿做 TDOA。片内 ADC 只用于调试窥探，不能作为正式时间源，也不能与比较器输出复用脚位。
 
 ```
-PZT ── 1M 泄放 ── 4.7k ── BAT54S 钳位 ── CMP_INx ── TLV1814 IN+
+PZT ── 1M 泄放 ── 4.7k ── BAT54S 钳位 ── CMP_INx ── TLV9034 IN+
                                               │
-MCP4728 VOUTx ─────────────────────────────── TLV1814 IN−
+MCP4728 VOUTx ─────────────────────────────── TLV9034 IN−
                                               │
                                               └── OUTx ── S3 边沿 GPIO
 
 CMP_INx ── 1M ── JP_ADC_x（0R，默认 DNP）── S3 独立 ADC1 GPIO
 ```
 
-比较器输入超过 DAC 门槛时输出高电平。TLV1814 是 3.3 V 供电的推挽输出器件，因此四路输出不装 10k 上拉；早期计划里的 `TLV1804` 是料号笔误。
+比较器输入超过 DAC 门槛时输出高电平。TLV9034 是 3.3 V 供电的推挽输出器件，因此四路输出不装 10k 上拉。TSSOP-14 脚位与原先计划的 `TLV1814PWR` 相同，只换料号。
 
 ## 器件与无源件
 
 | 数量 | 器件 | 料号 / 封装 | 备注 |
 |---:|---|---|---|
 | 1 | 四路 DAC | MCP4728-E/UN，MSOP-10 | I²C 地址 `0x60`，内部 2.048 V 基准，增益 ×1 |
-| 1 | 四路比较器 | TLV1814PWR，TSSOP-14 | 2.4–40 V、轨到轨输入、推挽输出 |
+| 1 | 四路比较器 | TLV9034PWR，TSSOP-14 | 1.65–5.5 V、轨到轨输入、推挽、典型 100 ns |
 | 2 | I²C 上拉 | 4.7k，0603 | SDA/SCL → 3V3 |
 | 2 | 去耦 | 100nF，0603 | DAC 与比较器各一颗，贴近电源脚 |
 | 4 | ADC 隔离 | 1M，0603 | 从 `CMP_INx` 到调试节点 |
 | 4 | ADC 跳线 | 0R，0603 | `JP_ADC_TL/TR/BL/BR`，量产默认 DNP |
 | 每码头 | 原 PZT 网络 | 1M + 4.7k + BAT54S | 码头侧保留，输出改名为 `CMP_INx` |
 
-器件依据：[MCP4728 产品页与数据手册](https://www.microchip.com/en-us/product/MCP4728)、[TLV1814 产品页与数据手册](https://www.ti.com/product/TLV1814)。
+器件依据：[MCP4728 产品页与数据手册](https://www.microchip.com/en-us/product/MCP4728)、[TLV9034 产品页与数据手册](https://www.ti.com/product/TLV9034)。
 
 ## 通道与脚位真理表
 
-| 位置 | MCP4728 | TLV1814 通道 | 比较器边沿 GPIO | ADC 窥探 GPIO |
+| 位置 | MCP4728 | TLV9034 通道 | 比较器边沿 GPIO | ADC 窥探 GPIO |
 |---|---|---:|---:|---:|
 | TL | B / VOUTB pin 2 | 2：IN− pin 6、IN+ pin 7、OUT pin 1 | GPIO16 | GPIO1 / ADC1_CH0 |
 | TR | A / VOUTA pin 1 | 1：IN− pin 4、IN+ pin 5、OUT pin 2 | GPIO15 | GPIO2 / ADC1_CH1 |
 | BL | C / VOUTC pin 3 | 3：IN− pin 8、IN+ pin 9、OUT pin 14 | GPIO6 | GPIO4 / ADC1_CH3 |
 | BR | D / VOUTD pin 4 | 4：IN− pin 10、IN+ pin 11、OUT pin 13 | GPIO7 | GPIO8 / ADC1_CH7 |
 
-公共脚：MCP4728 pin 5=GND、6=`/LDAC`→GND、7=SCL/GPIO18、8=SDA/GPIO17、9=3V3、10=`/RDY`悬空；TLV1814 pin 3=3V3、12=GND。
+公共脚：MCP4728 pin 5=GND、6=`/LDAC`→GND、7=SCL/GPIO18、8=SDA/GPIO17、9=3V3、10=`/RDY`悬空；TLV9034 pin 3=3V3、12=GND。
 
 MCU 全表以 `pcb/lib/esp32s3wroom1/pinmap.py` 为准。N16R8 的 GPIO35–37 被八线 PSRAM 占用，不得分配。
 
-TL/TR 的比较器通道有意按 **2/1** 排列：左侧 TL 的 `CMP_IN_TL` 落到更靠左的 TLV1814 pin 7，右侧 TR 的 `CMP_IN_TR` 落到 pin 5，避免两条长模拟线在比较器前交叉。DAC A/B 和边沿 GPIO15/16 同步按 TR/TL 排列；固件对外仍保持通道顺序 TL/TR/BL/BR。独立 ADC 支路不随比较器通道交换。
+TL/TR 的比较器通道有意按 **2/1** 排列：左侧 TL 的 `CMP_IN_TL` 落到更靠左的 TLV9034 pin 7，右侧 TR 的 `CMP_IN_TR` 落到 pin 5，避免两条长模拟线在比较器前交叉。DAC A/B 和边沿 GPIO15/16 同步按 TR/TL 排列；固件对外仍保持通道顺序 TL/TR/BL/BR。独立 ADC 支路不随比较器通道交换。
 
 ## 固件行为
 
@@ -64,8 +64,9 @@ TL/TR 的比较器通道有意按 **2/1** 排列：左侧 TL 的 `CMP_IN_TL` 落
 
 ## PCB 放置与用户布线交接
 
-- DAC、比较器、I²C 上拉、去耦和 ADC 跳线已由 `step4_ato_placement.py` 放在大陆下左区；电池分压与 LED 接口移到拍尾。
-- 两颗 100nF 必须最短回到各自电源/地脚；DAC VOUT 与四路比较器输入按模拟信号处理，远离 LED 数据和开关节点。
+- 比较器/DAC 本体保持 C5 现位：`PZT_CMP_TLV9034` 在 MCU +Y 侧，`PZT_DAC_MCP4728` 在其右侧。TL/TR 通道 2/1 对调不要改。
+- `PZT_C_CMP_100N` 贴 TLV9034 pin 3（VCC）/pin 12（GND）一侧；`PZT_C_DAC_100N` 贴 MCP4728 pin 9。不要把这两颗电容放到 USB 22R 那一行。
+- DAC VOUT 与四路比较器输入按模拟信号处理，远离 LED 数据和 TPS62162 开关节点。
 - 比较器 OUT→S3 的四路尽量等环境、短且不跨槽；它们不是 ADC 网。
-- S3 嵌入式开孔无法连接模组底部 EP41。布线时必须把 perimeter GND pad 1 与 pad 40 各自短接地，并在附近增加足够接地过孔；这是 C4 手工布线的强制检查项。
+- S3 嵌入式开孔无法连接模组底部 EP41。布线时必须把 perimeter GND pad 1 与 pad 40 各自短接地，并在附近增加足够接地过孔。
 - 量产前验收仍需实板：静置误触发、150–300 mV 轻敲、四角 `first=`、DNP ADC 下的定位与 N16R8 PSRAM 启动。

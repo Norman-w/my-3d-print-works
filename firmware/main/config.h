@@ -9,9 +9,9 @@
 // GPIO35..37 are reserved by octal PSRAM. GPIO0/3/45/46 are straps; only
 // GPIO0 is used, exclusively for the BOOT switch.
 
-// --- Piezo comparator edges (TLV1814 push-pull outputs) ---
-#define PIEZO_PIN_1 GPIO_NUM_16  // Top-left; TLV1814 channel 2
-#define PIEZO_PIN_2 GPIO_NUM_15  // Top-right; TLV1814 channel 1
+// --- Piezo comparator edges (TLV9034 push-pull outputs) ---
+#define PIEZO_PIN_1 GPIO_NUM_16  // Top-left; TLV9034 channel 2
+#define PIEZO_PIN_2 GPIO_NUM_15  // Top-right; TLV9034 channel 1
 #define PIEZO_PIN_3 GPIO_NUM_6   // Bottom-left blade corner
 #define PIEZO_PIN_4 GPIO_NUM_7   // Bottom-right blade corner
 

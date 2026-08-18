@@ -19,7 +19,7 @@ struct PiezoEvent {
 
 class PiezoCapture {
 public:
-    // C4 listens to four TLV1814 push-pull outputs. GPIO rising-edge ISR +
+    // C5 listens to four TLV9034 push-pull outputs. GPIO rising-edge ISR +
     // CPU cycle timestamps remain the production TDOA source.
     static esp_err_t init();
 

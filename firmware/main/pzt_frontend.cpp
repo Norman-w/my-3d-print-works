@@ -18,7 +18,7 @@ i2c_master_dev_handle_t s_dac = nullptr;
 uint16_t s_threshold_mv[kChannelCount] = {};
 
 // Public channel order is TL/TR/BL/BR.  On the PCB, TL/TR deliberately use
-// MCP4728 B/A and TLV1814 channels 2/1 so the two top CMP_IN traces do not
+// MCP4728 B/A and TLV9034 channels 2/1 so the two top CMP_IN traces do not
 // cross at the comparator.  BL/BR retain channels C/D and 3/4.
 constexpr uint8_t kDacChannelForLogical[kChannelCount] = {1, 0, 2, 3};
 

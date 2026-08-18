@@ -206,14 +206,15 @@ component MCP4728_MSOP10:
     footprint = "Package_SO:MSOP-10_3x3mm_P0.5mm"
 
 
-component TLV1814_TSSOP14:
-    """TI TLV1814 quad rail-to-rail comparator with push-pull outputs.
+component TLV9034_TSSOP14:
+    """TI TLV9034 quad low-voltage push-pull comparator.
 
-    TLV1804 in the early C4 notes was a typo; TLV1814 is the released
-    four-channel push-pull member. Pin numbers follow TI's PW package.
+    Pin-compatible with the earlier TLV1814PWR TSSOP-14 / LM339-style
+    pinout. Chosen for 3.3 V PZT TDOA: ~100 ns, 0.3 mV typ offset, no
+    output pull-ups. Pin numbers follow TI's PW package.
     """
     designator_prefix = "U"
-    value = "TLV1814PWR"
+    value = "TLV9034PWR"
     signal out_2
     signal out_1
     signal vcc
@@ -254,7 +255,7 @@ component WirePad:
 
 
 component SmallWirePad:
-    """大陆 / bringup 小测试点（含 TP_GND）；官方 TestPoint THT 校本化。"""
+    """历史 bringup 小测试点封装；当前主板不再实例化 TP_3V3 / TP_5VSW。"""
     designator_prefix = "TP"
     signal contact
     contact ~ pin 1

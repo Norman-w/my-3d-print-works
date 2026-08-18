@@ -17,9 +17,8 @@ from "parts.ato" import InductorXFL3012_2u2
 from "parts.ato" import Capacitor0805
 from "parts.ato" import Capacitor1206
 from "parts.ato" import MCP4728_MSOP10
-from "parts.ato" import TLV1814_TSSOP14
+from "parts.ato" import TLV9034_TSSOP14
 from "parts.ato" import WirePad
-from "parts.ato" import SmallWirePad
 from "parts.ato" import MolexPicoBlade_53261_5P
 from "parts.ato" import LED_0603
 from "parts.ato" import Omron_B3U_1000P_Debug
@@ -158,7 +157,7 @@ module PZTDock:
 
 
 module PztThresholdFrontend:
-    """Four PZT thresholds: MCP4728 DAC + TLV1814 push-pull comparator.
+    """Four PZT thresholds: MCP4728 DAC + TLV9034 push-pull comparator.
 
     The ADC peeks are DNP by default. Fitting JP_ADC_* connects the
     comparator input through 1M to a dedicated ADC1 pin; comparator timing
@@ -191,7 +190,7 @@ module PztThresholdFrontend:
     signal adc_iso_br
 
     dac = new MCP4728_MSOP10
-    comparator = new TLV1814_TSSOP14
+    comparator = new TLV9034_TSSOP14
     r_sda_pullup = new Resistor
     r_scl_pullup = new Resistor
     c_dac = new Capacitor
@@ -219,7 +218,7 @@ module PztThresholdFrontend:
     jp_adc_br.value = "0R DNP"
 
     # TL/TR intentionally use channels 2/1 respectively.  This keeps the
-    # left/right CMP_IN traces from crossing at TLV1814 pins 5 and 7.
+    # left/right CMP_IN traces from crossing at TLV9034 pins 5 and 7.
     dac.vout_a ~ vref_tr
     dac.vout_b ~ vref_tl
     dac.vout_c ~ vref_bl
@@ -424,15 +423,6 @@ module LEDInterface:
 
 
 
-module TestPads:
-    """Bringup 大陆测试焊盘：TP_3V3 / TP_SYS_5V_SW。BOOT/EN/开机用宽栈道轻触。"""
-    pin VCC_3V3
-    pin SYS_5V_SW
-
-    vcc_pad = new SmallWirePad;   vcc_pad.contact ~ VCC_3V3
-    sys5_pad = new SmallWirePad;  sys5_pad.contact ~ SYS_5V_SW
-
-
 module McuDebugControls:
     """默认 DNP 的 B3U-1000P：BOOT / EN / 开机测试（并联 btn_sw↔GND）。"""
     pin BOOT
@@ -491,7 +481,6 @@ module SmartPaddleRigid:
     imu = new IM948_Cutout
     power = new PowerLatchAndRegulator
     tail = new TailHarness5P2S
-    bringup = new TestPads
     debug_sw = new McuDebugControls
     pwr_led = new McuPowerLed
     battery = new BatterySense
@@ -636,9 +625,6 @@ module SmartPaddleRigid:
     battery.GND ~ gnd
     battery.SENSE ~ bat_sense
     mcu.GPIO9_BAT_SENSE ~ bat_sense
-
-    bringup.SYS_5V_SW ~ sys_5v_sw
-    bringup.VCC_3V3 ~ vcc
 
     # Dock clamps feed the comparator, never the MCU edge inputs directly.
     pzt_tr.CMP_INPUT ~ pzt_cmp_in_tr

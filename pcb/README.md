@@ -1,8 +1,8 @@
 # SmartPaddle 主板
 
-> **当前仓库状态（2026-08-15）：** 当前硬件组合为 **M7.C5**。`layouts/default/default.kicad_pcb` 标题栏为 `SmartPaddle Main PCB / C5`，已进入电源架构重整后的 **69 封装、0 走线、0 过孔、0 铜覆铜区、143 个预期未连接**交接态；MCU footprint 内另有一个双面天线规则区，它不是覆铜。**可以开始手工布线，但不得制造**。现行布线顺序见 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md)，同步、逐脚审计和放行命令见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **当前仓库状态（2026-08-18）：** 当前硬件组合为 **M7.C5**。`layouts/default/default.kicad_pcb` 标题栏为 `SmartPaddle Main PCB / C5`。无铜交接基线现为 **67 封装、0 走线、0 过孔、0 铜覆铜区、141 个预期未连接**（已去掉几乎不用的 `TP_3V3` / `TP_5VSW`）；MCU footprint 内另有一个双面天线规则区，它不是覆铜。现板已开始布线，**不得制造**。现行布线顺序见 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md)，同步、逐脚审计和放行命令见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >
-> **实物与源文件必须区分：** 已回板的旧 C4（SHA256 `86389d…`）仍可作为历史 bring-up 对象，但它不再等于当前 KiCad 源板；旧装配图、Gerber 与制造就绪结论不得套用到当前 69 件重整版。
+> **实物与源文件必须区分：** 已回板的旧 C4（SHA256 `86389d…`）仍可作为历史 bring-up 对象，但它不再等于当前 KiCad 源板；旧装配图、Gerber 与制造就绪结论不得套用到当前 67 件重整版。
 
 ## 当前 C5 布线入口
 
@@ -12,7 +12,7 @@
 python3 scripts/validate_power_rework.py
 ```
 
-门禁应报告主板 69 件、尾板 33 件、两板 0 铜以及 route-free handoff PASS。用户完成布线和铺地后，再运行 `python3 scripts/validate_power_rework.py --release-gate`；在 0 未连接和全部跨层审计通过以前不会放行制造导出。
+门禁无铜交接基线为主板 67 件、尾板 33 件。现板已有铜，默认 `validate_power_rework.py` 会因非 0 铜失败；语义审计用 `audit_power_architecture.py --allow-copper`。用户完成布线和铺地后，再运行 `python3 scripts/validate_power_rework.py --release-gate`；在 0 未连接和全部跨层审计通过以前不会放行制造导出。
 
 当前 `SW_BOOT`、`SW_EN`、`SW_PWR` 是与尾板同系列的 Omron `B3U-1000P` SMD 开关，均标记 DNP，只供裸板测试选择性手焊，正式外壳不开孔。ESP32-S3 footprint 内的 `ESP32_ANTENNA_HOST_KEEP_OUT` 同时禁止 F/B 面走线、过孔、焊盘、铺铜和其它封装；布线时不得删除或绕过。机械参数和预览见 [`../docs/mechanical-handoff/README.md`](../docs/mechanical-handoff/README.md)。
 

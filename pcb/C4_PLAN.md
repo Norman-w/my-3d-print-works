@@ -1,6 +1,6 @@
 # 电路 C4 改板计划
 
-> **历史文档提示（2026-08-15）：** 下文记录 63 件、已布线 C4 的形成过程，不是当前 `pcb/layouts/default/default.kicad_pcb` 的状态。当前源板已扩展为 69 件并主动清除全部铜，正等待重新布线；制造真理源改为 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **历史文档提示（2026-08-18）：** 下文记录 63 件、已布线 C4 的形成过程，不是当前 `pcb/layouts/default/default.kicad_pcb` 的状态。当前源板为 67 件并已开始重新布线；制造真理源改为 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 
 ## 范围
 

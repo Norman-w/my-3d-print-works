@@ -89,8 +89,8 @@ from collections import Counter
 board = pcbnew.LoadBoard(sys.argv[1])
 fails = []
 fps = list(board.GetFootprints())
-if len(fps) != 69:
-    fails.append(f"footprint_count={len(fps)} expected=69")
+if len(fps) != 67:
+    fails.append(f"footprint_count={len(fps)} expected=67")
 refs = [fp.GetReference() for fp in fps]
 c = Counter(refs)
 if c.get('REF**', 0) or c.get('', 0):

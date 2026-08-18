@@ -43,4 +43,4 @@
 
 (rule "C4 fine-pitch analog packages"
     (constraint clearance (min 0.12mm))
-    (condition "(A.memberOfFootprint('PZT_DAC_MCP4728') && B.memberOfFootprint('PZT_DAC_MCP4728')) || (A.memberOfFootprint('PZT_CMP_TLV1814') && B.memberOfFootprint('PZT_CMP_TLV1814'))"))
+    (condition "(A.memberOfFootprint('PZT_DAC_MCP4728') && B.memberOfFootprint('PZT_DAC_MCP4728')) || (A.memberOfFootprint('PZT_CMP_TLV9034') && B.memberOfFootprint('PZT_CMP_TLV9034'))"))
