@@ -49,7 +49,7 @@ C4_PARTS = (
          "C_0603_1608Metric"),
     Part("pzt_frontend.dac", "PZT_DAC_MCP4728", "MCP4728-E/UN",
          KICAD_PRETTY / "Package_SO.pretty", "MSOP-10_3x3mm_P0.5mm"),
-    Part("pzt_frontend.comparator", "PZT_CMP_TLV1814", "TLV1814PWR",
+    Part("pzt_frontend.comparator", "PZT_CMP_TLV9034", "TLV9034PWR",
          KICAD_PRETTY / "Package_SO.pretty", "TSSOP-14_4.4x5mm_P0.65mm"),
     Part("pzt_frontend.r_sda_pullup", "PZT_R_SDA_PU_4K7", "4.7k",
          KICAD_PRETTY / "Resistor_SMD.pretty", "R_0603_1608Metric"),
@@ -144,8 +144,6 @@ PAD_NETS: dict[str, dict[str, str]] = {
     "battery.r_top": {"1": "bat_cell_p", "2": "bat_sense"},
     "battery.r_bottom": {"1": "bat_sense", "2": "gnd"},
     "battery.c_filter": {"1": "bat_sense", "2": "gnd"},
-    "bringup.vcc_pad": {"1": "vcc"},
-    "bringup.sys5_pad": {"1": "sys_5v_sw"},
     "debug_sw.sw_boot": {"1": "boot_btn", "2": "gnd"},
     "debug_sw.sw_en": {"1": "en", "2": "gnd"},
     "debug_sw.sw_pwr": {"1": "btn_sw", "2": "gnd"},
@@ -195,7 +193,11 @@ for corner in ("tl", "tr", "bl", "br"):
 
 
 EXPECTED_C4_COMPONENTS = len(PAD_NETS)
-RETIRED_C4_ADDRESSES = frozenset({"bringup.gnd_pad"})
+RETIRED_C4_ADDRESSES = frozenset({
+    "bringup.gnd_pad",
+    "bringup.vcc_pad",
+    "bringup.sys5_pad",
+})
 
 
 DNP_ADDRESSES = frozenset(
@@ -242,7 +244,7 @@ def _source_guard() -> None:
     text = ATO_SOURCE.read_text(encoding="utf-8")
     required = {
         "ESP32S3WROOM1_Cutout", "PztThresholdFrontend", "MCP4728_MSOP10",
-        "TLV1814_TSSOP14", "GPIO35..37", "F.p1(5V) 对 B.p5(GND)",
+        "TLV9034_TSSOP14", "GPIO35..37", "F.p1(5V) 对 B.p5(GND)",
     }
     missing = sorted(token for token in required if token not in text)
     if missing:

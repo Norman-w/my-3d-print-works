@@ -3,7 +3,7 @@
 
 The routed board is never an Atopile build target.  This script moves logical
 pad nets from the route-free staging PCB to the user PCB by
-``atopile_address`` + pad number, keeps all 63 legacy footprint poses,
+``atopile_address`` + pad number, keeps all 61 legacy footprint poses,
 normalizes verified footprint geometry, and parks a missing new part outside
 the outline only on its first synchronization.
 """
@@ -76,6 +76,11 @@ CHANGED_PARTS = {
     "power.r_button_gpio_pullup": Part("PW_R_BTN_GPIO_PU_100K", "100k 1%"),
     "usb_r_dp": Part("USB_R_DP_22R", "22R 1%"),
     "usb_r_dn": Part("USB_R_DN_22R", "22R 1%"),
+    "pzt_frontend.comparator": Part(
+        "PZT_CMP_TLV9034",
+        "TLV9034PWR",
+        "https://www.ti.com/lit/gpn/tlv9034",
+    ),
 }
 
 NEW_PARTS = frozenset(
@@ -355,7 +360,7 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
     stage = pcbnew.LoadBoard(str(staging_path))
     target_parts = _by_address(target)
     stage_parts = _by_address(stage)
-    if len(target_parts) not in (63, 69) or len(stage_parts) != 69:
+    if len(target_parts) not in (61, 67) or len(stage_parts) != 67:
         raise SyncError(
             f"unexpected inventories: target={len(target_parts)}, staging={len(stage_parts)}"
         )
@@ -545,8 +550,8 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
         after = _pose(target_parts[address])
         if after != before:
             raise SyncError(f"legacy pose changed: {address}: {before} -> {after}")
-    if len(list(target.GetFootprints())) != 69:
-        raise SyncError("main board must contain 69 footprints")
+    if len(list(target.GetFootprints())) != 67:
+        raise SyncError("main board must contain 67 footprints")
     references = [fp.GetReference() for fp in target.GetFootprints()]
     if len(references) != len(set(references)):
         raise SyncError("duplicate references after synchronization")
@@ -559,7 +564,7 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
     temporary.unlink()
     pcbnew.SaveBoard(str(temporary), target)
     verify = pcbnew.LoadBoard(str(temporary))
-    if verify is None or len(list(verify.GetFootprints())) != 69:
+    if verify is None or len(list(verify.GetFootprints())) != 67:
         temporary.unlink(missing_ok=True)
         raise SyncError("saved-board verification failed")
     if list(verify.GetTracks()) or verify.GetAreaCount():
@@ -577,11 +582,11 @@ def synchronize(target_path: Path, staging_path: Path) -> None:
             path.with_suffix(suffix).unlink(missing_ok=True)
 
     print("Main-board power/USB synchronization PASS")
-    print("  63 legacy footprint poses preserved")
+    print("  61 legacy footprint poses preserved")
     print("  TPS62162 + 0805 input + 1206 output footprints applied")
     print("  6 added parts retained at existing poses (parked only on first add)")
     print("  stable public net names and deliberate NC pads preserved")
-    print("  69 footprints; 0 tracks/vias; 0 copper zones")
+    print("  67 footprints; 0 tracks/vias; 0 copper zones")
     print("  MCU footprint antenna rule area refreshed from the audited project library")
 
 

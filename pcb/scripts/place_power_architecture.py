@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Place the route-free main-board power, button and USB support parts.
+"""Place the route-free main-board power, USB and PZT-frontend support parts.
 
 This is deliberately a placement-only step.  It refuses any board containing
 tracks, vias or zones, moves only the named footprints below, and verifies that
 all other footprint poses are byte-for-byte unchanged.  The coordinates keep
 the TPS62162 input capacitor, converter, XFL3012 inductor and output capacitor
 in power-flow order; move the ESP32 supply/EN capacitors next to their module
-pins; and put the two 22 ohm USB resistors next to GPIO13/GPIO14.
+pins; park USB 22 ohm resistors east of the module so they do not plug the
+MCU-to-analog corridor; and keep the DAC / I2C pullups / bypass caps off the
+TLV9034 pin-escape channels.
 """
 
 # ===== 分区：导入/依赖 =====
@@ -41,7 +43,9 @@ class Pose:
 
 
 # Only these references are intentionally moved.  Existing connectors,
-# sensors, piezo front ends, switches and test points remain untouched.
+# sensors, the comparator body, PZT docks and switches remain untouched.
+# DAC shifts east so VREF/digital can use the CMP–DAC corridor;
+# I2C pullups leave that corridor and sit on the DAC I2C/VDD side.
 PLACEMENTS = {
     # PMIC block: CIN -> TPS62162 -> L -> COUT, all on F.Cu.
     "PW_C_IN_10U": Pose(-19.00, -20.70, 90.0),
@@ -52,17 +56,30 @@ PLACEMENTS = {
     "PW_R_BTN_RAW_PU_100K": Pose(-18.80, -28.66, 90.0),
     "PW_Q_BTN_SENSE": Pose(-11.40, -28.50, 90.0),
     "PW_R_BTN_GPIO_PU_100K": Pose(-11.40, -32.20, 0.0),
-    # ESP32 supply and EN support, directly above pins 2/3.
-    "MCU_C_BULK_10U": Pose(-12.00, 10.10, 0.0),
-    "MCU_C_DEC_100N": Pose(-8.80, 10.10, 0.0),
-    "MCU_C_EN_1U": Pose(-5.50, 10.10, 0.0),
-    "PW_R_EN_PU_10K": Pose(-2.00, 10.10, 0.0),
+    # ESP32 bulk/decap stay above pins 2/3.  EN RC parks on the far +X
+    # edge of the solid top strip so the TLV9034 south row can fan out.
+    "MCU_C_BULK_10U": Pose(-12.00, 10.40, 0.0),
+    "MCU_C_DEC_100N": Pose(-8.80, 10.40, 0.0),
+    # East of the module, still in the solid top strip.  Leaving the
+    # MCU-to-TLV9034 alley empty so the comparator south row can fan out.
+    "MCU_C_EN_1U": Pose(19.00, 10.80, 90.0),
+    "PW_R_EN_PU_10K": Pose(19.00, 13.97, 90.0),
     # Power indicator is non-critical; park it in the clear left column.
     "LED_MCU_PWR": Pose(-19.40, -12.80, 0.0),
     "R_MCU_PWR_1K": Pose(-19.40, -15.00, 90.0),
-    # Series termination sits immediately beyond ESP32 USB pads 13/14.
-    "USB_R_DN_22R": Pose(5.95, 10.70, 0.0),
-    "USB_R_DP_22R": Pose(9.10, 10.70, 180.0),
+    # USB 22R east of the module but west of the right-wing inner cut.
+    # 90° puts pad 2 (PHY) toward the MCU and pad 1 (connector) toward the tail.
+    "USB_R_DN_22R": Pose(11.80, 11.00, 90.0),
+    "USB_R_DP_22R": Pose(13.50, 11.00, 90.0),
+    # TLV9034 stays at its C4 body pose; bypass sits west of the body so the
+    # MCU-facing analog pin row can still arrive from -X.
+    "PZT_C_CMP_100N": Pose(-7.70, 14.80, 180.0),
+    # DAC VOUT stays facing the comparator; body shifts +X to open a ~3 mm
+    # courtyard corridor.  Bypass and I2C pullups cluster on the VDD/I2C side.
+    "PZT_DAC_MCP4728": Pose(5.80, 17.465, 0.0),
+    "PZT_C_DAC_100N": Pose(10.70, 16.97, 0.0),
+    "PZT_R_SCL_PU_4K7": Pose(10.70, 14.90, 180.0),
+    "PZT_R_SDA_PU_4K7": Pose(10.70, 18.70, 180.0),
 }
 
 PLACEMENT_VALUES = {
@@ -98,7 +115,7 @@ def _save_detached(board: "pcbnew.BOARD", destination: Path) -> None:
         detached = scratch / f"main-{uuid.uuid4().hex}.kicad_pcb"
         pcbnew.SaveBoard(str(detached), board)
         verify = pcbnew.LoadBoard(str(detached))
-        if verify is None or len(list(verify.GetFootprints())) != 69:
+        if verify is None or len(list(verify.GetFootprints())) != 67:
             raise PlacementError("detached saved-board verification failed")
         if list(verify.GetTracks()) or verify.GetAreaCount():
             raise PlacementError("placement unexpectedly created copper")
@@ -117,8 +134,8 @@ def place(board_path: Path) -> None:
         raise PlacementError(f"board not found: {board_path}")
     board = pcbnew.LoadBoard(str(board_path))
     footprints = {fp.GetReference(): fp for fp in board.GetFootprints()}
-    if len(footprints) != 69:
-        raise PlacementError(f"expected 69 unique footprints, got {len(footprints)}")
+    if len(footprints) != 67:
+        raise PlacementError(f"expected 67 unique footprints, got {len(footprints)}")
     missing = set(PLACEMENTS) - set(footprints)
     if missing:
         raise PlacementError(f"missing placement targets: {sorted(missing)}")
@@ -150,8 +167,9 @@ def place(board_path: Path) -> None:
     print("  buck power loop placed in physical current-flow order")
     print("  ESP32 supply/EN support moved next to module pins")
     print("  isolated button reader and USB 22R resistors placed")
+    print("  PZT DAC, I2C pullups and 100 nF caps placed for pin escape")
     print("  every other footprint pose preserved")
-    print("  69 footprints; 0 tracks/vias; 0 zones")
+    print("  67 footprints; 0 tracks/vias; 0 zones")
 
 
 def main() -> int:

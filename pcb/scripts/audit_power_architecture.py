@@ -168,9 +168,9 @@ FORCED_NC = {
 
 INTENTIONAL_POSES = {
     "LED_MCU_PWR": (-19.400, -12.800, 0.0, pcbnew.F_Cu),
-    "MCU_C_BULK_10U": (-12.000, 10.100, 0.0, pcbnew.F_Cu),
-    "MCU_C_DEC_100N": (-8.800, 10.100, 0.0, pcbnew.F_Cu),
-    "MCU_C_EN_1U": (-5.500, 10.100, 0.0, pcbnew.F_Cu),
+    "MCU_C_BULK_10U": (-12.000, 10.400, 0.0, pcbnew.F_Cu),
+    "MCU_C_DEC_100N": (-8.800, 10.400, 0.0, pcbnew.F_Cu),
+    "MCU_C_EN_1U": (19.000, 10.800, 90.0, pcbnew.F_Cu),
     "PW_BUCK_3V3": (-16.300, -19.500, 0.0, pcbnew.F_Cu),
     "PW_C_IN_10U": (-19.000, -20.700, 90.0, pcbnew.F_Cu),
     "PW_C_OUT_22U": (-10.800, -23.650, 90.0, pcbnew.F_Cu),
@@ -178,16 +178,21 @@ INTENTIONAL_POSES = {
     "PW_Q_BTN_SENSE": (-11.400, -28.500, 90.0, pcbnew.F_Cu),
     "PW_R_BTN_GPIO_PU_100K": (-11.400, -32.200, 0.0, pcbnew.F_Cu),
     "PW_R_BTN_RAW_PU_100K": (-18.800, -28.660, 90.0, pcbnew.F_Cu),
-    "PW_R_EN_PU_10K": (-2.000, 10.100, 0.0, pcbnew.F_Cu),
+    "PW_R_EN_PU_10K": (19.000, 13.970, 90.0, pcbnew.F_Cu),
     "R_MCU_PWR_1K": (-19.400, -15.000, 90.0, pcbnew.F_Cu),
-    "USB_R_DN_22R": (5.950, 10.700, 0.0, pcbnew.F_Cu),
-    "USB_R_DP_22R": (9.100, 10.700, 180.0, pcbnew.F_Cu),
+    "USB_R_DN_22R": (11.800, 11.000, 90.0, pcbnew.F_Cu),
+    "USB_R_DP_22R": (13.500, 11.000, 90.0, pcbnew.F_Cu),
+    "PZT_C_CMP_100N": (-7.700, 14.800, 180.0, pcbnew.F_Cu),
+    "PZT_C_DAC_100N": (10.700, 16.970, 0.0, pcbnew.F_Cu),
+    "PZT_DAC_MCP4728": (5.800, 17.465, 0.0, pcbnew.F_Cu),
+    "PZT_R_SCL_PU_4K7": (10.700, 14.900, 180.0, pcbnew.F_Cu),
+    "PZT_R_SDA_PU_4K7": (10.700, 18.700, 180.0, pcbnew.F_Cu),
 }
 
-# SHA-256 over address|reference|position-nm|orientation|layer for the 54
-# footprints outside INTENTIONAL_POSES.  It was derived after independently
-# proving those poses equal the routed checkpoint cc10307.
-PROTECTED_POSE_SHA256 = "720f624c08f4203b7d5201891aef621b4a94b2edace509a271d29aa96a9e00e5"
+# SHA-256 over address|reference|position-nm|orientation|layer for the 47
+# footprints outside INTENTIONAL_POSES.  Recomputed after removing the
+# unused TP_3V3 / TP_5VSW bringup pads.
+PROTECTED_POSE_SHA256 = "c0ac184b03610fc5524f37626ee14b5da5847371132b64739e1dfb39d314f335"
 
 
 # ===== 分区：私有成员 =====
@@ -236,8 +241,8 @@ def _audit_all_staging_maps(
     target: dict[str, "pcbnew.FOOTPRINT"],
     stage: dict[str, "pcbnew.FOOTPRINT"],
 ) -> None:
-    if set(target) != set(stage) or len(target) != 69:
-        raise AuditError("main target/staging 69-address inventories differ")
+    if set(target) != set(stage) or len(target) != 67:
+        raise AuditError("main target/staging 67-address inventories differ")
     for address in sorted(stage):
         expected = {}
         for number, net in _pad_map(stage[address]).items():
@@ -278,7 +283,7 @@ def _audit_poses(fps: dict[str, "pcbnew.FOOTPRINT"]) -> None:
             f"{fp.GetOrientationDegrees():.6f}|{fp.GetLayer()}"
         )
     digest = hashlib.sha256(("\n".join(sorted(lines)) + "\n").encode()).hexdigest()
-    if len(lines) != 54 or digest != PROTECTED_POSE_SHA256:
+    if len(lines) != 47 or digest != PROTECTED_POSE_SHA256:
         raise AuditError(f"protected legacy pose digest mismatch: {len(lines)} / {digest}")
 
 
@@ -396,8 +401,8 @@ def audit(require_route_free: bool = True) -> None:
     board = pcbnew.LoadBoard(str(BOARD))
     staging = pcbnew.LoadBoard(str(STAGING))
     fps = {fp.GetReference(): fp for fp in board.GetFootprints()}
-    if len(fps) != 69:
-        raise AuditError(f"expected 69 unique footprints, found {len(fps)}")
+    if len(fps) != 67:
+        raise AuditError(f"expected 67 unique footprints, found {len(fps)}")
     if require_route_free and (list(board.GetTracks()) or board.GetAreaCount()):
         raise AuditError("main board must remain route-free: 0 tracks/vias/zones")
     if list(staging.GetTracks()) or staging.GetAreaCount():
@@ -560,17 +565,17 @@ def audit(require_route_free: bool = True) -> None:
 
     print("Main-board end-to-end power/USB audit PASS")
     print("  authoritative TPS62162/XFL3012 source hashes and exact XFL3012 land verified")
-    print("  all 69 staging-to-physical pad/net maps plus deliberate NC pins verified")
+    print("  all 67 staging-to-physical pad/net maps plus deliberate NC pins verified")
     print("  harness, PMOS latch, isolated active-high button and USB split verified")
     print(
         "  critical distances: "
         + ", ".join(f"{name}={distance:.2f}mm" for name, distance in distances.items())
     )
-    print("  15 intentional poses and 54 checkpoint-preserved legacy poses verified")
+    print("  20 intentional poses and 47 checkpoint-preserved legacy poses verified")
     print("  critical package library IDs and populated values verified")
     print("  BAT_P -> 1M/1M + 100nF -> GPIO9 ADC and web estimate verified; no charging telemetry")
     if require_route_free:
-        print("  69 footprints; 0 tracks/vias; 0 copper zones; 1 footprint antenna rule area")
+        print("  67 footprints; 0 tracks/vias; 0 copper zones; 1 footprint antenna rule area")
     else:
         print("  copper allowed; electrical/physical semantics audited independently of routing")
 

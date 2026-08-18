@@ -7,7 +7,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 ## 核心功能
 
 ### 精准击球定位
-- 球拍四角各布一枚压电陶瓷传感器；当前 C5 沿用 MCP4728 四路门槛与 TLV1814 数字边沿，再以 GPIO ISR + CPU cycle 锁存振动波到达时间差
+- 球拍四角各布一枚压电陶瓷传感器；当前 C5 沿用 MCP4728 四路门槛与 TLV9034 数字边沿，再以 GPIO ISR + CPU cycle 锁存振动波到达时间差
 - 通过多项式回归模型将 TDOA 转换为拍面毫米级 XY 坐标
 - 支持 **每副球拍独立标定**，消除个体制造偏差，标定 RMSE < 3mm
 
@@ -46,7 +46,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 | 层级 | 技术栈 | 说明 |
 |------|--------|------|
-| **传感器/固件** | C3: ESP32-C6；C4/C5: ESP32-S3-WROOM-1-N16R8 | MCP4728 + TLV1814 四路边沿 TDOA + 十轴 IMU |
+| **传感器/固件** | C3: ESP32-C6；C4/C5: ESP32-S3-WROOM-1-N16R8 | MCP4728 + TLV9034 四路边沿 TDOA + 十轴 IMU |
 | **外壳（模型）** | OpenSCAD（`enclosure/`） | 四零件分体壳；版本见下方「模型」线 |
 | **电路板** | 飞线 → FPC → 刚性骨架 PCB | 版本见下方「电路」线；与模型线独立编号 |
 | **后端** | Go, SQLite, WebSocket | REST API / 实时数据管道 / 定位算法 / 标定管理 |
@@ -109,7 +109,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 
 **当前组合：** 主线 **V1** · 模型 **M7** · 电路 **C5** · 软件仍早期，整机硬件标识为 **M7.C5**。M7 的事实依据是现行外壳已相对 M6 增加受保护 14500 局部适配、两束实购 MX1.25 线的独立通道、8 个实际 PZT 焊盘中心让位，以及与主板 B3U/ESP32 天线边界联动的机械门禁；电路拓扑没有因此再变，仍为 C5。外壳打印件与预览清单使用当前模型号 `paddle_m7_*`；PCB、同步脚本和交接文件保持跨版本通用名。OpenSCAD 连续承力生成链内部仍保留 `m6_*` 模块/参数名，不代表当前整机版本。
 
-**硬件（当前）：** **C5** = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV1814 PZT 前端 + TPS62162 主电源 + 独立尾板 IP5305T/限流/USB/按键/灯；当前两板已同步但尚未布线。资料：[当前布线交接](../pcb/ROUTING_HANDOFF.md) · [电源架构重整](power-architecture-rework/README.md) · [外壳](../enclosure/README.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [主尾板线束](../pcb-tail/ADAPTER_HARNESS.md) · [尾板 Type-C](usb-c-vertical-16p-short/README.md) · [尾板/拍柄 3D 干涉](tail-handle-interference/README.md)。C4 计划、制造审计与 C5 早期单 8P 计划继续保留为历史资料，不再定义当前板。待办见 [`TODOS.md`](../TODOS.md)。
+**硬件（当前）：** **C5** = 单 IM948 + ESP32-S3-WROOM-1-N16R8 + MCP4728/TLV9034 PZT 前端 + TPS62162 主电源 + 独立尾板 IP5305T/限流/USB/按键/灯；当前两板已同步但尚未布线。资料：[当前布线交接](../pcb/ROUTING_HANDOFF.md) · [电源架构重整](power-architecture-rework/README.md) · [外壳](../enclosure/README.md) · [PZT 前端](PZT/comparator-frontend.md) · [IM948](IM948/README.md) · [主尾板线束](../pcb-tail/ADAPTER_HARNESS.md) · [尾板 Type-C](usb-c-vertical-16p-short/README.md) · [尾板/拍柄 3D 干涉](tail-handle-interference/README.md)。C4 计划、制造审计与 C5 早期单 8P 计划继续保留为历史资料，不再定义当前板。待办见 [`TODOS.md`](../TODOS.md)。
 
 ---
 
@@ -138,7 +138,7 @@ SmartPaddle 是一套端到端的**智能乒乓球拍系统**，通过在球拍�
 | TDOA 时间分辨率 | CPU cycle 锁存（非 12.5 ns RMT） |
 | 定位 RMSE（标定后）| < 3 mm |
 | IMU 上报率 | 当前固件 100 Hz @115200；250 Hz 为精简订阅后的待实测目标 |
-| PZT 时间源 | C5 沿用 TLV1814 推挽边沿 + CPU cycle；ADC 仅 DNP 调试窥探 |
+| PZT 时间源 | C5 使用 TLV9034 推挽边沿 + CPU cycle；ADC 仅 DNP 调试窥探 |
 | WebSocket 延迟 | < 10 ms (本地) |
 | 数据库 | SQLite WAL，支持 10万+ 击球记录 |
 

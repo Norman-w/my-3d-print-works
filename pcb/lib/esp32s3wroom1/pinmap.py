@@ -79,7 +79,7 @@ PROJECT_BINDINGS: dict[int, str] = {
     4: "GPIO4_PZT_ADC_BL",
     6: "GPIO6_PZT_EDGE_BL",
     7: "GPIO7_PZT_EDGE_BR",
-    # TLV1814 channel 1 is TR and channel 2 is TL so the top CMP_IN traces
+    # TLV9034 channel 1 is TR and channel 2 is TL so the top CMP_IN traces
     # approach pins 5/7 without crossing.
     8: "GPIO15_PZT_EDGE_TR",
     9: "GPIO16_PZT_EDGE_TL",

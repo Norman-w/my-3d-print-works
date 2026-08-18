@@ -67,7 +67,7 @@ READABLE_REFS = {
     'mcu_c_dec': ('MCU_C_DEC_100N', '100nF'),
     'en_c_delay': ('MCU_C_EN_1U', '1uF'),
     'pzt_frontend.dac': ('PZT_DAC_MCP4728', 'MCP4728-E/UN'),
-    'pzt_frontend.comparator': ('PZT_CMP_TLV1814', 'TLV1814PWR'),
+    'pzt_frontend.comparator': ('PZT_CMP_TLV9034', 'TLV9034PWR'),
     'pzt_frontend.r_sda_pullup': ('PZT_R_SDA_PU_4K7', '4.7k'),
     'pzt_frontend.r_scl_pullup': ('PZT_R_SCL_PU_4K7', '4.7k'),
     'pzt_frontend.c_dac': ('PZT_C_DAC_100N', '100nF'),
@@ -87,8 +87,6 @@ READABLE_REFS = {
     'debug_sw.sw_pwr': ('SW_PWR', 'B3U-1000P DNP'),
     'tail.conn_f': ('TAIL_MX125_F', 'MX1.25-5P'),
     'tail.conn_b': ('TAIL_MX125_B', 'MX1.25-5P'),
-    'bringup.vcc_pad': ('TP_3V3', '3V3'),
-    'bringup.sys5_pad': ('TP_5VSW', 'sys_5v_sw'),
 }
 
 # The C4 S3 model is a native STEP in millimetres. The legacy IM948 WRL
@@ -497,14 +495,6 @@ def main():
         'led_c_supply': (6.0, 72.0, 0),
     }
     moved += _place_map(fp_by_addr, c4_tail_local_zone, True)
-
-    # 大陆快照缺失时，把两颗 bringup TP 放在电源区（与现行手布一致）
-    if not mainland_snap:
-        bringup_zone = {
-            'bringup.vcc_pad': (19.05, -13.335, 0),
-            'bringup.sys5_pad': (19.05, -25.781, 0),
-        }
-        moved += _place_map(fp_by_addr, bringup_zone, True)
 
     corridor_snap = _snapshot_map(CORRIDOR_SNAPSHOT)
     if corridor_snap:

@@ -1,6 +1,6 @@
 # C4 最终制造与回板就绪审计
 
-> **历史审计，当前已失效（2026-08-15）：** 本文的 GO 结论只绑定下面列出的旧板 SHA256 和 63 件布线状态。当前 `pcb/layouts/default/default.kicad_pcb` 已扩展为 69 件并清除所有铜，存在 143 个预期未连接，**不可制造**。现行放行条件见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **历史审计，当前已失效（2026-08-18）：** 本文的 GO 结论只绑定下面列出的旧板 SHA256 和 63 件布线状态。当前 `pcb/layouts/default/default.kicad_pcb` 为 67 件（已去掉 bringup 测试焊盘）并已开始重新布线，**不可制造**。现行放行条件见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 
 > 审计日期：2026-07-30（Asia/Shanghai）  
 > 适用对象：审计当时的 `pcb/layouts/default/default.kicad_pcb` 历史对象，标题栏 **SmartPaddle Rigid PCB / C4**；不适用于当前同路径 C5

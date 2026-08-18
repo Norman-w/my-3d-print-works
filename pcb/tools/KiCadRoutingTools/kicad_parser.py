@@ -1270,7 +1270,16 @@ def _iter_zone_blocks(content: str):
     content between the opening ``(zone`` line and its matching closing paren.
     Shared by :func:`extract_zones` and :func:`extract_keepouts`.
     """
-    zone_start_pattern = r'\r?\n\t\(zone\s*\r?\n'
+    yield from _iter_zone_blocks_indented(content, r'\r?\n\t\(zone\s*\r?\n')
+
+
+def _iter_all_zone_blocks(content: str):
+    """Yield every ``(zone ...)`` block, including footprint-nested keepouts."""
+    yield from _iter_zone_blocks_indented(content, r'\r?\n\t+\(zone\s*\r?\n')
+
+
+def _iter_zone_blocks_indented(content: str, zone_start_pattern: str):
+    """Yield zone bodies whose opening line matches ``zone_start_pattern``."""
     for start_match in re.finditer(zone_start_pattern, content):
         # Find the matching closing paren (string-aware, so a lone paren inside
         # a quoted token cannot run the scan past the zone end — see issue #113).
@@ -1372,7 +1381,7 @@ def extract_keepouts(content: str) -> List[dict]:
          tracks_allowed: bool, vias_allowed: bool}
     """
     keepouts = []
-    for zc in _iter_zone_blocks(content):
+    for zc in _iter_all_zone_blocks(content):
         # The keepout clause holds nested sub-clauses, e.g.
         #   (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) ...)
         # so capture its full balanced-paren body rather than just the first ).

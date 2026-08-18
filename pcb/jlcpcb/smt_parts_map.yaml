@@ -9,7 +9,7 @@
 
 schema_version: 1
 notes: >
-  Economic SMT 只贴顶面 SMD。ESP32 / IM948 / 尾插 / PZT 线焊盘 / 测试点 /
+  Economic SMT 只贴顶面 SMD。ESP32 / IM948 / 尾插 / PZT 线焊盘 /
   THT 轻触 / DNP 跳线一律进 hand_solder 清单，不进 BOM/CPL。
 
 defaults:
@@ -102,11 +102,11 @@ parts:
     package: "MSOP-10"
     comment: "MCP4728 quad 12-bit DAC"
     library: extended
-  "TLV1814PWR":
-    lcsc: "C43134047"
-    mpn: "TLV1814PWR"
+  "TLV9034PWR":
+    lcsc: "C3658293"
+    mpn: "TLV9034PWR"
     package: "TSSOP-14"
-    comment: "TLV1814 quad push-pull comparator"
+    comment: "TLV9034 quad push-pull comparator (100ns, 3.3V)"
     library: extended
 
   # --- LED（颜色可按来料改 C 号）---
@@ -138,9 +138,3 @@ parts:
   "PZT GND wire":
     smt: false
     reason: wire_pad
-  "3V3":
-    smt: false
-    reason: testpoint
-  "sys_5v_sw":
-    smt: false
-    reason: testpoint

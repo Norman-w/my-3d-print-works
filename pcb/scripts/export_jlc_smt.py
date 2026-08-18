@@ -5,7 +5,6 @@ Default exclusions (not placed by SMT):
   - ESP32-S3 / IM948 embedded modules
   - Tail MX1.25 connectors
   - PZT wire pads (SIG/GND)
-  - Bring-up test points
   - KiCad DNP footprints (JP_ADC_*)
   - Through-hole tactiles (SW_*)
 
@@ -42,8 +41,6 @@ HAND_ADDR_EXACT = frozenset(
         "imu",
         "tail.conn_f",
         "tail.conn_b",
-        "bringup.vcc_pad",
-        "bringup.sys5_pad",
         "debug_sw.sw_boot",
         "debug_sw.sw_en",
         "debug_sw.sw_pwr",

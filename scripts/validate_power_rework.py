@@ -31,7 +31,7 @@ BOARDS = {
     "tail": ROOT / "pcb-tail/layouts/default/default.kicad_pcb",
 }
 EXPECTED_UNROUTED = {
-    "main": {"footprints": 69, "unconnected": 143},
+    "main": {"footprints": 67, "unconnected": 141},
     "tail": {"footprints": 33, "unconnected": 79},
 }
 MECHANICAL_REPORT = ROOT / "enclosure/stl/interference/tail_interference.json"

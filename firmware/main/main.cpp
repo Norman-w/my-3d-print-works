@@ -205,7 +205,7 @@ extern "C" void app_main() {
     }
 
     ESP_LOGI(TAG, "SmartPaddle 固件启动");
-    ESP_LOGI(TAG, "C4 压电: MCP4728 门槛 + TLV1814 四比较器 + GPIO ISR TDOA");
+    ESP_LOGI(TAG, "C5 压电: MCP4728 门槛 + TLV9034 四比较器 + GPIO ISR TDOA");
 
     // 2. 外设初始化（LED；用户键已在 power_control_init）
     init_peripherals();
