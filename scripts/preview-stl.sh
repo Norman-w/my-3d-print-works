@@ -57,7 +57,7 @@ ensure_assets() {
     exit 1
   fi
   if [[ ! -f "$DIR/paddle_m6_monolithic_front.stl" ]]; then
-    echo "→ 缺少 M6 STL，先导出…"
+    echo "→ 缺少 M7 STL，先导出…"
     "$ROOT/scripts/export-stl.sh"
   fi
 }
