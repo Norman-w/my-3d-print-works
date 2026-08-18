@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate M6 printable STL topology and the head-handle load path."""
+"""Validate M7 printable STL topology and the head-handle load path."""
 
 from __future__ import annotations
 
@@ -16,23 +16,23 @@ import trimesh
 ROOT = Path(__file__).resolve().parents[1]
 STL = ROOT / "enclosure" / "stl"
 PARTS = {
-    "skin_front": "paddle_m6_layer1_handle_skin_front.stl",
-    "core_front": "paddle_m6_layer2_core_front.stl",
-    "core_back": "paddle_m6_layer3_core_back.stl",
-    "skin_back": "paddle_m6_layer4_handle_skin_back.stl",
-    "monolithic_front": "paddle_m6_monolithic_front.stl",
-    "monolithic_back": "paddle_m6_monolithic_back.stl",
-    "fasteners": "paddle_m6_fasteners.stl",
+    "skin_front": "paddle_m7_layer1_handle_skin_front.stl",
+    "core_front": "paddle_m7_layer2_core_front.stl",
+    "core_back": "paddle_m7_layer3_core_back.stl",
+    "skin_back": "paddle_m7_layer4_handle_skin_back.stl",
+    "monolithic_front": "paddle_m7_monolithic_front.stl",
+    "monolithic_back": "paddle_m7_monolithic_back.stl",
+    "fasteners": "paddle_m7_fasteners.stl",
 }
 PRINT_PLATES = {
-    "plate_1_2": ("print/paddle_m6_print_plate_layers_1_2.stl", ("skin_front", "core_front")),
-    "plate_3_4": ("print/paddle_m6_print_plate_layers_3_4.stl", ("core_back", "skin_back")),
+    "plate_1_2": ("print/paddle_m7_print_plate_layers_1_2.stl", ("skin_front", "core_front")),
+    "plate_3_4": ("print/paddle_m7_print_plate_layers_3_4.stl", ("core_back", "skin_back")),
 }
 JOIN_Y = -78.5
 CORE_HALF_T = 3.0
 BUILD_MM = 256.0
 PLATE_GAP_MM = 5.0
-SCREW_SAFETY_REPORT = ROOT / "enclosure/generated/m6_screw_safety.json"
+SCREW_SAFETY_REPORT = ROOT / "enclosure/generated/m7_screw_safety.json"
 
 
 # ===== 分区：私有成员 =====
@@ -286,11 +286,11 @@ def main() -> int:
         )
 
     if errors:
-        print("\nM6 geometry validation failed:")
+        print("\nM7 geometry validation failed:")
         for error in errors:
             print(f"  - {error}")
         return 2
-    print("\nM6 geometry validation passed")
+    print("\nM7 geometry validation passed")
     return 0
 
 

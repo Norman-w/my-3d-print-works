@@ -129,20 +129,20 @@ echo ""
 # 交互式子命令: ./scripts/export-stl.sh tip
 if [[ "${1:-}" == "tip" ]]; then
   TIP_LENGTH="${TIP_LENGTH:-25}"
-  echo "→ 导出 M6 背面合体尾部 ${TIP_LENGTH}mm 切片（装配验证用）"
-  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_m6_handle_back_tip.stl" \
+  echo "→ 导出 M7 背面合体尾部 ${TIP_LENGTH}mm 切片（装配验证用）"
+  $OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_m7_handle_back_tip.stl" \
     ${SCAD_DEFS[@]+"${SCAD_DEFS[@]}"} \
     -D "HALF=\"m6_handle_back_tip\"" \
     -D "TIP_LENGTH=${TIP_LENGTH}" \
     "$SCAD"
-  if [[ -f "$OUT/paddle_m6_handle_back_tip.stl" ]]; then
-    ls -lh "$OUT/paddle_m6_handle_back_tip.stl"
+  if [[ -f "$OUT/paddle_m7_handle_back_tip.stl" ]]; then
+    ls -lh "$OUT/paddle_m7_handle_back_tip.stl"
   else
-    echo "错误: 未生成 paddle_m6_handle_back_tip.stl" >&2
+    echo "错误: 未生成 paddle_m7_handle_back_tip.stl" >&2
     exit 1
   fi
   echo ""
-  echo "完成：paddle_m6_handle_back_tip.stl (${TIP_LENGTH}mm)"
+  echo "完成：paddle_m7_handle_back_tip.stl (${TIP_LENGTH}mm)"
   echo ""
   echo "如需指定长度: TIP_LENGTH=30 ./scripts/export-stl.sh tip"
   exit 0
@@ -150,23 +150,25 @@ fi
 
 SKIP_STEP6="${SKIP_STEP6:-0}"
 
-# M6 是破坏性工艺升级：移除旧四件/半壳名称，避免误打印旧结构。
+# 破坏性工艺升级后只保留当前模型产物，避免误打印旧结构。
 rm -f \
   "$OUT"/paddle_blade_front.stl "$OUT"/paddle_blade_back.stl \
   "$OUT"/paddle_handle_front.stl "$OUT"/paddle_handle_back.stl \
   "$OUT"/paddle_shell_front.stl "$OUT"/paddle_shell_back.stl \
   "$OUT"/paddle_split_assembly.stl "$OUT"/paddle_handle_back_tip.stl \
-  "$OUT"/paddle_handle_tail.stl
+  "$OUT"/paddle_handle_tail.stl \
+  "$OUT"/paddle_m6_*.stl \
+  "$OUT"/print/paddle_m6_*.stl
 
-export_part m6_skin_front "$OUT/paddle_m6_layer1_handle_skin_front.stl"
-export_part m6_core_front "$OUT/paddle_m6_layer2_core_front.stl"
-export_part m6_core_back "$OUT/paddle_m6_layer3_core_back.stl"
-export_part m6_skin_back "$OUT/paddle_m6_layer4_handle_skin_back.stl"
-export_part m6_monolithic_front "$OUT/paddle_m6_monolithic_front.stl"
-export_part m6_monolithic_back "$OUT/paddle_m6_monolithic_back.stl"
-export_part m6_assembly "$OUT/paddle_m6_assembly.stl"
-export_part m6_exploded "$OUT/paddle_m6_exploded.stl"
-export_part m6_fasteners "$OUT/paddle_m6_fasteners.stl"
+export_part m6_skin_front "$OUT/paddle_m7_layer1_handle_skin_front.stl"
+export_part m6_core_front "$OUT/paddle_m7_layer2_core_front.stl"
+export_part m6_core_back "$OUT/paddle_m7_layer3_core_back.stl"
+export_part m6_skin_back "$OUT/paddle_m7_layer4_handle_skin_back.stl"
+export_part m6_monolithic_front "$OUT/paddle_m7_monolithic_front.stl"
+export_part m6_monolithic_back "$OUT/paddle_m7_monolithic_back.stl"
+export_part m6_assembly "$OUT/paddle_m7_assembly.stl"
+export_part m6_exploded "$OUT/paddle_m7_exploded.stl"
+export_part m6_fasteners "$OUT/paddle_m7_fasteners.stl"
 export_part m6_fasteners_front "$OUT/preview/fasteners_front.stl"
 export_part m6_fasteners_back "$OUT/preview/fasteners_back.stl"
 export_part m6_fasteners_through "$OUT/preview/fasteners_through.stl"
@@ -181,8 +183,8 @@ export_part m6_stage_continuous_blank "$OUT/preview/stage_continuous_blank.stl"
 export_part m6_stage_voids "$OUT/preview/stage_voids.stl"
 
 TIP_LENGTH="${TIP_LENGTH:-25}"
-echo "→ M6 背面合体尾部切片 ${TIP_LENGTH}mm …"
-$OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_m6_handle_back_tip.stl" \
+echo "→ M7 背面合体尾部切片 ${TIP_LENGTH}mm …"
+$OPENSCAD_BIN $OPENSCAD_FLAGS -o "$OUT/paddle_m7_handle_back_tip.stl" \
   ${SCAD_DEFS[@]+"${SCAD_DEFS[@]}"} \
   -D "HALF=\"m6_handle_back_tip\"" \
   -D "TIP_LENGTH=${TIP_LENGTH}" \
@@ -194,7 +196,7 @@ if [[ "$SKIP_STEP6" != "1" ]]; then
   PCB_TAIL="$ROOT/pcb-tail/layouts/default/default.kicad_pcb"
   if [[ -f "$STEP6" && -f "$PCB_TAIL" ]]; then
     echo ""
-    echo "→ Step6：pcb-tail 干涉 M6 四层与合体件 …"
+    echo "→ Step6：pcb-tail 干涉 M7 四层与合体件 …"
     STEP6_PY="$ROOT/scripts/.venv-stl/bin/python"
     if [[ ! -x "$STEP6_PY" ]]; then
       STEP6_PY="${PYTHON_CMD[0]:-python3}"
@@ -218,11 +220,11 @@ echo "→ 写入 M7 工艺预览 manifest …"
 
 echo ""
 echo "完成。最终打印件（enclosure/stl/）:"
-echo "  paddle_m6_layer{1..4}_*.stl      ← 四层分制"
-echo "  print/paddle_m6_print_plate_layers_{1_2,3_4}.stl ← 两件独立同板排版"
-echo "  paddle_m6_monolithic_{front,back}.stl"
-echo "  paddle_m6_{assembly,exploded}.stl"
-echo "  paddle_m6_fasteners.stl          ← 侧边动态 M1.x + 三点贯穿/拍面 M2 装配模拟"
-echo "  paddle_m6_handle_back_tip.stl"
+echo "  paddle_m7_layer{1..4}_*.stl      ← 四层分制"
+echo "  print/paddle_m7_print_plate_layers_{1_2,3_4}.stl ← 两件独立同板排版"
+echo "  paddle_m7_monolithic_{front,back}.stl"
+echo "  paddle_m7_{assembly,exploded}.stl"
+echo "  paddle_m7_fasteners.stl          ← 侧边动态 M1.x + 三点贯穿/拍面 M2 装配模拟"
+echo "  paddle_m7_handle_back_tip.stl"
 echo "跳过尾板干涉: SKIP_STEP6=1 ./scripts/export-stl.sh"
 echo "快速预览:     QUALITY_MODE=quick ./scripts/export-stl.sh"

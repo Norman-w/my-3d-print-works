@@ -125,7 +125,7 @@ export default function StlProcessPreview() {
         setActiveId(next.processSteps[0]?.id ?? '');
       })
       .catch((reason: unknown) => {
-        setError(`未找到 M6 预览资产：${String(reason)}。请先运行 ./scripts/export-stl.sh`);
+        setError(`未找到 M7 预览资产：${String(reason)}。请先运行 ./scripts/export-stl.sh`);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -361,7 +361,9 @@ export default function StlProcessPreview() {
   return (
     <div style={{ display: 'flex', flex: 1, minHeight: 0, color: '#e5e7eb' }}>
       <aside style={PANEL}>
-        <h2 style={{ margin: '0 0 4px', color: '#60a5fa' }}>M7 工艺预览</h2>
+        <h2 style={{ margin: '0 0 4px', color: '#60a5fa' }}>
+          {manifest?.modelVersion ?? 'M7'} 工艺预览
+        </h2>
         <div style={{ color: '#94a3b8', fontSize: 12, marginBottom: 12 }}>
           四层连续承力 · 头柄无缝
         </div>

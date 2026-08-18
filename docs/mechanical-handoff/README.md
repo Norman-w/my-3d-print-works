@@ -1,6 +1,6 @@
 # M7.C5 布线前机械与射频交接
 
-本目录保存当前方案真正参与建模和门禁的机械契约；版本号只写在说明内，文件名和脚本名不派生版本特例。OpenSCAD 直接读取 [`mechanical-contract.scad`](mechanical-contract.scad)，`scripts/validate_mechanical_handoff.py` 再从当前 KiCad 主板逐项反证坐标和尺寸。
+本目录保存当前方案真正参与建模和门禁的机械契约。交接文件本身保持跨版本通用名；外壳打印件在 `enclosure/stl/`，当前模型号为 `paddle_m7_*`。OpenSCAD 直接读取 [`mechanical-contract.scad`](mechanical-contract.scad)，`scripts/validate_mechanical_handoff.py` 再从当前 KiCad 主板逐项反证坐标和尺寸。
 
 ## 已锁定实物输入
 

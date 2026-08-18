@@ -28,7 +28,7 @@
 
 - SW1 已由 4.5×4.5 mm THT 换成 Omron `B3U-1000P` SMD，footprint 为 `Button_Switch_SMD:SW_SPST_B3U-1000P`；保持原锚点 `(-1.651,-5.461) mm` 和 `-90°`，没有移动或旋转其他器件。
 - Pad 1=`user_btn`、Pad 2=`GND`，当前已布线并接入双面 GND 覆铜。
-- 拍柄基准操作方式为 SW1 中心 Ø2.0 mm 直通针孔，可用针尖/笔尖操作，不用固定柱长期压住开关。另有从壳内装入、Ø3.0 mm 法兰防外脱的 Ø1.6 mm 可选活动推杆；推杆批量使用前仍须做行程试片。详见 [`../docs/tail-user-switch-b3u-1000p/README.md`](../docs/tail-user-switch-b3u-1000p/README.md) 和 [`../docs/tail-handle-interference/README.md`](../docs/tail-handle-interference/README.md)。当前四层制造 STL 和两张打印拼板已按正式尾板干涉事实重新生成。
+- 拍柄基准操作方式为 SW1 中心 Ø2.0 mm 直通针孔，可用针尖/笔尖操作，不用固定柱长期压住开关。另有从壳内装入、Ø3.0 mm 法兰防外脱的 Ø1.6 mm 可选活动推杆；推杆批量使用前仍须做行程试片。详见 [`../docs/tail-user-switch-b3u-1000p/README.md`](../docs/tail-user-switch-b3u-1000p/README.md) 和 [`../docs/tail-handle-interference/README.md`](../docs/tail-handle-interference/README.md)。当前四层制造 STL 和两张 `paddle_m7_*` 打印拼板已按正式尾板干涉事实重新生成。
 - `python3 pcb-tail/scripts/audit_battery_connector_j4.py --allow-copper` 同时核对 J4 与 SW1 的位姿、针脚网络和项目内资料；铜完整性由尾板独立制造门禁另行检查。
 
 ## 主板线束接口（卧插、已布线）
@@ -73,7 +73,7 @@ python3 scripts/validate_power_rework.py --release-gate --target tail
 外形：`web/src/data/userBezierProfiles.json` + `enclosure/parameters.scad`  
 内缩：`wall_t + tail_cavity_inset`；`board_clearance = -0.50` 嵌入环槽。
 
-壳体开孔：`./scripts/export-stl.sh`（含 Step6，按本板位姿干涉，并生成独立 B3U 活动推杆）；当前 M7.C5 已按正式尾板重新生成并通过四层几何和两张打印拼板门禁。
+壳体开孔：`./scripts/export-stl.sh`（含 Step6，按本板位姿干涉，并生成独立 B3U 活动推杆）；当前 M7.C5 已按正式尾板重新生成 `paddle_m7_*` 四层件和两张打印拼板。
 
 ## 文件
 

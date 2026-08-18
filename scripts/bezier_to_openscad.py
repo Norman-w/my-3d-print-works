@@ -22,7 +22,7 @@ DEFAULT_PARAMS = ROOT / "enclosure/parameters.scad"
 OUT_DIR = ROOT / "enclosure/generated"
 OUT_SCAD = OUT_DIR / "bezier_geometry.scad"
 TAIL_INTERFERENCE = ROOT / "enclosure/stl/interference/tail_interference.json"
-SCREW_SAFETY_REPORT = OUT_DIR / "m6_screw_safety.json"
+SCREW_SAFETY_REPORT = OUT_DIR / "m7_screw_safety.json"
 MECHANICAL_CONTRACT = ROOT / "docs/mechanical-handoff/mechanical-contract.scad"
 
 DEFAULT_SIDE = {

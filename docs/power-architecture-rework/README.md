@@ -2,7 +2,7 @@
 
 状态（2026-08-16）：当前硬件登记为 **M7.C5**。电气、封装、网络映射、元件位姿和固件接口已同步；尾板 J2/J3 已换为 Molex 53261-0471 卧插 SMT。按板端与已插 51021 线端的完整包络，C2、低电流状态电阻 R6 和 J4 做了最小避让；C3/U3/L1 保持原位。主板与尾板都故意删除了全部布线、过孔和铜覆铜区，**可开始手工布线，当前不得制造**。主板为 69 个封装、尾板为 33 个封装。MCU footprint 内另有一个双面天线规则区，它不是覆铜；这是无铜交接态，不是可制造状态。
 
-版本判断以现行源为准：M7 相对 M6 新增受保护 14500 的局部内腔、两束实购 4 芯线通道、8 个 PZT 焊点让位，以及主板 B3U 调试键/ESP32 天线边界的跨层门禁；电气拓扑仍是增加 TPS62162、按键隔离、修正尾板 USB-C、双 TPS2553、ACH 电池座等内容的 C5。版本号不进入脚本或 PCB 文件名，既有 `m6_*` 只是连续承力结构的历史内部标识；现行通用入口为 [`../../pcb/ROUTING_HANDOFF.md`](../../pcb/ROUTING_HANDOFF.md)、[`../../pcb-tail/ADAPTER_HARNESS.md`](../../pcb-tail/ADAPTER_HARNESS.md) 与 [`../mechanical-handoff/README.md`](../mechanical-handoff/README.md)。
+版本判断以现行源为准：M7 相对 M6 新增受保护 14500 的局部内腔、两束实购 4 芯线通道、8 个 PZT 焊点让位，以及主板 B3U 调试键/ESP32 天线边界的跨层门禁；电气拓扑仍是增加 TPS62162、按键隔离、修正尾板 USB-C、双 TPS2553、ACH 电池座等内容的 C5。外壳打印件使用当前模型号 `paddle_m7_*`；PCB、同步脚本和交接文件保持跨版本通用名。OpenSCAD 连续承力生成链内部仍保留 `m6_*` 模块/参数名。现行通用入口为 [`../../pcb/ROUTING_HANDOFF.md`](../../pcb/ROUTING_HANDOFF.md)、[`../../pcb-tail/ADAPTER_HARNESS.md`](../../pcb-tail/ADAPTER_HARNESS.md) 与 [`../mechanical-handoff/README.md`](../mechanical-handoff/README.md)。
 
 ## 为什么不能只看 DRC
 

@@ -4,7 +4,7 @@
   "plates": [
     {
       "label": "第1+2块：长承力板平放45° + 加厚外贴件竖立",
-      "path": "print/paddle_m6_print_plate_layers_1_2.stl",
+      "path": "print/paddle_m7_print_plate_layers_1_2.stl",
       "buildVolumeMm": [
         256.0,
         256.0,
@@ -15,7 +15,7 @@
       "sha256": "eba504220a7e1d48f94229db25be3fd71895dfc32bd7e525e5b425fbd3b5fb94",
       "parts": [
         {
-          "source": "paddle_m6_layer1_handle_skin_front.stl",
+          "source": "paddle_m7_layer1_handle_skin_front.stl",
           "sourceSha256": "12f948938a166a7d3b664e648b480f43635356dd191feace551f18a235e1fe6f",
           "triangleCount": 63910,
           "rotationMatrix": [
@@ -77,7 +77,7 @@
           ]
         },
         {
-          "source": "paddle_m6_layer2_core_front.stl",
+          "source": "paddle_m7_layer2_core_front.stl",
           "sourceSha256": "c4ba5fb2638343b59cc58ea30dd4d2eb358f1b0e73c6a8b5ac83dc7fc173af78",
           "triangleCount": 34146,
           "rotationMatrix": [
@@ -137,7 +137,7 @@
     },
     {
       "label": "第3+4块：长承力板平放45° + 加厚外贴件竖立",
-      "path": "print/paddle_m6_print_plate_layers_3_4.stl",
+      "path": "print/paddle_m7_print_plate_layers_3_4.stl",
       "buildVolumeMm": [
         256.0,
         256.0,
@@ -148,7 +148,7 @@
       "sha256": "269740a67103896fa4043fa30a4f7d9b6e7055af8141ac414f9523e200da0c7a",
       "parts": [
         {
-          "source": "paddle_m6_layer4_handle_skin_back.stl",
+          "source": "paddle_m7_layer4_handle_skin_back.stl",
           "sourceSha256": "38da6eb139b042256de5e058f19845bc2f6d8114075b5e8829c732a795610374",
           "triangleCount": 75396,
           "rotationMatrix": [
@@ -210,7 +210,7 @@
           ]
         },
         {
-          "source": "paddle_m6_layer3_core_back.stl",
+          "source": "paddle_m7_layer3_core_back.stl",
           "sourceSha256": "5951e4da136db0ce85a17efdc2b33f221f7067e7812f5ac3f146752dae531200",
           "triangleCount": 31192,
           "rotationMatrix": [

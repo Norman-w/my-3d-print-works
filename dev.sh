@@ -57,14 +57,14 @@ echo ""
 
 # 1. Keep ignored/generated STL assets in sync with the checked-out source.
 echo "[1/5] Checking M7 STL assets..."
-M6_FRONT="$ROOT/enclosure/stl/paddle_m6_monolithic_front.stl"
+M7_FRONT="$ROOT/enclosure/stl/paddle_m7_monolithic_front.stl"
 STALE_STL=0
 for SOURCE in \
   "$ROOT/enclosure/paddle_shell.scad" \
   "$ROOT/enclosure/parameters.scad" \
   "$ROOT/scripts/bezier_to_openscad.py" \
   "$ROOT/pcb-tail/layouts/default/default.kicad_pcb"; do
-  if [[ ! -f "$M6_FRONT" || "$SOURCE" -nt "$M6_FRONT" ]]; then
+  if [[ ! -f "$M7_FRONT" || "$SOURCE" -nt "$M7_FRONT" ]]; then
     STALE_STL=1
   fi
 done

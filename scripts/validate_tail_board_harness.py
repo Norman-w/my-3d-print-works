@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "pcb-tail/harness/adapter.json"
 TAIL_INTERFERENCE = ROOT / "enclosure/stl/interference/tail_interference.json"
-SCREW_SAFETY = ROOT / "enclosure/generated/m6_screw_safety.json"
+SCREW_SAFETY = ROOT / "enclosure/generated/m7_screw_safety.json"
 MAIN_FIT_REPORT = ROOT / "pcb/output/tail_mx125_fit/fit_report.txt"
 
 

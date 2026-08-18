@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-将 M6 无缝合体 STL 正交投影为二维轮廓图，并与 parameters.scad 做尺寸/对称性分析。
+将 M7 无缝合体 STL 正交投影为二维轮廓图，并与 parameters.scad 做尺寸/对称性分析。
 
 坐标系（与 OpenSCAD 一致）:
   X — 拍宽
@@ -469,12 +469,12 @@ def main() -> int:
     parser.add_argument(
         "--front",
         type=Path,
-        default=root / "enclosure/stl/paddle_m6_monolithic_front.stl",
+        default=root / "enclosure/stl/paddle_m7_monolithic_front.stl",
     )
     parser.add_argument(
         "--back",
         type=Path,
-        default=root / "enclosure/stl/paddle_m6_monolithic_back.stl",
+        default=root / "enclosure/stl/paddle_m7_monolithic_back.stl",
     )
     parser.add_argument(
         "--params",
@@ -504,17 +504,17 @@ def main() -> int:
 
     front_mesh = load_mesh(args.front)
     reports.append(
-        analyze_one(front_mesh, "paddle_m6_monolithic_front", args.out, spec, shell_kind="front")
+        analyze_one(front_mesh, "paddle_m7_monolithic_front", args.out, spec, shell_kind="front")
     )
-    print(f"✓ M6 正面合体件 → {args.out / 'paddle_m6_monolithic_front'}")
+    print(f"✓ M7 正面合体件 → {args.out / 'paddle_m7_monolithic_front'}")
 
     if not args.no_back and args.back.is_file():
         paths.append(args.back)
         back_mesh = load_mesh(args.back)
         reports.append(
-            analyze_one(back_mesh, "paddle_m6_monolithic_back", args.out, spec, shell_kind="back")
+            analyze_one(back_mesh, "paddle_m7_monolithic_back", args.out, spec, shell_kind="back")
         )
-        print(f"✓ M6 背面合体件 → {args.out / 'paddle_m6_monolithic_back'}")
+        print(f"✓ M7 背面合体件 → {args.out / 'paddle_m7_monolithic_back'}")
 
         asm = trimesh.util.concatenate([front_mesh, back_mesh])
         reports.append(

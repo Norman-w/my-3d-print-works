@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Step 6 — 用 pcb-tail 干涉已导出的 M6 四层与合体件。
+"""Step 6 — 用 pcb-tail 干涉已导出的 M7 四层与合体件。
 
 输入（须已由 export-stl.sh / OpenSCAD 生成）：
-  enclosure/stl/paddle_m6_layer{1..4}_*.stl
-  enclosure/stl/paddle_m6_monolithic_{front,back}.stl
-  enclosure/stl/paddle_m6_fasteners.stl
+  enclosure/stl/paddle_m7_layer{1..4}_*.stl
+  enclosure/stl/paddle_m7_monolithic_{front,back}.stl
+  enclosure/stl/paddle_m7_fasteners.stl
 
-输出会覆盖上述打印件，并重建 M6 装配、爆炸图和尾段试片。
+输出会覆盖上述打印件，并重建 M7 装配、爆炸图和尾段试片。
 另输出独立安装的 B3U 导向活动推杆：
-  enclosure/stl/paddle_m6_tail_button_plunger.stl
+  enclosure/stl/paddle_m7_tail_button_plunger.stl
 
 诊断（不覆盖打印件）：
   enclosure/stl/interference/board_slot.stl
@@ -383,7 +383,7 @@ def pcb_ready() -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Step6: pcb-tail 干涉已导出 M6 拍体")
+    parser = argparse.ArgumentParser(description="Step6: pcb-tail 干涉已导出 M7 拍体")
     parser.add_argument("--skip-export", action="store_true")
     parser.add_argument("--check-only", action="store_true", help="仅检查 pcb-tail 是否可干涉")
     args = parser.parse_args()
@@ -400,17 +400,17 @@ def main() -> int:
     import trimesh
 
     parts = {
-        "skin_front": STL / "paddle_m6_layer1_handle_skin_front.stl",
-        "core_front": STL / "paddle_m6_layer2_core_front.stl",
-        "core_back": STL / "paddle_m6_layer3_core_back.stl",
-        "skin_back": STL / "paddle_m6_layer4_handle_skin_back.stl",
-        "monolithic_front": STL / "paddle_m6_monolithic_front.stl",
-        "monolithic_back": STL / "paddle_m6_monolithic_back.stl",
+        "skin_front": STL / "paddle_m7_layer1_handle_skin_front.stl",
+        "core_front": STL / "paddle_m7_layer2_core_front.stl",
+        "core_back": STL / "paddle_m7_layer3_core_back.stl",
+        "skin_back": STL / "paddle_m7_layer4_handle_skin_back.stl",
+        "monolithic_front": STL / "paddle_m7_monolithic_front.stl",
+        "monolithic_back": STL / "paddle_m7_monolithic_back.stl",
     }
-    fasteners_path = STL / "paddle_m6_fasteners.stl"
+    fasteners_path = STL / "paddle_m7_fasteners.stl"
     for p in (*parts.values(), fasteners_path):
         if not p.is_file():
-            print(f"缺少已导出 M6 零件: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
+            print(f"缺少已导出 M7 零件: {p}\n请先跑 ./scripts/export-stl.sh", file=sys.stderr)
             return 1
 
     info = (
@@ -436,9 +436,9 @@ def main() -> int:
     )
     _export(trimesh.util.concatenate(all_cuts), INTER_DIR / "all_cuts.stl")
     _export(plunger, INTER_DIR / "button_plunger.stl")
-    _export(plunger, STL / "paddle_m6_tail_button_plunger.stl")
+    _export(plunger, STL / "paddle_m7_tail_button_plunger.stl")
 
-    print("→ 干涉 M6 四层与正反合体件 …")
+    print("→ 干涉 M7 四层与正反合体件 …")
     cut_parts = {
         name: _difference_all(_load_stl(path), all_cuts)
         for name, path in parts.items()
@@ -451,30 +451,30 @@ def main() -> int:
     assembly = trimesh.util.concatenate(
         [cut_parts[name] for name in assembly_order]
     )
-    _export(assembly, STL / "paddle_m6_assembly.stl")
+    _export(assembly, STL / "paddle_m7_assembly.stl")
 
     exploded_parts = []
     for name, dz in zip(assembly_order, (12.0, 4.0, -4.0, -12.0)):
         mesh = cut_parts[name].copy()
         mesh.apply_translation([0.0, 0.0, dz])
         exploded_parts.append(mesh)
-    _export(trimesh.util.concatenate(exploded_parts), STL / "paddle_m6_exploded.stl")
+    _export(trimesh.util.concatenate(exploded_parts), STL / "paddle_m7_exploded.stl")
 
     butt_y = float(info.get("butt_y", BUTT_Y))
     try:
         tip_back = _crop_tip(cut_parts["monolithic_back"], butt_y)
-        _export(tip_back, STL / "paddle_m6_handle_back_tip.stl")
+        _export(tip_back, STL / "paddle_m7_handle_back_tip.stl")
         tip_full = _crop_tip(
             trimesh.util.concatenate(
                 [cut_parts["monolithic_front"], cut_parts["monolithic_back"]]
             ),
             butt_y,
         )
-        _export(tip_full, STL / "paddle_m6_handle_tail.stl")
+        _export(tip_full, STL / "paddle_m7_handle_tail.stl")
     except Exception as exc:
         print(f"  tip 裁切跳过: {exc}")
 
-    print("Step6 完成 ✓  M6 最终打印件与可选按钮推杆已写入 enclosure/stl/")
+    print("Step6 完成 ✓  M7 最终打印件与可选按钮推杆已写入 enclosure/stl/")
     print("  Ø2.0 mm 针孔可直接操作；推杆须从壳内装入，采用前先做尾段行程试片。")
     return 0
 

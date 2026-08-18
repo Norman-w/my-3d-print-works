@@ -20,7 +20,7 @@ SHELL = ROOT / "enclosure/paddle_shell.scad"
 BOARD = ROOT / "pcb/layouts/default/default.kicad_pcb"
 HARNESS = ROOT / "pcb-tail/harness/adapter.json"
 TAIL_FACTS = ROOT / "enclosure/stl/interference/tail_interference.json"
-SCREW_FACTS = ROOT / "enclosure/generated/m6_screw_safety.json"
+SCREW_FACTS = ROOT / "enclosure/generated/m7_screw_safety.json"
 BEZIER = ROOT / "scripts/bezier_to_openscad.py"
 TAIL_CUTS = ROOT / "enclosure/stl/interference/tail_board_cuts.scad"
 STEP6 = ROOT / "scripts/step6_tail_board_interfere_handle.py"
@@ -315,7 +315,7 @@ def main() -> int:
         or "for (p = m6_handle_through_screw_centers)" not in through_function.group(1)
         or re.search(r"for\s*\(p\s*=\s*screw_positions\)", through_function.group(1))
     ):
-        raise HandoffError("M6 handle through-boss inventory is not tied to its three-point contract")
+        raise HandoffError("M7 handle through-boss inventory is not tied to its three-point contract")
     shoulder_bottom_y = _scalar(parameters, "shoulder_bottom_y")
     m2_boss_radius = _scalar(parameters, "screw_d_boss") / 2
     m2_outer_recess_radius = max(m2_boss_radius, _scalar(parameters, "plug_recess_d") / 2)

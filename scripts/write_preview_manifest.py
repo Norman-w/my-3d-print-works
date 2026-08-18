@@ -13,27 +13,27 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STL = ROOT / "enclosure" / "stl"
 OUT = STL / "preview" / "manifest.json"
-SCREW_SAFETY_REPORT = ROOT / "enclosure" / "generated" / "m6_screw_safety.json"
+SCREW_SAFETY_REPORT = ROOT / "enclosure" / "generated" / "m7_screw_safety.json"
 
 PARTS = [
     ("stage_planform", "01·整拍贝塞尔平面轮廓", "preview/stage_planform.stl", "#38bdf8", "inspection"),
     ("stage_handle_envelope", "02·拍柄贝塞尔人体工学包络", "preview/stage_handle_envelope.stl", "#8b5cf6", "inspection"),
     ("stage_continuous_blank", "03·头柄连续承力毛坯", "preview/stage_continuous_blank.stl", "#f59e0b", "inspection"),
     ("stage_voids", "04·内部挖空与电子空间", "preview/stage_voids.stl", "#22d3ee", "interference"),
-    ("skin_front", "第1层·拍柄正面外贴", "paddle_m6_layer1_handle_skin_front.stl", "#3b82f6", "skin"),
-    ("core_front", "第2层·正面主承力板", "paddle_m6_layer2_core_front.stl", "#ef4444", "core"),
-    ("core_back", "第3层·背面主承力板", "paddle_m6_layer3_core_back.stl", "#991b1b", "core"),
-    ("skin_back", "第4层·拍柄背面外贴", "paddle_m6_layer4_handle_skin_back.stl", "#1d4ed8", "skin"),
-    ("monolithic_front", "正面无缝合体打印件", "paddle_m6_monolithic_front.stl", "#f59e0b", "monolithic"),
-    ("monolithic_back", "背面无缝合体打印件", "paddle_m6_monolithic_back.stl", "#d97706", "monolithic"),
+    ("skin_front", "第1层·拍柄正面外贴", "paddle_m7_layer1_handle_skin_front.stl", "#3b82f6", "skin"),
+    ("core_front", "第2层·正面主承力板", "paddle_m7_layer2_core_front.stl", "#ef4444", "core"),
+    ("core_back", "第3层·背面主承力板", "paddle_m7_layer3_core_back.stl", "#991b1b", "core"),
+    ("skin_back", "第4层·拍柄背面外贴", "paddle_m7_layer4_handle_skin_back.stl", "#1d4ed8", "skin"),
+    ("monolithic_front", "正面无缝合体打印件", "paddle_m7_monolithic_front.stl", "#f59e0b", "monolithic"),
+    ("monolithic_back", "背面无缝合体打印件", "paddle_m7_monolithic_back.stl", "#d97706", "monolithic"),
     ("fasteners_front", "拍柄侧边第2层→第1层螺丝", "preview/fasteners_front.stl", "#e5e7eb", "fastener"),
     ("fasteners_back", "拍柄侧边第3层→第4层螺丝", "preview/fasteners_back.stl", "#aeb8c6", "fastener"),
     ("fasteners_through", "拍柄三点第1层→第4层贯穿螺丝", "preview/fasteners_through.stl", "#d1fae5", "fastener"),
     ("fasteners_blade", "拍面第2层→第3层沉头螺丝", "preview/fasteners_blade.stl", "#f8fafc", "fastener"),
     ("silicone_plugs", "拍柄三点M2硅胶盖", "preview/silicone_plugs.stl", "#111827", "plug"),
-    ("assembly", "M7 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
-    ("exploded", "M7 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
-    ("tail", "M7 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
+    ("assembly", "M7 四层装配", "paddle_m7_assembly.stl", "#94a3b8", "assembly"),
+    ("exploded", "M7 四层爆炸图", "paddle_m7_exploded.stl", "#cbd5e1", "assembly"),
+    ("tail", "M7 拍柄尾段", "paddle_m7_handle_tail.stl", "#64748b", "inspection"),
     ("board_slot", "尾板槽干涉体", "interference/board_slot.stl", "#22c55e", "interference"),
     ("ui_cuts", "USB/按键/LED 干涉体", "interference/ui_cuts.stl", "#f97316", "interference"),
 ]
@@ -42,13 +42,13 @@ PRINT_PLATES = [
     (
         "layers_1_2",
         "拼板 A：第1块 + 第2块",
-        "print/paddle_m6_print_plate_layers_1_2.stl",
+        "print/paddle_m7_print_plate_layers_1_2.stl",
         "第1+2层修复版：已恢复大镂空区靠拍头PCB穿透M2承力柱；保持既有摆放，尚未按X1C左前禁区重新排版，请导入后人工确认，不能作为X1C最终免检文件",
     ),
     (
         "layers_3_4",
         "拼板 B：第3块 + 第4块",
-        "print/paddle_m6_print_plate_layers_3_4.stl",
+        "print/paddle_m7_print_plate_layers_3_4.stl",
         "X1C验证拼板：第3层长承力板平放45°并自动左移，第4层上下翻正、以自动识别的物理底座面落床竖立并自动右移到肩颈区域；真实投影独立且避开左前禁区，装配接口原尺寸；请为竖立件开启树状自动支撑",
     ),
 ]
