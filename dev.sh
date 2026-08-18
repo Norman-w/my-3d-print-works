@@ -56,7 +56,7 @@ echo "============================================"
 echo ""
 
 # 1. Keep ignored/generated STL assets in sync with the checked-out source.
-echo "[1/5] Checking M6 STL assets..."
+echo "[1/5] Checking M7 STL assets..."
 M6_FRONT="$ROOT/enclosure/stl/paddle_m6_monolithic_front.stl"
 STALE_STL=0
 for SOURCE in \
@@ -69,7 +69,7 @@ for SOURCE in \
   fi
 done
 if [[ "${SKIP_STL_EXPORT:-0}" != "1" && "$STALE_STL" == "1" ]]; then
-  echo "  M6 源文件有更新，执行快速 STL 导出（可用 SKIP_STL_EXPORT=1 跳过）..."
+  echo "  M7 源文件有更新，执行快速 STL 导出（可用 SKIP_STL_EXPORT=1 跳过）..."
   QUALITY_MODE=quick "$ROOT/scripts/export-stl.sh"
 else
   python3 "$ROOT/scripts/write_preview_manifest.py"
@@ -127,7 +127,7 @@ echo ""
 echo "  Server:  http://localhost:$SP_API_PORT  (API + WebSocket)"
 echo "  Web UI:  http://localhost:$SP_WEB_PORT"
 echo "  Live:    http://localhost:$SP_WEB_PORT/?tab=live"
-echo "  M6:      http://localhost:$SP_WEB_PORT/?tab=process"
+echo "  M7:      http://localhost:$SP_WEB_PORT/?tab=process"
 echo "  Models:  $ROOT/enclosure/stl/"
 echo ""
 echo "Press Ctrl+C to stop all services."

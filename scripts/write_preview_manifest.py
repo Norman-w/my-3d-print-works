@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write the data-driven M6 process-preview manifest."""
+"""Write the data-driven M7 process-preview manifest."""
 
 from __future__ import annotations
 
@@ -31,9 +31,9 @@ PARTS = [
     ("fasteners_through", "拍柄三点第1层→第4层贯穿螺丝", "preview/fasteners_through.stl", "#d1fae5", "fastener"),
     ("fasteners_blade", "拍面第2层→第3层沉头螺丝", "preview/fasteners_blade.stl", "#f8fafc", "fastener"),
     ("silicone_plugs", "拍柄三点M2硅胶盖", "preview/silicone_plugs.stl", "#111827", "plug"),
-    ("assembly", "M6 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
-    ("exploded", "M6 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
-    ("tail", "M6 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
+    ("assembly", "M7 四层装配", "paddle_m6_assembly.stl", "#94a3b8", "assembly"),
+    ("exploded", "M7 四层爆炸图", "paddle_m6_exploded.stl", "#cbd5e1", "assembly"),
+    ("tail", "M7 拍柄尾段", "paddle_m6_handle_tail.stl", "#64748b", "inspection"),
     ("board_slot", "尾板槽干涉体", "interference/board_slot.stl", "#22c55e", "interference"),
     ("ui_cuts", "USB/按键/LED 干涉体", "interference/ui_cuts.stl", "#f97316", "interference"),
 ]
@@ -95,7 +95,7 @@ def main() -> int:
 
     manifest = {
         "schemaVersion": 1,
-        "modelVersion": "M6",
+        "modelVersion": "M7",
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "coordinateSystem": {"x": "拍宽", "y": "拍长", "z": "层叠/厚度"},
         "components": components,

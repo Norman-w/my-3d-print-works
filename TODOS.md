@@ -48,7 +48,7 @@
   - [x] 手工布线完成后以 Step 4.1e 备份并只读复核 63 器件到 `c4_placement_snapshot.json`/放置脚本
   - [x] 铺铜、最终 DRC、物理焊盘连通性、Gerber/钻孔/ZIP 试导出与最终 14 页装配包；详见 [`pcb/C4_FAB_READINESS.md`](pcb/C4_FAB_READINESS.md)
   - [ ] C4 回板 bring-up（进行中）：对照 `output/pdf/smartpaddle-ai-assembly/smartpaddle-c4-solder-assembly.pdf` 手焊；内部槽边焊接、限流 5 V 上电、AP2112 温升、USB 数据尾线、MCP4728/TLV1814 PZT 链、IMU UART、射频与功耗
-- [ ] **M6.C5 当前硬件（待布线）** — 现行真理源见 [`docs/power-architecture-rework/README.md`](docs/power-architecture-rework/README.md)、[`pcb/ROUTING_HANDOFF.md`](pcb/ROUTING_HANDOFF.md)、[`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)；`pcb/C5_PLAN.md` 仅保留早期 M5/单 8P 历史方案
+- [ ] **M7.C5 当前硬件（主板待布线）** — 现行真理源见 [`docs/power-architecture-rework/README.md`](docs/power-architecture-rework/README.md)、[`pcb/ROUTING_HANDOFF.md`](pcb/ROUTING_HANDOFF.md)、[`pcb-tail/`](pcb-tail/) 与 [`enclosure/README.md`](enclosure/README.md)；`pcb/C5_PLAN.md` 仅保留早期 M5/单 8P 历史方案
   - [x] M6 连续承力外壳、尾板卡槽、Type-C/按键开孔、紧固与干涉模型进入同一生成链
   - [x] C5 主板：TPS62162、按键/锁存隔离、USB 串阻、电池 ADC 与现行 2×5P 接口已同步
   - [x] C5 尾板：IP5305T、修正后的 H=5.8 16P USB-C、双 TPS2553、KEY 隔离、ACH 电池接口、B3U 与现行 2×4P 接口已同步
@@ -56,7 +56,7 @@
   - [ ] 按 [`pcb/ROUTING_HANDOFF.md`](pcb/ROUTING_HANDOFF.md) 完成两板布线与 GND 覆铜；不得复用 C4 铜线
   - [ ] 两板达到 DRC 0 规则违规、0 未连接，并通过 `python3 scripts/validate_power_rework.py --release-gate`
   - [ ] 生成前重新检查 3D、板框、开槽、装配方向、BOM/CPL 与制造参数；当前不得生成/复用制造文件
-  - [ ] M6.C5 工程样机验证：限流上电、充放电、关机、USB、PZT、IMU、无线、LED、温升、换电、振动、汗液、跌落和插拔寿命
+  - [ ] M7.C5 工程样机验证：限流上电、充放电、关机、USB、PZT、IMU、无线、LED、温升、换电、振动、汗液、跌落和插拔寿命
   - [ ] 电芯批次/温度/运输资料、保护阈值、DFM 和量产测试全部完成后移除“未验证”标记
 - [ ] **主线 V2** — 双 IMU + 更强 MCU；拍柄 IMU 基台与模型/电路协同
 - [ ] **软件自动发版** — SemVer + CI（固件/服务端/前端）

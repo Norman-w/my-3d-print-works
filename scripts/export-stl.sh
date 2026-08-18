@@ -121,7 +121,7 @@ export_part() {
   fi
 }
 
-echo "=== SmartPaddle M6 STL 完整导出 ==="
+echo "=== SmartPaddle M7 STL 完整导出 ==="
 echo "源: $SCAD"
 echo "输出: $OUT/"
 echo ""
@@ -213,7 +213,7 @@ echo "→ 基于最终四层生成第1+2块 / 第3+4块同板打印 STL（刚体
 "${PYTHON_CMD[@]}" "$ROOT/scripts/build_print_plates.py"
 
 echo ""
-echo "→ 写入 M6 工艺预览 manifest …"
+echo "→ 写入 M7 工艺预览 manifest …"
 "${PYTHON_CMD[@]}" "$ROOT/scripts/write_preview_manifest.py"
 
 echo ""

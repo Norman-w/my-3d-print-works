@@ -9,7 +9,7 @@
 - 不再让电池、USB和主板共用一块长板。
 - 本目录中的 `.kicad_pcb`、预览图、生成脚本和尺寸报告即使仍存在，也只能作为废弃概念的历史证据；不得作为新板外形、封装坐标、SCAD尺寸或布线输入。
 
-当前 M6.C5 的设计真理源是：
+当前 M7.C5 的设计真理源是：
 
 - [`../../docs/power-architecture-rework/README.md`](../../docs/power-architecture-rework/README.md)
 - [`../ROUTING_HANDOFF.md`](../ROUTING_HANDOFF.md)
