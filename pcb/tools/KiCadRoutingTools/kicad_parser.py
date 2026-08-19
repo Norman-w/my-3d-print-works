@@ -1278,7 +1278,14 @@ def _iter_all_zone_blocks(content: str):
     yield from _iter_zone_blocks_indented(content, r'\r?\n\t+\(zone\s*\r?\n')
 
 
-def _iter_zone_blocks_indented(content: str, zone_start_pattern: str):
+def _iter_all_zone_blocks_located(content: str):
+    """Yield ``(open_idx, body)`` for every zone, including nested keepouts."""
+    yield from _iter_zone_blocks_indented(
+        content, r'\r?\n\t+\(zone\s*\r?\n', with_index=True
+    )
+
+
+def _iter_zone_blocks_indented(content: str, zone_start_pattern: str, with_index: bool = False):
     """Yield zone bodies whose opening line matches ``zone_start_pattern``."""
     for start_match in re.finditer(zone_start_pattern, content):
         # Find the matching closing paren (string-aware, so a lone paren inside
@@ -1288,7 +1295,39 @@ def _iter_zone_blocks_indented(content: str, zone_start_pattern: str):
         zone_end = find_matching_paren(content, open_idx) - 1
         if zone_end <= open_idx:
             continue
-        yield content[start_match.end():zone_end]
+        body = content[start_match.end():zone_end]
+        if with_index:
+            yield open_idx, body
+        else:
+            yield body
+
+
+def _footprint_local_to_global(x: float, y: float, fx: float, fy: float, rot_deg: float) -> Tuple[float, float]:
+    """Map a footprint-local point into board millimetres."""
+    rad = math.radians(rot_deg)
+    cos_r = math.cos(rad)
+    sin_r = math.sin(rad)
+    return (fx + x * cos_r - y * sin_r, fy + x * sin_r + y * cos_r)
+
+
+def _footprint_pose_spans(content: str) -> List[Tuple[int, int, float, float, float]]:
+    """Return ``(start, end, x, y, rot)`` for every footprint block."""
+    spans = []
+    for match in re.finditer(r'\(footprint\s+"', content):
+        start = match.start()
+        end = find_matching_paren(content, start)
+        fp_text = content[start:end]
+        at_match = re.search(r'\(at\s+([\d.-]+)\s+([\d.-]+)(?:\s+([\d.-]+))?\)', fp_text)
+        if not at_match:
+            continue
+        spans.append((
+            start,
+            end,
+            float(at_match.group(1)),
+            float(at_match.group(2)),
+            float(at_match.group(3) or 0.0),
+        ))
+    return spans
 
 
 def extract_zones(content: str, name_to_id: Dict[str, int] = None) -> List[Zone]:
@@ -1381,7 +1420,8 @@ def extract_keepouts(content: str) -> List[dict]:
          tracks_allowed: bool, vias_allowed: bool}
     """
     keepouts = []
-    for zc in _iter_all_zone_blocks(content):
+    fp_spans = _footprint_pose_spans(content)
+    for open_idx, zc in _iter_all_zone_blocks_located(content):
         # The keepout clause holds nested sub-clauses, e.g.
         #   (keepout (tracks not_allowed) (vias not_allowed) (pads allowed) ...)
         # so capture its full balanced-paren body rather than just the first ).
@@ -1434,6 +1474,13 @@ def extract_keepouts(content: str) -> List[dict]:
             search = p_end + 1
         if not polys:
             continue
+        parent = next((span for span in fp_spans if span[0] < open_idx < span[1]), None)
+        if parent is not None:
+            _fx, _fy, _rot = parent[2], parent[3], parent[4]
+            polys = [
+                [_footprint_local_to_global(x, y, _fx, _fy, _rot) for x, y in poly]
+                for poly in polys
+            ]
         keepouts.append({'polygon': polys[0], 'holes': polys[1:], 'layers': layers,
                          'tracks_allowed': tracks_allowed, 'vias_allowed': vias_allowed})
     return keepouts

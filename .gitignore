@@ -83,7 +83,6 @@ pcb-tail/layouts/default/default.before_*.kicad_pcb
 pcb-tail/layouts/default/default.broken_*.kicad_pcb
 pcb-tail/layouts/staging/*.kicad_prl
 pcb-tail/layouts/staging/*.kicad_pro
-pcb-tail/layouts/in-board-candidate/fp-info-cache
 pcb-tail/output/fab/
 
 # ESP-IDF build artifacts

@@ -170,7 +170,7 @@ INTENTIONAL_POSES = {
     "LED_MCU_PWR": (-19.400, -12.800, 0.0, pcbnew.F_Cu),
     "MCU_C_BULK_10U": (-12.000, 10.400, 0.0, pcbnew.F_Cu),
     "MCU_C_DEC_100N": (-8.800, 10.400, 0.0, pcbnew.F_Cu),
-    "MCU_C_EN_1U": (19.000, 10.800, 90.0, pcbnew.F_Cu),
+    "MCU_C_EN_1U": (-5.700, 10.500, -90.0, pcbnew.F_Cu),
     "PW_BUCK_3V3": (-16.300, -19.500, 0.0, pcbnew.F_Cu),
     "PW_C_IN_10U": (-19.000, -20.700, 90.0, pcbnew.F_Cu),
     "PW_C_OUT_22U": (-10.800, -23.650, 90.0, pcbnew.F_Cu),
@@ -178,21 +178,22 @@ INTENTIONAL_POSES = {
     "PW_Q_BTN_SENSE": (-11.400, -28.500, 90.0, pcbnew.F_Cu),
     "PW_R_BTN_GPIO_PU_100K": (-11.400, -32.200, 0.0, pcbnew.F_Cu),
     "PW_R_BTN_RAW_PU_100K": (-18.800, -28.660, 90.0, pcbnew.F_Cu),
-    "PW_R_EN_PU_10K": (19.000, 13.970, 90.0, pcbnew.F_Cu),
+    "PW_R_EN_PU_10K": (-3.900, 10.500, -90.0, pcbnew.F_Cu),
     "R_MCU_PWR_1K": (-19.400, -15.000, 90.0, pcbnew.F_Cu),
-    "USB_R_DN_22R": (11.800, 11.000, 90.0, pcbnew.F_Cu),
-    "USB_R_DP_22R": (13.500, 11.000, 90.0, pcbnew.F_Cu),
-    "PZT_C_CMP_100N": (-7.700, 14.800, 180.0, pcbnew.F_Cu),
-    "PZT_C_DAC_100N": (10.700, 16.970, 0.0, pcbnew.F_Cu),
-    "PZT_DAC_MCP4728": (5.800, 17.465, 0.0, pcbnew.F_Cu),
-    "PZT_R_SCL_PU_4K7": (10.700, 14.900, 180.0, pcbnew.F_Cu),
-    "PZT_R_SDA_PU_4K7": (10.700, 18.700, 180.0, pcbnew.F_Cu),
+    "USB_R_DN_22R": (7.000, 10.600, 90.0, pcbnew.F_Cu),
+    "USB_R_DP_22R": (8.500, 10.600, 90.0, pcbnew.F_Cu),
+    "PZT_CMP_TLV9034": (14.000, 3.400, -90.0, pcbnew.F_Cu),
+    "PZT_C_CMP_100N": (14.650, -2.800, 90.0, pcbnew.F_Cu),
+    "PZT_C_DAC_100N": (19.500, 8.500, 90.0, pcbnew.F_Cu),
+    "PZT_DAC_MCP4728": (17.400, 9.000, 0.0, pcbnew.F_Cu),
+    "PZT_R_SCL_PU_4K7": (19.500, 10.700, 90.0, pcbnew.F_Cu),
+    "PZT_R_SDA_PU_4K7": (19.500, 12.000, 90.0, pcbnew.F_Cu),
 }
 
-# SHA-256 over address|reference|position-nm|orientation|layer for the 47
-# footprints outside INTENTIONAL_POSES.  Recomputed after removing the
-# unused TP_3V3 / TP_5VSW bringup pads.
-PROTECTED_POSE_SHA256 = "c0ac184b03610fc5524f37626ee14b5da5847371132b64739e1dfb39d314f335"
+# SHA-256 over address|reference|position-nm|orientation|layer for the 46
+# footprints outside INTENTIONAL_POSES.  Recomputed after parking the
+# TLV9034 frontend inside the mainland +X alley.
+PROTECTED_POSE_SHA256 = "3b872578987e8cb2e3ff15fe561d6e10c28c6cdf65ece0da36821be65dd9e026"
 
 
 # ===== 分区：私有成员 =====
@@ -283,7 +284,7 @@ def _audit_poses(fps: dict[str, "pcbnew.FOOTPRINT"]) -> None:
             f"{fp.GetOrientationDegrees():.6f}|{fp.GetLayer()}"
         )
     digest = hashlib.sha256(("\n".join(sorted(lines)) + "\n").encode()).hexdigest()
-    if len(lines) != 47 or digest != PROTECTED_POSE_SHA256:
+    if len(lines) != 46 or digest != PROTECTED_POSE_SHA256:
         raise AuditError(f"protected legacy pose digest mismatch: {len(lines)} / {digest}")
 
 
@@ -571,7 +572,7 @@ def audit(require_route_free: bool = True) -> None:
         "  critical distances: "
         + ", ".join(f"{name}={distance:.2f}mm" for name, distance in distances.items())
     )
-    print("  20 intentional poses and 47 checkpoint-preserved legacy poses verified")
+    print("  21 intentional poses and 46 checkpoint-preserved legacy poses verified")
     print("  critical package library IDs and populated values verified")
     print("  BAT_P -> 1M/1M + 100nF -> GPIO9 ADC and web estimate verified; no charging telemetry")
     if require_route_free:

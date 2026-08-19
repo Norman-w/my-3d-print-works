@@ -56,30 +56,27 @@ PLACEMENTS = {
     "PW_R_BTN_RAW_PU_100K": Pose(-18.80, -28.66, 90.0),
     "PW_Q_BTN_SENSE": Pose(-11.40, -28.50, 90.0),
     "PW_R_BTN_GPIO_PU_100K": Pose(-11.40, -32.20, 0.0),
-    # ESP32 bulk/decap stay above pins 2/3.  EN RC parks on the far +X
-    # edge of the solid top strip so the TLV9034 south row can fan out.
+    # ESP32 bulk/decap stay above pins 2/3.  EN RC sits on the EN pad row.
     "MCU_C_BULK_10U": Pose(-12.00, 10.40, 0.0),
     "MCU_C_DEC_100N": Pose(-8.80, 10.40, 0.0),
-    # East of the module, still in the solid top strip.  Leaving the
-    # MCU-to-TLV9034 alley empty so the comparator south row can fan out.
-    "MCU_C_EN_1U": Pose(19.00, 10.80, 90.0),
-    "PW_R_EN_PU_10K": Pose(19.00, 13.97, 90.0),
+    "MCU_C_EN_1U": Pose(-5.70, 10.50, -90.0),
+    "PW_R_EN_PU_10K": Pose(-3.90, 10.50, -90.0),
     # Power indicator is non-critical; park it in the clear left column.
     "LED_MCU_PWR": Pose(-19.40, -12.80, 0.0),
     "R_MCU_PWR_1K": Pose(-19.40, -15.00, 90.0),
-    # USB 22R east of the module but west of the right-wing inner cut.
-    # 90° puts pad 2 (PHY) toward the MCU and pad 1 (connector) toward the tail.
-    "USB_R_DN_22R": Pose(11.80, 11.00, 90.0),
-    "USB_R_DP_22R": Pose(13.50, 11.00, 90.0),
-    # TLV9034 stays at its C4 body pose; bypass sits west of the body so the
-    # MCU-facing analog pin row can still arrive from -X.
-    "PZT_C_CMP_100N": Pose(-7.70, 14.80, 180.0),
-    # DAC VOUT stays facing the comparator; body shifts +X to open a ~3 mm
-    # courtyard corridor.  Bypass and I2C pullups cluster on the VDD/I2C side.
-    "PZT_DAC_MCP4728": Pose(5.80, 17.465, 0.0),
-    "PZT_C_DAC_100N": Pose(10.70, 16.97, 0.0),
-    "PZT_R_SCL_PU_4K7": Pose(10.70, 14.90, 180.0),
-    "PZT_R_SDA_PU_4K7": Pose(10.70, 18.70, 180.0),
+    # USB 22R beside the MCU USB pads.  90° puts pad 2 (PHY) toward the MCU.
+    "USB_R_DN_22R": Pose(7.00, 10.60, 90.0),
+    "USB_R_DP_22R": Pose(8.50, 10.60, 90.0),
+    # TLV9034 keeps -90° so TL/TR do not cross.  Bypass sits south of pin 3
+    # on F.Cu so it does not sit on the TSSOP or the MCU east pad column.
+    "PZT_CMP_TLV9034": Pose(14.00, 3.40, -90.0),
+    "PZT_C_CMP_100N": Pose(14.65, -2.80, 90.0),
+    # DAC east of the comparator with VOUT facing west.  Bypass and I2C
+    # pullups stay on F.Cu on the VDD/I2C side.
+    "PZT_DAC_MCP4728": Pose(17.40, 9.00, 0.0),
+    "PZT_C_DAC_100N": Pose(19.50, 8.50, 90.0),
+    "PZT_R_SCL_PU_4K7": Pose(19.50, 10.70, 90.0),
+    "PZT_R_SDA_PU_4K7": Pose(19.50, 12.00, 90.0),
 }
 
 PLACEMENT_VALUES = {
