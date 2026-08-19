@@ -6,9 +6,9 @@ tracks, vias or zones, moves only the named footprints below, and verifies that
 all other footprint poses are byte-for-byte unchanged.  The coordinates keep
 the TPS62162 input capacitor, converter, XFL3012 inductor and output capacitor
 in power-flow order; move the ESP32 supply/EN capacitors next to their module
-pins; park USB 22 ohm resistors east of the module so they do not plug the
-MCU-to-analog corridor; and keep the DAC / I2C pullups / bypass caps off the
-TLV9034 pin-escape channels.
+pins; park USB 22 ohm resistors next to the USB pads; and park the DAC,
+I2C pullups and bypass caps on IMU +X because this board does not use
+Bluetooth, so both IMU X sides are legal placement area.
 """
 
 # ===== 分区：导入/依赖 =====
@@ -44,8 +44,8 @@ class Pose:
 
 # Only these references are intentionally moved.  Existing connectors,
 # sensors, the comparator body, PZT docks and switches remain untouched.
-# DAC shifts east so VREF/digital can use the CMP–DAC corridor;
-# I2C pullups leave that corridor and sit on the DAC I2C/VDD side.
+# PZT frontend lives on IMU +X.  DAC sits toward the blade head so
+# TR/TL VREF match the TLV9034 south row without wrapping the TSSOP.
 PLACEMENTS = {
     # PMIC block: CIN -> TPS62162 -> L -> COUT, all on F.Cu.
     "PW_C_IN_10U": Pose(-19.00, -20.70, 90.0),
@@ -67,16 +67,16 @@ PLACEMENTS = {
     # USB 22R beside the MCU USB pads.  90° puts pad 2 (PHY) toward the MCU.
     "USB_R_DN_22R": Pose(7.00, 10.60, 90.0),
     "USB_R_DP_22R": Pose(8.50, 10.60, 90.0),
-    # TLV9034 keeps -90° so TL/TR do not cross.  Bypass sits south of pin 3
-    # on F.Cu so it does not sit on the TSSOP or the MCU east pad column.
-    "PZT_CMP_TLV9034": Pose(14.00, 3.40, -90.0),
-    "PZT_C_CMP_100N": Pose(14.65, -2.80, 90.0),
-    # DAC east of the comparator with VOUT facing west.  Bypass and I2C
-    # pullups stay on F.Cu on the VDD/I2C side.
-    "PZT_DAC_MCP4728": Pose(17.40, 9.00, 0.0),
-    "PZT_C_DAC_100N": Pose(19.50, 8.50, 90.0),
-    "PZT_R_SCL_PU_4K7": Pose(19.50, 10.70, 90.0),
-    "PZT_R_SDA_PU_4K7": Pose(19.50, 12.00, 90.0),
+    # No Bluetooth: IMU ±X are both legal.  PZT frontend sits on IMU +X.
+    # TLV9034 keeps -90° so TL/TR stay on the head-side row.  Bypass is
+    # south of pin 3.  DAC sits further south with VOUT west toward the
+    # comparator so TR/TL VREF do not wrap around the TSSOP.
+    "PZT_CMP_TLV9034": Pose(14.00, -18.80, -90.0),
+    "PZT_C_CMP_100N": Pose(15.20, -24.00, 90.0),
+    "PZT_DAC_MCP4728": Pose(17.40, -28.50, 0.0),
+    "PZT_C_DAC_100N": Pose(19.50, -29.00, 90.0),
+    "PZT_R_SCL_PU_4K7": Pose(19.50, -26.80, 90.0),
+    "PZT_R_SDA_PU_4K7": Pose(19.50, -25.50, 90.0),
 }
 
 PLACEMENT_VALUES = {
@@ -164,7 +164,7 @@ def place(board_path: Path) -> None:
     print("  buck power loop placed in physical current-flow order")
     print("  ESP32 supply/EN support moved next to module pins")
     print("  isolated button reader and USB 22R resistors placed")
-    print("  PZT DAC, I2C pullups and 100 nF caps placed for pin escape")
+    print("  PZT frontend parked on IMU +X with DAC toward the blade head")
     print("  every other footprint pose preserved")
     print("  67 footprints; 0 tracks/vias; 0 zones")
 

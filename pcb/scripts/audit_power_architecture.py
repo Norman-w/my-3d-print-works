@@ -182,17 +182,17 @@ INTENTIONAL_POSES = {
     "R_MCU_PWR_1K": (-19.400, -15.000, 90.0, pcbnew.F_Cu),
     "USB_R_DN_22R": (7.000, 10.600, 90.0, pcbnew.F_Cu),
     "USB_R_DP_22R": (8.500, 10.600, 90.0, pcbnew.F_Cu),
-    "PZT_CMP_TLV9034": (14.000, 3.400, -90.0, pcbnew.F_Cu),
-    "PZT_C_CMP_100N": (14.650, -2.800, 90.0, pcbnew.F_Cu),
-    "PZT_C_DAC_100N": (19.500, 8.500, 90.0, pcbnew.F_Cu),
-    "PZT_DAC_MCP4728": (17.400, 9.000, 0.0, pcbnew.F_Cu),
-    "PZT_R_SCL_PU_4K7": (19.500, 10.700, 90.0, pcbnew.F_Cu),
-    "PZT_R_SDA_PU_4K7": (19.500, 12.000, 90.0, pcbnew.F_Cu),
+    "PZT_CMP_TLV9034": (14.000, -18.800, -90.0, pcbnew.F_Cu),
+    "PZT_C_CMP_100N": (15.200, -24.000, 90.0, pcbnew.F_Cu),
+    "PZT_C_DAC_100N": (19.500, -29.000, 90.0, pcbnew.F_Cu),
+    "PZT_DAC_MCP4728": (17.400, -28.500, 0.0, pcbnew.F_Cu),
+    "PZT_R_SCL_PU_4K7": (19.500, -26.800, 90.0, pcbnew.F_Cu),
+    "PZT_R_SDA_PU_4K7": (19.500, -25.500, 90.0, pcbnew.F_Cu),
 }
 
 # SHA-256 over address|reference|position-nm|orientation|layer for the 46
 # footprints outside INTENTIONAL_POSES.  Recomputed after parking the
-# TLV9034 frontend inside the mainland +X alley.
+# TLV9034 frontend on IMU +X; SHA covers the 46 non-INTENTIONAL poses.
 PROTECTED_POSE_SHA256 = "3b872578987e8cb2e3ff15fe561d6e10c28c6cdf65ece0da36821be65dd9e026"
 
 
