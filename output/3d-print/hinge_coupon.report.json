@@ -1,0 +1,30 @@
+{
+  "path": "output/3d-print/orthokeratology_lens_cleaning_kit_box_hinge_coupon.stl",
+  "units": "mm (CAD convention; STL has no embedded units)",
+  "bounds": [
+    [
+      18.0,
+      75.38465118408203,
+      2.4276582166748994e-07
+    ],
+    [
+      42.0,
+      136.05441284179688,
+      25.604337692260742
+    ]
+  ],
+  "size": [
+    24.0,
+    60.669761657714844,
+    25.60433744949492
+  ],
+  "volume": 10246.10254292561,
+  "watertight": true,
+  "components": 2,
+  "faces": 1416,
+  "repeated_vertex_faces": 0,
+  "zero_area_faces": 0,
+  "boundary_edges": 0,
+  "non_manifold_edges": 0,
+  "winding_consistent": true
+}

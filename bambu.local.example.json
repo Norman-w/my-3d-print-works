@@ -1,0 +1,6 @@
+{
+  "printer_ip": "192.168.1.100",
+  "printer_serial": "01XXXXXXXXXXXX",
+  "access_code": "replace-with-the-8-digit-lan-access-code",
+  "slicer_path": "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio"
+}

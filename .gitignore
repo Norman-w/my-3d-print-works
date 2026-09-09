@@ -1,0 +1,17 @@
+__pycache__/
+.venv/
+*.py[cod]
+.DS_Store
+bambu.local.json
+output/print-jobs/
+output/logs/
+output/validation/*.stl
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Invalid or superseded early prototypes remain local. Keep the Rev F baseline
+# used by the current material-comparison validation.
+archive/*
+!archive/rev-f-sealed/

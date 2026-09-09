@@ -1,0 +1,30 @@
+{
+  "path": "output/3d-print/orthokeratology_lens_cleaning_kit_box_print_in_place_open.stl",
+  "units": "mm (CAD convention; STL has no embedded units)",
+  "bounds": [
+    [
+      0.0,
+      -2.96713807301785e-07,
+      2.4276582166748994e-07
+    ],
+    [
+      134.8000030517578,
+      202.81236267089844,
+      111.19961547851562
+    ]
+  ],
+  "size": [
+    134.8000030517578,
+    202.81236296761224,
+    111.1996152357498
+  ],
+  "volume": 143228.8867364855,
+  "watertight": true,
+  "components": 2,
+  "faces": 17162,
+  "repeated_vertex_faces": 0,
+  "zero_area_faces": 0,
+  "boundary_edges": 0,
+  "non_manifold_edges": 0,
+  "winding_consistent": true
+}
