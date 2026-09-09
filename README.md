@@ -83,3 +83,11 @@ python3 serve.py --host 0.0.0.0 --port 8766
 打印机连接需要 IP、序列号和 LAN Access Code；凭据仅在请求内存中或忽略提交的 bambu.local.json 中使用。未安装 Bambu Studio 时下载 STL 自行切片。局域网页面没有账号系统，仅用于可信同网；本次没有发送打印任务。
 
 仓库仅保留用于减料比较的厚壁 Rev F 基线：archive/rev-f-sealed/，不是当前打印交付。更早的错误 / 废弃原型、临时验证 STL、运行日志、虚拟环境、实际打印机凭据及上传的打印任务均不纳入公开仓库。
+
+## 仓库卫生
+
+提交 SCAD / 网页 / 脚本源码、`output/3d-print/` 的交付 STL 和报告、`output/previews/` 的展示图、`output/validation/mechanics.json` 及 Rev F 对照基线。生成文件发生实际变化时仍会显示在 Git 中，需要审查并随对应源码一起提交。
+
+忽略 Python / Node 环境与缓存、编辑器状态、日志和备份、临时验证产物、切片任务（`*.gcode` / `*.gcode.3mf`）和本机凭据。`bambu.local.example.json` 与 `.env.example` 仅允许放脱敏示例；真实配置及其 `bambu.local*.json` 变体不提交。忽略规则不会删除本地文件，也不能保护已被 Git 跟踪的秘密。
+
+提交前用 `git status --short` 审查变更，`git ls-files -ci --exclude-standard` 应无输出（没有误跟踪的忽略文件）；可用 `git check-ignore -v 路径` 定位具体规则。不要用强制添加或隐藏已跟踪文件变更的方式保持表面干净。

@@ -1,17 +1,51 @@
+# Python environments and tool caches.
 __pycache__/
-.venv/
 *.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+node_modules/
+
+# OS/editor state and temporary files.
 .DS_Store
-bambu.local.json
-output/print-jobs/
-output/logs/
-output/validation/*.stl
+._*
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+*.log
+
+# Local credentials. Only sanitized examples belong in the public repository.
+bambu.local*.json
+!bambu.local.example.json
 .env
 .env.*
 !.env.example
 *.pem
 *.key
+*.p12
+*.pfx
+
+# Runtime uploads/logs and intermediate validation geometry are not deliverables.
+/output/print-jobs/
+/output/logs/
+/output/validation/*
+!/output/validation/mechanics.json
+# Machine-specific sliced jobs stay local; source STL/report/PNG files stay tracked.
+*.gcode
+*.gcode.3mf
+
 # Invalid or superseded early prototypes remain local. Keep the Rev F baseline
 # used by the current material-comparison validation.
-archive/*
-!archive/rev-f-sealed/
+/archive/*
+!/archive/rev-f-sealed/
