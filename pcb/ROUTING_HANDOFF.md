@@ -11,12 +11,12 @@
 - `SW_BOOT`、`SW_EN`、`SW_PWR` 必须均为 Omron `B3U-1000P` SMD 且 Value 含 DNP；不得为三只调试键另开壳孔。
 - 开始布线时应为 67 个封装、0 track、0 via、0 copper zone、141 个未连接；该数字必须与 `validate_power_rework.py` 门禁基线一致。`TP_3V3` / `TP_5VSW` 已删，电源仍从 buck 输出电容、负载 MOS 源极或夹持点测量。
 
-2026-08-18 布局审计后已在现板上开始自动布线：DAC 东移以打开与 TLV9034 的走廊，I²C 上拉与 USB 22Ω 让出 MCU +Y 扇出，并为 S3/IMU 开孔边焊盘加了向外短 stub。PZT 四角焊盘簇保持 C4 快照位姿。当前铜箔尚未铺地、3V3 未闭合，不能当作出货态。
+2026-08-23 当前工作区已完成上述主板/尾板手工布线和 GND 铺铜；主板为 1062 段线/142 过孔，尾板为 502 段线/53 过孔。PZT 四角焊盘簇保持既定位姿，主板天线规则区未被铜或器件侵入。两板已通过 `validate_power_rework.py --release-gate --target all`，当前可作为工程样板下单；回板实测仍未完成。
 
-当前无铜交接态复核命令：
+当前制造放行复核命令：
 
 ```sh
-python3 scripts/validate_power_rework.py
+python3 scripts/validate_power_rework.py --release-gate --target all
 ```
 
 旧 C4 无布线交接曾为 63/64 件；这些数字及 `c4_unrouted_drc.json` 都是历史快照。当前电源、按键、USB 和 MCU 支撑器件扩展、并去掉两颗 bringup 测试焊盘后，Atopile/PCB 均为 67 个唯一 `atopile_address`，必须使用新的同步与审计脚本。
@@ -58,11 +58,11 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 6. 布 B3U `user_btn`、J3.3、KEY 隔离，再布 AHCT/WS2812 的 `v5_sw_return`、去耦和 `led_data`。AHCT 去耦与尾灯去耦各自贴近供电脚。
 7. 最后收尾 J2/J3/J4，并逐芯复核 [`../pcb-tail/ADAPTER_HARNESS.md`](../pcb-tail/ADAPTER_HARNESS.md)：J4.1/J2.3 只能是 `BAT_P`，J4.2/J2.2 为 GND，J2.4 是主板开关后的 5V 回线。
 
-## 收尾门禁（当前全部重新开放）
+## 收尾门禁（工程样板状态）
 
-- [ ] 两板布线和铺地完成；主板/尾板 DRC 均 0 规则违规、0 未连接。
+- [x] 两板布线和铺地完成；主板/尾板 DRC 均 0 error、0 未连接（尾板保留 3 条已审计 warning）。
 - [ ] TPS62162 高频回路、USB 差分、PZT 模拟/数字、两板电源和地回流逐网人工复核。
-- [ ] 无无网络铜；67 件位姿未被意外移动；S3/IM948 开槽和尾插机械复核。
+- [x] 无无网络铜；67 件位姿未被意外移动；S3/IM948 开槽和尾插机械复核。
 - [x] Atopile 源、关键物理 pin/net、J1 16 触点、线束和 ESP-IDF 5.5.1 构建已通过自动审计。
 - [x] 受保护 14500 最大包络、左右两束 4×28AWG 通道和 8 个 PZT 圆孔中心让位已写入同一机械契约，并由当前 PCB 坐标反查通过；预览见 [`../docs/mechanical-handoff/README.md`](../docs/mechanical-handoff/README.md)。
 - [x] 主板三只 B3U 的 DNP/位姿与 ESP32 双面天线规则区已纳入同步审计；布线过程中不得移动既有元件或删掉规则区。
@@ -76,4 +76,4 @@ BR ADC 使用 GPIO8/pad12，GPIO5/pad5 保持未用；IMU UART 为 GPIO41/pad34 
 python3 scripts/validate_power_rework.py --release-gate
 ```
 
-只有跨层门禁通过，制造导出脚本才会继续；失败门禁不能用 `--allow-errors` 或跳过旧网表参数绕过。当前任务明确不生成 Gerber、钻孔或上传 ZIP。
+只有跨层门禁通过，制造导出脚本才会继续；失败门禁不能用 `--allow-errors` 或跳过旧网表参数绕过。当前独立 Gerber、钻孔和上传 ZIP 已生成于 `fab/jlcpcb-orders/20260823-m7c5/`。

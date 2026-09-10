@@ -23,6 +23,7 @@ LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 include <generated/bezier_geometry.scad>
 include <bezier_profile.scad>
 include <stl/interference/tail_board_cuts.scad>
+include <stl/interference/main_board_cuts.scad>
 
 // 拍柄开孔基准：以外壳实体底面为准。
 // 平底裁切后 BEZIER_Y0 可能比参数 handle_butt_y 更靠拍头；若仍取 min() 会落到实体外，
@@ -533,12 +534,10 @@ module rigid_pcb_profile_2d() {
 }
 
 module rigid_pcb_cavity(front = true) {
-    d = max(pcb_cavity_depth, piezo_trench_d, resistor_ear_d);
-    if (front)
-        translate([0, 0, d / 2])
-            linear_extrude(height = d + 2 * overcut + eps, center = true)
-                rigid_pcb_profile_2d();
-    else
+    // PCB 整体移入背面半壳：F.Cu 与 Z=0 分型面齐平，0.8 mm 板厚
+    // 加 0.2 mm 装配余量全部由背面承担；正面只按元器件实际高度挖坑。
+    d = main_if_board_t + main_if_board_back_clear;
+    if (!front)
         translate([0, 0, -d / 2])
             linear_extrude(height = d + 2 * overcut + eps, center = true)
                 rigid_pcb_profile_2d();
@@ -944,10 +943,8 @@ module blade_front_part() {
         screw_holes_clearance_blade();
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = true);
-        wire_channels(front = true);
-        signal_bus_to_handle(front = true);
         rigid_pcb_cavity(front = true);
-        pcb_main_cavity(front = true);
+        main_board_component_interference_cuts();
         pzt_solder_reliefs(front = true);
     }
     difference() {
@@ -977,10 +974,8 @@ module blade_back_part() {
     module _cutouts() {
         blade_pass_through_for_handle_screws();
         piezo_pockets(front = false);
-        wire_channels(front = false);
-        signal_bus_to_handle(front = false);
         rigid_pcb_cavity(front = false);
-        pcb_main_cavity(front = false);
+        main_board_component_interference_cuts();
         pzt_solder_reliefs(front = false);
     }
     difference() {
@@ -1039,7 +1034,7 @@ module handle_front_part() {
                     // USB/按钮/LED 开孔由 Step6 按 KiCad 位姿干涉，不再在此硬编码。
                 }
                 rigid_pcb_cavity(front = true);
-                pcb_main_cavity(front = true);
+                main_board_component_interference_cuts();
                 if (handle_open_blade_socket())
                     handle_blade_insert_socket();
             }
@@ -1072,7 +1067,7 @@ module handle_back_part() {
                     // 旧外购充电总成基台/夹持/软开关槽已废弃（见 handle_front_part）。
                 }
                 rigid_pcb_cavity(front = false);
-                pcb_main_cavity(front = false);
+                main_board_component_interference_cuts();
                 if (handle_open_blade_socket())
                     handle_blade_insert_socket();
             }
@@ -1140,14 +1135,9 @@ module m6_stage_voids() {
     intersection() {
         union() {
             handle_cavity();
-            wire_channels(front = true);
-            wire_channels(front = false);
-            signal_bus_to_handle(front = true);
-            signal_bus_to_handle(front = false);
             rigid_pcb_cavity(front = true);
             rigid_pcb_cavity(front = false);
-            pcb_main_cavity(front = true);
-            pcb_main_cavity(front = false);
+            main_board_component_interference_cuts();
             pzt_solder_reliefs(front = true);
             pzt_solder_reliefs(front = false);
         }
@@ -1399,10 +1389,8 @@ module m6_core_front() {
                 m6_core_blank(true);
                 handle_cavity();
                 piezo_pockets(front = true);
-                wire_channels(front = true);
-                signal_bus_to_handle(front = true);
                 rigid_pcb_cavity(front = true);
-                pcb_main_cavity(front = true);
+                main_board_component_interference_cuts();
                 pzt_solder_reliefs(front = true);
             }
             // 内腔挖空后补回第 2 层螺丝承力柱，否则螺丝会悬空。
@@ -1423,10 +1411,8 @@ module m6_core_back() {
                 m6_core_blank(false);
                 handle_cavity();
                 piezo_pockets(front = false);
-                wire_channels(front = false);
-                signal_bus_to_handle(front = false);
                 rigid_pcb_cavity(front = false);
-                pcb_main_cavity(front = false);
+                main_board_component_interference_cuts();
                 pzt_solder_reliefs(front = false);
             }
             // 第 3 层镜像承力柱，供螺丝穿过后向第 4 层攻丝。
@@ -1689,6 +1675,26 @@ module mechanical_pzt_relief_preview() {
     }
 }
 
+module main_board_interference_preview() {
+    // 用完整拍形显示最终减料结果。干涉体向 +Z 爆炸 6 mm，避免透明壳体、
+    // PCB 和包络重叠引发深度冲突条纹；该偏移仅用于预览，不进入制造 STL。
+    preview_z_lift = 6;
+    color([0.72, 0.78, 0.86]) m6_core_front();
+    translate([0, 0, preview_z_lift]) {
+        color([0.10, 0.48, 0.24])
+            linear_extrude(height = main_if_board_t, center = true)
+                rigid_pcb_profile_2d();
+        color([1.00, 0.42, 0.05])
+            for (k = main_if_component_keepouts)
+                translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
+                    cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
+        color([0.08, 0.42, 0.95])
+            let(k = main_if_module_flat_box)
+                translate([(k[0] + k[3]) / 2, (k[1] + k[4]) / 2, (k[2] + k[5]) / 2])
+                    cube([k[3] - k[0], k[4] - k[1], k[5] - k[2]], center = true);
+    }
+}
+
 // ═══ 渲染 ═══
 
 assert(
@@ -1742,6 +1748,8 @@ if (HALF == "m6_core_front") {
     mechanical_fit_preview();
 } else if (HALF == "mechanical_pzt_relief_preview") {
     mechanical_pzt_relief_preview();
+} else if (HALF == "main_board_interference_preview") {
+    main_board_interference_preview();
 } else {
     echo(str("Unknown M6 HALF: ", HALF));
 }

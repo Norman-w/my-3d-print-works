@@ -172,7 +172,7 @@ tail_if_component_keepouts = [
 // silently regress to checking the bare 53261 headers only.
 tail_if_mated_housing_keepouts = [
     [-9.10000, -171.44617, -4.22500, -4.65000, -167.69617, 3.02500],
-    [2.67500, -171.44617, -12.45000, 9.92500, -167.69617, -8.00000]
+    [2.67500, -171.44617, -3.60000, 9.92500, -167.69617, 0.85000]
 ];
 
 module tail_if_stadium_2d(w, d) {

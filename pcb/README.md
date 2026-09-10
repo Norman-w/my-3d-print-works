@@ -1,6 +1,6 @@
 # SmartPaddle 主板
 
-> **当前仓库状态（2026-08-18）：** 当前硬件组合为 **M7.C5**。`layouts/default/default.kicad_pcb` 标题栏为 `SmartPaddle Main PCB / C5`。无铜交接基线现为 **67 封装、0 走线、0 过孔、0 铜覆铜区、141 个预期未连接**（已去掉几乎不用的 `TP_3V3` / `TP_5VSW`）；MCU footprint 内另有一个双面天线规则区，它不是覆铜。现板已开始布线，**不得制造**。现行布线顺序见 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md)，同步、逐脚审计和放行命令见 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
+> **当前仓库状态（2026-08-23）：** 当前硬件组合为 **M7.C5**。`layouts/default/default.kicad_pcb` 标题栏为 `SmartPaddle Main PCB / C5`。当前工作区主板为 **67 封装、1062 段线、142 个过孔、1 个 GND 铜区**（另有 MCU 天线双面规则区），KiCad 9.0.6 DRC 为 **0 error / 0 warning / 0 未连接**，`scripts/validate_power_rework.py --release-gate --target all` 已通过。当前板已达到**工程样板下单**标准，但仍不是量产放行。最新独立下单包见 `fab/jlcpcb-orders/20260823-m7c5/`；不要使用历史 C4 包。现行布线与放行说明见 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md) 和 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)。
 >
 > **实物与源文件必须区分：** 已回板的旧 C4（SHA256 `86389d…`）仍可作为历史 bring-up 对象，但它不再等于当前 KiCad 源板；旧装配图、Gerber 与制造就绪结论不得套用到当前 67 件重整版。
 
@@ -136,7 +136,7 @@ kicad-cli pcb render --side top --width 1600 --height 1200 --background opaque -
 
 ## 历史 C4 状态
 
-仓库历史仍包含 C4 手工布线/铺铜快照、63 件全板快照和最终制造审计；当前 C5 已回到无铜交接态，不能用下列历史结果替代现行门禁。C4 历史后续工作记录：
+仓库历史仍包含 C4 手工布线/铺铜快照、63 件全板快照和最终制造审计；当前 C5 已完成新的布线/铺铜并有独立放行门禁，不能用下列历史结果替代现行 C5 包。C4 历史后续工作记录：
 
 - 当前 `c4_placement_snapshot.json` 已经 Step 4.1e 只读复核；禁止无意使用 `--replace` 覆盖接受基线
 - 嘉立创每次打板（裸板 / 部分 SMT）的通用操作见 [`JLCPCB_ORDERING.md`](JLCPCB_ORDERING.md)；下单时重新运行 `export_jlcpcb.py`（需要贴片时加 `--smt`），不得复用临时审计 ZIP

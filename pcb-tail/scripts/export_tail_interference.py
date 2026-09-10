@@ -65,10 +65,11 @@ SHELL_KEEPOUT_BOARD_OVERLAP = 0.15
 
 # Molex primary drawings, 4-circuit variants.  The header model/outline spans
 # 10.15 x 5.20 mm.  In the official 8.00 mm mated view the 6.75 x 3.95 mm
-# 51021-0400 housing occupies local Y=+2.45..+6.40 relative to the 53261
-# footprint origin.  These are in-plane boxes; height is handled separately.
+# 51021-0400 housing occupies footprint-local Y=-6.40..-2.45 relative to the
+# 53261 origin (opposite the SMT pad tails).  These are in-plane boxes; height
+# is handled separately.
 MOLEX_53261_HEADER_LOCAL_BOX = (-5.075, -2.600, 5.075, 2.600)
-MOLEX_51021_HOUSING_LOCAL_BOX = (-3.375, 2.450, 3.375, 6.400)
+MOLEX_51021_HOUSING_LOCAL_BOX = (-3.375, -6.400, 3.375, -2.450)
 MOLEX_51021_HOUSING_HEIGHT_MM = 3.20
 MOLEX_MATED_HEIGHT_MM = 3.40
 MOLEX_MATED_INPLANE_CLEAR_MM = 0.25
@@ -153,9 +154,12 @@ def _extract() -> dict:
         ]
 
     def transformed_box(local_box: tuple[float, float, float, float], pose: dict) -> list[float]:
-        """Transform an X-symmetric footprint-local box into KiCad XY."""
+        """Transform a footprint-local box into KiCad XY, including B.Cu mirroring."""
         x0, y0, x1, y1 = local_box
-        angle = math.radians(float(pose["rot_deg"]))
+        angle_deg = float(pose["rot_deg"])
+        if pose["layer"] == "B.Cu":
+            angle_deg = -angle_deg
+        angle = math.radians(angle_deg)
         cos_a, sin_a = math.cos(angle), math.sin(angle)
         corners = []
         for x in (x0, x1):
