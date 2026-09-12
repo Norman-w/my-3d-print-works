@@ -9,7 +9,7 @@
 | 04C (25H) | 6.35 mm | 25H(04C)2分单排链条长1.5米 | 先前误选，见 [CH1-25H-04C-roller-chain.md](CH1-25H-04C-roller-chain.md) |
 | 05B | 8 mm | 单排05B-1X190L长1.5米 | 同店最大 |
 
-接头（CL/OL）和链轮定制不是链条本体。`03C单排全接CL` 只是开口扣。
+接头（CL/OL）和链轮定制不是链条本体。`03C单排全接CL` 只是开口扣。连接节穿销和固定弹片/夹片的 CAD 参考模型见 [CH1-03C-connecting-link.md](CH1-03C-connecting-link.md)。
 
 ## 身份
 
