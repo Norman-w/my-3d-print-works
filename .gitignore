@@ -20,9 +20,14 @@ web/assets/stl/
 web/assets/previews/
 output/
 
+# ===== 分区：本地技能链接 =====
+.cursor/
+.claude/
+
 # ===== 分区：工具缓存 =====
 .DS_Store
 .idea/
 .vscode/
 node_modules/
 *.log
+*.pid
