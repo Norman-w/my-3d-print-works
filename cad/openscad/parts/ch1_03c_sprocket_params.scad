@@ -16,14 +16,20 @@ TOOTH_ADDENDUM = 0.38 * P;       // 尖齿齿顶高；ISO da_max 太钝，这里
 GULLET_INSET = 0.05;             // 星形谷底略缩进滚子座，避免共面布尔残片
 HUB_OD = 12.0;                   // 轮毂外径；1x 仍小于链板内包络
 HUB_H = 6.0;                     // 轮毂轴向厚，轴心竖直打印时作底面
-BORE_NOMINAL = 3.0;              // 默认轴径
-BORE_CLEARANCE = 0.25;           // 打印孔间隙
-SET_SCREW_D = 1.6;               // M2 底孔
+BORE_NOMINAL = 3.0;              // 默认 3 mm D 轴
+BORE_CLEARANCE = 0.25;           // 圆孔打印间隙
+D_FLAT_DEPTH = 0.50;             // 轴上切平深度（常见 3 mm D 轴 Ø3 → 对边 2.5）
+D_FLAT_CLEARANCE = 0.12;         // 平面侧间隙，保证能推进
+SET_SCREW_D = 1.6;               // M2 底孔，对准 D 平面
+INDICATOR_H = 1.0;               // 轮毂圆面凸起，转动时看出是否在转
+INDICATOR_D = 2.0;               // 指示凸点直径
+INDICATOR_EDGE = 0.35;           // 凸点外沿到轮毂外圆的边距
 PLATE_CLEAR = 0.40;              // 轮毂相对内链板径向让位
 LIGHTEN_MIN_RING = 8.0;          // 齿根圆到轮毂的环宽大于此值才开减重孔
 FAMILY_GAP = 6.0;
 
 bore_d = BORE_NOMINAL + BORE_CLEARANCE;
+d_flat_x = BORE_NOMINAL / 2 - D_FLAT_DEPTH + D_FLAT_CLEARANCE;
 tooth_w = TOOTH_WIDTH_RATIO * b1;
 seat_r = 0.505 * d1 + SEAT_CLEARANCE;
 //#endregion
@@ -85,6 +91,7 @@ function family_x(i) =
 //#region 业务逻辑
 // 节圆半径 R = P / (2 sin(180/N))。12/18/24/36/48 齿相对 12 齿的半径比约为 1.00 / 1.49 / 1.98 / 2.97 / 3.96。
 // 齿形是尖齿星形 + 节圆滚子座，不是 ISO da_max 截顶。轮毂必须缩进链板内包络。
+// D 孔平面在 +X，顶丝压平面；运转指示凸点在 +Y 的 +Z 轮毂面上。
 //#endregion
 
 //#region 方法/工具

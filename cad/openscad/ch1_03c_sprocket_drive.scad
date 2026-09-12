@@ -3,9 +3,9 @@
 // material: sprockets TBD resin/PETG; chain carbon steel SKU 单排03C-1X210L
 // parting_plane: n/a
 // opening_direction: n/a
-// fastener: sprocket 3 mm bore; chain riveted pins (visualization)
+// fastener: sprocket 3 mm D-shaft + M2 on flat; chain riveted pins (visualization)
 // seal: n/a
-// print_orientation: sprocket hub down, axis +Z; do not 3D-print the chain
+// print_orientation: sprocket hub down, indicator on +Z; do not 3D-print the chain
 // units: mm
 // source: docs/parts/CH1-03C-roller-chain.md
 // note: 1x left / 2x right, center distance 200 mm; 102-link even closed wrap

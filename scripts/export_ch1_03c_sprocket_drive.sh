@@ -152,6 +152,10 @@ python3 "$MANIFEST_PY" \
 
 patch_manifest
 
+mkdir -p "${PREVIEW_DIR}/js"
+cp -f "${PROJECT_ROOT}/web/sprocket-drive-viewer.html" "${PREVIEW_DIR}/drive.html"
+cp -f "${PROJECT_ROOT}/web/js/sprocket-drive-anim.js" "${PREVIEW_DIR}/js/sprocket-drive-anim.js"
+
 if [[ -f "$PREVIEW_SH" ]]; then
     "$PREVIEW_SH" restart "$PREVIEW_DIR" --host 0.0.0.0 --lan-host auto --no-open || \
         "$PREVIEW_SH" start "$PREVIEW_DIR" --host 0.0.0.0 --lan-host auto --no-open
@@ -163,6 +167,7 @@ for part in "${PARTS[@]}"; do
 done
 echo "  预览 ${OUT_PNG}/ch1_03c_drive_iso.png"
 echo "  HTTP http://127.0.0.1:8765/"
+echo "  运动 http://127.0.0.1:8765/drive.html"
 
 # ===== 分区：业务逻辑 =====
 # 链条是外购件包络；102 节绕 200 mm 中心距，不在这里张紧或润滑。

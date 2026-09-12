@@ -3,9 +3,9 @@
 // material: to be confirmed — rigid resin or PETG/nylon; not a substitute for steel sprockets
 // parting_plane: n/a (single printable disc + hub)
 // opening_direction: n/a
-// fastener: 3 mm shaft through-bore + optional M2 set-screw tap hole
+// fastener: 3 mm D-shaft through-bore; M2 set-screw on the D-flat
 // seal: n/a
-// print_orientation: hub face down, axis = +Z (tooth profile in XY)
+// print_orientation: hub face down (indicator on +Z), axis = +Z (tooth profile in XY)
 // units: mm
 // source: docs/parts/CH1-03C-roller-chain.md
 // note: roller-chain sprockets with pointed teeth; not involute gears
@@ -43,14 +43,30 @@ module hub_solid(n) {
     cylinder(d = hub_od_of(n), h = HUB_H, center = true);
 }
 
+module d_bore_2d() {
+    difference() {
+        circle(d = bore_d);
+        translate([d_flat_x, -bore_d])
+            square([bore_d, 2 * bore_d]);
+    }
+}
+
 module bore_cut(n) {
-    cylinder(d = bore_d, h = HUB_H + tooth_w + 2, center = true);
+    linear_extrude(height = HUB_H + tooth_w + INDICATOR_H + 2, center = true)
+        d_bore_2d();
 }
 
 module set_screw_cut(n) {
-    translate([bore_d / 2 - eps, 0, 0])
+    translate([d_flat_x - eps, 0, 0])
         rotate([0, 90, 0])
             cylinder(d = SET_SCREW_D, h = hub_od_of(n) / 2 + eps);
+}
+
+module run_indicator(n) {
+    hub_r = hub_od_of(n) / 2;
+    y = hub_r - INDICATOR_D / 2 - INDICATOR_EDGE;
+    translate([0, y, HUB_H / 2])
+        cylinder(d = INDICATOR_D, h = INDICATOR_H);
 }
 
 module lighten_cuts(n) {
@@ -85,6 +101,7 @@ module ch1_03c_sprocket(n) {
             linear_extrude(height = tooth_w, center = true, convexity = max(8, n))
                 sprocket_outline(n);
             hub_solid(n);
+            run_indicator(n);
         }
         bore_cut(n);
         set_screw_cut(n);
@@ -116,7 +133,7 @@ if (PART == "family") {
 
 //#region 业务逻辑
 // 齿形 = 尖齿星形（谷底在滚子角，齿顶在中间）再减去节圆滚子座。
-// 轮毂比齿圈厚，但外径缩进内链板包络；顶丝孔只打穿轮毂一侧。
+// D 孔沿 Z 贯通；顶丝从 +X 压在 D 平面上。+Z 轮毂面有 1 mm 偏心凸点作运转指示。
 //#endregion
 
 //#region 方法/工具
