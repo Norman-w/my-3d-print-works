@@ -17,6 +17,8 @@ dist/
 
 # ===== 分区：生成网格 =====
 web/assets/stl/
+web/assets/previews/
+output/
 
 # ===== 分区：工具缓存 =====
 .DS_Store

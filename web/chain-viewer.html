@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CH1 03C 滚子链条 · OpenSCAD 预览</title>
+  <!-- region: 导入/依赖 -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./js/three.module.js"
+      }
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1118;
+      --panel: rgba(19, 28, 38, 0.94);
+      --line: rgba(130, 146, 166, 0.34);
+      --muted: #9fb1c0;
+      --text: #f4f6fb;
+      --accent: #d9ff62;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: radial-gradient(circle at 60% -10%, rgba(120, 216, 255, .11), transparent 32%), var(--bg);
+      color: var(--text);
+      font-family: "PingFang SC", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 100vh;
+      gap: 14px;
+      padding: 14px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    h1 { margin: 0 0 8px; font-size: 18px; }
+    .meta, .status, .hint { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 8px 0;
+      flex-wrap: wrap;
+    }
+    button {
+      min-height: 32px;
+      border: 1px solid rgba(170, 186, 205, .45);
+      background: rgba(9, 16, 23, .88);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #162011;
+      border: 0;
+      font-weight: 600;
+    }
+    .thumbs {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .thumbs img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #070f17;
+    }
+    .viewer {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 540px;
+      background: linear-gradient(160deg, #0e1622, #060a10 72%);
+    }
+    canvas { width: 100%; height: 100%; display: block; }
+    .hud {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 11px;
+      color: rgba(240, 244, 250, .76);
+      pointer-events: none;
+    }
+    @media (max-width: 980px) { .app { grid-template-columns: 1fr; } }
+  </style>
+  <!-- endregion -->
+</head>
+<body>
+  <!-- region: 模型/类型 -->
+  <!-- 数据模型：manifest.models[] = {name, file, color, visible}；单位 mm -->
+  <!-- endregion -->
+
+  <!-- region: 私有成员 -->
+  <!-- Three.js 场景状态见下方脚本 state -->
+  <!-- endregion -->
+
+  <!-- region: 公开 API -->
+  <!-- 入口：initThree() + loadManifest() -->
+  <!-- endregion -->
+
+  <!-- region: 视图层 -->
+  <div class="app">
+    <section class="panel">
+      <h1>CH1 · 03C 滚子链条</h1>
+      <p class="meta" id="meta">加载 OpenSCAD 导出件…</p>
+      <div class="row">
+        <button id="fit" class="primary">重置视角</button>
+        <button id="reload">刷新</button>
+      </div>
+      <div class="row">
+        <label class="hint"><input id="autoplay" type="checkbox" checked /> 自动慢转</label>
+      </div>
+      <div id="modelList" class="meta"></div>
+      <p class="status" id="status">等待 STL。</p>
+      <div class="thumbs">
+        <img src="./assets/previews/ch1_03c_iso.png" alt="等轴预览" />
+        <img src="./assets/previews/ch1_03c_top.png" alt="顶视预览" />
+        <img src="./assets/previews/ch1_03c_front.png" alt="正视预览" />
+      </div>
+    </section>
+    <section class="viewer">
+      <div class="hud">左键旋转 · 滚轮缩放 · 单位 mm</div>
+      <canvas id="c"></canvas>
+    </section>
+  </div>
+  <!-- endregion -->
+
+  <!-- region: 业务逻辑 -->
+  <script type="module">
+    import * as THREE from "./js/three.module.js";
+    import { OrbitControls } from "./jsm/OrbitControls.js";
+    import { STLLoader } from "./jsm/STLLoader.js";
+
+    const state = {
+      scene: null,
+      camera: null,
+      renderer: null,
+      controls: null,
+      models: [],
+      autoRotate: true,
+    };
+
+    const els = {
+      meta: document.getElementById("meta"),
+      status: document.getElementById("status"),
+      modelList: document.getElementById("modelList"),
+      fit: document.getElementById("fit"),
+      reload: document.getElementById("reload"),
+      autoplay: document.getElementById("autoplay"),
+    };
+
+    function parseRgb(hex) {
+      const v = hex.replace("#", "");
+      const n = parseInt(v, 16);
+      return new THREE.Color(((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255);
+    }
+
+    function initThree() {
+      const canvas = document.getElementById("c");
+      state.scene = new THREE.Scene();
+      state.camera = new THREE.PerspectiveCamera(42, canvas.clientWidth / Math.max(1, canvas.clientHeight), 0.05, 800);
+      state.camera.position.set(42, 28, 42);
+      state.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      state.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      state.renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+      state.renderer.outputColorSpace = THREE.SRGBColorSpace;
+      state.scene.add(new THREE.HemisphereLight(0xbfdcff, 0x111a20, 1.15));
+      const key = new THREE.DirectionalLight(0xffffff, 1.15);
+      key.position.set(18, 24, 12);
+      state.scene.add(key);
+      const fill = new THREE.DirectionalLight(0x9fd3ff, 0.4);
+      fill.position.set(-12, 6, -8);
+      state.scene.add(fill);
+      state.controls = new OrbitControls(state.camera, canvas);
+      state.controls.enableDamping = true;
+      state.controls.autoRotate = true;
+      state.controls.autoRotateSpeed = 1.1;
+      animate();
+      window.addEventListener("resize", onResize);
+    }
+
+    function onResize() {
+      const canvas = document.getElementById("c");
+      if (!state.camera || !state.renderer) return;
+      state.camera.aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight);
+      state.camera.updateProjectionMatrix();
+      state.renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+    }
+
+    function clearModels() {
+      for (const entry of state.models) {
+        if (entry.mesh && entry.mesh.parent) entry.mesh.parent.remove(entry.mesh);
+      }
+      state.models = [];
+    }
+
+    async function loadManifest() {
+      const response = await fetch("./assets/stl/ch1_03c_manifest.json", { cache: "no-cache" });
+      if (!response.ok) throw new Error(`manifest ${response.status}`);
+      const manifest = await response.json();
+      els.meta.textContent = `${manifest.title} · P=${manifest.pitchMm} mm · 预览 ${manifest.previewLinks} 节闭环（SKU ${manifest.skuLinks} 节 / 1 m）`;
+      els.modelList.textContent = manifest.note || "";
+      clearModels();
+      const loader = new STLLoader();
+      for (const item of manifest.models || []) {
+        const geometry = await loader.loadAsync(`./assets/stl/${item.file}`);
+        geometry.computeVertexNormals();
+        const material = new THREE.MeshStandardMaterial({
+          color: parseRgb(item.color || "#9ab2c9"),
+          metalness: 0.55,
+          roughness: 0.32,
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.visible = item.visible !== false;
+        state.scene.add(mesh);
+        state.models.push({ mesh, source: item });
+      }
+      els.status.textContent = `已加载 ${state.models.length} 个 STL。`;
+      fitView();
+    }
+
+    function fitView() {
+      if (!state.models.length) return;
+      const box = new THREE.Box3();
+      for (const entry of state.models) box.union(new THREE.Box3().setFromObject(entry.mesh));
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const dist = Math.abs(maxDim / (2 * Math.tan((state.camera.fov * Math.PI) / 360)));
+      const dir = new THREE.Vector3(1, 0.72, 1).normalize();
+      state.camera.position.copy(center).add(dir.multiplyScalar(dist * 1.25));
+      state.controls.target.copy(center);
+      state.camera.near = Math.max(0.05, dist / 40);
+      state.camera.far = Math.max(200, dist * 12);
+      state.camera.updateProjectionMatrix();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (state.controls) {
+        state.controls.autoRotate = state.autoRotate;
+        state.controls.update();
+      }
+      state.renderer.render(state.scene, state.camera);
+    }
+
+    els.fit.addEventListener("click", fitView);
+    els.reload.addEventListener("click", () => loadManifest().catch((err) => {
+      els.status.textContent = `加载失败：${err.message || err}`;
+    }));
+    els.autoplay.addEventListener("change", () => {
+      state.autoRotate = els.autoplay.checked;
+    });
+
+    initThree();
+    loadManifest().catch((err) => {
+      els.status.textContent = `加载失败：${err.message || err}`;
+    });
+  </script>
+  <!-- endregion -->
+
+  <!-- region: 方法/工具 -->
+  <!-- STL 由 scripts/export_ch1_03c_chain.sh 生成 -->
+  <!-- endregion -->
+</body>
+</html>
