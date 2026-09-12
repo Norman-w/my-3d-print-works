@@ -78,7 +78,7 @@ payload["units"] = "mm"
 payload["up"] = "z"
 names = {
     "cabinet_shell": {
-        "name": "柜体（外框+隔板+格栅+Boss）",
+        "name": "柜体（外框+隔板+格栅）",
         "role": "printed",
         "color": "#6f8f9a",
         "explosion": [0, 0, 0],

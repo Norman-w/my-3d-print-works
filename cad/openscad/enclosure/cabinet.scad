@@ -3,7 +3,7 @@
 // material: PETG preferred; PLA acceptable for fit prototype
 // parting_plane: back face Y = D; shell stays, back panel separates
 // opening_direction: back panel pulled toward +Y
-// fastener: M3 socket cap from panel outside into heat-set inserts at boss tips
+// fastener: deferred — inset lid with screws on the side walls; no mid-span bosses
 // seal: none — parts cabinet, not watertight
 // print_orientation: shell front (Y=0) on bed; panel outer face down in slicer
 // units: mm
@@ -28,8 +28,7 @@ EXPLODE = 28;
 //#region 私有成员
 echo("bay_w", bay_w(), "bay_h", bay_h());
 echo("drawer_outer", drawer_outer_w(), drawer_outer_h(), "inner_h", drawer_inner_h());
-echo("rear_cavity", REAR_CAVITY, "boss_h", BOSS_H, "bosses", len(boss_points()));
-echo("rib_rule", "inward only; pads only on interior bosses");
+echo("rear_cavity", REAR_CAVITY, "fastener", "side screws later, no bosses");
 
 module outer_frame() {
     difference() {
@@ -53,39 +52,6 @@ module bay_grid() {
             cube([INNER_W + 2 * EPS, FRONT_NET + EPS, SHELF_T]);
 }
 
-module boss_rib() {
-    hull() {
-        translate([BOSS_R - 0.2, RIB_H * 0.92, 0])
-            cube([0.4, 0.4, RIB_T], center = true);
-        translate([BOSS_R - 0.2, 0.2, 0])
-            cube([0.4, 0.4, RIB_T], center = true);
-        translate([BOSS_R + RIB_L, 0.2, 0])
-            cube([0.4, 0.4, RIB_T], center = true);
-    }
-}
-
-module boss_solid(angles, with_pad) {
-    union() {
-        if (with_pad)
-            translate([0, -EPS, 0])
-                rotate([-90, 0, 0])
-                    cylinder(d = BOSS_PAD_D, h = BOSS_PAD_H + EPS);
-        rotate([-90, 0, 0])
-            cylinder(d = BOSS_OD, h = BOSS_H);
-        for (a = angles)
-            rotate([0, a, 0])
-                boss_rib();
-    }
-}
-
-module all_bosses() {
-    pts = boss_points();
-    angs = boss_rib_angles();
-    for (i = [0:len(pts) - 1])
-        translate([pts[i][0], PARTITION_BACK_Y, pts[i][1]])
-            boss_solid(angs[i], boss_has_pad(i));
-}
-
 module back_rabbet() {
     translate([
         WALL - RABBET_W,
@@ -99,24 +65,6 @@ module back_rabbet() {
         ]);
 }
 
-module boss_fastener_cuts() {
-    for (p = boss_points())
-        translate([p[0], PARTITION_BACK_Y, p[1]]) {
-            translate([0, BOSS_FLOOR, 0])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        d = BOSS_HOLLOW_D,
-                        h = BOSS_H - BOSS_FLOOR - INSERT_DEPTH - 1
-                    );
-            translate([0, BOSS_H - INSERT_DEPTH, 0])
-                rotate([-90, 0, 0])
-                    cylinder(d = INSERT_D, h = INSERT_DEPTH + EPS);
-            translate([0, BOSS_H - 0.8, 0])
-                rotate([-90, 0, 0])
-                    cylinder(d1 = INSERT_D, d2 = INSERT_D + 1.6, h = 0.8 + EPS);
-        }
-}
-
 module cabinet_shell() {
     intersection() {
         cube([W, D, H]);
@@ -125,32 +73,14 @@ module cabinet_shell() {
                 outer_frame();
                 partition_plate();
                 bay_grid();
-                all_bosses();
             }
             back_rabbet();
-            boss_fastener_cuts();
         }
     }
 }
 
-module panel_fastener_cuts() {
-    for (p = boss_points()) {
-        hx = p[0] - PANEL_X;
-        hz = p[1] - PANEL_Z;
-        translate([hx, -EPS, hz])
-            rotate([-90, 0, 0])
-                cylinder(d = SCREW_CLEAR_D, h = BACK_PANEL_T + 2 * EPS);
-        translate([hx, BACK_PANEL_T - CBORE_H, hz])
-            rotate([-90, 0, 0])
-                cylinder(d = CBORE_D, h = CBORE_H + EPS);
-    }
-}
-
 module back_panel() {
-    difference() {
-        cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
-        panel_fastener_cuts();
-    }
+    cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
 }
 
 module drawer_ghosts() {
@@ -200,9 +130,8 @@ if (PART == "assembly")
 //#endregion
 
 //#region 业务逻辑
-// 前脸开口、隔板、层板和立板一次成型。后仓只有 Boss 和加强筋，给链轮留空。
-// 四角与上下边中点 Boss 贴外框承力；两颗内柱落在立板/层板交叉背后。
-// 背板坐进止口，沉孔从外侧进；拧紧时止口是压紧止挡，Boss 短 0.4 mm。
+// 前脸开口、隔板、层板和立板一次成型。后仓留空给链轮，中部不设 Boss。
+// 背板只坐后口止口；侧边螺丝和内嵌后盖下一轮再做。
 //#endregion
 
 //#region 方法/工具
