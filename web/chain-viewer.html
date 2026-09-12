@@ -67,6 +67,23 @@
       border: 0;
       font-weight: 600;
     }
+    .quality {
+      width: 100%;
+      margin: 10px 0 4px;
+    }
+    .quality .row { margin-bottom: 4px; justify-content: space-between; }
+    .quality input[type="range"] {
+      width: 100%;
+      min-height: 22px;
+      accent-color: var(--accent);
+    }
+    .quality-ticks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2px;
+      font-size: 10px;
+      color: var(--muted);
+    }
     .thumbs {
       display: grid;
       gap: 8px;
@@ -100,6 +117,10 @@
   <!-- endregion -->
 </head>
 <body>
+  <!-- region: 常量/配置 -->
+  <!-- 精度档 1–5 来自 manifest.qualities；默认 defaultQuality=2 -->
+  <!-- endregion -->
+
   <!-- region: 模型/类型 -->
   <!-- 数据模型：manifest.models[] = {name, file, color, visible}；单位 mm -->
   <!-- endregion -->
@@ -123,6 +144,17 @@
       </div>
       <div class="row">
         <label class="hint"><input id="autoplay" type="checkbox" checked /> 自动慢转</label>
+      </div>
+      <div class="quality">
+        <div class="row">
+          <span class="hint">STL 精度</span>
+          <output id="qualityLabel" class="hint">较快</output>
+        </div>
+        <input id="quality" type="range" min="1" max="5" step="1" value="2" aria-label="STL 精度" />
+        <div class="quality-ticks" aria-hidden="true">
+          <span>最快</span><span>较快</span><span>标准</span><span>较真</span><span>最真</span>
+        </div>
+        <p class="hint" id="qualityHint">低档更快，高档更圆。松开拖条后重新加载。</p>
       </div>
       <div id="modelList" class="meta"></div>
       <p class="status" id="status">等待 STL。</p>
@@ -152,6 +184,9 @@
       controls: null,
       models: [],
       autoRotate: true,
+      manifest: null,
+      quality: 2,
+      loadGen: 0,
     };
 
     const els = {
@@ -161,6 +196,9 @@
       fit: document.getElementById("fit"),
       reload: document.getElementById("reload"),
       autoplay: document.getElementById("autoplay"),
+      quality: document.getElementById("quality"),
+      qualityLabel: document.getElementById("qualityLabel"),
+      qualityHint: document.getElementById("qualityHint"),
     };
 
     function parseRgb(hex) {
@@ -203,21 +241,59 @@
 
     function clearModels() {
       for (const entry of state.models) {
-        if (entry.mesh && entry.mesh.parent) entry.mesh.parent.remove(entry.mesh);
+        if (!entry.mesh) continue;
+        if (entry.mesh.parent) entry.mesh.parent.remove(entry.mesh);
+        if (entry.mesh.geometry) entry.mesh.geometry.dispose();
+        if (entry.mesh.material) entry.mesh.material.dispose();
       }
       state.models = [];
     }
 
-    async function loadManifest() {
+    function qualityInfo(level) {
+      const list = (state.manifest && state.manifest.qualities) || [];
+      return list.find((item) => item.level === level) || {
+        level,
+        label: `Q${level}`,
+        hint: "",
+        dir: `q${level}`,
+      };
+    }
+
+    function updateQualityLabel() {
+      const info = qualityInfo(state.quality);
+      els.qualityLabel.textContent = `${info.level} · ${info.label}`;
+      els.qualityHint.textContent = `${info.hint || ""} 松开拖条后重新加载。`.trim();
+    }
+
+    async function loadManifest(resetCamera = true) {
+      const gen = ++state.loadGen;
       const response = await fetch("./assets/stl/ch1_03c_manifest.json", { cache: "no-cache" });
       if (!response.ok) throw new Error(`manifest ${response.status}`);
       const manifest = await response.json();
+      if (gen !== state.loadGen) return;
+      state.manifest = manifest;
+      if (resetCamera) {
+        state.quality = manifest.defaultQuality || 2;
+        els.quality.value = String(state.quality);
+      }
+      const info = qualityInfo(state.quality);
+      updateQualityLabel();
       els.meta.textContent = `${manifest.title} · P=${manifest.pitchMm} mm · 预览 ${manifest.previewLinks} 节闭环（SKU ${manifest.skuLinks} 节 / 1 m）`;
       els.modelList.textContent = manifest.note || "";
-      clearModels();
+      els.status.textContent = `正在加载精度 ${info.level} · ${info.label}…`;
       const loader = new STLLoader();
+      const folder = `./assets/stl/${info.dir}`;
+      const pending = [];
       for (const item of manifest.models || []) {
-        const geometry = await loader.loadAsync(`./assets/stl/${item.file}`);
+        const geometry = await loader.loadAsync(`${folder}/${item.file}?q=${info.level}`);
+        if (gen !== state.loadGen) {
+          geometry.dispose();
+          for (const extra of pending) {
+            extra.mesh.geometry.dispose();
+            extra.mesh.material.dispose();
+          }
+          return;
+        }
         geometry.computeVertexNormals();
         const material = new THREE.MeshStandardMaterial({
           color: parseRgb(item.color || "#9ab2c9"),
@@ -226,11 +302,22 @@
         });
         const mesh = new THREE.Mesh(geometry, material);
         mesh.visible = item.visible !== false;
-        state.scene.add(mesh);
-        state.models.push({ mesh, source: item });
+        pending.push({ mesh, source: item });
       }
-      els.status.textContent = `已加载 ${state.models.length} 个 STL。`;
-      fitView();
+      if (gen !== state.loadGen) {
+        for (const extra of pending) {
+          extra.mesh.geometry.dispose();
+          extra.mesh.material.dispose();
+        }
+        return;
+      }
+      clearModels();
+      for (const entry of pending) {
+        state.scene.add(entry.mesh);
+        state.models.push(entry);
+      }
+      els.status.textContent = `已加载 ${state.models.length} 个 STL · 精度 ${info.level} ${info.label}（$fa=${info.fa} $fs=${info.fs}）。`;
+      if (resetCamera) fitView();
     }
 
     function fitView() {
@@ -259,15 +346,26 @@
     }
 
     els.fit.addEventListener("click", fitView);
-    els.reload.addEventListener("click", () => loadManifest().catch((err) => {
+    els.reload.addEventListener("click", () => loadManifest(false).catch((err) => {
       els.status.textContent = `加载失败：${err.message || err}`;
     }));
     els.autoplay.addEventListener("change", () => {
       state.autoRotate = els.autoplay.checked;
     });
+    els.quality.addEventListener("input", () => {
+      state.quality = Number(els.quality.value);
+      updateQualityLabel();
+    });
+    els.quality.addEventListener("change", () => {
+      state.quality = Number(els.quality.value);
+      updateQualityLabel();
+      loadManifest(false).catch((err) => {
+        els.status.textContent = `加载失败：${err.message || err}`;
+      });
+    });
 
     initThree();
-    loadManifest().catch((err) => {
+    loadManifest(true).catch((err) => {
       els.status.textContent = `加载失败：${err.message || err}`;
     });
   </script>

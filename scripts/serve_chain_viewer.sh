@@ -19,7 +19,7 @@ echo "CH1 03C 预览: http://127.0.0.1:${PORT}/chain-viewer.html"
 python3 -m http.server "${PORT}" --directory web
 
 # ===== 分区：业务逻辑 =====
-# 只托管 web/，STL 由 export_ch1_03c_chain.sh 预先导出。
+# 只托管 web/；STL 由 export_ch1_03c_chain.sh 预先按 q1–q5 导出，拖条松手后换档加载。
 
 # ===== 分区：方法/工具 =====
 # 端口可用第一个参数覆盖。

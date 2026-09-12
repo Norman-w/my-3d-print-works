@@ -14,13 +14,15 @@ include <ch1_03c_params.scad>
 //#endregion
 
 //#region 常量/配置
-$fa = 8;
-$fs = 0.22;
-
+QUALITY = is_undef(QUALITY) ? 3 : QUALITY;  // 1 最快 … 5 最真；-D QUALITY= 或拖条选档
 PART = "assembly";   // assembly | plates | rollers | pins
 MODE = "loop";       // loop | straight
 LINKS = 20;          // 预览节数；完整 SKU 为 210，勿直接整圈 CGAL
 assert(LINKS % 2 == 0, "LINKS must be even so inner/outer plates close");
+assert(QUALITY >= 1 && QUALITY <= 5, "QUALITY must be 1..5");
+
+$fa = lookup(QUALITY, [[1, 22], [2, 14], [3, 8], [4, 5], [5, 3]]);
+$fs = lookup(QUALITY, [[1, 0.70], [2, 0.40], [3, 0.22], [4, 0.14], [5, 0.08]]);
 //#endregion
 
 //#region 模型/类型
