@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- region: 导入/依赖 -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STL HTTP 预览</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <!-- endregion -->
+  <style>
+    :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dde8; }
+    .app { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; height: 100%; }
+    aside { border-right: 1px solid #243044; padding: 14px; overflow: hidden; background: #121722; display: flex; flex-direction: column; }
+    h1 { margin: 0 0 8px; font-size: 16px; }
+    .meta, .hint { color: #8b98ab; font-size: 12px; line-height: 1.5; }
+    .modes, .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    button, input, select { accent-color: #5b9fd6; }
+    button { background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; cursor: pointer; transition: background .16s ease, border-color .16s ease; }
+    button:hover { background: #243044; }
+    button:focus-visible { outline: 2px solid #f97316; outline-offset: 2px; }
+    button.on { background: #f97316; border-color: #fb923c; color: #1a1208; }
+    input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
+    input[type="range"] { width: 100%; cursor: pointer; accent-color: #f97316; }
+    .play { margin: 10px 0 8px; padding: 10px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; }
+    .play .row { margin: 8px 0 0; }
+    .hz-marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: #8b98ab; font-variant-numeric: tabular-nums; }
+    .hz-out { color: #fdba74; font-variant-numeric: tabular-nums; }
+    .filters { display: grid; gap: 8px; margin: 8px 0; }
+    #parts { flex: 1; overflow: auto; padding-right: 4px; }
+    .group { margin: 10px 0 14px; }
+    .group h2 { margin: 0 0 6px; font-size: 12px; color: #93c5fd; display: flex; justify-content: space-between; gap: 8px; }
+    label.part { display: grid; grid-template-columns: 18px 10px 1fr auto; gap: 8px; align-items: center; margin: 5px 0; font-size: 13px; }
+    label.part .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    label.part .status { color: #8b98ab; font-size: 11px; }
+    #c { width: 100%; height: 100%; display: block; }
+    .file-card { position: fixed; inset: 0; display: none; place-items: center; background: #0b0d12; z-index: 20; padding: 24px; }
+    body.file .file-card { display: grid; }
+    body.file .app { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      button { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- region: 模型/类型 -->
+  <!-- /api/parts: { title, units, groups, parts[{id,name,file,group,role,color,opacity,visible,explosion,bytes}] } -->
+  <!-- endregion -->
+
+  <!-- region: 视图层 -->
+  <div class="file-card">
+    <div>
+      <h1>请用本地 HTTP 打开</h1>
+      <p class="hint">直接打开 HTML 会绕过预览目录，STL 相对路径也无法稳定加载。</p>
+      <code>./scripts/preview_http.sh start output/3d-preview</code>
+    </div>
+  </div>
+  <div class="app">
+    <aside>
+      <h1 id="title">STL 预览</h1>
+      <div class="meta" id="meta">加载零件清单…</div>
+      <div class="modes">
+        <button type="button" id="mode-simple" class="on">简单预览</button>
+        <button type="button" id="mode-explode">爆炸视图</button>
+      </div>
+      <div class="row">
+        <button type="button" id="fit">适配视角</button>
+        <button type="button" id="assemble">合并</button>
+        <button type="button" id="explode">展开</button>
+      </div>
+      <label class="meta">爆炸程度 <output id="explode-out">0</output>%</label>
+      <input id="explode-range" type="range" min="0" max="100" value="0" />
+      <div class="play">
+        <label class="meta" for="hz-range">链条循环 <output class="hz-out" id="hz-out">1 Hz · 顺时针</output></label>
+        <input id="hz-range" type="range" min="0" max="5" step="1" value="2" />
+        <div class="hz-marks" aria-hidden="true">
+          <span>0.1</span><span>0.5</span><span>1</span><span>2</span><span>5</span><span>10</span>
+        </div>
+        <div class="row">
+          <button type="button" id="fwd" class="on">正转</button>
+          <button type="button" id="stop">停止</button>
+          <button type="button" id="rev">反转</button>
+        </div>
+      </div>
+      <div class="filters">
+        <input id="part-search" type="search" placeholder="搜索零件名 / 分组 / 文件" />
+        <select id="group-filter" aria-label="按分组筛选">
+          <option value="">全部分组</option>
+        </select>
+        <select id="role-filter" aria-label="按角色筛选">
+          <option value="">全部角色</option>
+          <option value="printed">printed</option>
+          <option value="purchased">purchased</option>
+          <option value="diagnostic">diagnostic</option>
+        </select>
+      </div>
+      <div class="row">
+        <button type="button" id="load-filtered">加载筛选结果</button>
+        <button type="button" id="hide-filtered">隐藏筛选结果</button>
+      </div>
+      <div id="parts"></div>
+      <p class="hint">左键旋转 · 滚轮缩放 · 右键平移。单位 mm。零件多时先列清单，勾选或点「加载筛选结果」再拉 STL。</p>
+    </aside>
+    <canvas id="c"></canvas>
+  </div>
+  <script type="module" src="./app.js"></script>
+  <!-- endregion -->
+</body>
+</html>

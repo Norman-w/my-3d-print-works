@@ -15,9 +15,9 @@ include <ch1_03c_params.scad>
 
 //#region 常量/配置
 QUALITY = is_undef(QUALITY) ? 3 : QUALITY;  // 1 最快 … 5 最真；-D QUALITY= 或拖条选档
-PART = "assembly";   // assembly | plates | rollers | pins
-MODE = "loop";       // loop | straight
-LINKS = 20;          // 预览节数；完整 SKU 为 210，勿直接整圈 CGAL
+PART = is_undef(PART) ? "assembly" : PART;   // assembly | plates | rollers | pins
+MODE = is_undef(MODE) ? "loop" : MODE;       // loop | straight
+LINKS = is_undef(LINKS) ? 20 : LINKS;          // 预览节数；完整 SKU 为 210，勿直接整圈 CGAL
 assert(LINKS % 2 == 0, "LINKS must be even so inner/outer plates close");
 assert(QUALITY >= 1 && QUALITY <= 5, "QUALITY must be 1..5");
 
@@ -207,7 +207,8 @@ module ch1_03c_chain() {
     }
 }
 
-ch1_03c_chain();
+if (is_undef(CHAIN_LIB_ONLY) || !CHAIN_LIB_ONLY)
+    ch1_03c_chain();
 //#endregion
 
 //#region 业务逻辑

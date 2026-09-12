@@ -73,7 +73,7 @@ import sys
 
 path = Path(sys.argv[1])
 payload = json.loads(path.read_text(encoding="utf-8"))
-payload["title"] = "零件柜外壳 · 240×200×120 mm · 5×6 格"
+payload["title"] = "零件柜 · 260×233×120 mm · 5×5 + 底仓"
 payload["units"] = "mm"
 payload["up"] = "z"
 names = {
@@ -88,6 +88,7 @@ names = {
         "role": "printed",
         "color": "#c4a574",
         "explosion": [0, 48, 0],
+        "visible": False,
     },
 }
 for part in payload.get("parts", []):
@@ -95,7 +96,7 @@ for part in payload.get("parts", []):
     if extra is None:
         continue
     part.update(extra)
-    part["visible"] = True
+    part["visible"] = extra.get("visible", True)
 text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 path.write_text(text, encoding="utf-8")
 path.with_name("parts.json").write_text(text, encoding="utf-8")
@@ -131,7 +132,7 @@ if [[ -f "$MANIFEST_PY" ]]; then
     python3 "$MANIFEST_PY" \
         --stl-dir "$OUT_STL" \
         --preview-dir "$PREVIEW_DIR" \
-        --title "零件柜外壳 · 240×200×120 mm · 5×6 格" \
+        --title "零件柜外壳 · 260×233×120 mm · 5×5 + 底仓" \
         --role printed \
         --no-recursive
     patch_manifest

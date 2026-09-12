@@ -21,8 +21,18 @@ BORE_CLEARANCE = 0.25;           // 圆孔打印间隙
 D_FLAT_DEPTH = 0.50;             // 轴上切平深度（常见 3 mm D 轴 Ø3 → 对边 2.5）
 D_FLAT_CLEARANCE = 0.12;         // 平面侧间隙，保证能推进
 SET_SCREW_D = 1.6;               // M2 底孔，对准 D 平面
-INDICATOR_H = 1.0;               // 轮毂圆面凸起，转动时看出是否在转
-INDICATOR_D = 2.0;               // 指示凸点直径
+
+// 轴承版统一采用 3×6×2 mm 微型轴承（MR63-2RS / MR63ZZ 等同尺寸件）。
+// 轴承外圈压入打印件；此处按树脂首版给出小间隙，FDM 需按实测孔径放大。
+BEARING_ID = 3.0;                // 轴承内径
+BEARING_OD = 6.0;                // 轴承外径
+BEARING_B = 2.0;                  // 轴承宽度
+BEARING_SEAT_CLEARANCE = 0.05;   // 轴承座直径余量；树脂首版
+BEARING_SEAT_D = BEARING_OD + BEARING_SEAT_CLEARANCE;
+BEARING_SHAFT_CLEARANCE = 0.40;  // 限位台阶内圆/后侧导轴孔余量；Ø3.0 轴对应 Ø3.4 孔
+BEARING_SHAFT_D = BEARING_ID + BEARING_SHAFT_CLEARANCE;
+INDICATOR_DEPTH = 0.20;          // 轮毂圆面内凹深度，转动时看出是否在转
+INDICATOR_D = 2.0;               // 指示圆直径
 INDICATOR_EDGE = 0.35;           // 凸点外沿到轮毂外圆的边距
 PLATE_CLEAR = 0.40;              // 轮毂相对内链板径向让位
 LIGHTEN_MIN_RING = 8.0;          // 齿根圆到轮毂的环宽大于此值才开减重孔

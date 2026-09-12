@@ -5,7 +5,7 @@
 // opening_direction: n/a
 // fastener: 3 mm D-shaft through-bore; M2 set-screw on the D-flat
 // seal: n/a
-// print_orientation: hub face down (indicator on +Z), axis = +Z (tooth profile in XY)
+// print_orientation: hub face down (indicator recess on +Z), axis = +Z (tooth profile in XY)
 // units: mm
 // source: docs/parts/CH1-03C-roller-chain.md
 // note: roller-chain sprockets with pointed teeth; not involute gears
@@ -52,8 +52,24 @@ module d_bore_2d() {
 }
 
 module bore_cut(n) {
-    linear_extrude(height = HUB_H + tooth_w + INDICATOR_H + 2, center = true)
+    linear_extrude(height = HUB_H + tooth_w + 2, center = true)
         d_bore_2d();
+}
+
+module bearing_cut(n) {
+    // 从 +Z 侧装入，底部台阶承托 2 mm 轴承；后侧另开 Ø3.4 导轴孔。
+    // 装入后仍由两侧链板/轴肩完成外部轴向限位，避免依赖打印薄唇。
+    seat_bottom = -BEARING_B / 2;
+    seat_top = HUB_H / 2 + 1;
+    union() {
+        translate([0, 0, (seat_bottom + seat_top) / 2])
+            cylinder(d = BEARING_SEAT_D, h = seat_top - seat_bottom);
+        cylinder(
+            d = BEARING_SHAFT_D,
+            h = HUB_H + tooth_w + 2,
+            center = true
+        );
+    }
 }
 
 module set_screw_cut(n) {
@@ -62,11 +78,11 @@ module set_screw_cut(n) {
             cylinder(d = SET_SCREW_D, h = hub_od_of(n) / 2 + eps);
 }
 
-module run_indicator(n) {
+module indicator_recess(n) {
     hub_r = hub_od_of(n) / 2;
     y = hub_r - INDICATOR_D / 2 - INDICATOR_EDGE;
-    translate([0, y, HUB_H / 2])
-        cylinder(d = INDICATOR_D, h = INDICATOR_H);
+    translate([0, y, HUB_H / 2 - INDICATOR_DEPTH / 2 + eps / 2])
+        cylinder(d = INDICATOR_D, h = INDICATOR_DEPTH + eps, center = true);
 }
 
 module lighten_cuts(n) {
@@ -101,10 +117,24 @@ module ch1_03c_sprocket(n) {
             linear_extrude(height = tooth_w, center = true, convexity = max(8, n))
                 sprocket_outline(n);
             hub_solid(n);
-            run_indicator(n);
         }
         bore_cut(n);
         set_screw_cut(n);
+        indicator_recess(n);
+        lighten_cuts(n);
+    }
+}
+
+module ch1_03c_bearing_sprocket(n) {
+    assert(n >= BASE_TEETH, "teeth below 1x (12) is not the working-well minimum");
+    difference() {
+        union() {
+            linear_extrude(height = tooth_w, center = true, convexity = max(8, n))
+                sprocket_outline(n);
+            hub_solid(n);
+        }
+        bearing_cut(n);
+        indicator_recess(n);
         lighten_cuts(n);
     }
 }
@@ -125,6 +155,9 @@ if (PART == "family") {
 } else if (PART == "wrap_check") {
     assert(is_known_size(SIZE), str("unknown SIZE: ", SIZE));
     ch1_03c_sprocket_wrap_check(teeth_of(SIZE));
+} else if (PART == "bearing") {
+    assert(is_known_size(SIZE), str("unknown SIZE: ", SIZE));
+    ch1_03c_bearing_sprocket(teeth_of(SIZE));
 } else {
     assert(is_known_size(SIZE), str("unknown SIZE: ", SIZE));
     ch1_03c_sprocket(teeth_of(SIZE));
@@ -133,9 +166,9 @@ if (PART == "family") {
 
 //#region 业务逻辑
 // 齿形 = 尖齿星形（谷底在滚子角，齿顶在中间）再减去节圆滚子座。
-// D 孔沿 Z 贯通；顶丝从 +X 压在 D 平面上。+Z 轮毂面有 1 mm 偏心凸点作运转指示。
+// D 孔沿 Z 贯通；顶丝从 +X 压在 D 平面上。+Z 轮毂面有直径 2 mm、深 0.2 mm 的偏心凹点作运转指示。
 //#endregion
 
 //#region 方法/工具
-// 导出用 -D SIZE='"2x"' 或 -D PART='"family"' / -D PART='"wrap_check"'。
+// 导出用 -D SIZE='"2x"' 或 -D PART='"family"' / -D PART='"wrap_check"' / -D PART='"bearing"'。
 //#endregion

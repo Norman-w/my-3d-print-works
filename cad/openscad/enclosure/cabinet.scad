@@ -10,25 +10,27 @@
 // note: drawers not modeled this round; 1 mm bay clearance reserved on 4 sides
 
 //#region 导入/依赖
-include <cabinet_params.scad>
+include <cabinet_motor_mount_params.scad>
+include <cabinet_tensioner.scad>
+include <cabinet_motor_mount.scad>
 //#endregion
 
 //#region 常量/配置
 $fa = 8;
 $fs = 0.35;
 
-PART = "assembly";               // assembly | shell | back_panel
-EXPLODE = 28;
+PART = is_undef(PART) ? "assembly" : PART;   // assembly | shell | back_panel
+EXPLODE = is_undef(EXPLODE) ? 28 : EXPLODE;
 //#endregion
 
 //#region 模型/类型
-// 尺寸与格口函数在 cabinet_params.scad。
+// 尺寸与格口函数在 cabinet_params.scad；张紧 U 在 cabinet_tensioner.scad。
 //#endregion
 
 //#region 私有成员
-echo("bay_w", bay_w(), "bay_h", bay_h());
+echo("bay_w", bay_w(), "bay_h", bay_h(), "W", W, "H", H);
 echo("drawer_outer", drawer_outer_w(), drawer_outer_h(), "inner_h", drawer_inner_h());
-echo("rear_cavity", REAR_CAVITY, "fastener", "side screws later, no bosses");
+echo("service_h", SERVICE_H, "service_w", SERVICE_W, "rear_cavity", REAR_CAVITY);
 
 module outer_frame() {
     difference() {
@@ -45,11 +47,18 @@ module partition_plate() {
 
 module bay_grid() {
     for (i = [1:N_COL - 1])
-        translate([col_x(i) - DIV_T, 0, WALL - EPS])
-            cube([DIV_T, FRONT_NET + EPS, INNER_H + 2 * EPS]);
+        translate([col_x(i) - DIV_T, 0, GRID_ORIGIN_Z])
+            cube([DIV_T, FRONT_NET + EPS, GRID_H + EPS]);
     for (j = [1:N_ROW - 1])
-        translate([WALL - EPS, 0, row_z(j) - SHELF_T])
-            cube([INNER_W + 2 * EPS, FRONT_NET + EPS, SHELF_T]);
+        translate([GRID_ORIGIN_X, 0, row_z(j) - SHELF_T])
+            cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
+    translate([GRID_ORIGIN_X, 0, GRID_ORIGIN_Z - SHELF_T])
+        cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
+}
+
+module front_service_cheek() {
+    translate([WALL - EPS, 0, GRID_ORIGIN_Z])
+        cube([SERVICE_W + EPS, FRONT_NET + EPS, GRID_H + EPS]);
 }
 
 module back_rabbet() {
@@ -73,14 +82,20 @@ module cabinet_shell() {
                 outer_frame();
                 partition_plate();
                 bay_grid();
+                front_service_cheek();
+                tensioner_guides();
             }
             back_rabbet();
+            tensioner_floor_bore();
         }
     }
 }
 
 module back_panel() {
-    cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
+    union() {
+        cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
+        cabinet_motor_mount_bosses_local();
+    }
 }
 
 module drawer_ghosts() {
@@ -104,34 +119,37 @@ module emit_part(name) {
 //#endregion
 
 //#region 公开 API
-emit_part("shell") {
-    if (PART == "assembly")
-        color("#6f8f9a") cabinet_shell();
-    else
-        cabinet_shell();
-}
-
-emit_part("back_panel") {
-    translate([PANEL_X, PANEL_Y, PANEL_Z]) {
+if (is_undef(CABINET_LIB_ONLY) || !CABINET_LIB_ONLY) {
+    emit_part("shell") {
         if (PART == "assembly")
-            translate([0, EXPLODE, 0])
-                color("#c4a574") back_panel();
+            color("#6f8f9a") cabinet_shell();
         else
-            back_panel();
+            cabinet_shell();
     }
-}
 
-if (PART == "assembly")
-    color("#d9ff62", 0.18) drawer_ghosts();
+    emit_part("back_panel") {
+        translate([PANEL_X, PANEL_Y, PANEL_Z]) {
+            if (PART == "assembly")
+                translate([0, EXPLODE, 0])
+                    color("#c4a574") back_panel();
+            else
+                back_panel();
+        }
+    }
+
+    if (PART == "assembly")
+        color("#d9ff62", 0.18) drawer_ghosts();
+}
 //#endregion
 
 //#region 视图层
-// 预览用 PART=assembly；打印件只导出 shell / back_panel。
+// 预览用 PART=assembly；打印件只导出 shell / back_panel。背板含动力电机罩的四根接收 boss。
 //#endregion
 
 //#region 业务逻辑
-// 前脸开口、隔板、层板和立板一次成型。后仓留空给链轮，中部不设 Boss。
-// 背板只坐后口止口；侧边螺丝和内嵌后盖下一轮再做。
+// 格栅只在抽屉区。底仓前脸通宽开口放电器；后仓仍是一个开间。
+// 可拆背板内侧增加动力电机罩的四根带底座 boss，罩体沿 +Y 压到 boss 端面。
+// 左颊板只堵前仓抽屉高度，把回程走廊留在后仓。张紧 U 导肋长在后仓底板。
 //#endregion
 
 //#region 方法/工具
