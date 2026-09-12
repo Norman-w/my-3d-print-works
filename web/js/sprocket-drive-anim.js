@@ -12,7 +12,8 @@ const LEFT_WRAP_PITCHES = 6;
 const RIGHT_WRAP_PITCHES = 12;
 const N_LEFT = 12;
 const N_RIGHT = 24;
-const MOTOR_HZ = 1;
+const HZ_STEPS = [0.1, 0.5, 1, 2, 5, 10];
+const DEFAULT_HZ_INDEX = 2;
 const CLOCKWISE = -1;
 const MODEL_FILES = {
   sprocket1x: "ch1_03c_drive_sprocket_1x.stl",
@@ -40,6 +41,7 @@ const els = {
   pause: document.getElementById("pause"),
   fit: document.getElementById("fit"),
   top: document.getElementById("top-view"),
+  hzRange: document.getElementById("hz-range"),
   stage: document.getElementById("stage"),
   loading: document.getElementById("loading"),
   loadingStep: document.getElementById("loading-step"),
@@ -57,7 +59,8 @@ const state = {
   chain: /** @type {ChainPart[]} */ ([]),
   playing: true,
   ready: false,
-  elapsed: 0,
+  motorHz: HZ_STEPS[DEFAULT_HZ_INDEX],
+  motorTurns: 0,
   lastMs: 0,
   modelBase: MODEL_BASES[0],
 };
@@ -80,8 +83,25 @@ async function announce(text, ratio) {
 function revealScene() {
   state.ready = true;
   els.stage?.classList.add("is-ready");
-  for (const button of [els.play, els.pause, els.fit, els.top]) {
-    if (button) button.disabled = false;
+  for (const control of [els.play, els.pause, els.fit, els.top, els.hzRange]) {
+    if (control) control.disabled = false;
+  }
+}
+
+function formatHz(hz) {
+  return Number.isInteger(hz) ? String(hz) : String(hz);
+}
+
+function hzFromSlider() {
+  const index = Number(els.hzRange?.value ?? DEFAULT_HZ_INDEX);
+  return HZ_STEPS[Math.min(HZ_STEPS.length - 1, Math.max(0, index))] ?? HZ_STEPS[DEFAULT_HZ_INDEX];
+}
+
+function updateHzLabel() {
+  const motor = state.motorHz;
+  const driven = motor * (N_LEFT / N_RIGHT);
+  if (els.hzOut) {
+    els.hzOut.textContent = `${formatHz(motor)} Hz · 2x ${formatHz(driven)} Hz · 顺时针`;
   }
 }
 
@@ -312,17 +332,15 @@ function fitCamera(kind) {
 
 function applyMotion(dt) {
   if (!state.ready || !state.path || !state.motor || !state.driven) return;
-  if (state.playing) state.elapsed += dt;
-  const pitches = MOTOR_HZ * N_LEFT * state.elapsed;
+  if (state.playing) state.motorTurns += state.motorHz * dt;
+  const pitches = state.motorTurns * N_LEFT;
   const offsetMm = pitches * (state.path.length / state.path.pins.length);
-  const motorAngle = CLOCKWISE * 2 * Math.PI * MOTOR_HZ * state.elapsed;
+  const motorAngle = CLOCKWISE * 2 * Math.PI * state.motorTurns;
   const drivenAngle = motorAngle * (N_LEFT / N_RIGHT);
   state.motor.rotation.z = motorAngle;
   state.driven.rotation.z = drivenAngle;
   for (const part of state.chain) slideChain(part, state.path, offsetMm);
-  if (els.hzOut) {
-    els.hzOut.textContent = `${MOTOR_HZ.toFixed(0)} Hz · 2x ${(MOTOR_HZ * N_LEFT / N_RIGHT).toFixed(2)} Hz · 顺时针`;
-  }
+  updateHzLabel();
 }
 //#endregion
 
@@ -411,14 +429,14 @@ async function loadDrive() {
   }
   if (els.meta) {
     els.meta.textContent =
-      `1x 电机 ${MOTOR_HZ} Hz 顺时针 · 2x ${MOTOR_HZ * N_LEFT / N_RIGHT} Hz 同向 · 中心距 ${CENTER_DISTANCE_MM} mm · 102 节`;
+      `1x 电机 0.1–10 Hz 顺时针 · 2x 半速同向 · 中心距 ${CENTER_DISTANCE_MM} mm · 102 节`;
   }
   for (const part of state.chain) part.mesh.visible = true;
   await announce("正在打开三维场景…", 1);
   revealScene();
   state.resize?.();
   fitCamera("iso");
-  setLoading("已按 1x=电机、1 Hz 顺时针运行。", 1);
+  setLoading("已按 1x=电机、顺时针运行。", 1);
 }
 
 function bindControls() {
@@ -430,6 +448,10 @@ function bindControls() {
   });
   els.fit?.addEventListener("click", () => fitCamera("iso"));
   els.top?.addEventListener("click", () => fitCamera("top"));
+  els.hzRange?.addEventListener("input", () => {
+    state.motorHz = hzFromSlider();
+    updateHzLabel();
+  });
 }
 //#endregion
 

@@ -4,7 +4,7 @@
   <!-- region: 导入/依赖 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CH1 03C 链传动 · 1x 电机 1 Hz 顺时针</title>
+  <title>CH1 03C 链传动 · 1x 电机可调转速顺时针</title>
   <script type="importmap">
   {
     "imports": {
@@ -45,13 +45,16 @@
     .bar { height: 6px; border-radius: 999px; background: #1c2433; overflow: hidden; }
     #loading-bar { display: block; height: 100%; width: 0; background: #d9ff62; transition: width .15s linear; }
     .hz { font-variant-numeric: tabular-nums; color: #d9ff62; }
+    .speed { margin: 10px 0 8px; }
+    #hz-range { width: 100%; }
+    .hz-marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: #8b98ab; }
     @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 900px) { .app { grid-template-columns: 1fr; } aside { border-right: 0; border-bottom: 1px solid #243044; } }
   </style>
 </head>
 <body>
   <!-- region: 常量/配置 -->
-  <!-- 路径与转速在 js/sprocket-drive-anim.js：1 Hz、顺时针、中心距 200 mm -->
+  <!-- 路径与转速在 js/sprocket-drive-anim.js：0.1–10 Hz 档位、顺时针、中心距 200 mm -->
   <!-- endregion -->
 
   <!-- region: 模型/类型 -->
@@ -70,8 +73,15 @@
   <div class="app">
     <aside>
       <h1>CH1 03C 链传动</h1>
-      <p class="meta" id="meta">小轮装在电机上，1 Hz 顺时针正转。</p>
-      <p class="hint hz" id="hz-out">1 Hz · 2x 0.50 Hz · 顺时针</p>
+      <p class="meta" id="meta">小轮装在电机上，顺时针正转；转速用滑杆切换。</p>
+      <p class="hint hz" id="hz-out">1 Hz · 2x 0.5 Hz · 顺时针</p>
+      <div class="speed">
+        <label class="hint" for="hz-range">1x 电机转速</label>
+        <input id="hz-range" type="range" min="0" max="5" step="1" value="2" disabled />
+        <div class="hz-marks" aria-hidden="true">
+          <span>0.1</span><span>0.5</span><span>1</span><span>2</span><span>5</span><span>10</span>
+        </div>
+      </div>
       <div class="row">
         <button type="button" id="play" class="primary" disabled>运行</button>
         <button type="button" id="pause" disabled>暂停</button>
