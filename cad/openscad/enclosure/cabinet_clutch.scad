@@ -10,7 +10,9 @@
 // print_orientation: gears/pulleys flat with their axis vertical; clutch carrier and fork may need supports
 // units: mm
 //
-// Coordinate contract: X is left/right when facing the back, Y is front/back, Z is vertical.
+// Coordinate contract: X=0 is the cabinet-left side when facing the front and
+// X=W is cabinet-right. When facing the back, the visual left/right order is
+// reversed: the front-left motor appears on the back-right.
 // The existing cabinet_params.scad is the source of the 5×5 drawer grid.
 
 //#region 导入/依赖
@@ -92,7 +94,12 @@ DRIVE_AXIS_Y = PARTITION_BACK_Y + 13.0;
 // Keep the front pulley close to the face while allowing its belt turn radius
 // to remain inside the cabinet instead of protruding through Y=0.
 FRONT_PULLEY_Y = 14.0;
+// The service corridor and motor are on the front-left side. From the back
+// this same motor is therefore the right-hand boundary drive.
 MOTOR_X = WALL + SERVICE_W / 2;
+// The two boundary axes are not drawer columns. The current cabinet has five
+// drawer transmission columns, so the complete vertical-axis count is 2 + 5.
+VERTICAL_AXIS_COUNT = N_COL + 2;
 BUS_BOTTOM_Z = GRID_ORIGIN_Z - 5.0;
 BUS_TOP_Z = H - WALL - 7.0;
 MOTOR_FACE_Z = BUS_BOTTOM_Z - 28.0;
@@ -102,7 +109,9 @@ ROD_BOTTOM_Z = BUS_BOTTOM_Z - 6.0;
 ROD_TOP_Z = BUS_TOP_Z + 6.0;
 LEFT_D_AXIS_Z0 = MOTOR_FACE_Z + MOTOR_SHAFT_L - 1.0;
 
-// The rightmost idler stays inside the rear cavity and leaves a small wall rim.
+// The front-right idler runs in the rear cavity and is deliberately outboard
+// of the 5 drawer axes; its receiver forms a short right-side extension.
+// From the back this axis is on the left side of the view.
 TIMING_PITCH_R = TIMING_TEETH * TIMING_PITCH_MM / (2 * PI);
 TIMING_ROOT_R = TIMING_PITCH_R - TIMING_TOOTH_DEPTH;
 TIMING_OUTER_R = TIMING_PITCH_R + TIMING_TOOTH_DEPTH;
@@ -118,8 +127,12 @@ TIMING_FLANGE_D = 2 * TIMING_FLANGE_R;
 // toothed pulley diameter.
 TENSIONER_TRAVEL_MM = 8.0;
 TENSIONER_SCREW_OUT_MM = is_undef(TENSIONER_SCREW_OUT_MM) ? 4.0 : TENSIONER_SCREW_OUT_MM;
-TENSIONER_AXIS_MAX_X = W - WALL - TIMING_FLANGE_R - 1.0;
-TENSIONER_AXIS_MIN_X = TENSIONER_AXIS_MAX_X - TENSIONER_TRAVEL_MM;
+TENSIONER_AXIS_GAP_MM = 1.0;
+// The right tensioner is an additional axis, not drawer column N_COL-1.
+// Keep the full retaining-flange envelope clear of the last drawer axis.
+TENSIONER_AXIS_MIN_X = col_center_x(N_COL - 1)
+    + TIMING_FLANGE_D + TENSIONER_AXIS_GAP_MM;
+TENSIONER_AXIS_MAX_X = TENSIONER_AXIS_MIN_X + TENSIONER_TRAVEL_MM;
 TENSIONER_X = TENSIONER_AXIS_MIN_X + TENSIONER_SCREW_OUT_MM;
 
 // The drawer rack/drive geometry is intentionally explicit.  The horizontal
@@ -142,10 +155,13 @@ FORK_T = 2.4;
 FORK_CLEAR_OPEN = 0.55;
 FORK_CONTACT = 0.08;
 
-// Right-side sliding tensioner.  The fixed channel is tied into the cabinet
+// Front-right sliding tensioner. The fixed channel is tied into the cabinet
 // right/back structure; the carriage captures the round shaft and moves in X.
-TENSIONER_BASE_X0 = TENSIONER_AXIS_MIN_X - 22.0;
-TENSIONER_BASE_X1 = W - WALL;
+// The shorter lead keeps the adjustment-head envelope clear of the last
+// drawer axis. The fixed receiver is intentionally an outboard right wing.
+TENSIONER_BASE_LEAD_MM = 18.0;
+TENSIONER_BASE_X0 = TENSIONER_AXIS_MIN_X - TENSIONER_BASE_LEAD_MM;
+TENSIONER_BASE_X1 = TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R + 1.0;
 TENSIONER_BASE_Y0 = DRIVE_AXIS_Y - 16.0;
 TENSIONER_BASE_D = 32.0;
 TENSIONER_BASE_END_W = 3.0;
@@ -201,7 +217,8 @@ COLOR_TENSIONER = "#e1b642";
 // Part values:
 //   assembly       complete cabinet + bus + all drawer take-offs + one fork
 //   cabinet        cabinet shell and drawer ghosts
-//   power_bus      motor, five drawer columns, top/bottom timing belts, idler
+//   power_bus      seven-axis bus, top/bottom timing belts, idler
+//   all_vertical_axes  D drive + five drawer axes + round tensioner only
 //   drawer_drive   rear/front compound wheels, Y belts and drawer racks
 //   clutch         all clutch stations
 //   clutch_detail  one selected station with the spring, screw and fork
@@ -869,7 +886,7 @@ module power_motor_vertical() {
 }
 
 module left_d_axis() {
-    // Left side axis: the rod has a D flat and both bus pulleys have matching
+    // Front-left axis: the rod has a D flat and both bus pulleys have matching
     // D bores. The motor output shaft overlaps the lower end of this rod.
     color(COLOR_SHAFT)
         d_rod_z(MOTOR_X, DRIVE_AXIS_Y, LEFT_D_AXIS_Z0, ROD_TOP_Z - LEFT_D_AXIS_Z0);
@@ -886,8 +903,9 @@ module left_d_axis() {
 }
 
 module right_round_axis() {
-    // Right side axis: this is a round tensioner shaft. Its two pulleys use
-    // round bores; there is deliberately no D flat on this shaft.
+    // Front-right axis: this is a round tensioner shaft. Its two pulleys use
+    // round bores; there is deliberately no D flat on this shaft. It appears
+    // on the left when the cabinet is viewed from the back.
     color(COLOR_TENSIONER)
         round_rod_z(TENSIONER_X, DRIVE_AXIS_Y, ROD_BOTTOM_Z, ROD_TOP_Z - ROD_BOTTOM_Z);
     for (z = [BUS_BOTTOM_Z, BUS_TOP_Z])
@@ -907,10 +925,21 @@ module side_axes() {
     right_round_axis();
 }
 
-module power_bus() {
+module all_vertical_axes() {
+    // Exact front-view order, left to right:
+    //   0       : D drive axis + motor
+    //   1..N_COL: one drawer transmission axis per drawer column
+    //   N_COL+1: round tensioner axis carried by the slide
     power_motor_vertical();
     for (i = [0:N_COL - 1])
         vertical_gear_column(clutch_col_x(i), DRIVE_AXIS_Y);
+    tensioner_slide_assembly();
+}
+
+module power_bus() {
+    // Front view: D drive + five drawer axes + round tensioner = seven axes.
+    // Rear view: the same physical order appears reversed.
+    all_vertical_axes();
 
     // One top and one bottom horizontal timing belt.  The column pulleys sit
     // on both straight runs; the far-right pair is the adjustable idler.
@@ -1267,6 +1296,8 @@ if (CLUTCH_PART == "assembly") {
     color(COLOR_CABINET) clutch_cabinet_shell();
 } else if (CLUTCH_PART == "power_bus") {
     power_bus();
+} else if (CLUTCH_PART == "all_vertical_axes") {
+    all_vertical_axes();
 } else if (CLUTCH_PART == "drawer_drive") {
     drawer_drive();
 } else if (CLUTCH_PART == "clutch") {
@@ -1340,6 +1371,7 @@ if (CLUTCH_PART == "assembly") {
 //#region 业务逻辑与检查
 echo("cabinet_clutch", "W", W, "H", H, "D", D);
 echo("drive_axis", "x_motor", MOTOR_X, "y", DRIVE_AXIS_Y, "z_bottom", BUS_BOTTOM_Z, "z_top", BUS_TOP_Z);
+echo("vertical_axes", "count", VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-columns + round-tensioner");
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("right_axis", "profile", "round", "d", ROUND_AXIS_D, "pulley_bore", ROUND_BORE_D);
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
@@ -1350,6 +1382,7 @@ assert(
     CLUTCH_PART == "assembly"
     || CLUTCH_PART == "cabinet"
     || CLUTCH_PART == "power_bus"
+    || CLUTCH_PART == "all_vertical_axes"
     || CLUTCH_PART == "drawer_drive"
     || CLUTCH_PART == "clutch"
     || CLUTCH_PART == "clutch_detail"
@@ -1383,6 +1416,8 @@ assert(
     || CLUTCH_PART == "drawer_rack"
 );
 assert(abs(CLUTCH_OPEN_GAP - 2 * CLUTCH_DOG_TOOTH_H) < 0.001, "open clutch gap must be two dog tooth heights");
+assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
+assert(VERTICAL_AXIS_COUNT == 7, "vertical axes must be D drive + 5 drawer axes + round tensioner");
 assert(DRIVE_AXIS_Y > PARTITION_BACK_Y + 1.0, "drive bus must be behind the partition");
 assert(DRIVE_AXIS_Y - TIMING_OUTER_R > PARTITION_BACK_Y + 0.50, "rear pulley OD must clear the partition");
 assert(DRIVE_AXIS_Y + TIMING_OUTER_R < D - BACK_PANEL_T - 1.0, "rear belt must clear the back panel");
@@ -1393,8 +1428,16 @@ assert(TENSIONER_SCREW_OUT_MM >= 0 && TENSIONER_SCREW_OUT_MM <= TENSIONER_TRAVEL
     "tensioner screw adjustment must stay within the defined travel");
 assert(TENSIONER_AXIS_MIN_X < TENSIONER_AXIS_MAX_X,
     "tensioner axis travel must have a valid range");
-assert(TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R < W - WALL + 0.01,
-    "right tensioner flange must remain inside the side wall");
+assert(TENSIONER_AXIS_MIN_X - col_center_x(N_COL - 1)
+    > TIMING_FLANGE_D + TENSIONER_AXIS_GAP_MM - 0.01,
+    "tensioner flange must clear the last drawer-axis flange");
+assert(TENSIONER_BASE_X0 - TENSIONER_ADJ_HEAD_L
+    > col_center_x(N_COL - 1) + ROD_D / 2 + 0.50,
+    "tensioner screw head must clear the last drawer axis");
+assert(TENSIONER_BASE_X0 < W - WALL && TENSIONER_BASE_X1 > W - WALL,
+    "outboard tensioner receiver must bridge the cabinet right wall");
+assert(TENSIONER_BASE_X1 > TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R,
+    "tensioner base must retain the full flange at maximum travel");
 assert(TENSIONER_BASE_X0 < TENSIONER_AXIS_MIN_X,
     "tensioner base must start before the axis travel");
 assert(TENSIONER_CHANNEL_H > TENSIONER_CHANNEL_FLOOR_T

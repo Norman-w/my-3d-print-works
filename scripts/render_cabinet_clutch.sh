@@ -14,7 +14,9 @@ OUT_DIR="${PROJECT_ROOT}/output/previews/cabinet-clutch"
 QUALITY="${QUALITY:-2}"
 
 # ===== 分区：模型/类型 =====
-# Cameras use the cabinet coordinate contract: X width, Y depth, Z height.
+# Cameras use the cabinet coordinate contract: X=0 is left when facing the
+# front. Therefore the true rear view reverses the apparent X order: the
+# front-left motor must appear on the right side of assembly-back.png.
 
 # ===== 分区：私有成员 =====
 render_view() {
@@ -52,6 +54,7 @@ mkdir -p "${OUT_DIR}"
 render_view "axes/left-d-axis" "left_d_axis" false "13,380,145,13,76,130" "900,1200"
 render_view "axes/right-round-axis" "right_round_axis" false "245,380,145,245,76,130" "900,1200"
 render_view "axes/side-axes" "side_axes" false "130,520,135,130,76,135" "1500,1200"
+render_view "axes/all-vertical-axes" "all_vertical_axes" false "130,-400,135,130,76,135" "1700,1200"
 render_view "tensioner/slide-open" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 0
 render_view "tensioner/slide-tight" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 8
 render_view "tensioner/base" "tensioner_base" false "285,145,160,235,76,141" "1200,900"
