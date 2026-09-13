@@ -155,15 +155,18 @@ FORK_T = 2.4;
 FORK_CLEAR_OPEN = 0.55;
 FORK_CONTACT = 0.08;
 
-// Front-right sliding tensioner. The fixed channel is tied into the cabinet
-// right/back structure; the carriage captures the round shaft and moves in X.
+// Front-right sliding tensioner. The carriage still moves in X because that is
+// the belt-tension direction, but the fixed slide is now a rear-mounted
+// inverted-T bracket. In the Y/Z section seen from either cabinet side, the
+// lower flange is the bottom crossbar and its long rail runs toward +Y, ending
+// at the back-panel receiver. The older flat U-channel was the wrong section.
 // The shorter lead keeps the adjustment-head envelope clear of the last
 // drawer axis. The fixed receiver is intentionally an outboard right wing.
 TENSIONER_BASE_LEAD_MM = 18.0;
 TENSIONER_BASE_X0 = TENSIONER_AXIS_MIN_X - TENSIONER_BASE_LEAD_MM;
 TENSIONER_BASE_X1 = TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R + 1.0;
 TENSIONER_BASE_Y0 = DRIVE_AXIS_Y - 16.0;
-TENSIONER_BASE_D = 40.0;
+TENSIONER_BASE_D = D - BACK_PANEL_T - 2.0 - TENSIONER_BASE_Y0;
 TENSIONER_BASE_END_W = 3.0;
 // Keep the adjustment screw and spring on two visible, parallel lanes of the
 // carriage. The pulley stays on the belt centerline, so the spring pocket is
@@ -178,8 +181,18 @@ TENSIONER_SLIDE_COUNT = 2;
 TENSIONER_STAGE_PULLEY_CLEAR = 0.50;
 TENSIONER_CHANNEL_FLOOR_T = 3.2;
 TENSIONER_CHANNEL_WALL_T = 3.2;
-TENSIONER_CHANNEL_H = 12.0;
+TENSIONER_CHANNEL_H = 20.0;
 TENSIONER_TOP_LIP_T = 1.6;
+TENSIONER_TOP_RAIL_T = 1.6;
+TENSIONER_FOOT_OVERHANG_X = 7.0;
+// The T rail is deliberately explicit. The bottom foot is the inverted-T
+// crossbar; the narrow web rises from it, while the rear mounting head lands
+// two millimeters before the inside face of the cabinet back panel.
+TENSIONER_T_WEB_T = 3.2;
+TENSIONER_T_WEB_H = 7.0;
+TENSIONER_REAR_MOUNT_T = 3.2;
+TENSIONER_REAR_MOUNT_H = TENSIONER_CHANNEL_H;
+TENSIONER_END_BOSS_D = 8.0;
 // The carriage is intentionally offset toward -X.  The round-axis flange
 // must reach the right side, while the moving shoe itself must still stay
 // inside the fixed channel at maximum travel.
@@ -304,8 +317,9 @@ function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 function selected_row() = min(max(0, SELECTED_ROW), N_ROW - 1);
 
 // The upper and lower tensioner stages share X/Y datums but have independent
-// Z envelopes.  The fixed channel is below its pulley and the carriage sits
-// just above the channel floor, leaving the pulley/flange free to turn.
+// Z envelopes. The fixed inverted-T rail is below its pulley. The carriage
+// clears both the lower foot and the narrow web, leaving the pulley/flange
+// free to turn above the rear-mounted bracket.
 function tensioner_level_z(level) =
     level == "top" ? BUS_TOP_Z : BUS_BOTTOM_Z;
 
@@ -321,6 +335,7 @@ function tensioner_channel_z0(level) =
 function tensioner_carriage_z0(level) =
     tensioner_channel_z0(level)
     + TENSIONER_CHANNEL_FLOOR_T
+    + TENSIONER_T_WEB_H
     + TENSIONER_GUIDE_CLEAR;
 
 function tensioner_carriage_center_z(level) =
@@ -580,24 +595,89 @@ module tensioner_slide_base(level = "top") {
     z1 = tensioner_channel_z1(level);
     center_z = tensioner_carriage_center_z(level);
 
-    // Fixed outer frame from the SketchUp reference. Every level has its own
-    // channel: the lower and upper frames do not share a yoke or vertical
-    // shaft. The left block is the screw station; the right block is the
-    // spring pocket/end stop.
+    // Fixed outer frame reconstructed from the SketchUp reference. In the
+    // Y/Z side section this is an inverted T: a continuous bottom crossbar
+    // runs from the front toward the rear (+Y), and a narrow web rises from
+    // that foot. The rear mounting head is the part that lands against the
+    // cabinet back-panel receiver. Each belt level owns a complete frame.
     color(COLOR_TENSIONER_BASE)
         difference() {
             union() {
-                // Floor and side walls form the fixed sliding channel.
-                translate([x0, y0, z0])
-                    cube([x1 - x0, TENSIONER_BASE_D, TENSIONER_CHANNEL_FLOOR_T]);
-                translate([x0, y0, z0])
-                    cube([x1 - x0, TENSIONER_CHANNEL_WALL_T, TENSIONER_CHANNEL_H]);
-                translate([x0, y1 - TENSIONER_CHANNEL_WALL_T, z0])
-                    cube([x1 - x0, TENSIONER_CHANNEL_WALL_T, TENSIONER_CHANNEL_H]);
+                // Inverted-T bottom crossbar. It is intentionally below the
+                // carriage, so the part orientation remains unambiguous in a
+                // side inspection view.
+                translate([
+                    x0 - TENSIONER_FOOT_OVERHANG_X,
+                    y0,
+                    z0
+                ])
+                    cube([
+                        x1 - x0 + 2 * TENSIONER_FOOT_OVERHANG_X,
+                        TENSIONER_BASE_D,
+                        TENSIONER_CHANNEL_FLOOR_T
+                    ]);
 
-                // Low top lips capture the carriage shoulders. The 0.4 mm
-                // guide clearance is below these lips, so the carriage can
-                // translate in X but cannot lift out of the channel.
+                // Narrow longitudinal web. Its long direction is +Y toward
+                // the rear panel; the carriage bridges this web while it
+                // translates along X.
+                translate([
+                    x0,
+                    DRIVE_AXIS_Y - TENSIONER_T_WEB_T / 2,
+                    z0
+                ])
+                    cube([
+                        x1 - x0,
+                        y1 - DRIVE_AXIS_Y + TENSIONER_T_WEB_T / 2,
+                        TENSIONER_CHANNEL_FLOOR_T + TENSIONER_T_WEB_H
+                    ]);
+
+                // The rear mounting head is a shallow rectangular frame. Its
+                // top and bottom bars are the horizontal mounting faces at
+                // the back panel; keeping the center open makes the SKP-like
+                // carriage and the inverted-T rail visible in side view.
+                difference() {
+                    translate([
+                        x0,
+                        y1 - TENSIONER_REAR_MOUNT_T,
+                        z0
+                    ])
+                        cube([
+                            x1 - x0,
+                            TENSIONER_REAR_MOUNT_T,
+                            TENSIONER_REAR_MOUNT_H
+                        ]);
+                    translate([
+                        x0 + TENSIONER_BASE_END_W,
+                        y1 - TENSIONER_REAR_MOUNT_T - EPS,
+                        z0 + TENSIONER_CHANNEL_FLOOR_T
+                    ])
+                        cube([
+                            x1 - x0 - 2 * TENSIONER_BASE_END_W,
+                            TENSIONER_REAR_MOUNT_T + 2 * EPS,
+                            TENSIONER_REAR_MOUNT_H
+                                - TENSIONER_CHANNEL_FLOOR_T
+                                - TENSIONER_TOP_LIP_T
+                        ]);
+                }
+
+                // Low front/rear guide shoulders keep the moving carriage
+                // registered in Y while the T web carries the section shape.
+                translate([x0, y0, z0])
+                    cube([
+                        x1 - x0,
+                        TENSIONER_CHANNEL_WALL_T,
+                        TENSIONER_CHANNEL_H
+                    ]);
+                translate([x0, y1 - TENSIONER_CHANNEL_WALL_T, z0])
+                    cube([
+                        x1 - x0,
+                        TENSIONER_CHANNEL_WALL_T,
+                        TENSIONER_CHANNEL_H
+                    ]);
+
+                // Short top lips capture the front/rear carriage shoulders.
+                // The 0.4 mm guide clearance is below these lips, so the
+                // carriage can translate in X but cannot lift out.
                 translate([
                     x0,
                     y0 + TENSIONER_CHANNEL_WALL_T - EPS,
@@ -611,10 +691,40 @@ module tensioner_slide_base(level = "top") {
                 ])
                     cube([x1 - x0, 2.8 + EPS, TENSIONER_TOP_LIP_T]);
 
-                translate([x0, y0, z0])
-                    cube([TENSIONER_BASE_END_W, TENSIONER_BASE_D, TENSIONER_CHANNEL_H]);
-                translate([x1 - TENSIONER_BASE_END_W, y0, z0])
-                    cube([TENSIONER_BASE_END_W, TENSIONER_BASE_D, TENSIONER_CHANNEL_H]);
+                // Long upper guide rail. Together with the bottom foot it
+                // gives the SKP side view its rectangular opening; its rear
+                // end is captured by the receiver at the cabinet back.
+                translate([x0, y0, z1 - TENSIONER_TOP_RAIL_T])
+                    cube([
+                        x1 - x0,
+                        TENSIONER_BASE_D,
+                        TENSIONER_TOP_RAIL_T
+                    ]);
+
+                // The screw and spring stops are lane bosses, not solid
+                // end walls. Keeping the middle open is important: from a
+                // left/right side view the inverted-T section must remain
+                // visible, just like the rectangular opening in the SKP.
+                translate([
+                    x0,
+                    TENSIONER_ADJ_Y - TENSIONER_END_BOSS_D / 2,
+                    z0
+                ])
+                    cube([
+                        TENSIONER_BASE_END_W,
+                        TENSIONER_END_BOSS_D,
+                        TENSIONER_CHANNEL_H
+                    ]);
+                translate([
+                    x1 - TENSIONER_BASE_END_W,
+                    TENSIONER_SPRING_Y - TENSIONER_END_BOSS_D / 2,
+                    z0
+                ])
+                    cube([
+                        TENSIONER_BASE_END_W,
+                        TENSIONER_END_BOSS_D,
+                        TENSIONER_CHANNEL_H
+                    ]);
             }
 
             // Large screw passage through the left end block. The screw head
@@ -796,15 +906,29 @@ module cabinet_tensioner_receiver_stage(level = "top") {
     z0 = tensioner_channel_z0(level);
 
     // These fixed ribs are part of the cabinet, not the moving carriage. The
-    // shelf extension catches this level's channel floor at y=y1 and lands in
-    // the inside face of the 5 mm back wall. End ribs prevent yaw; the right
-    // rib keys the fixed receiver against the cabinet side wall.
+    // lower shelf catches the inverted-T foot at y=y1. The tall rear key
+    // catches the T head and lands directly on the inside face of the 5 mm
+    // back wall; the two end ribs prevent yaw and the right rib keys the
+    // receiver against the cabinet side wall.
     union() {
+        // Matching top/bottom receiver straps leave the center of the
+        // mounting frame open, rather than turning the receiver into a solid
+        // wall behind the moving carriage.
         translate([x0, y1 - EPS, z0 - EPS])
             cube([
                 x1 - x0,
                 D - BACK_PANEL_T - y1 + 2 * EPS,
                 TENSIONER_CHANNEL_FLOOR_T + EPS
+            ]);
+        translate([
+            x0,
+            y1 - EPS,
+            z0 + TENSIONER_REAR_MOUNT_H - TENSIONER_TOP_LIP_T
+        ])
+            cube([
+                x1 - x0,
+                D - BACK_PANEL_T - y1 + 2 * EPS,
+                TENSIONER_TOP_LIP_T + EPS
             ]);
 
         for (x = [x0 + 4.0, x1 - 8.0])
@@ -1459,7 +1583,7 @@ echo("vertical_axes", "count", VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("right_axis", "profile", "round", "d", ROUND_AXIS_D, "pulley_bore", ROUND_BORE_D);
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
-echo("tensioner", "slides", TENSIONER_SLIDE_COUNT, "axis_min_x", TENSIONER_AXIS_MIN_X, "axis_max_x", TENSIONER_AXIS_MAX_X, "screw_out", TENSIONER_SCREW_OUT_MM, "channel_x", TENSIONER_BASE_X0, TENSIONER_BASE_X1, "bottom_z", tensioner_channel_z0("bottom"), "top_z", tensioner_channel_z0("top"), "channel_h", TENSIONER_CHANNEL_H);
+echo("tensioner", "slides", TENSIONER_SLIDE_COUNT, "section", "inverted-T", "axis_min_x", TENSIONER_AXIS_MIN_X, "axis_max_x", TENSIONER_AXIS_MAX_X, "screw_out", TENSIONER_SCREW_OUT_MM, "rail_y", TENSIONER_BASE_Y0, TENSIONER_BASE_Y0 + TENSIONER_BASE_D, "bottom_z", tensioner_channel_z0("bottom"), "top_z", tensioner_channel_z0("top"), "channel_h", TENSIONER_CHANNEL_H);
 echo("tensioner_bearing", "od", TENSIONER_BEARING_OD, "h", TENSIONER_BEARING_H, "spindle_d", ROUND_AXIS_D, "seat_od", TENSIONER_BEARING_SEAT_OD);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
 
@@ -1536,6 +1660,20 @@ assert(tensioner_channel_z1("bottom") < tensioner_channel_z0("top"),
 assert(TENSIONER_CHANNEL_H > TENSIONER_CHANNEL_FLOOR_T
     + TENSIONER_GUIDE_CLEAR + TENSIONER_CARRIAGE_T,
     "tensioner carriage must fit below the retaining lips");
+assert(TENSIONER_CHANNEL_H > TENSIONER_CHANNEL_FLOOR_T
+    + TENSIONER_T_WEB_H + TENSIONER_GUIDE_CLEAR + TENSIONER_CARRIAGE_T
+    + TENSIONER_BEARING_SEAT_H,
+    "inverted-T web and bearing seat must fit below the pulley");
+assert(TENSIONER_BASE_D > TENSIONER_CARRIAGE_D
+    + 2 * TENSIONER_GUIDE_CLEAR,
+    "inverted-T rail depth must contain the moving carriage");
+assert(TENSIONER_BASE_Y0 + TENSIONER_BASE_D
+    < D - BACK_PANEL_T - 1.0,
+    "rear mounting head must stop before the back-panel inside face");
+assert(TENSIONER_T_WEB_T > 0 && TENSIONER_T_WEB_H > 0,
+    "inverted-T web must have positive section dimensions");
+assert(TENSIONER_FOOT_OVERHANG_X > 0,
+    "inverted-T bottom crossbar must extend beyond the guide body");
 assert(TENSIONER_SPRING_MIN_L > 0, "tensioner spring minimum length must be positive");
 assert(TENSIONER_BEARING_OD > ROUND_BORE_D, "bearing inner bore must clear the round spindle");
 assert(TENSIONER_BEARING_SEAT_OD > TENSIONER_BEARING_OD,

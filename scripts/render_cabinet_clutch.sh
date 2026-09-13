@@ -26,13 +26,18 @@ render_view() {
     local camera="$4"
     local imgsize="$5"
     local screw_out="${6:-4}"
+    local fit="${7:-1}"
     local target="${OUT_DIR}/${name}.png"
     mkdir -p "$(dirname "${target}")"
     echo "→ render ${name}.png"
+    local viewall_args=()
+    if [[ "${fit}" == "1" ]]; then
+        viewall_args+=(--viewall)
+    fi
     "${OPENSCAD_BIN}" \
         --backend Manifold \
         --render \
-        --viewall \
+        "${viewall_args[@]-}" \
         --projection=ortho \
         --camera="${camera}" \
         --imgsize="${imgsize}" \
@@ -59,6 +64,8 @@ render_view "tensioner/slide-open" "tensioner_slide" false "300,180,190,238,78,1
 render_view "tensioner/slide-tight" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 8
 render_view "tensioner/slide-top-closeup" "tensioner_stage_top" false "250,10,420,258,76,214" "1500,1200" 4
 render_view "tensioner/slide-top-bearing-closeup" "tensioner_stage_top" false "210,120,235,258,76,216" "1400,1050" 4
+render_view "tensioner/slide-top-inverted-t-side" "tensioner_stage_top" false "360,86,214,258,86,214" "1400,1050" 4 0
+render_view "tensioner/slide-top-inverted-t-front" "tensioner_stage_top" false "258,-160,214,258,76,214" "1200,900" 4 0
 render_view "tensioner/bearings" "tensioner_bearing" false "220,300,300,258,76,216" "900,900" 4
 render_view "tensioner/base" "tensioner_base" false "285,145,160,235,76,141" "1200,900"
 render_view "tensioner/carriage" "tensioner_carriage" false "285,145,160,235,76,141" "1200,900"
