@@ -92,7 +92,7 @@ export_part "column" "${OUT_DIR}/02_drive_column_reference.stl" false 0
 export_part "vertical_rack" "${OUT_DIR}/03_vertical_rack_candidate.stl" false 0
 export_part "right_round_axis" "${OUT_DIR}/04_right_round_axis_reference.stl" false 0
 export_part "bus_belt" "${OUT_DIR}/05_top_bottom_bus_belts_reference.stl" false 0
-export_part "upper_spur" "${OUT_DIR}/06_upper_axis_y_spur_candidate.stl" false 0
+export_part "upper_spur" "${OUT_DIR}/06_upper_axis_z_spur_candidate.stl" false 0
 export_part "upper_dog" "${OUT_DIR}/07_upper_downward_dog_candidate.stl" false 0
 export_part "lower_dog" "${OUT_DIR}/08_lower_upward_dog_candidate.stl" false 0
 export_part "rear_pulley" "${OUT_DIR}/09_rear_takeoff_timing_pulley_candidate.stl" false 0
