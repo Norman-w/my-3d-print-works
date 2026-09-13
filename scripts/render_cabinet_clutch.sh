@@ -57,6 +57,9 @@ render_view "axes/side-axes" "side_axes" false "130,520,135,130,76,135" "1500,12
 render_view "axes/all-vertical-axes" "all_vertical_axes" false "130,-400,135,130,76,135" "1700,1200"
 render_view "tensioner/slide-open" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 0
 render_view "tensioner/slide-tight" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 8
+render_view "tensioner/slide-top-closeup" "tensioner_stage_top" false "250,10,420,258,76,214" "1500,1200" 4
+render_view "tensioner/slide-top-bearing-closeup" "tensioner_stage_top" false "210,120,235,258,76,216" "1400,1050" 4
+render_view "tensioner/bearings" "tensioner_bearing" false "220,300,300,258,76,216" "900,900" 4
 render_view "tensioner/base" "tensioner_base" false "285,145,160,235,76,141" "1200,900"
 render_view "tensioner/carriage" "tensioner_carriage" false "285,145,160,235,76,141" "1200,900"
 render_view "tensioner/pulley-top-closeup" "tensioner_pulley_top" false "300,170,270,262,76,222" "1200,1000"
