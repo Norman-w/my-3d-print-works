@@ -20,7 +20,7 @@ OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PARTS=(plates rollers pins sprockets idlers bearings motor motor_cover)
+PARTS=(plates rollers pins sprockets idlers bearings motor motor_cover connector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -30,6 +30,7 @@ EXTENDED_PIN_SCAD_FILE="ch1_03c_extended_connecting_pin.scad"
 EXTENDED_CLIPS_SCAD_FILE="ch1_03c_extended_retaining_clips.scad"
 CLUTCH_PLATFORM_SCAD_FILE="ch1_03c_clutch_platform.scad"
 CLUTCH_BEARING_SCAD_FILE="ch1_03c_clutch_bearing.scad"
+CLUTCH_RETAINER_SCAD_FILE="ch1_03c_clutch_bearing_retainer.scad"
 QUALITY="${QUALITY:-2}"
 
 # ===== 分区：模型/类型 =====
@@ -133,6 +134,13 @@ names = {
         "color": "#56616d",
         "explosion": [0, 0, 0],
     },
+    "cabinet_chain_connector": {
+        "name": "03C 链条连接节（带槽双穿销+圆弧夹片，高亮）",
+        "role": "diagnostic",
+        "color": "#ff2fd0",
+        "opacity": 1.0,
+        "explosion": [0, 0, 0],
+    },
     "ch1_03c_power_motor_pololu_100_1_hp_6v": {
         "name": "Pololu 100:1 HP 6V D轴电机（模型库/采购件）",
         "role": "purchased",
@@ -170,15 +178,21 @@ names = {
         "explosion": [0, 0, 0],
     },
     "ch1_03c_clutch_platform": {
-        "name": "传动离合轴承平台（3×6×2 座）",
+        "name": "传动离合轴承平台（681 1×3×1 座，轴向上下）",
         "role": "printed",
         "color": "#d17a3d",
         "explosion": [0, 0, 0],
     },
     "ch1_03c_clutch_bearing": {
-        "name": "3×6×2 离合转动基础轴承（装配显示/采购件）",
+        "name": "681 1×3×1 离合转动基础轴承（装配显示/采购件）",
         "role": "purchased",
         "color": "#b9c2ca",
+        "explosion": [0, 0, 0],
+    },
+    "ch1_03c_clutch_bearing_retainer": {
+        "name": "681 离合轴承下承托环（压配/点胶打印件）",
+        "role": "printed",
+        "color": "#a85c2a",
         "explosion": [0, 0, 0],
     },
 }
@@ -291,6 +305,7 @@ export_library_chain_clutch "$EXTENDED_PIN_SCAD_FILE" "pin" "ch1_03c_extended_co
 export_library_chain_clutch "$EXTENDED_CLIPS_SCAD_FILE" "clips" "ch1_03c_extended_retaining_clips"
 export_library_chain_clutch "$CLUTCH_PLATFORM_SCAD_FILE" "platform" "ch1_03c_clutch_platform"
 export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutch_bearing"
+export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
     for part in sprockets idlers bearings motor motor_cover; do
@@ -301,7 +316,9 @@ if [[ -f "$INSPECT_PY" ]]; then
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" "${OUT_STL}/cabinet_chain_${part}.stl"
     done
-    for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing; do
+    echo "→ inspect cabinet_chain_connector.stl"
+    python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_connector.stl"
+    for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing clutch_bearing_retainer; do
         echo "→ inspect ch1_03c_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_CHAIN_CLUTCH}/ch1_03c_${part}.stl"
     done
@@ -337,8 +354,9 @@ echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_connecting_pin.stl"
 echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_retaining_clip.stl"
 echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_connecting_pin.stl"
 echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_retaining_clips.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
+  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
+  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
+  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing_retainer.stl"
 echo "  预览保持现有 HTTP 服务，刷新即可"
 
 # ===== 分区：业务逻辑 =====

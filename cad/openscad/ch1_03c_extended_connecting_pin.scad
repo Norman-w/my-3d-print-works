@@ -16,5 +16,5 @@ else if (PART == "assembly")
 //#endregion
 
 //#region 业务逻辑
-// 固定端面到第一道夹片槽 6.42 mm；两夹片内侧净距 10 mm；总销长 17.20 mm。
+// 固定端面到第一道夹片槽 6.42 mm；两夹片内侧净距 10 mm；总销长 17.50 mm。
 //#endregion

@@ -16,5 +16,5 @@ else if (PART == "assembly")
 //#endregion
 
 //#region 业务逻辑
-// 轴承为 3×6×2 mm MR63 尺寸，轴向沿 +Y，与平台座孔一致。
+// 轴承为 681（1×3×1 mm）尺寸，轴向沿世界 Z（上下），位于两根穿销之间的下方加强座内。
 //#endregion

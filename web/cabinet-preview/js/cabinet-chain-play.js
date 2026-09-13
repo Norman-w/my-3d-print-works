@@ -9,6 +9,7 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
+  "cabinet-chain/cabinet_chain_connector",
 ]);
 const WHEEL_IDS = {
   "cabinet-chain/cabinet_chain_sprockets": "sprocket",
@@ -256,41 +257,6 @@ async function splitIslands(geometry) {
   return geos;
 }
 
-async function splitByPath(geometry, path) {
-  const pos = geometry.getAttribute("position");
-  const arr = pos.array;
-  const nTri = Math.floor(pos.count / 3);
-  const buckets = new Map();
-  for (let t = 0; t < nTri; t += 1) {
-    const i = t * 9;
-    const cx = (arr[i] + arr[i + 3] + arr[i + 6]) / 3;
-    const cy = (arr[i + 1] + arr[i + 4] + arr[i + 7]) / 3;
-    const cz = (arr[i + 2] + arr[i + 5] + arr[i + 8]) / 3;
-    const proj = projectPoint(path, cx, cy, cz);
-    const key = proj.seg * 2 + (proj.side >= 0 ? 1 : 0);
-    if (!buckets.has(key)) buckets.set(key, []);
-    buckets.get(key).push(t);
-    if (t % 8000 === 0) await yieldFrame();
-  }
-  const geos = [];
-  let built = 0;
-  for (const tris of buckets.values()) {
-    const out = new Float32Array(tris.length * 9);
-    let w = 0;
-    for (const t of tris) {
-      for (let k = 0; k < 9; k += 1) out[w++] = arr[t * 9 + k];
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(out, 3));
-    geo.computeVertexNormals();
-    geo.computeBoundingBox();
-    geos.push(geo);
-    built += 1;
-    if (built % 40 === 0) await yieldFrame();
-  }
-  return geos;
-}
-
 function chainOffsetMm() {
   if (!play.path) return 0;
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
@@ -349,7 +315,9 @@ async function bindWheelMesh(item, kind) {
 
 async function bindChainMesh(item) {
   if (!play.path || !item.mesh?.isMesh || !playScene()) return;
-  const islands = await splitByPath(item.mesh.geometry, play.path);
+  // 按真实不相连的 STL 零件岛拆分。按路径线段拆三角形会把拐角处的
+  // 单个滚子/链板切成多个刚体，随后分别旋转就会产生错误的拉伸形变。
+  const islands = await splitIslands(item.mesh.geometry);
   const group = new THREE.Group();
   const mat = item.mesh.material;
   const added = [];

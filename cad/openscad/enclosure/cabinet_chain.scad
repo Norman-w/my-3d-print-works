@@ -21,6 +21,7 @@ include <cabinet_chain_path.scad>
 use <../parts/ch1_03c_sprocket.scad>
 use <../parts/ch1_03c_blunt_idler.scad>
 use <../parts/ch1_03c_bearing_visual.scad>
+use <../parts/ch1_03c_connecting_link_params.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../parts/motor_pololu_mount_cover.scad>
 //#endregion
@@ -29,6 +30,8 @@ use <../parts/motor_pololu_mount_cover.scad>
 $fa = 8;
 $fs = 0.22;
 CHAIN_Y = MOTOR_MOUNT_CHAIN_Y;
+CONNECTOR_LINK_INDEX = 20;       // 顶部直线段上的一节；不放在转向轮上
+CONNECTOR_HIGHLIGHT = "#ff2fd0";
 //#endregion
 
 //#region 模型/类型
@@ -91,6 +94,31 @@ module rear_sprockets() {
         place_geared(c) ch1_03c_bearing_sprocket(SPROCKET_TEETH);
 }
 
+module highlighted_connector() {
+    // 接头只替换这两个销位的普通销：链板保持原位，带槽双穿销和夹片
+    // 必须共用普通销的中心线，不能再叠加一套外板。
+    p0 = snake_pins()[CONNECTOR_LINK_INDEX];
+    p1 = snake_pins()[(CONNECTOR_LINK_INDEX + 1) % len(snake_pins())];
+    snake_in_rear()
+        place_from_to(p0, p1, [0, 0, 1])
+            translate([P / 2, 0, 0])
+                color(CONNECTOR_HIGHLIGHT) {
+                    ch1_03c_connecting_pin_pair();
+                    ch1_03c_retaining_clip();
+                }
+}
+
+module pins_on_path_without_connector(pins) {
+    // 从普通销集合中拿掉接头占用的两个销位，由 highlighted_connector() 补回带槽销。
+    n = len(pins);
+    axis = [0, 0, 1];
+    connector_b = (CONNECTOR_LINK_INDEX + 1) % n;
+    for (i = [0:n - 1])
+        if (i != CONNECTOR_LINK_INDEX && i != connector_b)
+            place_from_to(pins[i], pins[(i + 1) % n], axis)
+                pin_solid();
+}
+
 module bay_center_dots() {
     for (i = [0:N_COL - 1], j = [0:N_ROW - 1])
         translate([col_center_x(i), CHAIN_Y, row_center_z(j)])
@@ -131,8 +159,8 @@ emit_chain("rollers") {
     else snake_in_rear() rollers_on_path(snake_pins());
 }
 emit_chain("pins") {
-    if (PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path(snake_pins());
-    else snake_in_rear() pins_on_path(snake_pins());
+    if (PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path_without_connector(snake_pins());
+    else snake_in_rear() pins_on_path_without_connector(snake_pins());
 }
 emit_chain("sprockets") {
     if (PART == "assembly") {
@@ -173,6 +201,9 @@ emit_chain("motor_cover") {
         place_power_motor_cover(power_c())
             ch1_03c_power_motor_cover();
 }
+emit_chain("connector") {
+    highlighted_connector();
+}
 //#endregion
 
 //#region 视图层
@@ -186,9 +217,11 @@ emit_chain("motor_cover") {
 // 橙色 power_c() 背面右上/正面左上 12T 保留 D 轴动力接口，并在轮后接入真实 Pololu 1101 电机模型与固定罩；
 // 下方 service_return、入口、金色张紧、蓝色转向和绿色 8T 平移轮均为轴承版，并显示独立的 3×6×2 轴承。
 // 所有轮子安装面翻转 180°。
+// 高亮 CONNECTOR_LINK_INDEX 节为 03C 连接节：该节普通双销被带槽双穿销替换，
+// 链板保持原位，再卡上右端敞口圆弧夹片；网页运动预览会把它与链条一起带着走。
 //#endregion
 
 //#region 方法/工具
-// 导出: -D PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"'
+// 导出: -D PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"connector"'
 // 检查视图: -D PART='"power_check"'。
 //#endregion
