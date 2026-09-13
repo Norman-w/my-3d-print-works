@@ -59,6 +59,7 @@ render_view "tensioner/slide-open" "tensioner_slide" false "300,180,190,238,78,1
 render_view "tensioner/slide-tight" "tensioner_slide" false "300,180,190,238,78,142" "1200,1200" 8
 render_view "tensioner/base" "tensioner_base" false "285,145,160,235,76,141" "1200,900"
 render_view "tensioner/carriage" "tensioner_carriage" false "285,145,160,235,76,141" "1200,900"
+render_view "tensioner/pulley-top-closeup" "tensioner_pulley_top" false "300,170,270,262,76,222" "1200,1000"
 render_view "assembly-back" "assembly" false "130,520,116,130,60,116" "1600,1200"
 render_view "assembly-front" "assembly" false "130,-400,116,130,60,116" "1600,1200"
 render_view "assembly-iso" "assembly" false "370,330,300,130,60,116" "1600,1200"

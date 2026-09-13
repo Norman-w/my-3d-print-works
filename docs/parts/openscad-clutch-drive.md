@@ -31,6 +31,7 @@
 - `assembly`：柜体、抽屉透明包络和完整机构的装配视图；
 - `power_bus`：正面左侧 D 驱动轴 + 中间 5 列传动轴 + 正面右侧滑台圆轴张紧轴，连同上下水平带；
 - `all_vertical_axes`：只显示上述 7 根纵轴的检查入口，不包含水平同步带和抽屉取力机构；
+- `tensioner_pulley_top`、`tensioner_pulley_bottom`：分别检查可调张紧轴的上、下同步轮；总装中两者各调用一次；
 - `drawer_drive`：后前复合取力轮、Y 向同步带和抽屉底部齿条；
 - `clutch`：全部格位离合；
 - `clutch_detail`：单格离合详图，可配合 `CLUTCH_EXPLODE` 和 `ENGAGED`；

@@ -225,6 +225,7 @@ COLOR_TENSIONER = "#e1b642";
 //   motor/left_d_axis/right_round_axis/side_axes/column/vertical_rack/idler/bus_belt
 //   tensioner_slide/tensioner_base/tensioner_carriage/tensioner_spring/
 //   tensioner_screw/tensioner_receiver
+//   tensioner_pulley_top/tensioner_pulley_bottom
 //   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
 //   spring/screw/fork/drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
 //                  individual verification pieces for the one-by-one workflow
@@ -908,9 +909,8 @@ module right_round_axis() {
     // on the left when the cabinet is viewed from the back.
     color(COLOR_TENSIONER)
         round_rod_z(TENSIONER_X, DRIVE_AXIS_Y, ROD_BOTTOM_Z, ROD_TOP_Z - ROD_BOTTOM_Z);
-    for (z = [BUS_BOTTOM_Z, BUS_TOP_Z])
-        color(COLOR_TENSIONER)
-            timing_pulley_z(TENSIONER_X, DRIVE_AXIS_Y, z, TIMING_TEETH, "round");
+    tensioner_pulley_bottom();
+    tensioner_pulley_top();
     color(COLOR_TENSIONER)
         for (z = [BUS_BOTTOM_Z, BUS_TOP_Z])
             translate([TENSIONER_X, DRIVE_AXIS_Y, z])
@@ -918,6 +918,20 @@ module right_round_axis() {
                     cylinder(d = 8.0, h = 1.0, center = true);
                     cylinder(d = ROUND_BORE_D + 2 * ROD_WALL_CLEAR, h = 1.2, center = true);
                 }
+}
+
+module tensioner_pulley(level = "top") {
+    z = level == "top" ? BUS_TOP_Z : BUS_BOTTOM_Z;
+    color(COLOR_TENSIONER)
+        timing_pulley_z(TENSIONER_X, DRIVE_AXIS_Y, z, TIMING_TEETH, "round");
+}
+
+module tensioner_pulley_top() {
+    tensioner_pulley("top");
+}
+
+module tensioner_pulley_bottom() {
+    tensioner_pulley("bottom");
 }
 
 module side_axes() {
@@ -1310,6 +1324,10 @@ if (CLUTCH_PART == "assembly") {
     selected_left_d_axis_part();
 } else if (CLUTCH_PART == "right_round_axis") {
     selected_right_round_axis_part();
+} else if (CLUTCH_PART == "tensioner_pulley_top") {
+    tensioner_pulley_top();
+} else if (CLUTCH_PART == "tensioner_pulley_bottom") {
+    tensioner_pulley_bottom();
 } else if (CLUTCH_PART == "tensioner_slide") {
     selected_tensioner_slide_part();
 } else if (CLUTCH_PART == "tensioner_base") {
@@ -1389,6 +1407,8 @@ assert(
     || CLUTCH_PART == "motor"
     || CLUTCH_PART == "left_d_axis"
     || CLUTCH_PART == "right_round_axis"
+    || CLUTCH_PART == "tensioner_pulley_top"
+    || CLUTCH_PART == "tensioner_pulley_bottom"
     || CLUTCH_PART == "tensioner_slide"
     || CLUTCH_PART == "tensioner_base"
     || CLUTCH_PART == "tensioner_carriage"

@@ -76,6 +76,8 @@ export_part "assembly" "${OUT_DIR}/cabinet_clutch_assembly.stl" false 0
 # corrected without hiding it inside a full assembly export.
 export_part "left_d_axis" "${OUT_DIR}/00_left_d_axis_candidate.stl" false 0
 export_part "right_round_axis" "${OUT_DIR}/00_right_round_axis_candidate.stl" false 0
+export_part "tensioner_pulley_top" "${OUT_DIR}/00_tensioner_pulley_top_reference.stl" false 0
+export_part "tensioner_pulley_bottom" "${OUT_DIR}/00_tensioner_pulley_bottom_reference.stl" false 0
 export_part "tensioner_base" "${OUT_DIR}/00_tensioner_base_candidate.stl" false 0
 export_part "tensioner_carriage" "${OUT_DIR}/00_tensioner_carriage_candidate.stl" false 0
 export_part "tensioner_spring" "${OUT_DIR}/00_tensioner_spring_reference.stl" false 0
