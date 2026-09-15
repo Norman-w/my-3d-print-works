@@ -2,7 +2,7 @@
 
 入口：`cad/openscad/enclosure/cabinet_clutch.scad`。
 
-这套模型按用户定义的世界坐标输出：X 是箱体宽度，Y 是高度（+Y 向上），Z 是箱体深度（正面 Z=0，背面为 +Z）；从背面沿 −Z 观察时左右顺序反过来。单位为毫米。它独立复用 `cabinet_params.scad` 的 5×5 柜体和格口尺寸，不依赖 FreeCAD。当前约束是：从箱体后方朝前看，电机/D 轴在左侧，圆轴张紧机构在右侧。
+这套模型按用户定义的世界坐标输出：X 是箱体宽度，Y 是高度（+Y 向上），Z 是箱体深度（正面 Z=0，背面为 −Z）；从箱体后方沿 +Z 朝前观察时，+X 显示在左侧。单位为毫米。它独立复用 `cabinet_params.scad` 的 5×5 柜体和格口尺寸，不依赖 FreeCAD。当前约束是：从箱体后方朝前看，电机直接接驳 +X 末列，圆轴张紧机构在低 X 侧（后视右侧）。
 
 `cabinet_clutch.scad` 只把 `cabinet_params.scad` 当作冻结尺寸数据源；离合场景的柜体、背板、轴、皮带、齿轮、滑台、装配位置和渲染相机全部按上面的世界 X/Y/Z 原生构造，没有在输出根部做坐标映射。
 
@@ -18,9 +18,9 @@
 
 ## 机构结构
 
-- 当前先锁定左右两根边界轴（以箱体后方朝前看为准）：左侧是竖直 3 mm D 型驱动轴，右侧是张紧边界。右侧不是一根贯穿上下的轴，而是上下两套独立的 3 mm 圆轴短主轴；每套只承载对应高度的一只同步轮。左轴同步轮为 D 孔，右侧两只同步轮为圆孔，不能互换。每个同步轮齿圈上下各有一个限位法兰，法兰外径大于齿圈外径。
-- 电机/D 轴位于后视左侧的高 X 边界；圆轴张紧机构位于后视右侧的低 X 边界。电机输出轴、D 轴和两只同步轮使用同一高 X 轴心。
-- 纵轴边界位置明确为 `2 + N_COL = 7`：后视左侧 1 根 D 型驱动轴，中间 5 根抽屉传动轴，后视最右侧 1 个张紧边界位置；这个位置上下各有 1 根独立的圆轴短主轴，D 驱动轴和张紧边界均不计入抽屉列数。
+- 当前动力母线不再额外放置一根与列轴重叠的 D 型传动轴：电机直接接驳后视左侧、世界 +X 末列的竖直花键齿轮杆；低 X 端（后视右侧）是张紧边界。张紧边界不是一根贯穿上下的轴，而是上下两套独立的 3 mm 圆轴短主轴；每套只承载对应高度的一只同步轮。电机接驳轴使用 D 输出，张紧两只同步轮使用圆孔，不能互换。每个同步轮齿圈上下各有一个限位法兰，法兰外径大于齿圈外径。
+- 电机、+X 末列花键齿轮杆和其余 4 根列轴都由 `power_bus` 统一装配；电机输出端直接落在 +X 末列的轴心上。圆轴张紧机构位于低 X 边界的上下两层。
+- 当前有效抽屉列轴数量为 `N_COL = 5`。另外保留一个低 X 张紧边界位置（上下各一根独立圆轴短主轴），张紧边界不计入抽屉列数；不再把旧的 D 驱动轴候选作为独立列显示。
 - 每个抽屉列使用一根沿世界 Y 方向的长花键齿轮杆：齿形沿 Y 连续贯通，两端各有用于同步轮的 D 轴。它替换了旧的“圆 D 杆 + 单侧齿条”占位体；上层啮合齿轮的世界轴向仍是 +Z（深度），下层为朝下的狗牙面。
 - 中心新版离合沿用 CH1 03C 的圆角三角浅锥公母接口和正中心磁铁盲孔：公轮在下、母轮在上；母轮集成 12T / 2 mm 节距 / 6 mm 带宽的 2GT 同步轮，完整 1 mm 下承托盘和母槽外壁与防脱导向外延齐平。
 - 中心后侧使用新的 80T / 160 mm 闭环 2GT 皮带，沿世界 +Z 传到抽屉前端；前端旧轮被移除，改为下层 2GT 同步轮、上层较大的粗齿轮，驱动抽屉底部的直线齿条。其余 24 套路径只有在 `SHOW_LEGACY_STATIONS=true` 时才恢复。
@@ -43,15 +43,15 @@
 
 - `assembly`：柜体、抽屉透明包络和完整机构的装配视图；
 - `world_axes`：只显示世界原点的 `+X/+Y/+Z` 三轴诊断标记，不属于打印件；
-- `power_bus`：后视左侧（正视右侧）D 驱动轴 + 中间 5 列传动轴 + 后视右侧（正视左侧）上下两套滑台圆轴，连同上下水平带；
-- `all_vertical_axes`：只显示上述 7 根纵轴的检查入口，不包含水平同步带和抽屉取力机构；
+- `power_bus`：后视左侧（世界 +X 末列）的电机直连花键齿轮杆 + 其余 4 列传动轴 + 后视右侧（低 X）上下两套滑台圆轴，连同上下水平带；
+- `all_vertical_axes`：只显示上述 5 根抽屉列纵轴的检查入口，不包含水平同步带和抽屉取力机构；
 - `tensioner_pulley_top`、`tensioner_pulley_bottom`：只检查上下两套滑台各自的同步轮；`tensioner_bearing`：检查上下两只独立轴承环；`tensioner_stage_top`、`tensioner_stage_bottom`：分别检查带箱体固定接收结构、固定槽、移动台、轴承、弹簧、调节螺杆和短圆轴的完整单层滑台；总装中两层各调用一次；
 - `drawer_drive`：后前复合取力轮、沿 +Z 走的同步带和抽屉底部齿条；
 - `clutch`：全部格位离合；
 - `clutch_detail`：单格离合详图，可配合 `CLUTCH_EXPLODE` 和 `ENGAGED`；
 - `cabinet`：导出闭合薄壁柜体外壳以及与滑台相配的固定接收结构；装配图里的格栅和抽屉包络不进入该 STL。
 
-逐件检查入口：当前轴阶段为 `left_d_axis`、`right_round_axis`、`side_axes`；滑台阶段为 `tensioner_slide`、`tensioner_stage_top`、`tensioner_stage_bottom`、`tensioner_bearing`、`tensioner_base`、`tensioner_carriage`、`tensioner_spring`、`tensioner_screw`、`tensioner_receiver`；随后还有 `motor`、`column`、`vertical_rack`、`idler`、`bus_belt`、`upper_spur`、`upper_dog`、`lower_dog`、`rear_pulley`、`spring`、`screw`、`fork`、`drawer_belt`、`front_pulley`、`front_gear`、`drawer_rack`。这些入口都固定在同一组装坐标，检查通过后可以直接回放到 `assembly`。
+逐件检查入口：参数化 SCAD 仍保留 `left_d_axis`、`right_round_axis`、`side_axes`、`motor`、`column` 等历史检查入口，便于单件验证；总装清单不再把这些与 `power_bus` 重叠的候选 STL 作为并列文件展示，而是在树中标成“内含”。滑台阶段为 `tensioner_slide`、`tensioner_stage_top`、`tensioner_stage_bottom`、`tensioner_bearing`、`tensioner_base`、`tensioner_carriage`、`tensioner_spring`、`tensioner_screw`、`tensioner_receiver`；随后还有 `vertical_rack`、`idler`、`bus_belt`、`upper_spur`、`upper_dog`、`lower_dog`、`rear_pulley`、`spring`、`screw`、`fork`、`drawer_belt`、`front_pulley`、`front_gear`、`drawer_rack`。这些入口都固定在同一组装坐标，检查通过后可以直接回放到 `assembly`。
 
 ## 参数与待确认项
 

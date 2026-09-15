@@ -49,11 +49,7 @@ const CAMERA_VIEWS = {
   "lower-tensioner": { direction: [-0.68, 0.58, -1.55], up: [0, 1, 0] },
 };
 const DRAWER_DRIVE_TAILS = new Set([
-  "00_left_d_axis_candidate",
-  "00_right_round_axis_candidate",
-  "01_motor_vertical_reference",
-  "02_drive_column_reference",
-  "03_vertical_rack_candidate",
+  "cabinet_clutch_power_bus",
   "04_right_round_axis_reference",
   "05_top_bottom_bus_belts_reference",
   "06_upper_axis_y_spur_candidate",
@@ -380,110 +376,320 @@ function renderGroupOptions(groups) {
   }
 }
 
-function groupVisibility(parts) {
-  const visibleCount = parts.filter((part) => state.visibleIds.has(part.id)).length;
+function fallbackTree(listing) {
+  const grouped = new Map();
+  for (const part of listing?.parts || []) {
+    const groupId = part.group || "ungrouped";
+    if (!grouped.has(groupId)) {
+      const group = listing.groups?.find((item) => item.id === groupId);
+      grouped.set(groupId, {
+        id: groupId,
+        kind: "folder",
+        groupId,
+        name: group?.name || groupId,
+        children: [],
+      });
+    }
+    grouped.get(groupId).children.push({
+      id: `part:${part.id}`,
+      kind: "part",
+      partId: part.id,
+      name: part.name || part.id,
+    });
+  }
+  return [...grouped.values()];
+}
+
+function treeRoots(listing = state.listing) {
+  return Array.isArray(listing?.tree) && listing.tree.length
+    ? listing.tree
+    : fallbackTree(listing);
+}
+
+function visibleTreeRoots(listing = state.listing) {
+  const allowed = new Set((listing?.parts || []).map((part) => part.id));
+  const prune = (node) => {
+    if (node.partId && !allowed.has(node.partId)) return null;
+    const children = Array.isArray(node.children)
+      ? node.children.map(prune).filter(Boolean)
+      : [];
+    if (!node.partId && node.kind !== "call" && !children.length) return null;
+    return { ...node, children };
+  };
+  return treeRoots(listing).map(prune).filter(Boolean);
+}
+
+function treePartIds(node, ids = new Set()) {
+  if (node?.partId && state.listing?.parts?.some((part) => part.id === node.partId)) {
+    ids.add(node.partId);
+  }
+  for (const child of node?.children || []) treePartIds(child, ids);
+  return ids;
+}
+
+function treePartNodes(node, result = []) {
+  if (node?.partId && state.listing?.parts?.some((part) => part.id === node.partId)) {
+    result.push(node);
+  }
+  for (const child of node?.children || []) treePartNodes(child, result);
+  return result;
+}
+
+function allTreePartNodes() {
+  return visibleTreeRoots().flatMap((node) => treePartNodes(node));
+}
+
+function findTreePartNode(partId) {
+  return allTreePartNodes().find((node) => node.partId === partId) || null;
+}
+
+function nodeExclusiveGroups(node) {
+  return Array.isArray(node?.exclusiveGroups) ? node.exclusiveGroups : [];
+}
+
+function groupVisibility(node) {
+  const ids = [...treePartIds(node)];
+  const visibleCount = ids.filter((id) => state.visibleIds.has(id)).length;
   if (visibleCount === 0) return "off";
-  if (visibleCount === parts.length) return "on";
+  if (visibleCount === ids.length) return "on";
   return "mixed";
 }
 
-async function setGroupVisible(groupId, visible) {
-  const parts = (state.listing?.parts || []).filter(
-    (part) => (part.group || "ungrouped") === groupId,
-  );
-  await Promise.all(parts.map((part) => setPartVisible(part.id, visible)));
+function preferredPartIds(node) {
+  const nodes = treePartNodes(node);
+  const selected = new Set([...treePartIds(node)]);
+  const byExclusiveGroup = new Map();
+  for (const child of nodes) {
+    for (const group of nodeExclusiveGroups(child)) {
+      if (!byExclusiveGroup.has(group)) byExclusiveGroup.set(group, []);
+      byExclusiveGroup.get(group).push(child);
+    }
+  }
+  for (const candidates of byExclusiveGroup.values()) {
+    if (candidates.length < 2) continue;
+    const winner = candidates.find((candidate) => candidate.displayMode === "assembly")
+      || candidates[0];
+    for (const candidate of candidates) {
+      if (candidate !== winner) selected.delete(candidate.partId);
+    }
+  }
+  return selected;
+}
+
+function preferredVisiblePartIds() {
+  const selected = new Set();
+  for (const node of visibleTreeRoots()) {
+    for (const partId of preferredPartIds(node)) selected.add(partId);
+  }
+  return selected;
+}
+
+async function setTreeNodeVisible(node, visible) {
+  const ids = [...treePartIds(node)];
+  const selected = visible ? preferredPartIds(node) : new Set();
+  for (const id of ids) {
+    if (selected.has(id)) {
+      state.visibleIds.add(id);
+    } else {
+      state.visibleIds.delete(id);
+      const item = state.items.get(id);
+      if (item?.mesh) item.mesh.visible = false;
+    }
+  }
+  await Promise.all([...selected].map(async (id) => {
+    const item = state.items.get(id);
+    if (!item) return;
+    await loadPart(item);
+    if (item.mesh) item.mesh.visible = true;
+  }));
   renderPartList();
+  applyExplode();
+}
+
+async function setGroupVisible(groupId, visible) {
+  const node = visibleTreeRoots().find((item) => item.id === groupId);
+  if (node) await setTreeNodeVisible(node, visible);
+}
+
+function toggleTreeNode(nodeId) {
+  if (state.collapsedGroups.has(nodeId)) state.collapsedGroups.delete(nodeId);
+  else state.collapsedGroups.add(nodeId);
+  saveCollapsedGroups();
+  renderPartList();
+}
+
+function makeDisclosure(node, collapsed, label) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "node-disclosure";
+  button.textContent = collapsed ? "›" : "⌄";
+  button.setAttribute("aria-expanded", String(!collapsed));
+  button.setAttribute("aria-label", `${collapsed ? "展开" : "折叠"}${label}`);
+  button.title = collapsed ? "展开" : "折叠";
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleTreeNode(node.id);
+  });
+  return button;
+}
+
+function makePartLine(part) {
+  const item = state.items.get(part.id);
+  const line = document.createElement("label");
+  line.className = "part";
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = state.visibleIds.has(part.id);
+  checkbox.addEventListener("change", () => {
+    void setPartVisible(part.id, checkbox.checked);
+  });
+  const mark = document.createElement("span");
+  mark.style.width = "10px";
+  mark.style.height = "10px";
+  mark.style.borderRadius = "50%";
+  mark.style.background = part.color || "#8b93a7";
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = part.name || part.id;
+  name.title = part.file;
+  name.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    void isolatePart(part.id);
+  });
+  const status = document.createElement("span");
+  status.className = "status";
+  status.textContent = itemStatus(item);
+  line.append(checkbox, mark, name, status);
+  return line;
+}
+
+function renderTreePartNode(node) {
+  const part = state.listing?.parts?.find((item) => item.id === node.partId);
+  if (!part) return null;
+  const wrapper = document.createElement("div");
+  wrapper.className = "tree-part-node";
+  const children = node.children || [];
+  const collapsed = children.length > 0 && state.collapsedGroups.has(node.id);
+  const row = document.createElement("div");
+  row.className = "tree-part-row";
+  row.append(
+    children.length
+      ? makeDisclosure(node, collapsed, part.name || part.id)
+      : Object.assign(document.createElement("span"), { className: "node-spacer" }),
+    makePartLine(part),
+  );
+  wrapper.appendChild(row);
+  if (children.length) {
+    const childBox = document.createElement("div");
+    childBox.className = "tree-children";
+    childBox.hidden = collapsed;
+    for (const child of children) {
+      const rendered = renderTreeChild(child);
+      if (rendered) childBox.appendChild(rendered);
+    }
+    wrapper.appendChild(childBox);
+  }
+  return wrapper;
+}
+
+function renderTreeInfoNode(node) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "tree-info-node";
+  const children = node.children || [];
+  const collapsed = children.length > 0 && state.collapsedGroups.has(node.id);
+  const row = document.createElement("div");
+  row.className = "tree-info-row";
+  row.append(
+    children.length
+      ? makeDisclosure(node, collapsed, node.name || "调用节点")
+      : Object.assign(document.createElement("span"), { className: "node-spacer" }),
+  );
+  const title = document.createElement("span");
+  title.className = "tree-info-name";
+  title.textContent = node.name || node.id;
+  title.title = node.description || node.id;
+  row.appendChild(title);
+  if (node.kind === "call") {
+    const kind = document.createElement("span");
+    kind.className = "tree-info-kind";
+    kind.textContent = "内含";
+    row.appendChild(kind);
+  }
+  wrapper.appendChild(row);
+  if (children.length) {
+    const childBox = document.createElement("div");
+    childBox.className = "tree-children";
+    childBox.hidden = collapsed;
+    for (const child of children) {
+      const rendered = renderTreeChild(child);
+      if (rendered) childBox.appendChild(rendered);
+    }
+    wrapper.appendChild(childBox);
+  }
+  return wrapper;
+}
+
+function renderTreeChild(node) {
+  return node?.partId ? renderTreePartNode(node) : renderTreeInfoNode(node);
+}
+
+function renderTreeFolder(node) {
+  const section = document.createElement("section");
+  section.className = "group tree-folder-node";
+  const collapsed = state.collapsedGroups.has(node.id);
+  section.classList.toggle("collapsed", collapsed);
+  const heading = document.createElement("h2");
+  const label = node.name || node.id;
+  const visibility = groupVisibility(node);
+  const visibilityToggle = document.createElement("button");
+  visibilityToggle.type = "button";
+  visibilityToggle.className = "group-visibility";
+  visibilityToggle.dataset.state = visibility;
+  visibilityToggle.setAttribute("aria-pressed", String(visibility === "on"));
+  visibilityToggle.setAttribute("aria-label", visibility === "on" ? `隐藏${label}` : `显示${label}`);
+  visibilityToggle.title = visibility === "on" ? "隐藏本组" : "显示本组";
+  visibilityToggle.textContent = visibility === "on" ? "●" : visibility === "mixed" ? "◐" : "○";
+  visibilityToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    void setTreeNodeVisible(node, visibility !== "on");
+  });
+  const toggle = document.createElement("button");
+  toggle.type = "button";
+  toggle.className = "group-toggle";
+  toggle.setAttribute("aria-expanded", String(!collapsed));
+  toggle.setAttribute("aria-label", `${label} (${treePartIds(node).size})`);
+  const chevron = document.createElement("span");
+  chevron.className = "chevron";
+  chevron.textContent = collapsed ? "›" : "⌄";
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = label;
+  const count = document.createElement("span");
+  count.textContent = String(treePartIds(node).size);
+  toggle.append(chevron, name, count);
+  toggle.addEventListener("click", () => toggleTreeNode(node.id));
+  heading.append(visibilityToggle, toggle);
+  section.appendChild(heading);
+  const children = document.createElement("div");
+  children.className = "group-items tree-children";
+  children.hidden = collapsed;
+  for (const child of node.children || []) {
+    const rendered = renderTreeChild(child);
+    if (rendered) children.appendChild(rendered);
+  }
+  section.appendChild(children);
+  return section;
 }
 
 function renderPartList() {
   els.parts.innerHTML = "";
-  const listing = state.listing;
-  if (!listing) return;
-  const grouped = new Map();
-  for (const part of listing.parts || []) {
-    const groupId = part.group || "ungrouped";
-    if (!grouped.has(groupId)) grouped.set(groupId, []);
-    grouped.get(groupId).push(part);
-  }
-  for (const [groupId, parts] of grouped) {
-    const section = document.createElement("section");
-    section.className = "group";
-    const collapsed = state.collapsedGroups.has(groupId);
-    section.classList.toggle("collapsed", collapsed);
-    const heading = document.createElement("h2");
-    const groupLabel = listing.groups?.find((group) => group.id === groupId)?.name || groupId;
-    const visibility = groupVisibility(parts);
-    const visibilityToggle = document.createElement("button");
-    visibilityToggle.type = "button";
-    visibilityToggle.className = "group-visibility";
-    visibilityToggle.dataset.state = visibility;
-    visibilityToggle.setAttribute("aria-pressed", String(visibility === "on"));
-    visibilityToggle.setAttribute(
-      "aria-label",
-      visibility === "on" ? `隐藏${groupLabel}` : `显示${groupLabel}`,
-    );
-    visibilityToggle.title = visibility === "on" ? "隐藏本组" : "显示本组";
-    visibilityToggle.textContent = visibility === "on" ? "●" : visibility === "mixed" ? "◐" : "○";
-    visibilityToggle.addEventListener("click", (event) => {
-      event.stopPropagation();
-      void setGroupVisible(groupId, visibility !== "on");
-    });
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "group-toggle";
-    toggle.setAttribute("aria-expanded", String(!collapsed));
-    toggle.setAttribute("aria-label", `${groupLabel} (${parts.length})`);
-    const chevron = document.createElement("span");
-    chevron.className = "chevron";
-    chevron.textContent = collapsed ? "›" : "⌄";
-    const name = document.createElement("span");
-    name.className = "name";
-    name.textContent = groupLabel;
-    const count = document.createElement("span");
-    count.textContent = String(parts.length);
-    toggle.append(chevron, name, count);
-    toggle.addEventListener("click", () => {
-      if (state.collapsedGroups.has(groupId)) state.collapsedGroups.delete(groupId);
-      else state.collapsedGroups.add(groupId);
-      saveCollapsedGroups();
-      renderPartList();
-    });
-    heading.append(visibilityToggle, toggle);
-    section.appendChild(heading);
-    const groupItems = document.createElement("div");
-    groupItems.className = "group-items";
-    for (const part of parts) {
-      const item = state.items.get(part.id);
-      const line = document.createElement("label");
-      line.className = "part";
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = state.visibleIds.has(part.id);
-      checkbox.addEventListener("change", () => {
-        void setPartVisible(part.id, checkbox.checked);
-      });
-      const mark = document.createElement("span");
-      mark.style.width = "10px";
-      mark.style.height = "10px";
-      mark.style.borderRadius = "50%";
-      mark.style.background = part.color || "#8b93a7";
-      const name = document.createElement("span");
-      name.className = "name";
-      name.textContent = part.name || part.id;
-      name.title = part.file;
-      name.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        void isolatePart(part.id);
-      });
-      const status = document.createElement("span");
-      status.className = "status";
-      status.textContent = itemStatus(item);
-      line.append(checkbox, mark, name, status);
-      groupItems.appendChild(line);
-    }
-    section.appendChild(groupItems);
-    els.parts.appendChild(section);
+  if (!state.listing) return;
+  for (const node of visibleTreeRoots()) {
+    const rendered = node.kind === "folder" || node.groupId
+      ? renderTreeFolder(node)
+      : renderTreeChild(node);
+    if (rendered) els.parts.appendChild(rendered);
   }
   refreshMeta();
 }
@@ -654,7 +860,23 @@ async function fetchListing() {
   const response = await fetch(queryText ? `./api/parts?${queryText}` : "./api/parts", {
     cache: "no-cache",
   });
-  if (response.ok) return response.json();
+  if (response.ok) {
+    const listing = await response.json();
+    // The preview API intentionally returns only the filtered part list. Read
+    // the full manifest as well so the nested call tree remains available
+    // while search/group filters are active.
+    try {
+      const manifestResponse = await fetch("./manifest.json", { cache: "no-cache" });
+      if (manifestResponse.ok) {
+        const manifest = await manifestResponse.json();
+        listing.tree = manifest.tree;
+        listing.treeVersion = manifest.treeVersion;
+      }
+    } catch {
+      // The flat API result is still usable through the fallback tree.
+    }
+    return listing;
+  }
   const fallback = await fetch("./manifest.json", { cache: "no-cache" });
   if (!fallback.ok) throw new Error(`零件清单 ${response.status}`);
   const manifest = await fallback.json();
@@ -698,10 +920,27 @@ async function refreshListing({ autoload = false } = {}) {
   }
 }
 
-async function setPartVisible(partId, visible) {
+function exclusivePeerIds(partId) {
+  const node = findTreePartNode(partId);
+  const groups = new Set(nodeExclusiveGroups(node));
+  if (!groups.size) return [];
+  return allTreePartNodes()
+    .filter((candidate) => candidate.partId !== partId)
+    .filter((candidate) => nodeExclusiveGroups(candidate).some((group) => groups.has(group)))
+    .map((candidate) => candidate.partId);
+}
+
+async function setPartVisible(partId, visible, { enforceExclusivity = true } = {}) {
   const item = state.items.get(partId);
   if (!item) return;
   if (visible) {
+    if (enforceExclusivity) {
+      for (const peerId of exclusivePeerIds(partId)) {
+        state.visibleIds.delete(peerId);
+        const peer = state.items.get(peerId);
+        if (peer?.mesh) peer.mesh.visible = false;
+      }
+    }
     state.visibleIds.add(partId);
     await loadPart(item);
     if (item.mesh) item.mesh.visible = true;
@@ -721,8 +960,27 @@ async function isolatePart(partId) {
 
 async function setFilteredVisible(visible) {
   const parts = state.listing?.parts || [];
-  await Promise.all(parts.map((part) => setPartVisible(part.id, visible)));
-  if (visible) fitCamera();
+  if (!visible) {
+    await Promise.all(parts.map((part) => setPartVisible(part.id, false)));
+    return;
+  }
+  const selected = preferredVisiblePartIds();
+  for (const part of parts) {
+    if (selected.has(part.id)) continue;
+    state.visibleIds.delete(part.id);
+    const item = state.items.get(part.id);
+    if (item?.mesh) item.mesh.visible = false;
+  }
+  await Promise.all([...selected].map(async (partId) => {
+    const item = state.items.get(partId);
+    if (!item) return;
+    state.visibleIds.add(partId);
+    await loadPart(item);
+    if (item.mesh) item.mesh.visible = true;
+  }));
+  renderPartList();
+  applyExplode();
+  fitCamera();
 }
 
 function partTail(part) {

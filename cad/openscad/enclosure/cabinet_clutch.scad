@@ -164,28 +164,35 @@ DRAWER_BUS_CHAIN_CLEARANCE = is_undef(DRAWER_BUS_CHAIN_CLEARANCE)
     : DRAWER_BUS_CHAIN_CLEARANCE;
 
 // World Z- is toward the cabinet rear. The complete drawer power bus moves
-// together: motor, D-axis, five Y-directed spline columns, rear clutch stacks,
-// and their rear timing pulleys. The drawer-front output datum stays at the
-// existing front interface; the belt length is re-derived below.
+// together: motor, five Y-directed spline columns, rear clutch stacks, and
+// their rear timing pulleys. The motor is mounted directly on the +X-most
+// drawer column; there is no extra D-axis column. The drawer-front output
+// datum stays at the existing front interface; the belt length is re-derived
+// below.
 DRAWER_DRIVE_REAR_SHIFT_Z = is_undef(DRAWER_DRIVE_REAR_SHIFT_Z)
     ? -18.0
     : DRAWER_DRIVE_REAR_SHIFT_Z;
 DRIVE_AXIS_Z_BASE = WORLD_PARTITION_BACK_Z - 13.0;
 DRIVE_AXIS_Z = DRIVE_AXIS_Z_BASE + DRAWER_DRIVE_REAR_SHIFT_Z;
-// In the canonical rear view, +X is on the left: the D-drive motor is placed
-// at high X and the SKP tensioner is placed at low X on the right.
-MOTOR_X = W - WALL - SERVICE_W / 2;
-// The two boundary axes are not drawer columns. During this T-only rebuild the
-// old tensioner wheel is intentionally absent; keep both counts explicit so a
-// temporary prototype cannot be mistaken for the final 2 + N layout.
-ACTIVE_VERTICAL_AXIS_COUNT = N_COL + 1;
-PLANNED_VERTICAL_AXIS_COUNT = N_COL + 2;
+// In the canonical rear view, +X is on the left. The motor is centered on
+// the last drawer column (the +X-most column), so its output shaft enters that
+// column's lower D stub directly. It is not a separate boundary axis.
+MOTOR_COLUMN = N_COL - 1;
+MOTOR_X = WORLD_GRID_ORIGIN_X + MOTOR_COLUMN * WORLD_COL_PITCH
+    + WORLD_BAY_W / 2;
+// The current bus therefore has exactly five physical vertical columns. A
+// future independent tensioner boundary is reserved separately and is not
+// counted as a drawer column.
+ACTIVE_VERTICAL_AXIS_COUNT = N_COL;
+PLANNED_VERTICAL_AXIS_COUNT = N_COL + 1;
 VERTICAL_AXIS_COUNT = ACTIVE_VERTICAL_AXIS_COUNT;
 BUS_BOTTOM_Y = WORLD_GRID_ORIGIN_Y - 5.0;
 BUS_TOP_Y = H - WALL - 7.0;
-MOTOR_FACE_Y = BUS_BOTTOM_Y - 28.0;
 MOTOR_BODY_L = 25.6;
 MOTOR_SHAFT_L = 9.0;
+// The gearbox face is one output-shaft length below the column's lower datum;
+// the 9 mm D output shaft then overlaps the column's lower D stub.
+MOTOR_FACE_Y = BUS_BOTTOM_Y - MOTOR_SHAFT_L;
 ROD_BOTTOM_Y = BUS_BOTTOM_Y - 6.0;
 ROD_TOP_Y = BUS_TOP_Y + 6.0;
 LEFT_D_AXIS_Y0 = MOTOR_FACE_Y + MOTOR_SHAFT_L - 1.0;
@@ -1333,14 +1340,15 @@ module clutch_cabinet_context(include_drawers = true) {
 }
 
 module power_motor_vertical() {
-    // The purchased motor's local +Z output is rotated onto world +Y.
+    // The purchased motor's local +Z output is rotated onto world +Y. It is
+    // mounted directly beneath the +X-most drawer column; that column already
+    // supplies the continuous Y-directed gear shaft and its lower D stub.
     translate([MOTOR_X, MOTOR_FACE_Y, DRIVE_AXIS_Z])
         rotate([-90, 0, 0])
             pololu_micro_metal_motor_100_1_hp_6v_body_colored();
     translate([MOTOR_X, MOTOR_FACE_Y, DRIVE_AXIS_Z])
         rotate([-90, 0, 0])
             color("#d6d9dc") d_shaft();
-    left_d_axis();
 }
 
 module left_d_axis() {
@@ -1371,11 +1379,8 @@ module side_axes() {
 }
 
 module all_vertical_axes() {
-    // Exact rear-view order, left to right:
-    //   0       : D drive axis + motor (high X, therefore rear-view-left)
-    //   1..N_COL: one drawer transmission axis per drawer column
-    // The high-X tensioner axis is intentionally removed during this
-    // standalone T reconstruction.
+    // Exactly five drawer columns. The +X-most column shares its lower D stub
+    // with the motor output; no separate D-drive column is inserted.
     power_motor_vertical();
     for (i = [0:N_COL - 1])
         vertical_gear_column(clutch_col_x(i), DRIVE_AXIS_Z);
@@ -1981,9 +1986,9 @@ clutch_scene_geometry();
 echo("cabinet_clutch", "W", W, "H", H, "D", D);
 echo("world_axes", "x=width", "y=height(+up)", "z=depth(+front)", "front_z", 0, "rear_z", -D);
 echo("rear_view_sides", "right", "-X/toward_x0", "left", "+X/toward_xW", "tensioner", "right", "motor", "left");
-echo("drive_axis", "x_motor", MOTOR_X, "z_base", DRIVE_AXIS_Z_BASE, "z", DRIVE_AXIS_Z, "rear_shift_z", DRAWER_DRIVE_REAR_SHIFT_Z, "front_interface_z", FRONT_PULLEY_Z, "belt_teeth", DRAWER_BELT_TEETH, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
+echo("drive_axis", "motor_column", MOTOR_COLUMN, "x_motor", MOTOR_X, "x_plus_max_column", clutch_col_x(N_COL - 1), "motor_face_y", MOTOR_FACE_Y, "z_base", DRIVE_AXIS_Z_BASE, "z", DRIVE_AXIS_Z, "rear_shift_z", DRAWER_DRIVE_REAR_SHIFT_Z, "front_interface_z", FRONT_PULLEY_Z, "belt_teeth", DRAWER_BELT_TEETH, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
 echo("drive_clearance", "snake_chain_center_z", SNAKE_CHAIN_CENTER_Z, "snake_chain_rear_edge_z", SNAKE_CHAIN_REAR_EDGE_Z, "pulley_front_edge_z", DRIVE_AXIS_Z + TIMING_FLANGE_R, "clearance", SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R));
-echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-columns; tensioner wheel removed for T prototype");
+echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "five drawer-columns; motor directly coupled to +X-most column; no separate D-drive column");
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
 echo("belt", "axial_width_world_y", TIMING_BELT_W, "base_thickness_xz", TIMING_BELT_T, "base_inner_r", TIMING_BELT_BASE_INNER_R, "base_outer_r", TIMING_BELT_BASE_OUTER_R, "tooth_pitch", TIMING_PITCH_MM, "tooth_h", TIMING_BELT_TOOTH_H);
@@ -2051,10 +2056,12 @@ assert(CENTER_GT2_FRONT_PULLEY_Z < 0
         && CENTER_GT2_FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z,
     "center 2GT front pulley must stay in the drawer bay");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
-assert(ACTIVE_VERTICAL_AXIS_COUNT == N_COL + 1,
-    "T-only prototype active axes must be D drive + drawer columns");
-assert(PLANNED_VERTICAL_AXIS_COUNT == N_COL + 2,
-    "final layout reserves two non-column boundary axes");
+assert(abs(MOTOR_X - clutch_col_x(N_COL - 1)) < 0.001,
+    "motor must be centered on the +X-most drawer column");
+assert(ACTIVE_VERTICAL_AXIS_COUNT == N_COL,
+    "active axes must be the five drawer columns; motor shares one column");
+assert(PLANNED_VERTICAL_AXIS_COUNT == N_COL + 1,
+    "future independent tensioner boundary is reserved outside the five columns");
 assert(DRIVE_AXIS_Z < WORLD_PARTITION_BACK_Z - 1.0, "drive bus must be behind the partition");
 assert(DRIVE_AXIS_Z + TIMING_OUTER_R < WORLD_PARTITION_BACK_Z - 0.50, "rear pulley OD must clear the partition");
 assert(DRIVE_AXIS_Z - TIMING_OUTER_R > -D + WORLD_BACK_PANEL_T + 1.0, "rear belt must clear the back panel");

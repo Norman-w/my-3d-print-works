@@ -122,13 +122,17 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/cabinet_clutch_power_bus": {
-        "name": "动力母线合并检查体（可选）",
-        "visible": False,
+        "name": "动力母线整件 · 电机直连 +X 末列",
+        "color": "#65788d",
+        "opacity": 0.86,
+        "visible": True,
         "role": "diagnostic",
     },
     "cabinet-clutch/00_tensioner_t_solid_reference": {
-        "name": "张紧机构·SKP 参数重建",
+        "name": "张紧机构·SKP 参数重建（动力母线整件内含）",
         "color": "#aebdce",
+        "visible": False,
+        "role": "diagnostic",
     },
     "cabinet/cabinet_back_panel": {
         "name": "可拆背板",
@@ -203,11 +207,7 @@ chain_labels = {
 group_map = {
     "cabinet_clutch_cabinet": "00·柜体与格口",
     "cabinet_clutch_cabinet_context": "00·柜体与格口",
-    "00_left_d_axis_candidate": "01·动力母线",
     "00_tensioner_t_solid_reference": "01·动力母线",
-    "01_motor_vertical_reference": "01·动力母线",
-    "02_drive_column_reference": "01·动力母线",
-    "03_vertical_rack_candidate": "01·动力母线",
     "cabinet_clutch_power_bus": "01·动力母线",
     "06_upper_axis_z_spur_candidate": "02·离合机构",
     "07_upper_downward_dog_candidate": "02·离合机构",
@@ -229,11 +229,7 @@ group_map = {
 name_map = {
     "cabinet_clutch_cabinet": "柜体外壳（可见背景）",
     "cabinet_clutch_cabinet_context": "柜体格口与抽屉背景",
-    "00_left_d_axis_candidate": "左侧驱动轴 · D 型",
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
-    "01_motor_vertical_reference": "抽屉开合电机 · 竖直",
-    "02_drive_column_reference": "传动轴 · 代表列",
-    "03_vertical_rack_candidate": "Y 向长花键齿轮杆 · 两端 D 轴",
     "06_upper_axis_z_spur_candidate": "中心格新版公轮 · 3mm兼容齿形",
     "07_upper_downward_dog_candidate": "中心格新版公轮 · 圆角三角插销",
     "08_lower_upward_dog_candidate": "中心格新版母轮 · 母槽与2GT",
@@ -279,6 +275,178 @@ payload["groups"] = [
     for group_id in ordered_group_ids
 ]
 payload["groupCount"] = len(payload["groups"])
+
+# Preserve the authored call structure in the root viewer.  A tree node that
+# has partId points to a real STL and receives a visibility checkbox; a call
+# node is structural information only and does not create another mesh.
+parts_by_id = {
+    str(part.get("id")): part
+    for part in payload.get("parts", [])
+    if isinstance(part, dict) and part.get("id")
+}
+parts_by_group = {}
+for part in payload.get("parts", []):
+    group_id = str(part.get("group") or "ungrouped")
+    parts_by_group.setdefault(group_id, []).append(part)
+
+def part_node(part_id, *, children=None, exclusive_groups=None, display_mode=None):
+    part = parts_by_id.get(part_id)
+    if not part:
+        return None
+    node = {
+        "id": f"part:{part_id}",
+        "kind": "part",
+        "partId": part_id,
+        "name": part.get("name") or part_id,
+    }
+    if children:
+        node["children"] = [child for child in children if child]
+    if exclusive_groups:
+        node["exclusiveGroups"] = exclusive_groups
+    if display_mode:
+        node["displayMode"] = display_mode
+    return node
+
+def call_node(node_id, name, description=""):
+    node = {"id": f"call:{node_id}", "kind": "call", "name": name}
+    if description:
+        node["description"] = description
+    return node
+
+def folder_node(group_id):
+    label = next(
+        (group.get("name") for group in payload["groups"] if group.get("id") == group_id),
+        group_id,
+    )
+    return {
+        "id": group_id,
+        "kind": "folder",
+        "groupId": group_id,
+        "name": label,
+        "children": [],
+    }
+
+tree = []
+for group_id in ordered_group_ids:
+    root = folder_node(group_id)
+    if group_id == "01·动力母线":
+        root["children"] = [
+            part_node(
+                "cabinet-clutch/cabinet_clutch_power_bus",
+                exclusive_groups=["power-bus"],
+                display_mode="assembly",
+                children=[
+                    call_node(
+                        "power_bus/power_motor_vertical",
+                        "抽屉开合电机 · 竖直（内含）",
+                        "power_motor_vertical()",
+                    ),
+                    call_node(
+                        "power_bus/column_plus_x_max",
+                        "+X 末列花键齿轮杆 · 电机直接接驳（内含）",
+                        "vertical_gear_column(N_COL - 1)",
+                    ),
+                    call_node(
+                        "power_bus/columns_remaining",
+                        "其余 4 列花键齿轮杆（内含）",
+                        "vertical_gear_column(0 .. N_COL - 2)",
+                    ),
+                ],
+            ),
+            part_node(
+                "cabinet-clutch/00_tensioner_t_solid_reference",
+                exclusive_groups=["power-bus"],
+                display_mode="detail",
+            ),
+        ]
+    elif group_id == "02·离合机构":
+        upper_alias = part_node(
+            "cabinet-clutch/07_upper_downward_dog_candidate",
+            exclusive_groups=["clutch-assembly", "clutch-upper-alias"],
+            display_mode="alias",
+        )
+        lower_alias = part_node(
+            "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate",
+            exclusive_groups=["clutch-assembly", "clutch-lower-alias"],
+            display_mode="alias",
+        )
+        upper = part_node(
+            "cabinet-clutch/06_upper_axis_z_spur_candidate",
+            exclusive_groups=["clutch-assembly", "clutch-upper-alias"],
+            children=[upper_alias],
+        )
+        lower = part_node(
+            "cabinet-clutch/08_lower_upward_dog_candidate",
+            exclusive_groups=["clutch-assembly", "clutch-lower-alias"],
+            children=[lower_alias],
+        )
+        root["children"] = [
+            part_node(
+                "cabinet-clutch/cabinet_clutch_all_clutches",
+                exclusive_groups=["clutch-assembly", "clutch-detail-state"],
+                display_mode="assembly",
+                children=[upper, lower],
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_detail_open",
+                exclusive_groups=["clutch-detail-state"],
+                display_mode="detail",
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_detail_engaged",
+                exclusive_groups=["clutch-detail-state"],
+                display_mode="detail",
+            ),
+        ]
+    elif group_id == "03·抽屉驱动":
+        root["children"] = [
+            part_node(
+                "cabinet-clutch/cabinet_clutch_drawer_drive",
+                exclusive_groups=["drawer-assembly"],
+                display_mode="assembly",
+                children=[
+                    part_node(
+                        "cabinet-clutch/13_drawer_timing_belt_reference",
+                        exclusive_groups=["drawer-assembly"],
+                    ),
+                    part_node(
+                        "cabinet-clutch/14_front_timing_pulley_candidate",
+                        exclusive_groups=["drawer-assembly"],
+                    ),
+                    part_node(
+                        "cabinet-clutch/15_front_pinion_candidate",
+                        exclusive_groups=["drawer-assembly"],
+                    ),
+                    part_node(
+                        "cabinet-clutch/16_drawer_linear_rack_candidate",
+                        exclusive_groups=["drawer-assembly"],
+                    ),
+                ],
+            ),
+        ]
+    else:
+        root["children"] = [
+            part_node(str(part.get("id")))
+            for part in parts_by_group.get(group_id, [])
+        ]
+    root["children"] = [child for child in root["children"] if child]
+    tree.append(root)
+
+# Keep any group introduced by a future exporter visible even if it is not in
+# the fixed mechanism order above.
+known_groups = {node["id"] for node in tree}
+for group_id in sorted(parts_by_group):
+    if group_id in known_groups:
+        continue
+    root = folder_node(group_id)
+    root["children"] = [
+        part_node(str(part.get("id")))
+        for part in parts_by_group[group_id]
+    ]
+    root["children"] = [child for child in root["children"] if child]
+    tree.append(root)
+payload["treeVersion"] = 1
+payload["tree"] = tree
 text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 path.write_text(text, encoding="utf-8")
 path.with_name("parts.json").write_text(text, encoding="utf-8")
@@ -338,6 +506,21 @@ for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
+# The root viewer uses the assembled power bus as the single authoritative
+# model for this mechanism. These generated child previews used to be loaded
+# at the same coordinates and duplicated the motor, D shaft, and column shaft.
+# Keep their parametric SCAD entry points, but do not publish duplicate root
+# list items.
+POWER_BUS_CHILD_OUTPUTS=(
+    "00_left_d_axis_candidate.stl"
+    "01_motor_vertical_reference.stl"
+    "02_drive_column_reference.stl"
+    "03_vertical_rack_candidate.stl"
+)
+for old_file in "${POWER_BUS_CHILD_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+done
+
 export_part "cabinet" "${OUT_DIR}/cabinet_clutch_cabinet.stl" false 0
 export_part "cabinet_context" "${OUT_DIR}/cabinet_clutch_cabinet_context.stl" false 0
 export_part "power_bus" "${OUT_DIR}/cabinet_clutch_power_bus.stl" false 0
@@ -350,11 +533,7 @@ export_part "assembly" "${OUT_DIR}/cabinet_clutch_assembly.stl" false 0
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be
 # corrected without hiding it inside a full assembly export.
-export_part "left_d_axis" "${OUT_DIR}/00_left_d_axis_candidate.stl" false 0
 export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
-export_part "motor" "${OUT_DIR}/01_motor_vertical_reference.stl" false 0
-export_part "column" "${OUT_DIR}/02_drive_column_reference.stl" false 0
-export_part "vertical_rack" "${OUT_DIR}/03_vertical_rack_candidate.stl" false 0
 export_part "upper_spur" "${OUT_DIR}/06_upper_axis_z_spur_candidate.stl" false 0
 export_part "upper_dog" "${OUT_DIR}/07_upper_downward_dog_candidate.stl" false 0
 export_part "lower_dog" "${OUT_DIR}/08_lower_upward_dog_candidate.stl" false 0
