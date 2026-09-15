@@ -40,4 +40,4 @@ FreeCAD 动画清单中的 `selectedIndex`、`drivenIndex`、`powerOn` 和 `driv
 ./scripts/export_cabinet_chain.sh
 ```
 
-独立 STL 会写入 `output/3d-print/chain-clutch/`，并进入 HTTP 模型库的 `chain-clutch` 分组。装配导出时 681 轴承单独作为银色零件跟随加长接头，结构高亮件不再把轴承染成青色。两只夹片均采用右端敞口、两销位带贴槽圆弧的收腰弹片轮廓；右侧上下圆弧之间约 `1.21 mm`，槽底可进入但完整销身不能穿过，避免形成从末端贯通的等宽大 U 槽。槽底径、槽宽、圆弧入口和片厚仍需收到实物后复核；这些值集中在 `cad/openscad/parts/ch1_03c_connecting_link_params.scad`。加强平台的轴承座与穿销孔在 Z 向分离，首件仍应检查 681 压入、承托环固定和穿销装配。
+独立 STL 会写入 `output/3d-print/chain-clutch/`，保留作单件尺寸/装配校验；不再发布到总装配根页面的器件树。当前总装配由 `cabinet_chain.scad` 在加长接头位置直接调用同一组参数化模块，681 轴承仍作为银色装配件跟随接头；结构高亮件不再把轴承染成青色。两只夹片均采用右端敞口、两销位带贴槽圆弧的收腰弹片轮廓；右侧上下圆弧之间约 `1.21 mm`，槽底可进入但完整销身不能穿过，避免形成从末端贯通的等宽大 U 槽。槽底径、槽宽、圆弧入口和片厚仍需收到实物后复核；这些值集中在 `cad/openscad/parts/ch1_03c_connecting_link_params.scad`。加强平台的轴承座与穿销孔在 Z 向分离，首件仍应检查 681 压入、承托环固定和穿销装配。

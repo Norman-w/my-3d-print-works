@@ -19,7 +19,7 @@
 
 - 固定罩源文件：`cad/openscad/parts/motor_pololu_mount_cover.scad`
 - 固定罩独立入口：`cad/openscad/ch1_03c_power_motor_cover.scad`
-- 独立打印 STL：`output/3d-print/motor-mount/ch1_03c_power_motor_cover.stl`
+- 独立打印 STL：`output/3d-print/motor-mount/ch1_03c_power_motor_cover.stl`（保留作单件打印/适配检查，不进入总装配器件树）
 - 柜体定位固定罩 STL：`output/3d-print/cabinet-chain/cabinet_chain_motor_cover.stl`
 - 含接收 boss 的背板 STL：`output/3d-print/cabinet/cabinet_back_panel.stl`
 - 共享位置/尺寸：`cad/openscad/enclosure/cabinet_motor_mount_params.scad`

@@ -32,10 +32,6 @@ const DEFAULT_HIDDEN_PART_IDS = new Set([
 const LEGACY_COORDINATE_GROUPS = new Set([
   "cabinet",
   "cabinet-chain",
-  "chain-clutch",
-  "chain-hardware",
-  "motor-library",
-  "motor-mount",
 ]);
 const CAMERA_VIEWS = {
   // 世界坐标：X=横向宽度，Y=竖直高度，Z=柜体深度；柜体正面为 +Z。

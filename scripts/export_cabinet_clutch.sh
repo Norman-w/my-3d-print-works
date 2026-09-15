@@ -13,10 +13,6 @@ OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 OUT_DIR="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_CHAIN="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
 OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
-OUT_MOTOR="${PROJECT_ROOT}/output/3d-print/motor-library"
-OUT_MOUNT="${PROJECT_ROOT}/output/3d-print/motor-mount"
-OUT_CHAIN_HARDWARE="${PROJECT_ROOT}/output/3d-print/chain-hardware"
-OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
 REPORT_DIR="${PROJECT_ROOT}/output/inspection/cabinet-clutch"
 INSPECT_PY="/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="/Users/norman/.codex/skills/stl-http-preview/scripts/write_preview_manifest.py"
@@ -25,6 +21,16 @@ MANIFEST_PY="/Users/norman/.codex/skills/stl-http-preview/scripts/write_preview_
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 LEGACY_PREVIEW_DIR="${PREVIEW_DIR}/cabinet-clutch"
 PREVIEW_SOURCE_DIR="${PROJECT_ROOT}/web/cabinet-preview"
+# These are retained as standalone library/fit-check outputs, but are not
+# published as root-page parts.  The active cabinet-chain assembly calls the
+# same parametric modules in-place, so exposing both paths creates duplicate
+# library entries rather than additional installed hardware.
+RETIRED_ROOT_PREVIEW_GROUPS=(
+    "chain-clutch"
+    "chain-hardware"
+    "motor-library"
+    "motor-mount"
+)
 QUALITY="${QUALITY:-2}"
 SELECTED_COLUMN="${SELECTED_COLUMN:-2}"
 SELECTED_ROW="${SELECTED_ROW:-2}"
@@ -194,15 +200,6 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_scheme1_clutch_faces": {"name": "旧方案1·狗牙离合面（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_bearings": {"name": "旧方案1·抽屉输出轴承（文件保留，默认隐藏）", "visible": False, "role": "purchased"},
     "cabinet-chain/cabinet_chain_scheme1_selector": {"name": "旧方案1·链条拨叉/8T 选择轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
-    "motor-library/ch1_03c_power_motor_pololu_100_1_hp_6v": {"name": "Pololu 蛇形驱动电机·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "motor-mount/ch1_03c_power_motor_cover": {"name": "蛇形电机固定罩·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
-    "chain-hardware/ch1_03c_connecting_pin": {"name": "03C 连接节穿销·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "chain-hardware/ch1_03c_retaining_clip": {"name": "03C 连接节卡子·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "chain-clutch/ch1_03c_extended_connecting_pin": {"name": "03C 加长接头穿销·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "chain-clutch/ch1_03c_extended_retaining_clips": {"name": "03C 加长接头卡子·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "chain-clutch/ch1_03c_clutch_platform": {"name": "传动离合轴承平台·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
-    "chain-clutch/ch1_03c_clutch_bearing": {"name": "681 离合轴承·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
-    "chain-clutch/ch1_03c_clutch_bearing_retainer": {"name": "681 离合轴承承托环·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
 }
 group_map = {
     "cabinet_clutch_cabinet": "00·柜体与格口",
@@ -467,6 +464,15 @@ fi
 rm -f "${PREVIEW_DIR}/drive.html"
 rm -rf "${PREVIEW_DIR}/js"
 
+# Remove retired standalone library links from the root preview.  Their STL
+# files remain under output/3d-print for independent fit checks and exports;
+# only the duplicate root-page model-library folders are removed.
+for retired_group in "${RETIRED_ROOT_PREVIEW_GROUPS[@]}"; do
+    if [[ -d "${PREVIEW_DIR}/models/${retired_group}" ]]; then
+        rm -rf "${PREVIEW_DIR}/models/${retired_group}"
+    fi
+done
+
 # Remove only the derived slide/tensioner/bus-belt artifacts from the previous
 # design. Source files and unrelated mechanism outputs are left untouched.
 OLD_TENSIONER_OUTPUTS=(
@@ -560,10 +566,6 @@ python3 "${MANIFEST_PY}" \
     --stl-dir "${OUT_DIR}" \
     --stl-dir "${OUT_CHAIN}" \
     --stl-dir "${OUT_CABINET}" \
-    --stl-dir "${OUT_MOTOR}" \
-    --stl-dir "${OUT_MOUNT}" \
-    --stl-dir "${OUT_CHAIN_HARDWARE}" \
-    --stl-dir "${OUT_CHAIN_CLUTCH}" \
     --preview-dir "${PREVIEW_DIR}" \
     --title "SmartPartsDrawer 离合张紧机构" \
     --role printed \

@@ -22,7 +22,7 @@
 
 - 模型库源文件：`cad/openscad/parts/motor_pololu_micro_metal_100_1_hp_6v.scad`
 - 独立入口：`cad/openscad/ch1_03c_power_motor.scad`
-- 独立模型库 STL：`output/3d-print/motor-library/ch1_03c_power_motor_pololu_100_1_hp_6v.stl`
+- 独立模型库 STL：`output/3d-print/motor-library/ch1_03c_power_motor_pololu_100_1_hp_6v.stl`（保留作尺寸参考，不进入总装配器件树）
 - 柜体中已安装的电机 STL：`output/3d-print/cabinet-chain/cabinet_chain_motor.stl`
 - 网页预览：`http://127.0.0.1:8765/`
 
