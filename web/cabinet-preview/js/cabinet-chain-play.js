@@ -682,17 +682,15 @@ function createAnimatedBelt(item, path, pitchMm, phaseSign = 1) {
   for (let tooth = 0; tooth < belt.toothCount; tooth += 1) {
     belt.toothS[tooth] = (tooth + 0.5) * pitchMm;
   }
-  // Belts are intentionally an always-visible diagnostic overlay.  The STL
-  // remains the physical reference; the web viewer must not let a cabinet,
-  // shaft, or transparent depth-sort hide it when the user orbits around the
-  // assembly.  Both the base and every tooth use the same material and render
-  // late, so the belt cannot disappear merely because its face is turned away.
+  // Keep the belt double-sided so its surface is visible from either side, but
+  // leave depth testing enabled.  The belt must be occluded by the shafts,
+  // gears, drawer parts, and cabinet surfaces that are actually in front of it.
   const beltMaterial = sourceMesh.material.clone();
   beltMaterial.side = THREE.DoubleSide;
-  beltMaterial.transparent = true;
+  beltMaterial.transparent = false;
   beltMaterial.opacity = 1;
-  beltMaterial.depthTest = false;
-  beltMaterial.depthWrite = false;
+  beltMaterial.depthTest = true;
+  beltMaterial.depthWrite = true;
   const baseMesh = new THREE.Mesh(
     buildContinuousBeltBaseGeometry(path, beltThickness, beltWidth),
     beltMaterial,
@@ -701,11 +699,11 @@ function createAnimatedBelt(item, path, pitchMm, phaseSign = 1) {
     buildBeltToothGeometry(path, belt, 0),
     beltMaterial,
   );
-  baseMesh.renderOrder = 10000;
-  toothMesh.renderOrder = 10001;
+  baseMesh.renderOrder = 0;
+  toothMesh.renderOrder = 1;
   const group = new THREE.Group();
   group.name = "continuous-timing-belt";
-  group.userData.alwaysVisiblePreview = true;
+  group.userData.animatedBelt = true;
   group.visible = sourceMesh.visible;
   group.add(baseMesh, toothMesh);
   replaceMesh(item, group, sourceMesh.parent || playScene());
@@ -979,7 +977,7 @@ async function extractPlateTemplates(geometry) {
 function chainOffsetMm() {
   if (!play.path) return 0;
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
-  return pitches * (play.path.length / play.path.count);
+  return pitches * chainPitchMm();
 }
 
 function poseChainPart(part, offsetMm) {
@@ -1288,15 +1286,29 @@ function setScheme1Phase(phase) {
   scheme1Status(labels[phase] || "方案1");
 }
 
+function chainPitchMm() {
+  if (!play.path?.count) return Number(play.motion?.p) || 0;
+  // The path is built from the authored/rounded pin positions.  Use that
+  // actual per-pin arc length for both selector travel and motor turns so the
+  // final frame of a station arrival cannot leave the chain one frame behind.
+  return play.path.length / play.path.count;
+}
+
+function chainLinearSpeedMmPerHz() {
+  return (play.motion?.driveTeeth || 12) * chainPitchMm();
+}
+
 function scheme1TransportSpeed() {
-  const base = Number(play.motion?.scheme1?.selectorSpeed);
-  const fallback = (play.motion?.driveTeeth || 12) * (play.motion?.p || 0);
-  return (Number.isFinite(base) && base > 0 ? base : fallback) * play.motorHz;
+  // Selector motion and the visible snake motor now share one derived speed;
+  // the old independently-authored selectorSpeed value could introduce a
+  // small phase error after each station stop.
+  return chainLinearSpeedMmPerHz() * play.motorHz;
 }
 
 function tickScheme1(dt) {
   const scheme = play.scheme1;
-  if (!scheme.ready || !play.path || !scheme.stationS.length) return;
+  if (!scheme.ready || !play.path || !scheme.stationS.length) return 0;
+  let transportDistance = 0;
 
   if (play.playing) {
     scheme.phaseTime += dt;
@@ -1310,9 +1322,11 @@ function tickScheme1(dt) {
         scheme1TransportSpeed() * dt,
       );
       if (remaining < 0.001 || travel >= remaining - 0.001) {
+        transportDistance = remaining;
         scheme.selectorS = targetS;
         setScheme1Phase(SCHEME1_PHASE.ENGAGE);
       } else {
+        transportDistance = travel;
         scheme.selectorS = wrapPathS(scheme.selectorS + play.dir * travel);
       }
     } else if (scheme.phase === SCHEME1_PHASE.ENGAGE
@@ -1388,6 +1402,7 @@ function tickScheme1(dt) {
       : (scheme.outputTurns[clutch.stationIndex] || 0);
     clutch.group.rotation.y = clutch.restY - 2 * Math.PI * turns;
   }
+  return transportDistance;
 }
 
 function currentClutchEngagement() {
@@ -1759,11 +1774,14 @@ export function tickPlay(dt) {
   // tickScheme1 changes the phase to ENGAGE before the transport datum is
   // advanced, so the selector and the snake belt stop on the same frame with
   // no one-frame overshoot.
-  tickScheme1(dt);
+  const transportDistance = tickScheme1(dt);
   // 方案1中，拨叉沿蛇形选择带到达目标后，选择带必须停稳；只有在
   // OPEN/CLOSE 完成并回到关闭基准、离合释放后，选择带才允许继续走位。
-  const transportMoving = !play.scheme1.ready || play.scheme1.phase === SCHEME1_PHASE.INDEX;
-  if (play.playing && transportMoving) play.motorTurns += play.dir * play.motorHz * dt;
+  // 这里用 tickScheme1 返回的“本帧实际弧长”更新电机转数，而不是再次按
+  // 速度计时，确保拨叉、链节和主动轮在到站的最后一帧仍然完全重合。
+  if (play.playing && transportDistance > 0) {
+    play.motorTurns += play.dir * transportDistance / chainLinearSpeedMmPerHz();
+  }
   const offsetMm = chainOffsetMm();
   for (const part of play.chain) poseChainPart(part, offsetMm);
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
