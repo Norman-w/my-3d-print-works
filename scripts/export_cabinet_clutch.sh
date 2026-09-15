@@ -11,6 +11,12 @@ SCAD_DIR="${PROJECT_ROOT}/cad/openscad/enclosure"
 SCAD_FILE="cabinet_clutch.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_DIR="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
+OUT_CHAIN="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
+OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
+OUT_MOTOR="${PROJECT_ROOT}/output/3d-print/motor-library"
+OUT_MOUNT="${PROJECT_ROOT}/output/3d-print/motor-mount"
+OUT_CHAIN_HARDWARE="${PROJECT_ROOT}/output/3d-print/chain-hardware"
+OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
 REPORT_DIR="${PROJECT_ROOT}/output/inspection/cabinet-clutch"
 INSPECT_PY="/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="/Users/norman/.codex/skills/stl-http-preview/scripts/write_preview_manifest.py"
@@ -122,6 +128,65 @@ labels = {
         "name": "张紧机构·SKP 参数重建",
         "color": "#aebdce",
     },
+    "cabinet/cabinet_back_panel": {
+        "name": "可拆背板",
+        "color": "#c4a574",
+        "visible": False,
+        "role": "printed",
+    },
+}
+chain_labels = {
+    "cabinet-chain/cabinet_chain_motor": {
+        "name": "蛇形链条唯一驱动电机本体（右下张紧位）",
+        "color": "#424a54",
+        "role": "purchased",
+    },
+    "cabinet-chain/cabinet_chain_motor_shaft": {
+        "name": "蛇形链条驱动 D 输出轴（右下，随动力轮转动）",
+        "color": "#d6d9dc",
+        "role": "purchased",
+    },
+    "cabinet-chain/cabinet_chain_motor_cover": {
+        "name": "蛇形链条电机固定罩（可沿下压方向滑动）",
+        "color": "#56616d",
+        "role": "printed",
+    },
+    "cabinet-chain/cabinet_chain_motor_tensioner": {
+        "name": "蛇形电机张紧调节（导槽 + 弹簧 + M3 螺杆）",
+        "color": "#c9a227",
+        "role": "printed",
+    },
+    "cabinet-chain/cabinet_chain_sprockets": {
+        "name": "12T 尖齿（右下动力 D 轴 + 其余轴承导向）",
+        "color": "#5b9fd6",
+        "role": "printed",
+    },
+    "cabinet-chain/cabinet_chain_idlers": {
+        "name": "8T 钝齿轴承平移轮",
+        "color": "#7dcc4a",
+        "role": "printed",
+    },
+    "cabinet-chain/cabinet_chain_plates": {"name": "03C 蛇形链板", "color": "#8A919C", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_rollers": {"name": "03C 滚子", "color": "#E8EDF2", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_pins": {"name": "03C 销轴", "color": "#B08D57", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_bearings": {"name": "3×6×2 轴承（装配显示/采购件）", "color": "#b9c2ca", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_connector": {"name": "03C 链条连接节（带槽双穿销+圆弧夹片）", "color": "#ff2fd0", "role": "diagnostic"},
+    "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
+    "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
+    "cabinet-chain/cabinet_chain_scheme1_power_wheels": {"name": "旧方案1·常转动力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
+    "cabinet-chain/cabinet_chain_scheme1_output_wheels": {"name": "旧方案1·抽屉受力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
+    "cabinet-chain/cabinet_chain_scheme1_clutch_faces": {"name": "旧方案1·狗牙离合面（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
+    "cabinet-chain/cabinet_chain_scheme1_bearings": {"name": "旧方案1·抽屉输出轴承（文件保留，默认隐藏）", "visible": False, "role": "purchased"},
+    "cabinet-chain/cabinet_chain_scheme1_selector": {"name": "旧方案1·链条拨叉/8T 选择轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
+    "motor-library/ch1_03c_power_motor_pololu_100_1_hp_6v": {"name": "Pololu 蛇形驱动电机·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "motor-mount/ch1_03c_power_motor_cover": {"name": "蛇形电机固定罩·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
+    "chain-hardware/ch1_03c_connecting_pin": {"name": "03C 连接节穿销·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "chain-hardware/ch1_03c_retaining_clip": {"name": "03C 连接节卡子·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "chain-clutch/ch1_03c_extended_connecting_pin": {"name": "03C 加长接头穿销·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "chain-clutch/ch1_03c_extended_retaining_clips": {"name": "03C 加长接头卡子·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "chain-clutch/ch1_03c_clutch_platform": {"name": "传动离合轴承平台·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
+    "chain-clutch/ch1_03c_clutch_bearing": {"name": "681 离合轴承·独立模型库（默认隐藏）", "visible": False, "role": "purchased"},
+    "chain-clutch/ch1_03c_clutch_bearing_retainer": {"name": "681 离合轴承承托环·独立模型库（默认隐藏）", "visible": False, "role": "printed"},
 }
 group_map = {
     "cabinet_clutch_cabinet": "00·柜体与格口",
@@ -176,7 +241,7 @@ name_map = {
     "cabinet_clutch_assembly": "总装配合并检查体（可选）",
 }
 for part in payload.get("parts", []):
-    patch = labels.get(part.get("id"))
+    patch = labels.get(part.get("id")) or chain_labels.get(part.get("id"))
     if patch:
         part.update(patch)
     stem = str(part.get("id", "")).rsplit("/", 1)[-1]
@@ -287,6 +352,12 @@ export_part "drawer_rack" "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" false
 [[ -f "${PREVIEW_SOURCE_DIR}/app.js" ]] || die "未找到离合预览模板: ${PREVIEW_SOURCE_DIR}/app.js"
 python3 "${MANIFEST_PY}" \
     --stl-dir "${OUT_DIR}" \
+    --stl-dir "${OUT_CHAIN}" \
+    --stl-dir "${OUT_CABINET}" \
+    --stl-dir "${OUT_MOTOR}" \
+    --stl-dir "${OUT_MOUNT}" \
+    --stl-dir "${OUT_CHAIN_HARDWARE}" \
+    --stl-dir "${OUT_CHAIN_CLUTCH}" \
     --preview-dir "${PREVIEW_DIR}" \
     --title "SmartPartsDrawer 离合张紧机构" \
     --role printed \
@@ -294,6 +365,8 @@ python3 "${MANIFEST_PY}" \
 patch_native_preview_manifest
 cp "${PREVIEW_SOURCE_DIR}/index.html" "${PREVIEW_DIR}/index.html"
 cp "${PREVIEW_SOURCE_DIR}/app.js" "${PREVIEW_DIR}/app.js"
+mkdir -p "${PREVIEW_DIR}/js"
+cp "${PROJECT_ROOT}/web/cabinet-preview/js/cabinet-chain-play.js" "${PREVIEW_DIR}/js/cabinet-chain-play.js"
 
 echo "完成: ${OUT_DIR}"
 echo "检查报告: ${REPORT_DIR}"

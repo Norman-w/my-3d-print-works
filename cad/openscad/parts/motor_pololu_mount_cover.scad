@@ -40,6 +40,17 @@ module local_y_cylinder(d, h, x, z, y0) {
             cylinder(d = d, h = h);
 }
 
+module local_y_slot(d, h, x, z, slot, y0) {
+    // Elongate the fastener clearance in local Z.  In the canonical web
+    // world this is the vertical +Y direction after the legacy adapter, so
+    // the cover can move down against the spring without losing the four
+    // back-panel screw references.
+    hull() {
+        local_y_cylinder(d, h, x, z - slot / 2, y0);
+        local_y_cylinder(d, h, x, z + slot / 2, y0);
+    }
+}
+
 module cover_shell() {
     rear_wall_front =
         MOTOR_MOUNT_COVER_BODY_REAR_Y_LOCAL - MOTOR_MOUNT_COVER_REAR_WALL_T;
@@ -85,18 +96,20 @@ module cover_flange() {
             MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL
         );
         for (p = MOTOR_MOUNT_BOSS_OFFSETS) {
-            local_y_cylinder(
+            local_y_slot(
                 MOTOR_MOUNT_SCREW_CLEAR_D,
                 MOTOR_MOUNT_COVER_FLANGE_T + 2 * MOTOR_MOUNT_EPS,
                 p[0],
                 p[1],
+                MOTOR_MOUNT_SLIDE_STROKE,
                 MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS
             );
-            local_y_cylinder(
+            local_y_slot(
                 MOTOR_MOUNT_SCREW_HEAD_D,
                 MOTOR_MOUNT_SCREW_HEAD_H + MOTOR_MOUNT_EPS,
                 p[0],
                 p[1],
+                MOTOR_MOUNT_SLIDE_STROKE,
                 MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS
             );
         }

@@ -3,11 +3,11 @@
 // material: sprockets resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
 // parting_plane: n/a for chain; cabinet back face remains Y = D
 // opening_direction: n/a
-// fastener: back-view upper-left / front-view upper-right power_c() sprocket 3 mm D-shaft; other wheels 3 mm round bearing shaft; tensioner M3 + spring
+// fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor carriage is pressed in the former tensioner slot by an M3 spring screw
 // seal: n/a
 // print_orientation: sprocket hub down; do not 3D-print the chain
 // units: mm
-// note: 5x5 row-major snake through every bay center; rear-view right return; power at back-view upper left / front-view upper right (power_c()); all wheels are face-flipped; bearings are separate display/purchase geometry
+// note: 5x5 row-major snake through every bay center; rear-view right return; the only snake motor is at the lower-right return/tensioner position (snake_drive_c()); all wheels are face-flipped; bearings are separate display/purchase geometry
 
 //#region 导入/依赖
 QUALITY = is_undef(QUALITY) ? 2 : QUALITY;
@@ -66,7 +66,7 @@ CLUTCH_CONNECTOR_PIN_FACE_OFFSET = -outer_face;
 
 //#region 私有成员
 echo("snake_pins", len(snake_pins()), "length_mm", len(snake_pins()) * P);
-echo("power", power_c(), "entry", entry_c(), "service_return", drive_c(), "tensioner", ten_path_c(), "ten_z", TEN_Z);
+echo("snake_drive", snake_drive_c(), "upper_guide", power_c(), "entry", entry_c(), "service_return", drive_c(), "tensioner", ten_path_c(), "ten_z", TEN_Z);
 
 module snake_in_rear() {
     translate([0, CHAIN_Y, 0])
@@ -211,19 +211,18 @@ module rear_blunt_idlers() {
 }
 
 module rear_bearing_visuals() {
-    // 与轴承版齿轮一一对应；高 X 的背面左上 power_c() 是 D 轴动力轮，
-    // 低 X 的 entry_c() 以及其余转向轮才放轴承。
-    for (c = concat([entry_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c(), ten_path_c()]))
+    // 与轴承版齿轮一一对应；旧高 X 转向位 power_c() 现在也是普通轴承轮，
+    // 右下 snake_drive_c() 才是 D 轴动力轮。
+    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
         place_geared(c) ch1_03c_bearing_visual();
     for (c = blunt_centers())
         place_geared(c) ch1_03c_bearing_visual();
 }
 
 module rear_sprockets() {
-    // 按用户背面视图：左上（正面右上）power_c() 保留 D 轴动力接口，
-    // 其余 12T 轮全部改为轴承版。
-    place_geared(power_c()) ch1_03c_sprocket(SPROCKET_TEETH);
-    for (c = concat([entry_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c(), ten_path_c()]))
+    // 右下回程/张紧位承接唯一 D 轴动力；高 X 上方旧动力位改成普通导向轮。
+    place_geared(snake_drive_c()) ch1_03c_sprocket(SPROCKET_TEETH);
+    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
         place_geared(c) ch1_03c_bearing_sprocket(SPROCKET_TEETH);
 }
 
@@ -326,13 +325,14 @@ module emit_chain(name) {
 
 //#region 公开 API
 if (PART == "power_check") {
-    // Diagnostic close-up only: the motor shaft enters the flipped D-shaft power wheel.
-    color("#e07a3d") place_geared(power_c())
+    // Diagnostic close-up only: the motor shaft enters the lower-right
+    // return/tensioner D wheel.
+    color("#e07a3d") place_geared(snake_drive_c())
         ch1_03c_sprocket(SPROCKET_TEETH);
-    place_power_motor(power_c())
+    place_power_motor(snake_drive_c())
         pololu_micro_metal_motor_100_1_hp_6v_colored();
     color("#56616d", 0.28)
-        place_power_motor_cover(power_c())
+        place_power_motor_cover(snake_drive_c())
             ch1_03c_power_motor_cover();
 }
 
@@ -360,14 +360,13 @@ emit_chain("pins") {
 }
 emit_chain("sprockets") {
     if (PART == "assembly") {
-        color("#e07a3d") place_geared(power_c())
+        color("#e07a3d") place_geared(snake_drive_c())
             ch1_03c_sprocket(SPROCKET_TEETH);
-        color("#d4a017") place_geared(ten_path_c())
+        color("#5b9fd6") place_geared(power_c())
             ch1_03c_bearing_sprocket(SPROCKET_TEETH);
-        color("#5b9fd6") {
+        color("#5b9fd6")
             for (c = concat([entry_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
                 place_geared(c) ch1_03c_bearing_sprocket(SPROCKET_TEETH);
-        }
     } else {
         rear_sprockets();
     }
@@ -382,27 +381,36 @@ emit_chain("bearings") {
 }
 emit_chain("motor") {
     if (PART == "assembly")
-        place_power_motor(power_c())
+        place_power_motor(snake_drive_c())
             pololu_micro_metal_motor_100_1_hp_6v_body_colored();
     else
-        place_power_motor(power_c())
+        place_power_motor(snake_drive_c())
             pololu_micro_metal_motor_100_1_hp_6v_body();
 }
 emit_chain("motor_shaft") {
     if (PART == "assembly")
-        place_power_motor(power_c())
+        place_power_motor(snake_drive_c())
             color("#d6d9dc") d_shaft();
     else
-        place_power_motor(power_c()) d_shaft();
+        place_power_motor(snake_drive_c()) d_shaft();
 }
 emit_chain("motor_cover") {
     if (PART == "assembly")
         color("#56616d", 0.92)
-            place_power_motor_cover(power_c())
+            place_power_motor_cover(snake_drive_c())
                 ch1_03c_power_motor_cover();
     else
-        place_power_motor_cover(power_c())
+        place_power_motor_cover(snake_drive_c())
             ch1_03c_power_motor_cover();
+}
+emit_chain("motor_tensioner") {
+    // The former lower return wheel's U guides and spring-loaded M3 adjuster
+    // now preload the motor/cover carriage.  The carriage remains visible as
+    // the cover; this part is the independent adjustment hardware.
+    if (PART == "assembly")
+        color("#c9a227", 0.90) tensioner_hardware();
+    else
+        tensioner_hardware();
 }
 emit_chain("connector") {
     highlighted_connector();
@@ -468,7 +476,7 @@ emit_chain("scheme1_selector") {
 //#region 业务逻辑
 // 闭环按真实节距闭合；底端张紧轮吃掉余量。长于 210L×1 m SKU，只做后仓走线可视化。
 // 红点是每格矩形中心；水平段节圆线必须穿过这些点。
-// 橙色 power_c() 背面左上/正面右上 12T 保留 D 轴动力接口，并在轮后接入真实 Pololu 1101 电机模型与固定罩；
+// 橙色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与可下压固定罩；
 // 下方 service_return、入口、金色张紧、蓝色转向和绿色 8T 平移轮均为轴承版，并显示独立的 3×6×2 轴承。
 // 所有轮子安装面翻转 180°。
 // 高亮 CONNECTOR_LINK_INDEX 节为普通 03C 接头：普通双销换成带槽销和夹片，

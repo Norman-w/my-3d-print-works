@@ -18,6 +18,22 @@ const RIGID_CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
 ]);
+const RIGID_CHAIN_SEGMENTS = new Map([
+  // These highlighted assemblies replace the corresponding two-pin link in
+  // the authored SCAD path.  Keeping their logical segment explicit prevents
+  // a platform/clip-heavy bounding box from becoming the animation pivot.
+  ["cabinet-chain/cabinet_chain_connector", 20],
+  ["cabinet-chain/cabinet_chain_clutch_connector", 140],
+  ["cabinet-chain/cabinet_chain_clutch_bearing", 140],
+]);
+const PLATE_TEMPLATE_SEGMENTS = {
+  // These are straight, ordinary links in the canonical 5x5 path.  Taking
+  // templates from the straight run avoids using corner triangles twice when
+  // the authored STL has been unioned into two connected surfaces.
+  outer: 10,
+  inner: 11,
+  connector: 20,
+};
 const WHEEL_IDS = {
   "cabinet-chain/cabinet_chain_sprockets": "sprocket",
   "cabinet-chain/cabinet_chain_idlers": "idler",
@@ -166,7 +182,10 @@ function samplePath(path, sRaw) {
   while (lo < hi) {
     const mid = (lo + hi) >> 1;
     const seg = path.segs[mid];
-    if (s > seg.s0 + seg.len) lo = mid + 1;
+    // At an exact pin position use the outgoing segment.  The authored
+    // pin/roller placement also uses p[i] -> p[i+1]; choosing the incoming
+    // segment here gives a 90°/turn-boundary orientation mismatch.
+    if (s >= seg.s0 + seg.len) lo = mid + 1;
     else hi = mid;
   }
   const seg = path.segs[lo];
@@ -501,45 +520,80 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
 }
 
-async function splitPathLinkBuckets(geometry) {
+function makePlateTemplateGeometry(values, seg) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(values), 3));
+  geo.computeVertexNormals();
+  geo.translate(
+    -(seg.a[0] + seg.b[0]) / 2,
+    -(seg.a[1] + seg.b[1]) / 2,
+    -(seg.a[2] + seg.b[2]) / 2,
+  );
+  geo.computeBoundingBox();
+  return {
+    geometry: geo,
+    restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
+  };
+}
+
+async function extractPlateTemplates(geometry) {
   const pos = geometry.getAttribute("position");
   const nTri = Math.floor(pos.count / 3);
-  const count = play.path.count;
-  const bucketByTri = new Uint16Array(nTri);
-  const bucketCounts = new Uint32Array(count);
+  const wanted = new Set(Object.values(PLATE_TEMPLATE_SEGMENTS));
+  const valuesBySegment = new Map([...wanted].map((index) => [index, []]));
+  const plateReach = Math.min(2.30, (play.motion?.p || 4.7625) * 0.49);
+  const outerLayer = 1.80;
 
   // OpenSCAD 导出的两层链板在 STL 中会各自合并成一张连通网格，不能依靠
-  // 拓扑连通性拆节。每个链板三角形仍落在对应的两销路径段附近，因此按最近
-  // 路径段归桶；归桶后每个桶就是一节完整的链板对，后面作为一个刚体移动。
+  // 拓扑连通性拆节。也不能把拐角处的三角形按最近路径段分桶：那会把同一
+  // 个链节切开。只从直线上的已知外/内链节提取一次模板，随后所有链节共享
+  // 模板几何并各自以路径节为刚体运动。
+  //
+  // 这里还要按两个独立的条件选三角形：
+  // 1. 沿直线链节自身的局部纵向范围，而不是“离哪一段路径最近”；相邻
+  //    内外链板在销孔处会有重叠，最近路径归桶会把一个链节切掉。
+  // 2. 原始 STL 的轴向层：外链板在 |Y-chainY| >= 1.80，内链板在里面。
+  //    连接节只保留负 Y 侧的那一块普通外链板，另一侧由高亮接头提供。
+  const templateSegments = Object.values(PLATE_TEMPLATE_SEGMENTS);
+  const frameBySegment = new Map(templateSegments.map((segmentIndex) => {
+    const seg = play.path.segs[segmentIndex];
+    const tangent = normalize(sub(seg.b, seg.a));
+    return [segmentIndex, { seg, tangent, normal: [-tangent[2], 0, tangent[0]] }];
+  }));
   for (let t = 0; t < nTri; t += 1) {
     const offset = t * 9;
     const x = (pos.array[offset] + pos.array[offset + 3] + pos.array[offset + 6]) / 3;
     const y = (pos.array[offset + 1] + pos.array[offset + 4] + pos.array[offset + 7]) / 3;
     const z = (pos.array[offset + 2] + pos.array[offset + 5] + pos.array[offset + 8]) / 3;
-    const bucket = projectPoint(play.path, x, y, z).seg;
-    bucketByTri[t] = bucket;
-    bucketCounts[bucket] += 1;
+    const axial = y - play.motion.chainY;
+    for (const [segmentIndex, frame] of frameBySegment) {
+      const delta = sub([x, y, z], frame.seg.a);
+      const along = dot(delta, frame.tangent);
+      const side = dot(delta, frame.normal);
+      if (along < -plateReach || along > frame.seg.len + plateReach || Math.abs(side) > plateReach) {
+        continue;
+      }
+      const isOuter = Math.abs(axial) >= outerLayer;
+      const isSelected = segmentIndex === PLATE_TEMPLATE_SEGMENTS.connector
+        ? axial <= -outerLayer
+        : segmentIndex === PLATE_TEMPLATE_SEGMENTS.outer
+          ? isOuter
+          : !isOuter;
+      if (!isSelected) continue;
+      const values = valuesBySegment.get(segmentIndex);
+      for (let k = 0; k < 9; k += 1) values.push(pos.array[offset + k]);
+      break;
+    }
     if (t % 2000 === 0) await yieldFrame();
   }
 
-  const arrays = Array.from(bucketCounts, (triCount) => new Float32Array(triCount * 9));
-  const writeOffsets = new Uint32Array(count);
-  for (let t = 0; t < nTri; t += 1) {
-    const bucket = bucketByTri[t];
-    const outOffset = writeOffsets[bucket];
-    const inOffset = t * 9;
-    arrays[bucket].set(pos.array.subarray(inOffset, inOffset + 9), outOffset);
-    writeOffsets[bucket] += 9;
-    if (t % 2000 === 0) await yieldFrame();
+  const templates = {};
+  for (const [kind, segmentIndex] of Object.entries(PLATE_TEMPLATE_SEGMENTS)) {
+    const values = valuesBySegment.get(segmentIndex) || [];
+    if (!values.length) throw new Error(`链板模板缺少路径节 ${segmentIndex}`);
+    templates[kind] = makePlateTemplateGeometry(values, play.path.segs[segmentIndex]);
   }
-
-  return arrays.map((array) => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(array, 3));
-    geo.computeVertexNormals();
-    geo.computeBoundingBox();
-    return geo;
-  });
+  return templates;
 }
 
 function chainOffsetMm() {
@@ -549,7 +603,13 @@ function chainOffsetMm() {
 }
 
 function poseChainPart(part, offsetMm) {
-  const sample = samplePath(play.path, part.s + offsetMm);
+  // `along` is the authored geometry centre's longitudinal offset from the
+  // path projection.  Apply it to the sampled path coordinate itself so a
+  // link crossing a corner is centred and oriented around the same anchor;
+  // adding it after taking the two endpoint samples mixes two different
+  // tangents and is what makes a link peel away at a turn.
+  const anchorS = part.s + offsetMm + (part.along || 0);
+  const sample = samplePath(play.path, anchorS);
   // 链板/接头是跨越两个销的刚体。拐入齿轮时，路径是由相邻销位组成的折线，
   // 所以不能把链板中心放在折点本身：那会让两端孔偏离两根销，动画中看起来像
   // 链条被撕裂。用两端销位的真实中点放置，并用两端连线定姿态；销和滚子
@@ -557,8 +617,8 @@ function poseChainPart(part, offsetMm) {
   let tangent = sample.tangent;
   let center = sample.point;
   if (part.halfSpan > 1e-6) {
-    const before = samplePath(play.path, part.s + offsetMm - part.halfSpan).point;
-    const after = samplePath(play.path, part.s + offsetMm + part.halfSpan).point;
+    const before = samplePath(play.path, anchorS - part.halfSpan).point;
+    const after = samplePath(play.path, anchorS + part.halfSpan).point;
     center = [
       (before[0] + after[0]) / 2,
       (before[1] + after[1]) / 2,
@@ -568,9 +628,9 @@ function poseChainPart(part, offsetMm) {
   }
   const normal = [-tangent[2], 0, tangent[0]];
   part.group.position.set(
-    center[0] + tangent[0] * part.along + normal[0] * part.side,
+    center[0] + normal[0] * part.side,
     center[1] + part.lift,
-    center[2] + tangent[2] * part.along + normal[2] * part.side,
+    center[2] + normal[2] * part.side,
   );
   const yaw = Math.atan2(tangent[2], tangent[0]);
   part.group.rotation.y = -(yaw - part.restYaw);
@@ -920,32 +980,74 @@ async function bindChainMesh(item) {
   if (!play.path || !item.mesh?.isMesh || !playScene()) return;
   const isPlateMesh = item.part.id.endsWith("cabinet_chain_plates");
   const isRigidChainMesh = RIGID_CHAIN_IDS.has(item.part.id);
-  // 普通链板 STL 要按路径段拆成一节一节；接头/轴承是装配替换件，虽然
-  // STL 内部有多个不相连实体，也必须整体作为一个刚体移动，不能按拓扑岛
-  // 分别绕链路拐角转动，否则穿销、夹片和链板会彼此撕开。
+  // 普通链板从直线段模板实例化，避免把拐角三角形切到相邻链节；接头/轴承
+  // 是装配替换件，必须整体作为一个刚体移动，不能按拓扑岛分别绕拐角转动。
+  const plateTemplates = isPlateMesh ? await extractPlateTemplates(item.mesh.geometry) : null;
   const islands = isPlateMesh
-    ? await splitPathLinkBuckets(item.mesh.geometry)
+    ? Array.from({ length: play.path.count }, (_, i) => i)
     : (isRigidChainMesh ? [item.mesh.geometry] : await splitIslands(item.mesh.geometry));
   const group = new THREE.Group();
   const mat = item.mesh.material;
   const added = [];
   for (let i = 0; i < islands.length; i += 1) {
-    const geo = islands[i];
-    const center = geo.boundingBox.getCenter(new THREE.Vector3());
-    const proj = projectPoint(play.path, center.x, center.y, center.z);
-    geo.translate(-center.x, -center.y, -center.z);
+    const isPlate = isPlateMesh;
+    const plateKind = i === PLATE_TEMPLATE_SEGMENTS.connector
+      ? "connector"
+      : i % 2 === 0 ? "outer" : "inner";
+    const template = isPlate ? plateTemplates[plateKind] : null;
+    const geo = isPlate ? template.geometry : islands[i];
     const pivot = new THREE.Group();
     pivot.add(new THREE.Mesh(geo, mat));
     group.add(pivot);
-    const part = {
-      group: pivot,
-      s: proj.s,
-      along: proj.along,
-      side: proj.side,
-      lift: proj.lift,
-      restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
-      halfSpan: (isPlateMesh || isRigidChainMesh) ? (play.motion?.p || 0) / 2 : 0,
-    };
+    let part;
+    if (isPlate) {
+      // Every instance uses the exact authored p[i] -> p[i+1] chord as its
+      // logical anchor.  The template itself is already centered at its
+      // straight-run chord midpoint, so no corner bbox can affect the pivot.
+      const seg = play.path.segs[i];
+      part = {
+        group: pivot,
+        s: seg.s0 + seg.len / 2,
+        along: 0,
+        side: 0,
+        lift: 0,
+        restYaw: template.restYaw,
+        halfSpan: (play.motion?.p || 0) / 2,
+      };
+    } else {
+      const center = geo.boundingBox.getCenter(new THREE.Vector3());
+      const segmentIndex = RIGID_CHAIN_SEGMENTS.get(item.part.id);
+      if (Number.isInteger(segmentIndex)) {
+        const seg = play.path.segs[segmentIndex];
+        const anchor = [
+          (seg.a[0] + seg.b[0]) / 2,
+          (seg.a[1] + seg.b[1]) / 2,
+          (seg.a[2] + seg.b[2]) / 2,
+        ];
+        geo.translate(-anchor[0], -anchor[1], -anchor[2]);
+        part = {
+          group: pivot,
+          s: seg.s0 + seg.len / 2,
+          along: 0,
+          side: 0,
+          lift: 0,
+          restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
+          halfSpan: (play.motion?.p || 0) / 2,
+        };
+      } else {
+        const proj = projectPoint(play.path, center.x, center.y, center.z);
+        geo.translate(-center.x, -center.y, -center.z);
+        part = {
+          group: pivot,
+          s: proj.s,
+          along: proj.along,
+          side: proj.side,
+          lift: proj.lift,
+          restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
+          halfSpan: isRigidChainMesh ? (play.motion?.p || 0) / 2 : 0,
+        };
+      }
+    }
     added.push(part);
     play.chain.push(part);
     if (i % 80 === 0) await yieldFrame();

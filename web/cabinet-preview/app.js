@@ -26,6 +26,9 @@ const VIEWS_POSITION_KEY = "smartpartsdrawer.preview.views.position";
 const FLOATING_PANEL_MARGIN = 12;
 const VIEW_HELPER_SIZE = 128;
 const LEGACY_ASSEMBLY_WIDTH = 260;
+const DEFAULT_HIDDEN_PART_IDS = new Set([
+  "cabinet/cabinet_back_panel",
+]);
 const LEGACY_COORDINATE_GROUPS = new Set([
   "cabinet",
   "cabinet-chain",
@@ -376,6 +379,21 @@ function renderGroupOptions(groups) {
   }
 }
 
+function groupVisibility(parts) {
+  const visibleCount = parts.filter((part) => state.visibleIds.has(part.id)).length;
+  if (visibleCount === 0) return "off";
+  if (visibleCount === parts.length) return "on";
+  return "mixed";
+}
+
+async function setGroupVisible(groupId, visible) {
+  const parts = (state.listing?.parts || []).filter(
+    (part) => (part.group || "ungrouped") === groupId,
+  );
+  await Promise.all(parts.map((part) => setPartVisible(part.id, visible)));
+  renderPartList();
+}
+
 function renderPartList() {
   els.parts.innerHTML = "";
   const listing = state.listing;
@@ -392,11 +410,27 @@ function renderPartList() {
     const collapsed = state.collapsedGroups.has(groupId);
     section.classList.toggle("collapsed", collapsed);
     const heading = document.createElement("h2");
+    const groupLabel = listing.groups?.find((group) => group.id === groupId)?.name || groupId;
+    const visibility = groupVisibility(parts);
+    const visibilityToggle = document.createElement("button");
+    visibilityToggle.type = "button";
+    visibilityToggle.className = "group-visibility";
+    visibilityToggle.dataset.state = visibility;
+    visibilityToggle.setAttribute("aria-pressed", String(visibility === "on"));
+    visibilityToggle.setAttribute(
+      "aria-label",
+      visibility === "on" ? `隐藏${groupLabel}` : `显示${groupLabel}`,
+    );
+    visibilityToggle.title = visibility === "on" ? "隐藏本组" : "显示本组";
+    visibilityToggle.textContent = visibility === "on" ? "●" : visibility === "mixed" ? "◐" : "○";
+    visibilityToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      void setGroupVisible(groupId, visibility !== "on");
+    });
     const toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "group-toggle";
     toggle.setAttribute("aria-expanded", String(!collapsed));
-    const groupLabel = listing.groups?.find((group) => group.id === groupId)?.name || groupId;
     toggle.setAttribute("aria-label", `${groupLabel} (${parts.length})`);
     const chevron = document.createElement("span");
     chevron.className = "chevron";
@@ -413,7 +447,7 @@ function renderPartList() {
       saveCollapsedGroups();
       renderPartList();
     });
-    heading.appendChild(toggle);
+    heading.append(visibilityToggle, toggle);
     section.appendChild(heading);
     const groupItems = document.createElement("div");
     groupItems.className = "group-items";
@@ -656,7 +690,7 @@ async function refreshListing({ autoload = false } = {}) {
     // 全局默认视图要能直接看到完整动画；柜体/背板由清单中的 visible=false
     // 排除，用户仍可通过清单勾选它们来恢复背景。
     const targets = (listing.parts || [])
-      .filter((part) => part.visible !== false)
+      .filter(isDefaultVisiblePart)
       .sort((a, b) => (a.bytes || 0) - (b.bytes || 0));
     await Promise.all(targets.map((part) => setPartVisible(part.id, true)));
     fitCamera();
@@ -710,10 +744,15 @@ function coordinateParent(part) {
 }
 
 function isCabinetContext(part) {
+  if (DEFAULT_HIDDEN_PART_IDS.has(part?.id)) return false;
   const tail = partTail(part);
   return part?.group === "cabinet"
     || tail === "cabinet_clutch_cabinet"
     || tail === "cabinet_clutch_cabinet_context";
+}
+
+function isDefaultVisiblePart(part) {
+  return part?.visible !== false && !DEFAULT_HIDDEN_PART_IDS.has(part?.id);
 }
 
 function isSnakePart(part) {
@@ -858,11 +897,11 @@ async function applyViewPreset(name) {
     // 当前清单被搜索过滤时，特写也必须保证有可取景对象；空特写回到该清单
     // 的默认可见件，避免相机被送到原点。
     if (!focusIds.size) {
-      focusIds = new Set(listingParts.filter((part) => part.visible !== false).map((part) => part.id));
+      focusIds = new Set(listingParts.filter(isDefaultVisiblePart).map((part) => part.id));
       contextIds = new Set();
     }
   } else {
-    focusIds = new Set(listingParts.filter((part) => part.visible !== false).map((part) => part.id));
+    focusIds = new Set(listingParts.filter(isDefaultVisiblePart).map((part) => part.id));
   }
 
   const applied = await applyViewVisibility(focusIds, contextIds, request, !profile);

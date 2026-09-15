@@ -11,6 +11,7 @@ SCAD_DIR="${PROJECT_ROOT}/cad/openscad/enclosure"
 SCAD_FILE="cabinet_chain.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
+OUT_CLUTCH="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_MOTOR="${PROJECT_ROOT}/output/3d-print/motor-library"
 OUT_MOUNT="${PROJECT_ROOT}/output/3d-print/motor-mount"
 OUT_CHAIN_HARDWARE="${PROJECT_ROOT}/output/3d-print/chain-hardware"
@@ -20,7 +21,7 @@ OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
+PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -71,7 +72,7 @@ path = Path(sys.argv[1])
 payload = json.loads(path.read_text(encoding="utf-8"))
 payload["title"] = "零件柜 · 后仓横走 03C + 张紧 U"
 payload["units"] = "mm"
-payload["up"] = "z"
+payload["up"] = "y"
 names = {
     "cabinet_shell": {
         "name": "柜体（外框+隔板+格栅）",
@@ -106,7 +107,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_sprockets": {
-        "name": "12T 尖齿（网页左上动力 D 轴 + 其余轴承）",
+        "name": "12T 尖齿（网页右下动力 D 轴 + 其余轴承）",
         "role": "printed",
         "color": "#5b9fd6",
         "explosion": [0, 0, 0],
@@ -125,22 +126,28 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor": {
-        "name": "动力轮电机本体（Pololu 100:1 HP 6V）",
+        "name": "蛇形链条唯一驱动电机本体（右下张紧位）",
         "role": "purchased",
         "color": "#424a54",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_shaft": {
-        "name": "动力轮电机 D 输出轴（随动力轮转动）",
+        "name": "蛇形链条驱动 D 输出轴（右下，随动力轮转动）",
         "role": "purchased",
         "color": "#d6d9dc",
         "opacity": 1.0,
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_cover": {
-        "name": "动力轮电机固定罩（M3 boss 螺钉固定）",
+        "name": "蛇形链条电机固定罩（可沿下压方向滑动）",
         "role": "printed",
         "color": "#56616d",
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_motor_tensioner": {
+        "name": "蛇形电机张紧调节（导槽 + 弹簧 + M3 螺杆）",
+        "role": "printed",
+        "color": "#c9a227",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_connector": {
@@ -269,12 +276,85 @@ names = {
         "explosion": [0, 0, 0],
     },
 }
+# Keep the single root viewer complete when this chain export is run after
+# the drawer/clutch export.  The manifest writer scans all supplied folders;
+# these mappings restore the canonical mechanism folders and labels for the
+# native-world drawer parts instead of leaving raw filenames in the tree.
+names.update({
+    "cabinet_clutch_cabinet": {
+        "name": "柜体·世界坐标背景", "role": "printed", "color": "#6f8f9a", "opacity": 0.18, "visible": True,
+    },
+    "cabinet_clutch_cabinet_context": {
+        "name": "柜体·格口与抽屉背景", "role": "diagnostic", "color": "#8fa9b8", "opacity": 0.32, "visible": True,
+    },
+    "cabinet_clutch_assembly": {
+        "name": "总装配合并检查体（可选）", "role": "diagnostic", "color": "#7f8ea3", "opacity": 0.28, "visible": False,
+    },
+    "cabinet_clutch_all_clutches": {"name": "离合器合并检查体（可选）", "role": "diagnostic", "visible": False},
+    "cabinet_clutch_detail_open": {"name": "离合细节·打开状态（可选）", "role": "diagnostic", "visible": False},
+    "cabinet_clutch_detail_engaged": {"name": "离合细节·闭合状态（可选）", "role": "diagnostic", "visible": False},
+    "cabinet_clutch_drawer_drive": {"name": "抽屉驱动合并检查体（可选）", "role": "diagnostic", "visible": False},
+    "cabinet_clutch_power_bus": {"name": "动力母线合并检查体（可选）", "role": "diagnostic", "visible": False},
+    "00_tensioner_t_solid_reference": {"name": "右侧张紧滑台 · SKP 参数化", "color": "#aebdce"},
+    "00_left_d_axis_candidate": {"name": "左侧驱动轴 · D 型"},
+    "01_motor_vertical_reference": {"name": "抽屉开合电机 · 竖直"},
+    "02_drive_column_reference": {"name": "传动轴 · 代表列"},
+    "03_vertical_rack_candidate": {"name": "Y 向长花键齿轮杆 · 两端 D 轴"},
+    "06_upper_axis_z_spur_candidate": {"name": "离合上方齿轮 · Z 轴"},
+    "07_upper_downward_dog_candidate": {"name": "上方离合齿 · 向下"},
+    "08_lower_upward_dog_candidate": {"name": "下方离合齿 · 向上"},
+    "09_rear_takeoff_timing_pulley_candidate": {"name": "后方取力同步轮"},
+    "10_clutch_spring_reference": {"name": "离合压簧"},
+    "11_t_countersunk_screw_reference": {"name": "T 形沉头螺丝"},
+    "12_clutch_fork_candidate": {"name": "离合拨叉"},
+    "13_drawer_timing_belt_reference": {"name": "抽屉同步皮带"},
+    "14_front_timing_pulley_candidate": {"name": "前方同步轮"},
+    "15_front_pinion_candidate": {"name": "抽屉底部驱动齿轮"},
+    "16_drawer_linear_rack_candidate": {"name": "抽屉底部直线齿排"},
+})
+clutch_group_map = {
+    "cabinet_clutch_cabinet": "00·柜体与格口",
+    "cabinet_clutch_cabinet_context": "00·柜体与格口",
+    "00_left_d_axis_candidate": "01·动力母线",
+    "00_tensioner_t_solid_reference": "01·动力母线",
+    "01_motor_vertical_reference": "01·动力母线",
+    "02_drive_column_reference": "01·动力母线",
+    "03_vertical_rack_candidate": "01·动力母线",
+    "cabinet_clutch_power_bus": "01·动力母线",
+    "06_upper_axis_z_spur_candidate": "02·离合机构",
+    "07_upper_downward_dog_candidate": "02·离合机构",
+    "08_lower_upward_dog_candidate": "02·离合机构",
+    "09_rear_takeoff_timing_pulley_candidate": "02·离合机构",
+    "10_clutch_spring_reference": "02·离合机构",
+    "11_t_countersunk_screw_reference": "02·离合机构",
+    "12_clutch_fork_candidate": "02·离合机构",
+    "cabinet_clutch_all_clutches": "02·离合机构",
+    "cabinet_clutch_detail_open": "02·离合机构",
+    "cabinet_clutch_detail_engaged": "02·离合机构",
+    "13_drawer_timing_belt_reference": "03·抽屉驱动",
+    "14_front_timing_pulley_candidate": "03·抽屉驱动",
+    "15_front_pinion_candidate": "03·抽屉驱动",
+    "16_drawer_linear_rack_candidate": "03·抽屉驱动",
+    "cabinet_clutch_drawer_drive": "03·抽屉驱动",
+    "cabinet_clutch_assembly": "99·总装配检查体",
+}
 for part in payload.get("parts", []):
     extra = names.get(Path(str(part.get("file", ""))).stem)
-    if extra is None:
-        continue
-    part.update(extra)
-    part["visible"] = extra.get("visible", True)
+    if extra is not None:
+        part.update(extra)
+        part["visible"] = extra.get("visible", True)
+    group_id = clutch_group_map.get(Path(str(part.get("file", ""))).stem)
+    if group_id is not None:
+        part["group"] = group_id
+group_order = ["00·柜体与格口", "01·动力母线", "02·离合机构", "03·抽屉驱动", "99·总装配检查体"]
+counts = {}
+for part in payload.get("parts", []):
+    group_id = str(part.get("group") or "未分组")
+    counts[group_id] = counts.get(group_id, 0) + 1
+ordered = [group_id for group_id in group_order if counts.get(group_id)]
+ordered += sorted(group_id for group_id in counts if group_id not in group_order)
+payload["groups"] = [{"id": group_id, "name": group_id, "count": counts[group_id]} for group_id in ordered]
+payload["groupCount"] = len(payload["groups"])
 text = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 path.write_text(text, encoding="utf-8")
 path.with_name("parts.json").write_text(text, encoding="utf-8")
@@ -381,7 +461,7 @@ export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutc
 export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings motor motor_shaft motor_cover scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
+    for part in sprockets idlers bearings motor motor_shaft motor_cover motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done
@@ -402,6 +482,7 @@ fi
 if [[ -f "$MANIFEST_PY" ]]; then
     args=(--preview-dir "$PREVIEW_DIR" --title "零件柜 · 后仓横走 03C + 张紧 U" --no-recursive)
     [[ -d "$OUT_CABINET" ]] && args+=(--stl-dir "$OUT_CABINET")
+    [[ -d "$OUT_CLUTCH" ]] && args+=(--stl-dir "$OUT_CLUTCH")
     args+=(--stl-dir "$OUT_MOTOR")
     args+=(--stl-dir "$OUT_MOUNT")
     args+=(--stl-dir "$OUT_CHAIN_HARDWARE")

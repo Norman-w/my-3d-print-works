@@ -27,27 +27,51 @@ GT2_MALE_TOOTH_DEPTH = is_undef(GT2_MALE_TOOTH_DEPTH)
     ? 0.60
     : GT2_MALE_TOOTH_DEPTH;
 GT2_MALE_GEAR_T = is_undef(GT2_MALE_GEAR_T)
-    ? 2.40
+    ? 3.20
     : GT2_MALE_GEAR_T;
 GT2_GEAR_MESH_CLEARANCE = is_undef(GT2_GEAR_MESH_CLEARANCE)
     ? 0.12
     : GT2_GEAR_MESH_CLEARANCE;
 
-// 现有圆角三角离合接口保持不变，只跟随新的共同圆心整体外移。
-GT2_DOG_BASE_R = 2.95;
-GT2_DOG_BASE_T = 1.00;
+// 圆角三角离合接口改为较深的浅锥圆角结构：根部略大、插入端略收，
+// 不用垂直直壁硬插；三角公牙直接从齿轮下方开始，不再增加圆形垫圈层。
 GT2_DOG_INTERFACE_R = 2.95;
+GT2_DOG_INTERFACE_TAPER_R = is_undef(GT2_DOG_INTERFACE_TAPER_R)
+    ? 0.20
+    : GT2_DOG_INTERFACE_TAPER_R;
 GT2_DOG_INTERFACE_HEAD_R = 0.30;
-GT2_DOG_INTERFACE_H = 0.75;
+// The leading face is rounded but slightly smaller than the root head, so
+// the male dog starts entering the continuous female taper instead of
+// presenting a blunt vertical edge.
+GT2_DOG_INTERFACE_TIP_HEAD_R = is_undef(GT2_DOG_INTERFACE_TIP_HEAD_R)
+    ? 0.24
+    : GT2_DOG_INTERFACE_TIP_HEAD_R;
+GT2_DOG_INTERFACE_H = is_undef(GT2_DOG_INTERFACE_H)
+    ? 3.00
+    : GT2_DOG_INTERFACE_H;
 GT2_DOG_INTERFACE_ROTATION_DEG = 30;
 GT2_DOG_GEAR_OVERLAP = 0.20;
-GT2_DOG_INTERFACE_OVERLAP = 0.10;
 
-// 打印轴孔：名义 Ø3 mm D 轴；D 平面保留打印配合余量。
+// 打印轴孔：名义 Ø3 mm D 轴；只在各自的齿轮/带轮本体内保留一小段盲孔。
+// 公母狗牙接驳段不再让 D 轴贯通，中心位置留给相斥磁铁。
 GT2_D_AXIS_D = 3.00;
 GT2_D_AXIS_FLAT_DEPTH = 0.50;
 GT2_D_BORE_RADIAL_CLEARANCE = 0.15;
 GT2_D_BORE_FLAT_CLEARANCE = 0.12;
+GT2_D_BORE_DEPTH = is_undef(GT2_D_BORE_DEPTH)
+    ? 3.00
+    : GT2_D_BORE_DEPTH;
+
+// One nominal Ø2 mm axial magnet per mating center. The printed pocket is
+// enlarged slightly for a hand-fit. Both pockets are exactly concentric with
+// the shaft axis; the female pocket opens from the bottom of the mother slot.
+GT2_MAGNET_NOMINAL_D = 2.00;
+GT2_MAGNET_POCKET_D = is_undef(GT2_MAGNET_POCKET_D)
+    ? 2.20
+    : GT2_MAGNET_POCKET_D;
+GT2_MAGNET_POCKET_H = is_undef(GT2_MAGNET_POCKET_H)
+    ? 1.80
+    : GT2_MAGNET_POCKET_H;
 
 // 标准 2GT/GT2：2 mm 节距、12T、6 mm 皮带。打印轮不带法兰或大轮毂。
 GT2_PULLEY_TEETH = is_undef(GT2_PULLEY_TEETH)
@@ -81,25 +105,37 @@ GT2_BELT_BACK_OFFSET = is_undef(GT2_BELT_BACK_OFFSET)
 GT2_BELT_GUIDE_R_MARGIN = is_undef(GT2_BELT_GUIDE_R_MARGIN)
     ? 0.05
     : GT2_BELT_GUIDE_R_MARGIN;
+// 下端改为完整覆盖皮带下侧的承托盘，而不是只有一圈薄唇；轴向厚度固定为 1 mm。
+GT2_BELT_LOWER_RETAINER_T = is_undef(GT2_BELT_LOWER_RETAINER_T)
+    ? 1.00
+    : GT2_BELT_LOWER_RETAINER_T;
+// 上端只保留较薄的导向唇，便于闭环皮带装入；下端完整承托负责防脱落。
 GT2_BELT_GUIDE_LIP_T = is_undef(GT2_BELT_GUIDE_LIP_T)
-    ? 0.30
+    ? 0.60
     : GT2_BELT_GUIDE_LIP_T;
 GT2_BELT_RADIAL_CLEARANCE = is_undef(GT2_BELT_RADIAL_CLEARANCE)
     ? 0.45
     : GT2_BELT_RADIAL_CLEARANCE;
 
-// 母座的圆角三角母槽和最大硬件外圈保持旧值；GT2 齿圈位于母座另一侧的
-// 独立轴向层，因此不会填平母槽，也不需要法兰。
+// 母座外壁现在与皮带防脱导向外延齐平，形成一圈连续厚壁；GT2 齿圈位于
+// 母座另一侧的独立轴向层，因此不会填平母槽，也不需要法兰。
 GT2_MOTHER_OUTER_R = is_undef(GT2_MOTHER_OUTER_R)
-    ? 3.80
+    ? GT2_PULLEY_TEETH * GT2_PULLEY_PITCH_MM / (2 * PI)
+        + GT2_BELT_BACK_OFFSET
+        + GT2_BELT_GUIDE_R_MARGIN
     : GT2_MOTHER_OUTER_R;
-GT2_MOTHER_T = is_undef(GT2_MOTHER_T) ? 1.00 : GT2_MOTHER_T;
+GT2_MOTHER_T = is_undef(GT2_MOTHER_T)
+    ? 3.70
+    : GT2_MOTHER_T;
 GT2_MOTHER_POCKET_DEPTH = is_undef(GT2_MOTHER_POCKET_DEPTH)
-    ? 0.75
+    ? 3.25
     : GT2_MOTHER_POCKET_DEPTH;
 GT2_MOTHER_POCKET_CLEARANCE = is_undef(GT2_MOTHER_POCKET_CLEARANCE)
     ? 0.25
     : GT2_MOTHER_POCKET_CLEARANCE;
+GT2_MOTHER_ENTRY_CLEARANCE = is_undef(GT2_MOTHER_ENTRY_CLEARANCE)
+    ? 0.42
+    : GT2_MOTHER_ENTRY_CLEARANCE;
 GT2_MOTHER_PULLEY_OVERLAP = is_undef(GT2_MOTHER_PULLEY_OVERLAP)
     ? 0.20
     : GT2_MOTHER_PULLEY_OVERLAP;
@@ -183,12 +219,50 @@ function gt2_mother_clearance_to_long_shaft() =
 function gt2_triangle_outer_r() =
     GT2_DOG_INTERFACE_R + GT2_DOG_INTERFACE_HEAD_R;
 
+function gt2_triangle_tip_center_r() =
+    GT2_DOG_INTERFACE_R - GT2_DOG_INTERFACE_TAPER_R;
+
+function gt2_triangle_tip_outer_r() =
+    gt2_triangle_tip_center_r() + GT2_DOG_INTERFACE_TIP_HEAD_R;
+
 function gt2_triangle_inner_r() =
     GT2_DOG_INTERFACE_R * cos(30)
         - GT2_DOG_INTERFACE_HEAD_R;
 
 function gt2_mother_pocket_outer_r() =
     gt2_triangle_outer_r() + GT2_MOTHER_POCKET_CLEARANCE;
+
+function gt2_pulley_face_bottom_z() =
+    GT2_BELT_LOWER_RETAINER_T;
+
+function gt2_pulley_face_top_z() =
+    gt2_pulley_face_bottom_z() + GT2_PULLEY_FACE_T;
+
+function gt2_mother_receiver_bottom_z() =
+    gt2_pulley_face_top_z() - GT2_MOTHER_PULLEY_OVERLAP;
+
+function gt2_mother_receiver_top_z() =
+    gt2_mother_receiver_bottom_z() + GT2_MOTHER_T;
+
+function gt2_mother_floor_t() =
+    GT2_MOTHER_T - GT2_MOTHER_POCKET_DEPTH;
+
+function gt2_mother_pocket_floor_z() =
+    gt2_mother_receiver_top_z() - GT2_MOTHER_POCKET_DEPTH;
+
+function gt2_male_total_h() =
+    GT2_MALE_GEAR_T
+        - GT2_DOG_GEAR_OVERLAP
+        + GT2_DOG_INTERFACE_H;
+
+function gt2_female_total_h() =
+    gt2_mother_receiver_top_z();
+
+function gt2_male_magnet_pocket_z0() =
+    gt2_male_total_h() - GT2_MAGNET_POCKET_H;
+
+function gt2_female_magnet_pocket_z0() =
+    gt2_mother_pocket_floor_z() - GT2_MAGNET_POCKET_H;
 
 function gt2_male_spline_clearance() =
     gt2_center_distance()
@@ -292,14 +366,29 @@ assert(
     "male gear root must leave wall around the D bore"
 );
 assert(GT2_MALE_GEAR_T > 0, "male gear thickness must be positive");
-assert(GT2_DOG_BASE_R > GT2_D_AXIS_D / 2, "dog base needs a D-bore wall");
-assert(GT2_DOG_INTERFACE_H > 0, "dog interface depth must be positive");
-assert(gt2_triangle_inner_r() < GT2_DOG_BASE_R,
-    "rounded triangle must overlap its dog base");
+assert(GT2_MALE_GEAR_T >= 3.0,
+    "male gear teeth need at least 3 mm axial thickness");
+assert(GT2_DOG_INTERFACE_H >= 3.0,
+    "dog interface needs about 3 mm insertion depth");
+assert(
+    GT2_DOG_GEAR_OVERLAP >= GT2_EPS
+        && GT2_DOG_GEAR_OVERLAP < GT2_MALE_GEAR_T,
+    "dog must overlap the gear band without adding a collar"
+);
+assert(GT2_DOG_INTERFACE_TAPER_R > 0
+        && GT2_DOG_INTERFACE_TAPER_R < GT2_DOG_INTERFACE_R,
+    "dog taper must be shallow and positive");
+assert(
+    GT2_DOG_INTERFACE_TIP_HEAD_R > 0
+        && GT2_DOG_INTERFACE_TIP_HEAD_R <= GT2_DOG_INTERFACE_HEAD_R,
+    "dog leading edge must stay rounded and no larger than the root"
+);
 assert(
     gt2_triangle_outer_r() < gt2_male_tip_r(),
     "dog outer radius must remain below the male gear tip radius"
 );
+assert(gt2_triangle_tip_outer_r() < gt2_triangle_outer_r(),
+    "male dog tip must be slightly smaller than its root");
 assert(GT2_PULLEY_TEETH == 12, "this compact envelope is reserved for 12T GT2");
 assert(GT2_PULLEY_PITCH_MM == 2.0, "pulley must use the 2 mm GT2 pitch");
 assert(GT2_BELT_WIDTH == 6.0, "pulley must be paired with a 6 mm belt");
@@ -309,6 +398,8 @@ assert(
 );
 assert(GT2_BELT_GUIDE_LIP_T > 0,
     "belt guide lip thickness must be positive");
+assert(GT2_BELT_LOWER_RETAINER_T == 1.0,
+    "lower belt retainer must be 1 mm thick");
 assert(gt2_pulley_root_r() > GT2_D_AXIS_D / 2 + 0.75,
     "GT2 pulley needs a printable wall around the D bore");
 assert(
@@ -318,6 +409,19 @@ assert(
 assert(
     gt2_mother_pocket_outer_r() < GT2_MOTHER_OUTER_R,
     "mother pocket must leave an outer ring wall"
+);
+assert(
+    gt2_mother_floor_t() >= 0.40,
+    "mother receiver floor needs at least 0.40 mm for FDM strength"
+);
+assert(
+    GT2_MOTHER_ENTRY_CLEARANCE >= GT2_MOTHER_POCKET_CLEARANCE,
+    "pocket mouth must not be tighter than its running clearance"
+);
+assert(
+    gt2_triangle_tip_outer_r() + GT2_MOTHER_ENTRY_CLEARANCE
+        < GT2_MOTHER_OUTER_R - 0.05,
+    "pocket entry flare must leave a mother outer wall"
 );
 assert(
     gt2_belt_clearance_to_long_shaft() >= GT2_BELT_RADIAL_CLEARANCE,
@@ -331,5 +435,35 @@ assert(
 assert(
     gt2_mother_clearance_to_long_shaft() >= GT2_BELT_RADIAL_CLEARANCE,
     "mother outer ring must clear the long spline shaft"
+);
+assert(GT2_D_BORE_DEPTH >= 2.50,
+    "short D-bore needs at least 2.5 mm engagement");
+assert(
+    GT2_D_BORE_DEPTH <= GT2_MALE_GEAR_T - 0.20,
+    "male short D-bore must leave a top wall under the dog"
+);
+assert(
+    GT2_D_BORE_DEPTH < gt2_mother_receiver_bottom_z() - 0.40,
+    "short D-bore must stop before the mother receiver"
+);
+assert(GT2_MAGNET_POCKET_D >= GT2_MAGNET_NOMINAL_D,
+    "magnet pocket must fit the nominal magnet");
+assert(GT2_MAGNET_POCKET_H >= 1.20,
+    "magnet pocket needs enough axial seating depth");
+assert(
+    GT2_MAGNET_POCKET_H < GT2_DOG_INTERFACE_H - 0.40,
+    "male magnet pocket must stay inside the dog interface"
+);
+assert(
+    gt2_male_magnet_pocket_z0() > GT2_MALE_GEAR_T,
+    "male magnet pocket must not reach the gear band"
+);
+assert(
+    gt2_female_magnet_pocket_z0() > gt2_pulley_face_bottom_z() + 0.40,
+    "female magnet pocket must stay in the mother-side hub"
+);
+assert(
+    abs(GT2_MOTHER_OUTER_R - gt2_belt_guide_r()) < 0.02,
+    "mother receiver outer wall must be flush with the belt guide"
 );
 //#endregion

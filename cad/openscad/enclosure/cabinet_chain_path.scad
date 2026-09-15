@@ -79,8 +79,8 @@ function entry_c() = [
     0
 ];
 
-// 后方朝前看时，动力轮在左上角；后视左右反转，因此动力位选用高 X
-// 侧的第一只右侧转向轮。低 X 的 entry_c() 仍是普通导向轮。
+// 后视图中，蛇形链条唯一的动力位放在右下方的回程张紧位；旧的高-X
+// 上方转向位仍保留，但现在只承担普通导向，不再连接电机。
 function power_c() = right_sprocket_c(row_center_z(N_ROW - 1));
 
 function right_turn_sprockets_without_power() = [
@@ -93,6 +93,11 @@ function ten_path_c() = [
     TEN_Z,
     0
 ];
+
+// The motorized sprocket is the former lower return/tensioner wheel.  Keep a
+// named alias so the motor, cover, D shaft, bearing list, and motion metadata
+// cannot silently drift to the old upper guide position.
+function snake_drive_c() = ten_path_c();
 
 function right_turn_sprockets() = [
     right_sprocket_c(row_center_z(4)),
@@ -129,8 +134,8 @@ function wheel_pose_rot(x, z) =
 //#region 业务逻辑
 // 销轴由 solve_cabinet_chain.py 按弦长 P 走出；只动底端张紧轮 Z 闭合闭环。
 // 每对 12T+钝齿节圆外切，外侧链条竖齐。5 层奇数，底仓横穿后进张紧 U。
-// 后视左 = 柜体 +X；power_c() 是高 X 的右侧转向轮，entry_c() 是低 X
-// 的普通导向轮，drive_c() 是下方服务回程轮位。
+// 后视左 = 柜体 +X；power_c() 是旧高 X 上方普通导向轮，entry_c() 是低 X
+// 的普通导向轮，snake_drive_c() 是右下方带电机的回程张紧轮位。
 //#endregion
 
 //#region 方法/工具
@@ -139,6 +144,6 @@ assert(len(snake_pins()) % 2 == 0, "snake pin count must be even");
 assert(len(snake_pins()) == SNAKE_PIN_N, "generated pin count must match");
 assert(TEN_Z >= WALL + drive_outer_r() - 0.01, "tensioner teeth must stay above the inner floor");
 assert(abs(s_span_check() - 90) < 1, "12T wrap should be a quarter turn onto the vertical chain");
-assert(norm(power_c() - motor_mount_c()) < 0.01,
-    "power_c and motor cover/back-panel boss center must stay aligned");
+assert(norm(snake_drive_c() - motor_mount_c()) < 0.01,
+    "snake drive and motor cover/back-panel boss center must stay aligned");
 //#endregion

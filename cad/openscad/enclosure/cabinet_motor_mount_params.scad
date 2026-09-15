@@ -1,10 +1,14 @@
 // 动力电机固定罩/背板 boss 的共享尺寸真值源。
-// 局部参考原点：power_c() 的轮轴中心；Y=0 为链轮中心平面。
+// 局部参考原点：snake_drive_c() 的轮轴中心；Y=0 为链轮中心平面。
 // 背板内侧是世界 Y=D-BACK_PANEL_T，固定罩沿 +Y 伸向背板。
 
 //#region 导入/依赖
 include <cabinet_params.scad>
 include <../parts/ch1_03c_sprocket_params.scad>
+// The generated chain solution is the shared nominal position of the movable
+// lower return carriage.  It keeps the back-panel boss datum and the chain
+// sprocket datum on the same measured pitch solution.
+include <cabinet_chain_pins.gen.scad>
 //#endregion
 
 //#region 常量/配置
@@ -13,6 +17,7 @@ MOTOR_MOUNT_WALL_CLEAR = 0.40;
 MOTOR_MOUNT_CHAIN_Y = PARTITION_BACK_Y + 12.0;
 MOTOR_MOUNT_PANEL_Y = D - BACK_PANEL_T;
 MOTOR_MOUNT_PANEL_Y_LOCAL = MOTOR_MOUNT_PANEL_Y - MOTOR_MOUNT_CHAIN_Y;
+MOTOR_MOUNT_SLIDE_STROKE = 6.0;  // cover/carriage adjustment along old Z -> world +Y
 
 // 电机/动力轮几何
 MOTOR_MOUNT_WHEEL_BACK_GAP = 0.50;
@@ -62,7 +67,8 @@ MOTOR_MOUNT_BOSS_OFFSETS = [
 //#endregion
 
 //#region 模型/类型
-// motor_mount_c() 与 cabinet_chain_path.scad 中的高 X power_c() 同一动力轴中心。
+// motor_mount_c() 与 cabinet_chain_path.scad 中的右下 snake_drive_c() 同一
+// 动力轴中心。此处的第二坐标是旧链条文件的竖向 Z，经过网页适配器后是世界 +Y。
 //#endregion
 
 //#region 公开 API
@@ -75,8 +81,8 @@ function motor_mount_return_x() =
     WALL + motor_mount_outer_r() + MOTOR_MOUNT_WALL_CLEAR;
 
 function motor_mount_c() = [
-    W - motor_mount_return_x(),
-    row_center_z(N_ROW - 1) - motor_mount_pitch_r(),
+    motor_mount_return_x() + motor_mount_pitch_r(),
+    TEN_Z,
     0
 ];
 //#endregion

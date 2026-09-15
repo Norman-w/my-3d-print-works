@@ -7,7 +7,7 @@
 //#region 常量/配置
 TEN_P = 4.7625;
 TEN_WALL_CLEAR = 0.40;
-TEN_TRAVEL = 10.0;               // 张紧轮沿 -Z 行程
+TEN_TRAVEL = MOTOR_MOUNT_SLIDE_STROKE; // 电机/罩体沿旧 Z 的可调下压行程
 TEN_RIB_T = 3.2;
 TEN_RIB_GAP = 16.0;              // 两肋夹住链条，轴沿 Y
 TEN_SLOT_W = 3.4;                // 3 mm 轴滑动间隙
@@ -28,7 +28,7 @@ function ten_return_x() = WALL + ten_outer_r() + TEN_WALL_CLEAR;
 
 function tensioner_c() = [
     ten_return_x() + ten_pitch_r(),
-    WALL + ten_outer_r() + 1.2
+    is_undef(TEN_Z) ? WALL + ten_outer_r() + 1.2 : TEN_Z
 ];
 
 function tensioner_slot_h() = TEN_TRAVEL + ten_pitch_r() * 2 + 2.0;
@@ -115,7 +115,8 @@ module tensioner_hardware() {
 //#endregion
 
 //#region 业务逻辑
-// 弹簧把 12T 张紧轮沿槽往下拉，加长 U 底路径；M3 从底板向上穿过弹簧作限位。
+// 弹簧/调节螺杆把现在的电机—固定罩滑台沿旧 Z 向下压；旧 Z 经总装配适配
+// 为世界 +Y，向下调节就是世界 -Y。链条额定位置由 TEN_Z 给出。
 //#endregion
 
 //#region 方法/工具

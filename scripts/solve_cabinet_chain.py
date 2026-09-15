@@ -262,7 +262,7 @@ def entry_c() -> Vec:
 
 
 def power_c() -> Vec:
-    """High-X top turn: rear-view-left D-shaft power wheel."""
+    """Former high-X top turn, now a normal rear-view-left guide wheel."""
     return right_sprocket_c(row_center_z(N_ROW - 1))
 
 
@@ -436,10 +436,13 @@ def write_gen(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> Non
 
 def motion_wheels(tz: float) -> list[dict]:
     wheels = [
-        {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
+        # The motor shaft follows the lower return/tensioner sprocket.  The
+        # old upper power position is kept as a separate guide identity so
+        # the mesh binder cannot attach the shaft to the wrong island.
+        {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
+        {"id": "upper-guide", "kind": "sprocket", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
         {"id": "entry", "kind": "sprocket", "teeth": 12, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
         {"id": "drive", "kind": "sprocket", "teeth": 12, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
-        {"id": "tensioner", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
     ]
     for row, z in (("2", row_center_z(2)), ("0", row_center_z(0))):
         c = right_sprocket_c(z)
