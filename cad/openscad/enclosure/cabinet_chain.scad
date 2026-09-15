@@ -229,8 +229,11 @@ module rear_sprockets() {
 module connector_plain_plate() {
     // The clip is on the +Y outer side of the pink connecting link.  The
     // opposite side is a normal single outer 8-shaped plate, not a second
-    // clip and not a solid replacement link.
-    translate([0, -(inner_width / 2 + T), 0])
+    // clip and not a solid replacement link.  chain_plate() uses the generic
+    // 0..P pin datum, while the connecting-pin/clip pair uses -P/2..+P/2;
+    // re-center the generic plate before highlighted_connector() applies its
+    // +P/2 placement so all three features share p0/p1 exactly.
+    translate([-P / 2, -(inner_width / 2 + T), 0])
         chain_plate(d2 + clearance);
 }
 
