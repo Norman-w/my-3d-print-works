@@ -53,6 +53,7 @@ const DRAWER_DRIVE_TAILS = new Set([
   "00_right_round_axis_candidate",
   "01_motor_vertical_reference",
   "02_drive_column_reference",
+  "03_vertical_rack_candidate",
   "04_right_round_axis_reference",
   "05_top_bottom_bus_belts_reference",
   "06_upper_axis_y_spur_candidate",
@@ -759,12 +760,17 @@ function isSnakePart(part) {
   return part?.group === "cabinet-chain" && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
+function isNativeClutchPart(part) {
+  return part?.group === "cabinet-clutch"
+    || String(part?.id || "").startsWith("cabinet-clutch/");
+}
+
 function isDrawerDrivePart(part) {
-  return part?.group === "cabinet-clutch" && DRAWER_DRIVE_TAILS.has(partTail(part));
+  return isNativeClutchPart(part) && DRAWER_DRIVE_TAILS.has(partTail(part));
 }
 
 function isUpperTensionerPart(part) {
-  return part?.group === "cabinet-clutch" && UPPER_TENSIONER_TAILS.has(partTail(part));
+  return isNativeClutchPart(part) && UPPER_TENSIONER_TAILS.has(partTail(part));
 }
 
 function isLowerTensionerPart(part) {

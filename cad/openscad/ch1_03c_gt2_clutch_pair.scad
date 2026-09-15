@@ -32,6 +32,12 @@ $fs = 0.12;
 GT2_MOTHER_GAP = is_undef(GT2_MOTHER_GAP)
     ? 0.35
     : GT2_MOTHER_GAP;
+// The standalone file exports one of its three preview modes. The cabinet
+// scene includes the same modules as an embedded library and owns the output
+// dispatch, so suppress standalone top-level geometry in that context.
+GT2_CLUTCH_EMBEDDED = is_undef(GT2_CLUTCH_EMBEDDED)
+    ? false
+    : GT2_CLUTCH_EMBEDDED;
 //#endregion
 
 //#region 私有成员：二维轮廓与轴孔
@@ -361,15 +367,16 @@ module assembly_thumbnail() {
 //#endregion
 
 //#region 业务逻辑
-if (GT2_CLUTCH_MODEL == "male") {
-    male_local();
-} else if (GT2_CLUTCH_MODEL == "female") {
-    female_local();
-} else if (GT2_CLUTCH_MODEL == "assembly") {
-    assembly_thumbnail();
-}
+if (!GT2_CLUTCH_EMBEDDED) {
+    if (GT2_CLUTCH_MODEL == "male") {
+        male_local();
+    } else if (GT2_CLUTCH_MODEL == "female") {
+        female_local();
+    } else if (GT2_CLUTCH_MODEL == "assembly") {
+        assembly_thumbnail();
+    }
 
-echo(
+    echo(
     "gt2_clutch_pair",
     "model",
     GT2_CLUTCH_MODEL,
@@ -443,7 +450,8 @@ echo(
     gt2_male_magnet_pocket_z0(),
     "female_magnet_pocket_z0_mm",
     gt2_female_magnet_pocket_z0()
-);
+    );
+}
 //#endregion
 
 //#region 方法/工具

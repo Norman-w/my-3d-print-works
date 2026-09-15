@@ -35,12 +35,36 @@ CLUTCH_EXPLODE = is_undef(CLUTCH_EXPLODE) ? 0 : CLUTCH_EXPLODE;
 ENGAGED = is_undef(ENGAGED) ? false : ENGAGED;
 SELECTED_COLUMN = is_undef(SELECTED_COLUMN) ? 2 : SELECTED_COLUMN;
 SELECTED_ROW = is_undef(SELECTED_ROW) ? 2 : SELECTED_ROW;
+// Start the physical validation scene with one known-good center station.
+// Set SHOW_LEGACY_STATIONS=true only when the remaining 24 old stations are
+// ready to be reviewed again; this keeps unverified legacy clutches out of the
+// main assembly and out of the drawer-drive preview by default.
+SHOW_LEGACY_STATIONS = is_undef(SHOW_LEGACY_STATIONS)
+    ? false
+    : SHOW_LEGACY_STATIONS;
 
 // Read the frozen cabinet dimensions directly. The old cabinet geometry file
 // is intentionally not included; this scene owns its native X/Y/Z geometry.
 include <cabinet_params.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
+include <../ch1_03c_gt2_clutch_pair.scad>
+// The center station reuses the finished CH1 03C rounded-triangle/magnet
+// construction.  This main scene's vertical shaft is the existing 12T / 3 mm
+// profile, so override the standalone pair's 10T / 2.4 mm datum after
+// including it.  The exact X1C-fine 15T / 2.4 mm pair remains a separate
+// printable sample; it must not be mixed into this 3 mm cabinet assembly.
+GT2_CLUTCH_EMBEDDED = true;
+GT2_LONG_TEETH = 12;
+GT2_LONG_PITCH_MM = 3.0;
+GT2_LONG_TOOTH_DEPTH = 0.82;
+GT2_MALE_TEETH = 12;
+GT2_MALE_PITCH_MM = 3.0;
+GT2_MALE_TOOTH_DEPTH = 0.82;
+// The larger 3 mm-compatible tooth ring needs a deliberate +Z stand-off from
+// the vertical rod.  0.32 mm leaves both the mother wall and the 2GT belt
+// back-envelope above the pair's 0.45 mm clearance requirement.
+GT2_GEAR_MESH_CLEARANCE = 0.32;
 // The authored Y-axis long gear shaft is the real middle-column member.  The
 // assembly calls its parameterized library API below with this enclosure's
 // live 3 mm mating datum, so the standalone X1C-fine default cannot silently
@@ -127,7 +151,27 @@ WORLD_ROW_PITCH = ROW_PITCH;
 WORLD_DIV_T = DIV_T;
 WORLD_SHELF_T = SHELF_T;
 WORLD_BACK_PANEL_T = BACK_PANEL_T;
-DRIVE_AXIS_Z = WORLD_PARTITION_BACK_Z - 13.0;
+// The native drawer drive shares the rear cavity with the legacy snake-chain
+// world adapter. That adapter places the chain at local Y=PARTITION_BACK_Y+
+// 12 mm, which becomes world Z=-(PARTITION_BACK_Y+12) after the rear-view
+// conversion. Keep the chain envelope as an explicit collision datum instead
+// of moving the drawer drive by an unexplained magic offset.
+SNAKE_CHAIN_CENTER_Z = -(PARTITION_BACK_Y + 12.0);
+SNAKE_CHAIN_HALF_DEPTH = 3.0;       // 12T sprocket envelope: local Y 72..78
+SNAKE_CHAIN_REAR_EDGE_Z = SNAKE_CHAIN_CENTER_Z - SNAKE_CHAIN_HALF_DEPTH;
+DRAWER_BUS_CHAIN_CLEARANCE = is_undef(DRAWER_BUS_CHAIN_CLEARANCE)
+    ? 2.0
+    : DRAWER_BUS_CHAIN_CLEARANCE;
+
+// World Z- is toward the cabinet rear. The complete drawer power bus moves
+// together: motor, D-axis, five Y-directed spline columns, rear clutch stacks,
+// and their rear timing pulleys. The drawer-front output datum stays at the
+// existing front interface; the belt length is re-derived below.
+DRAWER_DRIVE_REAR_SHIFT_Z = is_undef(DRAWER_DRIVE_REAR_SHIFT_Z)
+    ? -18.0
+    : DRAWER_DRIVE_REAR_SHIFT_Z;
+DRIVE_AXIS_Z_BASE = WORLD_PARTITION_BACK_Z - 13.0;
+DRIVE_AXIS_Z = DRIVE_AXIS_Z_BASE + DRAWER_DRIVE_REAR_SHIFT_Z;
 // In the canonical rear view, +X is on the left: the D-drive motor is placed
 // at high X and the SKP tensioner is placed at low X on the right.
 MOTOR_X = W - WALL - SERVICE_W / 2;
@@ -165,16 +209,25 @@ VERTICAL_GEAR_STUB_OVERLAP = 0.20;
 TIMING_PITCH_R = TIMING_TEETH * TIMING_PITCH_MM / (2 * PI);
 TIMING_ROOT_R = TIMING_PITCH_R - TIMING_TOOTH_DEPTH;
 TIMING_OUTER_R = TIMING_PITCH_R + TIMING_TOOTH_DEPTH;
-// Choose the drawer belt by tooth count, then derive the pulley centre
-// distance.  This keeps the belt pitch exact instead of stretching a 3 mm
-// pitch belt over an arbitrary cabinet gap.
-DRAWER_BELT_TEETH = 60;
+// Keep the front pulley at the existing drawer-front interface while the rear
+// bus moves backward. The default front datum is the former 60T-loop location
+// (-16 mm in this cabinet); the nearest integer tooth count is then chosen so
+// the new belt remains on the 3 mm pitch instead of being stretched.
+DRAWER_FRONT_INTERFACE_Z = is_undef(DRAWER_FRONT_INTERFACE_Z)
+    ? DRIVE_AXIS_Z_BASE + 60.0
+    : DRAWER_FRONT_INTERFACE_Z;
+DRAWER_BELT_TEETH = is_undef(DRAWER_BELT_TEETH)
+    ? round(
+        (2 * (DRAWER_FRONT_INTERFACE_Z - DRIVE_AXIS_Z)
+            + 2 * PI * TIMING_PITCH_R) / TIMING_PITCH_MM
+      )
+    : DRAWER_BELT_TEETH;
 DRAWER_BELT_CENTER_DISTANCE = (
     DRAWER_BELT_TEETH * TIMING_PITCH_MM - 2 * PI * TIMING_PITCH_R
 ) / 2;
 // The rear take-off is at DRIVE_AXIS_Z; +Z leads toward the drawer front.
-// The resulting front pulley remains behind the front datum and inside the
-// drawer bay while closing a 60T HTD3M-like loop.
+// With the default shift this is a 72T loop: its 78 mm centre distance puts
+// the front pulley back at the original -16 mm drawer interface.
 FRONT_PULLEY_Z = DRIVE_AXIS_Z + DRAWER_BELT_CENTER_DISTANCE;
 // The belt base is dimensioned from the mating pulley: its inner base radius
 // is the pulley pitch radius, and its radial base thickness is exactly the
@@ -353,14 +406,14 @@ COLOR_AXIS_Z = "#3b82f6";
 
 //#region 模型/类型
 // Part values:
-//   assembly       complete cabinet + bus + all drawer take-offs + one fork
+//   assembly       cabinet + bus + one center CH1 03C clutch/2GT drive path
 //   cabinet        cabinet shell and drawer ghosts
 //   cabinet_context wire-frame cabinet + bay dividers + drawer context
 //   power_bus      active D-drive + drawer-column bus during the T-only rebuild
 //   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
-//   clutch         all clutch stations
-//   clutch_detail  one selected station with the spring, screw and fork
+//   clutch         center clutch by default; old stations require SHOW_LEGACY_STATIONS
+//   clutch_detail  selected center magnetic pair (or a legacy station when enabled)
 //   motor/left_d_axis/side_axes/column/vertical_rack
 //   tensioner_t_solid
 //   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
@@ -368,13 +421,12 @@ COLOR_AXIS_Z = "#3b82f6";
 //   world_axes                 native +X/+Y/+Z diagnostic triad at the origin
 //                  individual verification pieces for the one-by-one workflow
 //
-// The upper clutch wheel has two functional faces represented in one carrier:
-// its axis-Z spur row meshes the vertical (+Y) toothed column, while its lower
-// dog face is an axis-Y engagement face. The lower compound wheel has an upward
-// dog face and a coaxial axis-Y timing pulley; the belt therefore runs from
-// rear to front in the XZ plane along +Z. This hybrid is the minimum readable
-// CAD abstraction for the directions in the request; the final bevel/tooth
-// profile can be swapped in without changing the layout parameters.
+// The center replacement uses the finished CH1 03C pair: a +Z-offset axis-Y
+// male gear with a rounded-triangle/magnet nose enters the female receiver
+// above it. The female body also carries the 2GT rear pulley. A separate front
+// compound has the matching 2GT pulley below the larger coarse rack pinion;
+// its belt runs rear-to-front in XZ along +Z. The other 24 legacy stations are
+// intentionally suppressed until this physical prototype is approved.
 //#endregion
 
 //#region 私有成员：几何函数
@@ -441,6 +493,75 @@ function drawer_front_gear_y(row) =
 function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 
 function selected_row() = min(max(0, SELECTED_ROW), N_ROW - 1);
+
+// Only the center station is migrated to the finished CH1 03C mechanism.
+// Columns and rows are zero-based, so this is the middle cell of the 5×5
+// drawer field.  Its new mating axis is deliberately on the +Z side of the
+// existing vertical 12T / 3 mm shaft.
+CENTER_GT2_COL = 2;
+CENTER_GT2_ROW = 2;
+CENTER_GT2_BELT_TEETH = 80;       // 160 mm closed 2GT belt at 2 mm pitch
+CENTER_GT2_BELT_LENGTH_MM = CENTER_GT2_BELT_TEETH * GT2_PULLEY_PITCH_MM;
+CENTER_GT2_BELT_CENTER_DISTANCE = (
+    CENTER_GT2_BELT_LENGTH_MM
+        - 2 * PI * gt2_pulley_pitch_r()
+) / 2;
+// Use the same conservative back-envelope budget as the finished female
+// pulley.  It is the radial envelope above the pitch circle, not the belt's
+// catalog total thickness; keeping it at 0.90 mm makes the belt sit inside the
+// 0.05 mm guide margin instead of visibly overhanging the retaining wall.
+CENTER_GT2_BELT_T = GT2_BELT_BACK_OFFSET;
+CENTER_GT2_BELT_BASE_INNER_R = gt2_pulley_pitch_r();
+CENTER_GT2_BELT_BASE_OUTER_R =
+    CENTER_GT2_BELT_BASE_INNER_R + CENTER_GT2_BELT_T;
+CENTER_GT2_BELT_TOOTH_H = max(0.20, GT2_PULLEY_TOOTH_DEPTH - 0.12);
+CENTER_GT2_BELT_TOOTH_BASE = GT2_PULLEY_PITCH_MM * 0.36;
+CENTER_GT2_BELT_TOOTH_TIP = GT2_PULLEY_PITCH_MM * 0.22;
+
+function is_center_gt2_station(col, row) =
+    col == CENTER_GT2_COL && row == CENTER_GT2_ROW;
+
+function center_gt2_z() = DRIVE_AXIS_Z + gt2_center_distance();
+
+CENTER_GT2_Z = center_gt2_z();
+
+CENTER_GT2_FRONT_PULLEY_Z =
+    center_gt2_z() + CENTER_GT2_BELT_CENTER_DISTANCE;
+
+function center_gt2_male_base_y(row) =
+    clutch_upper_open_y(row) - GT2_MALE_GEAR_T / 2;
+
+function center_gt2_male_tip_y(row) =
+    center_gt2_male_base_y(row) + gt2_male_total_h();
+
+function center_gt2_female_base_y(row) =
+    center_gt2_male_tip_y(row)
+        + GT2_MOTHER_GAP
+        + gt2_female_total_h();
+
+function center_gt2_belt_y(row) =
+    center_gt2_female_base_y(row)
+        - GT2_BELT_LOWER_RETAINER_T
+        - GT2_PULLEY_FACE_T / 2;
+
+function center_gt2_pulley_base_y(belt_y) =
+    belt_y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
+
+function center_gt2_pulley_top_y(belt_y) =
+    center_gt2_pulley_base_y(belt_y)
+        + GT2_BELT_LOWER_RETAINER_T
+        + GT2_PULLEY_FACE_T
+        + GT2_BELT_GUIDE_LIP_T;
+
+function center_gt2_front_gear_y(row) =
+    center_gt2_pulley_top_y(center_gt2_belt_y(row))
+        + COMPOUND_LAYER_GAP
+        + FRONT_GEAR_T / 2;
+
+function drawer_station_belt_y(col, row) =
+    is_center_gt2_station(col, row)
+        ? center_gt2_belt_y(row)
+        : drawer_belt_y(row);
 
 //#endregion
 
@@ -764,6 +885,102 @@ module belt_loop_z(x, z0, z1, y) {
         belt_loop_z_teeth(x, z0, z1, y);
     }
 }
+
+// Center-cell replacement belt.  The 24 other stations retain the legacy
+// 20T / 3 mm timing belt above; this path is a true 2GT / 2 mm / 6 mm belt
+// envelope with its own tooth sampling so the old large 3 mm belt is fully
+// removed from the migrated station.
+module center_gt2_belt_tooth_prism_z(x, z, y, inward) {
+    translate([x, y + GT2_BELT_WIDTH / 2, z])
+        rotate([0, -90, 0])
+            rotate([90, 0, 0])
+                linear_extrude(height = GT2_BELT_WIDTH + 2 * EPS)
+                    polygon([
+                        [-CENTER_GT2_BELT_TOOTH_BASE / 2, -inward * EPS],
+                        [ CENTER_GT2_BELT_TOOTH_BASE / 2, -inward * EPS],
+                        [ CENTER_GT2_BELT_TOOTH_TIP / 2,
+                            inward * CENTER_GT2_BELT_TOOTH_H],
+                        [-CENTER_GT2_BELT_TOOTH_TIP / 2,
+                            inward * CENTER_GT2_BELT_TOOTH_H]
+                    ]);
+}
+
+module center_gt2_belt_tooth_prism_arc(
+    cx,
+    cz,
+    y,
+    radial_inner,
+    angle
+) {
+    translate([cx, y + GT2_BELT_WIDTH / 2, cz])
+        rotate([0, 90 - angle, 0])
+            translate([0, 0, radial_inner])
+                rotate([90, 0, 0])
+                    linear_extrude(height = GT2_BELT_WIDTH + 2 * EPS)
+                        polygon([
+                            [-CENTER_GT2_BELT_TOOTH_BASE / 2, EPS],
+                            [ CENTER_GT2_BELT_TOOTH_BASE / 2, EPS],
+                            [ CENTER_GT2_BELT_TOOTH_TIP / 2,
+                                -CENTER_GT2_BELT_TOOTH_H],
+                            [-CENTER_GT2_BELT_TOOTH_TIP / 2,
+                                -CENTER_GT2_BELT_TOOTH_H]
+                        ]);
+}
+
+module center_gt2_belt_loop_z_base(x, z0, z1, y) {
+    inner = CENTER_GT2_BELT_BASE_INNER_R;
+    outer = CENTER_GT2_BELT_BASE_OUTER_R;
+    translate([0, y + GT2_BELT_WIDTH / 2, 0])
+        rotate([90, 0, 0])
+            linear_extrude(height = GT2_BELT_WIDTH, convexity = 8)
+                difference() {
+                    hull() {
+                        translate([x, z0]) circle(r = outer);
+                        translate([x, z1]) circle(r = outer);
+                    }
+                    hull() {
+                        translate([x, z0]) circle(r = inner);
+                        translate([x, z1]) circle(r = inner);
+                    }
+                }
+}
+
+module center_gt2_belt_loop_z_teeth(x, z0, z1, y) {
+    inner = CENTER_GT2_BELT_BASE_INNER_R;
+    run_count = max(0, floor((z1 - z0) / GT2_PULLEY_PITCH_MM));
+    arc_count = max(1,
+        round(PI * gt2_pulley_pitch_r() / GT2_PULLEY_PITCH_MM));
+    for (i = [0:run_count - 1]) {
+        z = z0 + (i + 0.5) * GT2_PULLEY_PITCH_MM;
+        center_gt2_belt_tooth_prism_z(x + inner, z, y, 1);
+        center_gt2_belt_tooth_prism_z(x - inner, z, y, -1);
+    }
+    for (i = [0:arc_count - 1]) {
+        top_angle = 0 + (i + 0.5) * 180 / arc_count;
+        bottom_angle = 180 + (i + 0.5) * 180 / arc_count;
+        center_gt2_belt_tooth_prism_arc(
+            x,
+            z1,
+            y,
+            inner,
+            top_angle
+        );
+        center_gt2_belt_tooth_prism_arc(
+            x,
+            z0,
+            y,
+            inner,
+            bottom_angle
+        );
+    }
+}
+
+module center_gt2_belt_loop_z(x, z0, z1, y) {
+    union() {
+        center_gt2_belt_loop_z_base(x, z0, z1, y);
+        center_gt2_belt_loop_z_teeth(x, z0, z1, y);
+    }
+}
 //#endregion
 
 //#region 私有成员：齿杆、齿条和弹簧
@@ -1075,21 +1292,30 @@ module clutch_assembly_shell_context() {
 }
 
 module clutch_partition_with_belt_passages() {
-    passage_half_x = TIMING_BELT_BASE_OUTER_R + TIMING_BELT_CLEAR + 0.45;
     difference() {
         world_partition_plate();
         for (row = [0:N_ROW - 1])
-            for (col = [0:N_COL - 1])
+            for (col = [0:N_COL - 1]) {
+                station_belt_t = is_center_gt2_station(col, row)
+                    ? CENTER_GT2_BELT_T
+                    : TIMING_BELT_T;
+                station_passage_half_x = is_center_gt2_station(col, row)
+                    ? CENTER_GT2_BELT_BASE_OUTER_R
+                        + GT2_BELT_RADIAL_CLEARANCE + 0.45
+                    : TIMING_BELT_BASE_OUTER_R
+                        + TIMING_BELT_CLEAR + 0.45;
                 translate([
-                    clutch_col_x(col) - passage_half_x,
-                    drawer_belt_y(row) - TIMING_BELT_T / 2 - 0.45,
+                    clutch_col_x(col) - station_passage_half_x,
+                    drawer_station_belt_y(col, row)
+                        - station_belt_t / 2 - 0.45,
                     WORLD_PARTITION_BACK_Z - EPS
                 ])
                     cube([
-                        2 * passage_half_x,
-                        TIMING_BELT_T + 0.90,
+                        2 * station_passage_half_x,
+                        station_belt_t + 0.90,
                         WORLD_PARTITION_T + 2 * EPS
                     ]);
+            }
     }
 }
 
@@ -1252,15 +1478,59 @@ module clutch_station(col, row, engaged = false, detail = false) {
             clutch_fork(col, row, engaged);
 }
 
+// Finished CH1 03C pair embedded in the cabinet's center cell.  The male
+// child is below and moves along +Y into the female mother above.  Both bodies
+// use the same +Z-shifted parallel axis, while the existing long shaft stays
+// on the original axis at DRIVE_AXIS_Z and drives the male gear tangentially.
+module center_gt2_male(col, row, engaged = false) {
+    x = clutch_col_x(col);
+    z = center_gt2_z();
+    insertion_shift = engaged
+        ? max(0, GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP)
+        : 0;
+    color("#e2a84b")
+        translate([
+            x,
+            center_gt2_male_base_y(row) + insertion_shift,
+            z
+        ])
+            rotate([-90, 0, 0])
+                male_local();
+}
+
+module center_gt2_female(col, row) {
+    x = clutch_col_x(col);
+    z = center_gt2_z();
+    color("#5d7885")
+        translate([x, center_gt2_female_base_y(row), z])
+            rotate([90, 0, 0])
+                female_local();
+}
+
+module center_gt2_clutch(col, row, engaged = false) {
+    center_gt2_female(col, row);
+    center_gt2_male(col, row, engaged);
+}
+
 module all_clutches() {
-    for (row = [0:N_ROW - 1])
-        for (col = [0:N_COL - 1])
-            clutch_station(
-                col,
-                row,
-                ENGAGED && col == selected_col() && row == selected_row(),
-                false
-            );
+    center_station_engaged =
+        ENGAGED
+            && CENTER_GT2_COL == selected_col()
+            && CENTER_GT2_ROW == selected_row();
+    center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, center_station_engaged);
+
+    // The old 24 stations stay available behind an explicit review switch,
+    // but are intentionally absent from the default physical-validation view.
+    if (SHOW_LEGACY_STATIONS)
+        for (row = [0:N_ROW - 1])
+            for (col = [0:N_COL - 1])
+                if (!is_center_gt2_station(col, row))
+                    clutch_station(
+                        col,
+                        row,
+                        ENGAGED && col == selected_col() && row == selected_row(),
+                        false
+                    );
 }
 
 module clutch_fork(col, row, engaged = false) {
@@ -1323,12 +1593,84 @@ module drawer_front_drive(col, row) {
     );
 }
 
+module center_gt2_front_pulley_y(x, belt_y, z) {
+    base_y = center_gt2_pulley_base_y(belt_y);
+    color(COLOR_TIMING)
+        translate([x, base_y, z])
+            rotate([-90, 0, 0])
+                difference() {
+                    gt2_pulley_local();
+                    translate([0, 0, -GT2_EPS])
+                        cylinder(
+                            d = ROUND_BORE_D,
+                            h = GT2_BELT_LOWER_RETAINER_T
+                                + GT2_PULLEY_FACE_T
+                                + GT2_BELT_GUIDE_LIP_T
+                                + 2 * GT2_EPS
+                        );
+                }
+}
+
+module center_gt2_front_compound(col, row) {
+    x = clutch_col_x(col);
+    front_z = CENTER_GT2_FRONT_PULLEY_Z;
+    belt_y = center_gt2_belt_y(row);
+    gear_y = center_gt2_front_gear_y(row);
+    pulley_base_y = center_gt2_pulley_base_y(belt_y);
+    gear_bottom_y = gear_y - FRONT_GEAR_T / 2;
+
+    center_gt2_front_pulley_y(x, belt_y, front_z);
+    // The front output remains the deliberately coarse rack pinion.  Only its
+    // lower timing wheel changes to the standard 2GT profile and 6 mm belt.
+    color(COLOR_GEAR)
+        spur_gear_y(
+            x,
+            gear_y,
+            front_z,
+            FRONT_GEAR_TEETH,
+            CLUTCH_PITCH_MM,
+            FRONT_GEAR_TOOTH_DEPTH,
+            FRONT_GEAR_T,
+            ROUND_BORE_D
+        );
+    color(COLOR_SHAFT)
+        cylinder_y(
+            x,
+            pulley_base_y - 0.25,
+            front_z,
+            CLUTCH_HUB_D,
+            gear_bottom_y - pulley_base_y + 0.50
+        );
+}
+
+module center_gt2_drawer_drive(col, row) {
+    x = clutch_col_x(col);
+    belt_y = center_gt2_belt_y(row);
+    color(COLOR_BELT, 0.18)
+        center_gt2_belt_loop_z(
+            x,
+            center_gt2_z(),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            belt_y
+        );
+    center_gt2_front_compound(col, row);
+    horizontal_drawer_rack(
+        x,
+        WORLD_PARTITION_FRONT_Z + 1.5,
+        CENTER_GT2_FRONT_PULLEY_Z - 3.5,
+        center_gt2_front_gear_y(row)
+    );
+}
+
 module drawer_drive() {
-    for (row = [0:N_ROW - 1])
-        for (col = [0:N_COL - 1]) {
-            clutch_lower_takeoff(col, row);
-            drawer_front_drive(col, row);
-        }
+    center_gt2_drawer_drive(CENTER_GT2_COL, CENTER_GT2_ROW);
+    if (SHOW_LEGACY_STATIONS)
+        for (row = [0:N_ROW - 1])
+            for (col = [0:N_COL - 1])
+                if (!is_center_gt2_station(col, row)) {
+                    clutch_lower_takeoff(col, row);
+                    drawer_front_drive(col, row);
+                }
 }
 
 // 单件检查入口。它们都使用同一组装坐标，便于把检查过的零件直接放回总装。
@@ -1349,136 +1691,203 @@ module selected_tensioner_t_solid_part() {
 }
 
 module selected_upper_clutch_part() {
-    clutch_upper_carrier(selected_col(), selected_row(), ENGAGED, false);
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_male(selected_col(), selected_row(), ENGAGED);
+    else
+        clutch_upper_carrier(selected_col(), selected_row(), ENGAGED, false);
 }
 
 module selected_upper_spur_part() {
     col = selected_col();
     row = selected_row();
-    spur_gear_z(
-        clutch_col_x(col),
-        clutch_upper_y(row, ENGAGED),
-        DRIVE_AXIS_Z,
-        CLUTCH_GEAR_TEETH,
-        CLUTCH_PITCH_MM,
-        CLUTCH_GEAR_TOOTH_DEPTH,
-        CLUTCH_GEAR_T,
-        ROD_D + 2 * ROD_CLEARANCE
-    );
+    if (is_center_gt2_station(col, row))
+        center_gt2_male(col, row, ENGAGED);
+    else
+        spur_gear_z(
+            clutch_col_x(col),
+            clutch_upper_y(row, ENGAGED),
+            DRIVE_AXIS_Z,
+            CLUTCH_GEAR_TEETH,
+            CLUTCH_PITCH_MM,
+            CLUTCH_GEAR_TOOTH_DEPTH,
+            CLUTCH_GEAR_T,
+            ROD_D + 2 * ROD_CLEARANCE
+        );
 }
 
 module selected_upper_dog_part() {
     col = selected_col();
     row = selected_row();
-    dog_face_y(
-        clutch_col_x(col),
-        clutch_upper_dog_y(row, ENGAGED),
-        DRIVE_AXIS_Z,
-        CLUTCH_DOG_TEETH,
-        false
-    );
+    if (is_center_gt2_station(col, row))
+        center_gt2_male(col, row, ENGAGED);
+    else
+        dog_face_y(
+            clutch_col_x(col),
+            clutch_upper_dog_y(row, ENGAGED),
+            DRIVE_AXIS_Z,
+            CLUTCH_DOG_TEETH,
+            false
+        );
 }
 
 module selected_lower_takeoff_part() {
-    clutch_lower_takeoff(selected_col(), selected_row());
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_female(selected_col(), selected_row());
+    else
+        clutch_lower_takeoff(selected_col(), selected_row());
 }
 
 module selected_lower_dog_part() {
-    dog_face_y(
-        clutch_col_x(selected_col()),
-        clutch_fixed_dog_y(selected_row()),
-        DRIVE_AXIS_Z,
-        CLUTCH_DOG_TEETH,
-        true
-    );
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_female(selected_col(), selected_row());
+    else
+        dog_face_y(
+            clutch_col_x(selected_col()),
+            clutch_fixed_dog_y(selected_row()),
+            DRIVE_AXIS_Z,
+            CLUTCH_DOG_TEETH,
+            true
+        );
 }
 
 module selected_rear_pulley_part() {
-    timing_pulley_y(
-        clutch_col_x(selected_col()),
-        clutch_takeoff_pulley_y(selected_row()),
-        DRIVE_AXIS_Z,
-        TIMING_TEETH,
-        "round"
-    );
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_female(selected_col(), selected_row());
+    else
+        timing_pulley_y(
+            clutch_col_x(selected_col()),
+            clutch_takeoff_pulley_y(selected_row()),
+            DRIVE_AXIS_Z,
+            TIMING_TEETH,
+            "round"
+        );
 }
 
 module selected_spring_part() {
-    clutch_spring_only(selected_col(), selected_row(), ENGAGED);
+    if (!is_center_gt2_station(selected_col(), selected_row()))
+        clutch_spring_only(selected_col(), selected_row(), ENGAGED);
 }
 
 module selected_screw_part() {
     col = selected_col();
     row = selected_row();
-    t_countersunk_screw_y(
-        clutch_col_x(col),
-        DRIVE_AXIS_Z,
-        clutch_screw_top_y(row, ENGAGED)
-    );
+    if (!is_center_gt2_station(col, row))
+        t_countersunk_screw_y(
+            clutch_col_x(col),
+            DRIVE_AXIS_Z,
+            clutch_screw_top_y(row, ENGAGED)
+        );
 }
 
 module selected_fork_part() {
-    clutch_fork(selected_col(), selected_row(), ENGAGED);
+    if (!is_center_gt2_station(selected_col(), selected_row()))
+        clutch_fork(selected_col(), selected_row(), ENGAGED);
 }
 
 module selected_drawer_belt_part() {
     col = selected_col();
     row = selected_row();
     color(COLOR_BELT, 0.18)
-        belt_loop_z(
-            clutch_col_x(col),
-            DRIVE_AXIS_Z,
-            FRONT_PULLEY_Z,
-            drawer_belt_y(row)
-        );
+        if (is_center_gt2_station(col, row))
+            center_gt2_belt_loop_z(
+                clutch_col_x(col),
+                center_gt2_z(),
+                CENTER_GT2_FRONT_PULLEY_Z,
+                center_gt2_belt_y(row)
+            );
+        else
+            belt_loop_z(
+                clutch_col_x(col),
+                DRIVE_AXIS_Z,
+                FRONT_PULLEY_Z,
+                drawer_belt_y(row)
+            );
 }
 
 module selected_front_compound_part() {
-    drawer_front_compound(selected_col(), selected_row());
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_front_compound(selected_col(), selected_row());
+    else
+        drawer_front_compound(selected_col(), selected_row());
 }
 
 module selected_front_pulley_part() {
-    timing_pulley_y(
-        clutch_col_x(selected_col()),
-        drawer_belt_y(selected_row()),
-        FRONT_PULLEY_Z,
-        TIMING_TEETH,
-        "round"
-    );
+    if (is_center_gt2_station(selected_col(), selected_row()))
+        center_gt2_front_pulley_y(
+            clutch_col_x(selected_col()),
+            center_gt2_belt_y(selected_row()),
+            CENTER_GT2_FRONT_PULLEY_Z
+        );
+    else
+        timing_pulley_y(
+            clutch_col_x(selected_col()),
+            drawer_belt_y(selected_row()),
+            FRONT_PULLEY_Z,
+            TIMING_TEETH,
+            "round"
+        );
 }
 
 module selected_front_gear_part() {
-    spur_gear_y(
-        clutch_col_x(selected_col()),
-        drawer_front_gear_y(selected_row()),
-        FRONT_PULLEY_Z,
-        FRONT_GEAR_TEETH,
-        CLUTCH_PITCH_MM,
-        FRONT_GEAR_TOOTH_DEPTH,
-        FRONT_GEAR_T
-    );
+    col = selected_col();
+    row = selected_row();
+    if (is_center_gt2_station(col, row))
+        spur_gear_y(
+            clutch_col_x(col),
+            center_gt2_front_gear_y(row),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            FRONT_GEAR_TEETH,
+            CLUTCH_PITCH_MM,
+            FRONT_GEAR_TOOTH_DEPTH,
+            FRONT_GEAR_T,
+            ROUND_BORE_D
+        );
+    else
+        spur_gear_y(
+            clutch_col_x(col),
+            drawer_front_gear_y(row),
+            FRONT_PULLEY_Z,
+            FRONT_GEAR_TEETH,
+            CLUTCH_PITCH_MM,
+            FRONT_GEAR_TOOTH_DEPTH,
+            FRONT_GEAR_T
+        );
 }
 
 module selected_drawer_rack_part() {
     row = selected_row();
-    horizontal_drawer_rack(
-        clutch_col_x(selected_col()),
-        WORLD_PARTITION_FRONT_Z + 1.5,
-        FRONT_PULLEY_Z - 3.5,
-        drawer_front_gear_y(row)
-    );
+    if (is_center_gt2_station(selected_col(), row))
+        horizontal_drawer_rack(
+            clutch_col_x(selected_col()),
+            WORLD_PARTITION_FRONT_Z + 1.5,
+            CENTER_GT2_FRONT_PULLEY_Z - 3.5,
+            center_gt2_front_gear_y(row)
+        );
+    else
+        horizontal_drawer_rack(
+            clutch_col_x(selected_col()),
+            WORLD_PARTITION_FRONT_Z + 1.5,
+            FRONT_PULLEY_Z - 3.5,
+            drawer_front_gear_y(row)
+        );
 }
 
 module clutch_detail() {
-    // A selected station is rendered in place, with the fork present.  EXPLODE
-    // separates the front/back axis stack without changing the mating datums.
+    // A selected station is rendered in place.  The migrated center station
+    // is magnetic and has no legacy spring/screw/fork; EXPLODE only separates
+    // the visual reference without changing its mating datums.
     col = selected_col();
     row = selected_row();
     x = clutch_col_x(col);
     z = DRIVE_AXIS_Z;
-    translate([0, 0, -CLUTCH_EXPLODE])
-        clutch_station(col, row, ENGAGED, true);
-    if (CLUTCH_EXPLODE > 0)
+    if (is_center_gt2_station(col, row))
+        center_gt2_clutch(col, row, ENGAGED);
+    else if (SHOW_LEGACY_STATIONS)
+        translate([0, 0, -CLUTCH_EXPLODE])
+            clutch_station(col, row, ENGAGED, true);
+    if (CLUTCH_EXPLODE > 0
+        && SHOW_LEGACY_STATIONS
+        && !is_center_gt2_station(col, row))
         color(COLOR_RACK, 0.45)
             translate([
                 x - 1.0,
@@ -1496,10 +1905,10 @@ module clutch_scene_geometry() {
         world_axes_marker();
         power_bus();
         all_clutches();
-        for (row = [0:N_ROW - 1])
-            for (col = [0:N_COL - 1])
-                drawer_front_drive(col, row);
-        clutch_fork(selected_col(), selected_row(), ENGAGED);
+        drawer_drive();
+        if (SHOW_LEGACY_STATIONS
+            && !is_center_gt2_station(selected_col(), selected_row()))
+            clutch_fork(selected_col(), selected_row(), ENGAGED);
     } else if (CLUTCH_PART == "cabinet") {
         // Export the shell alone as a watertight printed part; internal panels and
         // drawer ghosts are visual context only and intentionally do not enter it.
@@ -1572,11 +1981,13 @@ clutch_scene_geometry();
 echo("cabinet_clutch", "W", W, "H", H, "D", D);
 echo("world_axes", "x=width", "y=height(+up)", "z=depth(+front)", "front_z", 0, "rear_z", -D);
 echo("rear_view_sides", "right", "-X/toward_x0", "left", "+X/toward_xW", "tensioner", "right", "motor", "left");
-echo("drive_axis", "x_motor", MOTOR_X, "z", DRIVE_AXIS_Z, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
+echo("drive_axis", "x_motor", MOTOR_X, "z_base", DRIVE_AXIS_Z_BASE, "z", DRIVE_AXIS_Z, "rear_shift_z", DRAWER_DRIVE_REAR_SHIFT_Z, "front_interface_z", FRONT_PULLEY_Z, "belt_teeth", DRAWER_BELT_TEETH, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
+echo("drive_clearance", "snake_chain_center_z", SNAKE_CHAIN_CENTER_Z, "snake_chain_rear_edge_z", SNAKE_CHAIN_REAR_EDGE_Z, "pulley_front_edge_z", DRIVE_AXIS_Z + TIMING_FLANGE_R, "clearance", SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R));
 echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-columns; tensioner wheel removed for T prototype");
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
 echo("belt", "axial_width_world_y", TIMING_BELT_W, "base_thickness_xz", TIMING_BELT_T, "base_inner_r", TIMING_BELT_BASE_INNER_R, "base_outer_r", TIMING_BELT_BASE_OUTER_R, "tooth_pitch", TIMING_PITCH_MM, "tooth_h", TIMING_BELT_TOOTH_H);
+echo("center_gt2", "enabled", true, "legacy_stations", SHOW_LEGACY_STATIONS, "cell_col_row", CENTER_GT2_COL, CENTER_GT2_ROW, "mating_axis_z", center_gt2_z(), "shaft_axis_z", DRIVE_AXIS_Z, "shaft_z_offset", gt2_center_distance(), "long_profile", str(GT2_LONG_TEETH, "T/", GT2_LONG_PITCH_MM, "mm"), "male_profile", str(GT2_MALE_TEETH, "T/", GT2_MALE_PITCH_MM, "mm"), "belt", str(CENTER_GT2_BELT_TEETH, "T/", GT2_PULLEY_PITCH_MM, "mm/", GT2_BELT_WIDTH, "mm"), "belt_center_distance", CENTER_GT2_BELT_CENTER_DISTANCE, "front_pulley_z", CENTER_GT2_FRONT_PULLEY_Z, "belt_y", center_gt2_belt_y(CENTER_GT2_ROW), "front_gear_y", center_gt2_front_gear_y(CENTER_GT2_ROW), "guide_outer_d", 2 * gt2_belt_guide_r(), "mother_outer_d", 2 * GT2_MOTHER_OUTER_R, "lower_retainer_t", GT2_BELT_LOWER_RETAINER_T, "mother_pocket_depth", GT2_MOTHER_POCKET_DEPTH);
 echo("tensioner_skp_parametric", "source", "弹簧加力的滑动张紧轮调节滑台.skp", "axis_map", "SKP+Y(green)->world+X, SKP+X(red)->world+Y, SKP+Z(blue)->world-Z (same Z axis, rearward)", "native_bbox_xyz", TENSIONER_SKP_NATIVE_SIZE_X, TENSIONER_SKP_NATIVE_SIZE_Y, TENSIONER_SKP_NATIVE_SIZE_Z, "world_bbox_xyz", TENSIONER_SKP_WORLD_SIZE_X, TENSIONER_SKP_WORLD_SIZE_Y, TENSIONER_SKP_WORLD_SIZE_Z, "world_center", TENSIONER_SKP_WORLD_CENTER_X, TENSIONER_SKP_WORLD_CENTER_Y, TENSIONER_SKP_WORLD_CENTER_Z, "mesh_import", false, "parametric_csg", true);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
 
@@ -1622,6 +2033,23 @@ assert(TIMING_BELT_TOOTH_H < TIMING_TOOTH_DEPTH,
     "belt tooth height must stay below the mating pulley tooth depth");
 assert(TIMING_BELT_TOOTH_TIP < TIMING_PITCH_MM * 0.40,
     "belt tooth tip must fit the 0.40-pitch pulley root gap");
+assert(GT2_LONG_TEETH == VERTICAL_GEAR_TEETH
+        && abs(GT2_LONG_PITCH_MM - VERTICAL_GEAR_PITCH_MM) < 0.001,
+    "center GT2 long-gear datum must match the cabinet vertical shaft");
+assert(GT2_MALE_TEETH == VERTICAL_GEAR_TEETH
+        && abs(GT2_MALE_PITCH_MM - VERTICAL_GEAR_PITCH_MM) < 0.001,
+    "center GT2 male gear must match the cabinet vertical shaft");
+assert(CENTER_GT2_BELT_TEETH == 80,
+    "center drawer belt is the selected 160 mm / 80T 2GT loop");
+assert(CENTER_GT2_BELT_CENTER_DISTANCE > 0,
+    "center 2GT belt center distance must be positive");
+assert(CENTER_GT2_Z > DRIVE_AXIS_Z,
+    "center clutch axis must be on the vertical shaft +Z side");
+assert(CENTER_GT2_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
+    "center 2GT belt back envelope must stay inside its guide wall");
+assert(CENTER_GT2_FRONT_PULLEY_Z < 0
+        && CENTER_GT2_FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z,
+    "center 2GT front pulley must stay in the drawer bay");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
 assert(ACTIVE_VERTICAL_AXIS_COUNT == N_COL + 1,
     "T-only prototype active axes must be D drive + drawer columns");
@@ -1630,6 +2058,9 @@ assert(PLANNED_VERTICAL_AXIS_COUNT == N_COL + 2,
 assert(DRIVE_AXIS_Z < WORLD_PARTITION_BACK_Z - 1.0, "drive bus must be behind the partition");
 assert(DRIVE_AXIS_Z + TIMING_OUTER_R < WORLD_PARTITION_BACK_Z - 0.50, "rear pulley OD must clear the partition");
 assert(DRIVE_AXIS_Z - TIMING_OUTER_R > -D + WORLD_BACK_PANEL_T + 1.0, "rear belt must clear the back panel");
+assert(SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R)
+        >= DRAWER_BUS_CHAIN_CLEARANCE,
+    "drawer drive rear pulley must stay behind the snake-chain envelope");
 assert(BUS_BOTTOM_Y > WALL + 2.0, "bottom bus pulley must clear the cabinet floor");
 assert(BUS_TOP_Y < H - WALL - 1.0, "top bus pulley must clear the cabinet roof");
 assert(TENSIONER_SKP_NATIVE_SIZE_X > 0
@@ -1642,6 +2073,8 @@ assert(TENSIONER_SKP_WORLD_SIZE_Z > TENSIONER_SKP_WORLD_SIZE_Y,
     "mapped SKP dimensions must satisfy world Z > Y");
 assert(TIMING_FLANGE_R > TIMING_OUTER_R, "timing pulley retaining flange must exceed toothed outer circle");
 assert(FRONT_PULLEY_Z < 0 && FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z, "front pulley must stay in the drawer bay");
+assert(abs(FRONT_PULLEY_Z - DRAWER_FRONT_INTERFACE_Z) < TIMING_PITCH_MM / 2 + 0.01,
+    "belt tooth count must keep the front pulley near the drawer interface datum");
 assert(SELECTED_COLUMN >= 0 && SELECTED_COLUMN < N_COL, "SELECTED_COLUMN out of range");
 assert(SELECTED_ROW >= 0 && SELECTED_ROW < N_ROW, "SELECTED_ROW out of range");
 //#endregion

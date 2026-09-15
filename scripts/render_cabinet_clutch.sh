@@ -12,6 +12,7 @@ SCAD_FILE="cabinet_clutch.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_DIR="${PROJECT_ROOT}/output/previews/cabinet-clutch"
 QUALITY="${QUALITY:-2}"
+SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
 
 # ===== 分区：模型/类型 =====
 # Cameras use the user/world coordinate contract: X=width, Y=height, Z=depth.
@@ -31,7 +32,7 @@ render_view() {
     local target="${OUT_DIR}/${name}.png"
     mkdir -p "$(dirname "${target}")"
     echo "→ render ${name}.png"
-    local viewall_args=()
+    local viewall_args=(--autocenter)
     if [[ "${fit}" == "1" ]]; then
         viewall_args+=(--viewall)
     fi
@@ -48,6 +49,7 @@ render_view() {
         -D "ENGAGED=${engaged}" \
         -D "SELECTED_COLUMN=2" \
         -D "SELECTED_ROW=2" \
+        -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
         -D "CLUTCH_EXPLODE=8" \
         -D "TENSIONER_SCREW_OUT_MM=${screw_out}" \
         -o "${target}" \
@@ -58,21 +60,9 @@ render_view() {
 [[ -x "${OPENSCAD_BIN}" ]] || { echo "错误: 未找到 OpenSCAD: ${OPENSCAD_BIN}" >&2; exit 1; }
 mkdir -p "${OUT_DIR}"
 render_view "axes/left-d-axis" "left_d_axis" false "247,130,76,0,0,0,500" "900,1200"
-render_view "axes/right-round-axis" "right_round_axis" false "18,130,76,0,0,0,500" "900,1200"
 render_view "axes/side-axes" "side_axes" false "130,130,76,0,90,0,500" "1500,1200"
 render_view "axes/all-vertical-axes" "all_vertical_axes" false "130,130,76,0,0,0,500" "1700,1200"
-render_view "tensioner/slide-open" "tensioner_slide" false "18,214,86,-20,215,0,500" "1200,1200" 0
-render_view "tensioner/slide-tight" "tensioner_slide" false "18,214,86,-20,215,0,500" "1200,1200" 8
-render_view "tensioner/slide-top-closeup" "tensioner_stage_top" false "18,214,86,-20,215,0,500" "1500,1200" 4
-render_view "tensioner/slide-top-bearing-closeup" "tensioner_stage_top" false "18,214,86,-20,180,0,500" "1400,1050" 4
-render_view "tensioner/slide-top-inverted-t-side" "tensioner_stage_top" false "18,214,86,0,90,0,500" "1400,1050" 4
-render_view "tensioner/slide-top-inverted-t-front" "tensioner_stage_top" false "18,214,86,0,0,0,500" "1200,900" 4
-render_view "tensioner/slide-top-rear-up" "tensioner_stage_top" false "18,214,86,20,180,0,500" "1400,1050" 4
-render_view "tensioner/slide-top-rear-left-to-right" "tensioner_stage_top" false "18,214,86,0,90,0,500" "1400,1050" 4
-render_view "tensioner/bearings" "tensioner_bearing" false "18,214,86,-20,180,0,500" "900,900" 4
-render_view "tensioner/base" "tensioner_base" false "18,214,86,-20,215,0,500" "1200,900"
-render_view "tensioner/carriage" "tensioner_carriage" false "18,214,86,-20,215,0,500" "1200,900"
-render_view "tensioner/pulley-top-closeup" "tensioner_pulley_top" false "18,214,86,-20,180,0,500" "1200,1000"
+render_view "tensioner/parametric" "tensioner_t_solid" false "18,214,86,-20,215,0,500" "1200,1200"
 render_view "assembly-back" "assembly" false "130,116,60,0,180,0,500" "1600,1200"
 render_view "assembly-front" "assembly" false "130,116,60,0,0,0,500" "1600,1200"
 render_view "assembly-iso" "assembly" false "130,116,60,-25,215,0,650" "1600,1200"
@@ -88,15 +78,12 @@ render_view "clutch-detail-side-engaged" "clutch_detail" true "150,140,76,0,90,0
 render_view "parts/01-motor-vertical" "motor" false "247,130,76,-20,0,0,500" "1000,1200"
 render_view "parts/02-drive-column" "column" false "130,130,76,-20,0,0,500" "1100,1200"
 render_view "parts/03-vertical-rack" "vertical_rack" false "130,130,76,-20,0,0,500" "900,1200"
-render_view "parts/04-right-tensioner" "idler" false "18,214,86,-20,215,0,500" "1000,1200"
-render_view "parts/05-bus-belts" "bus_belt" false "130,130,76,-20,180,0,500" "1500,900"
+render_view "parts/04-right-tensioner" "tensioner_t_solid" false "18,214,86,-20,215,0,500" "1000,1200"
+render_view "parts/05-power-bus" "power_bus" false "130,130,76,-20,180,0,500" "1500,900"
 render_view "parts/06-upper-axis-z-spur" "upper_spur" false "140,140,76,-20,215,0,500" "900,800"
 render_view "parts/07-upper-downward-dog" "upper_dog" false "140,140,76,-20,215,0,500" "900,800"
 render_view "parts/08-lower-upward-dog" "lower_dog" false "140,140,76,-20,215,0,500" "900,800"
 render_view "parts/09-rear-takeoff-pulley" "rear_pulley" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/10-spring" "spring" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/11-t-countersunk-screw" "screw" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/12-clutch-fork" "fork" false "140,140,76,-20,215,0,500" "900,800"
 render_view "parts/13-drawer-belt" "drawer_belt" false "140,140,76,-20,215,0,500" "1100,850"
 render_view "parts/14-front-timing-pulley" "front_pulley" false "140,140,14,-20,0,0,500" "900,800"
 render_view "parts/15-front-pinion" "front_gear" false "140,140,14,-20,0,0,500" "900,800"

@@ -24,10 +24,11 @@ MANIFEST_PY="/Users/norman/.codex/skills/stl-http-preview/scripts/write_preview_
 # switch content/camera/opacity in this page instead of opening sub-pages.
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 LEGACY_PREVIEW_DIR="${PREVIEW_DIR}/cabinet-clutch"
-PREVIEW_SOURCE_DIR="${PROJECT_ROOT}/web/cabinet-clutch-preview"
+PREVIEW_SOURCE_DIR="${PROJECT_ROOT}/web/cabinet-preview"
 QUALITY="${QUALITY:-2}"
 SELECTED_COLUMN="${SELECTED_COLUMN:-2}"
 SELECTED_ROW="${SELECTED_ROW:-2}"
+SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
 
 # ===== 分区：模型/类型 =====
 # assembly is a visual envelope. The one-by-one references keep the purchased
@@ -57,6 +58,7 @@ export_part() {
             -D "CLUTCH_EXPLODE=${explode}" \
             -D "SELECTED_COLUMN=${SELECTED_COLUMN}" \
             -D "SELECTED_ROW=${SELECTED_ROW}" \
+            -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
             -o "${tmp}" \
             "${SCAD_FILE}"
     )
@@ -133,6 +135,16 @@ labels = {
         "color": "#c4a574",
         "visible": False,
         "role": "printed",
+    },
+    "cabinet-clutch/07_upper_downward_dog_candidate": {
+        "name": "中心格新版公轮 · 圆角三角插销（06同一实体，别名）",
+        "visible": False,
+        "role": "diagnostic",
+    },
+    "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate": {
+        "name": "中心格新版后端2GT母轮（08同一实体，别名）",
+        "visible": False,
+        "role": "diagnostic",
     },
 }
 chain_labels = {
@@ -222,17 +234,17 @@ name_map = {
     "01_motor_vertical_reference": "抽屉开合电机 · 竖直",
     "02_drive_column_reference": "传动轴 · 代表列",
     "03_vertical_rack_candidate": "Y 向长花键齿轮杆 · 两端 D 轴",
-    "06_upper_axis_z_spur_candidate": "离合上方齿轮 · Z 轴",
-    "07_upper_downward_dog_candidate": "上方离合齿 · 向下",
-    "08_lower_upward_dog_candidate": "下方离合齿 · 向上",
-    "09_rear_takeoff_timing_pulley_candidate": "后方取力同步轮",
+    "06_upper_axis_z_spur_candidate": "中心格新版公轮 · 3mm兼容齿形",
+    "07_upper_downward_dog_candidate": "中心格新版公轮 · 圆角三角插销",
+    "08_lower_upward_dog_candidate": "中心格新版母轮 · 母槽与2GT",
+    "09_rear_takeoff_timing_pulley_candidate": "中心格新版后端2GT母轮",
     "10_clutch_spring_reference": "离合压簧",
     "11_t_countersunk_screw_reference": "T 形沉头螺丝",
     "12_clutch_fork_candidate": "离合拨叉",
-    "13_drawer_timing_belt_reference": "抽屉同步皮带",
-    "14_front_timing_pulley_candidate": "前方同步轮",
-    "15_front_pinion_candidate": "抽屉底部驱动齿轮",
-    "16_drawer_linear_rack_candidate": "抽屉底部直线齿排",
+    "13_drawer_timing_belt_reference": "中心格新版2GT皮带 · 80T/160mm/6mm",
+    "14_front_timing_pulley_candidate": "中心格新版前端2GT同步轮",
+    "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
+    "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
     "cabinet_clutch_power_bus": "动力母线合并检查体（可选）",
     "cabinet_clutch_all_clutches": "离合机构合并检查体（可选）",
     "cabinet_clutch_drawer_drive": "抽屉驱动合并检查体（可选）",
@@ -241,14 +253,14 @@ name_map = {
     "cabinet_clutch_assembly": "总装配合并检查体（可选）",
 }
 for part in payload.get("parts", []):
-    patch = labels.get(part.get("id")) or chain_labels.get(part.get("id"))
-    if patch:
-        part.update(patch)
     stem = str(part.get("id", "")).rsplit("/", 1)[-1]
     if stem in group_map:
         part["group"] = group_map[stem]
     if stem in name_map:
         part["name"] = name_map[stem]
+    patch = labels.get(part.get("id")) or chain_labels.get(part.get("id"))
+    if patch:
+        part.update(patch)
 group_order = [
     "00·柜体与格口",
     "01·动力母线",
@@ -314,6 +326,18 @@ for old_file in "${OLD_TENSIONER_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
+# The default physical-validation scene has no legacy spring/screw/fork. Remove
+# any stale derived files from an older full-station export so the viewer cannot
+# accidentally present those retired parts as current center-cell hardware.
+LEGACY_CLUTCH_OUTPUTS=(
+    "10_clutch_spring_reference.stl"
+    "11_t_countersunk_screw_reference.stl"
+    "12_clutch_fork_candidate.stl"
+)
+for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+done
+
 export_part "cabinet" "${OUT_DIR}/cabinet_clutch_cabinet.stl" false 0
 export_part "cabinet_context" "${OUT_DIR}/cabinet_clutch_cabinet_context.stl" false 0
 export_part "power_bus" "${OUT_DIR}/cabinet_clutch_power_bus.stl" false 0
@@ -335,13 +359,16 @@ export_part "upper_spur" "${OUT_DIR}/06_upper_axis_z_spur_candidate.stl" false 0
 export_part "upper_dog" "${OUT_DIR}/07_upper_downward_dog_candidate.stl" false 0
 export_part "lower_dog" "${OUT_DIR}/08_lower_upward_dog_candidate.stl" false 0
 export_part "rear_pulley" "${OUT_DIR}/09_rear_takeoff_timing_pulley_candidate.stl" false 0
-export_part "spring" "${OUT_DIR}/10_clutch_spring_reference.stl" false 0
-export_part "screw" "${OUT_DIR}/11_t_countersunk_screw_reference.stl" false 0
-export_part "fork" "${OUT_DIR}/12_clutch_fork_candidate.stl" false 0
 export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false 0
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0
 export_part "drawer_rack" "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" false 0
+
+if [[ "${SHOW_LEGACY_STATIONS}" == "true" ]]; then
+    export_part "spring" "${OUT_DIR}/10_clutch_spring_reference.stl" false 0
+    export_part "screw" "${OUT_DIR}/11_t_countersunk_screw_reference.stl" false 0
+    export_part "fork" "${OUT_DIR}/12_clutch_fork_candidate.stl" false 0
+fi
 
 # ===== 分区：原生世界坐标预览 =====
 # cabinet_clutch.scad is authored in X=width, Y=height, Z=depth directly.

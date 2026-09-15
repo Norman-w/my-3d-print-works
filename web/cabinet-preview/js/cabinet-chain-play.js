@@ -52,8 +52,12 @@ const DRAWER_ROTARY_IDS = new Map([
   ["cabinet-clutch/14_front_timing_pulley_candidate", 1],
   ["cabinet-clutch/15_front_pinion_candidate", 1],
 ]);
-const DRAWER_BELT_TEETH = 60;
-const DRAWER_BELT_PITCH_MM = 3;
+// This is the default center station's mating pulley tooth count, not the
+// total teeth in the closed belt. One pulley revolution advances the 2GT belt
+// by 12 * 2 mm; using the belt's total 80 teeth would move it by one whole
+// loop and make it appear stationary in the preview.
+const DRAWER_PULLEY_TEETH = 12;
+const DRAWER_BELT_PITCH_MM = 2;
 const SCHEME1_PHASE = {
   INDEX: "INDEX",
   ENGAGE: "ENGAGE",
@@ -967,7 +971,7 @@ function tickScheme1(dt) {
 function tickDrawerDrive() {
   const turns = drawerDriveTurns();
   const angle = -2 * Math.PI * turns;
-  const phaseMm = turns * DRAWER_BELT_TEETH * DRAWER_BELT_PITCH_MM;
+  const phaseMm = turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM;
   for (const belt of play.drawerBelts) {
     poseDrawerBelt(belt, phaseMm);
   }

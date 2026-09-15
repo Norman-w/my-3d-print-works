@@ -10,10 +10,17 @@ GT2_CLUTCH_MODEL = is_undef(GT2_CLUTCH_MODEL)
     ? "assembly"
     : GT2_CLUTCH_MODEL;
 
-// 长花键轴位置基准：10T / 2.4 mm；仅用于啮合和皮带避让计算。
-GT2_LONG_TEETH = 10;
-GT2_LONG_PITCH_MM = 2.4;
-GT2_LONG_TOOTH_DEPTH = 0.60;
+// 长花键轴位置基准：独立 X1C 样件默认 10T / 2.4 mm；主场景会在
+// include 前覆盖为现有 12T / 3 mm 传动杆，避免把两个节距混合装配。
+GT2_LONG_TEETH = is_undef(GT2_LONG_TEETH)
+    ? 10
+    : GT2_LONG_TEETH;
+GT2_LONG_PITCH_MM = is_undef(GT2_LONG_PITCH_MM)
+    ? 2.4
+    : GT2_LONG_PITCH_MM;
+GT2_LONG_TOOTH_DEPTH = is_undef(GT2_LONG_TOOTH_DEPTH)
+    ? 0.60
+    : GT2_LONG_TOOTH_DEPTH;
 
 // 子轮改为 15T。它仍与长轴共用 2.4 mm 节距，增加的齿数同时带来更大的
 // 节圆和更大的中心距，不靠任意平移破坏齿轮啮合。
