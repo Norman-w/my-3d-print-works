@@ -4,7 +4,7 @@
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
-from fc_primitives import add_box, add_cylinder, add_gear_disc
+from fc_primitives import add_box, add_cylinder, add_placed_gear_disc
 
 # ===== 分区：常量/配置 =====
 DRAWER_BODY_COLOR = (175, 153, 123)
@@ -41,8 +41,13 @@ def build_drawers_and_tracks(doc, Part, App, cfg):
             front = add_box(doc, App, front_name, x + 4.0, y + 5.0, cfg.base_height + cfg.rail_depth * 0.25, cfg.cell_width - 8.0, 4.8, 5.2, FRONT_COLOR, 0.1)
             slide_a = add_box(doc, App, slide_a_name, x + cfg.slide_inset, y - cfg.slide_depth, cfg.base_height, cfg.cell_width - cfg.slide_inset * 2, cfg.slide_depth, cfg.slide_depth * 0.22, SLIDE_COLOR, 0.24)
             slide_b = add_box(doc, App, slide_b_name, x + cfg.slide_inset, y + cfg.cell_depth + cfg.slide_depth * 0.15, cfg.base_height, cfg.cell_width - cfg.slide_inset * 2, cfg.slide_depth, cfg.slide_depth * 0.22, SLIDE_COLOR, 0.24)
-            coupler = add_cylinder(doc, App, coupler_name, x + cfg.cell_width * 0.12, y + cfg.cell_depth * 0.17, cfg.base_height + cfg.drawer_height * 0.3, cfg.coupler_radius, cfg.drawer_height * 0.88, COUPLER_COLOR, 0.0)
-            add_gear_disc(doc, Part, App, coupler_gear_name, x + cfg.cell_width * 0.12, y + cfg.cell_depth * 0.17, cfg.base_height + cfg.drawer_height * 0.88, cfg.coupler_radius * 1.04, cfg.gear_thickness * 0.72, 12, (220, 185, 95))
+            coupler_x = x + cfg.cell_width * 0.12
+            coupler_y = y + cfg.cell_depth * 0.17
+            coupler_z = cfg.base_height + cfg.drawer_height * 0.88
+            coupler = add_cylinder(doc, App, coupler_name, coupler_x, coupler_y, cfg.base_height + cfg.drawer_height * 0.3, cfg.coupler_radius, cfg.drawer_height * 0.88, COUPLER_COLOR, 0.0)
+            # Keep this gear in local coordinates so scheme 1 can rotate it
+            # about its own take-off axis without accumulating a world transform.
+            add_placed_gear_disc(doc, Part, App, coupler_gear_name, coupler_x, coupler_y, coupler_z, cfg.coupler_radius * 1.04, cfg.gear_thickness * 0.72, 12, (220, 185, 95))
             add_cylinder(doc, App, selector_pin_name, x + cfg.cell_width * 0.76, y + cfg.cell_depth * 0.2, cfg.base_height + cfg.drawer_height * 0.62, 1.6, cfg.drawer_height * 0.45, PIN_COLOR, 0.15)
             items.extend((tray, front, slide_a, slide_b, coupler))
             drawer_map.append({
@@ -57,6 +62,8 @@ def build_drawers_and_tracks(doc, Part, App, cfg):
                 "slideRight": slide_b_name,
                 "couplerBody": coupler_name,
                 "couplerGear": coupler_gear_name,
+                "couplerAxis": {"x": coupler_x, "y": coupler_y, "z": cfg.base_height + cfg.drawer_height * 0.3},
+                "couplerGearAxis": {"x": coupler_x, "y": coupler_y, "z": coupler_z},
                 "selectionPin": selector_pin_name,
             })
     return items, drawer_map
@@ -83,6 +90,8 @@ def empty_drawer_map(cfg) -> list[dict]:
                 "slideRight": f"DrawerGuideRight_{prefix}_{label}",
                 "couplerBody": f"DrawerCouplerBody_{prefix}_{label}",
                 "couplerGear": f"DrawerCouplerGear_{prefix}_{label}",
+                "couplerAxis": {"x": x + cfg.cell_width * 0.12, "y": y + cfg.cell_depth * 0.17, "z": cfg.base_height + cfg.drawer_height * 0.3},
+                "couplerGearAxis": {"x": x + cfg.cell_width * 0.12, "y": y + cfg.cell_depth * 0.17, "z": cfg.base_height + cfg.drawer_height * 0.88},
                 "selectionPin": f"DrawerSelectionPin_{prefix}_{label}",
             })
     return drawer_map

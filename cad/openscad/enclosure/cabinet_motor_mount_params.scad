@@ -62,7 +62,7 @@ MOTOR_MOUNT_BOSS_OFFSETS = [
 //#endregion
 
 //#region 模型/类型
-// motor_mount_c() 与 cabinet_chain_path.scad 中的 power_c()/entry_c() 同一动力轴中心。
+// motor_mount_c() 与 cabinet_chain_path.scad 中的高 X power_c() 同一动力轴中心。
 //#endregion
 
 //#region 公开 API
@@ -75,7 +75,7 @@ function motor_mount_return_x() =
     WALL + motor_mount_outer_r() + MOTOR_MOUNT_WALL_CLEAR;
 
 function motor_mount_c() = [
-    motor_mount_return_x() + motor_mount_pitch_r(),
+    W - motor_mount_return_x(),
     row_center_z(N_ROW - 1) - motor_mount_pitch_r(),
     0
 ];

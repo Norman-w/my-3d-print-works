@@ -22,7 +22,9 @@ const TREE_COLLAPSED_KEY = "smartpartsdrawer.preview.tree.collapsed-groups";
 const TREE_PANEL_COLLAPSED_KEY = "smartpartsdrawer.preview.tree.collapsed";
 const TREE_POSITION_KEY = "smartpartsdrawer.preview.tree.position";
 const VIEWS_COLLAPSED_KEY = "smartpartsdrawer.preview.views.collapsed";
-const TREE_POSITION_MARGIN = 12;
+const VIEWS_POSITION_KEY = "smartpartsdrawer.preview.views.position";
+const FLOATING_PANEL_MARGIN = 12;
+const VIEW_HELPER_SIZE = 128;
 const LEGACY_ASSEMBLY_WIDTH = 260;
 const LEGACY_COORDINATE_GROUPS = new Set([
   "cabinet",
@@ -59,6 +61,13 @@ const DRAWER_DRIVE_TAILS = new Set([
   "14_front_timing_pulley_candidate",
   "15_front_pinion_candidate",
   "16_drawer_linear_rack_candidate",
+]);
+const LEGACY_SCHEME1_TAILS = new Set([
+  "cabinet_chain_scheme1_power_wheels",
+  "cabinet_chain_scheme1_output_wheels",
+  "cabinet_chain_scheme1_clutch_faces",
+  "cabinet_chain_scheme1_bearings",
+  "cabinet_chain_scheme1_selector",
 ]);
 const UPPER_TENSIONER_TAILS = new Set([
   "00_cabinet_tensioner_receiver_candidate",
@@ -97,7 +106,8 @@ const els = {
   treePanel: document.getElementById("tree-panel"),
   treeHeader: document.querySelector("#tree-panel .tree-header"),
   treeCollapse: document.getElementById("tree-collapse"),
-  viewSection: document.getElementById("view-section"),
+  viewPanel: document.getElementById("view-panel"),
+  viewHeader: document.querySelector("#view-panel .view-panel-header"),
   viewsToggle: document.getElementById("views-toggle"),
   viewsChevron: document.getElementById("views-chevron"),
   viewButtons: [...document.querySelectorAll("[data-view]")],
@@ -122,6 +132,8 @@ const state = {
   treePosition: loadTreePosition(),
   treeDrag: null,
   viewsCollapsed: loadViewsCollapsed(),
+  viewsPosition: loadViewsPosition(),
+  viewsDrag: null,
   activeView: "rear",
   viewProfile: null,
   viewRequest: 0,
@@ -160,6 +172,26 @@ function saveTreeCollapsed() {
   }
 }
 
+function loadFloatingPosition(storageKey, fallback) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (Number.isFinite(saved?.left) && Number.isFinite(saved?.top)) {
+      return { left: saved.left, top: saved.top };
+    }
+  } catch {
+    // Private browsing can deny localStorage; use the default position.
+  }
+  return { ...fallback };
+}
+
+function saveFloatingPosition(storageKey, position) {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(position));
+  } catch {
+    // Private browsing can deny localStorage; the panel still moves for this load.
+  }
+}
+
 function loadViewsCollapsed() {
   try {
     return localStorage.getItem(VIEWS_COLLAPSED_KEY) === "1";
@@ -177,46 +209,49 @@ function saveViewsCollapsed() {
 }
 
 function loadTreePosition() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(TREE_POSITION_KEY) || "null");
-    if (Number.isFinite(saved?.left) && Number.isFinite(saved?.top)) {
-      return { left: saved.left, top: saved.top };
-    }
-  } catch {
-    // Private browsing can deny localStorage; use the default position.
-  }
-  return { left: 16, top: 16 };
+  return loadFloatingPosition(TREE_POSITION_KEY, { left: 16, top: 16 });
 }
 
-function saveTreePosition() {
-  try {
-    localStorage.setItem(TREE_POSITION_KEY, JSON.stringify(state.treePosition));
-  } catch {
-    // Private browsing can deny localStorage; the panel still moves for this load.
-  }
+function saveTreePosition(position = state.treePosition) {
+  saveFloatingPosition(TREE_POSITION_KEY, position);
 }
 
-function clampTreePosition(left, top) {
-  const panel = els.treePanel;
+function loadViewsPosition() {
+  return loadFloatingPosition(VIEWS_POSITION_KEY, { left: 368, top: 16 });
+}
+
+function saveViewsPosition(position = state.viewsPosition) {
+  saveFloatingPosition(VIEWS_POSITION_KEY, position);
+}
+
+function clampFloatingPosition(panel, left, top) {
   if (!panel) return { left, top };
   const width = panel.offsetWidth || 340;
   const height = panel.offsetHeight || Math.max(44, window.innerHeight - 32);
-  const maxLeft = Math.max(TREE_POSITION_MARGIN, window.innerWidth - width - TREE_POSITION_MARGIN);
-  const maxTop = Math.max(TREE_POSITION_MARGIN, window.innerHeight - height - TREE_POSITION_MARGIN);
+  const maxLeft = Math.max(FLOATING_PANEL_MARGIN, window.innerWidth - width - FLOATING_PANEL_MARGIN);
+  const maxTop = Math.max(FLOATING_PANEL_MARGIN, window.innerHeight - height - FLOATING_PANEL_MARGIN);
   return {
-    left: Math.min(Math.max(left, TREE_POSITION_MARGIN), maxLeft),
-    top: Math.min(Math.max(top, TREE_POSITION_MARGIN), maxTop),
+    left: Math.min(Math.max(left, FLOATING_PANEL_MARGIN), maxLeft),
+    top: Math.min(Math.max(top, FLOATING_PANEL_MARGIN), maxTop),
   };
 }
 
-function applyTreePosition({ persist = false } = {}) {
-  const position = clampTreePosition(state.treePosition.left, state.treePosition.top);
-  state.treePosition = position;
-  if (els.treePanel) {
-    els.treePanel.style.left = `${position.left}px`;
-    els.treePanel.style.top = `${position.top}px`;
+function applyFloatingPosition(panel, position, save, { persist = false } = {}) {
+  const next = clampFloatingPosition(panel, position.left, position.top);
+  if (panel) {
+    panel.style.left = `${next.left}px`;
+    panel.style.top = `${next.top}px`;
   }
-  if (persist) saveTreePosition();
+  if (persist) save(next);
+  return next;
+}
+
+function applyTreePosition({ persist = false } = {}) {
+  state.treePosition = applyFloatingPosition(els.treePanel, state.treePosition, saveTreePosition, { persist });
+}
+
+function applyViewsPosition({ persist = false } = {}) {
+  state.viewsPosition = applyFloatingPosition(els.viewPanel, state.viewsPosition, saveViewsPosition, { persist });
 }
 
 function setMeta(text) {
@@ -235,26 +270,31 @@ function applyTreeCollapsed() {
 }
 
 function applyViewsCollapsed() {
-  els.viewSection?.classList.toggle("collapsed", state.viewsCollapsed);
+  els.viewPanel?.classList.toggle("collapsed", state.viewsCollapsed);
   els.viewsToggle?.setAttribute("aria-expanded", String(!state.viewsCollapsed));
-  if (els.viewsChevron) els.viewsChevron.textContent = state.viewsCollapsed ? "›" : "⌃";
+  if (els.viewsToggle) {
+    const label = state.viewsCollapsed ? "展开视角" : "折叠视角";
+    els.viewsToggle.setAttribute("aria-label", label);
+    els.viewsToggle.title = label;
+  }
+  if (els.viewsChevron) els.viewsChevron.textContent = state.viewsCollapsed ? "›" : "‹";
 }
 
-function bindTreeDrag() {
-  const handle = els.treeHeader;
-  const panel = els.treePanel;
+function bindFloatingPanelDrag({ panel, handle, getPosition, setPosition, save }) {
   if (!handle || !panel) return;
 
+  let drag = null;
+
   const finishDrag = (event) => {
-    const drag = state.treeDrag;
     if (!drag || drag.pointerId !== event.pointerId) return;
     if (handle.hasPointerCapture?.(event.pointerId)) {
       handle.releasePointerCapture(event.pointerId);
     }
     handle.classList.remove("dragging");
     panel.classList.remove("dragging");
-    state.treeDrag = null;
-    applyTreePosition({ persist: true });
+    drag = null;
+    const position = applyFloatingPosition(panel, getPosition(), save, { persist: true });
+    setPosition(position);
   };
 
   handle.addEventListener("pointerdown", (event) => {
@@ -262,7 +302,7 @@ function bindTreeDrag() {
     const target = event.target;
     if (target instanceof Element && target.closest("button, input, select, a")) return;
     const rect = panel.getBoundingClientRect();
-    state.treeDrag = {
+    drag = {
       pointerId: event.pointerId,
       offsetX: event.clientX - rect.left,
       offsetY: event.clientY - rect.top,
@@ -274,13 +314,12 @@ function bindTreeDrag() {
   });
 
   handle.addEventListener("pointermove", (event) => {
-    const drag = state.treeDrag;
     if (!drag || drag.pointerId !== event.pointerId) return;
-    const position = clampTreePosition(
+    const position = clampFloatingPosition(panel,
       event.clientX - drag.offsetX,
       event.clientY - drag.offsetY,
     );
-    state.treePosition = position;
+    setPosition(position);
     panel.style.left = `${position.left}px`;
     panel.style.top = `${position.top}px`;
     event.preventDefault();
@@ -288,8 +327,32 @@ function bindTreeDrag() {
 
   handle.addEventListener("pointerup", finishDrag);
   handle.addEventListener("pointercancel", finishDrag);
-  window.addEventListener("resize", () => applyTreePosition({ persist: true }));
-  applyTreePosition();
+  window.addEventListener("resize", () => {
+    const position = applyFloatingPosition(panel, getPosition(), save, { persist: true });
+    setPosition(position);
+  });
+  const position = applyFloatingPosition(panel, getPosition(), save);
+  setPosition(position);
+}
+
+function bindTreeDrag() {
+  bindFloatingPanelDrag({
+    panel: els.treePanel,
+    handle: els.treeHeader,
+    getPosition: () => state.treePosition,
+    setPosition: (position) => { state.treePosition = position; },
+    save: saveTreePosition,
+  });
+}
+
+function bindViewsDrag() {
+  bindFloatingPanelDrag({
+    panel: els.viewPanel,
+    handle: els.viewHeader,
+    getPosition: () => state.viewsPosition,
+    setPosition: (position) => { state.viewsPosition = position; },
+    save: saveViewsPosition,
+  });
 }
 
 function itemStatus(item) {
@@ -441,11 +504,35 @@ function initScene() {
   viewHelper.location.right = 16;
   viewHelper.setLabels("X", "Y", "Z");
   remapViewHelperWorldColors(viewHelper);
+  // ViewHelper is drawn into the canvas' upper-right viewport instead of a
+  // DOM element. OrbitControls would otherwise receive the same pointerdown
+  // first, call setPointerCapture() on the canvas, and begin a camera drag
+  // before the helper's later click handler can decide whether the axis was
+  // hit. Reserve only the helper viewport during pointerdown so the rest of
+  // the canvas keeps the normal orbit/pan/zoom behavior.
+  const isViewHelperPointer = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const left = viewHelper.location.left !== null
+      ? rect.left + viewHelper.location.left
+      : rect.left + canvas.offsetWidth - VIEW_HELPER_SIZE - viewHelper.location.right;
+    const top = viewHelper.location.top !== null
+      ? rect.top + viewHelper.location.top
+      : rect.top + canvas.offsetHeight - VIEW_HELPER_SIZE - viewHelper.location.bottom;
+    return event.clientX >= left
+      && event.clientX <= left + VIEW_HELPER_SIZE
+      && event.clientY >= top
+      && event.clientY <= top + VIEW_HELPER_SIZE;
+  };
+  const onViewHelperPointerDown = (event) => {
+    if (!isViewHelperPointer(event)) return;
+    event.stopImmediatePropagation();
+  };
   const onViewHelperClick = (event) => {
     if (viewHelper.handleClick(event)) {
       event.stopImmediatePropagation();
     }
   };
+  canvas.addEventListener("pointerdown", onViewHelperPointerDown, true);
   canvas.addEventListener("click", onViewHelperClick, true);
   state.scene = scene;
   state.legacyRoot = legacyRoot;
@@ -630,7 +717,7 @@ function isCabinetContext(part) {
 }
 
 function isSnakePart(part) {
-  return part?.group === "cabinet-chain";
+  return part?.group === "cabinet-chain" && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
 function isDrawerDrivePart(part) {
@@ -642,7 +729,7 @@ function isUpperTensionerPart(part) {
 }
 
 function isLowerTensionerPart(part) {
-  return part?.group === "cabinet-chain";
+  return part?.group === "cabinet-chain" && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
 const VIEW_PROFILES = {
@@ -826,6 +913,7 @@ function bindPreviewControls() {
     applyTreeCollapsed();
   });
   bindTreeDrag();
+  bindViewsDrag();
   applyTreeCollapsed();
   applyViewsCollapsed();
   updateActiveViewButton();

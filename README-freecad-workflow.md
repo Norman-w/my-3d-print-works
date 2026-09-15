@@ -1,8 +1,11 @@
-# SmartPartsDrawer：FreeCAD 真机构 + STL 网页展示流程
+# SmartPartsDrawer：FreeCAD 可选验证支线
 
-## 先选方案：你现在这条线是对的
+> 当前 `8765` 预览的主线是 **OpenSCAD/SCAD → STL → Three.js 网页**。方案1的输入轮、输出轮、狗牙离合、银色轴承和拨叉都由
+> `cad/openscad/enclosure/cabinet_chain.scad` 导出，并由 `web/cabinet-preview` 播放；FreeCAD 不参与这条页面链路。
 
-当前项目按「**单一本地真值源（FreeCAD）+ STL 展示**」实现：  
+## FreeCAD 支线说明
+
+FreeCAD 支线按「**单一本地真值源（FreeCAD）+ STL 展示**」实现：
 1) 几何、联动、干涉、机构尺寸都在 **FreeCAD macOS** 里建模和验证；  
 2) 只把最终结构导出为 STL + `manifest.json` 到 `web/assets/stl`；  
 3) 浏览器里的 `freecad-viewer.html` 只做视觉观看，不再承载物理真实性判断。
@@ -29,7 +32,7 @@ brew install --cask freecad
 你现在的目标是把“机构真实验证”放在本地单一 CAD（FreeCAD）里做，网页只做展示。当前仓库新增了这套链路：
 
 - `scripts/freecad_drawer_pipeline.py`：参数化建模 + FCStd + STL + 分件 STEP（**默认 selector-mode=snake**）
-- `scripts/freecad_snake_animate.py`：FreeCAD GUI 动画（释放指沿 U 形弧长 → 啮合 → 总线转 → 回 HOME）
+- `scripts/freecad_snake_animate.py`：FreeCAD GUI 动画（方案 1：选格 → 停稳 → 单离合啮合 → 单抽屉驱动 → 释放 → 回 HOME）
 - `web/freecad-viewer.html`：读取 `manifest.json`，加载 STL 的轻量展示页
 - `web/assets/stl/*`：导出的 STL 与清单文件
 - `build/step/*`：分件 STEP（ISO 螺钉包络一并导出）
@@ -115,7 +118,22 @@ open -n -a FreeCAD --args \
 
 不要直接执行 `Contents/MacOS/FreeCAD` 或 `Contents/Resources/bin/freecad`：在 Cursor/终端里那样启动经常出现进程在跑、窗口数为 0，屏幕上什么也没有。
 
-窗口打开后约一秒开始循环：INDEX → ENGAGE → DRIVE（橙总线转）→ RELEASE → RETURN → HOME。绿色件是释放指/触销，镜头跟着走。状态栏会显示相位。
+窗口打开后约一秒开始循环：INDEX → ENGAGE → DRIVE（仅目标抽屉的动力支路转）→ RELEASE → RETURN → HOME。选择带移动时动力轴断开；目标停稳后才接合一个离合；释放完成后才回程。绿色件是拨叉，状态栏会显示目标格、离合状态和动力开关。
+
+### 方案 1 的状态约束
+
+蛇形选择机构的动画清单会为每个格位生成一对固定狗牙盘和滑动狗牙盘。滑动盘的默认位置与固定盘留有 `2.6 mm` 间隙，只有拨叉到达目标格并完全停稳后，才沿轴向推进 `3.0 mm` 接合。动力总线的状态按下面顺序执行：
+
+```text
+INDEX   选择带移动，全部离合脱开，动力轴断电
+ENGAGE  选择带停止，目标滑动盘推进，动力轴仍断电
+DRIVE   目标离合已接合，只转目标抽屉取力支路
+RELEASE 动力轴先断电，目标滑动盘退出
+RETURN  选择带回 HOME，所有离合保持脱开
+HOME    等待下一次选格
+```
+
+`selectedIndex` 表示当前被拨叉接触的格位，`drivenIndex` 表示最后一次实际受力的格位，`powerOn` 表示动力电机是否通电。动力轴角度在断电后保持最后位置，避免释放/回程画面出现不真实的回零跳变。
 
 若模型已在 GUI 里打开，Python 控制台执行：
 

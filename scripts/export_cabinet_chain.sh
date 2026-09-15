@@ -20,7 +20,7 @@ OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PARTS=(plates rollers pins sprockets idlers bearings motor motor_cover connector)
+PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -78,6 +78,7 @@ names = {
         "role": "printed",
         "color": "#6f8f9a",
         "explosion": [0, 0, 0],
+        "visible": False,
     },
     "cabinet_back_panel": {
         "name": "可拆背板",
@@ -105,7 +106,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_sprockets": {
-        "name": "12T 尖齿（网页右上动力 D 轴 + 其余轴承）",
+        "name": "12T 尖齿（网页左上动力 D 轴 + 其余轴承）",
         "role": "printed",
         "color": "#5b9fd6",
         "explosion": [0, 0, 0],
@@ -120,12 +121,20 @@ names = {
         "name": "3×6×2 轴承（装配显示/采购件）",
         "role": "purchased",
         "color": "#b9c2ca",
+        "opacity": 1.0,
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor": {
-        "name": "动力轮已安装电机（Pololu 100:1 HP 6V，D轴）",
+        "name": "动力轮电机本体（Pololu 100:1 HP 6V）",
         "role": "purchased",
         "color": "#424a54",
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_motor_shaft": {
+        "name": "动力轮电机 D 输出轴（随动力轮转动）",
+        "role": "purchased",
+        "color": "#d6d9dc",
+        "opacity": 1.0,
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_cover": {
@@ -141,58 +150,122 @@ names = {
         "opacity": 1.0,
         "explosion": [0, 0, 0],
     },
+    "cabinet_chain_clutch_connector": {
+        "name": "03C 链条加长接头（双夹片+前向离合座，高亮）",
+        "role": "diagnostic",
+        "color": "#00d9ff",
+        "opacity": 1.0,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_clutch_bearing": {
+        "name": "加长接头 681 轴承（银色装配显示）",
+        "role": "purchased",
+        "color": "#cfd4da",
+        "opacity": 1.0,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_scheme1_power_wheels": {
+        "name": "旧方案1·25 个常转动力轮（世界默认隐藏，文件保留）",
+        "role": "diagnostic",
+        "color": "#e6a23c",
+        "opacity": 1.0,
+        "visible": False,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_scheme1_output_wheels": {
+        "name": "旧方案1·25 个抽屉受力轮（世界默认隐藏，文件保留）",
+        "role": "diagnostic",
+        "color": "#5b9fd6",
+        "opacity": 1.0,
+        "visible": False,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_scheme1_clutch_faces": {
+        "name": "旧方案1·25 组狗牙离合面（世界默认隐藏，文件保留）",
+        "role": "diagnostic",
+        "color": "#f0c36a",
+        "opacity": 1.0,
+        "visible": False,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_scheme1_bearings": {
+        "name": "旧方案1·抽屉输出轴承（世界默认隐藏，文件保留）",
+        "role": "purchased",
+        "color": "#cfd4da",
+        "opacity": 1.0,
+        "visible": False,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_scheme1_selector": {
+        "name": "旧方案1·链条拨叉/8T 选择轮（世界默认隐藏，文件保留）",
+        "role": "diagnostic",
+        "color": "#72e06a",
+        "opacity": 1.0,
+        "visible": False,
+        "explosion": [0, 0, 0],
+    },
     "ch1_03c_power_motor_pololu_100_1_hp_6v": {
-        "name": "Pololu 100:1 HP 6V D轴电机（模型库/采购件）",
+        "name": "Pololu 100:1 HP 6V D轴电机（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#424a54",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_power_motor_cover": {
-        "name": "动力轮电机固定罩（模型库/打印件）",
+        "name": "动力轮电机固定罩（独立模型库，默认隐藏）",
         "role": "printed",
         "color": "#56616d",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_connecting_pin": {
-        "name": "03C 连接节双穿销（模型库/外购参考件）",
+        "name": "03C 连接节双穿销（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#b08d57",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_retaining_clip": {
-        "name": "03C 连接节固定弹片/夹片（模型库/外购参考件）",
+        "name": "03C 连接节固定弹片/夹片（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#9aa7b6",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_extended_connecting_pin": {
-        "name": "03C 加长连接节双穿销（双夹片定位）",
+        "name": "03C 加长连接节双穿销（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#b08d57",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_extended_retaining_clips": {
-        "name": "03C 加长销双固定弹片/夹片",
+        "name": "03C 加长销双固定弹片/夹片（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#9aa7b6",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_clutch_platform": {
-        "name": "传动离合轴承平台（681 1×3×1 座，轴向上下）",
+        "name": "传动离合轴承平台（独立模型库，默认隐藏）",
         "role": "printed",
         "color": "#d17a3d",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_clutch_bearing": {
-        "name": "681 1×3×1 离合转动基础轴承（装配显示/采购件）",
+        "name": "681 1×3×1 离合转动基础轴承（独立模型库，默认隐藏）",
         "role": "purchased",
         "color": "#b9c2ca",
+        "visible": False,
+        "opacity": 1.0,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_clutch_bearing_retainer": {
-        "name": "681 离合轴承下承托环（压配/点胶打印件）",
+        "name": "681 离合轴承下承托环（独立模型库，默认隐藏）",
         "role": "printed",
         "color": "#a85c2a",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
 }
@@ -308,7 +381,7 @@ export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutc
 export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings motor motor_cover; do
+    for part in sprockets idlers bearings motor motor_shaft motor_cover scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done
@@ -318,6 +391,8 @@ if [[ -f "$INSPECT_PY" ]]; then
     done
     echo "→ inspect cabinet_chain_connector.stl"
     python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_connector.stl"
+    echo "→ inspect cabinet_chain_clutch_connector.stl"
+    python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_clutch_connector.stl"
     for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing clutch_bearing_retainer; do
         echo "→ inspect ch1_03c_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_CHAIN_CLUTCH}/ch1_03c_${part}.stl"
@@ -357,6 +432,7 @@ echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_retaining_clips.stl"
   echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
   echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
   echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing_retainer.stl"
+echo "  方案1视图: 输入轮 / 输出轮 / 狗牙离合 / 银色轴承 / 链条拨叉"
 echo "  预览保持现有 HTTP 服务，刷新即可"
 
 # ===== 分区：业务逻辑 =====

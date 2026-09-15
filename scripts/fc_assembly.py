@@ -6,11 +6,11 @@ from __future__ import annotations
 
 from fc_config import compute_geometry_totals
 from fc_drawers import build_drawers_and_tracks, empty_drawer_map
-from fc_drive import build_drive_chain, drive_mechanism_rows
+from fc_drive import build_drive_chain, drive_axis_specs, drive_mechanism_rows
 from fc_motion import build_selector_motion_profile, selector_origin
 from fc_primitives import add_box
 from fc_selectors import build_legacy_selector, legacy_selector_map
-from fc_snake_parts import build_snake_selector, snake_selector_map
+from fc_snake_parts import build_snake_selector, clutch_specs, snake_selector_map
 
 # ===== 分区：常量/配置 =====
 CABINET_BASE = (49, 63, 80)
@@ -37,15 +37,27 @@ def build_mechanism_map(cfg, drawer_map: list, selector_origin_xy: tuple[float, 
     else:
         selector = legacy_selector_map(cfg)
     selector["motionProfile"] = build_selector_motion_profile(cfg, selector_origin_xy[0], selector_origin_xy[1])
+    drive_chain = {
+        "motor": {"case": "MotorA_Case", "shaft": "MotorA_Shaft", "gear": "MotorA_Gear", "bracket": "MotorA_Bracket"},
+        "selectorMotor": {"case": "MotorMA_Case", "shaft": "MotorMA_Shaft"} if cfg.selector_mode == "snake" else None,
+        "busShaft": {"casing": "BusShaft_Casing", "shaft": "BusShaft_Main"},
+        "rows": drive_mechanism_rows(cfg),
+        "dimensions": {"widthTotal": width_total, "depthTotal": depth_total, "rowSpan": max(0.0, (cfg.columns - 1) * (cfg.cell_width + cfg.cell_gap_x))},
+    }
+    if cfg.selector_mode == "snake":
+        drive_chain.update({
+            "scheme": "scheme1-clutch-selective-drive",
+            "powerPolicy": {
+                "defaultOn": False,
+                "engageOnlyWhenSelectorStopped": True,
+                "activeTargetOnly": True,
+                "releaseBeforeReturn": True,
+            },
+            "axes": drive_axis_specs(cfg),
+        })
     return {
         "drawerCouplers": drawer_map,
-        "driveChain": {
-            "motor": {"case": "MotorA_Case", "shaft": "MotorA_Shaft", "gear": "MotorA_Gear", "bracket": "MotorA_Bracket"},
-            "selectorMotor": {"case": "MotorMA_Case", "shaft": "MotorMA_Shaft"} if cfg.selector_mode == "snake" else None,
-            "busShaft": {"casing": "BusShaft_Casing", "shaft": "BusShaft_Main"},
-            "rows": drive_mechanism_rows(cfg),
-            "dimensions": {"widthTotal": width_total, "depthTotal": depth_total, "rowSpan": max(0.0, (cfg.columns - 1) * (cfg.cell_width + cfg.cell_gap_x))},
-        },
+        "driveChain": drive_chain,
         "selector": selector,
     }
 
@@ -76,11 +88,20 @@ def preview_mechanism_map(cfg) -> dict:
         from fc_snake_path import build_snake_path
         path = build_snake_path(cfg)
         animation = {
+            "scheme": "scheme1-clutch-selective-drive",
+            "driveRpm": cfg.drive_rpm,
             "anchors": path["anchors"],
+            "cells": path["cells"],
             "workingLength": path["workingLength"],
             "loopLength": path["loopLength"],
             "greenParts": ["SelectorFinger", "SelectorContactPin"],
-            "clutches": [],
+            "clutches": clutch_specs(cfg, path),
+            "powerPolicy": {
+                "defaultOn": False,
+                "engageOnlyWhenSelectorStopped": True,
+                "activeTargetOnly": True,
+                "releaseBeforeReturn": True,
+            },
         }
     return build_mechanism_map(cfg, [], (origin_x, origin_y), animation)
 

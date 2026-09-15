@@ -14,11 +14,17 @@ EXTENDED_NET_PLATFORM_CLEAR = 10.0;
 EXTENDED_SECOND_CLIP_Y =
     EXTENDED_FIRST_CLIP_Y + EXTENDED_NET_PLATFORM_CLEAR + RETAINING_CLIP_T;
 EXTENDED_PIN_LENGTH = EXTENDED_SECOND_CLIP_Y + CONNECTING_PIN_GROOVE_FROM_TIP;
+// EXTENDED_PIN_LENGTH 是销杆从固定头内侧面到末端的有效长度；固定头向 -Y
+// 外伸 CONNECTING_PIN_HEAD_H，因此独立 STL 的 Y 向总包络还要再加这段头部。
+EXTENDED_PIN_OVERALL_LENGTH = EXTENDED_PIN_LENGTH + CONNECTING_PIN_HEAD_H;
 
-// 平台位于两夹片内侧的 10 mm 净空间中；主体厚 5.0 mm，前后各有 0.8 mm
-// 的对称加强筋，总包络 6.6 mm，两侧仍各留 1.7 mm 装配间隙。
-PLATFORM_T = 5.0;
+// 平台占用两夹片内侧之间的 10 mm 净空间；外廓沿销轴方向留每侧 0.20 mm
+// 装配间隙，得到 9.60 mm。主体和前后加强筋分开参数化，便于确认外廓确实
+// 落在两道夹片之间，而不是只和加长销的局部长度“看起来”相等。
+PLATFORM_SIDE_CLEARANCE = 0.20;
 PLATFORM_RIB_T = 0.8;
+PLATFORM_TOTAL_T = EXTENDED_NET_PLATFORM_CLEAR - 2 * PLATFORM_SIDE_CLEARANCE;
+PLATFORM_T = PLATFORM_TOTAL_T - 2 * PLATFORM_RIB_T;
 PLATFORM_CENTER_Y =
     EXTENDED_FIRST_CLIP_Y
     + RETAINING_CLIP_T / 2
@@ -73,7 +79,7 @@ CLUTCH_BEARING_RETAINER_RECESS_DEPTH =
     CLUTCH_BEARING_RETAINER_TOP_Z
     - CLUTCH_BEARING_RETAINER_RECESS_START_Z
     + EXTENDED_LINK_EPS;
-PLATFORM_TOTAL_HALF_T = PLATFORM_T / 2 + PLATFORM_RIB_T;
+PLATFORM_TOTAL_HALF_T = PLATFORM_TOTAL_T / 2;
 PLATFORM_SHAFT_BORE_START_Z = PLATFORM_BEARING_BOSS_BOTTOM_Z - EXTENDED_LINK_EPS;
 PLATFORM_SHAFT_BORE_DEPTH =
     PLATFORM_PIN_BOSS_D / 2
@@ -82,10 +88,11 @@ PLATFORM_SHAFT_BORE_DEPTH =
 //#endregion
 
 //#region 模型/类型
-// 双销中心位于 x=±P/2、z=0；平台两个销孔在同一销线上。
+// 双销中心位于 x=±P/2、z=0；平台两个销孔在同一销线上，平台沿销轴方向
+// 的外廓为 9.60 mm，正好落在两道夹片内侧之间的 10 mm 净空间内。
 // 681 轴承位于两销的正中 x=0、z=-2.0，轴向沿世界 Z；从下方压入 boss，
-// 再用独立承托环锁住。平台沿 Y 厚 5.0 mm，前后筋后总包络 6.6 mm。
-// 平台位于两夹片之间；夹片内侧净距严格为 10 mm。
+// 再用独立承托环锁住。平台主体沿 Y 厚 8.0 mm，前后各 0.8 mm 加强筋后
+// 总包络 9.60 mm；平台位于两夹片之间。
 //#endregion
 
 //#region 公开 API
@@ -120,7 +127,9 @@ module extended_pin_one(x) {
             translate([x, 0, 0])
                 rotate([-90, 0, 0])
                     cylinder(d = CONNECTING_PIN_SHAFT_D, h = EXTENDED_PIN_LENGTH);
-            translate([x, 0, 0])
+            // Y=0 是固定头的内侧面；头部必须向 -Y 伸到链板外侧，
+            // 不能和销杆一起从 Y=0 向内长，否则左侧没有露出的锁止头。
+            translate([x, -CONNECTING_PIN_HEAD_H, 0])
                 rotate([-90, 0, 0])
                     cylinder(d = CONNECTING_PIN_HEAD_D, h = CONNECTING_PIN_HEAD_H);
         }
@@ -309,7 +318,9 @@ module ch1_03c_extended_link_reference() {
 
 //#region 方法/工具
 assert(EXTENDED_SECOND_CLIP_Y - EXTENDED_FIRST_CLIP_Y - RETAINING_CLIP_T > 9.99);
-assert(PLATFORM_T + 2 * PLATFORM_RIB_T < EXTENDED_NET_PLATFORM_CLEAR);
+assert(PLATFORM_SIDE_CLEARANCE > 0);
+assert(PLATFORM_TOTAL_T < EXTENDED_NET_PLATFORM_CLEAR);
+assert(PLATFORM_T > 0);
 assert(PLATFORM_BEARING_BOSS_D > CLUTCH_BEARING_SEAT_D + 1.0);
 assert(CLUTCH_BEARING_SEAT_END_Z < -PLATFORM_PIN_HOLE_D / 2);
 assert(CLUTCH_BEARING_RETAINER_OD < CLUTCH_BEARING_RETAINER_RECESS_D);

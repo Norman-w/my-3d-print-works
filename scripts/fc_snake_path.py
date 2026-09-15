@@ -8,6 +8,7 @@ import math
 from typing import Any
 
 from fc_config import (
+    DEFAULT_DRIVE_RPM,
     DEFAULT_SELECTOR_SPEED_MM_S,
     HTD_BELT_THICKNESS_MM,
     HTD_BELT_WIDTH_MM,
@@ -326,6 +327,19 @@ def selector_timeline(path: dict[str, Any], target_index: int, speed_mm_s: float
         "rpm": pulley_rpm(speed_mm_s),
     }
 
+def _nearest_anchor_index(path: dict[str, Any], distance: float) -> int | None:
+    anchors = path.get("anchors") or {}
+    if not anchors:
+        return None
+    best_index = None
+    best_delta = float("inf")
+    for raw_index, raw_distance in anchors.items():
+        delta = abs(float(raw_distance) - distance)
+        if delta < best_delta:
+            best_delta = delta
+            best_index = int(raw_index)
+    return best_index
+
 def visible_tooth_samples(path: dict[str, Any], distance: float, pool: int = 36) -> list[dict[str, float]]:
     loop = path.get("loop") or []
     length = float(path.get("loopLength") or 0.0)
@@ -345,7 +359,7 @@ def visible_tooth_samples(path: dict[str, Any], distance: float, pool: int = 36)
             break
     return picked
 
-def selector_pose(path: dict[str, Any], target_index: int, elapsed: float, speed_mm_s: float) -> dict[str, Any]:
+def selector_pose(path: dict[str, Any], target_index: int, elapsed: float, speed_mm_s: float, drive_rpm: float | None = None) -> dict[str, Any]:
     timeline = selector_timeline(path, target_index, speed_mm_s)
     cycle = elapsed % timeline["total"] if timeline["total"] else 0.0
     accumulated = 0.0
@@ -368,6 +382,28 @@ def selector_pose(path: dict[str, Any], target_index: int, elapsed: float, speed
     else:
         distance = 0.0
     position = _point_at(path["working"], distance)
+    if phase_index == 1:
+        engagement = eased
+    elif phase_index == 2:
+        engagement = 1.0
+    elif phase_index == 3:
+        engagement = 1.0 - eased
+    else:
+        engagement = 0.0
+    power_on = phase_index == 2
+    # The powered axis is stopped, not reset, when RELEASE/RETURN begins.
+    # Keep its absolute angle across repeated preview cycles so the model does
+    # not visibly snap back to zero at the phase boundary.
+    total = float(timeline["total"] or 0.0)
+    cycle_number = int(max(0.0, elapsed) // total) if total > 0.0 else 0
+    drive_start = sum(timeline["durations"][:2])
+    drive_elapsed_in_cycle = _clamp(cycle - drive_start, 0.0, timeline["durations"][2])
+    if cycle < drive_start:
+        drive_elapsed_in_cycle = 0.0
+    drive_elapsed = cycle_number * timeline["durations"][2] + drive_elapsed_in_cycle
+    effective_drive_rpm = max(0.0, float(drive_rpm if drive_rpm is not None else path.get("driveRpm") or DEFAULT_DRIVE_RPM))
+    drive_deg = 360.0 * effective_drive_rpm * max(0.0, drive_elapsed) / 60.0
+    passing_index = _nearest_anchor_index(path, distance)
     drive_r = float(path.get("drive", {}).get("pitchRadius") or drive_pitch_radius_mm())
     spools = []
     for pulley in path.get("pulleys") or [path.get("drive")]:
@@ -388,8 +424,15 @@ def selector_pose(path: dict[str, Any], target_index: int, elapsed: float, speed
         "cycle": cycle,
         "position": position,
         "distance": distance,
-        "engaged": phase_index in (1, 2) or (phase_index == 3 and progress < 0.5),
-        "busOn": phase_index == 2,
+        "engaged": engagement >= 0.999,
+        "engagement": round(engagement, 6),
+        "busOn": power_on,
+        "powerOn": power_on,
+        "driveDeg": drive_deg,
+        "driveRpm": effective_drive_rpm,
+        "selectedIndex": target_index if engagement > 0.001 else None,
+        "drivenIndex": target_index if cycle_number > 0 or phase_index >= 2 else None,
+        "passingIndex": passing_index,
         "selecting": phase_index in (0, 4),
         "pulleyDeg": no_slip_deg(distance, drive_r, 1.0),
         "spools": spools,
@@ -426,7 +469,13 @@ def loop_pose(path: dict[str, Any], elapsed: float, speed_mm_s: float) -> dict[s
         "position": position,
         "distance": distance,
         "engaged": False,
+        "engagement": 0.0,
         "busOn": False,
+        "powerOn": False,
+        "driveDeg": 0.0,
+        "driveRpm": 0.0,
+        "selectedIndex": None,
+        "drivenIndex": None,
         "selecting": True,
         "pulleyDeg": no_slip_deg(distance, drive_r, 1.0),
         "spools": spools,

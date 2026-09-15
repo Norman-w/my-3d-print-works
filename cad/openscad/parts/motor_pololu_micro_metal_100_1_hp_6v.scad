@@ -99,19 +99,30 @@ module rear_terminals() {
 //#endregion
 
 //#region 公开 API
+module pololu_micro_metal_motor_100_1_hp_6v_body() {
+    // Keep the purchased motor body and the output shaft as separate solids.
+    // The assembly preview can then rotate only the real output shaft, while
+    // the gearbox and can remain fixed in the motor mount.
+    gearbox_body();
+    motor_can();
+    rear_terminals();
+}
+
 module pololu_micro_metal_motor_100_1_hp_6v() {
-    union() {
-        gearbox_body();
-        motor_can();
-        d_shaft();
-        rear_terminals();
-    }
+    pololu_micro_metal_motor_100_1_hp_6v_body();
+    d_shaft();
 }
 
 module pololu_micro_metal_motor_100_1_hp_6v_colored() {
     color("#aeb7c2") gearbox_body();
     color("#343a40") motor_can();
     color("#d6d9dc") d_shaft();
+    color("#c28b35") rear_terminals();
+}
+
+module pololu_micro_metal_motor_100_1_hp_6v_body_colored() {
+    color("#aeb7c2") gearbox_body();
+    color("#343a40") motor_can();
     color("#c28b35") rear_terminals();
 }
 //#endregion

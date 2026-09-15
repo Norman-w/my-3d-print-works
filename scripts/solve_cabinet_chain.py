@@ -29,6 +29,21 @@ TEN_TRAVEL = 10.0
 PITCH_TOL = 0.02
 CLOSE_TOL = 0.05
 
+# 方案 1 选择离合的网页/SCAD 共用装配参数（单位 mm）。输入轮与输出轮
+# 同轴，狗牙面默认开 2.6 mm；输出狗牙向输入侧移动 2.5 mm 后只剩 0.1 mm
+# 端面间隙，作为“已啮合”展示状态。
+CHAIN_Y = 75.0
+SCHEME1_POWER_Y_OFFSET = -5.20
+SCHEME1_OUTPUT_Y_OFFSET = 5.20
+SCHEME1_DOG_INPUT_Y_OFFSET = -1.80
+SCHEME1_DOG_OUTPUT_Y_OFFSET = 1.80
+SCHEME1_DOG_ENGAGED_Y_OFFSET = -0.70
+SCHEME1_OPEN_GAP = 2.60
+SCHEME1_ENGAGE_STROKE = 2.50
+# 与 12T 链轮在 1 Hz 时的理论链速一致；网页再按当前 Hz 比例缩放，
+# 让拨叉在运输阶段沿真实销轴路径同步移动。
+SCHEME1_SELECTOR_SPEED = SPROCKET_TEETH * P
+
 BAY_W = (GRID_W - (N_COL - 1) * DIV_T) / N_COL
 BAY_H = (REF_GRID_H - (REF_ROWS - 1) * SHELF_T) / REF_ROWS
 ROW_PITCH = BAY_H + SHELF_T
@@ -246,6 +261,11 @@ def entry_c() -> Vec:
     return (wall_inset() + drive_pitch_r(), row_center_z(N_ROW - 1) - drive_pitch_r())
 
 
+def power_c() -> Vec:
+    """High-X top turn: rear-view-left D-shaft power wheel."""
+    return right_sprocket_c(row_center_z(N_ROW - 1))
+
+
 def ten_home_z() -> float:
     return WALL + drive_outer_r() + 1.2
 
@@ -416,11 +436,12 @@ def write_gen(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> Non
 
 def motion_wheels(tz: float) -> list[dict]:
     wheels = [
+        {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
         {"id": "entry", "kind": "sprocket", "teeth": 12, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
         {"id": "drive", "kind": "sprocket", "teeth": 12, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
         {"id": "tensioner", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
     ]
-    for row, z in (("4", row_center_z(4)), ("2", row_center_z(2)), ("0", row_center_z(0))):
+    for row, z in (("2", row_center_z(2)), ("0", row_center_z(0))):
         c = right_sprocket_c(z)
         wheels.append({"id": f"r12-{row}", "kind": "sprocket", "teeth": 12, "sign": -1, "x": c[0], "z": c[1]})
     for row, z in (("3", row_center_z(3)), ("1", row_center_z(1))):
@@ -435,11 +456,35 @@ def motion_wheels(tz: float) -> list[dict]:
     return wheels
 
 
+def scheme1_stations() -> list[dict]:
+    """Return drawer stations in the same serpentine order as the selector path."""
+    stations = []
+    order = 0
+    for path_row, row in enumerate(range(N_ROW - 1, -1, -1)):
+        columns = range(N_COL) if path_row % 2 == 0 else range(N_COL - 1, -1, -1)
+        for col in columns:
+            stations.append({
+                "id": f"drawer-r{row + 1}c{col + 1}",
+                "order": order,
+                "row": row,
+                "col": col,
+                "x": round(col_center_x(col), 6),
+                "z": round(row_center_z(row), 6),
+                "powerY": round(CHAIN_Y + SCHEME1_POWER_Y_OFFSET, 6),
+                "outputY": round(CHAIN_Y + SCHEME1_OUTPUT_Y_OFFSET, 6),
+                "dogInputY": round(CHAIN_Y + SCHEME1_DOG_INPUT_Y_OFFSET, 6),
+                "dogOutputY": round(CHAIN_Y + SCHEME1_DOG_OUTPUT_Y_OFFSET, 6),
+                "dogEngagedY": round(CHAIN_Y + SCHEME1_DOG_ENGAGED_Y_OFFSET, 6),
+            })
+            order += 1
+    return stations
+
+
 def write_motion(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> None:
     payload = {
         "p": P,
         "driveTeeth": SPROCKET_TEETH,
-        "chainY": 60.0 + 3.0 + 12.0,
+        "chainY": CHAIN_Y,
         "tenZ": tz,
         "pins": [[round(x, 6), round(z, 6)] for x, z in pins],
         "wheels": [
@@ -454,6 +499,14 @@ def write_motion(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> 
             }
             for w in wheels
         ],
+        "scheme1": {
+            "scheme": "scheme1-clutch-selective-drive",
+            "selectorSpeed": SCHEME1_SELECTOR_SPEED,
+            "openGap": SCHEME1_OPEN_GAP,
+            "engageStroke": SCHEME1_ENGAGE_STROKE,
+            "stations": scheme1_stations(),
+            "selectorStart": 0,
+        },
     }
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 

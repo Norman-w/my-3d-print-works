@@ -16,5 +16,6 @@ else if (PART == "assembly")
 //#endregion
 
 //#region 业务逻辑
-// 固定端面到第一道夹片槽 6.42 mm；两夹片内侧净距 10 mm；总销长 17.50 mm。
+// 固定头内侧面到第一道夹片槽中心 6.42 mm；两夹片内侧净距 10 mm；
+// 销杆有效长 17.50 mm，固定头外伸后独立 STL 总包络 17.90 mm。
 //#endregion

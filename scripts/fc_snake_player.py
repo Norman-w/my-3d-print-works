@@ -13,7 +13,8 @@ _ROOT = _SCRIPTS.parent
 if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
-from fc_snake_path import loop_pose
+from fc_config import DEFAULT_DRIVE_RPM
+from fc_snake_path import selector_pose
 from fc_snake_parts import apply_mechanism
 
 # ===== 分区：常量/配置 =====
@@ -34,7 +35,7 @@ PAINT_ONCE = {
 
 # ===== 分区：模型/类型 =====
 class SnakePlayer:
-    """闭带循环：拨叉夹在带子上，带轮按 θ=s/R 转。"""
+    """方案 1：选格、停稳、单离合接合、单抽屉驱动，再释放回 HOME。"""
 
     def __init__(self, doc, animation: dict):
         self.doc = doc
@@ -47,7 +48,7 @@ class SnakePlayer:
         App, Gui, QtCore = _apps()
         _disable_qt_accessibility()
         _activate_model_view(Gui, self.doc)
-        pose = loop_pose(self.animation, 0.0, float(self.animation.get("speedMmS") or 120.0))
+        pose = self._pose()
         apply_mechanism(self.doc, App, self.animation, pose)
         self._prepare_view(Gui)
         self._timer = QtCore.QTimer()
@@ -57,8 +58,8 @@ class SnakePlayer:
             Gui.getMainWindow()._snake_player = self
         except Exception:
             pass
-        _heartbeat("START", 0.0, 0.0)
-        _console("闭带循环：皮带节线贴 20T 节圆，绿色拨叉是固定夹具，正转周而复始。")
+        _heartbeat(pose["phaseLabel"], 0.0, pose["distance"])
+        _console("方案1：选择带先定位并停稳；只接合目标离合，再开启动力轴；释放后断开并回HOME。")
 
     def stop(self) -> None:
         if self._timer is not None:
@@ -73,15 +74,25 @@ class SnakePlayer:
 
     def _tick_impl(self) -> None:
         App, _, _ = _apps()
-        speed = float(self.animation.get("speedMmS") or 120.0)
-        pose = loop_pose(self.animation, self.elapsed, speed)
+        pose = self._pose()
         apply_mechanism(self.doc, App, self.animation, pose)
         _heartbeat(pose["phaseLabel"], self.elapsed, pose["distance"])
-        rpm = pose["timeline"]["rpm"]
-        length = float(pose.get("loopLength") or self.animation.get("loopLength") or 0.0)
+        timeline = pose["timeline"]
+        length = float(pose.get("workingLength") or self.animation.get("workingLength") or 0.0)
         if int(self.elapsed * 2) != int((self.elapsed - TICK_MS / 1000.0) * 2):
-            _status(None, f"LOOP  s={pose['distance']:.0f}/{length:.0f}mm  n={rpm:.0f}rpm")
+            selected = pose.get("selectedIndex")
+            target = pose.get("targetIndex")
+            clutch = "ENGAGED" if pose.get("engaged") else ("MOVING" if pose.get("engagement", 0.0) > 0.0 else "OPEN")
+            power = "POWER ON" if pose.get("powerOn") else "POWER OFF"
+            selected_text = "-" if selected is None else str(int(selected) + 1)
+            _status(None, f"{pose['phaseLabel']}  目标={int(target) + 1}格  当前={selected_text}  离合={clutch}  {power}  s={pose['distance']:.0f}/{length:.0f}mm  n={timeline['rpm']:.0f}rpm")
         self.elapsed += TICK_MS / 1000.0
+
+    def _pose(self) -> dict:
+        target = int(self.animation.get("targetIndex") or 0)
+        speed = float(self.animation.get("speedMmS") or 120.0)
+        drive_rpm = float(self.animation.get("driveRpm") or DEFAULT_DRIVE_RPM)
+        return selector_pose(self.animation, target, self.elapsed, speed, drive_rpm)
 
     def _prepare_view(self, Gui) -> None:
         for obj in self.doc.Objects:
@@ -102,6 +113,10 @@ class SnakePlayer:
                 continue
             if name.startswith(("MotorA_", "BusShaft", "RowShaft", "RowGear", "Takeoff", "DriveBelt")):
                 vo.Transparency = 55
+                continue
+            if name.startswith(("ClutchFixed_", "ClutchSliding_", "RowCouplerGear_")):
+                vo.Visibility = True
+                vo.Transparency = 0
                 continue
             if name.startswith("SelectorFinger"):
                 vo.ShapeColor = (0.12, 0.92, 0.28)

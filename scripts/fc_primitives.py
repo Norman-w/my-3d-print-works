@@ -82,6 +82,25 @@ def add_gear_disc(doc, Part, App, name: str, x: float, y: float, z: float, radiu
         shape = shape.fuse(tooth)
     return add_feature(doc, shape, name, color, 0.1)
 
+def add_placed_gear_disc(doc, Part, App, name: str, x: float, y: float, z: float, radius: float, thickness: float, teeth: int, color=(220, 190, 120), alpha=0.1):
+    """Add a gear disc in local coordinates so Placement rotates about its axis."""
+    origin = _vec(App, 0, 0, 0)
+    shape = Part.makeCylinder(radius * 0.88, thickness, origin)
+    ring = Part.makeCylinder(radius, thickness * 0.7, origin)
+    shape = shape.fuse(ring)
+    tooth_count = max(8, int(teeth))
+    for i in range(tooth_count):
+        angle = (360.0 / tooth_count) * i
+        tooth = Part.makeBox(
+            3.6,
+            radius * 0.32,
+            thickness * 0.38,
+            _vec(App, radius * 0.65, -radius * 0.16, thickness * 0.3),
+        )
+        tooth.rotate(origin, _vec(App, 0, 0, 1), angle)
+        shape = shape.fuse(tooth)
+    return add_placed_shape(doc, App, name, shape, x, y, z, color, alpha)
+
 def make_htd_pulley_shape(Part, App, teeth: int, pitch_mm: float, width: float, toothed: bool = True):
     from fc_htd import htd_pulley_shape
     return htd_pulley_shape(Part, App, teeth, pitch_mm, width)

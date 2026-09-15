@@ -19,18 +19,27 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dde8; }
     .app { position: relative; width: 100%; height: 100%; overflow: hidden; }
-    aside { position: absolute; top: 16px; left: 16px; z-index: 10; width: min(340px, calc(100vw - 32px)); height: min(calc(100% - 32px), 900px); border: 1px solid #243044; border-radius: 12px; padding: 10px; overflow: hidden; background: rgba(18, 23, 34, .96); box-shadow: 0 16px 40px rgba(0, 0, 0, .34); display: flex; flex-direction: column; min-width: 0; transition: width .16s ease, height .16s ease, padding .16s ease, border-radius .16s ease; }
+    .floating-panel { position: absolute; top: 16px; left: 16px; z-index: 10; width: min(340px, calc(100vw - 32px)); height: min(calc(100% - 32px), 900px); border: 1px solid #243044; border-radius: 12px; padding: 10px; overflow: hidden; background: rgba(18, 23, 34, .96); box-shadow: 0 16px 40px rgba(0, 0, 0, .34); display: flex; flex-direction: column; min-width: 0; transition: width .16s ease, height .16s ease, padding .16s ease, border-radius .16s ease; }
+    .view-panel { z-index: 11; width: min(280px, calc(100vw - 32px)); height: auto; max-height: min(calc(100% - 32px), 900px); }
     .tree-header { display: flex; align-items: flex-start; gap: 8px; min-height: 34px; cursor: grab; touch-action: none; user-select: none; }
-    .tree-header.dragging { cursor: grabbing; }
+    .tree-header.dragging, .view-panel-header.dragging { cursor: grabbing; }
+    .view-panel-header { display: flex; align-items: center; gap: 8px; min-height: 34px; cursor: grab; touch-action: none; user-select: none; }
+    .panel-title { min-width: 0; flex: 1; font-size: 15px; font-weight: 700; }
     .tree-title { min-width: 0; flex: 1; }
     .tree-title h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .tree-collapse { flex: 0 0 28px; width: 28px; height: 28px; padding: 0; font-size: 16px; line-height: 1; }
+    .panel-collapse { flex: 0 0 28px; width: 28px; height: 28px; padding: 0; font-size: 16px; line-height: 1; }
     .tree-body { min-height: 0; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     .tree-panel.dragging { transition: none; }
     .tree-panel.collapsed { width: 44px; height: 44px; padding: 6px; border-radius: 10px; }
     .tree-panel.collapsed .tree-header { min-height: 32px; }
     .tree-panel.collapsed .tree-title, .tree-panel.collapsed .tree-body { display: none; }
     .tree-panel.collapsed .tree-collapse { width: 32px; height: 32px; margin: 0; }
+    .view-panel.dragging { transition: none; }
+    .view-panel.collapsed { width: 44px; height: 44px; padding: 6px; border-radius: 10px; }
+    .view-panel.collapsed .view-panel-header { min-height: 32px; }
+    .view-panel.collapsed .panel-title, .view-panel.collapsed .view-panel-body { display: none; }
+    .view-panel.collapsed .panel-collapse { width: 32px; height: 32px; margin: 0; }
     h1 { margin: 0 0 8px; font-size: 16px; }
     .meta, .hint { color: #8b98ab; font-size: 12px; line-height: 1.5; }
     .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
@@ -39,16 +48,11 @@
     button:hover { background: #243044; }
     button:focus-visible { outline: 2px solid #f97316; outline-offset: 2px; }
     button.on { background: #f97316; border-color: #fb923c; color: #1a1208; }
-    .view-section { flex: 0 0 auto; margin: 2px 0 8px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; overflow: hidden; }
-    .section-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 42px; padding: 8px 10px; border: 0; border-radius: 0; background: transparent; color: #d7dde8; text-align: left; font-size: 13px; font-weight: 650; }
-    .section-toggle:hover { background: #182232; }
-    .section-toggle .chevron { color: #8b98ab; font-size: 16px; }
-    .view-body { padding: 0 8px 8px; }
+    .view-panel-body { min-height: 0; overflow: auto; padding: 2px 0 2px; }
     .view-group-label { margin: 4px 2px 6px; color: #8b98ab; font-size: 11px; }
     .view-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
     .view-button { min-width: 0; min-height: 44px; padding: 6px 7px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .view-button.active { background: #28506a; border-color: #5b9fd6; color: #e8f3ff; box-shadow: inset 0 0 0 1px rgba(91, 159, 214, .25); }
-    .view-section.collapsed .view-body { display: none; }
     button:disabled { opacity: .5; cursor: default; }
     input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
     input[type="range"] { width: 100%; cursor: pointer; accent-color: #f97316; }
@@ -91,7 +95,7 @@
     </div>
   </div>
   <div class="app" id="preview-app">
-    <aside class="tree-panel" id="tree-panel">
+    <aside class="floating-panel tree-panel" id="tree-panel">
       <div class="tree-header">
         <div class="tree-title">
           <h1 id="title">STL 预览</h1>
@@ -102,27 +106,6 @@
       <div class="tree-body">
       <label class="meta">爆炸程度 <output id="explode-out">0</output>%</label>
       <input id="explode-range" type="range" min="0" max="100" value="0" />
-      <section class="view-section" id="view-section">
-        <button type="button" class="section-toggle" id="views-toggle" aria-expanded="true">
-          <span>视角</span><span class="chevron" id="views-chevron">⌃</span>
-        </button>
-        <div class="view-body" id="views-body">
-          <div class="view-group-label">标准</div>
-          <div class="view-grid">
-            <button type="button" class="view-button" data-view="front" aria-pressed="false">正视图</button>
-            <button type="button" class="view-button" data-view="left" aria-pressed="false">左视图</button>
-            <button type="button" class="view-button" data-view="rear" aria-pressed="false">后视图</button>
-            <button type="button" class="view-button" data-view="iso" aria-pressed="false">等轴视图</button>
-          </div>
-          <div class="view-group-label">机构</div>
-          <div class="view-grid">
-            <button type="button" class="view-button" data-view="snake" aria-pressed="false">蛇形结构</button>
-            <button type="button" class="view-button" data-view="drawer-drive" aria-pressed="false">开合驱动</button>
-            <button type="button" class="view-button" data-view="upper-tensioner" aria-pressed="false">上方张紧</button>
-            <button type="button" class="view-button" data-view="lower-tensioner" aria-pressed="false">下方张紧</button>
-          </div>
-        </div>
-      </section>
       <div class="play">
         <label class="meta" for="hz-range">链条循环 <output class="hz-out" id="hz-out">1 Hz · 顺时针</output></label>
         <input id="hz-range" type="range" min="0" max="5" step="1" value="2" />
@@ -154,9 +137,33 @@
       <div id="parts"></div>
       </div>
     </aside>
+    <aside class="floating-panel view-panel" id="view-panel">
+      <div class="view-panel-header">
+        <div class="panel-title">视角</div>
+        <button type="button" class="panel-collapse" id="views-toggle" aria-expanded="true" aria-label="折叠视角" title="折叠视角">
+          <span class="chevron" id="views-chevron">‹</span>
+        </button>
+      </div>
+      <div class="view-panel-body" id="views-body">
+        <div class="view-group-label">标准</div>
+        <div class="view-grid">
+          <button type="button" class="view-button" data-view="front" aria-pressed="false">正视图</button>
+          <button type="button" class="view-button" data-view="left" aria-pressed="false">左视图</button>
+          <button type="button" class="view-button" data-view="rear" aria-pressed="false">后视图</button>
+          <button type="button" class="view-button" data-view="iso" aria-pressed="false">等轴视图</button>
+        </div>
+        <div class="view-group-label">机构</div>
+        <div class="view-grid">
+          <button type="button" class="view-button" data-view="snake" aria-pressed="false">蛇形结构</button>
+          <button type="button" class="view-button" data-view="drawer-drive" aria-pressed="false">开合驱动</button>
+          <button type="button" class="view-button" data-view="upper-tensioner" aria-pressed="false">上方张紧</button>
+          <button type="button" class="view-button" data-view="lower-tensioner" aria-pressed="false">下方张紧</button>
+        </div>
+      </div>
+    </aside>
     <canvas id="c"></canvas>
   </div>
-    <script type="module" src="./app.js?v=view-column-1"></script>
+    <script type="module" src="./app.js?v=view-popup-2"></script>
   <!-- endregion -->
 </body>
 </html>

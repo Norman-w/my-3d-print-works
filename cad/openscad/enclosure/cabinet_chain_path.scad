@@ -79,8 +79,14 @@ function entry_c() = [
     0
 ];
 
-// 背面观察时的右上角 = 正面观察时的左上角；这里是低 X 的入口轮。
-function power_c() = entry_c();
+// 后方朝前看时，动力轮在左上角；后视左右反转，因此动力位选用高 X
+// 侧的第一只右侧转向轮。低 X 的 entry_c() 仍是普通导向轮。
+function power_c() = right_sprocket_c(row_center_z(N_ROW - 1));
+
+function right_turn_sprockets_without_power() = [
+    right_sprocket_c(row_center_z(2)),
+    right_sprocket_c(row_center_z(0))
+];
 
 function ten_path_c() = [
     return_x() + drive_pitch_r(),
@@ -123,7 +129,8 @@ function wheel_pose_rot(x, z) =
 //#region 业务逻辑
 // 销轴由 solve_cabinet_chain.py 按弦长 P 走出；只动底端张紧轮 Z 闭合闭环。
 // 每对 12T+钝齿节圆外切，外侧链条竖齐。5 层奇数，底仓横穿后进张紧 U。
-// 后视右 = 柜体 −X；用户定义的右上动力位是 power_c()/entry_c()，drive_c() 是下方服务回程轮位。
+// 后视左 = 柜体 +X；power_c() 是高 X 的右侧转向轮，entry_c() 是低 X
+// 的普通导向轮，drive_c() 是下方服务回程轮位。
 //#endregion
 
 //#region 方法/工具

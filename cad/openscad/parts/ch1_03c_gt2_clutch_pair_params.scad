@@ -1,0 +1,335 @@
+// CH1 03C 打印版 GT2 复合子母轮 — 参数真值源
+// 单位：毫米；打印坐标轴为 Z，装配时通过旋转让轴向回到世界 Y。
+
+//#region 导入/依赖
+// 无外部依赖。花键啮合轮沿用 CH1 03C X1C 细版的 2.4 mm 节距。
+//#endregion
+
+//#region 常量/配置
+GT2_CLUTCH_MODEL = is_undef(GT2_CLUTCH_MODEL)
+    ? "assembly"
+    : GT2_CLUTCH_MODEL;
+
+// 长花键轴位置基准：10T / 2.4 mm；仅用于啮合和皮带避让计算。
+GT2_LONG_TEETH = 10;
+GT2_LONG_PITCH_MM = 2.4;
+GT2_LONG_TOOTH_DEPTH = 0.60;
+
+// 子轮改为 15T。它仍与长轴共用 2.4 mm 节距，增加的齿数同时带来更大的
+// 节圆和更大的中心距，不靠任意平移破坏齿轮啮合。
+GT2_MALE_TEETH = is_undef(GT2_MALE_TEETH)
+    ? 15
+    : GT2_MALE_TEETH;
+GT2_MALE_PITCH_MM = is_undef(GT2_MALE_PITCH_MM)
+    ? GT2_LONG_PITCH_MM
+    : GT2_MALE_PITCH_MM;
+GT2_MALE_TOOTH_DEPTH = is_undef(GT2_MALE_TOOTH_DEPTH)
+    ? 0.60
+    : GT2_MALE_TOOTH_DEPTH;
+GT2_MALE_GEAR_T = is_undef(GT2_MALE_GEAR_T)
+    ? 2.40
+    : GT2_MALE_GEAR_T;
+GT2_GEAR_MESH_CLEARANCE = is_undef(GT2_GEAR_MESH_CLEARANCE)
+    ? 0.12
+    : GT2_GEAR_MESH_CLEARANCE;
+
+// 现有圆角三角离合接口保持不变，只跟随新的共同圆心整体外移。
+GT2_DOG_BASE_R = 2.95;
+GT2_DOG_BASE_T = 1.00;
+GT2_DOG_INTERFACE_R = 2.95;
+GT2_DOG_INTERFACE_HEAD_R = 0.30;
+GT2_DOG_INTERFACE_H = 0.75;
+GT2_DOG_INTERFACE_ROTATION_DEG = 30;
+GT2_DOG_GEAR_OVERLAP = 0.20;
+GT2_DOG_INTERFACE_OVERLAP = 0.10;
+
+// 打印轴孔：名义 Ø3 mm D 轴；D 平面保留打印配合余量。
+GT2_D_AXIS_D = 3.00;
+GT2_D_AXIS_FLAT_DEPTH = 0.50;
+GT2_D_BORE_RADIAL_CLEARANCE = 0.15;
+GT2_D_BORE_FLAT_CLEARANCE = 0.12;
+
+// 标准 2GT/GT2：2 mm 节距、12T、6 mm 皮带。打印轮不带法兰或大轮毂。
+GT2_PULLEY_TEETH = is_undef(GT2_PULLEY_TEETH)
+    ? 12
+    : GT2_PULLEY_TEETH;
+GT2_PULLEY_PITCH_MM = is_undef(GT2_PULLEY_PITCH_MM)
+    ? 2.0
+    : GT2_PULLEY_PITCH_MM;
+GT2_BELT_WIDTH = is_undef(GT2_BELT_WIDTH)
+    ? 6.0
+    : GT2_BELT_WIDTH;
+GT2_PULLEY_FACE_T = is_undef(GT2_PULLEY_FACE_T)
+    ? 7.20
+    : GT2_PULLEY_FACE_T;
+GT2_PULLEY_PLD = is_undef(GT2_PULLEY_PLD)
+    ? 0.254
+    : GT2_PULLEY_PLD;
+GT2_PULLEY_TOOTH_DEPTH = is_undef(GT2_PULLEY_TOOTH_DEPTH)
+    ? 0.75
+    : GT2_PULLEY_TOOTH_DEPTH;
+GT2_PULLEY_ROOT_CLEARANCE = is_undef(GT2_PULLEY_ROOT_CLEARANCE)
+    ? 0.06
+    : GT2_PULLEY_ROOT_CLEARANCE;
+
+// 皮带最外侧不是简单的“带轮外径 + 皮带总厚度”。这里按节圆外侧的
+// 保守回弹包络预算 0.90 mm，已包含标准背胶厚度和首件误差，用于最坏方向
+// 的花键轴避让检查；该包络只在缩略图显示，不导出到 STL。
+GT2_BELT_BACK_OFFSET = is_undef(GT2_BELT_BACK_OFFSET)
+    ? 0.90
+    : GT2_BELT_BACK_OFFSET;
+GT2_BELT_GUIDE_R_MARGIN = is_undef(GT2_BELT_GUIDE_R_MARGIN)
+    ? 0.05
+    : GT2_BELT_GUIDE_R_MARGIN;
+GT2_BELT_GUIDE_LIP_T = is_undef(GT2_BELT_GUIDE_LIP_T)
+    ? 0.30
+    : GT2_BELT_GUIDE_LIP_T;
+GT2_BELT_RADIAL_CLEARANCE = is_undef(GT2_BELT_RADIAL_CLEARANCE)
+    ? 0.45
+    : GT2_BELT_RADIAL_CLEARANCE;
+
+// 母座的圆角三角母槽和最大硬件外圈保持旧值；GT2 齿圈位于母座另一侧的
+// 独立轴向层，因此不会填平母槽，也不需要法兰。
+GT2_MOTHER_OUTER_R = is_undef(GT2_MOTHER_OUTER_R)
+    ? 3.80
+    : GT2_MOTHER_OUTER_R;
+GT2_MOTHER_T = is_undef(GT2_MOTHER_T) ? 1.00 : GT2_MOTHER_T;
+GT2_MOTHER_POCKET_DEPTH = is_undef(GT2_MOTHER_POCKET_DEPTH)
+    ? 0.75
+    : GT2_MOTHER_POCKET_DEPTH;
+GT2_MOTHER_POCKET_CLEARANCE = is_undef(GT2_MOTHER_POCKET_CLEARANCE)
+    ? 0.25
+    : GT2_MOTHER_POCKET_CLEARANCE;
+GT2_MOTHER_PULLEY_OVERLAP = is_undef(GT2_MOTHER_PULLEY_OVERLAP)
+    ? 0.20
+    : GT2_MOTHER_PULLEY_OVERLAP;
+
+GT2_EPS = 0.05;
+//#endregion
+
+//#region 尺寸函数
+function gt2_pitch_r(teeth, pitch_mm) =
+    teeth * pitch_mm / (2 * PI);
+
+function gt2_root_r(teeth, pitch_mm, tooth_depth, root_clearance = 0) =
+    gt2_pitch_r(teeth, pitch_mm)
+        - (pitch_mm * 0.0 + tooth_depth)
+        - root_clearance;
+
+function gt2_tip_r(teeth, pitch_mm, pld) =
+    gt2_pitch_r(teeth, pitch_mm) - pld;
+
+function gt2_long_pitch_r() =
+    gt2_pitch_r(GT2_LONG_TEETH, GT2_LONG_PITCH_MM);
+
+function gt2_long_tip_r() =
+    gt2_long_pitch_r() + GT2_LONG_TOOTH_DEPTH;
+
+function gt2_male_pitch_r() =
+    gt2_pitch_r(GT2_MALE_TEETH, GT2_MALE_PITCH_MM);
+
+function gt2_male_tip_r() =
+    gt2_male_pitch_r() + GT2_MALE_TOOTH_DEPTH;
+
+function gt2_center_distance() =
+    gt2_long_pitch_r()
+        + gt2_male_pitch_r()
+        + GT2_GEAR_MESH_CLEARANCE;
+
+function gt2_old_center_distance() =
+    gt2_long_pitch_r()
+        + gt2_pitch_r(12, GT2_LONG_PITCH_MM)
+        + GT2_GEAR_MESH_CLEARANCE;
+
+function gt2_center_shift() =
+    gt2_center_distance() - gt2_old_center_distance();
+
+function gt2_pulley_pitch_r() =
+    gt2_pitch_r(GT2_PULLEY_TEETH, GT2_PULLEY_PITCH_MM);
+
+function gt2_pulley_tip_r() =
+    gt2_tip_r(
+        GT2_PULLEY_TEETH,
+        GT2_PULLEY_PITCH_MM,
+        GT2_PULLEY_PLD
+    );
+
+function gt2_pulley_root_r() =
+    gt2_pulley_tip_r()
+        - GT2_PULLEY_TOOTH_DEPTH
+        - GT2_PULLEY_ROOT_CLEARANCE;
+
+function gt2_belt_envelope_r() =
+    gt2_pulley_pitch_r() + GT2_BELT_BACK_OFFSET;
+
+function gt2_belt_guide_r() =
+    gt2_belt_envelope_r() + GT2_BELT_GUIDE_R_MARGIN;
+
+function gt2_belt_clearance_to_long_shaft() =
+    gt2_center_distance()
+        - gt2_long_tip_r()
+        - gt2_belt_envelope_r();
+
+function gt2_belt_guide_clearance_to_long_shaft() =
+    gt2_center_distance()
+        - gt2_long_tip_r()
+        - gt2_belt_guide_r();
+
+function gt2_mother_clearance_to_long_shaft() =
+    gt2_center_distance()
+        - gt2_long_tip_r()
+        - GT2_MOTHER_OUTER_R;
+
+function gt2_triangle_outer_r() =
+    GT2_DOG_INTERFACE_R + GT2_DOG_INTERFACE_HEAD_R;
+
+function gt2_triangle_inner_r() =
+    GT2_DOG_INTERFACE_R * cos(30)
+        - GT2_DOG_INTERFACE_HEAD_R;
+
+function gt2_mother_pocket_outer_r() =
+    gt2_triangle_outer_r() + GT2_MOTHER_POCKET_CLEARANCE;
+
+function gt2_male_spline_clearance() =
+    gt2_center_distance()
+        - gt2_long_tip_r()
+        - gt2_triangle_outer_r();
+
+function gt2_male_gear_points() =
+    let(
+        teeth = GT2_MALE_TEETH,
+        root_r = gt2_male_pitch_r() - GT2_MALE_TOOTH_DEPTH,
+        tip_r = gt2_male_tip_r()
+    )
+        gt2_gear_points(
+            teeth,
+            root_r,
+            tip_r,
+            0.18,
+            0.50,
+            0.75
+        );
+
+function gt2_long_gear_points() =
+    gt2_gear_points(
+        GT2_LONG_TEETH,
+        gt2_long_pitch_r() - GT2_LONG_TOOTH_DEPTH,
+        gt2_long_tip_r(),
+        0.18,
+        0.50,
+        0.75
+    );
+
+function gt2_gear_polar(r, a) = [r * cos(a), r * sin(a)];
+
+function gt2_gear_points(
+    teeth,
+    root_r,
+    tip_r,
+    tip_start,
+    tip_end,
+    root_end
+) = [
+    for (i = [0:teeth - 1])
+        for (p = [
+            [0.00, root_r],
+            [tip_start, tip_r],
+            [tip_end, tip_r],
+            [root_end, root_r]
+        ])
+            let (a = (i + p[0]) * 360 / teeth)
+                gt2_gear_polar(p[1], a)
+];
+
+// 2GT 圆弧齿的 FDM 友好多点近似：峰顶和过渡段留足圆弧趋势，槽底比
+// 名义值再深一点，避免 0.4 mm 喷嘴首件把皮带齿卡死。
+function gt2_pulley_points() =
+    let(
+        teeth = GT2_PULLEY_TEETH,
+        root_r = gt2_pulley_root_r(),
+        tip_r = gt2_pulley_tip_r(),
+        depth = tip_r - root_r,
+        profile = [
+            [0.00, 0.00],
+            [0.07, 0.10],
+            [0.14, 0.38],
+            [0.20, 0.82],
+            [0.26, 1.00],
+            [0.48, 1.00],
+            [0.54, 0.82],
+            [0.60, 0.38],
+            [0.67, 0.10],
+            [1.00, 0.00]
+        ]
+    ) [
+        for (i = [0:teeth - 1])
+            for (p = profile)
+                let (
+                    r = root_r + depth * p[1],
+                    a = (i + p[0]) * 360 / teeth
+                )
+                    gt2_gear_polar(r, a)
+    ];
+//#endregion
+
+//#region 业务校验
+assert(
+    GT2_CLUTCH_MODEL == "male"
+        || GT2_CLUTCH_MODEL == "female"
+        || GT2_CLUTCH_MODEL == "assembly",
+    "unknown GT2 clutch pair model"
+);
+assert(GT2_LONG_TEETH >= 6, "long spline shaft needs at least 6 teeth");
+assert(GT2_LONG_PITCH_MM > 0, "long spline pitch must be positive");
+assert(GT2_MALE_TEETH >= 8, "male mating gear needs at least 8 teeth");
+assert(
+    GT2_MALE_PITCH_MM == GT2_LONG_PITCH_MM,
+    "male mating gear pitch must match long spline shaft"
+);
+assert(
+    gt2_male_pitch_r() - GT2_MALE_TOOTH_DEPTH
+        > GT2_D_AXIS_D / 2 + GT2_D_BORE_RADIAL_CLEARANCE,
+    "male gear root must leave wall around the D bore"
+);
+assert(GT2_MALE_GEAR_T > 0, "male gear thickness must be positive");
+assert(GT2_DOG_BASE_R > GT2_D_AXIS_D / 2, "dog base needs a D-bore wall");
+assert(GT2_DOG_INTERFACE_H > 0, "dog interface depth must be positive");
+assert(gt2_triangle_inner_r() < GT2_DOG_BASE_R,
+    "rounded triangle must overlap its dog base");
+assert(
+    gt2_triangle_outer_r() < gt2_male_tip_r(),
+    "dog outer radius must remain below the male gear tip radius"
+);
+assert(GT2_PULLEY_TEETH == 12, "this compact envelope is reserved for 12T GT2");
+assert(GT2_PULLEY_PITCH_MM == 2.0, "pulley must use the 2 mm GT2 pitch");
+assert(GT2_BELT_WIDTH == 6.0, "pulley must be paired with a 6 mm belt");
+assert(
+    GT2_PULLEY_FACE_T >= GT2_BELT_WIDTH + 0.80,
+    "pulley face must leave side clearance for the belt guide lips"
+);
+assert(GT2_BELT_GUIDE_LIP_T > 0,
+    "belt guide lip thickness must be positive");
+assert(gt2_pulley_root_r() > GT2_D_AXIS_D / 2 + 0.75,
+    "GT2 pulley needs a printable wall around the D bore");
+assert(
+    2 * gt2_pulley_tip_r() < 2 * GT2_MOTHER_OUTER_R,
+    "GT2 tooth tips must stay inside the reserved mother outer envelope"
+);
+assert(
+    gt2_mother_pocket_outer_r() < GT2_MOTHER_OUTER_R,
+    "mother pocket must leave an outer ring wall"
+);
+assert(
+    gt2_belt_clearance_to_long_shaft() >= GT2_BELT_RADIAL_CLEARANCE,
+    "GT2 belt back envelope must clear the long spline shaft"
+);
+assert(
+    gt2_belt_guide_clearance_to_long_shaft()
+        >= GT2_BELT_RADIAL_CLEARANCE,
+    "GT2 belt guide lip must clear the long spline shaft"
+);
+assert(
+    gt2_mother_clearance_to_long_shaft() >= GT2_BELT_RADIAL_CLEARANCE,
+    "mother outer ring must clear the long spline shaft"
+);
+//#endregion

@@ -25,7 +25,7 @@ export PYTHONPATH="${SCRIPT_DIR}${PYTHONPATH:+:${PYTHONPATH}}"
 export PYTHONUNBUFFERED=1
 export QT_ACCESSIBILITY=0
 echo "通过 macOS Launch Services 打开 FreeCAD。"
-echo "闭带循环：橙色皮带贴 20T 节圆，绿色拨叉是带子上的固定夹具。"
+echo "方案1：选择带先定位停稳，单离合接合后才开启目标抽屉动力，释放后回 HOME。"
 open -n -a "${APP}" --args -P "${SCRIPT_DIR}" "${FCSTD}" "${ANIM}"
 sleep 2
 osascript -e 'tell application "FreeCAD" to activate' >/dev/null 2>&1 || true

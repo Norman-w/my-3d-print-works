@@ -15,6 +15,7 @@ HTD_DRIVE_TEETH = 20
 HTD_BELT_WIDTH_MM = 9.0
 HTD_BELT_THICKNESS_MM = 1.9
 DEFAULT_SELECTOR_SPEED_MM_S = 120.0
+DEFAULT_DRIVE_RPM = 24.0
 DEFAULT_TARGET_INDEX = 7
 NEMA17_FACE_MM = 42.0
 ISO_M3 = {"size": "M3", "d": 3.0, "dk": 5.5, "k": 3.0}
@@ -56,6 +57,7 @@ class Config:
     snake_links: int = 16
     fourier_ridges: int = 18
     selector_speed_mm_s: float = DEFAULT_SELECTOR_SPEED_MM_S
+    drive_rpm: float = DEFAULT_DRIVE_RPM
     target_index: int = DEFAULT_TARGET_INDEX
     out: str = "web/assets/stl"
     fcstd: str = "build/SmartPartsDrawer.FCStd"
@@ -91,6 +93,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--selector-mode", choices=SELECTOR_MODES, default=defaults.selector_mode, help="主仿真选择机构")
     parser.add_argument("--selector-steps", type=int, default=defaults.selector_steps, help="轨迹采样点数")
     parser.add_argument("--selector-speed", type=float, default=defaults.selector_speed_mm_s, help="蛇形弧长速度 mm/s")
+    parser.add_argument("--drive-rpm", type=float, default=defaults.drive_rpm, help="方案1接合后的目标抽屉动力轴转速 rpm")
     parser.add_argument("--target-index", type=int, default=defaults.target_index, help="默认目标格位")
     parser.add_argument("--cell-width", type=float, default=defaults.cell_width)
     parser.add_argument("--cell-depth", type=float, default=defaults.cell_depth)
@@ -128,6 +131,7 @@ def parse_args(argv=None) -> tuple[Config, argparse.Namespace]:
         selector_mode=args.selector_mode,
         selector_steps=max(8, args.selector_steps),
         selector_speed_mm_s=max(1.0, args.selector_speed),
+        drive_rpm=max(0.0, args.drive_rpm),
         target_index=max(0, args.target_index),
         cell_width=max(50.0, args.cell_width),
         cell_depth=max(50.0, args.cell_depth),

@@ -122,6 +122,7 @@ def write_manifest(out_dir: Path, cfg, manifest, mechanism_map) -> None:
             "widthTotal": cfg.width_total,
             "depthTotal": cfg.depth_total,
             "selectorSpeedMmS": cfg.selector_speed_mm_s,
+            "driveRpm": cfg.drive_rpm,
             "targetIndex": cfg.target_index,
         },
         "models": manifest,
