@@ -48,6 +48,10 @@ const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
 const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
 const DRAWER_ROTARY_IDS = new Map([
+  // 08 is the visible, real center-cell female body.  09 is only its hidden
+  // compatibility alias, but keeping both IDs here makes either tree entry
+  // rotate about the same rear 2GT axis when inspected manually.
+  ["cabinet-clutch/08_lower_upward_dog_candidate", 1],
   ["cabinet-clutch/09_rear_takeoff_timing_pulley_candidate", 1],
   ["cabinet-clutch/14_front_timing_pulley_candidate", 1],
   ["cabinet-clutch/15_front_pinion_candidate", 1],
@@ -58,6 +62,16 @@ const DRAWER_ROTARY_IDS = new Map([
 // loop and make it appear stationary in the preview.
 const DRAWER_PULLEY_TEETH = 12;
 const DRAWER_BELT_PITCH_MM = 2;
+const POWER_MOTOR_SHAFT_ID = "cabinet-clutch/cabinet_clutch_power_motor_shaft";
+const POWER_COLUMN_ID_PREFIX = "cabinet-clutch/cabinet_clutch_power_column_";
+const POWER_COLUMN_SYNC_BELT_IDS = new Set([
+  "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
+  "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
+]);
+const POWER_COLUMN_SYNC_TENSIONER_ID = "cabinet-clutch/cabinet_clutch_column_sync_tensioner";
+const POWER_COLUMN_COUNT = 5;
+const POWER_COLUMN_PULLEY_TEETH = 12;
+const POWER_COLUMN_BELT_PITCH_MM = 2;
 const SCHEME1_PHASE = {
   INDEX: "INDEX",
   ENGAGE: "ENGAGE",
@@ -83,8 +97,10 @@ const play = {
   chain: /** @type {ChainPart[]} */ ([]),
   wheels: /** @type {WheelPivot[]} */ ([]),
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
-  drawerBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,s:number[],radial:number[],yOffset:number[],lastPhase:number}>} */ ([]),
+  drawerBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,triangleS:number[],triangleAlong:number[],triangleRadial:number[],triangleYOffset:number[],lastPhase:number}>} */ ([]),
   drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
+  powerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
+  columnSyncBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,triangleS:number[],triangleAlong:number[],triangleRadial:number[],triangleYOffset:number[],lastPhase:number}>} */ ([]),
   scheme1: {
     ready: false,
     stationS: /** @type {number[]} */ ([]),
@@ -280,8 +296,14 @@ function playScene() {
 function replaceMesh(item, group, parent = playScene()) {
   if (!parent || !item.mesh) return;
   group.visible = item.mesh.visible;
+  // Keep the coordinate parent that app.js selected for this part.  Native
+  // cabinet-clutch STL files live directly in the world scene, while the
+  // older snake-chain files live under the legacy adapter.  Reparenting every
+  // animated mesh to legacyRoot silently applied the old -90° transform to
+  // drawer pulleys and was a major source of apparent belt breakage.
+  const currentParent = item.mesh.parent || parent;
   item.mesh.parent?.remove(item.mesh);
-  parent.add(group);
+  currentParent.add(group);
   item.mesh = group;
   item.box = new THREE.Box3().setFromObject(group);
 }
@@ -360,7 +382,11 @@ function buildDrawerBeltPath(geometry) {
   // canonical world frame: X is radial width, Y is belt width, Z is drawer
   // travel.
   const outerRadius = Math.max(1, size.x / 2);
-  const pitchRadius = Math.max(1, outerRadius - DRAWER_BELT_PITCH_MM * 0.6);
+  // The authored center belt is a 12T 2GT pulley.  Its STL outer radius is
+  // the belt back envelope, not the pitch radius; subtracting an arbitrary
+  // fraction of the pitch made every tooth sit inside the pulley root.  Keep
+  // the animation path on the exact mating pitch circle.
+  const pitchRadius = DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM / (2 * Math.PI);
   const z0 = bounds.min.z + outerRadius;
   const z1 = bounds.max.z - outerRadius;
   const y = (bounds.min.y + bounds.max.y) / 2;
@@ -451,42 +477,81 @@ function drawerPathNormal(sample) {
   return [-sample.tangent[2], sample.tangent[0]];
 }
 
-function buildDrawerBeltVertexMap(geometry, path) {
+function buildRigidBeltTriangleMap(geometry, path, projectPoint) {
   const position = geometry.getAttribute("position");
-  const s = new Float32Array(position.count);
-  const radial = new Float32Array(position.count);
-  const yOffset = new Float32Array(position.count);
-  for (let i = 0; i < position.count; i += 1) {
-    const x = position.getX(i);
-    const y = position.getY(i);
-    const z = position.getZ(i);
-    const projected = projectDrawerBeltPoint(path, x, z);
-    const sample = sampleDrawerBeltPath(path, projected);
-    const normal = drawerPathNormal(sample);
-    s[i] = projected;
-    radial[i] = (x - sample.point[0]) * normal[0] + (z - sample.point[2]) * normal[1];
-    yOffset[i] = y - path.y;
+  const triangleCount = Math.floor(position.count / 3);
+  const triangleS = new Float32Array(triangleCount);
+  const triangleAlong = new Float32Array(triangleCount * 3);
+  const triangleRadial = new Float32Array(triangleCount * 3);
+  const triangleYOffset = new Float32Array(triangleCount * 3);
+  for (let triangle = 0; triangle < triangleCount; triangle += 1) {
+    const offset = triangle * 3;
+    const cx = (
+      position.getX(offset)
+      + position.getX(offset + 1)
+      + position.getX(offset + 2)
+    ) / 3;
+    const cy = (
+      position.getY(offset)
+      + position.getY(offset + 1)
+      + position.getY(offset + 2)
+    ) / 3;
+    const cz = (
+      position.getZ(offset)
+      + position.getZ(offset + 1)
+      + position.getZ(offset + 2)
+    ) / 3;
+    const projected = projectPoint(path, cx, cz);
+    const sample = path.sample(projected);
+    const normal = path.normal(sample);
+    triangleS[triangle] = projected;
+    for (let k = 0; k < 3; k += 1) {
+      const vertex = offset + k;
+      const dx = position.getX(vertex) - sample.point[0];
+      const dz = position.getZ(vertex) - sample.point[2];
+      triangleAlong[vertex] = dx * sample.tangent[0] + dz * sample.tangent[2];
+      triangleRadial[vertex] = dx * normal[0] + dz * normal[1];
+      triangleYOffset[vertex] = position.getY(vertex) - path.y;
+    }
   }
-  return { s, radial, yOffset };
+  return { triangleS, triangleAlong, triangleRadial, triangleYOffset };
 }
 
-function poseDrawerBelt(belt, phaseMm) {
+function poseRigidBeltTriangles(belt, phaseMm) {
   if (Number.isFinite(belt.lastPhase) && Math.abs(belt.lastPhase - phaseMm) < 1e-6) return;
   const position = belt.mesh.geometry.getAttribute("position");
-  const { s, radial, yOffset } = belt;
-  for (let i = 0; i < position.count; i += 1) {
-    const sample = sampleDrawerBeltPath(belt.path, s[i] + phaseMm);
-    const normal = drawerPathNormal(sample);
-    position.setXYZ(
-      i,
-      sample.point[0] + normal[0] * radial[i],
-      sample.point[1] + yOffset[i],
-      sample.point[2] + normal[1] * radial[i],
-    );
+  const {
+    triangleS,
+    triangleAlong,
+    triangleRadial,
+    triangleYOffset,
+  } = belt;
+  const triangleCount = triangleS.length;
+  for (let triangle = 0; triangle < triangleCount; triangle += 1) {
+    // One frame is shared by all three vertices of a triangle.  Binary STL is
+    // non-indexed, so per-vertex projection shears the tooth faces at a wrap;
+    // the triangle anchor keeps each authored face rigid and connected.
+    const sample = belt.path.sample(triangleS[triangle] + phaseMm);
+    const normal = belt.path.normal(sample);
+    const offset = triangle * 3;
+    for (let k = 0; k < 3; k += 1) {
+      const vertex = offset + k;
+      position.setXYZ(
+        vertex,
+        sample.point[0]
+          + sample.tangent[0] * triangleAlong[vertex]
+          + normal[0] * triangleRadial[vertex],
+        sample.point[1] + triangleYOffset[vertex],
+        sample.point[2]
+          + sample.tangent[2] * triangleAlong[vertex]
+          + normal[1] * triangleRadial[vertex],
+      );
+    }
   }
   position.needsUpdate = true;
   belt.mesh.geometry.computeVertexNormals();
   belt.mesh.geometry.computeBoundingBox();
+  belt.mesh.geometry.computeBoundingSphere();
   belt.lastPhase = phaseMm;
 }
 
@@ -494,18 +559,27 @@ function bindDrawerBeltMesh(item) {
   if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
   const geometry = item.mesh.geometry;
   const path = buildDrawerBeltPath(geometry);
-  const vertexMap = buildDrawerBeltVertexMap(geometry, path);
+  // The local wrapper keeps the drawer path implementation compatible with
+  // the generic rigid-triangle mapper used by the column bus belts.
+  path.sample = (s) => sampleDrawerBeltPath(path, s);
+  path.normal = drawerPathNormal;
+  const vertexMap = buildRigidBeltTriangleMap(
+    geometry,
+    path,
+    (beltPath, x, z) => projectDrawerBeltPoint(beltPath, x, z),
+  );
   play.drawerBelts.push({
     mesh: item.mesh,
     path,
-    s: vertexMap.s,
-    radial: vertexMap.radial,
-    yOffset: vertexMap.yOffset,
+    triangleS: vertexMap.triangleS,
+    triangleAlong: vertexMap.triangleAlong,
+    triangleRadial: vertexMap.triangleRadial,
+    triangleYOffset: vertexMap.triangleYOffset,
     lastPhase: Number.NaN,
   });
   // Preserve the authored SCAD pose at phase zero, then move every belt
   // vertex—including the connected tooth geometry—along the same pitch path.
-  poseDrawerBelt(play.drawerBelts[play.drawerBelts.length - 1], 0);
+  poseRigidBeltTriangles(play.drawerBelts[play.drawerBelts.length - 1], 0);
 }
 
 function bindDrawerRotaryMesh(item, sign = 1) {
@@ -522,6 +596,150 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   group.add(pivot);
   replaceMesh(item, group, play.host.state.scene);
   play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
+}
+
+function bindWorldYAxisRotaryMesh(item, target, name, sign = 1) {
+  if (!item.mesh?.isMesh || !playScene()) return;
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  geometry.translate(-center.x, -center.y, -center.z);
+  const pivot = new THREE.Group();
+  pivot.position.copy(center);
+  pivot.name = name;
+  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.name = `${name}-container`;
+  group.add(pivot);
+  replaceMesh(item, group);
+  target.push({ group: pivot, sign, restY: 0 });
+}
+
+function buildHorizontalBeltPath(geometry) {
+  geometry.computeBoundingBox();
+  const bounds = geometry.boundingBox;
+  const size = bounds.getSize(new THREE.Vector3());
+  const centerZ = (bounds.min.z + bounds.max.z) / 2;
+  // The column belt runs along world X.  Its Z extent is the pulley diameter;
+  // the Y extent is the 6 mm axial belt width.
+  const outerRadius = Math.max(1, size.z / 2);
+  const pitchRadius = POWER_COLUMN_PULLEY_TEETH * POWER_COLUMN_BELT_PITCH_MM
+    / (2 * Math.PI);
+  const x0 = bounds.min.x + outerRadius;
+  const x1 = bounds.max.x - outerRadius;
+  const y = (bounds.min.y + bounds.max.y) / 2;
+  const straight = Math.max(0.01, x1 - x0);
+  const segments = [
+    { type: "line", a: [x0, centerZ - pitchRadius], b: [x1, centerZ - pitchRadius] },
+    { type: "arc", cx: x1, cz: centerZ, a0: -Math.PI / 2, a1: Math.PI / 2 },
+    { type: "line", a: [x1, centerZ + pitchRadius], b: [x0, centerZ + pitchRadius] },
+    { type: "arc", cx: x0, cz: centerZ, a0: Math.PI / 2, a1: Math.PI * 1.5 },
+  ];
+  let total = 0;
+  for (const segment of segments) {
+    segment.s0 = total;
+    segment.len = segment.type === "line"
+      ? straight
+      : pitchRadius * Math.abs(segment.a1 - segment.a0);
+    total += segment.len;
+  }
+  return { centerZ, x0, x1, pitchRadius, y, outerRadius, segments, length: total };
+}
+
+function sampleHorizontalBeltPath(path, sRaw) {
+  const s = ((sRaw % path.length) + path.length) % path.length;
+  for (const segment of path.segments) {
+    if (s > segment.s0 + segment.len
+      && segment !== path.segments[path.segments.length - 1]) continue;
+    const t = segment.len < 1e-9 ? 0 : (s - segment.s0) / segment.len;
+    if (segment.type === "line") {
+      const dx = segment.b[0] - segment.a[0];
+      const dz = segment.b[1] - segment.a[1];
+      const length = Math.hypot(dx, dz) || 1;
+      return {
+        point: [segment.a[0] + dx * t, path.y, segment.a[1] + dz * t],
+        tangent: [dx / length, 0, dz / length],
+      };
+    }
+    const angle = segment.a0 + (segment.a1 - segment.a0) * t;
+    const direction = segment.a1 >= segment.a0 ? 1 : -1;
+    return {
+      point: [
+        segment.cx + path.pitchRadius * Math.cos(angle),
+        path.y,
+        segment.cz + path.pitchRadius * Math.sin(angle),
+      ],
+      tangent: [
+        -Math.sin(angle) * direction,
+        0,
+        Math.cos(angle) * direction,
+      ],
+    };
+  }
+  return {
+    point: [path.x0, path.y, path.centerZ - path.pitchRadius],
+    tangent: [1, 0, 0],
+  };
+}
+
+function projectHorizontalBeltPoint(path, x, z) {
+  let best = { s: 0, distance: Infinity };
+  for (const segment of path.segments) {
+    if (segment.type === "line") {
+      const ax = segment.a[0];
+      const az = segment.a[1];
+      const bx = segment.b[0];
+      const bz = segment.b[1];
+      const dx = bx - ax;
+      const dz = bz - az;
+      const len2 = dx * dx + dz * dz || 1;
+      const t = Math.min(1, Math.max(0,
+        ((x - ax) * dx + (z - az) * dz) / len2));
+      const qx = ax + dx * t;
+      const qz = az + dz * t;
+      const distance = (x - qx) ** 2 + (z - qz) ** 2;
+      if (distance < best.distance) {
+        best = { s: segment.s0 + segment.len * t, distance };
+      }
+      continue;
+    }
+    const angle = Math.atan2(z - segment.cz, x - segment.cx);
+    const start = segment.a0;
+    const end = segment.a1;
+    let candidate = angle;
+    while (candidate < start) candidate += Math.PI * 2;
+    while (candidate > end) candidate -= Math.PI * 2;
+    candidate = Math.min(end, Math.max(start, candidate));
+    const qx = segment.cx + path.pitchRadius * Math.cos(candidate);
+    const qz = segment.cz + path.pitchRadius * Math.sin(candidate);
+    const distance = (x - qx) ** 2 + (z - qz) ** 2;
+    if (distance < best.distance) {
+      best = { s: segment.s0 + path.pitchRadius * (candidate - start), distance };
+    }
+  }
+  return best.s;
+}
+
+function bindColumnSyncBeltMesh(item) {
+  if (!item.mesh?.isMesh || !playScene()) return;
+  const path = buildHorizontalBeltPath(item.mesh.geometry);
+  path.sample = (s) => sampleHorizontalBeltPath(path, s);
+  path.normal = drawerPathNormal;
+  const triangleMap = buildRigidBeltTriangleMap(
+    item.mesh.geometry,
+    path,
+    (beltPath, x, z) => projectHorizontalBeltPoint(beltPath, x, z),
+  );
+  play.columnSyncBelts.push({
+    mesh: item.mesh,
+    path,
+    triangleS: triangleMap.triangleS,
+    triangleAlong: triangleMap.triangleAlong,
+    triangleRadial: triangleMap.triangleRadial,
+    triangleYOffset: triangleMap.triangleYOffset,
+    lastPhase: Number.NaN,
+  });
+  poseRigidBeltTriangles(play.columnSyncBelts[play.columnSyncBelts.length - 1], 0);
 }
 
 function makePlateTemplateGeometry(values, seg) {
@@ -973,10 +1191,22 @@ function tickDrawerDrive() {
   const angle = -2 * Math.PI * turns;
   const phaseMm = turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM;
   for (const belt of play.drawerBelts) {
-    poseDrawerBelt(belt, phaseMm);
+    poseRigidBeltTriangles(belt, phaseMm);
   }
   for (const rotary of play.drawerRotaries) {
     rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
+  }
+}
+
+function tickColumnSyncDrive() {
+  const turns = drawerDriveTurns();
+  const angle = -2 * Math.PI * turns;
+  const phaseMm = turns * POWER_COLUMN_PULLEY_TEETH * POWER_COLUMN_BELT_PITCH_MM;
+  for (const rotary of play.powerRotaries) {
+    rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
+  }
+  for (const belt of play.columnSyncBelts) {
+    poseRigidBeltTriangles(belt, phaseMm);
   }
 }
 
@@ -1171,6 +1401,53 @@ export async function onPartLoaded(item) {
     item.playBound = true;
     return;
   }
+  if (id === POWER_MOTOR_SHAFT_ID) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindWorldYAxisRotaryMesh(
+      item,
+      play.powerRotaries,
+      "drawer-power-motor-shaft",
+      1,
+    )).catch((error) => {
+      console.error("drawer power motor shaft bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id.startsWith(POWER_COLUMN_ID_PREFIX)) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindWorldYAxisRotaryMesh(
+      item,
+      play.powerRotaries,
+      "drawer-power-column",
+      1,
+    )).catch((error) => {
+      console.error("drawer power column bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (POWER_COLUMN_SYNC_BELT_IDS.has(id)) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindColumnSyncBeltMesh(item)).catch((error) => {
+      console.error("column sync timing belt bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id === POWER_COLUMN_SYNC_TENSIONER_ID) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindWorldYAxisRotaryMesh(
+      item,
+      play.powerRotaries,
+      "column-sync-tensioner",
+      1,
+    )).catch((error) => {
+      console.error("column sync tensioner bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (id === DRAWER_BELT_ID) {
     item.playBound = true;
     enqueueBind(() => Promise.resolve(bindDrawerBeltMesh(item)).catch((error) => {
@@ -1240,6 +1517,10 @@ export function tickPlay(dt) {
     shaft.group.rotation.y = shaft.restY + 2 * Math.PI * motorTurns;
   }
   tickScheme1(dt);
+  // The column bus follows the same motor/power-turn datum as the drawer
+  // take-off.  It is evaluated after scheme1 so a selected powered station
+  // cannot leave the visible motor shaft and five columns one frame behind.
+  tickColumnSyncDrive();
   tickDrawerDrive();
 }
 //#endregion

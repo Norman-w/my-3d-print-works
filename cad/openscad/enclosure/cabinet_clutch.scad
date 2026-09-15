@@ -273,8 +273,11 @@ TENSIONER_SKP_WORLD_SIZE_Z = TENSIONER_SKP_NATIVE_SIZE_Z;
 // Low-X placement: this is the right-hand side in the canonical rear view.
 TENSIONER_SKP_WORLD_CENTER_X = WALL + 1.0 + TENSIONER_SKP_WORLD_SIZE_X / 2;
 TENSIONER_SKP_WORLD_CENTER_Y = BUS_TOP_Y;
-TENSIONER_SKP_WORLD_CENTER_Z = -D + WORLD_BACK_PANEL_T + 2.0
-    + TENSIONER_SKP_WORLD_SIZE_Z / 2;
+// The SKP bearing ring is one millimetre toward the rear from the mapped T
+// envelope centre.  Put that ring on the same Z axis as the vertical-column
+// bus wheels; the wheel/shaft assembly below can then move along X without
+// changing the verified SKP orientation.
+TENSIONER_SKP_WORLD_CENTER_Z = DRIVE_AXIS_Z + 1.0;
 
 // Main SKP body: a 9×42×22 mm envelope made from a 2 mm base and a 5×20 mm
 // upper rail.  Native coordinates here are SketchUp red/green/blue axes;
@@ -416,12 +419,13 @@ COLOR_AXIS_Z = "#3b82f6";
 //   assembly       cabinet + bus + one center CH1 03C clutch/2GT drive path
 //   cabinet        cabinet shell and drawer ghosts
 //   cabinet_context wire-frame cabinet + bay dividers + drawer context
-//   power_bus      active D-drive + drawer-column bus during the T-only rebuild
+//   power_bus      active motor + five-column 2GT bus and adjustable return wheel
 //   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
 //   clutch         center clutch by default; old stations require SHOW_LEGACY_STATIONS
 //   clutch_detail  selected center magnetic pair (or a legacy station when enabled)
-//   motor/left_d_axis/side_axes/column/vertical_rack
+//   motor/motor_body/motor_shaft/left_d_axis/side_axes/column/vertical_rack
+//   column_sync_belt_bottom/column_sync_belt_top/column_sync_tensioner
 //   tensioner_t_solid
 //   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
 //   spring/screw/fork/drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
@@ -524,6 +528,36 @@ CENTER_GT2_BELT_BASE_OUTER_R =
 CENTER_GT2_BELT_TOOTH_H = max(0.20, GT2_PULLEY_TOOTH_DEPTH - 0.12);
 CENTER_GT2_BELT_TOOTH_BASE = GT2_PULLEY_PITCH_MM * 0.36;
 CENTER_GT2_BELT_TOOTH_TIP = GT2_PULLEY_PITCH_MM * 0.22;
+
+// The five vertical drawer columns share two horizontal open 2GT loops.  The
+// loop length is deliberately expressed in catalog teeth, not inferred from
+// a bounding box: 226T × 2 mm gives a nominal 452 mm closed belt and a 214 mm
+// centre distance for the +X motor column and the -X tensioner wheel.
+COLUMN_SYNC_BELT_TEETH = 226;
+COLUMN_SYNC_BELT_LENGTH_MM =
+    COLUMN_SYNC_BELT_TEETH * GT2_PULLEY_PITCH_MM;
+COLUMN_SYNC_BELT_CENTER_DISTANCE = (
+    COLUMN_SYNC_BELT_LENGTH_MM
+        - 2 * PI * gt2_pulley_pitch_r()
+) / 2;
+// Positive adjustment is "screw out" toward the rear-view right, i.e. world
+// -X.  Never add the adjustment to X: that would move the tensioner toward
+// the motor and reverse the intended tension response.
+VERTICAL_TENSIONER_OFFSET_X = is_undef(VERTICAL_TENSIONER_OFFSET_X)
+    ? 0.0
+    : VERTICAL_TENSIONER_OFFSET_X;
+COLUMN_SYNC_TENSIONER_NOMINAL_X =
+    MOTOR_X - COLUMN_SYNC_BELT_CENTER_DISTANCE;
+COLUMN_SYNC_TENSIONER_X =
+    COLUMN_SYNC_TENSIONER_NOMINAL_X - VERTICAL_TENSIONER_OFFSET_X;
+COLUMN_SYNC_BELT_BASE_INNER_R = gt2_pulley_pitch_r();
+COLUMN_SYNC_BELT_T = GT2_BELT_BACK_OFFSET;
+COLUMN_SYNC_BELT_BASE_OUTER_R =
+    COLUMN_SYNC_BELT_BASE_INNER_R + COLUMN_SYNC_BELT_T;
+COLUMN_SYNC_BELT_TOOTH_H =
+    max(0.20, GT2_PULLEY_TOOTH_DEPTH - 0.12);
+COLUMN_SYNC_BELT_TOOTH_BASE = GT2_PULLEY_PITCH_MM * 0.36;
+COLUMN_SYNC_BELT_TOOTH_TIP = GT2_PULLEY_PITCH_MM * 0.22;
 
 function is_center_gt2_station(col, row) =
     col == CENTER_GT2_COL && row == CENTER_GT2_ROW;
@@ -766,6 +800,40 @@ module timing_pulley_y(x, y, z, teeth = TIMING_TEETH, bore = "d") {
             }
 }
 
+module column_gt2_pulley_y(x, y, z, bore = "d") {
+    // The column bus is a real GT2/2 mm interface.  Reuse the finished 12T
+    // pulley profile, including its larger lower/upper guide planes, instead
+    // of approximating it with the legacy 20T/3 mm timing wheel.
+    base_y = y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
+    translate([x, base_y, z])
+        rotate([-90, 0, 0])
+            difference() {
+                gt2_pulley_local();
+                if (bore == "d")
+                    translate([0, 0, -GT2_EPS])
+                        linear_extrude(
+                            height = GT2_BELT_LOWER_RETAINER_T
+                                + GT2_PULLEY_FACE_T
+                                + GT2_BELT_GUIDE_LIP_T
+                                + 2 * GT2_EPS
+                        )
+                            d_profile_2d(
+                                ROD_D,
+                                ROD_FLAT_DEPTH,
+                                ROD_CLEARANCE
+                            );
+                else
+                    translate([0, 0, -GT2_EPS])
+                        cylinder(
+                            d = ROUND_BORE_D,
+                            h = GT2_BELT_LOWER_RETAINER_T
+                                + GT2_PULLEY_FACE_T
+                                + GT2_BELT_GUIDE_LIP_T
+                                + 2 * GT2_EPS
+                        );
+            }
+}
+
 module spur_gear_y(x, y, z, teeth, pitch_mm, tooth_depth, thickness, bore_d = 3.2) {
     pitch_r = teeth * pitch_mm / (2 * PI);
     // The profile is in XZ and the axis is world +Y.
@@ -988,6 +1056,123 @@ module center_gt2_belt_loop_z(x, z0, z1, y) {
         center_gt2_belt_loop_z_teeth(x, z0, z1, y);
     }
 }
+
+// Two horizontal 2GT loops for the five vertical drawer columns.  The belt
+// plane is XZ and its 6 mm axial width is world Y, exactly matching the
+// column_gt2_pulley_y() guide stack.
+function column_sync_arc_point(cx, cz, radius, tangent, angle) = [
+    cx - sin(angle) * tangent + cos(angle) * radius,
+    cz + cos(angle) * tangent + sin(angle) * radius
+];
+
+module column_sync_belt_tooth_x(x, z, y, inward) {
+    translate([0, y + GT2_BELT_WIDTH / 2, 0])
+        rotate([90, 0, 0])
+            linear_extrude(
+                height = GT2_BELT_WIDTH + 2 * EPS,
+                convexity = 4
+            )
+                polygon([
+                    [x - COLUMN_SYNC_BELT_TOOTH_BASE / 2,
+                        z - inward * EPS],
+                    [x + COLUMN_SYNC_BELT_TOOTH_BASE / 2,
+                        z - inward * EPS],
+                    [x + COLUMN_SYNC_BELT_TOOTH_TIP / 2,
+                        z + inward * COLUMN_SYNC_BELT_TOOTH_H],
+                    [x - COLUMN_SYNC_BELT_TOOTH_TIP / 2,
+                        z + inward * COLUMN_SYNC_BELT_TOOTH_H]
+                ]);
+}
+
+module column_sync_belt_tooth_arc_x(cx, cz, y, angle) {
+    inner = COLUMN_SYNC_BELT_BASE_INNER_R;
+    translate([0, y + GT2_BELT_WIDTH / 2, 0])
+        rotate([90, 0, 0])
+            linear_extrude(
+                height = GT2_BELT_WIDTH + 2 * EPS,
+                convexity = 4
+            )
+                polygon([
+                    column_sync_arc_point(
+                        cx,
+                        cz,
+                        inner + EPS,
+                        -COLUMN_SYNC_BELT_TOOTH_BASE / 2,
+                        angle
+                    ),
+                    column_sync_arc_point(
+                        cx,
+                        cz,
+                        inner + EPS,
+                        COLUMN_SYNC_BELT_TOOTH_BASE / 2,
+                        angle
+                    ),
+                    column_sync_arc_point(
+                        cx,
+                        cz,
+                        inner - COLUMN_SYNC_BELT_TOOTH_H,
+                        COLUMN_SYNC_BELT_TOOTH_TIP / 2,
+                        angle
+                    ),
+                    column_sync_arc_point(
+                        cx,
+                        cz,
+                        inner - COLUMN_SYNC_BELT_TOOTH_H,
+                        -COLUMN_SYNC_BELT_TOOTH_TIP / 2,
+                        angle
+                    )
+                ]);
+}
+
+module column_sync_belt_loop_x_base(x0, x1, y, z) {
+    inner = COLUMN_SYNC_BELT_BASE_INNER_R;
+    outer = COLUMN_SYNC_BELT_BASE_OUTER_R;
+    translate([0, y + GT2_BELT_WIDTH / 2, 0])
+        rotate([90, 0, 0])
+            linear_extrude(
+                height = GT2_BELT_WIDTH,
+                convexity = 8
+            )
+                difference() {
+                    hull() {
+                        translate([x0, z]) circle(r = outer);
+                        translate([x1, z]) circle(r = outer);
+                    }
+                    hull() {
+                        translate([x0, z]) circle(r = inner);
+                        translate([x1, z]) circle(r = inner);
+                    }
+                }
+}
+
+module column_sync_belt_loop_x_teeth(x0, x1, y, z) {
+    inner = COLUMN_SYNC_BELT_BASE_INNER_R;
+    run_count = max(0, round((x1 - x0) / GT2_PULLEY_PITCH_MM));
+    arc_count = max(1,
+        round(PI * GT2_PULLEY_TEETH * GT2_PULLEY_PITCH_MM
+            / (2 * PI) / GT2_PULLEY_PITCH_MM));
+    // The default 20.4→234.4 span is 107 pitches. Together with six teeth on
+    // each half-wrap this is exactly 226 teeth around the closed belt.
+    for (i = [0:run_count - 1]) {
+        x = x0 + (i + 0.5) * GT2_PULLEY_PITCH_MM;
+        column_sync_belt_tooth_x(x, z - inner, y, 1);
+        column_sync_belt_tooth_x(x, z + inner, y, -1);
+    }
+    for (i = [0:arc_count - 1]) {
+        right_angle = -90 + (i + 0.5) * 180 / arc_count;
+        left_angle = 90 + (i + 0.5) * 180 / arc_count;
+        column_sync_belt_tooth_arc_x(x1, z, y, right_angle);
+        column_sync_belt_tooth_arc_x(x0, z, y, left_angle);
+    }
+}
+
+module column_sync_belt_loop_x(x0, x1, y, z) {
+    assert(x1 > x0, "column sync belt endpoints must run from -X to +X");
+    union() {
+        column_sync_belt_loop_x_base(x0, x1, y, z);
+        column_sync_belt_loop_x_teeth(x0, x1, y, z);
+    }
+}
 //#endregion
 
 //#region 私有成员：齿杆、齿条和弹簧
@@ -1020,7 +1205,7 @@ module vertical_gear_column(x, z) {
     vertical_gear_rack(x, z);
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_TIMING)
-            timing_pulley_y(x, axis_y, z);
+            column_gt2_pulley_y(x, axis_y, z, "d");
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_SHAFT)
             translate([x, axis_y, z])
@@ -1340,12 +1525,20 @@ module clutch_cabinet_context(include_drawers = true) {
 }
 
 module power_motor_vertical() {
+    power_motor_body();
+    power_motor_shaft();
+}
+
+module power_motor_body() {
     // The purchased motor's local +Z output is rotated onto world +Y. It is
     // mounted directly beneath the +X-most drawer column; that column already
     // supplies the continuous Y-directed gear shaft and its lower D stub.
     translate([MOTOR_X, MOTOR_FACE_Y, DRIVE_AXIS_Z])
         rotate([-90, 0, 0])
             pololu_micro_metal_motor_100_1_hp_6v_body_colored();
+}
+
+module power_motor_shaft() {
     translate([MOTOR_X, MOTOR_FACE_Y, DRIVE_AXIS_Z])
         rotate([-90, 0, 0])
             color("#d6d9dc") d_shaft();
@@ -1358,7 +1551,7 @@ module left_d_axis() {
         d_rod_y(MOTOR_X, LEFT_D_AXIS_Y0, DRIVE_AXIS_Z, ROD_TOP_Y - LEFT_D_AXIS_Y0);
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_TIMING)
-            timing_pulley_y(MOTOR_X, axis_y, DRIVE_AXIS_Z, TIMING_TEETH, "d");
+            column_gt2_pulley_y(MOTOR_X, axis_y, DRIVE_AXIS_Z, "d");
     color(COLOR_SHAFT)
         for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
             translate([MOTOR_X, axis_y, DRIVE_AXIS_Z])
@@ -1386,12 +1579,60 @@ module all_vertical_axes() {
         vertical_gear_column(clutch_col_x(i), DRIVE_AXIS_Z);
 }
 
-module power_bus() {
-    // The right-side tensioner slide belongs to the power-bus subassembly.
-    // The pulley/wheel and return belt remain separate until their mating
-    // geometry is approved, but the parametric SKP slide is already seated.
-    all_vertical_axes();
+module power_column_sync_belts() {
+    // Both belts are the same 226T/2GT loop, one at each end of every Y-axis
+    // column.  The intermediate pulleys sit on the two tangent runs, so all
+    // five shafts are mechanically represented on the same closed path.
+    color(COLOR_BELT, 0.18) {
+        column_sync_belt_loop_x(
+            COLUMN_SYNC_TENSIONER_X,
+            MOTOR_X,
+            BUS_BOTTOM_Y,
+            DRIVE_AXIS_Z
+        );
+        column_sync_belt_loop_x(
+            COLUMN_SYNC_TENSIONER_X,
+            MOTOR_X,
+            BUS_TOP_Y,
+            DRIVE_AXIS_Z
+        );
+    }
+}
+
+module column_sync_tensioner_wheels() {
+    // The bearing/slide body is static; this shaft and its two 2GT wheels are
+    // the moving part.  Positive VERTICAL_TENSIONER_OFFSET_X moves this whole
+    // set toward world -X, increasing the belt centre distance.
+    color(COLOR_SHAFT)
+        cylinder_y(
+            COLUMN_SYNC_TENSIONER_X,
+            BUS_BOTTOM_Y - 5.0,
+            DRIVE_AXIS_Z,
+            ROD_D,
+            BUS_TOP_Y - BUS_BOTTOM_Y + 10.0
+        );
+    for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
+        color(COLOR_TIMING)
+            column_gt2_pulley_y(
+                COLUMN_SYNC_TENSIONER_X,
+                axis_y,
+                DRIVE_AXIS_Z,
+                "round"
+            );
+}
+
+module column_sync_tensioner() {
     tensioner_t_solid();
+    column_sync_tensioner_wheels();
+}
+
+module power_bus() {
+    // The motor is on the +X-most drawer column. Both horizontal 2GT loops
+    // couple all five columns to that motor; the low-X wheel is the adjustable
+    // return/tension point and is not an extra drawer column.
+    all_vertical_axes();
+    power_column_sync_belts();
+    column_sync_tensioner();
 }
 //#endregion
 
@@ -1687,6 +1928,38 @@ module selected_left_d_axis_part() {
     left_d_axis();
 }
 
+module selected_power_motor_body_part() {
+    power_motor_body();
+}
+
+module selected_power_motor_shaft_part() {
+    power_motor_shaft();
+}
+
+module selected_column_sync_belt_bottom_part() {
+    color(COLOR_BELT, 0.18)
+        column_sync_belt_loop_x(
+            COLUMN_SYNC_TENSIONER_X,
+            MOTOR_X,
+            BUS_BOTTOM_Y,
+            DRIVE_AXIS_Z
+        );
+}
+
+module selected_column_sync_belt_top_part() {
+    color(COLOR_BELT, 0.18)
+        column_sync_belt_loop_x(
+            COLUMN_SYNC_TENSIONER_X,
+            MOTOR_X,
+            BUS_TOP_Y,
+            DRIVE_AXIS_Z
+        );
+}
+
+module selected_column_sync_tensioner_part() {
+    column_sync_tensioner_wheels();
+}
+
 module selected_vertical_rack_part() {
     vertical_gear_rack(clutch_col_x(selected_col()), DRIVE_AXIS_Z);
 }
@@ -1934,6 +2207,10 @@ module clutch_scene_geometry() {
         clutch_detail();
     } else if (CLUTCH_PART == "motor") {
         power_motor_vertical();
+    } else if (CLUTCH_PART == "motor_body") {
+        selected_power_motor_body_part();
+    } else if (CLUTCH_PART == "motor_shaft") {
+        selected_power_motor_shaft_part();
     } else if (CLUTCH_PART == "left_d_axis") {
         selected_left_d_axis_part();
     } else if (CLUTCH_PART == "tensioner_t_solid") {
@@ -1944,6 +2221,12 @@ module clutch_scene_geometry() {
         selected_column_part();
     } else if (CLUTCH_PART == "vertical_rack") {
         selected_vertical_rack_part();
+    } else if (CLUTCH_PART == "column_sync_belt_bottom") {
+        selected_column_sync_belt_bottom_part();
+    } else if (CLUTCH_PART == "column_sync_belt_top") {
+        selected_column_sync_belt_top_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner") {
+        selected_column_sync_tensioner_part();
     } else if (CLUTCH_PART == "upper_clutch") {
         selected_upper_clutch_part();
     } else if (CLUTCH_PART == "upper_spur") {
@@ -1992,6 +2275,7 @@ echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
 echo("belt", "axial_width_world_y", TIMING_BELT_W, "base_thickness_xz", TIMING_BELT_T, "base_inner_r", TIMING_BELT_BASE_INNER_R, "base_outer_r", TIMING_BELT_BASE_OUTER_R, "tooth_pitch", TIMING_PITCH_MM, "tooth_h", TIMING_BELT_TOOTH_H);
+echo("column_sync_gt2", "pitch_mm", GT2_PULLEY_PITCH_MM, "pulley_teeth", GT2_PULLEY_TEETH, "belt_teeth", COLUMN_SYNC_BELT_TEETH, "belt_length_mm", COLUMN_SYNC_BELT_LENGTH_MM, "center_distance_mm", COLUMN_SYNC_BELT_CENTER_DISTANCE, "tensioner_nominal_x", COLUMN_SYNC_TENSIONER_NOMINAL_X, "tensioner_x", COLUMN_SYNC_TENSIONER_X, "adjustment_direction", "positive screw-out -> world -X");
 echo("center_gt2", "enabled", true, "legacy_stations", SHOW_LEGACY_STATIONS, "cell_col_row", CENTER_GT2_COL, CENTER_GT2_ROW, "mating_axis_z", center_gt2_z(), "shaft_axis_z", DRIVE_AXIS_Z, "shaft_z_offset", gt2_center_distance(), "long_profile", str(GT2_LONG_TEETH, "T/", GT2_LONG_PITCH_MM, "mm"), "male_profile", str(GT2_MALE_TEETH, "T/", GT2_MALE_PITCH_MM, "mm"), "belt", str(CENTER_GT2_BELT_TEETH, "T/", GT2_PULLEY_PITCH_MM, "mm/", GT2_BELT_WIDTH, "mm"), "belt_center_distance", CENTER_GT2_BELT_CENTER_DISTANCE, "front_pulley_z", CENTER_GT2_FRONT_PULLEY_Z, "belt_y", center_gt2_belt_y(CENTER_GT2_ROW), "front_gear_y", center_gt2_front_gear_y(CENTER_GT2_ROW), "guide_outer_d", 2 * gt2_belt_guide_r(), "mother_outer_d", 2 * GT2_MOTHER_OUTER_R, "lower_retainer_t", GT2_BELT_LOWER_RETAINER_T, "mother_pocket_depth", GT2_MOTHER_POCKET_DEPTH);
 echo("tensioner_skp_parametric", "source", "弹簧加力的滑动张紧轮调节滑台.skp", "axis_map", "SKP+Y(green)->world+X, SKP+X(red)->world+Y, SKP+Z(blue)->world-Z (same Z axis, rearward)", "native_bbox_xyz", TENSIONER_SKP_NATIVE_SIZE_X, TENSIONER_SKP_NATIVE_SIZE_Y, TENSIONER_SKP_NATIVE_SIZE_Z, "world_bbox_xyz", TENSIONER_SKP_WORLD_SIZE_X, TENSIONER_SKP_WORLD_SIZE_Y, TENSIONER_SKP_WORLD_SIZE_Z, "world_center", TENSIONER_SKP_WORLD_CENTER_X, TENSIONER_SKP_WORLD_CENTER_Y, TENSIONER_SKP_WORLD_CENTER_Z, "mesh_import", false, "parametric_csg", true);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
@@ -2006,11 +2290,16 @@ assert(
     || CLUTCH_PART == "clutch"
     || CLUTCH_PART == "clutch_detail"
     || CLUTCH_PART == "motor"
+    || CLUTCH_PART == "motor_body"
+    || CLUTCH_PART == "motor_shaft"
     || CLUTCH_PART == "left_d_axis"
     || CLUTCH_PART == "tensioner_t_solid"
     || CLUTCH_PART == "side_axes"
     || CLUTCH_PART == "column"
     || CLUTCH_PART == "vertical_rack"
+    || CLUTCH_PART == "column_sync_belt_bottom"
+    || CLUTCH_PART == "column_sync_belt_top"
+    || CLUTCH_PART == "column_sync_tensioner"
     || CLUTCH_PART == "upper_clutch"
     || CLUTCH_PART == "upper_spur"
     || CLUTCH_PART == "upper_dog"
@@ -2055,6 +2344,17 @@ assert(CENTER_GT2_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
 assert(CENTER_GT2_FRONT_PULLEY_Z < 0
         && CENTER_GT2_FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z,
     "center 2GT front pulley must stay in the drawer bay");
+assert(COLUMN_SYNC_BELT_TEETH == 226,
+    "column sync must use the selected 226T / 452 mm 2GT loop");
+assert(abs(COLUMN_SYNC_BELT_LENGTH_MM
+        - COLUMN_SYNC_BELT_TEETH * GT2_PULLEY_PITCH_MM) < 0.001,
+    "column sync belt length must be derived from 2GT pitch");
+assert(COLUMN_SYNC_TENSIONER_NOMINAL_X < MOTOR_X,
+    "column sync tensioner must be on the -X side of the motor");
+assert(VERTICAL_TENSIONER_OFFSET_X >= 0,
+    "positive tensioner adjustment is screw-out toward world -X");
+assert(COLUMN_SYNC_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
+    "column sync 2GT belt back envelope must stay inside its guide wall");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
 assert(abs(MOTOR_X - clutch_col_x(N_COL - 1)) < 0.001,
     "motor must be centered on the +X-most drawer column");

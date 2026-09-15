@@ -51,6 +51,7 @@ export_part() {
     local target="$2"
     local engaged="$3"
     local explode="$4"
+    local selected_column="${5:-${SELECTED_COLUMN}}"
     local tmp="${target}.tmp.$$"
     echo "→ CLUTCH_PART=${part} ENGAGED=${engaged} → ${target}"
     (
@@ -62,7 +63,7 @@ export_part() {
             -D "CLUTCH_PART=\"${part}\"" \
             -D "ENGAGED=${engaged}" \
             -D "CLUTCH_EXPLODE=${explode}" \
-            -D "SELECTED_COLUMN=${SELECTED_COLUMN}" \
+            -D "SELECTED_COLUMN=${selected_column}" \
             -D "SELECTED_ROW=${SELECTED_ROW}" \
             -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
             -o "${tmp}" \
@@ -128,17 +129,79 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/cabinet_clutch_power_bus": {
-        "name": "动力母线整件 · 电机直连 +X 末列",
+        "name": "动力母线合并检查体（文件保留，默认隐藏）",
         "color": "#65788d",
-        "opacity": 0.86,
-        "visible": True,
+        "opacity": 0.28,
+        "visible": False,
         "role": "diagnostic",
     },
     "cabinet-clutch/00_tensioner_t_solid_reference": {
-        "name": "张紧机构·SKP 参数重建（动力母线整件内含）",
+        "name": "列同步张紧滑台 · SKP 参数重建",
         "color": "#aebdce",
-        "visible": False,
+        "visible": True,
         "role": "diagnostic",
+    },
+    "cabinet-clutch/cabinet_clutch_power_motor_body": {
+        "name": "抽屉开合动力电机 · 竖直本体（+X末列）",
+        "color": "#343a40",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/cabinet_clutch_power_motor_shaft": {
+        "name": "抽屉开合动力电机 · 竖直D输出轴",
+        "color": "#d6d9dc",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/cabinet_clutch_power_column_0": {
+        "name": "列同步轴 C1 · Y向长花键 + 上下2GT",
+        "color": "#9a77c7",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_power_column_1": {
+        "name": "列同步轴 C2 · Y向长花键 + 上下2GT",
+        "color": "#9a77c7",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_power_column_2": {
+        "name": "列同步轴 C3 · Y向长花键 + 上下2GT",
+        "color": "#9a77c7",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_power_column_3": {
+        "name": "列同步轴 C4 · Y向长花键 + 上下2GT",
+        "color": "#9a77c7",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_power_column_4": {
+        "name": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
+        "color": "#9a77c7",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom": {
+        "name": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
+        "color": "#ce5c31",
+        "opacity": 0.48,
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/cabinet_clutch_column_sync_belt_top": {
+        "name": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
+        "color": "#ce5c31",
+        "opacity": 0.48,
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner": {
+        "name": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
+        "color": "#f0a23b",
+        "visible": True,
+        "role": "printed",
     },
     "cabinet/cabinet_back_panel": {
         "name": "可拆背板",
@@ -206,6 +269,16 @@ group_map = {
     "cabinet_clutch_cabinet_context": "00·柜体与格口",
     "00_tensioner_t_solid_reference": "01·动力母线",
     "cabinet_clutch_power_bus": "01·动力母线",
+    "cabinet_clutch_power_motor_body": "01·动力母线",
+    "cabinet_clutch_power_motor_shaft": "01·动力母线",
+    "cabinet_clutch_power_column_0": "01·动力母线",
+    "cabinet_clutch_power_column_1": "01·动力母线",
+    "cabinet_clutch_power_column_2": "01·动力母线",
+    "cabinet_clutch_power_column_3": "01·动力母线",
+    "cabinet_clutch_power_column_4": "01·动力母线",
+    "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
+    "cabinet_clutch_column_sync_belt_top": "01·动力母线",
+    "cabinet_clutch_column_sync_tensioner": "01·动力母线",
     "06_upper_axis_z_spur_candidate": "02·离合机构",
     "07_upper_downward_dog_candidate": "02·离合机构",
     "08_lower_upward_dog_candidate": "02·离合机构",
@@ -239,6 +312,16 @@ name_map = {
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
     "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
     "cabinet_clutch_power_bus": "动力母线合并检查体（可选）",
+    "cabinet_clutch_power_motor_body": "抽屉开合动力电机 · 竖直本体（+X末列）",
+    "cabinet_clutch_power_motor_shaft": "抽屉开合动力电机 · 竖直D输出轴",
+    "cabinet_clutch_power_column_0": "列同步轴 C1 · Y向长花键 + 上下2GT",
+    "cabinet_clutch_power_column_1": "列同步轴 C2 · Y向长花键 + 上下2GT",
+    "cabinet_clutch_power_column_2": "列同步轴 C3 · Y向长花键 + 上下2GT",
+    "cabinet_clutch_power_column_3": "列同步轴 C4 · Y向长花键 + 上下2GT",
+    "cabinet_clutch_power_column_4": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
+    "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
+    "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
+    "cabinet_clutch_column_sync_tensioner": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
     "cabinet_clutch_all_clutches": "离合机构合并检查体（可选）",
     "cabinet_clutch_drawer_drive": "抽屉驱动合并检查体（可选）",
     "cabinet_clutch_detail_open": "离合细节 · 打开状态（可选）",
@@ -304,10 +387,12 @@ def part_node(part_id, *, children=None, exclusive_groups=None, display_mode=Non
         node["displayMode"] = display_mode
     return node
 
-def call_node(node_id, name, description=""):
+def call_node(node_id, name, description="", children=None):
     node = {"id": f"call:{node_id}", "kind": "call", "name": name}
     if description:
         node["description"] = description
+    if children:
+        node["children"] = [child for child in children if child]
     return node
 
 def folder_node(group_id):
@@ -327,33 +412,40 @@ tree = []
 for group_id in ordered_group_ids:
     root = folder_node(group_id)
     if group_id == "01·动力母线":
-        root["children"] = [
+        motor_shaft = part_node(
+            "cabinet-clutch/cabinet_clutch_power_motor_shaft",
+        )
+        motor_body = part_node(
+            "cabinet-clutch/cabinet_clutch_power_motor_body",
+            children=[motor_shaft],
+        )
+        active_power_parts = [
+            motor_body,
+            *[
+                part_node(
+                    f"cabinet-clutch/cabinet_clutch_power_column_{column}"
+                )
+                for column in range(5)
+            ],
             part_node(
-                "cabinet-clutch/cabinet_clutch_power_bus",
-                exclusive_groups=["power-bus"],
-                display_mode="assembly",
-                children=[
-                    call_node(
-                        "power_bus/power_motor_vertical",
-                        "抽屉开合电机 · 竖直（内含）",
-                        "power_motor_vertical()",
-                    ),
-                    call_node(
-                        "power_bus/column_plus_x_max",
-                        "+X 末列花键齿轮杆 · 电机直接接驳（内含）",
-                        "vertical_gear_column(N_COL - 1)",
-                    ),
-                    call_node(
-                        "power_bus/columns_remaining",
-                        "其余 4 列花键齿轮杆（内含）",
-                        "vertical_gear_column(0 .. N_COL - 2)",
-                    ),
-                ],
+                "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
             ),
             part_node(
                 "cabinet-clutch/00_tensioner_t_solid_reference",
-                exclusive_groups=["power-bus"],
-                display_mode="detail",
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
+            ),
+        ]
+        root["children"] = [
+            call_node(
+                "power_bus/active",
+                "列同步动力母线 · 电机 + 5列2GT + 上下同步带 + 张紧轮",
+                "power_motor_vertical() + vertical_gear_column(0 .. N_COL - 1) + power_column_sync_belts()",
+                children=active_power_parts,
             ),
         ]
     elif group_id == "02·离合机构":
@@ -530,6 +622,14 @@ done
 export_part "cabinet" "${OUT_DIR}/cabinet_clutch_cabinet.stl" false 0
 export_part "cabinet_context" "${OUT_DIR}/cabinet_clutch_cabinet_context.stl" false 0
 export_part "power_bus" "${OUT_DIR}/cabinet_clutch_power_bus.stl" false 0
+export_part "motor_body" "${OUT_DIR}/cabinet_clutch_power_motor_body.stl" false 0
+export_part "motor_shaft" "${OUT_DIR}/cabinet_clutch_power_motor_shaft.stl" false 0
+for column in 0 1 2 3 4; do
+    export_part "column" "${OUT_DIR}/cabinet_clutch_power_column_${column}.stl" false 0 "${column}"
+done
+export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
+export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
+export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
 export_part "drawer_drive" "${OUT_DIR}/cabinet_clutch_drawer_drive.stl" false 0
 export_part "clutch" "${OUT_DIR}/cabinet_clutch_all_clutches.stl" false 0
 export_part "clutch_detail" "${OUT_DIR}/cabinet_clutch_detail_open.stl" false 8
