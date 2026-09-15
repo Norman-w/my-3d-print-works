@@ -3,20 +3,24 @@
 // Mechanical contract
 // process: FDM fit prototype; gears/pulleys in PETG or nylon, metal 3 mm D rod preferred
 // material: PETG/nylon for printed parts; motor, belts, springs and screws are purchased parts
-// parting_plane: cabinet back face Z = D; all new drive parts stay in the rear cavity or below drawers
-// opening_direction: drawers pull toward +Z; the removable back panel is also pulled toward +Z
+// parting_plane: cabinet front face Z = 0 and back face Z = -D; all new drive parts stay in the rear cavity or below drawers
+// opening_direction: drawers pull toward +Z; the removable back panel is serviced toward -Z
 // fastener: M3 T-head countersunk screw used as the clutch follower; motor/rod mounts are parameterized
 // seal: none — this is a mechanism prototype, not a watertight enclosure
 // print_orientation: gears/pulleys flat with their axis vertical (+Y); clutch carrier and fork may need supports
 // units: mm
 //
-// User/world coordinate contract:
-//   X = cabinet width, left-to-right when facing the front
-//   Y = height/elevation, +Y is up
-//   Z = cabinet depth, front is Z=0 and rear is +Z
-// Therefore the front view looks along +Z, while a rear view looks along -Z
-// and reverses the apparent left/right order. The green arrow in the supplied
-// rear references is +Y, not +Z.
+// User/world coordinate contract (the canonical web view is from the rear):
+//   X = cabinet width; in a front view +X is screen-right, while in the rear view +X appears screen-left
+//   Y = height/elevation, +Y is screen-up
+//   Z = cabinet depth, front is Z=0 and rear is -Z
+// The rear camera stands on the -Z side and looks along +Z, so +Z points
+// away from the rear observer toward the cabinet front. A front camera shows
+// the requested +X-to-the-right orientation.
+// The green arrow in the supplied rear references is +Y, not +Z.
+// Tensioner orientation: the T crossbar/base is on the front-side end and the
+// long T rod extends toward -Z; its tip is therefore at the cabinet rear.
+// The screw bore opens at the +X end and the fastener advances along -X.
 //
 // cabinet_params.scad is used only as the dimension source. All geometry in
 // this file is written directly in the user/world frame; no final coordinate
@@ -36,6 +40,11 @@ SELECTED_ROW = is_undef(SELECTED_ROW) ? 2 : SELECTED_ROW;
 // is intentionally not included; this scene owns its native X/Y/Z geometry.
 include <cabinet_params.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
+use <../ch1_03c_long_gear_shaft.scad>
+// The authored Y-axis long gear shaft is the real middle-column member.  The
+// assembly calls its parameterized library API below with this enclosure's
+// live 3 mm mating datum, so the standalone X1C-fine default cannot silently
+// mismatch the existing clutch gears.
 //#endregion
 
 //#region 常量/配置
@@ -50,6 +59,13 @@ TIMING_PULLEY_W = 5.0;
 TIMING_BELT_W = 5.0;
 TIMING_BELT_T = 1.8;
 TIMING_BELT_CLEAR = 0.65;
+// The timing pulley is a 20T / 3 mm-pitch wheel.  Its polygon leaves a
+// 0.40-pitch root gap (the 0.8→1.0→0.2 sector); the belt tooth is narrower
+// than that gap and is shallower than the 0.86 mm pulley tooth depth.
+TIMING_MESH_CLEAR = 0.12;
+TIMING_BELT_TOOTH_H = max(0.20, TIMING_TOOTH_DEPTH - TIMING_MESH_CLEAR);
+TIMING_BELT_TOOTH_BASE = TIMING_PITCH_MM * 0.36;
+TIMING_BELT_TOOTH_TIP = TIMING_PITCH_MM * 0.22;
 
 // A 3 mm D rod is the default because it matches the Pololu output shaft.
 // For a long production shaft, replace the rod with a metal D shaft or increase ROD_D.
@@ -58,7 +74,6 @@ ROD_FLAT_DEPTH = 0.50;
 ROD_CLEARANCE = 0.12;
 ROD_FLAT_CLEARANCE = 0.12;
 ROD_WALL_CLEAR = 0.35;
-ROUND_AXIS_D = ROD_D;
 ROUND_BORE_D = ROD_D + 2 * ROD_CLEARANCE;
 
 // The upper clutch wheel is a 12T spur/dog prototype.  The pitch and all mating
@@ -97,9 +112,10 @@ COMPOUND_LAYER_GAP = 0.35;
 // Rear cavity locations. The horizontal bus is behind the partition; the
 // complete pulley OD must clear the partition rear edge, not just its center.
 // The front pulleys sit under the drawer fronts and send motion along +Z.
-WORLD_PARTITION_FRONT_Z = FRONT_NET;
+// The cabinet occupies -D..0: front is the zero datum and rear is negative Z.
+WORLD_PARTITION_FRONT_Z = -FRONT_NET;
 WORLD_PARTITION_T = PARTITION_T;
-WORLD_PARTITION_BACK_Z = WORLD_PARTITION_FRONT_Z + WORLD_PARTITION_T;
+WORLD_PARTITION_BACK_Z = WORLD_PARTITION_FRONT_Z - WORLD_PARTITION_T;
 WORLD_GRID_ORIGIN_X = WALL + SERVICE_W;
 WORLD_GRID_ORIGIN_Y = WALL + SERVICE_H;
 WORLD_GRID_W = GRID_W;
@@ -111,16 +127,16 @@ WORLD_ROW_PITCH = ROW_PITCH;
 WORLD_DIV_T = DIV_T;
 WORLD_SHELF_T = SHELF_T;
 WORLD_BACK_PANEL_T = BACK_PANEL_T;
-DRIVE_AXIS_Z = WORLD_PARTITION_BACK_Z + 13.0;
-// Keep the front pulley close to the face while allowing its belt turn radius
-// to remain inside the cabinet instead of protruding through Z=0.
-FRONT_PULLEY_Z = 14.0;
-// The service corridor and motor are on the front-left side. From the back
-// this same motor is therefore the right-hand boundary drive.
-MOTOR_X = WALL + SERVICE_W / 2;
-// The two boundary axes are not drawer columns. The current cabinet has five
-// drawer transmission columns, so the complete vertical-axis count is 2 + 5.
-VERTICAL_AXIS_COUNT = N_COL + 2;
+DRIVE_AXIS_Z = WORLD_PARTITION_BACK_Z - 13.0;
+// In the canonical rear view, +X is on the left: the D-drive motor is placed
+// at high X and the SKP tensioner is placed at low X on the right.
+MOTOR_X = W - WALL - SERVICE_W / 2;
+// The two boundary axes are not drawer columns. During this T-only rebuild the
+// old tensioner wheel is intentionally absent; keep both counts explicit so a
+// temporary prototype cannot be mistaken for the final 2 + N layout.
+ACTIVE_VERTICAL_AXIS_COUNT = N_COL + 1;
+PLANNED_VERTICAL_AXIS_COUNT = N_COL + 2;
+VERTICAL_AXIS_COUNT = ACTIVE_VERTICAL_AXIS_COUNT;
 BUS_BOTTOM_Y = WORLD_GRID_ORIGIN_Y - 5.0;
 BUS_TOP_Y = H - WALL - 7.0;
 MOTOR_FACE_Y = BUS_BOTTOM_Y - 28.0;
@@ -130,12 +146,42 @@ ROD_BOTTOM_Y = BUS_BOTTOM_Y - 6.0;
 ROD_TOP_Y = BUS_TOP_Y + 6.0;
 LEFT_D_AXIS_Y0 = MOTOR_FACE_Y + MOTOR_SHAFT_L - 1.0;
 
-// The front-right idler runs in the rear cavity and is deliberately outboard
-// of the 5 drawer axes; its receiver forms a short right-side extension.
-// From the back this axis is on the left side of the view.
+// The middle-column shaft consumes the authored long-gear-shaft geometry.
+// Keep the mating profile on the live 3 mm clutch datum and derive its gear
+// span from the actual upper/lower bus pulley centers rather than rounding
+// the cabinet height a second time.
+VERTICAL_GEAR_TEETH = CLUTCH_GEAR_TEETH;
+VERTICAL_GEAR_PITCH_MM = CLUTCH_PITCH_MM;
+VERTICAL_GEAR_TOOTH_DEPTH = CLUTCH_GEAR_TOOTH_DEPTH;
+VERTICAL_GEAR_TIP_START = 0.20;
+VERTICAL_GEAR_TIP_END = 0.50;
+VERTICAL_GEAR_ROOT_END = 0.80;
+VERTICAL_GEAR_LENGTH = BUS_TOP_Y - BUS_BOTTOM_Y;
+VERTICAL_GEAR_END_STUB_LENGTH = 6.0;
+VERTICAL_GEAR_STUB_OVERLAP = 0.20;
+
+// Timing dimensions remain available for the drawer take-offs. The former
+// rear-view-right idler geometry is intentionally not part of this prototype.
 TIMING_PITCH_R = TIMING_TEETH * TIMING_PITCH_MM / (2 * PI);
 TIMING_ROOT_R = TIMING_PITCH_R - TIMING_TOOTH_DEPTH;
 TIMING_OUTER_R = TIMING_PITCH_R + TIMING_TOOTH_DEPTH;
+// Choose the drawer belt by tooth count, then derive the pulley centre
+// distance.  This keeps the belt pitch exact instead of stretching a 3 mm
+// pitch belt over an arbitrary cabinet gap.
+DRAWER_BELT_TEETH = 60;
+DRAWER_BELT_CENTER_DISTANCE = (
+    DRAWER_BELT_TEETH * TIMING_PITCH_MM - 2 * PI * TIMING_PITCH_R
+) / 2;
+// The rear take-off is at DRIVE_AXIS_Z; +Z leads toward the drawer front.
+// The resulting front pulley remains behind the front datum and inside the
+// drawer bay while closing a 60T HTD3M-like loop.
+FRONT_PULLEY_Z = DRIVE_AXIS_Z + DRAWER_BELT_CENTER_DISTANCE;
+// The belt base is dimensioned from the mating pulley: its inner base radius
+// is the pulley pitch radius, and its radial base thickness is exactly the
+// belt thickness.  TIMING_BELT_CLEAR is reserved for cabinet passage/fit
+// clearance; it must not be added to the printed belt cross-section.
+TIMING_BELT_BASE_INNER_R = TIMING_PITCH_R;
+TIMING_BELT_BASE_OUTER_R = TIMING_BELT_BASE_INNER_R + TIMING_BELT_T;
 // Smooth retaining flanges sit above and below every timing pulley. They are
 // intentionally larger than the toothed outer circle so the belt cannot walk
 // off the pulley in Z.
@@ -143,18 +189,120 @@ TIMING_FLANGE_MARGIN = 1.0;
 TIMING_FLANGE_T = 0.80;
 TIMING_FLANGE_R = TIMING_OUTER_R + TIMING_FLANGE_MARGIN;
 TIMING_FLANGE_D = 2 * TIMING_FLANGE_R;
-// The screw pushes the carriage toward +X (the cabinet's outside/right side).
-// Leave the full flange diameter clear at the end of travel, not just the
-// toothed pulley diameter.
-TENSIONER_TRAVEL_MM = 8.0;
-TENSIONER_SCREW_OUT_MM = is_undef(TENSIONER_SCREW_OUT_MM) ? 4.0 : TENSIONER_SCREW_OUT_MM;
-TENSIONER_AXIS_GAP_MM = 1.0;
-// The right tensioner is an additional axis, not drawer column N_COL-1.
-// Keep the full retaining-flange envelope clear of the last drawer axis.
-TENSIONER_AXIS_MIN_X = world_col_center_x(N_COL - 1)
-    + TIMING_FLANGE_D + TENSIONER_AXIS_GAP_MM;
-TENSIONER_AXIS_MAX_X = TENSIONER_AXIS_MIN_X + TENSIONER_TRAVEL_MM;
-TENSIONER_X = TENSIONER_AXIS_MIN_X + TENSIONER_SCREW_OUT_MM;
+// SKP-to-SCAD parametric reconstruction.  The supplied SKP is not imported
+// as a frozen STL.  Its measured primitive layout is rebuilt below with
+// editable boxes, slots, bores, and annular plates.
+//
+// The supplied SKP group measures 9 × 42 × 22 mm in native SketchUp X/Y/Z.
+// The requested world-axis correspondence is explicit:
+//   SketchUp green (+Y) -> world +X  (42 mm)
+//   SketchUp red   (+X) -> world +Y  ( 9 mm)
+//   SketchUp blue  (+Z) -> world Z axis, reversed onto world -Z  (22 mm)
+// The blue direction is reversed so the T long rod points toward the cabinet
+// rear while the part still uses the shared world Z axis. No viewer-only
+// transform or imported mesh is involved.
+TENSIONER_SKP_NATIVE_MIN_X = -2.0;
+TENSIONER_SKP_NATIVE_MIN_Y = 0.0;
+TENSIONER_SKP_NATIVE_MIN_Z = -2.0;
+TENSIONER_SKP_NATIVE_SIZE_X = 9.0;
+TENSIONER_SKP_NATIVE_SIZE_Y = 42.0;
+TENSIONER_SKP_NATIVE_SIZE_Z = 22.0;
+TENSIONER_SKP_WORLD_SIZE_X = TENSIONER_SKP_NATIVE_SIZE_Y;
+TENSIONER_SKP_WORLD_SIZE_Y = TENSIONER_SKP_NATIVE_SIZE_X;
+TENSIONER_SKP_WORLD_SIZE_Z = TENSIONER_SKP_NATIVE_SIZE_Z;
+// Low-X placement: this is the right-hand side in the canonical rear view.
+TENSIONER_SKP_WORLD_CENTER_X = WALL + 1.0 + TENSIONER_SKP_WORLD_SIZE_X / 2;
+TENSIONER_SKP_WORLD_CENTER_Y = BUS_TOP_Y;
+TENSIONER_SKP_WORLD_CENTER_Z = -D + WORLD_BACK_PANEL_T + 2.0
+    + TENSIONER_SKP_WORLD_SIZE_Z / 2;
+
+// Main SKP body: a 9×42×22 mm envelope made from a 2 mm base and a 5×20 mm
+// upper rail.  Native coordinates here are SketchUp red/green/blue axes;
+// tensioner_native_box() maps them to SCAD/world X/Y/Z at the point of use.
+// The native blue span -2..20 is reflected onto world Z: the short crossbar
+// is at local world Z=0..2 and the long T rod reaches toward world -Z.
+TENSIONER_MAIN_BASE_X0 = -2.0;
+TENSIONER_MAIN_BASE_Y0 = 0.0;
+TENSIONER_MAIN_BASE_Z0 = -2.0;
+TENSIONER_MAIN_BASE_DX = 9.0;
+TENSIONER_MAIN_BASE_DY = 42.0;
+TENSIONER_MAIN_BASE_DZ = 2.0;
+TENSIONER_MAIN_UPPER_X0 = 0.0;
+TENSIONER_MAIN_UPPER_Y0 = 0.0;
+TENSIONER_MAIN_UPPER_Z0 = 0.0;
+TENSIONER_MAIN_UPPER_DX = 5.0;
+TENSIONER_MAIN_UPPER_DY = 42.0;
+TENSIONER_MAIN_UPPER_DZ = 20.0;
+
+// The two side openings are deliberately separate because the SKP uses
+// different 1 mm border offsets on the two sides of the rail.
+TENSIONER_MAIN_LEFT_SLOT_X0 = -EPS;
+TENSIONER_MAIN_LEFT_SLOT_Y0 = 4.0;
+TENSIONER_MAIN_LEFT_SLOT_Z0 = 4.0;
+TENSIONER_MAIN_LEFT_SLOT_DX = 2.0 + EPS;
+TENSIONER_MAIN_LEFT_SLOT_DY = 27.0;
+TENSIONER_MAIN_LEFT_SLOT_DZ = 12.0;
+TENSIONER_MAIN_RIGHT_SLOT_X0 = 2.0;
+TENSIONER_MAIN_RIGHT_SLOT_Y0 = 3.0;
+TENSIONER_MAIN_RIGHT_SLOT_Z0 = 3.0;
+TENSIONER_MAIN_RIGHT_SLOT_DX = 3.0 + EPS;
+TENSIONER_MAIN_RIGHT_SLOT_DY = 29.0;
+TENSIONER_MAIN_RIGHT_SLOT_DZ = 14.0;
+
+// Circular features in the main body.  The small bore is blind; the large
+// bore exits the far end of the 42 mm rail.  Both axes are native green (+Y),
+// which becomes the SCAD/world +X direction under the requested mapping.
+TENSIONER_MAIN_SMALL_BORE_X = 3.5;
+TENSIONER_MAIN_SMALL_BORE_Y0 = 1.5;
+TENSIONER_MAIN_SMALL_BORE_Z = 10.0;
+TENSIONER_MAIN_SMALL_BORE_D = 2.0;
+TENSIONER_MAIN_SMALL_BORE_L = 1.5;
+TENSIONER_MAIN_LARGE_BORE_X = 2.5;
+TENSIONER_MAIN_LARGE_BORE_Y0 = 32.0;
+TENSIONER_MAIN_LARGE_BORE_Z = 10.0;
+TENSIONER_MAIN_LARGE_BORE_D = 4.0;
+TENSIONER_MAIN_LARGE_BORE_L = 10.0;
+
+// The first nested SKP group is a 3 mm native-red-axis annular plate.
+TENSIONER_RING_X0 = 2.0;
+TENSIONER_RING_Y0 = 11.0;
+TENSIONER_RING_Z0 = 5.0;
+TENSIONER_RING_DX = 3.0;
+TENSIONER_RING_DY = 10.0;
+TENSIONER_RING_DZ = 10.0;
+TENSIONER_RING_OUTER_D = 10.0;
+TENSIONER_RING_INNER_D = 6.0;
+
+// The second nested SKP group is a 3 mm plate with an axis-red Ø10 through
+// bore and a native-green Ø2 blind bore.  Its local origin is retained so the
+// two nested bodies remain adjustable relative to the main rail.
+TENSIONER_PLATE_X0 = 2.0;
+TENSIONER_PLATE_Y0 = 9.5;
+TENSIONER_PLATE_Z0 = 3.5;
+TENSIONER_PLATE_DX = 3.0;
+TENSIONER_PLATE_DY = 14.0;
+TENSIONER_PLATE_DZ = 13.0;
+TENSIONER_PLATE_BORE_D = 10.0;
+TENSIONER_PLATE_SMALL_BORE_LOCAL_X = 1.5;
+TENSIONER_PLATE_SMALL_BORE_LOCAL_Y0 = -1.0;
+TENSIONER_PLATE_SMALL_BORE_LOCAL_Z = 6.5;
+TENSIONER_PLATE_SMALL_BORE_D = 2.0;
+TENSIONER_PLATE_SMALL_BORE_L = 2.5;
+
+// SketchUp used 24 segments for the circular edges in this reference.  It is
+// kept as a parameter so the reference can be matched or smoothed later.
+TENSIONER_SKP_ARC_SEGMENTS = 24;
+TENSIONER_SKP_WORLD_BBOX_MIN_X = TENSIONER_SKP_NATIVE_MIN_Y;
+TENSIONER_SKP_WORLD_BBOX_MIN_Y = TENSIONER_SKP_NATIVE_MIN_X;
+TENSIONER_SKP_WORLD_BBOX_MIN_Z = -(
+    TENSIONER_SKP_NATIVE_MIN_Z + TENSIONER_SKP_NATIVE_SIZE_Z
+);
+TENSIONER_PARAM_WORLD_ORIGIN_X = TENSIONER_SKP_WORLD_CENTER_X
+    - TENSIONER_SKP_WORLD_BBOX_MIN_X - TENSIONER_SKP_WORLD_SIZE_X / 2;
+TENSIONER_PARAM_WORLD_ORIGIN_Y = TENSIONER_SKP_WORLD_CENTER_Y
+    - TENSIONER_SKP_WORLD_BBOX_MIN_Y - TENSIONER_SKP_WORLD_SIZE_Y / 2;
+TENSIONER_PARAM_WORLD_ORIGIN_Z = TENSIONER_SKP_WORLD_CENTER_Z
+    - TENSIONER_SKP_WORLD_BBOX_MIN_Z - TENSIONER_SKP_WORLD_SIZE_Z / 2;
 
 // The drawer rack/drive geometry is intentionally explicit.  The horizontal
 // rack is under each drawer; the rear timing pulley and front timing pulley
@@ -176,69 +324,6 @@ FORK_T = 2.4;
 FORK_CLEAR_OPEN = 0.55;
 FORK_CONTACT = 0.08;
 
-// Front-right sliding tensioner. The carriage still moves in X because that is
-// the belt-tension direction, but the fixed slide is now a rear-mounted
-// inverted-T bracket. In the native Y/Z side section, the lower flange is the
-// bottom crossbar and its long rail runs toward the rear (+Z), ending at the
-// back-panel receiver. The older flat U-channel was the wrong section.
-// The shorter lead keeps the adjustment-head envelope clear of the last
-// drawer axis. The fixed receiver is intentionally an outboard right wing.
-TENSIONER_BASE_LEAD_MM = 18.0;
-TENSIONER_BASE_X0 = TENSIONER_AXIS_MIN_X - TENSIONER_BASE_LEAD_MM;
-TENSIONER_BASE_X1 = TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R + 1.0;
-TENSIONER_BASE_Z0 = DRIVE_AXIS_Z - 16.0;
-TENSIONER_BASE_DEPTH = D - WORLD_BACK_PANEL_T - 2.0 - TENSIONER_BASE_Z0;
-TENSIONER_BASE_END_W = 3.0;
-// Keep the adjustment screw and spring on two visible, parallel lanes of the
-// carriage. The pulley stays on the belt centerline, so the spring pocket is
-// outside its 22.82 mm retaining-flange envelope instead of being hidden
-// underneath the pulley.
-TENSIONER_ADJ_Z = DRIVE_AXIS_Z - 8.5;
-TENSIONER_SPRING_Z = DRIVE_AXIS_Z + 17.5;
-// There are two physically independent X-running slide stages.  Each stage
-// sits directly below one bus pulley; neither stage is a continuous carrier
-// for the upper and lower pulley.
-TENSIONER_SLIDE_COUNT = 2;
-TENSIONER_STAGE_PULLEY_CLEAR = 0.50;
-TENSIONER_CHANNEL_FLOOR_T = 3.2;
-TENSIONER_CHANNEL_WALL_T = 3.2;
-TENSIONER_CHANNEL_H = 20.0;
-TENSIONER_TOP_LIP_T = 1.6;
-TENSIONER_TOP_RAIL_T = 1.6;
-TENSIONER_FOOT_OVERHANG_X = 7.0;
-// The T rail is deliberately explicit. The bottom foot is the inverted-T
-// crossbar; the narrow web rises from it, while the rear mounting head lands
-// two millimeters before the inside face of the cabinet back panel.
-TENSIONER_T_WEB_T = 3.2;
-TENSIONER_T_WEB_H = 7.0;
-TENSIONER_REAR_MOUNT_T = 3.2;
-TENSIONER_REAR_MOUNT_H = TENSIONER_CHANNEL_H;
-TENSIONER_END_BOSS_D = 8.0;
-// The carriage is intentionally offset toward -X.  The round-axis flange
-// must reach the right side, while the moving shoe itself must still stay
-// inside the fixed channel at maximum travel.
-TENSIONER_CARRIAGE_W = 22.0;
-TENSIONER_CARRIAGE_X_OFFSET = -3.0;
-TENSIONER_CARRIAGE_D = 32.0;
-TENSIONER_CARRIAGE_T = 6.4;
-TENSIONER_GUIDE_CLEAR = 0.40;
-TENSIONER_BEARING_OD = 9.0;
-TENSIONER_BEARING_H = 2.0;
-TENSIONER_BEARING_SEAT_OD = 10.4;
-TENSIONER_BEARING_SEAT_H = 0.9;
-TENSIONER_BEARING_FIT = 0.25;
-TENSIONER_ADJ_ROD_D = 6.0;
-TENSIONER_ADJ_BORE_D = 6.8;
-TENSIONER_ADJ_HEAD_D = 10.0;
-TENSIONER_ADJ_HEAD_L = 3.0;
-TENSIONER_ADJ_SCREW_CLEAR = 0.35;
-TENSIONER_SPRING_POCKET_D = 6.0;
-TENSIONER_SPRING_POCKET_DEPTH = 3.0;
-TENSIONER_SPRING_WIRE_D = 0.65;
-TENSIONER_SPRING_OD = 4.8;
-TENSIONER_SPRING_TURNS = 5;
-TENSIONER_SPRING_MIN_L = 0.80;
-
 // Colors are only for the assembly preview; STL units remain millimeters.
 COLOR_CABINET = "#6f8f9a";
 COLOR_DRAWER = "#d3b184";
@@ -251,28 +336,36 @@ COLOR_SPRING = "#e6c24a";
 COLOR_FORK = "#45d85c";
 COLOR_RACK = "#9a77c7";
 COLOR_MOTOR = "#343a40";
-COLOR_TENSIONER = "#e1b642";
-COLOR_TENSIONER_BASE = "#b28724";
-COLOR_TENSIONER_CARRIAGE = "#f0c64b";
+COLOR_TENSIONER_T_SOLID = "#aebdce";
+// Diagnostic world-space triad. The origin is the cabinet front/lower/low-X
+// datum [0, 0, 0]; it is shown in assembly and in CLUTCH_PART=world_axes only.
+WORLD_AXIS_ORIGIN = [0, 0, 0];
+WORLD_AXIS_LENGTH = 28.0;
+WORLD_AXIS_SHAFT_D = 1.35;
+WORLD_AXIS_HEAD_L = 5.0;
+WORLD_AXIS_HEAD_D = 4.8;
+WORLD_AXIS_LABEL_SIZE = 5.5;
+WORLD_AXIS_LABEL_T = 0.65;
+COLOR_AXIS_X = "#ef4444";
+COLOR_AXIS_Y = "#22c55e";
+COLOR_AXIS_Z = "#3b82f6";
 //#endregion
 
 //#region 模型/类型
 // Part values:
 //   assembly       complete cabinet + bus + all drawer take-offs + one fork
 //   cabinet        cabinet shell and drawer ghosts
-//   power_bus      seven-axis boundary/column bus, top/bottom belts, two slides
-//   all_vertical_axes  D drive + five drawer axes + two short round spindles
+//   cabinet_context wire-frame cabinet + bay dividers + drawer context
+//   power_bus      active D-drive + drawer-column bus during the T-only rebuild
+//   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
 //   clutch         all clutch stations
 //   clutch_detail  one selected station with the spring, screw and fork
-//   motor/left_d_axis/right_round_axis/side_axes/column/vertical_rack/idler/bus_belt
-//   tensioner_slide/tensioner_base/tensioner_carriage/tensioner_spring/
-//   tensioner_screw/tensioner_receiver
-//   tensioner_stage_top/tensioner_stage_bottom
-//   tensioner_bearing
-//   tensioner_pulley_top/tensioner_pulley_bottom
+//   motor/left_d_axis/side_axes/column/vertical_rack
+//   tensioner_t_solid
 //   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
 //   spring/screw/fork/drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
+//   world_axes                 native +X/+Y/+Z diagnostic triad at the origin
 //                  individual verification pieces for the one-by-one workflow
 //
 // The upper clutch wheel has two functional faces represented in one carrier:
@@ -349,33 +442,6 @@ function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 
 function selected_row() = min(max(0, SELECTED_ROW), N_ROW - 1);
 
-// The upper and lower tensioner stages share X/Z datums but have independent
-// Y envelopes. The fixed inverted-T rail is below its pulley. The carriage
-// clears both the lower foot and the narrow web, leaving the pulley/flange
-// free to turn above the rear-mounted bracket.
-function tensioner_level_y(level) =
-    level == "top" ? BUS_TOP_Y : BUS_BOTTOM_Y;
-
-function tensioner_channel_y1(level) =
-    tensioner_level_y(level)
-    - TIMING_PULLEY_W / 2
-    - TIMING_FLANGE_T
-    - TENSIONER_STAGE_PULLEY_CLEAR;
-
-function tensioner_channel_y0(level) =
-    tensioner_channel_y1(level) - TENSIONER_CHANNEL_H;
-
-function tensioner_carriage_y0(level) =
-    tensioner_channel_y0(level)
-    + TENSIONER_CHANNEL_FLOOR_T
-    + TENSIONER_T_WEB_H
-    + TENSIONER_GUIDE_CLEAR;
-
-function tensioner_carriage_center_y(level) =
-    tensioner_carriage_y0(level) + TENSIONER_CARRIAGE_T / 2;
-
-function tensioner_carriage_top_y(level) =
-    tensioner_carriage_y0(level) + TENSIONER_CARRIAGE_T;
 //#endregion
 
 //#region 私有成员：齿轮、D 轴和带
@@ -402,12 +468,6 @@ module d_rod_y(x, y0, z, length, d = ROD_D) {
             }
 }
 
-module round_rod_y(x, y0, z, length, d = ROUND_AXIS_D) {
-    translate([x, y0, z])
-        rotate([-90, 0, 0])
-            cylinder(d = d, h = length);
-}
-
 module cylinder_x(x0, y, z, d, length) {
     // A local +Z cylinder rotated about Y becomes a world +X cylinder.
     translate([x0, y, z])
@@ -419,6 +479,122 @@ module cylinder_y(x, y0, z, d, length) {
     translate([x, y0, z])
         rotate([-90, 0, 0])
             cylinder(d = d, h = length);
+}
+
+// The SKP reference is modeled in its native red/green/blue frame and mapped
+// directly into the established SCAD/world frame:
+//   native green (+Y) -> world +X
+//   native red   (+X) -> world +Y
+//   native blue  (+Z) -> world Z axis with a sign reversal onto world -Z
+// Keeping these helpers separate makes the axis contract visible at every
+// reconstructed feature instead of hiding it in one imported mesh transform.
+module tensioner_native_box(x0, y0, z0, dx, dy, dz) {
+    translate([y0, x0, -z0 - dz])
+        cube([dy, dx, dz]);
+}
+
+module tensioner_native_axis_x_cylinder(x0, y, z, d, length) {
+    // Native red axis (+X) is world +Y; native blue coordinates are mirrored.
+    translate([y, x0, -z])
+        rotate([-90, 0, 0])
+            cylinder(d = d, h = length, $fn = TENSIONER_SKP_ARC_SEGMENTS);
+}
+
+module tensioner_native_axis_y_cylinder(x, y0, z, d, length) {
+    // Native green axis (+Y) is world +X; native blue coordinates are mirrored.
+    translate([y0, x, -z])
+        rotate([0, 90, 0])
+            cylinder(d = d, h = length, $fn = TENSIONER_SKP_ARC_SEGMENTS);
+}
+
+module tensioner_native_annular_plate(
+    x0,
+    y_center,
+    z_center,
+    thickness,
+    outer_d,
+    inner_d
+) {
+    // The plate normal is native red / world +Y.
+    difference() {
+        tensioner_native_axis_x_cylinder(
+            x0,
+            y_center,
+            z_center,
+            outer_d,
+            thickness
+        );
+        tensioner_native_axis_x_cylinder(
+            x0 - EPS,
+            y_center,
+            z_center,
+            inner_d,
+            thickness + 2 * EPS
+        );
+    }
+}
+
+module world_axis_arrow_x(origin, length = WORLD_AXIS_LENGTH) {
+    shaft_l = max(0.1, length - WORLD_AXIS_HEAD_L);
+    color(COLOR_AXIS_X) {
+        cylinder_x(origin[0], origin[1], origin[2], WORLD_AXIS_SHAFT_D, shaft_l);
+        translate([origin[0] + shaft_l, origin[1], origin[2]])
+            rotate([0, 90, 0])
+                cylinder(d1 = WORLD_AXIS_HEAD_D, d2 = 0, h = WORLD_AXIS_HEAD_L);
+    }
+}
+
+module world_axis_arrow_y(origin, length = WORLD_AXIS_LENGTH) {
+    shaft_l = max(0.1, length - WORLD_AXIS_HEAD_L);
+    color(COLOR_AXIS_Y) {
+        cylinder_y(origin[0], origin[1], origin[2], WORLD_AXIS_SHAFT_D, shaft_l);
+        translate([origin[0], origin[1] + shaft_l, origin[2]])
+            rotate([-90, 0, 0])
+                cylinder(d1 = WORLD_AXIS_HEAD_D, d2 = 0, h = WORLD_AXIS_HEAD_L);
+    }
+}
+
+module world_axis_arrow_z(origin, length = WORLD_AXIS_LENGTH) {
+    shaft_l = max(0.1, length - WORLD_AXIS_HEAD_L);
+    color(COLOR_AXIS_Z) {
+        translate(origin)
+            cylinder(d = WORLD_AXIS_SHAFT_D, h = shaft_l);
+        translate([origin[0], origin[1], origin[2] + shaft_l])
+            cylinder(d1 = WORLD_AXIS_HEAD_D, d2 = 0, h = WORLD_AXIS_HEAD_L);
+    }
+}
+
+module world_axis_label(label, position) {
+    // Labels stay centered on their world-space datum. The web ViewHelper is
+    // the authoritative clickable orientation control for the rear view.
+    translate(position)
+        linear_extrude(height = WORLD_AXIS_LABEL_T, center = true, convexity = 4)
+            text(
+                label,
+                size = WORLD_AXIS_LABEL_SIZE,
+                halign = "center",
+                valign = "center",
+                font = "Liberation Sans:style=Bold"
+            );
+}
+
+module world_axes_marker() {
+    o = WORLD_AXIS_ORIGIN;
+    l = WORLD_AXIS_LENGTH;
+    // The small white origin ball makes it clear that all three arrows start
+    // at the same world point even when the translucent cabinet is present.
+    color("#f8fafc")
+        translate(o)
+            sphere(d = 3.0);
+    world_axis_arrow_x(o, l);
+    world_axis_arrow_y(o, l);
+    world_axis_arrow_z(o, l);
+    color(COLOR_AXIS_X)
+        world_axis_label("+X", [o[0] + l + 3.5, o[1] + 1.0, o[2] + 0.7]);
+    color(COLOR_AXIS_Y)
+        world_axis_label("+Y", [o[0] + 1.5, o[1] + l + 3.5, o[2] + 0.7]);
+    color(COLOR_AXIS_Z)
+        world_axis_label("+Z", [o[0] + 4.0, o[1] + 1.0, o[2] + l]);
 }
 
 module timing_pulley_y(x, y, z, teeth = TIMING_TEETH, bore = "d") {
@@ -506,36 +682,49 @@ module dog_face_y(x, y, z, teeth = CLUTCH_DOG_TEETH, upward = true) {
             }
 }
 
-module rounded_belt_capsule_2d(a0, a1, fixed, radius) {
-    hull() {
-        translate([a0, fixed]) circle(r = radius);
-        translate([a1, fixed]) circle(r = radius);
-    }
+module belt_tooth_prism_z(x, z, y, inward) {
+    // Rotate the same profile so its tangent follows world +Z.  In this
+    // orientation local radial +Y maps to world -X, so the caller uses
+    // inward=+1 on the +X run and inward=-1 on the -X run.
+    translate([x, y + TIMING_BELT_W / 2, z])
+        rotate([0, -90, 0])
+            rotate([90, 0, 0])
+                linear_extrude(height = TIMING_BELT_W + 2 * EPS)
+                    polygon([
+                        [-TIMING_BELT_TOOTH_BASE / 2, -inward * EPS],
+                        [ TIMING_BELT_TOOTH_BASE / 2, -inward * EPS],
+                        [ TIMING_BELT_TOOTH_TIP / 2, inward * TIMING_BELT_TOOTH_H],
+                        [-TIMING_BELT_TOOTH_TIP / 2, inward * TIMING_BELT_TOOTH_H]
+                    ]);
 }
 
-module belt_loop_x(x0, x1, z, y) {
-    radial_half = TIMING_BELT_T / 2 + TIMING_BELT_CLEAR;
-    outer = TIMING_PITCH_R + radial_half;
-    inner = max(0.8, TIMING_PITCH_R - radial_half);
-    // The bus belt lies in the world XZ plane at a fixed height.
-    translate([0, y + TIMING_BELT_T / 2, 0])
-        rotate([90, 0, 0])
-            linear_extrude(height = TIMING_BELT_T, convexity = 8)
-                difference() {
-                    rounded_belt_capsule_2d(x0, x1, z, outer);
-                    rounded_belt_capsule_2d(x0, x1, z, inner);
-                }
+module belt_tooth_prism_arc(cx, cz, y, radial_inner, angle) {
+    // At angle=0 the local +Z direction is world +X.  The tooth profile's
+    // negative local radial direction therefore points into the pulley.
+    translate([cx, y + TIMING_BELT_W / 2, cz])
+        rotate([0, 90 - angle, 0])
+            translate([0, 0, radial_inner])
+                rotate([90, 0, 0])
+                    linear_extrude(height = TIMING_BELT_W + 2 * EPS)
+                        polygon([
+                            // The root crosses the inner belt boundary by
+                            // EPS toward the belt body.  Using -EPS here
+                            // leaves every arc tooth as a floating solid.
+                            [-TIMING_BELT_TOOTH_BASE / 2, EPS],
+                            [ TIMING_BELT_TOOTH_BASE / 2, EPS],
+                            [ TIMING_BELT_TOOTH_TIP / 2, -TIMING_BELT_TOOTH_H],
+                            [-TIMING_BELT_TOOTH_TIP / 2, -TIMING_BELT_TOOTH_H]
+                        ]);
 }
 
-module belt_loop_z(x, z0, z1, y) {
+module belt_loop_z_base(x, z0, z1, y) {
+    inner = TIMING_BELT_BASE_INNER_R;
+    outer = TIMING_BELT_BASE_OUTER_R;
     // Both drawer pulleys have vertical (+Y) axes. The belt therefore lies in
     // XZ and its two straight runs follow the drawer travel along +Z.
-    radial_half = TIMING_BELT_T / 2 + TIMING_BELT_CLEAR;
-    outer = TIMING_PITCH_R + radial_half;
-    inner = max(0.8, TIMING_PITCH_R - radial_half);
-    translate([0, y + TIMING_BELT_T / 2, 0])
+    translate([0, y + TIMING_BELT_W / 2, 0])
         rotate([90, 0, 0])
-            linear_extrude(height = TIMING_BELT_T, convexity = 8)
+            linear_extrude(height = TIMING_BELT_W, convexity = 8)
                 difference() {
                     hull() {
                         translate([x, z0]) circle(r = outer);
@@ -547,31 +736,63 @@ module belt_loop_z(x, z0, z1, y) {
                     }
                 }
 }
+
+module belt_loop_z_teeth(x, z0, z1, y) {
+    inner = TIMING_BELT_BASE_INNER_R;
+    run_count = max(0, floor((z1 - z0) / TIMING_PITCH_MM));
+    // πR/pitch is exactly 10 for a 20T, 3 mm-pitch pulley.  round() avoids
+    // floating-point truncation to 9 teeth at the two half-wraps.
+    arc_count = max(1, round(PI * TIMING_PITCH_R / TIMING_PITCH_MM));
+    // The drawer-running belt uses the same inner sawtooth profile.  Its
+    // long runs are along +Z instead of +X.
+    for (i = [0:run_count - 1]) {
+        z = z0 + (i + 0.5) * TIMING_PITCH_MM;
+        belt_tooth_prism_z(x + inner, z, y, 1);
+        belt_tooth_prism_z(x - inner, z, y, -1);
+    }
+    for (i = [0:arc_count - 1]) {
+        top_angle = 0 + (i + 0.5) * 180 / arc_count;
+        bottom_angle = 180 + (i + 0.5) * 180 / arc_count;
+        belt_tooth_prism_arc(x, z1, y, inner, top_angle);
+        belt_tooth_prism_arc(x, z0, y, inner, bottom_angle);
+    }
+}
+
+module belt_loop_z(x, z0, z1, y) {
+    union() {
+        belt_loop_z_base(x, z0, z1, y);
+        belt_loop_z_teeth(x, z0, z1, y);
+    }
+}
 //#endregion
 
 //#region 私有成员：齿杆、齿条和弹簧
 module vertical_gear_rack(x, z) {
-    rack_face_x = x + CLUTCH_GEAR_PITCH_R + 0.15;
-    color(COLOR_RACK) {
-        // The rack is a full-height strip in the X/Y plane, with a shallow
-        // depth thickness at the rear bus plane.
-        translate([rack_face_x, ROD_BOTTOM_Y, z - 1.0])
-            cube([2.6, ROD_TOP_Y - ROD_BOTTOM_Y, 2.0]);
-        for (rack_y = [ROD_BOTTOM_Y + 1.5:CLUTCH_PITCH_MM:ROD_TOP_Y - 1.5])
-            translate([
-                rack_face_x - CLUTCH_DOG_TOOTH_H,
-                rack_y - 0.48,
-                z - 1.15
-            ])
-                cube([CLUTCH_DOG_TOOTH_H + 2.6, 0.96, 2.3]);
-    }
+    // This is no longer the old flat rack placeholder.  The authored
+    // long_gear_shaft is centered between the two bus pulley datums: its
+    // continuous Y-directed spline teeth mesh with each axis-Z clutch spur,
+    // while its integral D stubs carry the top and bottom timing pulleys.
+    translate([x, (BUS_BOTTOM_Y + BUS_TOP_Y) / 2, z])
+        color(COLOR_RACK)
+            long_gear_shaft_solid_param(
+                VERTICAL_GEAR_TEETH,
+                VERTICAL_GEAR_PITCH_MM,
+                VERTICAL_GEAR_TOOTH_DEPTH,
+                VERTICAL_GEAR_TIP_START,
+                VERTICAL_GEAR_TIP_END,
+                VERTICAL_GEAR_ROOT_END,
+                VERTICAL_GEAR_LENGTH,
+                VERTICAL_GEAR_END_STUB_LENGTH,
+                VERTICAL_GEAR_STUB_OVERLAP,
+                ROD_D,
+                ROD_FLAT_DEPTH
+            );
 }
 
 module vertical_gear_column(x, z) {
-    // A continuous D shaft plus a full-height toothed strip. Each axis-Z
-    // upper clutch gear touches this strip at its station height.
-    color(COLOR_SHAFT)
-        d_rod_y(x, ROD_BOTTOM_Y, z, ROD_TOP_Y - ROD_BOTTOM_Y);
+    // One real Y-directed long spline gear shaft per drawer column.  The
+    // shaft already contains both end D stubs; do not add a second coaxial
+    // round/D rod that would hide the authored geometry.
     vertical_gear_rack(x, z);
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_TIMING)
@@ -624,23 +845,6 @@ module compression_spring_y(x, y0, y1, z) {
                     circle(d = CLUTCH_SPRING_WIRE_D);
 }
 
-module compression_spring_x(x0, x1, y, z) {
-    length = max(TENSIONER_SPRING_MIN_L, x1 - x0);
-    translate([x0, y, z])
-        rotate([0, 90, 0])
-            linear_extrude(
-                height = length,
-                twist = 360 * TENSIONER_SPRING_TURNS,
-                slices = max(32, TENSIONER_SPRING_TURNS * 16),
-                convexity = 4
-            )
-                translate([
-                    TENSIONER_SPRING_OD / 2 - TENSIONER_SPRING_WIRE_D / 2,
-                    0
-                ])
-                    circle(d = TENSIONER_SPRING_WIRE_D);
-}
-
 module t_countersunk_screw_y(x, z, top_y) {
     head_bottom = top_y - CLUTCH_SCREW_HEAD_H;
     color("#707985")
@@ -674,458 +878,177 @@ module t_countersunk_screw_y(x, z, top_y) {
 //#endregion
 
 //#region 公开 API：柜体与动力母线
-module tensioner_slide_base(level = "top") {
-    x0 = TENSIONER_BASE_X0;
-    x1 = TENSIONER_BASE_X1;
-    y0 = tensioner_channel_y0(level);
-    y1 = tensioner_channel_y1(level);
-    z0 = TENSIONER_BASE_Z0;
-    z1 = TENSIONER_BASE_Z0 + TENSIONER_BASE_DEPTH;
-    center_y = tensioner_carriage_center_y(level);
-
-    // Fixed outer frame reconstructed from the SketchUp reference. In the
-    // Y/Z side section this is an inverted T: a continuous bottom crossbar
-    // runs from the front toward the rear (+Z), and a narrow web rises from
-    // that foot. The rear mounting head is the part that lands against the
-    // cabinet back-panel receiver. Each belt level owns a complete frame.
-    color(COLOR_TENSIONER_BASE)
-        difference() {
-            union() {
-                // Inverted-T bottom crossbar. It is intentionally below the
-                // carriage, so the part orientation remains unambiguous in a
-                // side inspection view.
-                translate([
-                    x0 - TENSIONER_FOOT_OVERHANG_X,
-                    y0,
-                    z0
-                ])
-                    cube([
-                        x1 - x0 + 2 * TENSIONER_FOOT_OVERHANG_X,
-                        TENSIONER_CHANNEL_FLOOR_T,
-                        z1 - z0
-                    ]);
-
-                // Narrow longitudinal web. Its long direction is +Z toward
-                // the rear panel; the carriage bridges this web while it
-                // translates along X.
-                translate([
-                    x0,
-                    y0,
-                    DRIVE_AXIS_Z - TENSIONER_T_WEB_T / 2
-                ])
-                    cube([
-                        x1 - x0,
-                        TENSIONER_CHANNEL_FLOOR_T + TENSIONER_T_WEB_H,
-                        z1 - DRIVE_AXIS_Z + TENSIONER_T_WEB_T / 2
-                    ]);
-
-                // The rear mounting head is a shallow rectangular frame. Its
-                // top and bottom bars are the horizontal mounting faces at
-                // the back panel; keeping the center open makes the SKP-like
-                // carriage and the inverted-T rail visible in side view.
-                difference() {
-                    translate([
-                        x0,
-                        y0,
-                        z1 - TENSIONER_REAR_MOUNT_T
-                    ])
-                        cube([
-                            x1 - x0,
-                            TENSIONER_REAR_MOUNT_H,
-                            TENSIONER_REAR_MOUNT_T
-                        ]);
-                    translate([
-                        x0 + TENSIONER_BASE_END_W,
-                        y0 + TENSIONER_CHANNEL_FLOOR_T,
-                        z1 - TENSIONER_REAR_MOUNT_T - EPS
-                    ])
-                        cube([
-                            x1 - x0 - 2 * TENSIONER_BASE_END_W,
-                            TENSIONER_REAR_MOUNT_H
-                                - TENSIONER_CHANNEL_FLOOR_T
-                                - TENSIONER_TOP_LIP_T,
-                            TENSIONER_REAR_MOUNT_T + 2 * EPS
-                        ]);
-                }
-
-                // Low front/rear guide shoulders keep the moving carriage
-                // registered in Z while the T web carries the section shape.
-                translate([x0, y0, z0])
-                    cube([
-                        x1 - x0,
-                        TENSIONER_CHANNEL_H,
-                        TENSIONER_CHANNEL_WALL_T
-                    ]);
-                translate([x0, y0, z1 - TENSIONER_CHANNEL_WALL_T])
-                    cube([
-                        x1 - x0,
-                        TENSIONER_CHANNEL_H,
-                        TENSIONER_CHANNEL_WALL_T
-                    ]);
-
-                // Short top lips capture the front/rear carriage shoulders.
-                // The 0.4 mm guide clearance is below these lips, so the
-                // carriage can translate in X but cannot lift out.
-                translate([
-                    x0,
-                    y1 - TENSIONER_TOP_LIP_T,
-                    z0 + TENSIONER_CHANNEL_WALL_T - EPS
-                ])
-                    cube([x1 - x0, TENSIONER_TOP_LIP_T, 2.8 + EPS]);
-                translate([
-                    x0,
-                    y1 - TENSIONER_TOP_LIP_T,
-                    z1 - TENSIONER_CHANNEL_WALL_T - 2.8
-                ])
-                    cube([x1 - x0, TENSIONER_TOP_LIP_T, 2.8 + EPS]);
-
-                // Long upper guide rail. Together with the bottom foot it
-                // gives the SKP side view its rectangular opening; its rear
-                // end is captured by the receiver at the cabinet back.
-                translate([x0, y1 - TENSIONER_TOP_RAIL_T, z0])
-                    cube([
-                        x1 - x0,
-                        TENSIONER_TOP_RAIL_T,
-                        z1 - z0
-                    ]);
-
-                // The screw and spring stops are lane bosses, not solid
-                // end walls. Keeping the middle open is important: from a
-                // left/right side view the inverted-T section must remain
-                // visible, just like the rectangular opening in the SKP.
-                translate([
-                    x0,
-                    y0,
-                    TENSIONER_ADJ_Z - TENSIONER_END_BOSS_D / 2
-                ])
-                    cube([
-                        TENSIONER_BASE_END_W,
-                        TENSIONER_CHANNEL_H,
-                        TENSIONER_END_BOSS_D
-                    ]);
-                translate([
-                    x1 - TENSIONER_BASE_END_W,
-                    y0,
-                    TENSIONER_SPRING_Z - TENSIONER_END_BOSS_D / 2
-                ])
-                    cube([
-                        TENSIONER_BASE_END_W,
-                        TENSIONER_CHANNEL_H,
-                        TENSIONER_END_BOSS_D
-                    ]);
-            }
-
-            // Large screw passage through the left end block. The screw head
-            // remains outside the block; its 6 mm rod advances this level's
-            // carriage independently.
-            cylinder_x(
-                x0 - EPS,
-                center_y,
-                TENSIONER_ADJ_Z,
-                TENSIONER_ADJ_BORE_D,
-                TENSIONER_BASE_END_W + 2 * EPS
+module tensioner_main_parametric() {
+    // The native SKP main group is a base slab plus an upper rail.  The two
+    // side pockets are cut separately because their openings differ by 1 mm.
+    difference() {
+        union() {
+            tensioner_native_box(
+                TENSIONER_MAIN_BASE_X0,
+                TENSIONER_MAIN_BASE_Y0,
+                TENSIONER_MAIN_BASE_Z0,
+                TENSIONER_MAIN_BASE_DX,
+                TENSIONER_MAIN_BASE_DY,
+                TENSIONER_MAIN_BASE_DZ
             );
-
-            // Small blind spring pocket in the right end block.
-            cylinder_x(
-                x1 - TENSIONER_BASE_END_W - EPS,
-                center_y,
-                TENSIONER_SPRING_Z,
-                TENSIONER_SPRING_POCKET_D,
-                TENSIONER_SPRING_POCKET_DEPTH + EPS
+            tensioner_native_box(
+                TENSIONER_MAIN_UPPER_X0,
+                TENSIONER_MAIN_UPPER_Y0,
+                TENSIONER_MAIN_UPPER_Z0,
+                TENSIONER_MAIN_UPPER_DX,
+                TENSIONER_MAIN_UPPER_DY,
+                TENSIONER_MAIN_UPPER_DZ
             );
         }
-}
 
-module tensioner_slide_carriage(level = "top") {
-    cx = TENSIONER_X;
-    cz = DRIVE_AXIS_Z;
-    screw_z = TENSIONER_ADJ_Z;
-    spring_z = TENSIONER_SPRING_Z;
-    x0 = cx + TENSIONER_CARRIAGE_X_OFFSET - TENSIONER_CARRIAGE_W / 2;
-    x1 = x0 + TENSIONER_CARRIAGE_W;
-    y0 = tensioner_carriage_y0(level);
-    z0 = TENSIONER_BASE_Z0 + TENSIONER_CHANNEL_WALL_T + TENSIONER_GUIDE_CLEAR;
-    center_y = tensioner_carriage_center_y(level);
-
-    color(COLOR_TENSIONER_CARRIAGE)
-        difference() {
-            union() {
-                // One moving platform belongs to one belt level. It rides in
-                // the fixed channel with the specified 0.4 mm running gap.
-                translate([x0, y0, z0])
-                    cube([
-                        TENSIONER_CARRIAGE_W,
-                        TENSIONER_CARRIAGE_T,
-                        TENSIONER_CARRIAGE_D
-                    ]);
-
-                // The printed carriage has a shallow retaining seat. The
-                // actual center ring is a separate bearing, added below as a
-                // gray purchased part; it is not the carriage itself.
-                difference() {
-                    cylinder_y(
-                        cx,
-                        tensioner_carriage_top_y(level),
-                        cz,
-                        TENSIONER_BEARING_SEAT_OD,
-                        TENSIONER_BEARING_SEAT_H
-                    );
-                    cylinder_y(
-                        cx,
-                        tensioner_carriage_top_y(level) - EPS,
-                        cz,
-                        TENSIONER_BEARING_OD + TENSIONER_BEARING_FIT,
-                        TENSIONER_BEARING_SEAT_H + 2 * EPS
-                    );
-                }
-            }
-
-            // The bearing bore continues through the moving platform so the
-            // short round spindle can actually pass through the bearing.
-            cylinder_y(
-                cx,
-                y0 - EPS,
-                cz,
-                ROUND_BORE_D + 0.18,
-                TENSIONER_CARRIAGE_T
-                    + TENSIONER_BEARING_SEAT_H + 2 * EPS
-            );
-
-            // Large blind socket mates with the adjustment screw rod.
-            cylinder_x(
-                x0 - EPS,
-                center_y,
-                screw_z,
-                TENSIONER_ADJ_BORE_D,
-                3.2
-            );
-
-            // Small blind seat locates the spring in the moving carriage.
-            cylinder_x(
-                x1 - TENSIONER_SPRING_POCKET_DEPTH,
-                center_y,
-                spring_z,
-                TENSIONER_SPRING_POCKET_D,
-                TENSIONER_SPRING_POCKET_DEPTH + EPS
-            );
-        }
-}
-
-module tensioner_bearing_ring(level = "top") {
-    // SKP's middle circular ring is the bearing. Model it as a distinct
-    // annulus so the close-up cannot be mistaken for a solid printed boss.
-    color("#71808d")
-        difference() {
-            cylinder_y(
-                TENSIONER_X,
-                tensioner_carriage_top_y(level),
-                DRIVE_AXIS_Z,
-                TENSIONER_BEARING_OD,
-                TENSIONER_BEARING_H
-            );
-            cylinder_y(
-                TENSIONER_X,
-                tensioner_carriage_top_y(level) - EPS,
-                DRIVE_AXIS_Z,
-                ROUND_BORE_D + 0.18,
-                TENSIONER_BEARING_H + 2 * EPS
-            );
-        }
-}
-
-module tensioner_slide_spring(level = "top") {
-    spring_z = TENSIONER_SPRING_Z;
-    carriage_x1 = TENSIONER_X + TENSIONER_CARRIAGE_X_OFFSET
-        + TENSIONER_CARRIAGE_W / 2;
-    // The coil starts inside the carriage's small round seat and ends just
-    // before the fixed right end pocket, so the spring is visibly anchored at
-    // both ends of the slide.
-    spring_x0 = carriage_x1 - TENSIONER_SPRING_POCKET_DEPTH + 0.20;
-    spring_x1 = TENSIONER_BASE_X1 - TENSIONER_BASE_END_W - 0.20;
-    spring_y = tensioner_carriage_center_y(level);
-
-    color(COLOR_SPRING)
-        compression_spring_x(spring_x0, spring_x1, spring_y, spring_z);
-}
-
-module tensioner_adjust_screw(level = "top") {
-    screw_z = TENSIONER_ADJ_Z;
-    carriage_x0 = TENSIONER_X + TENSIONER_CARRIAGE_X_OFFSET
-        - TENSIONER_CARRIAGE_W / 2;
-    screw_y = tensioner_carriage_center_y(level);
-    screw_tip = carriage_x0 + TENSIONER_ADJ_SCREW_CLEAR;
-    rod_length = max(0.25, screw_tip - TENSIONER_BASE_X0 + EPS);
-
-    color("#707985") {
-        // A simple cylindrical head stands outside the fixed left end. The
-        // modeled rod gets longer as TENSIONER_SCREW_OUT_MM increases: turning
-        // the screw outward therefore pushes this level's carriage toward +X.
-        cylinder_x(
-            TENSIONER_BASE_X0 - TENSIONER_ADJ_HEAD_L,
-            screw_y,
-            screw_z,
-            TENSIONER_ADJ_HEAD_D,
-            TENSIONER_ADJ_HEAD_L
+        tensioner_native_box(
+            TENSIONER_MAIN_LEFT_SLOT_X0,
+            TENSIONER_MAIN_LEFT_SLOT_Y0,
+            TENSIONER_MAIN_LEFT_SLOT_Z0,
+            TENSIONER_MAIN_LEFT_SLOT_DX,
+            TENSIONER_MAIN_LEFT_SLOT_DY,
+            TENSIONER_MAIN_LEFT_SLOT_DZ
         );
-        cylinder_x(
-            TENSIONER_BASE_X0,
-            screw_y,
-            screw_z,
-            TENSIONER_ADJ_ROD_D,
-            rod_length
+        tensioner_native_box(
+            TENSIONER_MAIN_RIGHT_SLOT_X0,
+            TENSIONER_MAIN_RIGHT_SLOT_Y0,
+            TENSIONER_MAIN_RIGHT_SLOT_Z0,
+            TENSIONER_MAIN_RIGHT_SLOT_DX,
+            TENSIONER_MAIN_RIGHT_SLOT_DY,
+            TENSIONER_MAIN_RIGHT_SLOT_DZ
+        );
+
+        // Small native-green blind bore: native Y 1.5→3.0, Ø2.
+        tensioner_native_axis_y_cylinder(
+            TENSIONER_MAIN_SMALL_BORE_X,
+            TENSIONER_MAIN_SMALL_BORE_Y0,
+            TENSIONER_MAIN_SMALL_BORE_Z,
+            TENSIONER_MAIN_SMALL_BORE_D,
+            TENSIONER_MAIN_SMALL_BORE_L + EPS
+        );
+
+        // Large native-green through bore: native Y 32→42, Ø4.
+        tensioner_native_axis_y_cylinder(
+            TENSIONER_MAIN_LARGE_BORE_X,
+            TENSIONER_MAIN_LARGE_BORE_Y0 - EPS,
+            TENSIONER_MAIN_LARGE_BORE_Z,
+            TENSIONER_MAIN_LARGE_BORE_D,
+            TENSIONER_MAIN_LARGE_BORE_L + 2 * EPS
         );
     }
 }
 
-module tensioner_spindle(level = "top") {
-    pulley_y = tensioner_level_y(level);
-    spindle_y0 = tensioner_carriage_top_y(level) - 0.20;
-    spindle_y1 = pulley_y
-        + TIMING_PULLEY_W / 2
-        + TIMING_FLANGE_T
-        + 0.80;
-
-    // Each pulley has its own short round spindle. There is an intentional
-    // air gap between the two spindle ends; no rod passes through both levels.
-    color(COLOR_SHAFT)
-        round_rod_y(
-            TENSIONER_X,
-            spindle_y0,
-            DRIVE_AXIS_Z,
-            spindle_y1 - spindle_y0
-        );
-    tensioner_pulley(level);
+module tensioner_ring_parametric() {
+    tensioner_native_annular_plate(
+        TENSIONER_RING_X0,
+        TENSIONER_RING_Y0 + TENSIONER_RING_DY / 2,
+        TENSIONER_RING_Z0 + TENSIONER_RING_DZ / 2,
+        TENSIONER_RING_DX,
+        TENSIONER_RING_OUTER_D,
+        TENSIONER_RING_INNER_D
+    );
 }
 
-module cabinet_tensioner_receiver_stage(level = "top") {
-    x0 = TENSIONER_BASE_X0;
-    x1 = TENSIONER_BASE_X1;
-    y0 = tensioner_channel_y0(level);
-    z1 = TENSIONER_BASE_Z0 + TENSIONER_BASE_DEPTH;
-    receiver_depth = D - WORLD_BACK_PANEL_T - z1;
+module tensioner_plate_parametric() {
+    difference() {
+        tensioner_native_box(
+            TENSIONER_PLATE_X0,
+            TENSIONER_PLATE_Y0,
+            TENSIONER_PLATE_Z0,
+            TENSIONER_PLATE_DX,
+            TENSIONER_PLATE_DY,
+            TENSIONER_PLATE_DZ
+        );
 
-    // These fixed ribs are part of the cabinet, not the moving carriage. The
-    // lower shelf catches the inverted-T foot at z=z1. The tall rear key
-    // catches the T head and lands directly on the inside face of the 5 mm
-    // back wall; the two end ribs prevent yaw and the right rib keys the
-    // receiver against the cabinet side wall.
-    union() {
-        // Matching top/bottom receiver straps leave the center of the
-        // mounting frame open, rather than turning the receiver into a solid
-        // wall behind the moving carriage.
-        translate([x0, y0, z1 - EPS])
-            cube([
-                x1 - x0,
-                TENSIONER_CHANNEL_FLOOR_T + EPS,
-                receiver_depth + 2 * EPS
-            ]);
+        // Axis-red through bore: native X, Ø10, across the 3 mm plate.
+        tensioner_native_axis_x_cylinder(
+            TENSIONER_PLATE_X0 - EPS,
+            TENSIONER_PLATE_Y0 + TENSIONER_PLATE_DY / 2,
+            TENSIONER_PLATE_Z0 + TENSIONER_PLATE_DZ / 2,
+            TENSIONER_PLATE_BORE_D,
+            TENSIONER_PLATE_DX + 2 * EPS
+        );
+
+        // Axis-green blind bore: native local Y -1→1.5, Ø2.
+        tensioner_native_axis_y_cylinder(
+            TENSIONER_PLATE_X0 + TENSIONER_PLATE_SMALL_BORE_LOCAL_X,
+            TENSIONER_PLATE_Y0
+                + TENSIONER_PLATE_SMALL_BORE_LOCAL_Y0
+                - EPS,
+            TENSIONER_PLATE_Z0 + TENSIONER_PLATE_SMALL_BORE_LOCAL_Z,
+            TENSIONER_PLATE_SMALL_BORE_D,
+            TENSIONER_PLATE_SMALL_BORE_L + 2 * EPS
+        );
+    }
+}
+
+module tensioner_skp_parametric() {
+    // Align the mapped native envelope with the existing rear/low-X datum.
+    // The translation is placement only; all shape dimensions remain editable
+    // in the parameter block above.
+    color(COLOR_TENSIONER_T_SOLID)
         translate([
-            x0,
-            y0 + TENSIONER_REAR_MOUNT_H - TENSIONER_TOP_LIP_T,
-            z1 - EPS
-        ])
-            cube([
-                x1 - x0,
-                TENSIONER_TOP_LIP_T + EPS,
-                receiver_depth + 2 * EPS
-            ]);
-
-        for (x = [x0 + 4.0, x1 - 8.0])
-            translate([x, y0, z1 - EPS])
-                cube([
-                    4.0,
-                    TENSIONER_CHANNEL_H + EPS,
-                    receiver_depth + 2 * EPS
-                ]);
-
-        translate([W - WALL - EPS, y0, z1 - EPS])
-            cube([
-                WALL + 2 * EPS,
-                TENSIONER_CHANNEL_H + EPS,
-                receiver_depth + 2 * EPS
-            ]);
-    }
+            TENSIONER_PARAM_WORLD_ORIGIN_X,
+            TENSIONER_PARAM_WORLD_ORIGIN_Y,
+            TENSIONER_PARAM_WORLD_ORIGIN_Z
+        ]) {
+            tensioner_main_parametric();
+            tensioner_ring_parametric();
+            tensioner_plate_parametric();
+        }
 }
 
-module cabinet_tensioner_receiver(level = "both") {
-    if (level == "both") {
-        cabinet_tensioner_receiver_stage("bottom");
-        cabinet_tensioner_receiver_stage("top");
-    } else {
-        cabinet_tensioner_receiver_stage(level);
-    }
-}
-
-module tensioner_slide_stage(level = "top") {
-    tensioner_slide_base(level);
-    tensioner_slide_carriage(level);
-    tensioner_bearing_ring(level);
-    tensioner_slide_spring(level);
-    tensioner_adjust_screw(level);
-    tensioner_spindle(level);
-}
-
-module tensioner_slide_assembly() {
-    // Two separate stages: upper bus belt and lower bus belt.
-    tensioner_slide_stage("bottom");
-    tensioner_slide_stage("top");
-}
-
-module tensioner_stage_with_receiver(level = "both") {
-    cabinet_tensioner_receiver(level);
-    if (level == "both")
-        tensioner_slide_assembly();
-    else
-        tensioner_slide_stage(level);
+// Keep the existing part selector name stable for the exporter and viewer.
+// It now resolves to the editable reconstruction, not an imported mesh.
+module tensioner_t_solid() {
+    tensioner_skp_parametric();
 }
 
 module world_partition_plate() {
-    translate([0, 0, WORLD_PARTITION_FRONT_Z])
+    translate([0, 0, WORLD_PARTITION_BACK_Z])
         cube([W, H, WORLD_PARTITION_T]);
 }
 
 module world_bay_grid() {
     for (i = [1:N_COL - 1])
-        translate([world_col_x(i) - WORLD_DIV_T, WORLD_GRID_ORIGIN_Y, 0])
-            cube([WORLD_DIV_T, WORLD_GRID_H + EPS, WORLD_PARTITION_FRONT_Z + EPS]);
+        translate([world_col_x(i) - WORLD_DIV_T, WORLD_GRID_ORIGIN_Y, WORLD_PARTITION_FRONT_Z])
+            cube([WORLD_DIV_T, WORLD_GRID_H + EPS, -WORLD_PARTITION_FRONT_Z + EPS]);
     for (j = [1:N_ROW - 1])
-        translate([WORLD_GRID_ORIGIN_X, world_row_y(j) - WORLD_SHELF_T, 0])
-            cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z + EPS]);
-    translate([WORLD_GRID_ORIGIN_X, WORLD_GRID_ORIGIN_Y - WORLD_SHELF_T, 0])
-        cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z + EPS]);
+        translate([WORLD_GRID_ORIGIN_X, world_row_y(j) - WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z])
+            cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
+    translate([WORLD_GRID_ORIGIN_X, WORLD_GRID_ORIGIN_Y - WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z])
+        cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
 }
 
 module world_front_service_cheek() {
-    translate([WALL - EPS, WORLD_GRID_ORIGIN_Y, 0])
-        cube([SERVICE_W + EPS, WORLD_GRID_H + EPS, WORLD_PARTITION_FRONT_Z + EPS]);
+    translate([WALL - EPS, WORLD_GRID_ORIGIN_Y, WORLD_PARTITION_FRONT_Z])
+        cube([SERVICE_W + EPS, WORLD_GRID_H + EPS, -WORLD_PARTITION_FRONT_Z + EPS]);
 }
 
 module world_drawer_ghosts() {
+    drawer_depth = -WORLD_PARTITION_FRONT_Z - 0.6;
     for (i = [0:N_COL - 1], j = [0:N_ROW - 1])
         translate([
             world_col_x(i) + DRAWER_CLEAR,
             world_row_y(j) + DRAWER_CLEAR,
-            0.2
+            WORLD_PARTITION_FRONT_Z + 0.4
         ])
             cube([
                 world_drawer_outer_w(),
                 world_drawer_outer_h(),
-                WORLD_PARTITION_FRONT_Z - 0.6
+                drawer_depth
             ]);
 }
 
 module clutch_cabinet_shell() {
-    // Closed thin-wall world shell. The back face is +Z and the vertical
-    // dimension is +Y; the compatible tensioner receivers are part of this
-    // printable cabinet candidate.
-    union() {
-        difference() {
+    // Closed thin-wall world shell. The front face is 0 and the back face is -Z; the vertical
+    // dimension is +Y. The old tensioner receiver is intentionally absent
+    // until the standalone T datum is approved.
+    difference() {
+        translate([0, 0, -D])
             cube([W, H, D]);
-            translate([WALL, WALL, WALL])
-                cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
-        }
-        cabinet_tensioner_receiver();
+        translate([WALL, WALL, -D + WALL])
+            cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
     }
 }
 
@@ -1137,14 +1060,14 @@ module clutch_assembly_shell_context() {
     // the printable cabinet entry above remains a separate closed shell.
     union() {
         for (x = [0, W - WALL])
-            for (z = [0, D - WALL])
+            for (z = [-WALL, -D])
                 translate([x, 0, z])
                     cube([WALL, H, WALL]);
         for (x = [0, W - WALL])
             for (y = [0, H - WALL])
-                translate([x, y, 0])
+                translate([x, y, -D])
                     cube([WALL, WALL, D]);
-        for (z = [0, D - WALL])
+        for (z = [-WALL, -D])
             for (y = [0, H - WALL])
                 translate([0, y, z])
                     cube([W, WALL, WALL]);
@@ -1152,8 +1075,7 @@ module clutch_assembly_shell_context() {
 }
 
 module clutch_partition_with_belt_passages() {
-    radial_half = TIMING_BELT_T / 2 + TIMING_BELT_CLEAR;
-    passage_half_x = TIMING_PITCH_R + radial_half + 0.45;
+    passage_half_x = TIMING_BELT_BASE_OUTER_R + TIMING_BELT_CLEAR + 0.45;
     difference() {
         world_partition_plate();
         for (row = [0:N_ROW - 1])
@@ -1161,7 +1083,7 @@ module clutch_partition_with_belt_passages() {
                 translate([
                     clutch_col_x(col) - passage_half_x,
                     drawer_belt_y(row) - TIMING_BELT_T / 2 - 0.45,
-                    WORLD_PARTITION_FRONT_Z - EPS
+                    WORLD_PARTITION_BACK_Z - EPS
                 ])
                     cube([
                         2 * passage_half_x,
@@ -1179,7 +1101,6 @@ module clutch_cabinet_context(include_drawers = true) {
         // transparent boolean face is not useful for visual inspection.
         world_bay_grid();
         world_front_service_cheek();
-        cabinet_tensioner_receiver();
     }
     if (include_drawers)
         color(COLOR_DRAWER, 0.22) world_drawer_ghosts();
@@ -1197,8 +1118,8 @@ module power_motor_vertical() {
 }
 
 module left_d_axis() {
-    // Front-left axis: the rod has a D flat and both bus pulleys have matching
-    // D bores. The motor output shaft overlaps the lower end of this rod.
+    // Rear-view-left boundary axis: the rod has a D flat and both bus pulleys
+    // have matching D bores. The motor output shaft overlaps its lower end.
     color(COLOR_SHAFT)
         d_rod_y(MOTOR_X, LEFT_D_AXIS_Y0, DRIVE_AXIS_Z, ROD_TOP_Y - LEFT_D_AXIS_Y0);
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
@@ -1219,56 +1140,27 @@ module left_d_axis() {
                 }
 }
 
-module right_round_axis() {
-    // Front-right boundary: two independent short round spindles, one per
-    // belt level. There is deliberately no D flat on either shaft. This
-    // boundary appears on the left when the cabinet is viewed from the back.
-    tensioner_spindle("bottom");
-    tensioner_spindle("top");
-}
-
-module tensioner_pulley(level = "top") {
-    y = level == "top" ? BUS_TOP_Y : BUS_BOTTOM_Y;
-    color(COLOR_TENSIONER)
-        timing_pulley_y(TENSIONER_X, y, DRIVE_AXIS_Z, TIMING_TEETH, "round");
-}
-
-module tensioner_pulley_top() {
-    tensioner_pulley("top");
-}
-
-module tensioner_pulley_bottom() {
-    tensioner_pulley("bottom");
-}
-
 module side_axes() {
     left_d_axis();
-    right_round_axis();
 }
 
 module all_vertical_axes() {
-    // Exact front-view order, left to right:
-    //   0       : D drive axis + motor
+    // Exact rear-view order, left to right:
+    //   0       : D drive axis + motor (high X, therefore rear-view-left)
     //   1..N_COL: one drawer transmission axis per drawer column
-    //   N_COL+1: two independent round tensioner spindles carried by two slides
+    // The high-X tensioner axis is intentionally removed during this
+    // standalone T reconstruction.
     power_motor_vertical();
     for (i = [0:N_COL - 1])
         vertical_gear_column(clutch_col_x(i), DRIVE_AXIS_Z);
-    tensioner_slide_assembly();
 }
 
 module power_bus() {
-    // Front view: D drive + five drawer transmission columns + the two-level
-    // round tensioner boundary. The tensioner stages are included once by
-    // all_vertical_axes(); they are not duplicated after the belts.
+    // The right-side tensioner slide belongs to the power-bus subassembly.
+    // The pulley/wheel and return belt remain separate until their mating
+    // geometry is approved, but the parametric SKP slide is already seated.
     all_vertical_axes();
-
-    // One top and one bottom horizontal timing belt.  The column pulleys sit
-    // on both straight runs; the far-right pair is the adjustable idler.
-    color(COLOR_BELT, 0.15) {
-        belt_loop_x(MOTOR_X, TENSIONER_X, DRIVE_AXIS_Z, BUS_BOTTOM_Y);
-        belt_loop_x(MOTOR_X, TENSIONER_X, DRIVE_AXIS_Z, BUS_TOP_Y);
-    }
+    tensioner_t_solid();
 }
 //#endregion
 
@@ -1421,12 +1313,12 @@ module drawer_front_drive(col, row) {
     x = clutch_col_x(col);
     belt_y = drawer_belt_y(row);
     color(COLOR_BELT, 0.14)
-        belt_loop_z(x, FRONT_PULLEY_Z, DRIVE_AXIS_Z, belt_y);
+        belt_loop_z(x, DRIVE_AXIS_Z, FRONT_PULLEY_Z, belt_y);
     drawer_front_compound(col, row);
     horizontal_drawer_rack(
         x,
-        FRONT_PULLEY_Z + 3.5,
-        WORLD_PARTITION_FRONT_Z - 1.5,
+        WORLD_PARTITION_FRONT_Z + 1.5,
+        FRONT_PULLEY_Z - 3.5,
         drawer_front_gear_y(row)
     );
 }
@@ -1452,53 +1344,8 @@ module selected_vertical_rack_part() {
     vertical_gear_rack(clutch_col_x(selected_col()), DRIVE_AXIS_Z);
 }
 
-module selected_idler_part() {
-    tensioner_stage_with_receiver();
-}
-
-module selected_right_round_axis_part() {
-    right_round_axis();
-}
-
-module selected_tensioner_slide_part() {
-    tensioner_stage_with_receiver();
-}
-
-module selected_tensioner_top_stage_part() {
-    tensioner_stage_with_receiver("top");
-}
-
-module selected_tensioner_bottom_stage_part() {
-    tensioner_stage_with_receiver("bottom");
-}
-
-module selected_tensioner_bearing_part() {
-    tensioner_bearing_ring("bottom");
-    tensioner_bearing_ring("top");
-}
-
-module selected_tensioner_base_part() {
-    tensioner_slide_base("bottom");
-    tensioner_slide_base("top");
-}
-
-module selected_tensioner_carriage_part() {
-    tensioner_slide_carriage("bottom");
-    tensioner_slide_carriage("top");
-}
-
-module selected_tensioner_spring_part() {
-    tensioner_slide_spring("bottom");
-    tensioner_slide_spring("top");
-}
-
-module selected_tensioner_screw_part() {
-    tensioner_adjust_screw("bottom");
-    tensioner_adjust_screw("top");
-}
-
-module selected_tensioner_receiver_part() {
-    cabinet_tensioner_receiver();
+module selected_tensioner_t_solid_part() {
+    tensioner_t_solid();
 }
 
 module selected_upper_clutch_part() {
@@ -1580,8 +1427,8 @@ module selected_drawer_belt_part() {
     color(COLOR_BELT, 0.18)
         belt_loop_z(
             clutch_col_x(col),
-            FRONT_PULLEY_Z,
             DRIVE_AXIS_Z,
+            FRONT_PULLEY_Z,
             drawer_belt_y(row)
         );
 }
@@ -1616,8 +1463,8 @@ module selected_drawer_rack_part() {
     row = selected_row();
     horizontal_drawer_rack(
         clutch_col_x(selected_col()),
-        FRONT_PULLEY_Z + 3.5,
-        WORLD_PARTITION_FRONT_Z - 1.5,
+        WORLD_PARTITION_FRONT_Z + 1.5,
+        FRONT_PULLEY_Z - 3.5,
         drawer_front_gear_y(row)
     );
 }
@@ -1629,14 +1476,14 @@ module clutch_detail() {
     row = selected_row();
     x = clutch_col_x(col);
     z = DRIVE_AXIS_Z;
-    translate([0, 0, CLUTCH_EXPLODE])
+    translate([0, 0, -CLUTCH_EXPLODE])
         clutch_station(col, row, ENGAGED, true);
     if (CLUTCH_EXPLODE > 0)
         color(COLOR_RACK, 0.45)
             translate([
                 x - 1.0,
                 clutch_upper_open_y(row) - 1.0,
-                z + CLUTCH_EXPLODE - 1.0
+                z - CLUTCH_EXPLODE - 1.0
             ])
                 cube([2.0, 30, 2.0]);
 }
@@ -1646,6 +1493,7 @@ module clutch_detail() {
 module clutch_scene_geometry() {
     if (CLUTCH_PART == "assembly") {
         clutch_cabinet_context();
+        world_axes_marker();
         power_bus();
         all_clutches();
         for (row = [0:N_ROW - 1])
@@ -1656,6 +1504,10 @@ module clutch_scene_geometry() {
         // Export the shell alone as a watertight printed part; internal panels and
         // drawer ghosts are visual context only and intentionally do not enter it.
         color(COLOR_CABINET) clutch_cabinet_shell();
+    } else if (CLUTCH_PART == "cabinet_context") {
+        // Preview-only cabinet orientation and compartment datum. This remains
+        // separate from the printable shell so the folder can toggle the grid.
+        clutch_cabinet_context();
     } else if (CLUTCH_PART == "power_bus") {
         power_bus();
     } else if (CLUTCH_PART == "all_vertical_axes") {
@@ -1670,43 +1522,14 @@ module clutch_scene_geometry() {
         power_motor_vertical();
     } else if (CLUTCH_PART == "left_d_axis") {
         selected_left_d_axis_part();
-    } else if (CLUTCH_PART == "right_round_axis") {
-        selected_right_round_axis_part();
-    } else if (CLUTCH_PART == "tensioner_pulley_top") {
-        tensioner_pulley_top();
-    } else if (CLUTCH_PART == "tensioner_pulley_bottom") {
-        tensioner_pulley_bottom();
-    } else if (CLUTCH_PART == "tensioner_slide") {
-        selected_tensioner_slide_part();
-    } else if (CLUTCH_PART == "tensioner_stage_top") {
-        selected_tensioner_top_stage_part();
-    } else if (CLUTCH_PART == "tensioner_stage_bottom") {
-        selected_tensioner_bottom_stage_part();
-    } else if (CLUTCH_PART == "tensioner_bearing") {
-        selected_tensioner_bearing_part();
-    } else if (CLUTCH_PART == "tensioner_base") {
-        selected_tensioner_base_part();
-    } else if (CLUTCH_PART == "tensioner_carriage") {
-        selected_tensioner_carriage_part();
-    } else if (CLUTCH_PART == "tensioner_spring") {
-        selected_tensioner_spring_part();
-    } else if (CLUTCH_PART == "tensioner_screw") {
-        selected_tensioner_screw_part();
-    } else if (CLUTCH_PART == "tensioner_receiver") {
-        selected_tensioner_receiver_part();
+    } else if (CLUTCH_PART == "tensioner_t_solid") {
+        selected_tensioner_t_solid_part();
     } else if (CLUTCH_PART == "side_axes") {
         side_axes();
     } else if (CLUTCH_PART == "column") {
         selected_column_part();
     } else if (CLUTCH_PART == "vertical_rack") {
         selected_vertical_rack_part();
-    } else if (CLUTCH_PART == "idler") {
-        selected_idler_part();
-    } else if (CLUTCH_PART == "bus_belt") {
-        color(COLOR_BELT, 0.15) {
-            belt_loop_x(MOTOR_X, TENSIONER_X, DRIVE_AXIS_Z, BUS_BOTTOM_Y);
-            belt_loop_x(MOTOR_X, TENSIONER_X, DRIVE_AXIS_Z, BUS_TOP_Y);
-        }
     } else if (CLUTCH_PART == "upper_clutch") {
         selected_upper_clutch_part();
     } else if (CLUTCH_PART == "upper_spur") {
@@ -1735,6 +1558,8 @@ module clutch_scene_geometry() {
         selected_front_gear_part();
     } else if (CLUTCH_PART == "drawer_rack") {
         selected_drawer_rack_part();
+    } else if (CLUTCH_PART == "world_axes") {
+        world_axes_marker();
     } else {
         assert(false, str("unknown CLUTCH_PART: ", CLUTCH_PART));
     }
@@ -1745,19 +1570,20 @@ clutch_scene_geometry();
 
 //#region 业务逻辑与检查
 echo("cabinet_clutch", "W", W, "H", H, "D", D);
-echo("world_axes", "x=width", "y=height(+up)", "z=depth(+rear)", "front_z", 0, "rear_z", D);
+echo("world_axes", "x=width", "y=height(+up)", "z=depth(+front)", "front_z", 0, "rear_z", -D);
+echo("rear_view_sides", "right", "-X/toward_x0", "left", "+X/toward_xW", "tensioner", "right", "motor", "left");
 echo("drive_axis", "x_motor", MOTOR_X, "z", DRIVE_AXIS_Z, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
-echo("vertical_axes", "count", VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-columns + two short round tensioner spindles");
+echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "D-drive + drawer-columns; tensioner wheel removed for T prototype");
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
-echo("right_axis", "profile", "round", "d", ROUND_AXIS_D, "pulley_bore", ROUND_BORE_D);
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
-echo("tensioner", "slides", TENSIONER_SLIDE_COUNT, "section", "inverted-T", "axis_min_x", TENSIONER_AXIS_MIN_X, "axis_max_x", TENSIONER_AXIS_MAX_X, "screw_out", TENSIONER_SCREW_OUT_MM, "rail_z", TENSIONER_BASE_Z0, TENSIONER_BASE_Z0 + TENSIONER_BASE_DEPTH, "bottom_y", tensioner_channel_y0("bottom"), "top_y", tensioner_channel_y0("top"), "channel_h", TENSIONER_CHANNEL_H);
-echo("tensioner_bearing", "od", TENSIONER_BEARING_OD, "h", TENSIONER_BEARING_H, "spindle_d", ROUND_AXIS_D, "seat_od", TENSIONER_BEARING_SEAT_OD);
+echo("belt", "axial_width_world_y", TIMING_BELT_W, "base_thickness_xz", TIMING_BELT_T, "base_inner_r", TIMING_BELT_BASE_INNER_R, "base_outer_r", TIMING_BELT_BASE_OUTER_R, "tooth_pitch", TIMING_PITCH_MM, "tooth_h", TIMING_BELT_TOOTH_H);
+echo("tensioner_skp_parametric", "source", "弹簧加力的滑动张紧轮调节滑台.skp", "axis_map", "SKP+Y(green)->world+X, SKP+X(red)->world+Y, SKP+Z(blue)->world-Z (same Z axis, rearward)", "native_bbox_xyz", TENSIONER_SKP_NATIVE_SIZE_X, TENSIONER_SKP_NATIVE_SIZE_Y, TENSIONER_SKP_NATIVE_SIZE_Z, "world_bbox_xyz", TENSIONER_SKP_WORLD_SIZE_X, TENSIONER_SKP_WORLD_SIZE_Y, TENSIONER_SKP_WORLD_SIZE_Z, "world_center", TENSIONER_SKP_WORLD_CENTER_X, TENSIONER_SKP_WORLD_CENTER_Y, TENSIONER_SKP_WORLD_CENTER_Z, "mesh_import", false, "parametric_csg", true);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
 
 assert(
     CLUTCH_PART == "assembly"
     || CLUTCH_PART == "cabinet"
+    || CLUTCH_PART == "cabinet_context"
     || CLUTCH_PART == "power_bus"
     || CLUTCH_PART == "all_vertical_axes"
     || CLUTCH_PART == "drawer_drive"
@@ -1765,23 +1591,10 @@ assert(
     || CLUTCH_PART == "clutch_detail"
     || CLUTCH_PART == "motor"
     || CLUTCH_PART == "left_d_axis"
-    || CLUTCH_PART == "right_round_axis"
-    || CLUTCH_PART == "tensioner_pulley_top"
-    || CLUTCH_PART == "tensioner_pulley_bottom"
-    || CLUTCH_PART == "tensioner_slide"
-    || CLUTCH_PART == "tensioner_stage_top"
-    || CLUTCH_PART == "tensioner_stage_bottom"
-    || CLUTCH_PART == "tensioner_bearing"
-    || CLUTCH_PART == "tensioner_base"
-    || CLUTCH_PART == "tensioner_carriage"
-    || CLUTCH_PART == "tensioner_spring"
-    || CLUTCH_PART == "tensioner_screw"
-    || CLUTCH_PART == "tensioner_receiver"
+    || CLUTCH_PART == "tensioner_t_solid"
     || CLUTCH_PART == "side_axes"
     || CLUTCH_PART == "column"
     || CLUTCH_PART == "vertical_rack"
-    || CLUTCH_PART == "idler"
-    || CLUTCH_PART == "bus_belt"
     || CLUTCH_PART == "upper_clutch"
     || CLUTCH_PART == "upper_spur"
     || CLUTCH_PART == "upper_dog"
@@ -1796,63 +1609,39 @@ assert(
     || CLUTCH_PART == "front_pulley"
     || CLUTCH_PART == "front_gear"
     || CLUTCH_PART == "drawer_rack"
+    || CLUTCH_PART == "world_axes"
 );
 assert(abs(CLUTCH_OPEN_GAP - 2 * CLUTCH_DOG_TOOTH_H) < 0.001, "open clutch gap must be two dog tooth heights");
+assert(abs(TIMING_BELT_W - TIMING_PULLEY_W) < 0.001,
+    "timing belt axial width must match the mating pulley width along world Y");
+assert(abs((TIMING_BELT_BASE_OUTER_R - TIMING_BELT_BASE_INNER_R) - TIMING_BELT_T) < 0.001,
+    "timing belt base radial thickness must equal TIMING_BELT_T");
+assert(TIMING_BELT_BASE_OUTER_R < TIMING_FLANGE_R,
+    "timing belt base must remain inside the larger pulley retaining flange");
+assert(TIMING_BELT_TOOTH_H < TIMING_TOOTH_DEPTH,
+    "belt tooth height must stay below the mating pulley tooth depth");
+assert(TIMING_BELT_TOOTH_TIP < TIMING_PITCH_MM * 0.40,
+    "belt tooth tip must fit the 0.40-pitch pulley root gap");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
-assert(VERTICAL_AXIS_COUNT == 7, "vertical axis positions must be D drive + 5 drawer axes + one two-level tensioner boundary");
-assert(TENSIONER_SLIDE_COUNT == 2, "upper and lower bus belts require two independent tensioner slides");
-assert(DRIVE_AXIS_Z > WORLD_PARTITION_BACK_Z + 1.0, "drive bus must be behind the partition");
-assert(DRIVE_AXIS_Z - TIMING_OUTER_R > WORLD_PARTITION_BACK_Z + 0.50, "rear pulley OD must clear the partition");
-assert(DRIVE_AXIS_Z + TIMING_OUTER_R < D - WORLD_BACK_PANEL_T - 1.0, "rear belt must clear the back panel");
+assert(ACTIVE_VERTICAL_AXIS_COUNT == N_COL + 1,
+    "T-only prototype active axes must be D drive + drawer columns");
+assert(PLANNED_VERTICAL_AXIS_COUNT == N_COL + 2,
+    "final layout reserves two non-column boundary axes");
+assert(DRIVE_AXIS_Z < WORLD_PARTITION_BACK_Z - 1.0, "drive bus must be behind the partition");
+assert(DRIVE_AXIS_Z + TIMING_OUTER_R < WORLD_PARTITION_BACK_Z - 0.50, "rear pulley OD must clear the partition");
+assert(DRIVE_AXIS_Z - TIMING_OUTER_R > -D + WORLD_BACK_PANEL_T + 1.0, "rear belt must clear the back panel");
 assert(BUS_BOTTOM_Y > WALL + 2.0, "bottom bus pulley must clear the cabinet floor");
 assert(BUS_TOP_Y < H - WALL - 1.0, "top bus pulley must clear the cabinet roof");
-assert(TENSIONER_TRAVEL_MM > 0, "tensioner travel must be positive");
-assert(TENSIONER_SCREW_OUT_MM >= 0 && TENSIONER_SCREW_OUT_MM <= TENSIONER_TRAVEL_MM,
-    "tensioner screw adjustment must stay within the defined travel");
-assert(TENSIONER_AXIS_MIN_X < TENSIONER_AXIS_MAX_X,
-    "tensioner axis travel must have a valid range");
-assert(TENSIONER_AXIS_MIN_X - world_col_center_x(N_COL - 1)
-    > TIMING_FLANGE_D + TENSIONER_AXIS_GAP_MM - 0.01,
-    "tensioner flange must clear the last drawer-axis flange");
-assert(TENSIONER_BASE_X0 - TENSIONER_ADJ_HEAD_L
-    > world_col_center_x(N_COL - 1) + ROD_D / 2 + 0.50,
-    "tensioner screw head must clear the last drawer axis");
-assert(TENSIONER_BASE_X0 < W - WALL && TENSIONER_BASE_X1 > W - WALL,
-    "outboard tensioner receiver must bridge the cabinet right wall");
-assert(TENSIONER_BASE_X1 > TENSIONER_AXIS_MAX_X + TIMING_FLANGE_R,
-    "tensioner base must retain the full flange at maximum travel");
-assert(TENSIONER_BASE_X0 < TENSIONER_AXIS_MIN_X,
-    "tensioner base must start before the axis travel");
-assert(tensioner_channel_y1("bottom") < tensioner_channel_y0("top"),
-    "upper and lower tensioner channels must be separate");
-assert(TENSIONER_CHANNEL_H > TENSIONER_CHANNEL_FLOOR_T
-    + TENSIONER_GUIDE_CLEAR + TENSIONER_CARRIAGE_T,
-    "tensioner carriage must fit below the retaining lips");
-assert(TENSIONER_CHANNEL_H > TENSIONER_CHANNEL_FLOOR_T
-    + TENSIONER_T_WEB_H + TENSIONER_GUIDE_CLEAR + TENSIONER_CARRIAGE_T
-    + TENSIONER_BEARING_SEAT_H,
-    "inverted-T web and bearing seat must fit below the pulley");
-assert(TENSIONER_BASE_DEPTH > TENSIONER_CARRIAGE_D
-    + 2 * TENSIONER_GUIDE_CLEAR,
-    "inverted-T rail depth must contain the moving carriage");
-assert(TENSIONER_BASE_Z0 + TENSIONER_BASE_DEPTH
-    < D - WORLD_BACK_PANEL_T - 1.0,
-    "rear mounting head must stop before the back-panel inside face");
-assert(TENSIONER_T_WEB_T > 0 && TENSIONER_T_WEB_H > 0,
-    "inverted-T web must have positive section dimensions");
-assert(TENSIONER_FOOT_OVERHANG_X > 0,
-    "inverted-T bottom crossbar must extend beyond the guide body");
-assert(TENSIONER_SPRING_MIN_L > 0, "tensioner spring minimum length must be positive");
-assert(TENSIONER_BEARING_OD > ROUND_BORE_D, "bearing inner bore must clear the round spindle");
-assert(TENSIONER_BEARING_SEAT_OD > TENSIONER_BEARING_OD,
-    "printed bearing seat must retain the bearing ring");
-assert(TENSIONER_ADJ_Z > TENSIONER_BASE_Z0 + TENSIONER_CHANNEL_WALL_T,
-    "adjustment lane must clear the fixed front channel wall");
-assert(TENSIONER_SPRING_Z < TENSIONER_BASE_Z0 + TENSIONER_BASE_DEPTH - TENSIONER_CHANNEL_WALL_T,
-    "spring lane must fit inside the fixed rear channel wall");
-assert(ROUND_BORE_D > ROUND_AXIS_D, "round pulley bore must clear the round axis");
+assert(TENSIONER_SKP_NATIVE_SIZE_X > 0
+    && TENSIONER_SKP_NATIVE_SIZE_Y > 0
+    && TENSIONER_SKP_NATIVE_SIZE_Z > 0,
+    "SKP reference bbox dimensions must be positive");
+assert(TENSIONER_SKP_WORLD_SIZE_X > TENSIONER_SKP_WORLD_SIZE_Z,
+    "mapped SKP dimensions must satisfy world X > Z");
+assert(TENSIONER_SKP_WORLD_SIZE_Z > TENSIONER_SKP_WORLD_SIZE_Y,
+    "mapped SKP dimensions must satisfy world Z > Y");
 assert(TIMING_FLANGE_R > TIMING_OUTER_R, "timing pulley retaining flange must exceed toothed outer circle");
-assert(FRONT_PULLEY_Z > 0 && FRONT_PULLEY_Z < WORLD_PARTITION_FRONT_Z, "front pulley must stay in the drawer bay");
+assert(FRONT_PULLEY_Z < 0 && FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z, "front pulley must stay in the drawer bay");
 assert(SELECTED_COLUMN >= 0 && SELECTED_COLUMN < N_COL, "SELECTED_COLUMN out of range");
 assert(SELECTED_ROW >= 0 && SELECTED_ROW < N_ROW, "SELECTED_ROW out of range");
 //#endregion

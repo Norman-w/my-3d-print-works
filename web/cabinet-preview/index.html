@@ -8,8 +8,8 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/"
     }
   }
   </script>
@@ -18,16 +18,38 @@
     :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dde8; }
-    .app { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; height: 100%; }
-    aside { border-right: 1px solid #243044; padding: 14px; overflow: hidden; background: #121722; display: flex; flex-direction: column; }
+    .app { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    aside { position: absolute; top: 16px; left: 16px; z-index: 10; width: min(340px, calc(100vw - 32px)); height: min(calc(100% - 32px), 900px); border: 1px solid #243044; border-radius: 12px; padding: 10px; overflow: hidden; background: rgba(18, 23, 34, .96); box-shadow: 0 16px 40px rgba(0, 0, 0, .34); display: flex; flex-direction: column; min-width: 0; transition: width .16s ease, height .16s ease, padding .16s ease, border-radius .16s ease; }
+    .tree-header { display: flex; align-items: flex-start; gap: 8px; min-height: 34px; cursor: grab; touch-action: none; user-select: none; }
+    .tree-header.dragging { cursor: grabbing; }
+    .tree-title { min-width: 0; flex: 1; }
+    .tree-title h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tree-collapse { flex: 0 0 28px; width: 28px; height: 28px; padding: 0; font-size: 16px; line-height: 1; }
+    .tree-body { min-height: 0; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .tree-panel.dragging { transition: none; }
+    .tree-panel.collapsed { width: 44px; height: 44px; padding: 6px; border-radius: 10px; }
+    .tree-panel.collapsed .tree-header { min-height: 32px; }
+    .tree-panel.collapsed .tree-title, .tree-panel.collapsed .tree-body { display: none; }
+    .tree-panel.collapsed .tree-collapse { width: 32px; height: 32px; margin: 0; }
     h1 { margin: 0 0 8px; font-size: 16px; }
     .meta, .hint { color: #8b98ab; font-size: 12px; line-height: 1.5; }
-    .modes, .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
     button, input, select { accent-color: #5b9fd6; }
     button { background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; cursor: pointer; transition: background .16s ease, border-color .16s ease; }
     button:hover { background: #243044; }
     button:focus-visible { outline: 2px solid #f97316; outline-offset: 2px; }
     button.on { background: #f97316; border-color: #fb923c; color: #1a1208; }
+    .view-section { flex: 0 0 auto; margin: 2px 0 8px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; overflow: hidden; }
+    .section-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 42px; padding: 8px 10px; border: 0; border-radius: 0; background: transparent; color: #d7dde8; text-align: left; font-size: 13px; font-weight: 650; }
+    .section-toggle:hover { background: #182232; }
+    .section-toggle .chevron { color: #8b98ab; font-size: 16px; }
+    .view-body { padding: 0 8px 8px; }
+    .view-group-label { margin: 4px 2px 6px; color: #8b98ab; font-size: 11px; }
+    .view-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .view-button { min-width: 0; min-height: 44px; padding: 6px 7px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .view-button.active { background: #28506a; border-color: #5b9fd6; color: #e8f3ff; box-shadow: inset 0 0 0 1px rgba(91, 159, 214, .25); }
+    .view-section.collapsed .view-body { display: none; }
+    button:disabled { opacity: .5; cursor: default; }
     input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
     input[type="range"] { width: 100%; cursor: pointer; accent-color: #f97316; }
     .play { margin: 10px 0 8px; padding: 10px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; }
@@ -37,11 +59,16 @@
     .filters { display: grid; gap: 8px; margin: 8px 0; }
     #parts { flex: 1; overflow: auto; padding-right: 4px; }
     .group { margin: 10px 0 14px; }
-    .group h2 { margin: 0 0 6px; font-size: 12px; color: #93c5fd; display: flex; justify-content: space-between; gap: 8px; }
+    .group h2 { margin: 0 0 6px; font-size: 12px; color: #93c5fd; }
+    .group-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; border: 0; border-radius: 6px; padding: 4px 6px; color: #93c5fd; background: transparent; text-align: left; font-size: 12px; }
+    .group-toggle:hover { background: #1c2433; }
+    .group-toggle .chevron { width: 12px; color: #8b98ab; }
+    .group-items { display: block; }
+    .group.collapsed .group-items { display: none; }
     label.part { display: grid; grid-template-columns: 18px 10px 1fr auto; gap: 8px; align-items: center; margin: 5px 0; font-size: 13px; }
     label.part .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     label.part .status { color: #8b98ab; font-size: 11px; }
-    #c { width: 100%; height: 100%; display: block; }
+    #c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .file-card { position: fixed; inset: 0; display: none; place-items: center; background: #0b0d12; z-index: 20; padding: 24px; }
     body.file .file-card { display: grid; }
     body.file .app { display: none; }
@@ -63,21 +90,39 @@
       <code>./scripts/preview_http.sh start output/3d-preview</code>
     </div>
   </div>
-  <div class="app">
-    <aside>
-      <h1 id="title">STL 预览</h1>
-      <div class="meta" id="meta">加载零件清单…</div>
-      <div class="modes">
-        <button type="button" id="mode-simple" class="on">简单预览</button>
-        <button type="button" id="mode-explode">爆炸视图</button>
+  <div class="app" id="preview-app">
+    <aside class="tree-panel" id="tree-panel">
+      <div class="tree-header">
+        <div class="tree-title">
+          <h1 id="title">STL 预览</h1>
+          <div class="meta" id="meta">加载零件清单…</div>
+        </div>
+        <button type="button" class="tree-collapse" id="tree-collapse" aria-label="折叠器件树" title="折叠器件树">‹</button>
       </div>
-      <div class="row">
-        <button type="button" id="fit">适配视角</button>
-        <button type="button" id="assemble">合并</button>
-        <button type="button" id="explode">展开</button>
-      </div>
+      <div class="tree-body">
       <label class="meta">爆炸程度 <output id="explode-out">0</output>%</label>
       <input id="explode-range" type="range" min="0" max="100" value="0" />
+      <section class="view-section" id="view-section">
+        <button type="button" class="section-toggle" id="views-toggle" aria-expanded="true">
+          <span>视角</span><span class="chevron" id="views-chevron">⌃</span>
+        </button>
+        <div class="view-body" id="views-body">
+          <div class="view-group-label">标准</div>
+          <div class="view-grid">
+            <button type="button" class="view-button" data-view="front" aria-pressed="false">正视图</button>
+            <button type="button" class="view-button" data-view="left" aria-pressed="false">左视图</button>
+            <button type="button" class="view-button" data-view="rear" aria-pressed="false">后视图</button>
+            <button type="button" class="view-button" data-view="iso" aria-pressed="false">等轴视图</button>
+          </div>
+          <div class="view-group-label">机构</div>
+          <div class="view-grid">
+            <button type="button" class="view-button" data-view="snake" aria-pressed="false">蛇形结构</button>
+            <button type="button" class="view-button" data-view="drawer-drive" aria-pressed="false">开合驱动</button>
+            <button type="button" class="view-button" data-view="upper-tensioner" aria-pressed="false">上方张紧</button>
+            <button type="button" class="view-button" data-view="lower-tensioner" aria-pressed="false">下方张紧</button>
+          </div>
+        </div>
+      </section>
       <div class="play">
         <label class="meta" for="hz-range">链条循环 <output class="hz-out" id="hz-out">1 Hz · 顺时针</output></label>
         <input id="hz-range" type="range" min="0" max="5" step="1" value="2" />
@@ -107,11 +152,11 @@
         <button type="button" id="hide-filtered">隐藏筛选结果</button>
       </div>
       <div id="parts"></div>
-      <p class="hint">左键旋转 · 滚轮缩放 · 右键平移。单位 mm。零件多时先列清单，勾选或点「加载筛选结果」再拉 STL。</p>
+      </div>
     </aside>
     <canvas id="c"></canvas>
   </div>
-  <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js?v=view-column-1"></script>
   <!-- endregion -->
 </body>
 </html>

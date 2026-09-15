@@ -1,8 +1,13 @@
 //#region 导入/依赖
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { ViewHelper } from "three/addons/helpers/ViewHelper.js";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
-import { attachCabinetChainPlay, onPartLoaded, tickPlay } from "./js/cabinet-chain-play.js";
+import {
+  attachCabinetChainPlay,
+  onPartLoaded,
+  tickPlay,
+} from "./js/cabinet-chain-play.js";
 //#endregion
 
 //#region 常量/配置
@@ -12,8 +17,58 @@ const ROLE_FALLBACK_OPACITY = {
   diagnostic: 0.45,
 };
 const AUTO_EXPLODE_SCALE = 0.55;
-const AUTOLOAD_MAX = 12;
 const SEARCH_DELAY_MS = 160;
+const TREE_COLLAPSED_KEY = "smartpartsdrawer.preview.tree.collapsed-groups";
+const TREE_PANEL_COLLAPSED_KEY = "smartpartsdrawer.preview.tree.collapsed";
+const TREE_POSITION_KEY = "smartpartsdrawer.preview.tree.position";
+const VIEWS_COLLAPSED_KEY = "smartpartsdrawer.preview.views.collapsed";
+const TREE_POSITION_MARGIN = 12;
+const LEGACY_ASSEMBLY_WIDTH = 260;
+const LEGACY_COORDINATE_GROUPS = new Set([
+  "cabinet",
+  "cabinet-chain",
+  "chain-clutch",
+  "chain-hardware",
+  "motor-library",
+  "motor-mount",
+]);
+const CAMERA_VIEWS = {
+  // 世界坐标：X=横向宽度，Y=竖直高度，Z=柜体深度；柜体正面为 +Z。
+  front: { direction: [0, 0, 1], up: [0, 1, 0] },
+  left: { direction: [-1, 0, 0], up: [0, 1, 0] },
+  rear: { direction: [0, 0, -1], up: [0, 1, 0] },
+  iso: { direction: [1.15, 0.82, -1.45], up: [0, 1, 0] },
+  snake: { direction: [0.42, 0.62, -1.55], up: [0, 1, 0] },
+  "drawer-drive": { direction: [0.68, 0.52, -1.48], up: [0, 1, 0] },
+  "upper-tensioner": { direction: [-1.35, 0.62, -1.08], up: [0, 1, 0] },
+  "lower-tensioner": { direction: [-0.68, 0.58, -1.55], up: [0, 1, 0] },
+};
+const DRAWER_DRIVE_TAILS = new Set([
+  "00_left_d_axis_candidate",
+  "00_right_round_axis_candidate",
+  "01_motor_vertical_reference",
+  "02_drive_column_reference",
+  "04_right_round_axis_reference",
+  "05_top_bottom_bus_belts_reference",
+  "06_upper_axis_y_spur_candidate",
+  "06_upper_axis_z_spur_candidate",
+  "07_upper_downward_dog_candidate",
+  "08_lower_upward_dog_candidate",
+  "09_rear_takeoff_timing_pulley_candidate",
+  "13_drawer_timing_belt_reference",
+  "14_front_timing_pulley_candidate",
+  "15_front_pinion_candidate",
+  "16_drawer_linear_rack_candidate",
+]);
+const UPPER_TENSIONER_TAILS = new Set([
+  "00_cabinet_tensioner_receiver_candidate",
+  "00_left_d_axis_candidate",
+  "00_tensioner_adjust_screw_reference",
+  "00_tensioner_base_candidate",
+  "00_tensioner_carriage_candidate",
+  "00_tensioner_slide_assembly_reference",
+  "00_tensioner_spring_reference",
+]);
 //#endregion
 
 //#region 模型/类型
@@ -28,11 +83,6 @@ const els = {
   parts: document.getElementById("parts"),
   explodeRange: document.getElementById("explode-range"),
   explodeOut: document.getElementById("explode-out"),
-  modeSimple: document.getElementById("mode-simple"),
-  modeExplode: document.getElementById("mode-explode"),
-  fit: document.getElementById("fit"),
-  assemble: document.getElementById("assemble"),
-  explode: document.getElementById("explode"),
   search: document.getElementById("part-search"),
   groupFilter: document.getElementById("group-filter"),
   roleFilter: document.getElementById("role-filter"),
@@ -43,10 +93,17 @@ const els = {
   fwd: document.getElementById("fwd"),
   stop: document.getElementById("stop"),
   rev: document.getElementById("rev"),
+  previewApp: document.getElementById("preview-app"),
+  treePanel: document.getElementById("tree-panel"),
+  treeHeader: document.querySelector("#tree-panel .tree-header"),
+  treeCollapse: document.getElementById("tree-collapse"),
+  viewSection: document.getElementById("view-section"),
+  viewsToggle: document.getElementById("views-toggle"),
+  viewsChevron: document.getElementById("views-chevron"),
+  viewButtons: [...document.querySelectorAll("[data-view]")],
 };
 
 const state = {
-  mode: "simple",
   explode: 0,
   units: "mm",
   listing: /** @type {PreviewListing|null} */ (null),
@@ -55,12 +112,184 @@ const state = {
   camera: null,
   controls: null,
   scene: null,
+  legacyRoot: null,
+  legacyTensionerRoot: null,
+  viewHelper: null,
   searchTimer: 0,
   lastMs: 0,
+  collapsedGroups: loadCollapsedGroups(),
+  treeCollapsed: loadTreeCollapsed(),
+  treePosition: loadTreePosition(),
+  treeDrag: null,
+  viewsCollapsed: loadViewsCollapsed(),
+  activeView: "rear",
+  viewProfile: null,
+  viewRequest: 0,
 };
+
+function loadCollapsedGroups() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TREE_COLLAPSED_KEY) || "[]");
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveCollapsedGroups() {
+  try {
+    localStorage.setItem(TREE_COLLAPSED_KEY, JSON.stringify([...state.collapsedGroups]));
+  } catch {
+    // Private browsing can deny localStorage; the tree still works for this load.
+  }
+}
+
+function loadTreeCollapsed() {
+  try {
+    return localStorage.getItem(TREE_PANEL_COLLAPSED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function saveTreeCollapsed() {
+  try {
+    localStorage.setItem(TREE_PANEL_COLLAPSED_KEY, state.treeCollapsed ? "1" : "0");
+  } catch {
+    // Private browsing can deny localStorage; the tree still works for this load.
+  }
+}
+
+function loadViewsCollapsed() {
+  try {
+    return localStorage.getItem(VIEWS_COLLAPSED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function saveViewsCollapsed() {
+  try {
+    localStorage.setItem(VIEWS_COLLAPSED_KEY, state.viewsCollapsed ? "1" : "0");
+  } catch {
+    // Private browsing can deny localStorage; the view section still works for this load.
+  }
+}
+
+function loadTreePosition() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TREE_POSITION_KEY) || "null");
+    if (Number.isFinite(saved?.left) && Number.isFinite(saved?.top)) {
+      return { left: saved.left, top: saved.top };
+    }
+  } catch {
+    // Private browsing can deny localStorage; use the default position.
+  }
+  return { left: 16, top: 16 };
+}
+
+function saveTreePosition() {
+  try {
+    localStorage.setItem(TREE_POSITION_KEY, JSON.stringify(state.treePosition));
+  } catch {
+    // Private browsing can deny localStorage; the panel still moves for this load.
+  }
+}
+
+function clampTreePosition(left, top) {
+  const panel = els.treePanel;
+  if (!panel) return { left, top };
+  const width = panel.offsetWidth || 340;
+  const height = panel.offsetHeight || Math.max(44, window.innerHeight - 32);
+  const maxLeft = Math.max(TREE_POSITION_MARGIN, window.innerWidth - width - TREE_POSITION_MARGIN);
+  const maxTop = Math.max(TREE_POSITION_MARGIN, window.innerHeight - height - TREE_POSITION_MARGIN);
+  return {
+    left: Math.min(Math.max(left, TREE_POSITION_MARGIN), maxLeft),
+    top: Math.min(Math.max(top, TREE_POSITION_MARGIN), maxTop),
+  };
+}
+
+function applyTreePosition({ persist = false } = {}) {
+  const position = clampTreePosition(state.treePosition.left, state.treePosition.top);
+  state.treePosition = position;
+  if (els.treePanel) {
+    els.treePanel.style.left = `${position.left}px`;
+    els.treePanel.style.top = `${position.top}px`;
+  }
+  if (persist) saveTreePosition();
+}
 
 function setMeta(text) {
   els.meta.textContent = text;
+}
+
+function applyTreeCollapsed() {
+  els.treePanel?.classList.toggle("collapsed", state.treeCollapsed);
+  els.previewApp?.classList.toggle("tree-collapsed", state.treeCollapsed);
+  if (els.treeCollapse) {
+    els.treeCollapse.textContent = state.treeCollapsed ? "›" : "‹";
+    els.treeCollapse.setAttribute("aria-label", state.treeCollapsed ? "展开器件树" : "折叠器件树");
+    els.treeCollapse.title = state.treeCollapsed ? "展开器件树" : "折叠器件树";
+  }
+  applyTreePosition();
+}
+
+function applyViewsCollapsed() {
+  els.viewSection?.classList.toggle("collapsed", state.viewsCollapsed);
+  els.viewsToggle?.setAttribute("aria-expanded", String(!state.viewsCollapsed));
+  if (els.viewsChevron) els.viewsChevron.textContent = state.viewsCollapsed ? "›" : "⌃";
+}
+
+function bindTreeDrag() {
+  const handle = els.treeHeader;
+  const panel = els.treePanel;
+  if (!handle || !panel) return;
+
+  const finishDrag = (event) => {
+    const drag = state.treeDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    if (handle.hasPointerCapture?.(event.pointerId)) {
+      handle.releasePointerCapture(event.pointerId);
+    }
+    handle.classList.remove("dragging");
+    panel.classList.remove("dragging");
+    state.treeDrag = null;
+    applyTreePosition({ persist: true });
+  };
+
+  handle.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    const target = event.target;
+    if (target instanceof Element && target.closest("button, input, select, a")) return;
+    const rect = panel.getBoundingClientRect();
+    state.treeDrag = {
+      pointerId: event.pointerId,
+      offsetX: event.clientX - rect.left,
+      offsetY: event.clientY - rect.top,
+    };
+    handle.setPointerCapture?.(event.pointerId);
+    handle.classList.add("dragging");
+    panel.classList.add("dragging");
+    event.preventDefault();
+  });
+
+  handle.addEventListener("pointermove", (event) => {
+    const drag = state.treeDrag;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const position = clampTreePosition(
+      event.clientX - drag.offsetX,
+      event.clientY - drag.offsetY,
+    );
+    state.treePosition = position;
+    panel.style.left = `${position.left}px`;
+    panel.style.top = `${position.top}px`;
+    event.preventDefault();
+  });
+
+  handle.addEventListener("pointerup", finishDrag);
+  handle.addEventListener("pointercancel", finishDrag);
+  window.addEventListener("resize", () => applyTreePosition({ persist: true }));
+  applyTreePosition();
 }
 
 function itemStatus(item) {
@@ -97,9 +326,34 @@ function renderPartList() {
   for (const [groupId, parts] of grouped) {
     const section = document.createElement("section");
     section.className = "group";
+    const collapsed = state.collapsedGroups.has(groupId);
+    section.classList.toggle("collapsed", collapsed);
     const heading = document.createElement("h2");
-    heading.innerHTML = `<span>${groupId}</span><span>${parts.length}</span>`;
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "group-toggle";
+    toggle.setAttribute("aria-expanded", String(!collapsed));
+    const groupLabel = listing.groups?.find((group) => group.id === groupId)?.name || groupId;
+    toggle.setAttribute("aria-label", `${groupLabel} (${parts.length})`);
+    const chevron = document.createElement("span");
+    chevron.className = "chevron";
+    chevron.textContent = collapsed ? "›" : "⌄";
+    const name = document.createElement("span");
+    name.className = "name";
+    name.textContent = groupLabel;
+    const count = document.createElement("span");
+    count.textContent = String(parts.length);
+    toggle.append(chevron, name, count);
+    toggle.addEventListener("click", () => {
+      if (state.collapsedGroups.has(groupId)) state.collapsedGroups.delete(groupId);
+      else state.collapsedGroups.add(groupId);
+      saveCollapsedGroups();
+      renderPartList();
+    });
+    heading.appendChild(toggle);
     section.appendChild(heading);
+    const groupItems = document.createElement("div");
+    groupItems.className = "group-items";
     for (const part of parts) {
       const item = state.items.get(part.id);
       const line = document.createElement("label");
@@ -128,8 +382,9 @@ function renderPartList() {
       status.className = "status";
       status.textContent = itemStatus(item);
       line.append(checkbox, mark, name, status);
-      section.appendChild(line);
+      groupItems.appendChild(line);
     }
+    section.appendChild(groupItems);
     els.parts.appendChild(section);
   }
   refreshMeta();
@@ -149,18 +404,55 @@ function initScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0b0d12);
+  // 早期蛇形链条 STL 以 X=宽、Y=深、Z=高导出。把这批旧坐标整体旋转到
+  // 当前世界：X=宽、Y=高、Z=深；离合/滑台 STL 已经使用当前世界坐标，直接
+  // 挂在 scene 下。这样相机、轨道控制和右上角轴向都只面对一个世界。
+  const legacyRoot = new THREE.Group();
+  legacyRoot.name = "legacy-coordinate-adapter";
+  legacyRoot.rotation.x = -Math.PI / 2;
+  scene.add(legacyRoot);
+  const legacyTensionerRoot = new THREE.Group();
+  legacyTensionerRoot.name = "legacy-tensioner-coordinate-adapter";
+  // The detailed slide STL predates the canonical SCAD frame: old X=width,
+  // Y=depth (rear +Y), Z=height, with the tensioner on old high-X. Mirror X
+  // as well while bringing it into the current X=width, Y=height, Z=depth
+  // world, so the detailed reference lands on the current low-X rear side.
+  legacyTensionerRoot.position.x = LEGACY_ASSEMBLY_WIDTH;
+  legacyTensionerRoot.scale.x = -1;
+  legacyTensionerRoot.rotation.x = -Math.PI / 2;
+  scene.add(legacyTensionerRoot);
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 4000);
-  camera.up.set(0, 0, 1);
+  camera.up.set(0, 1, 0);
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
+  // OrbitControls 的默认滚轮倍率在已经放大的 STL 上会显得过慢；提高倍率并
+  // 让缩放围绕光标位置进行，便于直接钻进拨叉、销槽和轴承座检查。
+  controls.zoomSpeed = 2.4;
+  controls.zoomToCursor = true;
   scene.add(new THREE.AmbientLight(0xffffff, 0.7));
   const key = new THREE.DirectionalLight(0xffffff, 1.1);
   key.position.set(40, -80, 60);
   scene.add(key);
   scene.add(new THREE.HemisphereLight(0xbfdcff, 0x111a20, 0.45));
+  // 参考 SelfJackDemountableCamper：ViewHelper 固定在视口右上角，点击轴端
+  // 快速切换正交视角。此处直接使用当前世界轴：X 红、Y 绿、Z 蓝。
+  const viewHelper = new ViewHelper(camera, canvas);
+  viewHelper.location.top = 16;
+  viewHelper.location.right = 16;
+  viewHelper.setLabels("X", "Y", "Z");
+  remapViewHelperWorldColors(viewHelper);
+  const onViewHelperClick = (event) => {
+    if (viewHelper.handleClick(event)) {
+      event.stopImmediatePropagation();
+    }
+  };
+  canvas.addEventListener("click", onViewHelperClick, true);
   state.scene = scene;
+  state.legacyRoot = legacyRoot;
+  state.legacyTensionerRoot = legacyTensionerRoot;
   state.camera = camera;
   state.controls = controls;
+  state.viewHelper = viewHelper;
   function resize() {
     camera.aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight);
     camera.updateProjectionMatrix();
@@ -173,10 +465,57 @@ function initScene() {
     state.lastMs = now;
     tickPlay(dt);
     controls.update();
+    viewHelper.center.copy(controls.target);
+    if (viewHelper.animating) viewHelper.update(dt);
     renderer.render(scene, camera);
+    const previousClear = {
+      autoClear: renderer.autoClear,
+      autoClearColor: renderer.autoClearColor,
+      autoClearDepth: renderer.autoClearDepth,
+    };
+    try {
+      renderer.autoClear = false;
+      renderer.autoClearColor = false;
+      renderer.autoClearDepth = false;
+      viewHelper.render(renderer);
+    } finally {
+      renderer.autoClear = previousClear.autoClear;
+      renderer.autoClearColor = previousClear.autoClearColor;
+      renderer.autoClearDepth = previousClear.autoClearDepth;
+    }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+}
+
+function remapViewHelperWorldColors(viewHelper) {
+  // ViewHelper 的 children 顺序为 X/Y/Z 轴，再后面是 X/Y/Z 标签。
+  const [xAxis, yAxis, zAxis] = viewHelper.children;
+  xAxis?.material?.color?.set?.("#ff4466");
+  yAxis?.material?.color?.set?.("#88ff44");
+  zAxis?.material?.color?.set?.("#4488ff");
+  repaintViewHelperLabel(viewHelper.children[3], "#ff4466", "X");
+  repaintViewHelperLabel(viewHelper.children[4], "#88ff44", "Y");
+  repaintViewHelperLabel(viewHelper.children[5], "#4488ff", "Z");
+}
+
+function repaintViewHelperLabel(sprite, color, label) {
+  const canvas = sprite?.material?.map?.image;
+  const context = canvas?.getContext?.("2d");
+  if (!context) return;
+  const width = canvas.width || 64;
+  const height = canvas.height || 64;
+  context.clearRect(0, 0, width, height);
+  context.beginPath();
+  context.arc(width / 2, height / 2, (14 / 64) * width, 0, 2 * Math.PI);
+  context.closePath();
+  context.fillStyle = color;
+  context.fill();
+  context.font = "24px Arial";
+  context.textAlign = "center";
+  context.fillStyle = "#000000";
+  context.fillText(label, width / 2, 41);
+  sprite.material.map.needsUpdate = true;
 }
 //#endregion
 
@@ -227,10 +566,11 @@ async function refreshListing({ autoload = false } = {}) {
   }
   renderPartList();
   if (autoload) {
+    // 全局默认视图要能直接看到完整动画；柜体/背板由清单中的 visible=false
+    // 排除，用户仍可通过清单勾选它们来恢复背景。
     const targets = (listing.parts || [])
       .filter((part) => part.visible !== false)
-      .sort((a, b) => (a.bytes || 0) - (b.bytes || 0))
-      .slice(0, AUTOLOAD_MAX);
+      .sort((a, b) => (a.bytes || 0) - (b.bytes || 0));
     await Promise.all(targets.map((part) => setPartVisible(part.id, true)));
     fitCamera();
   }
@@ -262,24 +602,195 @@ async function setFilteredVisible(visible) {
   await Promise.all(parts.map((part) => setPartVisible(part.id, visible)));
   if (visible) fitCamera();
 }
+
+function partTail(part) {
+  return String(part?.id || "").split("/").pop().toLowerCase();
+}
+
+function usesLegacyCoordinates(part) {
+  return part?.coordinateFrame === "legacy-tensioner"
+    || LEGACY_COORDINATE_GROUPS.has(part?.group)
+    || String(part?.id || "").startsWith("cabinet/");
+}
+
+function coordinateParent(part) {
+  if (part?.coordinateFrame === "legacy-tensioner") {
+    return state.legacyTensionerRoot || state.scene;
+  }
+  return usesLegacyCoordinates(part)
+    ? (state.legacyRoot || state.scene)
+    : state.scene;
+}
+
+function isCabinetContext(part) {
+  const tail = partTail(part);
+  return part?.group === "cabinet"
+    || tail === "cabinet_clutch_cabinet"
+    || tail === "cabinet_clutch_cabinet_context";
+}
+
+function isSnakePart(part) {
+  return part?.group === "cabinet-chain";
+}
+
+function isDrawerDrivePart(part) {
+  return part?.group === "cabinet-clutch" && DRAWER_DRIVE_TAILS.has(partTail(part));
+}
+
+function isUpperTensionerPart(part) {
+  return part?.group === "cabinet-clutch" && UPPER_TENSIONER_TAILS.has(partTail(part));
+}
+
+function isLowerTensionerPart(part) {
+  return part?.group === "cabinet-chain";
+}
+
+const VIEW_PROFILES = {
+  snake: {
+    focus: isSnakePart,
+    context: isCabinetContext,
+  },
+  "drawer-drive": {
+    focus: isDrawerDrivePart,
+    context: isCabinetContext,
+  },
+  "upper-tensioner": {
+    focus: isUpperTensionerPart,
+    context: isCabinetContext,
+  },
+  "lower-tensioner": {
+    focus: isLowerTensionerPart,
+    context: isCabinetContext,
+  },
+};
+
+function updateActiveViewButton() {
+  for (const button of els.viewButtons) {
+    const active = button.dataset.view === state.activeView;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  }
+}
+
+function setObjectOpacity(root, opacity) {
+  root?.traverse?.((object) => {
+    if (!object.isMesh) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      if (!material) continue;
+      material.transparent = opacity < 0.999;
+      material.opacity = opacity;
+      material.depthWrite = opacity >= 0.999;
+      material.needsUpdate = true;
+    }
+  });
+}
+
+function viewBox(ids = null) {
+  if (!state.scene) return null;
+  state.scene.updateMatrixWorld(true);
+  const box = new THREE.Box3();
+  let has = false;
+  for (const item of state.items.values()) {
+    if (!item.mesh || !item.mesh.visible) continue;
+    if (ids && !ids.has(item.part.id)) continue;
+    box.expandByObject(item.mesh);
+    has = true;
+  }
+  return has ? box : null;
+}
+
+function frameBox(box, viewName) {
+  if (!box || !state.camera || !state.controls) return;
+  const view = CAMERA_VIEWS[viewName] || CAMERA_VIEWS.rear;
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const direction = new THREE.Vector3(...view.direction).normalize();
+  const up = new THREE.Vector3(...view.up).normalize();
+  const aspect = Math.max(0.25, state.camera.aspect || 1);
+  const vertical = Math.max(size.y, 1);
+  const horizontal = Math.max(size.x, size.z, 1) / aspect;
+  const span = Math.max(vertical, horizontal, 1);
+  const fov = THREE.MathUtils.degToRad(state.camera.fov);
+  const distance = Math.max(2, (span * 1.28) / (2 * Math.tan(fov / 2)));
+  state.controls.target.copy(center);
+  state.camera.up.copy(up);
+  state.camera.position.copy(center).addScaledVector(direction, distance);
+  state.camera.near = Math.max(0.01, distance / 100);
+  state.camera.far = Math.max(500, distance * 40);
+  state.camera.lookAt(center);
+  state.camera.updateProjectionMatrix();
+  state.controls.update();
+}
+
+async function applyViewVisibility(focusIds, contextIds, request, restorePartOpacity = false) {
+  const desiredIds = new Set([...focusIds, ...contextIds]);
+  state.visibleIds.clear();
+  for (const item of state.items.values()) {
+    if (item.mesh) item.mesh.visible = false;
+  }
+  for (const id of desiredIds) state.visibleIds.add(id);
+
+  const targets = [...state.items.values()].filter((item) => desiredIds.has(item.part.id));
+  await Promise.all(targets.map(async (item) => {
+    await loadPart(item);
+    if (request !== state.viewRequest) return;
+    if (item.mesh) item.mesh.visible = true;
+  }));
+  if (request !== state.viewRequest) return false;
+
+  for (const item of targets) {
+    if (!item.mesh) continue;
+    const opacity = restorePartOpacity
+      ? partOpacity(item.part)
+      : focusIds.has(item.part.id)
+        ? 1
+        : Math.min(0.08, partOpacity(item.part));
+    setObjectOpacity(item.mesh, opacity);
+  }
+  applyExplode();
+  renderPartList();
+  return true;
+}
+
+async function applyViewPreset(name) {
+  const viewName = CAMERA_VIEWS[name] ? name : "rear";
+  const request = ++state.viewRequest;
+  state.activeView = viewName;
+  updateActiveViewButton();
+
+  const listingParts = state.listing?.parts || [];
+  const profile = VIEW_PROFILES[viewName];
+  let focusIds = new Set();
+  let contextIds = new Set();
+  if (profile) {
+    for (const part of listingParts) {
+      if (profile.focus(part)) focusIds.add(part.id);
+      else if (profile.context(part)) contextIds.add(part.id);
+    }
+    // 当前清单被搜索过滤时，特写也必须保证有可取景对象；空特写回到该清单
+    // 的默认可见件，避免相机被送到原点。
+    if (!focusIds.size) {
+      focusIds = new Set(listingParts.filter((part) => part.visible !== false).map((part) => part.id));
+      contextIds = new Set();
+    }
+  } else {
+    focusIds = new Set(listingParts.filter((part) => part.visible !== false).map((part) => part.id));
+  }
+
+  const applied = await applyViewVisibility(focusIds, contextIds, request, !profile);
+  if (!applied || request !== state.viewRequest) return;
+  state.viewProfile = profile ? viewName : null;
+  const focusBox = profile ? viewBox(focusIds) : null;
+  frameBox(focusBox || viewBox(), viewName);
+}
 //#endregion
 
 //#region 视图层
 function bindPreviewControls() {
-  els.modeSimple.addEventListener("click", () => setMode("simple"));
-  els.modeExplode.addEventListener("click", () => setMode("explode"));
-  els.fit.addEventListener("click", fitCamera);
-  els.assemble.addEventListener("click", () => {
-    state.explode = 0;
-    setMode("simple");
-  });
-  els.explode.addEventListener("click", () => {
-    state.explode = 1;
-    setMode("explode");
-  });
   els.explodeRange.addEventListener("input", () => {
     state.explode = Number(els.explodeRange.value) / 100;
-    setMode("explode");
+    applyExplode();
   });
   els.search.addEventListener("input", () => {
     window.clearTimeout(state.searchTimer);
@@ -299,6 +810,25 @@ function bindPreviewControls() {
   els.hideFiltered.addEventListener("click", () => {
     void setFilteredVisible(false);
   });
+  els.viewsToggle?.addEventListener("click", () => {
+    state.viewsCollapsed = !state.viewsCollapsed;
+    saveViewsCollapsed();
+    applyViewsCollapsed();
+  });
+  for (const button of els.viewButtons) {
+    button.addEventListener("click", () => {
+      void applyViewPreset(button.dataset.view);
+    });
+  }
+  els.treeCollapse?.addEventListener("click", () => {
+    state.treeCollapsed = !state.treeCollapsed;
+    saveTreeCollapsed();
+    applyTreeCollapsed();
+  });
+  bindTreeDrag();
+  applyTreeCollapsed();
+  applyViewsCollapsed();
+  updateActiveViewButton();
 }
 
 if (window.location.protocol === "file:") {
@@ -341,22 +871,13 @@ function recomputeExplosions() {
 }
 
 function applyExplode() {
-  const amount = state.mode === "explode" ? state.explode : 0;
+  const amount = state.explode;
   for (const item of state.items.values()) {
     if (!item.mesh) continue;
     item.mesh.position.copy(item.base).addScaledVector(item.explosion, amount);
   }
   els.explodeRange.value = String(Math.round(amount * 100));
   els.explodeOut.textContent = String(Math.round(amount * 100));
-}
-
-function setMode(mode) {
-  state.mode = mode;
-  els.modeSimple.classList.toggle("on", mode === "simple");
-  els.modeExplode.classList.toggle("on", mode === "explode");
-  if (mode === "explode" && state.explode === 0) state.explode = 1;
-  if (mode === "simple") state.explode = 0;
-  applyExplode();
 }
 
 async function loadPart(item) {
@@ -378,7 +899,8 @@ async function loadPart(item) {
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.visible = state.visibleIds.has(item.part.id);
-    state.scene.add(mesh);
+    const parent = coordinateParent(item.part);
+    parent.add(mesh);
     item.mesh = mesh;
     item.box = geometry.boundingBox.clone();
     try {
@@ -412,28 +934,7 @@ function toColor(value) {
 }
 
 function fitCamera() {
-  const box = new THREE.Box3();
-  let has = false;
-  for (const item of state.items.values()) {
-    if (!item.mesh || !item.mesh.visible) continue;
-    box.expandByObject(item.mesh);
-    has = true;
-  }
-  if (!has || !state.camera || !state.controls) return;
-  const size = box.getSize(new THREE.Vector3());
-  const center = box.getCenter(new THREE.Vector3());
-  const radius = Math.max(size.x, size.y, size.z, 1) * 0.9;
-  state.controls.target.copy(center);
-  state.camera.up.set(0, 0, 1);
-  state.camera.position.set(
-    center.x + radius * 0.15,
-    center.y + radius * 2.1,
-    center.z + radius * 0.35,
-  );
-  state.camera.near = Math.max(0.01, radius / 100);
-  state.camera.far = Math.max(500, radius * 40);
-  state.camera.updateProjectionMatrix();
-  state.controls.update();
+  frameBox(viewBox(), state.activeView || "rear");
 }
 
 async function loadGeometry(url) {

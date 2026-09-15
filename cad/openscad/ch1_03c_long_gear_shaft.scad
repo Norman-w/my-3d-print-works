@@ -37,6 +37,51 @@ module long_gear_profile_2d() {
     polygon(long_gear_points());
 }
 
+// Parameterized library API used by assemblies whose mating gear has a
+// different pitch preset.  The standalone entry below still uses the global
+// preset from the parameter file; callers should use this module when they
+// need to keep their own mating datum authoritative.
+function long_gear_points_param(
+    teeth,
+    pitch_mm,
+    tooth_depth,
+    tip_start,
+    tip_end,
+    root_end
+) = let(
+    pitch_r = teeth * pitch_mm / (2 * PI),
+    root_r = pitch_r - tooth_depth,
+    tip_r = pitch_r + tooth_depth
+) [
+    for (i = [0:teeth - 1])
+        for (p = [
+            [0.00, root_r],
+            [tip_start, tip_r],
+            [tip_end, tip_r],
+            [root_end, root_r]
+        ])
+            let (a = (i + p[0]) * 360 / teeth)
+                [p[1] * cos(a), p[1] * sin(a)]
+];
+
+module long_gear_profile_2d_param(
+    teeth,
+    pitch_mm,
+    tooth_depth,
+    tip_start,
+    tip_end,
+    root_end
+) {
+    polygon(long_gear_points_param(
+        teeth,
+        pitch_mm,
+        tooth_depth,
+        tip_start,
+        tip_end,
+        root_end
+    ));
+}
+
 module d_profile_2d(
     d,
     flat_depth,
@@ -58,15 +103,42 @@ module d_profile_2d(
     }
 }
 
-module long_gear_body() {
+module long_gear_body_param(
+    teeth,
+    pitch_mm,
+    tooth_depth,
+    tip_start,
+    tip_end,
+    root_end,
+    length
+) {
     // Gear body is centered at Y=0 and spans -L/2..+L/2.
-    translate([0, -LONG_GEAR_LENGTH / 2, 0])
+    translate([0, -length / 2, 0])
         rotate([-90, 0, 0])
             linear_extrude(
-                height = LONG_GEAR_LENGTH,
-                convexity = max(8, LONG_GEAR_TEETH)
+                height = length,
+                convexity = max(8, teeth)
             )
-                long_gear_profile_2d();
+                long_gear_profile_2d_param(
+                    teeth,
+                    pitch_mm,
+                    tooth_depth,
+                    tip_start,
+                    tip_end,
+                    root_end
+                );
+}
+
+module long_gear_body() {
+    long_gear_body_param(
+        LONG_GEAR_TEETH,
+        LONG_GEAR_PITCH_MM,
+        LONG_GEAR_TOOTH_DEPTH,
+        LONG_GEAR_TIP_START,
+        LONG_GEAR_TIP_END,
+        LONG_GEAR_ROOT_END,
+        LONG_GEAR_LENGTH
+    );
 }
 
 module d_axis_segment_y(y0, length) {
@@ -78,6 +150,14 @@ module d_axis_segment_y(y0, length) {
                     LONG_GEAR_END_D,
                     LONG_GEAR_END_FLAT_DEPTH
                 );
+}
+
+module d_axis_segment_y_param(y0, length, end_d, end_flat_depth) {
+    // A local +Z extrusion becomes a world +Y D cylinder.
+    translate([0, y0, 0])
+        rotate([-90, 0, 0])
+            linear_extrude(height = length, convexity = 4)
+                d_profile_2d(end_d, end_flat_depth);
 }
 
 module d_bore_cut() {
@@ -103,20 +183,60 @@ module d_bore_cut() {
 //#endregion
 
 //#region 公开 API：两种打印件
-module long_gear_shaft_solid() {
+module long_gear_shaft_solid_param(
+    teeth,
+    pitch_mm,
+    tooth_depth,
+    tip_start,
+    tip_end,
+    root_end,
+    length,
+    end_stub_length,
+    stub_overlap,
+    end_d,
+    end_flat_depth
+) {
     // The overlap is hidden inside the gear body so each D stub is materially
     // connected rather than merely touching a coplanar end face.
     union() {
-        long_gear_body();
-        d_axis_segment_y(
-            -LONG_GEAR_LENGTH / 2 - LONG_GEAR_END_STUB_LENGTH,
-            LONG_GEAR_END_STUB_LENGTH + LONG_GEAR_STUB_OVERLAP
+        long_gear_body_param(
+            teeth,
+            pitch_mm,
+            tooth_depth,
+            tip_start,
+            tip_end,
+            root_end,
+            length
         );
-        d_axis_segment_y(
-            LONG_GEAR_LENGTH / 2 - LONG_GEAR_STUB_OVERLAP,
-            LONG_GEAR_END_STUB_LENGTH + LONG_GEAR_STUB_OVERLAP
+        d_axis_segment_y_param(
+            -length / 2 - end_stub_length,
+            end_stub_length + stub_overlap,
+            end_d,
+            end_flat_depth
+        );
+        d_axis_segment_y_param(
+            length / 2 - stub_overlap,
+            end_stub_length + stub_overlap,
+            end_d,
+            end_flat_depth
         );
     }
+}
+
+module long_gear_shaft_solid() {
+    long_gear_shaft_solid_param(
+        LONG_GEAR_TEETH,
+        LONG_GEAR_PITCH_MM,
+        LONG_GEAR_TOOTH_DEPTH,
+        LONG_GEAR_TIP_START,
+        LONG_GEAR_TIP_END,
+        LONG_GEAR_ROOT_END,
+        LONG_GEAR_LENGTH,
+        LONG_GEAR_END_STUB_LENGTH,
+        LONG_GEAR_STUB_OVERLAP,
+        LONG_GEAR_END_D,
+        LONG_GEAR_END_FLAT_DEPTH
+    );
 }
 
 module long_gear_shaft_sleeve() {

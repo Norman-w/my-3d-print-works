@@ -10,18 +10,49 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
   "cabinet-chain/cabinet_chain_connector",
+  "cabinet-chain/cabinet_chain_clutch_connector",
+  "cabinet-chain/cabinet_chain_clutch_bearing",
+]);
+const RIGID_CHAIN_IDS = new Set([
+  "cabinet-chain/cabinet_chain_connector",
+  "cabinet-chain/cabinet_chain_clutch_connector",
+  "cabinet-chain/cabinet_chain_clutch_bearing",
 ]);
 const WHEEL_IDS = {
   "cabinet-chain/cabinet_chain_sprockets": "sprocket",
   "cabinet-chain/cabinet_chain_idlers": "idler",
+};
+const MOTOR_SHAFT_IDS = new Set([
+  "cabinet-chain/cabinet_chain_motor_shaft",
+]);
+const SCHEME1_POWER_ID = "cabinet-chain/cabinet_chain_scheme1_power_wheels";
+const SCHEME1_OUTPUT_ID = "cabinet-chain/cabinet_chain_scheme1_output_wheels";
+const SCHEME1_CLUTCH_ID = "cabinet-chain/cabinet_chain_scheme1_clutch_faces";
+const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
+const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
+const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
+const DRAWER_ROTARY_IDS = new Map([
+  ["cabinet-clutch/09_rear_takeoff_timing_pulley_candidate", 1],
+  ["cabinet-clutch/14_front_timing_pulley_candidate", 1],
+  ["cabinet-clutch/15_front_pinion_candidate", 1],
+]);
+const DRAWER_BELT_TEETH = 60;
+const DRAWER_BELT_PITCH_MM = 3;
+const SCHEME1_PHASE = {
+  INDEX: "INDEX",
+  ENGAGE: "ENGAGE",
+  DRIVE: "DRIVE",
+  RELEASE: "RELEASE",
 };
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 //#endregion
 
 //#region 模型/类型
 /** @typedef {{a:number[], b:number[], s0:number, len:number}} PathSeg */
-/** @typedef {{group:THREE.Group, s:number, along:number, side:number, lift:number, restYaw:number}} ChainPart */
+/** @typedef {{group:THREE.Group, s:number, along:number, side:number, lift:number, restYaw:number, halfSpan:number}} ChainPart */
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
+/** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
+/** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
 //#endregion
 
 //#region 私有成员
@@ -31,6 +62,24 @@ const play = {
   path: null,
   chain: /** @type {ChainPart[]} */ ([]),
   wheels: /** @type {WheelPivot[]} */ ([]),
+  motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
+  drawerBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,s:number[],radial:number[],yOffset:number[],lastPhase:number}>} */ ([]),
+  drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
+  scheme1: {
+    ready: false,
+    stationS: /** @type {number[]} */ ([]),
+    stations: /** @type {any[]} */ ([]),
+    powerWheels: /** @type {WheelPivot[]} */ ([]),
+    outputWheels: /** @type {WheelPivot[]} */ ([]),
+    clutches: /** @type {ClutchPivot[]} */ ([]),
+    selectorPart: null,
+    selectorS: 0,
+    targetIndex: 0,
+    phase: SCHEME1_PHASE.INDEX,
+    phaseTime: 0,
+    powerTurns: 0,
+    outputTurns: /** @type {number[]} */ ([]),
+  },
   playing: true,
   dir: 1,
   motorHz: HZ_STEPS[DEFAULT_HZ_INDEX],
@@ -180,16 +229,36 @@ function projectPoint(path, x, y, z) {
   };
 }
 
-function playScene() {
-  return play.host?.state?.scene ?? null;
+function wrapPathS(s) {
+  if (!play.path?.length) return 0;
+  return ((s % play.path.length) + play.path.length) % play.path.length;
 }
 
-function replaceMesh(item, group) {
-  const scene = playScene();
-  if (!scene || !item.mesh) return;
+function pathDistance(from, to, dir) {
+  if (!play.path?.length) return 0;
+  return dir >= 0 ? wrapPathS(to - from) : wrapPathS(from - to);
+}
+
+function scheme1Status(text) {
+  const out = play.host?.els?.scheme1Out;
+  if (out) out.textContent = text;
+}
+
+function scheme1StationLabel(index) {
+  const station = play.scheme1.stations[index];
+  if (!station) return "待机";
+  return `R${station.row + 1}C${station.col + 1}`;
+}
+
+function playScene() {
+  return play.host?.state?.legacyRoot ?? play.host?.state?.scene ?? null;
+}
+
+function replaceMesh(item, group, parent = playScene()) {
+  if (!parent || !item.mesh) return;
   group.visible = item.mesh.visible;
-  scene.remove(item.mesh);
-  scene.add(group);
+  item.mesh.parent?.remove(item.mesh);
+  parent.add(group);
   item.mesh = group;
   item.box = new THREE.Box3().setFromObject(group);
 }
@@ -257,6 +326,222 @@ async function splitIslands(geometry) {
   return geos;
 }
 
+function buildDrawerBeltPath(geometry) {
+  geometry.computeBoundingBox();
+  const bounds = geometry.boundingBox;
+  const size = bounds.getSize(new THREE.Vector3());
+  const centerX = (bounds.min.x + bounds.max.x) / 2;
+  // The belt runs along Z, so its X extent is the pulley diameter.  Using the
+  // larger Z extent here makes the whole belt length look like a radius and
+  // sends the teeth onto a huge, wrong loop.  Keep the derivation in the
+  // canonical world frame: X is radial width, Y is belt width, Z is drawer
+  // travel.
+  const outerRadius = Math.max(1, size.x / 2);
+  const pitchRadius = Math.max(1, outerRadius - DRAWER_BELT_PITCH_MM * 0.6);
+  const z0 = bounds.min.z + outerRadius;
+  const z1 = bounds.max.z - outerRadius;
+  const y = (bounds.min.y + bounds.max.y) / 2;
+  const straight = Math.max(0.01, z1 - z0);
+  const segments = [
+    { type: "line", a: [centerX + pitchRadius, z0], b: [centerX + pitchRadius, z1] },
+    { type: "arc", cx: centerX, cz: z1, a0: 0, a1: Math.PI },
+    { type: "line", a: [centerX - pitchRadius, z1], b: [centerX - pitchRadius, z0] },
+    { type: "arc", cx: centerX, cz: z0, a0: Math.PI, a1: Math.PI * 2 },
+  ];
+  let total = 0;
+  for (const segment of segments) {
+    segment.s0 = total;
+    segment.len = segment.type === "line" ? straight : pitchRadius * Math.abs(segment.a1 - segment.a0);
+    total += segment.len;
+  }
+  return { centerX, z0, z1, pitchRadius, y, outerRadius, segments, length: total };
+}
+
+function sampleDrawerBeltPath(path, sRaw) {
+  let s = ((sRaw % path.length) + path.length) % path.length;
+  for (const segment of path.segments) {
+    if (s > segment.s0 + segment.len && segment !== path.segments[path.segments.length - 1]) continue;
+    const t = segment.len < 1e-9 ? 0 : (s - segment.s0) / segment.len;
+    if (segment.type === "line") {
+      const dx = segment.b[0] - segment.a[0];
+      const dz = segment.b[1] - segment.a[1];
+      const length = Math.hypot(dx, dz) || 1;
+      return {
+        point: [segment.a[0] + dx * t, path.y, segment.a[1] + dz * t],
+        tangent: [dx / length, 0, dz / length],
+      };
+    }
+    const angle = segment.a0 + (segment.a1 - segment.a0) * t;
+    const sign = segment.a1 >= segment.a0 ? 1 : -1;
+    return {
+      point: [segment.cx + path.pitchRadius * Math.cos(angle), path.y, segment.cz + path.pitchRadius * Math.sin(angle)],
+      tangent: [-Math.sin(angle) * sign, 0, Math.cos(angle) * sign],
+    };
+  }
+  return { point: [path.centerX + path.pitchRadius, path.y, path.z0], tangent: [0, 0, 1] };
+}
+
+function projectDrawerBeltPoint(path, x, z) {
+  let best = { s: 0, distance: Infinity };
+  for (const segment of path.segments) {
+    if (segment.type === "line") {
+      const ax = segment.a[0];
+      const az = segment.a[1];
+      const bx = segment.b[0];
+      const bz = segment.b[1];
+      const dx = bx - ax;
+      const dz = bz - az;
+      const len2 = dx * dx + dz * dz || 1;
+      const t = Math.min(1, Math.max(0, ((x - ax) * dx + (z - az) * dz) / len2));
+      const qx = ax + dx * t;
+      const qz = az + dz * t;
+      const distance = (x - qx) ** 2 + (z - qz) ** 2;
+      if (distance < best.distance) best = { s: segment.s0 + segment.len * t, distance };
+      continue;
+    }
+    const angle = Math.atan2(z - segment.cz, x - segment.cx);
+    const start = segment.a0;
+    const end = segment.a1;
+    let candidate = angle;
+    while (candidate < start) candidate += Math.PI * 2;
+    while (candidate > end) candidate -= Math.PI * 2;
+    candidate = Math.min(end, Math.max(start, candidate));
+    const qx = segment.cx + path.pitchRadius * Math.cos(candidate);
+    const qz = segment.cz + path.pitchRadius * Math.sin(candidate);
+    const distance = (x - qx) ** 2 + (z - qz) ** 2;
+    if (distance < best.distance) {
+      best = { s: segment.s0 + path.pitchRadius * (candidate - start), distance };
+    }
+  }
+  return best.s;
+}
+
+function drawerDriveTurns() {
+  if (play.scheme1.ready) return play.scheme1.powerTurns;
+  return play.motorTurns;
+}
+
+function drawerPathNormal(sample) {
+  // Path coordinates are X/Z while the belt's axial width is Y.  This is the
+  // in-plane normal used to preserve the original belt cross-section as the
+  // whole connected STL is advected around the two pulley wraps.
+  return [-sample.tangent[2], sample.tangent[0]];
+}
+
+function buildDrawerBeltVertexMap(geometry, path) {
+  const position = geometry.getAttribute("position");
+  const s = new Float32Array(position.count);
+  const radial = new Float32Array(position.count);
+  const yOffset = new Float32Array(position.count);
+  for (let i = 0; i < position.count; i += 1) {
+    const x = position.getX(i);
+    const y = position.getY(i);
+    const z = position.getZ(i);
+    const projected = projectDrawerBeltPoint(path, x, z);
+    const sample = sampleDrawerBeltPath(path, projected);
+    const normal = drawerPathNormal(sample);
+    s[i] = projected;
+    radial[i] = (x - sample.point[0]) * normal[0] + (z - sample.point[2]) * normal[1];
+    yOffset[i] = y - path.y;
+  }
+  return { s, radial, yOffset };
+}
+
+function poseDrawerBelt(belt, phaseMm) {
+  if (Number.isFinite(belt.lastPhase) && Math.abs(belt.lastPhase - phaseMm) < 1e-6) return;
+  const position = belt.mesh.geometry.getAttribute("position");
+  const { s, radial, yOffset } = belt;
+  for (let i = 0; i < position.count; i += 1) {
+    const sample = sampleDrawerBeltPath(belt.path, s[i] + phaseMm);
+    const normal = drawerPathNormal(sample);
+    position.setXYZ(
+      i,
+      sample.point[0] + normal[0] * radial[i],
+      sample.point[1] + yOffset[i],
+      sample.point[2] + normal[1] * radial[i],
+    );
+  }
+  position.needsUpdate = true;
+  belt.mesh.geometry.computeVertexNormals();
+  belt.mesh.geometry.computeBoundingBox();
+  belt.lastPhase = phaseMm;
+}
+
+function bindDrawerBeltMesh(item) {
+  if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
+  const geometry = item.mesh.geometry;
+  const path = buildDrawerBeltPath(geometry);
+  const vertexMap = buildDrawerBeltVertexMap(geometry, path);
+  play.drawerBelts.push({
+    mesh: item.mesh,
+    path,
+    s: vertexMap.s,
+    radial: vertexMap.radial,
+    yOffset: vertexMap.yOffset,
+    lastPhase: Number.NaN,
+  });
+  // Preserve the authored SCAD pose at phase zero, then move every belt
+  // vertex—including the connected tooth geometry—along the same pitch path.
+  poseDrawerBelt(play.drawerBelts[play.drawerBelts.length - 1], 0);
+}
+
+function bindDrawerRotaryMesh(item, sign = 1) {
+  if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  geometry.translate(-center.x, -center.y, -center.z);
+  const pivot = new THREE.Group();
+  pivot.position.copy(center);
+  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.name = "drawer-drive-rotary-animated";
+  group.add(pivot);
+  replaceMesh(item, group, play.host.state.scene);
+  play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
+}
+
+async function splitPathLinkBuckets(geometry) {
+  const pos = geometry.getAttribute("position");
+  const nTri = Math.floor(pos.count / 3);
+  const count = play.path.count;
+  const bucketByTri = new Uint16Array(nTri);
+  const bucketCounts = new Uint32Array(count);
+
+  // OpenSCAD 导出的两层链板在 STL 中会各自合并成一张连通网格，不能依靠
+  // 拓扑连通性拆节。每个链板三角形仍落在对应的两销路径段附近，因此按最近
+  // 路径段归桶；归桶后每个桶就是一节完整的链板对，后面作为一个刚体移动。
+  for (let t = 0; t < nTri; t += 1) {
+    const offset = t * 9;
+    const x = (pos.array[offset] + pos.array[offset + 3] + pos.array[offset + 6]) / 3;
+    const y = (pos.array[offset + 1] + pos.array[offset + 4] + pos.array[offset + 7]) / 3;
+    const z = (pos.array[offset + 2] + pos.array[offset + 5] + pos.array[offset + 8]) / 3;
+    const bucket = projectPoint(play.path, x, y, z).seg;
+    bucketByTri[t] = bucket;
+    bucketCounts[bucket] += 1;
+    if (t % 2000 === 0) await yieldFrame();
+  }
+
+  const arrays = Array.from(bucketCounts, (triCount) => new Float32Array(triCount * 9));
+  const writeOffsets = new Uint32Array(count);
+  for (let t = 0; t < nTri; t += 1) {
+    const bucket = bucketByTri[t];
+    const outOffset = writeOffsets[bucket];
+    const inOffset = t * 9;
+    arrays[bucket].set(pos.array.subarray(inOffset, inOffset + 9), outOffset);
+    writeOffsets[bucket] += 9;
+    if (t % 2000 === 0) await yieldFrame();
+  }
+
+  return arrays.map((array) => {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(array, 3));
+    geo.computeVertexNormals();
+    geo.computeBoundingBox();
+    return geo;
+  });
+}
+
 function chainOffsetMm() {
   if (!play.path) return 0;
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
@@ -265,12 +550,29 @@ function chainOffsetMm() {
 
 function poseChainPart(part, offsetMm) {
   const sample = samplePath(play.path, part.s + offsetMm);
+  // 链板/接头是跨越两个销的刚体。拐入齿轮时，路径是由相邻销位组成的折线，
+  // 所以不能把链板中心放在折点本身：那会让两端孔偏离两根销，动画中看起来像
+  // 链条被撕裂。用两端销位的真实中点放置，并用两端连线定姿态；销和滚子
+  // halfSpan=0，仍只跟随各自的中心线。
+  let tangent = sample.tangent;
+  let center = sample.point;
+  if (part.halfSpan > 1e-6) {
+    const before = samplePath(play.path, part.s + offsetMm - part.halfSpan).point;
+    const after = samplePath(play.path, part.s + offsetMm + part.halfSpan).point;
+    center = [
+      (before[0] + after[0]) / 2,
+      (before[1] + after[1]) / 2,
+      (before[2] + after[2]) / 2,
+    ];
+    tangent = normalize(sub(after, before));
+  }
+  const normal = [-tangent[2], 0, tangent[0]];
   part.group.position.set(
-    sample.point[0] + sample.tangent[0] * part.along + sample.normal[0] * part.side,
-    sample.point[1] + part.lift,
-    sample.point[2] + sample.tangent[2] * part.along + sample.normal[2] * part.side,
+    center[0] + tangent[0] * part.along + normal[0] * part.side,
+    center[1] + part.lift,
+    center[2] + tangent[2] * part.along + normal[2] * part.side,
   );
-  const yaw = Math.atan2(sample.tangent[2], sample.tangent[0]);
+  const yaw = Math.atan2(tangent[2], tangent[0]);
   part.group.rotation.y = -(yaw - part.restYaw);
 }
 
@@ -313,11 +615,317 @@ async function bindWheelMesh(item, kind) {
   replaceMesh(item, group);
 }
 
+async function bindMotorShaftMesh(item) {
+  const motion = play.motion;
+  if (!motion || !item.mesh?.isMesh || !playScene()) return;
+  const drive = motion.wheels.find((wheel) => wheel.id === "power")
+    || motion.wheels.find((wheel) => wheel.id === "entry");
+  if (!drive) return;
+
+  // The assembly STL contains only the D output shaft.  Place its pivot on
+  // the same X/Z axis as the power wheel; the Y coordinate can be any point
+  // on that shaft line.  This keeps the motor body fixed while the visible
+  // shaft rotates 1:1 with the D-shaft wheel.
+  const shaftGeometry = item.mesh.geometry;
+  shaftGeometry.translate(-drive.x, -motion.chainY, -drive.z);
+  const pivot = new THREE.Group();
+  pivot.position.set(drive.x, motion.chainY, drive.z);
+  pivot.add(new THREE.Mesh(shaftGeometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.add(pivot);
+  play.motorShafts.push({ group: pivot, restY: 0 });
+  replaceMesh(item, group);
+}
+
+function scheme1CandidateCenter(station, side) {
+  if (side === "input") {
+    return {
+      x: station.x,
+      y: (station.powerY + station.dogInputY) / 2,
+      z: station.z,
+    };
+  }
+  return {
+    x: station.x,
+    y: (station.outputY + station.dogOutputY) / 2,
+    z: station.z,
+  };
+}
+
+async function bindScheme1WheelMesh(item, side) {
+  const motion = play.motion;
+  const scheme = play.scheme1;
+  if (!motion || !scheme.ready || !item.mesh?.isMesh || !playScene()) return;
+  const isPower = side === "power";
+  const islands = await splitIslands(item.mesh.geometry);
+  const group = new THREE.Group();
+  const used = new Set();
+  const bound = isPower ? scheme.powerWheels : scheme.outputWheels;
+  for (const geo of islands) {
+    const center = geo.boundingBox.getCenter(new THREE.Vector3());
+    let best = null;
+    let bestD = Infinity;
+    for (let index = 0; index < scheme.stations.length; index += 1) {
+      if (used.has(index)) continue;
+      const station = scheme.stations[index];
+      const y = isPower ? station.powerY : station.outputY;
+      const d =
+        (center.x - station.x) ** 2 +
+        (center.z - station.z) ** 2 +
+        0.35 * (center.y - y) ** 2;
+      if (d < bestD) {
+        bestD = d;
+        best = { index, station, y };
+      }
+    }
+    if (!best) continue;
+    used.add(best.index);
+    // STL 坐标已经是装配坐标；把每个轮的轴心放到自己的 pivot，之后只
+    // 绕世界 Y 轴转动，不再对整个 25 轮 STL 进行整体缩放或形变。
+    geo.translate(-best.station.x, -best.y, -best.station.z);
+    const pivot = new THREE.Group();
+    pivot.position.set(best.station.x, best.y, best.station.z);
+    pivot.add(new THREE.Mesh(geo, item.mesh.material));
+    group.add(pivot);
+    bound.push({
+      group: pivot,
+      teeth: 12,
+      sign: 1,
+      restY: 0,
+      stationIndex: best.index,
+    });
+  }
+  if (used.size !== scheme.stations.length) {
+    console.warn(`方案1 ${side}轮绑定数量 ${used.size}/${scheme.stations.length}`);
+  }
+  replaceMesh(item, group);
+}
+
+async function bindScheme1ClutchMesh(item) {
+  const motion = play.motion;
+  const scheme = play.scheme1;
+  if (!motion || !scheme.ready || !item.mesh?.isMesh || !playScene()) return;
+  const islands = await splitIslands(item.mesh.geometry);
+  const group = new THREE.Group();
+  const used = new Set();
+  const candidates = [];
+  for (let index = 0; index < scheme.stations.length; index += 1) {
+    const station = scheme.stations[index];
+    const inputCenter = scheme1CandidateCenter(station, "input");
+    const outputCenter = scheme1CandidateCenter(station, "output");
+    candidates.push({
+      index,
+      side: "input",
+      station,
+      axisY: station.dogInputY,
+      center: inputCenter,
+    });
+    candidates.push({
+      index,
+      side: "output",
+      station,
+      axisY: station.dogOutputY,
+      center: outputCenter,
+    });
+  }
+  for (const geo of islands) {
+    const center = geo.boundingBox.getCenter(new THREE.Vector3());
+    let best = null;
+    let bestD = Infinity;
+    for (const candidate of candidates) {
+      const key = `${candidate.index}:${candidate.side}`;
+      if (used.has(key)) continue;
+      const d =
+        (center.x - candidate.center.x) ** 2 +
+        (center.z - candidate.center.z) ** 2 +
+        0.55 * (center.y - candidate.center.y) ** 2;
+      if (d < bestD) {
+        bestD = d;
+        best = { ...candidate, key };
+      }
+    }
+    if (!best) continue;
+    used.add(best.key);
+    geo.translate(-best.station.x, -best.axisY, -best.station.z);
+    const pivot = new THREE.Group();
+    pivot.position.set(best.station.x, best.axisY, best.station.z);
+    pivot.add(new THREE.Mesh(geo, item.mesh.material));
+    group.add(pivot);
+    scheme.clutches.push({
+      group: pivot,
+      stationIndex: best.index,
+      side: best.side,
+      baseY: best.axisY,
+      openY: best.axisY,
+      engagedY: best.side === "output" ? best.station.dogEngagedY : best.axisY,
+      restY: 0,
+    });
+  }
+  if (used.size !== candidates.length) {
+    console.warn(`方案1离合绑定数量 ${used.size}/${candidates.length}`);
+  }
+  replaceMesh(item, group);
+}
+
+async function bindScheme1SelectorMesh(item) {
+  const scheme = play.scheme1;
+  if (!scheme.ready || !item.mesh?.isMesh || !playScene()) return;
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  const proj = projectPoint(play.path, center.x, center.y, center.z);
+  geometry.translate(-center.x, -center.y, -center.z);
+  const pivot = new THREE.Group();
+  pivot.position.copy(center);
+  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.add(pivot);
+  scheme.selectorPart = {
+    group: pivot,
+    s: proj.s,
+    along: proj.along,
+    side: proj.side,
+    lift: proj.lift,
+    restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
+    halfSpan: 0,
+  };
+  replaceMesh(item, group);
+  poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+}
+
+function initScheme1Motion() {
+  const motion = play.motion;
+  const scheme = motion?.scheme1;
+  if (!motion || !scheme?.stations?.length || !play.path) return;
+  const stations = scheme.stations;
+  const stationS = stations.map((station) => projectPoint(
+    play.path,
+    station.x,
+    motion.chainY,
+    station.z,
+  ).s);
+  const start = Math.min(
+    stations.length - 1,
+    Math.max(0, Number(scheme.selectorStart) || 0),
+  );
+  play.scheme1.stations = stations;
+  play.scheme1.stationS = stationS;
+  play.scheme1.selectorS = stationS[start];
+  play.scheme1.targetIndex = start;
+  play.scheme1.phase = SCHEME1_PHASE.INDEX;
+  play.scheme1.phaseTime = 0;
+  play.scheme1.powerTurns = 0;
+  play.scheme1.outputTurns = Array.from({ length: stations.length }, () => 0);
+  play.scheme1.ready = true;
+  scheme1Status(`拨叉待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
+}
+
+function setScheme1Phase(phase) {
+  play.scheme1.phase = phase;
+  play.scheme1.phaseTime = 0;
+  const stationLabel = scheme1StationLabel(play.scheme1.targetIndex);
+  const labels = {
+    [SCHEME1_PHASE.INDEX]: `拨叉移动 · 目标 ${stationLabel}`,
+    [SCHEME1_PHASE.ENGAGE]: `停稳合闸 · ${stationLabel}`,
+    [SCHEME1_PHASE.DRIVE]: `方案1传动中 · ${stationLabel}`,
+    [SCHEME1_PHASE.RELEASE]: `断开离合 · ${stationLabel}`,
+  };
+  scheme1Status(labels[phase] || "方案1");
+}
+
+function scheme1TransportSpeed() {
+  const base = Number(play.motion?.scheme1?.selectorSpeed);
+  const fallback = (play.motion?.driveTeeth || 12) * (play.motion?.p || 0);
+  return (Number.isFinite(base) && base > 0 ? base : fallback) * play.motorHz;
+}
+
+function tickScheme1(dt) {
+  const scheme = play.scheme1;
+  if (!scheme.ready || !play.path || !scheme.stationS.length) return;
+
+  // 输入侧永远由动力轮带动；输出侧只有 DRIVE 阶段的目标站转动。
+  if (play.playing) {
+    scheme.powerTurns += play.dir * play.motorHz * dt;
+  }
+
+  if (play.playing) {
+    scheme.phaseTime += dt;
+    if (scheme.phase === SCHEME1_PHASE.INDEX) {
+      const targetS = scheme.stationS[scheme.targetIndex];
+      const remaining = pathDistance(scheme.selectorS, targetS, play.dir);
+      const travel = Math.min(
+        remaining,
+        scheme1TransportSpeed() * dt,
+      );
+      if (remaining < 0.001 || travel >= remaining - 0.001) {
+        scheme.selectorS = targetS;
+        setScheme1Phase(SCHEME1_PHASE.ENGAGE);
+      } else {
+        scheme.selectorS = wrapPathS(scheme.selectorS + play.dir * travel);
+      }
+    } else if (scheme.phase === SCHEME1_PHASE.ENGAGE && scheme.phaseTime >= 0.28) {
+      setScheme1Phase(SCHEME1_PHASE.DRIVE);
+    } else if (scheme.phase === SCHEME1_PHASE.DRIVE) {
+      scheme.outputTurns[scheme.targetIndex] += play.dir * play.motorHz * dt;
+      if (scheme.phaseTime >= 0.90) setScheme1Phase(SCHEME1_PHASE.RELEASE);
+    } else if (scheme.phase === SCHEME1_PHASE.RELEASE && scheme.phaseTime >= 0.24) {
+      const count = scheme.stations.length;
+      scheme.targetIndex = (scheme.targetIndex + (play.dir > 0 ? 1 : -1) + count) % count;
+      setScheme1Phase(SCHEME1_PHASE.INDEX);
+    }
+  }
+
+  if (scheme.selectorPart) {
+    poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+  }
+  const powerAngle = -2 * Math.PI * scheme.powerTurns;
+  for (const wheel of scheme.powerWheels) {
+    wheel.group.rotation.y = wheel.restY - wheel.sign * powerAngle;
+  }
+  const active = scheme.phase === SCHEME1_PHASE.ENGAGE || scheme.phase === SCHEME1_PHASE.DRIVE;
+  for (const wheel of scheme.outputWheels) {
+    const turns = scheme.outputTurns[wheel.stationIndex] || 0;
+    wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * turns;
+  }
+  for (const clutch of scheme.clutches) {
+    const isTarget = clutch.stationIndex === scheme.targetIndex;
+    const engagement = active && isTarget
+      ? scheme.phase === SCHEME1_PHASE.ENGAGE
+        ? Math.min(1, scheme.phaseTime / 0.28)
+        : 1
+      : scheme.phase === SCHEME1_PHASE.RELEASE && isTarget
+        ? Math.max(0, 1 - scheme.phaseTime / 0.24)
+        : 0;
+    clutch.group.position.y = clutch.baseY + (clutch.engagedY - clutch.openY) * engagement;
+    const turns = clutch.side === "input"
+      ? scheme.powerTurns
+      : (scheme.outputTurns[clutch.stationIndex] || 0);
+    clutch.group.rotation.y = clutch.restY - 2 * Math.PI * turns;
+  }
+}
+
+function tickDrawerDrive() {
+  const turns = drawerDriveTurns();
+  const angle = -2 * Math.PI * turns;
+  const phaseMm = turns * DRAWER_BELT_TEETH * DRAWER_BELT_PITCH_MM;
+  for (const belt of play.drawerBelts) {
+    poseDrawerBelt(belt, phaseMm);
+  }
+  for (const rotary of play.drawerRotaries) {
+    rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
+  }
+}
+
 async function bindChainMesh(item) {
   if (!play.path || !item.mesh?.isMesh || !playScene()) return;
-  // 按真实不相连的 STL 零件岛拆分。按路径线段拆三角形会把拐角处的
-  // 单个滚子/链板切成多个刚体，随后分别旋转就会产生错误的拉伸形变。
-  const islands = await splitIslands(item.mesh.geometry);
+  const isPlateMesh = item.part.id.endsWith("cabinet_chain_plates");
+  const isRigidChainMesh = RIGID_CHAIN_IDS.has(item.part.id);
+  // 普通链板 STL 要按路径段拆成一节一节；接头/轴承是装配替换件，虽然
+  // STL 内部有多个不相连实体，也必须整体作为一个刚体移动，不能按拓扑岛
+  // 分别绕链路拐角转动，否则穿销、夹片和链板会彼此撕开。
+  const islands = isPlateMesh
+    ? await splitPathLinkBuckets(item.mesh.geometry)
+    : (isRigidChainMesh ? [item.mesh.geometry] : await splitIslands(item.mesh.geometry));
   const group = new THREE.Group();
   const mat = item.mesh.material;
   const added = [];
@@ -336,6 +944,7 @@ async function bindChainMesh(item) {
       side: proj.side,
       lift: proj.lift,
       restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
+      halfSpan: (isPlateMesh || isRigidChainMesh) ? (play.motion?.p || 0) / 2 : 0,
     };
     added.push(part);
     play.chain.push(part);
@@ -404,6 +1013,7 @@ export function attachCabinetChainPlay(host) {
     .then((motion) => {
       play.motion = motion;
       play.path = buildPath(motion);
+      initScheme1Motion();
       play.ready = true;
       for (const item of host.state.items.values()) {
         if (item.mesh) void onPartLoaded(item);
@@ -417,6 +1027,60 @@ export function attachCabinetChainPlay(host) {
 export async function onPartLoaded(item) {
   const id = item.part?.id;
   if (!id || !play.path || item.playBound) return;
+  if (id === SCHEME1_POWER_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindScheme1WheelMesh(item, "power").catch((error) => {
+      console.error("scheme1 power wheel bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id === SCHEME1_OUTPUT_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindScheme1WheelMesh(item, "output").catch((error) => {
+      console.error("scheme1 output wheel bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id === SCHEME1_CLUTCH_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindScheme1ClutchMesh(item).catch((error) => {
+      console.error("scheme1 clutch bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id === SCHEME1_SELECTOR_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindScheme1SelectorMesh(item).catch((error) => {
+      console.error("scheme1 selector bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (id === SCHEME1_BEARING_ID) {
+    // 轴承是银色的静态装配参考件；它不参与旋转驱动，避免把采购件误当
+    // 成齿轮主体或在网页中拆成可形变的链节。
+    item.playBound = true;
+    return;
+  }
+  if (id === DRAWER_BELT_ID) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindDrawerBeltMesh(item)).catch((error) => {
+      console.error("drawer timing belt bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (DRAWER_ROTARY_IDS.has(id)) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindDrawerRotaryMesh(item, DRAWER_ROTARY_IDS.get(id))).catch((error) => {
+      console.error("drawer drive rotary bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (CHAIN_IDS.has(id)) {
     item.playBound = true;
     enqueueBind(() => bindChainMesh(item).catch((error) => {
@@ -431,18 +1095,46 @@ export async function onPartLoaded(item) {
       console.error("chain play bind failed", id, error);
       item.playBound = false;
     }), true);
+    return;
+  }
+  if (MOTOR_SHAFT_IDS.has(id)) {
+    item.playBound = true;
+    enqueueBind(() => bindMotorShaftMesh(item).catch((error) => {
+      console.error("motor shaft bind failed", id, error);
+      item.playBound = false;
+    }), true);
   }
 }
 
+export function holdScheme1Engaged() {
+  const scheme = play.scheme1;
+  if (!scheme.ready || !scheme.stations.length) return;
+  scheme.selectorS = scheme.stationS[scheme.targetIndex];
+  scheme.phase = SCHEME1_PHASE.ENGAGE;
+  scheme.phaseTime = 0.28;
+  play.playing = false;
+  updateHzLabel();
+  scheme1Status(`方案1检查状态 · 已合闸 ${scheme1StationLabel(scheme.targetIndex)}`);
+}
+
 export function tickPlay(dt) {
-  if (!play.ready || !play.path || !play.wheels.length) return;
-  if (play.playing) play.motorTurns += play.dir * play.motorHz * dt;
+  if (!play.ready || !play.path) return;
+  // 方案1中，拨叉沿链条到达目标后，运输链停住，先完成合闸和动力传递；
+  // 这样不会出现拨叉停在一个抽屉而链条继续把它拖走的假动作。
+  const transportMoving = !play.scheme1.ready || play.scheme1.phase === SCHEME1_PHASE.INDEX;
+  if (play.playing && transportMoving) play.motorTurns += play.dir * play.motorHz * dt;
   const offsetMm = chainOffsetMm();
   for (const part of play.chain) poseChainPart(part, offsetMm);
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
   for (const wheel of play.wheels) {
     wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * pitches / wheel.teeth;
   }
+  for (const shaft of play.motorShafts) {
+    const motorTurns = play.scheme1.ready ? play.scheme1.powerTurns : play.motorTurns;
+    shaft.group.rotation.y = shaft.restY + 2 * Math.PI * motorTurns;
+  }
+  tickScheme1(dt);
+  tickDrawerDrive();
 }
 //#endregion
 
