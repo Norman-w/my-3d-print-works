@@ -61,6 +61,10 @@ GT2_LONG_TOOTH_DEPTH = 0.82;
 GT2_MALE_TEETH = 12;
 GT2_MALE_PITCH_MM = 3.0;
 GT2_MALE_TOOTH_DEPTH = 0.82;
+// The browser animation uses this same authored +Y insertion datum.  Keeping
+// it named here prevents the static ENGAGED export and the dynamic preview
+// from silently drifting apart when the mother pocket or open gap changes.
+GT2_CLUTCH_ENGAGE_STROKE_MM = max(0, GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP);
 // The larger 3 mm-compatible tooth ring needs a deliberate +Z stand-off from
 // the vertical rod.  0.32 mm leaves both the mother wall and the 2GT belt
 // back-envelope above the pair's 0.45 mm clearance requirement.
@@ -198,16 +202,16 @@ ROD_TOP_Y = BUS_TOP_Y + 6.0;
 LEFT_D_AXIS_Y0 = MOTOR_FACE_Y + MOTOR_SHAFT_L - 1.0;
 
 // The middle-column shaft consumes the authored long-gear-shaft geometry.
-// Keep the mating profile on the live 3 mm clutch datum and derive its gear
-// span from the actual upper/lower bus pulley centers rather than rounding
-// the cabinet height a second time.
+// Keep the mating profile on the live 3 mm clutch datum. The tooth body stops
+// before each 2GT pulley face; only the integral D stubs pass through the
+// pulley. This keeps the 6 mm belt and its two guide planes visible instead
+// of letting the larger 3 mm-pitch gear section cover the pulley.
 VERTICAL_GEAR_TEETH = CLUTCH_GEAR_TEETH;
 VERTICAL_GEAR_PITCH_MM = CLUTCH_PITCH_MM;
 VERTICAL_GEAR_TOOTH_DEPTH = CLUTCH_GEAR_TOOTH_DEPTH;
 VERTICAL_GEAR_TIP_START = 0.20;
 VERTICAL_GEAR_TIP_END = 0.50;
 VERTICAL_GEAR_ROOT_END = 0.80;
-VERTICAL_GEAR_LENGTH = BUS_TOP_Y - BUS_BOTTOM_Y;
 VERTICAL_GEAR_END_STUB_LENGTH = 6.0;
 VERTICAL_GEAR_STUB_OVERLAP = 0.20;
 
@@ -558,6 +562,19 @@ COLUMN_SYNC_BELT_TOOTH_H =
     max(0.20, GT2_PULLEY_TOOTH_DEPTH - 0.12);
 COLUMN_SYNC_BELT_TOOTH_BASE = GT2_PULLEY_PITCH_MM * 0.36;
 COLUMN_SYNC_BELT_TOOTH_TIP = GT2_PULLEY_PITCH_MM * 0.22;
+// The pulley is intentionally wider than the 6 mm belt. The inward-facing
+// side is the lower retainer plus half of the toothed face; leave a small
+// radial-tooth-body clearance on that side so the full guide stack remains
+// readable in the assembled view.
+COLUMN_SYNC_PULLEY_AXIAL_WIDTH =
+    GT2_BELT_LOWER_RETAINER_T
+    + GT2_PULLEY_FACE_T
+    + GT2_BELT_GUIDE_LIP_T;
+COLUMN_SYNC_PULLEY_INNER_HALF_WIDTH =
+    GT2_BELT_LOWER_RETAINER_T + GT2_PULLEY_FACE_T / 2;
+VERTICAL_GEAR_END_CLEARANCE = COLUMN_SYNC_PULLEY_INNER_HALF_WIDTH + 0.35;
+VERTICAL_GEAR_LENGTH = BUS_TOP_Y - BUS_BOTTOM_Y
+    - 2 * VERTICAL_GEAR_END_CLEARANCE;
 
 function is_center_gt2_station(col, row) =
     col == CENTER_GT2_COL && row == CENTER_GT2_ROW;
@@ -1201,24 +1218,13 @@ module vertical_gear_rack(x, z) {
 module vertical_gear_column(x, z) {
     // One real Y-directed long spline gear shaft per drawer column.  The
     // shaft already contains both end D stubs; do not add a second coaxial
-    // round/D rod that would hide the authored geometry.
+    // round/D rod that would hide the authored geometry. The column pulley is
+    // the same finished 12T/2GT body used by the migrated center drive; its
+    // two guide planes are the only larger-than-tooth-radius features.
     vertical_gear_rack(x, z);
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_TIMING)
             column_gt2_pulley_y(x, axis_y, z, "d");
-    for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
-        color(COLOR_SHAFT)
-            translate([x, axis_y, z])
-                difference() {
-                    rotate([-90, 0, 0])
-                        cylinder(d = 8.0, h = 1.0, center = true);
-                    rotate([-90, 0, 0])
-                        cylinder(
-                            d = ROD_D + 2 * ROD_WALL_CLEAR,
-                            h = 1.2,
-                            center = true
-                        );
-                }
 }
 
 module horizontal_drawer_rack(x, z0, z1, y) {
@@ -1552,19 +1558,6 @@ module left_d_axis() {
     for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
         color(COLOR_TIMING)
             column_gt2_pulley_y(MOTOR_X, axis_y, DRIVE_AXIS_Z, "d");
-    color(COLOR_SHAFT)
-        for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
-            translate([MOTOR_X, axis_y, DRIVE_AXIS_Z])
-                difference() {
-                    rotate([-90, 0, 0])
-                        cylinder(d = 8.0, h = 1.0, center = true);
-                    rotate([-90, 0, 0])
-                        cylinder(
-                            d = ROD_D + 2 * ROD_WALL_CLEAR,
-                            h = 1.2,
-                            center = true
-                        );
-                }
 }
 
 module side_axes() {
@@ -1732,7 +1725,7 @@ module center_gt2_male(col, row, engaged = false) {
     x = clutch_col_x(col);
     z = center_gt2_z();
     insertion_shift = engaged
-        ? max(0, GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP)
+        ? GT2_CLUTCH_ENGAGE_STROKE_MM
         : 0;
     color("#e2a84b")
         translate([
@@ -2271,12 +2264,12 @@ echo("world_axes", "x=width", "y=height(+up)", "z=depth(+front)", "front_z", 0, 
 echo("rear_view_sides", "right", "-X/toward_x0", "left", "+X/toward_xW", "tensioner", "right", "motor", "left");
 echo("drive_axis", "motor_column", MOTOR_COLUMN, "x_motor", MOTOR_X, "x_plus_max_column", clutch_col_x(N_COL - 1), "motor_face_y", MOTOR_FACE_Y, "z_base", DRIVE_AXIS_Z_BASE, "z", DRIVE_AXIS_Z, "rear_shift_z", DRAWER_DRIVE_REAR_SHIFT_Z, "front_interface_z", FRONT_PULLEY_Z, "belt_teeth", DRAWER_BELT_TEETH, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
 echo("drive_clearance", "snake_chain_center_z", SNAKE_CHAIN_CENTER_Z, "snake_chain_rear_edge_z", SNAKE_CHAIN_REAR_EDGE_Z, "pulley_front_edge_z", DRIVE_AXIS_Z + TIMING_FLANGE_R, "clearance", SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R));
-echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "five drawer-columns; motor directly coupled to +X-most column; no separate D-drive column");
+echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "five drawer-columns; motor directly coupled to +X-most column; no separate D-drive column", "gear_body_length", VERTICAL_GEAR_LENGTH, "end_clearance", VERTICAL_GEAR_END_CLEARANCE, "pulley_axial_width", COLUMN_SYNC_PULLEY_AXIAL_WIDTH, "belt_width", GT2_BELT_WIDTH);
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
 echo("belt", "axial_width_world_y", TIMING_BELT_W, "base_thickness_xz", TIMING_BELT_T, "base_inner_r", TIMING_BELT_BASE_INNER_R, "base_outer_r", TIMING_BELT_BASE_OUTER_R, "tooth_pitch", TIMING_PITCH_MM, "tooth_h", TIMING_BELT_TOOTH_H);
 echo("column_sync_gt2", "pitch_mm", GT2_PULLEY_PITCH_MM, "pulley_teeth", GT2_PULLEY_TEETH, "belt_teeth", COLUMN_SYNC_BELT_TEETH, "belt_length_mm", COLUMN_SYNC_BELT_LENGTH_MM, "center_distance_mm", COLUMN_SYNC_BELT_CENTER_DISTANCE, "tensioner_nominal_x", COLUMN_SYNC_TENSIONER_NOMINAL_X, "tensioner_x", COLUMN_SYNC_TENSIONER_X, "adjustment_direction", "positive screw-out -> world -X");
-echo("center_gt2", "enabled", true, "legacy_stations", SHOW_LEGACY_STATIONS, "cell_col_row", CENTER_GT2_COL, CENTER_GT2_ROW, "mating_axis_z", center_gt2_z(), "shaft_axis_z", DRIVE_AXIS_Z, "shaft_z_offset", gt2_center_distance(), "long_profile", str(GT2_LONG_TEETH, "T/", GT2_LONG_PITCH_MM, "mm"), "male_profile", str(GT2_MALE_TEETH, "T/", GT2_MALE_PITCH_MM, "mm"), "belt", str(CENTER_GT2_BELT_TEETH, "T/", GT2_PULLEY_PITCH_MM, "mm/", GT2_BELT_WIDTH, "mm"), "belt_center_distance", CENTER_GT2_BELT_CENTER_DISTANCE, "front_pulley_z", CENTER_GT2_FRONT_PULLEY_Z, "belt_y", center_gt2_belt_y(CENTER_GT2_ROW), "front_gear_y", center_gt2_front_gear_y(CENTER_GT2_ROW), "guide_outer_d", 2 * gt2_belt_guide_r(), "mother_outer_d", 2 * GT2_MOTHER_OUTER_R, "lower_retainer_t", GT2_BELT_LOWER_RETAINER_T, "mother_pocket_depth", GT2_MOTHER_POCKET_DEPTH);
+echo("center_gt2", "enabled", true, "legacy_stations", SHOW_LEGACY_STATIONS, "cell_col_row", CENTER_GT2_COL, CENTER_GT2_ROW, "mating_axis_z", center_gt2_z(), "shaft_axis_z", DRIVE_AXIS_Z, "shaft_z_offset", gt2_center_distance(), "long_profile", str(GT2_LONG_TEETH, "T/", GT2_LONG_PITCH_MM, "mm"), "male_profile", str(GT2_MALE_TEETH, "T/", GT2_MALE_PITCH_MM, "mm"), "belt", str(CENTER_GT2_BELT_TEETH, "T/", GT2_PULLEY_PITCH_MM, "mm/", GT2_BELT_WIDTH, "mm"), "belt_center_distance", CENTER_GT2_BELT_CENTER_DISTANCE, "front_pulley_z", CENTER_GT2_FRONT_PULLEY_Z, "belt_y", center_gt2_belt_y(CENTER_GT2_ROW), "front_gear_y", center_gt2_front_gear_y(CENTER_GT2_ROW), "guide_outer_d", 2 * gt2_belt_guide_r(), "mother_outer_d", 2 * GT2_MOTHER_OUTER_R, "lower_retainer_t", GT2_BELT_LOWER_RETAINER_T, "mother_pocket_depth", GT2_MOTHER_POCKET_DEPTH, "engage_stroke", GT2_CLUTCH_ENGAGE_STROKE_MM);
 echo("tensioner_skp_parametric", "source", "弹簧加力的滑动张紧轮调节滑台.skp", "axis_map", "SKP+Y(green)->world+X, SKP+X(red)->world+Y, SKP+Z(blue)->world-Z (same Z axis, rearward)", "native_bbox_xyz", TENSIONER_SKP_NATIVE_SIZE_X, TENSIONER_SKP_NATIVE_SIZE_Y, TENSIONER_SKP_NATIVE_SIZE_Z, "world_bbox_xyz", TENSIONER_SKP_WORLD_SIZE_X, TENSIONER_SKP_WORLD_SIZE_Y, TENSIONER_SKP_WORLD_SIZE_Z, "world_center", TENSIONER_SKP_WORLD_CENTER_X, TENSIONER_SKP_WORLD_CENTER_Y, TENSIONER_SKP_WORLD_CENTER_Z, "mesh_import", false, "parametric_csg", true);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
 
@@ -2355,6 +2348,12 @@ assert(VERTICAL_TENSIONER_OFFSET_X >= 0,
     "positive tensioner adjustment is screw-out toward world -X");
 assert(COLUMN_SYNC_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
     "column sync 2GT belt back envelope must stay inside its guide wall");
+assert(GT2_PULLEY_FACE_T >= GT2_BELT_WIDTH + 0.80,
+    "every column GT2 pulley face must be wider than the 6 mm belt");
+assert(COLUMN_SYNC_PULLEY_AXIAL_WIDTH > GT2_BELT_WIDTH,
+    "column GT2 guide stack must be wider than the belt");
+assert(VERTICAL_GEAR_LENGTH > 0,
+    "vertical gear body must remain positive after pulley clearance");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
 assert(abs(MOTOR_X - clutch_col_x(N_COL - 1)) < 0.001,
     "motor must be centered on the +X-most drawer column");

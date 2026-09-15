@@ -32,7 +32,7 @@ brew install --cask freecad
 你现在的目标是把“机构真实验证”放在本地单一 CAD（FreeCAD）里做，网页只做展示。当前仓库新增了这套链路：
 
 - `scripts/freecad_drawer_pipeline.py`：参数化建模 + FCStd + STL + 分件 STEP（**默认 selector-mode=snake**）
-- `scripts/freecad_snake_animate.py`：FreeCAD GUI 动画（方案 1：选格 → 停稳 → 单离合啮合 → 单抽屉驱动 → 释放 → 回 HOME）
+- `scripts/freecad_snake_animate.py`：FreeCAD GUI 动画（方案 1：选格 → 停稳 → 单离合啮合 → 单抽屉打开/关闭 → 释放 → 继续选格）
 - `web/freecad-viewer.html`：读取 `manifest.json`，加载 STL 的轻量展示页
 - `web/assets/stl/*`：导出的 STL 与清单文件
 - `build/step/*`：分件 STEP（ISO 螺钉包络一并导出）
@@ -118,7 +118,7 @@ open -n -a FreeCAD --args \
 
 不要直接执行 `Contents/MacOS/FreeCAD` 或 `Contents/Resources/bin/freecad`：在 Cursor/终端里那样启动经常出现进程在跑、窗口数为 0，屏幕上什么也没有。
 
-窗口打开后约一秒开始循环：INDEX → ENGAGE → DRIVE（仅目标抽屉的动力支路转）→ RELEASE → RETURN → HOME。选择带移动时动力轴断开；目标停稳后才接合一个离合；释放完成后才回程。绿色件是拨叉，状态栏会显示目标格、离合状态和动力开关。
+窗口打开后约一秒开始循环：INDEX → ENGAGE → OPEN → CLOSE → RELEASE → INDEX。选择带移动到目标槽位后必须完全停止；目标停稳后才接合离合并完成一次抽屉打开/关闭；抽屉回到关闭基准且离合释放完成后，蛇形选择带才继续走位。绿色件是拨叉，状态栏会显示目标格、离合状态和动力开关。
 
 ### 方案 1 的状态约束
 
@@ -127,10 +127,9 @@ open -n -a FreeCAD --args \
 ```text
 INDEX   选择带移动，全部离合脱开，动力轴断电
 ENGAGE  选择带停止，目标滑动盘推进，动力轴仍断电
-DRIVE   目标离合已接合，只转目标抽屉取力支路
-RELEASE 动力轴先断电，目标滑动盘退出
-RETURN  选择带回 HOME，所有离合保持脱开
-HOME    等待下一次选格
+OPEN    目标离合已接合，目标抽屉沿开方向完成一整段行程
+CLOSE   目标抽屉反向回到关闭基准，动力角度精确回到循环起点
+RELEASE 动力轴断电，目标滑动盘退出；完成后进入下一个 INDEX
 ```
 
 `selectedIndex` 表示当前被拨叉接触的格位，`drivenIndex` 表示最后一次实际受力的格位，`powerOn` 表示动力电机是否通电。动力轴角度在断电后保持最后位置，避免释放/回程画面出现不真实的回零跳变。

@@ -107,13 +107,13 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_sprockets": {
-        "name": "12T 尖齿（网页右下动力 D 轴 + 其余轴承）",
+        "name": "12T 尖齿唯一主动轮（D 轴）",
         "role": "printed",
         "color": "#5b9fd6",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_idlers": {
-        "name": "8T 钝齿轴承平移轮",
+        "name": "12T/8T 绿色钝齿轴承导向轮",
         "role": "printed",
         "color": "#7dcc4a",
         "explosion": [0, 0, 0],

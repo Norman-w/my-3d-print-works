@@ -47,14 +47,19 @@ const SCHEME1_CLUTCH_ID = "cabinet-chain/cabinet_chain_scheme1_clutch_faces";
 const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
 const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
+const CURRENT_CLUTCH_IDS = new Map([
+  // The native center prototype is the only visible clutch pair in the
+  // default assembly.  Its male child is the upper input gear and its female
+  // child is the lower output dog/pulley.
+  ["cabinet-clutch/06_upper_axis_z_spur_candidate", "male"],
+  ["cabinet-clutch/08_lower_upward_dog_candidate", "female"],
+]);
 const DRAWER_ROTARY_IDS = new Map([
-  // 08 is the visible, real center-cell female body.  09 is only its hidden
-  // compatibility alias, but keeping both IDs here makes either tree entry
-  // rotate about the same rear 2GT axis when inspected manually.
-  ["cabinet-clutch/08_lower_upward_dog_candidate", 1],
-  ["cabinet-clutch/09_rear_takeoff_timing_pulley_candidate", 1],
-  ["cabinet-clutch/14_front_timing_pulley_candidate", 1],
-  ["cabinet-clutch/15_front_pinion_candidate", 1],
+  // The center clutch pair is bound separately so its +Y engagement stroke
+  // cannot be mistaken for a plain rotary pivot.  The front compound remains
+  // a downstream rotary load of the engaged clutch.
+  ["cabinet-clutch/14_front_timing_pulley_candidate", -1],
+  ["cabinet-clutch/15_front_pinion_candidate", -1],
 ]);
 // This is the default center station's mating pulley tooth count, not the
 // total teeth in the closed belt. One pulley revolution advances the 2GT belt
@@ -75,9 +80,23 @@ const POWER_COLUMN_BELT_PITCH_MM = 2;
 const SCHEME1_PHASE = {
   INDEX: "INDEX",
   ENGAGE: "ENGAGE",
-  DRIVE: "DRIVE",
+  OPEN: "OPEN",
+  CLOSE: "CLOSE",
   RELEASE: "RELEASE",
 };
+// One complete drawer travel is represented by the former 0.90-turn drive
+// window at 1 Hz.  The value is a travel amount, not a duration, so changing
+// the preview speed changes the time taken but never changes the open/close
+// end positions or leaves accumulated angular error between cycles.
+const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
+const SCHEME1_ENGAGE_SECONDS = 0.28;
+const SCHEME1_RELEASE_SECONDS = 0.24;
+// cabinet_clutch.scad derives this as
+// GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP = 3.25 - 0.35 mm.
+// Keep the browser stroke identical to the authored +Y insertion datum.
+const CURRENT_CLUTCH_ENGAGE_STROKE_MM = 2.90;
+const CURRENT_CLUTCH_ROW = 2;
+const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 //#endregion
 
@@ -87,6 +106,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
 /** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
+/** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number}} CurrentClutchPivot */
 //#endregion
 
 //#region 私有成员
@@ -97,10 +117,14 @@ const play = {
   chain: /** @type {ChainPart[]} */ ([]),
   wheels: /** @type {WheelPivot[]} */ ([]),
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
-  drawerBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,triangleS:number[],triangleAlong:number[],triangleRadial:number[],triangleYOffset:number[],lastPhase:number}>} */ ([]),
+  drawerBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
   drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
+  currentClutch: /** @type {{male:CurrentClutchPivot|null,female:CurrentClutchPivot|null}} */ ({
+    male: null,
+    female: null,
+  }),
   powerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
-  columnSyncBelts: /** @type {Array<{mesh:THREE.Mesh,path:any,triangleS:number[],triangleAlong:number[],triangleRadial:number[],triangleYOffset:number[],lastPhase:number}>} */ ([]),
+  columnSyncBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
   scheme1: {
     ready: false,
     stationS: /** @type {number[]} */ ([]),
@@ -115,6 +139,10 @@ const play = {
     phaseTime: 0,
     powerTurns: 0,
     outputTurns: /** @type {number[]} */ ([]),
+    cycleSign: 1,
+    cycleStartPowerTurns: 0,
+    cycleStartOutputTurns: 0,
+    cycleProgressTurns: 0,
   },
   playing: true,
   dir: 1,
@@ -465,88 +493,163 @@ function projectDrawerBeltPoint(path, x, z) {
   return best.s;
 }
 
+function isCurrentClutchStation(index = play.scheme1.targetIndex) {
+  const station = play.scheme1.stations[index];
+  return Boolean(
+    station
+      && Number(station.row) === CURRENT_CLUTCH_ROW
+      && Number(station.col) === CURRENT_CLUTCH_COL,
+  );
+}
+
+function currentClutchDrivesDrawer() {
+  if (!play.scheme1.ready) return false;
+  // The default assembly contains the approved center pair only.  It acts as
+  // the visible clutch detail for whichever selected station is being shown.
+  // If the optional 25-station clutch faces are loaded, stop using the proxy
+  // and let the actual R3C3 pair drive only at its own station.
+  return play.scheme1.clutches.length === 0 || isCurrentClutchStation();
+}
+
 function drawerDriveTurns() {
-  if (play.scheme1.ready) return play.scheme1.powerTurns;
-  return play.motorTurns;
+  // Do not let the drawer take-off borrow the snake motor while the motion
+  // manifest is still loading.  The drawer power datum becomes live only
+  // inside the explicit OPEN/CLOSE phases below.
+  if (!play.scheme1.ready || !currentClutchDrivesDrawer()) return 0;
+  const phase = play.scheme1.phase;
+  if (phase !== SCHEME1_PHASE.OPEN && phase !== SCHEME1_PHASE.CLOSE) return 0;
+  return play.scheme1.powerTurns;
 }
 
 function drawerPathNormal(sample) {
   // Path coordinates are X/Z while the belt's axial width is Y.  This is the
-  // in-plane normal used to preserve the original belt cross-section as the
-  // whole connected STL is advected around the two pulley wraps.
+  // inward in-plane normal: the belt teeth point toward the pulley center.
   return [-sample.tangent[2], sample.tangent[0]];
 }
 
-function buildRigidBeltTriangleMap(geometry, path, projectPoint) {
-  const position = geometry.getAttribute("position");
-  const triangleCount = Math.floor(position.count / 3);
-  const triangleS = new Float32Array(triangleCount);
-  const triangleAlong = new Float32Array(triangleCount * 3);
-  const triangleRadial = new Float32Array(triangleCount * 3);
-  const triangleYOffset = new Float32Array(triangleCount * 3);
-  for (let triangle = 0; triangle < triangleCount; triangle += 1) {
-    const offset = triangle * 3;
-    const cx = (
-      position.getX(offset)
-      + position.getX(offset + 1)
-      + position.getX(offset + 2)
-    ) / 3;
-    const cy = (
-      position.getY(offset)
-      + position.getY(offset + 1)
-      + position.getY(offset + 2)
-    ) / 3;
-    const cz = (
-      position.getZ(offset)
-      + position.getZ(offset + 1)
-      + position.getZ(offset + 2)
-    ) / 3;
-    const projected = projectPoint(path, cx, cz);
-    const sample = path.sample(projected);
+const BELT_TOOTH_HEIGHT = 0.63;
+const BELT_TOOTH_BASE = 0.72;
+const BELT_TOOTH_TIP = 0.44;
+const BELT_BODY_SAMPLE_STEP = 0.65;
+const BELT_TOOTH_BODY_OVERLAP = 0.03;
+
+function buildContinuousBeltBaseGeometry(path, beltThickness, beltWidth) {
+  // The authored STL is an excellent manufacturing reference, but it is a
+  // union of a closed ribbon and hundreds of separate tooth prisms.  Bending
+  // that non-indexed STL vertex-by-vertex makes a face cross a line/arc seam
+  // at different times from its neighbours.  Rebuild only the smooth ribbon
+  // from the same pitch path so its topology stays continuous for the whole
+  // animation.
+  const sampleCount = Math.max(128, Math.ceil(path.length / BELT_BODY_SAMPLE_STEP));
+  const positions = new Float32Array(sampleCount * 4 * 3);
+  const indices = [];
+  const y0 = path.y - beltWidth / 2;
+  const y1 = path.y + beltWidth / 2;
+  for (let i = 0; i < sampleCount; i += 1) {
+    const sample = path.sample(path.length * i / sampleCount);
     const normal = path.normal(sample);
-    triangleS[triangle] = projected;
-    for (let k = 0; k < 3; k += 1) {
-      const vertex = offset + k;
-      const dx = position.getX(vertex) - sample.point[0];
-      const dz = position.getZ(vertex) - sample.point[2];
-      triangleAlong[vertex] = dx * sample.tangent[0] + dz * sample.tangent[2];
-      triangleRadial[vertex] = dx * normal[0] + dz * normal[1];
-      triangleYOffset[vertex] = position.getY(vertex) - path.y;
+    const inner = [sample.point[0], sample.point[2]];
+    const outer = [
+      sample.point[0] - normal[0] * beltThickness,
+      sample.point[2] - normal[1] * beltThickness,
+    ];
+    const offset = i * 12;
+    const values = [
+      inner[0], y0, inner[1],
+      inner[0], y1, inner[1],
+      outer[0], y1, outer[1],
+      outer[0], y0, outer[1],
+    ];
+    positions.set(values, offset);
+  }
+  for (let i = 0; i < sampleCount; i += 1) {
+    const next = (i + 1) % sampleCount;
+    for (let side = 0; side < 4; side += 1) {
+      const a = i * 4 + side;
+      const b = next * 4 + side;
+      const c = next * 4 + (side + 1) % 4;
+      const d = i * 4 + (side + 1) % 4;
+      indices.push(a, b, d, b, c, d);
     }
   }
-  return { triangleS, triangleAlong, triangleRadial, triangleYOffset };
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingBox();
+  geometry.computeBoundingSphere();
+  return geometry;
 }
 
-function poseRigidBeltTriangles(belt, phaseMm) {
-  if (Number.isFinite(belt.lastPhase) && Math.abs(belt.lastPhase - phaseMm) < 1e-6) return;
-  const position = belt.mesh.geometry.getAttribute("position");
-  const {
-    triangleS,
-    triangleAlong,
-    triangleRadial,
-    triangleYOffset,
-  } = belt;
-  const triangleCount = triangleS.length;
-  for (let triangle = 0; triangle < triangleCount; triangle += 1) {
-    // One frame is shared by all three vertices of a triangle.  Binary STL is
-    // non-indexed, so per-vertex projection shears the tooth faces at a wrap;
-    // the triangle anchor keeps each authored face rigid and connected.
-    const sample = belt.path.sample(triangleS[triangle] + phaseMm);
-    const normal = belt.path.normal(sample);
-    const offset = triangle * 3;
-    for (let k = 0; k < 3; k += 1) {
-      const vertex = offset + k;
+function beltToothPoint(sample, normal, along, radial) {
+  return [
+    sample.point[0] + sample.tangent[0] * along + normal[0] * radial,
+    sample.point[1],
+    sample.point[2] + sample.tangent[2] * along + normal[1] * radial,
+  ];
+}
+
+function writeBeltToothVertices(position, toothIndex, belt, phaseMm) {
+  const sample = belt.path.sample(belt.toothS[toothIndex] + phaseMm);
+  const normal = belt.path.normal(sample);
+  const outline = [
+    [-belt.toothBase / 2, -BELT_TOOTH_BODY_OVERLAP],
+    [belt.toothBase / 2, -BELT_TOOTH_BODY_OVERLAP],
+    [belt.toothTip / 2, belt.toothHeight],
+    [-belt.toothTip / 2, belt.toothHeight],
+  ];
+  const positionOffset = toothIndex * 8;
+  for (let side = 0; side < 2; side += 1) {
+    const y = belt.path.y + (side === 0 ? -belt.width / 2 : belt.width / 2);
+    for (let corner = 0; corner < outline.length; corner += 1) {
+      const point = beltToothPoint(
+        sample,
+        normal,
+        outline[corner][0],
+        outline[corner][1],
+      );
       position.setXYZ(
-        vertex,
-        sample.point[0]
-          + sample.tangent[0] * triangleAlong[vertex]
-          + normal[0] * triangleRadial[vertex],
-        sample.point[1] + triangleYOffset[vertex],
-        sample.point[2]
-          + sample.tangent[2] * triangleAlong[vertex]
-          + normal[1] * triangleRadial[vertex],
+        positionOffset + side * 4 + corner,
+        point[0],
+        y,
+        point[2],
       );
     }
+  }
+}
+
+function buildBeltToothGeometry(path, belt, phaseMm = 0) {
+  const positions = new Float32Array(belt.toothCount * 8 * 3);
+  const indices = [];
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  for (let tooth = 0; tooth < belt.toothCount; tooth += 1) {
+    writeBeltToothVertices(geometry.getAttribute("position"), tooth, belt, phaseMm);
+    const base = tooth * 8;
+    // Bottom and top faces.
+    indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+    indices.push(base + 4, base + 6, base + 5, base + 4, base + 7, base + 6);
+    // Four side faces of one complete tooth prism.
+    for (let side = 0; side < 4; side += 1) {
+      const a = base + side;
+      const b = base + (side + 1) % 4;
+      const c = base + 4 + (side + 1) % 4;
+      const d = base + 4 + side;
+      indices.push(a, b, d, b, c, d);
+    }
+  }
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingBox();
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
+function poseBeltTeeth(belt, phaseMm) {
+  if (Number.isFinite(belt.lastPhase) && Math.abs(belt.lastPhase - phaseMm) < 1e-6) return;
+  const position = belt.mesh.geometry.getAttribute("position");
+  for (let tooth = 0; tooth < belt.toothCount; tooth += 1) {
+    writeBeltToothVertices(position, tooth, belt, phaseMm);
   }
   position.needsUpdate = true;
   belt.mesh.geometry.computeVertexNormals();
@@ -555,31 +658,70 @@ function poseRigidBeltTriangles(belt, phaseMm) {
   belt.lastPhase = phaseMm;
 }
 
+function createAnimatedBelt(item, path, pitchMm, phaseSign = 1) {
+  const sourceMesh = item.mesh;
+  const sourceGeometry = sourceMesh.geometry;
+  sourceGeometry.computeBoundingBox();
+  const size = sourceGeometry.boundingBox.getSize(new THREE.Vector3());
+  const beltWidth = Math.max(0.1, size.y);
+  const beltThickness = Math.max(0.1, path.outerRadius - path.pitchRadius);
+  const belt = {
+    mesh: null,
+    baseMesh: null,
+    path,
+    toothS: new Float32Array(Math.max(1, Math.round(path.length / pitchMm))),
+    toothCount: Math.max(1, Math.round(path.length / pitchMm)),
+    toothPitch: pitchMm,
+    toothHeight: BELT_TOOTH_HEIGHT,
+    toothBase: BELT_TOOTH_BASE,
+    toothTip: BELT_TOOTH_TIP,
+    width: beltWidth,
+    phaseSign,
+    lastPhase: Number.NaN,
+  };
+  for (let tooth = 0; tooth < belt.toothCount; tooth += 1) {
+    belt.toothS[tooth] = (tooth + 0.5) * pitchMm;
+  }
+  // Belts are intentionally an always-visible diagnostic overlay.  The STL
+  // remains the physical reference; the web viewer must not let a cabinet,
+  // shaft, or transparent depth-sort hide it when the user orbits around the
+  // assembly.  Both the base and every tooth use the same material and render
+  // late, so the belt cannot disappear merely because its face is turned away.
+  const beltMaterial = sourceMesh.material.clone();
+  beltMaterial.side = THREE.DoubleSide;
+  beltMaterial.transparent = true;
+  beltMaterial.opacity = 1;
+  beltMaterial.depthTest = false;
+  beltMaterial.depthWrite = false;
+  const baseMesh = new THREE.Mesh(
+    buildContinuousBeltBaseGeometry(path, beltThickness, beltWidth),
+    beltMaterial,
+  );
+  const toothMesh = new THREE.Mesh(
+    buildBeltToothGeometry(path, belt, 0),
+    beltMaterial,
+  );
+  baseMesh.renderOrder = 10000;
+  toothMesh.renderOrder = 10001;
+  const group = new THREE.Group();
+  group.name = "continuous-timing-belt";
+  group.userData.alwaysVisiblePreview = true;
+  group.visible = sourceMesh.visible;
+  group.add(baseMesh, toothMesh);
+  replaceMesh(item, group, sourceMesh.parent || playScene());
+  sourceGeometry.dispose();
+  belt.mesh = toothMesh;
+  belt.baseMesh = baseMesh;
+  return belt;
+}
+
 function bindDrawerBeltMesh(item) {
   if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
   const geometry = item.mesh.geometry;
   const path = buildDrawerBeltPath(geometry);
-  // The local wrapper keeps the drawer path implementation compatible with
-  // the generic rigid-triangle mapper used by the column bus belts.
   path.sample = (s) => sampleDrawerBeltPath(path, s);
   path.normal = drawerPathNormal;
-  const vertexMap = buildRigidBeltTriangleMap(
-    geometry,
-    path,
-    (beltPath, x, z) => projectDrawerBeltPoint(beltPath, x, z),
-  );
-  play.drawerBelts.push({
-    mesh: item.mesh,
-    path,
-    triangleS: vertexMap.triangleS,
-    triangleAlong: vertexMap.triangleAlong,
-    triangleRadial: vertexMap.triangleRadial,
-    triangleYOffset: vertexMap.triangleYOffset,
-    lastPhase: Number.NaN,
-  });
-  // Preserve the authored SCAD pose at phase zero, then move every belt
-  // vertex—including the connected tooth geometry—along the same pitch path.
-  poseRigidBeltTriangles(play.drawerBelts[play.drawerBelts.length - 1], 0);
+  play.drawerBelts.push(createAnimatedBelt(item, path, DRAWER_BELT_PITCH_MM, -1));
 }
 
 function bindDrawerRotaryMesh(item, sign = 1) {
@@ -596,6 +738,31 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   group.add(pivot);
   replaceMesh(item, group, play.host.state.scene);
   play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
+}
+
+function bindCurrentClutchMesh(item, role) {
+  if (!item.mesh?.isMesh || !playScene()) return;
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  geometry.translate(-center.x, -center.y, -center.z);
+  const pivot = new THREE.Group();
+  pivot.position.copy(center);
+  pivot.name = `current-clutch-${role}`;
+  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.name = `current-clutch-${role}-container`;
+  group.add(pivot);
+  replaceMesh(item, group);
+  play.currentClutch[role] = {
+    group: pivot,
+    role,
+    // The male input is driven through the spur mesh from the vertical
+    // spline shaft; the female output follows the same coaxial dog rotation.
+    sign: -1,
+    baseY: center.y,
+    restY: 0,
+  };
 }
 
 function bindWorldYAxisRotaryMesh(item, target, name, sign = 1) {
@@ -725,21 +892,12 @@ function bindColumnSyncBeltMesh(item) {
   const path = buildHorizontalBeltPath(item.mesh.geometry);
   path.sample = (s) => sampleHorizontalBeltPath(path, s);
   path.normal = drawerPathNormal;
-  const triangleMap = buildRigidBeltTriangleMap(
-    item.mesh.geometry,
+  play.columnSyncBelts.push(createAnimatedBelt(
+    item,
     path,
-    (beltPath, x, z) => projectHorizontalBeltPoint(beltPath, x, z),
-  );
-  play.columnSyncBelts.push({
-    mesh: item.mesh,
-    path,
-    triangleS: triangleMap.triangleS,
-    triangleAlong: triangleMap.triangleAlong,
-    triangleRadial: triangleMap.triangleRadial,
-    triangleYOffset: triangleMap.triangleYOffset,
-    lastPhase: Number.NaN,
-  });
-  poseRigidBeltTriangles(play.columnSyncBelts[play.columnSyncBelts.length - 1], 0);
+    POWER_COLUMN_BELT_PITCH_MM,
+    1,
+  ));
 }
 
 function makePlateTemplateGeometry(values, seg) {
@@ -1098,18 +1256,33 @@ function initScheme1Motion() {
   play.scheme1.phaseTime = 0;
   play.scheme1.powerTurns = 0;
   play.scheme1.outputTurns = Array.from({ length: stations.length }, () => 0);
+  play.scheme1.cycleSign = 1;
+  play.scheme1.cycleStartPowerTurns = 0;
+  play.scheme1.cycleStartOutputTurns = 0;
+  play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
   scheme1Status(`拨叉待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
 }
 
 function setScheme1Phase(phase) {
-  play.scheme1.phase = phase;
-  play.scheme1.phaseTime = 0;
-  const stationLabel = scheme1StationLabel(play.scheme1.targetIndex);
+  const scheme = play.scheme1;
+  if (phase === SCHEME1_PHASE.ENGAGE) {
+    // Capture the datum only after the selector has arrived.  OPEN and CLOSE
+    // will return to this exact value, so the next INDEX phase never inherits
+    // a half-open drawer angle from the preceding station.
+    scheme.cycleSign = play.dir || scheme.cycleSign || 1;
+    scheme.cycleStartPowerTurns = scheme.powerTurns;
+    scheme.cycleStartOutputTurns = scheme.outputTurns[scheme.targetIndex] || 0;
+    scheme.cycleProgressTurns = 0;
+  }
+  scheme.phase = phase;
+  scheme.phaseTime = 0;
+  const stationLabel = scheme1StationLabel(scheme.targetIndex);
   const labels = {
     [SCHEME1_PHASE.INDEX]: `拨叉移动 · 目标 ${stationLabel}`,
     [SCHEME1_PHASE.ENGAGE]: `停稳合闸 · ${stationLabel}`,
-    [SCHEME1_PHASE.DRIVE]: `方案1传动中 · ${stationLabel}`,
+    [SCHEME1_PHASE.OPEN]: `抽屉打开中 · ${stationLabel}`,
+    [SCHEME1_PHASE.CLOSE]: `抽屉关闭中 · ${stationLabel}`,
     [SCHEME1_PHASE.RELEASE]: `断开离合 · ${stationLabel}`,
   };
   scheme1Status(labels[phase] || "方案1");
@@ -1125,14 +1298,11 @@ function tickScheme1(dt) {
   const scheme = play.scheme1;
   if (!scheme.ready || !play.path || !scheme.stationS.length) return;
 
-  // 输入侧永远由动力轮带动；输出侧只有 DRIVE 阶段的目标站转动。
-  if (play.playing) {
-    scheme.powerTurns += play.dir * play.motorHz * dt;
-  }
-
   if (play.playing) {
     scheme.phaseTime += dt;
     if (scheme.phase === SCHEME1_PHASE.INDEX) {
+      // The snake selector is the only moving system in INDEX.  Keep the
+      // drawer power datum frozen until the selected slot is fully stopped.
       const targetS = scheme.stationS[scheme.targetIndex];
       const remaining = pathDistance(scheme.selectorS, targetS, play.dir);
       const travel = Math.min(
@@ -1145,12 +1315,44 @@ function tickScheme1(dt) {
       } else {
         scheme.selectorS = wrapPathS(scheme.selectorS + play.dir * travel);
       }
-    } else if (scheme.phase === SCHEME1_PHASE.ENGAGE && scheme.phaseTime >= 0.28) {
-      setScheme1Phase(SCHEME1_PHASE.DRIVE);
-    } else if (scheme.phase === SCHEME1_PHASE.DRIVE) {
-      scheme.outputTurns[scheme.targetIndex] += play.dir * play.motorHz * dt;
-      if (scheme.phaseTime >= 0.90) setScheme1Phase(SCHEME1_PHASE.RELEASE);
-    } else if (scheme.phase === SCHEME1_PHASE.RELEASE && scheme.phaseTime >= 0.24) {
+    } else if (scheme.phase === SCHEME1_PHASE.ENGAGE
+      && scheme.phaseTime >= SCHEME1_ENGAGE_SECONDS) {
+      // The selector remains stopped during the complete clutch stroke.
+      setScheme1Phase(SCHEME1_PHASE.OPEN);
+    } else if (scheme.phase === SCHEME1_PHASE.OPEN) {
+      // OPEN and CLOSE are one closed cycle.  Use a bounded progress datum so
+      // a high preview speed cannot overshoot and slowly desynchronise the
+      // rear gear, the 2GT belt, and the front rack pinion.
+      scheme.cycleProgressTurns = Math.min(
+        SCHEME1_DRAWER_TRAVEL_TURNS,
+        scheme.cycleProgressTurns + play.motorHz * dt,
+      );
+      scheme.powerTurns = scheme.cycleStartPowerTurns
+        + scheme.cycleSign * scheme.cycleProgressTurns;
+      scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns
+        + scheme.cycleSign * scheme.cycleProgressTurns;
+      if (scheme.cycleProgressTurns >= SCHEME1_DRAWER_TRAVEL_TURNS - 1e-6) {
+        setScheme1Phase(SCHEME1_PHASE.CLOSE);
+      }
+    } else if (scheme.phase === SCHEME1_PHASE.CLOSE) {
+      scheme.cycleProgressTurns = Math.max(
+        0,
+        scheme.cycleProgressTurns - play.motorHz * dt,
+      );
+      scheme.powerTurns = scheme.cycleStartPowerTurns
+        + scheme.cycleSign * scheme.cycleProgressTurns;
+      scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns
+        + scheme.cycleSign * scheme.cycleProgressTurns;
+      if (scheme.cycleProgressTurns <= 1e-6) {
+        // Snap the return datum once, rather than accumulating floating-point
+        // error across 25 stations and repeated direction changes.
+        scheme.cycleProgressTurns = 0;
+        scheme.powerTurns = scheme.cycleStartPowerTurns;
+        scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns;
+        setScheme1Phase(SCHEME1_PHASE.RELEASE);
+      }
+    } else if (scheme.phase === SCHEME1_PHASE.RELEASE
+      && scheme.phaseTime >= SCHEME1_RELEASE_SECONDS) {
       const count = scheme.stations.length;
       scheme.targetIndex = (scheme.targetIndex + (play.dir > 0 ? 1 : -1) + count) % count;
       setScheme1Phase(SCHEME1_PHASE.INDEX);
@@ -1164,7 +1366,9 @@ function tickScheme1(dt) {
   for (const wheel of scheme.powerWheels) {
     wheel.group.rotation.y = wheel.restY - wheel.sign * powerAngle;
   }
-  const active = scheme.phase === SCHEME1_PHASE.ENGAGE || scheme.phase === SCHEME1_PHASE.DRIVE;
+  const active = scheme.phase === SCHEME1_PHASE.ENGAGE
+    || scheme.phase === SCHEME1_PHASE.OPEN
+    || scheme.phase === SCHEME1_PHASE.CLOSE;
   for (const wheel of scheme.outputWheels) {
     const turns = scheme.outputTurns[wheel.stationIndex] || 0;
     wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * turns;
@@ -1186,16 +1390,52 @@ function tickScheme1(dt) {
   }
 }
 
+function currentClutchEngagement() {
+  if (!currentClutchDrivesDrawer()) return 0;
+  const phase = play.scheme1.phase;
+  if (phase === SCHEME1_PHASE.ENGAGE) {
+    return Math.min(1, play.scheme1.phaseTime / SCHEME1_ENGAGE_SECONDS);
+  }
+  if (phase === SCHEME1_PHASE.OPEN || phase === SCHEME1_PHASE.CLOSE) return 1;
+  if (phase === SCHEME1_PHASE.RELEASE) {
+    return Math.max(0, 1 - play.scheme1.phaseTime / SCHEME1_RELEASE_SECONDS);
+  }
+  return 0;
+}
+
+function tickCurrentClutch() {
+  const engagement = currentClutchEngagement();
+  const turns = drawerDriveTurns();
+  const angle = -2 * Math.PI * turns;
+  const male = play.currentClutch.male;
+  const female = play.currentClutch.female;
+  if (male) {
+    // In the authored SCAD the lower male child enters the upper mother along
+    // +Y.  The browser uses the same world axis; no local X/Z remap is applied.
+    male.group.position.y = male.baseY + CURRENT_CLUTCH_ENGAGE_STROKE_MM * engagement;
+    male.group.rotation.y = male.restY + male.sign * angle;
+  }
+  if (female) {
+    female.group.position.y = female.baseY;
+    female.group.rotation.y = female.restY + female.sign * angle;
+  }
+}
+
 function tickDrawerDrive() {
   const turns = drawerDriveTurns();
   const angle = -2 * Math.PI * turns;
+  // The rear female pulley is downstream of the parallel spur mesh, so its
+  // rotation is opposite to the vertical spline shaft.  The drawer belt path
+  // is oriented rear-to-front on its right run; a positive pulley rotation
+  // therefore advances the belt in the negative path direction.
   const phaseMm = turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM;
   for (const belt of play.drawerBelts) {
-    poseRigidBeltTriangles(belt, phaseMm);
+    poseBeltTeeth(belt, phaseMm * belt.phaseSign);
   }
   for (const rotary of play.drawerRotaries) {
     rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
   }
+  tickCurrentClutch();
 }
 
 function tickColumnSyncDrive() {
@@ -1206,7 +1446,7 @@ function tickColumnSyncDrive() {
     rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
   }
   for (const belt of play.columnSyncBelts) {
-    poseRigidBeltTriangles(belt, phaseMm);
+    poseBeltTeeth(belt, phaseMm * belt.phaseSign);
   }
 }
 
@@ -1456,6 +1696,15 @@ export async function onPartLoaded(item) {
     }), true);
     return;
   }
+  if (CURRENT_CLUTCH_IDS.has(id)) {
+    const role = CURRENT_CLUTCH_IDS.get(id);
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindCurrentClutchMesh(item, role)).catch((error) => {
+      console.error("current clutch bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (DRAWER_ROTARY_IDS.has(id)) {
     item.playBound = true;
     enqueueBind(() => Promise.resolve(bindDrawerRotaryMesh(item, DRAWER_ROTARY_IDS.get(id))).catch((error) => {
@@ -1493,8 +1742,12 @@ export function holdScheme1Engaged() {
   const scheme = play.scheme1;
   if (!scheme.ready || !scheme.stations.length) return;
   scheme.selectorS = scheme.stationS[scheme.targetIndex];
+  scheme.cycleSign = play.dir || 1;
+  scheme.cycleStartPowerTurns = scheme.powerTurns;
+  scheme.cycleStartOutputTurns = scheme.outputTurns[scheme.targetIndex] || 0;
+  scheme.cycleProgressTurns = 0;
   scheme.phase = SCHEME1_PHASE.ENGAGE;
-  scheme.phaseTime = 0.28;
+  scheme.phaseTime = SCHEME1_ENGAGE_SECONDS;
   play.playing = false;
   updateHzLabel();
   scheme1Status(`方案1检查状态 · 已合闸 ${scheme1StationLabel(scheme.targetIndex)}`);
@@ -1502,8 +1755,13 @@ export function holdScheme1Engaged() {
 
 export function tickPlay(dt) {
   if (!play.ready || !play.path) return;
-  // 方案1中，拨叉沿链条到达目标后，运输链停住，先完成合闸和动力传递；
-  // 这样不会出现拨叉停在一个抽屉而链条继续把它拖走的假动作。
+  // Resolve the scheme first.  If INDEX reaches its station in this frame,
+  // tickScheme1 changes the phase to ENGAGE before the transport datum is
+  // advanced, so the selector and the snake belt stop on the same frame with
+  // no one-frame overshoot.
+  tickScheme1(dt);
+  // 方案1中，拨叉沿蛇形选择带到达目标后，选择带必须停稳；只有在
+  // OPEN/CLOSE 完成并回到关闭基准、离合释放后，选择带才允许继续走位。
   const transportMoving = !play.scheme1.ready || play.scheme1.phase === SCHEME1_PHASE.INDEX;
   if (play.playing && transportMoving) play.motorTurns += play.dir * play.motorHz * dt;
   const offsetMm = chainOffsetMm();
@@ -1513,10 +1771,11 @@ export function tickPlay(dt) {
     wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * pitches / wheel.teeth;
   }
   for (const shaft of play.motorShafts) {
-    const motorTurns = play.scheme1.ready ? play.scheme1.powerTurns : play.motorTurns;
-    shaft.group.rotation.y = shaft.restY + 2 * Math.PI * motorTurns;
+    // This is the legacy snake-selector motor shaft.  It follows the snake
+    // belt datum, not the separate drawer-power datum; therefore it stops
+    // while OPEN/CLOSE runs and spins again only after RELEASE completes.
+    shaft.group.rotation.y = shaft.restY + 2 * Math.PI * play.motorTurns;
   }
-  tickScheme1(dt);
   // The column bus follows the same motor/power-turn datum as the drawer
   // take-off.  It is evaluated after scheme1 so a selected powered station
   // cannot leave the visible motor shaft and five columns one frame behind.

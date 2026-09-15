@@ -23,6 +23,7 @@
 - 当前有效抽屉列轴数量为 `N_COL = 5`。另外保留一个低 X 张紧边界位置（上下各一根独立圆轴短主轴），张紧边界不计入抽屉列数；不再把旧的 D 驱动轴候选作为独立列显示。
 - 每个抽屉列使用一根沿世界 Y 方向的长花键齿轮杆：齿形沿 Y 连续贯通，两端各有用于同步轮的 D 轴。它替换了旧的“圆 D 杆 + 单侧齿条”占位体；上层啮合齿轮的世界轴向仍是 +Z（深度），下层为朝下的狗牙面。
 - 中心新版离合沿用 CH1 03C 的圆角三角浅锥公母接口和正中心磁铁盲孔：公轮在下、母轮在上；母轮集成 12T / 2 mm 节距 / 6 mm 带宽的 2GT 同步轮，完整 1 mm 下承托盘和母槽外壁与防脱导向外延齐平。
+- 网页动态联动直接绑定 `06_upper_axis_z_spur_candidate` 与 `08_lower_upward_dog_candidate`：选槽移动时两轮分离并锁住抽屉动力；选槽停稳后公轮沿世界 `+Y` 压入 `2.90 mm`，啮合完成才同步驱动母轮、后方 2GT 皮带、前端复合轮、齿排和 5 根列轴；抽屉完整打开再关闭、回到零位后公轮沿 `-Y` 退回，蛇形选槽才继续。
 - 中心后侧使用新的 80T / 160 mm 闭环 2GT 皮带，沿世界 +Z 传到抽屉前端；前端旧轮被移除，改为下层 2GT 同步轮、上层较大的粗齿轮，驱动抽屉底部的直线齿条。其余 24 套路径只有在 `SHOW_LEGACY_STATIONS=true` 时才恢复。
 - 后视右侧的上、下圆轴各自采用参考 SKP 的倒 T 滑台：箱体后侧增加两层独立的固定接收结构。每层滑台从箱体左右侧看都是倒 T 截面——底部是横梁，长向导轨从前侧向 +Z 延伸到背板接收端；背板端的固定头落在背板内侧，移动台沿 -X 调整张紧轮位置。旧的平底 U 槽已经去掉，避免把滑台做成横向托盘。
 - SKP 中间的圆环按轴承建模，不再把它误当成滑块凸台。每层滑块都有一个轴承座，并单独放入一只 `Ø9 × 2 mm` 轴承环；Ø3 mm 圆轴穿过轴承后再承载该层同步轮。
@@ -41,17 +42,17 @@
 
 `CLUTCH_PART` 的入口值：
 
-- `assembly`：柜体、抽屉透明包络和完整机构的装配视图；
+- `assembly`：参数化源代码中的装配场景入口；网页总装不导出或加载这个合并 STL，而是由实际单个零件拼装；
 - `world_axes`：只显示世界原点的 `+X/+Y/+Z` 三轴诊断标记，不属于打印件；
-- `power_bus`：后视左侧（世界 +X 末列）的电机直连花键齿轮杆 + 其余 4 列传动轴 + 后视右侧（低 X）上下两套滑台圆轴，连同上下水平带；
+- `power_bus`：参数化源代码中的动力母线装配入口；网页总装分别加载电机、5 根列轴、上下 2GT 皮带和张紧轴零件；
 - `all_vertical_axes`：只显示上述 5 根抽屉列纵轴的检查入口，不包含水平同步带和抽屉取力机构；
 - `tensioner_pulley_top`、`tensioner_pulley_bottom`：只检查上下两套滑台各自的同步轮；`tensioner_bearing`：检查上下两只独立轴承环；`tensioner_stage_top`、`tensioner_stage_bottom`：分别检查带箱体固定接收结构、固定槽、移动台、轴承、弹簧、调节螺杆和短圆轴的完整单层滑台；总装中两层各调用一次；
-- `drawer_drive`：后前复合取力轮、沿 +Z 走的同步带和抽屉底部齿条；
-- `clutch`：全部格位离合；
-- `clutch_detail`：单格离合详图，可配合 `CLUTCH_EXPLODE` 和 `ENGAGED`；
+- `drawer_drive`：参数化源代码中的抽屉驱动装配入口；网页总装分别加载后取力轮、前端轮、同步带和齿排零件；
+- `clutch`：参数化源代码中的离合零件装配入口；网页总装只加载实际单个离合零件；
+- `clutch_detail`：单格离合零件检查入口；开合状态由网页脚本控制，不再输出静态“打开/闭合”两套合并体；
 - `cabinet`：导出闭合薄壁柜体外壳以及与滑台相配的固定接收结构；装配图里的格栅和抽屉包络不进入该 STL。
 
-逐件检查入口：参数化 SCAD 仍保留 `left_d_axis`、`right_round_axis`、`side_axes`、`motor`、`column` 等历史检查入口，便于单件验证；总装清单不再把这些与 `power_bus` 重叠的候选 STL 作为并列文件展示，而是在树中标成“内含”。滑台阶段为 `tensioner_slide`、`tensioner_stage_top`、`tensioner_stage_bottom`、`tensioner_bearing`、`tensioner_base`、`tensioner_carriage`、`tensioner_spring`、`tensioner_screw`、`tensioner_receiver`；随后还有 `vertical_rack`、`idler`、`bus_belt`、`upper_spur`、`upper_dog`、`lower_dog`、`rear_pulley`、`spring`、`screw`、`fork`、`drawer_belt`、`front_pulley`、`front_gear`、`drawer_rack`。这些入口都固定在同一组装坐标，检查通过后可以直接回放到 `assembly`。
+逐件检查入口：参数化 SCAD 仍保留 `left_d_axis`、`right_round_axis`、`side_axes`、`motor`、`column` 等历史检查入口，便于单件验证；总装清单不再把这些与动力母线重叠的候选 STL 作为并列文件展示，而是在树中由实际零件层级调用。滑台阶段为 `tensioner_slide`、`tensioner_stage_top`、`tensioner_stage_bottom`、`tensioner_bearing`、`tensioner_base`、`tensioner_carriage`、`tensioner_spring`、`tensioner_screw`、`tensioner_receiver`；随后还有 `vertical_rack`、`idler`、`bus_belt`、`upper_spur`、`upper_dog`、`lower_dog`、`rear_pulley`、`spring`、`screw`、`fork`、`drawer_belt`、`front_pulley`、`front_gear`、`drawer_rack`。这些入口都固定在同一组装坐标，检查通过后可以直接回放到网页总装。
 
 ## 参数与待确认项
 
@@ -67,4 +68,4 @@ SketchUp 可以直接导出 STL，但 STL 只保留三角网格，不能在 SCAD
 
 当前模型把“世界轴向 +Z 的上层啮合齿轮”和“世界轴向 +Y 的狗牙离合面”明确成同一个上层载架的两个功能面；后、前同步轮均为世界轴向 +Y，带路在 XZ 平面内沿 +Z 方向走。当前齿形是可替换的参数化原型轮廓；如果确定使用专门的锥齿/端面齿，可只替换对应轮廓模块，不需要重做整体坐标布局。
 
-STL 不包含单位、弹簧预紧力或切片参数。`cabinet_clutch_assembly.stl`、`cabinet_clutch_all_clutches.stl` 和 `cabinet_clutch_detail_*.stl` 是带有多个相互独立显示体的检查用总成，不能当作打印件；逐件候选 STL 才是后续切片检查的对象。导出后的 `output/inspection/cabinet-clutch/*.json` 只做包围盒、三角形和流形初筛；材料、层高、支撑、齿面强度和实际抽屉负载仍需在切片和首件装配中确认。
+STL 不包含单位、弹簧预紧力或切片参数。当前根页面只发布逐件 STL，所有合并/检查体（动力母线、抽屉驱动、全部离合、静态开合详情和总装合并体）均不导出、不进入清单；对应的参数化 SCAD 装配入口仅用于复用坐标和脚本构建，实际装配由单个零件组成。导出后的 `output/inspection/cabinet-clutch/*.json` 只做包围盒、三角形和流形初筛；材料、层高、支撑、齿面强度和实际抽屉负载仍需在切片和首件装配中确认。

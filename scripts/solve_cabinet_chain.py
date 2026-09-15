@@ -436,20 +436,20 @@ def write_gen(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> Non
 
 def motion_wheels(tz: float) -> list[dict]:
     wheels = [
-        # The motor shaft follows the lower return/tensioner sprocket.  The
-        # old upper power position is kept as a separate guide identity so
-        # the mesh binder cannot attach the shaft to the wrong island.
+        # The motor shaft follows the lower return/tensioner sprocket.  It is
+        # the only pointed sprocket; every other 12T position is a blunt,
+        # bearing-supported guide with the same pitch circle.
         {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
-        {"id": "upper-guide", "kind": "sprocket", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
-        {"id": "entry", "kind": "sprocket", "teeth": 12, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
-        {"id": "drive", "kind": "sprocket", "teeth": 12, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
+        {"id": "upper-guide", "kind": "idler", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
+        {"id": "entry", "kind": "idler", "teeth": 12, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
+        {"id": "drive", "kind": "idler", "teeth": 12, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
     ]
     for row, z in (("2", row_center_z(2)), ("0", row_center_z(0))):
         c = right_sprocket_c(z)
-        wheels.append({"id": f"r12-{row}", "kind": "sprocket", "teeth": 12, "sign": -1, "x": c[0], "z": c[1]})
+        wheels.append({"id": f"r12-{row}", "kind": "idler", "teeth": 12, "sign": -1, "x": c[0], "z": c[1]})
     for row, z in (("3", row_center_z(3)), ("1", row_center_z(1))):
         c = left_sprocket_c(z)
-        wheels.append({"id": f"l12-{row}", "kind": "sprocket", "teeth": 12, "sign": 1, "x": c[0], "z": c[1]})
+        wheels.append({"id": f"l12-{row}", "kind": "idler", "teeth": 12, "sign": 1, "x": c[0], "z": c[1]})
     for row, z in (("3", row_center_z(3)), ("1", row_center_z(1)), ("svc", service_chain_z())):
         c = right_blunt_c(z)
         wheels.append({"id": f"r8-{row}", "kind": "idler", "teeth": 8, "sign": -1, "x": c[0], "z": c[1]})

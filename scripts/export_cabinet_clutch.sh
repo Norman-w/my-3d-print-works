@@ -101,40 +101,6 @@ labels = {
         "visible": True,
         "role": "diagnostic",
     },
-    "cabinet-clutch/cabinet_clutch_assembly": {
-        "name": "总装配合并检查体（可选）",
-        "color": "#7f8ea3",
-        "opacity": 0.28,
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/cabinet_clutch_all_clutches": {
-        "name": "离合器合并检查体（可选）",
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/cabinet_clutch_detail_open": {
-        "name": "离合细节·打开状态（可选）",
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/cabinet_clutch_detail_engaged": {
-        "name": "离合细节·闭合状态（可选）",
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/cabinet_clutch_drawer_drive": {
-        "name": "抽屉驱动合并检查体（可选）",
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/cabinet_clutch_power_bus": {
-        "name": "动力母线合并检查体（文件保留，默认隐藏）",
-        "color": "#65788d",
-        "opacity": 0.28,
-        "visible": False,
-        "role": "diagnostic",
-    },
     "cabinet-clutch/00_tensioner_t_solid_reference": {
         "name": "列同步张紧滑台 · SKP 参数重建",
         "color": "#aebdce",
@@ -154,31 +120,31 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_power_column_0": {
-        "name": "列同步轴 C1 · Y向长花键 + 上下2GT",
+        "name": "列同步轴 C1 · Y向长花键 + 上下2GT · 6mm带宽",
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_power_column_1": {
-        "name": "列同步轴 C2 · Y向长花键 + 上下2GT",
+        "name": "列同步轴 C2 · Y向长花键 + 上下2GT · 6mm带宽",
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_power_column_2": {
-        "name": "列同步轴 C3 · Y向长花键 + 上下2GT",
+        "name": "列同步轴 C3 · Y向长花键 + 上下2GT · 6mm带宽",
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_power_column_3": {
-        "name": "列同步轴 C4 · Y向长花键 + 上下2GT",
+        "name": "列同步轴 C4 · Y向长花键 + 上下2GT · 6mm带宽",
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_power_column_4": {
-        "name": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
+        "name": "列同步轴 C5 · Y向长花键 + 上下2GT · 6mm带宽 · 电机直连",
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
@@ -186,14 +152,14 @@ labels = {
     "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom": {
         "name": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
         "color": "#ce5c31",
-        "opacity": 0.48,
+        "opacity": 1.0,
         "visible": True,
         "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_column_sync_belt_top": {
         "name": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
         "color": "#ce5c31",
-        "opacity": 0.48,
+        "opacity": 1.0,
         "visible": True,
         "role": "purchased",
     },
@@ -208,16 +174,6 @@ labels = {
         "color": "#c4a574",
         "visible": False,
         "role": "printed",
-    },
-    "cabinet-clutch/07_upper_downward_dog_candidate": {
-        "name": "中心格新版公轮 · 圆角三角插销（06同一实体，别名）",
-        "visible": False,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate": {
-        "name": "中心格新版后端2GT母轮（08同一实体，别名）",
-        "visible": False,
-        "role": "diagnostic",
     },
 }
 chain_labels = {
@@ -242,12 +198,12 @@ chain_labels = {
         "role": "printed",
     },
     "cabinet-chain/cabinet_chain_sprockets": {
-        "name": "12T 尖齿（右下动力 D 轴 + 其余轴承导向）",
+        "name": "12T 尖齿唯一主动轮（D 轴）",
         "color": "#5b9fd6",
         "role": "printed",
     },
     "cabinet-chain/cabinet_chain_idlers": {
-        "name": "8T 钝齿轴承平移轮",
+        "name": "12T/8T 绿色钝齿轴承导向轮",
         "color": "#7dcc4a",
         "role": "printed",
     },
@@ -268,7 +224,6 @@ group_map = {
     "cabinet_clutch_cabinet": "00·柜体与格口",
     "cabinet_clutch_cabinet_context": "00·柜体与格口",
     "00_tensioner_t_solid_reference": "01·动力母线",
-    "cabinet_clutch_power_bus": "01·动力母线",
     "cabinet_clutch_power_motor_body": "01·动力母线",
     "cabinet_clutch_power_motor_shaft": "01·动力母线",
     "cabinet_clutch_power_column_0": "01·动力母线",
@@ -280,30 +235,21 @@ group_map = {
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
     "06_upper_axis_z_spur_candidate": "02·离合机构",
-    "07_upper_downward_dog_candidate": "02·离合机构",
     "08_lower_upward_dog_candidate": "02·离合机构",
-    "09_rear_takeoff_timing_pulley_candidate": "02·离合机构",
     "10_clutch_spring_reference": "02·离合机构",
     "11_t_countersunk_screw_reference": "02·离合机构",
     "12_clutch_fork_candidate": "02·离合机构",
-    "cabinet_clutch_all_clutches": "02·离合机构",
-    "cabinet_clutch_detail_open": "02·离合机构",
-    "cabinet_clutch_detail_engaged": "02·离合机构",
     "13_drawer_timing_belt_reference": "03·抽屉驱动",
     "14_front_timing_pulley_candidate": "03·抽屉驱动",
     "15_front_pinion_candidate": "03·抽屉驱动",
     "16_drawer_linear_rack_candidate": "03·抽屉驱动",
-    "cabinet_clutch_drawer_drive": "03·抽屉驱动",
-    "cabinet_clutch_assembly": "99·总装配检查体",
 }
 name_map = {
     "cabinet_clutch_cabinet": "柜体外壳（可见背景）",
     "cabinet_clutch_cabinet_context": "柜体格口与抽屉背景",
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "06_upper_axis_z_spur_candidate": "中心格新版公轮 · 3mm兼容齿形",
-    "07_upper_downward_dog_candidate": "中心格新版公轮 · 圆角三角插销",
     "08_lower_upward_dog_candidate": "中心格新版母轮 · 母槽与2GT",
-    "09_rear_takeoff_timing_pulley_candidate": "中心格新版后端2GT母轮",
     "10_clutch_spring_reference": "离合压簧",
     "11_t_countersunk_screw_reference": "T 形沉头螺丝",
     "12_clutch_fork_candidate": "离合拨叉",
@@ -311,7 +257,6 @@ name_map = {
     "14_front_timing_pulley_candidate": "中心格新版前端2GT同步轮",
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
     "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
-    "cabinet_clutch_power_bus": "动力母线合并检查体（可选）",
     "cabinet_clutch_power_motor_body": "抽屉开合动力电机 · 竖直本体（+X末列）",
     "cabinet_clutch_power_motor_shaft": "抽屉开合动力电机 · 竖直D输出轴",
     "cabinet_clutch_power_column_0": "列同步轴 C1 · Y向长花键 + 上下2GT",
@@ -322,11 +267,6 @@ name_map = {
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_tensioner": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
-    "cabinet_clutch_all_clutches": "离合机构合并检查体（可选）",
-    "cabinet_clutch_drawer_drive": "抽屉驱动合并检查体（可选）",
-    "cabinet_clutch_detail_open": "离合细节 · 打开状态（可选）",
-    "cabinet_clutch_detail_engaged": "离合细节 · 闭合状态（可选）",
-    "cabinet_clutch_assembly": "总装配合并检查体（可选）",
 }
 for part in payload.get("parts", []):
     stem = str(part.get("id", "")).rsplit("/", 1)[-1]
@@ -342,7 +282,6 @@ group_order = [
     "01·动力母线",
     "02·离合机构",
     "03·抽屉驱动",
-    "99·总装配检查体",
 ]
 counts = {group_id: 0 for group_id in group_order}
 for part in payload.get("parts", []):
@@ -449,68 +388,41 @@ for group_id in ordered_group_ids:
             ),
         ]
     elif group_id == "02·离合机构":
-        upper_alias = part_node(
-            "cabinet-clutch/07_upper_downward_dog_candidate",
-            exclusive_groups=["clutch-assembly", "clutch-upper-alias"],
-            display_mode="alias",
-        )
-        lower_alias = part_node(
-            "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate",
-            exclusive_groups=["clutch-assembly", "clutch-lower-alias"],
-            display_mode="alias",
-        )
         upper = part_node(
             "cabinet-clutch/06_upper_axis_z_spur_candidate",
-            exclusive_groups=["clutch-assembly", "clutch-upper-alias"],
-            children=[upper_alias],
         )
         lower = part_node(
             "cabinet-clutch/08_lower_upward_dog_candidate",
-            exclusive_groups=["clutch-assembly", "clutch-lower-alias"],
-            children=[lower_alias],
         )
         root["children"] = [
+            upper,
+            lower,
             part_node(
-                "cabinet-clutch/cabinet_clutch_all_clutches",
-                exclusive_groups=["clutch-assembly", "clutch-detail-state"],
-                display_mode="assembly",
-                children=[upper, lower],
+                "cabinet-clutch/10_clutch_spring_reference",
+                exclusive_groups=["clutch-spring"],
             ),
             part_node(
-                "cabinet-clutch/cabinet_clutch_detail_open",
-                exclusive_groups=["clutch-detail-state"],
-                display_mode="detail",
+                "cabinet-clutch/11_t_countersunk_screw_reference",
+                exclusive_groups=["clutch-screw"],
             ),
             part_node(
-                "cabinet-clutch/cabinet_clutch_detail_engaged",
-                exclusive_groups=["clutch-detail-state"],
-                display_mode="detail",
+                "cabinet-clutch/12_clutch_fork_candidate",
+                exclusive_groups=["clutch-fork"],
             ),
         ]
     elif group_id == "03·抽屉驱动":
         root["children"] = [
             part_node(
-                "cabinet-clutch/cabinet_clutch_drawer_drive",
-                exclusive_groups=["drawer-assembly"],
-                display_mode="assembly",
-                children=[
-                    part_node(
-                        "cabinet-clutch/13_drawer_timing_belt_reference",
-                        exclusive_groups=["drawer-assembly"],
-                    ),
-                    part_node(
-                        "cabinet-clutch/14_front_timing_pulley_candidate",
-                        exclusive_groups=["drawer-assembly"],
-                    ),
-                    part_node(
-                        "cabinet-clutch/15_front_pinion_candidate",
-                        exclusive_groups=["drawer-assembly"],
-                    ),
-                    part_node(
-                        "cabinet-clutch/16_drawer_linear_rack_candidate",
-                        exclusive_groups=["drawer-assembly"],
-                    ),
-                ],
+                "cabinet-clutch/13_drawer_timing_belt_reference",
+            ),
+            part_node(
+                "cabinet-clutch/14_front_timing_pulley_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/15_front_pinion_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/16_drawer_linear_rack_candidate",
             ),
         ]
     else:
@@ -604,11 +516,36 @@ for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
-# The root viewer uses the assembled power bus as the single authoritative
-# model for this mechanism. These generated child previews used to be loaded
-# at the same coordinates and duplicated the motor, D shaft, and column shaft.
-# Keep their parametric SCAD entry points, but do not publish duplicate root
-# list items.
+# The root viewer is assembled from the individual parts below. Remove every
+# old merged/check body before regenerating the manifest; retaining one of them
+# would make the tree show a second copy of the mechanism and would mask which
+# real part is being animated.
+MERGED_CHECK_OUTPUTS=(
+    "cabinet_clutch_power_bus.stl"
+    "cabinet_clutch_drawer_drive.stl"
+    "cabinet_clutch_all_clutches.stl"
+    "cabinet_clutch_detail_open.stl"
+    "cabinet_clutch_detail_engaged.stl"
+    "cabinet_clutch_assembly.stl"
+)
+for old_file in "${MERGED_CHECK_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+done
+
+# 07/09 were generated aliases of the real 06/08 center-clutch meshes. Remove
+# stale copies from older exports; the parameterized source entry points stay
+# in cabinet_clutch.scad for single-part inspection and future reuse.
+DUPLICATE_CLUTCH_OUTPUTS=(
+    "07_upper_downward_dog_candidate.stl"
+    "09_rear_takeoff_timing_pulley_candidate.stl"
+)
+for old_file in "${DUPLICATE_CLUTCH_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+done
+
+# These generated child previews used to be loaded at the same coordinates and
+# duplicated the motor, D shaft, and column shaft. Keep their parametric SCAD
+# entry points, but do not publish duplicate root list items.
 POWER_BUS_CHILD_OUTPUTS=(
     "00_left_d_axis_candidate.stl"
     "01_motor_vertical_reference.stl"
@@ -621,7 +558,6 @@ done
 
 export_part "cabinet" "${OUT_DIR}/cabinet_clutch_cabinet.stl" false 0
 export_part "cabinet_context" "${OUT_DIR}/cabinet_clutch_cabinet_context.stl" false 0
-export_part "power_bus" "${OUT_DIR}/cabinet_clutch_power_bus.stl" false 0
 export_part "motor_body" "${OUT_DIR}/cabinet_clutch_power_motor_body.stl" false 0
 export_part "motor_shaft" "${OUT_DIR}/cabinet_clutch_power_motor_shaft.stl" false 0
 for column in 0 1 2 3 4; do
@@ -630,20 +566,13 @@ done
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
 export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
-export_part "drawer_drive" "${OUT_DIR}/cabinet_clutch_drawer_drive.stl" false 0
-export_part "clutch" "${OUT_DIR}/cabinet_clutch_all_clutches.stl" false 0
-export_part "clutch_detail" "${OUT_DIR}/cabinet_clutch_detail_open.stl" false 8
-export_part "clutch_detail" "${OUT_DIR}/cabinet_clutch_detail_engaged.stl" true 8
-export_part "assembly" "${OUT_DIR}/cabinet_clutch_assembly.stl" false 0
 
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be
 # corrected without hiding it inside a full assembly export.
 export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
 export_part "upper_spur" "${OUT_DIR}/06_upper_axis_z_spur_candidate.stl" false 0
-export_part "upper_dog" "${OUT_DIR}/07_upper_downward_dog_candidate.stl" false 0
 export_part "lower_dog" "${OUT_DIR}/08_lower_upward_dog_candidate.stl" false 0
-export_part "rear_pulley" "${OUT_DIR}/09_rear_takeoff_timing_pulley_candidate.stl" false 0
 export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false 0
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0

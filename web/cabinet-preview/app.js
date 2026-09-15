@@ -1069,14 +1069,20 @@ function updateActiveViewButton() {
 }
 
 function setObjectOpacity(root, opacity) {
+  const alwaysVisiblePreview = root?.userData?.alwaysVisiblePreview === true;
+  const forcedPreviewOpacity = alwaysVisiblePreview ? 1 : opacity;
   root?.traverse?.((object) => {
     if (!object.isMesh) return;
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (!material) continue;
-      material.transparent = opacity < 0.999;
-      material.opacity = opacity;
-      material.depthWrite = opacity >= 0.999;
+      // Belts are a diagnostic overlay in this viewer.  Keep them in the
+      // double-sided transparent pass and out of the depth buffer so rotating
+      // the assembly cannot make the belt vanish behind the cabinet or shafts.
+      material.transparent = alwaysVisiblePreview || forcedPreviewOpacity < 0.999;
+      material.opacity = forcedPreviewOpacity;
+      material.depthWrite = !alwaysVisiblePreview && forcedPreviewOpacity >= 0.999;
+      material.depthTest = !alwaysVisiblePreview;
       material.needsUpdate = true;
     }
   });

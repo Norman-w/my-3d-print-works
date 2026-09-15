@@ -1,6 +1,6 @@
 // Mechanical contract
-// process: assembly visualization — one 12T D-shaft drive sprocket; all other wheels use 3×6×2 bearing seats
-// material: sprockets resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
+// process: assembly visualization — one 12T D-shaft drive sprocket; all other wheels are blunt bearing idlers
+// material: pointed drive sprocket resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
 // parting_plane: n/a for chain; cabinet back face remains Y = D
 // opening_direction: n/a
 // fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor carriage is pressed in the former tensioner slot by an M3 spring screw
@@ -210,6 +210,15 @@ module rear_blunt_idlers() {
         place_geared(c) ch1_03c_bearing_blunt_idler(BLUNT_TEETH);
 }
 
+module rear_guide_idlers() {
+    // 非动力位沿用 12T 节圆，但改为绿色钝齿外形；这样链条仍走原来的
+    // 12T 圆弧/切线，不会因为把 12T 硬换成 8T 而脱离节距，同时消除尖齿
+    // 在层间切换时与绿色导向轮的外包络干涉。
+    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
+        place_geared(c) ch1_03c_bearing_blunt_idler(SPROCKET_TEETH);
+    rear_blunt_idlers();
+}
+
 module rear_bearing_visuals() {
     // 与轴承版齿轮一一对应；旧高 X 转向位 power_c() 现在也是普通轴承轮，
     // 右下 snake_drive_c() 才是 D 轴动力轮。
@@ -220,10 +229,8 @@ module rear_bearing_visuals() {
 }
 
 module rear_sprockets() {
-    // 右下回程/张紧位承接唯一 D 轴动力；高 X 上方旧动力位改成普通导向轮。
+    // 右下回程/张紧位承接唯一 D 轴动力；所有其它位置都在 rear_guide_idlers() 中。
     place_geared(snake_drive_c()) ch1_03c_sprocket(SPROCKET_TEETH);
-    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
-        place_geared(c) ch1_03c_bearing_sprocket(SPROCKET_TEETH);
 }
 
 module connector_plain_plate() {
@@ -363,20 +370,15 @@ emit_chain("pins") {
 }
 emit_chain("sprockets") {
     if (PART == "assembly") {
-        color("#e07a3d") place_geared(snake_drive_c())
+        color("#5b9fd6") place_geared(snake_drive_c())
             ch1_03c_sprocket(SPROCKET_TEETH);
-        color("#5b9fd6") place_geared(power_c())
-            ch1_03c_bearing_sprocket(SPROCKET_TEETH);
-        color("#5b9fd6")
-            for (c = concat([entry_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
-                place_geared(c) ch1_03c_bearing_sprocket(SPROCKET_TEETH);
     } else {
         rear_sprockets();
     }
 }
 emit_chain("idlers") {
-    if (PART == "assembly") color("#7dcc4a") rear_blunt_idlers();
-    else rear_blunt_idlers();
+    if (PART == "assembly") color("#7dcc4a") rear_guide_idlers();
+    else rear_guide_idlers();
 }
 emit_chain("bearings") {
     if (PART == "assembly") color("#b9c2ca") rear_bearing_visuals();
@@ -479,8 +481,9 @@ emit_chain("scheme1_selector") {
 //#region 业务逻辑
 // 闭环按真实节距闭合；底端张紧轮吃掉余量。长于 210L×1 m SKU，只做后仓走线可视化。
 // 红点是每格矩形中心；水平段节圆线必须穿过这些点。
-// 橙色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与可下压固定罩；
-// 下方 service_return、入口、金色张紧、蓝色转向和绿色 8T 平移轮均为轴承版，并显示独立的 3×6×2 轴承。
+// 蓝色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与可下压固定罩；
+// 其它 7 个 12T 转向/回程位全部是绿色 12T 钝齿轴承导向轮；5 个绿色 8T 平移轮也保留为轴承版，
+// 并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
 // 高亮 CONNECTOR_LINK_INDEX 节为普通 03C 接头：普通双销换成带槽销和夹片，
 // 夹片对侧由高亮零件补一块普通单面 8 字外链板；CLUTCH_CONNECTOR_LINK_INDEX 节为加长接头，
