@@ -46,6 +46,12 @@ SHOW_LEGACY_STATIONS = is_undef(SHOW_LEGACY_STATIONS)
 // Read the frozen cabinet dimensions directly. The old cabinet geometry file
 // is intentionally not included; this scene owns its native X/Y/Z geometry.
 include <cabinet_params.scad>
+// Keep the canonical world cabinet on the same motor-mount truth source as
+// cabinet.scad/cabinet_chain.scad.  The shared mount is authored in the
+// cabinet local frame (X=width, Y=depth, Z=height); this native root maps it
+// below with [x, y, z] -> [x, z, -y].
+include <cabinet_motor_mount_params.scad>
+include <cabinet_motor_mount.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
@@ -164,35 +170,28 @@ SNAKE_CHAIN_CENTER_Z = -(PARTITION_BACK_Y + 12.0);
 SNAKE_CHAIN_HALF_DEPTH = 3.0;       // 12T sprocket envelope: local Y 72..78
 SNAKE_CHAIN_REAR_EDGE_Z = SNAKE_CHAIN_CENTER_Z - SNAKE_CHAIN_HALF_DEPTH;
 
-// Snake-chain motor seat receiver, kept in the native world frame so the
-// canonical root cabinet and the legacy chain adapter share the exact same
-// four fixing datums.  The source-chain pitch is 4.7625 mm; this formula
-// reproduces its verified drive-axis X without importing the legacy frame.
-SNAKE_MOTOR_CHAIN_PITCH_MM = 4.7625;
-SNAKE_MOTOR_CHAIN_PITCH_R =
-    SNAKE_MOTOR_CHAIN_PITCH_MM / (2 * sin(15));
-SNAKE_MOTOR_CHAIN_OUTER_R =
-    SNAKE_MOTOR_CHAIN_PITCH_R + 0.38 * SNAKE_MOTOR_CHAIN_PITCH_MM;
-SNAKE_MOTOR_MOUNT_CENTER_X =
-    WALL + SNAKE_MOTOR_CHAIN_OUTER_R + 0.40
-        + SNAKE_MOTOR_CHAIN_PITCH_R;
-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X = 12.30;
-SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z =
-    SNAKE_CHAIN_CENTER_Z - (6.0 / 2 + 0.50 + 28.0 / 2);
-SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z = [-10.5, 10.5];
-SNAKE_MOTOR_BOSS_STAGE1_H = 4.0;
-SNAKE_MOTOR_BOSS_STAGE1_EMBED = 0.45;
-SNAKE_MOTOR_BOSS_STAGE1_Y0 = WALL - SNAKE_MOTOR_BOSS_STAGE1_EMBED;
-SNAKE_MOTOR_BOSS_STAGE1_TOP_Y =
-    SNAKE_MOTOR_BOSS_STAGE1_Y0 + SNAKE_MOTOR_BOSS_STAGE1_H;
-SNAKE_MOTOR_BOSS_RAIL_W = 15.0;
-SNAKE_MOTOR_BOSS_RAIL_L = 32.0;
-SNAKE_MOTOR_BOSS_RAIL_R = 1.2;
-SNAKE_MOTOR_BOSS_GUIDE_H = 20.0;
-SNAKE_MOTOR_BOSS_GUIDE_OD = 4.4;
-SNAKE_MOTOR_BOSS_GUIDE_BORE_D = 3.6;
-SNAKE_MOTOR_BOSS_GUIDE_TOP_Y =
-    SNAKE_MOTOR_BOSS_STAGE1_TOP_Y + SNAKE_MOTOR_BOSS_GUIDE_H;
+// Native aliases preserve the world-scene diagnostics while deriving every
+// value from cabinet_motor_mount_params.scad.  The local seat's depth axis is
+// inverted into native world -Z, so its two local Y hole offsets are negated.
+SNAKE_MOTOR_MOUNT_CENTER_X = motor_mount_c()[0];
+SNAKE_MOTOR_MOUNT_SEAT_CENTER_X = MOTOR_MOUNT_OMEGA_SEAT_CENTER_X;
+SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z = -(
+    MOTOR_MOUNT_CHAIN_Y + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL
+);
+SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z = [
+    for (offset_y = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y) -offset_y
+];
+SNAKE_MOTOR_BOSS_STAGE1_H = MOTOR_MOUNT_BOSS_STAGE1_H;
+SNAKE_MOTOR_BOSS_STAGE1_EMBED = MOTOR_MOUNT_BOSS_STAGE1_EMBED;
+SNAKE_MOTOR_BOSS_STAGE1_Y0 = MOTOR_MOUNT_BOSS_STAGE1_Z0;
+SNAKE_MOTOR_BOSS_STAGE1_TOP_Y = MOTOR_MOUNT_BOSS_STAGE1_TOP_Z;
+SNAKE_MOTOR_BOSS_RAIL_W = MOTOR_MOUNT_BOSS_STAGE1_RAIL_W;
+SNAKE_MOTOR_BOSS_RAIL_L = MOTOR_MOUNT_BOSS_STAGE1_RAIL_L;
+SNAKE_MOTOR_BOSS_RAIL_R = MOTOR_MOUNT_BOSS_STAGE1_RAIL_R;
+SNAKE_MOTOR_BOSS_GUIDE_H = MOTOR_MOUNT_BOSS_GUIDE_H;
+SNAKE_MOTOR_BOSS_GUIDE_OD = MOTOR_MOUNT_BOSS_GUIDE_OD;
+SNAKE_MOTOR_BOSS_GUIDE_BORE_D = MOTOR_MOUNT_BOSS_PILOT_D;
+SNAKE_MOTOR_BOSS_GUIDE_TOP_Y = MOTOR_MOUNT_BOSS_GUIDE_TOP_Z;
 DRAWER_BUS_CHAIN_CLEARANCE = is_undef(DRAWER_BUS_CHAIN_CLEARANCE)
     ? 2.0
     : DRAWER_BUS_CHAIN_CLEARANCE;
@@ -1485,81 +1484,19 @@ module world_drawer_ghosts() {
             ]);
 }
 
-module snake_motor_boss_rounded_rail(w, d, h, r, x, z0, y0) {
-    // Native world X/Z is the cabinet floor plane; +Y is upward.
-    translate([x, y0, z0])
-        hull() {
-            for (dx = [-w / 2 + r, w / 2 - r], dz = [r, d - r])
-                translate([dx, 0, dz])
-                    rotate([-90, 0, 0])
-                        cylinder(r = r, h = h);
-        }
-}
-
-module snake_motor_boss_axis_cylinder(d, h, x, z, y0) {
-    translate([x, y0, z])
-        rotate([-90, 0, 0])
-            cylinder(d = d, h = h);
-}
-
 module snake_motor_mount_bosses() {
-    // Two continuous first-step rails provide the 4 mm structural landing;
-    // one hollow 20 mm guide grows from each of the four screw datums.
-    rail_z0 = SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
-        - SNAKE_MOTOR_BOSS_RAIL_L / 2;
-    difference() {
-        union() {
-            for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
-                SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
-                snake_motor_boss_rounded_rail(
-                    SNAKE_MOTOR_BOSS_RAIL_W,
-                    SNAKE_MOTOR_BOSS_RAIL_L,
-                    SNAKE_MOTOR_BOSS_STAGE1_H,
-                    SNAKE_MOTOR_BOSS_RAIL_R,
-                    SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
-                    rail_z0,
-                    SNAKE_MOTOR_BOSS_STAGE1_Y0
-                );
-            for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
-                SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
-                for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
-                    snake_motor_boss_axis_cylinder(
-                        SNAKE_MOTOR_BOSS_GUIDE_OD,
-                        SNAKE_MOTOR_BOSS_GUIDE_H,
-                        SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
-                        SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
-                        SNAKE_MOTOR_BOSS_STAGE1_TOP_Y
-                    );
-        }
-        for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
-            SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
-            for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
-                snake_motor_boss_axis_cylinder(
-                    SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
-                    SNAKE_MOTOR_BOSS_STAGE1_H
-                        + SNAKE_MOTOR_BOSS_GUIDE_H
-                        + 2 * EPS,
-                    SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
-                    SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
-                    SNAKE_MOTOR_BOSS_STAGE1_Y0 - EPS
-                );
-    }
+    // Reuse the same continuous base rails, solid guide posts, and top-open
+    // blind pilots as the printable cabinet.  R_x(-90) maps local
+    // [x, depth, height] to native [x, -depth, height].
+    rotate([-90, 0, 0])
+        cabinet_motor_mount_floor_seats_local();
 }
 
 module snake_motor_mount_boss_floor_bores() {
-    // Cut the same four axes through the actual cabinet floor.  The boss
-    // module above owns the annular post walls, but a union with the solid
-    // shell floor would otherwise fill the lower portion of each hole.
-    for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
-        SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
-        for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
-            snake_motor_boss_axis_cylinder(
-                SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
-                SNAKE_MOTOR_BOSS_GUIDE_TOP_Y + 2 * EPS,
-                SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
-                SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
-                -EPS
-            );
+    // These are top-open, blind M3 pilots in the posts, not through-bores in
+    // the cabinet floor.  The native transform keeps the screw axis vertical.
+    rotate([-90, 0, 0])
+        cabinet_motor_mount_floor_pilot_holes_local();
 }
 
 module clutch_cabinet_shell() {

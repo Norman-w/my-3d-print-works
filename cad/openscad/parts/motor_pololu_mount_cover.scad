@@ -3,7 +3,7 @@
 // material: printed motor-fit Ω clamp; mating motor is purchased Pololu #1101
 // parting_plane: n/a; one printed clamp, open at the lower Ω mouth and at both axial ends
 // opening_direction: motor slides through the sleeve along local Y; fixing seats face local -Z
-// fastener: four M3 screws through local-Z holes in the two bottom seats into floor receivers
+// fastener: four M3 screws through local-Z holes in the two bottom seats into blind floor-boss pilots
 // seal: n/a; rear electrical tabs remain open
 // print_orientation: rotate as needed in the slicer; source axis follows the assembly datum
 // units: mm
@@ -22,7 +22,7 @@ $fs = 0.22;
 
 //#region 模型/类型
 // 固定套局部原点为蛇形主动轮轴中心；局部 X/Z 是电机横截面，局部 Y 是电机轴向。
-// 经过旧链条适配器后，局部 -Z 对应当前世界 -Y（下方）；下方是座子而不是腿。
+// 在柜体装配中局部 -Z 直接是柜底方向；下方是座子而不是腿。
 //#endregion
 
 //#region 私有成员
@@ -95,8 +95,8 @@ module omega_mount_seat(x) {
     union() {
         difference() {
             // A horizontal seat is visible as the outward underscore in the
-            // rear profile.  Its fastener axis is local Z -> world Y, not
-            // local Y.  The holes are clearance for the cabinet guide posts;
+            // rear profile.  Its fastener axis is local/world Z, not local Y.
+            // The holes are clearance for the cabinet guide posts;
             // the M3 screw remains on the same axis through each hole.
             motor_mount_rounded_prism_xy(
                 MOTOR_MOUNT_OMEGA_SEAT_W,
@@ -161,7 +161,7 @@ module ch1_03c_power_motor_cover_colored() {
 //#region 业务逻辑
 // Ω 套前端与主动轮后表面仍保持 MOTOR_MOUNT_WHEEL_BACK_GAP；包络贴合电机，
 // 不改变主动轮、D 轴和电机轴心；左右两个下向固定座承接螺钉拉力和弹簧预紧反力。
-// 轴向贯通的夹套只承受夹持和反扭矩，座子上的孔轴线沿世界 Y 向下固定。
+// 轴向贯通的夹套只承受夹持和反扭矩，座子上的孔轴线沿世界 Z 向下固定。
 //#endregion
 
 //#region 方法/工具

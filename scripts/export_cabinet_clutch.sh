@@ -13,8 +13,8 @@ SCAD_FILE="cabinet_clutch.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_DIR="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_CHAIN="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
-OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 REPORT_DIR="${PROJECT_ROOT}/output/inspection/cabinet-clutch"
+MOTION_JSON="${OUT_CHAIN}/cabinet_chain_motion.json"
 # The single canonical viewer is the preview server root. All view presets
 # switch content/camera/opacity in this page instead of opening sub-pages.
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
@@ -464,6 +464,12 @@ PY
 [[ -x "${OPENSCAD_BIN}" ]] || die "未找到 OpenSCAD: ${OPENSCAD_BIN}"
 mkdir -p "${OUT_DIR}" "${OUT_CHAIN}" "${REPORT_DIR}"
 
+# The canonical page owns the chain animation as well as the meshes.  Refresh
+# the solver output here so the motion path uses the same generated pin loop
+# that cabinet_chain.scad and cabinet_motor_mount_params.scad consume.
+python3 "${PROJECT_ROOT}/scripts/solve_cabinet_chain.py"
+[[ -s "${MOTION_JSON}" ]] || die "未生成蛇链运动路径: ${MOTION_JSON}"
+
 # Remove the old child-page output and the unrelated legacy root page/assets.
 # These are generated preview artifacts, not source models; the root viewer
 # below is the only supported browser entry for this assembly.
@@ -481,6 +487,13 @@ for retired_group in "${RETIRED_ROOT_PREVIEW_GROUPS[@]}"; do
         rm -rf "${PREVIEW_DIR}/models/${retired_group}"
     fi
 done
+# The old local-frame cabinet export is also retained for standalone checks,
+# but the canonical world scene already publishes its own cabinet shell and
+# context.  Keeping both produces a coincident second cabinet (and its old
+# mount envelope) in the browser.
+if [[ -d "${PREVIEW_DIR}/models/cabinet" ]]; then
+    rm -rf "${PREVIEW_DIR}/models/cabinet"
+fi
 
 # Remove only the derived slide/tensioner/bus-belt artifacts from the previous
 # design. Source files and unrelated mechanism outputs are left untouched.
@@ -626,7 +639,6 @@ fi
 python3 "${MANIFEST_PY}" \
     --stl-dir "${OUT_DIR}" \
     --stl-dir "${OUT_CHAIN}" \
-    --stl-dir "${OUT_CABINET}" \
     --preview-dir "${PREVIEW_DIR}" \
     --title "SmartPartsDrawer 离合张紧机构" \
     --role printed \
@@ -636,6 +648,8 @@ cp "${PREVIEW_SOURCE_DIR}/index.html" "${PREVIEW_DIR}/index.html"
 cp "${PREVIEW_SOURCE_DIR}/app.js" "${PREVIEW_DIR}/app.js"
 mkdir -p "${PREVIEW_DIR}/js"
 cp "${PROJECT_ROOT}/web/cabinet-preview/js/cabinet-chain-play.js" "${PREVIEW_DIR}/js/cabinet-chain-play.js"
+mkdir -p "${PREVIEW_DIR}/models/cabinet-chain"
+ln -sfn "${MOTION_JSON}" "${PREVIEW_DIR}/models/cabinet-chain/cabinet_chain_motion.json"
 
 echo "完成: ${OUT_DIR}"
 echo "检查报告: ${REPORT_DIR}"

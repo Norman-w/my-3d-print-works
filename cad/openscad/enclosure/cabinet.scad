@@ -89,7 +89,7 @@ module cabinet_shell() {
             }
             back_rabbet();
             tensioner_floor_bore();
-            cabinet_motor_mount_floor_bores_local();
+            cabinet_motor_mount_floor_pilot_holes_local();
         }
     }
 }
@@ -144,13 +144,13 @@ if (is_undef(CABINET_LIB_ONLY) || !CABINET_LIB_ONLY) {
 
 //#region 视图层
 // 预览用 PART=assembly；打印件只导出 shell / back_panel。柜底含蛇链电机固定座的
-// 两条 4 mm 一级台阶导轨和四个向上 20 mm 的空心导向柱。
+// 两条承托/限位基台和四个带柱顶盲孔的实体导向柱。
 //#endregion
 
 //#region 业务逻辑
 // 格栅只在抽屉区。底仓前脸通宽开口放电器；后仓仍是一个开间。
-// 动力电机罩不再挂在背板上；柜底两条一级台阶导轨承接左右固定座，四个二级空心
-// 导向柱穿过座子孔，罩体从上方落座，硬弹簧和向下蘑菇头螺钉沿同轴孔压紧。
+// 动力电机罩不再挂在背板上；柜底两条一级承托基台承接左右固定座，四个二级实体
+// 导向柱套入座子孔，罩体从上方落座，硬弹簧套柱，蘑菇头螺钉从上方拧入柱顶盲孔。
 // 左颊板只堵前仓抽屉高度，把回程走廊留在后仓。张紧 U 导肋长在后仓底板。
 //#endregion
 

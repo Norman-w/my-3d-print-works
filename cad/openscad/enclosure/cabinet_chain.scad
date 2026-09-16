@@ -3,7 +3,7 @@
 // material: pointed drive sprocket resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
 // parting_plane: n/a for chain; cabinet back face remains Y = D
 // opening_direction: n/a
-// fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor follows a rounded rectangular Ω clamp with two short outward bottom seats and downward Y-axis fixing holes, and is pressed in the former tensioner slot by a spring screw
+// fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor follows a rounded rectangular Ω clamp with two short outward bottom seats and downward Z-axis fixing holes into blind floor-boss pilots, and is pressed in the former tensioner slot by a spring screw
 // seal: n/a
 // print_orientation: sprocket hub down; do not 3D-print the chain
 // units: mm
@@ -511,8 +511,8 @@ emit_chain("scheme1_selector") {
 // 其它 7 个 12T 转向/回程位全部是绿色 12T 钝齿轴承导向轮；5 个绿色 8T 平移轮也保留为轴承版，
 // 并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
-// 蛇链电机 Ω 套的四个底部固定孔对应柜底两条 4 mm 一级台阶导轨，
-// 每孔向上长 20 mm 空心导向柱；硬弹簧套在导向柱外，大蘑菇头螺钉从上向下压紧，
+// 蛇链电机 Ω 套的四个底部固定孔对应柜底两条承托/限位基台，
+// 每孔向上套入实体导向柱；硬弹簧套在导向柱外，大蘑菇头螺钉从上向下拧入柱顶盲孔，
 // 这组采购件单独作为 motor_spring_hardware 显示，不与柜体或固定套合并。
 // 高亮 CONNECTOR_LINK_INDEX 节为普通 03C 接头：普通双销换成带槽销和夹片，
 // 夹片对侧由高亮零件补一块普通单面 8 字外链板；CLUTCH_CONNECTOR_LINK_INDEX 节为加长接头，

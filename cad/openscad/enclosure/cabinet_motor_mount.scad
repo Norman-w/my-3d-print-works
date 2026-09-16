@@ -24,8 +24,8 @@ module rounded_pad_xy(w, d, h, r, x, y0, z0) {
 }
 
 module motor_mount_spring_coil(x, y) {
-    // Preview-only purchased spring.  It is coaxial with the hollow guide
-    // post and starts just above the printed collar on the moving Omega seat.
+    // Preview-only purchased spring.  It is coaxial with the solid guide post
+    // and starts just above the printed collar on the moving Omega seat.
     translate([x, y, MOTOR_MOUNT_SPRING_START_Z])
         linear_extrude(
             height = MOTOR_MOUNT_SPRING_FREE_L,
@@ -41,15 +41,15 @@ module motor_mount_spring_coil(x, y) {
 }
 
 module motor_mount_mushroom_screw(x, y) {
-    // The shaft points downward through the post.  The two-stage head is a
+    // The shaft points downward into the blind pilot in the post.  The two-stage head is a
     // simple printable visual of the large mushroom head that compresses the
     // stiff spring; it is not claimed to be a thread model.
-    shaft_z0 = MOTOR_MOUNT_BOSS_STAGE1_Z0 - MOTOR_MOUNT_EPS;
+    shaft_z0 = MOTOR_MOUNT_BOSS_PILOT_BOTTOM_Z - MOTOR_MOUNT_EPS;
     head_z = MOTOR_MOUNT_SCREW_HEAD_Z;
     translate([x, y, shaft_z0])
         cylinder(
             d = MOTOR_MOUNT_SCREW_SHAFT_D,
-            h = head_z + MOTOR_MOUNT_SCREW_HEAD_H - shaft_z0
+            h = head_z - shaft_z0 + MOTOR_MOUNT_EPS
         );
     translate([x, y, head_z])
         hull() {
@@ -66,66 +66,56 @@ module cabinet_motor_mount_floor_seats_local() {
     floor_y = MOTOR_MOUNT_CHAIN_Y
         + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
     rail_y0 = floor_y - MOTOR_MOUNT_BOSS_STAGE1_RAIL_L / 2;
-    difference() {
-        union() {
-            for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
-                rounded_pad_xy(
-                    MOTOR_MOUNT_BOSS_STAGE1_RAIL_W,
-                    MOTOR_MOUNT_BOSS_STAGE1_RAIL_L,
-                    MOTOR_MOUNT_BOSS_STAGE1_H,
-                    MOTOR_MOUNT_BOSS_STAGE1_RAIL_R,
-                    c[0] + offset_x,
-                    rail_y0,
-                    MOTOR_MOUNT_BOSS_STAGE1_Z0
-                );
-            // Each fixing hole has its own hollow 20 mm guide.  The guides
-            // rise from the first step and keep the spring and screw coaxial
-            // while the Omega seat is pressed down.
-            for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
-                for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
-                    local_z_cylinder(
-                        MOTOR_MOUNT_BOSS_GUIDE_OD,
-                        MOTOR_MOUNT_BOSS_GUIDE_H,
-                        c[0] + offset_x,
-                        floor_y + y_offset,
-                        MOTOR_MOUNT_BOSS_STAGE1_TOP_Z
-                    );
-        }
-        // The continuous rails fuse into the cabinet floor and all four
-        // concentric bores pass through both steps and the 3.2 mm floor.  The
-        // underside can receive an M3 nut or heat-set insert.
+    union() {
+        // The two continuous rounded base rails are the bottom-end platforms:
+        // they fuse into the cabinet floor, support the two posts on each
+        // side, and stop the moving Omega seat above the cabinet floor.
+        for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+            rounded_pad_xy(
+                MOTOR_MOUNT_BOSS_STAGE1_RAIL_W,
+                MOTOR_MOUNT_BOSS_STAGE1_RAIL_L,
+                MOTOR_MOUNT_BOSS_STAGE1_H,
+                MOTOR_MOUNT_BOSS_STAGE1_RAIL_R,
+                c[0] + offset_x,
+                rail_y0,
+                MOTOR_MOUNT_BOSS_STAGE1_Z0
+            );
+        // Each fixing point has a solid guide post.  The moving seat's larger
+        // hole slides over the post; only the top pilot is removed later.
         for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
             for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
                 local_z_cylinder(
-                    MOTOR_MOUNT_BOSS_GUIDE_BORE_D,
-                    MOTOR_MOUNT_BOSS_STAGE1_H
-                        + MOTOR_MOUNT_BOSS_GUIDE_H
-                        + 2 * MOTOR_MOUNT_EPS,
+                    MOTOR_MOUNT_BOSS_GUIDE_OD,
+                    MOTOR_MOUNT_BOSS_GUIDE_H,
                     c[0] + offset_x,
                     floor_y + y_offset,
-                    MOTOR_MOUNT_BOSS_STAGE1_Z0 - MOTOR_MOUNT_EPS
+                    MOTOR_MOUNT_BOSS_STAGE1_TOP_Z
                 );
     }
 }
 
-module cabinet_motor_mount_floor_bores_local() {
-    // The cabinet floor is a solid part of outer_frame().  Keep this cut
-    // separate from the boss module so the four guide bores remain open
-    // after the bosses are fused into that floor.
+module cabinet_motor_mount_floor_pilot_holes_local() {
+    // These are blind M3 tapping pilots.  They open at the post top but stop
+    // above the base rail and cabinet floor, so a screw threads into the boss
+    // instead of falling through the box.
     c = motor_mount_c();
     floor_y = MOTOR_MOUNT_CHAIN_Y
         + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
     for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
         for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
             local_z_cylinder(
-                MOTOR_MOUNT_BOSS_GUIDE_BORE_D,
-                MOTOR_MOUNT_BOSS_STAGE1_H
-                    + MOTOR_MOUNT_BOSS_GUIDE_H
-                    + 2 * MOTOR_MOUNT_EPS,
+                MOTOR_MOUNT_BOSS_PILOT_D,
+                MOTOR_MOUNT_BOSS_PILOT_DEPTH + 2 * MOTOR_MOUNT_EPS,
                 c[0] + offset_x,
                 floor_y + y_offset,
-                MOTOR_MOUNT_BOSS_STAGE1_Z0 - MOTOR_MOUNT_EPS
+                MOTOR_MOUNT_BOSS_PILOT_BOTTOM_Z - MOTOR_MOUNT_EPS
             );
+}
+
+// Legacy API name retained for external preview scripts; this is no longer a
+// through-bore and now delegates to the blind pilot-hole cut.
+module cabinet_motor_mount_floor_bores_local() {
+    cabinet_motor_mount_floor_pilot_holes_local();
 }
 
 module cabinet_motor_mount_spring_hardware_local() {
@@ -144,8 +134,9 @@ module cabinet_motor_mount_spring_hardware_local() {
 
 //#region 业务逻辑
 // 该模块在 cabinet.scad 的 cabinet_shell() 局部坐标内调用：两条连续的
-// 一级台阶导轨从柜底长出，四个空心二级导向柱对应 Ω 套的四个孔。旧 Z
-// 是当前世界 Y；固定螺钉从上方沿世界 -Y 下压弹簧，Ω 套从上方沿导向柱落座。
+// 一级承托/限位基台从柜底长出，四个实体二级导向柱对应 Ω 套的四个孔。
+// 座子从上方套入导向柱并由基台托住；弹簧套在柱外，固定螺钉从上方沿
+// 世界 -Z 进入柱顶盲孔。
 // cabinet_motor_mount_spring_hardware_local() 只在链条总装配中显示采购件
 // 弹簧和螺钉，不把它们并入柜体打印 STL。
 //#endregion
