@@ -84,13 +84,53 @@ MOTOR_MOUNT_OMEGA_SEAT_CENTER_X =
         + MOTOR_MOUNT_OMEGA_SEAT_W / 2
         - MOTOR_MOUNT_OMEGA_SEAT_OVERLAP;
 
-// 两个向下固定座的柜底接收座；M3 螺钉轴线为世界 Y，不再放在背板上。
-MOTOR_MOUNT_FLOOR_SEAT_D = 8.0;
-MOTOR_MOUNT_FLOOR_SEAT_H = 3.4;
-MOTOR_MOUNT_FLOOR_BORE_D = 3.4;
-MOTOR_MOUNT_SCREW_CLEAR_D = 3.4;
+// 柜体上的四组台阶式 boss。一级台阶名义高度 4 mm；底部再埋入
+// 0.45 mm 作为打印融合量，所以它露出柜底约 3.55 mm，并在座子落下
+// 时留下由参数控制的下限位间隙。二级是从一级顶面向上的 20 mm 空心
+// 导向柱：螺钉轴线仍与四个孔完全同轴，弹簧套在导向柱外面。
+MOTOR_MOUNT_BOSS_STAGE1_H = 4.0;
+MOTOR_MOUNT_BOSS_STAGE1_EMBED = 0.45;
+MOTOR_MOUNT_BOSS_STAGE1_Z0 = WALL - MOTOR_MOUNT_BOSS_STAGE1_EMBED;
+MOTOR_MOUNT_BOSS_STAGE1_TOP_Z =
+    MOTOR_MOUNT_BOSS_STAGE1_Z0 + MOTOR_MOUNT_BOSS_STAGE1_H;
+MOTOR_MOUNT_BOSS_STAGE1_RAIL_W = MOTOR_MOUNT_OMEGA_SEAT_W + 2.0;
+MOTOR_MOUNT_BOSS_STAGE1_RAIL_L = MOTOR_MOUNT_OMEGA_SEAT_L + 4.0;
+MOTOR_MOUNT_BOSS_STAGE1_RAIL_R = 1.2;
+MOTOR_MOUNT_BOSS_GUIDE_H = 20.0;
+MOTOR_MOUNT_BOSS_GUIDE_OD = 4.4;
+MOTOR_MOUNT_BOSS_GUIDE_BORE_D = 3.6;
+MOTOR_MOUNT_BOSS_GUIDE_TOP_Z =
+    MOTOR_MOUNT_BOSS_STAGE1_TOP_Z + MOTOR_MOUNT_BOSS_GUIDE_H;
+
+// Ω 套固定座的孔放大为导向柱通孔；M3 螺钉仍沿孔中心穿过。导向孔
+// 比导向柱直径大 0.8 mm，弹簧座圈外径 8 mm，给硬弹簧提供平整承托。
+MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D = MOTOR_MOUNT_BOSS_GUIDE_OD + 0.8;
+MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD = 8.0;
+MOTOR_MOUNT_OMEGA_SPRING_SEAT_H = 1.0;
+
+// 预览中的硬弹簧与大蘑菇头压紧螺钉；真实弹簧/螺钉仍是采购件。
+MOTOR_MOUNT_SPRING_OD = 6.0;
+MOTOR_MOUNT_SPRING_WIRE_D = 1.1;
+MOTOR_MOUNT_SPRING_FREE_L = 14.0;
+MOTOR_MOUNT_SPRING_START_CLEAR = 0.25;
+MOTOR_MOUNT_SPRING_SEAT_TOP_Z =
+    TEN_Z + MOTOR_MOUNT_OMEGA_SEAT_TOP_Z
+        + MOTOR_MOUNT_OMEGA_SPRING_SEAT_H;
+MOTOR_MOUNT_SPRING_START_Z =
+    MOTOR_MOUNT_SPRING_SEAT_TOP_Z + MOTOR_MOUNT_SPRING_START_CLEAR;
+MOTOR_MOUNT_SPRING_TOP_Z =
+    MOTOR_MOUNT_SPRING_START_Z + MOTOR_MOUNT_SPRING_FREE_L;
+MOTOR_MOUNT_SCREW_SHAFT_D = 3.2;
 MOTOR_MOUNT_SCREW_HEAD_D = 6.0;
-MOTOR_MOUNT_SCREW_HEAD_H = 1.4;
+MOTOR_MOUNT_SCREW_HEAD_H = 2.4;
+MOTOR_MOUNT_SCREW_HEAD_Z = MOTOR_MOUNT_SPRING_TOP_Z;
+MOTOR_MOUNT_SCREW_CLEAR_D = MOTOR_MOUNT_BOSS_GUIDE_BORE_D;
+
+// 旧名称保留为兼容别名，避免已有入口因重命名失效；实际几何由上面的
+// 台阶导轨和导向柱生成，不再使用旧的四个独立圆柱接收座。
+MOTOR_MOUNT_FLOOR_SEAT_D = MOTOR_MOUNT_BOSS_STAGE1_RAIL_W;
+MOTOR_MOUNT_FLOOR_SEAT_H = MOTOR_MOUNT_BOSS_STAGE1_H;
+MOTOR_MOUNT_FLOOR_BORE_D = MOTOR_MOUNT_BOSS_GUIDE_BORE_D;
 MOTOR_MOUNT_EPS = 0.05;
 
 MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X = [
@@ -139,8 +179,22 @@ assert(MOTOR_MOUNT_OMEGA_SEAT_CENTER_X
         - MOTOR_MOUNT_SCREW_HEAD_D / 2
         > MOTOR_MOUNT_OMEGA_OUTER_W / 2 + 0.20,
     "screw-head relief must clear the outside of the sleeve");
-assert(MOTOR_MOUNT_FLOOR_SEAT_D > MOTOR_MOUNT_FLOOR_BORE_D,
-    "floor seats must leave material around the downward fastener bore");
+assert(MOTOR_MOUNT_BOSS_STAGE1_EMBED > 0
+    && MOTOR_MOUNT_BOSS_STAGE1_EMBED < WALL,
+    "stage-one boss embedment must fuse into, not pass through, the cabinet floor");
+assert(MOTOR_MOUNT_BOSS_STAGE1_TOP_Z > WALL
+    && MOTOR_MOUNT_BOSS_STAGE1_TOP_Z
+        < TEN_Z + MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z,
+    "stage-one boss must expose above the floor and remain below the Omega seat");
+assert(MOTOR_MOUNT_BOSS_GUIDE_OD > MOTOR_MOUNT_BOSS_GUIDE_BORE_D,
+    "guide post must leave a printable annular wall");
+assert(MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D
+        > MOTOR_MOUNT_BOSS_GUIDE_OD + 0.60,
+    "Omega guide holes need radial print clearance around the cabinet posts");
+assert(MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD > MOTOR_MOUNT_SPRING_OD,
+    "spring seat collar must support the full spring diameter");
+assert(MOTOR_MOUNT_SCREW_CLEAR_D > MOTOR_MOUNT_SCREW_SHAFT_D,
+    "screw shaft must have clearance in the guide bore");
 assert(MOTOR_MOUNT_OMEGA_SEAT_FASTENER_EDGE_MARGIN_Y
         > MOTOR_MOUNT_SCREW_HEAD_D / 2,
     "front/rear fastener rows must clear both seat ends");

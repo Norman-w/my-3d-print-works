@@ -3,7 +3,8 @@
 // material: PETG preferred; PLA acceptable for fit prototype
 // parting_plane: back face Y = D; shell stays, back panel separates
 // opening_direction: back panel pulled toward +Y
-// fastener: deferred — inset lid with screws on the side walls; no mid-span bosses
+// fastener: rear-cavity motor mount uses four downward M3 axes on stepped floor bosses;
+//           the removable back panel still uses the side-wall/inset-lid scheme
 // seal: none — parts cabinet, not watertight
 // print_orientation: shell front (Y=0) on bed; panel outer face down in slicer
 // units: mm
@@ -88,6 +89,7 @@ module cabinet_shell() {
             }
             back_rabbet();
             tensioner_floor_bore();
+            cabinet_motor_mount_floor_bores_local();
         }
     }
 }
@@ -141,12 +143,14 @@ if (is_undef(CABINET_LIB_ONLY) || !CABINET_LIB_ONLY) {
 //#endregion
 
 //#region 视图层
-// 预览用 PART=assembly；打印件只导出 shell / back_panel。柜底含动力电机罩的两个接收座。
+// 预览用 PART=assembly；打印件只导出 shell / back_panel。柜底含蛇链电机固定座的
+// 两条 4 mm 一级台阶导轨和四个向上 20 mm 的空心导向柱。
 //#endregion
 
 //#region 业务逻辑
 // 格栅只在抽屉区。底仓前脸通宽开口放电器；后仓仍是一个开间。
-// 动力电机罩不再挂在背板上；柜底有两个向下固定的接收座，罩体从上方落座。
+// 动力电机罩不再挂在背板上；柜底两条一级台阶导轨承接左右固定座，四个二级空心
+// 导向柱穿过座子孔，罩体从上方落座，硬弹簧和向下蘑菇头螺钉沿同轴孔压紧。
 // 左颊板只堵前仓抽屉高度，把回程走廊留在后仓。张紧 U 导肋长在后仓底板。
 //#endregion
 

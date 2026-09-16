@@ -21,7 +21,7 @@ OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
+PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover motor_spring_hardware motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -142,6 +142,12 @@ names = {
         "name": "蛇形链条电机 Ω 形贴合固定套（下向安装）",
         "role": "printed",
         "color": "#56616d",
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_motor_spring_hardware": {
+        "name": "蛇链电机固定座·四组硬弹簧与下压蘑菇头螺丝",
+        "role": "purchased",
+        "color": "#c9a227",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_tensioner": {
@@ -462,7 +468,7 @@ export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutc
 export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings motor motor_shaft motor_cover motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
+    for part in sprockets idlers bearings motor motor_shaft motor_cover motor_spring_hardware motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done

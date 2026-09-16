@@ -92,35 +92,49 @@ module omega_sleeve_shell() {
 }
 
 module omega_mount_seat(x) {
-    difference() {
-        // A horizontal seat is visible as the outward underscore in the rear
-        // profile.  Its fastener axis is local Z -> world Y, not local Y.
-        motor_mount_rounded_prism_xy(
-            MOTOR_MOUNT_OMEGA_SEAT_W,
-            MOTOR_MOUNT_OMEGA_SEAT_L,
-            MOTOR_MOUNT_OMEGA_SEAT_T,
-            MOTOR_MOUNT_OMEGA_SEAT_R,
-            x,
-            MOTOR_MOUNT_OMEGA_SEAT_FRONT_Y_LOCAL,
-            MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z
-        );
-        for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y) {
-            motor_mount_local_z_cylinder(
-                MOTOR_MOUNT_SCREW_CLEAR_D,
-                MOTOR_MOUNT_OMEGA_SEAT_T + 2 * MOTOR_MOUNT_EPS,
+    union() {
+        difference() {
+            // A horizontal seat is visible as the outward underscore in the
+            // rear profile.  Its fastener axis is local Z -> world Y, not
+            // local Y.  The holes are clearance for the cabinet guide posts;
+            // the M3 screw remains on the same axis through each hole.
+            motor_mount_rounded_prism_xy(
+                MOTOR_MOUNT_OMEGA_SEAT_W,
+                MOTOR_MOUNT_OMEGA_SEAT_L,
+                MOTOR_MOUNT_OMEGA_SEAT_T,
+                MOTOR_MOUNT_OMEGA_SEAT_R,
                 x,
-                MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
-                MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z - MOTOR_MOUNT_EPS
+                MOTOR_MOUNT_OMEGA_SEAT_FRONT_Y_LOCAL,
+                MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z
             );
-            motor_mount_local_z_cylinder(
-                MOTOR_MOUNT_SCREW_HEAD_D,
-                MOTOR_MOUNT_SCREW_HEAD_H + MOTOR_MOUNT_EPS,
-                x,
-                MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
-                MOTOR_MOUNT_OMEGA_SEAT_TOP_Z
-                    - MOTOR_MOUNT_SCREW_HEAD_H
-            );
+            for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
+                motor_mount_local_z_cylinder(
+                    MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D,
+                    MOTOR_MOUNT_OMEGA_SEAT_T + 2 * MOTOR_MOUNT_EPS,
+                    x,
+                    MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
+                    MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z - MOTOR_MOUNT_EPS
+                );
         }
+        // A short annular collar gives the hard spring a positive seat above
+        // the moving tab while the cabinet post remains inside it.
+        for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
+            difference() {
+                motor_mount_local_z_cylinder(
+                    MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD,
+                    MOTOR_MOUNT_OMEGA_SPRING_SEAT_H,
+                    x,
+                    MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
+                    MOTOR_MOUNT_OMEGA_SEAT_TOP_Z
+                );
+                motor_mount_local_z_cylinder(
+                    MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D,
+                    MOTOR_MOUNT_OMEGA_SPRING_SEAT_H + 2 * MOTOR_MOUNT_EPS,
+                    x,
+                    MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
+                    MOTOR_MOUNT_OMEGA_SEAT_TOP_Z - MOTOR_MOUNT_EPS
+                );
+            }
     }
 }
 
@@ -157,8 +171,12 @@ assert(MOTOR_MOUNT_OMEGA_INNER_W >= MOTOR_MOUNT_OMEGA_MOTOR_W
 assert(MOTOR_MOUNT_OMEGA_INNER_H >= MOTOR_MOUNT_OMEGA_MOTOR_H
     + 2 * MOTOR_MOUNT_OMEGA_CLEAR - MOTOR_MOUNT_EPS,
     "omega sleeve must clear the gearbox height");
-assert(MOTOR_MOUNT_OMEGA_SEAT_W > MOTOR_MOUNT_SCREW_HEAD_D,
-    "omega mounting seats must contain the screw head relief");
+assert(MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D
+        > MOTOR_MOUNT_BOSS_GUIDE_OD + 0.60,
+    "omega mounting seats must clear the cabinet guide posts");
 assert(MOTOR_MOUNT_OMEGA_SEAT_L > MOTOR_MOUNT_SCREW_HEAD_D,
-    "omega mounting seats must contain a usable floor fastener seat");
+    "omega mounting seats must contain a usable front/rear fastener span");
+assert(MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD
+        > MOTOR_MOUNT_SPRING_OD,
+    "omega spring collars must support the spring");
 //#endregion

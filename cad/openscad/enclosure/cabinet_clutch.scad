@@ -163,6 +163,36 @@ WORLD_BACK_PANEL_T = BACK_PANEL_T;
 SNAKE_CHAIN_CENTER_Z = -(PARTITION_BACK_Y + 12.0);
 SNAKE_CHAIN_HALF_DEPTH = 3.0;       // 12T sprocket envelope: local Y 72..78
 SNAKE_CHAIN_REAR_EDGE_Z = SNAKE_CHAIN_CENTER_Z - SNAKE_CHAIN_HALF_DEPTH;
+
+// Snake-chain motor seat receiver, kept in the native world frame so the
+// canonical root cabinet and the legacy chain adapter share the exact same
+// four fixing datums.  The source-chain pitch is 4.7625 mm; this formula
+// reproduces its verified drive-axis X without importing the legacy frame.
+SNAKE_MOTOR_CHAIN_PITCH_MM = 4.7625;
+SNAKE_MOTOR_CHAIN_PITCH_R =
+    SNAKE_MOTOR_CHAIN_PITCH_MM / (2 * sin(15));
+SNAKE_MOTOR_CHAIN_OUTER_R =
+    SNAKE_MOTOR_CHAIN_PITCH_R + 0.38 * SNAKE_MOTOR_CHAIN_PITCH_MM;
+SNAKE_MOTOR_MOUNT_CENTER_X =
+    WALL + SNAKE_MOTOR_CHAIN_OUTER_R + 0.40
+        + SNAKE_MOTOR_CHAIN_PITCH_R;
+SNAKE_MOTOR_MOUNT_SEAT_CENTER_X = 12.30;
+SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z =
+    SNAKE_CHAIN_CENTER_Z - (6.0 / 2 + 0.50 + 28.0 / 2);
+SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z = [-10.5, 10.5];
+SNAKE_MOTOR_BOSS_STAGE1_H = 4.0;
+SNAKE_MOTOR_BOSS_STAGE1_EMBED = 0.45;
+SNAKE_MOTOR_BOSS_STAGE1_Y0 = WALL - SNAKE_MOTOR_BOSS_STAGE1_EMBED;
+SNAKE_MOTOR_BOSS_STAGE1_TOP_Y =
+    SNAKE_MOTOR_BOSS_STAGE1_Y0 + SNAKE_MOTOR_BOSS_STAGE1_H;
+SNAKE_MOTOR_BOSS_RAIL_W = 15.0;
+SNAKE_MOTOR_BOSS_RAIL_L = 32.0;
+SNAKE_MOTOR_BOSS_RAIL_R = 1.2;
+SNAKE_MOTOR_BOSS_GUIDE_H = 20.0;
+SNAKE_MOTOR_BOSS_GUIDE_OD = 4.4;
+SNAKE_MOTOR_BOSS_GUIDE_BORE_D = 3.6;
+SNAKE_MOTOR_BOSS_GUIDE_TOP_Y =
+    SNAKE_MOTOR_BOSS_STAGE1_TOP_Y + SNAKE_MOTOR_BOSS_GUIDE_H;
 DRAWER_BUS_CHAIN_CLEARANCE = is_undef(DRAWER_BUS_CHAIN_CLEARANCE)
     ? 2.0
     : DRAWER_BUS_CHAIN_CLEARANCE;
@@ -1455,15 +1485,98 @@ module world_drawer_ghosts() {
             ]);
 }
 
-module clutch_cabinet_shell() {
-    // Closed thin-wall world shell. The front face is 0 and the back face is -Z; the vertical
-    // dimension is +Y. The old tensioner receiver is intentionally absent
-    // until the standalone T datum is approved.
+module snake_motor_boss_rounded_rail(w, d, h, r, x, z0, y0) {
+    // Native world X/Z is the cabinet floor plane; +Y is upward.
+    translate([x, y0, z0])
+        hull() {
+            for (dx = [-w / 2 + r, w / 2 - r], dz = [r, d - r])
+                translate([dx, 0, dz])
+                    rotate([-90, 0, 0])
+                        cylinder(r = r, h = h);
+        }
+}
+
+module snake_motor_boss_axis_cylinder(d, h, x, z, y0) {
+    translate([x, y0, z])
+        rotate([-90, 0, 0])
+            cylinder(d = d, h = h);
+}
+
+module snake_motor_mount_bosses() {
+    // Two continuous first-step rails provide the 4 mm structural landing;
+    // one hollow 20 mm guide grows from each of the four screw datums.
+    rail_z0 = SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
+        - SNAKE_MOTOR_BOSS_RAIL_L / 2;
     difference() {
-        translate([0, 0, -D])
-            cube([W, H, D]);
-        translate([WALL, WALL, -D + WALL])
-            cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
+        union() {
+            for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
+                SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
+                snake_motor_boss_rounded_rail(
+                    SNAKE_MOTOR_BOSS_RAIL_W,
+                    SNAKE_MOTOR_BOSS_RAIL_L,
+                    SNAKE_MOTOR_BOSS_STAGE1_H,
+                    SNAKE_MOTOR_BOSS_RAIL_R,
+                    SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
+                    rail_z0,
+                    SNAKE_MOTOR_BOSS_STAGE1_Y0
+                );
+            for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
+                SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
+                for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
+                    snake_motor_boss_axis_cylinder(
+                        SNAKE_MOTOR_BOSS_GUIDE_OD,
+                        SNAKE_MOTOR_BOSS_GUIDE_H,
+                        SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
+                        SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
+                        SNAKE_MOTOR_BOSS_STAGE1_TOP_Y
+                    );
+        }
+        for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
+            SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
+            for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
+                snake_motor_boss_axis_cylinder(
+                    SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
+                    SNAKE_MOTOR_BOSS_STAGE1_H
+                        + SNAKE_MOTOR_BOSS_GUIDE_H
+                        + 2 * EPS,
+                    SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
+                    SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
+                    SNAKE_MOTOR_BOSS_STAGE1_Y0 - EPS
+                );
+    }
+}
+
+module snake_motor_mount_boss_floor_bores() {
+    // Cut the same four axes through the actual cabinet floor.  The boss
+    // module above owns the annular post walls, but a union with the solid
+    // shell floor would otherwise fill the lower portion of each hole.
+    for (offset_x = [-SNAKE_MOTOR_MOUNT_SEAT_CENTER_X,
+        SNAKE_MOTOR_MOUNT_SEAT_CENTER_X])
+        for (offset_z = SNAKE_MOTOR_MOUNT_SEAT_FASTENER_OFFSETS_Z)
+            snake_motor_boss_axis_cylinder(
+                SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
+                SNAKE_MOTOR_BOSS_GUIDE_TOP_Y + 2 * EPS,
+                SNAKE_MOTOR_MOUNT_CENTER_X + offset_x,
+                SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z - offset_z,
+                -EPS
+            );
+}
+
+module clutch_cabinet_shell() {
+    // Closed thin-wall world shell. The front face is 0 and the back face is -Z;
+    // the vertical dimension is +Y. Bosses are added after the cavity cut so
+    // their second-stage guides remain inside the rear-cavity volume.
+    difference() {
+        union() {
+            difference() {
+                translate([0, 0, -D])
+                    cube([W, H, D]);
+                translate([WALL, WALL, -D + WALL])
+                    cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
+            }
+            snake_motor_mount_bosses();
+        }
+        snake_motor_mount_boss_floor_bores();
     }
 }
 
@@ -2264,6 +2377,7 @@ echo("world_axes", "x=width", "y=height(+up)", "z=depth(+front)", "front_z", 0, 
 echo("rear_view_sides", "right", "-X/toward_x0", "left", "+X/toward_xW", "tensioner", "right", "motor", "left");
 echo("drive_axis", "motor_column", MOTOR_COLUMN, "x_motor", MOTOR_X, "x_plus_max_column", clutch_col_x(N_COL - 1), "motor_face_y", MOTOR_FACE_Y, "z_base", DRIVE_AXIS_Z_BASE, "z", DRIVE_AXIS_Z, "rear_shift_z", DRAWER_DRIVE_REAR_SHIFT_Z, "front_interface_z", FRONT_PULLEY_Z, "belt_teeth", DRAWER_BELT_TEETH, "y_bottom", BUS_BOTTOM_Y, "y_top", BUS_TOP_Y);
 echo("drive_clearance", "snake_chain_center_z", SNAKE_CHAIN_CENTER_Z, "snake_chain_rear_edge_z", SNAKE_CHAIN_REAR_EDGE_Z, "pulley_front_edge_z", DRIVE_AXIS_Z + TIMING_FLANGE_R, "clearance", SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R));
+echo("snake_motor_boss", "center_x", SNAKE_MOTOR_MOUNT_CENTER_X, "seat_center_z", SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z, "stage1_h", SNAKE_MOTOR_BOSS_STAGE1_H, "stage1_top_y", SNAKE_MOTOR_BOSS_STAGE1_TOP_Y, "guide_h", SNAKE_MOTOR_BOSS_GUIDE_H, "guide_top_y", SNAKE_MOTOR_BOSS_GUIDE_TOP_Y, "guide_od", SNAKE_MOTOR_BOSS_GUIDE_OD, "bore_d", SNAKE_MOTOR_BOSS_GUIDE_BORE_D);
 echo("vertical_axes", "active_count", ACTIVE_VERTICAL_AXIS_COUNT, "planned_count", PLANNED_VERTICAL_AXIS_COUNT, "layout", "five drawer-columns; motor directly coupled to +X-most column; no separate D-drive column", "gear_body_length", VERTICAL_GEAR_LENGTH, "end_clearance", VERTICAL_GEAR_END_CLEARANCE, "pulley_axial_width", COLUMN_SYNC_PULLEY_AXIAL_WIDTH, "belt_width", GT2_BELT_WIDTH);
 echo("left_axis", "profile", "D", "d", ROD_D, "pulley_bore", "D");
 echo("timing", "pitch", TIMING_PITCH_MM, "teeth", TIMING_TEETH, "pitch_r", TIMING_PITCH_R, "outer_d", 2 * TIMING_OUTER_R, "flange_d", TIMING_FLANGE_D);
@@ -2364,6 +2478,26 @@ assert(PLANNED_VERTICAL_AXIS_COUNT == N_COL + 1,
 assert(DRIVE_AXIS_Z < WORLD_PARTITION_BACK_Z - 1.0, "drive bus must be behind the partition");
 assert(DRIVE_AXIS_Z + TIMING_OUTER_R < WORLD_PARTITION_BACK_Z - 0.50, "rear pulley OD must clear the partition");
 assert(DRIVE_AXIS_Z - TIMING_OUTER_R > -D + WORLD_BACK_PANEL_T + 1.0, "rear belt must clear the back panel");
+assert(SNAKE_MOTOR_MOUNT_CENTER_X - SNAKE_MOTOR_MOUNT_SEAT_CENTER_X
+        > WALL
+    && SNAKE_MOTOR_MOUNT_CENTER_X + SNAKE_MOTOR_MOUNT_SEAT_CENTER_X
+        < W - WALL,
+    "snake motor boss rails must stay inside the cabinet side walls");
+assert(SNAKE_MOTOR_BOSS_STAGE1_EMBED > 0
+    && SNAKE_MOTOR_BOSS_STAGE1_EMBED < WALL,
+    "snake motor boss first step must fuse into the cabinet floor");
+assert(SNAKE_MOTOR_BOSS_STAGE1_TOP_Y > WALL
+    && SNAKE_MOTOR_BOSS_STAGE1_TOP_Y < 7.0,
+    "snake motor boss first step must expose as a low floor stop");
+assert(SNAKE_MOTOR_BOSS_GUIDE_OD > SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
+    "snake motor boss guide must leave an annular wall");
+assert(SNAKE_MOTOR_BOSS_GUIDE_TOP_Y < WORLD_GRID_ORIGIN_Y,
+    "snake motor boss guides must remain below the drawer grid");
+assert(SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
+        - SNAKE_MOTOR_BOSS_RAIL_L / 2 > -D + WALL
+    && SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
+        + SNAKE_MOTOR_BOSS_RAIL_L / 2 < -WALL,
+    "snake motor boss rails must stay inside the rear depth");
 assert(SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R)
         >= DRAWER_BUS_CHAIN_CLEARANCE,
     "drawer drive rear pulley must stay behind the snake-chain envelope");

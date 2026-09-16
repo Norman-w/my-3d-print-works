@@ -192,6 +192,11 @@ chain_labels = {
         "color": "#56616d",
         "role": "printed",
     },
+    "cabinet-chain/cabinet_chain_motor_spring_hardware": {
+        "name": "蛇链电机固定座·四组硬弹簧与下压蘑菇头螺丝",
+        "color": "#c9a227",
+        "role": "purchased",
+    },
     "cabinet-chain/cabinet_chain_motor_tensioner": {
         "name": "旧蛇形电机张紧螺杆（源文件保留，默认隐藏）",
         "color": "#c9a227",

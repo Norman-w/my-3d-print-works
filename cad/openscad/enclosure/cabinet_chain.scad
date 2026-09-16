@@ -425,6 +425,16 @@ emit_chain("motor_cover") {
         place_power_motor_cover(snake_drive_c())
             ch1_03c_power_motor_cover();
 }
+emit_chain("motor_spring_hardware") {
+    // Four purchased spring/screw sets sit on the four moving-seat holes.
+    // They are kept as one assembly part so the tree has no duplicate copy;
+    // the printed cabinet bosses and Omega cover remain their own real parts.
+    if (CHAIN_PART == "assembly")
+        color("#c9a227", 0.95)
+            cabinet_motor_mount_spring_hardware_local();
+    else
+        cabinet_motor_mount_spring_hardware_local();
+}
 emit_chain("motor_tensioner") {
     // Legacy centerline tensioner hardware is kept as a standalone source part
     // for reference.  The current world uses the four-hole Omega motor seat;
@@ -501,6 +511,9 @@ emit_chain("scheme1_selector") {
 // 其它 7 个 12T 转向/回程位全部是绿色 12T 钝齿轴承导向轮；5 个绿色 8T 平移轮也保留为轴承版，
 // 并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
+// 蛇链电机 Ω 套的四个底部固定孔对应柜底两条 4 mm 一级台阶导轨，
+// 每孔向上长 20 mm 空心导向柱；硬弹簧套在导向柱外，大蘑菇头螺钉从上向下压紧，
+// 这组采购件单独作为 motor_spring_hardware 显示，不与柜体或固定套合并。
 // 高亮 CONNECTOR_LINK_INDEX 节为普通 03C 接头：普通双销换成带槽销和夹片，
 // 夹片对侧由高亮零件补一块普通单面 8 字外链板；CLUTCH_CONNECTOR_LINK_INDEX 节为加长接头，
 // 保持原链板并加装双夹片、前向离合座；681 轴承单独导出为银色随动零件。
@@ -511,6 +524,6 @@ emit_chain("scheme1_selector") {
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion
