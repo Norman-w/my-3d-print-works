@@ -5,6 +5,7 @@ import { ViewHelper } from "three/addons/helpers/ViewHelper.js";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import {
   attachCabinetChainPlay,
+  focusCenterClutch,
   onPartLoaded,
   tickPlay,
 } from "./js/cabinet-chain-play.js";
@@ -53,6 +54,7 @@ const CAMERA_VIEWS = {
   "drawer-drive": { direction: [0.68, 0.52, -1.48], up: [0, 1, 0] },
   "upper-tensioner": { direction: [-1.35, 0.62, -1.08], up: [0, 1, 0] },
   "lower-tensioner": { direction: [-0.68, 0.58, -1.55], up: [0, 1, 0] },
+  "center-clutch": { direction: [0.78, 0.42, -1.20], up: [0, 1, 0] },
 };
 const DRAWER_DRIVE_TAILS = new Set([
   "cabinet_clutch_power_motor_body",
@@ -91,6 +93,44 @@ const LEGACY_SCHEME1_TAILS = new Set([
   "cabinet_chain_scheme1_bearings",
   "cabinet_chain_scheme1_selector",
 ]);
+const CENTER_CLUTCH_FOCUS_IDS = new Set([
+  "cabinet-clutch/center_guide_rails",
+  "cabinet-clutch/center_input_bearings_reference",
+  "cabinet-clutch/center_input_carriage",
+  "cabinet-clutch/center_input_rotor",
+  "cabinet-clutch/center_input_shaft_reference",
+  "cabinet-clutch/center_mechanism_plate",
+  "cabinet-clutch/center_output_bearings_reference",
+  "cabinet-clutch/center_output_cage",
+  "cabinet-clutch/center_output_rotor",
+  "cabinet-clutch/center_output_shaft_reference",
+  "cabinet-clutch/center_stops",
+  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
+]);
+const CENTER_CLUTCH_FRAME_IDS = new Set([
+  "cabinet-clutch/center_guide_rails",
+  "cabinet-clutch/center_input_bearings_reference",
+  "cabinet-clutch/center_input_carriage",
+  "cabinet-clutch/center_input_rotor",
+  "cabinet-clutch/center_input_shaft_reference",
+  "cabinet-clutch/center_mechanism_plate",
+  "cabinet-clutch/center_output_bearings_reference",
+  "cabinet-clutch/center_output_cage",
+  "cabinet-clutch/center_output_rotor",
+  "cabinet-clutch/center_output_shaft_reference",
+  "cabinet-clutch/center_stops",
+  // The selector shoe is moved to R3C3 by the motion adapter. It is excluded
+  // from framing so an asynchronous first load cannot frame the camera on its
+  // authored R5C1 start position before the adapter has bound it.
+]);
+const CENTER_CLUTCH_CONTEXT_IDS = new Set([
+  "cabinet-clutch/cabinet_clutch_cabinet_context",
+  "cabinet-clutch/cabinet_clutch_power_column_2",
+  "cabinet-clutch/13_drawer_timing_belt_reference",
+  "cabinet-clutch/14_front_timing_pulley_candidate",
+  "cabinet-clutch/15_front_pinion_candidate",
+  "cabinet-clutch/16_drawer_linear_rack_candidate",
+]);
 const LEGACY_MOTOR_TENSIONER_ID = "cabinet-chain/cabinet_chain_motor_tensioner";
 const UPPER_TENSIONER_TAILS = new Set([
   "00_tensioner_t_solid_reference",
@@ -124,6 +164,7 @@ const els = {
   hideFiltered: document.getElementById("hide-filtered"),
   hzRange: document.getElementById("hz-range"),
   hzOut: document.getElementById("hz-out"),
+  scheme1Out: document.getElementById("scheme1-status"),
   fwd: document.getElementById("fwd"),
   stop: document.getElementById("stop"),
   rev: document.getElementById("rev"),
@@ -905,10 +946,22 @@ async function fetchListing() {
   const fallback = await fetch("./manifest.json", { cache: "no-cache" });
   if (!fallback.ok) throw new Error(`零件清单 ${response.status}`);
   const manifest = await fallback.json();
+  const allParts = manifest.parts || [];
+  const queryValue = query.toLowerCase();
+  const parts = allParts.filter((part) => {
+    const haystack = [part.id, part.name, part.file, part.group, part.role]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return (!queryValue || haystack.includes(queryValue))
+      && (!group || part.group === group)
+      && (!role || part.role === role);
+  });
   return {
     ...manifest,
-    totalCount: (manifest.parts || []).length,
-    count: (manifest.parts || []).length,
+    parts,
+    totalCount: allParts.length,
+    count: parts.length,
   };
 }
 
@@ -990,10 +1043,12 @@ async function setFilteredVisible(visible) {
     return;
   }
   const selected = preferredVisiblePartIds();
-  for (const part of parts) {
-    if (selected.has(part.id)) continue;
-    state.visibleIds.delete(part.id);
-    const item = state.items.get(part.id);
+  // The filtered listing is a view of the full manifest. Hide already-loaded
+  // items that are outside that view as well; otherwise a static preview can
+  // report 12 filtered parts while still rendering the previous 40 meshes.
+  for (const item of state.items.values()) {
+    if (selected.has(item.part.id)) continue;
+    state.visibleIds.delete(item.part.id);
     if (item?.mesh) item.mesh.visible = false;
   }
   await Promise.all([...selected].map(async (partId) => {
@@ -1065,6 +1120,18 @@ function isLowerTensionerPart(part) {
     && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
+function isCenterClutchPart(part) {
+  return CENTER_CLUTCH_FOCUS_IDS.has(part?.id);
+}
+
+function isCenterClutchContext(part) {
+  return CENTER_CLUTCH_CONTEXT_IDS.has(part?.id);
+}
+
+function isCenterClutchFramePart(part) {
+  return CENTER_CLUTCH_FRAME_IDS.has(part?.id);
+}
+
 const VIEW_PROFILES = {
   snake: {
     focus: isSnakePart,
@@ -1081,6 +1148,11 @@ const VIEW_PROFILES = {
   "lower-tensioner": {
     focus: isLowerTensionerPart,
     context: isCabinetContext,
+  },
+  "center-clutch": {
+    focus: isCenterClutchPart,
+    context: isCenterClutchContext,
+    frame: isCenterClutchFramePart,
   },
 };
 
@@ -1184,6 +1256,7 @@ async function applyViewPreset(name) {
   const request = ++state.viewRequest;
   state.activeView = viewName;
   updateActiveViewButton();
+  if (viewName === "center-clutch") focusCenterClutch();
 
   const listingParts = state.listing?.parts || [];
   const profile = VIEW_PROFILES[viewName];
@@ -1207,7 +1280,10 @@ async function applyViewPreset(name) {
   const applied = await applyViewVisibility(focusIds, contextIds, request, !profile);
   if (!applied || request !== state.viewRequest) return;
   state.viewProfile = profile ? viewName : null;
-  const focusBox = profile ? viewBox(focusIds) : null;
+  const frameIds = profile?.frame
+    ? new Set(listingParts.filter(profile.frame).map((part) => part.id))
+    : focusIds;
+  const focusBox = profile ? viewBox(frameIds.size ? frameIds : focusIds) : null;
   frameBox(focusBox || viewBox(), viewName);
 }
 //#endregion

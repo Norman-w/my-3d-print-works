@@ -52,6 +52,7 @@
     .view-group-label { margin: 4px 2px 6px; color: #8b98ab; font-size: 11px; }
     .view-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
     .view-button { min-width: 0; min-height: 44px; padding: 6px 7px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .view-button-special { grid-column: 1 / -1; border-color: #c2410c; color: #fed7aa; }
     .view-button.active { background: #28506a; border-color: #5b9fd6; color: #e8f3ff; box-shadow: inset 0 0 0 1px rgba(91, 159, 214, .25); }
     button:disabled { opacity: .5; cursor: default; }
     input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
@@ -60,6 +61,7 @@
     .play .row { margin: 8px 0 0; }
     .hz-marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: #8b98ab; font-variant-numeric: tabular-nums; }
     .hz-out { color: #fdba74; font-variant-numeric: tabular-nums; }
+    .mechanism-status { min-height: 28px; margin-top: 8px; padding: 6px 8px; border: 1px solid #3b2f24; border-radius: 8px; color: #fed7aa; background: #171512; font-size: 12px; line-height: 1.35; }
     .filters { display: grid; gap: 8px; margin: 8px 0; }
     #parts { flex: 1; overflow: auto; padding-right: 4px; }
     .group { margin: 10px 0 14px; }
@@ -125,6 +127,7 @@
         <div class="hz-marks" aria-hidden="true">
           <span>0.1</span><span>0.5</span><span>1</span><span>2</span><span>5</span><span>10</span>
         </div>
+        <div class="mechanism-status" id="scheme1-status" role="status" aria-live="polite">运动契约加载中…</div>
         <div class="row">
           <button type="button" id="fwd" class="on">正转</button>
           <button type="button" id="stop">停止</button>
@@ -172,11 +175,15 @@
           <button type="button" class="view-button" data-view="upper-tensioner" aria-pressed="false">上方张紧</button>
           <button type="button" class="view-button" data-view="lower-tensioner" aria-pressed="false">下方张紧</button>
         </div>
+        <div class="view-group-label">首件检查</div>
+        <div class="view-grid">
+          <button type="button" class="view-button view-button-special" data-view="center-clutch" aria-pressed="false" title="聚焦中心 R3C3：输入公轮、输出母轮、滑架、导轨、止挡、机构板与磁力靴">中心离合 · R3C3</button>
+        </div>
       </div>
     </aside>
     <canvas id="c"></canvas>
   </div>
-    <script type="module" src="./app.js?v=drawer-tree-1"></script>
+    <script type="module" src="./app.js?v=center-clutch-view-3"></script>
   <!-- endregion -->
 </body>
 </html>

@@ -176,6 +176,7 @@ const play = {
   host: null,
   bindQueue: /** @type {Array<() => Promise<void>>} */ ([]),
   bindBusy: false,
+  centerViewRequested: false,
 };
 
 function formatHz(hz) {
@@ -1415,7 +1416,36 @@ function initScheme1Motion() {
   play.scheme1.cycleStartOutputTurns = 0;
   play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
-  scheme1Status(`磁力靴待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
+  if (play.centerViewRequested && snapScheme1ToCenter()) {
+    scheme1Status(`首件视角 · 磁力靴已对准 ${scheme1StationLabel(play.scheme1.targetIndex)} · 开位`);
+  } else {
+    scheme1Status(`磁力靴待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
+  }
+}
+
+function snapScheme1ToCenter() {
+  const scheme = play.scheme1;
+  if (!scheme.ready || !scheme.stations.length) return false;
+  const centerIndex = scheme.stations.findIndex((station) => (
+    Number(station.row) === CURRENT_CLUTCH_ROW
+      && Number(station.col) === CURRENT_CLUTCH_COL
+  ));
+  if (centerIndex < 0) return false;
+  scheme.targetIndex = centerIndex;
+  scheme.selectorS = scheme.stationS[centerIndex];
+  scheme.phase = SCHEME1_PHASE.INDEX;
+  scheme.phaseTime = 0;
+  scheme.powerTurns = 0;
+  scheme.outputTurns.fill(0);
+  scheme.cycleSign = 1;
+  scheme.cycleStartPowerTurns = 0;
+  scheme.cycleStartOutputTurns = 0;
+  scheme.cycleProgressTurns = 0;
+  play.motorTurns = 0;
+  if (scheme.selectorPart) {
+    poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+  }
+  return true;
 }
 
 function setScheme1Phase(phase) {
@@ -1783,6 +1813,17 @@ export function attachCabinetChainPlay(host) {
         host.els.scheme1Out.textContent = `运动契约错误：${error.message || error}`;
       }
     });
+}
+
+export function focusCenterClutch() {
+  play.centerViewRequested = true;
+  play.playing = false;
+  const snapped = snapScheme1ToCenter();
+  if (snapped) {
+    scheme1Status(`首件视角 · 磁力靴已对准 ${scheme1StationLabel(play.scheme1.targetIndex)} · 开位`);
+  }
+  updateHzLabel();
+  return snapped;
 }
 
 export async function onPartLoaded(item) {
