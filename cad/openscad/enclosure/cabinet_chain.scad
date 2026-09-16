@@ -211,11 +211,10 @@ module scheme1_selector() {
 }
 
 module selector_magnetic_shoe() {
+    // Legacy diagnostic only. The canonical first-article shoe is the native
+    // cabinet-clutch/center_selector_shoe part emitted by cabinet_clutch.scad;
+    // this old chain-frame source remains solely for regression comparison.
     c = scheme1_selector_center();
-    // This is intentionally placed in the chain's authored coordinate frame.
-    // The web binds it to the selector path; it is not transformed as a
-    // native cabinet-clutch rotor. The square/triangle pockets are the
-    // M_engage/M_release assembly marks and are 12 mm apart along the shoe.
     scheme1_place_y(c, CHAIN_Y + 2.35)
         center_clutch_selector_shoe();
 }
@@ -509,6 +508,8 @@ emit_chain("scheme1_selector") {
         scheme1_selector();
     }
 }
+// Retained as an explicit hidden legacy diagnostic; never emit this into the
+// canonical cabinet-clutch manifest or use it as the physical center shoe.
 emit_chain("selector_magnetic_shoe") {
     if (CHAIN_PART == "assembly")
         color("#c8d3dc") selector_magnetic_shoe();

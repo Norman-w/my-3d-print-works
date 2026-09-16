@@ -57,6 +57,7 @@ include <cabinet_motor_mount.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
+include <../parts/center_clutch_selector_shoe.scad>
 // The center station reuses the finished CH1 03C rounded-triangle/magnet
 // construction.  This main scene's vertical shaft is the existing 12T / 3 mm
 // profile, so override the standalone pair's 10T / 2.4 mm datum after
@@ -613,6 +614,29 @@ CENTER_GT2_Z = center_gt2_z();
 
 CENTER_GT2_FRONT_PULLEY_Z =
     center_gt2_z() + CENTER_GT2_BELT_CENTER_DISTANCE;
+
+// The first selector shoe is a native world part, not a chain-frame STL
+// relocated by the browser. Its square-marked M_engage pocket is 6 mm toward
+// the selector tangent from the R3C3 axis; the magnetic face points toward
+// world -Z at the front side of the clutch rotor. Include the rim projection
+// in the Z datum so the stated clearance is to the nearest printed face.
+CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM =
+    GT2_ACTUATOR_TRIGGER_SPACING_MM / 2;
+CENTER_SELECTOR_SHOE_TARGET_Y_MM =
+    center_gt2_male_base_y(CENTER_GT2_ROW)
+        + gt2_male_magnet_pocket_z0()
+        + GT2_MAGNET_POCKET_H / 2;
+CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM =
+    CENTER_SELECTOR_SHOE_TARGET_Y_MM
+        - world_row_center_y(CENTER_GT2_ROW);
+CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM = 0.70;
+CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM =
+    CENTER_SELECTOR_SHOE_H / 2 + CENTER_SELECTOR_SHOE_POCKET_RIM_H;
+CENTER_SELECTOR_SHOE_Z_MM =
+    center_gt2_z()
+        + gt2_male_tip_r()
+        + CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM
+        + CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM;
 
 function center_gt2_male_base_y(row) =
     clutch_upper_open_y(row) - GT2_MALE_GEAR_T / 2;
@@ -1511,6 +1535,11 @@ module clutch_cabinet_shell() {
                     cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
             }
             snake_motor_mount_bosses();
+            // The internal partition is the load-bearing datum for the
+            // removable center mechanism plate. It is separate from the thin
+            // rear cover and contains the belt passages plus plate support
+            // slots/holes.
+            clutch_partition_with_belt_passages();
         }
         snake_motor_mount_boss_floor_bores();
     }
@@ -1541,6 +1570,10 @@ module clutch_assembly_shell_context() {
 module clutch_partition_with_belt_passages() {
     difference() {
         world_partition_plate();
+        center_clutch_partition_support_cuts(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW
+        );
         for (row = [0:N_ROW - 1])
             for (col = [0:N_COL - 1]) {
                 station_belt_t = is_center_gt2_station(col, row)
@@ -2054,6 +2087,18 @@ module selected_center_mechanism_plate_part() {
     center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
+module selected_center_selector_shoe_part() {
+    color("#c8d3dc")
+        translate([
+            clutch_col_x(CENTER_GT2_COL)
+                + CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
+            CENTER_SELECTOR_SHOE_TARGET_Y_MM,
+            CENTER_SELECTOR_SHOE_Z_MM
+        ])
+            rotate([180, 0, 0])
+                center_clutch_selector_shoe();
+}
+
 module selected_center_input_shaft_part() {
     center_clutch_input_shaft(
         CENTER_GT2_COL,
@@ -2293,6 +2338,7 @@ module clutch_scene_geometry() {
         world_axes_marker();
         power_bus();
         all_clutches();
+        selected_center_selector_shoe_part();
         drawer_drive();
         if (SHOW_LEGACY_STATIONS
             && !is_center_gt2_station(selected_col(), selected_row()))
@@ -2351,6 +2397,8 @@ module clutch_scene_geometry() {
         selected_center_stops_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
         selected_center_mechanism_plate_part();
+    } else if (CLUTCH_PART == "center_selector_shoe") {
+        selected_center_selector_shoe_part();
     } else if (CLUTCH_PART == "center_input_shaft") {
         selected_center_input_shaft_part();
     } else if (CLUTCH_PART == "center_output_shaft") {
@@ -2421,7 +2469,116 @@ echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", 
 // writes the same object into cabinet_chain_motion.json. Geometry values are
 // deliberately composed from the shared pair/carrier parameters so OpenSCAD
 // remains the only mechanical source of truth.
-echo("CENTER_CLUTCH_CONTRACT_DYNAMIC", "version=1", "axis=+Y", "role=input/output", str("axisXMm=", clutch_col_x(CENTER_GT2_COL)), str("axisZMm=", center_gt2_z()), str("inputBaseYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)), str("outputBaseYMm=", center_gt2_female_base_y(CENTER_GT2_ROW)), str("openGapMm=", GT2_MOTHER_GAP), str("dogInsertionMm=", GT2_MOTHER_EFFECTIVE_INSERTION), str("strokeMm=", GT2_CLUTCH_ENGAGE_STROKE_MM), str("pocketDepthMm=", GT2_MOTHER_POCKET_DEPTH), str("bottomClearanceMm=", GT2_MOTHER_BOTTOM_CLEARANCE), str("magnetNonContactClearanceMm=", GT2_MAGNET_NONCONTACT_CLEARANCE_MM), str("femaleMagnetProjectionMm=", GT2_FEMALE_MAGNET_PROJECTION_MM), str("magnetNominalDiameterMm=", GT2_MAGNET_NOMINAL_D), str("gearCenterDistanceMm=", gt2_center_distance()), str("longPitchRadiusMm=", gt2_long_pitch_r()), str("inputPitchRadiusMm=", gt2_male_pitch_r()), str("gearMeshClearanceMm=", GT2_GEAR_MESH_CLEARANCE), str("longTipRadiusMm=", gt2_long_tip_r()), str("inputTipRadiusMm=", gt2_male_tip_r()), str("beltEnvelopeRadiusMm=", gt2_belt_envelope_r()), str("beltGuideRadiusMm=", gt2_belt_guide_r()), str("motherOuterRadiusMm=", GT2_MOTHER_OUTER_R), str("selectorTriggerSpacingMm=", GT2_ACTUATOR_TRIGGER_SPACING_MM), str("guideRunningClearanceMm=", CENTER_CLUTCH_RAIL_CLEAR), str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)), str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)), str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)), str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)), str("engagedStopY1Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("openTabY0Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW)), str("openTabY1Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("engagedTabY0Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW)), str("engagedTabY1Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("bearingSeatDiameterMm=", CENTER_CLUTCH_BEARING_SEAT_D), str("bearingSeatDepthMm=", CENTER_CLUTCH_BEARING_SEAT_DEPTH), str("bearingBackShoulderMm=", CENTER_CLUTCH_BEARING_BACK_SHOULDER_T), "bearingNominal=3x6x2", "bearingCount=4", str("shaftDiameterMm=", GT2_D_AXIS_D), str("shaftCount=", 2), str("shaftCollarOdMm=", CENTER_CLUTCH_SHAFT_COLLAR_OD), str("shaftCollarBoreMm=", CENTER_CLUTCH_SHAFT_COLLAR_BORE_D), "matingMagnetCount=2", "selectorMagnetCount=2", "totalMagnetCount=4", "actuation=permanent-magnet", "engageOnlyWhenStopped=true", "releaseBeforeReturn=true", "centerCol=2", "centerRow=2", "inputPart=cabinet-clutch/center_input_rotor", "outputPart=cabinet-clutch/center_output_rotor", "inputCarriagePart=cabinet-clutch/center_input_carriage", "outputCagePart=cabinet-clutch/center_output_cage", "mechanismPlatePart=cabinet-clutch/center_mechanism_plate", "guidePart=cabinet-clutch/center_guide_rails", "stopPart=cabinet-clutch/center_stops", "selectorShoePart=cabinet-chain/cabinet_chain_selector_magnetic_shoe");
+echo(
+    "CENTER_CLUTCH_CONTRACT_DYNAMIC",
+    "version=1",
+    "axis=+Y",
+    "role=input/output",
+    str("axisXMm=", clutch_col_x(CENTER_GT2_COL)),
+    str("axisZMm=", center_gt2_z()),
+    str("inputBaseYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)),
+    str("outputBaseYMm=", center_gt2_female_base_y(CENTER_GT2_ROW)),
+    str("openGapMm=", GT2_MOTHER_GAP),
+    str("dogInsertionMm=", GT2_MOTHER_EFFECTIVE_INSERTION),
+    str("strokeMm=", GT2_CLUTCH_ENGAGE_STROKE_MM),
+    str("pocketDepthMm=", GT2_MOTHER_POCKET_DEPTH),
+    str("bottomClearanceMm=", GT2_MOTHER_BOTTOM_CLEARANCE),
+    str("magnetNonContactClearanceMm=", GT2_MAGNET_NONCONTACT_CLEARANCE_MM),
+    str("femaleMagnetProjectionMm=", GT2_FEMALE_MAGNET_PROJECTION_MM),
+    str("magnetNominalDiameterMm=", GT2_MAGNET_NOMINAL_D),
+    str("gearCenterDistanceMm=", gt2_center_distance()),
+    str("longPitchRadiusMm=", gt2_long_pitch_r()),
+    str("inputPitchRadiusMm=", gt2_male_pitch_r()),
+    str("gearMeshClearanceMm=", GT2_GEAR_MESH_CLEARANCE),
+    str("longTipRadiusMm=", gt2_long_tip_r()),
+    str("inputTipRadiusMm=", gt2_male_tip_r()),
+    str("beltEnvelopeRadiusMm=", gt2_belt_envelope_r()),
+    str("beltGuideRadiusMm=", gt2_belt_guide_r()),
+    str("motherOuterRadiusMm=", GT2_MOTHER_OUTER_R),
+    str("selectorTriggerSpacingMm=", GT2_ACTUATOR_TRIGGER_SPACING_MM),
+    str("guideRunningClearanceMm=", CENTER_CLUTCH_RAIL_CLEAR),
+    str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)),
+    str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)),
+    str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
+    str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)),
+    str("engagedStopY1Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("openTabY0Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW)),
+    str("openTabY1Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("engagedTabY0Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW)),
+    str("engagedTabY1Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("bearingSeatDiameterMm=", CENTER_CLUTCH_BEARING_SEAT_D),
+    str("bearingSeatDepthMm=", CENTER_CLUTCH_BEARING_SEAT_DEPTH),
+    str("bearingBackShoulderMm=", CENTER_CLUTCH_BEARING_BACK_SHOULDER_T),
+    str("bearingReferenceCenterOffsetMm=", CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET),
+    str("bearingCenterOffsetMm=", CENTER_CLUTCH_BEARING_CENTER_OFFSET),
+    str("bearingPairSpacingMm=", CENTER_CLUTCH_BEARING_PAIR_SPACING),
+    str("bearingBlockThicknessMm=", CENTER_CLUTCH_BEARING_BLOCK_T),
+    str("bearingBlockWidthMm=", CENTER_CLUTCH_BEARING_BLOCK_X),
+    str("bearingBlockHeightMm=", CENTER_CLUTCH_BEARING_BLOCK_Z),
+    str("guideRailWidthMm=", CENTER_CLUTCH_RAIL_W),
+    str("guideRailHeightMm=", CENTER_CLUTCH_RAIL_Z),
+    str("guideRailXOffsetMm=", CENTER_CLUTCH_RAIL_X_OFFSET),
+    str("guideRailZOffsetMm=", CENTER_CLUTCH_RAIL_Z_OFFSET),
+    str("captureShoeOuterMm=", CENTER_CLUTCH_SHOE_OUTER),
+    str("captureShoeLengthMm=", CENTER_CLUTCH_SHOE_L),
+    str("carriageUprightCenterXOffsetMm=",
+        CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET),
+    str("carriageUprightWidthMm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T),
+    str("carriageUprightZ0Mm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_Z0),
+    str("carriageUprightHeightMm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_H),
+    str("carriageUprightY0Mm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0),
+    str("carriageUprightLengthMm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_L),
+    str("plateWidthMm=", CENTER_CLUTCH_PLATE_W),
+    str("carriageUprightRadialClearanceMm=", sqrt(
+        pow(
+            CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
+                - CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T / 2,
+            2
+        )
+        + pow(CENTER_CLUTCH_CARRIAGE_UPRIGHT_Z0, 2)
+    ) - gt2_male_tip_r()),
+    str("plateKeyWidthMm=", CENTER_CLUTCH_PLATE_KEY_W),
+    str("plateKeyHeightMm=", CENTER_CLUTCH_PLATE_KEY_H),
+    str("plateKeyClearanceMm=", CENTER_CLUTCH_SUPPORT_KEY_CLEAR),
+    str("plateM3ClearanceMm=", CENTER_CLUTCH_M3_CLEAR_D),
+    "plateSupport=partition-through-M3",
+    str("selectorShoeTangentOffsetMm=", CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM),
+    str("selectorShoeNormalOffsetMm=", CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM),
+    str("selectorShoeTargetYMm=", CENTER_SELECTOR_SHOE_TARGET_Y_MM),
+    str("selectorShoeZMm=", CENTER_SELECTOR_SHOE_Z_MM),
+    str("selectorShoeFrontClearanceMm=", CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM),
+    str("selectorShoeRearProjectionMm=", CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM),
+    "selectorShoeCoordinateFrame=native-world",
+    str("inputShaftStartMm=", CENTER_CLUTCH_SHAFT_INPUT_START),
+    str("inputShaftLengthMm=", CENTER_CLUTCH_SHAFT_INPUT_LENGTH),
+    str("outputShaftStartMm=", CENTER_CLUTCH_SHAFT_OUTPUT_START),
+    str("outputShaftLengthMm=", CENTER_CLUTCH_SHAFT_OUTPUT_LENGTH),
+    str("inputGearBandThicknessMm=", GT2_MALE_GEAR_T),
+    str("dBoreDepthMm=", GT2_D_BORE_DEPTH),
+    "bearingNominal=3x6x2",
+    "bearingCount=4",
+    str("shaftDiameterMm=", GT2_D_AXIS_D),
+    str("shaftCount=", 2),
+    str("shaftCollarOdMm=", CENTER_CLUTCH_SHAFT_COLLAR_OD),
+    str("shaftCollarBoreMm=", CENTER_CLUTCH_SHAFT_COLLAR_BORE_D),
+    "matingMagnetCount=2",
+    "selectorMagnetCount=2",
+    "totalMagnetCount=4",
+    "actuation=permanent-magnet",
+    "engageOnlyWhenStopped=true",
+    "releaseBeforeReturn=true",
+    "centerCol=2",
+    "centerRow=2",
+    "inputPart=cabinet-clutch/center_input_rotor",
+    "outputPart=cabinet-clutch/center_output_rotor",
+    "inputCarriagePart=cabinet-clutch/center_input_carriage",
+    "outputCagePart=cabinet-clutch/center_output_cage",
+    "mechanismPlatePart=cabinet-clutch/center_mechanism_plate",
+    "guidePart=cabinet-clutch/center_guide_rails",
+    "stopPart=cabinet-clutch/center_stops",
+    "selectorShoePart=cabinet-clutch/center_selector_shoe"
+);
 
 assert(
     CLUTCH_PART == "assembly"
@@ -2454,6 +2611,7 @@ assert(
     || CLUTCH_PART == "center_output_shaft"
     || CLUTCH_PART == "center_input_bearings"
     || CLUTCH_PART == "center_output_bearings"
+    || CLUTCH_PART == "center_selector_shoe"
     || CLUTCH_PART == "contract"
     || CLUTCH_PART == "upper_clutch"
     || CLUTCH_PART == "upper_spur"

@@ -27,6 +27,45 @@ REQUIRED = {
     "actuation",
     "engageOnlyWhenStopped",
     "releaseBeforeReturn",
+    "bearingReferenceCenterOffsetMm",
+    "bearingCenterOffsetMm",
+    "bearingPairSpacingMm",
+    "bearingBlockThicknessMm",
+    "bearingBlockWidthMm",
+    "bearingBlockHeightMm",
+    "guideRailWidthMm",
+    "guideRailHeightMm",
+    "guideRailXOffsetMm",
+    "guideRailZOffsetMm",
+    "captureShoeOuterMm",
+    "captureShoeLengthMm",
+    "carriageUprightCenterXOffsetMm",
+    "carriageUprightWidthMm",
+    "carriageUprightZ0Mm",
+    "carriageUprightHeightMm",
+    "carriageUprightY0Mm",
+    "carriageUprightLengthMm",
+    "carriageUprightRadialClearanceMm",
+    "plateWidthMm",
+    "plateKeyWidthMm",
+    "plateKeyHeightMm",
+    "plateKeyClearanceMm",
+    "plateM3ClearanceMm",
+    "plateSupport",
+    "selectorShoePart",
+    "selectorShoeCoordinateFrame",
+    "selectorShoeTangentOffsetMm",
+    "selectorShoeNormalOffsetMm",
+    "selectorShoeTargetYMm",
+    "selectorShoeZMm",
+    "selectorShoeFrontClearanceMm",
+    "selectorShoeRearProjectionMm",
+    "inputShaftStartMm",
+    "inputShaftLengthMm",
+    "outputShaftStartMm",
+    "outputShaftLengthMm",
+    "inputGearBandThicknessMm",
+    "dBoreDepthMm",
 }
 FLOAT_KEYS = {
     "axisXMm",
@@ -65,9 +104,45 @@ FLOAT_KEYS = {
     "bearingSeatDiameterMm",
     "bearingSeatDepthMm",
     "bearingBackShoulderMm",
+    "bearingReferenceCenterOffsetMm",
+    "bearingCenterOffsetMm",
+    "bearingPairSpacingMm",
+    "bearingBlockThicknessMm",
+    "bearingBlockWidthMm",
+    "bearingBlockHeightMm",
+    "guideRailWidthMm",
+    "guideRailHeightMm",
+    "guideRailXOffsetMm",
+    "guideRailZOffsetMm",
+    "captureShoeOuterMm",
+    "captureShoeLengthMm",
+    "carriageUprightCenterXOffsetMm",
+    "carriageUprightWidthMm",
+    "carriageUprightZ0Mm",
+    "carriageUprightHeightMm",
+    "carriageUprightY0Mm",
+    "carriageUprightLengthMm",
+    "carriageUprightRadialClearanceMm",
+    "plateWidthMm",
     "shaftDiameterMm",
     "shaftCollarOdMm",
     "shaftCollarBoreMm",
+    "plateKeyWidthMm",
+    "plateKeyHeightMm",
+    "plateKeyClearanceMm",
+    "plateM3ClearanceMm",
+    "selectorShoeTangentOffsetMm",
+    "selectorShoeNormalOffsetMm",
+    "selectorShoeTargetYMm",
+    "selectorShoeZMm",
+    "selectorShoeFrontClearanceMm",
+    "selectorShoeRearProjectionMm",
+    "inputShaftStartMm",
+    "inputShaftLengthMm",
+    "outputShaftStartMm",
+    "outputShaftLengthMm",
+    "inputGearBandThicknessMm",
+    "dBoreDepthMm",
 }
 INT_KEYS = {
     "version",
@@ -150,6 +225,39 @@ def validate_contract(contract: dict[str, object]) -> None:
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
+        "bearingReferenceCenterOffsetMm": -0.60,
+        "bearingCenterOffsetMm": 4.20,
+        "bearingPairSpacingMm": 4.00,
+        "bearingBlockThicknessMm": 3.20,
+        "bearingBlockWidthMm": 14.00,
+        "bearingBlockHeightMm": 14.00,
+        "guideRailWidthMm": 3.00,
+        "guideRailHeightMm": 3.00,
+        "guideRailXOffsetMm": 9.00,
+        "guideRailZOffsetMm": 8.00,
+        "captureShoeOuterMm": 5.20,
+        "captureShoeLengthMm": 6.00,
+        "carriageUprightCenterXOffsetMm": 6.40,
+        "carriageUprightWidthMm": 2.40,
+        "carriageUprightZ0Mm": 5.20,
+        "carriageUprightHeightMm": 3.00,
+        "carriageUprightY0Mm": -10.00,
+        "carriageUprightLengthMm": 8.40,
+        "plateWidthMm": 34.00,
+        "plateKeyWidthMm": 4.00,
+        "plateKeyHeightMm": 6.00,
+        "plateKeyClearanceMm": 0.30,
+        "plateM3ClearanceMm": 3.40,
+        "selectorShoeTangentOffsetMm": 6.00,
+        "selectorShoeNormalOffsetMm": -6.50,
+        "selectorShoeFrontClearanceMm": 0.70,
+        "selectorShoeRearProjectionMm": 2.55,
+        "inputShaftStartMm": -10.90,
+        "inputShaftLengthMm": 13.90,
+        "outputShaftStartMm": -3.40,
+        "outputShaftLengthMm": 14.00,
+        "inputGearBandThicknessMm": 3.20,
+        "dBoreDepthMm": 3.00,
     }
     for key, expected in frozen.items():
         if abs(number(key) - expected) > 0.001:
@@ -170,6 +278,48 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心磁铁非接触余量推导失败")
     if number("bearingSeatDepthMm") < number("bearingBackShoulderMm") + 2.0:
         raise RuntimeError("轴承座深度不足以容纳 3x6x2 轴承和后肩")
+    if number("bearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
+        raise RuntimeError("轴承中心偏置不足以让双轴承块脱离转子端面")
+    if number("bearingPairSpacingMm") < number("bearingBlockThicknessMm"):
+        raise RuntimeError("同轴双轴承间距不足以分隔两枚轴承块")
+    if abs(
+        number("bearingReferenceCenterOffsetMm")
+        + number("bearingBackShoulderMm")
+    ) > 0.001:
+        raise RuntimeError("轴承参考件没有向盲座开口侧偏移后肩厚度")
+    if number("plateKeyWidthMm") <= 0 or number("plateKeyHeightMm") <= 0:
+        raise RuntimeError("机构板定位键尺寸无效")
+    if number("plateKeyClearanceMm") < 0.20:
+        raise RuntimeError("机构板定位键装配间隙不足")
+    if number("plateM3ClearanceMm") <= 3.0:
+        raise RuntimeError("机构板 M3 贯穿孔没有留通孔间隙")
+    if contract.get("plateSupport") != "partition-through-M3":
+        raise RuntimeError("机构板承接界面不是隔板 M3 贯穿固定")
+    if number("selectorShoeTangentOffsetMm") != 6.0:
+        raise RuntimeError("M_engage 选择指切向基准必须位于磁力靴中心前 6 mm")
+    if number("selectorShoeFrontClearanceMm") < 0.70:
+        raise RuntimeError("磁力靴到输入转子前侧间隙不足")
+    if contract.get("selectorShoeCoordinateFrame") != "native-world":
+        raise RuntimeError("磁力靴必须使用原生世界坐标")
+    if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
+        raise RuntimeError("磁力靴零件 ID 不是原生中心离合零件")
+    number("selectorShoeTargetYMm")
+    number("selectorShoeZMm")
+    if number("guideRailWidthMm") <= 0 or number("guideRailHeightMm") <= 0:
+        raise RuntimeError("捕获导轨截面无效")
+    if number("captureShoeOuterMm") <= number("guideRailWidthMm") + 2 * number("guideRunningClearanceMm"):
+        raise RuntimeError("捕获滑靴没有包住导轨运行间隙")
+    if number("carriageUprightCenterXOffsetMm") <= number("carriageUprightWidthMm") / 2:
+        raise RuntimeError("滑架立柱没有离开轴心")
+    if number("carriageUprightRadialClearanceMm") < 0.45:
+        raise RuntimeError("滑架立柱径向净空低于 0.45 mm 门槛")
+    input_end = number("inputShaftStartMm") + number("inputShaftLengthMm")
+    if abs(input_end - number("dBoreDepthMm")) > 0.001:
+        raise RuntimeError("输入 D 轴没有停在齿轮盲孔底基准")
+    if number("dBoreDepthMm") > number("inputGearBandThicknessMm"):
+        raise RuntimeError("输入 D 轴盲孔深度越过齿轮带厚度")
+    if number("outputShaftLengthMm") <= number("dBoreDepthMm"):
+        raise RuntimeError("输出 D 轴长度不足以穿过母轮盲孔和轴向保持段")
 
 
 def write_json(path: Path, payload: object) -> None:

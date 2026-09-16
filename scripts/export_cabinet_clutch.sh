@@ -35,6 +35,7 @@ QUALITY="${QUALITY:-2}"
 SELECTED_COLUMN="${SELECTED_COLUMN:-2}"
 SELECTED_ROW="${SELECTED_ROW:-2}"
 SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
+PREVIEW_PORT="${PREVIEW_PORT:-8876}"
 
 # ===== 分区：模型/类型 =====
 # assembly is a visual envelope. The one-by-one references keep the purchased
@@ -235,6 +236,12 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
+    "cabinet-clutch/center_selector_shoe": {
+        "name": "中心 R3C3 · 选择指磁力靴（M_engage/M_release，原生坐标）",
+        "color": "#c8d3dc",
+        "visible": True,
+        "role": "printed",
+    },
     "cabinet/cabinet_back_panel": {
         "name": "可拆背板",
         "color": "#c4a574",
@@ -287,10 +294,10 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
     "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
     "cabinet-chain/cabinet_chain_selector_magnetic_shoe": {
-        "name": "中心离合选择指·纯永磁磁力靴（M_engage/M_release，12mm）",
+        "name": "旧方案1·链条坐标磁力靴（文件保留，默认隐藏）",
         "color": "#c8d3dc",
-        "role": "printed",
-        "visible": True,
+        "role": "diagnostic",
+        "visible": False,
     },
     "cabinet-chain/cabinet_chain_scheme1_power_wheels": {"name": "旧方案1·常转动力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_output_wheels": {"name": "旧方案1·抽屉受力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
@@ -323,7 +330,7 @@ group_map = {
     "center_output_shaft_reference": "02·离合机构",
     "center_input_bearings_reference": "02·离合机构",
     "center_output_bearings_reference": "02·离合机构",
-    "cabinet_chain_selector_magnetic_shoe": "02·离合机构",
+    "center_selector_shoe": "02·离合机构",
     "10_clutch_spring_reference": "02·离合机构",
     "11_t_countersunk_screw_reference": "02·离合机构",
     "12_clutch_fork_candidate": "02·离合机构",
@@ -497,7 +504,7 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_output_shaft_reference"),
             part_node("cabinet-clutch/center_input_bearings_reference"),
             part_node("cabinet-clutch/center_output_bearings_reference"),
-            part_node("cabinet-chain/cabinet_chain_selector_magnetic_shoe"),
+            part_node("cabinet-clutch/center_selector_shoe"),
         ]
         legacy_center = [
             part_node("cabinet-clutch/06_upper_axis_y_spur_candidate"),
@@ -680,6 +687,18 @@ for old_file in "${DUPLICATE_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
+# The selector shoe moved from the old scheme1 chain frame into the native
+# cabinet-clutch export. Remove its stale chain-frame preview so a refresh can
+# never show two magnetic actuators at different coordinate origins.
+LEGACY_CHAIN_SELECTOR_OUTPUTS=(
+    "cabinet_chain_selector_magnetic_shoe.stl"
+)
+for old_file in "${LEGACY_CHAIN_SELECTOR_OUTPUTS[@]}"; do
+    rm -f "${OUT_CHAIN}/${old_file}" \
+        "${REPORT_DIR}/${old_file%.stl}.json" \
+        "${REPORT_DIR}/${old_file%.stl}.watertight.json"
+done
+
 # These generated child previews used to be loaded at the same coordinates and
 # duplicated the motor, D shaft, and column shaft. Keep their parametric SCAD
 # entry points, but do not publish duplicate root list items.
@@ -779,7 +798,7 @@ export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" f
 export_part "center_output_shaft" "${OUT_DIR}/center_output_shaft_reference.stl" false 0
 export_part "center_input_bearings" "${OUT_DIR}/center_input_bearings_reference.stl" false 0
 export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_reference.stl" false 0
-export_chain_part "selector_magnetic_shoe" "${OUT_CHAIN}/cabinet_chain_selector_magnetic_shoe.stl"
+export_part "center_selector_shoe" "${OUT_DIR}/center_selector_shoe.stl" false 0
 
 # The center printed pieces and the selector shoe are the current first-article
 # outputs.  Keep purchased shaft/bearing references in the ordinary inspection
@@ -792,7 +811,7 @@ for printable_part in \
     "${OUT_DIR}/center_guide_rails.stl" \
     "${OUT_DIR}/center_stops.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
-    "${OUT_CHAIN}/cabinet_chain_selector_magnetic_shoe.stl"; do
+    "${OUT_DIR}/center_selector_shoe.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 
@@ -842,4 +861,4 @@ ln -sfn "${MOTION_JSON}" "${PREVIEW_DIR}/models/cabinet-chain/cabinet_chain_moti
 
 echo "完成: ${OUT_DIR}"
 echo "检查报告: ${REPORT_DIR}"
-echo "世界总装配预览: http://127.0.0.1:8765/"
+echo "世界总装配预览: http://127.0.0.1:${PREVIEW_PORT}/"

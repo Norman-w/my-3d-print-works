@@ -12,13 +12,11 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
-  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
 ]);
 const RIGID_CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
-  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
 ]);
 const RIGID_CHAIN_SEGMENTS = new Map([
   // These highlighted assemblies replace the corresponding two-pin link in
@@ -48,6 +46,7 @@ const SCHEME1_OUTPUT_ID = "cabinet-chain/cabinet_chain_scheme1_output_wheels";
 const SCHEME1_CLUTCH_ID = "cabinet-chain/cabinet_chain_scheme1_clutch_faces";
 const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
 const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
+const CENTER_SELECTOR_SHOE_ID = "cabinet-clutch/center_selector_shoe";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
 const CURRENT_CLUTCH_IDS = new Map([
   // The native center prototype is the only visible clutch pair in the
@@ -404,6 +403,14 @@ function validateCenterClutchContract(contract) {
     "actuation",
     "engageOnlyWhenStopped",
     "releaseBeforeReturn",
+    "selectorShoePart",
+    "selectorShoeCoordinateFrame",
+    "selectorShoeTangentOffsetMm",
+    "selectorShoeNormalOffsetMm",
+    "selectorShoeTargetYMm",
+    "selectorShoeZMm",
+    "selectorShoeFrontClearanceMm",
+    "selectorShoeRearProjectionMm",
   ];
   if (!contract || typeof contract !== "object") {
     throw new Error("缺少 centerClutch 机械契约");
@@ -429,9 +436,21 @@ function validateCenterClutchContract(contract) {
     "magnetNonContactClearanceMm",
     "femaleMagnetProjectionMm",
     "magnetNominalDiameterMm",
+    "selectorShoeTangentOffsetMm",
+    "selectorShoeTargetYMm",
+    "selectorShoeFrontClearanceMm",
+    "selectorShoeRearProjectionMm",
   ]) {
     if (!Number.isFinite(Number(contract[key])) || Number(contract[key]) <= 0) {
       throw new Error(`centerClutch 尺寸无效: ${key}`);
+    }
+  }
+  for (const key of [
+    "selectorShoeNormalOffsetMm",
+    "selectorShoeZMm",
+  ]) {
+    if (!Number.isFinite(Number(contract[key]))) {
+      throw new Error(`centerClutch 坐标无效: ${key}`);
     }
   }
   if (!Number.isFinite(Number(contract.axisXMm))
@@ -452,6 +471,14 @@ function validateCenterClutchContract(contract) {
       - Number(contract.femaleMagnetProjectionMm)
       - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
     throw new Error("centerClutch magnet clearance derivation is invalid");
+  }
+  if (contract.selectorShoePart !== CENTER_SELECTOR_SHOE_ID
+      || contract.selectorShoeCoordinateFrame !== "native-world") {
+    throw new Error("centerClutch 选择磁力靴必须是原生世界坐标零件");
+  }
+  if (Math.abs(Number(contract.selectorShoeTangentOffsetMm) - 6) > 0.001
+      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 6.5) > 0.001) {
+    throw new Error("centerClutch 磁力靴 R3C3 切向/法向基准不匹配");
   }
   return contract;
 }
@@ -1385,7 +1412,75 @@ async function bindScheme1SelectorMesh(item) {
     halfSpan: 0,
   };
   replaceMesh(item, group);
-  poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+  poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+}
+
+function poseNativeSelectorShoe(part, deltaMm) {
+  if (!play.path || !part) return;
+  const sample = samplePath(
+    play.path,
+    part.s + deltaMm + part.tangentOffset,
+  );
+  // The solver path is authored in X/Z. Native cabinet parts use X/Y, so the
+  // selector shoe follows the same line after the explicit world conversion;
+  // its Z face remains fixed at the first-article magnetic trigger plane.
+  const tangent = [sample.tangent[0], sample.tangent[2]];
+  const normal = [-tangent[1], tangent[0]];
+  part.group.position.set(
+    sample.point[0] + normal[0] * part.normalOffset,
+    sample.point[2] + normal[1] * part.normalOffset,
+    part.z,
+  );
+  const yaw = Math.atan2(tangent[1], tangent[0]);
+  part.group.rotation.z = yaw - part.restYaw;
+}
+
+function poseSelectorPart(part, deltaMm) {
+  if (part?.native) {
+    poseNativeSelectorShoe(part, deltaMm);
+  } else {
+    poseChainPart(part, deltaMm);
+  }
+}
+
+function centerStationIndex() {
+  return play.scheme1.stations.findIndex((station) => (
+    Number(station.row) === CURRENT_CLUTCH_ROW
+      && Number(station.col) === CURRENT_CLUTCH_COL
+  ));
+}
+
+function bindNativeSelectorShoeMesh(item) {
+  const scheme = play.scheme1;
+  const scene = play.host?.state?.scene;
+  if (!scheme.ready || !item.mesh?.isMesh || !scene) return;
+  const centerIndex = centerStationIndex();
+  if (centerIndex < 0) throw new Error("运动路径缺少中心 R3C3 站点");
+
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  geometry.translate(-center.x, -center.y, -center.z);
+  const pivot = new THREE.Group();
+  pivot.position.copy(center);
+  pivot.name = "native-center-selector-shoe";
+  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
+  const group = new THREE.Group();
+  group.name = "native-center-selector-shoe-container";
+  group.add(pivot);
+  scheme.selectorPart = {
+    group: pivot,
+    s: scheme.stationS[centerIndex],
+    tangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
+    normalOffset: Number(play.currentClutch.contract.selectorShoeNormalOffsetMm),
+    z: center.z,
+    restYaw: 0,
+    native: true,
+  };
+  // Native cabinet-clutch geometry is already in X/Y/Z. It must stay outside
+  // legacyRoot, whose -90° rotation is reserved for cabinet-chain assets.
+  replaceMesh(item, group, scene);
+  poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
 }
 
 function initScheme1Motion() {
@@ -1443,7 +1538,7 @@ function snapScheme1ToCenter() {
   scheme.cycleProgressTurns = 0;
   play.motorTurns = 0;
   if (scheme.selectorPart) {
-    poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+    poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
   }
   return true;
 }
@@ -1560,7 +1655,7 @@ function tickScheme1(dt) {
   }
 
   if (scheme.selectorPart) {
-    poseChainPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+    poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
   }
   const powerAngle = -2 * Math.PI * scheme.powerTurns;
   for (const wheel of scheme.powerWheels) {
@@ -1829,6 +1924,14 @@ export function focusCenterClutch() {
 export async function onPartLoaded(item) {
   const id = item.part?.id;
   if (!id || !play.path || item.playBound) return;
+  if (id === CENTER_SELECTOR_SHOE_ID) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindNativeSelectorShoeMesh(item)).catch((error) => {
+      console.error("native selector shoe bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (id === SCHEME1_POWER_ID) {
     item.playBound = true;
     enqueueBind(() => bindScheme1WheelMesh(item, "power").catch((error) => {

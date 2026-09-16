@@ -1,6 +1,6 @@
 # SmartPartsDrawer：FreeCAD 可选验证支线
 
-> 当前 `8765` 预览的主线是 **OpenSCAD/SCAD → STL → Three.js 网页**。方案1的输入轮、输出轮、狗牙离合、银色轴承和拨叉都由
+> 当前 `8876` 预览的主线是 **OpenSCAD/SCAD → STL → Three.js 网页**。方案1的输入轮、输出轮、狗牙离合、银色轴承和拨叉都由
 > `cad/openscad/enclosure/cabinet_chain.scad` 导出，并由 `web/cabinet-preview` 播放；FreeCAD 不参与这条页面链路。
 
 ## FreeCAD 支线说明

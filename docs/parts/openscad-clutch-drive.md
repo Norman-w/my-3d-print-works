@@ -50,7 +50,7 @@
 | 触发 | 磁力靴内 `M_engage/M_release` 两槽，切线间距 `12 mm`；无弹簧、螺丝拨叉、电磁铁 |
 | 机构板 | 独立 PETG 后仓件，定位键 + `4×M3` 固定点；薄后盖不承受传动载荷 |
 
-唯一机械契约由 OpenSCAD 参数生成到 `output/3d-print/cabinet-clutch/center_clutch_contract.json`，再复制进 `cabinet_chain_motion.json`；网页不再自持 `2.90 mm` 等第二套尺寸。`scripts/validate_center_clutch_geometry.py` 会导出开位/合位临时 STL，检查持续啮合的径向包络、3 mm 行程、导轨捕获、轴承座后肩、实体止挡接触和磁铁余量。
+唯一机械契约由 OpenSCAD 参数生成到 `output/3d-print/cabinet-clutch/center_clutch_contract.json`，再复制进 `cabinet_chain_motion.json`；网页不再自持第二套尺寸。`scripts/validate_center_clutch_geometry.py` 会导出开位/合位临时 STL，检查持续啮合的径向包络、3 mm 行程、导轨捕获、轴承座后肩、实体止挡接触和磁铁余量。
 
 ## 可重复构建
 
@@ -71,7 +71,7 @@
 - `drawer_drive`：参数化源代码中的抽屉驱动装配入口；网页总装分别加载后取力轮、前端轮、同步带和齿排零件；
 - `clutch`：参数化源代码中的离合零件装配入口；网页总装只加载实际单个离合零件；
 - `clutch_detail`：单格离合零件检查入口；开合状态由网页脚本控制，不再输出静态“打开/闭合”两套合并体；
-- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`：中心 R3C3 当前打印件逐件入口；其中输入滑架按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/导轨/止挡/机构板固定；
+- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前打印件逐件入口；其中输入公轮和输入滑架按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/导轨/止挡/机构板/原生磁力靴固定；
 - `center_input_shaft`、`center_output_shaft`、`center_input_bearings`、`center_output_bearings`：两根独立 3 mm D 轴和四枚 `3×6×2` 轴承的采购件参考入口，不把采购件伪装成打印件；
 - `contract`：只回显中心机械契约，不产生几何；`scripts/generate_center_clutch_contract.py` 负责生成 JSON；
 - `cabinet`：导出闭合薄壁柜体外壳以及与滑台相配的固定接收结构；装配图里的格栅和抽屉包络不进入该 STL。

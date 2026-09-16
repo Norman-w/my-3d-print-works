@@ -24,6 +24,6 @@
 - 蛇链电机四组弹簧/蘑菇头螺丝装配件：`output/3d-print/cabinet-chain/cabinet_chain_motor_spring_hardware.stl`
 - 含承托基台、实体导向柱和柱顶盲孔的柜壳 STL：`output/3d-print/cabinet/cabinet_shell.stl`
 - 共享位置/尺寸：`cad/openscad/enclosure/cabinet_motor_mount_params.scad`
-- 网页模型库：[http://127.0.0.1:8765/](http://127.0.0.1:8765/)
+- 网页模型库：[http://127.0.0.1:8876/](http://127.0.0.1:8876/)
 
 Ω 套不是密封件；切片时需确认圆角矩形内壁清隙、下方开口的夹持力、导向柱与固定座滑动孔的打印间隙、基台与柜底的融合、盲孔攻牙强度、弹簧内径和实际下压预紧行程。FDM 首版建议先用实物电机、硬弹簧和螺钉做滑入/导向/夹持以及预紧行程检查。

@@ -105,7 +105,7 @@ const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_output_rotor",
   "cabinet-clutch/center_output_shaft_reference",
   "cabinet-clutch/center_stops",
-  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
+  "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_FRAME_IDS = new Set([
   "cabinet-clutch/center_guide_rails",
@@ -119,9 +119,7 @@ const CENTER_CLUTCH_FRAME_IDS = new Set([
   "cabinet-clutch/center_output_rotor",
   "cabinet-clutch/center_output_shaft_reference",
   "cabinet-clutch/center_stops",
-  // The selector shoe is moved to R3C3 by the motion adapter. It is excluded
-  // from framing so an asynchronous first load cannot frame the camera on its
-  // authored R5C1 start position before the adapter has bound it.
+  "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/cabinet_clutch_cabinet_context",
@@ -1116,7 +1114,6 @@ function isUpperTensionerPart(part) {
 function isLowerTensionerPart(part) {
   return part?.group === "cabinet-chain"
     && part?.id !== LEGACY_MOTOR_TENSIONER_ID
-    && partTail(part) !== "cabinet_chain_selector_magnetic_shoe"
     && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 

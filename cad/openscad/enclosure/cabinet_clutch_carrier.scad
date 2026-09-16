@@ -36,6 +36,8 @@ CENTER_CLUTCH_BEARING_BLOCK_X = 14.00;
 CENTER_CLUTCH_BEARING_BLOCK_Z = 14.00;
 CENTER_CLUTCH_BEARING_BLOCK_T = 3.20;
 CENTER_CLUTCH_BEARING_BACK_SHOULDER_T = 0.60;
+CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET =
+    -CENTER_CLUTCH_BEARING_BACK_SHOULDER_T;
 CENTER_CLUTCH_BEARING_SEAT_DEPTH = CENTER_CLUTCH_BEARING_BLOCK_T
     - CENTER_CLUTCH_BEARING_BACK_SHOULDER_T;
 CENTER_CLUTCH_BEARING_CENTER_OFFSET = 4.20;
@@ -50,6 +52,16 @@ CENTER_CLUTCH_RAIL_ANCHOR_T = 2.40;
 CENTER_CLUTCH_SHOE_L = 6.00;
 CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_RAIL_W
     + 2 * CENTER_CLUTCH_RAIL_CLEAR + 1.60;
+
+// The upright is deliberately outside the input rotor's radial envelope. Keep
+// its four datums named so the interference audit consumes the same values as
+// the printed carriage instead of copying a clearance number into Python.
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET = 6.40;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T = 2.40;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_Z0 = 5.20;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_H = 3.00;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0 = -10.00;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_L = 8.40;
 
 CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y = -9.00;
 CENTER_CLUTCH_CARRIAGE_STOP_TAB_T = 1.20;
@@ -72,9 +84,11 @@ CENTER_CLUTCH_PLATE_KEY_W = 4.00;
 CENTER_CLUTCH_PLATE_KEY_H = 6.00;
 CENTER_CLUTCH_PLATE_KEY_D = 1.00;
 CENTER_CLUTCH_M3_CLEAR_D = 3.40;
+CENTER_CLUTCH_SUPPORT_KEY_CLEAR = 0.30;
 
 CENTER_CLUTCH_SHAFT_INPUT_START = -10.90;
-CENTER_CLUTCH_SHAFT_INPUT_LENGTH = 14.40;
+CENTER_CLUTCH_SHAFT_INPUT_LENGTH =
+    GT2_D_BORE_DEPTH - CENTER_CLUTCH_SHAFT_INPUT_START;
 CENTER_CLUTCH_SHAFT_OUTPUT_START = -3.40;
 CENTER_CLUTCH_SHAFT_OUTPUT_LENGTH = 14.00;
 CENTER_CLUTCH_SHAFT_COLLAR_OD = 7.20;
@@ -254,6 +268,46 @@ module center_clutch_mechanism_plate(col, row) {
     }
 }
 
+module center_clutch_partition_support_cuts(col, row) {
+    // The service plate sits 0.80 mm behind the partition. Two locating keys
+    // enter captured rectangular slots; four M3 clearance holes line up with
+    // the plate and are intentionally through-holes for an M3 screw plus a
+    // front-side nut/washer. The thin removable back cover is not involved.
+    x = center_clutch_axis_x(col);
+    y0 = center_clutch_plate_y0(row);
+    h = center_clutch_plate_h(row);
+    for (sx = [-1, 1])
+        translate([
+            x + sx * 10.00
+                - (CENTER_CLUTCH_PLATE_KEY_W
+                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR) / 2,
+            y0 + h / 2
+                - (CENTER_CLUTCH_PLATE_KEY_H
+                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR) / 2,
+            WORLD_PARTITION_BACK_Z - EPS
+        ])
+            cube([
+                CENTER_CLUTCH_PLATE_KEY_W
+                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR,
+                CENTER_CLUTCH_PLATE_KEY_H
+                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR,
+                WORLD_PARTITION_T + 2 * EPS
+            ]);
+    for (sx = [-1, 1], sy = [-1, 1])
+        translate([
+            x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
+            y0 + (sy < 0
+                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
+                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+            WORLD_PARTITION_BACK_Z - EPS
+        ])
+            cylinder(
+                d = CENTER_CLUTCH_M3_CLEAR_D,
+                h = WORLD_PARTITION_T + 2 * EPS,
+                $fn = 40
+            );
+}
+
 module center_clutch_output_cage(col, row) {
     x = center_clutch_axis_x(col);
     z = center_clutch_axis_z();
@@ -350,11 +404,16 @@ module center_clutch_input_carriage(col, row, engaged = false) {
         // without crossing the input rotor's gear/dog envelope.
         for (sx = [-1, 1]) {
             translate([
-                x + sx * 6.40 - 1.20,
-                base_y - 10.00,
-                z + 5.20
+                x + sx * CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
+                    - CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T / 2,
+                base_y + CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0,
+                z + CENTER_CLUTCH_CARRIAGE_UPRIGHT_Z0
             ])
-                cube([2.40, 8.40, 3.00]);
+                cube([
+                    CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T,
+                    CENTER_CLUTCH_CARRIAGE_UPRIGHT_L,
+                    CENTER_CLUTCH_CARRIAGE_UPRIGHT_H
+                ]);
             center_clutch_rail_capture_shoe(
                 x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
                 base_y - 7.40,
@@ -464,7 +523,8 @@ module center_clutch_input_bearings(col, row, engaged = false) {
             translate([0, shift, 0])
                 center_clutch_bearing_reference_y(
                     x,
-                    center_clutch_input_bearing_y(row, index),
+                    center_clutch_input_bearing_y(row, index)
+                        + CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET,
                     z
                 );
 }
@@ -476,7 +536,8 @@ module center_clutch_output_bearings(col, row) {
         for (index = [0:1])
             center_clutch_bearing_reference_y(
                 x,
-                center_clutch_output_bearing_y(row, index),
+                center_clutch_output_bearing_y(row, index)
+                    + CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET,
                 z
             );
 }
@@ -509,10 +570,19 @@ assert(CENTER_CLUTCH_BEARING_SEAT_D >= 6.10,
 assert(CENTER_CLUTCH_BEARING_SEAT_DEPTH
         >= CENTER_CLUTCH_BEARING_W + 0.40,
     "blind bearing seat needs a rear axial shoulder");
+assert(abs(
+        CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET
+        + CENTER_CLUTCH_BEARING_BACK_SHOULDER_T
+    ) < 0.001,
+    "bearing reference must sit toward the open side of the blind seat");
 assert(CENTER_CLUTCH_SHAFT_COLLAR_OD > CENTER_CLUTCH_BEARING_OD,
     "shaft retaining ring must capture the bearing inner stack");
 assert(CENTER_CLUTCH_SHAFT_COLLAR_BORE_D > CENTER_CLUTCH_BEARING_ID,
     "shaft retaining ring must pass the 3 mm D shaft");
+assert(CENTER_CLUTCH_SHAFT_INPUT_START
+        + CENTER_CLUTCH_SHAFT_INPUT_LENGTH
+        <= GT2_D_BORE_DEPTH + 0.001,
+    "input D shaft must stop at the blind gear socket before the solid dog");
 assert(CENTER_CLUTCH_RAIL_CLEAR >= 0.30,
     "captured guides need at least 0.30 mm running clearance per side");
 assert(CENTER_CLUTCH_RAIL_X_OFFSET > CENTER_CLUTCH_BEARING_BLOCK_X / 2,
