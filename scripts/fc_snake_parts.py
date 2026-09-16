@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""蛇形 HTD3M-9：闭带贴节圆包角，绿色拨叉是带子上的固定夹具。"""
+"""旧方案 1 蛇形 FreeCAD 预览；不作为中心 R3C3 机械真值。"""
 
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
@@ -29,14 +29,20 @@ STEEL = (168, 176, 184)
 MOTOR = (72, 80, 90)
 BRONZE = (168, 108, 63)
 NEMA_BOLT_CIRCLE = 31.0
-CLUTCH_STROKE_MM = 3.0
+# This module is retained for the historical scheme1 FreeCAD preview.  Its
+# dog-clutch dimensions are deliberately legacy-only and must never define
+# the center R3C3 mechanism.  The current center station is generated from
+# the OpenSCAD centerClutch contract and is attached to cabinet_chain_motion.json
+# by solve_cabinet_chain.py.  A future FreeCAD center animation must consume
+# that contract instead of these fallback preview values.
+LEGACY_SCHEME1_CLUTCH_STROKE_MM = 3.0
 CLUTCH_FIXED_R = 7.4
 CLUTCH_SLIDING_R = 6.6
 CLUTCH_FIXED_T = 4.0
 CLUTCH_SLIDING_T = 3.6
-CLUTCH_GAP_MM = 2.6
-CLUTCH_OVERLAP_MM = 0.4
-CLUTCH_Z_DROP_MM = 10.0
+LEGACY_SCHEME1_CLUTCH_GAP_MM = 2.6
+LEGACY_SCHEME1_CLUTCH_OVERLAP_MM = 0.4
+LEGACY_SCHEME1_CLUTCH_Z_DROP_MM = 10.0
 # The finger is centered over a station.  An outward offset would make the
 # pusher miss the sliding dog when the belt is on a straight station.
 FORK_CLEAR_MM = 0.0
@@ -103,14 +109,18 @@ def _dog_clutch_shape(Part, App, radius: float, thickness: float):
     return shape
 
 def clutch_specs(cfg, path: dict) -> list[dict]:
-    """Return the station-to-drawer clutch map without requiring FreeCAD."""
+    """Return the legacy scheme1 station map without requiring FreeCAD.
+
+    These records are not the center R3C3 mechanism.  The current center
+    station uses the OpenSCAD-generated ``centerClutch`` object instead.
+    """
     records = []
     for cell in path["cells"]:
         x = cell["x"]
         y = cell["y"]
-        fixed_z = cell["z"] - CLUTCH_Z_DROP_MM
-        home_z = fixed_z + CLUTCH_FIXED_T + CLUTCH_GAP_MM
-        engaged_z = fixed_z + CLUTCH_FIXED_T - CLUTCH_OVERLAP_MM
+        fixed_z = cell["z"] - LEGACY_SCHEME1_CLUTCH_Z_DROP_MM
+        home_z = fixed_z + CLUTCH_FIXED_T + LEGACY_SCHEME1_CLUTCH_GAP_MM
+        engaged_z = fixed_z + CLUTCH_FIXED_T - LEGACY_SCHEME1_CLUTCH_OVERLAP_MM
         prefix = f"L{cell['layer']:02d}_C{cell['col']:02d}"
         fixed_name = f"ClutchFixed_{prefix}"
         sliding_name = f"ClutchSliding_{prefix}"
@@ -132,7 +142,7 @@ def clutch_specs(cfg, path: dict) -> list[dict]:
             "engagedZ": engaged_z,
             "strokeMm": home_z - engaged_z,
             "defaultState": "open",
-            "engagementGapMm": CLUTCH_GAP_MM,
+            "engagementGapMm": LEGACY_SCHEME1_CLUTCH_GAP_MM,
             "drawerCoupler": f"DrawerCouplerBody_L{cell['layer']:02d}_C{cell['col']:02d}_{drawer_index + 1:02d}",
             "drawerCouplerGear": f"DrawerCouplerGear_L{cell['layer']:02d}_C{cell['col']:02d}_{drawer_index + 1:02d}",
             "drawerCouplerAxis": {"x": coupler_x, "y": coupler_y, "z": cfg.base_height + cfg.drawer_height * 0.3},
@@ -258,7 +268,7 @@ def snake_selector_map(cfg, animation: dict | None) -> dict:
                 "index": item["index"],
                 "fixed": item["fixed"],
                 "sliding": item["sliding"],
-                "strokeMm": item.get("strokeMm", CLUTCH_STROKE_MM),
+                "strokeMm": item.get("strokeMm", LEGACY_SCHEME1_CLUTCH_STROKE_MM),
                 "fixedZ": item.get("fixedZ"),
                 "homeZ": item.get("homeZ"),
                 "engagedZ": item.get("engagedZ"),
