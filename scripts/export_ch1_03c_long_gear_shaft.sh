@@ -10,9 +10,9 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_FILE="${PROJECT_ROOT}/cad/openscad/ch1_03c_long_gear_shaft.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
-INSPECT_PY="${INSPECT_PY:-/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print/long-gear-shaft"
 OUT_PNG="${PROJECT_ROOT}/output/previews/long-gear-shaft"
 

@@ -7,15 +7,13 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 SCAD_FILE="ch1_03c_sprocket_drive.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print/sprocket-drive"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
-MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PREVIEW_SH="${HOME}/.cursor/skills/stl-http-preview/scripts/preview_http.sh"
 PARTS=(sprocket_1x sprocket_2x plates rollers pins)
 
 # ===== 分区：模型/类型 =====

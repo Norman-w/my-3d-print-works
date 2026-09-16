@@ -17,7 +17,7 @@ FreeCAD 支线按「**单一本地真值源（FreeCAD）+ STL 展示**」实现�
 执行：
 
 ```bash
-cd /Users/norman/CodexProjects/SmartPartsDrawer
+cd /path/to/SmartPartsDrawer
 ./scripts/check_freecad_ready.sh
 ```
 
@@ -45,7 +45,7 @@ brew install --cask freecad
 你在 macOS 上执行：
 
 ```bash
-cd /Users/norman/CodexProjects/SmartPartsDrawer
+cd /path/to/SmartPartsDrawer
 /Applications/FreeCAD.app/Contents/Resources/bin/freecadcmd \
   -P scripts scripts/freecad_drawer_pipeline.py \
   --pass "--columns 4 --layers 3 --out web/assets/stl"
@@ -207,7 +207,7 @@ http://127.0.0.1:4173/freecad-viewer.html
 你现在不需要在多个软件里来回切：
 
 ```bash
-cd /Users/norman/CodexProjects/SmartPartsDrawer
+cd /path/to/SmartPartsDrawer
 ./scripts/dev_local_loop.sh --columns 4 --layers 3 --selector-mode snake
 ```
 

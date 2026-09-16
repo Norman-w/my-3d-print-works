@@ -7,9 +7,9 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_FILE="${PROJECT_ROOT}/cad/openscad/ch1_03c_spline_gear_dog.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
-INSPECT_PY="${INSPECT_PY:-/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print/spline-gear-dog"
 OUT_PNG="${PROJECT_ROOT}/output/previews/spline-gear-dog"
 STL_NAME="ch1_03c_spline_gear_dog_solid"

@@ -7,12 +7,10 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 PLACE_PY="${SCRIPT_DIR}/place_ch1_03c_sprocket_layout.py"
-MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
-PREVIEW_SH="${HOME}/.cursor/skills/stl-http-preview/scripts/preview_http.sh"
 LAYOUT_DIR="${PROJECT_ROOT}/output/3d-print/sprocket-layout"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 CENTER_DISTANCE_MM="${1:-200}"
 
 # ===== 分区：模型/类型 =====

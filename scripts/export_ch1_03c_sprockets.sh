@@ -7,12 +7,12 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_DIR="${PROJECT_ROOT}/cad/openscad/parts"
 SCAD_FILE="ch1_03c_sprocket.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
-INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
 SIZES=(1x 1.5x 2x 3x 4x)
 
 # ===== 分区：模型/类型 =====

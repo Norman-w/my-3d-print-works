@@ -7,6 +7,7 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_DIR="${PROJECT_ROOT}/cad/openscad/enclosure"
 SCAD_FILE="cabinet_chain.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
@@ -19,8 +20,6 @@ OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
 OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-INSPECT_PY="${HOME}/.cursor/skills/openscad-stl-print/scripts/inspect_stl.py"
-MANIFEST_PY="${HOME}/.cursor/skills/stl-http-preview/scripts/write_preview_manifest.py"
 PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover motor_spring_hardware motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"

@@ -7,6 +7,7 @@ set -euo pipefail
 # ===== 分区：常量/配置 =====
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${SCRIPT_DIR}/resolve_preview_tools.sh"
 SCAD_DIR="${PROJECT_ROOT}/cad/openscad/enclosure"
 SCAD_FILE="cabinet_clutch.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
@@ -14,8 +15,6 @@ OUT_DIR="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_CHAIN="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
 OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 REPORT_DIR="${PROJECT_ROOT}/output/inspection/cabinet-clutch"
-INSPECT_PY="/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py"
-MANIFEST_PY="/Users/norman/.codex/skills/stl-http-preview/scripts/write_preview_manifest.py"
 # The single canonical viewer is the preview server root. All view presets
 # switch content/camera/opacity in this page instead of opening sub-pages.
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
