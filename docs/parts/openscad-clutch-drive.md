@@ -71,8 +71,9 @@
 - `drawer_drive`：参数化源代码中的抽屉驱动装配入口；网页总装分别加载后取力轮、前端轮、同步带和齿排零件；
 - `clutch`：参数化源代码中的离合零件装配入口；网页总装只加载实际单个离合零件；
 - `clutch_detail`：单格离合零件检查入口；开合状态由网页脚本控制，不再输出静态“打开/闭合”两套合并体；
-- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前打印件逐件入口；其中输入公轮和输入滑架按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/导轨/止挡/机构板/原生磁力靴固定；
+- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前打印件逐件入口；其中输入公轮和输入滑架按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/导轨/止挡/机构板/原生磁力靴固定；机构板带有按中心 2GT 包络切出的真实贯穿通道；
 - `center_input_shaft`、`center_output_shaft`、`center_input_bearings`、`center_output_bearings`：两根独立 3 mm D 轴和四枚 `3×6×2` 轴承的采购件参考入口，不把采购件伪装成打印件；
+- `center_plate_belt_collision`：只用于验证机构板与中心 2GT 实际网格的交集；正常通过时导出空 STL，不是默认装配件；
 - `contract`：只回显中心机械契约，不产生几何；`scripts/generate_center_clutch_contract.py` 负责生成 JSON；
 - `cabinet`：导出闭合薄壁柜体外壳以及与滑台相配的固定接收结构；装配图里的格栅和抽屉包络不进入该 STL。
 
@@ -92,4 +93,4 @@ SketchUp 可以直接导出 STL，但 STL 只保留三角网格，不能在 SCAD
 
 当前模型把“世界轴向 +Z 的上层啮合齿轮”和“世界轴向 +Y 的狗牙离合面”明确成同一个上层载架的两个功能面；后、前同步轮均为世界轴向 +Y，带路在 XZ 平面内沿 +Z 方向走。当前齿形是可替换的参数化原型轮廓；如果确定使用专门的锥齿/端面齿，可只替换对应轮廓模块，不需要重做整体坐标布局。
 
-STL 不包含单位、材料、磁力、弹簧预紧力或切片参数。当前根页面只发布逐件 STL，所有合并/检查体（动力母线、抽屉驱动、全部离合、静态开合详情和总装合并体）均不进入清单；对应的参数化 SCAD 装配入口仅用于复用坐标和脚本构建。`inspect_stl.py` 与 `validate_center_clutch_geometry.py` 只证明导出拓扑、尺寸包围和解析扫掠门槛；它们不替代 PETG 打印、轴承/磁铁实装、20 次手动循环或低速电机负载测试。
+STL 不包含单位、材料、磁力、弹簧预紧力或切片参数。当前根页面只发布逐件 STL，所有合并/检查体（动力母线、抽屉驱动、全部离合、静态开合详情和总装合并体）均不进入清单；对应的参数化 SCAD 装配入口仅用于复用坐标和脚本构建。`inspect_stl.py` 与 `validate_center_clutch_geometry.py` 只证明导出拓扑、尺寸包围、解析扫掠和机构板/皮带网格空交集门槛；它们不替代 PETG 打印、轴承/磁铁实装、20 次手动循环或低速电机负载测试。

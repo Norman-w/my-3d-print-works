@@ -2087,6 +2087,22 @@ module selected_center_mechanism_plate_part() {
     center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
+// Collision witness for the first-article audit. The service plate sits in
+// the rear-to-front belt span, so this must export as an empty intersection
+// after the plate's real through-passage is cut. It is diagnostic only and is
+// never included in the default manifest.
+module selected_center_plate_belt_collision_part() {
+    intersection() {
+        center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_gt2_belt_loop_z(
+            clutch_col_x(CENTER_GT2_COL),
+            center_gt2_z(),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_belt_y(CENTER_GT2_ROW)
+        );
+    }
+}
+
 module selected_center_selector_shoe_part() {
     color("#c8d3dc")
         translate([
@@ -2397,6 +2413,8 @@ module clutch_scene_geometry() {
         selected_center_stops_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
         selected_center_mechanism_plate_part();
+    } else if (CLUTCH_PART == "center_plate_belt_collision") {
+        selected_center_plate_belt_collision_part();
     } else if (CLUTCH_PART == "center_selector_shoe") {
         selected_center_selector_shoe_part();
     } else if (CLUTCH_PART == "center_input_shaft") {
@@ -2542,6 +2560,14 @@ echo(
     str("plateKeyHeightMm=", CENTER_CLUTCH_PLATE_KEY_H),
     str("plateKeyClearanceMm=", CENTER_CLUTCH_SUPPORT_KEY_CLEAR),
     str("plateM3ClearanceMm=", CENTER_CLUTCH_M3_CLEAR_D),
+    str("plateBeltPassageHalfWidthMm=",
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X),
+    str("plateBeltPassageAxialWidthMm=",
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y),
+    str("plateBeltPassageRadialClearanceMm=",
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR),
+    str("plateBeltPassageAxialClearanceMm=",
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR),
     "plateSupport=partition-through-M3",
     str("selectorShoeTangentOffsetMm=", CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM),
     str("selectorShoeNormalOffsetMm=", CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM),
@@ -2607,6 +2633,7 @@ assert(
     || CLUTCH_PART == "center_guide_rails"
     || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
+    || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_input_shaft"
     || CLUTCH_PART == "center_output_shaft"
     || CLUTCH_PART == "center_input_bearings"

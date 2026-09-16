@@ -670,11 +670,12 @@ function isCurrentClutchStation(index = play.scheme1.targetIndex) {
 
 function currentClutchDrivesDrawer() {
   if (!play.scheme1.ready || !play.currentClutch.contract) return false;
-  // The default assembly contains the approved center pair only.  It acts as
-  // the visible clutch detail for whichever selected station is being shown.
-  // If the optional 25-station clutch faces are loaded, stop using the proxy
-  // and let the actual R3C3 pair drive only at its own station.
-  return play.scheme1.clutches.length === 0 || isCurrentClutchStation();
+  // The current assembly contains one real clutch pair: the R3C3 first
+  // article. Never proxy that pair onto the other 24 selector stations. Once
+  // the selector leaves R3C3 it may continue indexing, but the center input
+  // must stay open and the drawer/power belts must stop until a real clutch is
+  // added for that station.
+  return isCurrentClutchStation();
 }
 
 function drawerDriveTurns() {

@@ -85,6 +85,20 @@ CENTER_CLUTCH_PLATE_KEY_H = 6.00;
 CENTER_CLUTCH_PLATE_KEY_D = 1.00;
 CENTER_CLUTCH_M3_CLEAR_D = 3.40;
 CENTER_CLUTCH_SUPPORT_KEY_CLEAR = 0.30;
+// The center 2GT belt runs from the rear female rotor to the front drawer
+// pulley. The service plate is intentionally in that Z interval, so it needs
+// its own through-passage; the partition passage alone cannot clear the belt.
+// Keep the corridor wider than the belt envelope on both axes and leave the
+// M3 mounts outside it.
+CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR = 0.45;
+CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR = 0.45;
+CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X =
+    CENTER_GT2_BELT_BASE_OUTER_R
+    + GT2_BELT_RADIAL_CLEARANCE
+    + CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR;
+CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y =
+    GT2_BELT_WIDTH
+    + 2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR;
 
 CENTER_CLUTCH_SHAFT_INPUT_START = -10.90;
 CENTER_CLUTCH_SHAFT_INPUT_LENGTH =
@@ -218,6 +232,21 @@ module center_clutch_z_arm(x, y, z0, z1, width = 2.00, depth = 3.20) {
 //#endregion
 
 //#region 公开 API：机构板、笼和导轨
+module center_clutch_plate_belt_passage(col, row) {
+    x = center_clutch_axis_x(col);
+    y = center_gt2_belt_y(row);
+    translate([
+        x - CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X,
+        y - CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y / 2,
+        CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T - EPS
+    ])
+        cube([
+            2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X,
+            CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y,
+            CENTER_CLUTCH_PLATE_T + 2 * EPS
+        ]);
+}
+
 module center_clutch_mechanism_plate(col, row) {
     x = center_clutch_axis_x(col);
     y0 = center_clutch_plate_y0(row);
@@ -265,6 +294,10 @@ module center_clutch_mechanism_plate(col, row) {
                         + 2 * EPS,
                     $fn = 40
                 );
+        // The center 2GT loop crosses this plate on its way from the rear
+        // output rotor to the front drawer pulley. This is a true through
+        // opening in the service plate, not a transparent preview hint.
+        center_clutch_plate_belt_passage(col, row);
     }
 }
 
@@ -594,6 +627,12 @@ assert(CENTER_CLUTCH_PLATE_Z < WORLD_PARTITION_BACK_Z,
 assert(CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T
         > -D + WORLD_BACK_PANEL_T + 1.0,
     "mechanism plate must clear the thin removable back cover");
+assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X
+        < CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET
+            - CENTER_CLUTCH_M3_CLEAR_D / 2 - 0.50,
+    "center belt passage must leave the M3 mounting holes outside its slot");
+assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y < center_clutch_plate_h(CENTER_GT2_ROW),
+    "center belt passage must leave solid plate material above and below");
 assert(CENTER_CLUTCH_ENGAGED_STOP_Y
         >= CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y
             + GT2_CLUTCH_ENGAGE_STROKE_MM

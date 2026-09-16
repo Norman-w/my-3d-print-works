@@ -51,6 +51,10 @@ REQUIRED = {
     "plateKeyHeightMm",
     "plateKeyClearanceMm",
     "plateM3ClearanceMm",
+    "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageAxialWidthMm",
+    "plateBeltPassageRadialClearanceMm",
+    "plateBeltPassageAxialClearanceMm",
     "plateSupport",
     "selectorShoePart",
     "selectorShoeCoordinateFrame",
@@ -131,6 +135,10 @@ FLOAT_KEYS = {
     "plateKeyHeightMm",
     "plateKeyClearanceMm",
     "plateM3ClearanceMm",
+    "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageAxialWidthMm",
+    "plateBeltPassageRadialClearanceMm",
+    "plateBeltPassageAxialClearanceMm",
     "selectorShoeTangentOffsetMm",
     "selectorShoeNormalOffsetMm",
     "selectorShoeTargetYMm",
@@ -248,6 +256,10 @@ def validate_contract(contract: dict[str, object]) -> None:
         "plateKeyHeightMm": 6.00,
         "plateKeyClearanceMm": 0.30,
         "plateM3ClearanceMm": 3.40,
+        "plateBeltPassageHalfWidthMm": 5.61972,
+        "plateBeltPassageAxialWidthMm": 6.90,
+        "plateBeltPassageRadialClearanceMm": 0.45,
+        "plateBeltPassageAxialClearanceMm": 0.45,
         "selectorShoeTangentOffsetMm": 6.00,
         "selectorShoeNormalOffsetMm": -6.50,
         "selectorShoeFrontClearanceMm": 0.70,
@@ -293,6 +305,12 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("机构板定位键装配间隙不足")
     if number("plateM3ClearanceMm") <= 3.0:
         raise RuntimeError("机构板 M3 贯穿孔没有留通孔间隙")
+    if number("plateBeltPassageHalfWidthMm") <= number("beltEnvelopeRadiusMm"):
+        raise RuntimeError("机构板皮带通道没有包住中心 2GT 背包络")
+    if number("plateBeltPassageAxialWidthMm") <= 6.0:
+        raise RuntimeError("机构板皮带通道没有覆盖 6 mm 皮带宽度")
+    if number("plateBeltPassageHalfWidthMm") >= number("plateWidthMm") / 2:
+        raise RuntimeError("机构板皮带通道穿出机构板侧边")
     if contract.get("plateSupport") != "partition-through-M3":
         raise RuntimeError("机构板承接界面不是隔板 M3 贯穿固定")
     if number("selectorShoeTangentOffsetMm") != 6.0:

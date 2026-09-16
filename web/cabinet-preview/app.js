@@ -122,7 +122,10 @@ const CENTER_CLUTCH_FRAME_IDS = new Set([
   "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_CONTEXT_IDS = new Set([
-  "cabinet-clutch/cabinet_clutch_cabinet_context",
+  // Keep the first-article view readable: the full cabinet/grid is a useful
+  // assembly context in the normal rear view, but its translucent wall faces
+  // hide the very mechanism being checked. Only the real neighboring drive
+  // datums remain as low-opacity context here.
   "cabinet-clutch/cabinet_clutch_power_column_2",
   "cabinet-clutch/13_drawer_timing_belt_reference",
   "cabinet-clutch/14_front_timing_pulley_candidate",
@@ -1163,15 +1166,19 @@ function updateActiveViewButton() {
 
 function setObjectOpacity(root, opacity) {
   const animatedBelt = root?.userData?.animatedBelt === true;
-  const targetOpacity = animatedBelt ? 1 : opacity;
+  // Animated belts stay opaque in the normal assembly, but a belt loaded as
+  // low-opacity focus context must not hide the clutch interface that is being
+  // inspected. The animation code only updates vertices; it does not require
+  // an opaque material, so let the view profile decide here.
+  const targetOpacity = animatedBelt && opacity >= 0.999 ? 1 : opacity;
   root?.traverse?.((object) => {
     if (!object.isMesh) return;
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (!material) continue;
-      // Animated belts remain opaque and depth-aware.  Double-sidedness is
-      // configured when the belt is built; it must not be used as a reason to
-      // bypass the depth buffer.
+      // Double-sidedness is configured when the belt is built; it must not be
+      // used as a reason to bypass the depth buffer. Context belts are
+      // translucent with depth writing off, so the real clutch remains legible.
       material.transparent = targetOpacity < 0.999;
       material.opacity = targetOpacity;
       material.depthWrite = targetOpacity >= 0.999;

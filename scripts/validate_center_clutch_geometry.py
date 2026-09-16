@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import struct
 import subprocess
 import sys
 import tempfile
@@ -126,6 +127,61 @@ def run_export(
         fail(f"OpenSCAD 导出失败: {part} engaged={engaged}\n{detail}")
 
 
+def run_collision_export(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+) -> bool:
+    """Export the actual plate/belt intersection and report whether it is empty."""
+    command = [
+        str(openscad),
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-D",
+        "QUALITY=2",
+        "-D",
+        'CLUTCH_PART="center_plate_belt_collision"',
+        "-D",
+        "ENGAGED=false",
+        "-D",
+        "SELECTED_COLUMN=2",
+        "-D",
+        "SELECTED_ROW=2",
+        "-D",
+        "SHOW_LEGACY_STATIONS=false",
+        "-o",
+        str(output),
+        str(scad),
+    ]
+    completed = subprocess.run(
+        command,
+        cwd=scad.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0:
+        if "Current top level object is empty" in (
+            completed.stderr + completed.stdout
+        ):
+            return False
+        detail = (completed.stderr or completed.stdout)[-3000:]
+        fail(f"中心机构板/皮带碰撞见证导出失败\n{detail}")
+    if not output.is_file() or output.stat().st_size == 0:
+        return False
+    raw = output.read_bytes()
+    # OpenSCAD's binary STL has an 80-byte header and a little-endian triangle
+    # count. Empty intersections may be emitted as no file or as an 84-byte
+    # zero-triangle file; both are valid no-collision results.
+    if len(raw) >= 84:
+        triangle_count = struct.unpack_from("<I", raw, 80)[0]
+        if triangle_count == 0:
+            return False
+    return True
+
+
 def inspect(inspect_py: Path, stl: Path) -> dict[str, object]:
     completed = subprocess.run(
         ["python3", str(inspect_py), str(stl), "--json"],
@@ -202,6 +258,10 @@ def validate_contract(contract: Contract) -> None:
         "plateKeyHeightMm": 6.00,
         "plateKeyClearanceMm": 0.30,
         "plateM3ClearanceMm": 3.40,
+        "plateBeltPassageHalfWidthMm": 5.61972,
+        "plateBeltPassageAxialWidthMm": 6.90,
+        "plateBeltPassageRadialClearanceMm": 0.45,
+        "plateBeltPassageAxialClearanceMm": 0.45,
         "selectorShoeTangentOffsetMm": 6.00,
         "selectorShoeNormalOffsetMm": -6.50,
         "selectorShoeFrontClearanceMm": 0.70,
@@ -312,6 +372,21 @@ def validate_contract(contract: Contract) -> None:
         fail("机构板定位键装配间隙不足")
     if number(contract, "plateM3ClearanceMm") <= 3.0:
         fail("机构板 M3 贯穿孔没有留通孔间隙")
+    expect_at_least(
+        number(contract, "plateBeltPassageHalfWidthMm")
+        - number(contract, "beltEnvelopeRadiusMm"),
+        number(contract, "plateBeltPassageRadialClearanceMm") * 2,
+        "机构板皮带通道横向净空",
+    )
+    expect_at_least(
+        number(contract, "plateBeltPassageAxialWidthMm") - 6.0,
+        number(contract, "plateBeltPassageAxialClearanceMm") * 2,
+        "机构板皮带通道轴向净空",
+    )
+    if number(contract, "plateBeltPassageHalfWidthMm") >= number(
+        contract, "plateWidthMm"
+    ) / 2:
+        fail("机构板皮带通道穿出机构板侧边")
     if contract.get("selectorShoeCoordinateFrame") != "native-world":
         fail("磁力靴必须使用原生世界坐标")
     if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
@@ -696,6 +771,10 @@ def main() -> int:
         cabinet_report = inspect(inspect_path, cabinet_stl)
         assert_watertight(cabinet_report, cabinet_stl.name)
 
+        collision_stl = temp_dir / "center_plate_belt_collision.stl"
+        if run_collision_export(openscad, scad, collision_stl):
+            fail("机构板与中心 2GT 皮带实际网格仍有交集")
+
         validate_sweep(contract, reports)
         metrics = validate_interference(contract, reports)
 
@@ -708,7 +787,7 @@ def main() -> int:
         f"guide_clear={number(contract, 'guideRunningClearanceMm'):.2f}mm, "
         f"shoe_front={metrics['shoeFrontClearance']:.2f}mm, "
         f"upright_radial={metrics['uprightRadialClearance']:.2f}mm; "
-        "输入/输出不漂移、轴承盲座、独立 D 轴、双导轨、实体止挡和原生磁力靴均已检查"
+        "输入/输出不漂移、轴承盲座、独立 D 轴、双导轨、实体止挡、原生磁力靴和机构板皮带通道均已检查"
     )
     print("实体轴承/磁铁装配、打印配合、低速负载和 20 次循环仍未验收")
     return 0
