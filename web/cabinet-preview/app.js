@@ -28,6 +28,16 @@ const VIEW_HELPER_SIZE = 128;
 const LEGACY_ASSEMBLY_WIDTH = 260;
 const DEFAULT_HIDDEN_PART_IDS = new Set([
   "cabinet/cabinet_back_panel",
+  // Retired center candidate names are kept only for explicit legacy
+  // diagnostics. The active center station is role-named input/output.
+  "cabinet-clutch/06_upper_axis_y_spur_candidate",
+  "cabinet-clutch/06_upper_axis_z_spur_candidate",
+  "cabinet-clutch/07_upper_downward_dog_candidate",
+  "cabinet-clutch/08_lower_upward_dog_candidate",
+  "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate",
+  "cabinet-clutch/10_clutch_spring_reference",
+  "cabinet-clutch/11_t_countersunk_screw_reference",
+  "cabinet-clutch/12_clutch_fork_candidate",
 ]);
 const LEGACY_COORDINATE_GROUPS = new Set([
   "cabinet",
@@ -58,9 +68,17 @@ const DRAWER_DRIVE_TAILS = new Set([
   "00_tensioner_t_solid_reference",
   "04_right_round_axis_reference",
   "05_top_bottom_bus_belts_reference",
-  "06_upper_axis_y_spur_candidate",
-  "06_upper_axis_z_spur_candidate",
-  "08_lower_upward_dog_candidate",
+  "center_input_rotor",
+  "center_output_rotor",
+  "center_input_carriage",
+  "center_output_cage",
+  "center_guide_rails",
+  "center_stops",
+  "center_mechanism_plate",
+  "center_input_shaft_reference",
+  "center_output_shaft_reference",
+  "center_input_bearings_reference",
+  "center_output_bearings_reference",
   "13_drawer_timing_belt_reference",
   "14_front_timing_pulley_candidate",
   "15_front_pinion_candidate",
@@ -1043,6 +1061,7 @@ function isUpperTensionerPart(part) {
 function isLowerTensionerPart(part) {
   return part?.group === "cabinet-chain"
     && part?.id !== LEGACY_MOTOR_TENSIONER_ID
+    && partTail(part) !== "cabinet_chain_selector_magnetic_shoe"
     && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 

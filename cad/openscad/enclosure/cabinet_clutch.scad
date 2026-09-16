@@ -1,13 +1,15 @@
-// SmartPartsDrawer 抽屉动力母线与弹簧离合机构
+// SmartPartsDrawer 抽屉动力母线与中心纯永磁离合机构
 //
 // Mechanical contract
 // process: FDM fit prototype; gears/pulleys in PETG or nylon, metal 3 mm D rod preferred
 // material: PETG/nylon for printed parts; motor, belts, springs and screws are purchased parts
 // parting_plane: cabinet front face Z = 0 and back face Z = -D; all new drive parts stay in the rear cavity or below drawers
 // opening_direction: drawers pull toward +Z; the removable back panel is serviced toward -Z
-// fastener: M3 T-head countersunk screw used as the clutch follower; motor/rod mounts are parameterized
+// fastener: center clutch uses a removable M3 mechanism plate; old screw/fork
+// follower remains legacy-only; motor/rod mounts are parameterized
 // seal: none — this is a mechanism prototype, not a watertight enclosure
-// print_orientation: gears/pulleys flat with their axis vertical (+Y); clutch carrier and fork may need supports
+// print_orientation: gears/pulleys flat with their axis vertical (+Y); center
+// carrier, rails and plate are separate PETG service parts
 // units: mm
 //
 // User/world coordinate contract (the canonical web view is from the rear):
@@ -67,10 +69,6 @@ GT2_LONG_TOOTH_DEPTH = 0.82;
 GT2_MALE_TEETH = 12;
 GT2_MALE_PITCH_MM = 3.0;
 GT2_MALE_TOOTH_DEPTH = 0.82;
-// The browser animation uses this same authored +Y insertion datum.  Keeping
-// it named here prevents the static ENGAGED export and the dynamic preview
-// from silently drifting apart when the mother pocket or open gap changes.
-GT2_CLUTCH_ENGAGE_STROKE_MM = max(0, GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP);
 // The larger 3 mm-compatible tooth ring needs a deliberate +Z stand-off from
 // the vertical rod.  0.32 mm leaves both the mother wall and the 2GT belt
 // back-envelope above the pair's 0.45 mm clearance requirement.
@@ -456,7 +454,7 @@ COLOR_AXIS_Z = "#3b82f6";
 //   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
 //   clutch         center clutch by default; old stations require SHOW_LEGACY_STATIONS
-//   clutch_detail  selected center magnetic pair (or a legacy station when enabled)
+//   clutch_detail  selected center mechanism (or a legacy station when enabled)
 //   motor/motor_body/motor_shaft/left_d_axis/side_axes/column/vertical_rack
 //   column_sync_belt_bottom/column_sync_belt_top/column_sync_tensioner
 //   tensioner_t_solid
@@ -466,11 +464,12 @@ COLOR_AXIS_Z = "#3b82f6";
 //                  individual verification pieces for the one-by-one workflow
 //
 // The center replacement uses the finished CH1 03C pair: a +Z-offset axis-Y
-// male gear with a rounded-triangle/magnet nose enters the female receiver
-// above it. The female body also carries the 2GT rear pulley. A separate front
-// compound has the matching 2GT pulley below the larger coarse rack pinion;
-// its belt runs rear-to-front in XZ along +Z. The other 24 legacy stations are
-// intentionally suppressed until this physical prototype is approved.
+// input male gear with a rounded-triangle/magnet nose enters the fixed output
+// female receiver above it. The female body also carries the 2GT rear pulley.
+// The pair is captured by cabinet_clutch_carrier.scad: two independent D
+// shafts, four 3x6x2 bearing references, dual rails, a removable plate and
+// hard stops. The other 24 legacy stations are intentionally suppressed until
+// this physical prototype is approved.
 //#endregion
 
 //#region 私有成员：几何函数
@@ -1679,6 +1678,12 @@ module power_bus() {
 }
 //#endregion
 
+// The center prototype is deliberately split into a removable mechanism plate,
+// fixed output cage, captured rails, moving input carriage, hard stops and
+// purchased-part references. Keeping this include after the world-coordinate
+// helpers makes the carrier consume the same station datums as the rotors.
+include <cabinet_clutch_carrier.scad>
+
 //#region 公开 API：离合与抽屉取力
 module clutch_upper_carrier(col, row, engaged = false, include_screw = false) {
     x = clutch_col_x(col);
@@ -1767,10 +1772,12 @@ module clutch_station(col, row, engaged = false, detail = false) {
             clutch_fork(col, row, engaged);
 }
 
-// Finished CH1 03C pair embedded in the cabinet's center cell.  The male
-// child is below and moves along +Y into the female mother above.  Both bodies
-// use the same +Z-shifted parallel axis, while the existing long shaft stays
-// on the original axis at DRIVE_AXIS_Z and drives the male gear tangentially.
+// Finished CH1 03C pair embedded in the cabinet's center cell. The input male
+// child is below and moves along +Y into the fixed output female mother above.
+// Both bodies use the same +Z-shifted parallel axis, while the existing long
+// shaft stays on the original axis at DRIVE_AXIS_Z and drives the input gear
+// tangentially. The carrier keeps the output rotor fixed in Y and carries the
+// input rotor, its D shaft and its bearings as one moving service assembly.
 module center_gt2_male(col, row, engaged = false) {
     x = clutch_col_x(col);
     z = center_gt2_z();
@@ -1797,6 +1804,7 @@ module center_gt2_female(col, row) {
 }
 
 module center_gt2_clutch(col, row, engaged = false) {
+    center_clutch_carrier(col, row, engaged, true);
     center_gt2_female(col, row);
     center_gt2_male(col, row, engaged);
 }
@@ -2009,6 +2017,65 @@ module selected_vertical_rack_part() {
 
 module selected_tensioner_t_solid_part() {
     tensioner_t_solid();
+}
+
+// Center-station exports. These are intentionally named by mechanical role,
+// not by the retired upper/lower candidate convention, so the preview tree
+// cannot silently swap input and output again.
+module selected_center_input_rotor_part() {
+    center_gt2_male(CENTER_GT2_COL, CENTER_GT2_ROW, ENGAGED);
+}
+
+module selected_center_output_rotor_part() {
+    center_gt2_female(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_input_carriage_part() {
+    center_clutch_input_carriage(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        ENGAGED
+    );
+}
+
+module selected_center_output_cage_part() {
+    center_clutch_output_cage(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_guide_rails_part() {
+    center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_stops_part() {
+    center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_mechanism_plate_part() {
+    center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_input_shaft_part() {
+    center_clutch_input_shaft(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        ENGAGED
+    );
+}
+
+module selected_center_output_shaft_part() {
+    center_clutch_output_shaft(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module selected_center_input_bearings_part() {
+    center_clutch_input_bearings(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        ENGAGED
+    );
+}
+
+module selected_center_output_bearings_part() {
+    center_clutch_output_bearings(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
 module selected_upper_clutch_part() {
@@ -2270,6 +2337,31 @@ module clutch_scene_geometry() {
         selected_column_sync_belt_top_part();
     } else if (CLUTCH_PART == "column_sync_tensioner") {
         selected_column_sync_tensioner_part();
+    } else if (CLUTCH_PART == "center_input_rotor") {
+        selected_center_input_rotor_part();
+    } else if (CLUTCH_PART == "center_output_rotor") {
+        selected_center_output_rotor_part();
+    } else if (CLUTCH_PART == "center_input_carriage") {
+        selected_center_input_carriage_part();
+    } else if (CLUTCH_PART == "center_output_cage") {
+        selected_center_output_cage_part();
+    } else if (CLUTCH_PART == "center_guide_rails") {
+        selected_center_guide_rails_part();
+    } else if (CLUTCH_PART == "center_stops") {
+        selected_center_stops_part();
+    } else if (CLUTCH_PART == "center_mechanism_plate") {
+        selected_center_mechanism_plate_part();
+    } else if (CLUTCH_PART == "center_input_shaft") {
+        selected_center_input_shaft_part();
+    } else if (CLUTCH_PART == "center_output_shaft") {
+        selected_center_output_shaft_part();
+    } else if (CLUTCH_PART == "center_input_bearings") {
+        selected_center_input_bearings_part();
+    } else if (CLUTCH_PART == "center_output_bearings") {
+        selected_center_output_bearings_part();
+    } else if (CLUTCH_PART == "contract") {
+        // Contract mode intentionally emits no geometry. The machine-readable
+        // echo below is parsed by the export helper.
     } else if (CLUTCH_PART == "upper_clutch") {
         selected_upper_clutch_part();
     } else if (CLUTCH_PART == "upper_spur") {
@@ -2323,6 +2415,13 @@ echo("column_sync_gt2", "pitch_mm", GT2_PULLEY_PITCH_MM, "pulley_teeth", GT2_PUL
 echo("center_gt2", "enabled", true, "legacy_stations", SHOW_LEGACY_STATIONS, "cell_col_row", CENTER_GT2_COL, CENTER_GT2_ROW, "mating_axis_z", center_gt2_z(), "shaft_axis_z", DRIVE_AXIS_Z, "shaft_z_offset", gt2_center_distance(), "long_profile", str(GT2_LONG_TEETH, "T/", GT2_LONG_PITCH_MM, "mm"), "male_profile", str(GT2_MALE_TEETH, "T/", GT2_MALE_PITCH_MM, "mm"), "belt", str(CENTER_GT2_BELT_TEETH, "T/", GT2_PULLEY_PITCH_MM, "mm/", GT2_BELT_WIDTH, "mm"), "belt_center_distance", CENTER_GT2_BELT_CENTER_DISTANCE, "front_pulley_z", CENTER_GT2_FRONT_PULLEY_Z, "belt_y", center_gt2_belt_y(CENTER_GT2_ROW), "front_gear_y", center_gt2_front_gear_y(CENTER_GT2_ROW), "guide_outer_d", 2 * gt2_belt_guide_r(), "mother_outer_d", 2 * GT2_MOTHER_OUTER_R, "lower_retainer_t", GT2_BELT_LOWER_RETAINER_T, "mother_pocket_depth", GT2_MOTHER_POCKET_DEPTH, "engage_stroke", GT2_CLUTCH_ENGAGE_STROKE_MM);
 echo("tensioner_skp_parametric", "source", "弹簧加力的滑动张紧轮调节滑台.skp", "axis_map", "SKP+Y(green)->world+X, SKP+X(red)->world+Y, SKP+Z(blue)->world-Z (same Z axis, rearward)", "native_bbox_xyz", TENSIONER_SKP_NATIVE_SIZE_X, TENSIONER_SKP_NATIVE_SIZE_Y, TENSIONER_SKP_NATIVE_SIZE_Z, "world_bbox_xyz", TENSIONER_SKP_WORLD_SIZE_X, TENSIONER_SKP_WORLD_SIZE_Y, TENSIONER_SKP_WORLD_SIZE_Z, "world_center", TENSIONER_SKP_WORLD_CENTER_X, TENSIONER_SKP_WORLD_CENTER_Y, TENSIONER_SKP_WORLD_CENTER_Z, "mesh_import", false, "parametric_csg", true);
 echo("clutch", "open_gap", CLUTCH_OPEN_GAP, "drop", CLUTCH_DROP_MM, "selected", selected_col(), selected_row(), "engaged", ENGAGED);
+// These values are intentionally composed from the shared parameter file,
+// rather than repeated as browser-owned geometry constants.
+// Machine-readable source marker. The export helper parses this line and
+// writes the same object into cabinet_chain_motion.json. Geometry values are
+// deliberately composed from the shared pair/carrier parameters so OpenSCAD
+// remains the only mechanical source of truth.
+echo("CENTER_CLUTCH_CONTRACT_DYNAMIC", "version=1", "axis=+Y", "role=input/output", str("axisXMm=", clutch_col_x(CENTER_GT2_COL)), str("axisZMm=", center_gt2_z()), str("inputBaseYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)), str("outputBaseYMm=", center_gt2_female_base_y(CENTER_GT2_ROW)), str("openGapMm=", GT2_MOTHER_GAP), str("dogInsertionMm=", GT2_MOTHER_EFFECTIVE_INSERTION), str("strokeMm=", GT2_CLUTCH_ENGAGE_STROKE_MM), str("pocketDepthMm=", GT2_MOTHER_POCKET_DEPTH), str("bottomClearanceMm=", GT2_MOTHER_BOTTOM_CLEARANCE), str("magnetNonContactClearanceMm=", GT2_MAGNET_NONCONTACT_CLEARANCE_MM), str("femaleMagnetProjectionMm=", GT2_FEMALE_MAGNET_PROJECTION_MM), str("magnetNominalDiameterMm=", GT2_MAGNET_NOMINAL_D), str("gearCenterDistanceMm=", gt2_center_distance()), str("longPitchRadiusMm=", gt2_long_pitch_r()), str("inputPitchRadiusMm=", gt2_male_pitch_r()), str("gearMeshClearanceMm=", GT2_GEAR_MESH_CLEARANCE), str("longTipRadiusMm=", gt2_long_tip_r()), str("inputTipRadiusMm=", gt2_male_tip_r()), str("beltEnvelopeRadiusMm=", gt2_belt_envelope_r()), str("beltGuideRadiusMm=", gt2_belt_guide_r()), str("motherOuterRadiusMm=", GT2_MOTHER_OUTER_R), str("selectorTriggerSpacingMm=", GT2_ACTUATOR_TRIGGER_SPACING_MM), str("guideRunningClearanceMm=", CENTER_CLUTCH_RAIL_CLEAR), str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)), str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)), str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)), str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)), str("engagedStopY1Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("openTabY0Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW)), str("openTabY1Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("engagedTabY0Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW)), str("engagedTabY1Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T), str("bearingSeatDiameterMm=", CENTER_CLUTCH_BEARING_SEAT_D), str("bearingSeatDepthMm=", CENTER_CLUTCH_BEARING_SEAT_DEPTH), str("bearingBackShoulderMm=", CENTER_CLUTCH_BEARING_BACK_SHOULDER_T), "bearingNominal=3x6x2", "bearingCount=4", str("shaftDiameterMm=", GT2_D_AXIS_D), str("shaftCount=", 2), str("shaftCollarOdMm=", CENTER_CLUTCH_SHAFT_COLLAR_OD), str("shaftCollarBoreMm=", CENTER_CLUTCH_SHAFT_COLLAR_BORE_D), "matingMagnetCount=2", "selectorMagnetCount=2", "totalMagnetCount=4", "actuation=permanent-magnet", "engageOnlyWhenStopped=true", "releaseBeforeReturn=true", "centerCol=2", "centerRow=2", "inputPart=cabinet-clutch/center_input_rotor", "outputPart=cabinet-clutch/center_output_rotor", "inputCarriagePart=cabinet-clutch/center_input_carriage", "outputCagePart=cabinet-clutch/center_output_cage", "mechanismPlatePart=cabinet-clutch/center_mechanism_plate", "guidePart=cabinet-clutch/center_guide_rails", "stopPart=cabinet-clutch/center_stops", "selectorShoePart=cabinet-chain/cabinet_chain_selector_magnetic_shoe");
 
 assert(
     CLUTCH_PART == "assembly"
@@ -2344,6 +2443,18 @@ assert(
     || CLUTCH_PART == "column_sync_belt_bottom"
     || CLUTCH_PART == "column_sync_belt_top"
     || CLUTCH_PART == "column_sync_tensioner"
+    || CLUTCH_PART == "center_input_rotor"
+    || CLUTCH_PART == "center_output_rotor"
+    || CLUTCH_PART == "center_input_carriage"
+    || CLUTCH_PART == "center_output_cage"
+    || CLUTCH_PART == "center_guide_rails"
+    || CLUTCH_PART == "center_stops"
+    || CLUTCH_PART == "center_mechanism_plate"
+    || CLUTCH_PART == "center_input_shaft"
+    || CLUTCH_PART == "center_output_shaft"
+    || CLUTCH_PART == "center_input_bearings"
+    || CLUTCH_PART == "center_output_bearings"
+    || CLUTCH_PART == "contract"
     || CLUTCH_PART == "upper_clutch"
     || CLUTCH_PART == "upper_spur"
     || CLUTCH_PART == "upper_dog"

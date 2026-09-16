@@ -15,6 +15,7 @@ OUT_DIR="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_CHAIN="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
 REPORT_DIR="${PROJECT_ROOT}/output/inspection/cabinet-clutch"
 MOTION_JSON="${OUT_CHAIN}/cabinet_chain_motion.json"
+CENTER_CONTRACT_JSON="${OUT_DIR}/center_clutch_contract.json"
 # The single canonical viewer is the preview server root. All view presets
 # switch content/camera/opacity in this page instead of opening sub-pages.
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
@@ -168,6 +169,72 @@ labels = {
         "visible": True,
         "role": "printed",
     },
+    "cabinet-clutch/center_input_rotor": {
+        "name": "中心 R3C3 · 输入公轮（随滑架 +Y 接合）",
+        "color": "#e2a84b",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_output_rotor": {
+        "name": "中心 R3C3 · 输出母轮（固定位置、保持旋转）",
+        "color": "#5d7885",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_input_carriage": {
+        "name": "中心 R3C3 · 输入滑架（双轴承座）",
+        "color": "#748c99",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_output_cage": {
+        "name": "中心 R3C3 · 输出轴承笼（双轴承座）",
+        "color": "#4c6470",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_guide_rails": {
+        "name": "中心 R3C3 · 双侧捕获导轨（每侧 0.30mm）",
+        "color": "#657f8c",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_stops": {
+        "name": "中心 R3C3 · 开位/合位实体止挡",
+        "color": "#d26b38",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_mechanism_plate": {
+        "name": "中心 R3C3 · 可拆后仓机构板（4×M3）",
+        "color": "#536d78",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_input_shaft_reference": {
+        "name": "中心 R3C3 · 采购件输入 3mm D 轴（独立短轴）",
+        "color": "#5c6876",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/center_output_shaft_reference": {
+        "name": "中心 R3C3 · 采购件输出 3mm D 轴（独立短轴）",
+        "color": "#5c6876",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/center_input_bearings_reference": {
+        "name": "中心 R3C3 · 输入 2×3×6×2 轴承（采购件参考）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/center_output_bearings_reference": {
+        "name": "中心 R3C3 · 输出 2×3×6×2 轴承（采购件参考）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
+    },
     "cabinet/cabinet_back_panel": {
         "name": "可拆背板",
         "color": "#c4a574",
@@ -219,6 +286,12 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_connector": {"name": "03C 链条连接节（带槽双穿销+圆弧夹片）", "color": "#ff2fd0", "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
     "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
+    "cabinet-chain/cabinet_chain_selector_magnetic_shoe": {
+        "name": "中心离合选择指·纯永磁磁力靴（M_engage/M_release，12mm）",
+        "color": "#c8d3dc",
+        "role": "printed",
+        "visible": True,
+    },
     "cabinet-chain/cabinet_chain_scheme1_power_wheels": {"name": "旧方案1·常转动力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_output_wheels": {"name": "旧方案1·抽屉受力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_clutch_faces": {"name": "旧方案1·狗牙离合面（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
@@ -239,8 +312,18 @@ group_map = {
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
-    "06_upper_axis_z_spur_candidate": "02·离合机构",
-    "08_lower_upward_dog_candidate": "02·离合机构",
+    "center_input_rotor": "02·离合机构",
+    "center_output_rotor": "02·离合机构",
+    "center_input_carriage": "02·离合机构",
+    "center_output_cage": "02·离合机构",
+    "center_guide_rails": "02·离合机构",
+    "center_stops": "02·离合机构",
+    "center_mechanism_plate": "02·离合机构",
+    "center_input_shaft_reference": "02·离合机构",
+    "center_output_shaft_reference": "02·离合机构",
+    "center_input_bearings_reference": "02·离合机构",
+    "center_output_bearings_reference": "02·离合机构",
+    "cabinet_chain_selector_magnetic_shoe": "02·离合机构",
     "10_clutch_spring_reference": "02·离合机构",
     "11_t_countersunk_screw_reference": "02·离合机构",
     "12_clutch_fork_candidate": "02·离合机构",
@@ -253,11 +336,20 @@ name_map = {
     "cabinet_clutch_cabinet": "柜体外壳（可见背景）",
     "cabinet_clutch_cabinet_context": "柜体格口与抽屉背景",
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
-    "06_upper_axis_z_spur_candidate": "中心格新版公轮 · 3mm兼容齿形",
-    "08_lower_upward_dog_candidate": "中心格新版母轮 · 母槽与2GT",
-    "10_clutch_spring_reference": "离合压簧",
-    "11_t_countersunk_screw_reference": "T 形沉头螺丝",
-    "12_clutch_fork_candidate": "离合拨叉",
+    "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
+    "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
+    "center_input_carriage": "中心 R3C3 输入滑架 · 随 +Y 行程移动",
+    "center_output_cage": "中心 R3C3 输出轴承笼 · 固定旋转支撑",
+    "center_guide_rails": "中心 R3C3 双侧捕获导轨 · 0.30mm/侧",
+    "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
+    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
+    "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
+    "center_output_shaft_reference": "中心 R3C3 输出独立 3mm D 轴 · 采购件",
+    "center_input_bearings_reference": "中心 R3C3 输入 2×3×6×2 轴承 · 采购件",
+    "center_output_bearings_reference": "中心 R3C3 输出 2×3×6×2 轴承 · 采购件",
+    "10_clutch_spring_reference": "旧离合压簧 · legacy 默认隐藏",
+    "11_t_countersunk_screw_reference": "旧 T 形沉头螺丝 · legacy 默认隐藏",
+    "12_clutch_fork_candidate": "旧离合拨叉 · legacy 默认隐藏",
     "13_drawer_timing_belt_reference": "中心格新版2GT皮带 · 80T/160mm/6mm",
     "14_front_timing_pulley_candidate": "中心格新版前端2GT同步轮",
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
@@ -393,26 +485,42 @@ for group_id in ordered_group_ids:
             ),
         ]
     elif group_id == "02·离合机构":
-        upper = part_node(
-            "cabinet-clutch/06_upper_axis_z_spur_candidate",
-        )
-        lower = part_node(
-            "cabinet-clutch/08_lower_upward_dog_candidate",
-        )
+        active_center = [
+            part_node("cabinet-clutch/center_input_rotor"),
+            part_node("cabinet-clutch/center_output_rotor"),
+            part_node("cabinet-clutch/center_input_carriage"),
+            part_node("cabinet-clutch/center_output_cage"),
+            part_node("cabinet-clutch/center_guide_rails"),
+            part_node("cabinet-clutch/center_stops"),
+            part_node("cabinet-clutch/center_mechanism_plate"),
+            part_node("cabinet-clutch/center_input_shaft_reference"),
+            part_node("cabinet-clutch/center_output_shaft_reference"),
+            part_node("cabinet-clutch/center_input_bearings_reference"),
+            part_node("cabinet-clutch/center_output_bearings_reference"),
+            part_node("cabinet-chain/cabinet_chain_selector_magnetic_shoe"),
+        ]
+        legacy_center = [
+            part_node("cabinet-clutch/06_upper_axis_y_spur_candidate"),
+            part_node("cabinet-clutch/06_upper_axis_z_spur_candidate"),
+            part_node("cabinet-clutch/07_upper_downward_dog_candidate"),
+            part_node("cabinet-clutch/08_lower_upward_dog_candidate"),
+            part_node("cabinet-clutch/09_rear_takeoff_timing_pulley_candidate"),
+            part_node("cabinet-clutch/10_clutch_spring_reference"),
+            part_node("cabinet-clutch/11_t_countersunk_screw_reference"),
+            part_node("cabinet-clutch/12_clutch_fork_candidate"),
+        ]
         root["children"] = [
-            upper,
-            lower,
-            part_node(
-                "cabinet-clutch/10_clutch_spring_reference",
-                exclusive_groups=["clutch-spring"],
+            call_node(
+                "center_clutch/active",
+                "中心 R3C3 · 单站纯永磁离合",
+                "输入公轮 + 输出母轮 + 滑架 + 双轴承笼 + 双导轨 + 实体止挡 + 可拆机构板 + 磁力靴",
+                children=active_center,
             ),
-            part_node(
-                "cabinet-clutch/11_t_countersunk_screw_reference",
-                exclusive_groups=["clutch-screw"],
-            ),
-            part_node(
-                "cabinet-clutch/12_clutch_fork_candidate",
-                exclusive_groups=["clutch-fork"],
+            call_node(
+                "center_clutch/legacy",
+                "legacy 诊断项（默认隐藏）",
+                "旧 upper/lower、弹簧、螺丝、拨叉仅保留源与显式诊断清单，不参与默认总装",
+                children=legacy_center,
             ),
         ]
     elif group_id == "03·抽屉驱动":
@@ -463,6 +571,14 @@ PY
 # ===== 分区：公开 API =====
 [[ -x "${OPENSCAD_BIN}" ]] || die "未找到 OpenSCAD: ${OPENSCAD_BIN}"
 mkdir -p "${OUT_DIR}" "${OUT_CHAIN}" "${REPORT_DIR}"
+
+# Generate the motion contract from the OpenSCAD parameter echo before the
+# chain solver writes its JSON. The solver then copies this exact object into
+# the motion file; JavaScript never owns a second set of clutch dimensions.
+python3 "${PROJECT_ROOT}/scripts/generate_center_clutch_contract.py" \
+    --openscad "${OPENSCAD_BIN}" \
+    --scad "${SCAD_DIR}/${SCAD_FILE}" \
+    --output "${CENTER_CONTRACT_JSON}"
 
 # The canonical page owns the chain animation as well as the meshes.  Refresh
 # the solver output here so the motion path uses the same generated pin loop
@@ -554,6 +670,9 @@ done
 # stale copies from older exports; the parameterized source entry points stay
 # in cabinet_clutch.scad for single-part inspection and future reuse.
 DUPLICATE_CLUTCH_OUTPUTS=(
+    "06_upper_axis_y_spur_candidate.stl"
+    "06_upper_axis_z_spur_candidate.stl"
+    "08_lower_upward_dog_candidate.stl"
     "07_upper_downward_dog_candidate.stl"
     "09_rear_takeoff_timing_pulley_candidate.stl"
 )
@@ -612,12 +731,71 @@ export_chain_motor_cover() {
 
 export_chain_motor_cover
 
+export_chain_part() {
+    local chain_part="$1"
+    local target="$2"
+    local tmp="${target}.tmp.$$"
+    echo "→ CHAIN_PART=${chain_part} → ${target}"
+    (
+        cd "${PROJECT_ROOT}/cad/openscad/enclosure"
+        "${OPENSCAD_BIN}" \
+            --backend Manifold \
+            --export-format binstl \
+            -D "QUALITY=${QUALITY}" \
+            -D "CHAIN_PART=\"${chain_part}\"" \
+            -o "${tmp}" \
+            "cabinet_chain.scad"
+    )
+    [[ -s "${tmp}" ]] || die "空 STL: ${target}"
+    mv -f "${tmp}" "${target}"
+    if [[ -x "${INSPECT_PY}" || -f "${INSPECT_PY}" ]]; then
+        python3 "${INSPECT_PY}" "${target}" --json \
+            --output "${REPORT_DIR}/$(basename "${target}" .stl).json"
+    fi
+}
+
+require_watertight_print_part() {
+    local target="$1"
+    local report_name
+    report_name="$(basename "${target}" .stl).watertight.json"
+    [[ -f "${INSPECT_PY}" ]] || die "未找到可打印件闭合检查所需的 inspect_stl.py: ${INSPECT_PY}"
+    echo "→ require-watertight → ${target}"
+    python3 "${INSPECT_PY}" "${target}" --require-watertight --json \
+        --output "${REPORT_DIR}/${report_name}"
+}
+
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be
 # corrected without hiding it inside a full assembly export.
 export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
-export_part "upper_spur" "${OUT_DIR}/06_upper_axis_z_spur_candidate.stl" false 0
-export_part "lower_dog" "${OUT_DIR}/08_lower_upward_dog_candidate.stl" false 0
+export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
+export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
+export_part "center_input_carriage" "${OUT_DIR}/center_input_carriage.stl" false 0
+export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
+export_part "center_guide_rails" "${OUT_DIR}/center_guide_rails.stl" false 0
+export_part "center_stops" "${OUT_DIR}/center_stops.stl" false 0
+export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
+export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
+export_part "center_output_shaft" "${OUT_DIR}/center_output_shaft_reference.stl" false 0
+export_part "center_input_bearings" "${OUT_DIR}/center_input_bearings_reference.stl" false 0
+export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_reference.stl" false 0
+export_chain_part "selector_magnetic_shoe" "${OUT_CHAIN}/cabinet_chain_selector_magnetic_shoe.stl"
+
+# The center printed pieces and the selector shoe are the current first-article
+# outputs.  Keep purchased shaft/bearing references in the ordinary inspection
+# report, but require closed topology for every printable center component.
+for printable_part in \
+    "${OUT_DIR}/center_input_rotor.stl" \
+    "${OUT_DIR}/center_output_rotor.stl" \
+    "${OUT_DIR}/center_input_carriage.stl" \
+    "${OUT_DIR}/center_output_cage.stl" \
+    "${OUT_DIR}/center_guide_rails.stl" \
+    "${OUT_DIR}/center_stops.stl" \
+    "${OUT_DIR}/center_mechanism_plate.stl" \
+    "${OUT_CHAIN}/cabinet_chain_selector_magnetic_shoe.stl"; do
+    require_watertight_print_part "${printable_part}"
+done
+
 export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false 0
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0
@@ -628,6 +806,17 @@ if [[ "${SHOW_LEGACY_STATIONS}" == "true" ]]; then
     export_part "screw" "${OUT_DIR}/11_t_countersunk_screw_reference.stl" false 0
     export_part "fork" "${OUT_DIR}/12_clutch_fork_candidate.stl" false 0
 fi
+
+# Run the center-only open/engaged sweep in a temporary directory. This checks
+# the actual OpenSCAD positions and keeps analytic motion/clearance regressions
+# out of the browser manifest; it is still not a substitute for the printed
+# bearing, magnet and 20-cycle physical gate.
+[[ -f "${INSPECT_PY}" ]] || die "未找到中心离合几何检查所需的 inspect_stl.py: ${INSPECT_PY}"
+python3 "${PROJECT_ROOT}/scripts/validate_center_clutch_geometry.py" \
+    --openscad "${OPENSCAD_BIN}" \
+    --scad "${SCAD_DIR}/${SCAD_FILE}" \
+    --contract "${CENTER_CONTRACT_JSON}" \
+    --inspect "${INSPECT_PY}"
 
 # ===== 分区：原生世界坐标预览 =====
 # cabinet_clutch.scad is authored in X=width, Y=height, Z=depth directly.

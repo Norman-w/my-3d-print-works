@@ -483,7 +483,25 @@ def scheme1_stations() -> list[dict]:
     return stations
 
 
-def write_motion(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> None:
+def load_center_clutch_contract(root: Path) -> dict | None:
+    """Read the OpenSCAD-generated contract without duplicating its dimensions."""
+    contract_path = root / "output/3d-print/cabinet-clutch/center_clutch_contract.json"
+    if not contract_path.is_file():
+        return None
+    payload = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract = payload.get("centerClutch")
+    if not isinstance(contract, dict):
+        raise RuntimeError(f"中心离合契约格式无效: {contract_path}")
+    return contract
+
+
+def write_motion(
+    path: Path,
+    tz: float,
+    pins: list[Vec],
+    wheels: list[dict],
+    center_contract: dict | None = None,
+) -> None:
     payload = {
         "p": P,
         "driveTeeth": SPROCKET_TEETH,
@@ -511,6 +529,8 @@ def write_motion(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> 
             "selectorStart": 0,
         },
     }
+    if center_contract is not None:
+        payload["centerClutch"] = center_contract
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
@@ -526,7 +546,8 @@ def main() -> int:
     write_gen(out, tz, pins, wheels)
     motion = root / "output/3d-print/cabinet-chain/cabinet_chain_motion.json"
     motion.parent.mkdir(parents=True, exist_ok=True)
-    write_motion(motion, tz, pins, wheels)
+    center_contract = load_center_clutch_contract(root)
+    write_motion(motion, tz, pins, wheels, center_contract)
     print(
         f"pins={n} even={n % 2 == 0} ten_z={tz:.4f} "
         f"home={ten_home_z():.4f} drop={ten_home_z() - tz:.4f} "

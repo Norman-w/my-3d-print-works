@@ -12,11 +12,13 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
+  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
 ]);
 const RIGID_CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
+  "cabinet-chain/cabinet_chain_selector_magnetic_shoe",
 ]);
 const RIGID_CHAIN_SEGMENTS = new Map([
   // These highlighted assemblies replace the corresponding two-pin link in
@@ -49,10 +51,35 @@ const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
 const CURRENT_CLUTCH_IDS = new Map([
   // The native center prototype is the only visible clutch pair in the
-  // default assembly.  Its male child is the upper input gear and its female
-  // child is the lower output dog/pulley.
-  ["cabinet-clutch/06_upper_axis_z_spur_candidate", "male"],
-  ["cabinet-clutch/08_lower_upward_dog_candidate", "female"],
+  // default assembly. Names follow the mechanical roles, not the retired
+  // upper/lower preview labels.
+  ["cabinet-clutch/center_input_rotor", {
+    role: "input", primary: true, moves: true, rotates: true,
+  }],
+  ["cabinet-clutch/center_output_rotor", {
+    role: "output", primary: true, moves: false, rotates: true,
+  }],
+  ["cabinet-clutch/center_input_carriage", {
+    role: "input", moves: true, rotates: false,
+  }],
+  ["cabinet-clutch/center_input_shaft_reference", {
+    role: "input", moves: true, rotates: true,
+  }],
+  ["cabinet-clutch/center_input_bearings_reference", {
+    role: "input", moves: true, rotates: false,
+  }],
+  ["cabinet-clutch/center_output_shaft_reference", {
+    role: "output", moves: false, rotates: true,
+  }],
+  ["cabinet-clutch/center_output_bearings_reference", {
+    role: "output", moves: false, rotates: false,
+  }],
+]);
+const CURRENT_CLUTCH_STATIC_IDS = new Set([
+  "cabinet-clutch/center_output_cage",
+  "cabinet-clutch/center_guide_rails",
+  "cabinet-clutch/center_stops",
+  "cabinet-clutch/center_mechanism_plate",
 ]);
 const DRAWER_ROTARY_IDS = new Map([
   // The center clutch pair is bound separately so its +Y engagement stroke
@@ -91,10 +118,6 @@ const SCHEME1_PHASE = {
 const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
 const SCHEME1_ENGAGE_SECONDS = 0.28;
 const SCHEME1_RELEASE_SECONDS = 0.24;
-// cabinet_clutch.scad derives this as
-// GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_GAP = 3.25 - 0.35 mm.
-// Keep the browser stroke identical to the authored +Y insertion datum.
-const CURRENT_CLUTCH_ENGAGE_STROKE_MM = 2.90;
 const CURRENT_CLUTCH_ROW = 2;
 const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
@@ -106,7 +129,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
 /** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
-/** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number}} CurrentClutchPivot */
+/** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
 //#endregion
 
 //#region 私有成员
@@ -119,9 +142,11 @@ const play = {
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
   drawerBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
   drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
-  currentClutch: /** @type {{male:CurrentClutchPivot|null,female:CurrentClutchPivot|null}} */ ({
-    male: null,
-    female: null,
+  currentClutch: /** @type {{contract:any,input:CurrentClutchPivot|null,output:CurrentClutchPivot|null,parts:CurrentClutchPivot[]}} */ ({
+    contract: null,
+    input: null,
+    output: null,
+    parts: [],
   }),
   powerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
   columnSyncBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
@@ -361,6 +386,75 @@ function scheme1StationLabel(index) {
   return `R${station.row + 1}C${station.col + 1}`;
 }
 
+function validateCenterClutchContract(contract) {
+  const required = [
+    "axisXMm",
+    "axisZMm",
+    "axis",
+    "role",
+    "openGapMm",
+    "dogInsertionMm",
+    "strokeMm",
+    "pocketDepthMm",
+    "bottomClearanceMm",
+    "magnetNonContactClearanceMm",
+    "femaleMagnetProjectionMm",
+    "magnetNominalDiameterMm",
+    "actuation",
+    "engageOnlyWhenStopped",
+    "releaseBeforeReturn",
+  ];
+  if (!contract || typeof contract !== "object") {
+    throw new Error("缺少 centerClutch 机械契约");
+  }
+  const missing = required.filter((key) => !(key in contract));
+  if (missing.length) {
+    throw new Error(`centerClutch 契约缺少 ${missing.join(", ")}`);
+  }
+  if (contract.axis !== "+Y" || contract.role !== "input/output") {
+    throw new Error("centerClutch 轴向/角色契约不匹配");
+  }
+  if (contract.actuation !== "permanent-magnet"
+    || contract.engageOnlyWhenStopped !== true
+    || contract.releaseBeforeReturn !== true) {
+    throw new Error("centerClutch 纯永磁动作门槛不满足");
+  }
+  for (const key of [
+    "openGapMm",
+    "dogInsertionMm",
+    "strokeMm",
+    "pocketDepthMm",
+    "bottomClearanceMm",
+    "magnetNonContactClearanceMm",
+    "femaleMagnetProjectionMm",
+    "magnetNominalDiameterMm",
+  ]) {
+    if (!Number.isFinite(Number(contract[key])) || Number(contract[key]) <= 0) {
+      throw new Error(`centerClutch 尺寸无效: ${key}`);
+    }
+  }
+  if (!Number.isFinite(Number(contract.axisXMm))
+      || !Number.isFinite(Number(contract.axisZMm))) {
+    throw new Error("centerClutch 旋转轴坐标无效");
+  }
+  if (Math.abs(Number(contract.strokeMm)
+      - Number(contract.openGapMm)
+      - Number(contract.dogInsertionMm)) > 0.001) {
+    throw new Error("centerClutch stroke != gap + insertion");
+  }
+  if (Math.abs(Number(contract.pocketDepthMm)
+      - Number(contract.dogInsertionMm)
+      - Number(contract.bottomClearanceMm)) > 0.001) {
+    throw new Error("centerClutch pocket depth != insertion + bottom clearance");
+  }
+  if (Math.abs(Number(contract.bottomClearanceMm)
+      - Number(contract.femaleMagnetProjectionMm)
+      - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
+    throw new Error("centerClutch magnet clearance derivation is invalid");
+  }
+  return contract;
+}
+
 function playScene() {
   return play.host?.state?.legacyRoot ?? play.host?.state?.scene ?? null;
 }
@@ -547,7 +641,7 @@ function isCurrentClutchStation(index = play.scheme1.targetIndex) {
 }
 
 function currentClutchDrivesDrawer() {
-  if (!play.scheme1.ready) return false;
+  if (!play.scheme1.ready || !play.currentClutch.contract) return false;
   // The default assembly contains the approved center pair only.  It acts as
   // the visible clutch detail for whichever selected station is being shown.
   // If the optional 25-station clutch faces are loaded, stop using the proxy
@@ -782,29 +876,43 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
 }
 
-function bindCurrentClutchMesh(item, role) {
-  if (!item.mesh?.isMesh || !playScene()) return;
+function bindCurrentClutchMesh(item, config) {
+  if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
   const geometry = item.mesh.geometry;
   geometry.computeBoundingBox();
   const center = geometry.boundingBox.getCenter(new THREE.Vector3());
-  geometry.translate(-center.x, -center.y, -center.z);
+  const contract = play.currentClutch.contract;
+  const axisX = Number(contract?.axisXMm);
+  const axisZ = Number(contract?.axisZMm);
+  const pivotX = Number.isFinite(axisX) ? axisX : center.x;
+  const pivotZ = Number.isFinite(axisZ) ? axisZ : center.z;
+  // A D shaft's flat shifts its bounding-box centre by half the flat depth;
+  // the carriage also contains off-axis guide shoes. Use the OpenSCAD axis
+  // datum whenever the contract provides it so rotations stay coaxial and
+  // only the explicitly moving parts receive the +Y stroke.
+  geometry.translate(-pivotX, -center.y, -pivotZ);
   const pivot = new THREE.Group();
-  pivot.position.copy(center);
-  pivot.name = `current-clutch-${role}`;
+  pivot.position.set(pivotX, center.y, pivotZ);
+  pivot.name = `current-clutch-${config.role}`;
   pivot.add(new THREE.Mesh(geometry, item.mesh.material));
   const group = new THREE.Group();
-  group.name = `current-clutch-${role}-container`;
+  group.name = `current-clutch-${config.role}-container`;
   group.add(pivot);
-  replaceMesh(item, group);
-  play.currentClutch[role] = {
+  // Native center parts belong directly to the canonical world scene. Do not
+  // send them through legacyRoot: that old -90° adapter is only for the
+  // cabinet-chain coordinate frame.
+  replaceMesh(item, group, play.host.state.scene);
+  const part = {
     group: pivot,
-    role,
-    // The male input is driven through the spur mesh from the vertical
-    // spline shaft; the female output follows the same coaxial dog rotation.
+    role: config.role,
     sign: -1,
     baseY: center.y,
     restY: 0,
+    moves: Boolean(config.moves),
+    rotates: Boolean(config.rotates),
   };
+  play.currentClutch.parts.push(part);
+  if (config.primary) play.currentClutch[config.role] = part;
 }
 
 function bindWorldYAxisRotaryMesh(item, target, name, sign = 1) {
@@ -1307,7 +1415,7 @@ function initScheme1Motion() {
   play.scheme1.cycleStartOutputTurns = 0;
   play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
-  scheme1Status(`拨叉待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
+  scheme1Status(`磁力靴待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
 }
 
 function setScheme1Phase(phase) {
@@ -1325,11 +1433,11 @@ function setScheme1Phase(phase) {
   scheme.phaseTime = 0;
   const stationLabel = scheme1StationLabel(scheme.targetIndex);
   const labels = {
-    [SCHEME1_PHASE.INDEX]: `拨叉移动 · 目标 ${stationLabel}`,
-    [SCHEME1_PHASE.ENGAGE]: `停稳合闸 · ${stationLabel}`,
+    [SCHEME1_PHASE.INDEX]: `磁力靴移动 · 目标 ${stationLabel}`,
+    [SCHEME1_PHASE.ENGAGE]: `停稳磁力接合 · ${stationLabel}`,
     [SCHEME1_PHASE.OPEN]: `抽屉打开中 · ${stationLabel}`,
     [SCHEME1_PHASE.CLOSE]: `抽屉关闭中 · ${stationLabel}`,
-    [SCHEME1_PHASE.RELEASE]: `断开离合 · ${stationLabel}`,
+    [SCHEME1_PHASE.RELEASE]: `磁力释放 · ${stationLabel}`,
   };
   scheme1Status(labels[phase] || "方案1");
 }
@@ -1467,20 +1575,22 @@ function currentClutchEngagement() {
 }
 
 function tickCurrentClutch() {
+  const contract = play.currentClutch.contract;
+  if (!contract) return;
   const engagement = currentClutchEngagement();
   const turns = drawerDriveTurns();
   const angle = -2 * Math.PI * turns;
-  const male = play.currentClutch.male;
-  const female = play.currentClutch.female;
-  if (male) {
-    // In the authored SCAD the lower male child enters the upper mother along
-    // +Y.  The browser uses the same world axis; no local X/Z remap is applied.
-    male.group.position.y = male.baseY + CURRENT_CLUTCH_ENGAGE_STROKE_MM * engagement;
-    male.group.rotation.y = male.restY + male.sign * angle;
-  }
-  if (female) {
-    female.group.position.y = female.baseY;
-    female.group.rotation.y = female.restY + female.sign * angle;
+  const stroke = Number(contract.strokeMm);
+  for (const part of play.currentClutch.parts) {
+    // The input rotor, its short D shaft, bearings and carriage are one
+    // moving +Y assembly. The output rotor/cage stays fixed in Y.
+    part.group.position.y = part.baseY + (part.moves ? stroke * engagement : 0);
+    if (part.rotates) {
+      // Once engaged, input and output share the coaxial clutch rotation. The
+      // output does not rotate during INDEX/RELEASE because drawerDriveTurns
+      // is zero outside OPEN/CLOSE.
+      part.group.rotation.y = part.restY + part.sign * angle;
+    }
   }
 }
 
@@ -1657,7 +1767,9 @@ export function attachCabinetChainPlay(host) {
       return res.json();
     })
     .then((motion) => {
+      const centerClutch = validateCenterClutchContract(motion.centerClutch);
       play.motion = motion;
+      play.currentClutch.contract = centerClutch;
       play.path = buildPath(motion);
       initScheme1Motion();
       play.ready = true;
@@ -1665,8 +1777,11 @@ export function attachCabinetChainPlay(host) {
         if (item.mesh) void onPartLoaded(item);
       }
     })
-    .catch(() => {
+    .catch((error) => {
       if (host.els.hzOut) host.els.hzOut.textContent = "未加载运动路径";
+      if (host.els.scheme1Out) {
+        host.els.scheme1Out.textContent = `运动契约错误：${error.message || error}`;
+      }
     });
 }
 
@@ -1766,10 +1881,17 @@ export async function onPartLoaded(item) {
     }), true);
     return;
   }
-  if (CURRENT_CLUTCH_IDS.has(id)) {
-    const role = CURRENT_CLUTCH_IDS.get(id);
+  if (CURRENT_CLUTCH_STATIC_IDS.has(id)) {
+    // Cage, rails, hard stops and the removable plate are fixed world-frame
+    // hardware. They must not enter the legacy chain adapter or a rotary
+    // pivot; their coordinates come directly from the native STL.
     item.playBound = true;
-    enqueueBind(() => Promise.resolve(bindCurrentClutchMesh(item, role)).catch((error) => {
+    return;
+  }
+  if (CURRENT_CLUTCH_IDS.has(id)) {
+    const config = CURRENT_CLUTCH_IDS.get(id);
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindCurrentClutchMesh(item, config)).catch((error) => {
       console.error("current clutch bind failed", id, error);
       item.playBound = false;
     }), true);
@@ -1820,7 +1942,7 @@ export function holdScheme1Engaged() {
   scheme.phaseTime = SCHEME1_ENGAGE_SECONDS;
   play.playing = false;
   updateHzLabel();
-  scheme1Status(`方案1检查状态 · 已合闸 ${scheme1StationLabel(scheme.targetIndex)}`);
+  scheme1Status(`磁力离合检查状态 · 已接合 ${scheme1StationLabel(scheme.targetIndex)}`);
 }
 
 export function tickPlay(dt) {

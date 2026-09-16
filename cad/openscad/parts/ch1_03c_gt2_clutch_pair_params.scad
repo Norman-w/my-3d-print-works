@@ -72,6 +72,9 @@ GT2_D_BORE_DEPTH = is_undef(GT2_D_BORE_DEPTH)
 // One nominal Ø2 mm axial magnet per mating center. The printed pocket is
 // enlarged slightly for a hand-fit. Both pockets are exactly concentric with
 // the shaft axis; the female pocket opens from the bottom of the mother slot.
+// A second pair lives in the selector magnetic shoe; keeping its spacing here
+// prevents the web animation and the printed trigger from acquiring separate
+// magic numbers.
 GT2_MAGNET_NOMINAL_D = 2.00;
 GT2_MAGNET_POCKET_D = is_undef(GT2_MAGNET_POCKET_D)
     ? 2.20
@@ -79,7 +82,6 @@ GT2_MAGNET_POCKET_D = is_undef(GT2_MAGNET_POCKET_D)
 GT2_MAGNET_POCKET_H = is_undef(GT2_MAGNET_POCKET_H)
     ? 1.80
     : GT2_MAGNET_POCKET_H;
-
 // 标准 2GT/GT2：2 mm 节距、12T、6 mm 皮带。打印轮不带法兰或大轮毂。
 GT2_PULLEY_TEETH = is_undef(GT2_PULLEY_TEETH)
     ? 12
@@ -137,6 +139,35 @@ GT2_MOTHER_T = is_undef(GT2_MOTHER_T)
 GT2_MOTHER_POCKET_DEPTH = is_undef(GT2_MOTHER_POCKET_DEPTH)
     ? 3.25
     : GT2_MOTHER_POCKET_DEPTH;
+// Frozen center-station clutch travel. The open gap is measured from the
+// male dog tip to the mother pocket mouth; effective insertion is the amount
+// that enters the pocket after the gap is closed. Total travel is therefore
+// gap + insertion, while the remaining pocket depth is the bottom clearance.
+GT2_MOTHER_GAP = is_undef(GT2_MOTHER_GAP)
+    ? 0.60
+    : GT2_MOTHER_GAP;
+GT2_MOTHER_EFFECTIVE_INSERTION = is_undef(GT2_MOTHER_EFFECTIVE_INSERTION)
+    ? 2.40
+    : GT2_MOTHER_EFFECTIVE_INSERTION;
+GT2_CLUTCH_ENGAGE_STROKE_MM = is_undef(GT2_CLUTCH_ENGAGE_STROKE_MM)
+    ? GT2_MOTHER_GAP + GT2_MOTHER_EFFECTIVE_INSERTION
+    : GT2_CLUTCH_ENGAGE_STROKE_MM;
+GT2_MOTHER_BOTTOM_CLEARANCE = is_undef(GT2_MOTHER_BOTTOM_CLEARANCE)
+    ? GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_EFFECTIVE_INSERTION
+    : GT2_MOTHER_BOTTOM_CLEARANCE;
+// The engaged dog still stops 0.85 mm above the mother-pocket bottom. Let the
+// female magnet sit 0.45 mm proud of that floor, leaving the frozen 0.40 mm
+// face-to-face non-contact clearance instead of making the magnets the stop.
+GT2_MAGNET_NONCONTACT_CLEARANCE_MM = is_undef(
+    GT2_MAGNET_NONCONTACT_CLEARANCE_MM
+)
+    ? 0.40
+    : GT2_MAGNET_NONCONTACT_CLEARANCE_MM;
+GT2_FEMALE_MAGNET_PROJECTION_MM = GT2_MOTHER_BOTTOM_CLEARANCE
+    - GT2_MAGNET_NONCONTACT_CLEARANCE_MM;
+GT2_ACTUATOR_TRIGGER_SPACING_MM = is_undef(GT2_ACTUATOR_TRIGGER_SPACING_MM)
+    ? 12.00
+    : GT2_ACTUATOR_TRIGGER_SPACING_MM;
 GT2_MOTHER_POCKET_CLEARANCE = is_undef(GT2_MOTHER_POCKET_CLEARANCE)
     ? 0.25
     : GT2_MOTHER_POCKET_CLEARANCE;
@@ -269,7 +300,9 @@ function gt2_male_magnet_pocket_z0() =
     gt2_male_total_h() - GT2_MAGNET_POCKET_H;
 
 function gt2_female_magnet_pocket_z0() =
-    gt2_mother_pocket_floor_z() - GT2_MAGNET_POCKET_H;
+    gt2_mother_pocket_floor_z()
+        - GT2_MAGNET_POCKET_H
+        + GT2_FEMALE_MAGNET_PROJECTION_MM;
 
 function gt2_male_spline_clearance() =
     gt2_center_distance()
@@ -377,6 +410,22 @@ assert(GT2_MALE_GEAR_T >= 3.0,
     "male gear teeth need at least 3 mm axial thickness");
 assert(GT2_DOG_INTERFACE_H >= 3.0,
     "dog interface needs about 3 mm insertion depth");
+assert(abs(GT2_MOTHER_GAP - 0.60) < 0.001,
+    "center clutch open gap is frozen at 0.60 mm");
+assert(abs(GT2_MOTHER_EFFECTIVE_INSERTION - 2.40) < 0.001,
+    "center clutch effective insertion is frozen at 2.40 mm");
+assert(abs(GT2_CLUTCH_ENGAGE_STROKE_MM - 3.00) < 0.001,
+    "center clutch total stroke is frozen at 3.00 mm");
+assert(abs(GT2_MOTHER_BOTTOM_CLEARANCE - 0.85) < 0.001,
+    "center clutch pocket bottom clearance is frozen at 0.85 mm");
+assert(abs(GT2_MOTHER_GAP + GT2_MOTHER_EFFECTIVE_INSERTION
+        - GT2_CLUTCH_ENGAGE_STROKE_MM) < 0.001,
+    "clutch stroke must equal open gap plus effective insertion");
+assert(abs(GT2_MOTHER_POCKET_DEPTH - GT2_MOTHER_EFFECTIVE_INSERTION
+        - GT2_MOTHER_BOTTOM_CLEARANCE) < 0.001,
+    "mother pocket depth must equal insertion plus bottom clearance");
+assert(GT2_ACTUATOR_TRIGGER_SPACING_MM >= 12.0,
+    "selector magnetic shoe needs at least 12 mm trigger spacing");
 assert(
     GT2_DOG_GEAR_OVERLAP >= GT2_EPS
         && GT2_DOG_GEAR_OVERLAP < GT2_MALE_GEAR_T,
@@ -469,6 +518,18 @@ assert(
     gt2_female_magnet_pocket_z0() > gt2_pulley_face_bottom_z() + 0.40,
     "female magnet pocket must stay in the mother-side hub"
 );
+assert(GT2_MAGNET_NONCONTACT_CLEARANCE_MM > 0,
+    "engaged magnets need a positive non-contact clearance");
+assert(GT2_MAGNET_NONCONTACT_CLEARANCE_MM < GT2_MOTHER_BOTTOM_CLEARANCE,
+    "female magnet projection must not consume the dog bottom clearance");
+assert(abs(
+        GT2_MOTHER_BOTTOM_CLEARANCE
+        - GT2_FEMALE_MAGNET_PROJECTION_MM
+        - GT2_MAGNET_NONCONTACT_CLEARANCE_MM
+    ) < 0.001,
+    "engaged magnet face clearance must be derived from the pocket bottom");
+assert(GT2_FEMALE_MAGNET_PROJECTION_MM < GT2_MAGNET_POCKET_H,
+    "female magnet projection must leave a blind pocket behind the magnet");
 assert(
     abs(GT2_MOTHER_OUTER_R - gt2_belt_guide_r()) < 0.02,
     "mother receiver outer wall must be flush with the belt guide"

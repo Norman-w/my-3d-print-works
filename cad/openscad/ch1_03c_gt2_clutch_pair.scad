@@ -29,9 +29,6 @@ include <parts/ch1_03c_gt2_clutch_pair_params.scad>
 $fa = 5;
 $fs = 0.12;
 
-GT2_MOTHER_GAP = is_undef(GT2_MOTHER_GAP)
-    ? 0.35
-    : GT2_MOTHER_GAP;
 // The standalone file exports one of its three preview modes. The cabinet
 // scene includes the same modules as an embedded library and owns the output
 // dispatch, so suppress standalone top-level geometry in that context.
@@ -436,6 +433,14 @@ if (!GT2_CLUTCH_EMBEDDED) {
     gt2_mother_clearance_to_long_shaft(),
     "mother_gap_mm",
     GT2_MOTHER_GAP,
+    "mother_effective_insertion_mm",
+    GT2_MOTHER_EFFECTIVE_INSERTION,
+    "clutch_stroke_mm",
+    GT2_CLUTCH_ENGAGE_STROKE_MM,
+    "mother_bottom_clearance_mm",
+    GT2_MOTHER_BOTTOM_CLEARANCE,
+    "actuator_trigger_spacing_mm",
+    GT2_ACTUATOR_TRIGGER_SPACING_MM,
     "d_bore_depth_mm",
     GT2_D_BORE_DEPTH,
     "magnet_nominal_d_mm",

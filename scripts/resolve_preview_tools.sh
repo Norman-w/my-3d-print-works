@@ -16,6 +16,16 @@ fi
 if [[ -n "${STL_HTTP_PREVIEW_SKILL_DIR:-}" ]]; then
     STL_PREVIEW_SKILL_ROOTS+=("${STL_HTTP_PREVIEW_SKILL_DIR}")
 fi
+if [[ -n "${AI_APPRENTICE_REPO:-}" ]]; then
+    STL_PREVIEW_SKILL_ROOTS+=("${AI_APPRENTICE_REPO}/skills/stl-http-preview")
+fi
+if [[ -n "${PROJECT_ROOT:-}" ]]; then
+    # The local apprentice checkout is the maintained fallback when the
+    # optional stl-http-preview skill is not installed into ~/.codex.
+    STL_PREVIEW_SKILL_ROOTS+=(
+        "${PROJECT_ROOT}/../AISkillsCrossLanguageCodeStandards/skills/stl-http-preview"
+    )
+fi
 if [[ -n "${HOME:-}" ]]; then
     OPENSCAD_SKILL_ROOTS+=(
         "${HOME}/.codex/skills/openscad-stl-print"
