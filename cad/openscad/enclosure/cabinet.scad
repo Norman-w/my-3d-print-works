@@ -84,6 +84,7 @@ module cabinet_shell() {
                 bay_grid();
                 front_service_cheek();
                 tensioner_guides();
+                cabinet_motor_mount_floor_seats_local();
             }
             back_rabbet();
             tensioner_floor_bore();
@@ -92,10 +93,7 @@ module cabinet_shell() {
 }
 
 module back_panel() {
-    union() {
-        cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
-        cabinet_motor_mount_bosses_local();
-    }
+    cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
 }
 
 module drawer_ghosts() {
@@ -143,12 +141,12 @@ if (is_undef(CABINET_LIB_ONLY) || !CABINET_LIB_ONLY) {
 //#endregion
 
 //#region 视图层
-// 预览用 PART=assembly；打印件只导出 shell / back_panel。背板含动力电机罩的四根接收 boss。
+// 预览用 PART=assembly；打印件只导出 shell / back_panel。柜底含动力电机罩的两个接收座。
 //#endregion
 
 //#region 业务逻辑
 // 格栅只在抽屉区。底仓前脸通宽开口放电器；后仓仍是一个开间。
-// 可拆背板内侧增加动力电机罩的四根带底座 boss，罩体沿 +Y 压到 boss 端面。
+// 动力电机罩不再挂在背板上；柜底有两个向下固定的接收座，罩体从上方落座。
 // 左颊板只堵前仓抽屉高度，把回程走廊留在后仓。张紧 U 导肋长在后仓底板。
 //#endregion
 

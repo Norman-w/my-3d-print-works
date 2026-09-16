@@ -73,6 +73,7 @@ const LEGACY_SCHEME1_TAILS = new Set([
   "cabinet_chain_scheme1_bearings",
   "cabinet_chain_scheme1_selector",
 ]);
+const LEGACY_MOTOR_TENSIONER_ID = "cabinet-chain/cabinet_chain_motor_tensioner";
 const UPPER_TENSIONER_TAILS = new Set([
   "00_tensioner_t_solid_reference",
   "cabinet_clutch_column_sync_tensioner",
@@ -1021,7 +1022,9 @@ function isDefaultVisiblePart(part) {
 }
 
 function isSnakePart(part) {
-  return part?.group === "cabinet-chain" && !LEGACY_SCHEME1_TAILS.has(partTail(part));
+  return part?.group === "cabinet-chain"
+    && part?.id !== LEGACY_MOTOR_TENSIONER_ID
+    && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
 function isNativeClutchPart(part) {
@@ -1038,7 +1041,9 @@ function isUpperTensionerPart(part) {
 }
 
 function isLowerTensionerPart(part) {
-  return part?.group === "cabinet-chain" && !LEGACY_SCHEME1_TAILS.has(partTail(part));
+  return part?.group === "cabinet-chain"
+    && part?.id !== LEGACY_MOTOR_TENSIONER_ID
+    && !LEGACY_SCHEME1_TAILS.has(partTail(part));
 }
 
 const VIEW_PROFILES = {

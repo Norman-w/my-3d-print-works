@@ -1,4 +1,4 @@
-// Pololu #1101 D 轴电机固定罩，独立模型库/打印入口。
+// Pololu #1101 D 轴电机 Ω 形固定套，独立模型库/打印入口。
 
 //#region 导入/依赖
 use <parts/motor_pololu_mount_cover.scad>

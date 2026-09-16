@@ -1,4 +1,4 @@
-// 柜体背板上的动力电机固定罩接收 boss。
+// 柜体底部的蛇形动力电机 Ω 形固定座接收面。
 // 本文件假设父文件已通过 cabinet_motor_mount_params.scad 载入共享参数。
 
 //#region 导入/依赖
@@ -6,51 +6,46 @@
 //#endregion
 
 //#region 私有成员
-module local_y_cylinder(d, h, x, z, y0) {
-    translate([x, y0 + h, z])
-        rotate([90, 0, 0])
-            cylinder(d = d, h = h);
+module local_z_cylinder(d, h, x, y, z0) {
+    translate([x, y, z0])
+        cylinder(d = d, h = h);
 }
 //#endregion
 
 //#region 公开 API
-module cabinet_motor_mount_bosses_local() {
+module cabinet_motor_mount_floor_seats_local() {
     c = motor_mount_c();
-    local_x = c[0] - PANEL_X;
-    local_z = c[1] - PANEL_Z;
+    floor_y = MOTOR_MOUNT_CHAIN_Y
+        + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
     difference() {
         union() {
-            for (p = MOTOR_MOUNT_BOSS_OFFSETS) {
-                local_y_cylinder(
-                    MOTOR_MOUNT_BOSS_OD,
-                    MOTOR_MOUNT_BOSS_L,
-                    local_x + p[0],
-                    local_z + p[1],
-                    -MOTOR_MOUNT_BOSS_L
-                );
-                local_y_cylinder(
-                    MOTOR_MOUNT_BOSS_PAD_D,
-                    MOTOR_MOUNT_BOSS_PAD_H,
-                    local_x + p[0],
-                    local_z + p[1],
-                    -MOTOR_MOUNT_BOSS_PAD_H
-                );
-            }
+            for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+                for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
+                    local_z_cylinder(
+                        MOTOR_MOUNT_FLOOR_SEAT_D,
+                        MOTOR_MOUNT_FLOOR_SEAT_H,
+                        c[0] + offset_x,
+                        floor_y + y_offset,
+                        WALL - MOTOR_MOUNT_EPS
+                    );
         }
-        // 嵌件从 boss 的前端压入，后面保留约 1.5 mm 实体承托到背板。
-        for (p = MOTOR_MOUNT_BOSS_OFFSETS)
-            local_y_cylinder(
-                MOTOR_MOUNT_INSERT_D,
-                MOTOR_MOUNT_INSERT_L + MOTOR_MOUNT_EPS,
-                local_x + p[0],
-                local_z + p[1],
-                -MOTOR_MOUNT_BOSS_L - MOTOR_MOUNT_EPS
-            );
+        // The vertical bore is the actual world-Y fixing reference.  It
+        // passes through the printed floor seat and the 3.2 mm cabinet floor;
+        // the underside can receive an M3 nut or heat-set insert.
+        for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+            for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
+                local_z_cylinder(
+                    MOTOR_MOUNT_FLOOR_BORE_D,
+                    MOTOR_MOUNT_FLOOR_SEAT_H + WALL + 2 * MOTOR_MOUNT_EPS,
+                    c[0] + offset_x,
+                    floor_y + y_offset,
+                    -MOTOR_MOUNT_EPS
+                );
     }
 }
 //#endregion
 
 //#region 业务逻辑
-// 该模块在 cabinet.scad 的 back_panel() 局部坐标内调用：boss 向 −Y 伸入后仓，
-// 与固定罩法兰的四个孔面接触；底座盘把螺钉拉力分散到 5 mm 背板。
+// 该模块在 cabinet.scad 的 cabinet_shell() 局部坐标内调用：两块圆形接收座
+// 直接坐在柜底，四个孔的轴线沿旧 Z / 世界 Y；Ω 套底部的左右固定座从上方落到这里。
 //#endregion

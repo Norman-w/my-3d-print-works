@@ -188,14 +188,15 @@ chain_labels = {
         "role": "purchased",
     },
     "cabinet-chain/cabinet_chain_motor_cover": {
-        "name": "蛇形链条电机固定罩（可沿下压方向滑动）",
+        "name": "蛇形链条电机 Ω 形贴合固定套（下向安装）",
         "color": "#56616d",
         "role": "printed",
     },
     "cabinet-chain/cabinet_chain_motor_tensioner": {
-        "name": "蛇形电机张紧调节（导槽 + 弹簧 + M3 螺杆）",
+        "name": "旧蛇形电机张紧螺杆（源文件保留，默认隐藏）",
         "color": "#c9a227",
         "role": "printed",
+        "visible": False,
     },
     "cabinet-chain/cabinet_chain_sprockets": {
         "name": "12T 尖齿唯一主动轮（D 轴）",
@@ -457,7 +458,7 @@ PY
 
 # ===== 分区：公开 API =====
 [[ -x "${OPENSCAD_BIN}" ]] || die "未找到 OpenSCAD: ${OPENSCAD_BIN}"
-mkdir -p "${OUT_DIR}" "${REPORT_DIR}"
+mkdir -p "${OUT_DIR}" "${OUT_CHAIN}" "${REPORT_DIR}"
 
 # Remove the old child-page output and the unrelated legacy root page/assets.
 # These are generated preview artifacts, not source models; the root viewer
@@ -566,6 +567,33 @@ done
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
 export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
+
+# The root page also owns the snake drive.  Export its motor sleeve here so a
+# canonical refresh can never leave an older motor-cover STL beside the new
+# native drawer-drive parts.  CHAIN_PART is namespaced because cabinet_chain.scad
+# includes libraries that also define PART.
+export_chain_motor_cover() {
+    local target="${OUT_CHAIN}/cabinet_chain_motor_cover.stl"
+    local tmp="${target}.tmp.$$"
+    echo "→ CHAIN_PART=motor_cover → ${target}"
+    (
+        cd "${PROJECT_ROOT}/cad/openscad/enclosure"
+        "${OPENSCAD_BIN}" \
+            --backend Manifold \
+            --export-format binstl \
+            -D "QUALITY=${QUALITY}" \
+            -D 'CHAIN_PART="motor_cover"' \
+            -o "${tmp}" \
+            "cabinet_chain.scad"
+    )
+    [[ -s "${tmp}" ]] || die "空 STL: ${target}"
+    mv -f "${tmp}" "${target}"
+    if [[ -x "${INSPECT_PY}" || -f "${INSPECT_PY}" ]]; then
+        python3 "${INSPECT_PY}" "${target}" --json --output "${REPORT_DIR}/cabinet_chain_motor_cover.json"
+    fi
+}
+
+export_chain_motor_cover
 
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be

@@ -1,14 +1,14 @@
 // Mechanical contract
-// process: FDM; PETG/nylon recommended for the cover and printed boss receiver
-// material: printed motor cover; mating motor is purchased Pololu #1101
-// parting_plane: open front faces the power wheel; cover removes toward +Y/back panel
-// opening_direction: slide the cover along +Y after removing four M3 screws
-// fastener: four M3 screws into 4.6 mm heat-set-insert pockets in the back-panel bosses
-// seal: n/a; cable exit is an open rear slot
-// print_orientation: rotate as needed in the slicer; the source axis is Y, not a claimed bed orientation
+// process: FDM; PETG/nylon recommended for the printed sleeve and fixing seats
+// material: printed motor-fit Ω clamp; mating motor is purchased Pololu #1101
+// parting_plane: n/a; one printed clamp, open at the lower Ω mouth and at both axial ends
+// opening_direction: motor slides through the sleeve along local Y; fixing seats face local -Z
+// fastener: four M3 screws through local-Z holes in the two bottom seats into floor receivers
+// seal: n/a; rear electrical tabs remain open
+// print_orientation: rotate as needed in the slicer; source axis follows the assembly datum
 // units: mm
-// note: the cover cavity is a clearance cage for a 10 x 12 mm gearbox and 10 x 10 mm motor body;
-//       it is a structural retainer, not a motor replacement or a sealed enclosure.
+// note: the clamp follows the motor's rounded rectangular 10×12 mm envelope;
+//       the bottom profile is two short outward seats, not two hanging legs.
 
 //#region 导入/依赖
 include <../enclosure/cabinet_motor_mount_params.scad>
@@ -21,7 +21,8 @@ $fs = 0.22;
 //#endregion
 
 //#region 模型/类型
-// 固定罩局部原点为动力轮轴中心；X/Z 为罩体截面，Y 向后仓/背板方向增加。
+// 固定套局部原点为蛇形主动轮轴中心；局部 X/Z 是电机横截面，局部 Y 是电机轴向。
+// 经过旧链条适配器后，局部 -Z 对应当前世界 -Y（下方）；下方是座子而不是腿。
 //#endregion
 
 //#region 私有成员
@@ -34,94 +35,107 @@ module rounded_prism_xz(w, h, len, r, y0) {
     }
 }
 
-module local_y_cylinder(d, h, x, z, y0) {
-    translate([x, y0 + h, z])
-        rotate([90, 0, 0])
-            cylinder(d = d, h = h);
+module motor_mount_local_z_cylinder(d, h, x, y, z0) {
+    translate([x, y, z0])
+        cylinder(d = d, h = h);
 }
 
-module local_y_slot(d, h, x, z, slot, y0) {
-    // Elongate the fastener clearance in local Z.  In the canonical web
-    // world this is the vertical +Y direction after the legacy adapter, so
-    // the cover can move down against the spring without losing the four
-    // back-panel screw references.
-    hull() {
-        local_y_cylinder(d, h, x, z - slot / 2, y0);
-        local_y_cylinder(d, h, x, z + slot / 2, y0);
-    }
+module motor_mount_rounded_prism_xy(w, d, h, r, x0, y0, z0) {
+    translate([x0, y0, z0])
+        hull() {
+            for (x = [-w / 2 + r, w / 2 - r], y = [r, d - r])
+                translate([x, y, 0])
+                    cylinder(r = r, h = h);
+        }
 }
 
-module cover_shell() {
-    rear_wall_front =
-        MOTOR_MOUNT_COVER_BODY_REAR_Y_LOCAL - MOTOR_MOUNT_COVER_REAR_WALL_T;
+module omega_mouth_cut() {
+    mouth_z = MOTOR_MOUNT_OMEGA_MOUTH_SIGN < 0
+        ? -MOTOR_MOUNT_OMEGA_OUTER_H / 2 - MOTOR_MOUNT_EPS
+        : MOTOR_MOUNT_OMEGA_INNER_H / 2 - MOTOR_MOUNT_EPS;
+    translate([
+        -MOTOR_MOUNT_OMEGA_MOUTH_W / 2,
+        MOTOR_MOUNT_COVER_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS,
+        mouth_z
+    ])
+        cube([
+            MOTOR_MOUNT_OMEGA_MOUTH_W,
+            MOTOR_MOUNT_OMEGA_BODY_L + 2 * MOTOR_MOUNT_EPS,
+            MOTOR_MOUNT_OMEGA_OUTER_H / 2 - MOTOR_MOUNT_OMEGA_INNER_H / 2
+                + 2 * MOTOR_MOUNT_EPS
+        ]);
+}
+
+module omega_sleeve_shell() {
     difference() {
         rounded_prism_xz(
-            MOTOR_MOUNT_COVER_OUTER_W,
-            MOTOR_MOUNT_COVER_OUTER_H,
-            MOTOR_MOUNT_COVER_BODY_L,
-            MOTOR_MOUNT_COVER_OUTER_R,
+            MOTOR_MOUNT_OMEGA_OUTER_W,
+            MOTOR_MOUNT_OMEGA_OUTER_H,
+            MOTOR_MOUNT_OMEGA_BODY_L,
+            MOTOR_MOUNT_OMEGA_OUTER_R,
             MOTOR_MOUNT_COVER_FRONT_Y_LOCAL
         );
-        // 前端开口，后侧留下 2 mm 罩底；两侧留出 2 mm 电机装配间隙。
+        // Rounded rectangular bore follows the 10×12 mm gearbox and clears
+        // the smaller 10×10 mm can without turning the sleeve into a tube.
         rounded_prism_xz(
-            MOTOR_MOUNT_COVER_INNER_W,
-            MOTOR_MOUNT_COVER_INNER_H,
-            MOTOR_MOUNT_COVER_BODY_L
-                - MOTOR_MOUNT_COVER_REAR_WALL_T
-                + MOTOR_MOUNT_EPS,
-            MOTOR_MOUNT_COVER_INNER_R,
+            MOTOR_MOUNT_OMEGA_INNER_W,
+            MOTOR_MOUNT_OMEGA_INNER_H,
+            MOTOR_MOUNT_OMEGA_BODY_L + 2 * MOTOR_MOUNT_EPS,
+            MOTOR_MOUNT_OMEGA_INNER_R,
             MOTOR_MOUNT_COVER_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS
         );
-        // Pololu 后端电气片/引线的出线槽，不封死电机后端。
-        translate([
-            -MOTOR_MOUNT_COVER_CABLE_SLOT_W / 2,
-            rear_wall_front - MOTOR_MOUNT_EPS,
-            -MOTOR_MOUNT_COVER_CABLE_SLOT_H / 2
-        ])
-            cube([
-                MOTOR_MOUNT_COVER_CABLE_SLOT_W,
-                MOTOR_MOUNT_COVER_REAR_WALL_T + 2 * MOTOR_MOUNT_EPS,
-                MOTOR_MOUNT_COVER_CABLE_SLOT_H
-            ]);
+        // Remove the entire lower span of the outer sleeve.  The cut reaches
+        // both rounded side transitions, so the motor underside is genuinely
+        // open and cannot leave a thin bridge between the two seats.
+        omega_mouth_cut();
     }
 }
 
-module cover_flange() {
+module omega_mount_seat(x) {
     difference() {
-        rounded_prism_xz(
-            MOTOR_MOUNT_COVER_FLANGE_W,
-            MOTOR_MOUNT_COVER_FLANGE_H,
-            MOTOR_MOUNT_COVER_FLANGE_T + MOTOR_MOUNT_COVER_OVERLAP,
-            MOTOR_MOUNT_COVER_OUTER_R,
-            MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL
+        // A horizontal seat is visible as the outward underscore in the rear
+        // profile.  Its fastener axis is local Z -> world Y, not local Y.
+        motor_mount_rounded_prism_xy(
+            MOTOR_MOUNT_OMEGA_SEAT_W,
+            MOTOR_MOUNT_OMEGA_SEAT_L,
+            MOTOR_MOUNT_OMEGA_SEAT_T,
+            MOTOR_MOUNT_OMEGA_SEAT_R,
+            x,
+            MOTOR_MOUNT_OMEGA_SEAT_FRONT_Y_LOCAL,
+            MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z
         );
-        for (p = MOTOR_MOUNT_BOSS_OFFSETS) {
-            local_y_slot(
+        for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y) {
+            motor_mount_local_z_cylinder(
                 MOTOR_MOUNT_SCREW_CLEAR_D,
-                MOTOR_MOUNT_COVER_FLANGE_T + 2 * MOTOR_MOUNT_EPS,
-                p[0],
-                p[1],
-                MOTOR_MOUNT_SLIDE_STROKE,
-                MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS
+                MOTOR_MOUNT_OMEGA_SEAT_T + 2 * MOTOR_MOUNT_EPS,
+                x,
+                MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
+                MOTOR_MOUNT_OMEGA_SEAT_BOTTOM_Z - MOTOR_MOUNT_EPS
             );
-            local_y_slot(
+            motor_mount_local_z_cylinder(
                 MOTOR_MOUNT_SCREW_HEAD_D,
                 MOTOR_MOUNT_SCREW_HEAD_H + MOTOR_MOUNT_EPS,
-                p[0],
-                p[1],
-                MOTOR_MOUNT_SLIDE_STROKE,
-                MOTOR_MOUNT_COVER_FLANGE_FRONT_Y_LOCAL - MOTOR_MOUNT_EPS
+                x,
+                MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL + y_offset,
+                MOTOR_MOUNT_OMEGA_SEAT_TOP_Z
+                    - MOTOR_MOUNT_SCREW_HEAD_H
             );
         }
     }
+}
+
+module omega_mount_seats() {
+    for (x = [-MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
+        MOTOR_MOUNT_OMEGA_SEAT_CENTER_X])
+        omega_mount_seat(x);
 }
 //#endregion
 
 //#region 公开 API
 module ch1_03c_power_motor_cover() {
     union() {
-        cover_shell();
-        cover_flange();
+        omega_sleeve_shell();
+        omega_mount_seats();
     }
 }
 
@@ -131,10 +145,20 @@ module ch1_03c_power_motor_cover_colored() {
 //#endregion
 
 //#region 业务逻辑
-// 罩体前缘与动力轮后表面保持 0.5 mm 轴向间隙；内腔 14×16 mm 包络覆盖 10×12 mm 减速箱。
-// 四个法兰孔与 cabinet_motor_mount_bosses_local() 同一组 ±10 / ±10.5 mm 坐标。
+// Ω 套前端与主动轮后表面仍保持 MOTOR_MOUNT_WHEEL_BACK_GAP；包络贴合电机，
+// 不改变主动轮、D 轴和电机轴心；左右两个下向固定座承接螺钉拉力和弹簧预紧反力。
+// 轴向贯通的夹套只承受夹持和反扭矩，座子上的孔轴线沿世界 Y 向下固定。
 //#endregion
 
 //#region 方法/工具
-// 独立入口见 cad/openscad/ch1_03c_power_motor_cover.scad。
+assert(MOTOR_MOUNT_OMEGA_INNER_W >= MOTOR_MOUNT_OMEGA_MOTOR_W
+    + 2 * MOTOR_MOUNT_OMEGA_CLEAR - MOTOR_MOUNT_EPS,
+    "omega sleeve must clear the gearbox width");
+assert(MOTOR_MOUNT_OMEGA_INNER_H >= MOTOR_MOUNT_OMEGA_MOTOR_H
+    + 2 * MOTOR_MOUNT_OMEGA_CLEAR - MOTOR_MOUNT_EPS,
+    "omega sleeve must clear the gearbox height");
+assert(MOTOR_MOUNT_OMEGA_SEAT_W > MOTOR_MOUNT_SCREW_HEAD_D,
+    "omega mounting seats must contain the screw head relief");
+assert(MOTOR_MOUNT_OMEGA_SEAT_L > MOTOR_MOUNT_SCREW_HEAD_D,
+    "omega mounting seats must contain a usable floor fastener seat");
 //#endregion

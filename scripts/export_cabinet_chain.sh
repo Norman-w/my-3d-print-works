@@ -53,7 +53,7 @@ export_stl() {
         "$OPENSCAD_BIN" \
             --backend Manifold \
             --export-format binstl \
-            -D "PART=\"${part}\"" \
+            -D "CHAIN_PART=\"${part}\"" \
             -D "QUALITY=${QUALITY}" \
             -o "$tmp" \
             "$SCAD_FILE"
@@ -139,15 +139,16 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_cover": {
-        "name": "蛇形链条电机固定罩（可沿下压方向滑动）",
+        "name": "蛇形链条电机 Ω 形贴合固定套（下向安装）",
         "role": "printed",
         "color": "#56616d",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_tensioner": {
-        "name": "蛇形电机张紧调节（导槽 + 弹簧 + M3 螺杆）",
+        "name": "旧蛇形电机张紧螺杆（源文件保留，默认隐藏）",
         "role": "printed",
         "color": "#c9a227",
+        "visible": False,
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_connector": {
@@ -219,7 +220,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "ch1_03c_power_motor_cover": {
-        "name": "动力轮电机固定罩（独立模型库，默认隐藏）",
+        "name": "动力轮电机 Ω 形贴合固定套（独立模型库，默认隐藏）",
         "role": "printed",
         "color": "#56616d",
         "visible": False,

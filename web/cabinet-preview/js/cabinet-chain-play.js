@@ -102,7 +102,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 
 //#region 模型/类型
 /** @typedef {{a:number[], b:number[], s0:number, len:number}} PathSeg */
-/** @typedef {{group:THREE.Group, s:number, along:number, side:number, lift:number, restYaw:number, halfSpan:number}} ChainPart */
+/** @typedef {{group:THREE.Group, s:number, along:number, side:number, lift:number, restYaw:number, halfSpan:number, pinIndex?:number, scaleAlong?:boolean}} ChainPart */
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
 /** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
@@ -241,6 +241,50 @@ function samplePath(path, sRaw) {
   const tangent = normalize(sub(seg.b, seg.a));
   const normal = [-tangent[2], 0, tangent[0]];
   return { point: lerp(seg.a, seg.b, t), tangent, normal };
+}
+
+function discretePinPoint(pinIndex, phase) {
+  const count = play.path?.count || 0;
+  if (!count) return [0, 0, 0];
+  const raw = pinIndex + phase;
+  const baseRaw = Math.floor(raw);
+  const base = ((baseRaw % count) + count) % count;
+  const fraction = raw - baseRaw;
+  const seg = play.path.segs[base];
+  return lerp(seg.a, seg.b, fraction);
+}
+
+function poseDiscreteChainPart(part, offsetMm) {
+  const pitch = Number(play.motion?.p)
+    || play.path.length / Math.max(1, play.path.count);
+  const phase = offsetMm / pitch;
+  const p0 = discretePinPoint(part.pinIndex, phase);
+  const p1 = discretePinPoint(part.pinIndex + 1, phase);
+  const chord = Math.max(1e-6, length3(sub(p1, p0)));
+  const tangent = normalize(sub(p1, p0));
+  const center = [
+    (p0[0] + p1[0]) / 2,
+    (p0[1] + p1[1]) / 2,
+    (p0[2] + p1[2]) / 2,
+  ];
+  const normal = [-tangent[2], 0, tangent[0]];
+  part.group.position.set(
+    center[0] + normal[0] * (part.side || 0),
+    center[1] + (part.lift || 0),
+    center[2] + normal[2] * (part.side || 0),
+  );
+  const yaw = Math.atan2(tangent[2], tangent[0]);
+  part.group.rotation.y = -(yaw - part.restYaw);
+  // At a bend, linearly interpolated pin centers are not exactly one pitch
+  // apart.  Scale only the link's longitudinal axis so both holes stay on
+  // the same two animated pins; this removes the visible split/spike while
+  // leaving straight runs at exactly 1:1 scale.
+  if (part.scaleAlong) {
+    const nominal = pitch || 1;
+    part.group.scale.set(chord / nominal, 1, 1);
+  } else {
+    part.group.scale.set(1, 1, 1);
+  }
 }
 
 function projectPoint(path, x, y, z) {
@@ -981,6 +1025,10 @@ function chainOffsetMm() {
 }
 
 function poseChainPart(part, offsetMm) {
+  if (Number.isInteger(part.pinIndex)) {
+    poseDiscreteChainPart(part, offsetMm);
+    return;
+  }
   // `along` is the authored geometry centre's longitudinal offset from the
   // path projection.  Apply it to the sampled path coordinate itself so a
   // link crossing a corner is centred and oriented around the same anchor;
@@ -1502,6 +1550,8 @@ async function bindChainMesh(item) {
         lift: 0,
         restYaw: template.restYaw,
         halfSpan: (play.motion?.p || 0) / 2,
+        pinIndex: i,
+        scaleAlong: true,
       };
     } else {
       const center = geo.boundingBox.getCenter(new THREE.Vector3());
@@ -1522,6 +1572,8 @@ async function bindChainMesh(item) {
           lift: 0,
           restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
           halfSpan: (play.motion?.p || 0) / 2,
+          pinIndex: segmentIndex,
+          scaleAlong: true,
         };
       } else {
         const proj = projectPoint(play.path, center.x, center.y, center.z);
@@ -1534,6 +1586,9 @@ async function bindChainMesh(item) {
           lift: proj.lift,
           restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
           halfSpan: isRigidChainMesh ? (play.motion?.p || 0) / 2 : 0,
+          pinIndex: Math.round(proj.s / (Number(play.motion?.p) || 1))
+            % play.path.count,
+          scaleAlong: false,
         };
       }
     }

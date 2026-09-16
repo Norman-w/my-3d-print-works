@@ -3,7 +3,7 @@
 // material: pointed drive sprocket resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
 // parting_plane: n/a for chain; cabinet back face remains Y = D
 // opening_direction: n/a
-// fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor carriage is pressed in the former tensioner slot by an M3 spring screw
+// fastener: rear-view lower-right snake_drive_c() sprocket uses the 3 mm D-shaft; other wheels use 3 mm round bearing seats; the motor follows a rounded rectangular Ω clamp with two short outward bottom seats and downward Y-axis fixing holes, and is pressed in the former tensioner slot by a spring screw
 // seal: n/a
 // print_orientation: sprocket hub down; do not 3D-print the chain
 // units: mm
@@ -11,7 +11,10 @@
 
 //#region 导入/依赖
 QUALITY = is_undef(QUALITY) ? 2 : QUALITY;
-PART = is_undef(PART) ? "assembly" : PART;
+// cabinet.scad and ch1_03c_roller_chain.scad both own a global PART selector.
+// Keep the chain export selector in its own namespace so an included library
+// cannot silently turn a one-part export back into the full assembly.
+CHAIN_PART = is_undef(CHAIN_PART) ? "assembly" : CHAIN_PART;
 EXPLODE = is_undef(EXPLODE) ? 48 : EXPLODE;
 CHAIN_LIB_ONLY = true;
 CABINET_LIB_ONLY = true;
@@ -328,48 +331,62 @@ module bay_center_dots() {
 }
 
 module emit_chain(name) {
-    if (PART == "assembly" || PART == name)
+    if (CHAIN_PART == "assembly" || CHAIN_PART == name)
         children();
 }
 //#endregion
 
 //#region 公开 API
-if (PART == "power_check") {
+if (CHAIN_PART == "power_check") {
     // Diagnostic close-up only: the motor shaft enters the lower-right
-    // return/tensioner D wheel.
+    // return/tensioner D wheel and the Ω sleeve surrounds the motor body.
     color("#e07a3d") place_geared(snake_drive_c())
         ch1_03c_sprocket(SPROCKET_TEETH);
     place_power_motor(snake_drive_c())
         pololu_micro_metal_motor_100_1_hp_6v_colored();
     color("#56616d", 0.28)
-        place_power_motor_cover(snake_drive_c())
-            ch1_03c_power_motor_cover();
+            place_power_motor_cover(snake_drive_c())
+                ch1_03c_power_motor_cover();
 }
 
-if (PART == "assembly") {
+if (CHAIN_PART == "mesh_check") {
+    // Focused diagnostic: show only the real chain path and the one pointed
+    // drive sprocket.  Keeping the motor carriage and tensioner out of this
+    // branch makes bend interference visible instead of hiding it in a dense
+    // assembly preview.
+    color("#8A919C") snake_in_rear()
+        plates_on_path_with_connector_replacement(snake_pins());
+    color("#E8EDF2") snake_in_rear()
+        rollers_on_path(snake_pins());
+    color("#B08D57") snake_in_rear()
+        pins_on_path_without_connectors(snake_pins());
+    color("#5b9fd6") place_geared(snake_drive_c())
+        ch1_03c_sprocket(SPROCKET_TEETH);
+}
+
+if (CHAIN_PART == "assembly") {
     %cabinet_shell();
     %drawer_ghosts();
     color("#ff4d4d", 0.9) bay_center_dots();
-    color("#c9a227", 0.85) tensioner_hardware();
 }
 
 emit_chain("plates") {
-    if (PART == "assembly")
+    if (CHAIN_PART == "assembly")
         color("#8A919C") snake_in_rear()
             plates_on_path_with_connector_replacement(snake_pins());
     else
         snake_in_rear() plates_on_path_with_connector_replacement(snake_pins());
 }
 emit_chain("rollers") {
-    if (PART == "assembly") color("#E8EDF2") snake_in_rear() rollers_on_path(snake_pins());
+    if (CHAIN_PART == "assembly") color("#E8EDF2") snake_in_rear() rollers_on_path(snake_pins());
     else snake_in_rear() rollers_on_path(snake_pins());
 }
 emit_chain("pins") {
-    if (PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path_without_connectors(snake_pins());
+    if (CHAIN_PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path_without_connectors(snake_pins());
     else snake_in_rear() pins_on_path_without_connectors(snake_pins());
 }
 emit_chain("sprockets") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         color("#5b9fd6") place_geared(snake_drive_c())
             ch1_03c_sprocket(SPROCKET_TEETH);
     } else {
@@ -377,15 +394,15 @@ emit_chain("sprockets") {
     }
 }
 emit_chain("idlers") {
-    if (PART == "assembly") color("#7dcc4a") rear_guide_idlers();
+    if (CHAIN_PART == "assembly") color("#7dcc4a") rear_guide_idlers();
     else rear_guide_idlers();
 }
 emit_chain("bearings") {
-    if (PART == "assembly") color("#b9c2ca") rear_bearing_visuals();
+    if (CHAIN_PART == "assembly") color("#b9c2ca") rear_bearing_visuals();
     else rear_bearing_visuals();
 }
 emit_chain("motor") {
-    if (PART == "assembly")
+    if (CHAIN_PART == "assembly")
         place_power_motor(snake_drive_c())
             pololu_micro_metal_motor_100_1_hp_6v_body_colored();
     else
@@ -393,14 +410,14 @@ emit_chain("motor") {
             pololu_micro_metal_motor_100_1_hp_6v_body();
 }
 emit_chain("motor_shaft") {
-    if (PART == "assembly")
+    if (CHAIN_PART == "assembly")
         place_power_motor(snake_drive_c())
             color("#d6d9dc") d_shaft();
     else
         place_power_motor(snake_drive_c()) d_shaft();
 }
 emit_chain("motor_cover") {
-    if (PART == "assembly")
+    if (CHAIN_PART == "assembly")
         color("#56616d", 0.92)
             place_power_motor_cover(snake_drive_c())
                 ch1_03c_power_motor_cover();
@@ -409,12 +426,11 @@ emit_chain("motor_cover") {
             ch1_03c_power_motor_cover();
 }
 emit_chain("motor_tensioner") {
-    // The former lower return wheel's U guides and spring-loaded M3 adjuster
-    // now preload the motor/cover carriage.  The carriage remains visible as
-    // the cover; this part is the independent adjustment hardware.
-    if (PART == "assembly")
-        color("#c9a227", 0.90) tensioner_hardware();
-    else
+    // Legacy centerline tensioner hardware is kept as a standalone source part
+    // for reference.  The current world uses the four-hole Omega motor seat;
+    // the old bolt/spring assembly is hidden from the default preview manifest
+    // until it is redesigned around that seat instead of crossing the drive wheel.
+    if (CHAIN_PART == "motor_tensioner")
         tensioner_hardware();
 }
 emit_chain("connector") {
@@ -426,13 +442,13 @@ emit_chain("clutch_connector") {
 emit_chain("clutch_bearing") {
     // Separate from the cyan structural highlight so the purchased bearing
     // is visibly silver in the assembly and follows the connector as one part.
-    if (PART == "assembly")
+    if (CHAIN_PART == "assembly")
         color("#cfd4da") highlighted_clutch_connector_bearing();
     else
         highlighted_clutch_connector_bearing();
 }
 emit_chain("scheme1_power_wheels") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         if (SHOW_SCHEME1_IN_ASSEMBLY)
             color("#e6a23c") scheme1_power_wheels();
     } else {
@@ -440,7 +456,7 @@ emit_chain("scheme1_power_wheels") {
     }
 }
 emit_chain("scheme1_output_wheels") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         if (SHOW_SCHEME1_IN_ASSEMBLY)
             color("#5b9fd6") scheme1_output_wheels();
     } else {
@@ -448,7 +464,7 @@ emit_chain("scheme1_output_wheels") {
     }
 }
 emit_chain("scheme1_clutch_faces") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         if (SHOW_SCHEME1_IN_ASSEMBLY)
             color("#f0c36a") scheme1_clutch_faces();
     } else {
@@ -456,7 +472,7 @@ emit_chain("scheme1_clutch_faces") {
     }
 }
 emit_chain("scheme1_bearings") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         if (SHOW_SCHEME1_IN_ASSEMBLY)
             color("#cfd4da") scheme1_bearings();
     } else {
@@ -464,7 +480,7 @@ emit_chain("scheme1_bearings") {
     }
 }
 emit_chain("scheme1_selector") {
-    if (PART == "assembly") {
+    if (CHAIN_PART == "assembly") {
         if (SHOW_SCHEME1_IN_ASSEMBLY)
             color(SCHEME1_SELECTOR_HIGHLIGHT) scheme1_selector();
     } else {
@@ -474,14 +490,14 @@ emit_chain("scheme1_selector") {
 //#endregion
 
 //#region 视图层
-// 预览用 PART=assembly；power_check 仅用于近距离确认动力轮、电机轴和固定罩的相对位置。
+// 预览用 CHAIN_PART=assembly；power_check 仅用于近距离确认动力轮、电机轴和固定罩的相对位置。
 // 链条外购件分 plates / rollers / pins 导出。
 //#endregion
 
 //#region 业务逻辑
 // 闭环按真实节距闭合；底端张紧轮吃掉余量。长于 210L×1 m SKU，只做后仓走线可视化。
 // 红点是每格矩形中心；水平段节圆线必须穿过这些点。
-// 蓝色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与可下压固定罩；
+// 蓝色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与贴合电机外形、下向固定的 Ω 夹套；
 // 其它 7 个 12T 转向/回程位全部是绿色 12T 钝齿轴承导向轮；5 个绿色 8T 平移轮也保留为轴承版，
 // 并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
@@ -495,6 +511,6 @@ emit_chain("scheme1_selector") {
 //#endregion
 
 //#region 方法/工具
-// 导出: -D PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
-// 检查视图: -D PART='"power_check"'。
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
+// 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion

@@ -145,5 +145,5 @@ assert(len(snake_pins()) == SNAKE_PIN_N, "generated pin count must match");
 assert(TEN_Z >= WALL + drive_outer_r() - 0.01, "tensioner teeth must stay above the inner floor");
 assert(abs(s_span_check() - 90) < 1, "12T wrap should be a quarter turn onto the vertical chain");
 assert(norm(snake_drive_c() - motor_mount_c()) < 0.01,
-    "snake drive and motor cover/back-panel boss center must stay aligned");
+    "snake drive and motor cover/floor fixing-seat center must stay aligned");
 //#endregion
