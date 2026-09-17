@@ -2173,8 +2173,8 @@ module selected_center_clutch_pair_collision_part() {
 
 module selected_center_selector_rail_collision_part() {
     // Compatibility alias for older audit commands. The current witness also
-    // includes the single under-rotor bearing, its holder/cap and the complete
-    // M_release -> M_engage shoe path.
+    // includes the single coaxial bearing behind the male rotor, its holder/cap
+    // and the complete M_release -> M_engage shoe path.
     selected_center_selector_linear_bearing_collision_part();
 }
 
@@ -2967,7 +2967,7 @@ echo(
             - (CENTER_SELECTOR_SHOE_Z_MM + CENTER_SELECTOR_SHOE_D / 2
             - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM)),
     "rotaryBearingArrangement=two-per-rotor-axially-spaced",
-    "linearBearingArrangement=single-under-male-rotor",
+    "linearBearingArrangement=single-coaxial-with-male-rotor",
     "selectorShoeLinearBearingCollisionPart=cabinet-clutch/center_selector_linear_bearing_collision",
     "selectorShoeChainSupportPart=cabinet-clutch/center_selector_chain_support_contact",
     str("selectorShoeBodyWidthMm=", CENTER_SELECTOR_SHOE_W),

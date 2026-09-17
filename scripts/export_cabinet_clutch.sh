@@ -183,13 +183,13 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_carriage": {
-        "name": "中心 R3C3 · 输入滑架（单直线轴承套；公轮下置导向）",
+        "name": "中心 R3C3 · 输入滑架（同轴直线轴承套；公轮轴线后侧）",
         "color": "#748c99",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/center_linear_bearings_reference": {
-        "name": "中心 R3C3 · 直线轴承×1 · Ø3×Ø7×10（公轮底下；采购件）",
+        "name": "中心 R3C3 · 直线轴承×1 · Ø3×Ø7×10（与输入公轮同轴；采购件）",
         "color": "#b7c0c8",
         "visible": True,
         "role": "purchased",
@@ -213,14 +213,14 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_guide_rails": {
-        "name": "中心 R3C3 · 单根 Ø3 金属导杆（公轮底下；采购件参考）",
+        "name": "中心 R3C3 · 单根 Ø3 金属导杆（与输入公轮同轴；采购件参考）",
         "color": "#657f8c",
         "visible": True,
         "role": "purchased",
     },
     "cabinet-clutch/center_stops": {
-        "name": "中心 R3C3 · 开位/合位实体止挡",
-        "color": "#d26b38",
+        "name": "中心 R3C3 · 开位/合位实体止挡（短臂；无橘色外露框）",
+        "color": "#536d78",
         "visible": True,
         "role": "printed",
     },
@@ -366,13 +366,13 @@ name_map = {
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
-    "center_input_carriage": "中心 R3C3 输入滑架 · 单直线轴承套（公轮底下）· 随 +Y 行程",
-    "center_linear_bearings_reference": "中心 R3C3 直线轴承×1 · Ø3×Ø7×10（公轮底下；采购件）",
+    "center_input_carriage": "中心 R3C3 输入滑架 · 同轴直线轴承套（公轮轴线后侧）· 随 +Y 行程",
+    "center_linear_bearings_reference": "中心 R3C3 直线轴承×1 · Ø3×Ø7×10（与输入公轮同轴；采购件）",
     "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖×1（单个；打印防脱件）",
     "center_linear_bearing_fit_coupon": "中心 R3C3 直线轴承配合测试片 · Ø7.20/7.30/7.40 + 单导杆行程",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
-    "center_guide_rails": "中心 R3C3 单根 Ø3 金属导杆 · 公轮底下 · 采购件参考",
-    "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
+    "center_guide_rails": "中心 R3C3 单根 Ø3 金属导杆 · 与输入公轮同轴 · 采购件参考",
+    "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位 · 短臂无橘色外露框",
     "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出独立 3mm D 轴 · 采购件",
@@ -518,8 +518,8 @@ for group_id in ordered_group_ids:
     elif group_id == "02·离合机构":
         vertical_guide = call_node(
             "center_clutch/vertical-guide",
-            "公轮竖直导向 · 公轮底下单枚 3×7×10（单根导杆）",
-            "一根独立 Ø3 金属导杆；公轮底下安装一枚采购直线轴承，打印轴承套与压盖各一件；直线轴承承担竖直滑动，独立实体止挡限定 3 mm 行程，不把打印套当滑动面",
+            "公轮竖直导向 · 同轴单枚 3×7×10（单根导杆）",
+            "一根与输入公轮同轴的独立 Ø3 金属导杆；公轮轴线后侧安装一枚采购直线轴承，打印轴承套与压盖各一件；直线轴承承担竖直滑动，短臂实体止挡限定 3 mm 行程，不把打印套当滑动面",
             children=[
                 part_node("cabinet-clutch/center_input_carriage"),
                 part_node("cabinet-clutch/center_linear_bearings_reference"),
@@ -530,7 +530,7 @@ for group_id in ordered_group_ids:
         rotary_support = call_node(
             "center_clutch/rotary-support",
             "转子旋转支撑 · 输入/输出各2枚 3×6×2（轴向间隔4mm）",
-            "输入公轮的两枚旋转轴承随滑架移动；输出母轮的两枚旋转轴承固定在输出轴承笼；四枚是两组轴向支撑，不是上下直线轴承重复件",
+            "输入公轮的两枚旋转轴承随滑架移动；输出母轮的两枚旋转轴承固定在输出轴承笼；四枚是两组轴向支撑，不是同轴直线轴承的重复件",
             children=[
                 part_node("cabinet-clutch/center_output_cage"),
                 part_node("cabinet-clutch/center_input_shaft_reference"),
@@ -542,7 +542,7 @@ for group_id in ordered_group_ids:
         fit_coupon = call_node(
             "center_clutch/fit-coupon",
             "首件配合测试片（默认隐藏）",
-            "打印后实装一枚 LM3UU、一根 Ø3 金属导杆；座孔为 Ø7.20/7.30/7.40，检查单导杆全行程",
+            "打印后实装一枚 LM3UU、一根与公轮同轴的 Ø3 金属导杆；座孔为 Ø7.20/7.30/7.40，检查单导杆全行程",
             children=[
                 part_node("cabinet-clutch/center_linear_bearing_fit_coupon"),
             ],
@@ -571,7 +571,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + 滑架 + 1×3×7×10直线轴承 + 单轴承套/压盖 + 双轴承笼 + 单Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
+                "输入公轮 + 输出母轮 + 滑架 + 同轴1×3×7×10直线轴承 + 单轴承套/压盖 + 双轴承笼 + 单Ø3金属导杆 + 短臂实体止挡 + 可拆机构板 + 磁力靴",
                 children=active_center,
             ),
             call_node(

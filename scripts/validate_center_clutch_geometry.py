@@ -279,7 +279,7 @@ def validate_contract(contract: Contract) -> None:
         "linearBearingNominalOdMm": 7.00,
         "linearBearingNominalLengthMm": 10.00,
         "linearBearingCount": 1,
-        "linearBearingCenterYOffsetMm": -4.60,
+        "linearBearingCenterYOffsetMm": -24.50,
         "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatDepthMm": 10.80,
         "linearBearingHolderOuterDiameterMm": 12.00,
@@ -307,23 +307,23 @@ def validate_contract(contract: Contract) -> None:
         "bearingPairSpacingMm": 4.00,
         "bearingBlockThicknessMm": 3.20,
         "guideRailXOffsetMm": 0.00,
-        "guideRailZOffsetMm": -14.00,
+        "guideRailZOffsetMm": 0.00,
         "guideRodXOffsetMm": 0.00,
-        "guideRodZOffsetMm": -14.00,
+        "guideRodZOffsetMm": 0.00,
         "stopPadWidthMm": 4.00,
         "stopPadXOffsetMm": 0.60,
-        "stopLugXOffsetMm": 8.00,
-        "stopLugWidthMm": 4.00,
-        "stopLugZOffsetMm": -8.20,
+        "stopLugXOffsetMm": 10.00,
+        "stopLugWidthMm": 3.00,
+        "stopLugZOffsetMm": 5.00,
         "stopLugHeightMm": 2.00,
-        "stopLugRouteXOffsetMm": 16.90,
+        "stopLugRouteXOffsetMm": 10.00,
         "stopLugRouteWidthMm": 0.80,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
         "carriageUprightHeightMm": 3.00,
-        "carriageUprightY0Mm": -10.00,
-        "carriageUprightLengthMm": 8.40,
+        "carriageUprightY0Mm": -30.60,
+        "carriageUprightLengthMm": 25.00,
         "plateKeyWidthMm": 4.00,
         "plateKeyHeightMm": 6.00,
         "plateKeyClearanceMm": 0.30,
@@ -383,8 +383,8 @@ def validate_contract(contract: Contract) -> None:
             != "two-per-rotor-axially-spaced":
         fail("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
     if contract.get("linearBearingArrangement") \
-            != "single-under-male-rotor":
-        fail("竖直直线轴承必须是公轮底下单枚、单根导杆")
+            != "single-coaxial-with-male-rotor":
+        fail("竖直直线轴承必须与公轮同轴且只配置一枚、单根导杆")
     if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
         fail("直线轴承采购参考必须是 LM3UU 可识别模型")
     if contract.get("linearBearingFitCouponPart") \
@@ -436,10 +436,11 @@ def validate_contract(contract: Contract) -> None:
         - number(contract, "stopLugWidthMm") / 2
     lug_x_max = number(contract, "stopLugXOffsetMm") \
         + number(contract, "stopLugWidthMm") / 2
-    if number(contract, "stopLugZOffsetMm") \
-            + number(contract, "stopLugHeightMm") / 2 \
-            >= -number(contract, "bearingBlockHeightMm") / 2 - 0.10:
-        fail("滑架硬止挡耳位没有避开下方旋转轴承块")
+    lug_low_z = number(contract, "stopLugZOffsetMm") \
+        - number(contract, "stopLugHeightMm") / 2
+    if math.hypot(lug_x_min, lug_low_z) \
+            - number(contract, "inputTipRadiusMm") < 0.45 - 0.001:
+        fail("侧向硬止挡耳位没有避开输入公轮径向包络")
     if lug_x_min <= 0:
         fail("滑架硬止挡耳位没有位于中心支撑外侧")
     route_inner_clearance = (
@@ -525,7 +526,7 @@ def validate_contract(contract: Contract) -> None:
         expect_at_least(clearance, CLEARANCE_FLOOR_MM, f"{label} 到长花键径向余量")
 
     if number(contract, "linearBearingCount") != 1:
-        fail("中心滑架必须配置一枚公轮底下直线轴承")
+        fail("中心滑架必须配置一枚与公轮同轴直线轴承")
     expect_close(
         number(contract, "linearBearingFitCouponGuideCount"),
         1.0,
@@ -551,10 +552,8 @@ def validate_contract(contract: Contract) -> None:
         0.001,
     )
     if abs(number(contract, "guideRodXOffsetMm")) > 0.001 \
-            or number(contract, "guideRodZOffsetMm") >= -number(
-                contract, "bearingBlockHeightMm"
-            ) / 2:
-        fail("单导杆没有位于公轮下方并避开旋转轴承块")
+            or abs(number(contract, "guideRodZOffsetMm")) > 0.001:
+        fail("单导杆没有与公轮共享 X/Z 轴心")
     expect_close(
         number(contract, "linearBearingCenterYOffsetMm"),
         number(contract, "openTabY0Mm") - number(contract, "inputBaseYMm")
@@ -636,15 +635,20 @@ def validate_contract(contract: Contract) -> None:
         fail("直线轴承压盖裙边无效")
     if number(contract, "linearBearingRodNominalClearanceMm") < -0.001:
         fail("直线轴承与导杆的名义间隙为负")
-    holder_rotor_clearance = math.hypot(
-        number(contract, "guideRailXOffsetMm"),
-        number(contract, "guideRailZOffsetMm"),
-    ) - number(contract, "linearBearingHolderOuterDiameterMm") / 2 \
-        - number(contract, "inputTipRadiusMm")
+    guide_rod_end = (
+        number(contract, "linearBearingCenterYOffsetMm")
+        + number(contract, "linearBearingHolderLengthMm") / 2
+        + number(contract, "strokeMm")
+        + number(contract, "linearBearingRetainerThicknessMm")
+        + number(contract, "guideRodCaptureMm")
+    )
+    guide_to_input_shaft_clearance = (
+        number(contract, "inputShaftStartMm") - guide_rod_end
+    )
     expect_at_least(
-        holder_rotor_clearance,
-        CLEARANCE_FLOOR_MM,
-        "直线轴承套到输入公轮径向净空",
+        guide_to_input_shaft_clearance,
+        0.40,
+        "同轴导杆/轴承套扫掠到输入 D 轴的轴向净空",
     )
 
     if contract.get("plateSupport") != "partition-through-M3":
@@ -766,22 +770,22 @@ def validate_sweep(
     expect_close(
         rail_bounds["min"][0],
         axis_x + rail_x_offset - number(contract, "guideRodDiameterMm") / 2,
-        "单根下置导杆 X 下限",
+        "同轴导杆 X 下限",
     )
     expect_close(
         rail_bounds["max"][0],
         axis_x + rail_x_offset + number(contract, "guideRodDiameterMm") / 2,
-        "单根下置导杆 X 上限",
+        "同轴导杆 X 上限",
     )
     expect_close(
         rail_bounds["min"][2],
         axis_z + rail_z_offset - number(contract, "guideRodDiameterMm") / 2,
-        "单根下置导杆 Z 下限",
+        "同轴导杆 Z 下限",
     )
     expect_close(
         rail_bounds["max"][2],
         axis_z + rail_z_offset + number(contract, "guideRodDiameterMm") / 2,
-        "单根下置导杆 Z 上限",
+        "同轴导杆 Z 上限",
     )
     expect_close(
         rail_bounds["min"][1],
@@ -794,14 +798,20 @@ def validate_sweep(
         "导向杆捕获上端 Y 基准",
     )
 
-    rod_radius = number(contract, "guideRodDiameterMm") / 2
-    guide_block_clear = abs(rail_z_offset) - rod_radius - number(
-        contract, "bearingBlockHeightMm"
-    ) / 2
+    guide_rod_end = (
+        number(contract, "linearBearingCenterYOffsetMm")
+        + number(contract, "linearBearingHolderLengthMm") / 2
+        + number(contract, "strokeMm")
+        + number(contract, "linearBearingRetainerThicknessMm")
+        + number(contract, "guideRodCaptureMm")
+    )
+    guide_to_input_shaft_clearance = (
+        number(contract, "inputShaftStartMm") - guide_rod_end
+    )
     expect_at_least(
-        guide_block_clear,
-        CLEARANCE_FLOOR_MM,
-        "下置导杆到旋转轴承块的 Z 向净空",
+        guide_to_input_shaft_clearance,
+        0.40,
+        "同轴导杆捕获端到输入 D 轴的轴向净空",
     )
 
     for engaged in (False, True):
@@ -822,13 +832,13 @@ def validate_sweep(
         expected_capture_min_z = axis_z + rail_z_offset - holder_radius
         expected_capture_max_z = axis_z + rail_z_offset + holder_radius
         if carriage["min"][0] > expected_capture_min_x + TOLERANCE_MM:
-            fail(f"滑架没有覆盖单根下置导杆 X 捕获位置: engaged={engaged}")
+            fail(f"滑架没有覆盖同轴导杆 X 捕获位置: engaged={engaged}")
         if carriage["max"][0] < expected_capture_max_x - TOLERANCE_MM:
-            fail(f"滑架没有覆盖单根下置导杆 X 捕获位置: engaged={engaged}")
+            fail(f"滑架没有覆盖同轴导杆 X 捕获位置: engaged={engaged}")
         if carriage["min"][2] > expected_capture_min_z + TOLERANCE_MM:
-            fail(f"滑架没有覆盖单根下置导杆 Z 捕获位置: engaged={engaged}")
+            fail(f"滑架没有覆盖同轴导杆 Z 捕获位置: engaged={engaged}")
         if carriage["max"][2] < expected_capture_max_z - TOLERANCE_MM:
-            fail(f"滑架没有覆盖单根下置导杆 Z 捕获位置: engaged={engaged}")
+            fail(f"滑架没有覆盖同轴导杆 Z 捕获位置: engaged={engaged}")
 
         linear_bearing = bounds(reports[("center_linear_bearings", engaged)])
         bearing_center_y = number(contract, "inputBaseYMm") \
@@ -957,7 +967,7 @@ def validate_intermediate_sweep(
         ),
         (
             "center_carriage_rail_collision",
-            "滑架在中间行程与单根下置导杆仍有实体交集",
+            "滑架在中间行程与单根同轴导杆仍有实体交集",
         ),
         (
             "center_selector_linear_bearing_collision",
@@ -1203,7 +1213,7 @@ def validate_interference(
         expect_close(actual_max, expected_union_max, f"{role} 轴承参考件最大 Y")
 
     # One purchased linear bearing travels with the input carriage on the
-    # single Ø3 guide rod below the male rotor. The holder/cap geometry is
+    # single Ø3 guide rod coaxial with and behind the male rotor. The holder/cap geometry is
     # checked separately so the intentional bearing-to-rod interface is never
     # mislabeled as a solid collision.
     linear_bearing_ref = bounds(
@@ -1497,13 +1507,13 @@ def main() -> int:
                 "center_carriage_rail_collision",
                 False,
                 "center_carriage_rail_collision_open.stl",
-                "滑架开位与单根下置导杆仍有实体交集",
+                "滑架开位与单根同轴导杆仍有实体交集",
             ),
             (
                 "center_carriage_rail_collision",
                 True,
                 "center_carriage_rail_collision_engaged.stl",
-                "滑架合位与单根下置导杆仍有实体交集",
+                "滑架合位与单根同轴导杆仍有实体交集",
             ),
             (
                 "center_input_rotor_carriage_collision",
@@ -1545,7 +1555,7 @@ def main() -> int:
                 "center_guide_stop_collision",
                 False,
                 "center_guide_stop_collision.stl",
-                "单根下置导杆与端部止挡支座仍有实体穿插",
+                "单根同轴导杆与端部止挡支座仍有实体穿插",
             ),
         )
         for part, engaged, filename, message in intersection_checks:
@@ -1598,7 +1608,7 @@ def main() -> int:
         f"seat_radial_clear={number(contract, 'linearBearingSeatRadialClearanceMm'):.2f}mm, "
         f"shoe_trigger_gap={metrics['shoeTriggerGap']:.2f}mm, "
         f"upright_radial={metrics['uprightRadialClearance']:.2f}mm; "
-        "输入/输出不漂移、轴承盲座、独立 D 轴、单根下置导杆、实体止挡、原生磁力靴路径和机构板皮带通道均已检查"
+        "输入/输出不漂移、轴承盲座、独立 D 轴、单根同轴导杆、实体止挡、原生磁力靴路径和机构板皮带通道均已检查"
     )
     print("实体轴承/磁铁装配、打印配合、低速负载和 20 次循环仍未验收")
     return 0

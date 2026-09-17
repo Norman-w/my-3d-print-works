@@ -521,6 +521,8 @@ function validateCenterClutchContract(contract) {
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
     "linearBearingRodNominalClearanceMm",
+    "guideRodCaptureMm",
+    "inputShaftStartMm",
     "linearBearingModel",
     "linearBearingFitCouponPart",
     "linearBearingFitCouponGuideCount",
@@ -578,7 +580,7 @@ function validateCenterClutchContract(contract) {
     throw new Error("centerClutch 纯永磁动作门槛不满足");
   }
   if (contract.rotaryBearingArrangement !== "two-per-rotor-axially-spaced"
-      || contract.linearBearingArrangement !== "single-under-male-rotor"
+      || contract.linearBearingArrangement !== "single-coaxial-with-male-rotor"
       || contract.selectorShoeChainSupportPart
         !== "cabinet-clutch/center_selector_chain_support_contact"
       || contract.selectorShoeLinearBearingCollisionPart
@@ -733,17 +735,16 @@ function validateCenterClutchContract(contract) {
       || Math.abs(Number(contract.guideRodZOffsetMm)
         - Number(contract.guideRailZOffsetMm)) > 0.001
       || Math.abs(Number(contract.guideRodXOffsetMm)) > 0.001
-      || Number(contract.guideRodZOffsetMm)
-        >= -Number(contract.bearingBlockHeightMm || 14) / 2) {
-    throw new Error("centerClutch 单导杆必须位于公轮下方并与导轨位置一致");
+      || Math.abs(Number(contract.guideRodZOffsetMm)) > 0.001) {
+    throw new Error("centerClutch 单导杆必须与公轮共享 X/Z 轴心");
   }
-  const holderRotorRadialClearance = Math.hypot(
-    Number(contract.guideRailXOffsetMm),
-    Number(contract.guideRailZOffsetMm),
-  ) - Number(contract.linearBearingHolderOuterDiameterMm) / 2
-    - Number(contract.inputTipRadiusMm);
-  if (holderRotorRadialClearance < 0.45) {
-    throw new Error("centerClutch 轴承套到输入公轮的径向净空不足");
+  const guideRodEnd = Number(contract.linearBearingCenterYOffsetMm)
+    + Number(contract.linearBearingHolderLengthMm) / 2
+    + Number(contract.strokeMm)
+    + Number(contract.linearBearingRetainerThicknessMm)
+    + Number(contract.guideRodCaptureMm);
+  if (Number(contract.inputShaftStartMm) - guideRodEnd < 0.40 - 0.001) {
+    throw new Error("centerClutch 同轴导杆捕获端没有避开输入 D 轴");
   }
   if (contract.linearBearingPart !== "cabinet-clutch/center_linear_bearings_reference"
       || contract.linearBearingRetainerPart

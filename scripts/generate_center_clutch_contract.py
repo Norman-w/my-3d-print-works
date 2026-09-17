@@ -346,8 +346,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心离合必须释放后返回")
     if contract.get("rotaryBearingArrangement") != "two-per-rotor-axially-spaced":
         raise RuntimeError("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
-    if contract.get("linearBearingArrangement") != "single-under-male-rotor":
-        raise RuntimeError("竖直直线轴承必须是公轮底下单枚、单根导杆")
+    if contract.get("linearBearingArrangement") != "single-coaxial-with-male-rotor":
+        raise RuntimeError("竖直直线轴承必须与公轮同轴且只配置一枚、单根导杆")
     if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
         raise RuntimeError("直线轴承采购参考必须是 LM3UU 可识别模型")
     if contract.get("linearBearingFitCouponPart") \
@@ -411,24 +411,24 @@ def validate_contract(contract: dict[str, object]) -> None:
         "bearingBlockWidthMm": 14.00,
         "bearingBlockHeightMm": 14.00,
         "guideRailXOffsetMm": 0.00,
-        "guideRailZOffsetMm": -14.00,
+        "guideRailZOffsetMm": 0.00,
         "guideRodXOffsetMm": 0.00,
-        "guideRodZOffsetMm": -14.00,
-        "linearBearingCenterYOffsetMm": -4.60,
+        "guideRodZOffsetMm": 0.00,
+        "linearBearingCenterYOffsetMm": -24.50,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
         "carriageUprightHeightMm": 3.00,
-        "carriageUprightY0Mm": -10.00,
-        "carriageUprightLengthMm": 8.40,
+        "carriageUprightY0Mm": -30.60,
+        "carriageUprightLengthMm": 25.00,
         "dogPocketPhaseDeg": 60.00,
         "stopPadWidthMm": 4.00,
         "stopPadXOffsetMm": 0.60,
-        "stopLugXOffsetMm": 8.00,
-        "stopLugWidthMm": 4.00,
-        "stopLugZOffsetMm": -8.20,
+        "stopLugXOffsetMm": 10.00,
+        "stopLugWidthMm": 3.00,
+        "stopLugZOffsetMm": 5.00,
         "stopLugHeightMm": 2.00,
-        "stopLugRouteXOffsetMm": 16.90,
+        "stopLugRouteXOffsetMm": 10.00,
         "stopLugRouteWidthMm": 0.80,
         "plateWidthMm": 34.00,
         "plateKeyWidthMm": 4.00,
@@ -498,9 +498,13 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("合位导杆捕获端必须位于直线轴承压盖之后")
     if number("stopLugWidthMm") <= 0 or number("stopLugHeightMm") <= 0:
         raise RuntimeError("滑架独立硬止挡耳位尺寸无效")
-    if number("stopLugZOffsetMm") + number("stopLugHeightMm") / 2 \
-            >= -number("bearingBlockHeightMm") / 2 - 0.10:
-        raise RuntimeError("滑架硬止挡耳位没有避开下方旋转轴承块")
+    lug_inner_x = number("stopLugXOffsetMm") \
+        - number("stopLugWidthMm") / 2
+    lug_low_z = number("stopLugZOffsetMm") \
+        - number("stopLugHeightMm") / 2
+    if math.hypot(lug_inner_x, lug_low_z) \
+            - number("inputTipRadiusMm") < 0.45 - 0.001:
+        raise RuntimeError("侧向硬止挡耳位没有避开输入公轮径向包络")
     if number("stopLugXOffsetMm") - number("stopLugWidthMm") / 2 <= 0:
         raise RuntimeError("滑架硬止挡耳位没有位于中心支撑外侧")
     if number("stopLugRouteWidthMm") <= 0:
@@ -585,7 +589,7 @@ def validate_contract(contract: dict[str, object]) -> None:
     if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
         raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
     if number("linearBearingCount") != 1:
-        raise RuntimeError("中心滑架必须配置一枚公轮底下直线轴承")
+        raise RuntimeError("中心滑架必须配置一枚与公轮同轴直线轴承")
     if number("linearBearingFitCouponGuideCount") != 1:
         raise RuntimeError("直线轴承配合测试片必须只配置一根导杆")
     if abs(number("linearBearingFitCouponGuideXOffsetMm")) > 0.001:
@@ -594,8 +598,8 @@ def validate_contract(contract: dict[str, object]) -> None:
             or abs(number("guideRodZOffsetMm") - number("guideRailZOffsetMm")) > 0.001:
         raise RuntimeError("导杆位置字段与导轨兼容字段不一致")
     if abs(number("guideRodXOffsetMm")) > 0.001 \
-            or number("guideRodZOffsetMm") >= -number("bearingBlockHeightMm") / 2:
-        raise RuntimeError("单导杆没有位于公轮下方并避开旋转轴承块")
+            or abs(number("guideRodZOffsetMm")) > 0.001:
+        raise RuntimeError("单导杆没有与公轮共享 X/Z 轴心")
     expected_center_y_offset = (
         number("openTabY0Mm") - number("inputBaseYMm")
         + number("linearBearingHolderLengthMm") / 2
@@ -667,13 +671,18 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("直线轴承压盖定位裙边无效")
     if number("linearBearingRodNominalClearanceMm") < -0.001:
         raise RuntimeError("直线轴承与导杆的名义孔径关系为负")
-    holder_rotor_clearance = math.hypot(
-        number("guideRailXOffsetMm"),
-        number("guideRailZOffsetMm"),
-    ) - number("linearBearingHolderOuterDiameterMm") / 2 \
-        - number("inputTipRadiusMm")
-    if holder_rotor_clearance < 0.45:
-        raise RuntimeError("直线轴承套到输入公轮径向净空不足")
+    guide_rod_end = (
+        number("linearBearingCenterYOffsetMm")
+        + number("linearBearingHolderLengthMm") / 2
+        + number("strokeMm")
+        + number("linearBearingRetainerThicknessMm")
+        + number("guideRodCaptureMm")
+    )
+    guide_to_input_shaft_clearance = (
+        number("inputShaftStartMm") - guide_rod_end
+    )
+    if guide_to_input_shaft_clearance < 0.40 - 0.001:
+        raise RuntimeError("同轴导杆/轴承套扫掠没有避开输入 D 轴")
     if number("carriageUprightCenterXOffsetMm") <= number("carriageUprightWidthMm") / 2:
         raise RuntimeError("滑架立柱没有离开轴心")
     if number("carriageUprightRadialClearanceMm") < 0.45:
