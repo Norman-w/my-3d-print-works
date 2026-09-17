@@ -9,7 +9,7 @@
 ## 当前主场景验证范围
 
 - 默认 `SHOW_LEGACY_STATIONS=false`，主场景只启用零基 `col=2,row=2`（R3C3）中心单站和它的抽屉驱动路径；其余 24 个旧站位不进入默认总装。
-- 默认树只发布输入公轮、输出母轮、输入滑架、输出轴承笼、两根 Ø3 采购导杆、实体止挡、可拆机构板、两根独立轴、四枚轴承参考和纯永磁磁力靴。旧 `upper/lower`、弹簧、螺丝、拨叉和 `scheme1_*` 只作为明确隐藏的 legacy 诊断项保留。
+- 默认树只发布输入公轮、输出母轮、输入滑架、两枚 `3×7×10 mm` 直线轴承采购参考、两个轴承套前端压盖、输出轴承笼、两根 Ø3 采购导杆、实体止挡、可拆机构板、两根独立轴、四枚转子轴承参考和纯永磁磁力靴。旧 `upper/lower`、弹簧、螺丝、拨叉和 `scheme1_*` 只作为明确隐藏的 legacy 诊断项保留。
 - 需要临时对照旧布局时，可用 `-D 'SHOW_LEGACY_STATIONS=true'`；这不是中心首件的验收路径。
 - 中心新版离合的轴心位于对应竖直长齿轮杆的 `+Z` 侧。为匹配主场景现有长杆，嵌入版使用 `12T / 3 mm` 的兼容齿形；独立的 CH1 03C X1C 细版仍保持 `15T / 2.4 mm`，两者不能混装。
 
@@ -44,7 +44,7 @@
 | 总滑架行程 | `3.00 mm`，即间隙 + 有效插入 |
 | 母槽深度/槽底余量 | `3.25 / 0.85 mm` |
 | 合闸磁铁非接触余量 | `0.40 mm`；母轮磁铁相对槽底前伸 `0.45 mm` |
-| 导向 | 左右两根采购 Ø3 金属圆杆；滑架衬套 `Ø3.30 / Ø6.40 × 6.00 mm`，直径间隙 `0.30 mm`，导入 `0.45 mm` |
+| 导向 | 左右两根采购 Ø3 金属圆杆；每侧一枚采购 `3×7×10 mm` 直线轴承；打印轴承套座 `Ø7.20`、外径 `Ø12.00`、长 `11.60 mm`，前端 `Ø12.40×0.80 mm` 压盖/防脱裙边 |
 | 轴承 | 每个转子 `2×3×6×2`；两枚沿轴向形成支撑基线，初始轴承座直径 `6.10 mm`、盲座后肩 `0.60 mm` |
 | 轴 | 两根独立名义 `3 mm` 金属 D 轴；轴承开口侧设轴肩/挡圈参考 |
 | 触发 | 磁力靴内 `M_engage/M_release` 两槽，切线间距 `12 mm`；无弹簧、螺丝拨叉、电磁铁 |
@@ -71,7 +71,7 @@
 - `drawer_drive`：参数化源代码中的抽屉驱动装配入口；网页总装分别加载后取力轮、前端轮、同步带和齿排零件；
 - `clutch`：参数化源代码中的离合零件装配入口；网页总装只加载实际单个离合零件；
 - `clutch_detail`：单格离合零件检查入口；开合状态由网页脚本控制，不再输出静态“打开/闭合”两套合并体；
-- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前逐件入口；其中输入公轮和输入滑架按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/止挡/机构板固定，`center_guide_rails` 是两根 Ø3 采购导杆参考，原生磁力靴固定在蛇链托架坐标上；机构板带有按中心 2GT 包络切出的真实贯穿通道；
+- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_linear_bearings`、`center_linear_bearing_retainers`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前逐件入口；其中输入公轮、输入滑架、两枚 `3×7×10 mm` 直线轴承参考和两个压盖按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/止挡/机构板固定，`center_guide_rails` 是两根 Ø3 采购导杆参考，原生磁力靴固定在蛇链托架坐标上；机构板带有按中心 2GT 包络切出的真实贯穿通道；
 - `center_input_shaft`、`center_output_shaft`、`center_input_bearings`、`center_output_bearings`：两根独立 3 mm D 轴和四枚 `3×6×2` 轴承的采购件参考入口，不把采购件伪装成打印件；
 - `center_plate_belt_collision`：只用于验证机构板与中心 2GT 实际网格的交集；正常通过时导出空 STL，不是默认装配件；
 - `contract`：只回显中心机械契约，不产生几何；`scripts/generate_center_clutch_contract.py` 负责生成 JSON；

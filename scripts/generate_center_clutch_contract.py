@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import subprocess
 import tempfile
@@ -37,23 +38,36 @@ REQUIRED = {
     "bearingBlockThicknessMm",
     "bearingBlockWidthMm",
     "bearingBlockHeightMm",
-    "guideRailWidthMm",
-    "guideRailHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
     "guideRodDiameterMm",
     "guideRodCaptureMm",
     "guideRodY0Mm",
     "guideRodY1Mm",
-    "guideBushingIdMm",
-    "guideBushingOdMm",
-    "guideBushingLengthMm",
-    "guideBushingLeadInLengthMm",
-    "guideRunningClearanceDiametralMm",
+    "linearBearingNominalIdMm",
+    "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm",
+    "linearBearingCount",
+    "linearBearingSeatDiameterMm",
+    "linearBearingSeatDepthMm",
+    "linearBearingHolderOuterDiameterMm",
+    "linearBearingHolderLengthMm",
+    "linearBearingHolderBackShoulderMm",
+    "linearBearingHolderFrontNeckDiameterMm",
+    "linearBearingHolderFrontNeckLengthMm",
+    "linearBearingRetainerInnerDiameterMm",
+    "linearBearingRetainerOuterDiameterMm",
+    "linearBearingRetainerThicknessMm",
+    "linearBearingRetainerLipOuterDiameterMm",
+    "linearBearingRetainerSkirtInnerDiameterMm",
+    "linearBearingRetainerSkirtOuterDiameterMm",
+    "linearBearingRetainerSkirtLengthMm",
+    "linearBearingSeatRadialClearanceMm",
+    "linearBearingRodNominalClearanceMm",
+    "linearBearingPart",
+    "linearBearingRetainerPart",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
-    "captureShoeOuterMm",
-    "captureShoeLengthMm",
     "carriageUprightCenterXOffsetMm",
     "carriageUprightWidthMm",
     "carriageUprightZ0Mm",
@@ -131,7 +145,6 @@ FLOAT_KEYS = {
     "beltGuideRadiusMm",
     "motherOuterRadiusMm",
     "selectorTriggerSpacingMm",
-    "guideRunningClearanceMm",
     "railY0Mm",
     "railY1Mm",
     "openStopY0Mm",
@@ -151,23 +164,33 @@ FLOAT_KEYS = {
     "bearingBlockThicknessMm",
     "bearingBlockWidthMm",
     "bearingBlockHeightMm",
-    "guideRailWidthMm",
-    "guideRailHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
     "guideRodDiameterMm",
     "guideRodCaptureMm",
     "guideRodY0Mm",
     "guideRodY1Mm",
-    "guideBushingIdMm",
-    "guideBushingOdMm",
-    "guideBushingLengthMm",
-    "guideBushingLeadInLengthMm",
-    "guideRunningClearanceDiametralMm",
+    "linearBearingNominalIdMm",
+    "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm",
+    "linearBearingSeatDiameterMm",
+    "linearBearingSeatDepthMm",
+    "linearBearingHolderOuterDiameterMm",
+    "linearBearingHolderLengthMm",
+    "linearBearingHolderBackShoulderMm",
+    "linearBearingHolderFrontNeckDiameterMm",
+    "linearBearingHolderFrontNeckLengthMm",
+    "linearBearingRetainerInnerDiameterMm",
+    "linearBearingRetainerOuterDiameterMm",
+    "linearBearingRetainerThicknessMm",
+    "linearBearingRetainerLipOuterDiameterMm",
+    "linearBearingRetainerSkirtInnerDiameterMm",
+    "linearBearingRetainerSkirtOuterDiameterMm",
+    "linearBearingRetainerSkirtLengthMm",
+    "linearBearingSeatRadialClearanceMm",
+    "linearBearingRodNominalClearanceMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
-    "captureShoeOuterMm",
-    "captureShoeLengthMm",
     "carriageUprightCenterXOffsetMm",
     "carriageUprightWidthMm",
     "carriageUprightZ0Mm",
@@ -220,6 +243,7 @@ FLOAT_KEYS = {
 INT_KEYS = {
     "version",
     "bearingCountPerRotor",
+    "linearBearingCount",
     "bearingCount",
     "shaftCount",
     "matingMagnetCount",
@@ -302,14 +326,27 @@ def validate_contract(contract: dict[str, object]) -> None:
         "femaleMagnetProjectionMm": 0.45,
         "magnetNominalDiameterMm": 2.00,
         "selectorTriggerSpacingMm": 12.00,
-        "guideRunningClearanceMm": 0.30,
-        "guideRunningClearanceDiametralMm": 0.30,
         "guideRodDiameterMm": 3.00,
         "guideRodCaptureMm": 0.80,
-        "guideBushingIdMm": 3.30,
-        "guideBushingOdMm": 6.40,
-        "guideBushingLengthMm": 6.00,
-        "guideBushingLeadInLengthMm": 0.45,
+        "linearBearingNominalIdMm": 3.00,
+        "linearBearingNominalOdMm": 7.00,
+        "linearBearingNominalLengthMm": 10.00,
+        "linearBearingSeatDiameterMm": 7.20,
+        "linearBearingSeatDepthMm": 10.80,
+        "linearBearingHolderOuterDiameterMm": 12.00,
+        "linearBearingHolderLengthMm": 11.60,
+        "linearBearingHolderBackShoulderMm": 0.80,
+        "linearBearingHolderFrontNeckDiameterMm": 10.80,
+        "linearBearingHolderFrontNeckLengthMm": 1.00,
+        "linearBearingRetainerInnerDiameterMm": 6.40,
+        "linearBearingRetainerOuterDiameterMm": 12.40,
+        "linearBearingRetainerThicknessMm": 0.80,
+        "linearBearingRetainerLipOuterDiameterMm": 7.00,
+        "linearBearingRetainerSkirtInnerDiameterMm": 11.00,
+        "linearBearingRetainerSkirtOuterDiameterMm": 11.60,
+        "linearBearingRetainerSkirtLengthMm": 1.00,
+        "linearBearingSeatRadialClearanceMm": 0.10,
+        "linearBearingRodNominalClearanceMm": 0.00,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
@@ -319,12 +356,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         "bearingBlockThicknessMm": 3.20,
         "bearingBlockWidthMm": 14.00,
         "bearingBlockHeightMm": 14.00,
-        "guideRailWidthMm": 3.00,
-        "guideRailHeightMm": 3.00,
-        "guideRailXOffsetMm": 9.00,
-        "guideRailZOffsetMm": 8.00,
-        "captureShoeOuterMm": 6.40,
-        "captureShoeLengthMm": 6.00,
+        "guideRailXOffsetMm": 10.00,
+        "guideRailZOffsetMm": 9.00,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
@@ -445,17 +478,80 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("磁力靴链条支撑臂宽度无效")
     if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
         raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
-    if number("guideRailWidthMm") <= 0 or number("guideRailHeightMm") <= 0:
-        raise RuntimeError("捕获导轨截面无效")
-    if abs(number("guideBushingIdMm") - (
-        number("guideRodDiameterMm")
-        + number("guideRunningClearanceDiametralMm")
-    )) > 0.001:
-        raise RuntimeError("圆杆衬套内径没有由直径间隙推导")
-    if number("guideBushingOdMm") <= number("guideBushingIdMm") + 2.0:
-        raise RuntimeError("圆杆衬套壁厚不足")
-    if number("captureShoeOuterMm") != number("guideBushingOdMm"):
-        raise RuntimeError("导出兼容字段没有指向圆杆衬套外径")
+    if number("linearBearingCount") != 2:
+        raise RuntimeError("中心滑架必须配置两枚直线轴承")
+    if abs(number("linearBearingNominalIdMm")
+           - number("guideRodDiameterMm")) > 0.001:
+        raise RuntimeError("直线轴承名义内径必须匹配 Ø3 导杆")
+    if number("linearBearingNominalOdMm") <= number("linearBearingNominalIdMm"):
+        raise RuntimeError("直线轴承内外径关系无效")
+    if number("linearBearingNominalLengthMm") <= 0:
+        raise RuntimeError("直线轴承长度无效")
+    if abs(
+        number("linearBearingSeatRadialClearanceMm")
+        - (number("linearBearingSeatDiameterMm")
+           - number("linearBearingNominalOdMm")) / 2
+    ) > 0.001:
+        raise RuntimeError("直线轴承座径向间隙没有由座孔和外径推导")
+    if number("linearBearingSeatDiameterMm") <= number(
+        "linearBearingNominalOdMm"
+    ):
+        raise RuntimeError("直线轴承座没有给采购件外径留装配间隙")
+    if number("linearBearingHolderOuterDiameterMm") < number(
+        "linearBearingSeatDiameterMm"
+    ) + 4.0:
+        raise RuntimeError("直线轴承套径向打印壁厚不足")
+    if number("linearBearingSeatDepthMm") < (
+        number("linearBearingHolderBackShoulderMm")
+        + number("linearBearingNominalLengthMm")
+    ):
+        raise RuntimeError("直线轴承套座深度不足")
+    if number("linearBearingHolderLengthMm") < (
+        number("linearBearingHolderBackShoulderMm")
+        + number("linearBearingNominalLengthMm")
+        + number("linearBearingRetainerThicknessMm")
+        - 0.001
+    ):
+        raise RuntimeError("直线轴承套长度不足以保留前端压盖空间")
+    if number("linearBearingHolderFrontNeckDiameterMm") >= number(
+        "linearBearingHolderOuterDiameterMm"
+    ) or number("linearBearingHolderFrontNeckLengthMm") <= 0:
+        raise RuntimeError("直线轴承套前端定位颈无效")
+    if not (
+        number("linearBearingRetainerInnerDiameterMm")
+        > number("guideRodDiameterMm")
+        and number("linearBearingRetainerInnerDiameterMm")
+        < number("linearBearingNominalOdMm")
+    ):
+        raise RuntimeError("直线轴承压盖孔不能同时通过导杆并捕获轴承")
+    if number("linearBearingRetainerOuterDiameterMm") <= number(
+        "linearBearingHolderOuterDiameterMm"
+    ) or number("linearBearingRetainerThicknessMm") <= 0:
+        raise RuntimeError("直线轴承压盖外径/厚度无效")
+    if number("linearBearingRetainerLipOuterDiameterMm") > number(
+        "linearBearingNominalOdMm"
+    ):
+        raise RuntimeError("直线轴承压盖内唇超出轴承座包络")
+    if number("linearBearingRetainerSkirtInnerDiameterMm") <= number(
+        "linearBearingHolderFrontNeckDiameterMm"
+    ):
+        raise RuntimeError("直线轴承压盖定位裙边没有避开前端定位颈")
+    if not (
+        number("linearBearingRetainerSkirtOuterDiameterMm")
+        > number("linearBearingRetainerSkirtInnerDiameterMm")
+        and number("linearBearingRetainerSkirtLengthMm")
+        >= number("linearBearingHolderFrontNeckLengthMm")
+    ):
+        raise RuntimeError("直线轴承压盖定位裙边无效")
+    if number("linearBearingRodNominalClearanceMm") < -0.001:
+        raise RuntimeError("直线轴承与导杆的名义孔径关系为负")
+    holder_rotor_clearance = math.hypot(
+        number("guideRailXOffsetMm"),
+        number("guideRailZOffsetMm"),
+    ) - number("linearBearingHolderOuterDiameterMm") / 2 \
+        - number("inputTipRadiusMm")
+    if holder_rotor_clearance < 0.45:
+        raise RuntimeError("直线轴承套到输入公轮径向净空不足")
     if number("carriageUprightCenterXOffsetMm") <= number("carriageUprightWidthMm") / 2:
         raise RuntimeError("滑架立柱没有离开轴心")
     if number("carriageUprightRadialClearanceMm") < 0.45:

@@ -183,8 +183,20 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_carriage": {
-        "name": "中心 R3C3 · 输入滑架（双轴承座）",
+        "name": "中心 R3C3 · 输入滑架（双转子轴承座 + 直线轴承套）",
         "color": "#748c99",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/center_linear_bearings_reference": {
+        "name": "中心 R3C3 · 2×3×7×10 直线轴承（采购件参考）",
+        "color": "#b7c0c8",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/center_linear_bearing_retainers": {
+        "name": "中心 R3C3 · 直线轴承套前端压盖/防脱固定件",
+        "color": "#8aa1ad",
         "visible": True,
         "role": "printed",
     },
@@ -322,6 +334,8 @@ group_map = {
     "center_input_rotor": "02·离合机构",
     "center_output_rotor": "02·离合机构",
     "center_input_carriage": "02·离合机构",
+    "center_linear_bearings_reference": "02·离合机构",
+    "center_linear_bearing_retainers": "02·离合机构",
     "center_output_cage": "02·离合机构",
     "center_guide_rails": "02·离合机构",
     "center_stops": "02·离合机构",
@@ -345,7 +359,9 @@ name_map = {
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
-    "center_input_carriage": "中心 R3C3 输入滑架 · 随 +Y 行程移动",
+    "center_input_carriage": "中心 R3C3 输入滑架 · 随 +Y 行程移动 · 直线轴承套",
+    "center_linear_bearings_reference": "中心 R3C3 2×3×7×10 直线轴承 · 采购件",
+    "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖 · 打印防脱固定件",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 固定旋转支撑",
     "center_guide_rails": "中心 R3C3 双侧 Ø3 金属导向杆 · 采购件参考",
     "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
@@ -496,6 +512,8 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
             part_node("cabinet-clutch/center_input_carriage"),
+            part_node("cabinet-clutch/center_linear_bearings_reference"),
+            part_node("cabinet-clutch/center_linear_bearing_retainers"),
             part_node("cabinet-clutch/center_output_cage"),
             part_node("cabinet-clutch/center_guide_rails"),
             part_node("cabinet-clutch/center_stops"),
@@ -520,7 +538,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + 滑架 + 双轴承笼 + 双Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
+                "输入公轮 + 输出母轮 + 滑架 + 2×3×7×10直线轴承 + 轴承套/压盖 + 双轴承笼 + 双Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
                 children=active_center,
             ),
             call_node(
@@ -792,6 +810,8 @@ export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
 export_part "center_input_carriage" "${OUT_DIR}/center_input_carriage.stl" false 0
 export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
 export_part "center_guide_rails" "${OUT_DIR}/center_guide_rails.stl" false 0
+export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
+export_part "center_linear_bearing_retainers" "${OUT_DIR}/center_linear_bearing_retainers.stl" false 0
 export_part "center_stops" "${OUT_DIR}/center_stops.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
 export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
@@ -808,6 +828,7 @@ for printable_part in \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_input_carriage.stl" \
+    "${OUT_DIR}/center_linear_bearing_retainers.stl" \
     "${OUT_DIR}/center_output_cage.stl" \
     "${OUT_DIR}/center_stops.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \

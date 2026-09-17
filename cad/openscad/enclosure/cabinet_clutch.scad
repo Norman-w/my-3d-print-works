@@ -2103,6 +2103,22 @@ module selected_center_guide_rails_part() {
     center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
+module selected_center_linear_bearings_part() {
+    center_clutch_linear_bearings(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        ENGAGED
+    );
+}
+
+module selected_center_linear_bearing_retainers_part() {
+    center_clutch_linear_bearing_retainers(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        ENGAGED
+    );
+}
+
 module selected_center_stops_part() {
     center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
@@ -2205,6 +2221,17 @@ module selected_center_selector_male_collision_part() {
 module selected_center_carriage_rail_collision_part() {
     intersection() {
         center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_clutch_input_carriage(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            ENGAGED
+        );
+    }
+}
+
+module selected_center_input_rotor_carriage_collision_part() {
+    intersection() {
+        center_gt2_male(CENTER_GT2_COL, CENTER_GT2_ROW, ENGAGED);
         center_clutch_input_carriage(
             CENTER_GT2_COL,
             CENTER_GT2_ROW,
@@ -2540,6 +2567,10 @@ module clutch_scene_geometry() {
         selected_center_output_cage_part();
     } else if (CLUTCH_PART == "center_guide_rails") {
         selected_center_guide_rails_part();
+    } else if (CLUTCH_PART == "center_linear_bearings") {
+        selected_center_linear_bearings_part();
+    } else if (CLUTCH_PART == "center_linear_bearing_retainers") {
+        selected_center_linear_bearing_retainers_part();
     } else if (CLUTCH_PART == "center_stops") {
         selected_center_stops_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
@@ -2554,6 +2585,8 @@ module clutch_scene_geometry() {
         selected_center_selector_male_collision_part();
     } else if (CLUTCH_PART == "center_carriage_rail_collision") {
         selected_center_carriage_rail_collision_part();
+    } else if (CLUTCH_PART == "center_input_rotor_carriage_collision") {
+        selected_center_input_rotor_carriage_collision_part();
     } else if (CLUTCH_PART == "center_stops_carriage_collision") {
         selected_center_stops_carriage_collision_part();
     } else if (CLUTCH_PART == "center_guide_stop_collision") {
@@ -2661,7 +2694,6 @@ echo(
     str("beltGuideRadiusMm=", gt2_belt_guide_r()),
     str("motherOuterRadiusMm=", GT2_MOTHER_OUTER_R),
     str("selectorTriggerSpacingMm=", GT2_ACTUATOR_TRIGGER_SPACING_MM),
-    str("guideRunningClearanceMm=", CENTER_CLUTCH_RAIL_CLEAR),
     str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)),
     str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)),
     str("guideRodDiameterMm=", CENTER_CLUTCH_GUIDE_ROD_D),
@@ -2670,12 +2702,40 @@ echo(
         - CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
     str("guideRodY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)
         + CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
-    str("guideBushingIdMm=", CENTER_CLUTCH_GUIDE_BUSHING_ID),
-    str("guideBushingOdMm=", CENTER_CLUTCH_GUIDE_BUSHING_OD),
-    str("guideBushingLengthMm=", CENTER_CLUTCH_GUIDE_BUSHING_L),
-    str("guideBushingLeadInLengthMm=", CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L),
-    str("guideRunningClearanceDiametralMm=",
-        CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL),
+    str("linearBearingNominalIdMm=", CENTER_CLUTCH_LINEAR_BEARING_ID),
+    str("linearBearingNominalOdMm=", CENTER_CLUTCH_LINEAR_BEARING_OD),
+    str("linearBearingNominalLengthMm=", CENTER_CLUTCH_LINEAR_BEARING_L),
+    str("linearBearingCount=", CENTER_CLUTCH_LINEAR_BEARING_COUNT),
+    str("linearBearingSeatDiameterMm=", CENTER_CLUTCH_LINEAR_BEARING_SEAT_D),
+    str("linearBearingSeatDepthMm=", CENTER_CLUTCH_LINEAR_BEARING_SEAT_DEPTH),
+    str("linearBearingHolderOuterDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD),
+    str("linearBearingHolderLengthMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L),
+    str("linearBearingHolderBackShoulderMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_BACK_SHOULDER_T),
+    str("linearBearingHolderFrontNeckDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_FRONT_NECK_D),
+    str("linearBearingHolderFrontNeckLengthMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_FRONT_NECK_L),
+    str("linearBearingRetainerInnerDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_ID),
+    str("linearBearingRetainerOuterDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_OD),
+    str("linearBearingRetainerThicknessMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_T),
+    str("linearBearingRetainerLipOuterDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_LIP_OD),
+    str("linearBearingRetainerSkirtInnerDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_ID),
+    str("linearBearingRetainerSkirtOuterDiameterMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_OD),
+    str("linearBearingRetainerSkirtLengthMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L),
+    str("linearBearingSeatRadialClearanceMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_SEAT_RADIAL_CLEARANCE),
+    str("linearBearingRodNominalClearanceMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_ROD_NOMINAL_CLEARANCE),
     str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
     str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
     str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)),
@@ -2693,14 +2753,10 @@ echo(
     str("bearingBlockThicknessMm=", CENTER_CLUTCH_BEARING_BLOCK_T),
     str("bearingBlockWidthMm=", CENTER_CLUTCH_BEARING_BLOCK_X),
     str("bearingBlockHeightMm=", CENTER_CLUTCH_BEARING_BLOCK_Z),
-    str("guideRailWidthMm=", CENTER_CLUTCH_RAIL_W),
-    str("guideRailHeightMm=", CENTER_CLUTCH_RAIL_Z),
     str("guideRailXOffsetMm=", CENTER_CLUTCH_RAIL_X_OFFSET),
     str("guideRailZOffsetMm=", CENTER_CLUTCH_RAIL_Z_OFFSET),
     str("stopPadWidthMm=", CENTER_CLUTCH_STOP_PAD_W),
     str("stopPadXOffsetMm=", CENTER_CLUTCH_STOP_PAD_X_OFFSET),
-    str("captureShoeOuterMm=", CENTER_CLUTCH_SHOE_OUTER),
-    str("captureShoeLengthMm=", CENTER_CLUTCH_SHOE_L),
     str("carriageUprightCenterXOffsetMm=",
         CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET),
     str("carriageUprightWidthMm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T),
@@ -2799,6 +2855,8 @@ echo(
     "outputCagePart=cabinet-clutch/center_output_cage",
     "mechanismPlatePart=cabinet-clutch/center_mechanism_plate",
     "guidePart=cabinet-clutch/center_guide_rails",
+    "linearBearingPart=cabinet-clutch/center_linear_bearings_reference",
+    "linearBearingRetainerPart=cabinet-clutch/center_linear_bearing_retainers",
     "stopPart=cabinet-clutch/center_stops",
     "selectorShoePart=cabinet-clutch/center_selector_shoe"
 );
@@ -2828,6 +2886,8 @@ assert(
     || CLUTCH_PART == "center_input_carriage"
     || CLUTCH_PART == "center_output_cage"
     || CLUTCH_PART == "center_guide_rails"
+    || CLUTCH_PART == "center_linear_bearings"
+    || CLUTCH_PART == "center_linear_bearing_retainers"
     || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"
@@ -2835,6 +2895,7 @@ assert(
     || CLUTCH_PART == "center_selector_rail_collision"
     || CLUTCH_PART == "center_selector_male_collision"
     || CLUTCH_PART == "center_carriage_rail_collision"
+    || CLUTCH_PART == "center_input_rotor_carriage_collision"
     || CLUTCH_PART == "center_stops_carriage_collision"
     || CLUTCH_PART == "center_guide_stop_collision"
     || CLUTCH_PART == "center_input_shaft"

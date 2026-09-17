@@ -67,6 +67,12 @@ const CURRENT_CLUTCH_IDS = new Map([
   ["cabinet-clutch/center_input_bearings_reference", {
     role: "input", moves: true, rotates: false,
   }],
+  ["cabinet-clutch/center_linear_bearings_reference", {
+    role: "input", moves: true, rotates: false,
+  }],
+  ["cabinet-clutch/center_linear_bearing_retainers", {
+    role: "input", moves: true, rotates: false,
+  }],
   ["cabinet-clutch/center_output_shaft_reference", {
     role: "output", moves: false, rotates: true,
   }],
@@ -403,6 +409,7 @@ function validateCenterClutchContract(contract) {
     "role",
     "verticalLayoutMode",
     "centerClutchVerticalLiftMm",
+    "inputBaseYMm",
     "openGapMm",
     "dogInsertionMm",
     "strokeMm",
@@ -412,6 +419,32 @@ function validateCenterClutchContract(contract) {
     "femaleMagnetProjectionMm",
     "magnetNominalDiameterMm",
     "maleBottomYMm",
+    "inputTipRadiusMm",
+    "guideRailXOffsetMm",
+    "guideRailZOffsetMm",
+    "guideRodDiameterMm",
+    "linearBearingNominalIdMm",
+    "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm",
+    "linearBearingCount",
+    "linearBearingSeatDiameterMm",
+    "linearBearingSeatDepthMm",
+    "linearBearingHolderOuterDiameterMm",
+    "linearBearingHolderLengthMm",
+    "linearBearingHolderBackShoulderMm",
+    "linearBearingHolderFrontNeckDiameterMm",
+    "linearBearingHolderFrontNeckLengthMm",
+    "linearBearingRetainerInnerDiameterMm",
+    "linearBearingRetainerOuterDiameterMm",
+    "linearBearingRetainerThicknessMm",
+    "linearBearingRetainerLipOuterDiameterMm",
+    "linearBearingRetainerSkirtInnerDiameterMm",
+    "linearBearingRetainerSkirtOuterDiameterMm",
+    "linearBearingRetainerSkirtLengthMm",
+    "linearBearingSeatRadialClearanceMm",
+    "linearBearingRodNominalClearanceMm",
+    "linearBearingPart",
+    "linearBearingRetainerPart",
     "actuation",
     "engageOnlyWhenStopped",
     "releaseBeforeReturn",
@@ -465,6 +498,28 @@ function validateCenterClutchContract(contract) {
     "magnetNominalDiameterMm",
     "centerClutchVerticalLiftMm",
     "maleBottomYMm",
+    "inputTipRadiusMm",
+    "guideRailXOffsetMm",
+    "guideRailZOffsetMm",
+    "guideRodDiameterMm",
+    "linearBearingNominalIdMm",
+    "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm",
+    "linearBearingSeatDiameterMm",
+    "linearBearingSeatDepthMm",
+    "linearBearingHolderOuterDiameterMm",
+    "linearBearingHolderLengthMm",
+    "linearBearingHolderBackShoulderMm",
+    "linearBearingHolderFrontNeckDiameterMm",
+    "linearBearingHolderFrontNeckLengthMm",
+    "linearBearingRetainerInnerDiameterMm",
+    "linearBearingRetainerOuterDiameterMm",
+    "linearBearingRetainerThicknessMm",
+    "linearBearingRetainerLipOuterDiameterMm",
+    "linearBearingRetainerSkirtInnerDiameterMm",
+    "linearBearingRetainerSkirtOuterDiameterMm",
+    "linearBearingRetainerSkirtLengthMm",
+    "linearBearingSeatRadialClearanceMm",
     "selectorShoeTangentOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeAnchorXMm",
@@ -511,6 +566,56 @@ function validateCenterClutchContract(contract) {
       - Number(contract.femaleMagnetProjectionMm)
       - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
     throw new Error("centerClutch magnet clearance derivation is invalid");
+  }
+  if (Number(contract.linearBearingCount) !== 2
+      || Math.abs(Number(contract.linearBearingNominalIdMm)
+        - Number(contract.guideRodDiameterMm)) > 0.001
+      || Number(contract.linearBearingSeatDiameterMm)
+        <= Number(contract.linearBearingNominalOdMm)
+      || Math.abs(Number(contract.linearBearingSeatRadialClearanceMm)
+        - (Number(contract.linearBearingSeatDiameterMm)
+          - Number(contract.linearBearingNominalOdMm)) / 2) > 0.001
+      || Number(contract.linearBearingHolderOuterDiameterMm)
+        < Number(contract.linearBearingSeatDiameterMm) + 4
+      || Number(contract.linearBearingSeatDepthMm)
+        < Number(contract.linearBearingHolderBackShoulderMm)
+          + Number(contract.linearBearingNominalLengthMm)
+      || Number(contract.linearBearingHolderLengthMm)
+        < Number(contract.linearBearingHolderBackShoulderMm)
+          + Number(contract.linearBearingNominalLengthMm)
+          + Number(contract.linearBearingRetainerThicknessMm) - 0.001
+      || Number(contract.linearBearingHolderFrontNeckDiameterMm)
+        >= Number(contract.linearBearingHolderOuterDiameterMm)
+      || Number(contract.linearBearingRetainerInnerDiameterMm)
+        <= Number(contract.guideRodDiameterMm)
+      || Number(contract.linearBearingRetainerInnerDiameterMm)
+        >= Number(contract.linearBearingNominalOdMm)
+      || Number(contract.linearBearingRetainerOuterDiameterMm)
+        <= Number(contract.linearBearingHolderOuterDiameterMm)
+      || Number(contract.linearBearingRetainerThicknessMm) <= 0
+      || Number(contract.linearBearingRetainerLipOuterDiameterMm)
+        > Number(contract.linearBearingNominalOdMm)
+      || Number(contract.linearBearingRetainerSkirtInnerDiameterMm)
+        <= Number(contract.linearBearingHolderFrontNeckDiameterMm)
+      || Number(contract.linearBearingRetainerSkirtOuterDiameterMm)
+        <= Number(contract.linearBearingRetainerSkirtInnerDiameterMm)
+      || Number(contract.linearBearingRetainerSkirtLengthMm)
+        < Number(contract.linearBearingHolderFrontNeckLengthMm)
+      || Number(contract.linearBearingRodNominalClearanceMm) < -0.001) {
+    throw new Error("centerClutch 直线轴承/轴承套/压盖契约不匹配");
+  }
+  const holderRotorRadialClearance = Math.hypot(
+    Number(contract.guideRailXOffsetMm),
+    Number(contract.guideRailZOffsetMm),
+  ) - Number(contract.linearBearingHolderOuterDiameterMm) / 2
+    - Number(contract.inputTipRadiusMm);
+  if (holderRotorRadialClearance < 0.45) {
+    throw new Error("centerClutch 轴承套到输入公轮的径向净空不足");
+  }
+  if (contract.linearBearingPart !== "cabinet-clutch/center_linear_bearings_reference"
+      || contract.linearBearingRetainerPart
+        !== "cabinet-clutch/center_linear_bearing_retainers") {
+    throw new Error("centerClutch 直线轴承参考件 ID 不匹配");
   }
   if (Math.abs(Number(contract.maleBottomYMm)
       - Number(contract.inputBaseYMm)) > 0.001
