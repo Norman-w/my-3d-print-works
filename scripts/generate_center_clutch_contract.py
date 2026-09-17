@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""从 OpenSCAD 的中心离合参数回显生成唯一机械契约。"""
+"""从 OpenSCAD 回显生成中心 R3C3 离合的唯一机械契约。"""
 
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import re
 import subprocess
 import tempfile
@@ -15,280 +14,63 @@ from pathlib import Path
 # ===== 分区：常量/配置 =====
 MARKER = "CENTER_CLUTCH_CONTRACT_DYNAMIC"
 REQUIRED = {
-    "axis",
-    "role",
-    "verticalLayoutMode",
-    "centerClutchVerticalLiftMm",
-    "openGapMm",
-    "dogInsertionMm",
-    "strokeMm",
-    "pocketDepthMm",
-    "bottomClearanceMm",
-    "magnetNonContactClearanceMm",
-    "femaleMagnetProjectionMm",
-    "magnetNominalDiameterMm",
-    "maleBottomYMm",
-    "dogPocketPhaseDeg",
-    "actuation",
-    "engageOnlyWhenStopped",
-    "releaseBeforeReturn",
-    "bearingReferenceCenterOffsetMm",
-    "bearingCenterOffsetMm",
-    "inputBearingCenterOffsetMm",
-    "bearingPairSpacingMm",
-    "bearingBlockThicknessMm",
-    "bearingBlockWidthMm",
-    "bearingBlockHeightMm",
-    "guideRailXOffsetMm",
-    "guideRailZOffsetMm",
-    "guideRodXOffsetMm",
-    "guideRodZOffsetMm",
-    "guideRodDiameterMm",
-    "guideRodCaptureMm",
-    "guideRodY0Mm",
-    "guideRodY1Mm",
-    "linearBearingNominalIdMm",
-    "linearBearingNominalOdMm",
-    "linearBearingNominalLengthMm",
-    "linearBearingCount",
-    "linearBearingCenterYOffsetMm",
-    "linearBearingSeatDiameterMm",
-    "linearBearingSeatDepthMm",
-    "linearBearingHolderOuterDiameterMm",
-    "linearBearingHolderLengthMm",
-    "linearBearingHolderBackShoulderMm",
-    "linearBearingHolderFrontNeckDiameterMm",
-    "linearBearingHolderFrontNeckLengthMm",
-    "linearBearingRetainerInnerDiameterMm",
-    "linearBearingRetainerOuterDiameterMm",
-    "linearBearingRetainerThicknessMm",
-    "linearBearingRetainerLipOuterDiameterMm",
-    "linearBearingRetainerSkirtInnerDiameterMm",
-    "linearBearingRetainerSkirtOuterDiameterMm",
-    "linearBearingRetainerSkirtLengthMm",
-    "linearBearingSeatRadialClearanceMm",
-    "linearBearingRodNominalClearanceMm",
-    "linearBearingModel",
-    "linearBearingFitCouponPart",
-    "linearBearingFitCouponGuideCount",
-    "linearBearingFitCouponGuideXOffsetMm",
-    "linearBearingPart",
-    "linearBearingRetainerPart",
-    "rotaryBearingArrangement",
-    "linearBearingArrangement",
-    "selectorShoeLinearBearingCollisionPart",
-    "stopPadWidthMm",
-    "stopPadXOffsetMm",
-    "stopLugXOffsetMm",
-    "stopLugWidthMm",
-    "stopLugZOffsetMm",
-    "stopLugHeightMm",
-    "stopLugRouteXOffsetMm",
-    "stopLugRouteWidthMm",
-    "carriageUprightCenterXOffsetMm",
-    "carriageUprightWidthMm",
-    "carriageUprightZ0Mm",
-    "carriageUprightHeightMm",
-    "carriageUprightY0Mm",
-    "carriageUprightLengthMm",
-    "carriageUprightRadialClearanceMm",
-    "plateWidthMm",
-    "plateKeyWidthMm",
-    "plateKeyHeightMm",
-    "plateKeyClearanceMm",
-    "plateM3ClearanceMm",
-    "plateBeltPassageHalfWidthMm",
-    "plateBeltPassageAxialWidthMm",
-    "plateBeltPassageRadialClearanceMm",
-    "plateBeltPassageAxialClearanceMm",
-    "plateSupport",
-    "selectorShoePart",
-    "selectorShoeCoordinateFrame",
-    "selectorShoeTangentOffsetMm",
-    "selectorShoeNormalOffsetMm",
-    "selectorShoeTargetYMm",
-    "selectorShoeZMm",
-    "selectorShoeAnchorXMm",
-    "selectorShoeAnchorYMm",
-    "selectorShoeAnchorZMm",
-    "selectorShoeMagnetFaceOffsetMm",
-    "selectorShoeMagnetFaceYMm",
-    "selectorShoeTriggerClearanceMm",
-    "selectorShoeMagnetAxis",
-    "selectorShoeChainAttachYMm",
-    "selectorShoeChainAttachZMm",
-    "selectorShoeChainAttachXMm",
-    "selectorShoeChainContactDiameterMm",
-    "selectorShoeSupportXOffsetMm",
-    "selectorShoeSupportArmXOffsetMm",
-    "selectorShoeSupportXWidthMm",
-    "selectorShoeSupportChainYOverhangMm",
-    "selectorShoeSupportChainZT",
-    "selectorShoeSupportBridgeOverlapMm",
-    "selectorShoeSupportDropMm",
-    "selectorShoeSupportReachMm",
-    "selectorShoeChainSupportPart",
-    "selectorShoeBodyWidthMm",
-    "selectorShoeBodyDepthMm",
-    "selectorShoeBodyHeightMm",
-    "selectorShoePocketRimHeightMm",
-    "inputShaftStartMm",
-    "inputShaftLengthMm",
-    "outputShaftStartMm",
-    "outputShaftLengthMm",
-    "inputGearBandThicknessMm",
-    "dBoreDepthMm",
-    "bearingCountPerRotor",
+    "version", "axis", "role", "verticalLayoutMode",
+    "centerClutchVerticalLiftMm", "axisXMm", "axisZMm", "inputBaseYMm",
+    "maleBottomYMm", "outputBaseYMm", "openGapMm", "dogInsertionMm",
+    "strokeMm", "pocketDepthMm", "bottomClearanceMm",
+    "magnetNonContactClearanceMm", "femaleMagnetProjectionMm",
+    "magnetNominalDiameterMm", "gearCenterDistanceMm", "longPitchRadiusMm",
+    "inputPitchRadiusMm", "gearMeshClearanceMm", "dogPocketPhaseDeg",
+    "longTipRadiusMm", "inputTipRadiusMm", "beltEnvelopeRadiusMm",
+    "beltGuideRadiusMm", "motherOuterRadiusMm",
+    "linearBearingNominalIdMm", "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm", "linearBearingCount",
+    "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
+    "linearBearingSeatDiameterMm", "linearBearingSeatRadialClearanceMm",
+    "linearBearingBlockWidthMm", "linearBearingBlockYLengthMm",
+    "linearBearingBlockZLengthMm", "linearBearingBlockZMarginMm",
+    "linearBearingBlockMountHoleDiameterMm",
+    "linearBearingBlockMountHoleCount", "linearBearingBlockMountXOffsetMm",
+    "linearBearingBlockMountYOffsetMm", "linearBearingBlockMount",
+    "linearBearingModel", "linearBearingMovesWithInput",
+    "linearBearingFitCouponPart", "linearBearingPart", "linearBearingBlockPart",
+    "inputShaftProfile", "inputShaftUpperDStartMm",
+    "inputShaftUpperDLengthMm", "inputShaftRoundStartMm",
+    "inputShaftRoundLengthMm", "inputShaftRoundDiameterMm",
+    "inputShaftLowerDStartMm", "inputShaftLowerDLengthMm",
+    "inputSleeveTopOffsetMm", "inputSleeveUpperDHeightMm",
+    "inputSleeveUpperDDiameterMm", "inputSleeveLowerRoundOuterDiameterMm",
+    "inputSleeveLowerRoundHeightMm", "inputSleeveDSocketDepthMm",
+    "inputSleeveDSocketClearanceMm", "inputSleeveMagnetNominalDiameterMm",
+    "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
+    "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetBottomClearanceMm",
+    "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
+    "outputShaftStartMm", "outputShaftLengthMm", "outputBearingCount",
+    "bearingCount", "bearingNominal", "bearingSeatDiameterMm",
+    "bearingSeatDepthMm", "bearingBackShoulderMm",
+    "bearingReferenceCenterOffsetMm", "bearingCenterOffsetMm",
+    "bearingPairSpacingMm", "bearingBlockThicknessMm", "shaftDiameterMm",
+    "shaftCollarOdMm", "shaftCollarBoreMm", "matingMagnetCount",
+    "inputSleeveMagnetCount", "totalModeledMagnetCount",
+    "rotaryBearingArrangement", "linearBearingArrangement", "plateWidthMm",
+    "plateKeyWidthMm", "plateKeyHeightMm", "plateKeyClearanceMm",
+    "plateM3ClearanceMm", "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageAxialWidthMm", "plateBeltPassageRadialClearanceMm",
+    "plateBeltPassageAxialClearanceMm", "plateSupport", "actuation",
+    "engageOnlyWhenStopped", "releaseBeforeReturn",
+    "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
+    "outputPart", "outputCagePart", "mechanismPlatePart", "outputShaftPart",
+    "outputBearingsPart",
 }
-FLOAT_KEYS = {
-    "axisXMm",
-    "axisZMm",
-    "inputBaseYMm",
-    "outputBaseYMm",
-    "centerClutchVerticalLiftMm",
-    "maleBottomYMm",
-    "openGapMm",
-    "dogInsertionMm",
-    "strokeMm",
-    "pocketDepthMm",
-    "bottomClearanceMm",
-    "magnetNonContactClearanceMm",
-    "femaleMagnetProjectionMm",
-    "magnetNominalDiameterMm",
-    "dogPocketPhaseDeg",
-    "gearCenterDistanceMm",
-    "longPitchRadiusMm",
-    "inputPitchRadiusMm",
-    "gearMeshClearanceMm",
-    "longTipRadiusMm",
-    "inputTipRadiusMm",
-    "beltEnvelopeRadiusMm",
-    "beltGuideRadiusMm",
-    "motherOuterRadiusMm",
-    "selectorTriggerSpacingMm",
-    "railY0Mm",
-    "railY1Mm",
-    "openStopY0Mm",
-    "openStopY1Mm",
-    "engagedStopY0Mm",
-    "engagedStopY1Mm",
-    "openTabY0Mm",
-    "openTabY1Mm",
-    "engagedTabY0Mm",
-    "engagedTabY1Mm",
-    "bearingSeatDiameterMm",
-    "bearingSeatDepthMm",
-    "bearingBackShoulderMm",
-    "bearingReferenceCenterOffsetMm",
-    "bearingCenterOffsetMm",
-    "inputBearingCenterOffsetMm",
-    "bearingPairSpacingMm",
-    "bearingBlockThicknessMm",
-    "bearingBlockWidthMm",
-    "bearingBlockHeightMm",
-    "guideRailXOffsetMm",
-    "guideRailZOffsetMm",
-    "guideRodXOffsetMm",
-    "guideRodZOffsetMm",
-    "guideRodDiameterMm",
-    "guideRodCaptureMm",
-    "guideRodY0Mm",
-    "guideRodY1Mm",
-    "linearBearingNominalIdMm",
-    "linearBearingNominalOdMm",
-    "linearBearingNominalLengthMm",
-    "linearBearingCenterYOffsetMm",
-    "linearBearingSeatDiameterMm",
-    "linearBearingSeatDepthMm",
-    "linearBearingHolderOuterDiameterMm",
-    "linearBearingHolderLengthMm",
-    "linearBearingHolderBackShoulderMm",
-    "linearBearingHolderFrontNeckDiameterMm",
-    "linearBearingHolderFrontNeckLengthMm",
-    "linearBearingRetainerInnerDiameterMm",
-    "linearBearingRetainerOuterDiameterMm",
-    "linearBearingRetainerThicknessMm",
-    "linearBearingRetainerLipOuterDiameterMm",
-    "linearBearingRetainerSkirtInnerDiameterMm",
-    "linearBearingRetainerSkirtOuterDiameterMm",
-    "linearBearingRetainerSkirtLengthMm",
-    "linearBearingSeatRadialClearanceMm",
-    "linearBearingRodNominalClearanceMm",
-    "linearBearingFitCouponGuideXOffsetMm",
-    "stopPadWidthMm",
-    "stopPadXOffsetMm",
-    "stopLugXOffsetMm",
-    "stopLugWidthMm",
-    "stopLugZOffsetMm",
-    "stopLugHeightMm",
-    "stopLugRouteXOffsetMm",
-    "stopLugRouteWidthMm",
-    "carriageUprightCenterXOffsetMm",
-    "carriageUprightWidthMm",
-    "carriageUprightZ0Mm",
-    "carriageUprightHeightMm",
-    "carriageUprightY0Mm",
-    "carriageUprightLengthMm",
-    "carriageUprightRadialClearanceMm",
-    "plateWidthMm",
-    "shaftDiameterMm",
-    "shaftCollarOdMm",
-    "shaftCollarBoreMm",
-    "plateKeyWidthMm",
-    "plateKeyHeightMm",
-    "plateKeyClearanceMm",
-    "plateM3ClearanceMm",
-    "plateBeltPassageHalfWidthMm",
-    "plateBeltPassageAxialWidthMm",
-    "plateBeltPassageRadialClearanceMm",
-    "plateBeltPassageAxialClearanceMm",
-    "selectorShoeTangentOffsetMm",
-    "selectorShoeNormalOffsetMm",
-    "selectorShoeTargetYMm",
-    "selectorShoeZMm",
-    "selectorShoeAnchorXMm",
-    "selectorShoeAnchorYMm",
-    "selectorShoeAnchorZMm",
-    "selectorShoeMagnetFaceOffsetMm",
-    "selectorShoeMagnetFaceYMm",
-    "selectorShoeTriggerClearanceMm",
-    "selectorShoeChainAttachYMm",
-    "selectorShoeChainAttachZMm",
-    "selectorShoeChainAttachXMm",
-    "selectorShoeChainContactDiameterMm",
-    "selectorShoeSupportXOffsetMm",
-    "selectorShoeSupportArmXOffsetMm",
-    "selectorShoeSupportXWidthMm",
-    "selectorShoeSupportChainYOverhangMm",
-    "selectorShoeSupportChainZT",
-    "selectorShoeSupportBridgeOverlapMm",
-    "selectorShoeSupportDropMm",
-    "selectorShoeSupportReachMm",
-    "selectorShoeBodyWidthMm",
-    "selectorShoeBodyDepthMm",
-    "selectorShoeBodyHeightMm",
-    "selectorShoePocketRimHeightMm",
-    "inputShaftStartMm",
-    "inputShaftLengthMm",
-    "outputShaftStartMm",
-    "outputShaftLengthMm",
-    "inputGearBandThicknessMm",
-    "dBoreDepthMm",
-}
+FLOAT_KEYS = {key for key in REQUIRED if key.endswith("Mm") or key.endswith("Deg")}
 INT_KEYS = {
-    "version",
-    "bearingCountPerRotor",
-    "linearBearingCount",
-    "bearingCount",
-    "shaftCount",
-    "matingMagnetCount",
-    "selectorMagnetCount",
-    "totalMagnetCount",
-    "linearBearingFitCouponGuideCount",
-    "centerCol",
-    "centerRow",
+    "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
+    "outputBearingCount", "bearingCount", "matingMagnetCount",
+    "inputSleeveMagnetCount", "totalModeledMagnetCount", "centerCol", "centerRow",
 }
-BOOL_KEYS = {"engageOnlyWhenStopped", "releaseBeforeReturn"}
+BOOL_KEYS = {
+    "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
+}
 
 # ===== 分区：私有成员 =====
 def parse_echo(output: str) -> dict[str, str]:
@@ -298,19 +80,17 @@ def parse_echo(output: str) -> dict[str, str]:
         tokens = re.findall(r'"((?:[^"\\]|\\.)*)"', line)
         if not tokens or tokens[0] != MARKER:
             continue
-        values: dict[str, str] = {}
-        for token in tokens[1:]:
-            if "=" not in token:
-                continue
-            key, value = token.split("=", 1)
-            values[key] = value
+        values = {
+            key: value
+            for token in tokens[1:]
+            if "=" in token
+            for key, value in [token.split("=", 1)]
+        }
         missing = REQUIRED - values.keys()
         if missing:
-            raise RuntimeError(
-                f"中心离合契约缺少字段: {', '.join(sorted(missing))}"
-            )
+            raise RuntimeError("中心离合契约缺少字段: " + ", ".join(sorted(missing)))
         return values
-    raise RuntimeError("OpenSCAD 输出中没有 CENTER_CLUTCH_CONTRACT 回显")
+    raise RuntimeError("OpenSCAD 输出中没有 CENTER_CLUTCH_CONTRACT_DYNAMIC 回显")
 
 
 def coerce(values: dict[str, str]) -> dict[str, object]:
@@ -329,379 +109,184 @@ def coerce(values: dict[str, str]) -> dict[str, object]:
     return result
 
 
+def n(contract: dict[str, object], key: str) -> float:
+    value = contract.get(key)
+    if not isinstance(value, (int, float)):
+        raise RuntimeError(f"中心离合契约数值字段无效: {key}={value!r}")
+    return float(value)
+
+
+def expect(contract: dict[str, object], key: str, value: float, label: str) -> None:
+    actual = n(contract, key)
+    if abs(actual - value) > 0.001:
+        raise RuntimeError(f"{label}: {actual:.4f}，期望 {value:.4f}")
+
+
 def validate_contract(contract: dict[str, object]) -> None:
+    if contract.get("version") != 1:
+        raise RuntimeError("中心离合契约版本必须为 1")
     if contract.get("axis") != "+Y" or contract.get("role") != "input/output":
         raise RuntimeError("中心离合契约轴向/角色不匹配")
     if contract.get("verticalLayoutMode") != "center-clutch-lift":
-        raise RuntimeError("中心离合垂直布局必须是整体上移的首件方案")
-    if contract.get("selectorShoeCoordinateFrame") != "native-world":
-        raise RuntimeError("磁力靴必须使用原生世界坐标")
-    if contract.get("selectorShoeMagnetAxis") != "+Y":
-        raise RuntimeError("磁力靴磁面必须朝世界 +Y，从公轮底部触发")
+        raise RuntimeError("中心离合垂直布局必须是整体上移首件方案")
+    expect(contract, "centerClutchVerticalLiftMm", 5.0, "中心离合垂直抬高")
     if contract.get("actuation") != "permanent-magnet":
-        raise RuntimeError("中心离合契约不是纯永磁动作")
+        raise RuntimeError("中心离合必须使用永磁动作")
     if contract.get("engageOnlyWhenStopped") is not True:
         raise RuntimeError("中心离合必须停稳后接合")
     if contract.get("releaseBeforeReturn") is not True:
         raise RuntimeError("中心离合必须释放后返回")
-    if contract.get("rotaryBearingArrangement") != "two-per-rotor-axially-spaced":
-        raise RuntimeError("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
-    if contract.get("linearBearingArrangement") != "single-coaxial-with-male-rotor":
-        raise RuntimeError("竖直直线轴承必须与公轮同轴且只配置一枚、单根导杆")
-    if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
-        raise RuntimeError("直线轴承采购参考必须是 LM3UU 可识别模型")
-    if contract.get("linearBearingFitCouponPart") \
-            != "cabinet-clutch/center_linear_bearing_fit_coupon":
-        raise RuntimeError("直线轴承配合测试片零件 ID 不匹配")
-    if contract.get("selectorShoeChainSupportPart") \
-            != "cabinet-clutch/center_selector_chain_support_contact":
-        raise RuntimeError("磁力靴必须包含链条支撑接触见证零件")
-    if contract.get("selectorShoeLinearBearingCollisionPart") \
-            != "cabinet-clutch/center_selector_linear_bearing_collision":
-        raise RuntimeError("磁力靴必须包含单直线轴承路径干涉见证零件")
+    if contract.get("inputSideAdditionalMechanism") != "none":
+        raise RuntimeError("公轮端不能残留滑架、止挡或拨叉等机构")
+    if contract.get("linearBearingMovesWithInput") is not False:
+        raise RuntimeError("固定长方条 LM3UU 不能随公轮移动")
 
-    def number(key: str) -> float:
-        value = contract.get(key)
-        if not isinstance(value, (int, float)):
-            raise RuntimeError(f"中心离合契约缺少数值字段: {key}")
-        return float(value)
+    exact = {
+        "linearBearingBlockMount": "main-plate-direct",
+        "linearBearingModel": "LM3UU-cutaway-reference",
+        "linearBearingFitCouponPart": "cabinet-clutch/center_linear_bearing_fit_coupon",
+        "linearBearingPart": "cabinet-clutch/center_linear_bearings_reference",
+        "linearBearingBlockPart": "cabinet-clutch/center_linear_bearing_block",
+        "inputShaftProfile": "D-round-D",
+        "inputShaftPart": "cabinet-clutch/center_input_shaft_reference",
+        "inputSleevePart": "cabinet-clutch/center_input_sleeve",
+        "inputSleeveMagnetPart": "cabinet-clutch/center_input_sleeve_magnet_reference",
+        "bearingNominal": "3x6x2",
+        "rotaryBearingArrangement": "output-two-3x6x2-axially-spaced-input-free",
+        "linearBearingArrangement": "single-coaxial-with-fixed-block",
+        "plateSupport": "partition-through-M3",
+        "inputPart": "cabinet-clutch/center_input_rotor",
+        "outputPart": "cabinet-clutch/center_output_rotor",
+        "outputCagePart": "cabinet-clutch/center_output_cage",
+        "mechanismPlatePart": "cabinet-clutch/center_mechanism_plate",
+        "outputShaftPart": "cabinet-clutch/center_output_shaft_reference",
+        "outputBearingsPart": "cabinet-clutch/center_output_bearings_reference",
+    }
+    for key, value in exact.items():
+        if contract.get(key) != value:
+            raise RuntimeError(f"中心离合契约字段错误: {key}={contract.get(key)!r}")
 
     frozen = {
-        "centerClutchVerticalLiftMm": 5.00,
-        "openGapMm": 0.60,
-        "dogInsertionMm": 2.40,
-        "strokeMm": 3.00,
-        "pocketDepthMm": 3.25,
-        "bottomClearanceMm": 0.85,
-        "magnetNonContactClearanceMm": 0.40,
-        "femaleMagnetProjectionMm": 0.45,
-        "magnetNominalDiameterMm": 2.00,
-        "selectorTriggerSpacingMm": 12.00,
-        "guideRodDiameterMm": 3.00,
-        "guideRodCaptureMm": 0.80,
-        "linearBearingNominalIdMm": 3.00,
-        "linearBearingNominalOdMm": 7.00,
-        "linearBearingNominalLengthMm": 10.00,
-        "linearBearingSeatDiameterMm": 7.20,
-        "linearBearingSeatDepthMm": 10.80,
-        "linearBearingHolderOuterDiameterMm": 12.00,
-        "linearBearingHolderLengthMm": 11.60,
-        "linearBearingHolderBackShoulderMm": 0.80,
-        "linearBearingHolderFrontNeckDiameterMm": 10.80,
-        "linearBearingHolderFrontNeckLengthMm": 1.00,
-        "linearBearingRetainerInnerDiameterMm": 6.40,
-        "linearBearingRetainerOuterDiameterMm": 12.40,
-        "linearBearingRetainerThicknessMm": 0.80,
-        "linearBearingRetainerLipOuterDiameterMm": 7.00,
-        "linearBearingRetainerSkirtInnerDiameterMm": 11.00,
-        "linearBearingRetainerSkirtOuterDiameterMm": 11.60,
-        "linearBearingRetainerSkirtLengthMm": 1.00,
-        "linearBearingSeatRadialClearanceMm": 0.10,
-        "linearBearingRodNominalClearanceMm": 0.00,
-        "linearBearingFitCouponGuideCount": 1.00,
-        "linearBearingFitCouponGuideXOffsetMm": 0.00,
-        "bearingSeatDiameterMm": 6.10,
-        "bearingSeatDepthMm": 2.60,
-        "bearingBackShoulderMm": 0.60,
-        "bearingReferenceCenterOffsetMm": -0.60,
-        "bearingCenterOffsetMm": 4.20,
-        "inputBearingCenterOffsetMm": 7.50,
-        "bearingPairSpacingMm": 4.00,
-        "bearingBlockThicknessMm": 3.20,
-        "bearingBlockWidthMm": 14.00,
-        "bearingBlockHeightMm": 14.00,
-        "guideRailXOffsetMm": 0.00,
-        "guideRailZOffsetMm": 0.00,
-        "guideRodXOffsetMm": 0.00,
-        "guideRodZOffsetMm": 0.00,
-        "linearBearingCenterYOffsetMm": -24.50,
-        "carriageUprightCenterXOffsetMm": 6.20,
-        "carriageUprightWidthMm": 2.00,
-        "carriageUprightZ0Mm": 5.20,
-        "carriageUprightHeightMm": 3.00,
-        "carriageUprightY0Mm": -30.60,
-        "carriageUprightLengthMm": 25.00,
-        "dogPocketPhaseDeg": 60.00,
-        "stopPadWidthMm": 4.00,
-        "stopPadXOffsetMm": 0.60,
-        "stopLugXOffsetMm": 10.00,
-        "stopLugWidthMm": 3.00,
-        "stopLugZOffsetMm": 5.00,
-        "stopLugHeightMm": 2.00,
-        "stopLugRouteXOffsetMm": 10.00,
-        "stopLugRouteWidthMm": 0.80,
-        "plateWidthMm": 34.00,
-        "plateKeyWidthMm": 4.00,
-        "plateKeyHeightMm": 6.00,
-        "plateKeyClearanceMm": 0.30,
-        "plateM3ClearanceMm": 3.40,
-        "plateBeltPassageHalfWidthMm": 5.61972,
-        "plateBeltPassageAxialWidthMm": 6.90,
+        "openGapMm": 0.60, "dogInsertionMm": 2.40, "strokeMm": 3.00,
+        "pocketDepthMm": 3.25, "bottomClearanceMm": 0.85,
+        "magnetNonContactClearanceMm": 0.40, "femaleMagnetProjectionMm": 0.45,
+        "magnetNominalDiameterMm": 2.00, "dogPocketPhaseDeg": 60.00,
+        "linearBearingNominalIdMm": 3.00, "linearBearingNominalOdMm": 7.00,
+        "linearBearingNominalLengthMm": 10.00, "linearBearingCount": 1.0,
+        "linearBearingCenterYOffsetMm": -14.00, "linearBearingSeatDiameterMm": 7.20,
+        "linearBearingSeatRadialClearanceMm": 0.10, "linearBearingBlockWidthMm": 18.00,
+        "linearBearingBlockYLengthMm": 14.00, "linearBearingBlockZMarginMm": 2.00,
+        "linearBearingBlockMountHoleDiameterMm": 3.40,
+        "linearBearingBlockMountHoleCount": 4.0,
+        "inputShaftUpperDStartMm": -4.00, "inputShaftUpperDLengthMm": 7.00,
+        "inputShaftRoundStartMm": -25.60, "inputShaftRoundLengthMm": 21.80,
+        "inputShaftRoundDiameterMm": 3.00, "inputShaftLowerDStartMm": -25.40,
+        "inputShaftLowerDLengthMm": 3.60, "inputSleeveTopOffsetMm": -22.00,
+        "inputSleeveUpperDHeightMm": 4.20, "inputSleeveUpperDDiameterMm": 7.60,
+        "inputSleeveLowerRoundOuterDiameterMm": 8.00,
+        "inputSleeveLowerRoundHeightMm": 6.40, "inputSleeveDSocketDepthMm": 3.60,
+        "inputSleeveDSocketClearanceMm": 0.16,
+        "inputSleeveMagnetNominalDiameterMm": 5.00,
+        "inputSleeveMagnetNominalLengthMm": 5.00,
+        "inputSleeveMagnetPocketDiameterMm": 5.20,
+        "inputSleeveMagnetPocketDepthMm": 5.20,
+        "inputSleeveMagnetBottomClearanceMm": 1.20,
+        "outputShaftStartMm": -3.40, "outputShaftLengthMm": 14.00,
+        "outputBearingCount": 2.0, "bearingCount": 2.0,
+        "bearingSeatDiameterMm": 6.10, "bearingSeatDepthMm": 2.60,
+        "bearingBackShoulderMm": 0.60, "bearingReferenceCenterOffsetMm": -0.60,
+        "bearingCenterOffsetMm": 4.20, "bearingPairSpacingMm": 4.00,
+        "bearingBlockThicknessMm": 3.20, "shaftDiameterMm": 3.00,
+        "shaftCollarOdMm": 7.20, "shaftCollarBoreMm": 3.35,
+        "matingMagnetCount": 2.0, "inputSleeveMagnetCount": 1.0,
+        "totalModeledMagnetCount": 3.0, "plateWidthMm": 34.00,
+        "plateKeyWidthMm": 4.00, "plateKeyHeightMm": 6.00,
+        "plateKeyClearanceMm": 0.30, "plateM3ClearanceMm": 3.40,
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
-        "selectorShoeTangentOffsetMm": 6.00,
-        "selectorShoeNormalOffsetMm": -8.00,
-        "selectorShoeTargetYMm": 141.00,
-        "selectorShoeZMm": -82.2208,
-        "selectorShoeAnchorXMm": 146.00,
-        "selectorShoeAnchorYMm": 141.00,
-        "selectorShoeAnchorZMm": -82.2208,
-        "selectorShoeMagnetFaceOffsetMm": 1.00,
-        "selectorShoeMagnetFaceYMm": 142.00,
-        "selectorShoeTriggerClearanceMm": 0.40,
-        "selectorShoeChainAttachYMm": 149.00,
-        "selectorShoeChainAttachZMm": -75.00,
-        "selectorShoeChainAttachXMm": 152.40,
-        "selectorShoeChainContactDiameterMm": 2.40,
-        "selectorShoeSupportXOffsetMm": 12.40,
-        "selectorShoeSupportArmXOffsetMm": 0.80,
-        "selectorShoeSupportXWidthMm": 2.40,
-        "selectorShoeSupportChainYOverhangMm": 1.20,
-        "selectorShoeSupportChainZT": 2.40,
-        "selectorShoeSupportBridgeOverlapMm": 0.30,
-        "selectorShoeSupportDropMm": 8.00,
-        "selectorShoeSupportReachMm": 5.92084,
-        "selectorShoeBodyWidthMm": 17.50,
-        "selectorShoeBodyDepthMm": 5.60,
-        "selectorShoeBodyHeightMm": 2.00,
-        "selectorShoePocketRimHeightMm": 0.35,
-        "inputShaftStartMm": -13.70,
-        "inputShaftLengthMm": 16.70,
-        "outputShaftStartMm": -3.40,
-        "outputShaftLengthMm": 14.00,
-        "inputGearBandThicknessMm": 3.20,
-        "dBoreDepthMm": 3.00,
     }
-    for key, expected in frozen.items():
-        if abs(number(key) - expected) > 0.001:
-            raise RuntimeError(
-                f"中心离合冻结值错误: {key}={number(key)}，期望 {expected}"
-            )
-    if abs(number("strokeMm")
-            - number("openGapMm")
-            - number("dogInsertionMm")) > 0.001:
-        raise RuntimeError("中心离合行程必须等于开位间隙加有效插入")
-    if abs(number("pocketDepthMm")
-            - number("dogInsertionMm")
-            - number("bottomClearanceMm")) > 0.001:
-        raise RuntimeError("中心母槽深度必须等于插入量加槽底余量")
-    if abs(number("bottomClearanceMm")
-            - number("femaleMagnetProjectionMm")
-            - number("magnetNonContactClearanceMm")) > 0.001:
-        raise RuntimeError("中心磁铁非接触余量推导失败")
-    if abs(
-        number("guideRodY1Mm")
-        - number("engagedStopY0Mm")
-        - number("linearBearingRetainerThicknessMm")
-        - number("guideRodCaptureMm")
-    ) > 0.001:
-        raise RuntimeError("合位导杆捕获端必须位于直线轴承压盖之后")
-    if number("stopLugWidthMm") <= 0 or number("stopLugHeightMm") <= 0:
-        raise RuntimeError("滑架独立硬止挡耳位尺寸无效")
-    lug_inner_x = number("stopLugXOffsetMm") \
-        - number("stopLugWidthMm") / 2
-    lug_low_z = number("stopLugZOffsetMm") \
-        - number("stopLugHeightMm") / 2
-    if math.hypot(lug_inner_x, lug_low_z) \
-            - number("inputTipRadiusMm") < 0.45 - 0.001:
-        raise RuntimeError("侧向硬止挡耳位没有避开输入公轮径向包络")
-    if number("stopLugXOffsetMm") - number("stopLugWidthMm") / 2 <= 0:
-        raise RuntimeError("滑架硬止挡耳位没有位于中心支撑外侧")
-    if number("stopLugRouteWidthMm") <= 0:
-        raise RuntimeError("滑架硬止挡耳位外侧支撑宽度无效")
-    route_inner_clearance = (
-        number("stopLugRouteXOffsetMm")
-        - number("stopLugRouteWidthMm") / 2
-        - number("guideRailXOffsetMm")
-        - number("linearBearingRetainerOuterDiameterMm") / 2
-    )
-    if route_inner_clearance < 0.30 - 0.001:
-        raise RuntimeError("滑架硬止挡耳位外侧支撑没有避开直线轴承压盖")
-    if abs(number("maleBottomYMm") - number("inputBaseYMm")) > 0.001:
-        raise RuntimeError("公轮底部基准没有和输入公轮基准统一")
-    if abs(
-        number("selectorShoeMagnetFaceYMm")
-        + number("selectorShoeTriggerClearanceMm")
-        - number("maleBottomYMm")
-    ) > 0.001:
-        raise RuntimeError("磁力靴磁面没有落在公轮底部下方的触发间隙")
-    if abs(
-        number("selectorShoeTargetYMm")
-        + number("selectorShoeMagnetFaceOffsetMm")
-        - number("selectorShoeMagnetFaceYMm")
-    ) > 0.001:
-        raise RuntimeError("磁力靴磁面 Y 没有由其原生锚点推导")
-    if number("bearingCountPerRotor") != 2:
-        raise RuntimeError("每个转子必须使用两枚轴承形成轴向间距")
-    if number("bearingSeatDepthMm") < number("bearingBackShoulderMm") + 2.0:
-        raise RuntimeError("轴承座深度不足以容纳 3x6x2 轴承和后肩")
-    if number("bearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
-        raise RuntimeError("轴承中心偏置不足以让双轴承块脱离转子端面")
-    if number("inputBearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
-        raise RuntimeError("输入转子轴承中心偏置不足以让拨叉通道脱离旋转轴承块")
-    if number("bearingPairSpacingMm") < number("bearingBlockThicknessMm"):
-        raise RuntimeError("同轴双轴承间距不足以分隔两枚轴承块")
-    if abs(
-        number("bearingReferenceCenterOffsetMm")
-        + number("bearingBackShoulderMm")
-    ) > 0.001:
-        raise RuntimeError("轴承参考件没有向盲座开口侧偏移后肩厚度")
-    if number("plateKeyWidthMm") <= 0 or number("plateKeyHeightMm") <= 0:
-        raise RuntimeError("机构板定位键尺寸无效")
-    if number("plateKeyClearanceMm") < 0.20:
-        raise RuntimeError("机构板定位键装配间隙不足")
-    if number("plateM3ClearanceMm") <= 3.0:
-        raise RuntimeError("机构板 M3 贯穿孔没有留通孔间隙")
-    if number("plateBeltPassageHalfWidthMm") <= number("beltEnvelopeRadiusMm"):
-        raise RuntimeError("机构板皮带通道没有包住中心 2GT 背包络")
-    if number("plateBeltPassageAxialWidthMm") <= 6.0:
-        raise RuntimeError("机构板皮带通道没有覆盖 6 mm 皮带宽度")
-    if number("plateBeltPassageHalfWidthMm") >= number("plateWidthMm") / 2:
-        raise RuntimeError("机构板皮带通道穿出机构板侧边")
-    if contract.get("plateSupport") != "partition-through-M3":
-        raise RuntimeError("机构板承接界面不是隔板 M3 贯穿固定")
-    if number("selectorShoeTangentOffsetMm") != 6.0:
-        raise RuntimeError("M_engage 选择指切向基准必须位于磁力靴中心前 6 mm")
-    if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
-        raise RuntimeError("磁力靴零件 ID 不是原生中心离合零件")
-    if number("selectorShoeAnchorXMm") != number("axisXMm") + 6.0:
-        raise RuntimeError("磁力靴原生 X 锚点没有把 M_engage 对准公轮轴心")
-    if abs(number("selectorShoeAnchorYMm") - number("selectorShoeTargetYMm")) > 0.001:
-        raise RuntimeError("磁力靴 Y 锚点没有和目标基准统一")
-    if abs(number("selectorShoeAnchorZMm") - number("selectorShoeZMm")) > 0.001:
-        raise RuntimeError("磁力靴 Z 锚点没有和离合轴统一")
-    if number("selectorShoeSupportXWidthMm") <= 0:
-        raise RuntimeError("磁力靴链条支撑臂宽度无效")
-    if number("selectorShoeSupportArmXOffsetMm") < 0:
-        raise RuntimeError("磁力靴支撑臂导轨避让偏置不能为负")
-    if abs(
-        number("selectorShoeChainAttachXMm")
-        - number("axisXMm")
-        - number("selectorShoeSupportXOffsetMm")
-    ) > 0.001:
-        raise RuntimeError("磁力靴链条支撑 X 没有由轴心和支撑偏置推导")
-    if number("selectorShoeChainContactDiameterMm") <= 0:
-        raise RuntimeError("磁力靴链条支撑接触见证直径无效")
-    if abs(number("selectorShoeChainAttachYMm") - 149.0) > 0.001:
-        raise RuntimeError("磁力靴链条支撑 Y 没有落在蛇链层")
-    if abs(number("selectorShoeChainAttachZMm") + 75.0) > 0.001:
-        raise RuntimeError("磁力靴链条支撑 Z 没有落在蛇链层")
-    if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
-        raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
-    if number("linearBearingCount") != 1:
-        raise RuntimeError("中心滑架必须配置一枚与公轮同轴直线轴承")
-    if number("linearBearingFitCouponGuideCount") != 1:
-        raise RuntimeError("直线轴承配合测试片必须只配置一根导杆")
-    if abs(number("linearBearingFitCouponGuideXOffsetMm")) > 0.001:
-        raise RuntimeError("单导杆配合测试片导杆必须位于中心 X")
-    if abs(number("guideRodXOffsetMm") - number("guideRailXOffsetMm")) > 0.001 \
-            or abs(number("guideRodZOffsetMm") - number("guideRailZOffsetMm")) > 0.001:
-        raise RuntimeError("导杆位置字段与导轨兼容字段不一致")
-    if abs(number("guideRodXOffsetMm")) > 0.001 \
-            or abs(number("guideRodZOffsetMm")) > 0.001:
-        raise RuntimeError("单导杆没有与公轮共享 X/Z 轴心")
-    expected_center_y_offset = (
-        number("openTabY0Mm") - number("inputBaseYMm")
-        + number("linearBearingHolderLengthMm") / 2
-    )
-    if abs(number("linearBearingCenterYOffsetMm") - expected_center_y_offset) > 0.001:
-        raise RuntimeError("单直线轴承 Y 中心没有由滑架承载窗口推导")
-    if abs(number("linearBearingNominalIdMm")
-           - number("guideRodDiameterMm")) > 0.001:
-        raise RuntimeError("直线轴承名义内径必须匹配 Ø3 导杆")
-    if number("linearBearingNominalOdMm") <= number("linearBearingNominalIdMm"):
-        raise RuntimeError("直线轴承内外径关系无效")
-    if number("linearBearingNominalLengthMm") <= 0:
-        raise RuntimeError("直线轴承长度无效")
-    if abs(
-        number("linearBearingSeatRadialClearanceMm")
-        - (number("linearBearingSeatDiameterMm")
-           - number("linearBearingNominalOdMm")) / 2
-    ) > 0.001:
-        raise RuntimeError("直线轴承座径向间隙没有由座孔和外径推导")
-    if number("linearBearingSeatDiameterMm") <= number(
-        "linearBearingNominalOdMm"
-    ):
-        raise RuntimeError("直线轴承座没有给采购件外径留装配间隙")
-    if number("linearBearingHolderOuterDiameterMm") < number(
-        "linearBearingSeatDiameterMm"
-    ) + 4.0:
-        raise RuntimeError("直线轴承套径向打印壁厚不足")
-    if number("linearBearingSeatDepthMm") < (
-        number("linearBearingHolderBackShoulderMm")
-        + number("linearBearingNominalLengthMm")
-    ):
-        raise RuntimeError("直线轴承套座深度不足")
-    if number("linearBearingHolderLengthMm") < (
-        number("linearBearingHolderBackShoulderMm")
-        + number("linearBearingNominalLengthMm")
-        + number("linearBearingRetainerThicknessMm")
-        - 0.001
-    ):
-        raise RuntimeError("直线轴承套长度不足以保留前端压盖空间")
-    if number("linearBearingHolderFrontNeckDiameterMm") >= number(
-        "linearBearingHolderOuterDiameterMm"
-    ) or number("linearBearingHolderFrontNeckLengthMm") <= 0:
-        raise RuntimeError("直线轴承套前端定位颈无效")
-    if not (
-        number("linearBearingRetainerInnerDiameterMm")
-        > number("guideRodDiameterMm")
-        and number("linearBearingRetainerInnerDiameterMm")
-        < number("linearBearingNominalOdMm")
-    ):
-        raise RuntimeError("直线轴承压盖孔不能同时通过导杆并捕获轴承")
-    if number("linearBearingRetainerOuterDiameterMm") <= number(
-        "linearBearingHolderOuterDiameterMm"
-    ) or number("linearBearingRetainerThicknessMm") <= 0:
-        raise RuntimeError("直线轴承压盖外径/厚度无效")
-    if number("linearBearingRetainerLipOuterDiameterMm") > number(
-        "linearBearingNominalOdMm"
-    ):
-        raise RuntimeError("直线轴承压盖内唇超出轴承座包络")
-    if number("linearBearingRetainerSkirtInnerDiameterMm") <= number(
-        "linearBearingHolderFrontNeckDiameterMm"
-    ):
-        raise RuntimeError("直线轴承压盖定位裙边没有避开前端定位颈")
-    if not (
-        number("linearBearingRetainerSkirtOuterDiameterMm")
-        > number("linearBearingRetainerSkirtInnerDiameterMm")
-        and number("linearBearingRetainerSkirtLengthMm")
-        >= number("linearBearingHolderFrontNeckLengthMm")
-    ):
-        raise RuntimeError("直线轴承压盖定位裙边无效")
-    if number("linearBearingRodNominalClearanceMm") < -0.001:
-        raise RuntimeError("直线轴承与导杆的名义孔径关系为负")
-    guide_rod_end = (
-        number("linearBearingCenterYOffsetMm")
-        + number("linearBearingHolderLengthMm") / 2
-        + number("strokeMm")
-        + number("linearBearingRetainerThicknessMm")
-        + number("guideRodCaptureMm")
-    )
-    guide_to_input_shaft_clearance = (
-        number("inputShaftStartMm") - guide_rod_end
-    )
-    if guide_to_input_shaft_clearance < 0.40 - 0.001:
-        raise RuntimeError("同轴导杆/轴承套扫掠没有避开输入 D 轴")
-    if number("carriageUprightCenterXOffsetMm") <= number("carriageUprightWidthMm") / 2:
-        raise RuntimeError("滑架立柱没有离开轴心")
-    if number("carriageUprightRadialClearanceMm") < 0.45:
-        raise RuntimeError("滑架立柱径向净空低于 0.45 mm 门槛")
-    input_end = number("inputShaftStartMm") + number("inputShaftLengthMm")
-    if abs(input_end - number("dBoreDepthMm")) > 0.001:
-        raise RuntimeError("输入 D 轴没有停在齿轮盲孔底基准")
-    if number("dBoreDepthMm") > number("inputGearBandThicknessMm"):
-        raise RuntimeError("输入 D 轴盲孔深度越过齿轮带厚度")
-    if number("outputShaftLengthMm") <= number("dBoreDepthMm"):
-        raise RuntimeError("输出 D 轴长度不足以穿过母轮盲孔和轴向保持段")
+    for key, value in frozen.items():
+        expect(contract, key, value, f"中心离合冻结值 {key}")
+
+    if abs(n(contract, "strokeMm") - n(contract, "openGapMm")
+           - n(contract, "dogInsertionMm")) > 0.001:
+        raise RuntimeError("总行程必须等于开位间隙 + 有效公牙插入")
+    if abs(n(contract, "pocketDepthMm") - n(contract, "dogInsertionMm")
+           - n(contract, "bottomClearanceMm")) > 0.001:
+        raise RuntimeError("母槽深度必须等于有效插入 + 槽底余量")
+    if abs(n(contract, "bottomClearanceMm") - n(contract, "femaleMagnetProjectionMm")
+           - n(contract, "magnetNonContactClearanceMm")) > 0.001:
+        raise RuntimeError("磁铁非接触余量推导不一致")
+
+    bearing_center = n(contract, "linearBearingCenterYOffsetMm")
+    bearing_half = n(contract, "linearBearingNominalLengthMm") / 2
+    round_start = n(contract, "inputShaftRoundStartMm")
+    round_end = round_start + n(contract, "inputShaftRoundLengthMm")
+    stroke = n(contract, "strokeMm")
+    if round_start > bearing_center - bearing_half + 0.001:
+        raise RuntimeError("公轮圆轴段开位没有完全穿过 LM3UU")
+    if round_end + stroke < bearing_center + bearing_half - 0.001:
+        raise RuntimeError("公轮圆轴段合位没有完全穿过 LM3UU")
+    upper_start = n(contract, "inputShaftUpperDStartMm")
+    upper_end = upper_start + n(contract, "inputShaftUpperDLengthMm")
+    lower_start = n(contract, "inputShaftLowerDStartMm")
+    lower_end = lower_start + n(contract, "inputShaftLowerDLengthMm")
+    if upper_end < 3.0 - 0.001:
+        raise RuntimeError("上 D 段没有达到公轮盲孔底")
+    if round_end < upper_start - 0.001:
+        raise RuntimeError("圆滑动段没有与上 D 段形成过渡重叠")
+    if lower_start > round_end + 0.001 or lower_end < round_start - 0.001:
+        raise RuntimeError("下 D 段没有与圆滑动段形成过渡重叠")
+
+    if n(contract, "inputSleeveDSocketDepthMm") > n(contract, "inputSleeveUpperDHeightMm"):
+        raise RuntimeError("圆套上方 D 型插孔越过上方 D 型段")
+    if n(contract, "inputSleeveDSocketDepthMm") > n(contract, "inputShaftLowerDLengthMm"):
+        raise RuntimeError("下 D 轴段长度不足以插入圆套")
+    if n(contract, "inputSleeveMagnetPocketDiameterMm") < n(contract, "inputSleeveMagnetNominalDiameterMm"):
+        raise RuntimeError("M5 磁铁槽孔径不足")
+    if n(contract, "inputSleeveMagnetPocketDepthMm") < n(contract, "inputSleeveMagnetNominalLengthMm"):
+        raise RuntimeError("M5 磁铁槽深不足")
+    sleeve_wall = (n(contract, "inputSleeveLowerRoundOuterDiameterMm")
+                   - n(contract, "inputSleeveMagnetPocketDiameterMm")) / 2
+    if sleeve_wall < 1.40 - 0.001:
+        raise RuntimeError("M5 圆柱磁铁周围圆套壁厚不足 1.40 mm")
+    if n(contract, "inputSleeveMagnetBottomClearanceMm") < 1.0:
+        raise RuntimeError("M5 磁铁下方实体底厚不足")
+
+    if abs(n(contract, "bearingReferenceCenterOffsetMm")
+           + n(contract, "bearingBackShoulderMm")) > 0.001:
+        raise RuntimeError("输出轴承参考件没有按后肩偏移")
+    if n(contract, "bearingSeatDepthMm") < n(contract, "bearingBackShoulderMm") + 2.0:
+        raise RuntimeError("输出 3x6x2 轴承座深度不足")
+    if n(contract, "shaftCollarOdMm") <= 6.0:
+        raise RuntimeError("输出轴肩/挡圈外径不能捕获 3x6x2 轴承")
+    if n(contract, "shaftCollarBoreMm") <= n(contract, "shaftDiameterMm"):
+        raise RuntimeError("输出轴肩孔不能通过 3 mm D 轴")
+
+    center_distance = n(contract, "gearCenterDistanceMm")
+    if abs(center_distance - n(contract, "longPitchRadiusMm")
+           - n(contract, "inputPitchRadiusMm")
+           - n(contract, "gearMeshClearanceMm")) > 0.001:
+        raise RuntimeError("长花键与公轮中心距不是节圆半径和 + 啮合余量")
+    for key in ("beltEnvelopeRadiusMm", "beltGuideRadiusMm", "motherOuterRadiusMm"):
+        if center_distance - n(contract, "longTipRadiusMm") - n(contract, key) < 0.45 - 0.001:
+            raise RuntimeError(f"{key} 到长花键的径向余量不足")
+
+    if n(contract, "plateBeltPassageHalfWidthMm") <= n(contract, "beltEnvelopeRadiusMm"):
+        raise RuntimeError("机构板贯穿槽没有包住 2GT 背包络")
+    if n(contract, "plateBeltPassageAxialWidthMm") <= 6.0:
+        raise RuntimeError("机构板贯穿槽没有覆盖 6 mm 皮带宽度")
+    if n(contract, "plateBeltPassageHalfWidthMm") >= n(contract, "plateWidthMm") / 2:
+        raise RuntimeError("机构板贯穿槽穿出侧壁")
+    if n(contract, "outputShaftLengthMm") <= n(contract, "inputShaftUpperDLengthMm"):
+        raise RuntimeError("输出 D 轴长度不足")
+    if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 2:
+        raise RuntimeError("当前契约必须锁定中心 R3C3（零基准 2,2）")
 
 
 def write_json(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 # ===== 分区：公开 API =====
@@ -715,53 +300,36 @@ def main() -> int:
     scad_path = args.scad.resolve()
     output_path = args.output.resolve()
     motion_path = args.motion.resolve() if args.motion else None
-
     with tempfile.NamedTemporaryFile(suffix=".stl") as temp:
-        command = [
-            str(args.openscad),
-            "--backend",
-            "Manifold",
-            "--export-format",
-            "binstl",
-            "-D",
-            'CLUTCH_PART="contract"',
-            "-o",
-            temp.name,
-            str(scad_path),
-        ]
         completed = subprocess.run(
-            command,
-            cwd=scad_path.parent,
-            capture_output=True,
-            text=True,
-            check=False,
+            [str(args.openscad), "--backend", "Manifold", "--export-format", "binstl",
+             "-D", 'CLUTCH_PART="contract"', "-o", temp.name, str(scad_path)],
+            cwd=scad_path.parent, capture_output=True, text=True, check=False,
         )
     output = f"{completed.stdout}\n{completed.stderr}"
     try:
-        # OpenSCAD returns 1 for an intentionally empty top-level object on
-        # some releases. The contract marker is the success criterion here;
-        # a non-empty diagnostic output without the marker is still a failure.
         contract = coerce(parse_echo(output))
         validate_contract(contract)
-    except RuntimeError:
+    except RuntimeError as exc:
         if completed.returncode != 0:
             raise RuntimeError(
-                f"OpenSCAD 契约模式失败（{completed.returncode}）:\n{output[-4000:]}"
-            ) from None
+                f"OpenSCAD 契约模式失败（{completed.returncode}）：\n{output[-4000:]}"
+            ) from exc
         raise
     contract["source"] = "cad/openscad/parts/ch1_03c_gt2_clutch_pair_params.scad"
     contract["geometrySource"] = "cad/openscad/enclosure/cabinet_clutch.scad"
     write_json(output_path, {"centerClutch": contract})
-
     if motion_path:
         motion = json.loads(motion_path.read_text(encoding="utf-8"))
         motion["centerClutch"] = contract
         write_json(motion_path, motion)
-
     print(
         "centerClutch contract: "
-        f"gap={contract['openGapMm']} insertion={contract['dogInsertionMm']} "
-        f"stroke={contract['strokeMm']} bottom={contract['bottomClearanceMm']}"
+        f"bearing=LM3UU {contract['linearBearingNominalIdMm']}x"
+        f"{contract['linearBearingNominalOdMm']}x{contract['linearBearingNominalLengthMm']} "
+        f"profile={contract['inputShaftProfile']} "
+        f"sleeve-magnet=Ø{contract['inputSleeveMagnetNominalDiameterMm']}x"
+        f"{contract['inputSleeveMagnetNominalLengthMm']} stroke={contract['strokeMm']}"
     )
     return 0
 

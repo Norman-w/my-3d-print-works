@@ -69,6 +69,39 @@ GT2_D_BORE_DEPTH = is_undef(GT2_D_BORE_DEPTH)
     ? 3.00
     : GT2_D_BORE_DEPTH;
 
+// 中心公轮端的阶梯轴/磁铁圆套接口。这里的 M5 指采购圆柱磁铁规格
+// Ø5×5 mm；打印圆套的外径必须大于磁铁外径，不能把“磁铁直径”冒充
+// 成打印件外径。轴承座、阶梯轴长度和圆套外形仍由中心载架文件定位。
+GT2_INPUT_SHAFT_PROFILE = "D-round-D";
+GT2_INPUT_SHAFT_ROUND_D = is_undef(GT2_INPUT_SHAFT_ROUND_D)
+    ? GT2_D_AXIS_D
+    : GT2_INPUT_SHAFT_ROUND_D;
+GT2_INPUT_SLEEVE_D_BORE_CLEARANCE = is_undef(
+    GT2_INPUT_SLEEVE_D_BORE_CLEARANCE
+)
+    ? 0.16
+    : GT2_INPUT_SLEEVE_D_BORE_CLEARANCE;
+GT2_INPUT_SLEEVE_MAGNET_NOMINAL_D = is_undef(
+    GT2_INPUT_SLEEVE_MAGNET_NOMINAL_D
+)
+    ? 5.00
+    : GT2_INPUT_SLEEVE_MAGNET_NOMINAL_D;
+GT2_INPUT_SLEEVE_MAGNET_NOMINAL_L = is_undef(
+    GT2_INPUT_SLEEVE_MAGNET_NOMINAL_L
+)
+    ? 5.00
+    : GT2_INPUT_SLEEVE_MAGNET_NOMINAL_L;
+GT2_INPUT_SLEEVE_MAGNET_POCKET_D = is_undef(
+    GT2_INPUT_SLEEVE_MAGNET_POCKET_D
+)
+    ? GT2_INPUT_SLEEVE_MAGNET_NOMINAL_D + 0.20
+    : GT2_INPUT_SLEEVE_MAGNET_POCKET_D;
+GT2_INPUT_SLEEVE_MAGNET_POCKET_DEPTH = is_undef(
+    GT2_INPUT_SLEEVE_MAGNET_POCKET_DEPTH
+)
+    ? GT2_INPUT_SLEEVE_MAGNET_NOMINAL_L + 0.20
+    : GT2_INPUT_SLEEVE_MAGNET_POCKET_DEPTH;
+
 // One nominal Ø2 mm axial magnet per mating center. The printed pocket is
 // enlarged slightly for a hand-fit. Both pockets are exactly concentric with
 // the shaft axis; the female pocket opens from the bottom of the mother slot.

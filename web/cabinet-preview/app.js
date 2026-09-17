@@ -10,7 +10,7 @@ import {
   onPartLoaded,
   setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=center-clutch-demo-2";
+} from "./js/cabinet-chain-play.js?v=center-clutch-droundd-1";
 //#endregion
 
 //#region 常量/配置
@@ -74,16 +74,14 @@ const DRAWER_DRIVE_TAILS = new Set([
   "05_top_bottom_bus_belts_reference",
   "center_input_rotor",
   "center_output_rotor",
-  "center_input_carriage",
-  "center_linear_bearings_reference",
-  "center_linear_bearing_retainers",
-  "center_output_cage",
-  "center_guide_rails",
-  "center_stops",
-  "center_mechanism_plate",
   "center_input_shaft_reference",
+  "center_input_sleeve",
+  "center_input_sleeve_magnet_reference",
+  "center_linear_bearings_reference",
+  "center_linear_bearing_block",
+  "center_output_cage",
+  "center_mechanism_plate",
   "center_output_shaft_reference",
-  "center_input_bearings_reference",
   "center_output_bearings_reference",
   "13_drawer_timing_belt_reference",
   "14_front_timing_pulley_candidate",
@@ -98,36 +96,20 @@ const LEGACY_SCHEME1_TAILS = new Set([
   "cabinet_chain_scheme1_selector",
 ]);
 const CENTER_CLUTCH_FOCUS_IDS = new Set([
-  "cabinet-clutch/center_guide_rails",
-  "cabinet-clutch/center_input_bearings_reference",
-  "cabinet-clutch/center_input_carriage",
-  "cabinet-clutch/center_linear_bearings_reference",
-  "cabinet-clutch/center_linear_bearing_retainers",
   "cabinet-clutch/center_input_rotor",
+  "cabinet-clutch/center_output_rotor",
   "cabinet-clutch/center_input_shaft_reference",
+  "cabinet-clutch/center_input_sleeve",
+  "cabinet-clutch/center_input_sleeve_magnet_reference",
+  "cabinet-clutch/center_linear_bearings_reference",
+  "cabinet-clutch/center_linear_bearing_block",
   "cabinet-clutch/center_mechanism_plate",
   "cabinet-clutch/center_output_bearings_reference",
   "cabinet-clutch/center_output_cage",
-  "cabinet-clutch/center_output_rotor",
   "cabinet-clutch/center_output_shaft_reference",
-  "cabinet-clutch/center_stops",
-  "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_FRAME_IDS = new Set([
-  "cabinet-clutch/center_guide_rails",
-  "cabinet-clutch/center_input_bearings_reference",
-  "cabinet-clutch/center_input_carriage",
-  "cabinet-clutch/center_linear_bearings_reference",
-  "cabinet-clutch/center_linear_bearing_retainers",
-  "cabinet-clutch/center_input_rotor",
-  "cabinet-clutch/center_input_shaft_reference",
-  "cabinet-clutch/center_mechanism_plate",
-  "cabinet-clutch/center_output_bearings_reference",
-  "cabinet-clutch/center_output_cage",
-  "cabinet-clutch/center_output_rotor",
-  "cabinet-clutch/center_output_shaft_reference",
-  "cabinet-clutch/center_stops",
-  "cabinet-clutch/center_selector_shoe",
+  ...CENTER_CLUTCH_FOCUS_IDS,
 ]);
 const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   // Keep the first-article view readable: the full cabinet/grid is a useful
@@ -140,10 +122,8 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/15_front_pinion_candidate",
   "cabinet-clutch/16_drawer_linear_rack_candidate",
   // Keep the authored snake-chain assets available as a low-opacity spatial
-  // reference.  setCenterClutchPreviewFocus() masks these 370-link assets to
-  // the few links around the contract's chain-support datum, so the shoe is
-  // visibly carried by the snake layer without burying the clutch in a full
-  // cabinet-wide chain ribbon.
+  // reference. They are surrounding-coordinate context only; the current
+  // male-end mechanism does not contain or animate a selector shoe.
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",

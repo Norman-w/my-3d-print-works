@@ -171,8 +171,8 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_rotor": {
-        "name": "中心 R3C3 · 输入公轮（随滑架 +Y 接合）",
-        "color": "#e2a84b",
+        "name": "中心 R3C3 · 输入公轮（随 D-round-D 轴 +Y 接合）",
+        "color": "#718b99",
         "visible": True,
         "role": "printed",
     },
@@ -183,16 +183,22 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_carriage": {
-        "name": "中心 R3C3 · 输入滑架（同轴直线轴承套；公轮轴线后侧）",
+        "name": "legacy · 中心 R3C3 输入滑架（已移除）",
         "color": "#748c99",
-        "visible": True,
-        "role": "printed",
+        "visible": False,
+        "role": "diagnostic",
     },
     "cabinet-clutch/center_linear_bearings_reference": {
-        "name": "中心 R3C3 · 直线轴承×1 · Ø3×Ø7×10（与输入公轮同轴；采购件）",
+        "name": "中心 R3C3 · 固定 LM3UU×1 · Ø3×Ø7×10（与公轮同轴；采购件）",
         "color": "#b7c0c8",
         "visible": True,
         "role": "purchased",
+    },
+    "cabinet-clutch/center_linear_bearing_block": {
+        "name": "中心 R3C3 · 长方条 LM3UU 轴承座（Ø7.20 孔；4×M3 直固机构板）",
+        "color": "#536d78",
+        "visible": True,
+        "role": "printed",
     },
     "cabinet-clutch/center_linear_bearing_retainers": {
         "name": "中心 R3C3 · 直线轴承套压盖×1（单个；打印防脱件）",
@@ -201,8 +207,8 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_linear_bearing_fit_coupon": {
-        "name": "中心 R3C3 · 直线轴承座/压盖/单导杆配合测试片（默认隐藏）",
-        "color": "#d6a85f",
+        "name": "中心 R3C3 · LM3UU 长方条轴承孔配合测试片（默认隐藏）",
+        "color": "#788a95",
         "visible": False,
         "role": "diagnostic",
     },
@@ -213,16 +219,16 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_guide_rails": {
-        "name": "中心 R3C3 · 单根 Ø3 金属导杆（与输入公轮同轴；采购件参考）",
+        "name": "legacy · 中心 R3C3 独立导轨（已移除）",
         "color": "#657f8c",
-        "visible": True,
-        "role": "purchased",
+        "visible": False,
+        "role": "diagnostic",
     },
     "cabinet-clutch/center_stops": {
-        "name": "中心 R3C3 · 开位/合位实体止挡（短臂；无橘色外露框）",
+        "name": "legacy · 中心 R3C3 开合止挡（已移除）",
         "color": "#536d78",
-        "visible": True,
-        "role": "printed",
+        "visible": False,
+        "role": "diagnostic",
     },
     "cabinet-clutch/center_mechanism_plate": {
         "name": "中心 R3C3 · 可拆后仓机构板（4×M3）",
@@ -231,7 +237,7 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_shaft_reference": {
-        "name": "中心 R3C3 · 采购件输入 3mm D 轴（独立短轴）",
+        "name": "中心 R3C3 · 采购件输入 D-round-D 阶梯轴（上D/圆滑动段/下D）",
         "color": "#5c6876",
         "visible": True,
         "role": "purchased",
@@ -243,10 +249,10 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/center_input_bearings_reference": {
-        "name": "中心 R3C3 · 输入转子2枚 3×6×2径向轴承（轴向间隔4mm；采购件）",
+        "name": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",
         "color": "#cfd4da",
-        "visible": True,
-        "role": "purchased",
+        "visible": False,
+        "role": "diagnostic",
     },
     "cabinet-clutch/center_output_bearings_reference": {
         "name": "中心 R3C3 · 输出转子2枚 3×6×2径向轴承（轴向间隔4mm；采购件）",
@@ -255,10 +261,22 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/center_selector_shoe": {
-        "name": "中心 R3C3 · 选择指磁力靴（M_engage/M_release，原生坐标）",
+        "name": "legacy · 中心 R3C3 选择指磁力靴（待按 M5 圆套重定位）",
         "color": "#c8d3dc",
+        "visible": False,
+        "role": "diagnostic",
+    },
+    "cabinet-clutch/center_input_sleeve": {
+        "name": "中心 R3C3 · 公轮底部 D 型圆套（下端 Ø8 圆形；Ø5×5 磁铁盲槽）",
+        "color": "#7c909d",
         "visible": True,
         "role": "printed",
+    },
+    "cabinet-clutch/center_input_sleeve_magnet_reference": {
+        "name": "中心 R3C3 · 圆套内 Ø5×5 圆柱磁铁（采购件）",
+        "color": "#5b6670",
+        "visible": True,
+        "role": "purchased",
     },
     "cabinet/cabinet_back_panel": {
         "name": "可拆背板",
@@ -339,6 +357,9 @@ group_map = {
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
     "center_input_rotor": "02·离合机构",
     "center_output_rotor": "02·离合机构",
+    "center_input_sleeve": "02·离合机构",
+    "center_input_sleeve_magnet_reference": "02·离合机构",
+    "center_linear_bearing_block": "02·离合机构",
     "center_input_carriage": "02·离合机构",
     "center_linear_bearings_reference": "02·离合机构",
     "center_linear_bearing_retainers": "02·离合机构",
@@ -366,17 +387,20 @@ name_map = {
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
-    "center_input_carriage": "中心 R3C3 输入滑架 · 同轴直线轴承套（公轮轴线后侧）· 随 +Y 行程",
-    "center_linear_bearings_reference": "中心 R3C3 直线轴承×1 · Ø3×Ø7×10（与输入公轮同轴；采购件）",
-    "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖×1（单个；打印防脱件）",
-    "center_linear_bearing_fit_coupon": "中心 R3C3 直线轴承配合测试片 · Ø7.20/7.30/7.40 + 单导杆行程",
+    "center_input_sleeve": "中心 R3C3 公轮底部 D 型圆套 · 下端 Ø8 + Ø5×5 磁铁盲槽",
+    "center_input_sleeve_magnet_reference": "中心 R3C3 圆套内 Ø5×5 圆柱磁铁 · 采购件",
+    "center_linear_bearing_block": "中心 R3C3 长方条 LM3UU 轴承座 · Ø7.20 孔 + 4×M3",
+    "center_input_carriage": "legacy · 中心 R3C3 输入滑架（已移除）",
+    "center_linear_bearings_reference": "中心 R3C3 固定 LM3UU×1 · Ø3×Ø7×10（与公轮同轴；采购件）",
+    "center_linear_bearing_retainers": "legacy · 中心 R3C3 轴承压盖（已移除）",
+    "center_linear_bearing_fit_coupon": "中心 R3C3 LM3UU 长方条轴承孔配合测试片 · Ø7.20/7.30/7.40",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
-    "center_guide_rails": "中心 R3C3 单根 Ø3 金属导杆 · 与输入公轮同轴 · 采购件参考",
-    "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位 · 短臂无橘色外露框",
+    "center_guide_rails": "legacy · 中心 R3C3 独立导轨（已移除）",
+    "center_stops": "legacy · 中心 R3C3 实体止挡（已移除）",
     "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出独立 3mm D 轴 · 采购件",
-    "center_input_bearings_reference": "中心 R3C3 输入转子2枚 3×6×2轴承 · 轴向间隔4mm · 采购件",
+    "center_input_bearings_reference": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",
     "center_output_bearings_reference": "中心 R3C3 输出转子2枚 3×6×2轴承 · 轴向间隔4mm · 采购件",
     "10_clutch_spring_reference": "旧离合压簧 · legacy 默认隐藏",
     "11_t_countersunk_screw_reference": "旧 T 形沉头螺丝 · legacy 默认隐藏",
@@ -516,33 +540,32 @@ for group_id in ordered_group_ids:
             ),
         ]
     elif group_id == "02·离合机构":
-        vertical_guide = call_node(
-            "center_clutch/vertical-guide",
-            "公轮竖直导向 · 同轴单枚 3×7×10（单根导杆）",
-            "一根与输入公轮同轴的独立 Ø3 金属导杆；公轮轴线后侧安装一枚采购直线轴承，打印轴承套与压盖各一件；直线轴承承担竖直滑动，短臂实体止挡限定 3 mm 行程，不把打印套当滑动面",
+        input_axis = call_node(
+            "center_clutch/input-axis",
+            "公轮轴竖直滑动 · D-round-D + 固定 LM3UU",
+            "公轮 D 轴固定后变为 Ø3 圆滑动段，直接在固定于离合主板的 LM3UU（Ø3×Ø7×10）中上下滑动；最低端再变为 D 型插入圆套上方 D 孔，圆套下端为 Ø8 圆形并嵌入 Ø5×5 圆柱磁铁。公轮端没有滑架、独立导轨、压盖或止挡。",
             children=[
-                part_node("cabinet-clutch/center_input_carriage"),
+                part_node("cabinet-clutch/center_input_shaft_reference"),
+                part_node("cabinet-clutch/center_input_sleeve"),
+                part_node("cabinet-clutch/center_input_sleeve_magnet_reference"),
                 part_node("cabinet-clutch/center_linear_bearings_reference"),
-                part_node("cabinet-clutch/center_linear_bearing_retainers"),
-                part_node("cabinet-clutch/center_guide_rails"),
+                part_node("cabinet-clutch/center_linear_bearing_block"),
             ],
         )
         rotary_support = call_node(
             "center_clutch/rotary-support",
-            "转子旋转支撑 · 输入/输出各2枚 3×6×2（轴向间隔4mm）",
-            "输入公轮的两枚旋转轴承随滑架移动；输出母轮的两枚旋转轴承固定在输出轴承笼；四枚是两组轴向支撑，不是同轴直线轴承的重复件",
+            "输出母轮旋转支撑 · 2枚 3×6×2（轴向间隔4mm）",
+            "公轮端没有额外旋转轴承组；输出母轮保持固定位置并由可拆输出轴承笼内的两枚 3×6×2 轴承旋转支撑。",
             children=[
                 part_node("cabinet-clutch/center_output_cage"),
-                part_node("cabinet-clutch/center_input_shaft_reference"),
                 part_node("cabinet-clutch/center_output_shaft_reference"),
-                part_node("cabinet-clutch/center_input_bearings_reference"),
                 part_node("cabinet-clutch/center_output_bearings_reference"),
             ],
         )
         fit_coupon = call_node(
             "center_clutch/fit-coupon",
-            "首件配合测试片（默认隐藏）",
-            "打印后实装一枚 LM3UU、一根与公轮同轴的 Ø3 金属导杆；座孔为 Ø7.20/7.30/7.40，检查单导杆全行程",
+            "LM3UU 长方条轴承座配合测试片（默认隐藏）",
+            "打印后实装一枚真实 Ø3×Ø7×10 LM3UU，先比较 Ø7.20/7.30/7.40 三档长方条座孔；该测试片不承担装机载荷。",
             children=[
                 part_node("cabinet-clutch/center_linear_bearing_fit_coupon"),
             ],
@@ -550,10 +573,8 @@ for group_id in ordered_group_ids:
         active_center = [
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
-            part_node("cabinet-clutch/center_stops"),
             part_node("cabinet-clutch/center_mechanism_plate"),
-            part_node("cabinet-clutch/center_selector_shoe"),
-            vertical_guide,
+            input_axis,
             rotary_support,
             fit_coupon,
         ]
@@ -571,7 +592,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + 滑架 + 同轴1×3×7×10直线轴承 + 单轴承套/压盖 + 双轴承笼 + 单Ø3金属导杆 + 短臂实体止挡 + 可拆机构板 + 磁力靴",
+                "输入公轮 + 输出母轮 + D-round-D 阶梯轴 + 固定 LM3UU 长方条轴承座 + D 型/Ø5×5 磁铁圆套 + 输出双轴承笼 + 可拆机构板",
                 children=active_center,
             ),
             call_node(
@@ -703,6 +724,12 @@ LEGACY_CLUTCH_OUTPUTS=(
     "10_clutch_spring_reference.stl"
     "11_t_countersunk_screw_reference.stl"
     "12_clutch_fork_candidate.stl"
+    "center_input_carriage.stl"
+    "center_guide_rails.stl"
+    "center_linear_bearing_retainers.stl"
+    "center_stops.stl"
+    "center_input_bearings_reference.stl"
+    "center_selector_shoe.stl"
 )
 for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
@@ -738,9 +765,10 @@ for old_file in "${DUPLICATE_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
-# The selector shoe moved from the old scheme1 chain frame into the native
-# cabinet-clutch export. Remove its stale chain-frame preview so a refresh can
-# never show two magnetic actuators at different coordinate origins.
+# The current male-end assembly uses the Ø5×5 magnet in its printed sleeve;
+# neither the old chain-frame shoe nor the retired native shoe is canonical.
+# Remove both stale outputs so a refresh can never show a second actuator at a
+# different coordinate origin.
 LEGACY_CHAIN_SELECTOR_OUTPUTS=(
     "cabinet_chain_selector_magnetic_shoe.stl"
 )
@@ -840,34 +868,28 @@ require_watertight_print_part() {
 export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
 export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
 export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
-export_part "center_input_carriage" "${OUT_DIR}/center_input_carriage.stl" false 0
 export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
-export_part "center_guide_rails" "${OUT_DIR}/center_guide_rails.stl" false 0
+export_part "center_linear_bearing_block" "${OUT_DIR}/center_linear_bearing_block.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
-export_part "center_linear_bearing_retainers" "${OUT_DIR}/center_linear_bearing_retainers.stl" false 0
 export_part "center_linear_bearing_fit_coupon" "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" false 0
-export_part "center_stops" "${OUT_DIR}/center_stops.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
 export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
+export_part "center_input_sleeve" "${OUT_DIR}/center_input_sleeve.stl" false 0
+export_part "center_input_sleeve_magnet" "${OUT_DIR}/center_input_sleeve_magnet_reference.stl" false 0
 export_part "center_output_shaft" "${OUT_DIR}/center_output_shaft_reference.stl" false 0
-export_part "center_input_bearings" "${OUT_DIR}/center_input_bearings_reference.stl" false 0
 export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_reference.stl" false 0
-export_part "center_selector_shoe" "${OUT_DIR}/center_selector_shoe.stl" false 0
 
-# The center printed pieces and the selector shoe are the current first-article
-# outputs. Keep purchased shaft/bearing/guide-rod references in the ordinary
-# inspection report, but require closed topology for every printable center
-# component.
+# The center printed pieces are the current first-article outputs. Purchased
+# shaft/bearing/magnet references remain ordinary inspection artifacts, while
+# every printable center component must be closed.
 for printable_part in \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
-    "${OUT_DIR}/center_input_carriage.stl" \
-    "${OUT_DIR}/center_linear_bearing_retainers.stl" \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_output_cage.stl" \
-    "${OUT_DIR}/center_stops.stl" \
+    "${OUT_DIR}/center_linear_bearing_block.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
-    "${OUT_DIR}/center_selector_shoe.stl"; do
+    "${OUT_DIR}/center_input_sleeve.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 

@@ -58,20 +58,17 @@ const CURRENT_CLUTCH_IDS = new Map([
   ["cabinet-clutch/center_output_rotor", {
     role: "output", primary: true, moves: false, rotates: true,
   }],
-  ["cabinet-clutch/center_input_carriage", {
-    role: "input", moves: true, rotates: false,
-  }],
   ["cabinet-clutch/center_input_shaft_reference", {
     role: "input", moves: true, rotates: true,
   }],
-  ["cabinet-clutch/center_input_bearings_reference", {
+  ["cabinet-clutch/center_input_sleeve", {
+    role: "input", moves: true, rotates: true,
+  }],
+  ["cabinet-clutch/center_input_sleeve_magnet_reference", {
     role: "input", moves: true, rotates: false,
   }],
   ["cabinet-clutch/center_linear_bearings_reference", {
-    role: "input", moves: true, rotates: false,
-  }],
-  ["cabinet-clutch/center_linear_bearing_retainers", {
-    role: "input", moves: true, rotates: false,
+    role: "input", moves: false, rotates: false,
   }],
   ["cabinet-clutch/center_output_shaft_reference", {
     role: "output", moves: false, rotates: true,
@@ -82,8 +79,7 @@ const CURRENT_CLUTCH_IDS = new Map([
 ]);
 const CURRENT_CLUTCH_STATIC_IDS = new Set([
   "cabinet-clutch/center_output_cage",
-  "cabinet-clutch/center_guide_rails",
-  "cabinet-clutch/center_stops",
+  "cabinet-clutch/center_linear_bearing_block",
   "cabinet-clutch/center_mechanism_plate",
 ]);
 const DRAWER_ROTARY_IDS = new Map([
@@ -127,9 +123,8 @@ const CENTER_DEMO_APPROACH_SECONDS = 0.80;
 const CENTER_DEMO_ENGAGE_SECONDS = 1.10;
 const CENTER_DEMO_HOLD_SECONDS = 0.80;
 const CENTER_DEMO_RELEASE_SECONDS = 1.20;
-// Display-only span around the actual chain-support projection.  The center
-// path index is derived from centerClutch.selectorShoeChainAttach* below; no
-// second hard-coded mechanical coordinate is introduced here.
+// Display-only span for optional legacy chain focus. The current center
+// contract deliberately has no selector-shoe attachment fields.
 const CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN = 4;
 const CURRENT_CLUTCH_ROW = 2;
 const CURRENT_CLUTCH_COL = 2;
@@ -424,13 +419,13 @@ function centerDemoTravelText() {
 
 function centerDemoStatusText() {
   const labels = {
-    approach: "M_release → M_engage 磁力靴到位",
-    engage: "M_engage 推动公轮 +Y 接合",
+    approach: "M5 圆套磁铁接口准备",
+    engage: "M5 圆套磁铁触发公轮 +Y 接合",
     hold: "已接合保持",
-    release: "M_release 拉回公轮 +Y 开位",
+    release: "磁力接口释放，公轮 +Y 回到开位",
     idle: "开位",
   };
-  return `中心离合演示 · ${labels[play.centerDemo.phase] || "开位"} · 滑架 +Y ${centerDemoTravelText()}`;
+  return `中心离合演示 · ${labels[play.centerDemo.phase] || "开位"} · 公轮轴 +Y ${centerDemoTravelText()}`;
 }
 
 function updateCenterDemoStatus() {
@@ -441,6 +436,8 @@ function centerClutchChainSupportPinIndex() {
   const path = play.path;
   const contract = play.currentClutch.contract;
   if (!path?.count || !contract) return -1;
+  if (!Object.hasOwn(contract, "selectorShoeChainAttachXMm")
+    || !Object.hasOwn(contract, "selectorShoeChainAttachYMm")) return -1;
   const x = Number(contract.selectorShoeChainAttachXMm);
   // Native contract Y maps to the authored X/Z chain path's Z coordinate;
   // native contract Z is the chain layer's world -Y and is not the path Z.
@@ -474,91 +471,55 @@ function applyCenterClutchChainVisibility() {
 
 function validateCenterClutchContract(contract) {
   const required = [
-    "axisXMm",
-    "axisZMm",
-    "axis",
-    "role",
-    "verticalLayoutMode",
-    "centerClutchVerticalLiftMm",
-    "inputBaseYMm",
-    "openGapMm",
-    "dogInsertionMm",
-    "strokeMm",
-    "pocketDepthMm",
-    "bottomClearanceMm",
-    "magnetNonContactClearanceMm",
-    "femaleMagnetProjectionMm",
-    "magnetNominalDiameterMm",
-    "maleBottomYMm",
-    "inputTipRadiusMm",
-    "guideRailXOffsetMm",
-    "guideRailZOffsetMm",
-    "guideRodXOffsetMm",
-    "guideRodZOffsetMm",
-    "guideRodDiameterMm",
-    "bearingBlockHeightMm",
-    "bearingBlockThicknessMm",
-    "inputBearingCenterOffsetMm",
-    "bearingBlockHeightMm",
-    "linearBearingNominalIdMm",
-    "linearBearingNominalOdMm",
-    "linearBearingNominalLengthMm",
-    "linearBearingCount",
-    "linearBearingCenterYOffsetMm",
-    "linearBearingSeatDiameterMm",
-    "linearBearingSeatDepthMm",
-    "linearBearingHolderOuterDiameterMm",
-    "linearBearingHolderLengthMm",
-    "linearBearingHolderBackShoulderMm",
-    "linearBearingHolderFrontNeckDiameterMm",
-    "linearBearingHolderFrontNeckLengthMm",
-    "linearBearingRetainerInnerDiameterMm",
-    "linearBearingRetainerOuterDiameterMm",
-    "linearBearingRetainerThicknessMm",
-    "linearBearingRetainerLipOuterDiameterMm",
-    "linearBearingRetainerSkirtInnerDiameterMm",
-    "linearBearingRetainerSkirtOuterDiameterMm",
-    "linearBearingRetainerSkirtLengthMm",
-    "linearBearingSeatRadialClearanceMm",
-    "linearBearingRodNominalClearanceMm",
-    "guideRodCaptureMm",
-    "inputShaftStartMm",
-    "linearBearingModel",
-    "linearBearingFitCouponPart",
-    "linearBearingFitCouponGuideCount",
-    "linearBearingFitCouponGuideXOffsetMm",
-    "linearBearingPart",
-    "linearBearingRetainerPart",
-    "rotaryBearingArrangement",
-    "linearBearingArrangement",
-    "actuation",
-    "engageOnlyWhenStopped",
-    "releaseBeforeReturn",
-    "selectorShoePart",
-    "selectorShoeCoordinateFrame",
-    "selectorShoeTangentOffsetMm",
-    "selectorShoeNormalOffsetMm",
-    "selectorShoeTargetYMm",
-    "selectorShoeZMm",
-    "selectorShoeAnchorXMm",
-    "selectorShoeAnchorYMm",
-    "selectorShoeAnchorZMm",
-    "selectorShoeMagnetFaceOffsetMm",
-    "selectorShoeMagnetFaceYMm",
-    "selectorShoeTriggerClearanceMm",
-    "selectorShoeMagnetAxis",
-    "selectorShoeChainAttachYMm",
-    "selectorShoeChainAttachZMm",
-    "selectorShoeChainAttachXMm",
-    "selectorShoeChainContactDiameterMm",
-    "selectorShoeSupportXOffsetMm",
-    "selectorShoeSupportArmXOffsetMm",
-    "selectorShoeSupportXWidthMm",
-    "selectorShoeSupportDropMm",
-    "selectorShoeSupportReachMm",
-    "selectorShoeChainSupportPart",
-    "selectorShoeLinearBearingCollisionPart",
-    "inputBearingCenterOffsetMm",
+    "version", "axis", "role", "verticalLayoutMode",
+    "centerClutchVerticalLiftMm", "axisXMm", "axisZMm",
+    "inputBaseYMm", "maleBottomYMm", "outputBaseYMm",
+    "openGapMm", "dogInsertionMm", "strokeMm", "pocketDepthMm",
+    "bottomClearanceMm", "magnetNonContactClearanceMm",
+    "femaleMagnetProjectionMm", "magnetNominalDiameterMm",
+    "gearCenterDistanceMm", "longPitchRadiusMm", "inputPitchRadiusMm",
+    "gearMeshClearanceMm", "longTipRadiusMm", "inputTipRadiusMm",
+    "beltEnvelopeRadiusMm", "beltGuideRadiusMm", "motherOuterRadiusMm",
+    "linearBearingNominalIdMm", "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm", "linearBearingCount",
+    "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
+    "linearBearingSeatDiameterMm", "linearBearingSeatRadialClearanceMm",
+    "linearBearingBlockWidthMm", "linearBearingBlockYLengthMm",
+    "linearBearingBlockZLengthMm", "linearBearingBlockZMarginMm",
+    "linearBearingBlockMountHoleDiameterMm",
+    "linearBearingBlockMountHoleCount", "linearBearingBlockMountXOffsetMm",
+    "linearBearingBlockMountYOffsetMm", "linearBearingBlockMount",
+    "linearBearingModel", "linearBearingMovesWithInput",
+    "linearBearingFitCouponPart", "linearBearingPart",
+    "linearBearingBlockPart", "inputShaftProfile",
+    "inputShaftUpperDStartMm", "inputShaftUpperDLengthMm",
+    "inputShaftRoundStartMm", "inputShaftRoundLengthMm",
+    "inputShaftRoundDiameterMm", "inputShaftLowerDStartMm",
+    "inputShaftLowerDLengthMm", "inputSleeveTopOffsetMm",
+    "inputSleeveUpperDHeightMm", "inputSleeveUpperDDiameterMm",
+    "inputSleeveLowerRoundOuterDiameterMm",
+    "inputSleeveLowerRoundHeightMm", "inputSleeveDSocketDepthMm",
+    "inputSleeveDSocketClearanceMm", "inputSleeveMagnetNominalDiameterMm",
+    "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
+    "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetBottomClearanceMm",
+    "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
+    "outputShaftStartMm", "outputShaftLengthMm", "outputBearingCount",
+    "bearingCount", "bearingNominal", "bearingSeatDiameterMm",
+    "bearingSeatDepthMm", "bearingBackShoulderMm",
+    "bearingReferenceCenterOffsetMm", "bearingCenterOffsetMm",
+    "bearingPairSpacingMm", "bearingBlockThicknessMm",
+    "shaftDiameterMm", "shaftCollarOdMm", "shaftCollarBoreMm",
+    "matingMagnetCount", "inputSleeveMagnetCount",
+    "totalModeledMagnetCount", "rotaryBearingArrangement",
+    "linearBearingArrangement", "plateWidthMm", "plateKeyWidthMm",
+    "plateKeyHeightMm", "plateKeyClearanceMm", "plateM3ClearanceMm",
+    "plateBeltPassageHalfWidthMm", "plateBeltPassageAxialWidthMm",
+    "plateBeltPassageRadialClearanceMm",
+    "plateBeltPassageAxialClearanceMm", "plateSupport", "actuation",
+    "engageOnlyWhenStopped", "releaseBeforeReturn",
+    "inputSideAdditionalMechanism", "centerCol", "centerRow",
+    "inputPart", "outputPart", "outputCagePart", "mechanismPlatePart",
+    "outputShaftPart", "outputBearingsPart",
   ];
   if (!contract || typeof contract !== "object") {
     throw new Error("缺少 centerClutch 机械契约");
@@ -567,211 +528,155 @@ function validateCenterClutchContract(contract) {
   if (missing.length) {
     throw new Error(`centerClutch 契约缺少 ${missing.join(", ")}`);
   }
-  if (contract.axis !== "+Y" || contract.role !== "input/output") {
-    throw new Error("centerClutch 轴向/角色契约不匹配");
-  }
-  if (contract.verticalLayoutMode !== "center-clutch-lift"
+  if (contract.version !== 1
+      || contract.axis !== "+Y"
+      || contract.role !== "input/output"
+      || contract.verticalLayoutMode !== "center-clutch-lift"
       || Math.abs(Number(contract.centerClutchVerticalLiftMm) - 5) > 0.001) {
-    throw new Error("centerClutch 没有使用整体上移 5 mm 的首件布局");
+    throw new Error("centerClutch 轴向、角色或垂直布局契约不匹配");
   }
   if (contract.actuation !== "permanent-magnet"
-    || contract.engageOnlyWhenStopped !== true
-    || contract.releaseBeforeReturn !== true) {
-    throw new Error("centerClutch 纯永磁动作门槛不满足");
+      || contract.engageOnlyWhenStopped !== true
+      || contract.releaseBeforeReturn !== true
+      || contract.inputSideAdditionalMechanism !== "none") {
+    throw new Error("centerClutch 永磁动作/公轮端无额外机构门槛不满足");
   }
-  if (contract.rotaryBearingArrangement !== "two-per-rotor-axially-spaced"
-      || contract.linearBearingArrangement !== "single-coaxial-with-male-rotor"
-      || contract.selectorShoeChainSupportPart
-        !== "cabinet-clutch/center_selector_chain_support_contact"
-      || contract.selectorShoeLinearBearingCollisionPart
-        !== "cabinet-clutch/center_selector_linear_bearing_collision") {
-    throw new Error("centerClutch 轴承数量布局或链条支撑契约不匹配");
+  if (contract.linearBearingMovesWithInput !== false
+      || contract.linearBearingBlockMount !== "main-plate-direct"
+      || contract.linearBearingModel !== "LM3UU-cutaway-reference"
+      || contract.inputShaftProfile !== "D-round-D") {
+    throw new Error("centerClutch 固定 LM3UU 或 D-round-D 契约不匹配");
   }
-  if (contract.linearBearingModel !== "LM3UU-cutaway-reference"
-      || contract.linearBearingFitCouponPart
-        !== "cabinet-clutch/center_linear_bearing_fit_coupon") {
-    throw new Error("centerClutch 直线轴承模型/测试片契约不匹配");
+  const exact = {
+    linearBearingFitCouponPart: "cabinet-clutch/center_linear_bearing_fit_coupon",
+    linearBearingPart: "cabinet-clutch/center_linear_bearings_reference",
+    linearBearingBlockPart: "cabinet-clutch/center_linear_bearing_block",
+    inputShaftPart: "cabinet-clutch/center_input_shaft_reference",
+    inputSleevePart: "cabinet-clutch/center_input_sleeve",
+    inputSleeveMagnetPart: "cabinet-clutch/center_input_sleeve_magnet_reference",
+    inputPart: "cabinet-clutch/center_input_rotor",
+    outputPart: "cabinet-clutch/center_output_rotor",
+    outputCagePart: "cabinet-clutch/center_output_cage",
+    mechanismPlatePart: "cabinet-clutch/center_mechanism_plate",
+    outputShaftPart: "cabinet-clutch/center_output_shaft_reference",
+    outputBearingsPart: "cabinet-clutch/center_output_bearings_reference",
+    bearingNominal: "3x6x2",
+    rotaryBearingArrangement: "output-two-3x6x2-axially-spaced-input-free",
+    linearBearingArrangement: "single-coaxial-with-fixed-block",
+    plateSupport: "partition-through-M3",
+  };
+  for (const [key, value] of Object.entries(exact)) {
+    if (contract[key] !== value) {
+      throw new Error(`centerClutch 字段错误: ${key}=${contract[key]}`);
+    }
   }
-  for (const key of [
-    "openGapMm",
-    "dogInsertionMm",
-    "strokeMm",
-    "pocketDepthMm",
-    "bottomClearanceMm",
-    "magnetNonContactClearanceMm",
-    "femaleMagnetProjectionMm",
-    "magnetNominalDiameterMm",
-    "centerClutchVerticalLiftMm",
-    "maleBottomYMm",
-    "inputTipRadiusMm",
-    "guideRodDiameterMm",
-    "linearBearingNominalIdMm",
-    "linearBearingNominalOdMm",
-    "linearBearingNominalLengthMm",
-    "linearBearingSeatDiameterMm",
-    "linearBearingSeatDepthMm",
-    "linearBearingHolderOuterDiameterMm",
-    "linearBearingHolderLengthMm",
-    "linearBearingHolderBackShoulderMm",
-    "linearBearingHolderFrontNeckDiameterMm",
-    "linearBearingHolderFrontNeckLengthMm",
-    "linearBearingRetainerInnerDiameterMm",
-    "linearBearingRetainerOuterDiameterMm",
-    "linearBearingRetainerThicknessMm",
-    "linearBearingRetainerLipOuterDiameterMm",
-    "linearBearingRetainerSkirtInnerDiameterMm",
-    "linearBearingRetainerSkirtOuterDiameterMm",
-    "linearBearingRetainerSkirtLengthMm",
-    "linearBearingSeatRadialClearanceMm",
-    "selectorShoeTangentOffsetMm",
-    "selectorShoeTargetYMm",
-    "selectorShoeAnchorXMm",
-    "selectorShoeAnchorYMm",
-    "selectorShoeMagnetFaceOffsetMm",
-    "selectorShoeMagnetFaceYMm",
-    "selectorShoeTriggerClearanceMm",
-    "selectorShoeChainAttachYMm",
-    "selectorShoeChainAttachXMm",
-    "selectorShoeChainContactDiameterMm",
-    "selectorShoeSupportXOffsetMm",
-    "selectorShoeSupportArmXOffsetMm",
-    "selectorShoeSupportXWidthMm",
-    "selectorShoeSupportDropMm",
-    "selectorShoeSupportReachMm",
-  ]) {
+  const positive = [
+    "openGapMm", "dogInsertionMm", "strokeMm", "pocketDepthMm",
+    "bottomClearanceMm", "magnetNonContactClearanceMm",
+    "femaleMagnetProjectionMm", "magnetNominalDiameterMm",
+    "linearBearingNominalIdMm", "linearBearingNominalOdMm",
+    "linearBearingNominalLengthMm", "linearBearingSeatDiameterMm",
+    "linearBearingBlockWidthMm", "linearBearingBlockYLengthMm",
+    "linearBearingBlockZLengthMm", "linearBearingBlockMountHoleDiameterMm",
+    "inputShaftUpperDLengthMm", "inputShaftRoundLengthMm",
+    "inputShaftRoundDiameterMm", "inputShaftLowerDLengthMm",
+    "inputSleeveUpperDHeightMm", "inputSleeveUpperDDiameterMm",
+    "inputSleeveLowerRoundOuterDiameterMm",
+    "inputSleeveLowerRoundHeightMm", "inputSleeveDSocketDepthMm",
+    "inputSleeveMagnetNominalDiameterMm",
+    "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
+    "inputSleeveMagnetPocketDepthMm", "outputShaftLengthMm",
+    "bearingSeatDiameterMm", "bearingSeatDepthMm",
+    "bearingPairSpacingMm", "shaftDiameterMm", "shaftCollarOdMm",
+    "plateWidthMm", "plateKeyWidthMm", "plateKeyHeightMm",
+    "plateM3ClearanceMm", "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageAxialWidthMm",
+  ];
+  for (const key of positive) {
     if (!Number.isFinite(Number(contract[key])) || Number(contract[key]) <= 0) {
       throw new Error(`centerClutch 尺寸无效: ${key}`);
     }
   }
-  for (const key of [
-    "axisZMm",
-    "guideRailXOffsetMm",
-    "guideRailZOffsetMm",
-    "guideRodXOffsetMm",
-    "guideRodZOffsetMm",
-    "linearBearingCenterYOffsetMm",
-    "selectorShoeNormalOffsetMm",
-    "selectorShoeZMm",
-    "selectorShoeAnchorZMm",
-    "selectorShoeChainAttachZMm",
-  ]) {
+  const finite = [
+    "axisXMm", "axisZMm", "inputBaseYMm", "maleBottomYMm", "outputBaseYMm",
+    "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
+    "inputShaftUpperDStartMm", "inputShaftRoundStartMm",
+    "inputShaftLowerDStartMm", "inputSleeveTopOffsetMm",
+    "outputShaftStartMm", "plateKeyClearanceMm",
+    "plateBeltPassageRadialClearanceMm", "plateBeltPassageAxialClearanceMm",
+  ];
+  for (const key of finite) {
     if (!Number.isFinite(Number(contract[key]))) {
       throw new Error(`centerClutch 坐标无效: ${key}`);
     }
   }
-  if (!Number.isFinite(Number(contract.axisXMm))
-      || !Number.isFinite(Number(contract.axisZMm))) {
-    throw new Error("centerClutch 旋转轴坐标无效");
+  const n = (key) => Number(contract[key]);
+  const close = (a, b, tolerance = 0.001) => Math.abs(a - b) <= tolerance;
+  if (n("centerCol") !== 2 || n("centerRow") !== 2) {
+    throw new Error("centerClutch 必须锁定中心 R3C3");
   }
-  if (Math.abs(Number(contract.strokeMm)
-      - Number(contract.openGapMm)
-      - Number(contract.dogInsertionMm)) > 0.001) {
-    throw new Error("centerClutch stroke != gap + insertion");
+  if (!close(n("strokeMm"), n("openGapMm") + n("dogInsertionMm"))
+      || !close(n("pocketDepthMm"), n("dogInsertionMm") + n("bottomClearanceMm"))
+      || !close(n("bottomClearanceMm"),
+        n("femaleMagnetProjectionMm") + n("magnetNonContactClearanceMm"))) {
+    throw new Error("centerClutch 行程/母槽/磁铁余量方程不满足");
   }
-  if (Math.abs(Number(contract.pocketDepthMm)
-      - Number(contract.dogInsertionMm)
-      - Number(contract.bottomClearanceMm)) > 0.001) {
-    throw new Error("centerClutch pocket depth != insertion + bottom clearance");
+  if (!close(n("linearBearingSeatRadialClearanceMm"),
+      (n("linearBearingSeatDiameterMm") - n("linearBearingNominalOdMm")) / 2)
+      || n("linearBearingSeatDiameterMm") <= n("linearBearingNominalOdMm")
+      || n("linearBearingNominalIdMm") !== n("inputShaftRoundDiameterMm")) {
+    throw new Error("centerClutch LM3UU 孔径/座孔/圆滑动段不匹配");
   }
-  if (Math.abs(Number(contract.bottomClearanceMm)
-      - Number(contract.femaleMagnetProjectionMm)
-      - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
-    throw new Error("centerClutch magnet clearance derivation is invalid");
+  if (n("linearBearingBlockZLengthMm") <= n("linearBearingBlockZMarginMm")
+      || n("linearBearingBlockWidthMm") <= n("linearBearingSeatDiameterMm") + 2
+      || n("linearBearingBlockYLengthMm") < n("linearBearingNominalLengthMm") + 2
+      || n("linearBearingBlockMountHoleCount") !== 4) {
+    throw new Error("centerClutch 长方条轴承座尺寸/固定孔不满足");
   }
-  if (Math.abs(Number(contract.selectorShoeChainAttachXMm)
-      - Number(contract.axisXMm)
-      - Number(contract.selectorShoeSupportXOffsetMm)) > 0.001
-      || Math.abs(Number(contract.selectorShoeChainAttachYMm) - 149) > 0.001
-      || Math.abs(Number(contract.selectorShoeChainAttachZMm) + 75) > 0.001) {
-    throw new Error("centerClutch 磁力靴链条支撑没有对齐蛇链层");
+  const roundEnd = n("inputShaftRoundStartMm") + n("inputShaftRoundLengthMm");
+  const bearingMin = n("linearBearingCenterYOffsetMm")
+    - n("linearBearingNominalLengthMm") / 2;
+  const bearingMax = n("linearBearingCenterYOffsetMm")
+    + n("linearBearingNominalLengthMm") / 2;
+  if (n("inputShaftRoundStartMm") > bearingMin + 0.001
+      || roundEnd + n("strokeMm") < bearingMax - 0.001) {
+    throw new Error("centerClutch 圆滑动段未覆盖 LM3UU 全行程");
   }
-  if (Number(contract.linearBearingCount) !== 1
-      || Math.abs(Number(contract.linearBearingNominalIdMm)
-        - Number(contract.guideRodDiameterMm)) > 0.001
-      || Number(contract.linearBearingSeatDiameterMm)
-        <= Number(contract.linearBearingNominalOdMm)
-      || Math.abs(Number(contract.linearBearingSeatRadialClearanceMm)
-        - (Number(contract.linearBearingSeatDiameterMm)
-          - Number(contract.linearBearingNominalOdMm)) / 2) > 0.001
-      || Number(contract.linearBearingHolderOuterDiameterMm)
-        < Number(contract.linearBearingSeatDiameterMm) + 4
-      || Number(contract.linearBearingSeatDepthMm)
-        < Number(contract.linearBearingHolderBackShoulderMm)
-          + Number(contract.linearBearingNominalLengthMm)
-      || Number(contract.linearBearingHolderLengthMm)
-        < Number(contract.linearBearingHolderBackShoulderMm)
-          + Number(contract.linearBearingNominalLengthMm)
-          + Number(contract.linearBearingRetainerThicknessMm) - 0.001
-      || Number(contract.linearBearingHolderFrontNeckDiameterMm)
-        >= Number(contract.linearBearingHolderOuterDiameterMm)
-      || Number(contract.linearBearingRetainerInnerDiameterMm)
-        <= Number(contract.guideRodDiameterMm)
-      || Number(contract.linearBearingRetainerInnerDiameterMm)
-        >= Number(contract.linearBearingNominalOdMm)
-      || Number(contract.linearBearingRetainerOuterDiameterMm)
-        <= Number(contract.linearBearingHolderOuterDiameterMm)
-      || Number(contract.linearBearingRetainerThicknessMm) <= 0
-      || Number(contract.linearBearingRetainerLipOuterDiameterMm)
-        > Number(contract.linearBearingNominalOdMm)
-      || Number(contract.linearBearingRetainerSkirtInnerDiameterMm)
-        <= Number(contract.linearBearingHolderFrontNeckDiameterMm)
-      || Number(contract.linearBearingRetainerSkirtOuterDiameterMm)
-        <= Number(contract.linearBearingRetainerSkirtInnerDiameterMm)
-      || Number(contract.linearBearingRetainerSkirtLengthMm)
-        < Number(contract.linearBearingHolderFrontNeckLengthMm)
-      || Number(contract.linearBearingRodNominalClearanceMm) < -0.001) {
-    throw new Error("centerClutch 直线轴承/轴承套/压盖契约不匹配");
+  const upperEnd = n("inputShaftUpperDStartMm") + n("inputShaftUpperDLengthMm");
+  const lowerEnd = n("inputShaftLowerDStartMm") + n("inputShaftLowerDLengthMm");
+  if (upperEnd < 3 - 0.001
+      || roundEnd < n("inputShaftUpperDStartMm") - 0.001
+      || n("inputShaftLowerDStartMm") > roundEnd + 0.001
+      || lowerEnd < n("inputShaftRoundStartMm") - 0.001) {
+    throw new Error("centerClutch D-round-D 三段不连续");
   }
-  if (Number(contract.inputBearingCenterOffsetMm)
-      <= Number(contract.bearingBlockThicknessMm)) {
-    throw new Error("centerClutch 输入旋转轴承块没有为磁力靴通道下移");
+  if (n("inputSleeveDSocketDepthMm") > n("inputSleeveUpperDHeightMm")
+      || n("inputSleeveDSocketDepthMm") > n("inputShaftLowerDLengthMm")
+      || n("inputSleeveMagnetPocketDiameterMm") < n("inputSleeveMagnetNominalDiameterMm")
+      || n("inputSleeveMagnetPocketDepthMm") < n("inputSleeveMagnetNominalLengthMm")
+      || (n("inputSleeveLowerRoundOuterDiameterMm")
+        - n("inputSleeveMagnetPocketDiameterMm")) / 2 < 1.4
+      || n("inputSleeveMagnetBottomClearanceMm") < 1) {
+    throw new Error("centerClutch D 型圆套或 Ø5×5 磁铁槽尺寸不满足");
   }
-  if (Number(contract.linearBearingFitCouponGuideCount) !== 1
-      || Math.abs(Number(contract.linearBearingFitCouponGuideXOffsetMm)) > 0.001) {
-    throw new Error("centerClutch 直线轴承测试片必须是中心单导杆");
+  if (n("bearingSeatDepthMm") < n("bearingBackShoulderMm") + 2
+      || n("shaftCollarOdMm") <= 6
+      || n("shaftCollarBoreMm") <= n("shaftDiameterMm")) {
+    throw new Error("centerClutch 输出 3×6×2 轴承笼保持尺寸不满足");
   }
-  if (Math.abs(Number(contract.guideRodXOffsetMm)
-      - Number(contract.guideRailXOffsetMm)) > 0.001
-      || Math.abs(Number(contract.guideRodZOffsetMm)
-        - Number(contract.guideRailZOffsetMm)) > 0.001
-      || Math.abs(Number(contract.guideRodXOffsetMm)) > 0.001
-      || Math.abs(Number(contract.guideRodZOffsetMm)) > 0.001) {
-    throw new Error("centerClutch 单导杆必须与公轮共享 X/Z 轴心");
+  if (!close(n("gearCenterDistanceMm"),
+      n("longPitchRadiusMm") + n("inputPitchRadiusMm") + n("gearMeshClearanceMm"))) {
+    throw new Error("centerClutch 长花键中心距不满足");
   }
-  const guideRodEnd = Number(contract.linearBearingCenterYOffsetMm)
-    + Number(contract.linearBearingHolderLengthMm) / 2
-    + Number(contract.strokeMm)
-    + Number(contract.linearBearingRetainerThicknessMm)
-    + Number(contract.guideRodCaptureMm);
-  if (Number(contract.inputShaftStartMm) - guideRodEnd < 0.40 - 0.001) {
-    throw new Error("centerClutch 同轴导杆捕获端没有避开输入 D 轴");
+  for (const key of ["beltEnvelopeRadiusMm", "beltGuideRadiusMm", "motherOuterRadiusMm"]) {
+    if (n("gearCenterDistanceMm") - n("longTipRadiusMm") - n(key) < 0.45 - 0.001) {
+      throw new Error(`centerClutch ${key} 径向净空不足`);
+    }
   }
-  if (contract.linearBearingPart !== "cabinet-clutch/center_linear_bearings_reference"
-      || contract.linearBearingRetainerPart
-        !== "cabinet-clutch/center_linear_bearing_retainers") {
-    throw new Error("centerClutch 直线轴承参考件 ID 不匹配");
-  }
-  if (Math.abs(Number(contract.maleBottomYMm)
-      - Number(contract.inputBaseYMm)) > 0.001
-      || Math.abs(Number(contract.selectorShoeMagnetFaceYMm)
-        + Number(contract.selectorShoeTriggerClearanceMm)
-        - Number(contract.maleBottomYMm)) > 0.001
-      || contract.selectorShoeMagnetAxis !== "+Y") {
-    throw new Error("centerClutch 磁力靴没有从公轮底部沿 +Y 保留触发间隙");
-  }
-  if (contract.selectorShoePart !== CENTER_SELECTOR_SHOE_ID
-      || contract.selectorShoeCoordinateFrame !== "native-world") {
-    throw new Error("centerClutch 选择磁力靴必须是原生世界坐标零件");
-  }
-  if (Math.abs(Number(contract.selectorShoeTangentOffsetMm) - 6) > 0.001
-      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 8) > 0.001
-      || Math.abs(Number(contract.selectorShoeAnchorXMm)
-        - Number(contract.axisXMm) - 6) > 0.001
-      || Math.abs(Number(contract.selectorShoeAnchorYMm)
-        - Number(contract.selectorShoeTargetYMm)) > 0.001
-      || Math.abs(Number(contract.selectorShoeAnchorZMm)
-        - Number(contract.selectorShoeZMm)) > 0.001) {
-    throw new Error("centerClutch 磁力靴 R3C3 切向/法向基准不匹配");
+  if (n("plateBeltPassageHalfWidthMm") <= n("beltEnvelopeRadiusMm")
+      || n("plateBeltPassageAxialWidthMm") <= 6
+      || n("plateBeltPassageHalfWidthMm") >= n("plateWidthMm") / 2) {
+    throw new Error("centerClutch 机构板皮带贯穿槽不满足");
   }
   return contract;
 }
@@ -1820,9 +1725,9 @@ function initScheme1Motion() {
   play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
   if (play.centerViewRequested && snapScheme1ToCenter()) {
-    scheme1Status(`首件视角 · 磁力靴已对准 ${scheme1StationLabel(play.scheme1.targetIndex)} · 开位`);
+    scheme1Status("首件视角 · R3C3 触发基准已对准 · 开位");
   } else {
-    scheme1Status(`磁力靴待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
+    scheme1Status(`选择指待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
   }
 }
 
@@ -1866,11 +1771,11 @@ function setScheme1Phase(phase) {
   scheme.phaseTime = 0;
   const stationLabel = scheme1StationLabel(scheme.targetIndex);
   const labels = {
-    [SCHEME1_PHASE.INDEX]: `磁力靴移动 · 目标 ${stationLabel}`,
+    [SCHEME1_PHASE.INDEX]: `选择指移动 · 目标 ${stationLabel}`,
     [SCHEME1_PHASE.ENGAGE]: `停稳磁力接合 · ${stationLabel}`,
     [SCHEME1_PHASE.OPEN]: `抽屉打开中 · ${stationLabel}`,
     [SCHEME1_PHASE.CLOSE]: `抽屉关闭中 · ${stationLabel}`,
-    [SCHEME1_PHASE.RELEASE]: `磁力释放 · ${stationLabel}`,
+    [SCHEME1_PHASE.RELEASE]: `磁力接口释放 · ${stationLabel}`,
   };
   scheme1Status(labels[phase] || "方案1");
 }
@@ -2063,7 +1968,7 @@ function tickCenterClutchDemo(dt) {
   demo.elapsed = 0;
   demo.phase = "idle";
   poseCenterDemoShoe(centerClutchShoeOffset("release"));
-  scheme1Status(`中心离合演示完成 · 已回到开位 · 滑架 +Y ${centerDemoTravelText()}`);
+  scheme1Status(`中心离合演示完成 · 已回到开位 · 公轮轴 +Y ${centerDemoTravelText()}`);
 }
 
 function currentClutchEngagement() {
@@ -2088,8 +1993,8 @@ function tickCurrentClutch() {
   const angle = -2 * Math.PI * turns;
   const stroke = Number(contract.strokeMm);
   for (const part of play.currentClutch.parts) {
-    // The input rotor, its short D shaft, bearings and carriage are one
-    // moving +Y assembly. The output rotor/cage stays fixed in Y.
+    // The input rotor, stepped shaft, sleeve and sleeve magnet are one moving
+    // +Y assembly. The fixed LM3UU block and output rotor/cage stay in Y.
     part.group.position.y = part.baseY + (part.moves ? stroke * engagement : 0);
     if (part.rotates) {
       // Once engaged, input and output share the coaxial clutch rotation. The
@@ -2443,7 +2348,7 @@ export async function onPartLoaded(item) {
     return;
   }
   if (CURRENT_CLUTCH_STATIC_IDS.has(id)) {
-    // Cage, rails, hard stops and the removable plate are fixed world-frame
+    // Cage, fixed bearing block and the removable plate are fixed world-frame
     // hardware. They must not enter the legacy chain adapter or a rotary
     // pivot; their coordinates come directly from the native STL.
     item.playBound = true;
