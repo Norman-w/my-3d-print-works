@@ -10,7 +10,7 @@
 // seal: none — this is a mechanism prototype, not a watertight enclosure
 // print_orientation: gears/pulleys flat with their axis vertical (+Y); center
 // carrier, printed guide sleeves and plate are separate PETG service parts;
-// the two guide rods are purchased metal references
+// the single guide rod is a purchased metal reference
 // units: mm
 //
 // User/world coordinate contract (the canonical web view is from the rear):
@@ -2172,9 +2172,31 @@ module selected_center_clutch_pair_collision_part() {
 }
 
 module selected_center_selector_rail_collision_part() {
+    // Compatibility alias for older audit commands. The current witness also
+    // includes the single under-rotor bearing, its holder/cap and the complete
+    // M_release -> M_engage shoe path.
+    selected_center_selector_linear_bearing_collision_part();
+}
+
+module selected_center_selector_linear_bearing_collision_part() {
+    // Empty CSG is required. Test the static guide rod together with the
+    // moving holder/cap at the requested carriage travel against the selector
+    // shoe body at five tangent positions from M_release to M_engage.
     intersection() {
-        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
-        selected_center_selector_shoe_part();
+        union() {
+            center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+            center_clutch_input_carriage(
+                CENTER_GT2_COL,
+                CENTER_GT2_ROW,
+                ENGAGED
+            );
+            center_clutch_linear_bearing_retainers(
+                CENTER_GT2_COL,
+                CENTER_GT2_ROW,
+                ENGAGED
+            );
+        }
+        center_clutch_selector_shoe_body_sweep();
     }
 }
 
@@ -2223,6 +2245,44 @@ module center_clutch_selector_support_arm() {
                     CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T
                 ]);
         }
+}
+
+module center_clutch_selector_shoe_body_at_tangent(tangent_offset) {
+    translate([
+        clutch_col_x(CENTER_GT2_COL) + tangent_offset,
+        CENTER_SELECTOR_SHOE_TARGET_Y_MM,
+        CENTER_SELECTOR_SHOE_Z_MM
+    ])
+        rotate([-90, 0, 0])
+            center_clutch_selector_shoe();
+}
+
+module center_clutch_selector_support_arm_at_tangent(tangent_offset) {
+    // The authored shoe is one rigid part.  The support arm follows the same
+    // tangent offset in a real chain position; the default assembly emits the
+    // M_engage position only, while the collision witness uses the body path
+    // below because the arm's chain dog-leg is not the bearing trigger.
+    translate([
+        tangent_offset - CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
+        0,
+        0
+    ])
+        center_clutch_selector_support_arm();
+}
+
+module center_clutch_selector_shoe_body_sweep() {
+    // Include endpoints, midpoint and quarter points so a shoe corner cannot
+    // pass through the single bearing/cap between the two magnetic triggers.
+    union() {
+        for (tangent_offset = [
+            -CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
+            -CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM / 2,
+            0,
+            CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM / 2,
+            CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM
+        ])
+            center_clutch_selector_shoe_body_at_tangent(tangent_offset);
+    }
 }
 
 // Positive CSG witness for the chain-supported selector shoe.  This is not a
@@ -2313,15 +2373,12 @@ module selected_center_guide_stop_collision_part() {
 module selected_center_selector_shoe_part() {
     color("#c8d3dc")
         union() {
-            translate([
-                clutch_col_x(CENTER_GT2_COL)
-                    + CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
-                CENTER_SELECTOR_SHOE_TARGET_Y_MM,
-                CENTER_SELECTOR_SHOE_Z_MM
-            ])
-                rotate([-90, 0, 0])
-                    center_clutch_selector_shoe();
-            center_clutch_selector_support_arm();
+            center_clutch_selector_shoe_body_at_tangent(
+                CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM
+            );
+            center_clutch_selector_support_arm_at_tangent(
+                CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM
+            );
         }
 }
 
@@ -2640,6 +2697,8 @@ module clutch_scene_geometry() {
         selected_center_clutch_pair_collision_part();
     } else if (CLUTCH_PART == "center_selector_rail_collision") {
         selected_center_selector_rail_collision_part();
+    } else if (CLUTCH_PART == "center_selector_linear_bearing_collision") {
+        selected_center_selector_linear_bearing_collision_part();
     } else if (CLUTCH_PART == "center_selector_male_collision") {
         selected_center_selector_male_collision_part();
     } else if (CLUTCH_PART == "center_selector_chain_support_contact") {
@@ -2768,6 +2827,8 @@ echo(
     str("linearBearingNominalOdMm=", CENTER_CLUTCH_LINEAR_BEARING_OD),
     str("linearBearingNominalLengthMm=", CENTER_CLUTCH_LINEAR_BEARING_L),
     str("linearBearingCount=", CENTER_CLUTCH_LINEAR_BEARING_COUNT),
+    str("linearBearingCenterYOffsetMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET),
     str("linearBearingSeatDiameterMm=", CENTER_CLUTCH_LINEAR_BEARING_SEAT_D),
     str("linearBearingSeatDepthMm=", CENTER_CLUTCH_LINEAR_BEARING_SEAT_DEPTH),
     str("linearBearingHolderOuterDiameterMm=",
@@ -2800,8 +2861,8 @@ echo(
         CENTER_CLUTCH_LINEAR_BEARING_ROD_NOMINAL_CLEARANCE),
     "linearBearingModel=LM3UU-cutaway-reference",
     "linearBearingFitCouponPart=cabinet-clutch/center_linear_bearing_fit_coupon",
-    str("linearBearingFitCouponRodSpacingMm=",
-        CENTER_CLUTCH_FIT_COUPON_ROD_SPACING),
+    "linearBearingFitCouponGuideCount=1",
+    "linearBearingFitCouponGuideXOffsetMm=0.00",
     "linearBearingFitCouponSeatVariantsMm=7.20/7.30/7.40",
     str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
     str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
@@ -2816,12 +2877,15 @@ echo(
     str("bearingBackShoulderMm=", CENTER_CLUTCH_BEARING_BACK_SHOULDER_T),
     str("bearingReferenceCenterOffsetMm=", CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET),
     str("bearingCenterOffsetMm=", CENTER_CLUTCH_BEARING_CENTER_OFFSET),
+    str("inputBearingCenterOffsetMm=", CENTER_CLUTCH_INPUT_BEARING_CENTER_OFFSET),
     str("bearingPairSpacingMm=", CENTER_CLUTCH_BEARING_PAIR_SPACING),
     str("bearingBlockThicknessMm=", CENTER_CLUTCH_BEARING_BLOCK_T),
     str("bearingBlockWidthMm=", CENTER_CLUTCH_BEARING_BLOCK_X),
     str("bearingBlockHeightMm=", CENTER_CLUTCH_BEARING_BLOCK_Z),
     str("guideRailXOffsetMm=", CENTER_CLUTCH_RAIL_X_OFFSET),
     str("guideRailZOffsetMm=", CENTER_CLUTCH_RAIL_Z_OFFSET),
+    str("guideRodXOffsetMm=", CENTER_CLUTCH_GUIDE_ROD_X_OFFSET),
+    str("guideRodZOffsetMm=", CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET),
     str("stopPadWidthMm=", CENTER_CLUTCH_STOP_PAD_W),
     str("stopPadXOffsetMm=", CENTER_CLUTCH_STOP_PAD_X_OFFSET),
     str("stopLugXOffsetMm=", CENTER_CLUTCH_STOP_LUG_X_OFFSET),
@@ -2903,7 +2967,8 @@ echo(
             - (CENTER_SELECTOR_SHOE_Z_MM + CENTER_SELECTOR_SHOE_D / 2
             - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM)),
     "rotaryBearingArrangement=two-per-rotor-axially-spaced",
-    "linearBearingArrangement=left-right-one-per-guide-rod",
+    "linearBearingArrangement=single-under-male-rotor",
+    "selectorShoeLinearBearingCollisionPart=cabinet-clutch/center_selector_linear_bearing_collision",
     "selectorShoeChainSupportPart=cabinet-clutch/center_selector_chain_support_contact",
     str("selectorShoeBodyWidthMm=", CENTER_SELECTOR_SHOE_W),
     str("selectorShoeBodyDepthMm=", CENTER_SELECTOR_SHOE_D),
@@ -3010,6 +3075,7 @@ assert(
     || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_selector_rail_collision"
+    || CLUTCH_PART == "center_selector_linear_bearing_collision"
     || CLUTCH_PART == "center_selector_male_collision"
     || CLUTCH_PART == "center_selector_chain_support_contact"
     || CLUTCH_PART == "center_carriage_rail_collision"

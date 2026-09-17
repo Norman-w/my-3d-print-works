@@ -493,11 +493,18 @@ function validateCenterClutchContract(contract) {
     "inputTipRadiusMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
+    "guideRodXOffsetMm",
+    "guideRodZOffsetMm",
     "guideRodDiameterMm",
+    "bearingBlockHeightMm",
+    "bearingBlockThicknessMm",
+    "inputBearingCenterOffsetMm",
+    "bearingBlockHeightMm",
     "linearBearingNominalIdMm",
     "linearBearingNominalOdMm",
     "linearBearingNominalLengthMm",
     "linearBearingCount",
+    "linearBearingCenterYOffsetMm",
     "linearBearingSeatDiameterMm",
     "linearBearingSeatDepthMm",
     "linearBearingHolderOuterDiameterMm",
@@ -516,7 +523,8 @@ function validateCenterClutchContract(contract) {
     "linearBearingRodNominalClearanceMm",
     "linearBearingModel",
     "linearBearingFitCouponPart",
-    "linearBearingFitCouponRodSpacingMm",
+    "linearBearingFitCouponGuideCount",
+    "linearBearingFitCouponGuideXOffsetMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
     "rotaryBearingArrangement",
@@ -547,6 +555,8 @@ function validateCenterClutchContract(contract) {
     "selectorShoeSupportDropMm",
     "selectorShoeSupportReachMm",
     "selectorShoeChainSupportPart",
+    "selectorShoeLinearBearingCollisionPart",
+    "inputBearingCenterOffsetMm",
   ];
   if (!contract || typeof contract !== "object") {
     throw new Error("缺少 centerClutch 机械契约");
@@ -568,9 +578,11 @@ function validateCenterClutchContract(contract) {
     throw new Error("centerClutch 纯永磁动作门槛不满足");
   }
   if (contract.rotaryBearingArrangement !== "two-per-rotor-axially-spaced"
-      || contract.linearBearingArrangement !== "left-right-one-per-guide-rod"
+      || contract.linearBearingArrangement !== "single-under-male-rotor"
       || contract.selectorShoeChainSupportPart
-        !== "cabinet-clutch/center_selector_chain_support_contact") {
+        !== "cabinet-clutch/center_selector_chain_support_contact"
+      || contract.selectorShoeLinearBearingCollisionPart
+        !== "cabinet-clutch/center_selector_linear_bearing_collision") {
     throw new Error("centerClutch 轴承数量布局或链条支撑契约不匹配");
   }
   if (contract.linearBearingModel !== "LM3UU-cutaway-reference"
@@ -590,8 +602,6 @@ function validateCenterClutchContract(contract) {
     "centerClutchVerticalLiftMm",
     "maleBottomYMm",
     "inputTipRadiusMm",
-    "guideRailXOffsetMm",
-    "guideRailZOffsetMm",
     "guideRodDiameterMm",
     "linearBearingNominalIdMm",
     "linearBearingNominalOdMm",
@@ -611,7 +621,6 @@ function validateCenterClutchContract(contract) {
     "linearBearingRetainerSkirtOuterDiameterMm",
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
-    "linearBearingFitCouponRodSpacingMm",
     "selectorShoeTangentOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeAnchorXMm",
@@ -634,6 +643,11 @@ function validateCenterClutchContract(contract) {
   }
   for (const key of [
     "axisZMm",
+    "guideRailXOffsetMm",
+    "guideRailZOffsetMm",
+    "guideRodXOffsetMm",
+    "guideRodZOffsetMm",
+    "linearBearingCenterYOffsetMm",
     "selectorShoeNormalOffsetMm",
     "selectorShoeZMm",
     "selectorShoeAnchorZMm",
@@ -669,7 +683,7 @@ function validateCenterClutchContract(contract) {
       || Math.abs(Number(contract.selectorShoeChainAttachZMm) + 75) > 0.001) {
     throw new Error("centerClutch 磁力靴链条支撑没有对齐蛇链层");
   }
-  if (Number(contract.linearBearingCount) !== 2
+  if (Number(contract.linearBearingCount) !== 1
       || Math.abs(Number(contract.linearBearingNominalIdMm)
         - Number(contract.guideRodDiameterMm)) > 0.001
       || Number(contract.linearBearingSeatDiameterMm)
@@ -706,8 +720,22 @@ function validateCenterClutchContract(contract) {
       || Number(contract.linearBearingRodNominalClearanceMm) < -0.001) {
     throw new Error("centerClutch 直线轴承/轴承套/压盖契约不匹配");
   }
-  if (Math.abs(Number(contract.linearBearingFitCouponRodSpacingMm) - 20) > 0.001) {
-    throw new Error("centerClutch 直线轴承平行度测试片中心距必须是 20 mm");
+  if (Number(contract.inputBearingCenterOffsetMm)
+      <= Number(contract.bearingBlockThicknessMm)) {
+    throw new Error("centerClutch 输入旋转轴承块没有为磁力靴通道下移");
+  }
+  if (Number(contract.linearBearingFitCouponGuideCount) !== 1
+      || Math.abs(Number(contract.linearBearingFitCouponGuideXOffsetMm)) > 0.001) {
+    throw new Error("centerClutch 直线轴承测试片必须是中心单导杆");
+  }
+  if (Math.abs(Number(contract.guideRodXOffsetMm)
+      - Number(contract.guideRailXOffsetMm)) > 0.001
+      || Math.abs(Number(contract.guideRodZOffsetMm)
+        - Number(contract.guideRailZOffsetMm)) > 0.001
+      || Math.abs(Number(contract.guideRodXOffsetMm)) > 0.001
+      || Number(contract.guideRodZOffsetMm)
+        >= -Number(contract.bearingBlockHeightMm || 14) / 2) {
+    throw new Error("centerClutch 单导杆必须位于公轮下方并与导轨位置一致");
   }
   const holderRotorRadialClearance = Math.hypot(
     Number(contract.guideRailXOffsetMm),
@@ -735,7 +763,7 @@ function validateCenterClutchContract(contract) {
     throw new Error("centerClutch 选择磁力靴必须是原生世界坐标零件");
   }
   if (Math.abs(Number(contract.selectorShoeTangentOffsetMm) - 6) > 0.001
-      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 9.2) > 0.001
+      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 8) > 0.001
       || Math.abs(Number(contract.selectorShoeAnchorXMm)
         - Number(contract.axisXMm) - 6) > 0.001
       || Math.abs(Number(contract.selectorShoeAnchorYMm)

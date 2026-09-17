@@ -34,12 +34,15 @@ REQUIRED = {
     "releaseBeforeReturn",
     "bearingReferenceCenterOffsetMm",
     "bearingCenterOffsetMm",
+    "inputBearingCenterOffsetMm",
     "bearingPairSpacingMm",
     "bearingBlockThicknessMm",
     "bearingBlockWidthMm",
     "bearingBlockHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
+    "guideRodXOffsetMm",
+    "guideRodZOffsetMm",
     "guideRodDiameterMm",
     "guideRodCaptureMm",
     "guideRodY0Mm",
@@ -48,6 +51,7 @@ REQUIRED = {
     "linearBearingNominalOdMm",
     "linearBearingNominalLengthMm",
     "linearBearingCount",
+    "linearBearingCenterYOffsetMm",
     "linearBearingSeatDiameterMm",
     "linearBearingSeatDepthMm",
     "linearBearingHolderOuterDiameterMm",
@@ -66,11 +70,13 @@ REQUIRED = {
     "linearBearingRodNominalClearanceMm",
     "linearBearingModel",
     "linearBearingFitCouponPart",
-    "linearBearingFitCouponRodSpacingMm",
+    "linearBearingFitCouponGuideCount",
+    "linearBearingFitCouponGuideXOffsetMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
     "rotaryBearingArrangement",
     "linearBearingArrangement",
+    "selectorShoeLinearBearingCollisionPart",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "stopLugXOffsetMm",
@@ -175,12 +181,15 @@ FLOAT_KEYS = {
     "bearingBackShoulderMm",
     "bearingReferenceCenterOffsetMm",
     "bearingCenterOffsetMm",
+    "inputBearingCenterOffsetMm",
     "bearingPairSpacingMm",
     "bearingBlockThicknessMm",
     "bearingBlockWidthMm",
     "bearingBlockHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
+    "guideRodXOffsetMm",
+    "guideRodZOffsetMm",
     "guideRodDiameterMm",
     "guideRodCaptureMm",
     "guideRodY0Mm",
@@ -188,6 +197,7 @@ FLOAT_KEYS = {
     "linearBearingNominalIdMm",
     "linearBearingNominalOdMm",
     "linearBearingNominalLengthMm",
+    "linearBearingCenterYOffsetMm",
     "linearBearingSeatDiameterMm",
     "linearBearingSeatDepthMm",
     "linearBearingHolderOuterDiameterMm",
@@ -204,7 +214,7 @@ FLOAT_KEYS = {
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
     "linearBearingRodNominalClearanceMm",
-    "linearBearingFitCouponRodSpacingMm",
+    "linearBearingFitCouponGuideXOffsetMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "stopLugXOffsetMm",
@@ -274,6 +284,7 @@ INT_KEYS = {
     "matingMagnetCount",
     "selectorMagnetCount",
     "totalMagnetCount",
+    "linearBearingFitCouponGuideCount",
     "centerCol",
     "centerRow",
 }
@@ -335,8 +346,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心离合必须释放后返回")
     if contract.get("rotaryBearingArrangement") != "two-per-rotor-axially-spaced":
         raise RuntimeError("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
-    if contract.get("linearBearingArrangement") != "left-right-one-per-guide-rod":
-        raise RuntimeError("竖直直线轴承必须是左右各一枚、每根导杆一枚")
+    if contract.get("linearBearingArrangement") != "single-under-male-rotor":
+        raise RuntimeError("竖直直线轴承必须是公轮底下单枚、单根导杆")
     if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
         raise RuntimeError("直线轴承采购参考必须是 LM3UU 可识别模型")
     if contract.get("linearBearingFitCouponPart") \
@@ -345,6 +356,9 @@ def validate_contract(contract: dict[str, object]) -> None:
     if contract.get("selectorShoeChainSupportPart") \
             != "cabinet-clutch/center_selector_chain_support_contact":
         raise RuntimeError("磁力靴必须包含链条支撑接触见证零件")
+    if contract.get("selectorShoeLinearBearingCollisionPart") \
+            != "cabinet-clutch/center_selector_linear_bearing_collision":
+        raise RuntimeError("磁力靴必须包含单直线轴承路径干涉见证零件")
 
     def number(key: str) -> float:
         value = contract.get(key)
@@ -384,18 +398,23 @@ def validate_contract(contract: dict[str, object]) -> None:
         "linearBearingRetainerSkirtLengthMm": 1.00,
         "linearBearingSeatRadialClearanceMm": 0.10,
         "linearBearingRodNominalClearanceMm": 0.00,
-        "linearBearingFitCouponRodSpacingMm": 20.00,
+        "linearBearingFitCouponGuideCount": 1.00,
+        "linearBearingFitCouponGuideXOffsetMm": 0.00,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
         "bearingReferenceCenterOffsetMm": -0.60,
         "bearingCenterOffsetMm": 4.20,
+        "inputBearingCenterOffsetMm": 7.50,
         "bearingPairSpacingMm": 4.00,
         "bearingBlockThicknessMm": 3.20,
         "bearingBlockWidthMm": 14.00,
         "bearingBlockHeightMm": 14.00,
-        "guideRailXOffsetMm": 10.00,
-        "guideRailZOffsetMm": 9.00,
+        "guideRailXOffsetMm": 0.00,
+        "guideRailZOffsetMm": -14.00,
+        "guideRodXOffsetMm": 0.00,
+        "guideRodZOffsetMm": -14.00,
+        "linearBearingCenterYOffsetMm": -4.60,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
@@ -407,7 +426,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "stopPadXOffsetMm": 0.60,
         "stopLugXOffsetMm": 8.00,
         "stopLugWidthMm": 4.00,
-        "stopLugZOffsetMm": -7.60,
+        "stopLugZOffsetMm": -8.20,
         "stopLugHeightMm": 2.00,
         "stopLugRouteXOffsetMm": 16.90,
         "stopLugRouteWidthMm": 0.80,
@@ -421,13 +440,13 @@ def validate_contract(contract: dict[str, object]) -> None:
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
         "selectorShoeTangentOffsetMm": 6.00,
-        "selectorShoeNormalOffsetMm": -9.20,
-        "selectorShoeTargetYMm": 139.80,
+        "selectorShoeNormalOffsetMm": -8.00,
+        "selectorShoeTargetYMm": 141.00,
         "selectorShoeZMm": -82.2208,
         "selectorShoeAnchorXMm": 146.00,
-        "selectorShoeAnchorYMm": 139.80,
+        "selectorShoeAnchorYMm": 141.00,
         "selectorShoeAnchorZMm": -82.2208,
-        "selectorShoeMagnetFaceOffsetMm": 2.20,
+        "selectorShoeMagnetFaceOffsetMm": 1.00,
         "selectorShoeMagnetFaceYMm": 142.00,
         "selectorShoeTriggerClearanceMm": 0.40,
         "selectorShoeChainAttachYMm": 149.00,
@@ -440,14 +459,14 @@ def validate_contract(contract: dict[str, object]) -> None:
         "selectorShoeSupportChainYOverhangMm": 1.20,
         "selectorShoeSupportChainZT": 2.40,
         "selectorShoeSupportBridgeOverlapMm": 0.30,
-        "selectorShoeSupportDropMm": 9.20,
+        "selectorShoeSupportDropMm": 8.00,
         "selectorShoeSupportReachMm": 5.92084,
         "selectorShoeBodyWidthMm": 17.50,
         "selectorShoeBodyDepthMm": 5.60,
-        "selectorShoeBodyHeightMm": 4.40,
+        "selectorShoeBodyHeightMm": 2.00,
         "selectorShoePocketRimHeightMm": 0.35,
-        "inputShaftStartMm": -10.90,
-        "inputShaftLengthMm": 13.90,
+        "inputShaftStartMm": -13.70,
+        "inputShaftLengthMm": 16.70,
         "outputShaftStartMm": -3.40,
         "outputShaftLengthMm": 14.00,
         "inputGearBandThicknessMm": 3.20,
@@ -479,15 +498,11 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("合位导杆捕获端必须位于直线轴承压盖之后")
     if number("stopLugWidthMm") <= 0 or number("stopLugHeightMm") <= 0:
         raise RuntimeError("滑架独立硬止挡耳位尺寸无效")
-    if not (
-        number("stopLugXOffsetMm") - number("stopLugWidthMm") / 2
-        < number("bearingBlockWidthMm") / 2
-        < number("stopLugXOffsetMm") + number("stopLugWidthMm") / 2
-    ):
-        raise RuntimeError("滑架硬止挡耳位没有与中心承力块形成实体连接")
     if number("stopLugZOffsetMm") + number("stopLugHeightMm") / 2 \
-            <= -number("bearingBlockHeightMm") / 2:
-        raise RuntimeError("滑架硬止挡耳位没有与中心承力块形成 Z 向实体连接")
+            >= -number("bearingBlockHeightMm") / 2 - 0.10:
+        raise RuntimeError("滑架硬止挡耳位没有避开下方旋转轴承块")
+    if number("stopLugXOffsetMm") - number("stopLugWidthMm") / 2 <= 0:
+        raise RuntimeError("滑架硬止挡耳位没有位于中心支撑外侧")
     if number("stopLugRouteWidthMm") <= 0:
         raise RuntimeError("滑架硬止挡耳位外侧支撑宽度无效")
     route_inner_clearance = (
@@ -518,6 +533,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("轴承座深度不足以容纳 3x6x2 轴承和后肩")
     if number("bearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
         raise RuntimeError("轴承中心偏置不足以让双轴承块脱离转子端面")
+    if number("inputBearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
+        raise RuntimeError("输入转子轴承中心偏置不足以让拨叉通道脱离旋转轴承块")
     if number("bearingPairSpacingMm") < number("bearingBlockThicknessMm"):
         raise RuntimeError("同轴双轴承间距不足以分隔两枚轴承块")
     if abs(
@@ -567,10 +584,24 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("磁力靴链条支撑 Z 没有落在蛇链层")
     if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
         raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
-    if number("linearBearingCount") != 2:
-        raise RuntimeError("中心滑架必须配置两枚直线轴承")
-    if number("linearBearingFitCouponRodSpacingMm") != 20.0:
-        raise RuntimeError("直线轴承平行度测试片导杆中心距必须是 20 mm")
+    if number("linearBearingCount") != 1:
+        raise RuntimeError("中心滑架必须配置一枚公轮底下直线轴承")
+    if number("linearBearingFitCouponGuideCount") != 1:
+        raise RuntimeError("直线轴承配合测试片必须只配置一根导杆")
+    if abs(number("linearBearingFitCouponGuideXOffsetMm")) > 0.001:
+        raise RuntimeError("单导杆配合测试片导杆必须位于中心 X")
+    if abs(number("guideRodXOffsetMm") - number("guideRailXOffsetMm")) > 0.001 \
+            or abs(number("guideRodZOffsetMm") - number("guideRailZOffsetMm")) > 0.001:
+        raise RuntimeError("导杆位置字段与导轨兼容字段不一致")
+    if abs(number("guideRodXOffsetMm")) > 0.001 \
+            or number("guideRodZOffsetMm") >= -number("bearingBlockHeightMm") / 2:
+        raise RuntimeError("单导杆没有位于公轮下方并避开旋转轴承块")
+    expected_center_y_offset = (
+        number("openTabY0Mm") - number("inputBaseYMm")
+        + number("linearBearingHolderLengthMm") / 2
+    )
+    if abs(number("linearBearingCenterYOffsetMm") - expected_center_y_offset) > 0.001:
+        raise RuntimeError("单直线轴承 Y 中心没有由滑架承载窗口推导")
     if abs(number("linearBearingNominalIdMm")
            - number("guideRodDiameterMm")) > 0.001:
         raise RuntimeError("直线轴承名义内径必须匹配 Ø3 导杆")

@@ -14,7 +14,11 @@ include <ch1_03c_gt2_clutch_pair_params.scad>
 //#region 常量/配置
 CENTER_SELECTOR_SHOE_W = 17.50;
 CENTER_SELECTOR_SHOE_D = 5.60;
-CENTER_SELECTOR_SHOE_H = 4.40;
+// The trigger face stays at the frozen 0.40 mm gap below the male rotor, but
+// the shoe must pass above the input rotary-bearing blocks.  A 2.00 mm body
+// leaves 0.20 mm clearance over their top datum while retaining the frozen
+// 1.80 mm blind magnet pocket and its 0.20 mm printed floor.
+CENTER_SELECTOR_SHOE_H = 2.00;
 CENTER_SELECTOR_SHOE_POCKET_RIM_D = 2.80;
 CENTER_SELECTOR_SHOE_POCKET_RIM_H = 0.35;
 CENTER_SELECTOR_SHOE_MARK_H = 0.30;

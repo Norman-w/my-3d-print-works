@@ -11,15 +11,15 @@
 //                        bearings; the whole set travels +Y
 //   output               female rotor + its own short D shaft and two fixed
 //                        rotary bearings; it rotates in the output cage
-//   guides               two purchased 3 mm round guide rods with exactly one
-//                        purchased 3x7x10 linear bearing on each side (left +
-//                        right, not an upper/lower stack); the carriage carries
-//                        one printed bearing holder and one cap per side
+//   guides               one purchased 3 mm round guide rod below the male
+//                        rotor with exactly one purchased 3x7x10 linear
+//                        bearing; the carriage carries one printed bearing
+//                        holder and one removable cap
 //   limit                printed open and engaged hard stops; magnets never
 //                        define the final travel
 //   material             PETG functional first article; PLA is fit-only
 //   purchased            two independent 3 mm D shafts, four 3x6x2 rotary
-//                        bearings, two 3x7x10 linear bearings, four nominal
+//                        bearings, one 3x7x10 linear bearing, four nominal
 //                        2 mm magnets
 
 //#region 导入/依赖
@@ -46,19 +46,24 @@ CENTER_CLUTCH_BEARING_SEAT_DEPTH = CENTER_CLUTCH_BEARING_BLOCK_T
     - CENTER_CLUTCH_BEARING_BACK_SHOULDER_T;
 CENTER_CLUTCH_BEARING_CENTER_OFFSET = 4.20;
 CENTER_CLUTCH_BEARING_PAIR_SPACING = 4.00;
+// The input rotary pair is lowered so its moving support blocks clear the
+// selector shoe while the carriage rises.  The fixed output cage keeps the
+// shorter 4.20 mm offset so it remains inside the service plate envelope.
+CENTER_CLUTCH_INPUT_BEARING_CENTER_OFFSET = 7.50;
 
 CENTER_CLUTCH_GUIDE_ROD_D = 3.00;
 CENTER_CLUTCH_GUIDE_ROD_CAPTURE = 0.80;
 CENTER_CLUTCH_GUIDE_ROD_POCKET_D = CENTER_CLUTCH_GUIDE_ROD_D + 0.30;
 
-// The vertical carriage uses a purchased LM3UU-class linear bearing on each
-// captured rod.  The bearing is modeled as a separate reference part; only
-// the holder and its removable printed cap belong to the carriage's printed
-// output.  These are first-article FDM values and still require a fit coupon.
+// The vertical carriage uses one purchased LM3UU-class linear bearing on a
+// single captured rod below the male rotor.  The bearing is modeled as a
+// separate reference part; only the holder, support web and removable printed
+// cap belong to the carriage's printed output.  These are first-article FDM
+// values and still require a fit coupon.
 CENTER_CLUTCH_LINEAR_BEARING_ID = 3.00;
 CENTER_CLUTCH_LINEAR_BEARING_OD = 7.00;
 CENTER_CLUTCH_LINEAR_BEARING_L = 10.00;
-CENTER_CLUTCH_LINEAR_BEARING_COUNT = 2;
+CENTER_CLUTCH_LINEAR_BEARING_COUNT = 1;
 CENTER_CLUTCH_LINEAR_BEARING_SEAT_D =
     CENTER_CLUTCH_LINEAR_BEARING_OD + 0.20;
 CENTER_CLUTCH_LINEAR_BEARING_SEAT_RADIAL_CLEARANCE =
@@ -97,12 +102,11 @@ CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH =
         - CENTER_CLUTCH_LINEAR_BEARING_ID / 2 - 0.08;
 
 // A compact printed coupon is exported separately from the mechanism. The
-// first row samples the three FDM seat diameters; the dual-rod frame checks
-// parallelism with real rods and bearings; the bottom row provides free caps
-// for the actual holder neck. These are fit-tuning data, not new assembly
-// datums.
-CENTER_CLUTCH_FIT_COUPON_ROD_SPACING = 20.00;
-CENTER_CLUTCH_FIT_COUPON_FRAME_W = 28.00;
+// first row samples the three FDM seat diameters; the single-rod frame checks
+// the under-rotor guide and one real bearing; the bottom row provides free
+// caps for the actual holder neck. These are fit-tuning data, not new
+// assembly datums.
+CENTER_CLUTCH_FIT_COUPON_FRAME_W = 10.00;
 CENTER_CLUTCH_FIT_COUPON_FRAME_L = 34.00;
 CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_Z = -9.00;
 CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_T = 2.00;
@@ -117,13 +121,18 @@ CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS = [7.20, 7.30, 7.40];
 // Internal side-clearance datum for the stop-pad/upright layout. It is not a
 // bearing running clearance and is intentionally not exported as one.
 CENTER_CLUTCH_SIDE_CLEARANCE = 0.30;
-// Keep the rail aliases for the stop-pad envelope and existing scene helpers;
-// they describe the purchased rod cross-section, not a printed square rail.
+// The single guide is a purchased rod, not a printed square rail.  Its X/Z
+// offsets are the radial placement of the rod center from the mating axis.
+CENTER_CLUTCH_GUIDE_ROD_X_OFFSET = 0.00;
+CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET = -14.00;
+// Keep the rail aliases for the existing scene/validator API while making the
+// signed placement explicit: X=0 and Z=-14 place the guide under the male
+// rotor, outside the rotor tip and below the selector shoe.
 CENTER_CLUTCH_RAIL_W = CENTER_CLUTCH_GUIDE_ROD_D;
 CENTER_CLUTCH_RAIL_Z = CENTER_CLUTCH_GUIDE_ROD_D;
 CENTER_CLUTCH_RAIL_CLEAR = CENTER_CLUTCH_SIDE_CLEARANCE;
-CENTER_CLUTCH_RAIL_X_OFFSET = 10.00;
-CENTER_CLUTCH_RAIL_Z_OFFSET = 9.00;
+CENTER_CLUTCH_RAIL_X_OFFSET = CENTER_CLUTCH_GUIDE_ROD_X_OFFSET;
+CENTER_CLUTCH_RAIL_Z_OFFSET = CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET;
 CENTER_CLUTCH_SHOE_L = CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L;
 CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD;
 
@@ -150,13 +159,15 @@ CENTER_CLUTCH_STOP_PAD_T = 1.20;
 CENTER_CLUTCH_STOP_PAD_W = CENTER_CLUTCH_RAIL_W + 1.00;
 CENTER_CLUTCH_STOP_PAD_Z = CENTER_CLUTCH_RAIL_Z + 1.00;
 CENTER_CLUTCH_STOP_PAD_X_OFFSET = 0.60;
-// The lower lugs are the actual open/engaged travel interfaces. They overlap
-// the central bearing blocks by 0.40 mm in Z and 1.00 mm in X, while staying
-// outside the male rotor's radial envelope. The stationary copies are tied to
-// the mechanism plate by short rearward arms.
+// The lower lugs are the actual open/engaged travel interfaces. They sit below
+// the lowered input bearing blocks and are tied back to the central support web
+// by the moving carriage bridges. The stationary copies are tied to the
+// mechanism plate by short rearward arms.
 CENTER_CLUTCH_STOP_LUG_X_OFFSET = 8.00;
 CENTER_CLUTCH_STOP_LUG_X_T = 4.00;
-CENTER_CLUTCH_STOP_LUG_Z_OFFSET = -7.60;
+// The lugs sit below the lowered input rotary-bearing blocks; their carriage
+// bridges return inward to the central under-rotor support web.
+CENTER_CLUTCH_STOP_LUG_Z_OFFSET = -8.20;
 CENTER_CLUTCH_STOP_LUG_Z_T = 2.00;
 // The lower-lug support is routed outward below the rotor before it rises to
 // the rear service plate. Its vertical arm clears the Ø12.4 cap by 0.30 mm;
@@ -168,6 +179,25 @@ CENTER_CLUTCH_OPEN_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y0
     - CENTER_CLUTCH_STOP_PAD_T;
 CENTER_CLUTCH_ENGAGED_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y1
     + GT2_CLUTCH_ENGAGE_STROKE_MM;
+
+// The bearing center stays in the same Y envelope as the original carriage
+// shoe, but moves radially below the male rotor.  This keeps the guide rod
+// captured by the existing open/engaged end brackets while the selector shoe
+// can pass through its magnetic trigger plane without touching the holder.
+CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET =
+    CENTER_CLUTCH_CARRIAGE_SHOE_Y0
+        + CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2;
+CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_X_T = 5.00;
+CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Y0 = -9.80;
+CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Y1 = -2.60;
+CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z0 = 4.00;
+CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z1 = 7.50;
+
+// The single guide end bracket routes symmetrically to the removable service
+// plate.  Its vertical legs sit outside the Ø12.4 moving cap; the lower stop
+// lugs remain the actual carriage travel datums.
+CENTER_CLUTCH_GUIDE_STOP_ROUTE_X_OFFSET = 9.00;
+CENTER_CLUTCH_GUIDE_STOP_ROUTE_W = 1.50;
 
 // The plate sits immediately behind the partition, with a rearward arm to
 // the clutch axis. It is a separate service part; the thin back cover never
@@ -197,7 +227,7 @@ CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y =
     GT2_BELT_WIDTH
     + 2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR;
 
-CENTER_CLUTCH_SHAFT_INPUT_START = -10.90;
+CENTER_CLUTCH_SHAFT_INPUT_START = -13.70;
 CENTER_CLUTCH_SHAFT_INPUT_LENGTH =
     GT2_D_BORE_DEPTH - CENTER_CLUTCH_SHAFT_INPUT_START;
 CENTER_CLUTCH_SHAFT_OUTPUT_START = -3.40;
@@ -218,6 +248,9 @@ function center_clutch_axis_z() = center_gt2_z();
 
 function center_clutch_rail_z() = center_clutch_axis_z()
     + CENTER_CLUTCH_RAIL_Z_OFFSET;
+
+function center_clutch_linear_bearing_z() = center_clutch_axis_z()
+    + CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET;
 
 function center_clutch_rail_y0(row) = center_clutch_input_base_y(row)
     + CENTER_CLUTCH_CARRIAGE_SHOE_Y0;
@@ -253,7 +286,7 @@ function center_clutch_plate_h(row) = center_clutch_plate_y1(row)
 
 function center_clutch_input_bearing_y(row, index) =
     center_clutch_input_base_y(row)
-    - CENTER_CLUTCH_BEARING_CENTER_OFFSET
+    - CENTER_CLUTCH_INPUT_BEARING_CENTER_OFFSET
     - index * CENTER_CLUTCH_BEARING_PAIR_SPACING;
 
 function center_clutch_output_bearing_y(row, index) =
@@ -275,8 +308,7 @@ function center_clutch_carriage_shoe_y1(row) = center_clutch_input_base_y(row)
 
 function center_clutch_linear_bearing_center_y(row) =
     center_clutch_input_base_y(row)
-        + CENTER_CLUTCH_CARRIAGE_SHOE_Y0
-        + CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2;
+        + CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET;
 
 function center_clutch_linear_bearing_front_y(row) =
     center_clutch_linear_bearing_center_y(row)
@@ -495,19 +527,16 @@ module center_clutch_guide_rails(col, row) {
     rail_z = center_clutch_rail_z();
     y0 = center_clutch_rail_y0(row);
     y1 = center_clutch_guide_rod_y1(row);
-    // These are purchased round guide rods, shown as reference geometry. The
-    // two rods are captured in the bored stop pads at both ends; the printed
-    // carriage carries the two relieved sleeves around them.
-    for (sx = [-1, 1]) {
-        rail_x = x + sx * CENTER_CLUTCH_RAIL_X_OFFSET;
-        cylinder_y(
-            rail_x,
-            y0 - CENTER_CLUTCH_GUIDE_ROD_CAPTURE,
-            rail_z,
-            CENTER_CLUTCH_GUIDE_ROD_D,
-            y1 - y0 + CENTER_CLUTCH_GUIDE_ROD_CAPTURE
-        );
-    }
+    // One purchased round guide rod is captured in the two end brackets. It
+    // sits below the male rotor and passes through the single LM3UU carried by
+    // the moving carriage; the rod is the guide datum, never a printed rail.
+    cylinder_y(
+        x + CENTER_CLUTCH_GUIDE_ROD_X_OFFSET,
+        y0 - CENTER_CLUTCH_GUIDE_ROD_CAPTURE,
+        rail_z,
+        CENTER_CLUTCH_GUIDE_ROD_D,
+        y1 - y0 + CENTER_CLUTCH_GUIDE_ROD_CAPTURE
+    );
 }
 //#endregion
 
@@ -621,14 +650,13 @@ module center_clutch_linear_bearing_retainer_y(x, y1, z) {
     }
 }
 
-module center_clutch_linear_bearing_fit_coupon_parallel_frame() {
-    spacing = CENTER_CLUTCH_FIT_COUPON_ROD_SPACING;
+module center_clutch_linear_bearing_fit_coupon_single_frame() {
     frame_w = CENTER_CLUTCH_FIT_COUPON_FRAME_W;
     frame_l = CENTER_CLUTCH_FIT_COUPON_FRAME_L;
     end_block_l = CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Y;
-    // The fixed end blocks accept two real Ø3 rods. The long open span is
-    // deliberately empty so a carriage fitted with the purchased bearings
-    // can be pushed through the complete parallelism check by hand.
+    // The fixed end blocks accept one real Ø3 rod. The long open span is
+    // deliberately empty so a carriage fitted with one purchased LM3UU can
+    // be pushed through the complete vertical travel check by hand.
     translate([
         -frame_w / 2,
         0,
@@ -654,34 +682,32 @@ module center_clutch_linear_bearing_fit_coupon_parallel_frame() {
                     end_block_l,
                     CENTER_CLUTCH_FIT_COUPON_END_BLOCK_H
                 ]);
-            for (sx = [-1, 1])
-                cylinder_y(
-                    sx * spacing / 2,
-                    y0 - EPS,
-                    0,
-                    CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
-                    end_block_l + 2 * EPS
-                );
+            cylinder_y(
+                0,
+                y0 - EPS,
+                0,
+                CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
+                end_block_l + 2 * EPS
+            );
         }
 
     // This is the moving test carriage. It is intentionally a separate
-    // island in the STL: after printing, install two actual LM3UU bearings,
-    // pass the two rods through them and slide this bridge between the end
-    // blocks. The bridge is above the bearing OD so it cannot mask a bind.
-    for (sx = [-1, 1])
-        center_clutch_linear_bearing_holder_y(
-            sx * spacing / 2,
-            CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y,
-            0
-        );
+    // island in the STL: after printing, install one actual LM3UU, pass the
+    // rod through it and slide the bridge between the end blocks. The bridge
+    // is above the bearing OD so it cannot mask a bind.
+    center_clutch_linear_bearing_holder_y(
+        0,
+        CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y,
+        0
+    );
     translate([
-        -spacing / 2,
+        -CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD / 2,
         CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y
             - CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2,
         CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD / 2 - 0.70
     ])
         cube([
-            spacing,
+            CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD,
             CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L,
             2.00
         ]);
@@ -709,7 +735,50 @@ module center_clutch_linear_bearing_fit_coupon() {
             CENTER_CLUTCH_FIT_COUPON_CAP_SAMPLE_Z
         );
 
-    center_clutch_linear_bearing_fit_coupon_parallel_frame();
+    center_clutch_linear_bearing_fit_coupon_single_frame();
+}
+
+module center_clutch_linear_bearing_support_web_y(x, base_y, bearing_z) {
+    // The web joins the lower side of the input rotary bearing blocks to the
+    // under-rotor holder. It starts above the Ø7.20 seat bore, so it cannot
+    // intrude into the purchased LM3UU envelope, and it ends below the male
+    // rotor's Y start. This is the printed load path for the single guide.
+    translate([
+        x - CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_X_T / 2,
+        base_y + CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Y0,
+        bearing_z + CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z0
+    ])
+        cube([
+            CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_X_T,
+            CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Y1
+                - CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Y0,
+            CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z1
+                - CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z0
+        ]);
+}
+
+module center_clutch_carriage_stop_bridge(x, base_y, z, sx) {
+    // Route each lower hard-stop lug from the central under-rotor web at a Z
+    // level below the rotary block. This keeps the stop part of the moving
+    // carriage without crossing the lower rotary bearing block.
+    bridge_inner_x = x + sx * (
+        CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_X_T / 2 - 0.25
+    );
+    lug_inner_x = x + sx * (
+        CENTER_CLUTCH_STOP_LUG_X_OFFSET
+        - CENTER_CLUTCH_STOP_LUG_X_T / 2
+    );
+    bridge_z0 = z + CENTER_CLUTCH_STOP_LUG_Z_OFFSET - 0.60;
+    translate([
+        min(bridge_inner_x, lug_inner_x),
+        base_y + CENTER_CLUTCH_CARRIAGE_SHOE_Y0,
+        bridge_z0
+    ])
+        cube([
+            abs(lug_inner_x - bridge_inner_x) + 0.25,
+            CENTER_CLUTCH_CARRIAGE_SHOE_L,
+            1.20
+        ]);
 }
 
 module center_clutch_input_carriage(col, row, engaged = false) {
@@ -717,7 +786,7 @@ module center_clutch_input_carriage(col, row, engaged = false) {
     z = center_clutch_axis_z();
     base_y = center_clutch_input_base_y(row);
     shift = CENTER_CLUTCH_TRAVEL_MM;
-    rail_z = center_clutch_rail_z();
+    bearing_z = center_clutch_linear_bearing_z();
     translate([0, shift, 0]) {
         for (index = [0:1])
             center_clutch_bearing_block_y(
@@ -726,10 +795,19 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                 z
             );
 
-        // Side uprights connect the bearing blocks to exactly two linear-bearing
-        // holders: sx=-1 is left and sx=+1 is right in world X.  The two
-        // rotary bearing blocks above are a separate axial support pair; they
-        // must not be read as a second pair of vertical guide bearings.
+        // The two upper blocks are the input rotor's axial rotary support. The
+        // one lower holder is the only vertical linear-bearing seat.
+        center_clutch_linear_bearing_holder_y(
+            x + CENTER_CLUTCH_GUIDE_ROD_X_OFFSET,
+            base_y + CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET,
+            bearing_z
+        );
+        center_clutch_linear_bearing_support_web_y(x, base_y, bearing_z);
+        for (sx = [-1, 1])
+            center_clutch_carriage_stop_bridge(x, base_y, z, sx);
+
+        // Side uprights keep the input rotary blocks tied together. They are
+        // not vertical guide bearings and remain outside the rotor envelope.
         for (sx = [-1, 1]) {
             translate([
                 x + sx * CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
@@ -742,17 +820,9 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                     CENTER_CLUTCH_CARRIAGE_UPRIGHT_L,
                     CENTER_CLUTCH_CARRIAGE_UPRIGHT_H
                 ]);
-            center_clutch_linear_bearing_holder_y(
-                x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
-                base_y
-                    + CENTER_CLUTCH_CARRIAGE_SHOE_Y0
-                    + CENTER_CLUTCH_CARRIAGE_SHOE_L / 2,
-                rail_z
-            );
-
             // Dedicated lower stop lug. It follows the carriage but is
-            // deliberately far below the guide-bearing envelope, so the
-            // LM3UU cap never becomes the travel stop.
+            // deliberately separate from the single LM3UU cap, so the cap
+            // never becomes the travel stop.
             translate([
                 x + sx * CENTER_CLUTCH_STOP_LUG_X_OFFSET
                     - CENTER_CLUTCH_STOP_LUG_X_T / 2,
@@ -771,63 +841,68 @@ module center_clutch_input_carriage(col, row, engaged = false) {
 
 module center_clutch_linear_bearing_retainers(col, row, engaged = false) {
     x = center_clutch_axis_x(col);
-    z = center_clutch_axis_z();
+    z = center_clutch_linear_bearing_z();
     shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#8aa1ad")
-        // One removable cap on each side guide rod.  These are left/right
-        // retainers, not two retainers stacked above and below one rod.
-        for (sx = [-1, 1])
-            center_clutch_linear_bearing_retainer_y(
-                x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
-                center_clutch_linear_bearing_front_y(row) + shift,
-                center_clutch_rail_z()
-            );
+        // One removable cap on the single under-rotor guide rod.
+        center_clutch_linear_bearing_retainer_y(
+            x + CENTER_CLUTCH_GUIDE_ROD_X_OFFSET,
+            center_clutch_linear_bearing_front_y(row) + shift,
+            z
+        );
 }
 
 module center_clutch_stop_bar(col, row, y) {
     x = center_clutch_axis_x(col);
-    rail_x_offset = CENTER_CLUTCH_RAIL_X_OFFSET;
     rail_z = center_clutch_rail_z();
     plate_rear_z = CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T;
-    // Two short end caps sit just outward of the rod axes. Their 4.0 mm square
-    // section is wider than the 3.0 mm rod plus clearance, while the outward
-    // offset leaves the carriage uprights and central bearing blocks outside
-    // the stop solid. A blind rod pocket at each inner face captures the
-    // purchased rod axially; the rod, not a printed square face, carries the
-    // sliding load.
+    rail_x = x + CENTER_CLUTCH_GUIDE_ROD_X_OFFSET;
+    stop_is_before_rail = y < center_clutch_rail_y0(row);
+    // One square end bracket captures the single rod axially. The separate
+    // lower carriage lugs, not this rod bracket, define the 3 mm travel.
+    difference() {
+        translate([
+            rail_x - CENTER_CLUTCH_STOP_PAD_W / 2,
+            y,
+            rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
+        ])
+            cube([
+                CENTER_CLUTCH_STOP_PAD_W,
+                CENTER_CLUTCH_STOP_PAD_T,
+                CENTER_CLUTCH_STOP_PAD_Z
+            ]);
+        rod_pocket_y0 = stop_is_before_rail
+            ? y + CENTER_CLUTCH_STOP_PAD_T - CENTER_CLUTCH_GUIDE_ROD_CAPTURE
+            : y;
+        translate([rail_x, rod_pocket_y0 - EPS, rail_z])
+            rotate([-90, 0, 0])
+                cylinder(
+                    d = CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
+                    h = CENTER_CLUTCH_GUIDE_ROD_CAPTURE + 2 * EPS,
+                    $fn = 48
+                );
+    }
+    // Route both sides outward before rising to the removable plate. Keeping
+    // the vertical legs beyond the Ø12.4 cap leaves the moving carriage free.
     for (sx = [-1, 1]) {
-        rail_x = x + sx * rail_x_offset;
-        stop_x = x + sx * (rail_x_offset + CENTER_CLUTCH_STOP_PAD_X_OFFSET);
-        stop_is_before_rail = y < center_clutch_rail_y0(row);
-        difference() {
-            translate([
-                stop_x - CENTER_CLUTCH_STOP_PAD_W / 2,
-                y,
-                rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
-            ])
-                cube([
-                    CENTER_CLUTCH_STOP_PAD_W,
-                    CENTER_CLUTCH_STOP_PAD_T,
-                    CENTER_CLUTCH_STOP_PAD_Z
-                ]);
-            rod_pocket_y0 = stop_is_before_rail
-                ? y + CENTER_CLUTCH_STOP_PAD_T
-                    - CENTER_CLUTCH_GUIDE_ROD_CAPTURE
-                : y;
-            translate([rail_x, rod_pocket_y0 - EPS, rail_z])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        d = CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
-                        h = CENTER_CLUTCH_GUIDE_ROD_CAPTURE + 2 * EPS,
-                        $fn = 48
-                    );
-        }
+        route_x = x + sx * CENTER_CLUTCH_GUIDE_STOP_ROUTE_X_OFFSET;
+        bridge_start = rail_x + sx * CENTER_CLUTCH_STOP_PAD_W / 2;
+        translate([
+            min(bridge_start, route_x),
+            y,
+            rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
+        ])
+            cube([
+                abs(route_x - bridge_start),
+                CENTER_CLUTCH_STOP_PAD_T,
+                CENTER_CLUTCH_STOP_PAD_Z
+            ]);
         center_clutch_z_arm(
-            stop_x + sx * CENTER_CLUTCH_STOP_PAD_W / 2,
+            route_x,
             y + CENTER_CLUTCH_STOP_PAD_T / 2,
             rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2,
             plate_rear_z,
-            2.00,
+            CENTER_CLUTCH_GUIDE_STOP_ROUTE_W,
             CENTER_CLUTCH_STOP_PAD_T
         );
     }
@@ -1056,15 +1131,14 @@ module center_clutch_linear_bearing_reference_y(x, y, z) {
 
 module center_clutch_linear_bearings(col, row, engaged = false) {
     x = center_clutch_axis_x(col);
-    z = center_clutch_rail_z();
+    z = center_clutch_linear_bearing_z();
     shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#b7c0c8")
-        for (sx = [-1, 1])
-            center_clutch_linear_bearing_reference_y(
-                x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
-                center_clutch_linear_bearing_center_y(row) + shift,
-                z
-            );
+        center_clutch_linear_bearing_reference_y(
+            x + CENTER_CLUTCH_GUIDE_ROD_X_OFFSET,
+            center_clutch_linear_bearing_center_y(row) + shift,
+            z
+        );
 }
 
 module center_clutch_purchased_references(col, row, engaged = false) {
@@ -1110,8 +1184,8 @@ assert(CENTER_CLUTCH_SHAFT_INPUT_START
         + CENTER_CLUTCH_SHAFT_INPUT_LENGTH
         <= GT2_D_BORE_DEPTH + 0.001,
     "input D shaft must stop at the blind gear socket before the solid dog");
-assert(CENTER_CLUTCH_LINEAR_BEARING_COUNT == 2,
-    "center carriage needs one purchased linear bearing on each guide rod");
+assert(CENTER_CLUTCH_LINEAR_BEARING_COUNT == 1,
+    "center carriage needs exactly one purchased linear bearing below the male rotor");
 assert(abs(CENTER_CLUTCH_LINEAR_BEARING_ID
         - CENTER_CLUTCH_GUIDE_ROD_D) < 0.001,
     "linear bearing bore must match the nominal 3 mm guide rod");
@@ -1168,13 +1242,14 @@ assert(CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH > 0
             < CENTER_CLUTCH_LINEAR_BEARING_OD / 2,
     "LM3UU display cutaway and ball rows must stay inside the purchased envelope");
 assert(len(CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS) == 3
-        && CENTER_CLUTCH_FIT_COUPON_ROD_SPACING > 0,
-    "linear bearing fit coupon must provide three seat variants and a positive rod spacing");
+        && CENTER_CLUTCH_FIT_COUPON_FRAME_W
+            > CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
+    "linear bearing fit coupon must provide three seat variants and a single rod frame");
 assert(CENTER_CLUTCH_FIT_COUPON_FRAME_L > 2
         * CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Y
         && CENTER_CLUTCH_FIT_COUPON_FRAME_W
-            > CENTER_CLUTCH_FIT_COUPON_ROD_SPACING,
-    "linear bearing fit coupon must leave a usable open rod span");
+            > CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
+    "linear bearing fit coupon must leave a usable open single-rod span");
 assert(CENTER_CLUTCH_SIDE_CLEARANCE >= 0.30,
     "carriage side datum needs at least 0.30 mm stop-pad clearance");
 assert(CENTER_CLUTCH_GUIDE_ROD_CAPTURE > 0
@@ -1183,16 +1258,23 @@ assert(CENTER_CLUTCH_GUIDE_ROD_CAPTURE > 0
 assert(CENTER_CLUTCH_TRAVEL_MM >= -0.001
         && CENTER_CLUTCH_TRAVEL_MM <= GT2_CLUTCH_ENGAGE_STROKE_MM + 0.001,
     "center clutch travel override must stay within the open/engaged datums");
-assert(CENTER_CLUTCH_RAIL_X_OFFSET > CENTER_CLUTCH_BEARING_BLOCK_X / 2,
-    "guide rails must stand outside the rotor bearing block");
-assert(CENTER_CLUTCH_RAIL_Z_OFFSET > CENTER_CLUTCH_BEARING_BLOCK_Z / 2,
-    "guide rails must stand outside the rotor envelope");
+assert(abs(CENTER_CLUTCH_GUIDE_ROD_X_OFFSET) < 0.001,
+    "single under-rotor guide rod must be centered on the clutch axis");
+assert(CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET
+        < -CENTER_CLUTCH_BEARING_BLOCK_Z / 2,
+    "single under-rotor guide rod must sit below the input rotary blocks");
 assert(sqrt(
-        pow(CENTER_CLUTCH_RAIL_X_OFFSET, 2)
-        + pow(CENTER_CLUTCH_RAIL_Z_OFFSET, 2)
+        pow(CENTER_CLUTCH_GUIDE_ROD_X_OFFSET, 2)
+        + pow(CENTER_CLUTCH_GUIDE_ROD_Z_OFFSET, 2)
     ) - CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD / 2 - gt2_male_tip_r()
         >= 0.45,
     "linear bearing holder must clear the input rotor radial envelope");
+assert(CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z0
+        > CENTER_CLUTCH_LINEAR_BEARING_SEAT_D / 2,
+    "single linear-bearing support web must stay above the seat bore");
+assert(CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z1
+        > CENTER_CLUTCH_LINEAR_BEARING_SUPPORT_WEB_Z0,
+    "single linear-bearing support web must have positive height");
 assert(CENTER_CLUTCH_PLATE_Z < WORLD_PARTITION_BACK_Z,
     "mechanism plate must remain in the rear cavity behind the partition");
 assert(CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T
@@ -1235,19 +1317,11 @@ assert(center_clutch_rail_length(CENTER_GT2_ROW)
 assert(CENTER_CLUTCH_STOP_PAD_W > CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
     "stop pad must overhang the guide rod pocket");
 assert(
-    CENTER_CLUTCH_RAIL_X_OFFSET + CENTER_CLUTCH_STOP_PAD_X_OFFSET
-        - CENTER_CLUTCH_STOP_PAD_W / 2
-        >= CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
-            + CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T / 2
+    CENTER_CLUTCH_GUIDE_STOP_ROUTE_X_OFFSET
+        - CENTER_CLUTCH_GUIDE_STOP_ROUTE_W / 2
+        > CENTER_CLUTCH_LINEAR_BEARING_RETAINER_OD / 2
             + CENTER_CLUTCH_RAIL_CLEAR,
-    "stop pad must clear the carriage upright outer edge"
-);
-assert(
-    CENTER_CLUTCH_RAIL_X_OFFSET + CENTER_CLUTCH_STOP_PAD_X_OFFSET
-        + CENTER_CLUTCH_STOP_PAD_W / 2
-        <= CENTER_CLUTCH_RAIL_X_OFFSET
-            + CENTER_CLUTCH_SHOE_OUTER / 2 + 0.001,
-    "stop pad must remain within the linear-bearing holder outer envelope"
+    "single guide stop support must clear the moving bearing cap"
 );
 assert(center_clutch_output_bearing_y(CENTER_GT2_ROW, 1)
         + CENTER_CLUTCH_BEARING_BLOCK_T / 2

@@ -183,25 +183,25 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_input_carriage": {
-        "name": "中心 R3C3 · 输入滑架（直线轴承套×2；左右导杆各1）",
+        "name": "中心 R3C3 · 输入滑架（单直线轴承套；公轮下置导向）",
         "color": "#748c99",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/center_linear_bearings_reference": {
-        "name": "中心 R3C3 · 直线轴承×2 · Ø3×Ø7×10（左右各1；采购件）",
+        "name": "中心 R3C3 · 直线轴承×1 · Ø3×Ø7×10（公轮底下；采购件）",
         "color": "#b7c0c8",
         "visible": True,
         "role": "purchased",
     },
     "cabinet-clutch/center_linear_bearing_retainers": {
-        "name": "中心 R3C3 · 直线轴承套压盖×2（左右各1；非上下重复）",
+        "name": "中心 R3C3 · 直线轴承套压盖×1（单个；打印防脱件）",
         "color": "#8aa1ad",
         "visible": True,
         "role": "printed",
     },
     "cabinet-clutch/center_linear_bearing_fit_coupon": {
-        "name": "中心 R3C3 · 直线轴承座/压盖/双导杆配合测试片（默认隐藏）",
+        "name": "中心 R3C3 · 直线轴承座/压盖/单导杆配合测试片（默认隐藏）",
         "color": "#d6a85f",
         "visible": False,
         "role": "diagnostic",
@@ -213,7 +213,7 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_guide_rails": {
-        "name": "中心 R3C3 · 左右各1根 Ø3 金属导杆（采购件参考）",
+        "name": "中心 R3C3 · 单根 Ø3 金属导杆（公轮底下；采购件参考）",
         "color": "#657f8c",
         "visible": True,
         "role": "purchased",
@@ -366,12 +366,12 @@ name_map = {
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
-    "center_input_carriage": "中心 R3C3 输入滑架 · 直线轴承套×2（左右各1）· 随 +Y 行程",
-    "center_linear_bearings_reference": "中心 R3C3 直线轴承×2 · Ø3×Ø7×10（左右各1；采购件）",
-    "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖×2（左右各1；打印防脱件）",
-    "center_linear_bearing_fit_coupon": "中心 R3C3 直线轴承配合测试片 · Ø7.20/7.30/7.40 + 双导杆平行度",
+    "center_input_carriage": "中心 R3C3 输入滑架 · 单直线轴承套（公轮底下）· 随 +Y 行程",
+    "center_linear_bearings_reference": "中心 R3C3 直线轴承×1 · Ø3×Ø7×10（公轮底下；采购件）",
+    "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖×1（单个；打印防脱件）",
+    "center_linear_bearing_fit_coupon": "中心 R3C3 直线轴承配合测试片 · Ø7.20/7.30/7.40 + 单导杆行程",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
-    "center_guide_rails": "中心 R3C3 左右各1根 Ø3 金属导杆 · 采购件参考",
+    "center_guide_rails": "中心 R3C3 单根 Ø3 金属导杆 · 公轮底下 · 采购件参考",
     "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
     "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
@@ -518,8 +518,8 @@ for group_id in ordered_group_ids:
     elif group_id == "02·离合机构":
         vertical_guide = call_node(
             "center_clutch/vertical-guide",
-            "公轮竖直导向 · 左右各1枚 3×7×10（不是上下各两枚）",
-            "两根独立 Ø3 金属导杆；每根导杆上各装一枚采购直线轴承，打印轴承套和压盖也各为左右一件；直线轴承承担竖直滑动与抗偏摆，不把打印套当滑动面",
+            "公轮竖直导向 · 公轮底下单枚 3×7×10（单根导杆）",
+            "一根独立 Ø3 金属导杆；公轮底下安装一枚采购直线轴承，打印轴承套与压盖各一件；直线轴承承担竖直滑动，独立实体止挡限定 3 mm 行程，不把打印套当滑动面",
             children=[
                 part_node("cabinet-clutch/center_input_carriage"),
                 part_node("cabinet-clutch/center_linear_bearings_reference"),
@@ -542,7 +542,7 @@ for group_id in ordered_group_ids:
         fit_coupon = call_node(
             "center_clutch/fit-coupon",
             "首件配合测试片（默认隐藏）",
-            "打印后实装两枚 LM3UU、两根 Ø3 金属导杆；左至右座孔为 Ø7.20/7.30/7.40，双导杆中心距 20 mm",
+            "打印后实装一枚 LM3UU、一根 Ø3 金属导杆；座孔为 Ø7.20/7.30/7.40，检查单导杆全行程",
             children=[
                 part_node("cabinet-clutch/center_linear_bearing_fit_coupon"),
             ],
@@ -571,7 +571,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + 滑架 + 2×3×7×10直线轴承 + 轴承套/压盖 + 双轴承笼 + 双Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
+                "输入公轮 + 输出母轮 + 滑架 + 1×3×7×10直线轴承 + 单轴承套/压盖 + 双轴承笼 + 单Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
                 children=active_center,
             ),
             call_node(
