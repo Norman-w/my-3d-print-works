@@ -137,10 +137,9 @@ CENTER_CLUTCH_CARRIAGE_UPRIGHT_H = 3.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0 = -10.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_L = 8.40;
 
-// The moving carriage is stopped by the two bearing-holder ends themselves. A
-// former full-width crossbar passed through both rails and the bearing blocks;
-// that was a real solid interference, not a harmless contact datum. The
-// printed holder is a seat for a purchased linear bearing, not the sliding
+// The moving carriage is stopped by two dedicated lower hard-stop lugs. The
+// bearing-holder ends remain free to pass the guide-rod capture hardware; they
+// are a seat for a purchased linear bearing, not a travel datum or a sliding
 // surface. The bearing ID and the rod remain a nominal coaxial purchased-part
 // interface and are not faked as a printed bearing surface.
 CENTER_CLUTCH_CARRIAGE_SHOE_Y0 = -10.40;
@@ -151,6 +150,20 @@ CENTER_CLUTCH_STOP_PAD_T = 1.20;
 CENTER_CLUTCH_STOP_PAD_W = CENTER_CLUTCH_RAIL_W + 1.00;
 CENTER_CLUTCH_STOP_PAD_Z = CENTER_CLUTCH_RAIL_Z + 1.00;
 CENTER_CLUTCH_STOP_PAD_X_OFFSET = 0.60;
+// The lower lugs are the actual open/engaged travel interfaces. They overlap
+// the central bearing blocks by 0.40 mm in Z and 1.00 mm in X, while staying
+// outside the male rotor's radial envelope. The stationary copies are tied to
+// the mechanism plate by short rearward arms.
+CENTER_CLUTCH_STOP_LUG_X_OFFSET = 8.00;
+CENTER_CLUTCH_STOP_LUG_X_T = 4.00;
+CENTER_CLUTCH_STOP_LUG_Z_OFFSET = -7.60;
+CENTER_CLUTCH_STOP_LUG_Z_T = 2.00;
+// The lower-lug support is routed outward below the rotor before it rises to
+// the rear service plate. Its vertical arm clears the Ø12.4 cap by 0.30 mm;
+// the horizontal bridge stays at the lug's low Z and therefore never crosses
+// the cap's radial envelope.
+CENTER_CLUTCH_STOP_LUG_ROUTE_X_OFFSET = 16.90;
+CENTER_CLUTCH_STOP_LUG_ROUTE_W = 0.80;
 CENTER_CLUTCH_OPEN_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y0
     - CENTER_CLUTCH_STOP_PAD_T;
 CENTER_CLUTCH_ENGAGED_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y1
@@ -217,6 +230,13 @@ function center_clutch_rail_y0(row) = center_clutch_input_base_y(row)
 function center_clutch_rail_y1(row) = center_clutch_input_base_y(row)
     + CENTER_CLUTCH_CARRIAGE_SHOE_Y1
     + GT2_CLUTCH_ENGAGE_STROKE_MM;
+
+// The engaged rod-capture bracket starts after the moving cap. This keeps the
+// 0.80 mm rod capture behind the 0.80 mm retainer flange instead of making the
+// same Y slice serve both as a removable cap envelope and as a hard stop.
+function center_clutch_guide_rod_y1(row) = center_clutch_rail_y1(row)
+    + CENTER_CLUTCH_LINEAR_BEARING_RETAINER_T
+    + CENTER_CLUTCH_GUIDE_ROD_CAPTURE;
 
 function center_clutch_rail_length(row) = center_clutch_rail_y1(row)
     - center_clutch_rail_y0(row);
@@ -474,7 +494,7 @@ module center_clutch_guide_rails(col, row) {
     x = center_clutch_axis_x(col);
     rail_z = center_clutch_rail_z();
     y0 = center_clutch_rail_y0(row);
-    y1 = center_clutch_rail_y1(row);
+    y1 = center_clutch_guide_rod_y1(row);
     // These are purchased round guide rods, shown as reference geometry. The
     // two rods are captured in the bored stop pads at both ends; the printed
     // carriage carries the two relieved sleeves around them.
@@ -485,7 +505,7 @@ module center_clutch_guide_rails(col, row) {
             y0 - CENTER_CLUTCH_GUIDE_ROD_CAPTURE,
             rail_z,
             CENTER_CLUTCH_GUIDE_ROD_D,
-            y1 - y0 + 2 * CENTER_CLUTCH_GUIDE_ROD_CAPTURE
+            y1 - y0 + CENTER_CLUTCH_GUIDE_ROD_CAPTURE
         );
     }
 }
@@ -574,19 +594,28 @@ module center_clutch_linear_bearing_retainer_y(x, y1, z) {
             );
         }
         union() {
+            // Both the bearing-side lip and the front flange must remain a
+            // through-ring around the guide rod.  The previous cut stopped
+            // inside the flange, leaving a blind plug at its front end; that
+            // could trap the rod and was especially easy to miss in the
+            // translucent assembly view.
             cylinder_y(
                 x,
                 y1 - CENTER_CLUTCH_LINEAR_BEARING_HOLDER_BACK_SHOULDER_T - EPS,
                 z,
                 CENTER_CLUTCH_LINEAR_BEARING_RETAINER_ID,
-                CENTER_CLUTCH_LINEAR_BEARING_HOLDER_BACK_SHOULDER_T + 3 * EPS
+                CENTER_CLUTCH_LINEAR_BEARING_HOLDER_BACK_SHOULDER_T
+                    + CENTER_CLUTCH_LINEAR_BEARING_RETAINER_T
+                    + 2 * EPS
             );
             cylinder_y(
                 x,
-                y1 - CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L,
+                y1 - CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L - EPS,
                 z,
                 CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_ID,
-                CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L + 3 * EPS
+                CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L
+                    + CENTER_CLUTCH_LINEAR_BEARING_RETAINER_T
+                    + 2 * EPS
             );
         }
     }
@@ -720,6 +749,22 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                     + CENTER_CLUTCH_CARRIAGE_SHOE_L / 2,
                 rail_z
             );
+
+            // Dedicated lower stop lug. It follows the carriage but is
+            // deliberately far below the guide-bearing envelope, so the
+            // LM3UU cap never becomes the travel stop.
+            translate([
+                x + sx * CENTER_CLUTCH_STOP_LUG_X_OFFSET
+                    - CENTER_CLUTCH_STOP_LUG_X_T / 2,
+                base_y + CENTER_CLUTCH_CARRIAGE_SHOE_Y0,
+                z + CENTER_CLUTCH_STOP_LUG_Z_OFFSET
+                    - CENTER_CLUTCH_STOP_LUG_Z_T / 2
+            ])
+                cube([
+                    CENTER_CLUTCH_STOP_LUG_X_T,
+                    CENTER_CLUTCH_CARRIAGE_SHOE_L,
+                    CENTER_CLUTCH_STOP_LUG_Z_T
+                ]);
         }
     }
 }
@@ -788,9 +833,69 @@ module center_clutch_stop_bar(col, row, y) {
     }
 }
 
+module center_clutch_stop_lugs(col, row, y) {
+    x = center_clutch_axis_x(col);
+    z = center_clutch_axis_z();
+    plate_rear_z = CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T;
+    // These are separate from the rod-capture bars. Each lug is a positive
+    // stop face for the moving carriage; its rear arm ties into the removable
+    // service-plate datum without entering the rotor or cap envelope.
+    for (sx = [-1, 1]) {
+        lug_x = x + sx * CENTER_CLUTCH_STOP_LUG_X_OFFSET;
+        lug_z = z + CENTER_CLUTCH_STOP_LUG_Z_OFFSET;
+        translate([
+            lug_x - CENTER_CLUTCH_STOP_LUG_X_T / 2,
+            y,
+            lug_z - CENTER_CLUTCH_STOP_LUG_Z_T / 2
+        ])
+            cube([
+                CENTER_CLUTCH_STOP_LUG_X_T,
+                CENTER_CLUTCH_STOP_PAD_T,
+                CENTER_CLUTCH_STOP_LUG_Z_T
+            ]);
+        route_x = x + sx * CENTER_CLUTCH_STOP_LUG_ROUTE_X_OFFSET;
+        bridge_start = lug_x + sx * (
+            CENTER_CLUTCH_STOP_LUG_X_T / 2 - 0.25
+        );
+        // Route the support outward at the lug's low Z, then rise outside the
+        // cap envelope. The bridge overlaps the lug and the vertical arm so
+        // the stop is one connected printable island rather than coplanar
+        // solids or a vertical arm through the moving bearing cap.
+        translate([
+            min(bridge_start, route_x),
+            y,
+            lug_z - CENTER_CLUTCH_STOP_LUG_Z_T / 2
+        ])
+            cube([
+                abs(route_x - bridge_start),
+                CENTER_CLUTCH_STOP_PAD_T,
+                CENTER_CLUTCH_STOP_LUG_Z_T
+            ]);
+        center_clutch_z_arm(
+            route_x,
+            y + CENTER_CLUTCH_STOP_PAD_T / 2,
+            lug_z - CENTER_CLUTCH_STOP_LUG_Z_T / 2,
+            plate_rear_z,
+            CENTER_CLUTCH_STOP_LUG_ROUTE_W,
+            CENTER_CLUTCH_STOP_PAD_T
+        );
+    }
+}
+
 module center_clutch_stops(col, row) {
-    center_clutch_stop_bar(col, row, center_clutch_open_stop_y(row));
-    center_clutch_stop_bar(col, row, center_clutch_engaged_stop_y(row));
+    open_stop_y = center_clutch_open_stop_y(row);
+    engaged_stop_y = center_clutch_engaged_stop_y(row);
+    center_clutch_stop_bar(col, row, open_stop_y);
+    center_clutch_stop_lugs(col, row, open_stop_y);
+    // The engaged rod-capture bar starts after the moving cap's flange. The
+    // lower lug still uses the frozen engaged stop datum, so the carriage's
+    // lower stop face—not the bearing cap—sets the 3.00 mm stroke.
+    center_clutch_stop_bar(
+        col,
+        row,
+        engaged_stop_y + CENTER_CLUTCH_LINEAR_BEARING_RETAINER_T
+    );
+    center_clutch_stop_lugs(col, row, engaged_stop_y);
 }
 //#endregion
 

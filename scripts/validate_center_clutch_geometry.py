@@ -307,6 +307,12 @@ def validate_contract(contract: Contract) -> None:
         "guideRailZOffsetMm": 9.00,
         "stopPadWidthMm": 4.00,
         "stopPadXOffsetMm": 0.60,
+        "stopLugXOffsetMm": 8.00,
+        "stopLugWidthMm": 4.00,
+        "stopLugZOffsetMm": -7.60,
+        "stopLugHeightMm": 2.00,
+        "stopLugRouteXOffsetMm": 16.90,
+        "stopLugRouteWidthMm": 0.80,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
@@ -406,6 +412,38 @@ def validate_contract(contract: Contract) -> None:
         0.001,
     ):
         fail("磁铁非接触余量不是由槽底余量推导")
+    if not close(
+        number(contract, "guideRodY1Mm"),
+        number(contract, "engagedStopY0Mm")
+        + number(contract, "linearBearingRetainerThicknessMm")
+        + number(contract, "guideRodCaptureMm"),
+        0.001,
+    ):
+        fail("合位导杆捕获端必须位于直线轴承压盖之后")
+    if number(contract, "stopLugWidthMm") <= 0 or number(
+        contract, "stopLugHeightMm"
+    ) <= 0:
+        fail("滑架独立硬止挡耳位尺寸无效")
+    lug_x_min = number(contract, "stopLugXOffsetMm") \
+        - number(contract, "stopLugWidthMm") / 2
+    lug_x_max = number(contract, "stopLugXOffsetMm") \
+        + number(contract, "stopLugWidthMm") / 2
+    if not (
+        lug_x_min < number(contract, "bearingBlockWidthMm") / 2 < lug_x_max
+    ):
+        fail("滑架硬止挡耳位没有与中心承力块形成实体连接")
+    if number(contract, "stopLugZOffsetMm") \
+            + number(contract, "stopLugHeightMm") / 2 \
+            <= -number(contract, "bearingBlockHeightMm") / 2:
+        fail("滑架硬止挡耳位没有与中心承力块形成 Z 向实体连接")
+    route_inner_clearance = (
+        number(contract, "stopLugRouteXOffsetMm")
+        - number(contract, "stopLugRouteWidthMm") / 2
+        - number(contract, "guideRailXOffsetMm")
+        - number(contract, "linearBearingRetainerOuterDiameterMm") / 2
+    )
+    if route_inner_clearance < 0.30 - 0.001:
+        fail("滑架硬止挡耳位外侧支撑没有避开直线轴承压盖")
     if not close(
         number(contract, "maleBottomYMm"), number(contract, "inputBaseYMm"), 0.001
     ):
@@ -861,6 +899,10 @@ def validate_intermediate_sweep(
         (
             "center_stops_carriage_collision",
             "止挡在中间行程与滑架仍有实体穿插",
+        ),
+        (
+            "center_stops_retainer_collision",
+            "止挡在中间行程与直线轴承压盖仍有实体穿插",
         ),
     )
     for fraction in intermediate_fractions:
@@ -1392,6 +1434,18 @@ def main() -> int:
                 True,
                 "center_stops_carriage_collision_engaged.stl",
                 "合位止挡与滑架仍有实体穿插",
+            ),
+            (
+                "center_stops_retainer_collision",
+                False,
+                "center_stops_retainer_collision_open.stl",
+                "开位止挡与直线轴承压盖仍有实体穿插",
+            ),
+            (
+                "center_stops_retainer_collision",
+                True,
+                "center_stops_retainer_collision_engaged.stl",
+                "合位止挡与直线轴承压盖仍有实体穿插",
             ),
             (
                 "center_guide_stop_collision",

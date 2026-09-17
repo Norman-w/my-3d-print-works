@@ -2288,6 +2288,21 @@ module selected_center_stops_carriage_collision_part() {
     }
 }
 
+// The retainer caps travel with the input carriage, but they extend past the
+// carriage stop shoe.  Keep this witness separate from the carriage witness:
+// a cap/stop collision is a real hard bind even when the carrier body itself
+// only touches the designed stop face.
+module selected_center_stops_retainer_collision_part() {
+    intersection() {
+        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_clutch_linear_bearing_retainers(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            ENGAGED
+        );
+    }
+}
+
 module selected_center_guide_stop_collision_part() {
     intersection() {
         center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
@@ -2635,6 +2650,8 @@ module clutch_scene_geometry() {
         selected_center_input_rotor_carriage_collision_part();
     } else if (CLUTCH_PART == "center_stops_carriage_collision") {
         selected_center_stops_carriage_collision_part();
+    } else if (CLUTCH_PART == "center_stops_retainer_collision") {
+        selected_center_stops_retainer_collision_part();
     } else if (CLUTCH_PART == "center_guide_stop_collision") {
         selected_center_guide_stop_collision_part();
     } else if (CLUTCH_PART == "center_selector_shoe") {
@@ -2746,8 +2763,7 @@ echo(
     str("guideRodCaptureMm=", CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
     str("guideRodY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)
         - CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
-    str("guideRodY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)
-        + CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
+    str("guideRodY1Mm=", center_clutch_guide_rod_y1(CENTER_GT2_ROW)),
     str("linearBearingNominalIdMm=", CENTER_CLUTCH_LINEAR_BEARING_ID),
     str("linearBearingNominalOdMm=", CENTER_CLUTCH_LINEAR_BEARING_OD),
     str("linearBearingNominalLengthMm=", CENTER_CLUTCH_LINEAR_BEARING_L),
@@ -2808,6 +2824,12 @@ echo(
     str("guideRailZOffsetMm=", CENTER_CLUTCH_RAIL_Z_OFFSET),
     str("stopPadWidthMm=", CENTER_CLUTCH_STOP_PAD_W),
     str("stopPadXOffsetMm=", CENTER_CLUTCH_STOP_PAD_X_OFFSET),
+    str("stopLugXOffsetMm=", CENTER_CLUTCH_STOP_LUG_X_OFFSET),
+    str("stopLugWidthMm=", CENTER_CLUTCH_STOP_LUG_X_T),
+    str("stopLugZOffsetMm=", CENTER_CLUTCH_STOP_LUG_Z_OFFSET),
+    str("stopLugHeightMm=", CENTER_CLUTCH_STOP_LUG_Z_T),
+    str("stopLugRouteXOffsetMm=", CENTER_CLUTCH_STOP_LUG_ROUTE_X_OFFSET),
+    str("stopLugRouteWidthMm=", CENTER_CLUTCH_STOP_LUG_ROUTE_W),
     str("carriageUprightCenterXOffsetMm=",
         CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET),
     str("carriageUprightWidthMm=", CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T),
@@ -2993,6 +3015,7 @@ assert(
     || CLUTCH_PART == "center_carriage_rail_collision"
     || CLUTCH_PART == "center_input_rotor_carriage_collision"
     || CLUTCH_PART == "center_stops_carriage_collision"
+    || CLUTCH_PART == "center_stops_retainer_collision"
     || CLUTCH_PART == "center_guide_stop_collision"
     || CLUTCH_PART == "center_input_shaft"
     || CLUTCH_PART == "center_output_shaft"

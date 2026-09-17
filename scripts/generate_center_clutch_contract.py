@@ -73,6 +73,12 @@ REQUIRED = {
     "linearBearingArrangement",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
+    "stopLugXOffsetMm",
+    "stopLugWidthMm",
+    "stopLugZOffsetMm",
+    "stopLugHeightMm",
+    "stopLugRouteXOffsetMm",
+    "stopLugRouteWidthMm",
     "carriageUprightCenterXOffsetMm",
     "carriageUprightWidthMm",
     "carriageUprightZ0Mm",
@@ -201,6 +207,12 @@ FLOAT_KEYS = {
     "linearBearingFitCouponRodSpacingMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
+    "stopLugXOffsetMm",
+    "stopLugWidthMm",
+    "stopLugZOffsetMm",
+    "stopLugHeightMm",
+    "stopLugRouteXOffsetMm",
+    "stopLugRouteWidthMm",
     "carriageUprightCenterXOffsetMm",
     "carriageUprightWidthMm",
     "carriageUprightZ0Mm",
@@ -393,6 +405,12 @@ def validate_contract(contract: dict[str, object]) -> None:
         "dogPocketPhaseDeg": 60.00,
         "stopPadWidthMm": 4.00,
         "stopPadXOffsetMm": 0.60,
+        "stopLugXOffsetMm": 8.00,
+        "stopLugWidthMm": 4.00,
+        "stopLugZOffsetMm": -7.60,
+        "stopLugHeightMm": 2.00,
+        "stopLugRouteXOffsetMm": 16.90,
+        "stopLugRouteWidthMm": 0.80,
         "plateWidthMm": 34.00,
         "plateKeyWidthMm": 4.00,
         "plateKeyHeightMm": 6.00,
@@ -452,6 +470,34 @@ def validate_contract(contract: dict[str, object]) -> None:
             - number("femaleMagnetProjectionMm")
             - number("magnetNonContactClearanceMm")) > 0.001:
         raise RuntimeError("中心磁铁非接触余量推导失败")
+    if abs(
+        number("guideRodY1Mm")
+        - number("engagedStopY0Mm")
+        - number("linearBearingRetainerThicknessMm")
+        - number("guideRodCaptureMm")
+    ) > 0.001:
+        raise RuntimeError("合位导杆捕获端必须位于直线轴承压盖之后")
+    if number("stopLugWidthMm") <= 0 or number("stopLugHeightMm") <= 0:
+        raise RuntimeError("滑架独立硬止挡耳位尺寸无效")
+    if not (
+        number("stopLugXOffsetMm") - number("stopLugWidthMm") / 2
+        < number("bearingBlockWidthMm") / 2
+        < number("stopLugXOffsetMm") + number("stopLugWidthMm") / 2
+    ):
+        raise RuntimeError("滑架硬止挡耳位没有与中心承力块形成实体连接")
+    if number("stopLugZOffsetMm") + number("stopLugHeightMm") / 2 \
+            <= -number("bearingBlockHeightMm") / 2:
+        raise RuntimeError("滑架硬止挡耳位没有与中心承力块形成 Z 向实体连接")
+    if number("stopLugRouteWidthMm") <= 0:
+        raise RuntimeError("滑架硬止挡耳位外侧支撑宽度无效")
+    route_inner_clearance = (
+        number("stopLugRouteXOffsetMm")
+        - number("stopLugRouteWidthMm") / 2
+        - number("guideRailXOffsetMm")
+        - number("linearBearingRetainerOuterDiameterMm") / 2
+    )
+    if route_inner_clearance < 0.30 - 0.001:
+        raise RuntimeError("滑架硬止挡耳位外侧支撑没有避开直线轴承压盖")
     if abs(number("maleBottomYMm") - number("inputBaseYMm")) > 0.001:
         raise RuntimeError("公轮底部基准没有和输入公轮基准统一")
     if abs(
