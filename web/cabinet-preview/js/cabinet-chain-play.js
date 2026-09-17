@@ -123,9 +123,12 @@ const SCHEME1_PHASE = {
 const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
 const SCHEME1_ENGAGE_SECONDS = 0.28;
 const SCHEME1_RELEASE_SECONDS = 0.24;
-const CENTER_DEMO_ENGAGE_SECONDS = 1.20;
+const CENTER_DEMO_APPROACH_SECONDS = 0.80;
+const CENTER_DEMO_ENGAGE_SECONDS = 1.10;
 const CENTER_DEMO_HOLD_SECONDS = 0.80;
 const CENTER_DEMO_RELEASE_SECONDS = 1.20;
+const CENTER_DEMO_SHOE_RELEASE_OFFSET_MM = -6.00;
+const CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM = 6.00;
 const CURRENT_CLUTCH_ROW = 2;
 const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
@@ -445,6 +448,8 @@ function validateCenterClutchContract(contract) {
     "linearBearingRodNominalClearanceMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
+    "rotaryBearingArrangement",
+    "linearBearingArrangement",
     "actuation",
     "engageOnlyWhenStopped",
     "releaseBeforeReturn",
@@ -463,10 +468,14 @@ function validateCenterClutchContract(contract) {
     "selectorShoeMagnetAxis",
     "selectorShoeChainAttachYMm",
     "selectorShoeChainAttachZMm",
+    "selectorShoeChainAttachXMm",
+    "selectorShoeChainContactDiameterMm",
     "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportArmXOffsetMm",
     "selectorShoeSupportXWidthMm",
     "selectorShoeSupportDropMm",
     "selectorShoeSupportReachMm",
+    "selectorShoeChainSupportPart",
   ];
   if (!contract || typeof contract !== "object") {
     throw new Error("缺少 centerClutch 机械契约");
@@ -486,6 +495,12 @@ function validateCenterClutchContract(contract) {
     || contract.engageOnlyWhenStopped !== true
     || contract.releaseBeforeReturn !== true) {
     throw new Error("centerClutch 纯永磁动作门槛不满足");
+  }
+  if (contract.rotaryBearingArrangement !== "two-per-rotor-axially-spaced"
+      || contract.linearBearingArrangement !== "left-right-one-per-guide-rod"
+      || contract.selectorShoeChainSupportPart
+        !== "cabinet-clutch/center_selector_chain_support_contact") {
+    throw new Error("centerClutch 轴承数量布局或链条支撑契约不匹配");
   }
   for (const key of [
     "openGapMm",
@@ -528,7 +543,10 @@ function validateCenterClutchContract(contract) {
     "selectorShoeMagnetFaceYMm",
     "selectorShoeTriggerClearanceMm",
     "selectorShoeChainAttachYMm",
+    "selectorShoeChainAttachXMm",
+    "selectorShoeChainContactDiameterMm",
     "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportArmXOffsetMm",
     "selectorShoeSupportXWidthMm",
     "selectorShoeSupportDropMm",
     "selectorShoeSupportReachMm",
@@ -566,6 +584,13 @@ function validateCenterClutchContract(contract) {
       - Number(contract.femaleMagnetProjectionMm)
       - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
     throw new Error("centerClutch magnet clearance derivation is invalid");
+  }
+  if (Math.abs(Number(contract.selectorShoeChainAttachXMm)
+      - Number(contract.axisXMm)
+      - Number(contract.selectorShoeSupportXOffsetMm)) > 0.001
+      || Math.abs(Number(contract.selectorShoeChainAttachYMm) - 149) > 0.001
+      || Math.abs(Number(contract.selectorShoeChainAttachZMm) + 75) > 0.001) {
+    throw new Error("centerClutch 磁力靴链条支撑没有对齐蛇链层");
   }
   if (Number(contract.linearBearingCount) !== 2
       || Math.abs(Number(contract.linearBearingNominalIdMm)
@@ -1577,9 +1602,10 @@ async function bindScheme1SelectorMesh(item) {
 
 function poseNativeSelectorShoe(part, deltaMm) {
   if (!play.path || !part) return;
+  const tangentOffset = part.demoTangentOffset ?? part.tangentOffset;
   const sample = samplePath(
     play.path,
-    part.s + deltaMm + part.tangentOffset,
+    part.s + deltaMm + tangentOffset,
   );
   // The solver path is authored in X/Z. Native cabinet parts use X/Y, so the
   // selector shoe follows the same line after the explicit world conversion;
@@ -1593,6 +1619,13 @@ function poseNativeSelectorShoe(part, deltaMm) {
   );
   const yaw = Math.atan2(tangent[1], tangent[0]);
   part.group.rotation.z = yaw - part.restYaw;
+}
+
+function poseCenterDemoShoe(tangentOffsetMm = null) {
+  const part = play.scheme1.selectorPart;
+  if (!part?.native) return;
+  part.demoTangentOffset = tangentOffsetMm;
+  poseNativeSelectorShoe(part, play.scheme1.selectorS - part.s);
 }
 
 function poseSelectorPart(part, deltaMm) {
@@ -1640,6 +1673,7 @@ function bindNativeSelectorShoeMesh(item) {
     normalOffset: Number(play.currentClutch.contract.selectorShoeNormalOffsetMm),
     z: anchor.z,
     restYaw: 0,
+    demoTangentOffset: null,
     native: true,
   };
   // Native cabinet-clutch geometry is already in X/Y/Z. It must stay outside
@@ -1861,7 +1895,8 @@ function setCenterDemoPhase(phase) {
   if (demo.phase === phase) return;
   demo.phase = phase;
   const labels = {
-    engage: "中心离合演示 · 开位 → 永磁接合",
+    approach: "中心离合演示 · M_release → M_engage 磁力靴到位",
+    engage: "中心离合演示 · 开位 → 公轮上移永磁接合",
     hold: "中心离合演示 · 已接合保持",
     release: "中心离合演示 · 永磁释放 → 开位",
   };
@@ -1872,17 +1907,33 @@ function tickCenterClutchDemo(dt) {
   const demo = play.centerDemo;
   if (!demo.active) return;
   demo.elapsed += Math.max(0, dt);
-  const engageEnd = CENTER_DEMO_ENGAGE_SECONDS;
+  const approachEnd = CENTER_DEMO_APPROACH_SECONDS;
+  const engageEnd = approachEnd + CENTER_DEMO_ENGAGE_SECONDS;
   const holdEnd = engageEnd + CENTER_DEMO_HOLD_SECONDS;
   const releaseEnd = holdEnd + CENTER_DEMO_RELEASE_SECONDS;
+  if (demo.elapsed < approachEnd) {
+    setCenterDemoPhase("approach");
+    demo.engagement = 0;
+    const t = smoothStep(demo.elapsed / CENTER_DEMO_APPROACH_SECONDS);
+    poseCenterDemoShoe(
+      CENTER_DEMO_SHOE_RELEASE_OFFSET_MM
+        + (CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM
+          - CENTER_DEMO_SHOE_RELEASE_OFFSET_MM) * t,
+    );
+    return;
+  }
   if (demo.elapsed < engageEnd) {
     setCenterDemoPhase("engage");
-    demo.engagement = smoothStep(demo.elapsed / engageEnd);
+    demo.engagement = smoothStep(
+      (demo.elapsed - approachEnd) / CENTER_DEMO_ENGAGE_SECONDS,
+    );
+    poseCenterDemoShoe(CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM);
     return;
   }
   if (demo.elapsed < holdEnd) {
     setCenterDemoPhase("hold");
     demo.engagement = 1;
+    poseCenterDemoShoe(CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM);
     return;
   }
   if (demo.elapsed < releaseEnd) {
@@ -1890,12 +1941,21 @@ function tickCenterClutchDemo(dt) {
     demo.engagement = 1 - smoothStep(
       (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
     );
+    const t = smoothStep(
+      (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
+    );
+    poseCenterDemoShoe(
+      CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM
+        + (CENTER_DEMO_SHOE_RELEASE_OFFSET_MM
+          - CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM) * t,
+    );
     return;
   }
   demo.active = false;
   demo.engagement = 0;
   demo.elapsed = 0;
   demo.phase = "idle";
+  poseCenterDemoShoe(CENTER_DEMO_SHOE_RELEASE_OFFSET_MM);
   scheme1Status("中心离合演示完成 · 已回到开位");
 }
 
@@ -2135,6 +2195,7 @@ export function focusCenterClutch() {
   play.centerDemo.engagement = 0;
   play.centerDemo.phase = "idle";
   play.playing = false;
+  poseCenterDemoShoe(null);
   const snapped = snapScheme1ToCenter();
   if (snapped) {
     scheme1Status(`首件视角 · 磁力靴已对准 ${scheme1StationLabel(play.scheme1.targetIndex)} · 开位`);
@@ -2153,12 +2214,13 @@ export function playCenterClutchDemo() {
     scheme1Status("中心离合演示不可用：缺少 R3C3 站点");
     return false;
   }
+  poseCenterDemoShoe(CENTER_DEMO_SHOE_RELEASE_OFFSET_MM);
   play.playing = false;
   play.centerDemo.active = true;
   play.centerDemo.elapsed = 0;
   play.centerDemo.engagement = 0;
   play.centerDemo.phase = "idle";
-  setCenterDemoPhase("engage");
+  setCenterDemoPhase("approach");
   updateHzLabel();
   return true;
 }

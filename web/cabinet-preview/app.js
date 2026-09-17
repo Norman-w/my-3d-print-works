@@ -138,6 +138,16 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/14_front_timing_pulley_candidate",
   "cabinet-clutch/15_front_pinion_candidate",
   "cabinet-clutch/16_drawer_linear_rack_candidate",
+  // Keep the authored snake-chain path visible as a low-opacity spatial
+  // reference.  The native shoe support arm terminates at this chain datum;
+  // without these parts the center view can look vertically misregistered even
+  // when the X/Y/Z contract is correct.
+  "cabinet-chain/cabinet_chain_plates",
+  "cabinet-chain/cabinet_chain_rollers",
+  "cabinet-chain/cabinet_chain_pins",
+  "cabinet-chain/cabinet_chain_connector",
+  "cabinet-chain/cabinet_chain_clutch_connector",
+  "cabinet-chain/cabinet_chain_clutch_bearing",
 ]);
 const LEGACY_MOTOR_TENSIONER_ID = "cabinet-chain/cabinet_chain_motor_tensioner";
 const UPPER_TENSIONER_TAILS = new Set([
@@ -1334,7 +1344,11 @@ function bindPreviewControls() {
       void applyViewPreset(button.dataset.view);
     });
   }
-  els.centerClutchDemo?.addEventListener("click", () => {
+  els.centerClutchDemo?.addEventListener("click", async () => {
+    // A demo request is also a request for the center first-article view. If
+    // the user is currently looking at the full snake structure, starting the
+    // hidden center animation only changes a status label and appears broken.
+    await applyViewPreset("center-clutch");
     playCenterClutchDemo();
   });
   els.treeCollapse?.addEventListener("click", () => {

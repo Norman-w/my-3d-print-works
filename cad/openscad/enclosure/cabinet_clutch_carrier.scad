@@ -7,13 +7,14 @@
 //
 // Mechanical contract:
 //   axis                 world +Y
-//   input                male rotor + its own short D shaft and two bearings;
-//                        the whole set travels +Y
+//   input                male rotor + its own short D shaft and two rotary
+//                        bearings; the whole set travels +Y
 //   output               female rotor + its own short D shaft and two fixed
-//                        bearings; it rotates in the output cage
-//   guides               two purchased 3 mm round guide rods with one
-//                        purchased 3x7x10 linear bearing per side; the
-//                        carriage carries a printed bearing holder and cap
+//                        rotary bearings; it rotates in the output cage
+//   guides               two purchased 3 mm round guide rods with exactly one
+//                        purchased 3x7x10 linear bearing on each side (left +
+//                        right, not an upper/lower stack); the carriage carries
+//                        one printed bearing holder and one cap per side
 //   limit                printed open and engaged hard stops; magnets never
 //                        define the final travel
 //   material             PETG functional first article; PLA is fit-only
@@ -568,8 +569,10 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                 z
             );
 
-        // Side uprights connect the bearing blocks to the two linear-bearing
-        // holders without crossing the input rotor's gear/dog envelope.
+        // Side uprights connect the bearing blocks to exactly two linear-bearing
+        // holders: sx=-1 is left and sx=+1 is right in world X.  The two
+        // rotary bearing blocks above are a separate axial support pair; they
+        // must not be read as a second pair of vertical guide bearings.
         for (sx = [-1, 1]) {
             translate([
                 x + sx * CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
@@ -598,6 +601,8 @@ module center_clutch_linear_bearing_retainers(col, row, engaged = false) {
     z = center_clutch_axis_z();
     shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#8aa1ad")
+        // One removable cap on each side guide rod.  These are left/right
+        // retainers, not two retainers stacked above and below one rod.
         for (sx = [-1, 1])
             center_clutch_linear_bearing_retainer_y(
                 x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
@@ -712,6 +717,9 @@ module center_clutch_input_bearings(col, row, engaged = false) {
     z = center_clutch_axis_z();
     shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#cfd4da")
+        // Two purchased rotary bearings on the input rotor, axially spaced
+        // along Y.  Both move with the input carriage; this is not the
+        // left/right linear-guidance pair.
         for (index = [0:1])
             translate([0, shift, 0])
                 center_clutch_bearing_reference_y(
@@ -726,6 +734,8 @@ module center_clutch_output_bearings(col, row) {
     x = center_clutch_axis_x(col);
     z = center_clutch_axis_z();
     color("#cfd4da")
+        // Two purchased rotary bearings on the fixed output rotor, axially
+        // spaced along Y.  The output pair remains in the fixed cage.
         for (index = [0:1])
             center_clutch_bearing_reference_y(
                 x,

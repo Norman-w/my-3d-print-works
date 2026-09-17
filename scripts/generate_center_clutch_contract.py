@@ -66,6 +66,8 @@ REQUIRED = {
     "linearBearingRodNominalClearanceMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
+    "rotaryBearingArrangement",
+    "linearBearingArrangement",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "carriageUprightCenterXOffsetMm",
@@ -100,13 +102,17 @@ REQUIRED = {
     "selectorShoeMagnetAxis",
     "selectorShoeChainAttachYMm",
     "selectorShoeChainAttachZMm",
+    "selectorShoeChainAttachXMm",
+    "selectorShoeChainContactDiameterMm",
     "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportArmXOffsetMm",
     "selectorShoeSupportXWidthMm",
     "selectorShoeSupportChainYOverhangMm",
     "selectorShoeSupportChainZT",
     "selectorShoeSupportBridgeOverlapMm",
     "selectorShoeSupportDropMm",
     "selectorShoeSupportReachMm",
+    "selectorShoeChainSupportPart",
     "selectorShoeBodyWidthMm",
     "selectorShoeBodyDepthMm",
     "selectorShoeBodyHeightMm",
@@ -222,7 +228,10 @@ FLOAT_KEYS = {
     "selectorShoeTriggerClearanceMm",
     "selectorShoeChainAttachYMm",
     "selectorShoeChainAttachZMm",
+    "selectorShoeChainAttachXMm",
+    "selectorShoeChainContactDiameterMm",
     "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportArmXOffsetMm",
     "selectorShoeSupportXWidthMm",
     "selectorShoeSupportChainYOverhangMm",
     "selectorShoeSupportChainZT",
@@ -308,6 +317,13 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心离合必须停稳后接合")
     if contract.get("releaseBeforeReturn") is not True:
         raise RuntimeError("中心离合必须释放后返回")
+    if contract.get("rotaryBearingArrangement") != "two-per-rotor-axially-spaced":
+        raise RuntimeError("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
+    if contract.get("linearBearingArrangement") != "left-right-one-per-guide-rod":
+        raise RuntimeError("竖直直线轴承必须是左右各一枚、每根导杆一枚")
+    if contract.get("selectorShoeChainSupportPart") \
+            != "cabinet-clutch/center_selector_chain_support_contact":
+        raise RuntimeError("磁力靴必须包含链条支撑接触见证零件")
 
     def number(key: str) -> float:
         value = contract.get(key)
@@ -388,7 +404,10 @@ def validate_contract(contract: dict[str, object]) -> None:
         "selectorShoeTriggerClearanceMm": 0.40,
         "selectorShoeChainAttachYMm": 149.00,
         "selectorShoeChainAttachZMm": -75.00,
-        "selectorShoeSupportXOffsetMm": 13.00,
+        "selectorShoeChainAttachXMm": 152.40,
+        "selectorShoeChainContactDiameterMm": 2.40,
+        "selectorShoeSupportXOffsetMm": 12.40,
+        "selectorShoeSupportArmXOffsetMm": 0.80,
         "selectorShoeSupportXWidthMm": 2.40,
         "selectorShoeSupportChainYOverhangMm": 1.20,
         "selectorShoeSupportChainZT": 2.40,
@@ -476,6 +495,20 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("磁力靴 Z 锚点没有和离合轴统一")
     if number("selectorShoeSupportXWidthMm") <= 0:
         raise RuntimeError("磁力靴链条支撑臂宽度无效")
+    if number("selectorShoeSupportArmXOffsetMm") < 0:
+        raise RuntimeError("磁力靴支撑臂导轨避让偏置不能为负")
+    if abs(
+        number("selectorShoeChainAttachXMm")
+        - number("axisXMm")
+        - number("selectorShoeSupportXOffsetMm")
+    ) > 0.001:
+        raise RuntimeError("磁力靴链条支撑 X 没有由轴心和支撑偏置推导")
+    if number("selectorShoeChainContactDiameterMm") <= 0:
+        raise RuntimeError("磁力靴链条支撑接触见证直径无效")
+    if abs(number("selectorShoeChainAttachYMm") - 149.0) > 0.001:
+        raise RuntimeError("磁力靴链条支撑 Y 没有落在蛇链层")
+    if abs(number("selectorShoeChainAttachZMm") + 75.0) > 0.001:
+        raise RuntimeError("磁力靴链条支撑 Z 没有落在蛇链层")
     if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
         raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
     if number("linearBearingCount") != 2:

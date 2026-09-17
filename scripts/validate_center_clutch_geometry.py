@@ -332,7 +332,10 @@ def validate_contract(contract: Contract) -> None:
         "selectorShoeTriggerClearanceMm": 0.40,
         "selectorShoeChainAttachYMm": 149.00,
         "selectorShoeChainAttachZMm": -75.00,
-        "selectorShoeSupportXOffsetMm": 13.00,
+        "selectorShoeChainAttachXMm": 152.40,
+        "selectorShoeChainContactDiameterMm": 2.40,
+        "selectorShoeSupportXOffsetMm": 12.40,
+        "selectorShoeSupportArmXOffsetMm": 0.80,
         "selectorShoeSupportXWidthMm": 2.40,
         "selectorShoeSupportChainYOverhangMm": 1.20,
         "selectorShoeSupportChainZT": 2.40,
@@ -364,6 +367,15 @@ def validate_contract(contract: Contract) -> None:
         fail("磁力靴必须使用原生世界坐标")
     if contract.get("selectorShoeMagnetAxis") != "+Y":
         fail("磁力靴磁面必须朝世界 +Y")
+    if contract.get("rotaryBearingArrangement") \
+            != "two-per-rotor-axially-spaced":
+        fail("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
+    if contract.get("linearBearingArrangement") \
+            != "left-right-one-per-guide-rod":
+        fail("竖直直线轴承必须是左右各一枚、每根导杆一枚")
+    if contract.get("selectorShoeChainSupportPart") \
+            != "cabinet-clutch/center_selector_chain_support_contact":
+        fail("磁力靴必须包含链条支撑接触见证零件")
     for key, value in expected.items():
         actual = number(contract, key)
         if not close(actual, value, 0.001):
@@ -586,8 +598,23 @@ def validate_contract(contract: Contract) -> None:
         0.001,
     ):
         fail("磁力靴原生锚点没有和目标基准统一")
+    if not close(
+        number(contract, "selectorShoeChainAttachXMm"),
+        number(contract, "axisXMm")
+        + number(contract, "selectorShoeSupportXOffsetMm"),
+        0.001,
+    ):
+        fail("磁力靴链条支撑 X 没有由轴心和支撑偏置推导")
+    if number(contract, "selectorShoeChainContactDiameterMm") <= 0:
+        fail("磁力靴链条支撑接触见证直径无效")
+    if not close(number(contract, "selectorShoeChainAttachYMm"), 149.0, 0.001):
+        fail("磁力靴链条支撑 Y 没有落在蛇链层")
+    if not close(number(contract, "selectorShoeChainAttachZMm"), -75.0, 0.001):
+        fail("磁力靴链条支撑 Z 没有落在蛇链层")
     if number(contract, "selectorShoeSupportXWidthMm") <= 0:
         fail("磁力靴链条支撑臂宽度无效")
+    if number(contract, "selectorShoeSupportArmXOffsetMm") < 0:
+        fail("磁力靴支撑臂导轨避让偏置不能为负")
     if number(contract, "selectorShoeSupportDropMm") <= 0 or number(
         contract, "selectorShoeSupportReachMm"
     ) <= 0:
@@ -1163,9 +1190,9 @@ def validate_interference(
         number(contract, "selectorShoeTriggerClearanceMm"),
         "磁力靴 M_engage 到公轮底部触发间隙",
     )
-    support_min_x = shoe_anchor_x + number(
-        contract, "selectorShoeSupportXOffsetMm"
-    ) - number(contract, "selectorShoeSupportXWidthMm") / 2
+    support_min_x = number(contract, "selectorShoeChainAttachXMm") \
+        + number(contract, "selectorShoeSupportArmXOffsetMm") \
+        - number(contract, "selectorShoeSupportXWidthMm") / 2
     expect_at_least(
         support_min_x - output["max"][0],
         CLEARANCE_FLOOR_MM,
@@ -1343,6 +1370,20 @@ def main() -> int:
                 engaged,
             ):
                 fail(message)
+
+        # Unlike the collision witnesses above, the chain-support witness must
+        # contain a positive solid: the printed shoe arm has to reach the
+        # authored R3C3 chain pin datum instead of merely passing nearby.
+        contact_witness = temp_dir / "center_selector_chain_support_contact.stl"
+        if not run_intersection_export(
+            openscad,
+            scad,
+            contact_witness,
+            inspect_path,
+            "center_selector_chain_support_contact",
+            False,
+        ):
+            fail("磁力靴链条支撑接触见证没有正体积")
 
         open_reports = {
             part: reports[(part, False)] for part in MOVING_PARTS

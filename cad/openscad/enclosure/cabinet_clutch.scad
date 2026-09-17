@@ -649,15 +649,28 @@ CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM =
     CENTER_SELECTOR_SHOE_TARGET_Y_MM
         - world_row_center_y(CENTER_GT2_ROW);
 CENTER_SELECTOR_SHOE_Z_MM = center_gt2_z();
-CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM = 13.00;
+// The support arm terminates on the real R3C3 straight-chain pin datum.  The
+// center axis is X=140.00; the nearest authored pin/roller center at the
+// support side is X≈152.29, so use a 12.40 mm nominal arm center and let the
+// 2.40 mm contact witness cover the small pin-rounding difference.  This is a
+// chain interface datum, not a free visual offset.
+CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM = 12.40;
 CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM = 2.40;
 CENTER_SELECTOR_SHOE_SUPPORT_Y_T = 2.00;
 CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM = 1.20;
 CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T = 2.40;
 CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM = 0.30;
+CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM = 2.40;
 CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM =
     world_row_center_y(CENTER_GT2_ROW);
 CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM = SNAKE_CHAIN_CENTER_Z;
+CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM = clutch_col_x(CENTER_GT2_COL)
+    + CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM;
+// Keep the vertical drop of the printed chain support just outside the right
+// guide rod.  Its lower foot still overlaps the Ø2.40 mm chain-pin witness at
+// the authored attach datum; this offset is the clearance dog-leg, not a new
+// chain coordinate.
+CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM = 0.80;
 
 function center_gt2_male_base_y(row) =
     clutch_upper_open_y(row)
@@ -2166,8 +2179,8 @@ module selected_center_selector_rail_collision_part() {
 // reaching to the existing snake-chain plane at -Z; this is the mechanical
 // bridge that the old free-floating browser mesh did not contain.
 module center_clutch_selector_support_arm() {
-    x = clutch_col_x(CENTER_GT2_COL)
-        + CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM;
+    x = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM
+        + CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM;
     shoe_front_z = CENTER_SELECTOR_SHOE_Z_MM
         + CENTER_SELECTOR_SHOE_D / 2;
     bridge_z0 = shoe_front_z
@@ -2206,6 +2219,26 @@ module center_clutch_selector_support_arm() {
                     CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T
                 ]);
         }
+}
+
+// Positive CSG witness for the chain-supported selector shoe.  This is not a
+// collision test: the sphere is a small inspection volume centered on the
+// authored chain pin datum and must intersect the printed support arm with a
+// positive volume.  It is exported only by the geometry validator.
+module center_selector_chain_contact_reference() {
+    translate([
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM,
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM,
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
+    ])
+        sphere(d = CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM, $fn = 48);
+}
+
+module selected_center_selector_chain_support_contact_part() {
+    intersection() {
+        selected_center_selector_shoe_part();
+        center_selector_chain_contact_reference();
+    }
 }
 
 // Empty CSG witness used by the center first-article sweep. It is intentionally
@@ -2583,6 +2616,8 @@ module clutch_scene_geometry() {
         selected_center_selector_rail_collision_part();
     } else if (CLUTCH_PART == "center_selector_male_collision") {
         selected_center_selector_male_collision_part();
+    } else if (CLUTCH_PART == "center_selector_chain_support_contact") {
+        selected_center_selector_chain_support_contact_part();
     } else if (CLUTCH_PART == "center_carriage_rail_collision") {
         selected_center_carriage_rail_collision_part();
     } else if (CLUTCH_PART == "center_input_rotor_carriage_collision") {
@@ -2805,8 +2840,14 @@ echo(
         CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM),
     str("selectorShoeChainAttachZMm=",
         CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM),
+    str("selectorShoeChainAttachXMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM),
+    str("selectorShoeChainContactDiameterMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM),
     str("selectorShoeSupportXOffsetMm=",
         CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM),
+    str("selectorShoeSupportArmXOffsetMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM),
     str("selectorShoeSupportXWidthMm=",
         CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM),
     str("selectorShoeSupportChainYOverhangMm=",
@@ -2822,7 +2863,10 @@ echo(
         CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
             + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2
             - (CENTER_SELECTOR_SHOE_Z_MM + CENTER_SELECTOR_SHOE_D / 2
-                - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM)),
+            - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM)),
+    "rotaryBearingArrangement=two-per-rotor-axially-spaced",
+    "linearBearingArrangement=left-right-one-per-guide-rod",
+    "selectorShoeChainSupportPart=cabinet-clutch/center_selector_chain_support_contact",
     str("selectorShoeBodyWidthMm=", CENTER_SELECTOR_SHOE_W),
     str("selectorShoeBodyDepthMm=", CENTER_SELECTOR_SHOE_D),
     str("selectorShoeBodyHeightMm=", CENTER_SELECTOR_SHOE_H),
@@ -2861,6 +2905,40 @@ echo(
     "selectorShoePart=cabinet-clutch/center_selector_shoe"
 );
 
+// The native shoe is mechanically attached to the chain reference, not only
+// placed near it in the browser.  Keep these checks beside the contract echo
+// so a changed chain layer or station datum fails before export.
+assert(abs(
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM
+        - (clutch_col_x(CENTER_GT2_COL)
+            + CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM)
+    ) < 0.001,
+    "selector shoe chain attach X must be derived from the support arm");
+assert(abs(
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM
+        - world_row_center_y(CENTER_GT2_ROW)
+    ) < 0.001,
+    "selector shoe chain attach Y must stay on the R3C3 row datum");
+assert(abs(
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM - SNAKE_CHAIN_CENTER_Z
+    ) < 0.001,
+    "selector shoe chain attach Z must stay on the snake-chain plane");
+assert(CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM > 0
+        && CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM > 0,
+    "selector shoe chain support and contact witness must have positive size");
+assert(
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM
+            + CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM
+            - CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM / 2
+        >= clutch_col_x(CENTER_GT2_COL)
+            + CENTER_CLUTCH_RAIL_X_OFFSET
+            + CENTER_CLUTCH_GUIDE_ROD_D / 2
+            + 0.45 - 0.001,
+    "selector shoe chain support arm must clear the right guide rod");
+assert(CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM
+        > CENTER_SELECTOR_SHOE_TARGET_Y_MM,
+    "selector shoe chain support must bridge from the shoe toward the chain");
+
 assert(
     CLUTCH_PART == "assembly"
     || CLUTCH_PART == "cabinet"
@@ -2894,6 +2972,7 @@ assert(
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_selector_rail_collision"
     || CLUTCH_PART == "center_selector_male_collision"
+    || CLUTCH_PART == "center_selector_chain_support_contact"
     || CLUTCH_PART == "center_carriage_rail_collision"
     || CLUTCH_PART == "center_input_rotor_carriage_collision"
     || CLUTCH_PART == "center_stops_carriage_collision"
