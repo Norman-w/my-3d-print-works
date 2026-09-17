@@ -26,7 +26,6 @@ MOVING_PARTS = (
 FIXED_PARTS = (
     "center_output_rotor",
     "center_output_cage",
-    "center_linear_bearing_block",
     "center_linear_bearings",
     "center_mechanism_plate",
     "center_output_shaft",
@@ -36,7 +35,6 @@ PRINTED_PARTS = {
     "center_input_rotor",
     "center_output_rotor",
     "center_output_cage",
-    "center_linear_bearing_block",
     "center_mechanism_plate",
     "center_input_sleeve",
 }
@@ -208,9 +206,9 @@ def validate_contract(contract: Contract) -> None:
         fail("公轮轴截面必须是 D-round-D")
     if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
         fail("直线轴承采购参考不是 LM3UU")
-    if contract.get("linearBearingBlockMount") != "main-plate-direct":
-        fail("直线轴承座必须直接固定在机构板")
-    if contract.get("linearBearingArrangement") != "single-coaxial-with-fixed-block":
+    if contract.get("linearBearingBlockMount") != "mechanism-plate-integral-press-fit":
+        fail("直线轴承座必须与机构板一体成型并采用压入固定")
+    if contract.get("linearBearingArrangement") != "single-coaxial-with-integrated-seat":
         fail("直线轴承必须是固定座内的公轮同轴单枚配置")
     if contract.get("rotaryBearingArrangement") != "output-two-3x6x2-axially-spaced-input-free":
         fail("当前公轮端不应残留输入旋转轴承组")
@@ -223,7 +221,20 @@ def validate_contract(contract: Contract) -> None:
         "linearBearingNominalLengthMm": 10.00, "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatRadialClearanceMm": 0.10,
         "linearBearingBlockWidthMm": 18.00, "linearBearingBlockYLengthMm": 14.00,
-        "linearBearingBlockMountHoleDiameterMm": 3.40,
+        "linearBearingBlockZLengthMm": 19.7208,
+        "linearBearingBlockZMarginMm": 1.00,
+        "linearBearingBlockMountHoleDiameterMm": 0.00,
+        "linearBearingBlockMountHoleCount": 0.00,
+        "linearBearingBlockMountXOffsetMm": 0.00,
+        "linearBearingBlockMountYOffsetMm": 0.00,
+        "linearBearingCenterYOffsetMm": -7.00,
+        "inputShaftUpperDStartMm": -0.40,
+        "inputShaftUpperDLengthMm": 3.60,
+        "inputShaftRoundStartMm": -20.60,
+        "inputShaftRoundLengthMm": 20.40,
+        "inputShaftLowerDStartMm": -20.40,
+        "inputShaftLowerDLengthMm": 3.60,
+        "inputSleeveTopOffsetMm": -17.00,
         "inputShaftRoundDiameterMm": 3.00,
         "inputSleeveMagnetNominalDiameterMm": 5.00,
         "inputSleeveMagnetNominalLengthMm": 5.00,
@@ -250,12 +261,13 @@ def validate_contract(contract: Contract) -> None:
         fail("长方条轴承孔周围壁厚不足")
     if number(contract, "linearBearingBlockYLengthMm") < number(contract, "linearBearingNominalLengthMm") + 2.0:
         fail("长方条 Y 向长度不足")
-    if number(contract, "linearBearingBlockMountHoleCount") != 4:
-        fail("长方条必须使用四个 M3 固定孔")
-    if number(contract, "linearBearingBlockMountXOffsetMm") + number(contract, "linearBearingBlockMountHoleDiameterMm") / 2 >= number(contract, "linearBearingBlockWidthMm") / 2:
-        fail("长方条 X 向 M3 孔穿出侧壁")
-    if number(contract, "linearBearingBlockMountYOffsetMm") + number(contract, "linearBearingBlockMountHoleDiameterMm") / 2 >= number(contract, "linearBearingBlockYLengthMm") / 2:
-        fail("长方条 Y 向 M3 孔穿出侧壁")
+    if any(number(contract, key) != 0 for key in (
+        "linearBearingBlockMountHoleCount",
+        "linearBearingBlockMountHoleDiameterMm",
+        "linearBearingBlockMountXOffsetMm",
+        "linearBearingBlockMountYOffsetMm",
+    )):
+        fail("一体式 LM3UU 轴承座不得有座体 M3 固定孔")
 
     bearing_center = number(contract, "linearBearingCenterYOffsetMm")
     bearing_half = number(contract, "linearBearingNominalLengthMm") / 2
@@ -278,6 +290,11 @@ def validate_contract(contract: Contract) -> None:
         fail("圆套上方 D 插孔超过上方 D 段")
     if number(contract, "inputSleeveDSocketDepthMm") > number(contract, "inputShaftLowerDLengthMm"):
         fail("下 D 轴段不足以插入圆套")
+    bearing_y0 = number(contract, "linearBearingCenterYOffsetMm") - number(contract, "linearBearingBlockYLengthMm") / 2
+    sleeve_open_top = number(contract, "inputSleeveTopOffsetMm")
+    sleeve_engaged_top = sleeve_open_top + number(contract, "strokeMm")
+    expect_close(sleeve_engaged_top, bearing_y0, "合位圆套上沿/一体轴承座下沿接触", 0.001)
+    expect_close(bearing_y0 - sleeve_open_top, number(contract, "strokeMm"), "开位圆套/一体轴承座间隙", 0.001)
     sleeve_wall = (number(contract, "inputSleeveLowerRoundOuterDiameterMm")
                    - number(contract, "inputSleeveMagnetPocketDiameterMm")) / 2
     expect_at_least(sleeve_wall, 1.40, "M5 磁铁圆套单侧壁厚")
@@ -329,13 +346,11 @@ def validate_sweep(contract: Contract, reports: dict[tuple[str, bool], dict[str,
     expect_close(bearing["min"][1], expected_center_y - 5.0, "LM3UU Y 下限")
     expect_close(bearing["max"][1], expected_center_y + 5.0, "LM3UU Y 上限")
 
-    block = bounds(reports[("center_linear_bearing_block", False)])
-    expect_close((block["min"][0] + block["max"][0]) / 2, axis_x, "长方条 X 中心")
-    expect_close(block["max"][0] - block["min"][0], number(contract, "linearBearingBlockWidthMm"), "长方条宽度")
-    expect_close(block["max"][1] - block["min"][1], number(contract, "linearBearingBlockYLengthMm"), "长方条 Y 长度")
-    expect_close(block["max"][2] - block["min"][2], number(contract, "linearBearingBlockZLengthMm"), "长方条 Z 长度", 0.05)
     plate = bounds(reports[("center_mechanism_plate", False)])
-    expect_close(block["max"][2], plate["min"][2], "长方条直接贴合机构板后面")
+    expected_seat_z_min = axis_z - number(contract, "linearBearingNominalOdMm") / 2 - number(contract, "linearBearingBlockZMarginMm")
+    expect_close(plate["min"][2], expected_seat_z_min, "一体轴承座 Z 后端包络")
+    if plate["max"][2] <= plate["min"][2]:
+        fail("机构板一体轴承座没有形成实体 Z 支撑")
 
     sleeve = bounds(reports[("center_input_sleeve", False)])
     magnet = bounds(reports[("center_input_sleeve_magnet", False)])
@@ -394,6 +409,11 @@ def validate_interference(contract: Contract, reports: dict[tuple[str, bool], di
         "stroke": stroke,
         "bottomClearance": bottom,
         "sleeveSocketOverlap": socket_overlap,
+        "engagedSleeveSeatContact": abs(
+            (number(contract, "linearBearingCenterYOffsetMm")
+             - number(contract, "linearBearingBlockYLengthMm") / 2)
+            - (number(contract, "inputSleeveTopOffsetMm") + stroke)
+        ),
     }
 
 
@@ -466,7 +486,7 @@ def main() -> int:
         f"{number(contract, 'linearBearingNominalLengthMm'):.0f}mm, "
         f"M5×5 sleeve magnet, socket_overlap={metrics['sleeveSocketOverlap']:.2f}mm"
     )
-    print("已检查：公轮轴 X/Z 不漂移、固定长方条轴承座、D-round-D 过渡、圆套盲槽、输出轴承笼、皮带贯穿槽")
+    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出轴承笼、皮带贯穿槽")
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
     return 0
 

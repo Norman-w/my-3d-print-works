@@ -8,8 +8,9 @@
 // carriage, second guide, stop lug, spring, fork or printed input rotary cage.
 //
 // The output side remains a separately serviceable two-bearing cage.  The
-// linear-bearing block is a long rectangular bar bored Ø7.20 through Y and
-// bolted directly to the rear face of the removable clutch mechanism plate.
+// linear-bearing seat is a long rectangular bar bored Ø7.20 through Y and
+// printed as one solid with the removable clutch mechanism plate.  The bar has
+// no fastener holes: the plate's own four M3 holes attach the complete part.
 
 //#region 导入/依赖
 // cabinet_clutch.scad supplies WORLD_PARTITION_BACK_Z, CENTER_GT2_Z,
@@ -66,8 +67,10 @@ CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X =
 CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y = GT2_BELT_WIDTH
     + 2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR;
 
-// One fixed rectangular bar carries one LM3UU.  Its long Z direction is the
-// direct printed connection from the main plate to the male-axis bearing hole.
+// One fixed rectangular bar carries one LM3UU. Its long Z direction is the
+// direct printed connection from the main plate to the male-axis bearing hole;
+// the end extends past the bearing OD so the purchased bearing is enclosed in
+// Z rather than hanging out of the rear of the bar.
 CENTER_CLUTCH_LINEAR_BEARING_ID = 3.00;
 CENTER_CLUTCH_LINEAR_BEARING_OD = 7.00;
 CENTER_CLUTCH_LINEAR_BEARING_L = 10.00;
@@ -77,17 +80,24 @@ CENTER_CLUTCH_LINEAR_BEARING_SEAT_D =
 CENTER_CLUTCH_LINEAR_BEARING_SEAT_RADIAL_CLEARANCE =
     (CENTER_CLUTCH_LINEAR_BEARING_SEAT_D
         - CENTER_CLUTCH_LINEAR_BEARING_OD) / 2;
-CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET = -14.00;
+CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET = -7.00;
 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_X = 18.00;
 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y = 14.00;
-CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN = 2.00;
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN = 1.00;
 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH =
-    CENTER_CLUTCH_PLATE_REAR_Z - CENTER_GT2_Z
-        + CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN;
-CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_X_OFFSET = 6.50;
-CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_Y_OFFSET = 5.00;
-CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_D = 3.40;
-CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_COUNT = 4;
+    CENTER_CLUTCH_PLATE_REAR_Z
+        - (CENTER_GT2_Z
+            - CENTER_CLUTCH_LINEAR_BEARING_OD / 2
+            - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN);
+// A small overlap into the plate makes the seat one watertight printed solid
+// instead of two coincident-face solids. It is not an extra external boss.
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_OVERLAP = 0.20;
+// Kept as zero-valued contract fields to make the absence of holder fasteners
+// machine-checkable. Only the plate itself has its four partition M3 holes.
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_X_OFFSET = 0.00;
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_Y_OFFSET = 0.00;
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_D = 0.00;
+CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_COUNT = 0;
 CENTER_CLUTCH_LINEAR_BEARING_MOVES_WITH_INPUT = false;
 
 // LM3UU visual/reference geometry.  The purchased envelope is exactly
@@ -106,19 +116,22 @@ CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH =
 // Moving input shaft.  Relative Y is measured from the male gear underside:
 // upper D enters the male blind socket, the Ø3 round section is the only
 // sliding journal, and the lower D enters the sleeve's upper D socket.
-CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START = -4.00;
-CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_LENGTH = GT2_D_BORE_DEPTH + 4.00;
-CENTER_CLUTCH_INPUT_SHAFT_ROUND_START = -25.60;
-CENTER_CLUTCH_INPUT_SHAFT_ROUND_LENGTH = 21.80;
-CENTER_CLUTCH_INPUT_SHAFT_LOWER_D_START = -25.40;
+CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START = -GT2_INPUT_SHAFT_UPPER_D_EXTERNAL;
+CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_LENGTH = GT2_D_BORE_DEPTH
+    + GT2_INPUT_SHAFT_UPPER_D_EXTERNAL
+    + GT2_INPUT_SHAFT_TRANSITION_OVERLAP;
+CENTER_CLUTCH_INPUT_SHAFT_ROUND_START = -20.60;
+CENTER_CLUTCH_INPUT_SHAFT_ROUND_LENGTH = 20.40;
+CENTER_CLUTCH_INPUT_SHAFT_LOWER_D_START = -20.40;
 CENTER_CLUTCH_INPUT_SHAFT_LOWER_D_LENGTH = 3.60;
 CENTER_CLUTCH_INPUT_SHAFT_ROUND_D = GT2_INPUT_SHAFT_ROUND_D;
-CENTER_CLUTCH_INPUT_SHAFT_TRANSITION_OVERLAP = 0.20;
+CENTER_CLUTCH_INPUT_SHAFT_TRANSITION_OVERLAP =
+    GT2_INPUT_SHAFT_TRANSITION_OVERLAP;
 
 // Printed sleeve: upper outer D profile, lower round boss, blind Ø5.20×5.20
 // pocket for a purchased Ø5×5 magnet.  “M5” here is the magnet size; the
 // printed round boss is Ø8 to leave a 1.40 mm radial wall around that pocket.
-CENTER_CLUTCH_INPUT_SLEEVE_TOP_OFFSET = -22.00;
+CENTER_CLUTCH_INPUT_SLEEVE_TOP_OFFSET = -17.00;
 CENTER_CLUTCH_INPUT_SLEEVE_UPPER_D_HEIGHT = 4.20;
 CENTER_CLUTCH_INPUT_SLEEVE_UPPER_D = 7.60;
 CENTER_CLUTCH_INPUT_SLEEVE_UPPER_D_FLAT = 0.80;
@@ -347,8 +360,8 @@ module center_clutch_linear_bearing_block_y(col, row) {
     z0 = CENTER_CLUTCH_PLATE_REAR_Z
         - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH;
     difference() {
-        // Long bar: its inner face is directly coincident with the rear face
-        // of the main plate; its outer end surrounds the male-axis LM3UU hole.
+        // Long bar: it overlaps the rear of the main plate by 0.20 mm, and its
+        // outer end surrounds the male-axis LM3UU hole in Z.
         translate([
             x - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_X / 2,
             y - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y / 2,
@@ -358,9 +371,11 @@ module center_clutch_linear_bearing_block_y(col, row) {
                 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_X,
                 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y,
                 CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH
+                    + CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_OVERLAP
             ]);
         // One through Ø7.20 bearing hole along world Y. The purchased LM3UU
-        // is press-fit in this bar; no round printed holder or cap is used.
+        // is press-fit from either side in this solid bar; no holder mounting
+        // holes, round printed holder, cap or retainer is used.
         cylinder_y(
             x,
             y - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y / 2 - EPS,
@@ -368,23 +383,6 @@ module center_clutch_linear_bearing_block_y(col, row) {
             CENTER_CLUTCH_LINEAR_BEARING_SEAT_D,
             CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y + 2 * EPS
         );
-        // Four M3 clearance holes fasten the bar directly to the mechanism
-        // plate. Matching holes are cut into the plate below.
-        for (
-            sx = [-1, 1],
-            sy = [-1, 1]
-        )
-            translate([
-                x + sx * CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_X_OFFSET,
-                y + sy * CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_Y_OFFSET,
-                z0 - EPS
-            ])
-                cylinder(
-                    d = CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_D,
-                    h = CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH
-                        + 2 * EPS,
-                    $fn = 40
-                );
     }
 }
 
@@ -392,7 +390,6 @@ module center_clutch_mechanism_plate(col, row) {
     x = center_clutch_axis_x(col);
     y0 = center_clutch_plate_y0(row);
     h = center_clutch_plate_h(row);
-    bearing_y = center_clutch_linear_bearing_center_y(row);
     difference() {
         union() {
             translate([
@@ -418,6 +415,10 @@ module center_clutch_mechanism_plate(col, row) {
                         CENTER_CLUTCH_PLATE_KEY_H,
                         CENTER_CLUTCH_PLATE_KEY_D
                     ]);
+            // The LM3UU seat is part of this same printed mechanism plate.
+            // Only the bearing bore is subtracted from the otherwise solid
+            // support; there is no separate holder or holder fastener set.
+            center_clutch_linear_bearing_block_y(col, row);
         }
         // Four plate-to-partition M3 holes.
         for (sx = [-1, 1], sy = [-1, 1])
@@ -432,19 +433,6 @@ module center_clutch_mechanism_plate(col, row) {
                     d = CENTER_CLUTCH_M3_CLEAR_D,
                     h = CENTER_CLUTCH_PLATE_T
                         + CENTER_CLUTCH_PLATE_KEY_D + 2 * EPS,
-                    $fn = 40
-                );
-        // Four holes for the long linear-bearing bar. They are intentionally
-        // at the lower service datum, away from the 2GT belt passage.
-        for (sx = [-1, 1], sy = [-1, 1])
-            translate([
-                x + sx * CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_X_OFFSET,
-                bearing_y + sy * CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_Y_OFFSET,
-                CENTER_CLUTCH_PLATE_REAR_Z - EPS
-            ])
-                cylinder(
-                    d = CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_D,
-                    h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
                     $fn = 40
                 );
         center_clutch_plate_belt_passage(col, row);
@@ -783,7 +771,6 @@ module center_clutch_carriage_stop_bridge(x, base_y, z, sx) {}
 //#region 公开 API：中心机构总装
 module center_clutch_carrier(col, row, engaged = false, purchased = true) {
     color("#536d78") center_clutch_mechanism_plate(col, row);
-    color("#536d78") center_clutch_linear_bearing_block_y(col, row);
     color("#4c6470") center_clutch_output_cage(col, row);
     color("#7c909d") center_clutch_input_sleeve(col, row, engaged);
     if (purchased)
@@ -814,13 +801,23 @@ assert(CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Y
 assert(CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH
         > CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN,
     "LM3UU bar must reach from the plate to the clutch axis");
-assert(CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_COUNT == 4,
-    "LM3UU bar must use four direct M3 plate mounting holes");
+assert(CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_COUNT == 0
+        && CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_D == 0,
+    "integrated LM3UU seat must have no holder mounting holes");
+assert(CENTER_CLUTCH_PLATE_REAR_Z
+        - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_LENGTH
+        <= CENTER_GT2_Z
+            - CENTER_CLUTCH_LINEAR_BEARING_OD / 2
+            - CENTER_CLUTCH_LINEAR_BEARING_BLOCK_Z_MARGIN + 0.001,
+    "integrated LM3UU seat must enclose the bearing OD in Z");
 assert(CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START < 0
         && CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START
             + CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_LENGTH
             >= GT2_D_BORE_DEPTH - 0.001,
     "upper D shaft must key into the male blind socket");
+assert(-CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START
+        <= GT2_INPUT_SHAFT_UPPER_D_EXTERNAL + 0.001,
+    "upper D shaft must transition to round immediately below the male rotor");
 assert(CENTER_CLUTCH_INPUT_SHAFT_ROUND_START
         + CENTER_CLUTCH_INPUT_SHAFT_ROUND_LENGTH
         >= CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START - 0.001,
@@ -855,6 +852,16 @@ assert(CENTER_CLUTCH_INPUT_SLEEVE_LOWER_ROUND_OD
     "round sleeve must leave at least 1.40 mm radial magnet wall");
 assert(CENTER_CLUTCH_INPUT_SLEEVE_MAGNET_BOTTOM_CLEARANCE >= 1.00,
     "sleeve must retain a solid floor below the M5 magnet");
+assert(abs(
+    center_clutch_linear_bearing_y0(2)
+        - (center_clutch_input_sleeve_top_y(2)
+            + GT2_CLUTCH_ENGAGE_STROKE_MM)
+    ) < 0.001,
+    "engaged sleeve upper edge must meet the integrated bearing seat");
+assert(center_clutch_linear_bearing_y0(2)
+        - center_clutch_input_sleeve_top_y(2)
+        >= GT2_CLUTCH_ENGAGE_STROKE_MM - 0.001,
+    "open sleeve must clear the integrated bearing seat by the full stroke");
 assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X
         < CENTER_CLUTCH_PLATE_W / 2,
     "center belt passage must stay inside the mechanism plate");

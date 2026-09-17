@@ -194,12 +194,6 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
-    "cabinet-clutch/center_linear_bearing_block": {
-        "name": "中心 R3C3 · 长方条 LM3UU 轴承座（Ø7.20 孔；4×M3 直固机构板）",
-        "color": "#536d78",
-        "visible": True,
-        "role": "printed",
-    },
     "cabinet-clutch/center_linear_bearing_retainers": {
         "name": "中心 R3C3 · 直线轴承套压盖×1（单个；打印防脱件）",
         "color": "#8aa1ad",
@@ -231,7 +225,7 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/center_mechanism_plate": {
-        "name": "中心 R3C3 · 可拆后仓机构板（4×M3）",
+        "name": "中心 R3C3 · 可拆后仓机构板（一体 LM3UU 轴承座；4×M3）",
         "color": "#536d78",
         "visible": True,
         "role": "printed",
@@ -359,7 +353,6 @@ group_map = {
     "center_output_rotor": "02·离合机构",
     "center_input_sleeve": "02·离合机构",
     "center_input_sleeve_magnet_reference": "02·离合机构",
-    "center_linear_bearing_block": "02·离合机构",
     "center_input_carriage": "02·离合机构",
     "center_linear_bearings_reference": "02·离合机构",
     "center_linear_bearing_retainers": "02·离合机构",
@@ -389,7 +382,6 @@ name_map = {
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
     "center_input_sleeve": "中心 R3C3 公轮底部 D 型圆套 · 下端 Ø8 + Ø5×5 磁铁盲槽",
     "center_input_sleeve_magnet_reference": "中心 R3C3 圆套内 Ø5×5 圆柱磁铁 · 采购件",
-    "center_linear_bearing_block": "中心 R3C3 长方条 LM3UU 轴承座 · Ø7.20 孔 + 4×M3",
     "center_input_carriage": "legacy · 中心 R3C3 输入滑架（已移除）",
     "center_linear_bearings_reference": "中心 R3C3 固定 LM3UU×1 · Ø3×Ø7×10（与公轮同轴；采购件）",
     "center_linear_bearing_retainers": "legacy · 中心 R3C3 轴承压盖（已移除）",
@@ -397,7 +389,7 @@ name_map = {
     "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
     "center_guide_rails": "legacy · 中心 R3C3 独立导轨（已移除）",
     "center_stops": "legacy · 中心 R3C3 实体止挡（已移除）",
-    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
+    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 一体 LM3UU 轴承座 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出独立 3mm D 轴 · 采购件",
     "center_input_bearings_reference": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",
@@ -543,13 +535,12 @@ for group_id in ordered_group_ids:
         input_axis = call_node(
             "center_clutch/input-axis",
             "公轮轴竖直滑动 · D-round-D + 固定 LM3UU",
-            "公轮 D 轴固定后变为 Ø3 圆滑动段，直接在固定于离合主板的 LM3UU（Ø3×Ø7×10）中上下滑动；最低端再变为 D 型插入圆套上方 D 孔，圆套下端为 Ø8 圆形并嵌入 Ø5×5 圆柱磁铁。公轮端没有滑架、独立导轨、压盖或止挡。",
+            "公轮 D 轴固定后只保留 0.40 mm 外露 D 段，立即变为 Ø3 圆滑动段，直接在与离合机构板一体的 LM3UU 座（Ø3×Ø7×10）中上下滑动；最低端再变为 D 型插入圆套上方 D 孔，圆套下端为 Ø8 圆形并嵌入 Ø5×5 圆柱磁铁。轴承从一体座的贯通孔上下压入，座体除轴承孔外为实心；公轮端没有其他机构。",
             children=[
                 part_node("cabinet-clutch/center_input_shaft_reference"),
                 part_node("cabinet-clutch/center_input_sleeve"),
                 part_node("cabinet-clutch/center_input_sleeve_magnet_reference"),
                 part_node("cabinet-clutch/center_linear_bearings_reference"),
-                part_node("cabinet-clutch/center_linear_bearing_block"),
             ],
         )
         rotary_support = call_node(
@@ -592,7 +583,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + D-round-D 阶梯轴 + 固定 LM3UU 长方条轴承座 + D 型/Ø5×5 磁铁圆套 + 输出双轴承笼 + 可拆机构板",
+                "输入公轮 + 输出母轮 + D-round-D 阶梯轴 + 机构板一体实心 LM3UU 轴承座 + D 型/Ø5×5 磁铁圆套 + 输出双轴承笼 + 可拆机构板",
                 children=active_center,
             ),
             call_node(
@@ -730,9 +721,12 @@ LEGACY_CLUTCH_OUTPUTS=(
     "center_stops.stl"
     "center_input_bearings_reference.stl"
     "center_selector_shoe.stl"
+    "center_linear_bearing_block.stl"
 )
 for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
-    rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+    rm -f "${OUT_DIR}/${old_file}" \
+        "${REPORT_DIR}/${old_file%.stl}.json" \
+        "${REPORT_DIR}/${old_file%.stl}.watertight.json"
 done
 
 # The root viewer is assembled from the individual parts below. Remove every
@@ -869,7 +863,6 @@ export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" 
 export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
 export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
 export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
-export_part "center_linear_bearing_block" "${OUT_DIR}/center_linear_bearing_block.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
 export_part "center_linear_bearing_fit_coupon" "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
@@ -887,7 +880,6 @@ for printable_part in \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_output_cage.stl" \
-    "${OUT_DIR}/center_linear_bearing_block.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl"; do
     require_watertight_print_part "${printable_part}"

@@ -9,8 +9,8 @@
 // follower remains legacy-only; motor/rod mounts are parameterized
 // seal: none — this is a mechanism prototype, not a watertight enclosure
 // print_orientation: gears/pulleys flat with their axis vertical (+Y); center
-// the fixed LM3UU bar, stepped input sleeve and mechanism plate are separate
-// PETG service parts; the stepped shaft and bearings are purchased references
+// the fixed LM3UU seat is printed integral with the mechanism plate, while the
+// stepped input shaft and bearings are purchased references
 // units: mm
 //
 // User/world coordinate contract (the canonical web view is from the rear):
@@ -486,7 +486,7 @@ COLOR_AXIS_Z = "#3b82f6";
 // female receiver above it. The female body also carries the 2GT rear pulley.
 // cabinet_clutch_carrier.scad keeps the male end to one D-round-D shaft: its
 // Ø3 round section slides directly in one fixed LM3UU held by a rectangular
-// bar bolted to the mechanism plate, while the lower D enters the Ø8 round
+// bar formed as part of the mechanism plate, while the lower D enters the Ø8 round
 // sleeve with a Ø5×5 magnet pocket. The output side has two independent D
 // shafts and two 3×6×2 bearing references in its fixed cage. The other 24
 // legacy stations are intentionally suppressed until this physical prototype
@@ -1751,9 +1751,10 @@ module power_bus() {
 }
 //#endregion
 
-// The center prototype is deliberately split into a removable mechanism plate,
-// fixed output cage, fixed LM3UU bar, stepped input shaft/sleeve and purchased-
-// part references. Keeping this include after the world-coordinate helpers
+// The center prototype is deliberately split into one removable mechanism
+// plate with an integral fixed LM3UU seat, a fixed output cage, stepped input
+// shaft/sleeve and purchased-part references. Keeping this include after the
+// world-coordinate helpers
 // makes the carrier consume the same station datums as the rotors.
 include <cabinet_clutch_carrier.scad>
 
@@ -2107,7 +2108,7 @@ module selected_center_output_rotor_part() {
 module selected_center_input_carriage_part() {
     // Retained only as an empty compatibility entry point. The current male
     // end has no printed carriage; its shaft slides directly in the fixed
-    // LM3UU block.
+    // integral LM3UU seat in the mechanism plate.
 }
 
 module selected_center_input_sleeve_part() {
@@ -2124,10 +2125,6 @@ module selected_center_input_sleeve_magnet_part() {
         CENTER_GT2_ROW,
         ENGAGED
     );
-}
-
-module selected_center_linear_bearing_block_part() {
-    center_clutch_linear_bearing_block_y(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
 module selected_center_output_cage_part() {
@@ -2184,7 +2181,7 @@ module selected_center_plate_belt_collision_part() {
 
 // These actual CSG intersections are exported only by the geometry gate. An
 // Empty result is the required witness: the pair may contact through its
-// designed tooth envelope, while the stepped shaft, fixed LM3UU block and
+// designed tooth envelope, while the stepped shaft, fixed LM3UU seat and
 // sleeve must retain real clearance throughout the open and engaged datums.
 module selected_center_clutch_pair_collision_part() {
     intersection() {
@@ -2620,7 +2617,7 @@ module clutch_detail() {
     z = DRIVE_AXIS_Z;
     if (is_center_gt2_station(col, row)) {
         center_gt2_clutch(col, row, ENGAGED);
-        // The center detail contains only the current plate, bearing block,
+        // The center detail contains only the current plate with integral seat,
         // output cage and D-round-D input shaft/sleeve. The old selector shoe
         // remains an optional diagnostic source, not a male-end component.
     } else if (SHOW_LEGACY_STATIONS)
@@ -2698,8 +2695,6 @@ module clutch_scene_geometry() {
         selected_center_input_sleeve_part();
     } else if (CLUTCH_PART == "center_input_sleeve_magnet") {
         selected_center_input_sleeve_magnet_part();
-    } else if (CLUTCH_PART == "center_linear_bearing_block") {
-        selected_center_linear_bearing_block_part();
     } else if (CLUTCH_PART == "center_input_carriage") {
         selected_center_input_carriage_part();
     } else if (CLUTCH_PART == "center_output_cage") {
@@ -2844,12 +2839,12 @@ echo(
         CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_X_OFFSET),
     str("linearBearingBlockMountYOffsetMm=",
         CENTER_CLUTCH_LINEAR_BEARING_BLOCK_MOUNT_Y_OFFSET),
-    "linearBearingBlockMount=main-plate-direct",
+    "linearBearingBlockMount=mechanism-plate-integral-press-fit",
     "linearBearingModel=LM3UU-cutaway-reference",
     "linearBearingMovesWithInput=false",
     "linearBearingFitCouponPart=cabinet-clutch/center_linear_bearing_fit_coupon",
     "linearBearingPart=cabinet-clutch/center_linear_bearings_reference",
-    "linearBearingBlockPart=cabinet-clutch/center_linear_bearing_block",
+    "linearBearingBlockPart=cabinet-clutch/center_mechanism_plate",
     str("inputShaftProfile=", GT2_INPUT_SHAFT_PROFILE),
     str("inputShaftUpperDStartMm=", CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_START),
     str("inputShaftUpperDLengthMm=", CENTER_CLUTCH_INPUT_SHAFT_UPPER_D_LENGTH),
@@ -2903,7 +2898,7 @@ echo(
     str("inputSleeveMagnetCount=", 1),
     str("totalModeledMagnetCount=", 3),
     "rotaryBearingArrangement=output-two-3x6x2-axially-spaced-input-free",
-    "linearBearingArrangement=single-coaxial-with-fixed-block",
+    "linearBearingArrangement=single-coaxial-with-integrated-seat",
     str("plateWidthMm=", CENTER_CLUTCH_PLATE_W),
     str("plateKeyWidthMm=", CENTER_CLUTCH_PLATE_KEY_W),
     str("plateKeyHeightMm=", CENTER_CLUTCH_PLATE_KEY_H),
@@ -2955,7 +2950,6 @@ assert(
     || CLUTCH_PART == "center_output_rotor"
     || CLUTCH_PART == "center_input_sleeve"
     || CLUTCH_PART == "center_input_sleeve_magnet"
-    || CLUTCH_PART == "center_linear_bearing_block"
     || CLUTCH_PART == "center_input_carriage"
     || CLUTCH_PART == "center_output_cage"
     || CLUTCH_PART == "center_guide_rails"

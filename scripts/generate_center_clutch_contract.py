@@ -140,20 +140,25 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("公轮端不能残留滑架、止挡或拨叉等机构")
     if contract.get("linearBearingMovesWithInput") is not False:
         raise RuntimeError("固定长方条 LM3UU 不能随公轮移动")
+    if (n(contract, "linearBearingBlockMountHoleCount") != 0
+            or n(contract, "linearBearingBlockMountHoleDiameterMm") != 0
+            or n(contract, "linearBearingBlockMountXOffsetMm") != 0
+            or n(contract, "linearBearingBlockMountYOffsetMm") != 0):
+        raise RuntimeError("一体式 LM3UU 轴承座不得保留座体 M3 固定孔")
 
     exact = {
-        "linearBearingBlockMount": "main-plate-direct",
+        "linearBearingBlockMount": "mechanism-plate-integral-press-fit",
         "linearBearingModel": "LM3UU-cutaway-reference",
         "linearBearingFitCouponPart": "cabinet-clutch/center_linear_bearing_fit_coupon",
         "linearBearingPart": "cabinet-clutch/center_linear_bearings_reference",
-        "linearBearingBlockPart": "cabinet-clutch/center_linear_bearing_block",
+        "linearBearingBlockPart": "cabinet-clutch/center_mechanism_plate",
         "inputShaftProfile": "D-round-D",
         "inputShaftPart": "cabinet-clutch/center_input_shaft_reference",
         "inputSleevePart": "cabinet-clutch/center_input_sleeve",
         "inputSleeveMagnetPart": "cabinet-clutch/center_input_sleeve_magnet_reference",
         "bearingNominal": "3x6x2",
         "rotaryBearingArrangement": "output-two-3x6x2-axially-spaced-input-free",
-        "linearBearingArrangement": "single-coaxial-with-fixed-block",
+        "linearBearingArrangement": "single-coaxial-with-integrated-seat",
         "plateSupport": "partition-through-M3",
         "inputPart": "cabinet-clutch/center_input_rotor",
         "outputPart": "cabinet-clutch/center_output_rotor",
@@ -173,15 +178,18 @@ def validate_contract(contract: dict[str, object]) -> None:
         "magnetNominalDiameterMm": 2.00, "dogPocketPhaseDeg": 60.00,
         "linearBearingNominalIdMm": 3.00, "linearBearingNominalOdMm": 7.00,
         "linearBearingNominalLengthMm": 10.00, "linearBearingCount": 1.0,
-        "linearBearingCenterYOffsetMm": -14.00, "linearBearingSeatDiameterMm": 7.20,
+        "linearBearingCenterYOffsetMm": -7.00, "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatRadialClearanceMm": 0.10, "linearBearingBlockWidthMm": 18.00,
-        "linearBearingBlockYLengthMm": 14.00, "linearBearingBlockZMarginMm": 2.00,
-        "linearBearingBlockMountHoleDiameterMm": 3.40,
-        "linearBearingBlockMountHoleCount": 4.0,
-        "inputShaftUpperDStartMm": -4.00, "inputShaftUpperDLengthMm": 7.00,
-        "inputShaftRoundStartMm": -25.60, "inputShaftRoundLengthMm": 21.80,
-        "inputShaftRoundDiameterMm": 3.00, "inputShaftLowerDStartMm": -25.40,
-        "inputShaftLowerDLengthMm": 3.60, "inputSleeveTopOffsetMm": -22.00,
+        "linearBearingBlockYLengthMm": 14.00, "linearBearingBlockZMarginMm": 1.00,
+        "linearBearingBlockZLengthMm": 19.7208,
+        "linearBearingBlockMountHoleDiameterMm": 0.00,
+        "linearBearingBlockMountHoleCount": 0.0,
+        "linearBearingBlockMountXOffsetMm": 0.00,
+        "linearBearingBlockMountYOffsetMm": 0.00,
+        "inputShaftUpperDStartMm": -0.40, "inputShaftUpperDLengthMm": 3.60,
+        "inputShaftRoundStartMm": -20.60, "inputShaftRoundLengthMm": 20.40,
+        "inputShaftRoundDiameterMm": 3.00, "inputShaftLowerDStartMm": -20.40,
+        "inputShaftLowerDLengthMm": 3.60, "inputSleeveTopOffsetMm": -17.00,
         "inputSleeveUpperDHeightMm": 4.20, "inputSleeveUpperDDiameterMm": 7.60,
         "inputSleeveLowerRoundOuterDiameterMm": 8.00,
         "inputSleeveLowerRoundHeightMm": 6.40, "inputSleeveDSocketDepthMm": 3.60,
@@ -237,6 +245,14 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("圆滑动段没有与上 D 段形成过渡重叠")
     if lower_start > round_end + 0.001 or lower_end < round_start - 0.001:
         raise RuntimeError("下 D 段没有与圆滑动段形成过渡重叠")
+
+    bearing_y0 = bearing_center - n(contract, "linearBearingBlockYLengthMm") / 2
+    sleeve_open_top = n(contract, "inputSleeveTopOffsetMm")
+    sleeve_engaged_top = sleeve_open_top + stroke
+    if abs(sleeve_engaged_top - bearing_y0) > 0.001:
+        raise RuntimeError("合位圆套上沿必须刚好接触一体式轴承座下沿")
+    if bearing_y0 - sleeve_open_top < stroke - 0.001:
+        raise RuntimeError("开位圆套没有与一体式轴承座保持完整行程间隙")
 
     if n(contract, "inputSleeveDSocketDepthMm") > n(contract, "inputSleeveUpperDHeightMm"):
         raise RuntimeError("圆套上方 D 型插孔越过上方 D 型段")

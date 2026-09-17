@@ -79,7 +79,6 @@ const CURRENT_CLUTCH_IDS = new Map([
 ]);
 const CURRENT_CLUTCH_STATIC_IDS = new Set([
   "cabinet-clutch/center_output_cage",
-  "cabinet-clutch/center_linear_bearing_block",
   "cabinet-clutch/center_mechanism_plate",
 ]);
 const DRAWER_ROTARY_IDS = new Map([
@@ -542,7 +541,7 @@ function validateCenterClutchContract(contract) {
     throw new Error("centerClutch 永磁动作/公轮端无额外机构门槛不满足");
   }
   if (contract.linearBearingMovesWithInput !== false
-      || contract.linearBearingBlockMount !== "main-plate-direct"
+      || contract.linearBearingBlockMount !== "mechanism-plate-integral-press-fit"
       || contract.linearBearingModel !== "LM3UU-cutaway-reference"
       || contract.inputShaftProfile !== "D-round-D") {
     throw new Error("centerClutch 固定 LM3UU 或 D-round-D 契约不匹配");
@@ -550,7 +549,7 @@ function validateCenterClutchContract(contract) {
   const exact = {
     linearBearingFitCouponPart: "cabinet-clutch/center_linear_bearing_fit_coupon",
     linearBearingPart: "cabinet-clutch/center_linear_bearings_reference",
-    linearBearingBlockPart: "cabinet-clutch/center_linear_bearing_block",
+    linearBearingBlockPart: "cabinet-clutch/center_mechanism_plate",
     inputShaftPart: "cabinet-clutch/center_input_shaft_reference",
     inputSleevePart: "cabinet-clutch/center_input_sleeve",
     inputSleeveMagnetPart: "cabinet-clutch/center_input_sleeve_magnet_reference",
@@ -562,7 +561,7 @@ function validateCenterClutchContract(contract) {
     outputBearingsPart: "cabinet-clutch/center_output_bearings_reference",
     bearingNominal: "3x6x2",
     rotaryBearingArrangement: "output-two-3x6x2-axially-spaced-input-free",
-    linearBearingArrangement: "single-coaxial-with-fixed-block",
+    linearBearingArrangement: "single-coaxial-with-integrated-seat",
     plateSupport: "partition-through-M3",
   };
   for (const [key, value] of Object.entries(exact)) {
@@ -577,7 +576,7 @@ function validateCenterClutchContract(contract) {
     "linearBearingNominalIdMm", "linearBearingNominalOdMm",
     "linearBearingNominalLengthMm", "linearBearingSeatDiameterMm",
     "linearBearingBlockWidthMm", "linearBearingBlockYLengthMm",
-    "linearBearingBlockZLengthMm", "linearBearingBlockMountHoleDiameterMm",
+    "linearBearingBlockZLengthMm",
     "inputShaftUpperDLengthMm", "inputShaftRoundLengthMm",
     "inputShaftRoundDiameterMm", "inputShaftLowerDLengthMm",
     "inputSleeveUpperDHeightMm", "inputSleeveUpperDDiameterMm",
@@ -630,8 +629,11 @@ function validateCenterClutchContract(contract) {
   if (n("linearBearingBlockZLengthMm") <= n("linearBearingBlockZMarginMm")
       || n("linearBearingBlockWidthMm") <= n("linearBearingSeatDiameterMm") + 2
       || n("linearBearingBlockYLengthMm") < n("linearBearingNominalLengthMm") + 2
-      || n("linearBearingBlockMountHoleCount") !== 4) {
-    throw new Error("centerClutch 长方条轴承座尺寸/固定孔不满足");
+      || n("linearBearingBlockMountHoleCount") !== 0
+      || n("linearBearingBlockMountHoleDiameterMm") !== 0
+      || n("linearBearingBlockMountXOffsetMm") !== 0
+      || n("linearBearingBlockMountYOffsetMm") !== 0) {
+    throw new Error("centerClutch 一体式轴承座尺寸或无座体固定孔约束不满足");
   }
   const roundEnd = n("inputShaftRoundStartMm") + n("inputShaftRoundLengthMm");
   const bearingMin = n("linearBearingCenterYOffsetMm")
@@ -658,6 +660,24 @@ function validateCenterClutchContract(contract) {
         - n("inputSleeveMagnetPocketDiameterMm")) / 2 < 1.4
       || n("inputSleeveMagnetBottomClearanceMm") < 1) {
     throw new Error("centerClutch D 型圆套或 Ø5×5 磁铁槽尺寸不满足");
+  }
+  if (!close(n("linearBearingCenterYOffsetMm"), -7)
+      || !close(n("linearBearingBlockZMarginMm"), 1)
+      || !close(n("linearBearingBlockZLengthMm"), 19.7208, 0.002)
+      || !close(n("inputShaftUpperDStartMm"), -0.4)
+      || !close(n("inputShaftUpperDLengthMm"), 3.6)
+      || !close(n("inputShaftRoundStartMm"), -20.6)
+      || !close(n("inputShaftRoundLengthMm"), 20.4)
+      || !close(n("inputShaftLowerDStartMm"), -20.4)
+      || !close(n("inputShaftLowerDLengthMm"), 3.6)
+      || !close(n("inputSleeveTopOffsetMm"), -17)) {
+    throw new Error("centerClutch 公轮轴/LM3UU/磁铁圆套新定位参数不匹配");
+  }
+  const seatLowerY = n("linearBearingCenterYOffsetMm")
+    - n("linearBearingBlockYLengthMm") / 2;
+  if (!close(seatLowerY, n("inputSleeveTopOffsetMm") + n("strokeMm"))
+      || !close(seatLowerY - n("inputSleeveTopOffsetMm"), n("strokeMm"))) {
+    throw new Error("centerClutch 合位圆套接触或开位完整行程间隙不满足");
   }
   if (n("bearingSeatDepthMm") < n("bearingBackShoulderMm") + 2
       || n("shaftCollarOdMm") <= 6

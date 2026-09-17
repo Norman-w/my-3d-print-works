@@ -10,7 +10,7 @@ import {
   onPartLoaded,
   setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=center-clutch-droundd-1";
+} from "./js/cabinet-chain-play.js?v=center-clutch-integral-seat-1";
 //#endregion
 
 //#region 常量/配置
@@ -78,7 +78,6 @@ const DRAWER_DRIVE_TAILS = new Set([
   "center_input_sleeve",
   "center_input_sleeve_magnet_reference",
   "center_linear_bearings_reference",
-  "center_linear_bearing_block",
   "center_output_cage",
   "center_mechanism_plate",
   "center_output_shaft_reference",
@@ -102,7 +101,6 @@ const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_input_sleeve",
   "cabinet-clutch/center_input_sleeve_magnet_reference",
   "cabinet-clutch/center_linear_bearings_reference",
-  "cabinet-clutch/center_linear_bearing_block",
   "cabinet-clutch/center_mechanism_plate",
   "cabinet-clutch/center_output_bearings_reference",
   "cabinet-clutch/center_output_cage",

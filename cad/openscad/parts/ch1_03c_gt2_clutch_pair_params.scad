@@ -76,6 +76,20 @@ GT2_INPUT_SHAFT_PROFILE = "D-round-D";
 GT2_INPUT_SHAFT_ROUND_D = is_undef(GT2_INPUT_SHAFT_ROUND_D)
     ? GT2_D_AXIS_D
     : GT2_INPUT_SHAFT_ROUND_D;
+// The upper D key only remains outside the male rotor long enough to bridge
+// the blind socket and the round transition. Keep this in the shared pair
+// parameters so the center carrier cannot grow a second long D shaft by
+// accident.
+GT2_INPUT_SHAFT_UPPER_D_EXTERNAL = is_undef(
+    GT2_INPUT_SHAFT_UPPER_D_EXTERNAL
+)
+    ? 0.40
+    : GT2_INPUT_SHAFT_UPPER_D_EXTERNAL;
+GT2_INPUT_SHAFT_TRANSITION_OVERLAP = is_undef(
+    GT2_INPUT_SHAFT_TRANSITION_OVERLAP
+)
+    ? 0.20
+    : GT2_INPUT_SHAFT_TRANSITION_OVERLAP;
 GT2_INPUT_SLEEVE_D_BORE_CLEARANCE = is_undef(
     GT2_INPUT_SLEEVE_D_BORE_CLEARANCE
 )
