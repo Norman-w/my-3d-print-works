@@ -8,8 +8,9 @@ import {
   focusCenterClutch,
   playCenterClutchDemo,
   onPartLoaded,
+  setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js";
+} from "./js/cabinet-chain-play.js?v=center-clutch-demo-2";
 //#endregion
 
 //#region 常量/配置
@@ -138,10 +139,11 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/14_front_timing_pulley_candidate",
   "cabinet-clutch/15_front_pinion_candidate",
   "cabinet-clutch/16_drawer_linear_rack_candidate",
-  // Keep the authored snake-chain path visible as a low-opacity spatial
-  // reference.  The native shoe support arm terminates at this chain datum;
-  // without these parts the center view can look vertically misregistered even
-  // when the X/Y/Z contract is correct.
+  // Keep the authored snake-chain assets available as a low-opacity spatial
+  // reference.  setCenterClutchPreviewFocus() masks these 370-link assets to
+  // the few links around the contract's chain-support datum, so the shoe is
+  // visibly carried by the snake layer without burying the clutch in a full
+  // cabinet-wide chain ribbon.
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
@@ -337,6 +339,17 @@ function applyTreePosition({ persist = false } = {}) {
 
 function applyViewsPosition({ persist = false } = {}) {
   state.viewsPosition = applyFloatingPosition(els.viewPanel, state.viewsPosition, saveViewsPosition, { persist });
+}
+
+function placeCenterClutchViewPanel() {
+  if (!els.viewPanel) return;
+  const width = els.viewPanel.offsetWidth || 280;
+  state.viewsPosition = clampFloatingPosition(
+    els.viewPanel,
+    window.innerWidth - width - FLOATING_PANEL_MARGIN,
+    FLOATING_PANEL_MARGIN,
+  );
+  applyViewsPosition();
 }
 
 function setMeta(text) {
@@ -1301,12 +1314,14 @@ async function applyViewPreset(name) {
 
   const applied = await applyViewVisibility(focusIds, contextIds, request, !profile);
   if (!applied || request !== state.viewRequest) return;
+  setCenterClutchPreviewFocus(viewName === "center-clutch");
   state.viewProfile = profile ? viewName : null;
   const frameIds = profile?.frame
     ? new Set(listingParts.filter(profile.frame).map((part) => part.id))
     : focusIds;
   const focusBox = profile ? viewBox(frameIds.size ? frameIds : focusIds) : null;
   frameBox(focusBox || viewBox(), viewName);
+  if (viewName === "center-clutch") placeCenterClutchViewPanel();
 }
 //#endregion
 

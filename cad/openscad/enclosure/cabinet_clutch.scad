@@ -2524,9 +2524,14 @@ module clutch_detail() {
     row = selected_row();
     x = clutch_col_x(col);
     z = DRIVE_AXIS_Z;
-    if (is_center_gt2_station(col, row))
+    if (is_center_gt2_station(col, row)) {
         center_gt2_clutch(col, row, ENGAGED);
-    else if (SHOW_LEGACY_STATIONS)
+        // The center detail must show the real selector shoe/support bridge as
+        // well as the carrier.  The assembly branch emits the shoe separately
+        // to keep it as one browser part; this detail branch owns the complete
+        // first-article close-up and therefore adds it here exactly once.
+        selected_center_selector_shoe_part();
+    } else if (SHOW_LEGACY_STATIONS)
         translate([0, 0, -CLUTCH_EXPLODE])
             clutch_station(col, row, ENGAGED, true);
     if (CLUTCH_EXPLODE > 0

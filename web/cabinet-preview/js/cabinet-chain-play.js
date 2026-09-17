@@ -127,8 +127,10 @@ const CENTER_DEMO_APPROACH_SECONDS = 0.80;
 const CENTER_DEMO_ENGAGE_SECONDS = 1.10;
 const CENTER_DEMO_HOLD_SECONDS = 0.80;
 const CENTER_DEMO_RELEASE_SECONDS = 1.20;
-const CENTER_DEMO_SHOE_RELEASE_OFFSET_MM = -6.00;
-const CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM = 6.00;
+// Display-only span around the actual chain-support projection.  The center
+// path index is derived from centerClutch.selectorShoeChainAttach* below; no
+// second hard-coded mechanical coordinate is introduced here.
+const CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN = 4;
 const CURRENT_CLUTCH_ROW = 2;
 const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
@@ -186,6 +188,7 @@ const play = {
     engagement: 0,
     phase: "idle",
   },
+  centerClutchChainFocus: false,
   playing: true,
   dir: 1,
   motorHz: HZ_STEPS[DEFAULT_HZ_INDEX],
@@ -402,6 +405,71 @@ function scheme1StationLabel(index) {
   const station = play.scheme1.stations[index];
   if (!station) return "待机";
   return `R${station.row + 1}C${station.col + 1}`;
+}
+
+function centerClutchShoeOffset(mode) {
+  const tangent = Math.abs(Number(
+    play.currentClutch.contract?.selectorShoeTangentOffsetMm,
+  ));
+  if (!Number.isFinite(tangent) || tangent <= 0) return 0;
+  return mode === "engage" ? tangent : -tangent;
+}
+
+function centerDemoTravelText() {
+  const stroke = Number(play.currentClutch.contract?.strokeMm);
+  const engagement = Math.min(1, Math.max(0, Number(play.centerDemo.engagement) || 0));
+  if (!Number.isFinite(stroke)) return "0.00/0.00 mm";
+  return `${(stroke * engagement).toFixed(2)}/${stroke.toFixed(2)} mm`;
+}
+
+function centerDemoStatusText() {
+  const labels = {
+    approach: "M_release → M_engage 磁力靴到位",
+    engage: "M_engage 推动公轮 +Y 接合",
+    hold: "已接合保持",
+    release: "M_release 拉回公轮 +Y 开位",
+    idle: "开位",
+  };
+  return `中心离合演示 · ${labels[play.centerDemo.phase] || "开位"} · 滑架 +Y ${centerDemoTravelText()}`;
+}
+
+function updateCenterDemoStatus() {
+  scheme1Status(centerDemoStatusText());
+}
+
+function centerClutchChainSupportPinIndex() {
+  const path = play.path;
+  const contract = play.currentClutch.contract;
+  if (!path?.count || !contract) return -1;
+  const x = Number(contract.selectorShoeChainAttachXMm);
+  // Native contract Y maps to the authored X/Z chain path's Z coordinate;
+  // native contract Z is the chain layer's world -Y and is not the path Z.
+  const pathZ = Number(contract.selectorShoeChainAttachYMm);
+  const chainY = Number(play.motion?.chainY);
+  if (![x, pathZ, chainY].every(Number.isFinite)) return -1;
+  const projection = projectPoint(path, x, chainY, pathZ);
+  const pitch = Number(play.motion?.p) || path.length / path.count;
+  return ((Math.round(projection.s / pitch) % path.count) + path.count) % path.count;
+}
+
+function isNearCircularIndex(index, center, halfSpan, count) {
+  const distance = Math.abs(index - center);
+  return Math.min(distance, count - distance) <= halfSpan;
+}
+
+function applyCenterClutchChainVisibility() {
+  const count = play.path?.count || 0;
+  const center = centerClutchChainSupportPinIndex();
+  const focused = play.centerClutchChainFocus && count > 0 && center >= 0;
+  for (const part of play.chain) {
+    if (!focused) {
+      part.group.visible = true;
+      continue;
+    }
+    const index = Number(part.pinIndex);
+    part.group.visible = Number.isFinite(index)
+      && isNearCircularIndex(index, center, CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN, count);
+  }
 }
 
 function validateCenterClutchContract(contract) {
@@ -1906,13 +1974,7 @@ function setCenterDemoPhase(phase) {
   const demo = play.centerDemo;
   if (demo.phase === phase) return;
   demo.phase = phase;
-  const labels = {
-    approach: "中心离合演示 · M_release → M_engage 磁力靴到位",
-    engage: "中心离合演示 · 开位 → 公轮上移永磁接合",
-    hold: "中心离合演示 · 已接合保持",
-    release: "中心离合演示 · 永磁释放 → 开位",
-  };
-  scheme1Status(labels[phase] || "中心离合演示");
+  updateCenterDemoStatus();
 }
 
 function tickCenterClutchDemo(dt) {
@@ -1928,10 +1990,11 @@ function tickCenterClutchDemo(dt) {
     demo.engagement = 0;
     const t = smoothStep(demo.elapsed / CENTER_DEMO_APPROACH_SECONDS);
     poseCenterDemoShoe(
-      CENTER_DEMO_SHOE_RELEASE_OFFSET_MM
-        + (CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM
-          - CENTER_DEMO_SHOE_RELEASE_OFFSET_MM) * t,
+      centerClutchShoeOffset("release")
+        + (centerClutchShoeOffset("engage")
+          - centerClutchShoeOffset("release")) * t,
     );
+    updateCenterDemoStatus();
     return;
   }
   if (demo.elapsed < engageEnd) {
@@ -1939,13 +2002,15 @@ function tickCenterClutchDemo(dt) {
     demo.engagement = smoothStep(
       (demo.elapsed - approachEnd) / CENTER_DEMO_ENGAGE_SECONDS,
     );
-    poseCenterDemoShoe(CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM);
+    poseCenterDemoShoe(centerClutchShoeOffset("engage"));
+    updateCenterDemoStatus();
     return;
   }
   if (demo.elapsed < holdEnd) {
     setCenterDemoPhase("hold");
     demo.engagement = 1;
-    poseCenterDemoShoe(CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM);
+    poseCenterDemoShoe(centerClutchShoeOffset("engage"));
+    updateCenterDemoStatus();
     return;
   }
   if (demo.elapsed < releaseEnd) {
@@ -1957,18 +2022,19 @@ function tickCenterClutchDemo(dt) {
       (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
     );
     poseCenterDemoShoe(
-      CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM
-        + (CENTER_DEMO_SHOE_RELEASE_OFFSET_MM
-          - CENTER_DEMO_SHOE_ENGAGE_OFFSET_MM) * t,
+      centerClutchShoeOffset("engage")
+        + (centerClutchShoeOffset("release")
+          - centerClutchShoeOffset("engage")) * t,
     );
+    updateCenterDemoStatus();
     return;
   }
   demo.active = false;
   demo.engagement = 0;
   demo.elapsed = 0;
   demo.phase = "idle";
-  poseCenterDemoShoe(CENTER_DEMO_SHOE_RELEASE_OFFSET_MM);
-  scheme1Status("中心离合演示完成 · 已回到开位");
+  poseCenterDemoShoe(centerClutchShoeOffset("release"));
+  scheme1Status(`中心离合演示完成 · 已回到开位 · 滑架 +Y ${centerDemoTravelText()}`);
 }
 
 function currentClutchEngagement() {
@@ -2120,6 +2186,7 @@ async function bindChainMesh(item) {
   const offsetMm = chainOffsetMm();
   for (const part of added) poseChainPart(part, offsetMm);
   replaceMesh(item, group);
+  applyCenterClutchChainVisibility();
 }
 
 function updateHzLabel() {
@@ -2216,6 +2283,11 @@ export function focusCenterClutch() {
   return snapped;
 }
 
+export function setCenterClutchPreviewFocus(enabled) {
+  play.centerClutchChainFocus = Boolean(enabled);
+  applyCenterClutchChainVisibility();
+}
+
 export function playCenterClutchDemo() {
   play.centerViewRequested = true;
   if (!play.ready || !play.scheme1.ready || !play.currentClutch.contract) {
@@ -2226,7 +2298,7 @@ export function playCenterClutchDemo() {
     scheme1Status("中心离合演示不可用：缺少 R3C3 站点");
     return false;
   }
-  poseCenterDemoShoe(CENTER_DEMO_SHOE_RELEASE_OFFSET_MM);
+  poseCenterDemoShoe(centerClutchShoeOffset("release"));
   play.playing = false;
   play.centerDemo.active = true;
   play.centerDemo.elapsed = 0;
