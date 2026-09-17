@@ -41,7 +41,6 @@ PRINTED_PARTS = {
     "center_input_carriage",
     "center_output_rotor",
     "center_output_cage",
-    "center_guide_rails",
     "center_stops",
     "center_mechanism_plate",
     "center_selector_shoe",
@@ -260,6 +259,7 @@ def assert_watertight(report: dict[str, object], label: str) -> None:
 
 def validate_contract(contract: Contract) -> None:
     expected = {
+        "centerClutchVerticalLiftMm": 5.00,
         "openGapMm": 0.60,
         "dogInsertionMm": 2.40,
         "strokeMm": 3.00,
@@ -271,6 +271,13 @@ def validate_contract(contract: Contract) -> None:
         "dogPocketPhaseDeg": 60.00,
         "selectorTriggerSpacingMm": 12.00,
         "guideRunningClearanceMm": 0.30,
+        "guideRunningClearanceDiametralMm": 0.30,
+        "guideRodDiameterMm": 3.00,
+        "guideRodCaptureMm": 0.80,
+        "guideBushingIdMm": 3.30,
+        "guideBushingOdMm": 6.40,
+        "guideBushingLengthMm": 6.00,
+        "guideBushingLeadInLengthMm": 0.45,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
@@ -284,7 +291,7 @@ def validate_contract(contract: Contract) -> None:
         "guideRailZOffsetMm": 8.00,
         "stopPadWidthMm": 4.00,
         "stopPadXOffsetMm": 0.60,
-        "captureShoeOuterMm": 5.20,
+        "captureShoeOuterMm": 6.40,
         "captureShoeLengthMm": 6.00,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
@@ -301,9 +308,28 @@ def validate_contract(contract: Contract) -> None:
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
         "selectorShoeTangentOffsetMm": 6.00,
-        "selectorShoeNormalOffsetMm": -6.50,
-        "selectorShoeFrontClearanceMm": 0.70,
-        "selectorShoeRearProjectionMm": 2.55,
+        "selectorShoeNormalOffsetMm": -9.20,
+        "selectorShoeTargetYMm": 139.80,
+        "selectorShoeZMm": -82.2208,
+        "selectorShoeAnchorXMm": 146.00,
+        "selectorShoeAnchorYMm": 139.80,
+        "selectorShoeAnchorZMm": -82.2208,
+        "selectorShoeMagnetFaceOffsetMm": 2.20,
+        "selectorShoeMagnetFaceYMm": 142.00,
+        "selectorShoeTriggerClearanceMm": 0.40,
+        "selectorShoeChainAttachYMm": 149.00,
+        "selectorShoeChainAttachZMm": -75.00,
+        "selectorShoeSupportXOffsetMm": 13.00,
+        "selectorShoeSupportXWidthMm": 2.40,
+        "selectorShoeSupportChainYOverhangMm": 1.20,
+        "selectorShoeSupportChainZT": 2.40,
+        "selectorShoeSupportBridgeOverlapMm": 0.30,
+        "selectorShoeSupportDropMm": 9.20,
+        "selectorShoeSupportReachMm": 5.92084,
+        "selectorShoeBodyWidthMm": 17.50,
+        "selectorShoeBodyDepthMm": 5.60,
+        "selectorShoeBodyHeightMm": 4.40,
+        "selectorShoePocketRimHeightMm": 0.35,
         "inputShaftStartMm": -10.90,
         "inputShaftLengthMm": 13.90,
         "outputShaftStartMm": -3.40,
@@ -313,12 +339,18 @@ def validate_contract(contract: Contract) -> None:
     }
     if contract.get("axis") != "+Y" or contract.get("role") != "input/output":
         fail("中心离合不是 +Y input/output 契约")
+    if contract.get("verticalLayoutMode") != "center-clutch-lift":
+        fail("中心离合没有使用整体上移的垂直布局")
     if contract.get("actuation") != "permanent-magnet":
         fail("中心离合不是纯永磁动作契约")
     if contract.get("engageOnlyWhenStopped") is not True:
         fail("中心离合没有停稳接合门槛")
     if contract.get("releaseBeforeReturn") is not True:
         fail("中心离合没有释放后返回门槛")
+    if contract.get("selectorShoeCoordinateFrame") != "native-world":
+        fail("磁力靴必须使用原生世界坐标")
+    if contract.get("selectorShoeMagnetAxis") != "+Y":
+        fail("磁力靴磁面必须朝世界 +Y")
     for key, value in expected.items():
         actual = number(contract, key)
         if not close(actual, value, 0.001):
@@ -343,6 +375,26 @@ def validate_contract(contract: Contract) -> None:
         0.001,
     ):
         fail("磁铁非接触余量不是由槽底余量推导")
+    if not close(
+        number(contract, "maleBottomYMm"), number(contract, "inputBaseYMm"), 0.001
+    ):
+        fail("公轮底部基准没有和输入公轮基准统一")
+    if not close(
+        number(contract, "selectorShoeMagnetFaceYMm")
+        + number(contract, "selectorShoeTriggerClearanceMm"),
+        number(contract, "maleBottomYMm"),
+        0.001,
+    ):
+        fail("磁力靴磁面没有落在公轮底部下方的触发间隙")
+    if not close(
+        number(contract, "selectorShoeTargetYMm")
+        + number(contract, "selectorShoeMagnetFaceOffsetMm"),
+        number(contract, "selectorShoeMagnetFaceYMm"),
+        0.001,
+    ):
+        fail("磁力靴磁面 Y 没有由锚点和面偏置推导")
+    if number(contract, "bearingCountPerRotor") != 2:
+        fail("每个转子必须配置两枚轴承")
 
     if number(contract, "bearingSeatDiameterMm") <= BEARING_NOMINAL_OD_MM:
         fail("轴承座没有给 3x6x2 外径留装配间隙")
@@ -393,14 +445,24 @@ def validate_contract(contract: Contract) -> None:
         )
         expect_at_least(clearance, CLEARANCE_FLOOR_MM, f"{label} 到长花键径向余量")
 
-    if number(contract, "captureShoeOuterMm") <= number(
-        contract, "guideRailWidthMm"
-    ) + 2 * number(contract, "guideRunningClearanceMm"):
-        fail("捕获滑靴没有包住导轨运行间隙")
+    if not close(
+        number(contract, "guideBushingIdMm"),
+        number(contract, "guideRodDiameterMm")
+        + number(contract, "guideRunningClearanceDiametralMm"),
+        0.001,
+    ):
+        fail("圆杆衬套内径没有由直径间隙推导")
+    if number(contract, "guideBushingOdMm") <= number(contract, "guideBushingIdMm") + 2.0:
+        fail("圆杆衬套壁厚不足")
+    if not close(
+        number(contract, "captureShoeOuterMm"),
+        number(contract, "guideBushingOdMm"),
+        0.001,
+    ):
+        fail("兼容滑靴外径没有映射到圆杆衬套外径")
     capture_wall = (
-        number(contract, "captureShoeOuterMm")
-        - number(contract, "guideRailWidthMm")
-        - 2 * number(contract, "guideRunningClearanceMm")
+        number(contract, "guideBushingOdMm")
+        - number(contract, "guideBushingIdMm")
     ) / 2
     expect_at_least(capture_wall, 0.60, "捕获滑靴单侧实体壁厚")
 
@@ -425,14 +487,32 @@ def validate_contract(contract: Contract) -> None:
         contract, "plateWidthMm"
     ) / 2:
         fail("机构板皮带通道穿出机构板侧边")
-    if contract.get("selectorShoeCoordinateFrame") != "native-world":
-        fail("磁力靴必须使用原生世界坐标")
     if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
         fail("磁力靴零件 ID 不是原生中心离合零件")
     if number(contract, "selectorShoeTangentOffsetMm") != 6.0:
         fail("M_engage 选择指切向基准必须位于磁力靴中心前 6 mm")
-    if number(contract, "selectorShoeFrontClearanceMm") < 0.70:
-        fail("磁力靴到输入转子前侧间隙不足")
+    if not close(
+        number(contract, "selectorShoeAnchorXMm"),
+        number(contract, "axisXMm") + 6.0,
+        0.001,
+    ):
+        fail("磁力靴 M_engage 没有对准公轮轴心")
+    if not close(
+        number(contract, "selectorShoeAnchorYMm"),
+        number(contract, "selectorShoeTargetYMm"),
+        0.001,
+    ) or not close(
+        number(contract, "selectorShoeAnchorZMm"),
+        number(contract, "selectorShoeZMm"),
+        0.001,
+    ):
+        fail("磁力靴原生锚点没有和目标基准统一")
+    if number(contract, "selectorShoeSupportXWidthMm") <= 0:
+        fail("磁力靴链条支撑臂宽度无效")
+    if number(contract, "selectorShoeSupportDropMm") <= 0 or number(
+        contract, "selectorShoeSupportReachMm"
+    ) <= 0:
+        fail("磁力靴链条支撑臂没有连接到蛇链平面")
 
     inner_upright_x = number(contract, "carriageUprightCenterXOffsetMm") - number(
         contract, "carriageUprightWidthMm"
@@ -488,20 +568,29 @@ def validate_sweep(
     rail_x_offset = number(contract, "guideRailXOffsetMm")
     expect_close(
         rail_bounds["min"][0],
-        axis_x - rail_x_offset - rail_w / 2,
-        "左导轨外侧 X 基准",
+        axis_x - rail_x_offset - number(contract, "guideRodDiameterMm") / 2,
+        "左导向杆外侧 X 基准",
     )
     expect_close(
         rail_bounds["max"][0],
-        axis_x + rail_x_offset + rail_w / 2,
-        "右导轨外侧 X 基准",
+        axis_x + rail_x_offset + number(contract, "guideRodDiameterMm") / 2,
+        "右导向杆外侧 X 基准",
     )
-    expect_close(rail_bounds["min"][1], rail_y0, "导轨下端 Y 基准")
-    expect_close(rail_bounds["max"][1], rail_y1, "导轨上端 Y 基准")
+    expect_close(
+        rail_bounds["min"][1],
+        number(contract, "guideRodY0Mm"),
+        "导向杆捕获下端 Y 基准",
+    )
+    expect_close(
+        rail_bounds["max"][1],
+        number(contract, "guideRodY1Mm"),
+        "导向杆捕获上端 Y 基准",
+    )
 
     block_half_x = number(contract, "bearingBlockWidthMm") / 2
-    rail_inner_clear = rail_x_offset - rail_w / 2 - block_half_x
-    expect_at_least(rail_inner_clear, CLEARANCE_FLOOR_MM, "导轨到轴承块的横向净空")
+    rod_radius = number(contract, "guideRodDiameterMm") / 2
+    rail_inner_clear = rail_x_offset - rod_radius - block_half_x
+    expect_at_least(rail_inner_clear, CLEARANCE_FLOOR_MM, "导向杆到轴承块的横向净空")
 
     for engaged in (False, True):
         carriage = bounds(reports[("center_input_carriage", engaged)])
@@ -573,6 +662,10 @@ def validate_intermediate_sweep(
         (
             "center_carriage_rail_collision",
             "滑架在中间行程与双侧导轨仍有实体交集",
+        ),
+        (
+            "center_selector_male_collision",
+            "磁力靴在中间行程与公轮仍有实体交集",
         ),
         (
             "center_stops_carriage_collision",
@@ -788,42 +881,77 @@ def validate_interference(
         expect_close(actual_max, expected_union_max, f"{role} 双轴承参考件最大 Y")
 
     # The native shoe is authored in the same world frame. Its square-marked
-    # M_engage pocket is at axis X, while the complete shoe is offset +6 mm.
-    shoe_center_x = (shoe["min"][0] + shoe["max"][0]) / 2
-    shoe_center_y = (shoe["min"][1] + shoe["max"][1]) / 2
+    # M_engage pocket is at axis X, while the body is offset +6 mm. The STL
+    # also contains the chain support arm, so its overall Y/Z midpoint is not
+    # a valid shoe anchor; use the explicit contract anchor instead.
+    shoe_anchor_x = number(contract, "selectorShoeAnchorXMm")
+    shoe_anchor_y = number(contract, "selectorShoeAnchorYMm")
+    shoe_anchor_z = number(contract, "selectorShoeAnchorZMm")
     expect_close(
-        shoe_center_x,
+        shoe_anchor_x,
         axis_x + number(contract, "selectorShoeTangentOffsetMm"),
-        "原生磁力靴 X 基准",
+        "原生磁力靴 X 锚点",
     )
     expect_close(
-        shoe_center_y,
+        shoe_anchor_y,
         number(contract, "selectorShoeTargetYMm"),
-        "原生磁力靴 Y 基准",
+        "原生磁力靴 Y 锚点",
+    )
+    expect_close(
+        shoe_anchor_z,
+        number(contract, "selectorShoeZMm"),
+        "原生磁力靴 Z 锚点",
+    )
+    shoe_body_half_w = number(contract, "selectorShoeBodyWidthMm") / 2
+    shoe_body_half_d = number(contract, "selectorShoeBodyDepthMm") / 2
+    shoe_body_half_h = number(contract, "selectorShoeBodyHeightMm") / 2
+    expect_close(
+        shoe["min"][0],
+        shoe_anchor_x - shoe_body_half_w,
+        "磁力靴本体最小 X",
+    )
+    expect_close(
+        shoe["max"][0],
+        shoe_anchor_x + shoe_body_half_w,
+        "磁力靴本体最大 X",
+    )
+    expect_close(
+        shoe["min"][1],
+        shoe_anchor_y - shoe_body_half_h,
+        "磁力靴本体最小 Y",
+    )
+    expect_close(
+        shoe["max"][1],
+        number(contract, "selectorShoeChainAttachYMm")
+        + number(contract, "selectorShoeSupportChainYOverhangMm"),
+        "磁力靴链条支撑 Y 上限",
     )
     expect_close(
         shoe["min"][2],
-        number(contract, "selectorShoeZMm")
-        - number(contract, "selectorShoeRearProjectionMm"),
-        "原生磁力靴最近后侧面 Z",
+        shoe_anchor_z - shoe_body_half_d,
+        "磁力靴本体最小 Z",
     )
-    shoe_front_clearance = shoe["min"][2] - (
-        axis_z + number(contract, "inputTipRadiusMm")
+    expect_close(
+        shoe["max"][2],
+        number(contract, "selectorShoeChainAttachZMm")
+        + number(contract, "selectorShoeSupportChainZT") / 2,
+        "磁力靴链条支撑 Z 上限",
     )
+    shoe_trigger_gap = number(contract, "maleBottomYMm") - number(
+        contract, "selectorShoeMagnetFaceYMm"
+    )
+    expect_close(
+        shoe_trigger_gap,
+        number(contract, "selectorShoeTriggerClearanceMm"),
+        "磁力靴 M_engage 到公轮底部触发间隙",
+    )
+    support_min_x = shoe_anchor_x + number(
+        contract, "selectorShoeSupportXOffsetMm"
+    ) - number(contract, "selectorShoeSupportXWidthMm") / 2
     expect_at_least(
-        shoe_front_clearance,
-        number(contract, "selectorShoeFrontClearanceMm"),
-        "磁力靴到输入公轮前侧净空",
-    )
-    expect_at_least(
-        shoe["min"][1] - carriage_engaged["max"][1],
+        support_min_x - output["max"][0],
         CLEARANCE_FLOOR_MM,
-        "合位磁力靴到滑架顶部净空",
-    )
-    expect_at_least(
-        shoe["min"][2] - output["max"][2],
-        CLEARANCE_FLOOR_MM,
-        "磁力靴到输出母轮前侧净空",
+        "磁力靴支撑臂到输出母轮横向净空",
     )
 
     plate = bounds(reports[("center_mechanism_plate", False)])
@@ -855,7 +983,7 @@ def validate_interference(
         "cageRotorGap": cage_rotor_gap,
         "shaftGapOpen": shaft_gap_open,
         "shaftGapEngaged": shaft_gap_engaged,
-        "shoeFrontClearance": shoe_front_clearance,
+        "shoeTriggerGap": shoe_trigger_gap,
         "uprightRadialClearance": number(
             contract, "carriageUprightRadialClearanceMm"
         ),
@@ -933,6 +1061,18 @@ def main() -> int:
                 "磁力靴与双侧导轨仍有实体交集",
             ),
             (
+                "center_selector_male_collision",
+                False,
+                "center_selector_male_collision_open.stl",
+                "磁力靴开位与公轮仍有实体交集",
+            ),
+            (
+                "center_selector_male_collision",
+                True,
+                "center_selector_male_collision_engaged.stl",
+                "磁力靴合位与公轮仍有实体交集",
+            ),
+            (
                 "center_carriage_rail_collision",
                 False,
                 "center_carriage_rail_collision_open.stl",
@@ -995,7 +1135,7 @@ def main() -> int:
         f"stroke={metrics['stroke']:.2f}mm, "
         f"bottom={metrics['bottomClearance']:.2f}mm, "
         f"guide_clear={number(contract, 'guideRunningClearanceMm'):.2f}mm, "
-        f"shoe_front={metrics['shoeFrontClearance']:.2f}mm, "
+        f"shoe_trigger_gap={metrics['shoeTriggerGap']:.2f}mm, "
         f"upright_radial={metrics['uprightRadialClearance']:.2f}mm; "
         "输入/输出不漂移、轴承盲座、独立 D 轴、双导轨、实体止挡、原生磁力靴和机构板皮带通道均已检查"
     )

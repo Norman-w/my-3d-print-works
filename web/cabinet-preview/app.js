@@ -6,6 +6,7 @@ import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import {
   attachCabinetChainPlay,
   focusCenterClutch,
+  playCenterClutchDemo,
   onPartLoaded,
   tickPlay,
 } from "./js/cabinet-chain-play.js";
@@ -166,6 +167,7 @@ const els = {
   hzRange: document.getElementById("hz-range"),
   hzOut: document.getElementById("hz-out"),
   scheme1Out: document.getElementById("scheme1-status"),
+  centerClutchDemo: document.getElementById("center-clutch-demo"),
   fwd: document.getElementById("fwd"),
   stop: document.getElementById("stop"),
   rev: document.getElementById("rev"),
@@ -1326,6 +1328,9 @@ function bindPreviewControls() {
       void applyViewPreset(button.dataset.view);
     });
   }
+  els.centerClutchDemo?.addEventListener("click", () => {
+    playCenterClutchDemo();
+  });
   els.treeCollapse?.addEventListener("click", () => {
     state.treeCollapsed = !state.treeCollapsed;
     saveTreeCollapsed();

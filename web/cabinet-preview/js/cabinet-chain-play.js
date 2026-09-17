@@ -117,6 +117,9 @@ const SCHEME1_PHASE = {
 const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
 const SCHEME1_ENGAGE_SECONDS = 0.28;
 const SCHEME1_RELEASE_SECONDS = 0.24;
+const CENTER_DEMO_ENGAGE_SECONDS = 1.20;
+const CENTER_DEMO_HOLD_SECONDS = 0.80;
+const CENTER_DEMO_RELEASE_SECONDS = 1.20;
 const CURRENT_CLUTCH_ROW = 2;
 const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
@@ -167,6 +170,12 @@ const play = {
     cycleStartPowerTurns: 0,
     cycleStartOutputTurns: 0,
     cycleProgressTurns: 0,
+  },
+  centerDemo: {
+    active: false,
+    elapsed: 0,
+    engagement: 0,
+    phase: "idle",
   },
   playing: true,
   dir: 1,
@@ -392,6 +401,8 @@ function validateCenterClutchContract(contract) {
     "axisZMm",
     "axis",
     "role",
+    "verticalLayoutMode",
+    "centerClutchVerticalLiftMm",
     "openGapMm",
     "dogInsertionMm",
     "strokeMm",
@@ -400,6 +411,7 @@ function validateCenterClutchContract(contract) {
     "magnetNonContactClearanceMm",
     "femaleMagnetProjectionMm",
     "magnetNominalDiameterMm",
+    "maleBottomYMm",
     "actuation",
     "engageOnlyWhenStopped",
     "releaseBeforeReturn",
@@ -409,8 +421,19 @@ function validateCenterClutchContract(contract) {
     "selectorShoeNormalOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeZMm",
-    "selectorShoeFrontClearanceMm",
-    "selectorShoeRearProjectionMm",
+    "selectorShoeAnchorXMm",
+    "selectorShoeAnchorYMm",
+    "selectorShoeAnchorZMm",
+    "selectorShoeMagnetFaceOffsetMm",
+    "selectorShoeMagnetFaceYMm",
+    "selectorShoeTriggerClearanceMm",
+    "selectorShoeMagnetAxis",
+    "selectorShoeChainAttachYMm",
+    "selectorShoeChainAttachZMm",
+    "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportXWidthMm",
+    "selectorShoeSupportDropMm",
+    "selectorShoeSupportReachMm",
   ];
   if (!contract || typeof contract !== "object") {
     throw new Error("缺少 centerClutch 机械契约");
@@ -421,6 +444,10 @@ function validateCenterClutchContract(contract) {
   }
   if (contract.axis !== "+Y" || contract.role !== "input/output") {
     throw new Error("centerClutch 轴向/角色契约不匹配");
+  }
+  if (contract.verticalLayoutMode !== "center-clutch-lift"
+      || Math.abs(Number(contract.centerClutchVerticalLiftMm) - 5) > 0.001) {
+    throw new Error("centerClutch 没有使用整体上移 5 mm 的首件布局");
   }
   if (contract.actuation !== "permanent-magnet"
     || contract.engageOnlyWhenStopped !== true
@@ -436,18 +463,31 @@ function validateCenterClutchContract(contract) {
     "magnetNonContactClearanceMm",
     "femaleMagnetProjectionMm",
     "magnetNominalDiameterMm",
+    "centerClutchVerticalLiftMm",
+    "maleBottomYMm",
     "selectorShoeTangentOffsetMm",
     "selectorShoeTargetYMm",
-    "selectorShoeFrontClearanceMm",
-    "selectorShoeRearProjectionMm",
+    "selectorShoeAnchorXMm",
+    "selectorShoeAnchorYMm",
+    "selectorShoeMagnetFaceOffsetMm",
+    "selectorShoeMagnetFaceYMm",
+    "selectorShoeTriggerClearanceMm",
+    "selectorShoeChainAttachYMm",
+    "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportXWidthMm",
+    "selectorShoeSupportDropMm",
+    "selectorShoeSupportReachMm",
   ]) {
     if (!Number.isFinite(Number(contract[key])) || Number(contract[key]) <= 0) {
       throw new Error(`centerClutch 尺寸无效: ${key}`);
     }
   }
   for (const key of [
+    "axisZMm",
     "selectorShoeNormalOffsetMm",
     "selectorShoeZMm",
+    "selectorShoeAnchorZMm",
+    "selectorShoeChainAttachZMm",
   ]) {
     if (!Number.isFinite(Number(contract[key]))) {
       throw new Error(`centerClutch 坐标无效: ${key}`);
@@ -472,12 +512,26 @@ function validateCenterClutchContract(contract) {
       - Number(contract.magnetNonContactClearanceMm)) > 0.001) {
     throw new Error("centerClutch magnet clearance derivation is invalid");
   }
+  if (Math.abs(Number(contract.maleBottomYMm)
+      - Number(contract.inputBaseYMm)) > 0.001
+      || Math.abs(Number(contract.selectorShoeMagnetFaceYMm)
+        + Number(contract.selectorShoeTriggerClearanceMm)
+        - Number(contract.maleBottomYMm)) > 0.001
+      || contract.selectorShoeMagnetAxis !== "+Y") {
+    throw new Error("centerClutch 磁力靴没有从公轮底部沿 +Y 保留触发间隙");
+  }
   if (contract.selectorShoePart !== CENTER_SELECTOR_SHOE_ID
       || contract.selectorShoeCoordinateFrame !== "native-world") {
     throw new Error("centerClutch 选择磁力靴必须是原生世界坐标零件");
   }
   if (Math.abs(Number(contract.selectorShoeTangentOffsetMm) - 6) > 0.001
-      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 6.5) > 0.001) {
+      || Math.abs(Number(contract.selectorShoeNormalOffsetMm) + 9.2) > 0.001
+      || Math.abs(Number(contract.selectorShoeAnchorXMm)
+        - Number(contract.axisXMm) - 6) > 0.001
+      || Math.abs(Number(contract.selectorShoeAnchorYMm)
+        - Number(contract.selectorShoeTargetYMm)) > 0.001
+      || Math.abs(Number(contract.selectorShoeAnchorZMm)
+        - Number(contract.selectorShoeZMm)) > 0.001) {
     throw new Error("centerClutch 磁力靴 R3C3 切向/法向基准不匹配");
   }
   return contract;
@@ -1460,10 +1514,15 @@ function bindNativeSelectorShoeMesh(item) {
 
   const geometry = item.mesh.geometry;
   geometry.computeBoundingBox();
-  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
-  geometry.translate(-center.x, -center.y, -center.z);
+  const contract = play.currentClutch.contract;
+  const anchor = new THREE.Vector3(
+    Number(contract.selectorShoeAnchorXMm),
+    Number(contract.selectorShoeAnchorYMm),
+    Number(contract.selectorShoeAnchorZMm),
+  );
+  geometry.translate(-anchor.x, -anchor.y, -anchor.z);
   const pivot = new THREE.Group();
-  pivot.position.copy(center);
+  pivot.position.copy(anchor);
   pivot.name = "native-center-selector-shoe";
   pivot.add(new THREE.Mesh(geometry, item.mesh.material));
   const group = new THREE.Group();
@@ -1474,7 +1533,7 @@ function bindNativeSelectorShoeMesh(item) {
     s: scheme.stationS[centerIndex],
     tangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
     normalOffset: Number(play.currentClutch.contract.selectorShoeNormalOffsetMm),
-    z: center.z,
+    z: anchor.z,
     restYaw: 0,
     native: true,
   };
@@ -1687,7 +1746,56 @@ function tickScheme1(dt) {
   return transportDistance;
 }
 
+function smoothStep(value) {
+  const t = Math.min(1, Math.max(0, value));
+  return t * t * (3 - 2 * t);
+}
+
+function setCenterDemoPhase(phase) {
+  const demo = play.centerDemo;
+  if (demo.phase === phase) return;
+  demo.phase = phase;
+  const labels = {
+    engage: "中心离合演示 · 开位 → 永磁接合",
+    hold: "中心离合演示 · 已接合保持",
+    release: "中心离合演示 · 永磁释放 → 开位",
+  };
+  scheme1Status(labels[phase] || "中心离合演示");
+}
+
+function tickCenterClutchDemo(dt) {
+  const demo = play.centerDemo;
+  if (!demo.active) return;
+  demo.elapsed += Math.max(0, dt);
+  const engageEnd = CENTER_DEMO_ENGAGE_SECONDS;
+  const holdEnd = engageEnd + CENTER_DEMO_HOLD_SECONDS;
+  const releaseEnd = holdEnd + CENTER_DEMO_RELEASE_SECONDS;
+  if (demo.elapsed < engageEnd) {
+    setCenterDemoPhase("engage");
+    demo.engagement = smoothStep(demo.elapsed / engageEnd);
+    return;
+  }
+  if (demo.elapsed < holdEnd) {
+    setCenterDemoPhase("hold");
+    demo.engagement = 1;
+    return;
+  }
+  if (demo.elapsed < releaseEnd) {
+    setCenterDemoPhase("release");
+    demo.engagement = 1 - smoothStep(
+      (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
+    );
+    return;
+  }
+  demo.active = false;
+  demo.engagement = 0;
+  demo.elapsed = 0;
+  demo.phase = "idle";
+  scheme1Status("中心离合演示完成 · 已回到开位");
+}
+
 function currentClutchEngagement() {
+  if (play.centerDemo.active) return play.centerDemo.engagement;
   if (!currentClutchDrivesDrawer()) return 0;
   const phase = play.scheme1.phase;
   if (phase === SCHEME1_PHASE.ENGAGE) {
@@ -1849,6 +1957,10 @@ function updateHzLabel() {
 }
 
 function setDir(dir) {
+  play.centerDemo.active = false;
+  play.centerDemo.elapsed = 0;
+  play.centerDemo.engagement = 0;
+  play.centerDemo.phase = "idle";
   if (dir === 0) {
     play.playing = false;
   } else {
@@ -1913,6 +2025,10 @@ export function attachCabinetChainPlay(host) {
 
 export function focusCenterClutch() {
   play.centerViewRequested = true;
+  play.centerDemo.active = false;
+  play.centerDemo.elapsed = 0;
+  play.centerDemo.engagement = 0;
+  play.centerDemo.phase = "idle";
   play.playing = false;
   const snapped = snapScheme1ToCenter();
   if (snapped) {
@@ -1920,6 +2036,26 @@ export function focusCenterClutch() {
   }
   updateHzLabel();
   return snapped;
+}
+
+export function playCenterClutchDemo() {
+  play.centerViewRequested = true;
+  if (!play.ready || !play.scheme1.ready || !play.currentClutch.contract) {
+    scheme1Status("中心离合演示等待运动契约加载…");
+    return false;
+  }
+  if (!snapScheme1ToCenter()) {
+    scheme1Status("中心离合演示不可用：缺少 R3C3 站点");
+    return false;
+  }
+  play.playing = false;
+  play.centerDemo.active = true;
+  play.centerDemo.elapsed = 0;
+  play.centerDemo.engagement = 0;
+  play.centerDemo.phase = "idle";
+  setCenterDemoPhase("engage");
+  updateHzLabel();
+  return true;
 }
 
 export async function onPartLoaded(item) {
@@ -2092,11 +2228,12 @@ export function holdScheme1Engaged() {
 
 export function tickPlay(dt) {
   if (!play.ready || !play.path) return;
+  tickCenterClutchDemo(dt);
   // Resolve the scheme first.  If INDEX reaches its station in this frame,
   // tickScheme1 changes the phase to ENGAGE before the transport datum is
   // advanced, so the selector and the snake belt stop on the same frame with
   // no one-frame overshoot.
-  const transportDistance = tickScheme1(dt);
+  const transportDistance = play.centerDemo.active ? 0 : tickScheme1(dt);
   // 方案1中，拨叉沿蛇形选择带到达目标后，选择带必须停稳；只有在
   // OPEN/CLOSE 完成并回到关闭基准、离合释放后，选择带才允许继续走位。
   // 这里用 tickScheme1 返回的“本帧实际弧长”更新电机转数，而不是再次按

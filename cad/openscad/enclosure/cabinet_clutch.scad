@@ -9,7 +9,8 @@
 // follower remains legacy-only; motor/rod mounts are parameterized
 // seal: none — this is a mechanism prototype, not a watertight enclosure
 // print_orientation: gears/pulleys flat with their axis vertical (+Y); center
-// carrier, rails and plate are separate PETG service parts
+// carrier, printed guide sleeves and plate are separate PETG service parts;
+// the two guide rods are purchased metal references
 // units: mm
 //
 // User/world coordinate contract (the canonical web view is from the rear):
@@ -85,6 +86,13 @@ GT2_GEAR_MESH_CLEARANCE = 0.32;
 CENTER_CLUTCH_TRAVEL_MM = is_undef(CENTER_CLUTCH_TRAVEL_MM)
     ? (ENGAGED ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0)
     : CENTER_CLUTCH_TRAVEL_MM;
+// The snake-chain selector shoe is already constrained by the existing chain
+// plane and cannot be lowered without putting the lowest chain layer into the
+// cabinet floor.  Lift the complete center clutch datum instead, preserving
+// the chain/motor mount and giving the shoe a real under-rotor approach.
+CENTER_CLUTCH_VERTICAL_LIFT_MM = is_undef(CENTER_CLUTCH_VERTICAL_LIFT_MM)
+    ? 5.00
+    : CENTER_CLUTCH_VERTICAL_LIFT_MM;
 //#endregion
 
 //#region 常量/配置
@@ -475,7 +483,8 @@ COLOR_AXIS_Z = "#3b82f6";
 // input male gear with a rounded-triangle/magnet nose enters the fixed output
 // female receiver above it. The female body also carries the 2GT rear pulley.
 // The pair is captured by cabinet_clutch_carrier.scad: two independent D
-// shafts, four 3x6x2 bearing references, dual rails, a removable plate and
+// shafts, four 3x6x2 bearing references, dual Ø3 guide rods with printed
+// sleeves, a removable plate and
 // hard stops. The other 24 legacy stations are intentionally suppressed until
 // this physical prototype is approved.
 //#endregion
@@ -624,29 +633,36 @@ CENTER_GT2_FRONT_PULLEY_Z =
 
 // The first selector shoe is a native world part, not a chain-frame STL
 // relocated by the browser. Its square-marked M_engage pocket is 6 mm toward
-// the selector tangent from the R3C3 axis; the magnetic face points toward
-// world -Z at the front side of the clutch rotor. Include the rim projection
-// in the Z datum so the stated clearance is to the nearest printed face.
+// the selector tangent from the R3C3 axis. The shoe is rotated so its blind
+// magnet faces point along world +Y, from below the male rotor. The trigger
+// datum is a 0.40 mm magnet-face gap below the male gear's open bottom; the
+// shoe's support arm reaches back to the existing snake-chain plane.
 CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM =
     GT2_ACTUATOR_TRIGGER_SPACING_MM / 2;
+CENTER_SELECTOR_SHOE_TRIGGER_CLEARANCE_MM = 0.40;
+CENTER_SELECTOR_SHOE_MAGNET_FACE_OFFSET_MM = CENTER_SELECTOR_SHOE_H / 2;
 CENTER_SELECTOR_SHOE_TARGET_Y_MM =
     center_gt2_male_base_y(CENTER_GT2_ROW)
-        + gt2_male_magnet_pocket_z0()
-        + GT2_MAGNET_POCKET_H / 2;
+        - CENTER_SELECTOR_SHOE_TRIGGER_CLEARANCE_MM
+        - CENTER_SELECTOR_SHOE_MAGNET_FACE_OFFSET_MM;
 CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM =
     CENTER_SELECTOR_SHOE_TARGET_Y_MM
         - world_row_center_y(CENTER_GT2_ROW);
-CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM = 0.70;
-CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM =
-    CENTER_SELECTOR_SHOE_H / 2 + CENTER_SELECTOR_SHOE_POCKET_RIM_H;
-CENTER_SELECTOR_SHOE_Z_MM =
-    center_gt2_z()
-        + gt2_male_tip_r()
-        + CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM
-        + CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM;
+CENTER_SELECTOR_SHOE_Z_MM = center_gt2_z();
+CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM = 13.00;
+CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM = 2.40;
+CENTER_SELECTOR_SHOE_SUPPORT_Y_T = 2.00;
+CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM = 1.20;
+CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T = 2.40;
+CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM = 0.30;
+CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM =
+    world_row_center_y(CENTER_GT2_ROW);
+CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM = SNAKE_CHAIN_CENTER_Z;
 
 function center_gt2_male_base_y(row) =
-    clutch_upper_open_y(row) - GT2_MALE_GEAR_T / 2;
+    clutch_upper_open_y(row)
+        + CENTER_CLUTCH_VERTICAL_LIFT_MM
+        - GT2_MALE_GEAR_T / 2;
 
 function center_gt2_male_tip_y(row) =
     center_gt2_male_base_y(row) + gt2_male_total_h();
@@ -2129,6 +2145,63 @@ module selected_center_selector_rail_collision_part() {
     }
 }
 
+// The selector shoe is a single printed part with a narrow support arm. The
+// arm intentionally leaves the magnetic shoe at the rotor's lower face while
+// reaching to the existing snake-chain plane at -Z; this is the mechanical
+// bridge that the old free-floating browser mesh did not contain.
+module center_clutch_selector_support_arm() {
+    x = clutch_col_x(CENTER_GT2_COL)
+        + CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM;
+    shoe_front_z = CENTER_SELECTOR_SHOE_Z_MM
+        + CENTER_SELECTOR_SHOE_D / 2;
+    bridge_z0 = shoe_front_z
+        - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM;
+    bridge_z1 = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
+        + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2;
+    support_y0 = CENTER_SELECTOR_SHOE_TARGET_Y_MM
+        - CENTER_SELECTOR_SHOE_SUPPORT_Y_T / 2;
+    support_y1 = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM
+        + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM;
+    color("#92a4b0")
+        union() {
+            // Depth bridge: overlap the shoe body by 0.30 mm and terminate
+            // inside the chain-plane support arm.
+            translate([
+                x - CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM / 2,
+                support_y0,
+                min(bridge_z0, bridge_z1)
+            ])
+                cube([
+                    CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM,
+                    CENTER_SELECTOR_SHOE_SUPPORT_Y_T,
+                    abs(bridge_z1 - bridge_z0)
+                ]);
+            // Vertical-in-Y drop: the chain link/roller bracket sees the
+            // support through its center datum rather than relying on gravity.
+            translate([
+                x - CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM / 2,
+                support_y0,
+                CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
+                    - CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2
+            ])
+                cube([
+                    CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM,
+                    support_y1 - support_y0,
+                    CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T
+                ]);
+        }
+}
+
+// Empty CSG witness used by the center first-article sweep. It is intentionally
+// separate from the selector/rail witness so the trigger gap is checked as a
+// real solid intersection at both travel endpoints.
+module selected_center_selector_male_collision_part() {
+    intersection() {
+        selected_center_selector_shoe_part();
+        center_gt2_male(CENTER_GT2_COL, CENTER_GT2_ROW, ENGAGED);
+    }
+}
+
 module selected_center_carriage_rail_collision_part() {
     intersection() {
         center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
@@ -2160,14 +2233,17 @@ module selected_center_guide_stop_collision_part() {
 
 module selected_center_selector_shoe_part() {
     color("#c8d3dc")
-        translate([
-            clutch_col_x(CENTER_GT2_COL)
-                + CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
-            CENTER_SELECTOR_SHOE_TARGET_Y_MM,
-            CENTER_SELECTOR_SHOE_Z_MM
-        ])
-            rotate([180, 0, 0])
-                center_clutch_selector_shoe();
+        union() {
+            translate([
+                clutch_col_x(CENTER_GT2_COL)
+                    + CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM,
+                CENTER_SELECTOR_SHOE_TARGET_Y_MM,
+                CENTER_SELECTOR_SHOE_Z_MM
+            ])
+                rotate([-90, 0, 0])
+                    center_clutch_selector_shoe();
+            center_clutch_selector_support_arm();
+        }
 }
 
 module selected_center_input_shaft_part() {
@@ -2474,6 +2550,8 @@ module clutch_scene_geometry() {
         selected_center_clutch_pair_collision_part();
     } else if (CLUTCH_PART == "center_selector_rail_collision") {
         selected_center_selector_rail_collision_part();
+    } else if (CLUTCH_PART == "center_selector_male_collision") {
+        selected_center_selector_male_collision_part();
     } else if (CLUTCH_PART == "center_carriage_rail_collision") {
         selected_center_carriage_rail_collision_part();
     } else if (CLUTCH_PART == "center_stops_carriage_collision") {
@@ -2557,9 +2635,12 @@ echo(
     "version=1",
     "axis=+Y",
     "role=input/output",
+    "verticalLayoutMode=center-clutch-lift",
+    str("centerClutchVerticalLiftMm=", CENTER_CLUTCH_VERTICAL_LIFT_MM),
     str("axisXMm=", clutch_col_x(CENTER_GT2_COL)),
     str("axisZMm=", center_gt2_z()),
     str("inputBaseYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)),
+    str("maleBottomYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)),
     str("outputBaseYMm=", center_gt2_female_base_y(CENTER_GT2_ROW)),
     str("openGapMm=", GT2_MOTHER_GAP),
     str("dogInsertionMm=", GT2_MOTHER_EFFECTIVE_INSERTION),
@@ -2583,6 +2664,18 @@ echo(
     str("guideRunningClearanceMm=", CENTER_CLUTCH_RAIL_CLEAR),
     str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)),
     str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)),
+    str("guideRodDiameterMm=", CENTER_CLUTCH_GUIDE_ROD_D),
+    str("guideRodCaptureMm=", CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
+    str("guideRodY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)
+        - CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
+    str("guideRodY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)
+        + CENTER_CLUTCH_GUIDE_ROD_CAPTURE),
+    str("guideBushingIdMm=", CENTER_CLUTCH_GUIDE_BUSHING_ID),
+    str("guideBushingOdMm=", CENTER_CLUTCH_GUIDE_BUSHING_OD),
+    str("guideBushingLengthMm=", CENTER_CLUTCH_GUIDE_BUSHING_L),
+    str("guideBushingLeadInLengthMm=", CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L),
+    str("guideRunningClearanceDiametralMm=",
+        CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL),
     str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
     str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
     str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)),
@@ -2641,8 +2734,43 @@ echo(
     str("selectorShoeNormalOffsetMm=", CENTER_SELECTOR_SHOE_NORMAL_OFFSET_MM),
     str("selectorShoeTargetYMm=", CENTER_SELECTOR_SHOE_TARGET_Y_MM),
     str("selectorShoeZMm=", CENTER_SELECTOR_SHOE_Z_MM),
-    str("selectorShoeFrontClearanceMm=", CENTER_SELECTOR_SHOE_FRONT_CLEARANCE_MM),
-    str("selectorShoeRearProjectionMm=", CENTER_SELECTOR_SHOE_REAR_PROJECTION_MM),
+    str("selectorShoeAnchorXMm=", clutch_col_x(CENTER_GT2_COL)
+        + CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM),
+    str("selectorShoeAnchorYMm=", CENTER_SELECTOR_SHOE_TARGET_Y_MM),
+    str("selectorShoeAnchorZMm=", CENTER_SELECTOR_SHOE_Z_MM),
+    str("selectorShoeMagnetFaceOffsetMm=",
+        CENTER_SELECTOR_SHOE_MAGNET_FACE_OFFSET_MM),
+    str("selectorShoeMagnetFaceYMm=", CENTER_SELECTOR_SHOE_TARGET_Y_MM
+        + CENTER_SELECTOR_SHOE_MAGNET_FACE_OFFSET_MM),
+    str("selectorShoeTriggerClearanceMm=",
+        CENTER_SELECTOR_SHOE_TRIGGER_CLEARANCE_MM),
+    "selectorShoeMagnetAxis=+Y",
+    str("selectorShoeChainAttachYMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM),
+    str("selectorShoeChainAttachZMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM),
+    str("selectorShoeSupportXOffsetMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM),
+    str("selectorShoeSupportXWidthMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM),
+    str("selectorShoeSupportChainYOverhangMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM),
+    str("selectorShoeSupportChainZT=",
+        CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T),
+    str("selectorShoeSupportBridgeOverlapMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM),
+    str("selectorShoeSupportDropMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM
+            - CENTER_SELECTOR_SHOE_TARGET_Y_MM),
+    str("selectorShoeSupportReachMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
+            + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2
+            - (CENTER_SELECTOR_SHOE_Z_MM + CENTER_SELECTOR_SHOE_D / 2
+                - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM)),
+    str("selectorShoeBodyWidthMm=", CENTER_SELECTOR_SHOE_W),
+    str("selectorShoeBodyDepthMm=", CENTER_SELECTOR_SHOE_D),
+    str("selectorShoeBodyHeightMm=", CENTER_SELECTOR_SHOE_H),
+    str("selectorShoePocketRimHeightMm=", CENTER_SELECTOR_SHOE_POCKET_RIM_H),
     "selectorShoeCoordinateFrame=native-world",
     str("inputShaftStartMm=", CENTER_CLUTCH_SHAFT_INPUT_START),
     str("inputShaftLengthMm=", CENTER_CLUTCH_SHAFT_INPUT_LENGTH),
@@ -2651,6 +2779,7 @@ echo(
     str("inputGearBandThicknessMm=", GT2_MALE_GEAR_T),
     str("dBoreDepthMm=", GT2_D_BORE_DEPTH),
     "bearingNominal=3x6x2",
+    "bearingCountPerRotor=2",
     "bearingCount=4",
     str("shaftDiameterMm=", GT2_D_AXIS_D),
     str("shaftCount=", 2),
@@ -2704,6 +2833,7 @@ assert(
     || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_selector_rail_collision"
+    || CLUTCH_PART == "center_selector_male_collision"
     || CLUTCH_PART == "center_carriage_rail_collision"
     || CLUTCH_PART == "center_stops_carriage_collision"
     || CLUTCH_PART == "center_guide_stop_collision"

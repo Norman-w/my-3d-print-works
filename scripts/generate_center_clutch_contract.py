@@ -16,6 +16,8 @@ MARKER = "CENTER_CLUTCH_CONTRACT_DYNAMIC"
 REQUIRED = {
     "axis",
     "role",
+    "verticalLayoutMode",
+    "centerClutchVerticalLiftMm",
     "openGapMm",
     "dogInsertionMm",
     "strokeMm",
@@ -24,6 +26,7 @@ REQUIRED = {
     "magnetNonContactClearanceMm",
     "femaleMagnetProjectionMm",
     "magnetNominalDiameterMm",
+    "maleBottomYMm",
     "dogPocketPhaseDeg",
     "actuation",
     "engageOnlyWhenStopped",
@@ -38,6 +41,15 @@ REQUIRED = {
     "guideRailHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
+    "guideRodDiameterMm",
+    "guideRodCaptureMm",
+    "guideRodY0Mm",
+    "guideRodY1Mm",
+    "guideBushingIdMm",
+    "guideBushingOdMm",
+    "guideBushingLengthMm",
+    "guideBushingLeadInLengthMm",
+    "guideRunningClearanceDiametralMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "captureShoeOuterMm",
@@ -65,20 +77,41 @@ REQUIRED = {
     "selectorShoeNormalOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeZMm",
-    "selectorShoeFrontClearanceMm",
-    "selectorShoeRearProjectionMm",
+    "selectorShoeAnchorXMm",
+    "selectorShoeAnchorYMm",
+    "selectorShoeAnchorZMm",
+    "selectorShoeMagnetFaceOffsetMm",
+    "selectorShoeMagnetFaceYMm",
+    "selectorShoeTriggerClearanceMm",
+    "selectorShoeMagnetAxis",
+    "selectorShoeChainAttachYMm",
+    "selectorShoeChainAttachZMm",
+    "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportXWidthMm",
+    "selectorShoeSupportChainYOverhangMm",
+    "selectorShoeSupportChainZT",
+    "selectorShoeSupportBridgeOverlapMm",
+    "selectorShoeSupportDropMm",
+    "selectorShoeSupportReachMm",
+    "selectorShoeBodyWidthMm",
+    "selectorShoeBodyDepthMm",
+    "selectorShoeBodyHeightMm",
+    "selectorShoePocketRimHeightMm",
     "inputShaftStartMm",
     "inputShaftLengthMm",
     "outputShaftStartMm",
     "outputShaftLengthMm",
     "inputGearBandThicknessMm",
     "dBoreDepthMm",
+    "bearingCountPerRotor",
 }
 FLOAT_KEYS = {
     "axisXMm",
     "axisZMm",
     "inputBaseYMm",
     "outputBaseYMm",
+    "centerClutchVerticalLiftMm",
+    "maleBottomYMm",
     "openGapMm",
     "dogInsertionMm",
     "strokeMm",
@@ -122,6 +155,15 @@ FLOAT_KEYS = {
     "guideRailHeightMm",
     "guideRailXOffsetMm",
     "guideRailZOffsetMm",
+    "guideRodDiameterMm",
+    "guideRodCaptureMm",
+    "guideRodY0Mm",
+    "guideRodY1Mm",
+    "guideBushingIdMm",
+    "guideBushingOdMm",
+    "guideBushingLengthMm",
+    "guideBushingLeadInLengthMm",
+    "guideRunningClearanceDiametralMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "captureShoeOuterMm",
@@ -149,8 +191,25 @@ FLOAT_KEYS = {
     "selectorShoeNormalOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeZMm",
-    "selectorShoeFrontClearanceMm",
-    "selectorShoeRearProjectionMm",
+    "selectorShoeAnchorXMm",
+    "selectorShoeAnchorYMm",
+    "selectorShoeAnchorZMm",
+    "selectorShoeMagnetFaceOffsetMm",
+    "selectorShoeMagnetFaceYMm",
+    "selectorShoeTriggerClearanceMm",
+    "selectorShoeChainAttachYMm",
+    "selectorShoeChainAttachZMm",
+    "selectorShoeSupportXOffsetMm",
+    "selectorShoeSupportXWidthMm",
+    "selectorShoeSupportChainYOverhangMm",
+    "selectorShoeSupportChainZT",
+    "selectorShoeSupportBridgeOverlapMm",
+    "selectorShoeSupportDropMm",
+    "selectorShoeSupportReachMm",
+    "selectorShoeBodyWidthMm",
+    "selectorShoeBodyDepthMm",
+    "selectorShoeBodyHeightMm",
+    "selectorShoePocketRimHeightMm",
     "inputShaftStartMm",
     "inputShaftLengthMm",
     "outputShaftStartMm",
@@ -160,6 +219,7 @@ FLOAT_KEYS = {
 }
 INT_KEYS = {
     "version",
+    "bearingCountPerRotor",
     "bearingCount",
     "shaftCount",
     "matingMagnetCount",
@@ -212,6 +272,12 @@ def coerce(values: dict[str, str]) -> dict[str, object]:
 def validate_contract(contract: dict[str, object]) -> None:
     if contract.get("axis") != "+Y" or contract.get("role") != "input/output":
         raise RuntimeError("中心离合契约轴向/角色不匹配")
+    if contract.get("verticalLayoutMode") != "center-clutch-lift":
+        raise RuntimeError("中心离合垂直布局必须是整体上移的首件方案")
+    if contract.get("selectorShoeCoordinateFrame") != "native-world":
+        raise RuntimeError("磁力靴必须使用原生世界坐标")
+    if contract.get("selectorShoeMagnetAxis") != "+Y":
+        raise RuntimeError("磁力靴磁面必须朝世界 +Y，从公轮底部触发")
     if contract.get("actuation") != "permanent-magnet":
         raise RuntimeError("中心离合契约不是纯永磁动作")
     if contract.get("engageOnlyWhenStopped") is not True:
@@ -226,6 +292,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         return float(value)
 
     frozen = {
+        "centerClutchVerticalLiftMm": 5.00,
         "openGapMm": 0.60,
         "dogInsertionMm": 2.40,
         "strokeMm": 3.00,
@@ -236,6 +303,13 @@ def validate_contract(contract: dict[str, object]) -> None:
         "magnetNominalDiameterMm": 2.00,
         "selectorTriggerSpacingMm": 12.00,
         "guideRunningClearanceMm": 0.30,
+        "guideRunningClearanceDiametralMm": 0.30,
+        "guideRodDiameterMm": 3.00,
+        "guideRodCaptureMm": 0.80,
+        "guideBushingIdMm": 3.30,
+        "guideBushingOdMm": 6.40,
+        "guideBushingLengthMm": 6.00,
+        "guideBushingLeadInLengthMm": 0.45,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
@@ -249,7 +323,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "guideRailHeightMm": 3.00,
         "guideRailXOffsetMm": 9.00,
         "guideRailZOffsetMm": 8.00,
-        "captureShoeOuterMm": 5.20,
+        "captureShoeOuterMm": 6.40,
         "captureShoeLengthMm": 6.00,
         "carriageUprightCenterXOffsetMm": 6.20,
         "carriageUprightWidthMm": 2.00,
@@ -270,9 +344,28 @@ def validate_contract(contract: dict[str, object]) -> None:
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
         "selectorShoeTangentOffsetMm": 6.00,
-        "selectorShoeNormalOffsetMm": -6.50,
-        "selectorShoeFrontClearanceMm": 0.70,
-        "selectorShoeRearProjectionMm": 2.55,
+        "selectorShoeNormalOffsetMm": -9.20,
+        "selectorShoeTargetYMm": 139.80,
+        "selectorShoeZMm": -82.2208,
+        "selectorShoeAnchorXMm": 146.00,
+        "selectorShoeAnchorYMm": 139.80,
+        "selectorShoeAnchorZMm": -82.2208,
+        "selectorShoeMagnetFaceOffsetMm": 2.20,
+        "selectorShoeMagnetFaceYMm": 142.00,
+        "selectorShoeTriggerClearanceMm": 0.40,
+        "selectorShoeChainAttachYMm": 149.00,
+        "selectorShoeChainAttachZMm": -75.00,
+        "selectorShoeSupportXOffsetMm": 13.00,
+        "selectorShoeSupportXWidthMm": 2.40,
+        "selectorShoeSupportChainYOverhangMm": 1.20,
+        "selectorShoeSupportChainZT": 2.40,
+        "selectorShoeSupportBridgeOverlapMm": 0.30,
+        "selectorShoeSupportDropMm": 9.20,
+        "selectorShoeSupportReachMm": 5.92084,
+        "selectorShoeBodyWidthMm": 17.50,
+        "selectorShoeBodyDepthMm": 5.60,
+        "selectorShoeBodyHeightMm": 4.40,
+        "selectorShoePocketRimHeightMm": 0.35,
         "inputShaftStartMm": -10.90,
         "inputShaftLengthMm": 13.90,
         "outputShaftStartMm": -3.40,
@@ -297,6 +390,22 @@ def validate_contract(contract: dict[str, object]) -> None:
             - number("femaleMagnetProjectionMm")
             - number("magnetNonContactClearanceMm")) > 0.001:
         raise RuntimeError("中心磁铁非接触余量推导失败")
+    if abs(number("maleBottomYMm") - number("inputBaseYMm")) > 0.001:
+        raise RuntimeError("公轮底部基准没有和输入公轮基准统一")
+    if abs(
+        number("selectorShoeMagnetFaceYMm")
+        + number("selectorShoeTriggerClearanceMm")
+        - number("maleBottomYMm")
+    ) > 0.001:
+        raise RuntimeError("磁力靴磁面没有落在公轮底部下方的触发间隙")
+    if abs(
+        number("selectorShoeTargetYMm")
+        + number("selectorShoeMagnetFaceOffsetMm")
+        - number("selectorShoeMagnetFaceYMm")
+    ) > 0.001:
+        raise RuntimeError("磁力靴磁面 Y 没有由其原生锚点推导")
+    if number("bearingCountPerRotor") != 2:
+        raise RuntimeError("每个转子必须使用两枚轴承形成轴向间距")
     if number("bearingSeatDepthMm") < number("bearingBackShoulderMm") + 2.0:
         raise RuntimeError("轴承座深度不足以容纳 3x6x2 轴承和后肩")
     if number("bearingCenterOffsetMm") <= number("bearingBlockThicknessMm"):
@@ -324,18 +433,29 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("机构板承接界面不是隔板 M3 贯穿固定")
     if number("selectorShoeTangentOffsetMm") != 6.0:
         raise RuntimeError("M_engage 选择指切向基准必须位于磁力靴中心前 6 mm")
-    if number("selectorShoeFrontClearanceMm") < 0.70:
-        raise RuntimeError("磁力靴到输入转子前侧间隙不足")
-    if contract.get("selectorShoeCoordinateFrame") != "native-world":
-        raise RuntimeError("磁力靴必须使用原生世界坐标")
     if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
         raise RuntimeError("磁力靴零件 ID 不是原生中心离合零件")
-    number("selectorShoeTargetYMm")
-    number("selectorShoeZMm")
+    if number("selectorShoeAnchorXMm") != number("axisXMm") + 6.0:
+        raise RuntimeError("磁力靴原生 X 锚点没有把 M_engage 对准公轮轴心")
+    if abs(number("selectorShoeAnchorYMm") - number("selectorShoeTargetYMm")) > 0.001:
+        raise RuntimeError("磁力靴 Y 锚点没有和目标基准统一")
+    if abs(number("selectorShoeAnchorZMm") - number("selectorShoeZMm")) > 0.001:
+        raise RuntimeError("磁力靴 Z 锚点没有和离合轴统一")
+    if number("selectorShoeSupportXWidthMm") <= 0:
+        raise RuntimeError("磁力靴链条支撑臂宽度无效")
+    if number("selectorShoeSupportDropMm") <= 0 or number("selectorShoeSupportReachMm") <= 0:
+        raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
     if number("guideRailWidthMm") <= 0 or number("guideRailHeightMm") <= 0:
         raise RuntimeError("捕获导轨截面无效")
-    if number("captureShoeOuterMm") <= number("guideRailWidthMm") + 2 * number("guideRunningClearanceMm"):
-        raise RuntimeError("捕获滑靴没有包住导轨运行间隙")
+    if abs(number("guideBushingIdMm") - (
+        number("guideRodDiameterMm")
+        + number("guideRunningClearanceDiametralMm")
+    )) > 0.001:
+        raise RuntimeError("圆杆衬套内径没有由直径间隙推导")
+    if number("guideBushingOdMm") <= number("guideBushingIdMm") + 2.0:
+        raise RuntimeError("圆杆衬套壁厚不足")
+    if number("captureShoeOuterMm") != number("guideBushingOdMm"):
+        raise RuntimeError("导出兼容字段没有指向圆杆衬套外径")
     if number("carriageUprightCenterXOffsetMm") <= number("carriageUprightWidthMm") / 2:
         raise RuntimeError("滑架立柱没有离开轴心")
     if number("carriageUprightRadialClearanceMm") < 0.45:

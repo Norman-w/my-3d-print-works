@@ -11,7 +11,8 @@
 //                        the whole set travels +Y
 //   output               female rotor + its own short D shaft and two fixed
 //                        bearings; it rotates in the output cage
-//   guides               two captured 3 mm rails, 0.30 mm running clearance
+//   guides               two purchased 3 mm round guide rods with printed
+//                        low-friction sleeves, 0.30 mm diametral clearance
 //   limit                printed open and engaged hard stops; magnets never
 //                        define the final travel
 //   material             PETG functional first article; PLA is fit-only
@@ -43,14 +44,24 @@ CENTER_CLUTCH_BEARING_SEAT_DEPTH = CENTER_CLUTCH_BEARING_BLOCK_T
 CENTER_CLUTCH_BEARING_CENTER_OFFSET = 4.20;
 CENTER_CLUTCH_BEARING_PAIR_SPACING = 4.00;
 
-CENTER_CLUTCH_RAIL_W = 3.00;
-CENTER_CLUTCH_RAIL_Z = 3.00;
-CENTER_CLUTCH_RAIL_CLEAR = 0.30;
+CENTER_CLUTCH_GUIDE_ROD_D = 3.00;
+CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL = 0.30;
+CENTER_CLUTCH_GUIDE_ROD_CAPTURE = 0.80;
+CENTER_CLUTCH_GUIDE_BUSHING_ID = CENTER_CLUTCH_GUIDE_ROD_D
+    + CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL;
+CENTER_CLUTCH_GUIDE_BUSHING_OD = 6.40;
+CENTER_CLUTCH_GUIDE_BUSHING_L = 6.00;
+CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L = 0.45;
+CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_D = 4.20;
+// Keep the old names as geometric aliases for the export/inspection API. The
+// section is now round, not a 3x3 printed square rail.
+CENTER_CLUTCH_RAIL_W = CENTER_CLUTCH_GUIDE_ROD_D;
+CENTER_CLUTCH_RAIL_Z = CENTER_CLUTCH_GUIDE_ROD_D;
+CENTER_CLUTCH_RAIL_CLEAR = CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL;
 CENTER_CLUTCH_RAIL_X_OFFSET = 9.00;
 CENTER_CLUTCH_RAIL_Z_OFFSET = 8.00;
-CENTER_CLUTCH_SHOE_L = 6.00;
-CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_RAIL_W
-    + 2 * CENTER_CLUTCH_RAIL_CLEAR + 1.60;
+CENTER_CLUTCH_SHOE_L = CENTER_CLUTCH_GUIDE_BUSHING_L;
+CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_GUIDE_BUSHING_OD;
 
 // The upright is deliberately outside the input rotor's radial envelope. Keep
 // its four datums named so the interference audit consumes the same values as
@@ -62,9 +73,11 @@ CENTER_CLUTCH_CARRIAGE_UPRIGHT_H = 3.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0 = -10.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_L = 8.40;
 
-// The moving carriage is stopped by the two captured shoes themselves. A
+// The moving carriage is stopped by the two guide sleeves themselves. A
 // former full-width crossbar passed through both rails and the bearing blocks;
-// that was a real solid interference, not a harmless contact datum.
+// that was a real solid interference, not a harmless contact datum. The
+// sleeve is deliberately a purchased-rod/printed-bushing interface: PETG
+// on PETG is not described as a smooth bearing surface.
 CENTER_CLUTCH_CARRIAGE_SHOE_Y0 = -10.40;
 CENTER_CLUTCH_CARRIAGE_SHOE_L = CENTER_CLUTCH_SHOE_L;
 CENTER_CLUTCH_CARRIAGE_SHOE_Y1 = CENTER_CLUTCH_CARRIAGE_SHOE_Y0
@@ -388,49 +401,69 @@ module center_clutch_guide_rails(col, row) {
     rail_z = center_clutch_rail_z();
     y0 = center_clutch_rail_y0(row);
     y1 = center_clutch_rail_y1(row);
-    // The two rails are captured between the open and engaged stop brackets.
-    // Their end faces meet those brackets; no rearward arm is routed through
-    // the moving shoe or duplicated in the separate stop STL.
+    // These are purchased round guide rods, shown as reference geometry. The
+    // two rods are captured in the bored stop pads at both ends; the printed
+    // carriage carries the two relieved sleeves around them.
     for (sx = [-1, 1]) {
         rail_x = x + sx * CENTER_CLUTCH_RAIL_X_OFFSET;
-        translate([
-            rail_x - CENTER_CLUTCH_RAIL_W / 2,
-            y0,
-            rail_z - CENTER_CLUTCH_RAIL_Z / 2
-        ])
-            cube([
-                CENTER_CLUTCH_RAIL_W,
-                y1 - y0,
-                CENTER_CLUTCH_RAIL_Z
-            ]);
+        cylinder_y(
+            rail_x,
+            y0 - CENTER_CLUTCH_GUIDE_ROD_CAPTURE,
+            rail_z,
+            CENTER_CLUTCH_GUIDE_ROD_D,
+            y1 - y0 + 2 * CENTER_CLUTCH_GUIDE_ROD_CAPTURE
+        );
     }
 }
 //#endregion
 
 //#region 公开 API：输入滑架与实体止挡
-module center_clutch_rail_capture_shoe(x, y, z) {
+module center_clutch_guide_bushing_y(x, y, z) {
+    y0 = y - CENTER_CLUTCH_GUIDE_BUSHING_L / 2;
+    y1 = y + CENTER_CLUTCH_GUIDE_BUSHING_L / 2;
     difference() {
-        translate([
-            x - CENTER_CLUTCH_SHOE_OUTER / 2,
-            y - CENTER_CLUTCH_SHOE_L / 2,
-            z - CENTER_CLUTCH_SHOE_OUTER / 2
-        ])
-            cube([
-                CENTER_CLUTCH_SHOE_OUTER,
-                CENTER_CLUTCH_SHOE_L,
-                CENTER_CLUTCH_SHOE_OUTER
-            ]);
-        translate([
-            x - (CENTER_CLUTCH_RAIL_W + 2 * CENTER_CLUTCH_RAIL_CLEAR) / 2,
-            y - CENTER_CLUTCH_SHOE_L / 2 - EPS,
-            z - (CENTER_CLUTCH_RAIL_Z + 2 * CENTER_CLUTCH_RAIL_CLEAR) / 2
-        ])
-            cube([
-                CENTER_CLUTCH_RAIL_W + 2 * CENTER_CLUTCH_RAIL_CLEAR,
-                CENTER_CLUTCH_SHOE_L + 2 * EPS,
-                CENTER_CLUTCH_RAIL_Z + 2 * CENTER_CLUTCH_RAIL_CLEAR
-            ]);
+        // The positive shell is a printable sleeve around the purchased rod.
+        // The two short conical cuts are lead-ins, so a slightly tilted first
+        // insertion does not shave a PETG corner off the rod path.
+        cylinder_y(
+            x,
+            y0,
+            z,
+            CENTER_CLUTCH_GUIDE_BUSHING_OD,
+            CENTER_CLUTCH_GUIDE_BUSHING_L
+        );
+        // The straight bore leaves 0.30 mm diametral running clearance. The
+        // lead-in cuts below only open the first 0.45 mm at each end.
+        cylinder_y(
+            x,
+            y0 - EPS,
+            z,
+            CENTER_CLUTCH_GUIDE_BUSHING_ID,
+            CENTER_CLUTCH_GUIDE_BUSHING_L + 2 * EPS
+        );
+        translate([x, y0 - EPS, z])
+            rotate([-90, 0, 0])
+                cylinder(
+                    d1 = CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_D,
+                    d2 = CENTER_CLUTCH_GUIDE_BUSHING_ID,
+                    h = CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L + EPS,
+                    $fn = 48
+                );
+        translate([x, y1 - CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L - EPS, z])
+            rotate([-90, 0, 0])
+                cylinder(
+                    d1 = CENTER_CLUTCH_GUIDE_BUSHING_ID,
+                    d2 = CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_D,
+                    h = CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L + EPS,
+                    $fn = 48
+                );
     }
+}
+
+// Compatibility alias for callers that still use the old preview-oriented
+// name. Geometry is the round bushing above, never a square rail capture.
+module center_clutch_rail_capture_shoe(x, y, z) {
+    center_clutch_guide_bushing_y(x, y, z);
 }
 
 module center_clutch_input_carriage(col, row, engaged = false) {
@@ -447,7 +480,8 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                 z
             );
 
-        // Side uprights connect the bearing blocks to the two captured shoes
+        // Side uprights connect the bearing blocks to the two round guide
+        // bushings
         // without crossing the input rotor's gear/dog envelope.
         for (sx = [-1, 1]) {
             translate([
@@ -477,28 +511,42 @@ module center_clutch_stop_bar(col, row, y) {
     rail_x_offset = CENTER_CLUTCH_RAIL_X_OFFSET;
     rail_z = center_clutch_rail_z();
     plate_rear_z = CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T;
-    // Two short end caps sit just outward of the rail axes. Their 4.0 mm
-    // square section is wider than the 3.6 mm shoe capture opening, while the
-    // outward offset leaves the carriage uprights and central bearing blocks
-    // outside the stop solid. They stop the shoe faces at exact Y contact and
-    // never bridge through the moving rotor stack.
+    // Two short end caps sit just outward of the rod axes. Their 4.0 mm square
+    // section is wider than the 3.0 mm rod plus clearance, while the outward
+    // offset leaves the carriage uprights and central bearing blocks outside
+    // the stop solid. A blind rod pocket at each inner face captures the
+    // purchased rod axially; the rod, not a printed square face, carries the
+    // sliding load.
     for (sx = [-1, 1]) {
         rail_x = x + sx * rail_x_offset;
         stop_x = x + sx * (rail_x_offset + CENTER_CLUTCH_STOP_PAD_X_OFFSET);
         stop_is_before_rail = y < center_clutch_rail_y0(row);
-        translate([
-            stop_x - CENTER_CLUTCH_STOP_PAD_W / 2,
-            y,
-            rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
-        ])
-            cube([
-                CENTER_CLUTCH_STOP_PAD_W,
-                CENTER_CLUTCH_STOP_PAD_T,
-                CENTER_CLUTCH_STOP_PAD_Z
-            ]);
+        difference() {
+            translate([
+                stop_x - CENTER_CLUTCH_STOP_PAD_W / 2,
+                y,
+                rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
+            ])
+                cube([
+                    CENTER_CLUTCH_STOP_PAD_W,
+                    CENTER_CLUTCH_STOP_PAD_T,
+                    CENTER_CLUTCH_STOP_PAD_Z
+                ]);
+            rod_pocket_y0 = stop_is_before_rail
+                ? y + CENTER_CLUTCH_STOP_PAD_T
+                    - CENTER_CLUTCH_GUIDE_ROD_CAPTURE
+                : y;
+            translate([rail_x, rod_pocket_y0 - EPS, rail_z])
+                rotate([-90, 0, 0])
+                    cylinder(
+                        d = CENTER_CLUTCH_GUIDE_BUSHING_ID,
+                        h = CENTER_CLUTCH_GUIDE_ROD_CAPTURE + 2 * EPS,
+                        $fn = 48
+                    );
+        }
         center_clutch_z_arm(
-            rail_x,
-            y + (stop_is_before_rail ? 0 : CENTER_CLUTCH_STOP_PAD_T / 2),
+            stop_x + sx * CENTER_CLUTCH_STOP_PAD_W / 2,
+            y + CENTER_CLUTCH_STOP_PAD_T / 2,
             rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2,
             plate_rear_z,
             2.00,
@@ -629,7 +677,21 @@ assert(CENTER_CLUTCH_SHAFT_INPUT_START
         <= GT2_D_BORE_DEPTH + 0.001,
     "input D shaft must stop at the blind gear socket before the solid dog");
 assert(CENTER_CLUTCH_RAIL_CLEAR >= 0.30,
-    "captured guides need at least 0.30 mm running clearance per side");
+    "round guide bushings need at least 0.30 mm diametral running clearance");
+assert(CENTER_CLUTCH_GUIDE_BUSHING_ID
+        >= CENTER_CLUTCH_GUIDE_ROD_D
+            + CENTER_CLUTCH_GUIDE_ROD_CLEAR_DIAMETRAL - 0.001,
+    "printed guide bushing must clear the purchased rod");
+assert(CENTER_CLUTCH_GUIDE_BUSHING_OD
+        >= CENTER_CLUTCH_GUIDE_BUSHING_ID + 2.0,
+    "guide bushing must leave a printable sleeve wall");
+assert(CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L > 0
+        && CENTER_CLUTCH_GUIDE_BUSHING_LEAD_IN_L
+            < CENTER_CLUTCH_GUIDE_BUSHING_L / 2,
+    "guide bushing lead-in must fit inside the sleeve length");
+assert(CENTER_CLUTCH_GUIDE_ROD_CAPTURE > 0
+        && CENTER_CLUTCH_GUIDE_ROD_CAPTURE < CENTER_CLUTCH_STOP_PAD_T,
+    "guide rod end capture must fit inside the stop pad");
 assert(CENTER_CLUTCH_TRAVEL_MM >= -0.001
         && CENTER_CLUTCH_TRAVEL_MM <= GT2_CLUTCH_ENGAGE_STROKE_MM + 0.001,
     "center clutch travel override must stay within the open/engaged datums");
@@ -676,9 +738,8 @@ assert(center_clutch_rail_length(CENTER_GT2_ROW)
         >= CENTER_CLUTCH_CARRIAGE_SHOE_L
             + GT2_CLUTCH_ENGAGE_STROKE_MM,
     "guide rails must retain the moving carriage through the full stroke");
-assert(CENTER_CLUTCH_STOP_PAD_W > CENTER_CLUTCH_RAIL_W
-        + 2 * CENTER_CLUTCH_RAIL_CLEAR,
-    "stop pad must overhang the captured shoe opening");
+assert(CENTER_CLUTCH_STOP_PAD_W > CENTER_CLUTCH_GUIDE_BUSHING_ID,
+    "stop pad must overhang the guide rod pocket");
 assert(
     CENTER_CLUTCH_RAIL_X_OFFSET + CENTER_CLUTCH_STOP_PAD_X_OFFSET
         - CENTER_CLUTCH_STOP_PAD_W / 2
@@ -692,7 +753,7 @@ assert(
         + CENTER_CLUTCH_STOP_PAD_W / 2
         <= CENTER_CLUTCH_RAIL_X_OFFSET
             + CENTER_CLUTCH_SHOE_OUTER / 2 + 0.001,
-    "stop pad must remain within the captured shoe outer envelope"
+    "stop pad must remain within the guide bushing outer envelope"
 );
 assert(center_clutch_output_bearing_y(CENTER_GT2_ROW, 1)
         + CENTER_CLUTCH_BEARING_BLOCK_T / 2

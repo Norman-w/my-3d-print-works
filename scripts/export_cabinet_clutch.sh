@@ -195,10 +195,10 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/center_guide_rails": {
-        "name": "中心 R3C3 · 双侧捕获导轨（每侧 0.30mm）",
+        "name": "中心 R3C3 · 双侧 Ø3 金属导向杆（采购件参考）",
         "color": "#657f8c",
         "visible": True,
-        "role": "printed",
+        "role": "purchased",
     },
     "cabinet-clutch/center_stops": {
         "name": "中心 R3C3 · 开位/合位实体止挡",
@@ -347,7 +347,7 @@ name_map = {
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
     "center_input_carriage": "中心 R3C3 输入滑架 · 随 +Y 行程移动",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 固定旋转支撑",
-    "center_guide_rails": "中心 R3C3 双侧捕获导轨 · 0.30mm/侧",
+    "center_guide_rails": "中心 R3C3 双侧 Ø3 金属导向杆 · 采购件参考",
     "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
     "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
@@ -520,7 +520,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + 滑架 + 双轴承笼 + 双导轨 + 实体止挡 + 可拆机构板 + 磁力靴",
+                "输入公轮 + 输出母轮 + 滑架 + 双轴承笼 + 双Ø3金属导杆 + 实体止挡 + 可拆机构板 + 磁力靴",
                 children=active_center,
             ),
             call_node(
@@ -801,14 +801,14 @@ export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_referenc
 export_part "center_selector_shoe" "${OUT_DIR}/center_selector_shoe.stl" false 0
 
 # The center printed pieces and the selector shoe are the current first-article
-# outputs.  Keep purchased shaft/bearing references in the ordinary inspection
-# report, but require closed topology for every printable center component.
+# outputs. Keep purchased shaft/bearing/guide-rod references in the ordinary
+# inspection report, but require closed topology for every printable center
+# component.
 for printable_part in \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_input_carriage.stl" \
     "${OUT_DIR}/center_output_cage.stl" \
-    "${OUT_DIR}/center_guide_rails.stl" \
     "${OUT_DIR}/center_stops.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_selector_shoe.stl"; do
