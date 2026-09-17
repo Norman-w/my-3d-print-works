@@ -2132,6 +2132,10 @@ module selected_center_linear_bearing_retainers_part() {
     );
 }
 
+module selected_center_linear_bearing_fit_coupon_part() {
+    center_clutch_linear_bearing_fit_coupon();
+}
+
 module selected_center_stops_part() {
     center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
@@ -2604,6 +2608,8 @@ module clutch_scene_geometry() {
         selected_center_linear_bearings_part();
     } else if (CLUTCH_PART == "center_linear_bearing_retainers") {
         selected_center_linear_bearing_retainers_part();
+    } else if (CLUTCH_PART == "center_linear_bearing_fit_coupon") {
+        selected_center_linear_bearing_fit_coupon_part();
     } else if (CLUTCH_PART == "center_stops") {
         selected_center_stops_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
@@ -2771,6 +2777,11 @@ echo(
         CENTER_CLUTCH_LINEAR_BEARING_SEAT_RADIAL_CLEARANCE),
     str("linearBearingRodNominalClearanceMm=",
         CENTER_CLUTCH_LINEAR_BEARING_ROD_NOMINAL_CLEARANCE),
+    "linearBearingModel=LM3UU-cutaway-reference",
+    "linearBearingFitCouponPart=cabinet-clutch/center_linear_bearing_fit_coupon",
+    str("linearBearingFitCouponRodSpacingMm=",
+        CENTER_CLUTCH_FIT_COUPON_ROD_SPACING),
+    "linearBearingFitCouponSeatVariantsMm=7.20/7.30/7.40",
     str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
     str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
     str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)),
@@ -2966,6 +2977,7 @@ assert(
     || CLUTCH_PART == "center_guide_rails"
     || CLUTCH_PART == "center_linear_bearings"
     || CLUTCH_PART == "center_linear_bearing_retainers"
+    || CLUTCH_PART == "center_linear_bearing_fit_coupon"
     || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"

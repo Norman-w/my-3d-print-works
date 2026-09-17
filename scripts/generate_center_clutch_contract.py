@@ -64,6 +64,9 @@ REQUIRED = {
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
     "linearBearingRodNominalClearanceMm",
+    "linearBearingModel",
+    "linearBearingFitCouponPart",
+    "linearBearingFitCouponRodSpacingMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
     "rotaryBearingArrangement",
@@ -195,6 +198,7 @@ FLOAT_KEYS = {
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
     "linearBearingRodNominalClearanceMm",
+    "linearBearingFitCouponRodSpacingMm",
     "stopPadWidthMm",
     "stopPadXOffsetMm",
     "carriageUprightCenterXOffsetMm",
@@ -321,6 +325,11 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("转子旋转轴承必须是每个转子两枚、沿轴向分隔")
     if contract.get("linearBearingArrangement") != "left-right-one-per-guide-rod":
         raise RuntimeError("竖直直线轴承必须是左右各一枚、每根导杆一枚")
+    if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
+        raise RuntimeError("直线轴承采购参考必须是 LM3UU 可识别模型")
+    if contract.get("linearBearingFitCouponPart") \
+            != "cabinet-clutch/center_linear_bearing_fit_coupon":
+        raise RuntimeError("直线轴承配合测试片零件 ID 不匹配")
     if contract.get("selectorShoeChainSupportPart") \
             != "cabinet-clutch/center_selector_chain_support_contact":
         raise RuntimeError("磁力靴必须包含链条支撑接触见证零件")
@@ -363,6 +372,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "linearBearingRetainerSkirtLengthMm": 1.00,
         "linearBearingSeatRadialClearanceMm": 0.10,
         "linearBearingRodNominalClearanceMm": 0.00,
+        "linearBearingFitCouponRodSpacingMm": 20.00,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
@@ -513,6 +523,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("磁力靴链条支撑臂没有连接到既有蛇链平面")
     if number("linearBearingCount") != 2:
         raise RuntimeError("中心滑架必须配置两枚直线轴承")
+    if number("linearBearingFitCouponRodSpacingMm") != 20.0:
+        raise RuntimeError("直线轴承平行度测试片导杆中心距必须是 20 mm")
     if abs(number("linearBearingNominalIdMm")
            - number("guideRodDiameterMm")) > 0.001:
         raise RuntimeError("直线轴承名义内径必须匹配 Ø3 导杆")

@@ -71,7 +71,7 @@
 - `drawer_drive`：参数化源代码中的抽屉驱动装配入口；网页总装分别加载后取力轮、前端轮、同步带和齿排零件；
 - `clutch`：参数化源代码中的离合零件装配入口；网页总装只加载实际单个离合零件；
 - `clutch_detail`：单格离合零件检查入口；开合状态由网页脚本控制，不再输出静态“打开/闭合”两套合并体；
-- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_linear_bearings`、`center_linear_bearing_retainers`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前逐件入口；其中输入公轮、输入滑架、两枚 `3×7×10 mm` 直线轴承参考和两个压盖按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/止挡/机构板固定，`center_guide_rails` 是两根 Ø3 采购导杆参考，原生磁力靴固定在蛇链托架坐标上；机构板带有按中心 2GT 包络切出的真实贯穿通道；
+- `center_input_rotor`、`center_output_rotor`、`center_input_carriage`、`center_linear_bearings`、`center_linear_bearing_retainers`、`center_linear_bearing_fit_coupon`、`center_output_cage`、`center_guide_rails`、`center_stops`、`center_mechanism_plate`、`center_selector_shoe`：中心 R3C3 当前逐件入口；其中输入公轮、输入滑架、两枚 `3×7×10 mm` 直线轴承参考和两个压盖按 `ENGAGED=true` 沿 `+Y` 移动，输出笼/止挡/机构板固定，`center_guide_rails` 是两根 Ø3 采购导杆参考，原生磁力靴固定在蛇链托架坐标上；机构板带有按中心 2GT 包络切出的真实贯穿通道；`center_linear_bearing_fit_coupon` 是默认隐藏的 PETG 试配件，不进入装机总成；
 - `center_input_shaft`、`center_output_shaft`、`center_input_bearings`、`center_output_bearings`：两根独立 3 mm D 轴和四枚 `3×6×2` 轴承的采购件参考入口，不把采购件伪装成打印件；
 - `center_plate_belt_collision`：只用于验证机构板与中心 2GT 实际网格的交集；正常通过时导出空 STL，不是默认装配件；
 - `contract`：只回显中心机械契约，不产生几何；`scripts/generate_center_clutch_contract.py` 负责生成 JSON；

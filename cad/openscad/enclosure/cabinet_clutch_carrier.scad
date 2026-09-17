@@ -82,6 +82,38 @@ CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_L = 1.00;
 CENTER_CLUTCH_LINEAR_BEARING_ROD_NOMINAL_CLEARANCE =
     CENTER_CLUTCH_LINEAR_BEARING_ID - CENTER_CLUTCH_GUIDE_ROD_D;
 
+// The purchased LM3UU reference keeps the exact 3x7x10 mm envelope while
+// making the sleeve, seals and four ball rows readable in the browser. The
+// near-side window is a display cutaway only; it is never part of the printed
+// carriage and does not change the procurement envelope.
+CENTER_CLUTCH_LINEAR_BEARING_BODY_L = 8.80;
+CENTER_CLUTCH_LINEAR_BEARING_SEAL_L = 0.60;
+CENTER_CLUTCH_LINEAR_BEARING_BALL_D = 0.72;
+CENTER_CLUTCH_LINEAR_BEARING_BALL_PITCH_R = 2.15;
+CENTER_CLUTCH_LINEAR_BEARING_BALL_ROWS = [-3.30, -1.10, 1.10, 3.30];
+CENTER_CLUTCH_LINEAR_BEARING_BALLS_PER_ROW = 8;
+CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH =
+    CENTER_CLUTCH_LINEAR_BEARING_OD / 2
+        - CENTER_CLUTCH_LINEAR_BEARING_ID / 2 - 0.08;
+
+// A compact printed coupon is exported separately from the mechanism. The
+// first row samples the three FDM seat diameters; the dual-rod frame checks
+// parallelism with real rods and bearings; the bottom row provides free caps
+// for the actual holder neck. These are fit-tuning data, not new assembly
+// datums.
+CENTER_CLUTCH_FIT_COUPON_ROD_SPACING = 20.00;
+CENTER_CLUTCH_FIT_COUPON_FRAME_W = 28.00;
+CENTER_CLUTCH_FIT_COUPON_FRAME_L = 34.00;
+CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_Z = -9.00;
+CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_T = 2.00;
+CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Y = 4.00;
+CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Z0 = -7.00;
+CENTER_CLUTCH_FIT_COUPON_END_BLOCK_H = 14.00;
+CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y = 17.00;
+CENTER_CLUTCH_FIT_COUPON_SEAT_SAMPLE_Z = 18.00;
+CENTER_CLUTCH_FIT_COUPON_CAP_SAMPLE_Z = -18.00;
+CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS = [7.20, 7.30, 7.40];
+
 // Internal side-clearance datum for the stop-pad/upright layout. It is not a
 // bearing running clearance and is intentionally not exported as one.
 CENTER_CLUTCH_SIDE_CLEARANCE = 0.30;
@@ -460,7 +492,12 @@ module center_clutch_guide_rails(col, row) {
 //#endregion
 
 //#region 公开 API：输入滑架、直线轴承套与实体止挡
-module center_clutch_linear_bearing_holder_y(x, y, z) {
+module center_clutch_linear_bearing_holder_y(
+    x,
+    y,
+    z,
+    seat_d = CENTER_CLUTCH_LINEAR_BEARING_SEAT_D
+) {
     y0 = y - CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2;
     y1 = y + CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2;
     difference() {
@@ -501,7 +538,7 @@ module center_clutch_linear_bearing_holder_y(x, y, z) {
             x,
             y0 + CENTER_CLUTCH_LINEAR_BEARING_HOLDER_BACK_SHOULDER_T,
             z,
-            CENTER_CLUTCH_LINEAR_BEARING_SEAT_D,
+            seat_d,
             CENTER_CLUTCH_LINEAR_BEARING_SEAT_DEPTH + EPS
         );
     }
@@ -553,6 +590,97 @@ module center_clutch_linear_bearing_retainer_y(x, y1, z) {
             );
         }
     }
+}
+
+module center_clutch_linear_bearing_fit_coupon_parallel_frame() {
+    spacing = CENTER_CLUTCH_FIT_COUPON_ROD_SPACING;
+    frame_w = CENTER_CLUTCH_FIT_COUPON_FRAME_W;
+    frame_l = CENTER_CLUTCH_FIT_COUPON_FRAME_L;
+    end_block_l = CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Y;
+    // The fixed end blocks accept two real Ø3 rods. The long open span is
+    // deliberately empty so a carriage fitted with the purchased bearings
+    // can be pushed through the complete parallelism check by hand.
+    translate([
+        -frame_w / 2,
+        0,
+        CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_Z
+    ])
+        cube([
+            frame_w,
+            frame_l,
+            CENTER_CLUTCH_FIT_COUPON_FRAME_BASE_T
+        ]);
+    for (y0 = [
+        0,
+        frame_l - end_block_l
+    ])
+        difference() {
+            translate([
+                -frame_w / 2,
+                y0,
+                CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Z0
+            ])
+                cube([
+                    frame_w,
+                    end_block_l,
+                    CENTER_CLUTCH_FIT_COUPON_END_BLOCK_H
+                ]);
+            for (sx = [-1, 1])
+                cylinder_y(
+                    sx * spacing / 2,
+                    y0 - EPS,
+                    0,
+                    CENTER_CLUTCH_GUIDE_ROD_POCKET_D,
+                    end_block_l + 2 * EPS
+                );
+        }
+
+    // This is the moving test carriage. It is intentionally a separate
+    // island in the STL: after printing, install two actual LM3UU bearings,
+    // pass the two rods through them and slide this bridge between the end
+    // blocks. The bridge is above the bearing OD so it cannot mask a bind.
+    for (sx = [-1, 1])
+        center_clutch_linear_bearing_holder_y(
+            sx * spacing / 2,
+            CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y,
+            0
+        );
+    translate([
+        -spacing / 2,
+        CENTER_CLUTCH_FIT_COUPON_CARRIAGE_CENTER_Y
+            - CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2,
+        CENTER_CLUTCH_LINEAR_BEARING_HOLDER_OD / 2 - 0.70
+    ])
+        cube([
+            spacing,
+            CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L,
+            2.00
+        ]);
+}
+
+module center_clutch_linear_bearing_fit_coupon() {
+    // Seat samples are ordered left-to-right: Ø7.20 / Ø7.30 / Ø7.40 mm.
+    // They retain the same 0.80 mm rear shoulder and 1.00 mm cap neck as the
+    // production holder, so only the FDM radial seat fit is being swept.
+    for (index = [0:len(CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS) - 1])
+        center_clutch_linear_bearing_holder_y(
+            (index - 1) * 16.00,
+            CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L / 2,
+            CENTER_CLUTCH_FIT_COUPON_SEAT_SAMPLE_Z,
+            CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS[index]
+        );
+
+    // The caps are free pieces rather than fused to a holder. Fit one on the
+    // installed holder after seating the bearing; the 6.40 mm opening must
+    // clear the rod while the lip captures the Ø7 bearing end.
+    for (index = [0:2])
+        center_clutch_linear_bearing_retainer_y(
+            (index - 1) * 16.00,
+            CENTER_CLUTCH_LINEAR_BEARING_HOLDER_L + 5.00,
+            CENTER_CLUTCH_FIT_COUPON_CAP_SAMPLE_Z
+        );
+
+    center_clutch_linear_bearing_fit_coupon_parallel_frame();
 }
 
 module center_clutch_input_carriage(col, row, engaged = false) {
@@ -747,23 +875,77 @@ module center_clutch_output_bearings(col, row) {
 
 module center_clutch_linear_bearing_reference_y(x, y, z) {
     // Purchased LM3UU-class reference: nominal Ø3 bore, Ø7 housing and
-    // 10 mm axial length. Keep the exact envelope and coaxial bore visible;
-    // the ball rows are a supplier detail, not a printed geometry claim.
-    translate([x, y, z])
-        rotate([90, 0, 0])
-            difference() {
-                cylinder(
-                    d = CENTER_CLUTCH_LINEAR_BEARING_OD,
-                    h = CENTER_CLUTCH_LINEAR_BEARING_L,
-                    center = true,
-                    $fn = 64
-                );
-                cylinder(
-                    d = CENTER_CLUTCH_LINEAR_BEARING_ID,
-                    h = CENTER_CLUTCH_LINEAR_BEARING_L + 2 * EPS,
-                    center = true,
-                    $fn = 48
-                );
+    // 10 mm axial length. It is a cutaway display model, not a printed
+    // bearing: the sleeve, seals and ball rows make the load path legible
+    // while the exact procurement envelope remains 3×7×10 mm.
+    color("#aeb8be")
+        translate([x, y, z])
+            rotate([90, 0, 0])
+                difference() {
+                    cylinder(
+                        d = CENTER_CLUTCH_LINEAR_BEARING_OD,
+                        h = CENTER_CLUTCH_LINEAR_BEARING_BODY_L,
+                        center = true,
+                        $fn = 64
+                    );
+                    cylinder(
+                        d = CENTER_CLUTCH_LINEAR_BEARING_ID,
+                        h = CENTER_CLUTCH_LINEAR_BEARING_BODY_L + 2 * EPS,
+                        center = true,
+                        $fn = 48
+                    );
+                    // Rear-facing window exposes one ball track in the
+                    // assembly view without changing the outer bounds.
+                    translate([
+                        -CENTER_CLUTCH_LINEAR_BEARING_OD / 2 - EPS,
+                        -CENTER_CLUTCH_LINEAR_BEARING_OD / 2 - EPS,
+                        -CENTER_CLUTCH_LINEAR_BEARING_BODY_L / 2 - EPS
+                    ])
+                        cube([
+                            CENTER_CLUTCH_LINEAR_BEARING_OD + 2 * EPS,
+                            CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH,
+                            CENTER_CLUTCH_LINEAR_BEARING_BODY_L + 2 * EPS
+                        ]);
+                }
+    color("#4d5b64")
+        for (sy = [-1, 1])
+            translate([
+                x,
+                y + sy * (
+                    CENTER_CLUTCH_LINEAR_BEARING_BODY_L / 2
+                    + CENTER_CLUTCH_LINEAR_BEARING_SEAL_L / 2
+                ),
+                z
+            ])
+                rotate([90, 0, 0])
+                    difference() {
+                        cylinder(
+                            d = CENTER_CLUTCH_LINEAR_BEARING_OD,
+                            h = CENTER_CLUTCH_LINEAR_BEARING_SEAL_L,
+                            center = true,
+                            $fn = 64
+                        );
+                        cylinder(
+                            d = CENTER_CLUTCH_LINEAR_BEARING_ID + 0.40,
+                            h = CENTER_CLUTCH_LINEAR_BEARING_SEAL_L + 2 * EPS,
+                            center = true,
+                            $fn = 48
+                        );
+                    }
+    color("#303a40")
+        for (row_y = CENTER_CLUTCH_LINEAR_BEARING_BALL_ROWS)
+            for (index = [0:CENTER_CLUTCH_LINEAR_BEARING_BALLS_PER_ROW - 1]) {
+                angle = -90
+                    + index * 360 / CENTER_CLUTCH_LINEAR_BEARING_BALLS_PER_ROW;
+                translate([
+                    x + CENTER_CLUTCH_LINEAR_BEARING_BALL_PITCH_R * cos(angle),
+                    y + row_y,
+                    z + CENTER_CLUTCH_LINEAR_BEARING_BALL_PITCH_R * sin(angle)
+                ])
+                    sphere(
+                        d = CENTER_CLUTCH_LINEAR_BEARING_BALL_D,
+                        $fn = 16
+                    );
             }
 }
 
@@ -869,6 +1051,25 @@ assert(CENTER_CLUTCH_LINEAR_BEARING_RETAINER_SKIRT_OD
     "retaining cap skirt must form a positive locating wall");
 assert(CENTER_CLUTCH_LINEAR_BEARING_ROD_NOMINAL_CLEARANCE >= -0.001,
     "linear bearing and guide rod nominal bore relationship must be non-negative");
+assert(abs(
+        CENTER_CLUTCH_LINEAR_BEARING_BODY_L
+        + 2 * CENTER_CLUTCH_LINEAR_BEARING_SEAL_L
+        - CENTER_CLUTCH_LINEAR_BEARING_L
+    ) < 0.001,
+    "LM3UU reference sleeve, seals and total length must keep the 10 mm envelope");
+assert(CENTER_CLUTCH_LINEAR_BEARING_CUTAWAY_DEPTH > 0
+        && CENTER_CLUTCH_LINEAR_BEARING_BALL_PITCH_R
+            + CENTER_CLUTCH_LINEAR_BEARING_BALL_D / 2
+            < CENTER_CLUTCH_LINEAR_BEARING_OD / 2,
+    "LM3UU display cutaway and ball rows must stay inside the purchased envelope");
+assert(len(CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS) == 3
+        && CENTER_CLUTCH_FIT_COUPON_ROD_SPACING > 0,
+    "linear bearing fit coupon must provide three seat variants and a positive rod spacing");
+assert(CENTER_CLUTCH_FIT_COUPON_FRAME_L > 2
+        * CENTER_CLUTCH_FIT_COUPON_END_BLOCK_Y
+        && CENTER_CLUTCH_FIT_COUPON_FRAME_W
+            > CENTER_CLUTCH_FIT_COUPON_ROD_SPACING,
+    "linear bearing fit coupon must leave a usable open rod span");
 assert(CENTER_CLUTCH_SIDE_CLEARANCE >= 0.30,
     "carriage side datum needs at least 0.30 mm stop-pad clearance");
 assert(CENTER_CLUTCH_GUIDE_ROD_CAPTURE > 0

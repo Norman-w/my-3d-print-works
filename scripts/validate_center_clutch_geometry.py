@@ -295,6 +295,7 @@ def validate_contract(contract: Contract) -> None:
         "linearBearingRetainerSkirtLengthMm": 1.00,
         "linearBearingSeatRadialClearanceMm": 0.10,
         "linearBearingRodNominalClearanceMm": 0.00,
+        "linearBearingFitCouponRodSpacingMm": 20.00,
         "bearingSeatDiameterMm": 6.10,
         "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60,
@@ -373,6 +374,11 @@ def validate_contract(contract: Contract) -> None:
     if contract.get("linearBearingArrangement") \
             != "left-right-one-per-guide-rod":
         fail("竖直直线轴承必须是左右各一枚、每根导杆一枚")
+    if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
+        fail("直线轴承采购参考必须是 LM3UU 可识别模型")
+    if contract.get("linearBearingFitCouponPart") \
+            != "cabinet-clutch/center_linear_bearing_fit_coupon":
+        fail("直线轴承配合测试片零件 ID 不匹配")
     if contract.get("selectorShoeChainSupportPart") \
             != "cabinet-clutch/center_selector_chain_support_contact":
         fail("磁力靴必须包含链条支撑接触见证零件")
@@ -472,6 +478,12 @@ def validate_contract(contract: Contract) -> None:
 
     if number(contract, "linearBearingCount") != 2:
         fail("中心滑架必须配置两枚直线轴承")
+    expect_close(
+        number(contract, "linearBearingFitCouponRodSpacingMm"),
+        20.0,
+        "直线轴承平行度测试片导杆中心距",
+        0.001,
+    )
     expect_close(
         number(contract, "linearBearingNominalIdMm"),
         number(contract, "guideRodDiameterMm"),
@@ -1279,6 +1291,34 @@ def main() -> int:
         run_export(openscad, scad, cabinet_stl, "cabinet", False)
         cabinet_report = inspect(inspect_path, cabinet_stl)
         assert_watertight(cabinet_report, cabinet_stl.name)
+
+        # The fit coupon is a real printable test artifact, not part of the
+        # installed mechanism. Keep it in this same OpenSCAD/inspection gate
+        # so a changed holder or cap cannot silently invalidate the physical
+        # smoothness check described in the build notes.
+        coupon_stl = temp_dir / "center_linear_bearing_fit_coupon.stl"
+        run_export(
+            openscad,
+            scad,
+            coupon_stl,
+            "center_linear_bearing_fit_coupon",
+            False,
+        )
+        coupon_report = inspect(inspect_path, coupon_stl)
+        assert_watertight(coupon_report, coupon_stl.name)
+        coupon_box = bounds(coupon_report)
+        expect_close(
+            coupon_box["max"][0] - coupon_box["min"][0],
+            44.4,
+            "直线轴承配合测试片总宽",
+            0.05,
+        )
+        expect_close(
+            coupon_box["max"][1] - coupon_box["min"][1],
+            34.0,
+            "直线轴承配合测试片导杆框长度",
+            0.05,
+        )
 
         intersection_checks = (
             (

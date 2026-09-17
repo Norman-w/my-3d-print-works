@@ -200,6 +200,12 @@ labels = {
         "visible": True,
         "role": "printed",
     },
+    "cabinet-clutch/center_linear_bearing_fit_coupon": {
+        "name": "中心 R3C3 · 直线轴承座/压盖/双导杆配合测试片（默认隐藏）",
+        "color": "#d6a85f",
+        "visible": False,
+        "role": "diagnostic",
+    },
     "cabinet-clutch/center_output_cage": {
         "name": "中心 R3C3 · 输出轴承笼（输出转子2枚轴承固定）",
         "color": "#4c6470",
@@ -336,6 +342,7 @@ group_map = {
     "center_input_carriage": "02·离合机构",
     "center_linear_bearings_reference": "02·离合机构",
     "center_linear_bearing_retainers": "02·离合机构",
+    "center_linear_bearing_fit_coupon": "02·离合机构",
     "center_output_cage": "02·离合机构",
     "center_guide_rails": "02·离合机构",
     "center_stops": "02·离合机构",
@@ -362,6 +369,7 @@ name_map = {
     "center_input_carriage": "中心 R3C3 输入滑架 · 直线轴承套×2（左右各1）· 随 +Y 行程",
     "center_linear_bearings_reference": "中心 R3C3 直线轴承×2 · Ø3×Ø7×10（左右各1；采购件）",
     "center_linear_bearing_retainers": "中心 R3C3 直线轴承套压盖×2（左右各1；打印防脱件）",
+    "center_linear_bearing_fit_coupon": "中心 R3C3 直线轴承配合测试片 · Ø7.20/7.30/7.40 + 双导杆平行度",
     "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
     "center_guide_rails": "中心 R3C3 左右各1根 Ø3 金属导杆 · 采购件参考",
     "center_stops": "中心 R3C3 实体止挡 · 开位 + 合位",
@@ -531,6 +539,14 @@ for group_id in ordered_group_ids:
                 part_node("cabinet-clutch/center_output_bearings_reference"),
             ],
         )
+        fit_coupon = call_node(
+            "center_clutch/fit-coupon",
+            "首件配合测试片（默认隐藏）",
+            "打印后实装两枚 LM3UU、两根 Ø3 金属导杆；左至右座孔为 Ø7.20/7.30/7.40，双导杆中心距 20 mm",
+            children=[
+                part_node("cabinet-clutch/center_linear_bearing_fit_coupon"),
+            ],
+        )
         active_center = [
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
@@ -539,6 +555,7 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_selector_shoe"),
             vertical_guide,
             rotary_support,
+            fit_coupon,
         ]
         legacy_center = [
             part_node("cabinet-clutch/06_upper_axis_y_spur_candidate"),
@@ -828,6 +845,7 @@ export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
 export_part "center_guide_rails" "${OUT_DIR}/center_guide_rails.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
 export_part "center_linear_bearing_retainers" "${OUT_DIR}/center_linear_bearing_retainers.stl" false 0
+export_part "center_linear_bearing_fit_coupon" "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" false 0
 export_part "center_stops" "${OUT_DIR}/center_stops.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
 export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
@@ -845,6 +863,7 @@ for printable_part in \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_input_carriage.stl" \
     "${OUT_DIR}/center_linear_bearing_retainers.stl" \
+    "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_output_cage.stl" \
     "${OUT_DIR}/center_stops.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \

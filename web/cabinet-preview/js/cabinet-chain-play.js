@@ -446,6 +446,9 @@ function validateCenterClutchContract(contract) {
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
     "linearBearingRodNominalClearanceMm",
+    "linearBearingModel",
+    "linearBearingFitCouponPart",
+    "linearBearingFitCouponRodSpacingMm",
     "linearBearingPart",
     "linearBearingRetainerPart",
     "rotaryBearingArrangement",
@@ -502,6 +505,11 @@ function validateCenterClutchContract(contract) {
         !== "cabinet-clutch/center_selector_chain_support_contact") {
     throw new Error("centerClutch 轴承数量布局或链条支撑契约不匹配");
   }
+  if (contract.linearBearingModel !== "LM3UU-cutaway-reference"
+      || contract.linearBearingFitCouponPart
+        !== "cabinet-clutch/center_linear_bearing_fit_coupon") {
+    throw new Error("centerClutch 直线轴承模型/测试片契约不匹配");
+  }
   for (const key of [
     "openGapMm",
     "dogInsertionMm",
@@ -535,6 +543,7 @@ function validateCenterClutchContract(contract) {
     "linearBearingRetainerSkirtOuterDiameterMm",
     "linearBearingRetainerSkirtLengthMm",
     "linearBearingSeatRadialClearanceMm",
+    "linearBearingFitCouponRodSpacingMm",
     "selectorShoeTangentOffsetMm",
     "selectorShoeTargetYMm",
     "selectorShoeAnchorXMm",
@@ -628,6 +637,9 @@ function validateCenterClutchContract(contract) {
         < Number(contract.linearBearingHolderFrontNeckLengthMm)
       || Number(contract.linearBearingRodNominalClearanceMm) < -0.001) {
     throw new Error("centerClutch 直线轴承/轴承套/压盖契约不匹配");
+  }
+  if (Math.abs(Number(contract.linearBearingFitCouponRodSpacingMm) - 20) > 0.001) {
+    throw new Error("centerClutch 直线轴承平行度测试片中心距必须是 20 mm");
   }
   const holderRotorRadialClearance = Math.hypot(
     Number(contract.guideRailXOffsetMm),
