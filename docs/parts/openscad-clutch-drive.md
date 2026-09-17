@@ -50,7 +50,7 @@
 | 触发 | 磁力靴内 `M_engage/M_release` 两槽，切线间距 `12 mm`；无弹簧、螺丝拨叉、电磁铁 |
 | 机构板 | 独立 PETG 后仓件，定位键 + `4×M3` 固定点；薄后盖不承受传动载荷 |
 
-唯一机械契约由 OpenSCAD 参数生成到 `output/3d-print/cabinet-clutch/center_clutch_contract.json`，再复制进 `cabinet_chain_motion.json`；网页不再自持第二套尺寸。`scripts/validate_center_clutch_geometry.py` 会导出开位/合位临时 STL，检查持续啮合的径向包络、3 mm 行程、导轨捕获、轴承座后肩、实体止挡接触和磁铁余量。
+唯一机械契约由 OpenSCAD 参数生成到 `output/3d-print/cabinet-clutch/center_clutch_contract.json`，再复制进 `cabinet_chain_motion.json`；网页不再自持第二套尺寸。`scripts/validate_center_clutch_geometry.py` 会导出开位/合位及 `0.75 / 1.50 / 2.25 mm` 中间行程临时 STL，检查持续啮合的径向包络、3 mm 行程、导轨捕获、轴承座后肩、实体止挡接触和磁铁余量，并用 OpenSCAD `intersection()` 见证排除正实体体积干涉。止挡与滑靴、导轨与止挡的零面积端面接触是合法的承力基准；只有超过 `0.01 mm³` 的实体交集才失败。
 
 ## 可重复构建
 

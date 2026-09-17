@@ -92,6 +92,7 @@ def run_export(
     output: Path,
     part: str,
     engaged: bool,
+    travel_mm: float | None = None,
 ) -> None:
     command = [
         str(openscad),
@@ -105,6 +106,13 @@ def run_export(
         f'CLUTCH_PART="{part}"',
         "-D",
         f"ENGAGED={'true' if engaged else 'false'}",
+        "-D",
+        (
+            f"CENTER_CLUTCH_TRAVEL_MM={travel_mm:.6f}"
+            if travel_mm is not None
+            else "CENTER_CLUTCH_TRAVEL_MM="
+            + ("3.000000" if engaged else "0.000000")
+        ),
         "-D",
         "SELECTED_COLUMN=2",
         "-D",
@@ -124,15 +132,25 @@ def run_export(
     )
     if completed.returncode != 0 or not output.is_file() or output.stat().st_size == 0:
         detail = (completed.stderr or completed.stdout)[-3000:]
-        fail(f"OpenSCAD 导出失败: {part} engaged={engaged}\n{detail}")
+        fail(
+            f"OpenSCAD 导出失败: {part} engaged={engaged} "
+            f"travel={travel_mm}\n{detail}"
+        )
 
 
-def run_collision_export(
+INTERSECTION_VOLUME_TOLERANCE_MM3 = 0.01
+
+
+def run_intersection_export(
     openscad: Path,
     scad: Path,
     output: Path,
+    inspect_py: Path,
+    part: str,
+    engaged: bool,
+    travel_mm: float | None = None,
 ) -> bool:
-    """Export the actual plate/belt intersection and report whether it is empty."""
+    """Export one actual CSG intersection and report positive solid volume."""
     command = [
         str(openscad),
         "--backend",
@@ -142,9 +160,16 @@ def run_collision_export(
         "-D",
         "QUALITY=2",
         "-D",
-        'CLUTCH_PART="center_plate_belt_collision"',
+        f'CLUTCH_PART="{part}"',
         "-D",
-        "ENGAGED=false",
+        f"ENGAGED={'true' if engaged else 'false'}",
+        "-D",
+        (
+            f"CENTER_CLUTCH_TRAVEL_MM={travel_mm:.6f}"
+            if travel_mm is not None
+            else "CENTER_CLUTCH_TRAVEL_MM="
+            + ("3.000000" if engaged else "0.000000")
+        ),
         "-D",
         "SELECTED_COLUMN=2",
         "-D",
@@ -168,7 +193,10 @@ def run_collision_export(
         ):
             return False
         detail = (completed.stderr or completed.stdout)[-3000:]
-        fail(f"中心机构板/皮带碰撞见证导出失败\n{detail}")
+        fail(
+            f"中心离合交集见证导出失败: {part} engaged={engaged} "
+            f"travel={travel_mm}\n{detail}"
+        )
     if not output.is_file() or output.stat().st_size == 0:
         return False
     raw = output.read_bytes()
@@ -179,7 +207,14 @@ def run_collision_export(
         triangle_count = struct.unpack_from("<I", raw, 80)[0]
         if triangle_count == 0:
             return False
-    return True
+    report = inspect(inspect_py, output)
+    volume = report.get("volume")
+    if not isinstance(volume, (int, float)):
+        fail(f"中心离合交集见证缺少体积: {part} engaged={engaged}")
+    # Exact face contact (for example, the carriage shoe against a hard stop)
+    # may produce zero-area STL facets. It is a valid kinematic datum, not a
+    # volume collision; only a positive solid intersection fails the gate.
+    return abs(float(volume)) > INTERSECTION_VOLUME_TOLERANCE_MM3
 
 
 def inspect(inspect_py: Path, stl: Path) -> dict[str, object]:
@@ -233,6 +268,7 @@ def validate_contract(contract: Contract) -> None:
         "magnetNonContactClearanceMm": 0.40,
         "femaleMagnetProjectionMm": 0.45,
         "magnetNominalDiameterMm": 2.00,
+        "dogPocketPhaseDeg": 60.00,
         "selectorTriggerSpacingMm": 12.00,
         "guideRunningClearanceMm": 0.30,
         "bearingSeatDiameterMm": 6.10,
@@ -246,10 +282,12 @@ def validate_contract(contract: Contract) -> None:
         "guideRailHeightMm": 3.00,
         "guideRailXOffsetMm": 9.00,
         "guideRailZOffsetMm": 8.00,
+        "stopPadWidthMm": 4.00,
+        "stopPadXOffsetMm": 0.60,
         "captureShoeOuterMm": 5.20,
         "captureShoeLengthMm": 6.00,
-        "carriageUprightCenterXOffsetMm": 6.40,
-        "carriageUprightWidthMm": 2.40,
+        "carriageUprightCenterXOffsetMm": 6.20,
+        "carriageUprightWidthMm": 2.00,
         "carriageUprightZ0Mm": 5.20,
         "carriageUprightHeightMm": 3.00,
         "carriageUprightY0Mm": -10.00,
@@ -467,10 +505,16 @@ def validate_sweep(
 
     for engaged in (False, True):
         carriage = bounds(reports[("center_input_carriage", engaged)])
-        if carriage["min"][1] < rail_y0 - TOLERANCE_MM:
-            fail(f"滑架开/合位脱出导轨下端: engaged={engaged}")
-        if carriage["max"][1] > rail_y1 + TOLERANCE_MM:
-            fail(f"滑架开/合位脱出导轨上端: engaged={engaged}")
+        shoe_y0 = number(contract, "openTabY0Mm") + (
+            stroke if engaged else 0.0
+        )
+        shoe_y1 = number(contract, "openTabY1Mm") + (
+            stroke if engaged else 0.0
+        )
+        if shoe_y0 < rail_y0 - TOLERANCE_MM:
+            fail(f"滑架捕获滑靴开/合位脱出导轨下端: engaged={engaged}")
+        if shoe_y1 > rail_y1 + TOLERANCE_MM:
+            fail(f"滑架捕获滑靴开/合位脱出导轨上端: engaged={engaged}")
         expected_capture_min_x = axis_x - rail_x_offset - number(
             contract, "captureShoeOuterMm"
         ) / 2
@@ -492,10 +536,100 @@ def validate_sweep(
         0.001,
     ):
         fail("合位止挡没有与滑架止挡片实体接触")
-    for key in ("openStopY0Mm", "engagedStopY0Mm"):
-        stop_y = number(contract, key)
-        if stop_y < rail_y0 - TOLERANCE_MM or stop_y > rail_y1 + TOLERANCE_MM:
-            fail(f"实体止挡超出导轨服务范围: {key}={stop_y}")
+    expect_close(
+        number(contract, "openStopY1Mm"),
+        rail_y0,
+        "开位止挡与导轨下端的端面基准",
+        0.001,
+    )
+    expect_close(
+        number(contract, "engagedStopY0Mm"),
+        rail_y1,
+        "合位止挡与导轨上端的端面基准",
+        0.001,
+    )
+
+
+def validate_intermediate_sweep(
+    openscad: Path,
+    scad: Path,
+    inspect_path: Path,
+    temp_dir: Path,
+    contract: Contract,
+    open_reports: dict[str, dict[str, object]],
+) -> None:
+    """Check real CSG witnesses and rigid-body travel between the two stops."""
+    stroke = number(contract, "strokeMm")
+    # Endpoint checks alone can miss a tooth flank, upright or shoe corner that
+    # crosses another solid only while the carriage is moving. These three
+    # quarter points are intentionally exported with a numeric OpenSCAD travel
+    # override, not reconstructed from endpoint bounding boxes.
+    intermediate_fractions = (0.25, 0.50, 0.75)
+    collision_checks = (
+        (
+            "center_clutch_pair_collision",
+            "公母离合轮在中间行程仍有实体交集",
+        ),
+        (
+            "center_carriage_rail_collision",
+            "滑架在中间行程与双侧导轨仍有实体交集",
+        ),
+        (
+            "center_stops_carriage_collision",
+            "止挡在中间行程与滑架仍有实体穿插",
+        ),
+    )
+    for fraction in intermediate_fractions:
+        travel = stroke * fraction
+        for part in MOVING_PARTS:
+            stl = temp_dir / f"{part}_travel_{travel:.3f}.stl"
+            run_export(
+                openscad,
+                scad,
+                stl,
+                part,
+                False,
+                travel_mm=travel,
+            )
+            report = inspect(inspect_path, stl)
+            if part in PRINTED_PARTS:
+                assert_watertight(report, stl.name)
+            current = bounds(report)
+            opened = bounds(open_reports[part])
+            for axis, index in (("X", 0), ("Z", 2)):
+                expect_close(
+                    current["min"][index],
+                    opened["min"][index],
+                    f"{part} 在中间行程 {travel:.2f} mm 的 {axis} 最小值漂移",
+                )
+                expect_close(
+                    current["max"][index],
+                    opened["max"][index],
+                    f"{part} 在中间行程 {travel:.2f} mm 的 {axis} 最大值漂移",
+                )
+            expect_close(
+                current["min"][1] - opened["min"][1],
+                travel,
+                f"{part} 在中间行程 {travel:.2f} mm 的 Y 最小值位移",
+            )
+            expect_close(
+                current["max"][1] - opened["max"][1],
+                travel,
+                f"{part} 在中间行程 {travel:.2f} mm 的 Y 最大值位移",
+            )
+
+        for part, message in collision_checks:
+            witness = temp_dir / f"{part}_travel_{travel:.3f}_collision.stl"
+            if run_intersection_export(
+                openscad,
+                scad,
+                witness,
+                inspect_path,
+                part,
+                False,
+                travel_mm=travel,
+            ):
+                fail(f"{message}: travel={travel:.2f} mm")
 
 
 def validate_interference(
@@ -705,8 +839,10 @@ def validate_interference(
     )
     expect_close(
         plate["max"][1] - plate["min"][1],
-        number(contract, "railY1Mm") - number(contract, "railY0Mm") + 2.0,
-        "机构板服务高度",
+        number(contract, "outputBaseYMm")
+        - number(contract, "railY0Mm")
+        + 11.0,
+        "机构板服务高度（覆盖输出轴承笼）",
     )
 
     return {
@@ -771,10 +907,84 @@ def main() -> int:
         cabinet_report = inspect(inspect_path, cabinet_stl)
         assert_watertight(cabinet_report, cabinet_stl.name)
 
-        collision_stl = temp_dir / "center_plate_belt_collision.stl"
-        if run_collision_export(openscad, scad, collision_stl):
-            fail("机构板与中心 2GT 皮带实际网格仍有交集")
+        intersection_checks = (
+            (
+                "center_plate_belt_collision",
+                False,
+                "center_plate_belt_collision.stl",
+                "机构板与中心 2GT 皮带实际网格仍有交集",
+            ),
+            (
+                "center_clutch_pair_collision",
+                False,
+                "center_clutch_pair_collision_open.stl",
+                "公母离合轮开位仍有实体交集",
+            ),
+            (
+                "center_clutch_pair_collision",
+                True,
+                "center_clutch_pair_collision_engaged.stl",
+                "公母离合轮合位仍有实体交集",
+            ),
+            (
+                "center_selector_rail_collision",
+                False,
+                "center_selector_rail_collision.stl",
+                "磁力靴与双侧导轨仍有实体交集",
+            ),
+            (
+                "center_carriage_rail_collision",
+                False,
+                "center_carriage_rail_collision_open.stl",
+                "滑架开位与双侧导轨仍有实体交集",
+            ),
+            (
+                "center_carriage_rail_collision",
+                True,
+                "center_carriage_rail_collision_engaged.stl",
+                "滑架合位与双侧导轨仍有实体交集",
+            ),
+            (
+                "center_stops_carriage_collision",
+                False,
+                "center_stops_carriage_collision_open.stl",
+                "开位止挡与滑架仍有实体穿插",
+            ),
+            (
+                "center_stops_carriage_collision",
+                True,
+                "center_stops_carriage_collision_engaged.stl",
+                "合位止挡与滑架仍有实体穿插",
+            ),
+            (
+                "center_guide_stop_collision",
+                False,
+                "center_guide_stop_collision.stl",
+                "双侧导轨与端部止挡支座仍有实体穿插",
+            ),
+        )
+        for part, engaged, filename, message in intersection_checks:
+            if run_intersection_export(
+                openscad,
+                scad,
+                temp_dir / filename,
+                inspect_path,
+                part,
+                engaged,
+            ):
+                fail(message)
 
+        open_reports = {
+            part: reports[(part, False)] for part in MOVING_PARTS
+        }
+        validate_intermediate_sweep(
+            openscad,
+            scad,
+            inspect_path,
+            temp_dir,
+            contract,
+            open_reports,
+        )
         validate_sweep(contract, reports)
         metrics = validate_interference(contract, reports)
 

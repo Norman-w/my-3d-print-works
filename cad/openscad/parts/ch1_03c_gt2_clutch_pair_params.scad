@@ -177,6 +177,13 @@ GT2_MOTHER_ENTRY_CLEARANCE = is_undef(GT2_MOTHER_ENTRY_CLEARANCE)
 GT2_MOTHER_PULLEY_OVERLAP = is_undef(GT2_MOTHER_PULLEY_OVERLAP)
     ? 0.20
     : GT2_MOTHER_PULLEY_OVERLAP;
+// The female receiver faces the male dog from the opposite side. Flipping
+// the local +Z axis mirrors the X/Y profile, so the pocket needs one 60 deg
+// phase correction to put its three rounded lobes over the male's three
+// valleys in the common world XZ plane.
+GT2_MOTHER_POCKET_PHASE_DEG = is_undef(GT2_MOTHER_POCKET_PHASE_DEG)
+    ? 60.00
+    : GT2_MOTHER_POCKET_PHASE_DEG;
 
 GT2_EPS = 0.05;
 //#endregion
@@ -478,6 +485,11 @@ assert(
     gt2_triangle_tip_outer_r() + GT2_MOTHER_ENTRY_CLEARANCE
         < GT2_MOTHER_OUTER_R - 0.05,
     "pocket entry flare must leave a mother outer wall"
+);
+assert(
+    GT2_MOTHER_POCKET_PHASE_DEG >= 0
+        && GT2_MOTHER_POCKET_PHASE_DEG < 120,
+    "mother pocket phase must stay within one triangular symmetry period"
 );
 assert(
     gt2_belt_clearance_to_long_shaft() >= GT2_BELT_RADIAL_CLEARANCE,

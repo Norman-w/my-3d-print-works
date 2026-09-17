@@ -48,7 +48,6 @@ CENTER_CLUTCH_RAIL_Z = 3.00;
 CENTER_CLUTCH_RAIL_CLEAR = 0.30;
 CENTER_CLUTCH_RAIL_X_OFFSET = 9.00;
 CENTER_CLUTCH_RAIL_Z_OFFSET = 8.00;
-CENTER_CLUTCH_RAIL_ANCHOR_T = 2.40;
 CENTER_CLUTCH_SHOE_L = 6.00;
 CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_RAIL_W
     + 2 * CENTER_CLUTCH_RAIL_CLEAR + 1.60;
@@ -56,21 +55,28 @@ CENTER_CLUTCH_SHOE_OUTER = CENTER_CLUTCH_RAIL_W
 // The upright is deliberately outside the input rotor's radial envelope. Keep
 // its four datums named so the interference audit consumes the same values as
 // the printed carriage instead of copying a clearance number into Python.
-CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET = 6.40;
-CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T = 2.40;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET = 6.20;
+CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T = 2.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_Z0 = 5.20;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_H = 3.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_Y0 = -10.00;
 CENTER_CLUTCH_CARRIAGE_UPRIGHT_L = 8.40;
 
-CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y = -9.00;
-CENTER_CLUTCH_CARRIAGE_STOP_TAB_T = 1.20;
-CENTER_CLUTCH_OPEN_STOP_Y = -10.20;
-CENTER_CLUTCH_ENGAGED_STOP_Y = CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y
-    + GT2_CLUTCH_ENGAGE_STROKE_MM
-    + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T;
-CENTER_CLUTCH_STOP_BAR_W = 22.00;
-CENTER_CLUTCH_STOP_BAR_Z = CENTER_CLUTCH_RAIL_Z + 2 * CENTER_CLUTCH_RAIL_CLEAR;
+// The moving carriage is stopped by the two captured shoes themselves. A
+// former full-width crossbar passed through both rails and the bearing blocks;
+// that was a real solid interference, not a harmless contact datum.
+CENTER_CLUTCH_CARRIAGE_SHOE_Y0 = -10.40;
+CENTER_CLUTCH_CARRIAGE_SHOE_L = CENTER_CLUTCH_SHOE_L;
+CENTER_CLUTCH_CARRIAGE_SHOE_Y1 = CENTER_CLUTCH_CARRIAGE_SHOE_Y0
+    + CENTER_CLUTCH_CARRIAGE_SHOE_L;
+CENTER_CLUTCH_STOP_PAD_T = 1.20;
+CENTER_CLUTCH_STOP_PAD_W = CENTER_CLUTCH_RAIL_W + 1.00;
+CENTER_CLUTCH_STOP_PAD_Z = CENTER_CLUTCH_RAIL_Z + 1.00;
+CENTER_CLUTCH_STOP_PAD_X_OFFSET = 0.60;
+CENTER_CLUTCH_OPEN_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y0
+    - CENTER_CLUTCH_STOP_PAD_T;
+CENTER_CLUTCH_ENGAGED_STOP_Y = CENTER_CLUTCH_CARRIAGE_SHOE_Y1
+    + GT2_CLUTCH_ENGAGE_STROKE_MM;
 
 // The plate sits immediately behind the partition, with a rearward arm to
 // the clutch axis. It is a separate service part; the thin back cover never
@@ -122,16 +128,27 @@ function center_clutch_axis_z() = center_gt2_z();
 function center_clutch_rail_z() = center_clutch_axis_z()
     + CENTER_CLUTCH_RAIL_Z_OFFSET;
 
-function center_clutch_rail_y0(row) = center_clutch_input_base_y(row) - 10.50;
+function center_clutch_rail_y0(row) = center_clutch_input_base_y(row)
+    + CENTER_CLUTCH_CARRIAGE_SHOE_Y0;
 
-function center_clutch_rail_y1(row) = center_clutch_output_base_y(row) + 9.00;
+// Only the input carriage travels on these rails. The fixed output cage has
+// its own z-arms to the service plate, so extending the rails to the output
+// bearing stack would unnecessarily put them through the selector shoe. The
+// rails span the union of the open and engaged shoe envelopes and are captured
+// between the two separate stop brackets at their end faces.
+function center_clutch_rail_y1(row) = center_clutch_input_base_y(row)
+    + CENTER_CLUTCH_CARRIAGE_SHOE_Y1
+    + GT2_CLUTCH_ENGAGE_STROKE_MM;
 
 function center_clutch_rail_length(row) = center_clutch_rail_y1(row)
     - center_clutch_rail_y0(row);
 
 function center_clutch_plate_y0(row) = center_clutch_rail_y0(row) - 1.00;
 
-function center_clutch_plate_y1(row) = center_clutch_rail_y1(row) + 1.00;
+// The plate still spans the fixed output cage even though the captured rails
+// stop at the input carriage. This keeps the output bearing arms attached to
+// the same removable service datum.
+function center_clutch_plate_y1(row) = center_clutch_output_base_y(row) + 10.00;
 
 function center_clutch_plate_h(row) = center_clutch_plate_y1(row)
     - center_clutch_plate_y0(row);
@@ -152,11 +169,17 @@ function center_clutch_open_stop_y(row) = center_clutch_input_base_y(row)
 function center_clutch_engaged_stop_y(row) = center_clutch_input_base_y(row)
     + CENTER_CLUTCH_ENGAGED_STOP_Y;
 
-function center_clutch_carriage_stop_y(row) = center_clutch_input_base_y(row)
-    + CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y;
+function center_clutch_carriage_shoe_y0(row) = center_clutch_input_base_y(row)
+    + CENTER_CLUTCH_CARRIAGE_SHOE_Y0;
 
-function center_clutch_engaged_carriage_stop_y(row) =
-    center_clutch_carriage_stop_y(row) + GT2_CLUTCH_ENGAGE_STROKE_MM;
+function center_clutch_carriage_shoe_y1(row) = center_clutch_input_base_y(row)
+    + CENTER_CLUTCH_CARRIAGE_SHOE_Y1;
+
+function center_clutch_engaged_carriage_shoe_y0(row) =
+    center_clutch_carriage_shoe_y0(row) + GT2_CLUTCH_ENGAGE_STROKE_MM;
+
+function center_clutch_engaged_carriage_shoe_y1(row) =
+    center_clutch_carriage_shoe_y1(row) + GT2_CLUTCH_ENGAGE_STROKE_MM;
 //#endregion
 
 //#region 私有成员：轴承/承力几何
@@ -365,7 +388,9 @@ module center_clutch_guide_rails(col, row) {
     rail_z = center_clutch_rail_z();
     y0 = center_clutch_rail_y0(row);
     y1 = center_clutch_rail_y1(row);
-    plate_rear_z = CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T;
+    // The two rails are captured between the open and engaged stop brackets.
+    // Their end faces meet those brackets; no rearward arm is routed through
+    // the moving shoe or duplicated in the separate stop STL.
     for (sx = [-1, 1]) {
         rail_x = x + sx * CENTER_CLUTCH_RAIL_X_OFFSET;
         translate([
@@ -378,17 +403,6 @@ module center_clutch_guide_rails(col, row) {
                 y1 - y0,
                 CENTER_CLUTCH_RAIL_Z
             ]);
-        // End anchors tie the rails into the removable plate. The rails are
-        // not cantilevered from the rotor shafts.
-        for (anchor_y = [y0, y1 - CENTER_CLUTCH_RAIL_ANCHOR_T])
-            center_clutch_z_arm(
-                rail_x,
-                anchor_y + CENTER_CLUTCH_RAIL_ANCHOR_T / 2,
-                rail_z - CENTER_CLUTCH_RAIL_Z / 2,
-                plate_rear_z,
-                CENTER_CLUTCH_RAIL_W,
-                CENTER_CLUTCH_RAIL_ANCHOR_T
-            );
     }
 }
 //#endregion
@@ -423,7 +437,7 @@ module center_clutch_input_carriage(col, row, engaged = false) {
     x = center_clutch_axis_x(col);
     z = center_clutch_axis_z();
     base_y = center_clutch_input_base_y(row);
-    shift = engaged ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0;
+    shift = CENTER_CLUTCH_TRAVEL_MM;
     rail_z = center_clutch_rail_z();
     translate([0, shift, 0]) {
         for (index = [0:1])
@@ -449,50 +463,48 @@ module center_clutch_input_carriage(col, row, engaged = false) {
                 ]);
             center_clutch_rail_capture_shoe(
                 x + sx * CENTER_CLUTCH_RAIL_X_OFFSET,
-                base_y - 7.40,
+                base_y
+                    + CENTER_CLUTCH_CARRIAGE_SHOE_Y0
+                    + CENTER_CLUTCH_CARRIAGE_SHOE_L / 2,
                 rail_z
             );
         }
-
-        // This crossbar is the moving stop tab. It lands on the lower fixed
-        // stop in open position and on the upper fixed stop after exactly the
-        // frozen 3.00 mm stroke.
-        translate([
-            x - CENTER_CLUTCH_STOP_BAR_W / 2,
-            base_y + CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y,
-            rail_z - CENTER_CLUTCH_STOP_BAR_Z / 2
-        ])
-            cube([
-                CENTER_CLUTCH_STOP_BAR_W,
-                CENTER_CLUTCH_CARRIAGE_STOP_TAB_T,
-                CENTER_CLUTCH_STOP_BAR_Z
-            ]);
     }
 }
 
 module center_clutch_stop_bar(col, row, y) {
     x = center_clutch_axis_x(col);
+    rail_x_offset = CENTER_CLUTCH_RAIL_X_OFFSET;
     rail_z = center_clutch_rail_z();
     plate_rear_z = CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T;
-    translate([
-        x - CENTER_CLUTCH_STOP_BAR_W / 2,
-        y,
-        rail_z - CENTER_CLUTCH_STOP_BAR_Z / 2
-    ])
-        cube([
-            CENTER_CLUTCH_STOP_BAR_W,
-            CENTER_CLUTCH_CARRIAGE_STOP_TAB_T,
-            CENTER_CLUTCH_STOP_BAR_Z
-        ]);
-    for (sx = [-1, 1])
+    // Two short end caps sit just outward of the rail axes. Their 4.0 mm
+    // square section is wider than the 3.6 mm shoe capture opening, while the
+    // outward offset leaves the carriage uprights and central bearing blocks
+    // outside the stop solid. They stop the shoe faces at exact Y contact and
+    // never bridge through the moving rotor stack.
+    for (sx = [-1, 1]) {
+        rail_x = x + sx * rail_x_offset;
+        stop_x = x + sx * (rail_x_offset + CENTER_CLUTCH_STOP_PAD_X_OFFSET);
+        stop_is_before_rail = y < center_clutch_rail_y0(row);
+        translate([
+            stop_x - CENTER_CLUTCH_STOP_PAD_W / 2,
+            y,
+            rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2
+        ])
+            cube([
+                CENTER_CLUTCH_STOP_PAD_W,
+                CENTER_CLUTCH_STOP_PAD_T,
+                CENTER_CLUTCH_STOP_PAD_Z
+            ]);
         center_clutch_z_arm(
-            x + sx * (CENTER_CLUTCH_STOP_BAR_W / 2 - 1.00),
-            y + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T / 2,
-            rail_z - CENTER_CLUTCH_STOP_BAR_Z / 2,
+            rail_x,
+            y + (stop_is_before_rail ? 0 : CENTER_CLUTCH_STOP_PAD_T / 2),
+            rail_z - CENTER_CLUTCH_STOP_PAD_Z / 2,
             plate_rear_z,
             2.00,
-            CENTER_CLUTCH_CARRIAGE_STOP_TAB_T
+            CENTER_CLUTCH_STOP_PAD_T
         );
+    }
 }
 
 module center_clutch_stops(col, row) {
@@ -505,7 +517,7 @@ module center_clutch_stops(col, row) {
 module center_clutch_input_shaft(col, row, engaged = false) {
     x = center_clutch_axis_x(col);
     z = center_clutch_axis_z();
-    shift = engaged ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0;
+    shift = CENTER_CLUTCH_TRAVEL_MM;
     color(COLOR_SHAFT)
         d_rod_y(
             x,
@@ -550,7 +562,7 @@ module center_clutch_output_shaft(col, row) {
 module center_clutch_input_bearings(col, row, engaged = false) {
     x = center_clutch_axis_x(col);
     z = center_clutch_axis_z();
-    shift = engaged ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0;
+    shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#cfd4da")
         for (index = [0:1])
             translate([0, shift, 0])
@@ -618,6 +630,9 @@ assert(CENTER_CLUTCH_SHAFT_INPUT_START
     "input D shaft must stop at the blind gear socket before the solid dog");
 assert(CENTER_CLUTCH_RAIL_CLEAR >= 0.30,
     "captured guides need at least 0.30 mm running clearance per side");
+assert(CENTER_CLUTCH_TRAVEL_MM >= -0.001
+        && CENTER_CLUTCH_TRAVEL_MM <= GT2_CLUTCH_ENGAGE_STROKE_MM + 0.001,
+    "center clutch travel override must stay within the open/engaged datums");
 assert(CENTER_CLUTCH_RAIL_X_OFFSET > CENTER_CLUTCH_BEARING_BLOCK_X / 2,
     "guide rails must stand outside the rotor bearing block");
 assert(CENTER_CLUTCH_RAIL_Z_OFFSET > CENTER_CLUTCH_BEARING_BLOCK_Z / 2,
@@ -633,22 +648,54 @@ assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X
     "center belt passage must leave the M3 mounting holes outside its slot");
 assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y < center_clutch_plate_h(CENTER_GT2_ROW),
     "center belt passage must leave solid plate material above and below");
-assert(CENTER_CLUTCH_ENGAGED_STOP_Y
-        >= CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y
-            + GT2_CLUTCH_ENGAGE_STROKE_MM
-            + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T,
-    "engaged stop must close on the carriage stop tab after the full stroke");
+assert(abs(
+        CENTER_CLUTCH_OPEN_STOP_Y + CENTER_CLUTCH_STOP_PAD_T
+        - CENTER_CLUTCH_CARRIAGE_SHOE_Y0
+    ) < 0.001,
+    "open hard stop must meet the carriage shoe lower face");
 assert(abs(
         CENTER_CLUTCH_ENGAGED_STOP_Y
-        - (CENTER_CLUTCH_CARRIAGE_STOP_TAB_Y
-            + GT2_CLUTCH_ENGAGE_STROKE_MM
-            + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T)
+        - (CENTER_CLUTCH_CARRIAGE_SHOE_Y1
+            + GT2_CLUTCH_ENGAGE_STROKE_MM)
     ) < 0.001,
-    "engaged hard stop must be one tab thickness above the engaged tab");
-assert(center_clutch_rail_length(CENTER_GT2_ROW) > GT2_CLUTCH_ENGAGE_STROKE_MM,
+    "engaged hard stop must meet the carriage shoe upper face");
+assert(abs(
+        center_clutch_rail_y0(CENTER_GT2_ROW)
+        - (center_clutch_input_base_y(CENTER_GT2_ROW)
+            + CENTER_CLUTCH_CARRIAGE_SHOE_Y0)
+    ) < 0.001,
+    "guide rail lower face must meet the open shoe envelope");
+assert(abs(
+        center_clutch_rail_y1(CENTER_GT2_ROW)
+        - (center_clutch_input_base_y(CENTER_GT2_ROW)
+            + CENTER_CLUTCH_CARRIAGE_SHOE_Y1
+            + GT2_CLUTCH_ENGAGE_STROKE_MM)
+    ) < 0.001,
+    "guide rail upper face must meet the engaged shoe envelope");
+assert(center_clutch_rail_length(CENTER_GT2_ROW)
+        >= CENTER_CLUTCH_CARRIAGE_SHOE_L
+            + GT2_CLUTCH_ENGAGE_STROKE_MM,
     "guide rails must retain the moving carriage through the full stroke");
+assert(CENTER_CLUTCH_STOP_PAD_W > CENTER_CLUTCH_RAIL_W
+        + 2 * CENTER_CLUTCH_RAIL_CLEAR,
+    "stop pad must overhang the captured shoe opening");
+assert(
+    CENTER_CLUTCH_RAIL_X_OFFSET + CENTER_CLUTCH_STOP_PAD_X_OFFSET
+        - CENTER_CLUTCH_STOP_PAD_W / 2
+        >= CENTER_CLUTCH_CARRIAGE_UPRIGHT_CENTER_X_OFFSET
+            + CENTER_CLUTCH_CARRIAGE_UPRIGHT_X_T / 2
+            + CENTER_CLUTCH_RAIL_CLEAR,
+    "stop pad must clear the carriage upright outer edge"
+);
+assert(
+    CENTER_CLUTCH_RAIL_X_OFFSET + CENTER_CLUTCH_STOP_PAD_X_OFFSET
+        + CENTER_CLUTCH_STOP_PAD_W / 2
+        <= CENTER_CLUTCH_RAIL_X_OFFSET
+            + CENTER_CLUTCH_SHOE_OUTER / 2 + 0.001,
+    "stop pad must remain within the captured shoe outer envelope"
+);
 assert(center_clutch_output_bearing_y(CENTER_GT2_ROW, 1)
         + CENTER_CLUTCH_BEARING_BLOCK_T / 2
-        < center_clutch_rail_y1(CENTER_GT2_ROW) + 1.0,
-    "output bearing cage must stay inside the guide/plate service envelope");
+        < center_clutch_plate_y1(CENTER_GT2_ROW) + 0.01,
+    "output bearing cage must stay inside the mechanism plate service envelope");
 //#endregion

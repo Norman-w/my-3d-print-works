@@ -128,14 +128,15 @@ module mother_pocket_prism(z0, height) {
     // running clearance and narrows smoothly toward the pocket floor. There
     // is deliberately no step, ledge, or sudden entry flare that could catch
     // the rounded male dog while it is being inserted or pulled out.
-    rounded_triangle_tapered_prism(
-        z0 - GT2_EPS,
-        height + 2 * GT2_EPS,
-        GT2_DOG_INTERFACE_R,
-        gt2_triangle_tip_center_r(),
-        GT2_DOG_INTERFACE_HEAD_R + GT2_MOTHER_POCKET_CLEARANCE,
-        GT2_DOG_INTERFACE_TIP_HEAD_R + GT2_MOTHER_ENTRY_CLEARANCE
-    );
+    rotate([0, 0, GT2_MOTHER_POCKET_PHASE_DEG])
+        rounded_triangle_tapered_prism(
+            z0 - GT2_EPS,
+            height + 2 * GT2_EPS,
+            GT2_DOG_INTERFACE_R,
+            gt2_triangle_tip_center_r(),
+            GT2_DOG_INTERFACE_HEAD_R + GT2_MOTHER_POCKET_CLEARANCE,
+            GT2_DOG_INTERFACE_TIP_HEAD_R + GT2_MOTHER_ENTRY_CLEARANCE
+        );
 }
 //#endregion
 

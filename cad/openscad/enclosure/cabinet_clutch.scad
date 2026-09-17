@@ -78,6 +78,13 @@ GT2_GEAR_MESH_CLEARANCE = 0.32;
 // assembly calls its parameterized library API below with this enclosure's
 // live 3 mm mating datum, so the standalone X1C-fine default cannot silently
 // mismatch the existing clutch gears.
+// A numeric override is used by the geometry gate to sample the complete
+// open-to-engaged travel.  The normal assembly still derives its position from
+// ENGAGED, so a preview/export without an override has exactly the two
+// contract end states.
+CENTER_CLUTCH_TRAVEL_MM = is_undef(CENTER_CLUTCH_TRAVEL_MM)
+    ? (ENGAGED ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0)
+    : CENTER_CLUTCH_TRAVEL_MM;
 //#endregion
 
 //#region 常量/配置
@@ -1814,9 +1821,10 @@ module clutch_station(col, row, engaged = false, detail = false) {
 module center_gt2_male(col, row, engaged = false) {
     x = clutch_col_x(col);
     z = center_gt2_z();
-    insertion_shift = engaged
-        ? GT2_CLUTCH_ENGAGE_STROKE_MM
-        : 0;
+    // The explicit travel override is intentionally shared by the rotor,
+    // carriage, shafts and bearings.  Using the boolean only here would make
+    // an intermediate CSG sample look stationary while the carrier moved.
+    insertion_shift = CENTER_CLUTCH_TRAVEL_MM;
     color("#e2a84b")
         translate([
             x,
@@ -2100,6 +2108,53 @@ module selected_center_plate_belt_collision_part() {
             CENTER_GT2_FRONT_PULLEY_Z,
             center_gt2_belt_y(CENTER_GT2_ROW)
         );
+    }
+}
+
+// These actual CSG intersections are exported only by the geometry gate. An
+// empty result is the required witness: the pair may contact through its
+// designed tooth envelope, while the carriage/rail and shoe/rail interfaces
+// must retain real clearance throughout the open and engaged datums.
+module selected_center_clutch_pair_collision_part() {
+    intersection() {
+        center_gt2_male(CENTER_GT2_COL, CENTER_GT2_ROW, ENGAGED);
+        center_gt2_female(CENTER_GT2_COL, CENTER_GT2_ROW);
+    }
+}
+
+module selected_center_selector_rail_collision_part() {
+    intersection() {
+        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+        selected_center_selector_shoe_part();
+    }
+}
+
+module selected_center_carriage_rail_collision_part() {
+    intersection() {
+        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_clutch_input_carriage(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            ENGAGED
+        );
+    }
+}
+
+module selected_center_stops_carriage_collision_part() {
+    intersection() {
+        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_clutch_input_carriage(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            ENGAGED
+        );
+    }
+}
+
+module selected_center_guide_stop_collision_part() {
+    intersection() {
+        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
+        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
     }
 }
 
@@ -2415,6 +2470,16 @@ module clutch_scene_geometry() {
         selected_center_mechanism_plate_part();
     } else if (CLUTCH_PART == "center_plate_belt_collision") {
         selected_center_plate_belt_collision_part();
+    } else if (CLUTCH_PART == "center_clutch_pair_collision") {
+        selected_center_clutch_pair_collision_part();
+    } else if (CLUTCH_PART == "center_selector_rail_collision") {
+        selected_center_selector_rail_collision_part();
+    } else if (CLUTCH_PART == "center_carriage_rail_collision") {
+        selected_center_carriage_rail_collision_part();
+    } else if (CLUTCH_PART == "center_stops_carriage_collision") {
+        selected_center_stops_carriage_collision_part();
+    } else if (CLUTCH_PART == "center_guide_stop_collision") {
+        selected_center_guide_stop_collision_part();
     } else if (CLUTCH_PART == "center_selector_shoe") {
         selected_center_selector_shoe_part();
     } else if (CLUTCH_PART == "center_input_shaft") {
@@ -2508,6 +2573,7 @@ echo(
     str("longPitchRadiusMm=", gt2_long_pitch_r()),
     str("inputPitchRadiusMm=", gt2_male_pitch_r()),
     str("gearMeshClearanceMm=", GT2_GEAR_MESH_CLEARANCE),
+    str("dogPocketPhaseDeg=", GT2_MOTHER_POCKET_PHASE_DEG),
     str("longTipRadiusMm=", gt2_long_tip_r()),
     str("inputTipRadiusMm=", gt2_male_tip_r()),
     str("beltEnvelopeRadiusMm=", gt2_belt_envelope_r()),
@@ -2518,13 +2584,13 @@ echo(
     str("railY0Mm=", center_clutch_rail_y0(CENTER_GT2_ROW)),
     str("railY1Mm=", center_clutch_rail_y1(CENTER_GT2_ROW)),
     str("openStopY0Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW)),
-    str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("openStopY1Mm=", center_clutch_open_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
     str("engagedStopY0Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW)),
-    str("engagedStopY1Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
-    str("openTabY0Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW)),
-    str("openTabY1Mm=", center_clutch_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
-    str("engagedTabY0Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW)),
-    str("engagedTabY1Mm=", center_clutch_engaged_carriage_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_CARRIAGE_STOP_TAB_T),
+    str("engagedStopY1Mm=", center_clutch_engaged_stop_y(CENTER_GT2_ROW) + CENTER_CLUTCH_STOP_PAD_T),
+    str("openTabY0Mm=", center_clutch_carriage_shoe_y0(CENTER_GT2_ROW)),
+    str("openTabY1Mm=", center_clutch_carriage_shoe_y1(CENTER_GT2_ROW)),
+    str("engagedTabY0Mm=", center_clutch_engaged_carriage_shoe_y0(CENTER_GT2_ROW)),
+    str("engagedTabY1Mm=", center_clutch_engaged_carriage_shoe_y1(CENTER_GT2_ROW)),
     str("bearingSeatDiameterMm=", CENTER_CLUTCH_BEARING_SEAT_D),
     str("bearingSeatDepthMm=", CENTER_CLUTCH_BEARING_SEAT_DEPTH),
     str("bearingBackShoulderMm=", CENTER_CLUTCH_BEARING_BACK_SHOULDER_T),
@@ -2538,6 +2604,8 @@ echo(
     str("guideRailHeightMm=", CENTER_CLUTCH_RAIL_Z),
     str("guideRailXOffsetMm=", CENTER_CLUTCH_RAIL_X_OFFSET),
     str("guideRailZOffsetMm=", CENTER_CLUTCH_RAIL_Z_OFFSET),
+    str("stopPadWidthMm=", CENTER_CLUTCH_STOP_PAD_W),
+    str("stopPadXOffsetMm=", CENTER_CLUTCH_STOP_PAD_X_OFFSET),
     str("captureShoeOuterMm=", CENTER_CLUTCH_SHOE_OUTER),
     str("captureShoeLengthMm=", CENTER_CLUTCH_SHOE_L),
     str("carriageUprightCenterXOffsetMm=",
@@ -2634,6 +2702,11 @@ assert(
     || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"
+    || CLUTCH_PART == "center_clutch_pair_collision"
+    || CLUTCH_PART == "center_selector_rail_collision"
+    || CLUTCH_PART == "center_carriage_rail_collision"
+    || CLUTCH_PART == "center_stops_carriage_collision"
+    || CLUTCH_PART == "center_guide_stop_collision"
     || CLUTCH_PART == "center_input_shaft"
     || CLUTCH_PART == "center_output_shaft"
     || CLUTCH_PART == "center_input_bearings"
