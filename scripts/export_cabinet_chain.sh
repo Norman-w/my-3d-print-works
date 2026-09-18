@@ -20,7 +20,7 @@ OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
 OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-PARTS=(plates rollers pins sprockets idlers bearings motor motor_shaft motor_cover motor_spring_hardware motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
+PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -72,6 +72,22 @@ payload = json.loads(path.read_text(encoding="utf-8"))
 payload["title"] = "零件柜 · 后仓横走 03C + 张紧 U"
 payload["units"] = "mm"
 payload["up"] = "y"
+obsolete_cabinet_ids = {
+    "cabinet-clutch/cabinet_clutch_cabinet",
+    "cabinet-clutch/cabinet_clutch_cabinet_context",
+}
+payload["parts"] = [
+    part for part in payload.get("parts", [])
+    if part.get("id") not in obsolete_cabinet_ids
+]
+models_dir = path.parent / "models" / "cabinet-clutch"
+for stale_name in (
+    "cabinet_clutch_cabinet.stl",
+    "cabinet_clutch_cabinet_context.stl",
+):
+    stale_path = models_dir / stale_name
+    if stale_path.exists() or stale_path.is_symlink():
+        stale_path.unlink()
 names = {
     "cabinet_shell": {
         "name": "柜体（外框+隔板+格栅）",
@@ -122,6 +138,12 @@ names = {
         "role": "purchased",
         "color": "#b9c2ca",
         "opacity": 1.0,
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_clutch_trigger_magnet": {
+        "name": "蛇形链条·链节 Z− 触发磁铁（Ø2×1.8 采购件参考）",
+        "role": "purchased",
+        "color": "#5b6670",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor": {
@@ -287,11 +309,9 @@ names = {
 # these mappings restore the canonical mechanism folders and labels for the
 # native-world drawer parts instead of leaving raw filenames in the tree.
 names.update({
-    "cabinet_clutch_cabinet": {
-        "name": "柜体·世界坐标背景", "role": "printed", "color": "#6f8f9a", "opacity": 0.18, "visible": True,
-    },
-    "cabinet_clutch_cabinet_context": {
-        "name": "柜体·格口与抽屉背景", "role": "diagnostic", "color": "#8fa9b8", "opacity": 0.32, "visible": True,
+    "cabinet_clutch_cabinet_frame": {
+        "name": "箱体·上下左右外框 + X+立板 + 前部层格/立格 + 前后仓隔板皮带孔 + 后仓贯通 + 前下实体面",
+        "role": "printed", "color": "#6f8f9a", "opacity": 0.30, "visible": True,
     },
     "cabinet_clutch_assembly": {
         "name": "总装配合并检查体（可选）", "role": "diagnostic", "color": "#7f8ea3", "opacity": 0.28, "visible": False,
@@ -319,8 +339,7 @@ names.update({
     "16_drawer_linear_rack_candidate": {"name": "抽屉底部直线齿排"},
 })
 clutch_group_map = {
-    "cabinet_clutch_cabinet": "00·柜体与格口",
-    "cabinet_clutch_cabinet_context": "00·柜体与格口",
+    "cabinet_clutch_cabinet_frame": "00·箱体框架",
     "00_left_d_axis_candidate": "01·动力母线",
     "00_tensioner_t_solid_reference": "01·动力母线",
     "01_motor_vertical_reference": "01·动力母线",
@@ -352,7 +371,7 @@ for part in payload.get("parts", []):
     group_id = clutch_group_map.get(Path(str(part.get("file", ""))).stem)
     if group_id is not None:
         part["group"] = group_id
-group_order = ["00·柜体与格口", "01·动力母线", "02·离合机构", "03·抽屉驱动", "99·总装配检查体"]
+group_order = ["00·箱体框架", "01·动力母线", "02·离合机构", "03·抽屉驱动", "99·总装配检查体"]
 counts = {}
 for part in payload.get("parts", []):
     group_id = str(part.get("group") or "未分组")
@@ -467,7 +486,7 @@ export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutc
 export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings motor motor_shaft motor_cover motor_spring_hardware motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
+    for part in sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done
@@ -490,6 +509,10 @@ python3 "${PROJECT_ROOT}/scripts/validate_cabinet_chain_sync.py" \
     --stl-dir "${OUT_STL}"
 
 if [[ -f "$MANIFEST_PY" ]]; then
+    # Rebuild the canonical clutch model folder before scanning.  The manifest
+    # writer updates the JSON but intentionally does not remove dangling links
+    # left by retired parts from an older export.
+    rm -rf "$PREVIEW_DIR/models/cabinet-clutch"
     args=(--preview-dir "$PREVIEW_DIR" --title "零件柜 · 后仓横走 03C + 张紧 U" --no-recursive)
     [[ -d "$OUT_CABINET" ]] && args+=(--stl-dir "$OUT_CABINET")
     [[ -d "$OUT_CLUTCH" ]] && args+=(--stl-dir "$OUT_CLUTCH")

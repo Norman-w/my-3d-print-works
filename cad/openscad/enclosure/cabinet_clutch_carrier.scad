@@ -48,20 +48,31 @@ CENTER_CLUTCH_BEARING_PAIR_SPACING = CENTER_CLUTCH_BEARING_BLOCK_Y
 CENTER_CLUTCH_BEARING_BLOCK_Z_MARGIN = 1.00;
 CENTER_CLUTCH_BEARING_BLOCK_Z_OVERLAP = 0.20;
 
-// The removable plate lives behind the partition.  The linear-bearing block
-// reaches rearward from the plate to the male/output axis and is deliberately
-// a single rectangular printed part; the thin back cover never carries this
-// load path.
-CENTER_CLUTCH_PLATE_Z = WORLD_PARTITION_BACK_Z - 0.80;
+// The removable plate seats directly on the rear face of the fixed partition.
+// Every drawer cell repeats the same four-corner boss pattern: the bosses
+// project rearward from the partition, stop 0.50 mm before the plate rear
+// face, and contain blind pilot holes for the mushroom-head self-tapping
+// screws.  The thin final rear cover never carries this load path.
+CENTER_CLUTCH_PLATE_PARTITION_GAP = 0.00;
+CENTER_CLUTCH_PLATE_Z = WORLD_PARTITION_BACK_Z
+    - CENTER_CLUTCH_PLATE_PARTITION_GAP;
 CENTER_CLUTCH_PLATE_T = 3.20;
 CENTER_CLUTCH_PLATE_W = 34.00;
 CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET = 12.00;
 CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET = 4.00;
-CENTER_CLUTCH_PLATE_KEY_W = 4.00;
-CENTER_CLUTCH_PLATE_KEY_H = 6.00;
-CENTER_CLUTCH_PLATE_KEY_D = 1.00;
 CENTER_CLUTCH_M3_CLEAR_D = 3.40;
-CENTER_CLUTCH_SUPPORT_KEY_CLEAR = 0.30;
+CENTER_CLUTCH_PLATE_FASTENER_COUNT = 4;
+CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D = 2.40;
+CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT = 4;
+CENTER_CLUTCH_PARTITION_BOSS_OD = 5.00;
+CENTER_CLUTCH_PARTITION_BOSS_HEIGHT = CENTER_CLUTCH_PLATE_T - 0.50;
+CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH =
+    CENTER_CLUTCH_PARTITION_BOSS_HEIGHT - 0.50;
+CENTER_CLUTCH_PARTITION_SELF_TAP_BOTTOM_WALL =
+    CENTER_CLUTCH_PARTITION_BOSS_HEIGHT
+        - CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH;
+CENTER_CLUTCH_PARTITION_BOSS_COUNT =
+    N_COL * N_ROW * CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT;
 CENTER_CLUTCH_PLATE_REAR_Z = CENTER_CLUTCH_PLATE_Z
     - CENTER_CLUTCH_PLATE_T;
 
@@ -69,10 +80,16 @@ CENTER_CLUTCH_PLATE_REAR_Z = CENTER_CLUTCH_PLATE_Z
 // rotor and the front drawer pulley.  This opening is a true CSG passage.
 CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR = 0.45;
 CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR = 0.45;
-CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X =
-    CENTER_GT2_BELT_BASE_OUTER_R
-    + GT2_BELT_RADIAL_CLEARANCE
+CENTER_CLUTCH_PLATE_BELT_SLOT_CENTER_OFFSET =
+    CENTER_GT2_BELT_BASE_INNER_R + CENTER_GT2_BELT_T / 2;
+CENTER_CLUTCH_PLATE_BELT_SLOT_HALF_X = CENTER_GT2_BELT_T / 2
+    + CENTER_GT2_BELT_TOOTH_H
     + CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR;
+// This remains the outer envelope half-width for contract/clearance checks;
+// the printed plate itself contains two slots at +/- the center offset.
+CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X =
+    CENTER_CLUTCH_PLATE_BELT_SLOT_CENTER_OFFSET
+    + CENTER_CLUTCH_PLATE_BELT_SLOT_HALF_X;
 CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y = GT2_BELT_WIDTH
     + 2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR;
 
@@ -356,16 +373,16 @@ module center_clutch_d_prism_y(
 module center_clutch_plate_belt_passage(col, row) {
     x = center_clutch_axis_x(col);
     y = center_gt2_belt_y(row);
-    translate([
-        x - CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X,
-        y - CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y / 2,
-        CENTER_CLUTCH_PLATE_Z - CENTER_CLUTCH_PLATE_T - EPS
-    ])
-        cube([
-            2 * CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X,
-            CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y,
-            CENTER_CLUTCH_PLATE_T + 2 * EPS
-        ]);
+    // The active belt crosses the plate on its two straight radial strips;
+    // do not remove the solid bridge between them.
+    center_gt2_belt_straight_passage_slots(
+        x,
+        y,
+        CENTER_CLUTCH_PLATE_REAR_Z - EPS,
+        CENTER_CLUTCH_PLATE_T + 2 * EPS,
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR,
+        CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR
+    );
 }
 
 module center_clutch_linear_bearing_block_y(col, row) {
@@ -456,19 +473,6 @@ module center_clutch_mechanism_plate(col, row) {
                     h,
                     CENTER_CLUTCH_PLATE_T
                 ]);
-            // Locating keys enter captured partition slots. They locate the
-            // removable service plate but do not carry the shaft load.
-            for (sx = [-1, 1])
-                translate([
-                    x + sx * 10.00 - CENTER_CLUTCH_PLATE_KEY_W / 2,
-                    y0 + h / 2 - CENTER_CLUTCH_PLATE_KEY_H / 2,
-                    CENTER_CLUTCH_PLATE_Z
-                ])
-                    cube([
-                        CENTER_CLUTCH_PLATE_KEY_W,
-                        CENTER_CLUTCH_PLATE_KEY_H,
-                        CENTER_CLUTCH_PLATE_KEY_D
-                    ]);
             // The LM3UU seat is part of this same printed mechanism plate.
             // Only the bearing bore is subtracted from the otherwise solid
             // support; there is no separate holder or holder fastener set.
@@ -477,7 +481,7 @@ module center_clutch_mechanism_plate(col, row) {
             // Its only subtractions are the two Ø6.10 bearing pockets.
             center_clutch_output_bearing_bar_y(col, row);
         }
-        // Four plate-to-partition M3 holes.
+        // Four plate-to-partition self-tapping screw clearance holes.
         for (sx = [-1, 1], sy = [-1, 1])
             translate([
                 x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
@@ -488,48 +492,43 @@ module center_clutch_mechanism_plate(col, row) {
             ])
                 cylinder(
                     d = CENTER_CLUTCH_M3_CLEAR_D,
-                    h = CENTER_CLUTCH_PLATE_T
-                        + CENTER_CLUTCH_PLATE_KEY_D + 2 * EPS,
+                    h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
                     $fn = 40
                 );
         center_clutch_plate_belt_passage(col, row);
     }
 }
 
-module center_clutch_partition_support_cuts(col, row) {
+module center_clutch_partition_mount_bosses(col, row) {
     x = center_clutch_axis_x(col);
     y0 = center_clutch_plate_y0(row);
     h = center_clutch_plate_h(row);
-    for (sx = [-1, 1])
-        translate([
-            x + sx * 10.00
-                - (CENTER_CLUTCH_PLATE_KEY_W
-                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR) / 2,
-            y0 + h / 2
-                - (CENTER_CLUTCH_PLATE_KEY_H
-                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR) / 2,
-            WORLD_PARTITION_BACK_Z - EPS
-        ])
-            cube([
-                CENTER_CLUTCH_PLATE_KEY_W
-                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR,
-                CENTER_CLUTCH_PLATE_KEY_H
-                    + 2 * CENTER_CLUTCH_SUPPORT_KEY_CLEAR,
-                WORLD_PARTITION_T + 2 * EPS
-            ]);
+    // Every drawer cell receives the same four-corner pattern.  Each boss
+    // starts at the partition rear face and projects in -Z.  Its blind pilot
+    // opens at the boss rear end for the screw and leaves a 0.50 mm solid
+    // bottom wall at the partition side.
     for (sx = [-1, 1], sy = [-1, 1])
         translate([
             x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
             y0 + (sy < 0
                 ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
                 : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
-            WORLD_PARTITION_BACK_Z - EPS
+            WORLD_PARTITION_BACK_Z - CENTER_CLUTCH_PARTITION_BOSS_HEIGHT
         ])
-            cylinder(
-                d = CENTER_CLUTCH_M3_CLEAR_D,
-                h = WORLD_PARTITION_T + 2 * EPS,
-                $fn = 40
-            );
+            difference() {
+                cylinder(
+                    d = CENTER_CLUTCH_PARTITION_BOSS_OD,
+                    h = CENTER_CLUTCH_PARTITION_BOSS_HEIGHT,
+                    $fn = 48
+                );
+                translate([0, 0, -EPS])
+                    cylinder(
+                        d = CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D,
+                        h = CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH
+                            + EPS,
+                        $fn = 40
+                    );
+            }
 }
 
 //#endregion
@@ -965,4 +964,25 @@ assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X
     "center belt passage must stay inside the mechanism plate");
 assert(CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y > GT2_BELT_WIDTH,
     "center belt passage must include axial clearance");
+assert(CENTER_CLUTCH_PLATE_PARTITION_GAP == 0,
+    "mechanism plate must seat directly on the partition rear face");
+assert(CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT == 4,
+    "each drawer cell must have four corner locating bosses");
+assert(CENTER_CLUTCH_PARTITION_BOSS_COUNT
+        == N_COL * N_ROW * CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT,
+    "partition boss count must repeat across every drawer cell");
+assert(CENTER_CLUTCH_PARTITION_BOSS_HEIGHT
+        == CENTER_CLUTCH_PLATE_T - 0.50,
+    "partition boss must finish 0.50 mm below the plate rear face");
+assert(CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH
+        + CENTER_CLUTCH_PARTITION_SELF_TAP_BOTTOM_WALL
+        == CENTER_CLUTCH_PARTITION_BOSS_HEIGHT,
+    "boss self-tap pilot must leave its partition-side bottom wall");
+assert(CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH > 0,
+    "boss self-tap pilot depth must be positive");
+assert(CENTER_CLUTCH_PARTITION_BOSS_OD
+        > CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D + 2.0,
+    "boss must leave radial material around the self-tap pilot");
+assert(CENTER_CLUTCH_PLATE_FASTENER_COUNT == 4,
+    "mechanism plate must retain four self-tapping screw locations");
 //#endregion

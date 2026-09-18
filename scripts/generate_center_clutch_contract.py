@@ -66,6 +66,15 @@ REQUIRED = {
     "inputSleeveDSocketClearanceMm", "inputSleeveMagnetNominalDiameterMm",
     "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
     "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetBottomClearanceMm",
+    "inputSleeveMagnetOpenBottomYMm", "snakeChainHeightDatum",
+    "snakeChainLinkTopOffsetMm", "snakeChainReferenceRow",
+    "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
+    "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainTriggerMagnetSegmentIndex",
+    "snakeChainTriggerMagnetDiameterMm", "snakeChainTriggerMagnetLengthMm",
+    "snakeChainTriggerMagnetNormalOffsetMm",
+    "snakeChainTriggerMagnetTopClearanceMm",
+    "snakeChainTriggerMagnetAxialStartOffsetMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -83,10 +92,31 @@ REQUIRED = {
     "shaftDiameterMm", "matingMagnetCount",
     "inputSleeveMagnetCount", "totalModeledMagnetCount",
     "rotaryBearingArrangement", "linearBearingArrangement", "plateWidthMm",
-    "plateKeyWidthMm", "plateKeyHeightMm", "plateKeyClearanceMm",
-    "plateM3ClearanceMm", "plateBeltPassageHalfWidthMm",
+    "plateThicknessMm", "platePartitionGapMm", "plateFastenerCount",
+    "plateM3ClearanceMm", "partitionSelfTapPilotDiameterMm",
+    "partitionSelfTapPilotDepthMm", "partitionSelfTapBottomWallMm",
+    "partitionBossPerCellCount", "partitionBossCount",
+    "partitionBossCenterOffsetXMm", "partitionBossCenterOffsetYMm",
+    "partitionBossOuterDiameterMm", "partitionBossHeightMm",
+    "partitionBossHeightDeficitMm", "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageSlotCount", "plateBeltPassageSlotCenterOffsetMm",
+    "plateBeltPassageSlotWidthMm",
     "plateBeltPassageAxialWidthMm", "plateBeltPassageRadialClearanceMm",
     "plateBeltPassageAxialClearanceMm", "plateSupport", "actuation",
+    "partitionBeltPassageType", "partitionBeltPassageCenterXMm",
+    "partitionBeltPassageCenterYMm", "partitionBeltPassageRelativeXMm",
+    "partitionBeltPassageRelativeYMm", "partitionBeltPassagePlateZMm",
+    "partitionBeltPassagePlateThicknessMm", "partitionBeltPassageHalfWidthMm",
+    "partitionBeltPassageWindowCount", "partitionBeltPassageCenterWindowCount",
+    "partitionBeltPassageLegacyWindowCount", "partitionBeltPassageAxialWidthMm",
+    "partitionBeltPassageRadialClearanceMm",
+    "partitionBeltPassageAxialClearanceMm",
+    "partitionBeltPassageLegacySlotCenterOffsetMm",
+    "partitionBeltPassageLegacySlotWidthMm",
+    "partitionBeltPassageLegacyHalfWidthMm",
+    "partitionBeltPassageLegacyAxialWidthMm",
+    "partitionBeltPassageLegacyRadialClearanceMm",
+    "partitionBeltPassageLegacyAxialClearanceMm",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
     "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
@@ -118,6 +148,12 @@ INT_KEYS = {
     "outputBearingCount", "bearingCount", "matingMagnetCount",
     "inputSleeveMagnetCount", "totalModeledMagnetCount", "centerCol", "centerRow",
     "drawerLayerCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
+    "plateBeltPassageSlotCount", "partitionBeltPassageWindowCount",
+    "partitionBeltPassageCenterWindowCount",
+    "partitionBeltPassageLegacyWindowCount", "plateFastenerCount",
+    "partitionBossPerCellCount", "partitionBossCount",
+    "snakeChainReferenceRow",
+    "snakeChainTriggerMagnetSegmentIndex",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -212,7 +248,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "outputShaftProfile": "D-round",
         "rotaryBearingArrangement": "output-two-3x6x2-in-one-integral-bar-input-free",
         "linearBearingArrangement": "single-coaxial-with-integrated-seat",
-        "plateSupport": "partition-through-M3",
+        "plateSupport": "partition-boss-locators-plus-four-self-tapping-screws",
         "inputPart": "cabinet-clutch/center_input_rotor",
         "outputPart": "cabinet-clutch/center_output_rotor",
         "outputBearingSupportPart": "cabinet-clutch/center_mechanism_plate",
@@ -236,6 +272,34 @@ def validate_contract(contract: dict[str, object]) -> None:
         if contract.get(key) != value:
             raise RuntimeError(f"中心离合契约字段错误: {key}={contract.get(key)!r}")
 
+    if n(contract, "platePartitionGapMm") != 0:
+        raise RuntimeError("离合机构板必须贴合前后仓隔板后表面")
+    if n(contract, "partitionBossPerCellCount") != 4:
+        raise RuntimeError("每个抽屉格必须提供四个角部定位 Boss")
+    if n(contract, "partitionBossCount") != n(contract, "partitionBossPerCellCount") * 15:
+        raise RuntimeError("前后仓隔板必须把四角 Boss 重复到 15 个抽屉格")
+    if n(contract, "plateFastenerCount") != 4:
+        raise RuntimeError("离合机构板必须保留四个自攻螺丝固定点")
+    if n(contract, "partitionBossHeightMm") >= n(contract, "plateThicknessMm"):
+        raise RuntimeError("定位 Boss 高度不能达到离合机构板后表面")
+    expect(
+        contract,
+        "partitionBossHeightDeficitMm",
+        0.50,
+        "定位 Boss 相对机构板的高度差",
+    )
+    if n(contract, "partitionBossCenterOffsetXMm") != 12.0 or n(contract, "partitionBossCenterOffsetYMm") != 4.0:
+        raise RuntimeError("每格四角 Boss 必须复用机构板四角安装坐标")
+    if n(contract, "partitionSelfTapPilotDepthMm") <= 0:
+        raise RuntimeError("隔板自攻螺丝导孔深度无效")
+    expect(
+        contract,
+        "partitionSelfTapPilotDepthMm",
+        n(contract, "partitionBossHeightMm")
+        - n(contract, "partitionSelfTapBottomWallMm"),
+        "Boss 内自攻螺丝导孔底厚",
+    )
+
     frozen = {
         "openGapMm": 0.60, "dogInsertionMm": 2.40, "strokeMm": 3.00,
         "pocketDepthMm": 3.25, "bottomClearanceMm": 0.85,
@@ -248,7 +312,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatRadialClearanceMm": 0.10, "linearBearingBlockWidthMm": 18.00,
         "linearBearingBlockYLengthMm": 10.00, "linearBearingBlockZMarginMm": 1.00,
-        "linearBearingBlockZLengthMm": 19.7208,
+        "linearBearingBlockZLengthMm": 20.5208,
         "linearBearingBlockMountHoleDiameterMm": 0.00,
         "linearBearingBlockMountHoleCount": 0.0,
         "linearBearingBlockMountXOffsetMm": 0.00,
@@ -279,12 +343,24 @@ def validate_contract(contract: dict[str, object]) -> None:
         "outputBearingBarWidthMm": 14.00,
         "outputBearingBarYLengthMm": 6.40,
         "outputBearingBarY0OffsetMm": 0.40,
-        "outputBearingBarZLengthMm": 19.4208,
+        "outputBearingBarZLengthMm": 20.2208,
         "outputBearingBarZMarginMm": 1.00,
         "outputBearingBarMotherClearanceMm": 0.40,
         "outputBearingBarPlateOverlapMm": 0.20,
         "matingMagnetCount": 2.0, "inputSleeveMagnetCount": 1.0,
         "totalModeledMagnetCount": 3.0, "plateWidthMm": 34.00,
+        "plateThicknessMm": 3.20, "platePartitionGapMm": 0.00,
+        "plateFastenerCount": 4.0, "plateM3ClearanceMm": 3.40,
+        "partitionSelfTapPilotDiameterMm": 2.40,
+        "partitionSelfTapPilotDepthMm": 2.20,
+        "partitionSelfTapBottomWallMm": 0.50,
+        "partitionBossPerCellCount": 4.0,
+        "partitionBossCount": 60.0,
+        "partitionBossCenterOffsetXMm": 12.00,
+        "partitionBossCenterOffsetYMm": 4.00,
+        "partitionBossOuterDiameterMm": 5.00,
+        "partitionBossHeightMm": 2.70,
+        "partitionBossHeightDeficitMm": 0.50,
         "drawerShelfThicknessMm": 2.40,
         "frontTimingBearingWidthMm": 2.00,
         "frontTimingBearingIdMm": 3.00,
@@ -302,10 +378,15 @@ def validate_contract(contract: dict[str, object]) -> None:
         "drawerGuideFlangeClearanceMm": 0.30,
         "drawerGuideFlangeBackClearanceMm": 0.60,
         "drawerGuideFrontSupportClearanceMm": 0.00,
-        "plateKeyWidthMm": 4.00, "plateKeyHeightMm": 6.00,
-        "plateKeyClearanceMm": 0.30, "plateM3ClearanceMm": 3.40,
+        "plateBeltPassageSlotCount": 2.0,
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
+        "partitionBeltPassageWindowCount": 15.0,
+        "partitionBeltPassageCenterWindowCount": 1.0,
+        "partitionBeltPassageLegacyWindowCount": 14.0,
+        "partitionBeltPassagePlateThicknessMm": 3.0,
+        "partitionBeltPassageRadialClearanceMm": 0.90,
+        "partitionBeltPassageAxialClearanceMm": 0.45,
     }
     for key, value in frozen.items():
         expect(contract, key, value, f"中心离合冻结值 {key}")
@@ -370,6 +451,89 @@ def validate_contract(contract: dict[str, object]) -> None:
     if n(contract, "inputSleeveMagnetBottomClearanceMm") < 1.0:
         raise RuntimeError("M5 磁铁下方实体底厚不足")
 
+    if contract.get("snakeChainHeightDatum") != "input-sleeve-magnet-bottom":
+        raise RuntimeError("蛇链高度基准必须锁定公轮底部 M5 磁铁下沿")
+    expected_magnet_bottom = (
+        n(contract, "inputBaseYMm")
+        + n(contract, "inputSleeveTopOffsetMm")
+        - n(contract, "inputSleeveUpperDHeightMm")
+        - n(contract, "inputSleeveLowerRoundHeightMm")
+        + 0.10
+    )
+    expect(
+        contract,
+        "inputSleeveMagnetOpenBottomYMm",
+        expected_magnet_bottom,
+        "公轮底部磁铁开位下沿",
+    )
+    if n(contract, "snakeChainReferenceRow") != n(contract, "centerRow") - 1:
+        raise RuntimeError("蛇链参考服务行必须对应中心离合下方的服务行")
+    expected_reference_path = (
+        n(contract, "drawerShelfTopYMm")
+        - (n(contract, "centerRow") - n(contract, "snakeChainReferenceRow"))
+        * (n(contract, "drawerBayHeightMm") + n(contract, "drawerShelfThicknessMm"))
+        + n(contract, "drawerBayHeightMm") / 2
+    )
+    expect(
+        contract,
+        "snakeChainReferencePathCenterYMm",
+        expected_reference_path,
+        "蛇链参考服务行中心高度",
+    )
+    expect(contract, "snakeChainLinkTopOffsetMm", 2.15, "03C 链节上沿偏移")
+    expected_shift = (
+        n(contract, "inputSleeveMagnetOpenBottomYMm")
+        - n(contract, "snakeChainLinkTopOffsetMm")
+        - n(contract, "snakeChainReferencePathCenterYMm")
+    )
+    expect(contract, "snakeChainVerticalShiftMm", expected_shift, "蛇链服务层高度偏移")
+    expect(
+        contract,
+        "snakeChainServicePathCenterYMm",
+        expected_reference_path
+        - (n(contract, "drawerBayHeightMm") + n(contract, "drawerShelfThicknessMm"))
+        + n(contract, "snakeChainVerticalShiftMm"),
+        "蛇链服务层中心高度",
+    )
+    expect(
+        contract,
+        "snakeChainReturnGuideCenterYMm",
+        41.20,
+        "蛇链回程导向轮中心高度",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerMagnetDiameterMm",
+        2.0,
+        "蛇链触发磁铁直径",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerMagnetLengthMm",
+        1.8,
+        "蛇链触发磁铁长度",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerMagnetNormalOffsetMm",
+        1.15,
+        "蛇链触发磁铁上沿偏移",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerMagnetTopClearanceMm",
+        0.0,
+        "蛇链触发磁铁上沿基准余量",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerMagnetAxialStartOffsetMm",
+        2.44,
+        "蛇链触发磁铁轴向起点",
+    )
+    if n(contract, "snakeChainTriggerMagnetSegmentIndex") != 143:
+        raise RuntimeError("蛇链触发磁铁节号必须落在中心服务直线段 143")
+
     if abs(n(contract, "bearingReferenceCenterOffsetMm")) > 0.001:
         raise RuntimeError("输出轴承参考件必须与长方条轴承孔同心")
     if n(contract, "bearingSeatDepthMm") < n(contract, "bearingBackShoulderMm") + 2.0:
@@ -424,10 +588,65 @@ def validate_contract(contract: dict[str, object]) -> None:
 
     if n(contract, "plateBeltPassageHalfWidthMm") <= n(contract, "beltEnvelopeRadiusMm"):
         raise RuntimeError("机构板贯穿槽没有包住 2GT 背包络")
+    if n(contract, "plateBeltPassageSlotCount") != 2:
+        raise RuntimeError("机构板必须只为中心皮带保留左右两个穿板槽")
+    if n(contract, "plateBeltPassageSlotCenterOffsetMm") <= 0:
+        raise RuntimeError("机构板皮带槽中心偏移无效")
+    if n(contract, "plateBeltPassageSlotWidthMm") <= 0:
+        raise RuntimeError("机构板皮带槽宽度无效")
+    if abs(
+        n(contract, "plateBeltPassageSlotCenterOffsetMm")
+        + n(contract, "plateBeltPassageSlotWidthMm") / 2
+        - n(contract, "plateBeltPassageHalfWidthMm")
+    ) > 0.001:
+        raise RuntimeError("机构板皮带槽外包络没有由槽中心和槽宽推导")
     if n(contract, "plateBeltPassageAxialWidthMm") <= 6.0:
         raise RuntimeError("机构板贯穿槽没有覆盖 6 mm 皮带宽度")
     if n(contract, "plateBeltPassageHalfWidthMm") >= n(contract, "plateWidthMm") / 2:
         raise RuntimeError("机构板贯穿槽穿出侧壁")
+    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-plus-3M-straight-run-windows":
+        raise RuntimeError("前后仓隔板必须使用逐抽屉格 2GT+3M 直线段窗口")
+    if n(contract, "partitionBeltPassageWindowCount") != 15:
+        raise RuntimeError("前后仓隔板必须有 5×3 共 15 个抽屉格皮带窗口")
+    if n(contract, "partitionBeltPassageCenterWindowCount") != 1:
+        raise RuntimeError("前后仓隔板必须只有 1 个中心 2GT 窗口")
+    if n(contract, "partitionBeltPassageLegacyWindowCount") != 14:
+        raise RuntimeError("前后仓隔板必须有 14 个其它抽屉格 3M 窗口")
+    if abs(
+        n(contract, "partitionBeltPassageCenterXMm")
+        - n(contract, "axisXMm")
+    ) > 0.001:
+        raise RuntimeError("前后仓隔板皮带窗口没有对准中心离合轴线")
+    if abs(
+        n(contract, "partitionBeltPassageCenterYMm")
+        - n(contract, "frontTimingBeltYMm")
+    ) > 0.001:
+        raise RuntimeError("前后仓隔板皮带窗口没有对准真实皮带中心高度")
+    if abs(n(contract, "partitionBeltPassageRelativeXMm")) > 0.001:
+        raise RuntimeError("前后仓隔板皮带窗口相对 X 必须统一")
+    if abs(n(contract, "partitionBeltPassageRelativeYMm")) >= n(contract, "drawerBayHeightMm") / 2:
+        raise RuntimeError("前后仓隔板皮带窗口相对 Y 超出抽屉格")
+    if n(contract, "partitionBeltPassagePlateThicknessMm") <= 0:
+        raise RuntimeError("前后仓隔板厚度无效")
+    if n(contract, "partitionBeltPassageHalfWidthMm") <= n(contract, "beltEnvelopeRadiusMm"):
+        raise RuntimeError("前后仓隔板皮带窗口没有包住真实皮带包络")
+    if n(contract, "partitionBeltPassageAxialWidthMm") <= 6.0:
+        raise RuntimeError("前后仓隔板皮带窗口没有覆盖 6 mm 皮带宽度")
+    if n(contract, "partitionBeltPassageLegacyHalfWidthMm") <= 0:
+        raise RuntimeError("其它抽屉格 3M 皮带窗口宽度无效")
+    if abs(
+        n(contract, "partitionBeltPassageLegacySlotCenterOffsetMm")
+        + n(contract, "partitionBeltPassageLegacySlotWidthMm") / 2
+        - n(contract, "partitionBeltPassageLegacyHalfWidthMm")
+    ) > 0.001:
+        raise RuntimeError("其它抽屉格 3M 窗口外包络没有由槽中心和槽宽推导")
+    if n(contract, "partitionBeltPassageLegacyAxialWidthMm") <= 5.0:
+        raise RuntimeError("其它抽屉格 3M 皮带窗口没有覆盖皮带宽度")
+    partition_z = n(contract, "partitionBeltPassagePlateZMm")
+    belt_z0 = min(n(contract, "axisZMm"), n(contract, "frontTimingPulleyZMm"))
+    belt_z1 = max(n(contract, "axisZMm"), n(contract, "frontTimingPulleyZMm"))
+    if not belt_z0 < partition_z < belt_z1:
+        raise RuntimeError("前后仓隔板皮带窗口没有穿过中心皮带直线段")
     if n(contract, "outputShaftRoundDiameterMm") != n(contract, "shaftDiameterMm"):
         raise RuntimeError("输出圆轴直径必须与 3 mm D 轴名义尺寸一致")
     if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 1:

@@ -58,6 +58,7 @@ include <cabinet_motor_mount.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
+include <../ch1_03c_params.scad>
 include <../parts/drawer_drive_bearings.scad>
 // Retained for explicit legacy/trigger diagnostics only. It is not part of the
 // current male-end assembly; the new sleeve carries the magnetic interface.
@@ -116,6 +117,19 @@ TIMING_PULLEY_W = 5.0;
 TIMING_BELT_W = 5.0;
 TIMING_BELT_T = 1.8;
 TIMING_BELT_CLEAR = 0.65;
+// The partition is pierced by the belt's XZ plane.  Its X opening follows
+// the radial envelope; its Y opening follows the belt axial width, not the
+// radial belt thickness.
+PARTITION_BELT_PASSAGE_RADIAL_CLEAR = 0.45;
+PARTITION_BELT_PASSAGE_AXIAL_CLEAR = 0.45;
+// The front/rear compartment partition gets one real belt window per drawer
+// cell. The center R3C3 cell uses the migrated 2GT loop; the other fourteen
+// cells use the existing 3M timing-belt envelope. This is not the final
+// removable rear panel at z=-D.
+PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR =
+    PARTITION_BELT_PASSAGE_RADIAL_CLEAR;
+PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR =
+    PARTITION_BELT_PASSAGE_AXIAL_CLEAR;
 // The timing pulley is a 20T / 3 mm-pitch wheel.  Its polygon leaves a
 // 0.40-pitch root gap (the 0.8→1.0→0.2 sector); the belt tooth is narrower
 // than that gap and is shallower than the 0.86 mm pulley tooth depth.
@@ -298,6 +312,16 @@ FRONT_PULLEY_Z = DRIVE_AXIS_Z + DRAWER_BELT_CENTER_DISTANCE;
 // clearance; it must not be added to the printed belt cross-section.
 TIMING_BELT_BASE_INNER_R = TIMING_PITCH_R;
 TIMING_BELT_BASE_OUTER_R = TIMING_BELT_BASE_INNER_R + TIMING_BELT_T;
+TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET =
+    TIMING_BELT_BASE_INNER_R + TIMING_BELT_T / 2;
+TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X = TIMING_BELT_T / 2
+    + TIMING_BELT_TOOTH_H
+    + PARTITION_BELT_PASSAGE_RADIAL_CLEAR;
+TIMING_BELT_PARTITION_WINDOW_HALF_X =
+    TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET
+    + TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X;
+TIMING_BELT_PARTITION_WINDOW_AXIAL_WIDTH = TIMING_BELT_W
+    + 2 * PARTITION_BELT_PASSAGE_AXIAL_CLEAR;
 // Smooth retaining flanges sit above and below every timing pulley. They are
 // intentionally larger than the toothed outer circle so the belt cannot walk
 // off the pulley in Z.
@@ -524,8 +548,11 @@ COLOR_AXIS_Z = "#3b82f6";
 //#region 模型/类型
 // Part values:
 //   assembly       cabinet + bus + one center CH1 03C clutch/2GT drive path
-//   cabinet        cabinet shell and drawer ghosts
-//   cabinet_context wire-frame cabinet + bay dividers + drawer context
+//   cabinet        closed cabinet shell for standalone geometry checks
+//   cabinet_frame  canonical preview frame: outer frame + explicit +X side
+//                  plate + front grid + lower face; the front/rear partition
+//                  is a separate installed part so it cannot hide the grid
+//   cabinet_context canonical frame + optional drawer context
 //   power_bus      active motor + five-column 2GT bus and adjustable return wheel
 //   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
@@ -693,6 +720,17 @@ CENTER_GT2_BELT_BASE_OUTER_R =
 CENTER_GT2_BELT_TOOTH_H = max(0.20, GT2_PULLEY_TOOTH_DEPTH - 0.12);
 CENTER_GT2_BELT_TOOTH_BASE = GT2_PULLEY_PITCH_MM * 0.36;
 CENTER_GT2_BELT_TOOTH_TIP = GT2_PULLEY_PITCH_MM * 0.22;
+PARTITION_BELT_PASSAGE_WINDOW_SLOT_CENTER_OFFSET =
+    CENTER_GT2_BELT_BASE_INNER_R + CENTER_GT2_BELT_T / 2;
+PARTITION_BELT_PASSAGE_WINDOW_SLOT_HALF_X = CENTER_GT2_BELT_T / 2
+    + CENTER_GT2_BELT_TOOTH_H
+    + PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR
+    + GT2_BELT_RADIAL_CLEARANCE;
+PARTITION_BELT_PASSAGE_WINDOW_HALF_X =
+    PARTITION_BELT_PASSAGE_WINDOW_SLOT_CENTER_OFFSET
+    + PARTITION_BELT_PASSAGE_WINDOW_SLOT_HALF_X;
+PARTITION_BELT_PASSAGE_WINDOW_AXIAL_WIDTH = GT2_BELT_WIDTH
+    + 2 * PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR;
 
 // The five vertical drawer columns share two horizontal open 2GT loops.  The
 // loop length is deliberately expressed in catalog teeth, not inferred from
@@ -870,6 +908,20 @@ function drawer_station_belt_y(col, row) =
     is_center_gt2_station(col, row)
         ? center_gt2_belt_y(row)
         : drawer_belt_y(row);
+
+// The front/rear partition is one repeated datum: every drive cell sends its
+// timing belt into the next lower bay, just as center R3C3 sends its belt into
+// CENTER_GT2_FRONT_PULLEY_ROW.  The portal keeps the same normalized
+// in-bay position as that center pulley.  This is deliberately separate from
+// the live station belt function above because the legacy 3M mechanisms may
+// retain their own pulley stack while the partition openings share one
+// normalized placement.
+function drawer_partition_belt_y(row) =
+    center_gt2_belt_y(CENTER_GT2_ROW)
+        + world_row_center_y(
+            row + CENTER_GT2_FRONT_PULLEY_ROW - CENTER_GT2_ROW
+        )
+        - world_row_center_y(CENTER_GT2_FRONT_PULLEY_ROW);
 
 //#endregion
 
@@ -1336,6 +1388,148 @@ module center_gt2_belt_loop_z(x, z0, z1, y) {
         center_gt2_belt_loop_z_base(x, z0, z1, y);
         center_gt2_belt_loop_z_teeth(x, z0, z1, y);
     }
+}
+
+// The active R3C3 belt is a closed loop in XZ around the center clutch pulley
+// and the drawer-front pulley.  At either intermediate plate (the cabinet
+// partition or the removable mechanism plate) its section is not one wide
+// rectangle: it is two straight radial strips at +/- the pitch-radius datum.
+// Keep the bridge between those strips solid and derive both cuts from the
+// same belt envelope used by center_gt2_belt_loop_z().  Legacy stations are
+// intentionally not included here because their clutches/belts are hidden
+// and are not the current mechanical assembly truth.
+module center_gt2_belt_straight_passage_slots(
+    x,
+    y,
+    z0,
+    z_depth,
+    radial_clear,
+    axial_clear
+) {
+    path_min_z = min(CENTER_GT2_Z, CENTER_GT2_FRONT_PULLEY_Z);
+    path_max_z = max(CENTER_GT2_Z, CENTER_GT2_FRONT_PULLEY_Z);
+    slot_center_offset = CENTER_GT2_BELT_BASE_INNER_R
+        + CENTER_GT2_BELT_T / 2;
+    // The belt back envelope occupies +/- T/2 around each strip centre, but
+    // the printed tooth prism extends inward by CENTER_GT2_BELT_TOOTH_H.
+    // Include that real tooth envelope before applying the plate clearance;
+    // otherwise the inner tooth tips still bite the solid bridge.
+    slot_half_x = CENTER_GT2_BELT_T / 2
+        + CENTER_GT2_BELT_TOOTH_H
+        + radial_clear;
+    assert(z_depth > 0, "center belt passage depth must be positive");
+    assert(radial_clear >= 0 && axial_clear >= 0,
+        "center belt passage clearances must be non-negative");
+    assert(z0 > path_min_z - EPS
+            && z0 + z_depth < path_max_z + EPS,
+        "belt passage plate must cross the center belt straight run");
+    for (side = [-1, 1])
+        translate([
+            x + side * slot_center_offset - slot_half_x,
+            y - GT2_BELT_WIDTH / 2 - axial_clear,
+            z0
+        ])
+            cube([
+                2 * slot_half_x,
+                GT2_BELT_WIDTH + 2 * axial_clear,
+                z_depth
+            ]);
+}
+
+// The front/rear compartment partition is perpendicular to the belt's
+// straight Z run. It therefore needs one real window covering the two belt
+// strips and the small bridge between them. This is intentionally separate
+// from the mechanism plate's two-slot cut: the partition is the fixed cabinet
+// datum, while the removable plate keeps its bridge for stiffness.
+module center_gt2_belt_partition_window(
+    x,
+    y,
+    z0,
+    z_depth,
+    radial_clear,
+    axial_clear
+) {
+    path_min_z = min(CENTER_GT2_Z, CENTER_GT2_FRONT_PULLEY_Z);
+    path_max_z = max(CENTER_GT2_Z, CENTER_GT2_FRONT_PULLEY_Z);
+    slot_center_offset = PARTITION_BELT_PASSAGE_WINDOW_SLOT_CENTER_OFFSET;
+    slot_half_x = CENTER_GT2_BELT_T / 2
+        + CENTER_GT2_BELT_TOOTH_H
+        + radial_clear;
+    window_half_x = slot_center_offset + slot_half_x;
+    assert(z_depth > 0, "center belt partition window depth must be positive");
+    assert(radial_clear >= 0 && axial_clear >= 0,
+        "partition belt passage clearances must be non-negative");
+    assert(z0 > path_min_z - EPS
+            && z0 + z_depth < path_max_z + EPS,
+        "partition belt window must cross the center belt straight run");
+    translate([
+        x - window_half_x,
+        y - GT2_BELT_WIDTH / 2 - axial_clear,
+        z0
+    ])
+        cube([
+            2 * window_half_x,
+            GT2_BELT_WIDTH + 2 * axial_clear,
+            z_depth
+        ]);
+}
+
+module timing_belt_partition_window(
+    x,
+    y,
+    z0,
+    z_depth,
+    radial_clear,
+    axial_clear
+) {
+    path_min_z = min(DRIVE_AXIS_Z, FRONT_PULLEY_Z);
+    path_max_z = max(DRIVE_AXIS_Z, FRONT_PULLEY_Z);
+    slot_center_offset = TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET;
+    slot_half_x = TIMING_BELT_T / 2
+        + TIMING_BELT_TOOTH_H
+        + radial_clear;
+    window_half_x = slot_center_offset + slot_half_x;
+    assert(z_depth > 0, "timing belt partition window depth must be positive");
+    assert(radial_clear >= 0 && axial_clear >= 0,
+        "timing partition belt clearances must be non-negative");
+    assert(z0 > path_min_z - EPS
+            && z0 + z_depth < path_max_z + EPS,
+        "timing partition belt window must cross the 3M straight run");
+    translate([
+        x - window_half_x,
+        y - TIMING_BELT_W / 2 - axial_clear,
+        z0
+    ])
+        cube([
+            2 * window_half_x,
+            TIMING_BELT_W + 2 * axial_clear,
+            z_depth
+        ]);
+}
+
+module all_drawer_belt_partition_windows() {
+    for (row = [0:N_ROW - 1])
+        for (col = [0:N_COL - 1]) {
+            if (is_center_gt2_station(col, row))
+                center_gt2_belt_partition_window(
+                    clutch_col_x(col),
+                    drawer_partition_belt_y(row),
+                    WORLD_PARTITION_BACK_Z - EPS,
+                    WORLD_PARTITION_T + 2 * EPS,
+                    GT2_BELT_RADIAL_CLEARANCE
+                        + PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR,
+                    PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR
+                );
+            else
+                timing_belt_partition_window(
+                    clutch_col_x(col),
+                    drawer_partition_belt_y(row),
+                    WORLD_PARTITION_BACK_Z - EPS,
+                    WORLD_PARTITION_T + 2 * EPS,
+                    PARTITION_BELT_PASSAGE_RADIAL_CLEAR,
+                    PARTITION_BELT_PASSAGE_AXIAL_CLEAR
+                );
+        }
 }
 
 // Two horizontal 2GT loops for the five vertical drawer columns.  The belt
@@ -2018,9 +2212,92 @@ module world_bay_grid() {
         cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
 }
 
-module world_front_service_cheek() {
-    translate([WALL - EPS, WORLD_GRID_ORIGIN_Y, WORLD_PARTITION_FRONT_Z])
-        cube([SERVICE_W + EPS, WORLD_GRID_H + EPS, -WORLD_PARTITION_FRONT_Z + EPS]);
+// Canonical cabinet-frame geometry for the browser and assembly context.
+//
+// The user-facing cabinet is deliberately an open structural frame, not a
+// second closed shell: the outer XZ/YZ frame members run through the full
+// depth, but the drawer XZ shelves and YZ dividers exist only in the front
+// drawer bay (-FRONT_NET..0).  The rear box (-D..-FRONT_NET) stays one open,
+// unobstructed cavity.  The XY front plane has only the lower service face.
+// This avoids the coincident shell/context pair that previously hid the
+// mechanism and made the cabinet look like two overlapping models.
+module cabinet_frame_outer() {
+    union() {
+        // Full-depth lower and upper XZ frame members.
+        translate([0, 0, -D])
+            cube([W, WALL, D]);
+        translate([0, H - WALL, -D])
+            cube([W, WALL, D]);
+
+        // Full-depth left YZ frame member.  The +X member is a named plate
+        // below so the assembly tree can distinguish it from the rails.
+        translate([0, 0, -D])
+            cube([WALL, H, D]);
+    }
+}
+
+module cabinet_frame_xplus_side_panel() {
+    // Solid YZ side plate at the +X boundary.  It runs through the rear
+    // cavity and is the datum for the right-hand side of the open frame.
+    translate([W - WALL, 0, -D])
+        cube([WALL, H, D]);
+}
+
+module cabinet_frame_grid() {
+    // Drawer-area shelves, including the shelf over the lower service bay.
+    // Do not extend these into the rear box: its full depth remains open.
+    for (j = [0:N_ROW - 1])
+        translate([
+            WORLD_GRID_ORIGIN_X,
+            world_row_y(j) - WORLD_SHELF_T,
+            WORLD_PARTITION_FRONT_Z
+        ])
+            cube([WORLD_GRID_W, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z]);
+
+    // Drawer-area vertical dividers; each spans only the front drawer bay.
+    for (i = [1:N_COL - 1])
+        translate([
+            world_col_x(i) - WORLD_DIV_T,
+            WORLD_GRID_ORIGIN_Y,
+            WORLD_PARTITION_FRONT_Z
+        ])
+            cube([WORLD_DIV_T, WORLD_GRID_H, -WORLD_PARTITION_FRONT_Z]);
+}
+
+module cabinet_frame_front_service_cheek() {
+    // The left 20 mm return/service corridor has its own full-height front
+    // divider. The printable cabinet already has this as front_service_cheek
+    // in cabinet.scad; the canonical preview frame had accidentally omitted
+    // it, leaving one vertical board missing at the left edge of the 5-column
+    // drawer grid. Keep the small EPS overlap so it fuses to the shelves and
+    // to the service floor without creating a naked coincident edge.
+    translate([
+        WALL - EPS,
+        WORLD_GRID_ORIGIN_Y,
+        WORLD_PARTITION_FRONT_Z
+    ])
+        cube([
+            SERVICE_W + 2 * EPS,
+            WORLD_GRID_H + EPS,
+            -WORLD_PARTITION_FRONT_Z + EPS
+        ]);
+}
+
+module cabinet_frame_front_lower_face() {
+    // Only the front lower service bay is a solid XY face.  The upper drawer
+    // fronts remain open so the layers and mechanism can be inspected.
+    translate([0, 0, -WALL])
+        cube([W, WORLD_GRID_ORIGIN_Y, WALL]);
+}
+
+module clutch_cabinet_frame() {
+    union() {
+        cabinet_frame_outer();
+        cabinet_frame_xplus_side_panel();
+        cabinet_frame_grid();
+        cabinet_frame_front_service_cheek();
+        cabinet_frame_front_lower_face();
+    }
 }
 
 module world_drawer_ghosts() {
@@ -2076,69 +2353,42 @@ module clutch_cabinet_shell() {
     }
 }
 
-module clutch_assembly_shell_context() {
-    // Do not use a transparent difference() or broad wall panels here.
-    // OpenSCAD triangulates transparent faces into large fan faces, which makes
-    // the inspection image look like the mechanism is inside broken glass. A
-    // wire-frame cabinet datum is enough to show the front/back orientation;
-    // the printable cabinet entry above remains a separate closed shell.
-    union() {
-        for (x = [0, W - WALL])
-            for (z = [-WALL, -D])
-                translate([x, 0, z])
-                    cube([WALL, H, WALL]);
-        for (x = [0, W - WALL])
-            for (y = [0, H - WALL])
-                translate([x, y, -D])
-                    cube([WALL, WALL, D]);
-        for (z = [-WALL, -D])
-            for (y = [0, H - WALL])
-                translate([0, y, z])
-                    cube([W, WALL, WALL]);
-    }
-}
-
 module clutch_partition_with_belt_passages() {
+    cabinet_frame_partition_with_belt_passage();
+}
+
+// The full-size XY plate at the rear edge of the drawer bay is the fixed
+// front/rear compartment partition. It is not the thin removable rear panel
+// at z=-D: the rear service cavity behind this partition remains open through
+// the outer frame. Every drawer cell has its own true belt passage and the
+// same four-corner Boss mounting datum; the center cell is the 2GT first
+// article and the other cells retain their 3M envelope.
+module cabinet_frame_partition_with_belt_passage() {
     difference() {
-        world_partition_plate();
-        center_clutch_partition_support_cuts(
-            CENTER_GT2_COL,
-            CENTER_GT2_ROW
-        );
-        for (row = [0:N_ROW - 1])
-            for (col = [0:N_COL - 1]) {
-                station_belt_t = is_center_gt2_station(col, row)
-                    ? CENTER_GT2_BELT_T
-                    : TIMING_BELT_T;
-                station_passage_half_x = is_center_gt2_station(col, row)
-                    ? CENTER_GT2_BELT_BASE_OUTER_R
-                        + GT2_BELT_RADIAL_CLEARANCE + 0.45
-                    : TIMING_BELT_BASE_OUTER_R
-                        + TIMING_BELT_CLEAR + 0.45;
-                translate([
-                    clutch_col_x(col) - station_passage_half_x,
-                    drawer_station_belt_y(col, row)
-                        - station_belt_t / 2 - 0.45,
-                    WORLD_PARTITION_BACK_Z - EPS
-                ])
-                    cube([
-                        2 * station_passage_half_x,
-                        station_belt_t + 0.90,
-                        WORLD_PARTITION_T + 2 * EPS
-                    ]);
-            }
+        union() {
+            world_partition_plate();
+            // Repeat the same relative Boss pattern in every one of the 15
+            // drawer cells. The center mechanism plate is the reference
+            // geometry; the other cells receive the same mounting datums.
+            for (row = [0:N_ROW - 1])
+                for (col = [0:N_COL - 1])
+                    center_clutch_partition_mount_bosses(col, row);
+        }
+        // Fifteen actual drawer-cell windows: center R3C3 uses the migrated
+        // 2GT straight run; the other fourteen use the 3M envelope. All
+        // fifteen windows use the center cell's normalized relative Y datum.
+        // The final rear panel is not part of these cuts.
+        all_drawer_belt_partition_windows();
     }
 }
 
-module clutch_cabinet_context(include_drawers = true) {
-    color(COLOR_CABINET, 0.38) clutch_assembly_shell_context();
-    color(COLOR_CABINET, 0.72) {
-        // Keep the partition as datum rails in the preview. The full
-        // perforated partition is a printable cabinet feature, but its
-        // transparent boolean face is not useful for visual inspection.
-        world_bay_grid();
-        world_front_service_cheek();
-    }
+module clutch_cabinet_context(include_drawers = true, include_partition = true) {
+    color(COLOR_CABINET, 0.38) clutch_cabinet_frame();
+    if (include_partition)
+        // Keep the installed partition separate from the frame mesh. This is
+        // a display/assembly split only; its fixed location and real passage
+        // remain defined by clutch_partition_with_belt_passages().
+        color(COLOR_CABINET, 0.16) clutch_partition_with_belt_passages();
     if (include_drawers)
         color(COLOR_DRAWER, 0.22) world_drawer_ghosts();
 }
@@ -2248,6 +2498,36 @@ module power_bus() {
 // world-coordinate helpers
 // makes the carrier consume the same station datums as the rotors.
 include <cabinet_clutch_carrier.scad>
+
+// The snake-chain service runs use the bottom edge of the open male-sleeve
+// magnet as their vertical datum.  The chain source is authored in XZ and is
+// rotated into the browser's native world frame, so its path "z" becomes the
+// world Y height. The lower guide loop has its own raised center so the
+// shifted return run remains floor-safe without changing the 03C pin count.
+SNAKE_CHAIN_HEIGHT_DATUM = "input-sleeve-magnet-bottom";
+SNAKE_CHAIN_REFERENCE_ROW = CENTER_GT2_ROW - 1;
+SNAKE_CHAIN_LINK_TOP_OFFSET_MM = h2 / 2;
+SNAKE_CHAIN_INPUT_SLEEVE_MAGNET_OPEN_BOTTOM_Y_MM =
+    center_clutch_input_sleeve_bottom_y(CENTER_GT2_ROW) + 0.10;
+SNAKE_CHAIN_REFERENCE_PATH_CENTER_Y_MM =
+    row_center_z(SNAKE_CHAIN_REFERENCE_ROW);
+SNAKE_CHAIN_VERTICAL_SHIFT_MM =
+    SNAKE_CHAIN_INPUT_SLEEVE_MAGNET_OPEN_BOTTOM_Y_MM
+        - SNAKE_CHAIN_LINK_TOP_OFFSET_MM
+        - SNAKE_CHAIN_REFERENCE_PATH_CENTER_Y_MM;
+SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM =
+    row_center_z(0) - ROW_PITCH + SNAKE_CHAIN_VERTICAL_SHIFT_MM;
+// The service run is shifted down to the magnet datum.  This independent
+// lower-return guide center keeps the 03C loop at its original 274-pin length
+// while leaving the small guide wheel safely above the floor.
+SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM = 41.20;
+SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143;
+SNAKE_CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
+SNAKE_CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
+SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM =
+    (h2 - SNAKE_CHAIN_TRIGGER_MAGNET_D) / 2;
+SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.00;
+SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = outer_face + 0.05;
 
 //#region 公开 API：离合与抽屉取力
 module clutch_upper_carrier(col, row, engaged = false, include_screw = false) {
@@ -2680,6 +2960,14 @@ module selected_center_mechanism_plate_part() {
     center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
+// Standalone inspection export for the fixed front/rear compartment
+// partition. The canonical cabinet_frame already contains the same solid, so
+// this part is published only as a hidden inspection/reference mesh and never
+// as a second installed partition in the default assembly.
+module selected_cabinet_partition_part() {
+    cabinet_frame_partition_with_belt_passage();
+}
+
 // Collision witness for the first-article audit. The service plate sits in
 // the rear-to-front belt span, so this must export as an empty intersection
 // after the plate's real through-passage is cut. It is diagnostic only and is
@@ -2690,6 +2978,22 @@ module selected_center_plate_belt_collision_part() {
         center_gt2_belt_loop_z(
             clutch_col_x(CENTER_GT2_COL),
             center_gt2_z(),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_belt_y(CENTER_GT2_ROW)
+        );
+    }
+}
+
+// Empty CSG witness for the cabinet's internal rear datum plate. This is a
+// separate check from the removable mechanism plate because the cabinet plate
+// has its own larger print clearance and must still clear the same real R3C3
+// belt straight run without opening phantom legacy-station holes.
+module selected_center_partition_belt_collision_part() {
+    intersection() {
+        clutch_partition_with_belt_passages();
+        center_gt2_belt_loop_z(
+            clutch_col_x(CENTER_GT2_COL),
+            CENTER_GT2_Z,
             CENTER_GT2_FRONT_PULLEY_Z,
             center_gt2_belt_y(CENTER_GT2_ROW)
         );
@@ -3277,9 +3581,16 @@ module clutch_scene_geometry() {
         // Export the shell alone as a watertight printed part; internal panels and
         // drawer ghosts are visual context only and intentionally do not enter it.
         color(COLOR_CABINET) clutch_cabinet_shell();
+    } else if (CLUTCH_PART == "cabinet_frame") {
+        // Canonical non-duplicated cabinet structure for the root preview.
+        color(COLOR_CABINET) clutch_cabinet_frame();
+    } else if (CLUTCH_PART == "cabinet_partition") {
+        // Standalone inspection/reference mesh; cabinet_frame owns the
+        // installed copy so this selector is not a second assembly body.
+        color(COLOR_CABINET) selected_cabinet_partition_part();
     } else if (CLUTCH_PART == "cabinet_context") {
-        // Preview-only cabinet orientation and compartment datum. This remains
-        // separate from the printable shell so the folder can toggle the grid.
+        // Compatibility alias: the context now uses the same single canonical
+        // frame, with optional drawer ghosts, instead of a second wire shell.
         clutch_cabinet_context();
     } else if (CLUTCH_PART == "power_bus") {
         power_bus();
@@ -3339,6 +3650,8 @@ module clutch_scene_geometry() {
         selected_center_mechanism_plate_part();
     } else if (CLUTCH_PART == "center_plate_belt_collision") {
         selected_center_plate_belt_collision_part();
+    } else if (CLUTCH_PART == "center_partition_belt_collision") {
+        selected_center_partition_belt_collision_part();
     } else if (CLUTCH_PART == "center_clutch_pair_collision") {
         selected_center_clutch_pair_collision_part();
     } else if (CLUTCH_PART == "center_selector_rail_collision") {
@@ -3613,6 +3926,28 @@ echo(
         CENTER_CLUTCH_INPUT_SLEEVE_MAGNET_POCKET_DEPTH),
     str("inputSleeveMagnetBottomClearanceMm=",
         CENTER_CLUTCH_INPUT_SLEEVE_MAGNET_BOTTOM_CLEARANCE),
+    str("inputSleeveMagnetOpenBottomYMm=",
+        SNAKE_CHAIN_INPUT_SLEEVE_MAGNET_OPEN_BOTTOM_Y_MM),
+    str("snakeChainHeightDatum=", SNAKE_CHAIN_HEIGHT_DATUM),
+    str("snakeChainLinkTopOffsetMm=", SNAKE_CHAIN_LINK_TOP_OFFSET_MM),
+    str("snakeChainReferenceRow=", SNAKE_CHAIN_REFERENCE_ROW),
+    str("snakeChainReferencePathCenterYMm=",
+        SNAKE_CHAIN_REFERENCE_PATH_CENTER_Y_MM),
+    str("snakeChainVerticalShiftMm=", SNAKE_CHAIN_VERTICAL_SHIFT_MM),
+    str("snakeChainServicePathCenterYMm=",
+        SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM),
+    str("snakeChainReturnGuideCenterYMm=",
+        SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM),
+    str("snakeChainTriggerMagnetSegmentIndex=",
+        SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX),
+    str("snakeChainTriggerMagnetDiameterMm=", SNAKE_CHAIN_TRIGGER_MAGNET_D),
+    str("snakeChainTriggerMagnetLengthMm=", SNAKE_CHAIN_TRIGGER_MAGNET_L),
+    str("snakeChainTriggerMagnetNormalOffsetMm=",
+        SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM),
+    str("snakeChainTriggerMagnetTopClearanceMm=",
+        SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM),
+    str("snakeChainTriggerMagnetAxialStartOffsetMm=",
+        SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM),
     "inputShaftPart=cabinet-clutch/center_input_shaft_reference",
     "inputSleevePart=cabinet-clutch/center_input_sleeve",
     "inputSleeveMagnetPart=cabinet-clutch/center_input_sleeve_magnet_reference",
@@ -3661,19 +3996,76 @@ echo(
     "rotaryBearingArrangement=output-two-3x6x2-in-one-integral-bar-input-free",
     "linearBearingArrangement=single-coaxial-with-integrated-seat",
     str("plateWidthMm=", CENTER_CLUTCH_PLATE_W),
-    str("plateKeyWidthMm=", CENTER_CLUTCH_PLATE_KEY_W),
-    str("plateKeyHeightMm=", CENTER_CLUTCH_PLATE_KEY_H),
-    str("plateKeyClearanceMm=", CENTER_CLUTCH_SUPPORT_KEY_CLEAR),
+    str("plateThicknessMm=", CENTER_CLUTCH_PLATE_T),
+    str("platePartitionGapMm=", CENTER_CLUTCH_PLATE_PARTITION_GAP),
+    str("plateFastenerCount=", CENTER_CLUTCH_PLATE_FASTENER_COUNT),
     str("plateM3ClearanceMm=", CENTER_CLUTCH_M3_CLEAR_D),
+    str("partitionSelfTapPilotDiameterMm=",
+        CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D),
+    str("partitionSelfTapPilotDepthMm=",
+        CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_DEPTH),
+    str("partitionSelfTapBottomWallMm=",
+        CENTER_CLUTCH_PARTITION_SELF_TAP_BOTTOM_WALL),
+    str("partitionBossPerCellCount=",
+        CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT),
+    str("partitionBossCount=", CENTER_CLUTCH_PARTITION_BOSS_COUNT),
+    str("partitionBossCenterOffsetXMm=",
+        CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET),
+    str("partitionBossCenterOffsetYMm=",
+        CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+    str("partitionBossOuterDiameterMm=",
+        CENTER_CLUTCH_PARTITION_BOSS_OD),
+    str("partitionBossHeightMm=", CENTER_CLUTCH_PARTITION_BOSS_HEIGHT),
+    str("partitionBossHeightDeficitMm=",
+        CENTER_CLUTCH_PLATE_T - CENTER_CLUTCH_PARTITION_BOSS_HEIGHT),
     str("plateBeltPassageHalfWidthMm=",
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_HALF_X),
+    str("plateBeltPassageSlotCount=", 2),
+    str("plateBeltPassageSlotCenterOffsetMm=",
+        CENTER_CLUTCH_PLATE_BELT_SLOT_CENTER_OFFSET),
+    str("plateBeltPassageSlotWidthMm=",
+        2 * CENTER_CLUTCH_PLATE_BELT_SLOT_HALF_X),
     str("plateBeltPassageAxialWidthMm=",
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_Y),
     str("plateBeltPassageRadialClearanceMm=",
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR),
     str("plateBeltPassageAxialClearanceMm=",
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR),
-    "plateSupport=partition-through-M3",
+    "partitionBeltPassageType=per-drawer-cell-2GT-plus-3M-straight-run-windows",
+    str("partitionBeltPassageWindowCount=", N_COL * N_ROW),
+    str("partitionBeltPassageCenterWindowCount=", 1),
+    str("partitionBeltPassageLegacyWindowCount=", N_COL * N_ROW - 1),
+    str("partitionBeltPassageCenterXMm=", clutch_col_x(CENTER_GT2_COL)),
+    str("partitionBeltPassageCenterYMm=",
+        center_gt2_belt_y(CENTER_GT2_ROW)),
+    str("partitionBeltPassageRelativeXMm=", 0),
+    str("partitionBeltPassageRelativeYMm=",
+        center_gt2_belt_y(CENTER_GT2_ROW)
+            - world_row_center_y(CENTER_GT2_FRONT_PULLEY_ROW)),
+    str("partitionBeltPassagePlateZMm=", WORLD_PARTITION_BACK_Z),
+    str("partitionBeltPassagePlateThicknessMm=", WORLD_PARTITION_T),
+    str("partitionBeltPassageHalfWidthMm=",
+        PARTITION_BELT_PASSAGE_WINDOW_HALF_X),
+    str("partitionBeltPassageAxialWidthMm=",
+        PARTITION_BELT_PASSAGE_WINDOW_AXIAL_WIDTH),
+    str("partitionBeltPassageRadialClearanceMm=",
+        PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR
+            + GT2_BELT_RADIAL_CLEARANCE),
+    str("partitionBeltPassageAxialClearanceMm=",
+        PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR),
+    str("partitionBeltPassageLegacySlotCenterOffsetMm=",
+        TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET),
+    str("partitionBeltPassageLegacySlotWidthMm=",
+        2 * TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X),
+    str("partitionBeltPassageLegacyHalfWidthMm=",
+        TIMING_BELT_PARTITION_WINDOW_HALF_X),
+    str("partitionBeltPassageLegacyAxialWidthMm=",
+        TIMING_BELT_PARTITION_WINDOW_AXIAL_WIDTH),
+    str("partitionBeltPassageLegacyRadialClearanceMm=",
+        PARTITION_BELT_PASSAGE_RADIAL_CLEAR),
+    str("partitionBeltPassageLegacyAxialClearanceMm=",
+        PARTITION_BELT_PASSAGE_AXIAL_CLEAR),
+    "plateSupport=partition-boss-locators-plus-four-self-tapping-screws",
     "actuation=permanent-magnet",
     "engageOnlyWhenStopped=true",
     "releaseBeforeReturn=true",
@@ -3690,6 +4082,8 @@ echo(
 assert(
     CLUTCH_PART == "assembly"
     || CLUTCH_PART == "cabinet"
+    || CLUTCH_PART == "cabinet_frame"
+    || CLUTCH_PART == "cabinet_partition"
     || CLUTCH_PART == "cabinet_context"
     || CLUTCH_PART == "power_bus"
     || CLUTCH_PART == "all_vertical_axes"
@@ -3720,6 +4114,7 @@ assert(
     || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"
+    || CLUTCH_PART == "center_partition_belt_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_selector_rail_collision"
     || CLUTCH_PART == "center_selector_linear_bearing_collision"

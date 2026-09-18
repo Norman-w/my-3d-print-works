@@ -92,19 +92,40 @@ import sys
 path = Path(sys.argv[1])
 payload = json.loads(path.read_text(encoding="utf-8"))
 payload["up"] = "y"
+# The root preview owns one cabinet frame.  The old closed shell and the old
+# wire/grid context were coincident alternatives, not additional hardware.
+# Drop both IDs from the manifest and remove their generated links so stale
+# output cannot reappear after a refresh.
+obsolete_cabinet_ids = {
+    "cabinet-clutch/cabinet_clutch_cabinet",
+    "cabinet-clutch/cabinet_clutch_cabinet_context",
+}
+payload["parts"] = [
+    part for part in payload.get("parts", [])
+    if part.get("id") not in obsolete_cabinet_ids
+]
+models_dir = path.parent / "models" / "cabinet-clutch"
+for stale_name in (
+    "cabinet_clutch_cabinet.stl",
+    "cabinet_clutch_cabinet_context.stl",
+):
+    stale_path = models_dir / stale_name
+    if stale_path.exists() or stale_path.is_symlink():
+        stale_path.unlink()
 labels = {
-    "cabinet-clutch/cabinet_clutch_cabinet": {
-        "name": "柜体·世界坐标背景",
+    "cabinet-clutch/cabinet_clutch_cabinet_frame": {
+        "name": "箱体框架·上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面（前后仓隔板另列）",
         "color": "#6f8f9a",
-        "opacity": 0.18,
+        "opacity": 0.30,
         "visible": True,
     },
-    "cabinet-clutch/cabinet_clutch_cabinet_context": {
-        "name": "柜体·格口与抽屉背景",
-        "color": "#8fa9b8",
-        "opacity": 0.32,
-        "visible": True,
-        "role": "diagnostic",
+    "cabinet-clutch/cabinet_clutch_partition": {
+        "name": "前后仓隔板·5×3抽屉格皮带通孔 + 每格四角 Boss（中心2GT + 其余3M；独立安装件）",
+        "group": "00·箱体框架",
+        "color": "#91a7b2",
+        "opacity": 1.0,
+        "visible": False,
+        "role": "printed",
     },
     "cabinet-clutch/17_drawer_rack_guide_rollers_reference": {
         "name": "中心格·抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
@@ -247,7 +268,7 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/center_mechanism_plate": {
-        "name": "中心 R3C3 · 可拆后仓机构板（一体 LM3UU + 输出双轴承长方条；4×M3）",
+        "name": "中心 R3C3 · 可拆后仓机构板（四角孔 + 每格四角 Boss 自攻固定；一体 LM3UU + 输出双轴承长方条）",
         "color": "#536d78",
         "visible": True,
         "role": "printed",
@@ -342,6 +363,11 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_rollers": {"name": "03C 滚子", "color": "#E8EDF2", "role": "purchased"},
     "cabinet-chain/cabinet_chain_pins": {"name": "03C 销轴", "color": "#B08D57", "role": "purchased"},
     "cabinet-chain/cabinet_chain_bearings": {"name": "3×6×2 轴承（装配显示/采购件）", "color": "#b9c2ca", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_clutch_trigger_magnet": {
+        "name": "蛇形链条·链节 Z− 触发磁铁（Ø2×1.8 采购件参考）",
+        "color": "#5b6670",
+        "role": "purchased",
+    },
     "cabinet-chain/cabinet_chain_connector": {"name": "03C 链条连接节（带槽双穿销+圆弧夹片）", "color": "#ff2fd0", "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
     "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
@@ -358,8 +384,8 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_scheme1_selector": {"name": "旧方案1·链条拨叉/8T 选择轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
 }
 group_map = {
-    "cabinet_clutch_cabinet": "00·柜体与格口",
-    "cabinet_clutch_cabinet_context": "00·柜体与格口",
+    "cabinet_clutch_cabinet_frame": "00·箱体框架",
+    "cabinet_clutch_partition": "00·箱体框架",
     "00_tensioner_t_solid_reference": "01·动力母线",
     "cabinet_clutch_power_motor_body": "01·动力母线",
     "cabinet_clutch_power_motor_shaft": "01·动力母线",
@@ -400,8 +426,8 @@ group_map = {
     "23_front_d_axis_reference": "03·抽屉驱动",
 }
 name_map = {
-    "cabinet_clutch_cabinet": "柜体外壳（可见背景）",
-    "cabinet_clutch_cabinet_context": "柜体格口与抽屉背景",
+    "cabinet_clutch_cabinet_frame": "箱体框架（上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面；前后仓隔板另列）",
+    "cabinet_clutch_partition": "前后仓隔板·5×3抽屉格皮带通孔 + 每格四角 Boss（中心2GT + 其余3M；独立安装件）",
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
@@ -413,7 +439,7 @@ name_map = {
     "center_linear_bearing_fit_coupon": "中心 R3C3 LM3UU 长方条轴承孔配合测试片 · Ø7.20/7.30/7.40",
     "center_guide_rails": "legacy · 中心 R3C3 独立导轨（已移除）",
     "center_stops": "legacy · 中心 R3C3 实体止挡（已移除）",
-    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 一体 LM3UU + 输出双轴承长方条 · 4×M3",
+    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 四角孔 + 每格四角 Boss 自攻固定 · 一体 LM3UU + 输出双轴承长方条",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出 D-round 短轴 · 母轮D段 + 双轴承圆轴 · 采购件",
     "center_input_bearings_reference": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",
@@ -450,7 +476,7 @@ for part in payload.get("parts", []):
     if patch:
         part.update(patch)
 group_order = [
-    "00·柜体与格口",
+    "00·箱体框架",
     "01·动力母线",
     "02·离合机构",
     "03·抽屉驱动",
@@ -722,6 +748,11 @@ done
 if [[ -d "${PREVIEW_DIR}/models/cabinet" ]]; then
     rm -rf "${PREVIEW_DIR}/models/cabinet"
 fi
+# The manifest writer does not remove dangling links from an older scan.  The
+# canonical cabinet-clutch folder is rebuilt below, so clear that generated
+# folder first to prevent retired duplicate parts from lingering in the UI's
+# model directory.
+rm -rf "${PREVIEW_DIR}/models/cabinet-clutch"
 
 # Remove only the derived slide/tensioner/bus-belt artifacts from the previous
 # design. Source files and unrelated mechanism outputs are left untouched.
@@ -842,8 +873,21 @@ for old_file in "${POWER_BUS_CHILD_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
 done
 
-export_part "cabinet" "${OUT_DIR}/cabinet_clutch_cabinet.stl" false 0
-export_part "cabinet_context" "${OUT_DIR}/cabinet_clutch_cabinet_context.stl" false 0
+# The printable closed shell remains available from cabinet.scad.  This root
+# preview exports only the one canonical open structural frame; remove older
+# shell/context outputs so they cannot be scanned as duplicate root parts.
+OLD_DUPLICATE_CABINET_OUTPUTS=(
+    "cabinet_clutch_cabinet.stl"
+    "cabinet_clutch_cabinet_context.stl"
+    "cabinet_clutch_backplate.stl"
+)
+for old_file in "${OLD_DUPLICATE_CABINET_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" \
+        "${REPORT_DIR}/${old_file%.stl}.json" \
+        "${REPORT_DIR}/${old_file%.stl}.watertight.json"
+done
+export_part "cabinet_frame" "${OUT_DIR}/cabinet_clutch_cabinet_frame.stl" false 0
+export_part "cabinet_partition" "${OUT_DIR}/cabinet_clutch_partition.stl" false 0
 export_part "motor_body" "${OUT_DIR}/cabinet_clutch_power_motor_body.stl" false 0
 export_part "motor_shaft" "${OUT_DIR}/cabinet_clutch_power_motor_shaft.stl" false 0
 for column in 0 1 2 3 4; do
@@ -932,6 +976,7 @@ export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_referenc
 # shaft/bearing/magnet references remain ordinary inspection artifacts, while
 # every printable center component must be closed.
 for printable_part in \
+    "${OUT_DIR}/cabinet_clutch_partition.stl" \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \

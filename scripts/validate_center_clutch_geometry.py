@@ -236,6 +236,32 @@ def validate_contract(contract: Contract) -> None:
         fail("输出轴截面必须是短 D-round")
     if contract.get("outputBearingSupportPart") != "cabinet-clutch/center_mechanism_plate":
         fail("输出轴承固定条必须与离合机构板一体")
+    if contract.get("plateSupport") != "partition-boss-locators-plus-four-self-tapping-screws":
+        fail("离合机构板必须使用隔板圆 Boss 定位和自攻螺丝固定")
+    expect_close(number(contract, "platePartitionGapMm"), 0.0, "机构板/隔板贴合间隙", 0.001)
+    expect_close(number(contract, "partitionBossPerCellCount"), 4.0, "每格四角 Boss 数量", 0.001)
+    expect_close(
+        number(contract, "partitionBossCount"),
+        number(contract, "partitionBossPerCellCount") * 15.0,
+        "15 格隔板定位 Boss 总数",
+        0.001,
+    )
+    expect_close(number(contract, "plateFastenerCount"), 4.0, "机构板自攻螺丝数量", 0.001)
+    expect_close(
+        number(contract, "partitionBossHeightDeficitMm"),
+        0.50,
+        "隔板定位 Boss 高度差",
+        0.001,
+    )
+    expect_close(number(contract, "partitionBossCenterOffsetXMm"), 12.0, "每格 Boss X 角距", 0.001)
+    expect_close(number(contract, "partitionBossCenterOffsetYMm"), 4.0, "每格 Boss Y 角距", 0.001)
+    expect_close(
+        number(contract, "partitionSelfTapPilotDepthMm")
+        + number(contract, "partitionSelfTapBottomWallMm"),
+        number(contract, "partitionBossHeightMm"),
+        "Boss 内自攻螺丝导孔底厚",
+        0.001,
+    )
     if contract.get("frontTimingBearingSupport") != "integral-shelf-stepped-seat":
         fail("前端 3x6x2 轴承座必须是层板一体阶梯座")
     if contract.get("frontTimingBearingFit") != "press-fit-3x6x2-bottom-captive":
@@ -251,7 +277,7 @@ def validate_contract(contract: Contract) -> None:
         "linearBearingNominalLengthMm": 10.00, "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatRadialClearanceMm": 0.10,
         "linearBearingBlockWidthMm": 18.00, "linearBearingBlockYLengthMm": 10.00,
-        "linearBearingBlockZLengthMm": 19.7208,
+        "linearBearingBlockZLengthMm": 20.5208,
         "linearBearingBlockZMarginMm": 1.00,
         "linearBearingBlockMountHoleDiameterMm": 0.00,
         "linearBearingBlockMountHoleCount": 0.00,
@@ -304,7 +330,7 @@ def validate_contract(contract: Contract) -> None:
         "outputBearingBarWidthMm": 14.00,
         "outputBearingBarYLengthMm": 6.40,
         "outputBearingBarY0OffsetMm": 0.40,
-        "outputBearingBarZLengthMm": 19.4208,
+        "outputBearingBarZLengthMm": 20.2208,
         "outputBearingBarZMarginMm": 1.00,
         "outputBearingBarMotherClearanceMm": 0.40,
         "outputBearingBarPlateOverlapMm": 0.20,
@@ -593,6 +619,67 @@ def validate_contract(contract: Contract) -> None:
         )
     if number(contract, "plateBeltPassageHalfWidthMm") <= number(contract, "beltEnvelopeRadiusMm") or number(contract, "plateBeltPassageAxialWidthMm") <= 6.0:
         fail("机构板皮带贯穿槽尺寸不足")
+    if number(contract, "plateBeltPassageSlotCount") != 2:
+        fail("机构板必须只为中心皮带保留左右两个穿板槽")
+    if number(contract, "plateBeltPassageSlotCenterOffsetMm") <= 0:
+        fail("机构板皮带槽中心偏移无效")
+    if number(contract, "plateBeltPassageSlotWidthMm") <= 0:
+        fail("机构板皮带槽宽度无效")
+    expect_close(
+        number(contract, "plateBeltPassageSlotCenterOffsetMm")
+        + number(contract, "plateBeltPassageSlotWidthMm") / 2,
+        number(contract, "plateBeltPassageHalfWidthMm"),
+        "机构板皮带槽外包络",
+        0.001,
+    )
+    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-plus-3M-straight-run-windows":
+        fail("前后仓隔板必须使用逐抽屉格 2GT+3M 直线段窗口")
+    if number(contract, "partitionBeltPassageWindowCount") != 15:
+        fail("前后仓隔板必须有 5×3 共 15 个抽屉格皮带窗口")
+    if number(contract, "partitionBeltPassageCenterWindowCount") != 1:
+        fail("前后仓隔板必须只有 1 个中心 2GT 窗口")
+    if number(contract, "partitionBeltPassageLegacyWindowCount") != 14:
+        fail("前后仓隔板必须有 14 个其它抽屉格 3M 窗口")
+    expect_close(
+        number(contract, "partitionBeltPassageCenterXMm"),
+        number(contract, "axisXMm"),
+        "前后仓隔板皮带窗口中心 X",
+        0.001,
+    )
+    expect_close(
+        number(contract, "partitionBeltPassageCenterYMm"),
+        number(contract, "frontTimingBeltYMm"),
+        "前后仓隔板皮带窗口中心 Y",
+        0.001,
+    )
+    expect_close(
+        number(contract, "partitionBeltPassageRelativeXMm"),
+        0.0,
+        "前后仓隔板皮带窗口相对 X",
+        0.001,
+    )
+    if abs(number(contract, "partitionBeltPassageRelativeYMm")) >= number(contract, "drawerBayHeightMm") / 2:
+        fail("前后仓隔板皮带窗口相对 Y 超出抽屉格")
+    partition_z = number(contract, "partitionBeltPassagePlateZMm")
+    belt_z0 = min(number(contract, "axisZMm"), number(contract, "frontTimingPulleyZMm"))
+    belt_z1 = max(number(contract, "axisZMm"), number(contract, "frontTimingPulleyZMm"))
+    if not belt_z0 < partition_z < belt_z1:
+        fail("前后仓隔板皮带窗口没有穿过中心皮带直线段")
+    if number(contract, "partitionBeltPassageHalfWidthMm") <= number(contract, "beltEnvelopeRadiusMm"):
+        fail("前后仓隔板皮带窗口没有包住真实皮带包络")
+    if number(contract, "partitionBeltPassageAxialWidthMm") <= 6.0:
+        fail("前后仓隔板皮带窗口没有覆盖 6 mm 皮带宽度")
+    if number(contract, "partitionBeltPassageLegacyHalfWidthMm") <= 0:
+        fail("其它抽屉格 3M 皮带窗口宽度无效")
+    expect_close(
+        number(contract, "partitionBeltPassageLegacySlotCenterOffsetMm")
+        + number(contract, "partitionBeltPassageLegacySlotWidthMm") / 2,
+        number(contract, "partitionBeltPassageLegacyHalfWidthMm"),
+        "其它抽屉格 3M 窗口外包络",
+        0.001,
+    )
+    if number(contract, "partitionBeltPassageLegacyAxialWidthMm") <= 5.0:
+        fail("其它抽屉格 3M 皮带窗口没有覆盖皮带宽度")
 
 
 def validate_sweep(contract: Contract, reports: dict[tuple[str, bool], dict[str, object]]) -> None:
@@ -795,6 +882,17 @@ def main() -> int:
         belt_witness = temp_dir / "center_plate_belt_collision.stl"
         if run_intersection_export(openscad, scad, belt_witness, inspect_py, "center_plate_belt_collision", False, 0.0):
             fail("机构板与中心 2GT 皮带存在实体交集")
+        partition_belt_witness = temp_dir / "center_partition_belt_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_belt_witness,
+            inspect_py,
+            "center_partition_belt_collision",
+            False,
+            0.0,
+        ):
+            fail("箱体后背基准板与中心 R3C3 真实皮带存在实体交集")
         guide_witness = temp_dir / "drawer_guide_flange_rail_collision.stl"
         if run_intersection_export(
             openscad,
@@ -832,7 +930,7 @@ def main() -> int:
         f"{number(contract, 'linearBearingNominalLengthMm'):.0f}mm, "
         f"M5×5 sleeve magnet, socket_overlap={metrics['sleeveSocketOverlap']:.2f}mm"
     )
-    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、皮带贯穿槽、C 槽凸缘后壁交集")
+    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、机构板双槽、隔板 5×3 逐格皮带窗口、15 格四角 Boss 定位/自攻导孔、C 槽凸缘后壁交集")
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
     return 0
 

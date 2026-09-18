@@ -131,19 +131,14 @@
       <input id="explode-range" type="range" min="0" max="100" value="0" />
       <section class="appearance-control" aria-labelledby="cabinet-opacity-title">
         <div class="appearance-header">
-          <span class="appearance-title" id="cabinet-opacity-title">箱体透明度</span>
+          <span class="appearance-title" id="cabinet-opacity-title">箱体框架透明度</span>
           <button type="button" class="appearance-reset" id="cabinet-opacity-reset">恢复默认</button>
         </div>
         <div class="hint">0% 不透明 · 100% 完全透明</div>
         <div class="opacity-row">
-          <label for="cabinet-shell-transparency">外壳</label>
+          <label for="cabinet-shell-transparency">框架</label>
           <input id="cabinet-shell-transparency" type="range" min="0" max="100" step="1" value="82" aria-describedby="cabinet-opacity-hint" />
           <output id="cabinet-shell-transparency-out" for="cabinet-shell-transparency">82%</output>
-        </div>
-        <div class="opacity-row">
-          <label for="cabinet-context-transparency">格口背景</label>
-          <input id="cabinet-context-transparency" type="range" min="0" max="100" step="1" value="68" aria-describedby="cabinet-opacity-hint" />
-          <output id="cabinet-context-transparency-out" for="cabinet-context-transparency">68%</output>
         </div>
         <div class="opacity-scale" id="cabinet-opacity-hint" aria-hidden="true"><span>不透明</span><span>完全透明</span></div>
       </section>
@@ -203,6 +198,8 @@
         </div>
         <div class="view-group-label">首件检查</div>
         <div class="view-grid">
+          <button type="button" class="view-button view-button-special" data-view="cabinet-frame" aria-pressed="false" title="只显示箱体外框、左侧服务回程立板、X+立板、前部层格/立格、贯通后仓和前下实体面；前后仓隔板在独立视角检查">箱体框架</button>
+          <button type="button" class="view-button view-button-special" data-view="cabinet-partition" aria-pressed="false" title="只显示独立安装的前后仓隔板，后视图检查15格皮带通孔与每格四角Boss：中心R3C3为2GT，其余14格为3M">前后仓隔板·皮带孔+四角Boss</button>
           <button type="button" class="view-button view-button-special" data-view="center-clutch" aria-pressed="false" title="聚焦中心 R3C3：输入公轮、D-round-D 阶梯轴、机构板一体 LM3UU、圆套磁铁、输出母轮">中心离合 · R3C3</button>
           <button type="button" class="view-button view-button-special" id="center-clutch-demo" title="播放中心 R3C3：开位 → 永磁接合 → 保持 → 永磁释放 → 开位">▶ 播放离合开合</button>
         </div>
@@ -210,7 +207,7 @@
     </aside>
     <canvas id="c"></canvas>
   </div>
-    <script type="module" src="./app.js?v=cabinet-opacity-control-1"></script>
+    <script type="module" src="./app.js?v=cabinet-frame-view-11"></script>
   <!-- endregion -->
 </body>
 </html>

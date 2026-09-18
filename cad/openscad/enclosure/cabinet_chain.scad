@@ -40,6 +40,15 @@ CONNECTOR_LINK_INDEX = 20;       // 顶部直线段上的一节；不放在转�
 CONNECTOR_HIGHLIGHT = "#ff2fd0";
 CLUTCH_CONNECTOR_LINK_INDEX = 140; // 三层路径中部直线段上的一节；避开转向轮
 CLUTCH_CONNECTOR_HIGHLIGHT = "#00d9ff";
+// One purchased/reference magnet is carried by a straight service link near
+// the center station.  Its upper edge is tied to the open male-sleeve magnet
+// bottom by the generated vertical path shift; its axis protrudes toward the
+// browser/world Z- direction after snake_in_rear() and the legacy adapter.
+CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143;
+CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
+CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
+CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET = (h2 - CHAIN_TRIGGER_MAGNET_D) / 2;
+CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET = outer_face + 0.05;
 // 方案 1：每个抽屉位置一组同轴的常转输入轮与受力输出轮；两张狗牙面
 // 默认轴向留 2.6 mm，只有停稳后的拨叉把目标输出狗牙推过去才闭合。
 // These are retained as standalone diagnostic/export parts, but the old
@@ -113,12 +122,12 @@ module scheme1_place_y(c, y) {
 
 function scheme1_station_centers() = [
     for (j = [0:N_ROW - 1], i = [0:N_COL - 1])
-        [col_center_x(i), row_center_z(j), 0]
+        [col_center_x(i), chain_row_center_z(j), 0]
 ];
 
 function scheme1_selector_center() = [
     col_center_x(0),
-    row_center_z(N_ROW - 1),
+    chain_row_center_z(N_ROW - 1),
     0
 ];
 
@@ -317,6 +326,30 @@ module highlighted_clutch_connector() {
                 }
 }
 
+module clutch_trigger_magnet_reference() {
+    // place_from_to's local Y axis is the chain axial axis.  rotate(+90 X)
+    // sends the cylinder along local -Y; after place_from_to and
+    // snake_in_rear this becomes source +Y, which the browser legacyRoot
+    // maps to world Z-.  The local -Z offset puts the 2 mm magnet on the
+    // upper edge of the 4.3 mm chain link, leaving its top on the datum.
+    p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
+    p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
+    snake_in_rear()
+        place_from_to(p0, p1, [0, 0, 1])
+            translate([
+                P / 2,
+                -CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET,
+                -CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET
+            ])
+                rotate([90, 0, 0])
+                    color("#5b6670")
+                        cylinder(
+                            d = CHAIN_TRIGGER_MAGNET_D,
+                            h = CHAIN_TRIGGER_MAGNET_L,
+                            $fn = 48
+                        );
+}
+
 module pins_on_path_without_connectors(pins) {
     // 从普通销集合中拿掉两处接头各自占用的两个销位，由两个高亮接头补回对应销。
     n = len(pins);
@@ -410,6 +443,9 @@ emit_chain("idlers") {
 emit_chain("bearings") {
     if (CHAIN_PART == "assembly") color("#b9c2ca") rear_bearing_visuals();
     else rear_bearing_visuals();
+}
+emit_chain("clutch_trigger_magnet") {
+    clutch_trigger_magnet_reference();
 }
 emit_chain("motor") {
     if (CHAIN_PART == "assembly")

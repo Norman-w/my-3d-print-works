@@ -21,6 +21,7 @@ REQUIRED_STL_NAMES = (
     "cabinet_chain_sprockets.stl",
     "cabinet_chain_idlers.stl",
     "cabinet_chain_bearings.stl",
+    "cabinet_chain_clutch_trigger_magnet.stl",
 )
 
 
@@ -81,6 +82,46 @@ def main() -> int:
             fail(f"当前 5×3 蛇链应有 8 个导向轮，实际为 {len(idlers)}")
         fail("导向轮齿数与运动契约不一致")
 
+    center = payload.get("centerClutch")
+    datum = payload.get("chainTopDatum")
+    trigger = payload.get("chainTriggerMagnet")
+    if not isinstance(center, dict) or not isinstance(datum, dict) or not isinstance(trigger, dict):
+        fail("缺少中心离合/蛇链磁铁高度契约")
+    try:
+        shift = float(payload["chainVerticalShiftMm"])
+        contract_shift = float(center["snakeChainVerticalShiftMm"])
+        magnet_bottom = float(datum["inputSleeveMagnetOpenBottomYMm"])
+        link_top = float(datum["linkTopOffsetMm"])
+        reference_path = float(datum["referencePathCenterYMm"])
+        shifted_path = float(datum["referencePathShiftedCenterYMm"])
+        floor_clearance = float(datum["servicePathFloorClearanceMm"])
+        return_guide = float(datum["returnGuideCenterYMm"])
+        contract_return_guide = float(center["snakeChainReturnGuideCenterYMm"])
+        trigger_index = int(trigger["segmentIndex"])
+        trigger_d = float(trigger["diameterMm"])
+        trigger_l = float(trigger["lengthMm"])
+        trigger_top_clearance = float(trigger["topClearanceMm"])
+    except (KeyError, TypeError, ValueError) as exc:
+        fail(f"蛇链磁铁高度契约字段无效: {exc}")
+    if abs(shift - contract_shift) > 0.001:
+        fail("链条高度偏移与中心离合契约不一致")
+    if datum.get("mode") != "input-sleeve-magnet-bottom":
+        fail("链条上沿基准不是公轮底部磁铁下沿")
+    if abs(shifted_path - (reference_path + shift)) > 0.001:
+        fail("蛇链参考服务行没有按契约偏移")
+    if abs(shifted_path + link_top - magnet_bottom) > 0.001:
+        fail("链节上沿没有对齐公轮底部磁铁下沿")
+    if abs(return_guide - contract_return_guide) > 0.001 or return_guide < 10.0:
+        fail("底部回程导向轮高度与契约或箱底安全线不一致")
+    if floor_clearance <= 0:
+        fail(f"底部回程导向轮侵入箱底，余量={floor_clearance:.3f} mm")
+    if trigger_index < 0 or trigger_index >= len(pins):
+        fail(f"触发磁铁节号越界: {trigger_index}")
+    if abs(trigger_d - 2.0) > 0.001 or abs(trigger_l - 1.8) > 0.001:
+        fail("链节触发磁铁必须为 Ø2×1.8 采购件参考")
+    if abs(trigger_top_clearance) > 0.001:
+        fail("链节触发磁铁上沿没有锁定到链节上沿基准")
+
     motion_mtime = args.motion.stat().st_mtime_ns
     stale = []
     for name in REQUIRED_STL_NAMES:
@@ -96,7 +137,8 @@ def main() -> int:
         "链条预览同步通过: "
         f"pins={len(pins)} wheels={len(wheels)} "
         f"drive={drive_teeth}T idlers={len(idlers)}×{guide_teeth}T "
-        f"chainY={float(payload.get('chainY', 0)):.3f}"
+        f"chainY={float(payload.get('chainY', 0)):.3f} "
+        f"verticalShift={shift:.3f} triggerSegment={trigger_index}"
     )
     return 0
 

@@ -13,6 +13,7 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
 ]);
+const CHAIN_TRIGGER_MAGNET_ID = "cabinet-chain/cabinet_chain_clutch_trigger_magnet";
 const RIGID_CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
@@ -38,6 +39,7 @@ const WHEEL_IDS = {
   "cabinet-chain/cabinet_chain_sprockets": "sprocket",
   "cabinet-chain/cabinet_chain_idlers": "idler",
 };
+const CHAIN_BEARING_ID = "cabinet-chain/cabinet_chain_bearings";
 const MOTOR_SHAFT_IDS = new Set([
   "cabinet-chain/cabinet_chain_motor_shaft",
 ]);
@@ -133,6 +135,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{a:number[], b:number[], s0:number, len:number}} PathSeg */
 /** @typedef {{group:THREE.Group, s:number, along:number, side:number, lift:number, restYaw:number, halfSpan:number, pinIndex?:number, scaleAlong?:boolean}} ChainPart */
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
+/** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} BearingPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
 /** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
 /** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
@@ -145,6 +148,7 @@ const play = {
   path: null,
   chain: /** @type {ChainPart[]} */ ([]),
   wheels: /** @type {WheelPivot[]} */ ([]),
+  bearingRotaries: /** @type {BearingPivot[]} */ ([]),
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
   drawerBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
   drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
@@ -524,6 +528,15 @@ function validateCenterClutchContract(contract) {
     "inputSleeveDSocketClearanceMm", "inputSleeveMagnetNominalDiameterMm",
     "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
     "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetBottomClearanceMm",
+    "inputSleeveMagnetOpenBottomYMm", "snakeChainHeightDatum",
+    "snakeChainLinkTopOffsetMm", "snakeChainReferenceRow",
+    "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
+    "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainTriggerMagnetSegmentIndex",
+    "snakeChainTriggerMagnetDiameterMm", "snakeChainTriggerMagnetLengthMm",
+    "snakeChainTriggerMagnetNormalOffsetMm",
+    "snakeChainTriggerMagnetTopClearanceMm",
+    "snakeChainTriggerMagnetAxialStartOffsetMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -543,7 +556,9 @@ function validateCenterClutchContract(contract) {
     "totalModeledMagnetCount", "rotaryBearingArrangement",
     "linearBearingArrangement", "plateWidthMm", "plateKeyWidthMm",
     "plateKeyHeightMm", "plateKeyClearanceMm", "plateM3ClearanceMm",
-    "plateBeltPassageHalfWidthMm", "plateBeltPassageAxialWidthMm",
+    "plateBeltPassageHalfWidthMm", "plateBeltPassageSlotCount",
+    "plateBeltPassageSlotCenterOffsetMm", "plateBeltPassageSlotWidthMm",
+    "plateBeltPassageAxialWidthMm",
     "plateBeltPassageRadialClearanceMm",
     "plateBeltPassageAxialClearanceMm", "plateSupport", "actuation",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -584,6 +599,9 @@ function validateCenterClutchContract(contract) {
       || contract.releaseBeforeReturn !== true
       || contract.inputSideAdditionalMechanism !== "none") {
     throw new Error("centerClutch 永磁动作/公轮端无额外机构门槛不满足");
+  }
+  if (contract.snakeChainHeightDatum !== "input-sleeve-magnet-bottom") {
+    throw new Error("蛇链高度基准必须是公轮底部磁铁下沿");
   }
   if (contract.linearBearingMovesWithInput !== false
       || contract.linearBearingBlockMount !== "mechanism-plate-integral-press-fit"
@@ -645,7 +663,12 @@ function validateCenterClutchContract(contract) {
     "inputSleeveLowerRoundHeightMm", "inputSleeveDSocketDepthMm",
     "inputSleeveMagnetNominalDiameterMm",
     "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
-    "inputSleeveMagnetPocketDepthMm", "outputShaftLengthMm",
+    "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetOpenBottomYMm",
+    "snakeChainLinkTopOffsetMm", "snakeChainReferencePathCenterYMm",
+    "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainTriggerMagnetDiameterMm",
+    "snakeChainTriggerMagnetLengthMm", "snakeChainTriggerMagnetNormalOffsetMm",
+    "snakeChainTriggerMagnetAxialStartOffsetMm", "outputShaftLengthMm",
     "bearingSeatDiameterMm", "bearingSeatDepthMm",
     "bearingPairSpacingMm", "outputShaftDLengthMm",
     "outputShaftRoundLengthMm", "outputShaftRoundDiameterMm",
@@ -656,6 +679,8 @@ function validateCenterClutchContract(contract) {
     "shaftDiameterMm",
     "plateWidthMm", "plateKeyWidthMm", "plateKeyHeightMm",
     "plateM3ClearanceMm", "plateBeltPassageHalfWidthMm",
+    "plateBeltPassageSlotCount", "plateBeltPassageSlotCenterOffsetMm",
+    "plateBeltPassageSlotWidthMm",
     "plateBeltPassageAxialWidthMm",
     "drawerBayHeightMm", "drawerShelfThicknessMm", "drawerRackBodyHeightMm",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
@@ -703,6 +728,11 @@ function validateCenterClutchContract(contract) {
     "frontTimingBearingLowerFaceYMm", "frontDshaftStartYMm",
     "frontDshaftEndYMm",
     "frontPinionThicknessMm", "inputBaseYMm", "maleBottomYMm", "outputBaseYMm",
+    "inputSleeveMagnetOpenBottomYMm", "snakeChainReferenceRow",
+    "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
+    "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainTriggerMagnetSegmentIndex",
+    "snakeChainTriggerMagnetTopClearanceMm",
     "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
     "inputShaftUpperDStartMm", "inputShaftRoundStartMm",
     "inputShaftLowerDStartMm", "inputSleeveTopOffsetMm",
@@ -722,6 +752,38 @@ function validateCenterClutchContract(contract) {
       || n("drawerLayerCount") !== 3 || n("serviceLayerCount") !== 1
       || n("drawerBayHeightMm") < 55.29) {
     throw new Error("centerClutch 必须锁定三层柜体中心格（零基准 2,1）");
+  }
+  const chainPitch = n("drawerBayHeightMm") + n("drawerShelfThicknessMm");
+  const expectedChainReference = n("drawerShelfTopYMm")
+    - (n("centerRow") - n("snakeChainReferenceRow")) * chainPitch
+    + n("drawerBayHeightMm") / 2;
+  if (n("snakeChainReferenceRow") !== n("centerRow") - 1
+      || !close(n("snakeChainReferencePathCenterYMm"), expectedChainReference)
+      || !close(
+        n("inputSleeveMagnetOpenBottomYMm"),
+        n("inputBaseYMm") + n("inputSleeveTopOffsetMm")
+          - n("inputSleeveUpperDHeightMm")
+          - n("inputSleeveLowerRoundHeightMm") + 0.10,
+      )
+      || !close(
+        n("snakeChainVerticalShiftMm"),
+        n("inputSleeveMagnetOpenBottomYMm")
+          - n("snakeChainLinkTopOffsetMm")
+          - n("snakeChainReferencePathCenterYMm"),
+      )
+      || !close(
+        n("snakeChainServicePathCenterYMm"),
+        expectedChainReference - chainPitch + n("snakeChainVerticalShiftMm"),
+      )
+      || !close(n("snakeChainReturnGuideCenterYMm"), 41.20)
+      || !close(n("snakeChainLinkTopOffsetMm"), 2.15)
+      || !close(n("snakeChainTriggerMagnetDiameterMm"), 2.0)
+      || !close(n("snakeChainTriggerMagnetLengthMm"), 1.8)
+      || !close(n("snakeChainTriggerMagnetNormalOffsetMm"), 1.15)
+      || !close(n("snakeChainTriggerMagnetTopClearanceMm"), 0)
+      || !close(n("snakeChainTriggerMagnetAxialStartOffsetMm"), 2.44)
+      || n("snakeChainTriggerMagnetSegmentIndex") !== 143) {
+    throw new Error("蛇链服务层与公轮底部磁铁下沿的高度契约不满足");
   }
   if (n("frontTimingPulleyDrawerRow") !== n("centerRow") - 1
       || !close(n("frontPinionCenterYMm"), n("drawerRackYMm"))
@@ -942,6 +1004,16 @@ function validateCenterClutchContract(contract) {
       || n("plateBeltPassageAxialWidthMm") <= 6
       || n("plateBeltPassageHalfWidthMm") >= n("plateWidthMm") / 2) {
     throw new Error("centerClutch 机构板皮带贯穿槽不满足");
+  }
+  if (n("plateBeltPassageSlotCount") !== 2
+      || n("plateBeltPassageSlotCenterOffsetMm") <= 0
+      || n("plateBeltPassageSlotWidthMm") <= 0
+      || !close(
+        n("plateBeltPassageSlotCenterOffsetMm")
+          + n("plateBeltPassageSlotWidthMm") / 2,
+        n("plateBeltPassageHalfWidthMm"),
+      )) {
+    throw new Error("centerClutch 机构板必须使用中心皮带左右两条真实穿板槽");
   }
   return contract;
 }
@@ -1701,6 +1773,62 @@ async function bindWheelMesh(item, kind) {
   replaceMesh(item, group);
 }
 
+async function bindChainBearingMesh(item) {
+  const motion = play.motion;
+  if (!motion || !item.mesh?.isMesh || !playScene()) return;
+  const candidates = motion.wheels.filter((wheel) => wheel.kind === "idler");
+  const islands = await splitIslands(item.mesh.geometry);
+  const grouped = new Map(candidates.map((wheel) => [wheel.id, []]));
+
+  // One purchase bearing is exported as separate outer/inner race islands.
+  // Assign every island to its nearest solved wheel instead of consuming one
+  // island per wheel; the old one-to-one matcher left the bearing races at
+  // their authored coordinates and made them appear detached from the green
+  // 8T wheels after the chain datum moved.
+  for (const geo of islands) {
+    const center = geo.boundingBox.getCenter(new THREE.Vector3());
+    let best = null;
+    let bestD = Infinity;
+    for (const wheel of candidates) {
+      const d =
+        (center.x - wheel.x) ** 2
+        + (center.y - motion.chainY) ** 2
+        + (center.z - wheel.z) ** 2;
+      if (d < bestD) {
+        bestD = d;
+        best = wheel;
+      }
+    }
+    if (best) grouped.get(best.id).push(geo);
+  }
+
+  const group = new THREE.Group();
+  for (const wheel of candidates) {
+    const wheelIslands = grouped.get(wheel.id) || [];
+    if (!wheelIslands.length) continue;
+    const rotating = new THREE.Group();
+    const fixed = new THREE.Group();
+    rotating.position.set(wheel.x, motion.chainY, wheel.z);
+    fixed.position.set(wheel.x, motion.chainY, wheel.z);
+    for (const geo of wheelIslands) {
+      const size = geo.boundingBox.getSize(new THREE.Vector3());
+      const isOuterRaceOrSeal = Math.max(size.x, size.z) > 5.4;
+      geo.translate(-wheel.x, -motion.chainY, -wheel.z);
+      (isOuterRaceOrSeal ? rotating : fixed).add(
+        new THREE.Mesh(geo, item.mesh.material),
+      );
+    }
+    group.add(rotating, fixed);
+    play.bearingRotaries.push({
+      group: rotating,
+      teeth: wheel.teeth,
+      sign: wheel.sign,
+      restY: 0,
+    });
+  }
+  replaceMesh(item, group);
+}
+
 async function bindMotorShaftMesh(item) {
   const motion = play.motion;
   if (!motion || !item.mesh?.isMesh || !playScene()) return;
@@ -2388,6 +2516,54 @@ async function bindChainMesh(item) {
   applyCenterClutchChainVisibility();
 }
 
+async function bindChainTriggerMagnetMesh(item) {
+  if (!play.path || !item.mesh?.isMesh || !playScene()) return;
+  const motion = play.motion;
+  const trigger = motion?.chainTriggerMagnet;
+  const segmentIndex = Number(trigger?.segmentIndex ?? 143);
+  const seg = play.path.segs[segmentIndex];
+  if (!seg) throw new Error(`触发磁铁路径节不存在: ${segmentIndex}`);
+
+  const geometry = item.mesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  const anchor = [
+    (seg.a[0] + seg.b[0]) / 2,
+    (seg.a[1] + seg.b[1]) / 2,
+    (seg.a[2] + seg.b[2]) / 2,
+  ];
+  const tangent = normalize(sub(seg.b, seg.a));
+  const normal = [-tangent[2], 0, tangent[0]];
+  const delta = [center.x - anchor[0], center.y - anchor[1], center.z - anchor[2]];
+  const side = delta[0] * normal[0] + delta[2] * normal[2];
+  const geometryMaterial = item.mesh.material;
+  geometry.translate(-center.x, -center.y, -center.z);
+
+  const pivot = new THREE.Group();
+  pivot.add(new THREE.Mesh(geometry, geometryMaterial));
+  const group = new THREE.Group();
+  group.name = "chain-clutch-trigger-magnet-animated";
+  group.add(pivot);
+  const part = {
+    group: pivot,
+    s: seg.s0 + seg.len / 2,
+    along: 0,
+    side,
+    // The authored chain axial offset is source Y. It is intentionally kept
+    // as lift here: legacyRoot maps source +Y to browser/world Z-.
+    lift: delta[1],
+    restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
+    halfSpan: 0,
+    pinIndex: segmentIndex,
+    scaleAlong: false,
+  };
+  group.visible = item.mesh.visible;
+  play.chain.push(part);
+  replaceMesh(item, group);
+  poseChainPart(part, chainOffsetMm());
+  applyCenterClutchChainVisibility();
+}
+
 function updateHzLabel() {
   const els = play.host?.els;
   if (!els?.hzOut) return;
@@ -2449,6 +2625,20 @@ export function attachCabinetChainPlay(host) {
     })
     .then((motion) => {
       const centerClutch = validateCenterClutchContract(motion.centerClutch);
+      const datum = motion.chainTopDatum;
+      const trigger = motion.chainTriggerMagnet;
+      if (!datum || datum.mode !== "input-sleeve-magnet-bottom"
+          || !trigger
+          || Number(trigger.segmentIndex) !== Number(centerClutch.snakeChainTriggerMagnetSegmentIndex)
+          || Math.abs(Number(motion.chainVerticalShiftMm)
+            - Number(centerClutch.snakeChainVerticalShiftMm)) > 0.001
+          || Math.abs(
+            Number(datum.referencePathShiftedCenterYMm)
+              + Number(datum.linkTopOffsetMm)
+              - Number(datum.inputSleeveMagnetOpenBottomYMm),
+          ) > 0.001) {
+        throw new Error("蛇链服务层高度与中心离合底部磁铁契约不一致");
+      }
       play.motion = motion;
       play.currentClutch.contract = centerClutch;
       play.path = buildPath(motion);
@@ -2612,6 +2802,22 @@ export async function onPartLoaded(item) {
     }), true);
     return;
   }
+  if (id === CHAIN_TRIGGER_MAGNET_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindChainTriggerMagnetMesh(item).catch((error) => {
+      console.error("chain trigger magnet bind failed", id, error);
+      item.playBound = false;
+    }));
+    return;
+  }
+  if (id === CHAIN_BEARING_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindChainBearingMesh(item).catch((error) => {
+      console.error("chain bearing bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (CURRENT_CLUTCH_STATIC_IDS.has(id)) {
     // Cage, fixed bearing block and the removable plate are fixed world-frame
     // hardware. They must not enter the legacy chain adapter or a rotary
@@ -2696,6 +2902,10 @@ export function tickPlay(dt) {
   const pitches = play.motorTurns * (play.motion?.driveTeeth || 12);
   for (const wheel of play.wheels) {
     wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * pitches / wheel.teeth;
+  }
+  for (const bearing of play.bearingRotaries) {
+    bearing.group.rotation.y = bearing.restY
+      - bearing.sign * 2 * Math.PI * pitches / bearing.teeth;
   }
   for (const shaft of play.motorShafts) {
     // This is the legacy snake-selector motor shaft.  It follows the snake

@@ -10,7 +10,7 @@ import {
   onPartLoaded,
   setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=cabinet-opacity-control-1";
+} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-11";
 //#endregion
 
 //#region 常量/配置
@@ -32,16 +32,10 @@ const VIEW_HELPER_SIZE = 128;
 const LEGACY_ASSEMBLY_WIDTH = 260;
 const CABINET_TRANSPARENCY_CONTROLS = Object.freeze([
   {
-    partId: "cabinet-clutch/cabinet_clutch_cabinet",
+    partId: "cabinet-clutch/cabinet_clutch_cabinet_frame",
     inputId: "cabinet-shell-transparency",
     outputId: "cabinet-shell-transparency-out",
-    fallbackOpacity: 0.18,
-  },
-  {
-    partId: "cabinet-clutch/cabinet_clutch_cabinet_context",
-    inputId: "cabinet-context-transparency",
-    outputId: "cabinet-context-transparency-out",
-    fallbackOpacity: 0.32,
+    fallbackOpacity: 0.30,
   },
 ]);
 const CABINET_CONTROL_BY_PART_ID = new Map(
@@ -59,6 +53,10 @@ const DEFAULT_HIDDEN_PART_IDS = new Set([
   "cabinet-clutch/10_clutch_spring_reference",
   "cabinet-clutch/11_t_countersunk_screw_reference",
   "cabinet-clutch/12_clutch_fork_candidate",
+  // Retired coincident cabinet meshes; the canonical frame is the only
+  // cabinet object published by the root preview.
+  "cabinet-clutch/cabinet_clutch_cabinet",
+  "cabinet-clutch/cabinet_clutch_cabinet_context",
 ]);
 const LEGACY_COORDINATE_GROUPS = new Set([
   "cabinet",
@@ -75,6 +73,8 @@ const CAMERA_VIEWS = {
   "upper-tensioner": { direction: [-1.35, 0.62, -1.08], up: [0, 1, 0] },
   "lower-tensioner": { direction: [-0.68, 0.58, -1.55], up: [0, 1, 0] },
   "center-clutch": { direction: [0.78, 0.42, -1.20], up: [0, 1, 0] },
+  "cabinet-frame": { direction: [1.15, 0.82, -1.45], up: [0, 1, 0] },
+  "cabinet-partition": { direction: [0, 0, -1], up: [0, 1, 0] },
 };
 const DRAWER_DRIVE_TAILS = new Set([
   "cabinet_clutch_power_motor_body",
@@ -144,6 +144,7 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-chain/cabinet_chain_connector",
   "cabinet-chain/cabinet_chain_clutch_connector",
   "cabinet-chain/cabinet_chain_clutch_bearing",
+  "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
 ]);
 const LEGACY_MOTOR_TENSIONER_ID = "cabinet-chain/cabinet_chain_motor_tensioner";
 const UPPER_TENSIONER_TAILS = new Set([
@@ -173,8 +174,6 @@ const els = {
   explodeOut: document.getElementById("explode-out"),
   cabinetShellTransparency: document.getElementById("cabinet-shell-transparency"),
   cabinetShellTransparencyOut: document.getElementById("cabinet-shell-transparency-out"),
-  cabinetContextTransparency: document.getElementById("cabinet-context-transparency"),
-  cabinetContextTransparencyOut: document.getElementById("cabinet-context-transparency-out"),
   cabinetTransparencyReset: document.getElementById("cabinet-opacity-reset"),
   search: document.getElementById("part-search"),
   groupFilter: document.getElementById("group-filter"),
@@ -1144,10 +1143,15 @@ function coordinateParent(part) {
 
 function isCabinetContext(part) {
   if (DEFAULT_HIDDEN_PART_IDS.has(part?.id)) return false;
-  const tail = partTail(part);
-  return part?.group === "cabinet"
-    || tail === "cabinet_clutch_cabinet"
-    || tail === "cabinet_clutch_cabinet_context";
+  return part?.id === "cabinet-clutch/cabinet_clutch_cabinet_frame";
+}
+
+function isCabinetFramePart(part) {
+  return part?.id === "cabinet-clutch/cabinet_clutch_cabinet_frame";
+}
+
+function isCabinetPartitionPart(part) {
+  return part?.id === "cabinet-clutch/cabinet_clutch_partition";
 }
 
 function defaultCabinetTransparency(partId) {
@@ -1256,6 +1260,12 @@ const VIEW_PROFILES = {
     focus: isCenterClutchPart,
     context: isCenterClutchContext,
     frame: isCenterClutchFramePart,
+  },
+  "cabinet-frame": {
+    focus: isCabinetFramePart,
+  },
+  "cabinet-partition": {
+    focus: isCabinetPartitionPart,
   },
 };
 

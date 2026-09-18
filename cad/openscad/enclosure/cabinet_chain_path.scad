@@ -9,6 +9,13 @@ SPROCKET_TEETH = 12;
 BLUNT_TEETH = 8;                 // 所有绿色导向轮统一使用的最小轮
 WALL_CLEAR = 0.40;
 DRIVE_RETURN_X_TRIM = -0.1018;   // 三层路径在地板安全高度闭合真实 P 节距
+// The generated solver receives this from the center-clutch contract. Keep a
+// zero fallback so the path file remains inspectable by itself, but do not
+// assign back to the same OpenSCAD variable: self-redefinition would shadow
+// the generated -19.50 mm value and silently leave the wheels at old heights.
+CHAIN_PATH_VERTICAL_SHIFT = is_undef(SNAKE_CHAIN_VERTICAL_SHIFT)
+    ? 0
+    : SNAKE_CHAIN_VERTICAL_SHIFT;
 //#endregion
 
 //#region 模型/类型
@@ -30,6 +37,8 @@ function blunt_dx() = (W - wall_inset()) - col_center_x(N_COL - 1);
 // make different pitch radii share a vertical tangent; now both wheels on a
 // side are 8T, so the offset only preserves the established cabinet envelope.
 function guide_anchor_dx() = drive_pitch_r() - translator_r();
+
+function chain_row_center_z(row) = row_center_z(row) + CHAIN_PATH_VERTICAL_SHIFT;
 
 function polar_xy(c, r, a) = [c[0] + r * cos(a), c[1] + r * sin(a), 0];
 
@@ -67,35 +76,41 @@ function left_blunt_c(z_lo) = [
 ];
 
 function right_leave_a() = external_a(
-    right_sprocket_c(row_center_z(N_ROW - 1)),
+    right_sprocket_c(chain_row_center_z(N_ROW - 1)),
     translator_r(),
-    right_blunt_c(row_center_z(N_ROW - 2)),
+    right_blunt_c(chain_row_center_z(N_ROW - 2)),
     translator_r()
 );
 
 function s_span_check() = (90 - right_leave_a() + 360) % 360;
 
-function service_chain_z() = row_center_z(0) - ROW_PITCH;
+// The service run follows the clutch magnet-bottom datum. The independent
+// return guide center below keeps its small guide wheel floor-safe.
+function service_chain_z() = row_center_z(0) - ROW_PITCH + CHAIN_PATH_VERTICAL_SHIFT;
+
+function return_drive_center_y() = is_undef(SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y)
+    ? service_chain_z() - translator_r()
+    : SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y;
 
 function drive_c() = [
     return_x() + 2 * drive_pitch_r() + translator_r() + DRIVE_RETURN_X_TRIM,
-    service_chain_z() - translator_r(),
+    return_drive_center_y(),
     0
 ];
 
 function entry_c() = [
     return_x() + translator_r(),
-    row_center_z(N_ROW - 1) - translator_r(),
+    chain_row_center_z(N_ROW - 1) - translator_r(),
     0
 ];
 
 // 后视图中，蛇形链条唯一的动力位放在右下方的回程张紧位；旧的高-X
 // 上方转向位仍保留，但现在只承担普通导向，不再连接电机。
-function power_c() = right_sprocket_c(row_center_z(N_ROW - 1));
+function power_c() = right_sprocket_c(chain_row_center_z(N_ROW - 1));
 
 function right_turn_sprockets_without_power() = [
     for (row = [N_ROW - 3:-2:0])
-        right_sprocket_c(row_center_z(row))
+        right_sprocket_c(chain_row_center_z(row))
 ];
 
 function ten_path_c() = [
@@ -111,19 +126,19 @@ function snake_drive_c() = ten_path_c();
 
 function right_turn_sprockets() = [
     for (row = [N_ROW - 1:-2:0])
-        right_sprocket_c(row_center_z(row))
+        right_sprocket_c(chain_row_center_z(row))
 ];
 
 function left_turn_sprockets() = [
     for (row = [N_ROW - 2:-2:1])
-        left_sprocket_c(row_center_z(row))
+        left_sprocket_c(chain_row_center_z(row))
 ];
 
 function blunt_centers() = [
     for (k = [0:N_ROW - 2])
         (k % 2 == 0
-            ? right_blunt_c(row_center_z(N_ROW - 2 - k))
-            : left_blunt_c(row_center_z(N_ROW - 2 - k))),
+            ? right_blunt_c(chain_row_center_z(N_ROW - 2 - k))
+            : left_blunt_c(chain_row_center_z(N_ROW - 2 - k))),
     right_blunt_c(service_chain_z())
 ];
 //#endregion
