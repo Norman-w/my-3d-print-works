@@ -10,7 +10,7 @@ import {
   onPartLoaded,
   setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-11";
+} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-13";
 //#endregion
 
 //#region 常量/配置

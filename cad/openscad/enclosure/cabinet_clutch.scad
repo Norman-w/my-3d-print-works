@@ -122,10 +122,9 @@ TIMING_BELT_CLEAR = 0.65;
 // radial belt thickness.
 PARTITION_BELT_PASSAGE_RADIAL_CLEAR = 0.45;
 PARTITION_BELT_PASSAGE_AXIAL_CLEAR = 0.45;
-// The front/rear compartment partition gets one real belt window per drawer
-// cell. The center R3C3 cell uses the migrated 2GT loop; the other fourteen
-// cells use the existing 3M timing-belt envelope. This is not the final
-// removable rear panel at z=-D.
+// The front/rear compartment partition gets one real, identical 2GT belt
+// window per drawer cell. The old 3M partition-window envelope is removed;
+// this is not the final removable rear panel at z=-D.
 PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR =
     PARTITION_BELT_PASSAGE_RADIAL_CLEAR;
 PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR =
@@ -312,16 +311,6 @@ FRONT_PULLEY_Z = DRIVE_AXIS_Z + DRAWER_BELT_CENTER_DISTANCE;
 // clearance; it must not be added to the printed belt cross-section.
 TIMING_BELT_BASE_INNER_R = TIMING_PITCH_R;
 TIMING_BELT_BASE_OUTER_R = TIMING_BELT_BASE_INNER_R + TIMING_BELT_T;
-TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET =
-    TIMING_BELT_BASE_INNER_R + TIMING_BELT_T / 2;
-TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X = TIMING_BELT_T / 2
-    + TIMING_BELT_TOOTH_H
-    + PARTITION_BELT_PASSAGE_RADIAL_CLEAR;
-TIMING_BELT_PARTITION_WINDOW_HALF_X =
-    TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET
-    + TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X;
-TIMING_BELT_PARTITION_WINDOW_AXIAL_WIDTH = TIMING_BELT_W
-    + 2 * PARTITION_BELT_PASSAGE_AXIAL_CLEAR;
 // Smooth retaining flanges sit above and below every timing pulley. They are
 // intentionally larger than the toothed outer circle so the belt cannot walk
 // off the pulley in Z.
@@ -904,11 +893,6 @@ function center_gt2_front_d_shaft_length(row) =
     center_gt2_front_d_shaft_end_y(row)
         - center_gt2_front_d_shaft_start_y(row);
 
-function drawer_station_belt_y(col, row) =
-    is_center_gt2_station(col, row)
-        ? center_gt2_belt_y(row)
-        : drawer_belt_y(row);
-
 // The front/rear partition is one repeated datum: every drive cell sends its
 // timing belt into the next lower bay, just as center R3C3 sends its belt into
 // CENTER_GT2_FRONT_PULLEY_ROW.  The portal keeps the same normalized
@@ -1474,61 +1458,20 @@ module center_gt2_belt_partition_window(
         ]);
 }
 
-module timing_belt_partition_window(
-    x,
-    y,
-    z0,
-    z_depth,
-    radial_clear,
-    axial_clear
-) {
-    path_min_z = min(DRIVE_AXIS_Z, FRONT_PULLEY_Z);
-    path_max_z = max(DRIVE_AXIS_Z, FRONT_PULLEY_Z);
-    slot_center_offset = TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET;
-    slot_half_x = TIMING_BELT_T / 2
-        + TIMING_BELT_TOOTH_H
-        + radial_clear;
-    window_half_x = slot_center_offset + slot_half_x;
-    assert(z_depth > 0, "timing belt partition window depth must be positive");
-    assert(radial_clear >= 0 && axial_clear >= 0,
-        "timing partition belt clearances must be non-negative");
-    assert(z0 > path_min_z - EPS
-            && z0 + z_depth < path_max_z + EPS,
-        "timing partition belt window must cross the 3M straight run");
-    translate([
-        x - window_half_x,
-        y - TIMING_BELT_W / 2 - axial_clear,
-        z0
-    ])
-        cube([
-            2 * window_half_x,
-            TIMING_BELT_W + 2 * axial_clear,
-            z_depth
-        ]);
-}
-
 module all_drawer_belt_partition_windows() {
     for (row = [0:N_ROW - 1])
         for (col = [0:N_COL - 1]) {
-            if (is_center_gt2_station(col, row))
-                center_gt2_belt_partition_window(
-                    clutch_col_x(col),
-                    drawer_partition_belt_y(row),
-                    WORLD_PARTITION_BACK_Z - EPS,
-                    WORLD_PARTITION_T + 2 * EPS,
-                    GT2_BELT_RADIAL_CLEARANCE
-                        + PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR,
-                    PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR
-                );
-            else
-                timing_belt_partition_window(
-                    clutch_col_x(col),
-                    drawer_partition_belt_y(row),
-                    WORLD_PARTITION_BACK_Z - EPS,
-                    WORLD_PARTITION_T + 2 * EPS,
-                    PARTITION_BELT_PASSAGE_RADIAL_CLEAR,
-                    PARTITION_BELT_PASSAGE_AXIAL_CLEAR
-                );
+            // Every cell uses the same center 2GT straight-run envelope;
+            // there is no wider legacy 3M partition opening anymore.
+            center_gt2_belt_partition_window(
+                clutch_col_x(col),
+                drawer_partition_belt_y(row),
+                WORLD_PARTITION_BACK_Z - EPS,
+                WORLD_PARTITION_T + 2 * EPS,
+                GT2_BELT_RADIAL_CLEARANCE
+                    + PARTITION_BELT_PASSAGE_WINDOW_RADIAL_CLEAR,
+                PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR
+            );
         }
 }
 
@@ -4031,10 +3974,9 @@ echo(
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_RADIAL_CLEAR),
     str("plateBeltPassageAxialClearanceMm=",
         CENTER_CLUTCH_PLATE_BELT_PASSAGE_AXIAL_CLEAR),
-    "partitionBeltPassageType=per-drawer-cell-2GT-plus-3M-straight-run-windows",
+    "partitionBeltPassageType=per-drawer-cell-2GT-straight-run-windows",
     str("partitionBeltPassageWindowCount=", N_COL * N_ROW),
-    str("partitionBeltPassageCenterWindowCount=", 1),
-    str("partitionBeltPassageLegacyWindowCount=", N_COL * N_ROW - 1),
+    str("partitionBeltPassage2GTWindowCount=", N_COL * N_ROW),
     str("partitionBeltPassageCenterXMm=", clutch_col_x(CENTER_GT2_COL)),
     str("partitionBeltPassageCenterYMm=",
         center_gt2_belt_y(CENTER_GT2_ROW)),
@@ -4053,18 +3995,6 @@ echo(
             + GT2_BELT_RADIAL_CLEARANCE),
     str("partitionBeltPassageAxialClearanceMm=",
         PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR),
-    str("partitionBeltPassageLegacySlotCenterOffsetMm=",
-        TIMING_BELT_PARTITION_WINDOW_SLOT_CENTER_OFFSET),
-    str("partitionBeltPassageLegacySlotWidthMm=",
-        2 * TIMING_BELT_PARTITION_WINDOW_SLOT_HALF_X),
-    str("partitionBeltPassageLegacyHalfWidthMm=",
-        TIMING_BELT_PARTITION_WINDOW_HALF_X),
-    str("partitionBeltPassageLegacyAxialWidthMm=",
-        TIMING_BELT_PARTITION_WINDOW_AXIAL_WIDTH),
-    str("partitionBeltPassageLegacyRadialClearanceMm=",
-        PARTITION_BELT_PASSAGE_RADIAL_CLEAR),
-    str("partitionBeltPassageLegacyAxialClearanceMm=",
-        PARTITION_BELT_PASSAGE_AXIAL_CLEAR),
     "plateSupport=partition-boss-locators-plus-four-self-tapping-screws",
     "actuation=permanent-magnet",
     "engageOnlyWhenStopped=true",

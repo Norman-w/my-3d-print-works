@@ -107,16 +107,10 @@ REQUIRED = {
     "partitionBeltPassageCenterYMm", "partitionBeltPassageRelativeXMm",
     "partitionBeltPassageRelativeYMm", "partitionBeltPassagePlateZMm",
     "partitionBeltPassagePlateThicknessMm", "partitionBeltPassageHalfWidthMm",
-    "partitionBeltPassageWindowCount", "partitionBeltPassageCenterWindowCount",
-    "partitionBeltPassageLegacyWindowCount", "partitionBeltPassageAxialWidthMm",
+    "partitionBeltPassageWindowCount", "partitionBeltPassage2GTWindowCount",
+    "partitionBeltPassageAxialWidthMm",
     "partitionBeltPassageRadialClearanceMm",
     "partitionBeltPassageAxialClearanceMm",
-    "partitionBeltPassageLegacySlotCenterOffsetMm",
-    "partitionBeltPassageLegacySlotWidthMm",
-    "partitionBeltPassageLegacyHalfWidthMm",
-    "partitionBeltPassageLegacyAxialWidthMm",
-    "partitionBeltPassageLegacyRadialClearanceMm",
-    "partitionBeltPassageLegacyAxialClearanceMm",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
     "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
@@ -149,8 +143,7 @@ INT_KEYS = {
     "inputSleeveMagnetCount", "totalModeledMagnetCount", "centerCol", "centerRow",
     "drawerLayerCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
     "plateBeltPassageSlotCount", "partitionBeltPassageWindowCount",
-    "partitionBeltPassageCenterWindowCount",
-    "partitionBeltPassageLegacyWindowCount", "plateFastenerCount",
+    "partitionBeltPassage2GTWindowCount", "plateFastenerCount",
     "partitionBossPerCellCount", "partitionBossCount",
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
@@ -382,8 +375,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "plateBeltPassageRadialClearanceMm": 0.45,
         "plateBeltPassageAxialClearanceMm": 0.45,
         "partitionBeltPassageWindowCount": 15.0,
-        "partitionBeltPassageCenterWindowCount": 1.0,
-        "partitionBeltPassageLegacyWindowCount": 14.0,
+        "partitionBeltPassage2GTWindowCount": 15.0,
         "partitionBeltPassagePlateThicknessMm": 3.0,
         "partitionBeltPassageRadialClearanceMm": 0.90,
         "partitionBeltPassageAxialClearanceMm": 0.45,
@@ -604,14 +596,12 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("机构板贯穿槽没有覆盖 6 mm 皮带宽度")
     if n(contract, "plateBeltPassageHalfWidthMm") >= n(contract, "plateWidthMm") / 2:
         raise RuntimeError("机构板贯穿槽穿出侧壁")
-    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-plus-3M-straight-run-windows":
-        raise RuntimeError("前后仓隔板必须使用逐抽屉格 2GT+3M 直线段窗口")
+    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-straight-run-windows":
+        raise RuntimeError("前后仓隔板必须使用逐抽屉格统一 2GT 直线段窗口")
     if n(contract, "partitionBeltPassageWindowCount") != 15:
         raise RuntimeError("前后仓隔板必须有 5×3 共 15 个抽屉格皮带窗口")
-    if n(contract, "partitionBeltPassageCenterWindowCount") != 1:
-        raise RuntimeError("前后仓隔板必须只有 1 个中心 2GT 窗口")
-    if n(contract, "partitionBeltPassageLegacyWindowCount") != 14:
-        raise RuntimeError("前后仓隔板必须有 14 个其它抽屉格 3M 窗口")
+    if n(contract, "partitionBeltPassage2GTWindowCount") != 15:
+        raise RuntimeError("前后仓隔板的 15 个窗口必须全部使用 2GT 包络")
     if abs(
         n(contract, "partitionBeltPassageCenterXMm")
         - n(contract, "axisXMm")
@@ -632,16 +622,6 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("前后仓隔板皮带窗口没有包住真实皮带包络")
     if n(contract, "partitionBeltPassageAxialWidthMm") <= 6.0:
         raise RuntimeError("前后仓隔板皮带窗口没有覆盖 6 mm 皮带宽度")
-    if n(contract, "partitionBeltPassageLegacyHalfWidthMm") <= 0:
-        raise RuntimeError("其它抽屉格 3M 皮带窗口宽度无效")
-    if abs(
-        n(contract, "partitionBeltPassageLegacySlotCenterOffsetMm")
-        + n(contract, "partitionBeltPassageLegacySlotWidthMm") / 2
-        - n(contract, "partitionBeltPassageLegacyHalfWidthMm")
-    ) > 0.001:
-        raise RuntimeError("其它抽屉格 3M 窗口外包络没有由槽中心和槽宽推导")
-    if n(contract, "partitionBeltPassageLegacyAxialWidthMm") <= 5.0:
-        raise RuntimeError("其它抽屉格 3M 皮带窗口没有覆盖皮带宽度")
     partition_z = n(contract, "partitionBeltPassagePlateZMm")
     belt_z0 = min(n(contract, "axisZMm"), n(contract, "frontTimingPulleyZMm"))
     belt_z1 = max(n(contract, "axisZMm"), n(contract, "frontTimingPulleyZMm"))

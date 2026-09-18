@@ -632,14 +632,12 @@ def validate_contract(contract: Contract) -> None:
         "机构板皮带槽外包络",
         0.001,
     )
-    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-plus-3M-straight-run-windows":
-        fail("前后仓隔板必须使用逐抽屉格 2GT+3M 直线段窗口")
+    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-straight-run-windows":
+        fail("前后仓隔板必须使用逐抽屉格统一 2GT 直线段窗口")
     if number(contract, "partitionBeltPassageWindowCount") != 15:
         fail("前后仓隔板必须有 5×3 共 15 个抽屉格皮带窗口")
-    if number(contract, "partitionBeltPassageCenterWindowCount") != 1:
-        fail("前后仓隔板必须只有 1 个中心 2GT 窗口")
-    if number(contract, "partitionBeltPassageLegacyWindowCount") != 14:
-        fail("前后仓隔板必须有 14 个其它抽屉格 3M 窗口")
+    if number(contract, "partitionBeltPassage2GTWindowCount") != 15:
+        fail("前后仓隔板的 15 个窗口必须全部使用 2GT 包络")
     expect_close(
         number(contract, "partitionBeltPassageCenterXMm"),
         number(contract, "axisXMm"),
@@ -669,17 +667,6 @@ def validate_contract(contract: Contract) -> None:
         fail("前后仓隔板皮带窗口没有包住真实皮带包络")
     if number(contract, "partitionBeltPassageAxialWidthMm") <= 6.0:
         fail("前后仓隔板皮带窗口没有覆盖 6 mm 皮带宽度")
-    if number(contract, "partitionBeltPassageLegacyHalfWidthMm") <= 0:
-        fail("其它抽屉格 3M 皮带窗口宽度无效")
-    expect_close(
-        number(contract, "partitionBeltPassageLegacySlotCenterOffsetMm")
-        + number(contract, "partitionBeltPassageLegacySlotWidthMm") / 2,
-        number(contract, "partitionBeltPassageLegacyHalfWidthMm"),
-        "其它抽屉格 3M 窗口外包络",
-        0.001,
-    )
-    if number(contract, "partitionBeltPassageLegacyAxialWidthMm") <= 5.0:
-        fail("其它抽屉格 3M 皮带窗口没有覆盖皮带宽度")
 
 
 def validate_sweep(contract: Contract, reports: dict[tuple[str, bool], dict[str, object]]) -> None:
@@ -930,7 +917,7 @@ def main() -> int:
         f"{number(contract, 'linearBearingNominalLengthMm'):.0f}mm, "
         f"M5×5 sleeve magnet, socket_overlap={metrics['sleeveSocketOverlap']:.2f}mm"
     )
-    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、机构板双槽、隔板 5×3 逐格皮带窗口、15 格四角 Boss 定位/自攻导孔、C 槽凸缘后壁交集")
+    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、C 槽凸缘后壁交集")
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
     return 0
 

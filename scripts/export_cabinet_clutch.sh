@@ -120,7 +120,7 @@ labels = {
         "visible": True,
     },
     "cabinet-clutch/cabinet_clutch_partition": {
-        "name": "前后仓隔板·5×3抽屉格皮带通孔 + 每格四角 Boss（中心2GT + 其余3M；独立安装件）",
+        "name": "前后仓隔板·5×3抽屉格统一2GT皮带通孔 + 每格四角 Boss（独立安装件）",
         "group": "00·箱体框架",
         "color": "#91a7b2",
         "opacity": 1.0,
@@ -427,7 +427,7 @@ group_map = {
 }
 name_map = {
     "cabinet_clutch_cabinet_frame": "箱体框架（上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面；前后仓隔板另列）",
-    "cabinet_clutch_partition": "前后仓隔板·5×3抽屉格皮带通孔 + 每格四角 Boss（中心2GT + 其余3M；独立安装件）",
+    "cabinet_clutch_partition": "前后仓隔板·5×3抽屉格统一2GT皮带通孔 + 每格四角 Boss（独立安装件）",
     "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
