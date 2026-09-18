@@ -33,7 +33,11 @@ RETIRED_ROOT_PREVIEW_GROUPS=(
 )
 QUALITY="${QUALITY:-2}"
 SELECTED_COLUMN="${SELECTED_COLUMN:-2}"
-SELECTED_ROW="${SELECTED_ROW:-2}"
+# R3C3 is zero-based (col=2,row=1).  The assembly itself already defaults to
+# row 1; keeping the one-by-one drawer-drive exports on row 2 silently mixed
+# the center clutch with the third drawer layer and produced a legacy 20T
+# timing belt under the "center 2GT" labels.
+SELECTED_ROW="${SELECTED_ROW:-1}"
 SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
 PREVIEW_PORT="${PREVIEW_PORT:-8876}"
 
@@ -101,6 +105,30 @@ labels = {
         "opacity": 0.32,
         "visible": True,
         "role": "diagnostic",
+    },
+    "cabinet-clutch/17_drawer_rack_guide_rollers_reference": {
+        "name": "中心格·抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/18_drawer_rack_guide_rails_candidate": {
+        "name": "中心格·左右内开口 C 形导向槽×2（Z向；尾部滚轮+前端下托）",
+        "color": "#657f8c",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/22_front_timing_bearing_reference": {
+        "name": "中心格·前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/23_front_d_axis_reference": {
+        "name": "中心格·前端主动轮到同步轮短 D 轴",
+        "color": "#5c6876",
+        "visible": True,
+        "role": "purchased",
     },
     "cabinet-clutch/00_tensioner_t_solid_reference": {
         "name": "列同步张紧滑台 · SKP 参数重建",
@@ -206,12 +234,6 @@ labels = {
         "visible": False,
         "role": "diagnostic",
     },
-    "cabinet-clutch/center_output_cage": {
-        "name": "中心 R3C3 · 输出轴承笼（输出转子2枚轴承固定）",
-        "color": "#4c6470",
-        "visible": True,
-        "role": "printed",
-    },
     "cabinet-clutch/center_guide_rails": {
         "name": "legacy · 中心 R3C3 独立导轨（已移除）",
         "color": "#657f8c",
@@ -225,7 +247,7 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/center_mechanism_plate": {
-        "name": "中心 R3C3 · 可拆后仓机构板（一体 LM3UU 轴承座；4×M3）",
+        "name": "中心 R3C3 · 可拆后仓机构板（一体 LM3UU + 输出双轴承长方条；4×M3）",
         "color": "#536d78",
         "visible": True,
         "role": "printed",
@@ -237,7 +259,7 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/center_output_shaft_reference": {
-        "name": "中心 R3C3 · 采购件输出 3mm D 轴（独立短轴）",
+        "name": "中心 R3C3 · 采购件输出 D-round 短轴（母轮D段 + 双轴承圆轴）",
         "color": "#5c6876",
         "visible": True,
         "role": "purchased",
@@ -249,7 +271,7 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/center_output_bearings_reference": {
-        "name": "中心 R3C3 · 输出转子2枚 3×6×2径向轴承（轴向间隔4mm；采购件）",
+        "name": "中心 R3C3 · 输出双枚 3×6×2 径向轴承（同一体长方条上下固定；采购件）",
         "color": "#cfd4da",
         "visible": True,
         "role": "purchased",
@@ -312,7 +334,7 @@ chain_labels = {
         "role": "printed",
     },
     "cabinet-chain/cabinet_chain_idlers": {
-        "name": "12T/8T 绿色钝齿轴承导向轮",
+        "name": "8T 小尺寸绿色钝齿轴承导向轮（8颗）",
         "color": "#7dcc4a",
         "role": "printed",
     },
@@ -357,7 +379,6 @@ group_map = {
     "center_linear_bearings_reference": "02·离合机构",
     "center_linear_bearing_retainers": "02·离合机构",
     "center_linear_bearing_fit_coupon": "02·离合机构",
-    "center_output_cage": "02·离合机构",
     "center_guide_rails": "02·离合机构",
     "center_stops": "02·离合机构",
     "center_mechanism_plate": "02·离合机构",
@@ -373,6 +394,10 @@ group_map = {
     "14_front_timing_pulley_candidate": "03·抽屉驱动",
     "15_front_pinion_candidate": "03·抽屉驱动",
     "16_drawer_linear_rack_candidate": "03·抽屉驱动",
+    "17_drawer_rack_guide_rollers_reference": "03·抽屉驱动",
+    "18_drawer_rack_guide_rails_candidate": "03·抽屉驱动",
+    "22_front_timing_bearing_reference": "03·抽屉驱动",
+    "23_front_d_axis_reference": "03·抽屉驱动",
 }
 name_map = {
     "cabinet_clutch_cabinet": "柜体外壳（可见背景）",
@@ -386,14 +411,13 @@ name_map = {
     "center_linear_bearings_reference": "中心 R3C3 固定 LM3UU×1 · Ø3×Ø7×10（与公轮同轴；采购件）",
     "center_linear_bearing_retainers": "legacy · 中心 R3C3 轴承压盖（已移除）",
     "center_linear_bearing_fit_coupon": "中心 R3C3 LM3UU 长方条轴承孔配合测试片 · Ø7.20/7.30/7.40",
-    "center_output_cage": "中心 R3C3 输出轴承笼 · 输出转子2枚轴承固定",
     "center_guide_rails": "legacy · 中心 R3C3 独立导轨（已移除）",
     "center_stops": "legacy · 中心 R3C3 实体止挡（已移除）",
-    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 一体 LM3UU 轴承座 · 4×M3",
+    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 一体 LM3UU + 输出双轴承长方条 · 4×M3",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
-    "center_output_shaft_reference": "中心 R3C3 输出独立 3mm D 轴 · 采购件",
+    "center_output_shaft_reference": "中心 R3C3 输出 D-round 短轴 · 母轮D段 + 双轴承圆轴 · 采购件",
     "center_input_bearings_reference": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",
-    "center_output_bearings_reference": "中心 R3C3 输出转子2枚 3×6×2轴承 · 轴向间隔4mm · 采购件",
+    "center_output_bearings_reference": "中心 R3C3 输出双枚 3×6×2轴承 · 长方条上下固定 · 采购件",
     "10_clutch_spring_reference": "旧离合压簧 · legacy 默认隐藏",
     "11_t_countersunk_screw_reference": "旧 T 形沉头螺丝 · legacy 默认隐藏",
     "12_clutch_fork_candidate": "旧离合拨叉 · legacy 默认隐藏",
@@ -401,6 +425,10 @@ name_map = {
     "14_front_timing_pulley_candidate": "中心格新版前端2GT同步轮",
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
     "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
+    "17_drawer_rack_guide_rollers_reference": "中心格抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
+    "18_drawer_rack_guide_rails_candidate": "中心格左右内开口 C 形导向槽×2（Z向；尾部滚轮+前端下托）",
+    "22_front_timing_bearing_reference": "中心格前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
+    "23_front_d_axis_reference": "中心格前端主动轮到下层同步轮 3mm 短 D 轴",
     "cabinet_clutch_power_motor_body": "抽屉开合动力电机 · 竖直本体（+X末列）",
     "cabinet_clutch_power_motor_shaft": "抽屉开合动力电机 · 竖直D输出轴",
     "cabinet_clutch_power_column_0": "列同步轴 C1 · Y向长花键 + 上下2GT",
@@ -545,10 +573,9 @@ for group_id in ordered_group_ids:
         )
         rotary_support = call_node(
             "center_clutch/rotary-support",
-            "输出母轮旋转支撑 · 2枚 3×6×2（轴向间隔4mm）",
-            "公轮端没有额外旋转轴承组；输出母轮保持固定位置并由可拆输出轴承笼内的两枚 3×6×2 轴承旋转支撑。",
+            "输出母轮旋转支撑 · 一体长方条上下2枚 3×6×2",
+            "公轮端没有额外旋转轴承组；输出母轮保持固定位置，短 D-round 轴穿过机构板一体长方条上下两枚 3×6×2 轴承旋转支撑。长方条只有两个轴承孔，中间保留实心隔墙。",
             children=[
-                part_node("cabinet-clutch/center_output_cage"),
                 part_node("cabinet-clutch/center_output_shaft_reference"),
                 part_node("cabinet-clutch/center_output_bearings_reference"),
             ],
@@ -583,7 +610,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/active",
                 "中心 R3C3 · 单站纯永磁离合",
-                "输入公轮 + 输出母轮 + D-round-D 阶梯轴 + 机构板一体实心 LM3UU 轴承座 + D 型/Ø5×5 磁铁圆套 + 输出双轴承笼 + 可拆机构板",
+                "输入公轮 + 输出母轮 + D-round-D 阶梯轴 + 机构板一体实心 LM3UU 轴承座 + D 型/Ø5×5 磁铁圆套 + 输出双轴承一体长方条 + 可拆机构板",
                 children=active_center,
             ),
             call_node(
@@ -606,6 +633,18 @@ for group_id in ordered_group_ids:
             ),
             part_node(
                 "cabinet-clutch/16_drawer_linear_rack_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/17_drawer_rack_guide_rollers_reference",
+            ),
+            part_node(
+                "cabinet-clutch/18_drawer_rack_guide_rails_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/22_front_timing_bearing_reference",
+            ),
+            part_node(
+                "cabinet-clutch/23_front_d_axis_reference",
             ),
         ]
     else:
@@ -650,10 +689,13 @@ python3 "${PROJECT_ROOT}/scripts/generate_center_clutch_contract.py" \
     --scad "${SCAD_DIR}/${SCAD_FILE}" \
     --output "${CENTER_CONTRACT_JSON}"
 
-# The canonical page owns the chain animation as well as the meshes.  Refresh
-# the solver output here so the motion path uses the same generated pin loop
-# that cabinet_chain.scad and cabinet_motor_mount_params.scad consume.
-python3 "${PROJECT_ROOT}/scripts/solve_cabinet_chain.py"
+# The canonical page owns the chain animation as well as the meshes.  Always
+# rebuild the chain meshes from the same solver invocation; otherwise a new
+# motion JSON can be paired with older STL geometry and make the browser show
+# chains/gears flying out of their authored layers.
+CHAIN_EXPORT_SCRIPT="${PROJECT_ROOT}/scripts/export_cabinet_chain.sh"
+[[ -x "${CHAIN_EXPORT_SCRIPT}" ]] || die "找不到链条同步导出脚本: ${CHAIN_EXPORT_SCRIPT}"
+QUALITY="${QUALITY}" bash "${CHAIN_EXPORT_SCRIPT}"
 [[ -s "${MOTION_JSON}" ]] || die "未生成蛇链运动路径: ${MOTION_JSON}"
 
 # Remove the old child-page output and the unrelated legacy root page/assets.
@@ -722,6 +764,7 @@ LEGACY_CLUTCH_OUTPUTS=(
     "center_input_bearings_reference.stl"
     "center_selector_shoe.stl"
     "center_linear_bearing_block.stl"
+    "center_output_cage.stl"
 )
 for old_file in "${LEGACY_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" \
@@ -757,6 +800,20 @@ DUPLICATE_CLUTCH_OUTPUTS=(
 )
 for old_file in "${DUPLICATE_CLUTCH_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
+done
+
+# The front pinion bearing is now captured directly by the shelf.  Remove the
+# three old standalone support/reference meshes so a refresh cannot reintroduce
+# the obsolete upper-MR63 stack into the manifest.
+OBSOLETE_DRAWER_DRIVE_OUTPUTS=(
+    "19_front_pinion_bearing_support_candidate.stl"
+    "20_front_pinion_bearings_reference.stl"
+    "21_front_timing_bearing_support_candidate.stl"
+)
+for old_file in "${OBSOLETE_DRAWER_DRIVE_OUTPUTS[@]}"; do
+    rm -f "${OUT_DIR}/${old_file}" \
+        "${REPORT_DIR}/${old_file%.stl}.json" \
+        "${REPORT_DIR}/${old_file%.stl}.watertight.json"
 done
 
 # The current male-end assembly uses the Ø5×5 magnet in its printed sleeve;
@@ -862,7 +919,6 @@ require_watertight_print_part() {
 export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
 export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
 export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
-export_part "center_output_cage" "${OUT_DIR}/center_output_cage.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
 export_part "center_linear_bearing_fit_coupon" "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
@@ -879,7 +935,6 @@ for printable_part in \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
-    "${OUT_DIR}/center_output_cage.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl"; do
     require_watertight_print_part "${printable_part}"
@@ -889,6 +944,15 @@ export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0
 export_part "drawer_rack" "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" false 0
+export_part "drawer_rack_guide_rollers" "${OUT_DIR}/17_drawer_rack_guide_rollers_reference.stl" false 0
+export_part "drawer_rack_guide_rails" "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" false 0
+export_part "front_timing_bearing" "${OUT_DIR}/22_front_timing_bearing_reference.stl" false 0
+export_part "front_d_axis" "${OUT_DIR}/23_front_d_axis_reference.stl" false 0
+
+for printable_part in \
+    "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl"; do
+    require_watertight_print_part "${printable_part}"
+done
 
 if [[ "${SHOW_LEGACY_STATIONS}" == "true" ]]; then
     export_part "spring" "${OUT_DIR}/10_clutch_spring_reference.stl" false 0

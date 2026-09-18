@@ -48,7 +48,7 @@ render_view() {
         -D "CLUTCH_PART=\"${part}\"" \
         -D "ENGAGED=${engaged}" \
         -D "SELECTED_COLUMN=2" \
-        -D "SELECTED_ROW=2" \
+        -D "SELECTED_ROW=1" \
         -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
         -D "CLUTCH_EXPLODE=8" \
         -D "TENSIONER_SCREW_OUT_MM=${screw_out}" \
@@ -73,7 +73,7 @@ render_view "clutch-detail-side-open" "clutch_detail" false "150,140,76,0,90,0,5
 render_view "clutch-detail-side-engaged" "clutch_detail" true "150,140,76,0,90,0,500" "1200,1000"
 
 # ===== 分区：逐件预览 =====
-# The selected verification station is column 2 / row 2. These views are
+# The selected verification station is column 2 / row 1. These views are
 # deliberately close so the mating faces and layer order can be inspected.
 render_view "parts/01-motor-vertical" "motor" false "247,130,76,-20,0,0,500" "1000,1200"
 render_view "parts/02-drive-column" "column" false "130,130,76,-20,0,0,500" "1100,1200"

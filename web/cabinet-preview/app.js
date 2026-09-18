@@ -10,7 +10,7 @@ import {
   onPartLoaded,
   setCenterClutchPreviewFocus,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=center-clutch-integral-seat-1";
+} from "./js/cabinet-chain-play.js?v=cabinet-opacity-control-1";
 //#endregion
 
 //#region 常量/配置
@@ -26,9 +26,27 @@ const TREE_PANEL_COLLAPSED_KEY = "smartpartsdrawer.preview.tree.collapsed";
 const TREE_POSITION_KEY = "smartpartsdrawer.preview.tree.position";
 const VIEWS_COLLAPSED_KEY = "smartpartsdrawer.preview.views.collapsed";
 const VIEWS_POSITION_KEY = "smartpartsdrawer.preview.views.position";
+const CABINET_TRANSPARENCY_KEY = "smartpartsdrawer.preview.cabinet.transparency";
 const FLOATING_PANEL_MARGIN = 12;
 const VIEW_HELPER_SIZE = 128;
 const LEGACY_ASSEMBLY_WIDTH = 260;
+const CABINET_TRANSPARENCY_CONTROLS = Object.freeze([
+  {
+    partId: "cabinet-clutch/cabinet_clutch_cabinet",
+    inputId: "cabinet-shell-transparency",
+    outputId: "cabinet-shell-transparency-out",
+    fallbackOpacity: 0.18,
+  },
+  {
+    partId: "cabinet-clutch/cabinet_clutch_cabinet_context",
+    inputId: "cabinet-context-transparency",
+    outputId: "cabinet-context-transparency-out",
+    fallbackOpacity: 0.32,
+  },
+]);
+const CABINET_CONTROL_BY_PART_ID = new Map(
+  CABINET_TRANSPARENCY_CONTROLS.map((control) => [control.partId, control]),
+);
 const DEFAULT_HIDDEN_PART_IDS = new Set([
   "cabinet/cabinet_back_panel",
   // Retired center candidate names are kept only for explicit legacy
@@ -78,7 +96,6 @@ const DRAWER_DRIVE_TAILS = new Set([
   "center_input_sleeve",
   "center_input_sleeve_magnet_reference",
   "center_linear_bearings_reference",
-  "center_output_cage",
   "center_mechanism_plate",
   "center_output_shaft_reference",
   "center_output_bearings_reference",
@@ -103,7 +120,6 @@ const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_linear_bearings_reference",
   "cabinet-clutch/center_mechanism_plate",
   "cabinet-clutch/center_output_bearings_reference",
-  "cabinet-clutch/center_output_cage",
   "cabinet-clutch/center_output_shaft_reference",
 ]);
 const CENTER_CLUTCH_FRAME_IDS = new Set([
@@ -155,6 +171,11 @@ const els = {
   parts: document.getElementById("parts"),
   explodeRange: document.getElementById("explode-range"),
   explodeOut: document.getElementById("explode-out"),
+  cabinetShellTransparency: document.getElementById("cabinet-shell-transparency"),
+  cabinetShellTransparencyOut: document.getElementById("cabinet-shell-transparency-out"),
+  cabinetContextTransparency: document.getElementById("cabinet-context-transparency"),
+  cabinetContextTransparencyOut: document.getElementById("cabinet-context-transparency-out"),
+  cabinetTransparencyReset: document.getElementById("cabinet-opacity-reset"),
   search: document.getElementById("part-search"),
   groupFilter: document.getElementById("group-filter"),
   roleFilter: document.getElementById("role-filter"),
@@ -202,7 +223,35 @@ const state = {
   activeView: "rear",
   viewProfile: null,
   viewRequest: 0,
+  cabinetTransparency: loadCabinetTransparency(),
 };
+
+function clampCabinetTransparency(value) {
+  return Math.min(100, Math.max(0, Math.round(Number(value))));
+}
+
+function loadCabinetTransparency() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CABINET_TRANSPARENCY_KEY) || "null");
+    const result = new Map();
+    for (const control of CABINET_TRANSPARENCY_CONTROLS) {
+      const value = Number(saved?.[control.partId]);
+      if (Number.isFinite(value)) result.set(control.partId, clampCabinetTransparency(value));
+    }
+    return result;
+  } catch {
+    return new Map();
+  }
+}
+
+function saveCabinetTransparency() {
+  try {
+    const values = Object.fromEntries(state.cabinetTransparency.entries());
+    localStorage.setItem(CABINET_TRANSPARENCY_KEY, JSON.stringify(values));
+  } catch {
+    // Private browsing can deny localStorage; the controls still work for this load.
+  }
+}
 
 function loadCollapsedGroups() {
   try {
@@ -979,6 +1028,7 @@ async function refreshListing({ autoload = false } = {}) {
   const listing = await fetchListing();
   state.listing = listing;
   state.units = listing.units || "mm";
+  syncCabinetTransparencyControls();
   els.title.textContent = listing.title || "STL 预览";
   renderGroupOptions(listing.groups || []);
   for (const part of listing.parts || []) {
@@ -1100,6 +1150,50 @@ function isCabinetContext(part) {
     || tail === "cabinet_clutch_cabinet_context";
 }
 
+function defaultCabinetTransparency(partId) {
+  const control = CABINET_CONTROL_BY_PART_ID.get(partId);
+  if (!control) return 0;
+  const part = state.listing?.parts?.find((item) => item.id === partId);
+  const opacity = part ? rawPartOpacity(part) : control.fallbackOpacity;
+  return clampCabinetTransparency((1 - opacity) * 100);
+}
+
+function cabinetTransparencyForPart(part) {
+  const configured = state.cabinetTransparency.get(part?.id);
+  return Number.isFinite(configured)
+    ? clampCabinetTransparency(configured)
+    : defaultCabinetTransparency(part?.id);
+}
+
+function cabinetOpacityForPart(part) {
+  return 1 - cabinetTransparencyForPart(part) / 100;
+}
+
+function syncCabinetTransparencyControls() {
+  for (const control of CABINET_TRANSPARENCY_CONTROLS) {
+    const value = cabinetTransparencyForPart({ id: control.partId });
+    const input = document.getElementById(control.inputId);
+    const output = document.getElementById(control.outputId);
+    if (input) input.value = String(value);
+    if (output) output.textContent = `${value}%`;
+  }
+}
+
+function setCabinetTransparency(partId, value) {
+  if (!CABINET_CONTROL_BY_PART_ID.has(partId)) return;
+  state.cabinetTransparency.set(partId, clampCabinetTransparency(value));
+  saveCabinetTransparency();
+  syncCabinetTransparencyControls();
+  applyCabinetTransparency();
+}
+
+function resetCabinetTransparency() {
+  state.cabinetTransparency.clear();
+  saveCabinetTransparency();
+  syncCabinetTransparencyControls();
+  applyCabinetTransparency();
+}
+
 function isDefaultVisiblePart(part) {
   return part?.visible !== false && !DEFAULT_HIDDEN_PART_IDS.has(part?.id);
 }
@@ -1195,6 +1289,18 @@ function setObjectOpacity(root, opacity) {
       material.needsUpdate = true;
     }
   });
+}
+
+function applyCabinetTransparency() {
+  const profile = state.viewProfile ? VIEW_PROFILES[state.viewProfile] : null;
+  for (const item of state.items.values()) {
+    if (!item.mesh || !isCabinetContext(item.part)) continue;
+    const baseOpacity = cabinetOpacityForPart(item.part);
+    const opacity = profile?.context?.(item.part)
+      ? Math.min(0.08, baseOpacity)
+      : baseOpacity;
+    setObjectOpacity(item.mesh, opacity);
+  }
 }
 
 function viewBox(ids = null) {
@@ -1309,6 +1415,14 @@ function bindPreviewControls() {
     state.explode = Number(els.explodeRange.value) / 100;
     applyExplode();
   });
+  for (const control of CABINET_TRANSPARENCY_CONTROLS) {
+    const input = document.getElementById(control.inputId);
+    input?.addEventListener("input", () => {
+      setCabinetTransparency(control.partId, input.value);
+    });
+  }
+  els.cabinetTransparencyReset?.addEventListener("click", resetCabinetTransparency);
+  syncCabinetTransparencyControls();
   els.search.addEventListener("input", () => {
     window.clearTimeout(state.searchTimer);
     state.searchTimer = window.setTimeout(() => {
@@ -1433,6 +1547,7 @@ async function loadPart(item) {
     } catch (playError) {
       console.error("chain play bind failed", item.part?.id, playError);
     }
+    if (isCabinetContext(item.part)) applyCabinetTransparency();
     recomputeExplosions();
     applyExplode();
   } catch (error) {
@@ -1446,6 +1561,11 @@ async function loadPart(item) {
 
 //#region 方法/工具
 function partOpacity(part) {
+  if (isCabinetContext(part)) return cabinetOpacityForPart(part);
+  return rawPartOpacity(part);
+}
+
+function rawPartOpacity(part) {
   if (typeof part.opacity === "number") return part.opacity;
   return ROLE_FALLBACK_OPACITY[part.role] ?? 1;
 }

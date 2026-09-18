@@ -1,5 +1,5 @@
 // SmartPartsDrawer 柜体外壳 — 尺寸真值源：本文件
-// 单位：毫米。格口冻结为原 5×6 的 44.8×30.27；顶层去掉一格成 5×5，底部仍加两层层距。
+// 单位：毫米。中心首件冻结为 5 列 × 3 层抽屉，底部保留 1 层服务空间。
 
 //#region 导入/依赖
 // 无外部库；几何由本文件常数驱动。
@@ -7,7 +7,7 @@
 
 //#region 常量/配置
 SERVICE_W = 20.0;                // 左回程走廊；只在后仓空、前脸抽屉区做成实心颊板
-SERVICE_LAYERS = 2;
+SERVICE_LAYERS = 1;
 W = 240 + SERVICE_W;
 D = 120;
 WALL = 3.2;
@@ -16,8 +16,9 @@ FRONT_NET = 60;
 BACK_PANEL_T = 5.0;
 GRID_T = 2.4;
 N_COL = 5;
-N_ROW = 5;
-REF_ROWS = 6;                    // 格口高度按原 6 层冻结，不因减层而变高
+N_ROW = 3;
+DESIGN_BAY_H = 55.30;             // 三层方案的真实抽屉净高；不再沿用旧 6 层反推值
+REF_ROWS = N_ROW;
 CHAIN_LAYER_CLEAR_OD = 22.0;
 DRAWER_CLEAR = 1.0;
 DRAWER_FLOOR = 1.6;
@@ -25,7 +26,7 @@ RABBET_W = 1.6;
 PANEL_FIT = 0.35;
 EPS = 0.05;
 GRID_W = 233.6;                  // 冻结：原 240 柜内宽
-REF_GRID_H = 193.6;              // 冻结：原 6 层内高，只用来反推 BAY_H
+REF_GRID_H = REF_ROWS * DESIGN_BAY_H + (REF_ROWS - 1) * GRID_T;
 //#endregion
 
 //#region 模型/类型
@@ -33,7 +34,7 @@ INNER_W = W - 2 * WALL;
 DIV_T = GRID_T;
 SHELF_T = GRID_T;
 BAY_W = (GRID_W - (N_COL - 1) * DIV_T) / N_COL;
-BAY_H = (REF_GRID_H - (REF_ROWS - 1) * SHELF_T) / REF_ROWS;
+BAY_H = DESIGN_BAY_H;
 ROW_PITCH = BAY_H + SHELF_T;
 COL_PITCH = BAY_W + DIV_T;
 GRID_H = N_ROW * BAY_H + (N_ROW - 1) * SHELF_T;
@@ -51,6 +52,60 @@ PANEL_H = INNER_H + 2 * RABBET_W - 2 * PANEL_FIT;
 PANEL_X = WALL - RABBET_W + PANEL_FIT;
 PANEL_Y = D - BACK_PANEL_T;
 PANEL_Z = WALL - RABBET_W + PANEL_FIT;
+
+// 中心格前端主动轮的共享安装真值。世界坐标的 +Y 高度映射到柜体原生
+// +Z，高度之外的世界 -Z 深度映射到柜体原生 +Y。轴线深度必须同时被
+// cabinet.scad 的实体层板和 cabinet_clutch.scad 的后仓总装消费，避免
+// 预览里的轴承孔与真正的柜体层板错位。
+CENTER_FRONT_DRIVE_AXIS_NATIVE_Y = is_undef(
+    CENTER_FRONT_DRIVE_AXIS_NATIVE_Y
+)
+    ? 14.2208
+    : CENTER_FRONT_DRIVE_AXIS_NATIVE_Y;
+CENTER_FRONT_RACK_GEAR_TEETH = 16;
+CENTER_FRONT_RACK_GEAR_PITCH_MM = 3.0;
+CENTER_FRONT_RACK_GEAR_TOOTH_DEPTH = 1.0;
+CENTER_FRONT_RACK_GEAR_THICKNESS = 3.2;
+CENTER_FRONT_RACK_BODY_HEIGHT = 3.8;
+// The rack is a moving drawer-bottom drive part. Keep its complete X/Y envelope
+// in the shared parameter source so the world preview and printable cabinet
+// use the same above-shelf datum; the shelf remains intact below it.
+CENTER_FRONT_RACK_BODY_X = CENTER_FRONT_RACK_GEAR_THICKNESS;
+CENTER_FRONT_RACK_TOOTH_HEIGHT_X = 1.25;
+CENTER_FRONT_RACK_TOOTH_OVERHANG_X = 0.20;
+CENTER_FRONT_RACK_TOOTH_Y_MARGIN = 0.25;
+CENTER_FRONT_RACK_FACE_OFFSET_X = 0.15;
+CENTER_FRONT_RACK_ABOVE_SHELF_GAP = 0.05;
+CENTER_FRONT_DRIVE_BEARING_GEAR_GAP = 0.35;
+CENTER_FRONT_DRIVE_LIFT_MM = CENTER_FRONT_RACK_BODY_HEIGHT
+    - DRAWER_CLEAR
+    + CENTER_FRONT_RACK_ABOVE_SHELF_GAP;
+CENTER_FRONT_BEARING_GEAR_CLEARANCE = 0.35;
+CENTER_FRONT_BEARING_ID = 3.0;
+CENTER_FRONT_BEARING_OD = 6.0;
+CENTER_FRONT_BEARING_WIDTH = 2.0;
+CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER =
+    CENTER_FRONT_BEARING_OD + 2.0;
+CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS = 1.0;
+CENTER_FRONT_BEARING_SEAT_DIAMETER = 6.10;
+CENTER_FRONT_BEARING_RETAINER_THICKNESS =
+    SHELF_T - CENTER_FRONT_BEARING_WIDTH;
+CENTER_FRONT_BEARING_RETAINER_BORE_DIAMETER = 3.40;
+CENTER_FRONT_RACK_GEAR_OUTER_RADIUS =
+    CENTER_FRONT_RACK_GEAR_TEETH * CENTER_FRONT_RACK_GEAR_PITCH_MM
+        / (2 * PI)
+    + CENTER_FRONT_RACK_GEAR_TOOTH_DEPTH;
+CENTER_FRONT_RACK_GEAR_PITCH_RADIUS =
+    CENTER_FRONT_RACK_GEAR_TEETH * CENTER_FRONT_RACK_GEAR_PITCH_MM
+        / (2 * PI);
+CENTER_FRONT_SHELF_GEAR_CLEARANCE_RADIUS =
+    CENTER_FRONT_RACK_GEAR_OUTER_RADIUS + 0.45;
+CENTER_FRONT_BEARING_BOSS_XZ =
+    2 * CENTER_FRONT_SHELF_GEAR_CLEARANCE_RADIUS + 0.40;
+
+function center_front_rack_face_x(axis_x) =
+    axis_x + CENTER_FRONT_RACK_GEAR_PITCH_RADIUS
+        + CENTER_FRONT_RACK_FACE_OFFSET_X;
 
 function bay_w() = BAY_W;
 
@@ -84,7 +139,7 @@ function drawer_inner_h() = drawer_outer_h() - DRAWER_FLOOR;
 //#endregion
 
 //#region 业务逻辑
-// 格口仍约 44.8×30.27，层距约 32.67。5×5 抽屉；底仓两层层距给电器和张紧。
+// 格口约 44.8×55.3，层距约 57.7。5×3 抽屉；底部一层层距给电器和张紧。
 // 左侧 SERVICE_W 只在前脸抽屉高度做成实心颊板，后仓仍是一个大开间。
 // 背板只坐止口；中部不设 Boss。侧边紧固和内嵌后盖下一轮再做。
 //#endregion
@@ -96,4 +151,5 @@ assert(abs(N_ROW * BAY_H + (N_ROW - 1) * SHELF_T - GRID_H) < 0.01);
 assert(abs(GRID_ORIGIN_X + GRID_W - (W - WALL)) < 0.01);
 assert(abs(GRID_ORIGIN_Z + GRID_H - (H - WALL)) < 0.01);
 assert(ROW_PITCH > CHAIN_LAYER_CLEAR_OD, "layer pitch must clear 03C 1x sprocket OD");
+assert(abs(BAY_H - DESIGN_BAY_H) < 0.001, "drawer bay height must use the three-layer design value");
 //#endregion

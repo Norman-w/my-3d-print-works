@@ -1,5 +1,5 @@
 // Mechanical contract
-// process: assembly visualization — one 12T D-shaft drive sprocket; all other wheels are blunt bearing idlers
+// process: assembly visualization — one 12T D-shaft drive sprocket; all green guide wheels are small 8T blunt bearing idlers
 // material: pointed drive sprocket resin/PETG TBD; chain carbon steel 03C; blunt idlers PETG
 // parting_plane: n/a for chain; cabinet back face remains Y = D
 // opening_direction: n/a
@@ -7,7 +7,7 @@
 // seal: n/a
 // print_orientation: sprocket hub down; do not 3D-print the chain
 // units: mm
-// note: 5x5 row-major snake through every bay center; rear-view right return; the only snake motor is at the lower-right return/tensioner position (snake_drive_c()); all wheels are face-flipped; bearings are separate display/purchase geometry
+// note: 5x3 row-major snake through every bay center; rear-view right return; the only snake motor is at the lower-right return/tensioner position (snake_drive_c()); all wheels are face-flipped; bearings are separate display/purchase geometry
 
 //#region 导入/依赖
 QUALITY = is_undef(QUALITY) ? 2 : QUALITY;
@@ -38,7 +38,7 @@ $fs = 0.22;
 CHAIN_Y = MOTOR_MOUNT_CHAIN_Y;
 CONNECTOR_LINK_INDEX = 20;       // 顶部直线段上的一节；不放在转向轮上
 CONNECTOR_HIGHLIGHT = "#ff2fd0";
-CLUTCH_CONNECTOR_LINK_INDEX = 140; // 中部第三层横直段上的一节；避开转向轮
+CLUTCH_CONNECTOR_LINK_INDEX = 140; // 三层路径中部直线段上的一节；避开转向轮
 CLUTCH_CONNECTOR_HIGHLIGHT = "#00d9ff";
 // 方案 1：每个抽屉位置一组同轴的常转输入轮与受力输出轮；两张狗牙面
 // 默认轴向留 2.6 mm，只有停稳后的拨叉把目标输出狗牙推过去才闭合。
@@ -225,11 +225,10 @@ module rear_blunt_idlers() {
 }
 
 module rear_guide_idlers() {
-    // 非动力位沿用 12T 节圆，但改为绿色钝齿外形；这样链条仍走原来的
-    // 12T 圆弧/切线，不会因为把 12T 硬换成 8T 而脱离节距，同时消除尖齿
-    // 在层间切换时与绿色导向轮的外包络干涉。
+    // 所有绿色固定导向位统一替换为小尺寸 8T 钝齿轮；路径求解器已同步
+    // 把这些位置的弯折半径和切线改为 8T，不能只替换外形而保留 12T 节圆。
     for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
-        place_geared(c) ch1_03c_bearing_blunt_idler(SPROCKET_TEETH);
+        place_geared(c) ch1_03c_bearing_blunt_idler(BLUNT_TEETH);
     rear_blunt_idlers();
 }
 
@@ -527,8 +526,8 @@ emit_chain("selector_magnetic_shoe") {
 // 闭环按真实节距闭合；底端张紧轮吃掉余量。长于 210L×1 m SKU，只做后仓走线可视化。
 // 红点是每格矩形中心；水平段节圆线必须穿过这些点。
 // 蓝色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与贴合电机外形、下向固定的 Ω 夹套；
-// 其它 7 个 12T 转向/回程位全部是绿色 12T 钝齿轴承导向轮；5 个绿色 8T 平移轮也保留为轴承版，
-// 并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
+// 全部 12 个绿色固定导向位统一使用小尺寸 8T 钝齿轴承轮，路径与轮心由求解器
+// 按 8T 节圆重算；并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
 // 蛇链电机 Ω 套的四个底部固定孔对应柜底两条承托/限位基台，
 // 每孔向上套入实体导向柱；硬弹簧套在导向柱外，大蘑菇头螺钉从上向下拧入柱顶盲孔，

@@ -57,6 +57,14 @@
     button:disabled { opacity: .5; cursor: default; }
     input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
     input[type="range"] { width: 100%; cursor: pointer; accent-color: #f97316; }
+    .appearance-control { margin: 8px 0; padding: 9px 10px 8px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; }
+    .appearance-header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .appearance-title { color: #d7dde8; font-size: 12px; font-weight: 700; }
+    .appearance-reset { flex: 0 0 auto; padding: 3px 7px; font-size: 11px; }
+    .opacity-row { display: grid; grid-template-columns: 58px minmax(0, 1fr) 42px; gap: 7px; align-items: center; margin-top: 7px; }
+    .opacity-row label { color: #aab6c8; font-size: 12px; }
+    .opacity-row output { color: #fdba74; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+    .opacity-scale { display: flex; justify-content: space-between; margin: 4px 42px 0 65px; color: #718096; font-size: 10px; }
     .play { margin: 10px 0 8px; padding: 10px; border: 1px solid #243044; border-radius: 10px; background: #0f1520; }
     .play .row { margin: 8px 0 0; }
     .hz-marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: #8b98ab; font-variant-numeric: tabular-nums; }
@@ -121,6 +129,24 @@
       <div class="tree-body">
       <label class="meta">爆炸程度 <output id="explode-out">0</output>%</label>
       <input id="explode-range" type="range" min="0" max="100" value="0" />
+      <section class="appearance-control" aria-labelledby="cabinet-opacity-title">
+        <div class="appearance-header">
+          <span class="appearance-title" id="cabinet-opacity-title">箱体透明度</span>
+          <button type="button" class="appearance-reset" id="cabinet-opacity-reset">恢复默认</button>
+        </div>
+        <div class="hint">0% 不透明 · 100% 完全透明</div>
+        <div class="opacity-row">
+          <label for="cabinet-shell-transparency">外壳</label>
+          <input id="cabinet-shell-transparency" type="range" min="0" max="100" step="1" value="82" aria-describedby="cabinet-opacity-hint" />
+          <output id="cabinet-shell-transparency-out" for="cabinet-shell-transparency">82%</output>
+        </div>
+        <div class="opacity-row">
+          <label for="cabinet-context-transparency">格口背景</label>
+          <input id="cabinet-context-transparency" type="range" min="0" max="100" step="1" value="68" aria-describedby="cabinet-opacity-hint" />
+          <output id="cabinet-context-transparency-out" for="cabinet-context-transparency">68%</output>
+        </div>
+        <div class="opacity-scale" id="cabinet-opacity-hint" aria-hidden="true"><span>不透明</span><span>完全透明</span></div>
+      </section>
       <div class="play">
         <label class="meta" for="hz-range">链条循环 <output class="hz-out" id="hz-out">1 Hz · 顺时针</output></label>
         <input id="hz-range" type="range" min="0" max="5" step="1" value="2" />
@@ -184,7 +210,7 @@
     </aside>
     <canvas id="c"></canvas>
   </div>
-    <script type="module" src="./app.js?v=center-clutch-integral-seat-1"></script>
+    <script type="module" src="./app.js?v=cabinet-opacity-control-1"></script>
   <!-- endregion -->
 </body>
 </html>

@@ -46,20 +46,98 @@ module partition_plate() {
         cube([W, PARTITION_T, H]);
 }
 
+function center_front_bearing_row() = floor(N_ROW / 2);
+
+function center_front_bearing_axis_x() =
+    col_center_x(floor(N_COL / 2));
+
+function center_front_bearing_shelf_top_z() =
+    row_z(center_front_bearing_row());
+
+function center_front_bearing_shelf_bottom_z() =
+    center_front_bearing_shelf_top_z() - SHELF_T;
+
+function center_front_pinion_lower_z() =
+    row_z(center_front_bearing_row())
+    + DRAWER_CLEAR
+    - CENTER_FRONT_RACK_BODY_HEIGHT / 2
+    - CENTER_FRONT_RACK_GEAR_THICKNESS / 2
+    + CENTER_FRONT_DRIVE_LIFT_MM;
+
+function center_front_bearing_upper_z() =
+    center_front_pinion_lower_z() - CENTER_FRONT_BEARING_GEAR_CLEARANCE;
+
+function center_front_bearing_lower_z() =
+    center_front_bearing_upper_z() - CENTER_FRONT_BEARING_WIDTH;
+
+function center_front_bearing_boss_bottom_z() =
+    center_front_bearing_lower_z()
+    - CENTER_FRONT_BEARING_RETAINER_THICKNESS
+    - CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS;
+
+// The bearing is installed from the upper drawer bay with its upper edge
+// flush to the shelf top. A real printed reinforcement disc extends below
+// the shelf bottom; the Ø3.40 through-bore leaves the D-shaft passage while
+// the annulus retains the purchased 3×6×2 bearing from below.
+module center_front_bearing_shelf_boss_solid() {
+    translate([
+        center_front_bearing_axis_x(),
+        CENTER_FRONT_DRIVE_AXIS_NATIVE_Y,
+        center_front_bearing_boss_bottom_z()
+    ])
+        cylinder(
+            d = CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER,
+            h = CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+                + CENTER_FRONT_BEARING_RETAINER_THICKNESS
+                + EPS,
+            $fn = 64
+        );
+}
+
+module center_front_bearing_shelf_cuts() {
+    x = center_front_bearing_axis_x();
+    y = CENTER_FRONT_DRIVE_AXIS_NATIVE_Y;
+    // The pinion and rack are above the shelf now; only the purchased bearing
+    // seat and its bottom D-shaft passage are cut from the shelf/disc.
+    translate([x, y, center_front_bearing_lower_z() - EPS])
+        cylinder(
+            d = CENTER_FRONT_BEARING_SEAT_DIAMETER,
+            h = CENTER_FRONT_BEARING_WIDTH + 2 * EPS,
+            $fn = 64
+        );
+    translate([x, y, center_front_bearing_boss_bottom_z() - EPS])
+        cylinder(
+            d = CENTER_FRONT_BEARING_RETAINER_BORE_DIAMETER,
+            h = CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+                + CENTER_FRONT_BEARING_RETAINER_THICKNESS
+                + 2 * EPS,
+            $fn = 64
+        );
+}
+
 module bay_grid() {
-    for (i = [1:N_COL - 1])
-        translate([col_x(i) - DIV_T, 0, GRID_ORIGIN_Z])
-            cube([DIV_T, FRONT_NET + EPS, GRID_H + EPS]);
-    for (j = [1:N_ROW - 1])
-        translate([GRID_ORIGIN_X, 0, row_z(j) - SHELF_T])
-            cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
-    translate([GRID_ORIGIN_X, 0, GRID_ORIGIN_Z - SHELF_T])
-        cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
+    difference() {
+        union() {
+            for (i = [1:N_COL - 1])
+                translate([col_x(i) - DIV_T, 0, GRID_ORIGIN_Z])
+                    cube([DIV_T, FRONT_NET + EPS, GRID_H + EPS]);
+            for (j = [1:N_ROW - 1])
+                translate([GRID_ORIGIN_X, 0, row_z(j) - SHELF_T])
+                    cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
+            translate([GRID_ORIGIN_X, 0, GRID_ORIGIN_Z - SHELF_T])
+                cube([GRID_W + EPS, FRONT_NET + EPS, SHELF_T]);
+            center_front_bearing_shelf_boss_solid();
+        }
+        center_front_bearing_shelf_cuts();
+    }
 }
 
 module front_service_cheek() {
     translate([WALL - EPS, 0, GRID_ORIGIN_Z])
-        cube([SERVICE_W + EPS, FRONT_NET + EPS, GRID_H + EPS]);
+        // Overlap the first bay-grid column by EPS so the service cheek and
+        // the drawer grid fuse into one shell rather than sharing a naked
+        // non-manifold boundary edge at GRID_ORIGIN_X.
+        cube([SERVICE_W + 2 * EPS, FRONT_NET + EPS, GRID_H + EPS]);
 }
 
 module back_rabbet() {

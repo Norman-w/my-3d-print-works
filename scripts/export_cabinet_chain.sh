@@ -112,7 +112,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_idlers": {
-        "name": "12T/8T 绿色钝齿轴承导向轮",
+        "name": "8T 小尺寸绿色钝齿轴承导向轮（8颗）",
         "role": "printed",
         "color": "#7dcc4a",
         "explosion": [0, 0, 0],
@@ -479,11 +479,15 @@ if [[ -f "$INSPECT_PY" ]]; then
     python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_connector.stl"
     echo "→ inspect cabinet_chain_clutch_connector.stl"
     python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_clutch_connector.stl"
-    for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing clutch_bearing_retainer; do
+for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing clutch_bearing_retainer; do
         echo "→ inspect ch1_03c_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_CHAIN_CLUTCH}/ch1_03c_${part}.stl"
     done
 fi
+
+python3 "${PROJECT_ROOT}/scripts/validate_cabinet_chain_sync.py" \
+    --motion "${OUT_STL}/cabinet_chain_motion.json" \
+    --stl-dir "${OUT_STL}"
 
 if [[ -f "$MANIFEST_PY" ]]; then
     args=(--preview-dir "$PREVIEW_DIR" --title "零件柜 · 后仓横走 03C + 张紧 U" --no-recursive)

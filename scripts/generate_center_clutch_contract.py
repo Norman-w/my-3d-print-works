@@ -15,7 +15,28 @@ from pathlib import Path
 MARKER = "CENTER_CLUTCH_CONTRACT_DYNAMIC"
 REQUIRED = {
     "version", "axis", "role", "verticalLayoutMode",
-    "centerClutchVerticalLiftMm", "axisXMm", "axisZMm", "inputBaseYMm",
+    "centerClutchDriveLayerOffsetMm", "centerClutchVerticalLiftMm",
+    "axisXMm", "axisZMm", "drawerBottomYMm", "drawerRackYMm",
+    "frontPinionCenterYMm", "frontPinionLowerFaceYMm",
+    "frontTimingPulleyDrawerRow", "frontTimingPulleyLayer",
+    "frontTimingPulleyZMm",
+    "frontTimingBeltYMm", "frontTimingPulleyCenterYMm",
+    "frontTimingPulleyBottomYMm", "frontTimingPulleyTopYMm",
+    "frontTimingPulleyToPinionGapMm", "frontTimingBearingCenterYMm",
+    "frontTimingBearingUpperFaceYMm", "frontTimingBearingLowerFaceYMm",
+    "frontTimingBearingWidthMm", "frontTimingBearingIdMm",
+    "frontTimingBearingOdMm", "frontTimingBearingSeatDiameterMm",
+    "frontTimingBearingSeatDepthMm",
+    "frontTimingBearingRetainerThicknessMm",
+    "frontTimingBearingRetainerBoreDiameterMm",
+    "frontTimingBearingShelfLowerFaceYMm",
+    "frontTimingBearingBossFusionOverlapMm",
+    "frontTimingBearingBossBottomYMm",
+    "frontTimingBearingGearClearanceMm",
+    "frontTimingBearingPulleyClearanceMm", "frontTimingBearingSupport",
+    "frontTimingBearingFit", "frontDshaftProfile", "frontDshaftStartYMm",
+    "frontDshaftEndYMm", "frontDshaftLengthMm", "frontPinionThicknessMm",
+    "inputBaseYMm",
     "maleBottomYMm", "outputBaseYMm", "openGapMm", "dogInsertionMm",
     "strokeMm", "pocketDepthMm", "bottomClearanceMm",
     "magnetNonContactClearanceMm", "femaleMagnetProjectionMm",
@@ -26,6 +47,7 @@ REQUIRED = {
     "linearBearingNominalIdMm", "linearBearingNominalOdMm",
     "linearBearingNominalLengthMm", "linearBearingCount",
     "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
+    "linearBearingInputRotorClearanceMm",
     "linearBearingSeatDiameterMm", "linearBearingSeatRadialClearanceMm",
     "linearBearingBlockWidthMm", "linearBearingBlockYLengthMm",
     "linearBearingBlockZLengthMm", "linearBearingBlockZMarginMm",
@@ -45,12 +67,20 @@ REQUIRED = {
     "inputSleeveMagnetNominalLengthMm", "inputSleeveMagnetPocketDiameterMm",
     "inputSleeveMagnetPocketDepthMm", "inputSleeveMagnetBottomClearanceMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
-    "outputShaftStartMm", "outputShaftLengthMm", "outputBearingCount",
+    "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
+    "outputShaftDStartMm", "outputShaftDLengthMm",
+    "outputShaftRoundStartMm", "outputShaftRoundLengthMm",
+    "outputShaftRoundDiameterMm", "outputShaftTopProtrusionMm",
+    "outputShaftMotherSocketOverlapMm", "outputBearingCount",
     "bearingCount", "bearingNominal", "bearingSeatDiameterMm",
     "bearingSeatDepthMm", "bearingBackShoulderMm",
     "bearingReferenceCenterOffsetMm", "bearingCenterOffsetMm",
-    "bearingPairSpacingMm", "bearingBlockThicknessMm", "shaftDiameterMm",
-    "shaftCollarOdMm", "shaftCollarBoreMm", "matingMagnetCount",
+    "bearingPairSpacingMm", "outputBearingBarWidthMm",
+    "outputBearingBarYLengthMm", "outputBearingBarY0OffsetMm",
+    "outputBearingBarZLengthMm", "outputBearingBarZMarginMm",
+    "outputBearingBarZMinMm", "outputBearingBarZMaxMm",
+    "outputBearingBarMotherClearanceMm", "outputBearingBarPlateOverlapMm",
+    "shaftDiameterMm", "matingMagnetCount",
     "inputSleeveMagnetCount", "totalModeledMagnetCount",
     "rotaryBearingArrangement", "linearBearingArrangement", "plateWidthMm",
     "plateKeyWidthMm", "plateKeyHeightMm", "plateKeyClearanceMm",
@@ -59,7 +89,27 @@ REQUIRED = {
     "plateBeltPassageAxialClearanceMm", "plateSupport", "actuation",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
-    "outputPart", "outputCagePart", "mechanismPlatePart", "outputShaftPart",
+    "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
+    "drawerShelfThicknessMm",
+    "drawerRackBodyWidthMm", "drawerRackBodyHeightMm",
+    "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
+    "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
+    "drawerRackLowerYMm", "drawerShelfTopYMm",
+    "frontTimingBearingReinforcementDiscDiameterMm",
+    "frontTimingBearingReinforcementDiscThicknessMm",
+    "drawerRackMount", "drawerMassLoadPath",
+    "drawerGuideBearing", "drawerGuideRail",
+    "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
+    "drawerGuideLoadPath", "drawerFrontPinionBearing",
+    "drawerGuideRailClearanceMm", "drawerGuideRailWallThicknessMm",
+    "drawerGuideBearingSeatDiameterMm",
+    "drawerGuideSlotHeightMm", "drawerGuideRailDepthMm",
+    "drawerGuideFlangeThicknessMm", "drawerGuideFlangeProjectionMm",
+    "drawerGuideFlangeClearanceMm", "drawerGuideFlangeBackClearanceMm",
+    "drawerGuideFrontSupportClearanceMm", "drawerGuideTailBearingAxis",
+    "drawerGuideFrontBearingAxis",
+    "drawerFrontPinionBearingSeatDiameterMm",
+    "outputPart", "outputBearingSupportPart", "mechanismPlatePart", "outputShaftPart",
     "outputBearingsPart",
 }
 FLOAT_KEYS = {key for key in REQUIRED if key.endswith("Mm") or key.endswith("Deg")}
@@ -67,6 +117,7 @@ INT_KEYS = {
     "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
     "outputBearingCount", "bearingCount", "matingMagnetCount",
     "inputSleeveMagnetCount", "totalModeledMagnetCount", "centerCol", "centerRow",
+    "drawerLayerCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -127,9 +178,10 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心离合契约版本必须为 1")
     if contract.get("axis") != "+Y" or contract.get("role") != "input/output":
         raise RuntimeError("中心离合契约轴向/角色不匹配")
-    if contract.get("verticalLayoutMode") != "center-clutch-lift":
-        raise RuntimeError("中心离合垂直布局必须是整体上移首件方案")
-    expect(contract, "centerClutchVerticalLiftMm", 5.0, "中心离合垂直抬高")
+    if contract.get("verticalLayoutMode") != "drawer-bottom-drive-layer-lower-pulley":
+        raise RuntimeError("中心离合垂直布局必须使用抽屉底部主动轮+下层同步轮")
+    expect(contract, "centerClutchDriveLayerOffsetMm", 0.0, "中心驱动层偏置")
+    expect(contract, "centerClutchVerticalLiftMm", 0.0, "兼容垂直偏置")
     if contract.get("actuation") != "permanent-magnet":
         raise RuntimeError("中心离合必须使用永磁动作")
     if contract.get("engageOnlyWhenStopped") is not True:
@@ -157,15 +209,28 @@ def validate_contract(contract: dict[str, object]) -> None:
         "inputSleevePart": "cabinet-clutch/center_input_sleeve",
         "inputSleeveMagnetPart": "cabinet-clutch/center_input_sleeve_magnet_reference",
         "bearingNominal": "3x6x2",
-        "rotaryBearingArrangement": "output-two-3x6x2-axially-spaced-input-free",
+        "outputShaftProfile": "D-round",
+        "rotaryBearingArrangement": "output-two-3x6x2-in-one-integral-bar-input-free",
         "linearBearingArrangement": "single-coaxial-with-integrated-seat",
         "plateSupport": "partition-through-M3",
         "inputPart": "cabinet-clutch/center_input_rotor",
         "outputPart": "cabinet-clutch/center_output_rotor",
-        "outputCagePart": "cabinet-clutch/center_output_cage",
+        "outputBearingSupportPart": "cabinet-clutch/center_mechanism_plate",
         "mechanismPlatePart": "cabinet-clutch/center_mechanism_plate",
         "outputShaftPart": "cabinet-clutch/center_output_shaft_reference",
         "outputBearingsPart": "cabinet-clutch/center_output_bearings_reference",
+        "frontTimingPulleyLayer": "next-drawer-bay",
+        "frontTimingBearingSupport": "integral-shelf-stepped-seat",
+        "frontTimingBearingFit": "press-fit-3x6x2-bottom-captive",
+        "frontDshaftProfile": "D",
+        "drawerFrontPinionBearing": "integral-shelf-stepped-3x6x2",
+        "drawerGuideBearing": "681-1x3x1-X-axis-C-slot",
+        "drawerGuideRail": "dual-inward-C-slot",
+        "drawerGuideBearingArrangement": "tail-moving-plus-front-lower-fixed",
+        "drawerGuideBearingAxis": "+X/-X",
+        "drawerGuideLoadPath": "Y-support-Z-travel",
+        "drawerGuideTailBearingAxis": "+X/-X",
+        "drawerGuideFrontBearingAxis": "+X/-X",
     }
     for key, value in exact.items():
         if contract.get(key) != value:
@@ -178,18 +243,20 @@ def validate_contract(contract: dict[str, object]) -> None:
         "magnetNominalDiameterMm": 2.00, "dogPocketPhaseDeg": 60.00,
         "linearBearingNominalIdMm": 3.00, "linearBearingNominalOdMm": 7.00,
         "linearBearingNominalLengthMm": 10.00, "linearBearingCount": 1.0,
-        "linearBearingCenterYOffsetMm": -7.00, "linearBearingSeatDiameterMm": 7.20,
+        "linearBearingCenterYOffsetMm": -5.40,
+        "linearBearingInputRotorClearanceMm": 0.40,
+        "linearBearingSeatDiameterMm": 7.20,
         "linearBearingSeatRadialClearanceMm": 0.10, "linearBearingBlockWidthMm": 18.00,
-        "linearBearingBlockYLengthMm": 14.00, "linearBearingBlockZMarginMm": 1.00,
+        "linearBearingBlockYLengthMm": 10.00, "linearBearingBlockZMarginMm": 1.00,
         "linearBearingBlockZLengthMm": 19.7208,
         "linearBearingBlockMountHoleDiameterMm": 0.00,
         "linearBearingBlockMountHoleCount": 0.0,
         "linearBearingBlockMountXOffsetMm": 0.00,
         "linearBearingBlockMountYOffsetMm": 0.00,
         "inputShaftUpperDStartMm": -0.40, "inputShaftUpperDLengthMm": 3.60,
-        "inputShaftRoundStartMm": -20.60, "inputShaftRoundLengthMm": 20.40,
-        "inputShaftRoundDiameterMm": 3.00, "inputShaftLowerDStartMm": -20.40,
-        "inputShaftLowerDLengthMm": 3.60, "inputSleeveTopOffsetMm": -17.00,
+        "inputShaftRoundStartMm": -17.00, "inputShaftRoundLengthMm": 16.80,
+        "inputShaftRoundDiameterMm": 3.00, "inputShaftLowerDStartMm": -16.80,
+        "inputShaftLowerDLengthMm": 3.60, "inputSleeveTopOffsetMm": -13.40,
         "inputSleeveUpperDHeightMm": 4.20, "inputSleeveUpperDDiameterMm": 7.60,
         "inputSleeveLowerRoundOuterDiameterMm": 8.00,
         "inputSleeveLowerRoundHeightMm": 6.40, "inputSleeveDSocketDepthMm": 3.60,
@@ -199,15 +266,42 @@ def validate_contract(contract: dict[str, object]) -> None:
         "inputSleeveMagnetPocketDiameterMm": 5.20,
         "inputSleeveMagnetPocketDepthMm": 5.20,
         "inputSleeveMagnetBottomClearanceMm": 1.20,
-        "outputShaftStartMm": -3.40, "outputShaftLengthMm": 14.00,
+        "outputShaftStartMm": -3.40, "outputShaftLengthMm": 11.00,
+        "outputShaftDStartMm": -3.40, "outputShaftDLengthMm": 3.60,
+        "outputShaftRoundStartMm": -0.20, "outputShaftRoundLengthMm": 7.80,
+        "outputShaftRoundDiameterMm": 3.00,
+        "outputShaftTopProtrusionMm": 0.80,
+        "outputShaftMotherSocketOverlapMm": 3.00,
         "outputBearingCount": 2.0, "bearingCount": 2.0,
         "bearingSeatDiameterMm": 6.10, "bearingSeatDepthMm": 2.60,
-        "bearingBackShoulderMm": 0.60, "bearingReferenceCenterOffsetMm": -0.60,
-        "bearingCenterOffsetMm": 4.20, "bearingPairSpacingMm": 4.00,
-        "bearingBlockThicknessMm": 3.20, "shaftDiameterMm": 3.00,
-        "shaftCollarOdMm": 7.20, "shaftCollarBoreMm": 3.35,
+        "bearingBackShoulderMm": 0.60, "bearingReferenceCenterOffsetMm": 0.00,
+        "bearingCenterOffsetMm": 1.40, "bearingPairSpacingMm": 4.40,
+        "outputBearingBarWidthMm": 14.00,
+        "outputBearingBarYLengthMm": 6.40,
+        "outputBearingBarY0OffsetMm": 0.40,
+        "outputBearingBarZLengthMm": 19.4208,
+        "outputBearingBarZMarginMm": 1.00,
+        "outputBearingBarMotherClearanceMm": 0.40,
+        "outputBearingBarPlateOverlapMm": 0.20,
         "matingMagnetCount": 2.0, "inputSleeveMagnetCount": 1.0,
         "totalModeledMagnetCount": 3.0, "plateWidthMm": 34.00,
+        "drawerShelfThicknessMm": 2.40,
+        "frontTimingBearingWidthMm": 2.00,
+        "frontTimingBearingIdMm": 3.00,
+        "frontTimingBearingOdMm": 6.00,
+        "frontTimingBearingSeatDiameterMm": 6.10,
+        "frontTimingBearingSeatDepthMm": 2.00,
+        "frontTimingBearingRetainerThicknessMm": 0.40,
+        "frontTimingBearingRetainerBoreDiameterMm": 3.40,
+        "drawerGuideRailClearanceMm": 0.30,
+        "drawerGuideRailWallThicknessMm": 1.20,
+        "drawerGuideSlotHeightMm": 3.60,
+        "drawerGuideRailDepthMm": 4.50,
+        "drawerGuideFlangeThicknessMm": 2.40,
+        "drawerGuideFlangeProjectionMm": 3.00,
+        "drawerGuideFlangeClearanceMm": 0.30,
+        "drawerGuideFlangeBackClearanceMm": 0.60,
+        "drawerGuideFrontSupportClearanceMm": 0.00,
         "plateKeyWidthMm": 4.00, "plateKeyHeightMm": 6.00,
         "plateKeyClearanceMm": 0.30, "plateM3ClearanceMm": 3.40,
         "plateBeltPassageRadialClearanceMm": 0.45,
@@ -215,6 +309,13 @@ def validate_contract(contract: dict[str, object]) -> None:
     }
     for key, value in frozen.items():
         expect(contract, key, value, f"中心离合冻结值 {key}")
+
+    bearing_top = (n(contract, "linearBearingCenterYOffsetMm")
+                   + n(contract, "linearBearingNominalLengthMm") / 2)
+    if abs(bearing_top + n(contract, "linearBearingInputRotorClearanceMm")) > 0.001:
+        raise RuntimeError("LM3UU/一体座上沿与公轮下沿间隙推导不一致")
+    if not 0.30 - 0.001 <= n(contract, "linearBearingInputRotorClearanceMm") <= 0.60 + 0.001:
+        raise RuntimeError("LM3UU/公轮上沿间隙必须保持 0.30-0.60 mm")
 
     if abs(n(contract, "strokeMm") - n(contract, "openGapMm")
            - n(contract, "dogInsertionMm")) > 0.001:
@@ -269,15 +370,48 @@ def validate_contract(contract: dict[str, object]) -> None:
     if n(contract, "inputSleeveMagnetBottomClearanceMm") < 1.0:
         raise RuntimeError("M5 磁铁下方实体底厚不足")
 
-    if abs(n(contract, "bearingReferenceCenterOffsetMm")
-           + n(contract, "bearingBackShoulderMm")) > 0.001:
-        raise RuntimeError("输出轴承参考件没有按后肩偏移")
+    if abs(n(contract, "bearingReferenceCenterOffsetMm")) > 0.001:
+        raise RuntimeError("输出轴承参考件必须与长方条轴承孔同心")
     if n(contract, "bearingSeatDepthMm") < n(contract, "bearingBackShoulderMm") + 2.0:
         raise RuntimeError("输出 3x6x2 轴承座深度不足")
-    if n(contract, "shaftCollarOdMm") <= 6.0:
-        raise RuntimeError("输出轴肩/挡圈外径不能捕获 3x6x2 轴承")
-    if n(contract, "shaftCollarBoreMm") <= n(contract, "shaftDiameterMm"):
-        raise RuntimeError("输出轴肩孔不能通过 3 mm D 轴")
+    if n(contract, "outputBearingBarWidthMm") <= n(contract, "bearingSeatDiameterMm") + 2.0:
+        raise RuntimeError("输出轴承长方条孔周围壁厚不足")
+    if n(contract, "outputBearingBarYLengthMm") < 2 * n(contract, "bearingSeatDepthMm") - 2.0 + 1.0:
+        raise RuntimeError("输出轴承长方条无法容纳上下两个轴承孔")
+    if n(contract, "outputBearingBarZLengthMm") <= n(contract, "outputBearingBarZMarginMm"):
+        raise RuntimeError("输出轴承长方条没有接到机构板")
+    if n(contract, "outputBearingBarMotherClearanceMm") <= 0:
+        raise RuntimeError("母轮与输出轴承固定条没有防摩擦间隙")
+
+    bar_y0 = n(contract, "outputBearingBarY0OffsetMm")
+    bar_y1 = bar_y0 + n(contract, "outputBearingBarYLengthMm")
+    lower_center = n(contract, "bearingCenterOffsetMm")
+    upper_center = lower_center + n(contract, "bearingPairSpacingMm")
+    if abs(lower_center - (bar_y0 + 1.0)) > 0.001:
+        raise RuntimeError("下输出轴承没有落在长方条下端孔内")
+    if abs(upper_center - (bar_y1 - 1.0)) > 0.001:
+        raise RuntimeError("上输出轴承没有落在长方条上端孔内")
+    if bar_y1 - n(contract, "bearingSeatDepthMm") - (bar_y0 + n(contract, "bearingSeatDepthMm")) < 1.0 - 0.001:
+        raise RuntimeError("上下输出轴承孔之间没有保留中间实体隔墙")
+
+    d_start = n(contract, "outputShaftDStartMm")
+    d_end = d_start + n(contract, "outputShaftDLengthMm")
+    round_start = n(contract, "outputShaftRoundStartMm")
+    round_end = round_start + n(contract, "outputShaftRoundLengthMm")
+    if d_start > -3.0 + 0.001 or d_end < 0.0 - 0.001:
+        raise RuntimeError("输出 D 轴没有完整进入母轮 3 mm 盲孔")
+    if round_start > d_end + 0.001 or round_end < d_start - 0.001:
+        raise RuntimeError("输出 D 轴到圆轴没有形成短过渡")
+    if round_start > lower_center - 1.0 + 0.001 or round_end < upper_center + 1.0 - 0.001:
+        raise RuntimeError("输出圆轴没有穿过上下两枚 3x6x2 轴承")
+    if abs(min(d_end, 0.0) - max(d_start, -3.0)
+           - n(contract, "outputShaftMotherSocketOverlapMm")) > 0.001:
+        raise RuntimeError("输出 D 轴与母轮盲孔重叠量不一致")
+    if abs(round_end - bar_y1 - n(contract, "outputShaftTopProtrusionMm")) > 0.001:
+        raise RuntimeError("输出圆轴上端露出量不一致")
+    if abs(round_end - n(contract, "outputShaftStartMm")
+           - n(contract, "outputShaftLengthMm")) > 0.001:
+        raise RuntimeError("输出轴总长度没有覆盖 D 到圆轴端")
 
     center_distance = n(contract, "gearCenterDistanceMm")
     if abs(center_distance - n(contract, "longPitchRadiusMm")
@@ -294,10 +428,157 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("机构板贯穿槽没有覆盖 6 mm 皮带宽度")
     if n(contract, "plateBeltPassageHalfWidthMm") >= n(contract, "plateWidthMm") / 2:
         raise RuntimeError("机构板贯穿槽穿出侧壁")
-    if n(contract, "outputShaftLengthMm") <= n(contract, "inputShaftUpperDLengthMm"):
-        raise RuntimeError("输出 D 轴长度不足")
-    if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 2:
-        raise RuntimeError("当前契约必须锁定中心 R3C3（零基准 2,2）")
+    if n(contract, "outputShaftRoundDiameterMm") != n(contract, "shaftDiameterMm"):
+        raise RuntimeError("输出圆轴直径必须与 3 mm D 轴名义尺寸一致")
+    if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 1:
+        raise RuntimeError("当前契约必须锁定三层柜体中心格（零基准 2,1）")
+    if n(contract, "frontTimingPulleyDrawerRow") != n(contract, "centerRow") - 1:
+        raise RuntimeError("前端同步轮必须落在中心抽屉的下一层格口")
+    if n(contract, "drawerLayerCount") != 3 or n(contract, "serviceLayerCount") != 1:
+        raise RuntimeError("当前柜体必须是三层抽屉加一层服务空间")
+    if n(contract, "drawerBayHeightMm") < 55.29:
+        raise RuntimeError("三层抽屉净高没有达到 55.30 mm 方案值")
+    if n(contract, "drawerRackBodyHeightMm") <= 0:
+        raise RuntimeError("抽屉底部齿条背板高度无效")
+    if n(contract, "drawerRackBodyWidthMm") <= 0:
+        raise RuntimeError("抽屉底部齿条背板宽度无效")
+    if n(contract, "drawerRackToothHeightMm") <= 0:
+        raise RuntimeError("抽屉底部直齿高度无效")
+    if n(contract, "centerFrontDriveLiftMm") <= 0:
+        raise RuntimeError("中心前端驱动必须整体上移到完整层板上方")
+    if n(contract, "frontRackAboveShelfGapMm") < 0.05 - 0.001:
+        raise RuntimeError("直齿排下沿必须与层板上沿保留至少 0.05 mm")
+    if n(contract, "drawerRackLowerYMm") <= n(contract, "drawerShelfTopYMm"):
+        raise RuntimeError("直齿排下沿仍沉入完整层板")
+    if abs(
+        n(contract, "drawerRackLowerYMm")
+        - n(contract, "drawerShelfTopYMm")
+        - n(contract, "frontRackAboveShelfGapMm")
+    ) > 0.001:
+        raise RuntimeError("直齿排下沿/层板上沿间隙推导不一致")
+    if abs(
+        n(contract, "frontTimingBearingUpperFaceYMm")
+        - n(contract, "drawerShelfTopYMm")
+    ) > 0.001:
+        raise RuntimeError("层间轴承上沿必须与层板上沿齐平")
+    if n(contract, "frontTimingBearingReinforcementDiscDiameterMm") <= n(contract, "frontTimingBearingOdMm"):
+        raise RuntimeError("层间轴承下方加固圆盘必须大于轴承外径")
+    if n(contract, "frontTimingBearingReinforcementDiscThicknessMm") <= 0:
+        raise RuntimeError("层间轴承下方加固圆盘厚度无效")
+    if n(contract, "drawerGuideBearingSeatDiameterMm") <= 3.0:
+        raise RuntimeError("681 导向轴承座孔没有保留打印配合余量")
+    if n(contract, "drawerFrontPinionBearingSeatDiameterMm") <= 6.0:
+        raise RuntimeError("前端层板 3x6x2 轴承座孔没有保留打印配合余量")
+    if abs(n(contract, "frontPinionCenterYMm") - n(contract, "drawerRackYMm")) > 0.001:
+        raise RuntimeError("前端主动轮必须与抽屉底部直线齿排同高")
+    if abs(
+        n(contract, "frontPinionLowerFaceYMm")
+        - (n(contract, "frontPinionCenterYMm")
+           - n(contract, "frontPinionThicknessMm") / 2)
+    ) > 0.001:
+        raise RuntimeError("前端主动轮下沿推导不一致")
+    if abs(
+        n(contract, "frontTimingPulleyCenterYMm")
+        - n(contract, "frontTimingBeltYMm")
+    ) > 0.001:
+        raise RuntimeError("前端同步轮中心必须跟随 2GT 皮带中心")
+    if abs(
+        n(contract, "frontTimingBearingUpperFaceYMm")
+        - (n(contract, "frontTimingBearingCenterYMm")
+           + n(contract, "frontTimingBearingWidthMm") / 2)
+    ) > 0.001 or abs(
+        n(contract, "frontTimingBearingLowerFaceYMm")
+        - (n(contract, "frontTimingBearingCenterYMm")
+           - n(contract, "frontTimingBearingWidthMm") / 2)
+    ) > 0.001:
+        raise RuntimeError("层间同步轮轴承上下沿推导不一致")
+    if abs(
+        n(contract, "frontTimingBearingUpperFaceYMm")
+        + n(contract, "frontTimingBearingGearClearanceMm")
+        - n(contract, "frontPinionLowerFaceYMm")
+    ) > 0.001:
+        raise RuntimeError("层间轴承上沿没有与主动轮保持间隙")
+    if abs(
+        n(contract, "frontTimingPulleyTopYMm")
+        + n(contract, "frontTimingBearingPulleyClearanceMm")
+        - n(contract, "frontTimingBearingLowerFaceYMm")
+    ) > 0.001:
+        raise RuntimeError("同步轮上沿没有与层间轴承保持间隙")
+    if abs(
+        n(contract, "frontTimingPulleyToPinionGapMm")
+        - (n(contract, "frontPinionLowerFaceYMm")
+           - n(contract, "frontTimingPulleyTopYMm"))
+    ) > 0.001:
+        raise RuntimeError("同步轮/主动轮总层间间距推导不一致")
+    if n(contract, "frontTimingBearingWidthMm") <= 0:
+        raise RuntimeError("层间同步轮轴承厚度无效")
+    if n(contract, "frontTimingBearingWidthMm") >= n(contract, "drawerShelfThicknessMm"):
+        raise RuntimeError("3x6x2 轴承必须在层板内留下底部承托肩")
+    if abs(
+        n(contract, "frontTimingBearingSeatDepthMm")
+        - n(contract, "frontTimingBearingWidthMm")
+    ) > 0.001:
+        raise RuntimeError("层板轴承座深度必须等于 3x6x2 轴承宽度")
+    if abs(
+        n(contract, "frontTimingBearingRetainerThicknessMm")
+        - n(contract, "drawerShelfThicknessMm")
+        + n(contract, "frontTimingBearingWidthMm")
+    ) > 0.001:
+        raise RuntimeError("层板轴承底部承托肩厚度推导不一致")
+    if n(contract, "frontTimingBearingRetainerBoreDiameterMm") <= n(contract, "frontTimingBearingIdMm"):
+        raise RuntimeError("层板轴承底部承托孔没有给 D 轴留通道")
+    if n(contract, "frontTimingBearingRetainerBoreDiameterMm") >= n(contract, "frontTimingBearingOdMm"):
+        raise RuntimeError("层板轴承底部承托孔不能切掉轴承外圈承托面")
+    if abs(
+        n(contract, "frontTimingBearingBossBottomYMm")
+        + n(contract, "frontTimingBearingRetainerThicknessMm")
+        + n(contract, "frontTimingBearingReinforcementDiscThicknessMm")
+        - n(contract, "frontTimingBearingLowerFaceYMm")
+    ) > 0.001:
+        raise RuntimeError("层板轴承底部 Boss 与承托肩不一致")
+    if n(contract, "frontTimingBearingShelfLowerFaceYMm") <= n(contract, "frontTimingBearingBossBottomYMm"):
+        raise RuntimeError("层板一体轴承座没有从层板下侧连续落到承托肩")
+    if n(contract, "frontTimingBearingBossFusionOverlapMm") <= 0:
+        raise RuntimeError("层板一体轴承座必须保留正的实体融合重叠量")
+    if n(contract, "drawerGuideSlotHeightMm") <= n(contract, "drawerGuideBearingSeatDiameterMm"):
+        raise RuntimeError("C 形导向槽高度不足以容纳 681 轴承")
+    if n(contract, "drawerGuideFlangeThicknessMm") >= n(contract, "drawerGuideSlotHeightMm"):
+        raise RuntimeError("抽屉侧向导轨凸缘没有留出 C 槽上下间隙")
+    if n(contract, "drawerGuideRailDepthMm") <= n(contract, "drawerGuideFlangeThicknessMm"):
+        raise RuntimeError("C 形导向槽深度不足以捕获抽屉侧向凸缘")
+    if n(contract, "drawerGuideRailDepthMm") <= (
+        n(contract, "drawerGuideFlangeProjectionMm")
+        + n(contract, "drawerGuideRailClearanceMm")
+    ):
+        raise RuntimeError("C 形导向槽深度不足以让抽屉凸缘在后壁前停止")
+    expected_back_clearance = (
+        n(contract, "drawerGuideRailDepthMm")
+        + n(contract, "drawerGuideFlangeClearanceMm")
+        - n(contract, "drawerGuideFlangeProjectionMm")
+        - n(contract, "drawerGuideRailWallThicknessMm")
+    )
+    if abs(
+        n(contract, "drawerGuideFlangeBackClearanceMm")
+        - expected_back_clearance
+    ) > 0.001:
+        raise RuntimeError("C 形导向槽凸缘后壁净空推导不一致")
+    if n(contract, "drawerGuideFlangeBackClearanceMm") < n(contract, "drawerGuideRailClearanceMm"):
+        raise RuntimeError("C 形导向槽凸缘与后壁的净空不足")
+    if n(contract, "drawerGuideFrontSupportClearanceMm") != 0:
+        raise RuntimeError("前端下托 681 必须与抽屉凸缘保持名义承托接触")
+    if n(contract, "frontTimingBearingSeatDiameterMm") <= n(contract, "frontTimingBearingOdMm"):
+        raise RuntimeError("层间同步轮轴承座孔没有保留压入余量")
+    if n(contract, "frontTimingBearingIdMm") != n(contract, "shaftDiameterMm"):
+        raise RuntimeError("层间同步轮轴承内径必须与 D 轴直径一致")
+    if n(contract, "frontDshaftLengthMm") <= n(contract, "frontTimingBearingWidthMm"):
+        raise RuntimeError("前端 D 轴没有跨过层间轴承")
+    if abs(
+        n(contract, "frontTimingPulleyTopYMm")
+        + n(contract, "frontTimingPulleyToPinionGapMm")
+        + n(contract, "frontPinionThicknessMm") / 2
+        - n(contract, "frontPinionCenterYMm")
+    ) > 0.001:
+        raise RuntimeError("前端 2GT 同步轮必须位于主动轮下方的固定层间距")
 
 
 def write_json(path: Path, payload: object) -> None:

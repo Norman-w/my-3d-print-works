@@ -14,6 +14,7 @@ OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
 OUT_STL="${PROJECT_ROOT}/output/3d-print/cabinet"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
+PREVIEW_PORT="${PREVIEW_PORT:-8876}"
 PARTS=(shell back_panel)
 
 # ===== 分区：模型/类型 =====
@@ -71,7 +72,7 @@ import sys
 
 path = Path(sys.argv[1])
 payload = json.loads(path.read_text(encoding="utf-8"))
-payload["title"] = "零件柜 · 260×233×120 mm · 5×5 + 底仓"
+payload["title"] = "零件柜 · 260×234.8×120 mm · 5×3 + 一层服务仓"
 payload["units"] = "mm"
 payload["up"] = "z"
 names = {
@@ -130,15 +131,15 @@ if [[ -f "$MANIFEST_PY" ]]; then
     python3 "$MANIFEST_PY" \
         --stl-dir "$OUT_STL" \
         --preview-dir "$PREVIEW_DIR" \
-        --title "零件柜外壳 · 260×233×120 mm · 5×5 + 底仓" \
+        --title "零件柜外壳 · 260×234.8×120 mm · 5×3 + 一层服务仓" \
         --role printed \
         --no-recursive
     patch_manifest
 fi
 
 if [[ -f "$PREVIEW_SH" ]]; then
-    "$PREVIEW_SH" restart "$PREVIEW_DIR" --host 0.0.0.0 --lan-host auto --no-open || \
-        "$PREVIEW_SH" start "$PREVIEW_DIR" --host 0.0.0.0 --lan-host auto --no-open
+    "$PREVIEW_SH" restart "$PREVIEW_DIR" --host 0.0.0.0 --port "$PREVIEW_PORT" --lan-host auto --no-open || \
+        "$PREVIEW_SH" start "$PREVIEW_DIR" --host 0.0.0.0 --port "$PREVIEW_PORT" --lan-host auto --no-open
 fi
 
 echo "完成:"

@@ -16,15 +16,16 @@ WALL = 3.2
 SERVICE_W = 20.0
 W = 240.0 + SERVICE_W
 GRID_W = 233.6
-REF_GRID_H = 193.6
 N_COL = 5
-N_ROW = 5
-REF_ROWS = 6
+N_ROW = 3
+SERVICE_LAYERS = 1
+DESIGN_BAY_H = 55.30
 DIV_T = 2.4
 SHELF_T = 2.4
 SPROCKET_TEETH = 12
-BLUNT_TEETH = 8
+BLUNT_TEETH = 8  # 所有绿色导向轮统一使用的小轮
 WALL_CLEAR = 0.40
+DRIVE_RETURN_X_TRIM = -0.1018
 TEN_TRAVEL = 10.0
 PITCH_TOL = 0.02
 CLOSE_TOL = 0.05
@@ -45,10 +46,10 @@ SCHEME1_ENGAGE_STROKE = 2.50
 SCHEME1_SELECTOR_SPEED = SPROCKET_TEETH * P
 
 BAY_W = (GRID_W - (N_COL - 1) * DIV_T) / N_COL
-BAY_H = (REF_GRID_H - (REF_ROWS - 1) * SHELF_T) / REF_ROWS
+BAY_H = DESIGN_BAY_H
 ROW_PITCH = BAY_H + SHELF_T
 COL_PITCH = BAY_W + DIV_T
-SERVICE_H = 2 * ROW_PITCH
+SERVICE_H = SERVICE_LAYERS * ROW_PITCH
 GRID_ORIGIN_X = WALL + SERVICE_W
 GRID_ORIGIN_Z = WALL + SERVICE_H
 
@@ -221,11 +222,16 @@ def drive_outer_r() -> float:
     return drive_pitch_r() + 0.38 * P
 
 
+def guide_outer_r() -> float:
+    return translator_r() + 0.12 * P
+
+
 def wall_inset() -> float:
     return WALL + drive_outer_r() + WALL_CLEAR
 
 
-def pair_align_dx() -> float:
+def guide_anchor_dx() -> float:
+    """Keep the former 8T side anchors while all fixed guides use 8T."""
     return drive_pitch_r() - translator_r()
 
 
@@ -234,19 +240,19 @@ def blunt_dx() -> float:
 
 
 def right_sprocket_c(z_hi: float) -> Vec:
-    return (W - wall_inset(), z_hi - drive_pitch_r())
+    return (W - wall_inset() + guide_anchor_dx(), z_hi - translator_r())
 
 
 def right_blunt_c(z_lo: float) -> Vec:
-    return (W - wall_inset() + pair_align_dx(), z_lo + translator_r())
+    return (W - wall_inset() + guide_anchor_dx(), z_lo + translator_r())
 
 
 def left_sprocket_c(z_hi: float) -> Vec:
-    return (col_center_x(0) - blunt_dx(), z_hi - drive_pitch_r())
+    return (col_center_x(0) - blunt_dx() - guide_anchor_dx(), z_hi - translator_r())
 
 
 def left_blunt_c(z_lo: float) -> Vec:
-    return (col_center_x(0) - blunt_dx() - pair_align_dx(), z_lo + translator_r())
+    return (col_center_x(0) - blunt_dx() - guide_anchor_dx(), z_lo + translator_r())
 
 
 def service_chain_z() -> float:
@@ -254,11 +260,14 @@ def service_chain_z() -> float:
 
 
 def drive_c() -> Vec:
-    return (wall_inset() + 3.0 * drive_pitch_r(), service_chain_z() - drive_pitch_r())
+    return (
+        wall_inset() + 2.0 * drive_pitch_r() + translator_r() + DRIVE_RETURN_X_TRIM,
+        service_chain_z() - translator_r(),
+    )
 
 
 def entry_c() -> Vec:
-    return (wall_inset() + drive_pitch_r(), row_center_z(N_ROW - 1) - drive_pitch_r())
+    return (wall_inset() + translator_r(), row_center_z(N_ROW - 1) - translator_r())
 
 
 def power_c() -> Vec:
@@ -275,7 +284,7 @@ def ten_c(tz: float) -> Vec:
 
 
 def north(c: Vec) -> Vec:
-    return polar(c, drive_pitch_r(), math.pi / 2.0)
+    return polar(c, translator_r(), math.pi / 2.0)
 
 
 def ang(deg: float) -> float:
@@ -285,24 +294,22 @@ def ang(deg: float) -> float:
 def right_s(z_hi: float, z_lo: float) -> list:
     c1 = right_sprocket_c(z_hi)
     c2 = right_blunt_c(z_lo)
-    r12 = drive_pitch_r()
-    rb = translator_r()
+    rg = translator_r()
     return [
-        Arc(c1, r12, ang(90.0), ang(0.0)),
-        Line(polar(c1, r12, 0.0), polar(c2, rb, 0.0)),
-        Arc(c2, rb, ang(0.0), ang(-90.0)),
+        Arc(c1, rg, ang(90.0), ang(0.0)),
+        Line(polar(c1, rg, 0.0), polar(c2, rg, 0.0)),
+        Arc(c2, rg, ang(0.0), ang(-90.0)),
     ]
 
 
 def left_s(z_hi: float, z_lo: float) -> list:
     c1 = left_sprocket_c(z_hi)
     c2 = left_blunt_c(z_lo)
-    r12 = drive_pitch_r()
-    rb = translator_r()
+    rg = translator_r()
     return [
-        Arc(c1, r12, ang(90.0), ang(180.0)),
-        Line(polar(c1, r12, math.pi), polar(c2, rb, math.pi)),
-        Arc(c2, rb, ang(180.0), ang(270.0)),
+        Arc(c1, rg, ang(90.0), ang(180.0)),
+        Line(polar(c1, rg, math.pi), polar(c2, rg, math.pi)),
+        Arc(c2, rg, ang(180.0), ang(270.0)),
     ]
 
 
@@ -310,23 +317,42 @@ def path_segments(tz: float) -> list:
     r12 = drive_pitch_r()
     rb = translator_r()
     z_svc = service_chain_z()
-    segs: list = [Line(north(entry_c()), north(right_sprocket_c(row_center_z(4))))]
-    segs.extend(right_s(row_center_z(4), row_center_z(3)))
-    segs.append(Line(polar(right_blunt_c(row_center_z(3)), rb, ang(-90.0)), north(left_sprocket_c(row_center_z(3)))))
-    segs.extend(left_s(row_center_z(3), row_center_z(2)))
-    segs.append(Line(polar(left_blunt_c(row_center_z(2)), rb, ang(270.0)), north(right_sprocket_c(row_center_z(2)))))
-    segs.extend(right_s(row_center_z(2), row_center_z(1)))
-    segs.append(Line(polar(right_blunt_c(row_center_z(1)), rb, ang(-90.0)), north(left_sprocket_c(row_center_z(1)))))
-    segs.extend(left_s(row_center_z(1), row_center_z(0)))
-    segs.append(Line(polar(left_blunt_c(row_center_z(0)), rb, ang(270.0)), north(right_sprocket_c(row_center_z(0)))))
+    top_row = N_ROW - 1
+    segs: list = [Line(north(entry_c()), north(right_sprocket_c(row_center_z(top_row))))]
+    # The chain alternates right/left turns while descending through the
+    # drawer rows.  Keeping this loop in lock-step with cabinet_chain_path.scad
+    # prevents the old 5-row path from silently surviving the 3-row layout.
+    side = "right"
+    for upper_row in range(top_row, 0, -1):
+        lower_row = upper_row - 1
+        if side == "right":
+            segs.extend(right_s(row_center_z(upper_row), row_center_z(lower_row)))
+            segs.append(
+                Line(
+                    polar(right_blunt_c(row_center_z(lower_row)), rb, ang(-90.0)),
+                    north(left_sprocket_c(row_center_z(lower_row))),
+                )
+            )
+            side = "left"
+        else:
+            segs.extend(left_s(row_center_z(upper_row), row_center_z(lower_row)))
+            segs.append(
+                Line(
+                    polar(left_blunt_c(row_center_z(lower_row)), rb, ang(270.0)),
+                    north(right_sprocket_c(row_center_z(lower_row))),
+                )
+            )
+            side = "right"
+    # For an odd row count the bottom row exits on the right, then crosses the
+    # service layer and enters the motor/tensioner return loop.
     segs.extend(right_s(row_center_z(0), z_svc))
     segs.append(Line(polar(right_blunt_c(z_svc), rb, ang(-90.0)), north(drive_c())))
-    segs.append(Arc(drive_c(), r12, ang(90.0), ang(180.0)))
+    segs.append(Arc(drive_c(), rb, ang(90.0), ang(180.0)))
     ten = ten_c(tz)
-    segs.append(Line(polar(drive_c(), r12, math.pi), polar(ten, r12, 0.0)))
+    segs.append(Line(polar(drive_c(), rb, math.pi), polar(ten, r12, 0.0)))
     segs.append(Arc(ten, r12, ang(0.0), ang(-180.0)))
-    segs.append(Line(polar(ten, r12, math.pi), polar(entry_c(), r12, math.pi)))
-    segs.append(Arc(entry_c(), r12, ang(180.0), ang(90.0)))
+    segs.append(Line(polar(ten, r12, math.pi), polar(entry_c(), rb, math.pi)))
+    segs.append(Arc(entry_c(), rb, ang(180.0), ang(90.0)))
     return segs
 
 
@@ -417,6 +443,32 @@ def apply_seat_phase(wheels: list[dict], pins: list[Vec]) -> None:
         w["rot"] = sum(offs) / len(offs) if offs else 0.0
 
 
+def audit_wheel_seating(wheels: list[dict], pins: list[Vec]) -> dict[str, float]:
+    """Check that every modeled wheel has real chain pins on its pitch circle."""
+    max_error = 0.0
+    contact_counts: list[int] = []
+    for wheel in wheels:
+        radius = P / (2.0 * math.sin(math.pi / wheel["teeth"]))
+        errors = [
+            abs(dist((x, z), (wheel["x"], wheel["z"])) - radius)
+            for x, z in pins
+        ]
+        contacts = [error for error in errors if error <= 0.08]
+        if len(contacts) < 2:
+            raise RuntimeError(
+                f"{wheel['id']} has fewer than two pins on its {wheel['teeth']}T pitch circle"
+            )
+        max_error = max(max_error, max(contacts))
+        contact_counts.append(len(contacts))
+        wheel["contactCount"] = len(contacts)
+        wheel["maxContactErrorMm"] = max(contacts)
+    return {
+        "maxContactErrorMm": max_error,
+        "minContactCount": min(contact_counts),
+        "maxContactCount": max(contact_counts),
+    }
+
+
 def write_gen(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> None:
     lines = [
         "// Generated by scripts/solve_cabinet_chain.py — 每节弦长 = P。",
@@ -437,25 +489,35 @@ def write_gen(path: Path, tz: float, pins: list[Vec], wheels: list[dict]) -> Non
 def motion_wheels(tz: float) -> list[dict]:
     wheels = [
         # The motor shaft follows the lower return/tensioner sprocket.  It is
-        # the only pointed sprocket; every other 12T position is a blunt,
-        # bearing-supported guide with the same pitch circle.
+        # the only pointed 12T sprocket; every other green position is the
+        # smaller 8T blunt, bearing-supported guide.
         {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
-        {"id": "upper-guide", "kind": "idler", "teeth": 12, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
-        {"id": "entry", "kind": "idler", "teeth": 12, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
-        {"id": "drive", "kind": "idler", "teeth": 12, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
+        {"id": "upper-guide", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
+        {"id": "entry", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
+        {"id": "drive", "kind": "idler", "teeth": BLUNT_TEETH, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
     ]
-    for row, z in (("2", row_center_z(2)), ("0", row_center_z(0))):
+    for row in range(N_ROW - 3, -1, -2):
+        z = row_center_z(row)
         c = right_sprocket_c(z)
-        wheels.append({"id": f"r12-{row}", "kind": "idler", "teeth": 12, "sign": -1, "x": c[0], "z": c[1]})
-    for row, z in (("3", row_center_z(3)), ("1", row_center_z(1))):
+        wheels.append({"id": f"r8-guide-{row}", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": c[0], "z": c[1]})
+    for row in range(N_ROW - 2, 0, -2):
+        z = row_center_z(row)
         c = left_sprocket_c(z)
-        wheels.append({"id": f"l12-{row}", "kind": "idler", "teeth": 12, "sign": 1, "x": c[0], "z": c[1]})
-    for row, z in (("3", row_center_z(3)), ("1", row_center_z(1)), ("svc", service_chain_z())):
-        c = right_blunt_c(z)
-        wheels.append({"id": f"r8-{row}", "kind": "idler", "teeth": 8, "sign": -1, "x": c[0], "z": c[1]})
-    for row, z in (("2", row_center_z(2)), ("0", row_center_z(0))):
-        c = left_blunt_c(z)
-        wheels.append({"id": f"l8-{row}", "kind": "idler", "teeth": 8, "sign": 1, "x": c[0], "z": c[1]})
+        wheels.append({"id": f"l8-guide-{row}", "kind": "idler", "teeth": BLUNT_TEETH, "sign": 1, "x": c[0], "z": c[1]})
+    for k in range(N_ROW - 1):
+        row = N_ROW - 2 - k
+        z = row_center_z(row)
+        if k % 2 == 0:
+            c = right_blunt_c(z)
+            side = "r"
+            sign = -1
+        else:
+            c = left_blunt_c(z)
+            side = "l"
+            sign = 1
+        wheels.append({"id": f"{side}8-guide-{row}", "kind": "idler", "teeth": BLUNT_TEETH, "sign": sign, "x": c[0], "z": c[1]})
+    c = right_blunt_c(service_chain_z())
+    wheels.append({"id": "r8-guide-svc", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": c[0], "z": c[1]})
     return wheels
 
 
@@ -505,6 +567,11 @@ def write_motion(
     payload = {
         "p": P,
         "driveTeeth": SPROCKET_TEETH,
+        "guideTeeth": BLUNT_TEETH,
+        "driveReturnXTrimMm": DRIVE_RETURN_X_TRIM,
+        "guidePitchRadiusMm": round(translator_r(), 6),
+        "guideOuterRadiusMm": round(guide_outer_r(), 6),
+        "guideBendAngleDeg": round(360.0 / BLUNT_TEETH, 6),
         "chainY": CHAIN_Y,
         "tenZ": tz,
         "pins": [[round(x, 6), round(z, 6)] for x, z in pins],
@@ -517,6 +584,8 @@ def write_motion(
                 "rot": round(w["rot"], 6),
                 "x": round(w["x"], 6),
                 "z": round(w["z"], 6),
+                "contactCount": w["contactCount"],
+                "maxContactErrorMm": round(w["maxContactErrorMm"], 6),
             }
             for w in wheels
         ],
@@ -543,6 +612,7 @@ def main() -> int:
     chords = [dist(pins[i], pins[(i + 1) % n]) for i in range(n)]
     wheels = motion_wheels(tz)
     apply_seat_phase(wheels, pins)
+    seating = audit_wheel_seating(wheels, pins)
     write_gen(out, tz, pins, wheels)
     motion = root / "output/3d-print/cabinet-chain/cabinet_chain_motion.json"
     motion.parent.mkdir(parents=True, exist_ok=True)
@@ -552,7 +622,11 @@ def main() -> int:
         f"pins={n} even={n % 2 == 0} ten_z={tz:.4f} "
         f"home={ten_home_z():.4f} drop={ten_home_z() - tz:.4f} "
         f"chord_min={min(chords):.6f} chord_max={max(chords):.6f} "
-        f"close={chords[-1]:.6f} P={P}"
+        f"close={chords[-1]:.6f} P={P} "
+        f"guide={BLUNT_TEETH}T R={translator_r():.6f} "
+        f"bend={360.0 / BLUNT_TEETH:.2f}deg "
+        f"seat_error={seating['maxContactErrorMm']:.6f} "
+        f"seat_contacts={seating['minContactCount']}-{seating['maxContactCount']}"
     )
     if n % 2:
         raise SystemExit("pin count must be even")

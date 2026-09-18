@@ -37,7 +37,7 @@ CLUTCH_PART = is_undef(CLUTCH_PART) ? "assembly" : CLUTCH_PART;
 CLUTCH_EXPLODE = is_undef(CLUTCH_EXPLODE) ? 0 : CLUTCH_EXPLODE;
 ENGAGED = is_undef(ENGAGED) ? false : ENGAGED;
 SELECTED_COLUMN = is_undef(SELECTED_COLUMN) ? 2 : SELECTED_COLUMN;
-SELECTED_ROW = is_undef(SELECTED_ROW) ? 2 : SELECTED_ROW;
+SELECTED_ROW = is_undef(SELECTED_ROW) ? 1 : SELECTED_ROW;
 // Start the physical validation scene with one known-good center station.
 // Set SHOW_LEGACY_STATIONS=true only when the remaining 24 old stations are
 // ready to be reviewed again; this keeps unverified legacy clutches out of the
@@ -58,6 +58,7 @@ include <cabinet_motor_mount.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
+include <../parts/drawer_drive_bearings.scad>
 // Retained for explicit legacy/trigger diagnostics only. It is not part of the
 // current male-end assembly; the new sleeve carries the magnetic interface.
 include <../parts/center_clutch_selector_shoe.scad>
@@ -88,13 +89,19 @@ GT2_GEAR_MESH_CLEARANCE = 0.32;
 CENTER_CLUTCH_TRAVEL_MM = is_undef(CENTER_CLUTCH_TRAVEL_MM)
     ? (ENGAGED ? GT2_CLUTCH_ENGAGE_STROKE_MM : 0)
     : CENTER_CLUTCH_TRAVEL_MM;
-// The snake-chain selector shoe is already constrained by the existing chain
-// plane and cannot be lowered without putting the lowest chain layer into the
-// cabinet floor.  Lift the complete center clutch datum instead, preserving
-// the chain/motor mount and giving the shoe a real under-rotor approach.
-CENTER_CLUTCH_VERTICAL_LIFT_MM = is_undef(CENTER_CLUTCH_VERTICAL_LIFT_MM)
-    ? 5.00
-    : CENTER_CLUTCH_VERTICAL_LIFT_MM;
+// The center station is located on the drawer-bottom drive layer.  The front
+// pinion is the vertical datum for this layer; the 2GT pulley sits immediately
+// below it and the whole clutch pair follows the same belt plane.  Keep the
+// old -D override as a compatibility alias, but default the drive-layer
+// correction to zero so no unexplained row-center lift can return.
+CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM = is_undef(
+    CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM
+)
+    ? (is_undef(CENTER_CLUTCH_VERTICAL_LIFT_MM)
+        ? 0.00
+        : CENTER_CLUTCH_VERTICAL_LIFT_MM)
+    : CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM;
+CENTER_CLUTCH_VERTICAL_LIFT_MM = CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM;
 //#endregion
 
 //#region 常量/配置
@@ -417,16 +424,67 @@ TENSIONER_PARAM_WORLD_ORIGIN_Z = TENSIONER_SKP_WORLD_CENTER_Z
     - TENSIONER_SKP_WORLD_BBOX_MIN_Z - TENSIONER_SKP_WORLD_SIZE_Z / 2;
 
 // The drawer rack/drive geometry is intentionally explicit.  The horizontal
-// rack is under each drawer; the rear timing pulley and front timing pulley
-// share one Y-running belt.
-DRAWER_RACK_TOOTH_H = 1.25;
+// rack is directly attached under each drawer and moves in +Z with it; the
+// fixed front pinion only transmits torque and never carries drawer weight.
 DRAWER_RACK_PITCH = 3.0;
-FRONT_GEAR_TEETH = 16;
-FRONT_GEAR_TOOTH_DEPTH = 1.0;
-FRONT_GEAR_T = 3.2;
+DRAWER_RACK_BODY_Y = CENTER_FRONT_RACK_BODY_HEIGHT;
+DRAWER_RACK_BODY_X = CENTER_FRONT_RACK_BODY_X;
+DRAWER_RACK_TOOTH_H = CENTER_FRONT_RACK_TOOTH_HEIGHT_X;
+DRAWER_RACK_TOOTH_OVERHANG_X = CENTER_FRONT_RACK_TOOTH_OVERHANG_X;
+DRAWER_RACK_TOOTH_Y_MARGIN = CENTER_FRONT_RACK_TOOTH_Y_MARGIN;
+DRAWER_RACK_TO_DRAWER_GAP = 0.00;
+DRAWER_GUIDE_RAIL_T = 1.20;
+DRAWER_GUIDE_RAIL_GAP = 0.30;
+DRAWER_GUIDE_C_SLOT_H = DRAWER_GUIDE_681_OD
+    + 2 * DRAWER_GUIDE_RAIL_GAP;
+DRAWER_GUIDE_C_TOP_LIP_T = 1.20;
+DRAWER_GUIDE_C_BOTTOM_RAIL_H = DRAWER_GUIDE_681_OD
+    + 2 * DRAWER_GUIDE_RAIL_GAP;
+// The rear wall reaches the adjacent cabinet divider with a small nominal
+// overlap, so the C rail has a real fixed datum instead of floating beside the
+// drawer. The flange still stops short of the wall inside the captured slot.
+DRAWER_GUIDE_C_DEPTH = 4.50;
+DRAWER_GUIDE_C_FLANGE_T = 2.40;
+// The projection is measured from the drawer side to the flange's back edge.
+// Account for the 0.30 mm opening offset and the 1.20 mm C-rail back wall;
+// 3.00 mm leaves 0.60 mm between the flange and the wall's inner face.
+DRAWER_GUIDE_C_FLANGE_PROJECTION = 3.00;
+DRAWER_GUIDE_C_FLANGE_CLEARANCE = 0.30;
+DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE = DRAWER_GUIDE_C_DEPTH
+    + DRAWER_GUIDE_C_FLANGE_CLEARANCE
+    - DRAWER_GUIDE_C_FLANGE_PROJECTION
+    - DRAWER_GUIDE_RAIL_T;
+// The +Z/front roller is the actual lower support for the drawer-side flange.
+// Keep nominal contact at the support datum; the 0.30 mm running clearance is
+// reserved for the tail roller against the C-slot top/bottom faces.
+DRAWER_GUIDE_C_FRONT_SUPPORT_CLEARANCE = 0.00;
+DRAWER_GUIDE_ROLLER_Y_OFFSET = 4.00;
+DRAWER_GUIDE_ROLLER_Z_MARGIN = 6.00;
+DRAWER_GUIDE_TAIL_BEARING_Y_OFFSET = 0.00;
+FRONT_GEAR_TEETH = CENTER_FRONT_RACK_GEAR_TEETH;
+FRONT_GEAR_TOOTH_DEPTH = CENTER_FRONT_RACK_GEAR_TOOTH_DEPTH;
+FRONT_GEAR_T = CENTER_FRONT_RACK_GEAR_THICKNESS;
 FRONT_GEAR_PITCH_R = FRONT_GEAR_TEETH * CLUTCH_PITCH_MM / (2 * PI);
 FRONT_GEAR_ROOT_R = FRONT_GEAR_PITCH_R - FRONT_GEAR_TOOTH_DEPTH;
 FRONT_GEAR_OUTER_R = FRONT_GEAR_PITCH_R + FRONT_GEAR_TOOTH_DEPTH;
+DRAWER_PINION_SUPPORT_X = 12.0;
+DRAWER_PINION_SUPPORT_CHEEK_Z = 14.0;
+DRAWER_PINION_SUPPORT_CHEEK_Y = 3.0;
+DRAWER_PINION_SUPPORT_CHEEK_GAP = 0.30;
+DRAWER_PINION_SUPPORT_CHEEK_OFFSET =
+    FRONT_GEAR_T / 2
+    + DRAWER_PINION_SUPPORT_CHEEK_GAP
+    + DRAWER_PINION_SUPPORT_CHEEK_Y / 2;
+DRAWER_PINION_SUPPORT_SIDE_X = FRONT_GEAR_OUTER_R + 1.20;
+DRAWER_PINION_SUPPORT_SIDE_T = 1.40;
+// The center first article no longer stacks the timing pulley immediately
+// below the front pinion.  It leaves a shelf-thickness bearing in the gap and
+// sends the lower 2GT pulley into the next drawer bay on the same D shaft.
+CENTER_GT2_FRONT_TIMING_BEARING_GEAR_GAP =
+    CENTER_FRONT_DRIVE_BEARING_GEAR_GAP;
+CENTER_GT2_FRONT_TIMING_BEARING_PULLEY_GAP =
+    COMPOUND_LAYER_GAP + DRAWER_FRONT_TIMING_BEARING_RETAINER_T;
+CENTER_GT2_FRONT_D_SHAFT_OVERLAP = 0.50;
 
 // Fork clearance is a real parameter: open state leaves the fork just above
 // the recessed screw head; engaged state makes it nearly flush with the gear.
@@ -515,6 +573,62 @@ function world_drawer_outer_h() = WORLD_BAY_H - 2 * DRAWER_CLEAR;
 
 function clutch_col_x(i) = world_col_center_x(i);
 
+function drawer_bottom_y(row) = world_row_y(row) + DRAWER_CLEAR;
+
+function drawer_rack_y(row) = drawer_bottom_y(row)
+    - DRAWER_RACK_TO_DRAWER_GAP
+    - DRAWER_RACK_BODY_Y / 2;
+
+function drawer_guide_y(row) = drawer_bottom_y(row)
+    + DRAWER_GUIDE_ROLLER_Y_OFFSET;
+
+function drawer_left_x(col) = world_col_x(col) + DRAWER_CLEAR;
+
+function drawer_right_x(col) = world_col_x(col)
+    + WORLD_BAY_W - DRAWER_CLEAR;
+
+function drawer_left_guide_rail_opening_x(col) = drawer_left_x(col)
+    - DRAWER_GUIDE_C_FLANGE_CLEARANCE;
+
+function drawer_right_guide_rail_opening_x(col) = drawer_right_x(col)
+    + DRAWER_GUIDE_C_FLANGE_CLEARANCE;
+
+function drawer_left_guide_rail_back_x(col) =
+    drawer_left_guide_rail_opening_x(col) - DRAWER_GUIDE_C_DEPTH;
+
+function drawer_right_guide_rail_back_x(col) =
+    drawer_right_guide_rail_opening_x(col) + DRAWER_GUIDE_C_DEPTH;
+
+function drawer_left_guide_tail_bearing_x(col) = drawer_left_x(col)
+    - DRAWER_GUIDE_C_FLANGE_PROJECTION / 2;
+
+function drawer_right_guide_tail_bearing_x(col) = drawer_right_x(col)
+    + DRAWER_GUIDE_C_FLANGE_PROJECTION / 2;
+
+function drawer_left_guide_front_bearing_x(col) =
+    drawer_left_guide_rail_opening_x(col) - 0.80;
+
+function drawer_right_guide_front_bearing_x(col) =
+    drawer_right_guide_rail_opening_x(col) + 0.80;
+
+function drawer_guide_slot_bottom_y(row) = drawer_guide_y(row)
+    - DRAWER_GUIDE_C_SLOT_H / 2;
+
+function drawer_guide_flange_y(row) = drawer_guide_y(row);
+
+function drawer_guide_front_bearing_y(row) = drawer_guide_flange_y(row)
+    - DRAWER_GUIDE_C_FLANGE_T / 2
+    - DRAWER_GUIDE_C_FRONT_SUPPORT_CLEARANCE
+    - DRAWER_GUIDE_681_OD / 2;
+
+function drawer_rack_z0() = WORLD_PARTITION_FRONT_Z + 1.5;
+
+function drawer_rack_z1(front_z) = front_z - 3.5;
+
+function drawer_guide_z0(front_z) = drawer_rack_z0() + 2.0;
+
+function drawer_guide_z1(front_z) = drawer_rack_z1(front_z) - 2.0;
+
 function clutch_upper_open_y(row) = world_row_center_y(row) - CLUTCH_DROP_MM;
 
 function clutch_fixed_dog_y(row) =
@@ -549,21 +663,19 @@ function clutch_screw_top_y(row, engaged) =
     - (engaged ? CLUTCH_SCREW_FLUSH : CLUTCH_SCREW_RECESS_OPEN);
 
 function drawer_front_gear_y(row) =
-    drawer_belt_y(row)
-    + TIMING_PULLEY_W / 2
-    + COMPOUND_LAYER_GAP
-    + FRONT_GEAR_T / 2;
+    drawer_rack_y(row);
 
 function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 
 function selected_row() = min(max(0, SELECTED_ROW), N_ROW - 1);
 
 // Only the center station is migrated to the finished CH1 03C mechanism.
-// Columns and rows are zero-based, so this is the middle cell of the 5×5
+// Columns and rows are zero-based, so this is the middle cell of the 5×3
 // drawer field.  Its new mating axis is deliberately on the +Z side of the
 // existing vertical 12T / 3 mm shaft.
-CENTER_GT2_COL = 2;
-CENTER_GT2_ROW = 2;
+CENTER_GT2_COL = floor(N_COL / 2);
+CENTER_GT2_ROW = floor(N_ROW / 2);
+CENTER_GT2_FRONT_PULLEY_ROW = CENTER_GT2_ROW - 1;
 CENTER_GT2_BELT_TEETH = 80;       // 160 mm closed 2GT belt at 2 mm pitch
 CENTER_GT2_BELT_LENGTH_MM = CENTER_GT2_BELT_TEETH * GT2_PULLEY_PITCH_MM;
 CENTER_GT2_BELT_CENTER_DISTANCE = (
@@ -676,23 +788,61 @@ CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM = clutch_col_x(CENTER_GT2_COL)
 // chain coordinate.
 CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM = 0.80;
 
+function center_gt2_front_gear_y(row) =
+    drawer_rack_y(row) + CENTER_FRONT_DRIVE_LIFT_MM;
+
+function center_gt2_front_pinion_lower_y(row) =
+    center_gt2_front_gear_y(row) - FRONT_GEAR_T / 2;
+
+function center_gt2_front_timing_bearing_upper_y(row) =
+    center_gt2_front_pinion_lower_y(row)
+        - CENTER_GT2_FRONT_TIMING_BEARING_GEAR_GAP;
+
+function center_gt2_front_timing_bearing_center_y(row) =
+    center_gt2_front_timing_bearing_upper_y(row)
+        - DRAWER_FRONT_TIMING_BEARING_W / 2;
+
+function center_gt2_front_timing_bearing_lower_y(row) =
+    center_gt2_front_timing_bearing_center_y(row)
+        - DRAWER_FRONT_TIMING_BEARING_W / 2;
+
+function center_gt2_front_shelf_lower_y(row) =
+    world_row_y(row) - WORLD_SHELF_T;
+
+function center_gt2_front_bearing_boss_bottom_y(row) =
+    center_gt2_front_timing_bearing_lower_y(row)
+        - DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+        - CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS;
+
+function center_gt2_front_timing_pulley_row(row) = row - 1;
+
+function center_gt2_front_pulley_top_offset_y() =
+    GT2_PULLEY_FACE_T / 2 + GT2_BELT_GUIDE_LIP_T;
+
+// The front pinion meshes with the lifted rack datum above the intact shelf.
+// The timing pulley is deliberately kept in the next lower drawer bay; the
+// extra vertical separation is carried by the longer D shaft and the
+// shelf-thickness bearing, rather than by sinking the rack into the shelf.
+function center_gt2_belt_y(row) =
+    center_gt2_front_timing_bearing_lower_y(row)
+        - CENTER_FRONT_DRIVE_LIFT_MM
+        - CENTER_GT2_FRONT_TIMING_BEARING_PULLEY_GAP
+        - center_gt2_front_pulley_top_offset_y()
+        + CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM;
+
+function center_gt2_female_base_y(row) =
+    center_gt2_belt_y(row)
+        + GT2_BELT_LOWER_RETAINER_T
+        + GT2_PULLEY_FACE_T / 2;
+
 function center_gt2_male_base_y(row) =
-    clutch_upper_open_y(row)
-        + CENTER_CLUTCH_VERTICAL_LIFT_MM
-        - GT2_MALE_GEAR_T / 2;
+    center_gt2_female_base_y(row)
+        - GT2_MOTHER_GAP
+        - gt2_female_total_h()
+        - gt2_male_total_h();
 
 function center_gt2_male_tip_y(row) =
     center_gt2_male_base_y(row) + gt2_male_total_h();
-
-function center_gt2_female_base_y(row) =
-    center_gt2_male_tip_y(row)
-        + GT2_MOTHER_GAP
-        + gt2_female_total_h();
-
-function center_gt2_belt_y(row) =
-    center_gt2_female_base_y(row)
-        - GT2_BELT_LOWER_RETAINER_T
-        - GT2_PULLEY_FACE_T / 2;
 
 function center_gt2_pulley_base_y(belt_y) =
     belt_y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
@@ -703,10 +853,18 @@ function center_gt2_pulley_top_y(belt_y) =
         + GT2_PULLEY_FACE_T
         + GT2_BELT_GUIDE_LIP_T;
 
-function center_gt2_front_gear_y(row) =
-    center_gt2_pulley_top_y(center_gt2_belt_y(row))
-        + COMPOUND_LAYER_GAP
-        + FRONT_GEAR_T / 2;
+function center_gt2_front_d_shaft_start_y(row) =
+    center_gt2_pulley_base_y(center_gt2_belt_y(row))
+        - CENTER_GT2_FRONT_D_SHAFT_OVERLAP;
+
+function center_gt2_front_d_shaft_end_y(row) =
+    center_gt2_front_gear_y(row)
+        + FRONT_GEAR_T / 2
+        + CENTER_GT2_FRONT_D_SHAFT_OVERLAP;
+
+function center_gt2_front_d_shaft_length(row) =
+    center_gt2_front_d_shaft_end_y(row)
+        - center_gt2_front_d_shaft_start_y(row);
 
 function drawer_station_belt_y(col, row) =
     is_center_gt2_station(col, row)
@@ -943,7 +1101,17 @@ module column_gt2_pulley_y(x, y, z, bore = "d") {
             }
 }
 
-module spur_gear_y(x, y, z, teeth, pitch_mm, tooth_depth, thickness, bore_d = 3.2) {
+module spur_gear_y(
+    x,
+    y,
+    z,
+    teeth,
+    pitch_mm,
+    tooth_depth,
+    thickness,
+    bore_d = 3.2,
+    bore_type = "round"
+) {
     pitch_r = teeth * pitch_mm / (2 * PI);
     // The profile is in XZ and the axis is world +Y.
     translate([x, y - thickness / 2, z])
@@ -951,7 +1119,11 @@ module spur_gear_y(x, y, z, teeth, pitch_mm, tooth_depth, thickness, bore_d = 3.
             difference() {
                 linear_extrude(height = thickness, convexity = 8)
                     gear_profile_2d(teeth, pitch_r - tooth_depth, pitch_r + tooth_depth);
-                cylinder(d = bore_d, h = thickness + 2 * EPS);
+                if (bore_type == "d")
+                    linear_extrude(height = thickness + 2 * EPS)
+                        d_profile_2d(bore_d, ROD_FLAT_DEPTH, ROD_CLEARANCE);
+                else
+                    cylinder(d = bore_d, h = thickness + 2 * EPS);
             }
 }
 
@@ -1321,20 +1493,310 @@ module vertical_gear_column(x, z) {
 
 module horizontal_drawer_rack(x, z0, z1, y) {
     length = z1 - z0;
-    rack_face_x = x + FRONT_GEAR_PITCH_R + 0.15;
-    rack_body_y = y - 1.9;
+    rack_face_x = center_front_rack_face_x(x);
+    rack_body_y = y - DRAWER_RACK_BODY_Y / 2;
     color(COLOR_RACK) {
-        // The rack runs in world +Z below each drawer. Its tooth height is
-        // radial in X, so the +Y-axis pinion can mesh with it.
+        // The top of this solid backing is flush with the drawer underside;
+        // the whole rack therefore follows the drawer in +Z. Its tooth height
+        // is radial in X, so the fixed +Y-axis pinion can mesh with it.
         translate([rack_face_x, rack_body_y, z0])
-            cube([3.2, 3.8, length]);
+            cube([DRAWER_RACK_BODY_X, DRAWER_RACK_BODY_Y, length]);
         for (rack_z = [z0 + DRAWER_RACK_PITCH / 2:DRAWER_RACK_PITCH:z1 - DRAWER_RACK_PITCH / 2])
             translate([
                 rack_face_x - DRAWER_RACK_TOOTH_H,
-                rack_body_y + 0.25,
+                rack_body_y + DRAWER_RACK_TOOTH_Y_MARGIN,
                 rack_z - 0.42
             ])
-                cube([DRAWER_RACK_TOOTH_H + 0.20, 3.3, 0.84]);
+                cube([
+                    DRAWER_RACK_TOOTH_H + DRAWER_RACK_TOOTH_OVERHANG_X,
+                    DRAWER_RACK_BODY_Y - 2 * DRAWER_RACK_TOOTH_Y_MARGIN,
+                    0.84
+                ]);
+    }
+}
+
+module drawer_c_guide_rail_at(col, row, front_z, side) {
+    z0 = drawer_guide_z0(front_z);
+    z1 = drawer_guide_z1(front_z);
+    length = z1 - z0;
+    opening_x = side < 0
+        ? drawer_left_guide_rail_opening_x(col)
+        : drawer_right_guide_rail_opening_x(col);
+    back_x = side < 0
+        ? drawer_left_guide_rail_back_x(col)
+        : drawer_right_guide_rail_back_x(col);
+    x_min = min(opening_x, back_x);
+    depth = abs(opening_x - back_x);
+    y = drawer_guide_y(row);
+    slot_bottom = drawer_guide_slot_bottom_y(row);
+    total_bottom = slot_bottom - DRAWER_GUIDE_C_BOTTOM_RAIL_H;
+    total_height = DRAWER_GUIDE_C_BOTTOM_RAIL_H
+        + DRAWER_GUIDE_C_SLOT_H
+        + DRAWER_GUIDE_C_TOP_LIP_T;
+    wall_x = side < 0
+        ? x_min
+        : max(opening_x, back_x) - DRAWER_GUIDE_RAIL_T;
+    front_bearing_x = side < 0
+        ? opening_x - 0.80
+        : opening_x + 0.80;
+    front_bearing_y = drawer_guide_front_bearing_y(row);
+    difference() {
+        color("#657f8c")
+            union() {
+                // The back wall closes the C and the opening faces the
+                // drawer centre: +X on the left, -X on the right.
+                translate([wall_x, total_bottom, z0])
+                    cube([
+                        DRAWER_GUIDE_RAIL_T,
+                        total_height,
+                        length
+                    ]);
+                translate([x_min, total_bottom, z0])
+                    cube([
+                        depth,
+                        DRAWER_GUIDE_C_BOTTOM_RAIL_H,
+                        length
+                    ]);
+                translate([
+                    x_min,
+                    slot_bottom + DRAWER_GUIDE_C_SLOT_H,
+                    z0
+                ])
+                    cube([
+                        depth,
+                        DRAWER_GUIDE_C_TOP_LIP_T,
+                        length
+                    ]);
+            }
+        // The front support 681 is seated in the lower rail, with its axis
+        // along X. Only the local seat is opened; the rail remains a solid
+        // captive support along the rest of its Z travel.
+        translate([
+            front_bearing_x,
+            front_bearing_y,
+            z1 - DRAWER_GUIDE_ROLLER_Z_MARGIN
+        ])
+            rotate([0, 90, 0])
+                cylinder(
+                    d = DRAWER_GUIDE_681_SEAT_D,
+                    h = DRAWER_GUIDE_681_W + 2 * EPS,
+                    center = true,
+                    $fn = 48
+                );
+    }
+}
+
+module drawer_c_guide_flanges_at(col, row, front_z) {
+    z0 = drawer_guide_z0(front_z);
+    z1 = drawer_guide_z1(front_z);
+    length = z1 - z0;
+    y = drawer_guide_flange_y(row);
+    color("#9a77c7") {
+        translate([
+            drawer_left_x(col) - DRAWER_GUIDE_C_FLANGE_PROJECTION,
+            y - DRAWER_GUIDE_C_FLANGE_T / 2,
+            z0
+        ])
+            cube([
+                DRAWER_GUIDE_C_FLANGE_PROJECTION,
+                DRAWER_GUIDE_C_FLANGE_T,
+                length
+            ]);
+        translate([
+            drawer_right_x(col),
+            y - DRAWER_GUIDE_C_FLANGE_T / 2,
+            z0
+        ])
+            cube([
+                DRAWER_GUIDE_C_FLANGE_PROJECTION,
+                DRAWER_GUIDE_C_FLANGE_T,
+                length
+            ]);
+    }
+}
+
+module drawer_rack_guide_rails_at(col, row, front_z) {
+    drawer_c_guide_rail_at(col, row, front_z, -1);
+    drawer_c_guide_rail_at(col, row, front_z, 1);
+}
+
+module drawer_rack_guide_rollers(col, row, front_z) {
+    z0 = drawer_guide_z0(front_z);
+    z1 = drawer_guide_z1(front_z);
+    tail_z = z0 + DRAWER_GUIDE_ROLLER_Z_MARGIN;
+    front_z_bearing = z1 - DRAWER_GUIDE_ROLLER_Z_MARGIN;
+    // Two tail bearings travel with the drawer flange. Their axes are ±X,
+    // and their outer rings react the drawer's ±Y load in the C slots.
+    color("#cfd4da") {
+        drawer_drive_681_bearing_x(
+            drawer_left_guide_tail_bearing_x(col),
+            drawer_guide_flange_y(row) + DRAWER_GUIDE_TAIL_BEARING_Y_OFFSET,
+            tail_z
+        );
+        drawer_drive_681_bearing_x(
+            drawer_right_guide_tail_bearing_x(col),
+            drawer_guide_flange_y(row) + DRAWER_GUIDE_TAIL_BEARING_Y_OFFSET,
+            tail_z
+        );
+        // Two fixed front lower bearings lift the drawer-side flange at the
+        // +Z/front end. They sit in the C rail's bottom support, also on X.
+        drawer_drive_681_bearing_x(
+            drawer_left_guide_front_bearing_x(col),
+            drawer_guide_front_bearing_y(row),
+            front_z_bearing
+        );
+        drawer_drive_681_bearing_x(
+            drawer_right_guide_front_bearing_x(col),
+            drawer_guide_front_bearing_y(row),
+            front_z_bearing
+        );
+    }
+}
+
+module drawer_front_pinion_bearing_support(
+    x,
+    gear_y,
+    z,
+    include_lower_mr63 = true
+) {
+    // Legacy stations retain two separate fixed cheeks.  The center station
+    // replaces the lower cheek with the shelf-thickness timing-bearing
+    // support below, so the D shaft can continue to the lower pulley without
+    // stacking two supports into the same inter-layer gap.
+    bearing_sides = include_lower_mr63 ? [-1, 1] : [1];
+    for (side = bearing_sides) {
+        bearing_y = gear_y + side * DRAWER_PINION_SUPPORT_CHEEK_OFFSET;
+        color("#536d78")
+            difference() {
+                translate([
+                    x - DRAWER_PINION_SUPPORT_X / 2,
+                    bearing_y - DRAWER_PINION_SUPPORT_CHEEK_Y / 2,
+                    z - DRAWER_PINION_SUPPORT_CHEEK_Z / 2
+                ])
+                    cube([
+                        DRAWER_PINION_SUPPORT_X,
+                        DRAWER_PINION_SUPPORT_CHEEK_Y,
+                        DRAWER_PINION_SUPPORT_CHEEK_Z
+                    ]);
+                cylinder_y(
+                    x,
+                    bearing_y - DRAWER_PINION_SUPPORT_CHEEK_Y / 2 - EPS,
+                    z,
+                    DRAWER_PINION_MR63_SEAT_D,
+                    DRAWER_PINION_SUPPORT_CHEEK_Y + 2 * EPS
+                );
+                // M3 clearance holes let each cheek fasten to a fixed front
+                // frame; the holes are not used to retain the bearing.
+                for (mx = [-4.0, 4.0])
+                    translate([
+                        x + mx,
+                        bearing_y,
+                        z - DRAWER_PINION_SUPPORT_CHEEK_Z / 2 - EPS
+                    ])
+                        cylinder(
+                            d = 3.40,
+                            h = DRAWER_PINION_SUPPORT_CHEEK_Z + 2 * EPS,
+                            $fn = 40
+                        );
+            }
+        color("#cfd4da")
+            drawer_drive_mr63_bearing_y(x, bearing_y, z);
+    }
+}
+
+// This is the shelf-integrated bearing support. The front rack and pinion are
+// above the shelf, so there is no rack slot or circular pinion cut in the
+// shelf. A printed Ø8 mm reinforcement disc sits below the shelf and carries
+// the lower Ø6.10 bearing seat; the Ø3.40 through-bore leaves the annulus
+// that prevents the 3×6×2 bearing from dropping into the next bay.
+module center_gt2_front_shelf_bearing_boss(
+    col,
+    row,
+    front_z,
+    include_bearing = false
+) {
+    x = clutch_col_x(col);
+    bearing_lower_y = center_gt2_front_timing_bearing_lower_y(row);
+    boss_bottom_y = bearing_lower_y
+        - DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+        - CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS;
+    difference() {
+        color("#536d78")
+            cylinder_y(
+                x,
+                boss_bottom_y,
+                front_z,
+                CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER,
+                CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+                    + DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+                    + EPS
+            );
+        cylinder_y(
+            x,
+            bearing_lower_y - EPS,
+            front_z,
+            DRAWER_FRONT_TIMING_BEARING_SEAT_D,
+            DRAWER_FRONT_TIMING_BEARING_W + 2 * EPS
+        );
+        cylinder_y(
+            x,
+            boss_bottom_y - EPS,
+            front_z,
+            DRAWER_FRONT_TIMING_BEARING_RETAINER_BORE_D,
+            DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+                + CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+                + 2 * EPS
+        );
+    }
+    if (include_bearing)
+        color("#cfd4da")
+            drawer_drive_front_timing_bearing_y(
+                x,
+                center_gt2_front_timing_bearing_center_y(row),
+                front_z
+            );
+}
+
+module center_gt2_front_shelf_bearing_cuts(col, row, front_z) {
+    x = clutch_col_x(col);
+    bearing_lower_y = center_gt2_front_timing_bearing_lower_y(row);
+    boss_bottom_y = center_gt2_front_bearing_boss_bottom_y(row);
+    cylinder_y(
+        x,
+        bearing_lower_y - EPS,
+        front_z,
+        DRAWER_FRONT_TIMING_BEARING_SEAT_D,
+        DRAWER_FRONT_TIMING_BEARING_W + 2 * EPS
+    );
+    cylinder_y(
+        x,
+        boss_bottom_y - EPS,
+        front_z,
+        DRAWER_FRONT_TIMING_BEARING_RETAINER_BORE_D,
+        DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+            + CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+            + 2 * EPS
+    );
+}
+
+module drawer_front_drive_guide_system(col, row, front_z) {
+    // These two drawer-side runners enter the inward-facing C slots; they
+    // move with the drawer and carry the tail bearing pair.
+    drawer_c_guide_flanges_at(col, row, front_z);
+    drawer_rack_guide_rails_at(col, row, front_z);
+    drawer_rack_guide_rollers(col, row, front_z);
+    if (is_center_gt2_station(col, row)) {
+        // The center pinion has no upper MR63 cheek. Its only front-drive
+        // rotary support is the 3×6×2 bearing seated in the shelf-integrated
+        // stepped boss.
+        center_gt2_front_shelf_bearing_boss(col, row, front_z, true);
+    } else {
+        drawer_front_pinion_bearing_support(
+            clutch_col_x(col),
+            drawer_front_gear_y(row),
+            front_z,
+            true
+        );
     }
 }
 
@@ -1521,8 +1983,37 @@ module world_bay_grid() {
         translate([world_col_x(i) - WORLD_DIV_T, WORLD_GRID_ORIGIN_Y, WORLD_PARTITION_FRONT_Z])
             cube([WORLD_DIV_T, WORLD_GRID_H + EPS, -WORLD_PARTITION_FRONT_Z + EPS]);
     for (j = [1:N_ROW - 1])
-        translate([WORLD_GRID_ORIGIN_X, world_row_y(j) - WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z])
-            cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
+        if (j == CENTER_GT2_ROW)
+            difference() {
+                union() {
+                    translate([
+                        WORLD_GRID_ORIGIN_X,
+                        world_row_y(j) - WORLD_SHELF_T,
+                        WORLD_PARTITION_FRONT_Z
+                    ])
+                        cube([
+                            WORLD_GRID_W + EPS,
+                            WORLD_SHELF_T,
+                            -WORLD_PARTITION_FRONT_Z + EPS
+                        ]);
+                    // The shelf and this stepped boss are one cabinet feature;
+                    // only the metal 3×6×2 bearing is shown as a purchase item.
+                    center_gt2_front_shelf_bearing_boss(
+                        CENTER_GT2_COL,
+                        j,
+                        CENTER_GT2_FRONT_PULLEY_Z,
+                        false
+                    );
+                }
+                center_gt2_front_shelf_bearing_cuts(
+                    CENTER_GT2_COL,
+                    j,
+                    CENTER_GT2_FRONT_PULLEY_Z
+                );
+            }
+        else
+            translate([WORLD_GRID_ORIGIN_X, world_row_y(j) - WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z])
+                cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
     translate([WORLD_GRID_ORIGIN_X, WORLD_GRID_ORIGIN_Y - WORLD_SHELF_T, WORLD_PARTITION_FRONT_Z])
         cube([WORLD_GRID_W + EPS, WORLD_SHELF_T, -WORLD_PARTITION_FRONT_Z + EPS]);
 }
@@ -1752,7 +2243,7 @@ module power_bus() {
 //#endregion
 
 // The center prototype is deliberately split into one removable mechanism
-// plate with an integral fixed LM3UU seat, a fixed output cage, stepped input
+// plate with integral fixed LM3UU and output bearing-bar seats, stepped input
 // shaft/sleeve and purchased-part references. Keeping this include after the
 // world-coordinate helpers
 // makes the carrier consume the same station datums as the rotors.
@@ -1941,12 +2432,20 @@ module drawer_front_compound(col, row) {
     color(COLOR_SHAFT)
         cylinder_y(
             x,
-            belt_y - TIMING_PULLEY_W / 2 - 0.25,
+            min(
+                belt_y - TIMING_PULLEY_W / 2 - 0.25,
+                gear_y - FRONT_GEAR_T / 2 - 0.25
+            ),
             front_z,
             CLUTCH_HUB_D,
-            gear_y - belt_y
-                + TIMING_PULLEY_W / 2
-                + FRONT_GEAR_T / 2
+            max(
+                belt_y - TIMING_PULLEY_W / 2 - 0.25,
+                gear_y - FRONT_GEAR_T / 2 - 0.25
+            )
+                - min(
+                    belt_y - TIMING_PULLEY_W / 2 - 0.25,
+                    gear_y - FRONT_GEAR_T / 2 - 0.25
+                )
                 + 0.50
         );
 }
@@ -1963,23 +2462,38 @@ module drawer_front_drive(col, row) {
         FRONT_PULLEY_Z - 3.5,
         drawer_front_gear_y(row)
     );
+    drawer_front_drive_guide_system(col, row, FRONT_PULLEY_Z);
 }
 
-module center_gt2_front_pulley_y(x, belt_y, z) {
+module center_gt2_front_pulley_y(x, belt_y, z, bore = "d") {
     base_y = center_gt2_pulley_base_y(belt_y);
     color(COLOR_TIMING)
         translate([x, base_y, z])
             rotate([-90, 0, 0])
                 difference() {
                     gt2_pulley_local();
-                    translate([0, 0, -GT2_EPS])
-                        cylinder(
-                            d = ROUND_BORE_D,
-                            h = GT2_BELT_LOWER_RETAINER_T
-                                + GT2_PULLEY_FACE_T
-                                + GT2_BELT_GUIDE_LIP_T
-                                + 2 * GT2_EPS
-                        );
+                    if (bore == "d")
+                        translate([0, 0, -GT2_EPS])
+                            linear_extrude(
+                                height = GT2_BELT_LOWER_RETAINER_T
+                                    + GT2_PULLEY_FACE_T
+                                    + GT2_BELT_GUIDE_LIP_T
+                                    + 2 * GT2_EPS
+                            )
+                                d_profile_2d(
+                                    ROD_D,
+                                    ROD_FLAT_DEPTH,
+                                    ROD_CLEARANCE
+                                );
+                    else
+                        translate([0, 0, -GT2_EPS])
+                            cylinder(
+                                d = ROUND_BORE_D,
+                                h = GT2_BELT_LOWER_RETAINER_T
+                                    + GT2_PULLEY_FACE_T
+                                    + GT2_BELT_GUIDE_LIP_T
+                                    + 2 * GT2_EPS
+                            );
                 }
 }
 
@@ -1988,12 +2502,11 @@ module center_gt2_front_compound(col, row) {
     front_z = CENTER_GT2_FRONT_PULLEY_Z;
     belt_y = center_gt2_belt_y(row);
     gear_y = center_gt2_front_gear_y(row);
-    pulley_base_y = center_gt2_pulley_base_y(belt_y);
-    gear_bottom_y = gear_y - FRONT_GEAR_T / 2;
 
     center_gt2_front_pulley_y(x, belt_y, front_z);
-    // The front output remains the deliberately coarse rack pinion.  Only its
-    // lower timing wheel changes to the standard 2GT profile and 6 mm belt.
+    // The front output remains the deliberately coarse rack pinion.  Its
+    // lower timing wheel now lives in the next drawer bay and is joined by a
+    // continuous D shaft through the shelf-thickness bearing.
     color(COLOR_GEAR)
         spur_gear_y(
             x,
@@ -2003,15 +2516,16 @@ module center_gt2_front_compound(col, row) {
             CLUTCH_PITCH_MM,
             FRONT_GEAR_TOOTH_DEPTH,
             FRONT_GEAR_T,
-            ROUND_BORE_D
+            ROD_D,
+            "d"
         );
     color(COLOR_SHAFT)
-        cylinder_y(
+        d_rod_y(
             x,
-            pulley_base_y - 0.25,
+            center_gt2_front_d_shaft_start_y(row),
             front_z,
-            CLUTCH_HUB_D,
-            gear_bottom_y - pulley_base_y + 0.50
+            center_gt2_front_d_shaft_length(row),
+            ROD_D
         );
 }
 
@@ -2032,6 +2546,7 @@ module center_gt2_drawer_drive(col, row) {
         CENTER_GT2_FRONT_PULLEY_Z - 3.5,
         center_gt2_front_gear_y(row)
     );
+    drawer_front_drive_guide_system(col, row, CENTER_GT2_FRONT_PULLEY_Z);
 }
 
 module drawer_drive() {
@@ -2127,8 +2642,10 @@ module selected_center_input_sleeve_magnet_part() {
     );
 }
 
-module selected_center_output_cage_part() {
-    center_clutch_output_cage(CENTER_GT2_COL, CENTER_GT2_ROW);
+module selected_center_output_bearing_bar_part() {
+    // Diagnostic-only standalone view of the output support. The canonical
+    // printed part is center_mechanism_plate, which contains this bar.
+    center_clutch_output_bearing_bar_y(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
 module selected_center_guide_rails_part() {
@@ -2575,7 +3092,8 @@ module selected_front_gear_part() {
             CLUTCH_PITCH_MM,
             FRONT_GEAR_TOOTH_DEPTH,
             FRONT_GEAR_T,
-            ROUND_BORE_D
+            ROD_D,
+            "d"
         );
     else
         spur_gear_y(
@@ -2594,8 +3112,8 @@ module selected_drawer_rack_part() {
     if (is_center_gt2_station(selected_col(), row))
         horizontal_drawer_rack(
             clutch_col_x(selected_col()),
-            WORLD_PARTITION_FRONT_Z + 1.5,
-            CENTER_GT2_FRONT_PULLEY_Z - 3.5,
+            drawer_rack_z0(),
+            drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
             center_gt2_front_gear_y(row)
         );
     else
@@ -2604,6 +3122,114 @@ module selected_drawer_rack_part() {
             WORLD_PARTITION_FRONT_Z + 1.5,
             FRONT_PULLEY_Z - 3.5,
             drawer_front_gear_y(row)
+        );
+    drawer_c_guide_flanges_at(
+        selected_col(),
+        row,
+        is_center_gt2_station(selected_col(), row)
+            ? CENTER_GT2_FRONT_PULLEY_Z
+            : FRONT_PULLEY_Z
+    );
+}
+
+module selected_drawer_rack_guide_rollers_part() {
+    drawer_rack_guide_rollers(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
+}
+
+module selected_drawer_rack_guide_rails_part() {
+    drawer_rack_guide_rails_at(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
+}
+
+// Empty CSG witness: the moving drawer flanges must remain inside the slot
+// envelope and must not enter either C-rail back wall. A non-empty result is
+// a real geometric collision, not a merely analytic warning.
+module selected_drawer_guide_flange_rail_collision_part() {
+    intersection() {
+        drawer_c_guide_flanges_at(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            CENTER_GT2_FRONT_PULLEY_Z
+        );
+        drawer_rack_guide_rails_at(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            CENTER_GT2_FRONT_PULLEY_Z
+        );
+    }
+}
+
+// Empty CSG witness: the center drawer rack and front pinion must not enter
+// the intact printable center shelf or its integrated 3×6×2 bearing boss.
+// The rack/pinion are deliberately above the shelf; a non-empty result means
+// a future height change has buried the drive into the shelf again.
+module selected_drawer_front_drive_shelf_collision_part() {
+    intersection() {
+        union() {
+            horizontal_drawer_rack(
+                clutch_col_x(CENTER_GT2_COL),
+                drawer_rack_z0(),
+                drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
+                center_gt2_front_gear_y(CENTER_GT2_ROW)
+            );
+            selected_front_gear_part();
+        }
+        world_bay_grid();
+    }
+}
+
+module selected_drawer_front_pinion_bearing_support_part() {
+    drawer_front_pinion_bearing_support(
+        clutch_col_x(CENTER_GT2_COL),
+        center_gt2_front_gear_y(CENTER_GT2_ROW),
+        CENTER_GT2_FRONT_PULLEY_Z,
+        false
+    );
+}
+
+module selected_drawer_front_pinion_bearings_part() {
+    x = clutch_col_x(CENTER_GT2_COL);
+    gear_y = center_gt2_front_gear_y(CENTER_GT2_ROW);
+    for (side = [1])
+        drawer_drive_mr63_bearing_y(
+            x,
+            gear_y + side * DRAWER_PINION_SUPPORT_CHEEK_OFFSET,
+            CENTER_GT2_FRONT_PULLEY_Z
+        );
+}
+
+module selected_front_timing_bearing_support_part() {
+    center_gt2_front_shelf_bearing_boss(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        CENTER_GT2_FRONT_PULLEY_Z,
+        false
+    );
+}
+
+module selected_front_timing_bearing_part() {
+    drawer_drive_front_timing_bearing_y(
+        clutch_col_x(CENTER_GT2_COL),
+        center_gt2_front_timing_bearing_center_y(CENTER_GT2_ROW),
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
+}
+
+module selected_front_d_axis_part() {
+    color(COLOR_SHAFT)
+        d_rod_y(
+            clutch_col_x(CENTER_GT2_COL),
+            center_gt2_front_d_shaft_start_y(CENTER_GT2_ROW),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_front_d_shaft_length(CENTER_GT2_ROW),
+            ROD_D
         );
 }
 
@@ -2617,8 +3243,8 @@ module clutch_detail() {
     z = DRIVE_AXIS_Z;
     if (is_center_gt2_station(col, row)) {
         center_gt2_clutch(col, row, ENGAGED);
-        // The center detail contains only the current plate with integral seat,
-        // output cage and D-round-D input shaft/sleeve. The old selector shoe
+        // The center detail contains only the current plate with integral seats,
+        // output D-round shaft and D-round-D input shaft/sleeve. The old selector shoe
         // remains an optional diagnostic source, not a male-end component.
     } else if (SHOW_LEGACY_STATIONS)
         translate([0, 0, -CLUTCH_EXPLODE])
@@ -2697,8 +3323,8 @@ module clutch_scene_geometry() {
         selected_center_input_sleeve_magnet_part();
     } else if (CLUTCH_PART == "center_input_carriage") {
         selected_center_input_carriage_part();
-    } else if (CLUTCH_PART == "center_output_cage") {
-        selected_center_output_cage_part();
+    } else if (CLUTCH_PART == "center_output_bearing_bar") {
+        selected_center_output_bearing_bar_part();
     } else if (CLUTCH_PART == "center_guide_rails") {
         selected_center_guide_rails_part();
     } else if (CLUTCH_PART == "center_linear_bearings") {
@@ -2774,6 +3400,24 @@ module clutch_scene_geometry() {
         selected_front_gear_part();
     } else if (CLUTCH_PART == "drawer_rack") {
         selected_drawer_rack_part();
+    } else if (CLUTCH_PART == "drawer_rack_guide_rollers") {
+        selected_drawer_rack_guide_rollers_part();
+    } else if (CLUTCH_PART == "drawer_rack_guide_rails") {
+        selected_drawer_rack_guide_rails_part();
+    } else if (CLUTCH_PART == "drawer_guide_flange_rail_collision") {
+        selected_drawer_guide_flange_rail_collision_part();
+    } else if (CLUTCH_PART == "drawer_front_drive_shelf_collision") {
+        selected_drawer_front_drive_shelf_collision_part();
+    } else if (CLUTCH_PART == "drawer_front_pinion_bearing_support") {
+        selected_drawer_front_pinion_bearing_support_part();
+    } else if (CLUTCH_PART == "drawer_front_pinion_bearings") {
+        selected_drawer_front_pinion_bearings_part();
+    } else if (CLUTCH_PART == "front_timing_bearing_support") {
+        selected_front_timing_bearing_support_part();
+    } else if (CLUTCH_PART == "front_timing_bearing") {
+        selected_front_timing_bearing_part();
+    } else if (CLUTCH_PART == "front_d_axis") {
+        selected_front_d_axis_part();
     } else if (CLUTCH_PART == "world_axes") {
         world_axes_marker();
     } else {
@@ -2789,10 +3433,102 @@ echo(
     "version=1",
     "axis=+Y",
     "role=input/output",
-    "verticalLayoutMode=center-clutch-lift",
+    "verticalLayoutMode=drawer-bottom-drive-layer-lower-pulley",
+    str("centerClutchDriveLayerOffsetMm=", CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM),
     str("centerClutchVerticalLiftMm=", CENTER_CLUTCH_VERTICAL_LIFT_MM),
+    str("drawerLayerCount=", N_ROW),
+    str("serviceLayerCount=", SERVICE_LAYERS),
+    str("drawerBayHeightMm=", BAY_H),
+    str("drawerShelfThicknessMm=", WORLD_SHELF_T),
+    str("drawerRackBodyWidthMm=", DRAWER_RACK_BODY_X),
+    str("drawerRackBodyHeightMm=", DRAWER_RACK_BODY_Y),
+    str("drawerRackToothHeightMm=", DRAWER_RACK_TOOTH_H),
+    str("drawerRackToothOverhangMm=", DRAWER_RACK_TOOTH_OVERHANG_X),
+    str("centerFrontDriveLiftMm=", CENTER_FRONT_DRIVE_LIFT_MM),
+    str("frontRackAboveShelfGapMm=", CENTER_FRONT_RACK_ABOVE_SHELF_GAP),
+    str("drawerRackLowerYMm=",
+        center_gt2_front_gear_y(CENTER_GT2_ROW) - DRAWER_RACK_BODY_Y / 2),
+    str("drawerShelfTopYMm=", world_row_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingReinforcementDiscDiameterMm=",
+        CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER),
+    str("frontTimingBearingReinforcementDiscThicknessMm=",
+        CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS),
+    "drawerRackMount=drawer-bottom-moving",
+    "drawerMassLoadPath=side-slides-not-rack",
+    "drawerGuideBearing=681-1x3x1-X-axis-C-slot",
+    "drawerGuideRail=dual-inward-C-slot",
+    "drawerGuideBearingArrangement=tail-moving-plus-front-lower-fixed",
+    "drawerGuideBearingAxis=+X/-X",
+    "drawerGuideLoadPath=Y-support-Z-travel",
+    "drawerFrontPinionBearing=integral-shelf-stepped-3x6x2",
+    str("drawerGuideRailClearanceMm=", DRAWER_GUIDE_RAIL_GAP),
+    str("drawerGuideRailWallThicknessMm=", DRAWER_GUIDE_RAIL_T),
+    str("drawerGuideBearingSeatDiameterMm=", DRAWER_GUIDE_681_SEAT_D),
+    str("drawerGuideSlotHeightMm=", DRAWER_GUIDE_C_SLOT_H),
+    str("drawerGuideRailDepthMm=", DRAWER_GUIDE_C_DEPTH),
+    str("drawerGuideFlangeThicknessMm=", DRAWER_GUIDE_C_FLANGE_T),
+    str("drawerGuideFlangeProjectionMm=", DRAWER_GUIDE_C_FLANGE_PROJECTION),
+    str("drawerGuideFlangeClearanceMm=", DRAWER_GUIDE_C_FLANGE_CLEARANCE),
+    str("drawerGuideFlangeBackClearanceMm=", DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE),
+    str("drawerGuideFrontSupportClearanceMm=", DRAWER_GUIDE_C_FRONT_SUPPORT_CLEARANCE),
+    "drawerGuideTailBearingAxis=+X/-X",
+    "drawerGuideFrontBearingAxis=+X/-X",
+    str("drawerFrontPinionBearingSeatDiameterMm=", DRAWER_PINION_MR63_SEAT_D),
     str("axisXMm=", clutch_col_x(CENTER_GT2_COL)),
     str("axisZMm=", center_gt2_z()),
+    str("drawerBottomYMm=", drawer_bottom_y(CENTER_GT2_ROW)),
+    str("drawerRackYMm=", center_gt2_front_gear_y(CENTER_GT2_ROW)),
+    str("frontPinionCenterYMm=", center_gt2_front_gear_y(CENTER_GT2_ROW)),
+    str("frontPinionLowerFaceYMm=",
+        center_gt2_front_pinion_lower_y(CENTER_GT2_ROW)),
+    str("frontTimingPulleyDrawerRow=", CENTER_GT2_FRONT_PULLEY_ROW),
+    "frontTimingPulleyLayer=next-drawer-bay",
+    str("frontTimingPulleyZMm=", CENTER_GT2_FRONT_PULLEY_Z),
+    str("frontTimingBeltYMm=", center_gt2_belt_y(CENTER_GT2_ROW)),
+    str("frontTimingPulleyCenterYMm=", center_gt2_belt_y(CENTER_GT2_ROW)),
+    str("frontTimingPulleyBottomYMm=",
+        center_gt2_pulley_base_y(center_gt2_belt_y(CENTER_GT2_ROW))),
+    str("frontTimingPulleyTopYMm=",
+        center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))),
+    str("frontTimingPulleyToPinionGapMm=",
+        center_gt2_front_pinion_lower_y(CENTER_GT2_ROW)
+            - center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))),
+    str("frontTimingBearingCenterYMm=",
+        center_gt2_front_timing_bearing_center_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingUpperFaceYMm=",
+        center_gt2_front_timing_bearing_upper_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingLowerFaceYMm=",
+        center_gt2_front_timing_bearing_lower_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingWidthMm=", DRAWER_FRONT_TIMING_BEARING_W),
+    str("frontTimingBearingIdMm=", DRAWER_FRONT_TIMING_BEARING_ID),
+    str("frontTimingBearingOdMm=", DRAWER_FRONT_TIMING_BEARING_OD),
+    str("frontTimingBearingSeatDiameterMm=",
+        DRAWER_FRONT_TIMING_BEARING_SEAT_D),
+    str("frontTimingBearingSeatDepthMm=", DRAWER_FRONT_TIMING_BEARING_W),
+    str("frontTimingBearingRetainerThicknessMm=",
+        DRAWER_FRONT_TIMING_BEARING_RETAINER_T),
+    str("frontTimingBearingRetainerBoreDiameterMm=",
+        DRAWER_FRONT_TIMING_BEARING_RETAINER_BORE_D),
+    str("frontTimingBearingShelfLowerFaceYMm=",
+        center_gt2_front_shelf_lower_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingBossFusionOverlapMm=", EPS),
+    str("frontTimingBearingBossBottomYMm=",
+        center_gt2_front_bearing_boss_bottom_y(CENTER_GT2_ROW)),
+    str("frontTimingBearingGearClearanceMm=",
+        CENTER_GT2_FRONT_TIMING_BEARING_GEAR_GAP),
+    str("frontTimingBearingPulleyClearanceMm=",
+        center_gt2_front_timing_bearing_lower_y(CENTER_GT2_ROW)
+            - center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))),
+    "frontTimingBearingSupport=integral-shelf-stepped-seat",
+    "frontTimingBearingFit=press-fit-3x6x2-bottom-captive",
+    "frontDshaftProfile=D",
+    str("frontDshaftStartYMm=",
+        center_gt2_front_d_shaft_start_y(CENTER_GT2_ROW)),
+    str("frontDshaftEndYMm=",
+        center_gt2_front_d_shaft_end_y(CENTER_GT2_ROW)),
+    str("frontDshaftLengthMm=",
+        center_gt2_front_d_shaft_length(CENTER_GT2_ROW)),
+    str("frontPinionThicknessMm=", FRONT_GEAR_T),
     str("inputBaseYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)),
     str("maleBottomYMm=", center_gt2_male_base_y(CENTER_GT2_ROW)),
     str("outputBaseYMm=", center_gt2_female_base_y(CENTER_GT2_ROW)),
@@ -2820,6 +3556,8 @@ echo(
     str("linearBearingCount=", CENTER_CLUTCH_LINEAR_BEARING_COUNT),
     str("linearBearingCenterYOffsetMm=",
         CENTER_CLUTCH_LINEAR_BEARING_CENTER_Y_OFFSET),
+    str("linearBearingInputRotorClearanceMm=",
+        CENTER_CLUTCH_LINEAR_BEARING_INPUT_ROTOR_CLEARANCE),
     str("linearBearingCenterYMm=",
         center_clutch_linear_bearing_center_y(CENTER_GT2_ROW)),
     str("linearBearingSeatDiameterMm=", CENTER_CLUTCH_LINEAR_BEARING_SEAT_D),
@@ -2880,6 +3618,16 @@ echo(
     "inputSleeveMagnetPart=cabinet-clutch/center_input_sleeve_magnet_reference",
     str("outputShaftStartMm=", CENTER_CLUTCH_SHAFT_OUTPUT_START),
     str("outputShaftLengthMm=", CENTER_CLUTCH_SHAFT_OUTPUT_LENGTH),
+    str("outputShaftDStartMm=", CENTER_CLUTCH_SHAFT_OUTPUT_D_START),
+    str("outputShaftDLengthMm=", CENTER_CLUTCH_SHAFT_OUTPUT_D_LENGTH),
+    str("outputShaftRoundStartMm=", CENTER_CLUTCH_SHAFT_OUTPUT_ROUND_START),
+    str("outputShaftRoundLengthMm=", CENTER_CLUTCH_SHAFT_OUTPUT_ROUND_LENGTH),
+    str("outputShaftRoundDiameterMm=", CENTER_CLUTCH_SHAFT_OUTPUT_ROUND_D),
+    str("outputShaftTopProtrusionMm=",
+        CENTER_CLUTCH_SHAFT_OUTPUT_TOP_PROTRUSION),
+    str("outputShaftMotherSocketOverlapMm=",
+        CENTER_CLUTCH_SHAFT_OUTPUT_MOTHER_SOCKET_OVERLAP),
+    str("outputShaftProfile=", CENTER_CLUTCH_SHAFT_OUTPUT_PROFILE),
     str("outputBearingCount=", 2),
     str("bearingCount=", 2),
     str("bearingNominal=3x6x2"),
@@ -2890,14 +3638,27 @@ echo(
         CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET),
     str("bearingCenterOffsetMm=", CENTER_CLUTCH_BEARING_CENTER_OFFSET),
     str("bearingPairSpacingMm=", CENTER_CLUTCH_BEARING_PAIR_SPACING),
-    str("bearingBlockThicknessMm=", CENTER_CLUTCH_BEARING_BLOCK_T),
+    str("outputBearingBarWidthMm=", CENTER_CLUTCH_BEARING_BLOCK_X),
+    str("outputBearingBarYLengthMm=", CENTER_CLUTCH_BEARING_BLOCK_Y),
+    str("outputBearingBarY0OffsetMm=",
+        CENTER_CLUTCH_BEARING_BLOCK_Y0_OFFSET),
+    str("outputBearingBarZLengthMm=",
+        center_clutch_output_bearing_bar_z_length()),
+    str("outputBearingBarZMarginMm=",
+        CENTER_CLUTCH_BEARING_BLOCK_Z_MARGIN),
+    str("outputBearingBarZMinMm=",
+        center_clutch_output_bearing_bar_z0()),
+    str("outputBearingBarZMaxMm=",
+        center_clutch_output_bearing_bar_z1()),
+    str("outputBearingBarMotherClearanceMm=",
+        CENTER_CLUTCH_BEARING_BLOCK_Y0_OFFSET),
+    str("outputBearingBarPlateOverlapMm=",
+        CENTER_CLUTCH_BEARING_BLOCK_Z_OVERLAP),
     str("shaftDiameterMm=", GT2_D_AXIS_D),
-    str("shaftCollarOdMm=", CENTER_CLUTCH_SHAFT_COLLAR_OD),
-    str("shaftCollarBoreMm=", CENTER_CLUTCH_SHAFT_COLLAR_BORE_D),
     str("matingMagnetCount=", 2),
     str("inputSleeveMagnetCount=", 1),
     str("totalModeledMagnetCount=", 3),
-    "rotaryBearingArrangement=output-two-3x6x2-axially-spaced-input-free",
+    "rotaryBearingArrangement=output-two-3x6x2-in-one-integral-bar-input-free",
     "linearBearingArrangement=single-coaxial-with-integrated-seat",
     str("plateWidthMm=", CENTER_CLUTCH_PLATE_W),
     str("plateKeyWidthMm=", CENTER_CLUTCH_PLATE_KEY_W),
@@ -2917,11 +3678,11 @@ echo(
     "engageOnlyWhenStopped=true",
     "releaseBeforeReturn=true",
     "inputSideAdditionalMechanism=none",
-    "centerCol=2",
-    "centerRow=2",
+    str("centerCol=", CENTER_GT2_COL),
+    str("centerRow=", CENTER_GT2_ROW),
     "inputPart=cabinet-clutch/center_input_rotor",
     "outputPart=cabinet-clutch/center_output_rotor",
-    "outputCagePart=cabinet-clutch/center_output_cage",
+    "outputBearingSupportPart=cabinet-clutch/center_mechanism_plate",
     "mechanismPlatePart=cabinet-clutch/center_mechanism_plate",
     "outputShaftPart=cabinet-clutch/center_output_shaft_reference",
     "outputBearingsPart=cabinet-clutch/center_output_bearings_reference"
@@ -2951,7 +3712,7 @@ assert(
     || CLUTCH_PART == "center_input_sleeve"
     || CLUTCH_PART == "center_input_sleeve_magnet"
     || CLUTCH_PART == "center_input_carriage"
-    || CLUTCH_PART == "center_output_cage"
+    || CLUTCH_PART == "center_output_bearing_bar"
     || CLUTCH_PART == "center_guide_rails"
     || CLUTCH_PART == "center_linear_bearings"
     || CLUTCH_PART == "center_linear_bearing_retainers"
@@ -2989,6 +3750,15 @@ assert(
     || CLUTCH_PART == "front_pulley"
     || CLUTCH_PART == "front_gear"
     || CLUTCH_PART == "drawer_rack"
+    || CLUTCH_PART == "drawer_rack_guide_rollers"
+    || CLUTCH_PART == "drawer_rack_guide_rails"
+    || CLUTCH_PART == "drawer_guide_flange_rail_collision"
+    || CLUTCH_PART == "drawer_front_drive_shelf_collision"
+    || CLUTCH_PART == "drawer_front_pinion_bearing_support"
+    || CLUTCH_PART == "drawer_front_pinion_bearings"
+    || CLUTCH_PART == "front_timing_bearing_support"
+    || CLUTCH_PART == "front_timing_bearing"
+    || CLUTCH_PART == "front_d_axis"
     || CLUTCH_PART == "world_axes"
 );
 assert(abs(CLUTCH_OPEN_GAP - 2 * CLUTCH_DOG_TOOTH_H) < 0.001, "open clutch gap must be two dog tooth heights");
@@ -3019,6 +3789,121 @@ assert(CENTER_GT2_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
 assert(CENTER_GT2_FRONT_PULLEY_Z < 0
         && CENTER_GT2_FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z,
     "center 2GT front pulley must stay in the drawer bay");
+assert(abs(CENTER_GT2_FRONT_PULLEY_Z + CENTER_FRONT_DRIVE_AXIS_NATIVE_Y) < 0.001,
+    "center front drive depth must match the printable cabinet shelf seat");
+assert(N_ROW == 3 && SERVICE_LAYERS == 1,
+    "current first article is the three-drawer one-service-layer layout");
+assert(DRAWER_RACK_BODY_Y > 0
+        && abs(drawer_rack_y(CENTER_GT2_ROW)
+            + DRAWER_RACK_BODY_Y / 2
+            - drawer_bottom_y(CENTER_GT2_ROW)) < 0.001,
+    "drawer rack backing must terminate at the drawer underside");
+assert(DRAWER_RACK_BODY_X > 0
+        && DRAWER_RACK_TOOTH_H > 0
+        && DRAWER_RACK_TOOTH_OVERHANG_X >= 0,
+    "drawer rack X envelope and tooth geometry must be positive");
+assert(CENTER_FRONT_DRIVE_LIFT_MM > 0,
+    "center front drive must lift above the intact shelf");
+assert(abs(
+    center_gt2_front_gear_y(CENTER_GT2_ROW)
+        - (drawer_rack_y(CENTER_GT2_ROW) + CENTER_FRONT_DRIVE_LIFT_MM)
+) < 0.001,
+    "center front rack lift must be applied to the rack and pinion together");
+assert(abs(
+    center_gt2_front_gear_y(CENTER_GT2_ROW)
+        - DRAWER_RACK_BODY_Y / 2
+        - world_row_y(CENTER_GT2_ROW)
+        - CENTER_FRONT_RACK_ABOVE_SHELF_GAP
+) < 0.001,
+    "center rack lower edge must sit above the shelf top");
+assert(abs(
+    center_gt2_front_timing_bearing_upper_y(CENTER_GT2_ROW)
+        - world_row_y(CENTER_GT2_ROW)
+) < 0.001,
+    "center timing bearing upper edge must be flush with the shelf top");
+assert(CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER
+        > CENTER_FRONT_BEARING_OD
+        && CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS > 0,
+    "center timing bearing must have a real lower reinforcement disc");
+assert(drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z)
+        > drawer_rack_z0() + DRAWER_RACK_PITCH,
+    "drawer rack must leave a positive tooth run");
+assert(abs(
+    center_gt2_front_gear_y(CENTER_GT2_ROW)
+        - (drawer_rack_y(CENTER_GT2_ROW) + CENTER_FRONT_DRIVE_LIFT_MM)
+) < 0.001,
+    "center front pinion must share the lifted moving drawer rack height");
+assert(abs(
+    center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))
+        + CENTER_GT2_FRONT_TIMING_BEARING_GEAR_GAP
+        + DRAWER_FRONT_TIMING_BEARING_W
+        + CENTER_GT2_FRONT_TIMING_BEARING_PULLEY_GAP
+        + CENTER_FRONT_DRIVE_LIFT_MM
+        + FRONT_GEAR_T / 2
+        - center_gt2_front_gear_y(CENTER_GT2_ROW)
+) < 0.001,
+    "center 2GT pulley must sit in the lower bay below the shelf bearing");
+assert(CENTER_GT2_FRONT_PULLEY_ROW >= 0
+        && CENTER_GT2_FRONT_PULLEY_ROW < N_ROW,
+    "center front pulley must have a real lower drawer bay");
+assert(center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))
+        < center_gt2_front_timing_bearing_lower_y(CENTER_GT2_ROW)
+            - CENTER_GT2_FRONT_TIMING_BEARING_PULLEY_GAP + 0.001,
+    "center front pulley must clear the shelf-thickness bearing");
+assert(center_gt2_front_timing_bearing_upper_y(CENTER_GT2_ROW)
+        < center_gt2_front_pinion_lower_y(CENTER_GT2_ROW) + 0.001,
+    "center shelf bearing must clear the upper pinion");
+assert(abs(DRAWER_FRONT_TIMING_BEARING_W - CENTER_FRONT_BEARING_WIDTH) < 0.001
+        && abs(DRAWER_FRONT_TIMING_BEARING_ID - CENTER_FRONT_BEARING_ID) < 0.001
+        && abs(DRAWER_FRONT_TIMING_BEARING_OD - CENTER_FRONT_BEARING_OD) < 0.001,
+    "center front bearing must be the purchased 3x6x2 part");
+assert(DRAWER_FRONT_TIMING_BEARING_W < WORLD_SHELF_T
+        && DRAWER_FRONT_TIMING_BEARING_RETAINER_T > 0
+        && DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+            + DRAWER_FRONT_TIMING_BEARING_W <= WORLD_SHELF_T + 0.001,
+    "center front bearing must leave a printed shelf shoulder");
+assert(abs(
+    center_gt2_front_bearing_boss_bottom_y(CENTER_GT2_ROW)
+        + DRAWER_FRONT_TIMING_BEARING_RETAINER_T
+        + CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS
+        - center_gt2_front_timing_bearing_lower_y(CENTER_GT2_ROW)
+    ) < 0.001,
+    "center front bearing bottom shoulder must be derived from the bearing");
+assert(abs(
+    center_gt2_front_shelf_lower_y(CENTER_GT2_ROW)
+        - (world_row_y(CENTER_GT2_ROW) - WORLD_SHELF_T)
+    ) < 0.001,
+    "center front bearing boss must terminate on the real shelf underside");
+assert(center_gt2_front_d_shaft_length(CENTER_GT2_ROW) > 0
+        && center_gt2_front_d_shaft_length(CENTER_GT2_ROW)
+            > DRAWER_FRONT_TIMING_BEARING_W,
+    "center front D shaft must bridge pinion, shelf bearing and pulley");
+assert(center_gt2_pulley_base_y(center_gt2_belt_y(CENTER_GT2_ROW))
+        >= world_row_y(CENTER_GT2_FRONT_PULLEY_ROW) + DRAWER_CLEAR
+            - 0.001
+        && center_gt2_pulley_top_y(center_gt2_belt_y(CENTER_GT2_ROW))
+            <= world_row_y(CENTER_GT2_FRONT_PULLEY_ROW) + BAY_H - DRAWER_CLEAR
+                + 0.001,
+    "center front timing pulley must fit inside the next drawer bay");
+assert(center_gt2_belt_y(CENTER_GT2_ROW)
+        < center_gt2_front_gear_y(CENTER_GT2_ROW),
+    "center drawer belt must stay below the front pinion");
+assert(drawer_guide_z1(CENTER_GT2_FRONT_PULLEY_Z)
+        > drawer_guide_z0(CENTER_GT2_FRONT_PULLEY_Z)
+            + 2 * DRAWER_GUIDE_ROLLER_Z_MARGIN,
+    "drawer guide rails must leave two roller stations");
+assert(DRAWER_GUIDE_681_OD > DRAWER_GUIDE_681_ID
+        && DRAWER_GUIDE_681_SEAT_D > DRAWER_GUIDE_681_OD,
+    "681 guide bearing seat must leave a press-fit annulus");
+assert(DRAWER_GUIDE_C_DEPTH
+        > DRAWER_GUIDE_C_FLANGE_PROJECTION
+            + DRAWER_GUIDE_C_FLANGE_CLEARANCE,
+    "C rail depth must capture the drawer flange without bottoming at the back wall");
+assert(DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE >= DRAWER_GUIDE_RAIL_GAP,
+    "C rail flange must clear the back wall by at least the running gap");
+assert(DRAWER_PINION_MR63_OD > DRAWER_PINION_MR63_ID
+        && DRAWER_PINION_MR63_SEAT_D > DRAWER_PINION_MR63_OD,
+    "MR63 pinion bearing seat must leave a press-fit annulus");
 assert(COLUMN_SYNC_BELT_TEETH == 226,
     "column sync must use the selected 226T / 452 mm 2GT loop");
 assert(abs(COLUMN_SYNC_BELT_LENGTH_MM

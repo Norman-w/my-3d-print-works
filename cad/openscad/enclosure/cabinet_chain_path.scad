@@ -6,8 +6,9 @@ include <cabinet_chain_pins.gen.scad>
 
 //#region 常量/配置
 SPROCKET_TEETH = 12;
-BLUNT_TEETH = 8;
+BLUNT_TEETH = 8;                 // 所有绿色导向轮统一使用的最小轮
 WALL_CLEAR = 0.40;
+DRIVE_RETURN_X_TRIM = -0.1018;   // 三层路径在地板安全高度闭合真实 P 节距
 //#endregion
 
 //#region 模型/类型
@@ -17,13 +18,18 @@ function drive_outer_r() = drive_pitch_r() + 0.38 * P;
 
 function translator_r() = P / (2 * sin(180 / BLUNT_TEETH));
 
+function guide_outer_r() = translator_r() + 0.12 * P;
+
 function wall_inset() = WALL + drive_outer_r() + WALL_CLEAR;
 
 function return_x() = wall_inset();
 
 function blunt_dx() = (W - wall_inset()) - col_center_x(N_COL - 1);
 
-function pair_align_dx() = drive_pitch_r() - translator_r();
+// Keep the old 8T side anchors.  The former 12T/8T pair used this offset to
+// make different pitch radii share a vertical tangent; now both wheels on a
+// side are 8T, so the offset only preserves the established cabinet envelope.
+function guide_anchor_dx() = drive_pitch_r() - translator_r();
 
 function polar_xy(c, r, a) = [c[0] + r * cos(a), c[1] + r * sin(a), 0];
 
@@ -36,29 +42,33 @@ function external_a(c1, r1, c2, r2) =
 //#endregion
 
 //#region 私有成员
-function right_sprocket_c(z_hi) = [W - wall_inset(), z_hi - drive_pitch_r(), 0];
+function right_sprocket_c(z_hi) = [
+    W - wall_inset() + guide_anchor_dx(),
+    z_hi - translator_r(),
+    0
+];
 
 function right_blunt_c(z_lo) = [
-    W - wall_inset() + pair_align_dx(),
+    W - wall_inset() + guide_anchor_dx(),
     z_lo + translator_r(),
     0
 ];
 
 function left_sprocket_c(z_hi) = [
-    col_center_x(0) - blunt_dx(),
-    z_hi - drive_pitch_r(),
+    col_center_x(0) - blunt_dx() - guide_anchor_dx(),
+    z_hi - translator_r(),
     0
 ];
 
 function left_blunt_c(z_lo) = [
-    col_center_x(0) - blunt_dx() - pair_align_dx(),
+    col_center_x(0) - blunt_dx() - guide_anchor_dx(),
     z_lo + translator_r(),
     0
 ];
 
 function right_leave_a() = external_a(
     right_sprocket_c(row_center_z(N_ROW - 1)),
-    drive_pitch_r(),
+    translator_r(),
     right_blunt_c(row_center_z(N_ROW - 2)),
     translator_r()
 );
@@ -68,14 +78,14 @@ function s_span_check() = (90 - right_leave_a() + 360) % 360;
 function service_chain_z() = row_center_z(0) - ROW_PITCH;
 
 function drive_c() = [
-    return_x() + 3 * drive_pitch_r(),
-    service_chain_z() - drive_pitch_r(),
+    return_x() + 2 * drive_pitch_r() + translator_r() + DRIVE_RETURN_X_TRIM,
+    service_chain_z() - translator_r(),
     0
 ];
 
 function entry_c() = [
-    return_x() + drive_pitch_r(),
-    row_center_z(N_ROW - 1) - drive_pitch_r(),
+    return_x() + translator_r(),
+    row_center_z(N_ROW - 1) - translator_r(),
     0
 ];
 
@@ -84,8 +94,8 @@ function entry_c() = [
 function power_c() = right_sprocket_c(row_center_z(N_ROW - 1));
 
 function right_turn_sprockets_without_power() = [
-    right_sprocket_c(row_center_z(2)),
-    right_sprocket_c(row_center_z(0))
+    for (row = [N_ROW - 3:-2:0])
+        right_sprocket_c(row_center_z(row))
 ];
 
 function ten_path_c() = [
@@ -100,21 +110,20 @@ function ten_path_c() = [
 function snake_drive_c() = ten_path_c();
 
 function right_turn_sprockets() = [
-    right_sprocket_c(row_center_z(4)),
-    right_sprocket_c(row_center_z(2)),
-    right_sprocket_c(row_center_z(0))
+    for (row = [N_ROW - 1:-2:0])
+        right_sprocket_c(row_center_z(row))
 ];
 
 function left_turn_sprockets() = [
-    left_sprocket_c(row_center_z(3)),
-    left_sprocket_c(row_center_z(1))
+    for (row = [N_ROW - 2:-2:1])
+        left_sprocket_c(row_center_z(row))
 ];
 
 function blunt_centers() = [
-    right_blunt_c(row_center_z(3)),
-    left_blunt_c(row_center_z(2)),
-    right_blunt_c(row_center_z(1)),
-    left_blunt_c(row_center_z(0)),
+    for (k = [0:N_ROW - 2])
+        (k % 2 == 0
+            ? right_blunt_c(row_center_z(N_ROW - 2 - k))
+            : left_blunt_c(row_center_z(N_ROW - 2 - k))),
     right_blunt_c(service_chain_z())
 ];
 //#endregion
@@ -133,17 +142,21 @@ function wheel_pose_rot(x, z) =
 
 //#region 业务逻辑
 // 销轴由 solve_cabinet_chain.py 按弦长 P 走出；只动底端张紧轮 Z 闭合闭环。
-// 每对 12T+钝齿节圆外切，外侧链条竖齐。5 层奇数，底仓横穿后进张紧 U。
+// 所有固定绿色导向位统一采用 8T 钝齿节圆，侧边同半径后直接形成四分之一圆弧；
+// 只有底部张紧/主动轮保留 12T。抽屉层数保持奇数，底仓横穿后进张紧 U。
 // 后视左 = 柜体 +X；power_c() 是旧高 X 上方普通导向轮，entry_c() 是低 X
 // 的普通导向轮，snake_drive_c() 是右下方带电机的回程张紧轮位。
 //#endregion
 
 //#region 方法/工具
-assert(N_COL == 5 && N_ROW == 5, "snake layout is for 5x5");
+assert(N_COL == 5 && N_ROW == 3, "snake layout is for the 5x3 drawer layout");
 assert(len(snake_pins()) % 2 == 0, "snake pin count must be even");
 assert(len(snake_pins()) == SNAKE_PIN_N, "generated pin count must match");
 assert(TEN_Z >= WALL + drive_outer_r() - 0.01, "tensioner teeth must stay above the inner floor");
-assert(abs(s_span_check() - 90) < 1, "12T wrap should be a quarter turn onto the vertical chain");
+assert(BLUNT_TEETH >= 8, "03C guide wheel must be at least 8T");
+assert(translator_r() > P / 2, "8T guide wheel must accept one-pitch pin chord");
+assert(guide_outer_r() < drive_outer_r(), "small guide envelope should stay below the 12T drive envelope");
+assert(abs(s_span_check() - 90) < 1, "8T guide wrap should be a quarter turn onto the vertical chain");
 assert(norm(snake_drive_c() - motor_mount_c()) < 0.01,
     "snake drive and motor cover/floor fixing-seat center must stay aligned");
 //#endregion
