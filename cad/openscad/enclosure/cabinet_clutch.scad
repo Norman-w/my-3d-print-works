@@ -2444,7 +2444,7 @@ SNAKE_CHAIN_VERTICAL_SHIFT_MM =
 SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM =
     row_center_z(0) - ROW_PITCH + SNAKE_CHAIN_VERTICAL_SHIFT_MM;
 // The service run is shifted down to the magnet datum.  This independent
-// lower-return guide center keeps the 03C loop at its original 274-pin length
+// lower-return guide center closes the 250 mm / 44 mm 03C loop at 256 pins
 // while leaving the small guide wheel safely above the floor.
 SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM = 41.20;
 SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143;
@@ -2485,7 +2485,7 @@ SNAKE_CHAIN_RETURN_DRIVE_X_MM =
     SNAKE_CHAIN_WALL_INSET_MM
         + 2 * SNAKE_CHAIN_DRIVE_PITCH_R_MM
         + SNAKE_CHAIN_GUIDE_PITCH_R_MM
-        - 0.1018;
+        - 2.10;
 
 VERTICAL_SPLINE_BEARING_NOMINAL = "3x6x2";
 VERTICAL_SPLINE_BEARING_ID_MM = 3.0;
@@ -2872,8 +2872,8 @@ module center_gt2_female(col, row) {
                 female_local();
 }
 
-module center_gt2_clutch(col, row, engaged = false) {
-    center_clutch_carrier(col, row, engaged, true);
+module center_gt2_clutch(col, row, engaged = false, include_plate = false) {
+    center_clutch_carrier(col, row, engaged, true, include_plate);
     center_gt2_female(col, row);
     center_gt2_male(col, row, engaged);
 }
@@ -2883,7 +2883,16 @@ module all_clutches() {
         ENGAGED
             && CENTER_GT2_COL == selected_col()
             && CENTER_GT2_ROW == selected_row();
-    center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, center_station_engaged);
+    // The rear cavity has one continuous printed carrier strip per drawer
+    // row.  Station mechanisms below are instances and deliberately do not
+    // carry fifteen duplicate local plates.
+    color("#536d78") center_clutch_mechanism_row_plates();
+    center_gt2_clutch(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        center_station_engaged,
+        false
+    );
 
     // Keep the world assembly complete: the fourteen non-center stations are
     // translated instances of the same finished center clutch. They are
@@ -3127,7 +3136,7 @@ module center_station_instance_transform(col, row) {
 
 module center_station_clutch_instance(col, row, engaged = false) {
     center_station_instance_transform(col, row)
-        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged);
+        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged, false);
 }
 
 module center_station_drawer_drive_instance(col, row) {
@@ -3137,7 +3146,7 @@ module center_station_drawer_drive_instance(col, row) {
 
 module center_station_assembly_instance(col, row, engaged = false) {
     center_station_instance_transform(col, row) {
-        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged);
+        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged, false);
         center_gt2_drawer_drive(CENTER_GT2_COL, CENTER_GT2_ROW);
     }
 }
@@ -3296,7 +3305,10 @@ module selected_center_stops_part() {
 }
 
 module selected_center_mechanism_plate_part() {
-    center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
+    // This one STL is the complete three-row rear carrier: each row spans
+    // five stations, while every station's LM3UU/output bearing supports and
+    // four screw holes remain generated from the same source datum.
+    center_clutch_mechanism_row_plates();
 }
 
 // Standalone inspection export for the fixed front/rear compartment
@@ -3313,13 +3325,16 @@ module selected_cabinet_partition_part() {
 // never included in the default manifest.
 module selected_center_plate_belt_collision_part() {
     intersection() {
-        center_clutch_mechanism_plate(CENTER_GT2_COL, CENTER_GT2_ROW);
-        center_gt2_belt_loop_z(
-            clutch_col_x(CENTER_GT2_COL),
-            center_gt2_z(),
-            CENTER_GT2_FRONT_PULLEY_Z,
-            center_gt2_belt_y(CENTER_GT2_ROW)
-        );
+        center_clutch_mechanism_row_plates();
+        union()
+            for (row = [0:N_ROW - 1])
+                for (col = [0:N_COL - 1])
+                    center_gt2_belt_loop_z(
+                        clutch_col_x(col),
+                        center_gt2_z(),
+                        CENTER_GT2_FRONT_PULLEY_Z,
+                        center_gt2_belt_y(row)
+                    );
     }
 }
 
@@ -3731,7 +3746,10 @@ module clutch_detail() {
     x = clutch_col_x(col);
     z = DRIVE_AXIS_Z;
     if (is_center_gt2_station(col, row)) {
-        center_gt2_clutch(col, row, ENGAGED);
+        // Detail mode is a single-station inspection view.  The world
+        // assembly uses the shared row carrier above; this local plate is
+        // intentionally only a diagnostic overlay for the selected station.
+        center_gt2_clutch(col, row, ENGAGED, true);
         // The center detail contains the current plate with integral seats,
         // output D-round shaft, D-round-D input shaft/sleeve and the sleeve
         // magnet interface.  The retired selector shoe/support arm is not
@@ -3942,6 +3960,21 @@ echo(
     str("serviceLayerCount=", SERVICE_LAYERS),
     str("drawerBayHeightMm=", BAY_H),
     str("drawerShelfThicknessMm=", WORLD_SHELF_T),
+    str("cabinetWidthMm=", W),
+    str("serviceWidthMm=", SERVICE_W),
+    str("gridWidthMm=", WORLD_GRID_W),
+    str("drawerBayWidthMm=", WORLD_BAY_W),
+    str("drawerColumnPitchMm=", WORLD_COL_PITCH),
+    "rearClutchCarrierMode=row-strip",
+    str("rearClutchRowPlateCount=", N_ROW),
+    str("rearClutchRowPlateStationCount=", N_COL),
+    str("rearClutchRowPlateLengthMm=", center_clutch_row_plate_length()),
+    str("rearClutchRowPlateX0Mm=", center_clutch_row_plate_x0()),
+    str("rearClutchRowPlateX1Mm=", center_clutch_row_plate_x1()),
+    str("rearClutchRowPlateLeftClearanceMm=",
+        center_clutch_row_plate_left_clearance()),
+    str("rearClutchRowPlateRightClearanceMm=",
+        center_clutch_row_plate_right_clearance()),
     str("drawerStationTemplateOriginXMm=", clutch_col_x(0)),
     str("drawerStationTemplateOriginYMm=", world_row_center_y(0)),
     str("drawerStationColumnPitchMm=", WORLD_COL_PITCH),
@@ -4169,6 +4202,7 @@ echo(
         SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM),
     str("snakeChainReturnGuideCenterYMm=",
         SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM),
+    str("snakeChainReturnDriveXTrimMm=", -2.10),
     str("snakeChainTriggerMagnetSegmentIndex=",
         SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX),
     str("snakeChainTriggerMagnetDiameterMm=", SNAKE_CHAIN_TRIGGER_MAGNET_D),

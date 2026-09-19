@@ -95,6 +95,7 @@ REQUIRED = {
     "snakeChainLinkTopOffsetMm", "snakeChainReferenceRow",
     "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
     "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainReturnDriveXTrimMm",
     "snakeChainTriggerMagnetSegmentIndex",
     "snakeChainTriggerMagnetDiameterMm", "snakeChainTriggerMagnetLengthMm",
     "snakeChainTriggerMagnetNormalOffsetMm",
@@ -140,6 +141,11 @@ REQUIRED = {
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
     "drawerLayerCount", "drawerColumnCount", "serviceLayerCount", "drawerBayHeightMm",
     "drawerShelfThicknessMm",
+    "cabinetWidthMm", "serviceWidthMm", "gridWidthMm", "drawerBayWidthMm",
+    "drawerColumnPitchMm", "rearClutchCarrierMode", "rearClutchRowPlateCount",
+    "rearClutchRowPlateStationCount", "rearClutchRowPlateLengthMm",
+    "rearClutchRowPlateX0Mm", "rearClutchRowPlateX1Mm",
+    "rearClutchRowPlateLeftClearanceMm", "rearClutchRowPlateRightClearanceMm",
     "drawerStationTemplateOriginXMm", "drawerStationTemplateOriginYMm",
     "drawerStationColumnPitchMm", "drawerStationRowPitchMm",
     "drawerStationInstanceCount",
@@ -179,7 +185,8 @@ INT_KEYS = {
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
     "verticalSplineBearingCount", "verticalSplineBearingDetourColumn",
-    "drawerStationInstanceCount",
+    "drawerStationInstanceCount", "rearClutchRowPlateCount",
+    "rearClutchRowPlateStationCount",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -242,6 +249,26 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("中心离合契约轴向/角色不匹配")
     if contract.get("verticalLayoutMode") != "drawer-bottom-drive-layer-lower-pulley":
         raise RuntimeError("中心离合垂直布局必须使用抽屉底部主动轮+下层同步轮")
+    if contract.get("rearClutchCarrierMode") != "row-strip":
+        raise RuntimeError("后仓离合承载板必须是按抽屉层连续横向承载板")
+    for key, value, label in (
+        ("cabinetWidthMm", 250.0, "箱体总宽"),
+        ("serviceWidthMm", 44.0, "X- 服务区宽度"),
+        ("gridWidthMm", 199.6, "五列抽屉区净宽"),
+        ("drawerBayWidthMm", 38.0, "抽屉格净宽"),
+        ("drawerColumnPitchMm", 40.4, "抽屉列节距"),
+        ("rearClutchRowPlateLengthMm", 195.6, "连续离合行板长度"),
+        ("rearClutchRowPlateX0Mm", 49.2, "连续离合行板 X- 起点"),
+        ("rearClutchRowPlateX1Mm", 244.8, "连续离合行板 X+ 终点"),
+        ("rearClutchRowPlateLeftClearanceMm", 2.0, "连续离合行板左侧净空"),
+        ("rearClutchRowPlateRightClearanceMm", 2.0, "连续离合行板右侧净空"),
+    ):
+        expect(contract, key, value, label)
+    if n(contract, "rearClutchRowPlateCount") != 3:
+        raise RuntimeError("后仓连续离合承载板必须按三层抽屉生成三条")
+    if n(contract, "rearClutchRowPlateStationCount") != 5:
+        raise RuntimeError("每条后仓连续离合承载板必须覆盖五个站点")
+    expect(contract, "snakeChainReturnDriveXTrimMm", -2.10, "蛇链回程主动轮 X 相位偏移")
     expect(contract, "centerClutchDriveLayerOffsetMm", 0.0, "中心驱动层偏置")
     expect(contract, "centerClutchVerticalLiftMm", 0.0, "兼容垂直偏置")
     if contract.get("actuation") != "permanent-magnet":
@@ -299,6 +326,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "drawerGuideLoadPath": "Y-support-Z-travel",
         "drawerGuideTailBearingAxis": "+X/-X",
         "drawerGuideFrontBearingAxis": "+X/-X",
+        "rearClutchCarrierMode": "row-strip",
     }
     for key, value in exact.items():
         if contract.get(key) != value:
@@ -453,6 +481,16 @@ def validate_contract(contract: dict[str, object]) -> None:
         "partitionBossHeightMm": 2.70,
         "partitionBossHeightDeficitMm": 0.50,
         "drawerShelfThicknessMm": 2.40,
+        "cabinetWidthMm": 250.00, "serviceWidthMm": 44.00,
+        "gridWidthMm": 199.60, "drawerBayWidthMm": 38.00,
+        "drawerColumnPitchMm": 40.40,
+        "rearClutchRowPlateCount": 3.0,
+        "rearClutchRowPlateStationCount": 5.0,
+        "rearClutchRowPlateLengthMm": 195.60,
+        "rearClutchRowPlateX0Mm": 49.20,
+        "rearClutchRowPlateX1Mm": 244.80,
+        "rearClutchRowPlateLeftClearanceMm": 2.00,
+        "rearClutchRowPlateRightClearanceMm": 2.00,
         "frontTimingBearingWidthMm": 2.00,
         "frontTimingBearingIdMm": 3.00,
         "frontTimingBearingOdMm": 6.00,

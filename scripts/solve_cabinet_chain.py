@@ -13,9 +13,9 @@ from pathlib import Path
 # ===== 分区：常量/配置 =====
 P = 4.7625
 WALL = 3.2
-SERVICE_W = 20.0
-W = 240.0 + SERVICE_W
-GRID_W = 233.6
+SERVICE_W = 44.0
+W = 250.0
+GRID_W = W - 2 * WALL - SERVICE_W
 N_COL = 5
 N_ROW = 3
 SERVICE_LAYERS = 1
@@ -25,10 +25,15 @@ SHELF_T = 2.4
 SPROCKET_TEETH = 12
 BLUNT_TEETH = 8  # 所有绿色导向轮统一使用的小轮
 WALL_CLEAR = 0.40
-DRIVE_RETURN_X_TRIM = -0.1018
+# The 250 mm / 44 mm cabinet changes the discrete serpentine phase.  This
+# X-minus trim keeps the motor return wheel inside the service zone while
+# closing the 4.7625 mm pin pitch at the final link instead of accepting a
+# short non-pitch chord at the loop seam.
+DRIVE_RETURN_X_TRIM = -2.10
 TEN_TRAVEL = 10.0
 PITCH_TOL = 0.02
 CLOSE_TOL = 0.05
+EXPECTED_PIN_COUNT = 256
 
 # 方案 1 选择离合的网页/SCAD 共用装配参数（单位 mm）。输入轮与输出轮
 # 同轴，狗牙面默认开 2.6 mm；输出狗牙向输入侧移动 2.5 mm 后只剩 0.1 mm
@@ -63,6 +68,10 @@ COL_PITCH = BAY_W + DIV_T
 SERVICE_H = SERVICE_LAYERS * ROW_PITCH
 GRID_ORIGIN_X = WALL + SERVICE_W
 GRID_ORIGIN_Z = WALL + SERVICE_H
+
+assert abs(GRID_W - 199.6) < 1e-6
+assert abs(BAY_W - 38.0) < 1e-6
+assert abs(COL_PITCH - 40.4) < 1e-6
 
 # ===== 分区：模型/类型 =====
 Vec = tuple[float, float]
@@ -757,6 +766,10 @@ def main() -> int:
     )
     if n % 2:
         raise SystemExit("pin count must be even")
+    if n != EXPECTED_PIN_COUNT:
+        raise SystemExit(
+            f"250 mm / 44 mm 方案应有 {EXPECTED_PIN_COUNT} 个销，实际为 {n}"
+        )
     if min(chords) < P - PITCH_TOL or max(chords) > P + PITCH_TOL:
         raise SystemExit("pin spacing is not true pitch")
     if abs(chords[-1] - P) > CLOSE_TOL:

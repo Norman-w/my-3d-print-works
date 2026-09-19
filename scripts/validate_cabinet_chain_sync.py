@@ -23,6 +23,7 @@ REQUIRED_STL_NAMES = (
     "cabinet_chain_bearings.stl",
     "cabinet_chain_clutch_trigger_magnet.stl",
 )
+EXPECTED_PIN_COUNT = 256
 
 
 def fail(message: str) -> None:
@@ -67,8 +68,8 @@ def main() -> int:
     guide_teeth = int(payload.get("guideTeeth", 0))
     sprockets = [wheel for wheel in wheels if wheel.get("kind") == "sprocket"]
     idlers = [wheel for wheel in wheels if wheel.get("kind") == "idler"]
-    if len(pins) != 274:
-        fail(f"当前 5×3 蛇链应有 274 个销，实际为 {len(pins)}")
+    if len(pins) != EXPECTED_PIN_COUNT:
+        fail(f"当前 250 mm / 44 mm / 5×3 蛇链应有 {EXPECTED_PIN_COUNT} 个销，实际为 {len(pins)}")
     if abs(float(payload.get("chainY", 0)) - 75.0) > 0.01:
         fail(f"后仓链条层位应为 chainY=75.000，实际为 {payload.get('chainY')!r}")
     if abs(pitch - 4.7625) > 0.001:

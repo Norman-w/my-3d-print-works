@@ -1,14 +1,16 @@
 // SmartPartsDrawer 柜体外壳 — 尺寸真值源：本文件
 // 单位：毫米。中心首件冻结为 5 列 × 3 层抽屉，底部保留 1 层服务空间。
+// 这版把 X- 侧服务区单独让给电机、回程蛇链和安装/紧固包络；抽屉格
+// 宽度必须由剩余净宽推导，不能再沿用旧的 240 mm 抽屉区常数。
 
 //#region 导入/依赖
 // 无外部库；几何由本文件常数驱动。
 //#endregion
 
 //#region 常量/配置
-SERVICE_W = 20.0;                // 左回程走廊；只在后仓空、前脸抽屉区做成实心颊板
+SERVICE_W = 44.0;                // X- 服务区：电机、回程链和安装件的保留包络
 SERVICE_LAYERS = 1;
-W = 240 + SERVICE_W;
+W = 250.0;                       // X1C 256 mm 名义宽度内，左右各留 3 mm
 D = 120;
 WALL = 3.2;
 PARTITION_T = 3.0;
@@ -25,7 +27,11 @@ DRAWER_FLOOR = 1.6;
 RABBET_W = 1.6;
 PANEL_FIT = 0.35;
 EPS = 0.05;
-GRID_W = 233.6;                  // 冻结：原 240 柜内宽
+X1C_BUILD_X = 256.0;
+X1C_BUILD_Y = 256.0;
+X1C_BUILD_Z = 256.0;
+X1C_FRAME_EDGE_MARGIN = 3.0;
+GRID_W = W - 2 * WALL - SERVICE_W;
 REF_GRID_H = REF_ROWS * DESIGN_BAY_H + (REF_ROWS - 1) * GRID_T;
 //#endregion
 
@@ -139,8 +145,9 @@ function drawer_inner_h() = drawer_outer_h() - DRAWER_FLOOR;
 //#endregion
 
 //#region 业务逻辑
-// 格口约 44.8×55.3，层距约 57.7。5×3 抽屉；底部一层层距给电器和张紧。
-// 左侧 SERVICE_W 只在前脸抽屉高度做成实心颊板，后仓仍是一个大开间。
+// 当前目标格口约 38.0×55.3，层距约 57.7。5×3 抽屉；底部一层层距给
+// 电器和张紧。X- SERVICE_W 只在前脸抽屉高度做成实心颊板，后仓仍是
+// 一个大开间；后仓离合板允许跨越多个抽屉格，由连续行承载板承载。
 // 背板只坐止口；中部不设 Boss。侧边紧固和内嵌后盖下一轮再做。
 //#endregion
 
@@ -150,6 +157,14 @@ assert(abs(N_COL * BAY_W + (N_COL - 1) * DIV_T - GRID_W) < 0.01);
 assert(abs(N_ROW * BAY_H + (N_ROW - 1) * SHELF_T - GRID_H) < 0.01);
 assert(abs(GRID_ORIGIN_X + GRID_W - (W - WALL)) < 0.01);
 assert(abs(GRID_ORIGIN_Z + GRID_H - (H - WALL)) < 0.01);
+assert(W <= X1C_BUILD_X - 2 * X1C_FRAME_EDGE_MARGIN + EPS,
+    "cabinet width must fit the X1C nominal bed with the reserved edge margin");
+assert(H <= X1C_BUILD_Y + EPS && D <= X1C_BUILD_Z + EPS,
+    "cabinet envelope must fit the X1C nominal build volume in the authored orientation");
+assert(SERVICE_W >= 44.0 - EPS,
+    "X- service zone must leave the motor and snake return clearance target");
+assert(BAY_W > CENTER_FRONT_BEARING_BOSS_XZ / 2 + 8.0,
+    "five drawer bays must retain side clearance around the front drive bearing seat");
 assert(ROW_PITCH > CHAIN_LAYER_CLEAR_OD, "layer pitch must clear 03C 1x sprocket OD");
 assert(abs(BAY_H - DESIGN_BAY_H) < 0.001, "drawer bay height must use the three-layer design value");
 //#endregion

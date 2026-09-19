@@ -154,7 +154,7 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/24_center_station_kit_template": {
-        "name": "中心 R3C3 同款离合总成模板（14 个非中心实例；单一 STL 引用）",
+        "name": "中心 R3C3 同款离合活动/采购件模板（14 个非中心实例；不含共用行承载板）",
         "color": "#718b99",
         "opacity": 1.0,
         "visible": True,
@@ -289,7 +289,7 @@ labels = {
         "role": "diagnostic",
     },
     "cabinet-clutch/center_mechanism_plate": {
-        "name": "中心 R3C3 · 可拆后仓机构板（四角孔 + 每格四角 Boss 自攻固定；一体 LM3UU + 输出双轴承长方条）",
+        "name": "后仓离合共用承载板×3（每层一条、跨 5 站；四角孔/Boss + 一体 LM3UU + 输出双轴承长方条）",
         "color": "#536d78",
         "visible": True,
         "role": "printed",
@@ -450,7 +450,7 @@ name_map = {
     "center_linear_bearing_fit_coupon": "中心 R3C3 LM3UU 长方条轴承孔配合测试片 · Ø7.20/7.30/7.40",
     "center_guide_rails": "legacy · 中心 R3C3 独立导轨（已移除）",
     "center_stops": "legacy · 中心 R3C3 实体止挡（已移除）",
-    "center_mechanism_plate": "中心 R3C3 可拆后仓机构板 · 四角孔 + 每格四角 Boss 自攻固定 · 一体 LM3UU + 输出双轴承长方条",
+    "center_mechanism_plate": "后仓离合共用承载板×3 · 每层连续跨 5 站 · 四角孔/Boss 自攻固定 · 一体 LM3UU + 输出双轴承长方条",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出 D-round 短轴 · 母轮D段 + 双轴承圆轴 · 采购件",
     "center_input_bearings_reference": "legacy · 中心 R3C3 输入旋转轴承组（已移除）",

@@ -299,6 +299,26 @@ function center_clutch_plate_y1(row) =
 function center_clutch_plate_h(row) =
     center_clutch_plate_y1(row) - center_clutch_plate_y0(row);
 
+// The rear cavity is one continuous service volume.  The removable printed
+// carrier is therefore one horizontal strip per drawer row, with each station
+// retaining its own four-hole datum and its own integral LM3UU/output-bearing
+// supports.  This avoids fifteen disconnected plates while keeping every
+// station generated from this one source module.
+function center_clutch_row_plate_x0() =
+    center_clutch_axis_x(0) - CENTER_CLUTCH_PLATE_W / 2;
+
+function center_clutch_row_plate_x1() =
+    center_clutch_axis_x(N_COL - 1) + CENTER_CLUTCH_PLATE_W / 2;
+
+function center_clutch_row_plate_length() =
+    center_clutch_row_plate_x1() - center_clutch_row_plate_x0();
+
+function center_clutch_row_plate_left_clearance() =
+    center_clutch_row_plate_x0() - WORLD_GRID_ORIGIN_X;
+
+function center_clutch_row_plate_right_clearance() =
+    WORLD_GRID_ORIGIN_X + WORLD_GRID_W - center_clutch_row_plate_x1();
+
 // Compatibility datums for old inspection callers.  They now describe the
 // fixed LM3UU block, not a retired guide rail or moving carriage.
 function center_clutch_rail_y0(row) = center_clutch_linear_bearing_y0(row);
@@ -497,6 +517,52 @@ module center_clutch_mechanism_plate(col, row) {
                 );
         center_clutch_plate_belt_passage(col, row);
     }
+}
+
+module center_clutch_mechanism_row_plate(row) {
+    x0 = center_clutch_row_plate_x0();
+    y0 = center_clutch_plate_y0(row);
+    h = center_clutch_plate_h(row);
+    difference() {
+        union() {
+            // One continuous rear-cavity carrier strip for this drawer row.
+            // Its station supports are fused into the same printed solid.
+            translate([x0, y0, CENTER_CLUTCH_PLATE_REAR_Z])
+                cube([
+                    center_clutch_row_plate_length(),
+                    h,
+                    CENTER_CLUTCH_PLATE_T
+                ]);
+            for (col = [0:N_COL - 1]) {
+                center_clutch_linear_bearing_block_y(col, row);
+                center_clutch_output_bearing_bar_y(col, row);
+            }
+        }
+        // Keep the repeated cell datum at every station.  These holes line up
+        // with the four blind-pilot bosses already fused to the partition.
+        for (col = [0:N_COL - 1]) {
+            x = center_clutch_axis_x(col);
+            for (sx = [-1, 1], sy = [-1, 1])
+                translate([
+                    x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
+                    y0 + (sy < 0
+                        ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
+                        : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+                    CENTER_CLUTCH_PLATE_REAR_Z - EPS
+                ])
+                    cylinder(
+                        d = CENTER_CLUTCH_M3_CLEAR_D,
+                        h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
+                        $fn = 40
+                    );
+            center_clutch_plate_belt_passage(col, row);
+        }
+    }
+}
+
+module center_clutch_mechanism_row_plates() {
+    for (row = [0:N_ROW - 1])
+        center_clutch_mechanism_row_plate(row);
 }
 
 module center_clutch_partition_mount_bosses(col, row) {
@@ -813,8 +879,15 @@ module center_clutch_carriage_stop_bridge(x, base_y, z, sx) {}
 //#endregion
 
 //#region 公开 API：中心机构总装
-module center_clutch_carrier(col, row, engaged = false, purchased = true) {
-    color("#536d78") center_clutch_mechanism_plate(col, row);
+module center_clutch_carrier(
+    col,
+    row,
+    engaged = false,
+    purchased = true,
+    include_plate = true
+) {
+    if (include_plate)
+        color("#536d78") center_clutch_mechanism_plate(col, row);
     color("#7c909d") center_clutch_input_sleeve(col, row, engaged);
     if (purchased)
         center_clutch_purchased_references(col, row, engaged);
@@ -985,4 +1058,13 @@ assert(CENTER_CLUTCH_PARTITION_BOSS_OD
     "boss must leave radial material around the self-tap pilot");
 assert(CENTER_CLUTCH_PLATE_FASTENER_COUNT == 4,
     "mechanism plate must retain four self-tapping screw locations");
+assert(N_COL >= 1 && N_ROW >= 1,
+    "continuous rear carrier needs at least one station and one row");
+assert(center_clutch_row_plate_length() > CENTER_CLUTCH_PLATE_W,
+    "row carrier must span the station array instead of one local plate");
+assert(center_clutch_row_plate_left_clearance() >= 1.0 - EPS
+        && center_clutch_row_plate_right_clearance() >= 1.0 - EPS,
+    "continuous row carrier must stay inside the rear drawer grid with side clearance");
+assert(center_clutch_row_plate_length() < X1C_BUILD_X - 2 * X1C_FRAME_EDGE_MARGIN,
+    "continuous row carrier must fit the reserved X1C print envelope");
 //#endregion

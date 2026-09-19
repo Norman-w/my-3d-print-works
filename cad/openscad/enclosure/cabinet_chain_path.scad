@@ -8,7 +8,7 @@ include <cabinet_chain_pins.gen.scad>
 SPROCKET_TEETH = 12;
 BLUNT_TEETH = 8;                 // 所有绿色导向轮统一使用的最小轮
 WALL_CLEAR = 0.40;
-DRIVE_RETURN_X_TRIM = -0.1018;   // 三层路径在地板安全高度闭合真实 P 节距
+DRIVE_RETURN_X_TRIM = -2.10;     // 250/44 方案在地板安全高度闭合真实 P 节距
 // The generated solver receives this from the center-clutch contract. Keep a
 // zero fallback so the path file remains inspectable by itself, but do not
 // assign back to the same OpenSCAD variable: self-redefinition would shadow

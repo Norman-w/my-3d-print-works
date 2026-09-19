@@ -52,6 +52,7 @@ PRINTED_PARTS = {
 TOLERANCE_MM = 0.02
 CLEARANCE_FLOOR_MM = 0.45
 INTERSECTION_VOLUME_TOLERANCE_MM3 = 0.01
+X1C_BUILD_VOLUME_MM = (256.0, 256.0, 256.0)
 
 # ===== 分区：模型/类型 =====
 Contract = dict[str, object]
@@ -203,6 +204,24 @@ def validate_contract(contract: Contract) -> None:
         fail("中心离合不是 +Y input/output 契约")
     if contract.get("verticalLayoutMode") != "drawer-bottom-drive-layer-lower-pulley":
         fail("中心离合没有使用抽屉底部主动轮+下层同步轮布局")
+    if contract.get("rearClutchCarrierMode") != "row-strip":
+        fail("后仓离合必须使用按层连续横向承载板")
+    for key, expected, label in (
+        ("cabinetWidthMm", 250.0, "箱体总宽"),
+        ("serviceWidthMm", 44.0, "X- 服务区宽度"),
+        ("gridWidthMm", 199.6, "五列抽屉区净宽"),
+        ("drawerBayWidthMm", 38.0, "抽屉格净宽"),
+        ("drawerColumnPitchMm", 40.4, "抽屉列节距"),
+        ("rearClutchRowPlateLengthMm", 195.6, "连续离合行板长度"),
+        ("rearClutchRowPlateX0Mm", 49.2, "连续离合行板 X- 起点"),
+        ("rearClutchRowPlateX1Mm", 244.8, "连续离合行板 X+ 终点"),
+        ("rearClutchRowPlateLeftClearanceMm", 2.0, "连续离合行板左侧净空"),
+        ("rearClutchRowPlateRightClearanceMm", 2.0, "连续离合行板右侧净空"),
+        ("snakeChainReturnDriveXTrimMm", -2.10, "蛇链回程主动轮 X 相位偏移"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_close(number(contract, "rearClutchRowPlateCount"), 3.0, "连续离合行板数量", 0.001)
+    expect_close(number(contract, "rearClutchRowPlateStationCount"), 5.0, "每条连续行板站点数量", 0.001)
     expect_close(number(contract, "centerClutchDriveLayerOffsetMm"), 0.0, "中心驱动层偏置", 0.001)
     expect_close(number(contract, "centerClutchVerticalLiftMm"), 0.0, "兼容垂直偏置", 0.001)
     if contract.get("actuation") != "permanent-magnet":
@@ -762,6 +781,10 @@ def validate_sweep(contract: Contract, reports: dict[tuple[str, bool], dict[str,
 
     axis_x = number(contract, "axisXMm")
     axis_z = number(contract, "axisZMm")
+    row_plate = bounds(reports[("center_mechanism_plate", False)])
+    expect_close(row_plate["min"][0], number(contract, "rearClutchRowPlateX0Mm"), "连续离合行板 X- 起点", 0.001)
+    expect_close(row_plate["max"][0], number(contract, "rearClutchRowPlateX1Mm"), "连续离合行板 X+ 终点", 0.001)
+    expect_close(row_plate["max"][0] - row_plate["min"][0], number(contract, "rearClutchRowPlateLengthMm"), "连续离合行板 X 长度", 0.001)
     bearing = bounds(reports[("center_linear_bearings", False)])
     expect_close(bearing["min"][0], axis_x - 3.5, "LM3UU X 下限")
     expect_close(bearing["max"][0], axis_x + 3.5, "LM3UU X 上限")
@@ -932,7 +955,26 @@ def main() -> int:
 
         cabinet_stl = temp_dir / "cabinet.stl"
         run_export(openscad, scad, cabinet_stl, "cabinet", False)
-        assert_watertight(inspect(inspect_py, cabinet_stl), cabinet_stl.name)
+        cabinet_report = inspect(inspect_py, cabinet_stl)
+        assert_watertight(cabinet_report, cabinet_stl.name)
+        cabinet_bounds = bounds(cabinet_report)
+        cabinet_size = [
+            cabinet_bounds["max"][axis] - cabinet_bounds["min"][axis]
+            for axis in range(3)
+        ]
+        expect_close(
+            cabinet_size[0],
+            number(contract, "cabinetWidthMm"),
+            "箱体 STL X 总宽",
+            0.01,
+        )
+        for axis, size in enumerate(cabinet_size):
+            if size > X1C_BUILD_VOLUME_MM[axis] + TOLERANCE_MM:
+                fail(
+                    "箱体 STL 超出 X1C 设计包络: "
+                    f"axis={axis}, actual={size:.4f} mm, "
+                    f"limit={X1C_BUILD_VOLUME_MM[axis]:.4f} mm"
+                )
 
         coupon_stl = temp_dir / "center_linear_bearing_fit_coupon.stl"
         run_export(openscad, scad, coupon_stl, "center_linear_bearing_fit_coupon", False)
