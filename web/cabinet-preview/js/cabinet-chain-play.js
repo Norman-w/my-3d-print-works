@@ -48,7 +48,6 @@ const SCHEME1_OUTPUT_ID = "cabinet-chain/cabinet_chain_scheme1_output_wheels";
 const SCHEME1_CLUTCH_ID = "cabinet-chain/cabinet_chain_scheme1_clutch_faces";
 const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
 const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
-const CENTER_SELECTOR_SHOE_ID = "cabinet-clutch/center_selector_shoe";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
 const CURRENT_CLUTCH_IDS = new Map([
   // The native center prototype is the only visible clutch pair in the
@@ -123,10 +122,6 @@ const CENTER_DEMO_APPROACH_SECONDS = 0.80;
 const CENTER_DEMO_ENGAGE_SECONDS = 1.10;
 const CENTER_DEMO_HOLD_SECONDS = 0.80;
 const CENTER_DEMO_RELEASE_SECONDS = 1.20;
-// Display-only span for the center first-article chain focus. The native shoe
-// now exposes its chain datum through the same centerClutch contract used by
-// the OpenSCAD exporter.
-const CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN = 4;
 const CURRENT_CLUTCH_ROW = 1;
 const CURRENT_CLUTCH_COL = 2;
 const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
@@ -186,7 +181,6 @@ const play = {
     engagement: 0,
     phase: "idle",
   },
-  centerClutchChainFocus: false,
   playing: true,
   dir: 1,
   motorHz: HZ_STEPS[DEFAULT_HZ_INDEX],
@@ -405,14 +399,6 @@ function scheme1StationLabel(index) {
   return `R${station.row + 1}C${station.col + 1}`;
 }
 
-function centerClutchShoeOffset(mode) {
-  const tangent = Math.abs(Number(
-    play.currentClutch.contract?.selectorShoeTangentOffsetMm,
-  ));
-  if (!Number.isFinite(tangent) || tangent <= 0) return 0;
-  return mode === "engage" ? tangent : -tangent;
-}
-
 function centerDemoTravelText() {
   const stroke = Number(play.currentClutch.contract?.strokeMm);
   const engagement = Math.min(1, Math.max(0, Number(play.centerDemo.engagement) || 0));
@@ -433,43 +419,6 @@ function centerDemoStatusText() {
 
 function updateCenterDemoStatus() {
   scheme1Status(centerDemoStatusText());
-}
-
-function centerClutchChainSupportPinIndex() {
-  const path = play.path;
-  const contract = play.currentClutch.contract;
-  if (!path?.count || !contract) return -1;
-  if (!Object.hasOwn(contract, "selectorShoeChainAttachXMm")
-    || !Object.hasOwn(contract, "selectorShoeChainAttachYMm")) return -1;
-  const x = Number(contract.selectorShoeChainAttachXMm);
-  // Native contract Y maps to the authored X/Z chain path's Z coordinate;
-  // native contract Z is the chain layer's world -Y and is not the path Z.
-  const pathZ = Number(contract.selectorShoeChainAttachYMm);
-  const chainY = Number(play.motion?.chainY);
-  if (![x, pathZ, chainY].every(Number.isFinite)) return -1;
-  const projection = projectPoint(path, x, chainY, pathZ);
-  const pitch = Number(play.motion?.p) || path.length / path.count;
-  return ((Math.round(projection.s / pitch) % path.count) + path.count) % path.count;
-}
-
-function isNearCircularIndex(index, center, halfSpan, count) {
-  const distance = Math.abs(index - center);
-  return Math.min(distance, count - distance) <= halfSpan;
-}
-
-function applyCenterClutchChainVisibility() {
-  const count = play.path?.count || 0;
-  const center = centerClutchChainSupportPinIndex();
-  const focused = play.centerClutchChainFocus && count > 0 && center >= 0;
-  for (const part of play.chain) {
-    if (!focused) {
-      part.group.visible = true;
-      continue;
-    }
-    const index = Number(part.pinIndex);
-    part.group.visible = Number.isFinite(index)
-      && isNearCircularIndex(index, center, CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN, count);
-  }
 }
 
 function validateCenterClutchContract(contract) {
@@ -538,13 +487,6 @@ function validateCenterClutchContract(contract) {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
-    "selectorShoePart", "selectorShoeSupport", "selectorShoeRotationMode",
-    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm",
-    "selectorShoeAnchorZMm", "selectorShoeTangentOffsetMm",
-    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
-    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
-    "selectorShoeSupportArmDiameterMm", "selectorShoeTargetYMm",
-    "selectorShoeTriggerClearanceMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -637,9 +579,6 @@ function validateCenterClutchContract(contract) {
     rotaryBearingArrangement: "output-two-3x6x2-in-one-integral-bar-input-free",
     linearBearingArrangement: "single-coaxial-with-integrated-seat",
     plateSupport: "partition-boss-locators-plus-four-self-tapping-screws",
-    selectorShoePart: "cabinet-clutch/center_selector_shoe",
-    selectorShoeSupport: "chain-mounted-smooth-hull-arm",
-    selectorShoeRotationMode: "fixed-world-center-row",
     drawerRackMount: "drawer-bottom-moving",
     drawerMassLoadPath: "side-slides-not-rack",
     drawerGuideBearing: "681-1x3x1-X-axis-C-slot",
@@ -661,22 +600,6 @@ function validateCenterClutchContract(contract) {
     if (contract[key] !== value) {
       throw new Error(`centerClutch 字段错误: ${key}=${contract[key]}`);
     }
-  }
-  const selectorPitch = Number(contract.drawerBayHeightMm)
-    + Number(contract.drawerShelfThicknessMm);
-  const selectorPathY = Number(contract.snakeChainReferencePathCenterYMm)
-    + (Number(contract.centerRow) - Number(contract.snakeChainReferenceRow))
-      * selectorPitch
-    + Number(contract.snakeChainVerticalShiftMm);
-  if (Math.abs(Number(contract.selectorShoeNormalOffsetMm)) > 0.001
-      || Math.abs(Number(contract.selectorShoeAnchorXMm)
-        - Number(contract.axisXMm)) > 0.001
-      || Math.abs(Number(contract.selectorShoeAnchorYMm) - selectorPathY) > 0.001
-      || Math.abs(Number(contract.selectorShoeChainAttachYMm) - selectorPathY) > 0.001
-      || Math.abs(Number(contract.selectorShoeChainAttachZMm)
-        - Number(contract.selectorShoeAnchorZMm)) > 0.001
-      || Number(contract.selectorShoeSupportArmDiameterMm) < 2.4) {
-    throw new Error("centerClutch 选择指路径锚点/平滑支撑臂契约不满足");
   }
   const positive = [
     "openGapMm", "dogInsertionMm", "strokeMm", "pocketDepthMm",
@@ -734,8 +657,6 @@ function validateCenterClutchContract(contract) {
     "frontTimingBearingGearClearanceMm",
     "frontTimingBearingPulleyClearanceMm", "frontDshaftStartYMm",
     "frontDshaftEndYMm", "frontDshaftLengthMm", "frontPinionThicknessMm",
-    "selectorShoeTangentOffsetMm", "selectorShoeSupportArmDiameterMm",
-    "selectorShoeTriggerClearanceMm",
     "drawerGuideRailClearanceMm", "drawerGuidePartitionThicknessMm",
     "drawerGuideRailAttachOverlapMm",
     "drawerGuideBearingSeatDiameterMm",
@@ -775,10 +696,6 @@ function validateCenterClutchContract(contract) {
     "outputBearingBarY0OffsetMm", "outputBearingBarZMinMm",
     "outputBearingBarZMaxMm",
     "plateBeltPassageRadialClearanceMm", "plateBeltPassageAxialClearanceMm",
-    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm", "selectorShoeAnchorZMm",
-    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
-    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
-    "selectorShoeTargetYMm",
   ];
   for (const key of finite) {
     if (!Number.isFinite(Number(contract[key]))) {
@@ -2048,99 +1965,8 @@ async function bindScheme1SelectorMesh(item) {
   poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
 }
 
-function poseNativeSelectorShoe(part, deltaMm) {
-  if (!play.path || !part) return;
-  // The exported shoe is authored at its engagement tangent (+6 mm) and its
-  // anchor is the centre-row chain datum.  The centre-row path runs toward
-  // -X, so a requested physical shoe tangent t maps to a path displacement
-  // of (sourceTangent - t).  This keeps the static STL at its authored
-  // engagement position and moves the release magnet to the same axis
-  // without duplicating or rotating the part.
-  const physicalTangent = part.demoTangentOffset ?? part.tangentOffset;
-  const tangentOffset = part.sourceTangentOffset - physicalTangent;
-  const sample = samplePath(
-    play.path,
-    part.s + deltaMm + tangentOffset,
-  );
-  // The solver path is authored in X/Z. Native cabinet parts use X/Y, so the
-  // selector shoe follows the same line after the explicit world conversion;
-  // its Z face remains fixed at the first-article magnetic trigger plane.
-  const tangent = [sample.tangent[0], sample.tangent[2]];
-  const normal = [-tangent[1], tangent[0]];
-  part.group.position.set(
-    sample.point[0] + normal[0] * part.normalOffset,
-    sample.point[2] + normal[1] * part.normalOffset,
-    part.z,
-  );
-  if (part.rotationMode === "fixed-world-center-row") {
-    part.group.rotation.z = 0;
-  } else {
-    const yaw = Math.atan2(tangent[1], tangent[0]);
-    part.group.rotation.z = yaw - part.restYaw;
-  }
-}
-
-function poseCenterDemoShoe(tangentOffsetMm = null) {
-  const part = play.scheme1.selectorPart;
-  if (!part?.native) return;
-  part.demoTangentOffset = tangentOffsetMm;
-  poseNativeSelectorShoe(part, play.scheme1.selectorS - part.s);
-}
-
 function poseSelectorPart(part, deltaMm) {
-  if (part?.native) {
-    poseNativeSelectorShoe(part, deltaMm);
-  } else {
-    poseChainPart(part, deltaMm);
-  }
-}
-
-function centerStationIndex() {
-  return play.scheme1.stations.findIndex((station) => (
-    Number(station.row) === CURRENT_CLUTCH_ROW
-      && Number(station.col) === CURRENT_CLUTCH_COL
-  ));
-}
-
-function bindNativeSelectorShoeMesh(item) {
-  const scheme = play.scheme1;
-  const scene = play.host?.state?.scene;
-  if (!scheme.ready || !item.mesh?.isMesh || !scene) return;
-  const centerIndex = centerStationIndex();
-  if (centerIndex < 0) throw new Error("运动路径缺少三层柜体中心格站点");
-
-  const geometry = item.mesh.geometry;
-  geometry.computeBoundingBox();
-  const contract = play.currentClutch.contract;
-  const anchor = new THREE.Vector3(
-    Number(contract.selectorShoeAnchorXMm),
-    Number(contract.selectorShoeAnchorYMm),
-    Number(contract.selectorShoeAnchorZMm),
-  );
-  geometry.translate(-anchor.x, -anchor.y, -anchor.z);
-  const pivot = new THREE.Group();
-  pivot.position.copy(anchor);
-  pivot.name = "native-center-selector-shoe";
-  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
-  const group = new THREE.Group();
-  group.name = "native-center-selector-shoe-container";
-  group.add(pivot);
-  scheme.selectorPart = {
-    group: pivot,
-    s: scheme.stationS[centerIndex],
-    tangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
-    sourceTangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
-    normalOffset: Number(play.currentClutch.contract.selectorShoeNormalOffsetMm),
-    z: anchor.z,
-    restYaw: 0,
-    rotationMode: play.currentClutch.contract.selectorShoeRotationMode,
-    demoTangentOffset: null,
-    native: true,
-  };
-  // Native cabinet-clutch geometry is already in X/Y/Z. It must stay outside
-  // legacyRoot, whose -90° rotation is reserved for cabinet-chain assets.
-  replaceMesh(item, group, scene);
-  poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
+  poseChainPart(part, deltaMm);
 }
 
 function initScheme1Motion() {
@@ -2369,12 +2195,6 @@ function tickCenterClutchDemo(dt) {
   if (demo.elapsed < approachEnd) {
     setCenterDemoPhase("approach");
     demo.engagement = 0;
-    const t = smoothStep(demo.elapsed / CENTER_DEMO_APPROACH_SECONDS);
-    poseCenterDemoShoe(
-      centerClutchShoeOffset("release")
-        + (centerClutchShoeOffset("engage")
-          - centerClutchShoeOffset("release")) * t,
-    );
     updateCenterDemoStatus();
     return;
   }
@@ -2383,14 +2203,12 @@ function tickCenterClutchDemo(dt) {
     demo.engagement = smoothStep(
       (demo.elapsed - approachEnd) / CENTER_DEMO_ENGAGE_SECONDS,
     );
-    poseCenterDemoShoe(centerClutchShoeOffset("engage"));
     updateCenterDemoStatus();
     return;
   }
   if (demo.elapsed < holdEnd) {
     setCenterDemoPhase("hold");
     demo.engagement = 1;
-    poseCenterDemoShoe(centerClutchShoeOffset("engage"));
     updateCenterDemoStatus();
     return;
   }
@@ -2399,14 +2217,6 @@ function tickCenterClutchDemo(dt) {
     demo.engagement = 1 - smoothStep(
       (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
     );
-    const t = smoothStep(
-      (demo.elapsed - holdEnd) / CENTER_DEMO_RELEASE_SECONDS,
-    );
-    poseCenterDemoShoe(
-      centerClutchShoeOffset("engage")
-        + (centerClutchShoeOffset("release")
-          - centerClutchShoeOffset("engage")) * t,
-    );
     updateCenterDemoStatus();
     return;
   }
@@ -2414,7 +2224,6 @@ function tickCenterClutchDemo(dt) {
   demo.engagement = 0;
   demo.elapsed = 0;
   demo.phase = "idle";
-  poseCenterDemoShoe(centerClutchShoeOffset("release"));
   scheme1Status(`中心离合演示完成 · 已回到开位 · 公轮轴 +Y ${centerDemoTravelText()}`);
 }
 
@@ -2567,7 +2376,6 @@ async function bindChainMesh(item) {
   const offsetMm = chainOffsetMm();
   for (const part of added) poseChainPart(part, offsetMm);
   replaceMesh(item, group);
-  applyCenterClutchChainVisibility();
 }
 
 async function bindChainTriggerMagnetMesh(item) {
@@ -2615,7 +2423,6 @@ async function bindChainTriggerMagnetMesh(item) {
   play.chain.push(part);
   replaceMesh(item, group);
   poseChainPart(part, chainOffsetMm());
-  applyCenterClutchChainVisibility();
 }
 
 function updateHzLabel() {
@@ -2717,18 +2524,12 @@ export function focusCenterClutch() {
   play.centerDemo.engagement = 0;
   play.centerDemo.phase = "idle";
   play.playing = false;
-  poseCenterDemoShoe(null);
   const snapped = snapScheme1ToCenter();
   if (snapped) {
-    scheme1Status(`首件视角 · 磁力靴已对准 ${scheme1StationLabel(play.scheme1.targetIndex)} · 开位`);
+    scheme1Status(`首件视角 · 三层柜体中心格已对准 · 开位`);
   }
   updateHzLabel();
   return snapped;
-}
-
-export function setCenterClutchPreviewFocus(enabled) {
-  play.centerClutchChainFocus = Boolean(enabled);
-  applyCenterClutchChainVisibility();
 }
 
 export function playCenterClutchDemo() {
@@ -2741,7 +2542,6 @@ export function playCenterClutchDemo() {
     scheme1Status("中心离合演示不可用：缺少三层柜体中心格站点");
     return false;
   }
-  poseCenterDemoShoe(centerClutchShoeOffset("release"));
   play.playing = false;
   play.centerDemo.active = true;
   play.centerDemo.elapsed = 0;
@@ -2755,14 +2555,6 @@ export function playCenterClutchDemo() {
 export async function onPartLoaded(item) {
   const id = item.part?.id;
   if (!id || !play.path || item.playBound) return;
-  if (id === CENTER_SELECTOR_SHOE_ID) {
-    item.playBound = true;
-    enqueueBind(() => Promise.resolve(bindNativeSelectorShoeMesh(item)).catch((error) => {
-      console.error("native selector shoe bind failed", id, error);
-      item.playBound = false;
-    }), true);
-    return;
-  }
   if (id === SCHEME1_POWER_ID) {
     item.playBound = true;
     enqueueBind(() => bindScheme1WheelMesh(item, "power").catch((error) => {

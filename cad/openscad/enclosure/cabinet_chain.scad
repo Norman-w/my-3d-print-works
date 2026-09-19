@@ -29,7 +29,6 @@ use <../parts/ch1_03c_extended_link_params.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../parts/motor_pololu_mount_cover.scad>
 include <../parts/ch1_03c_gt2_clutch_pair_params.scad>
-include <../parts/center_clutch_selector_shoe.scad>
 //#endregion
 
 //#region 常量/配置
@@ -217,15 +216,6 @@ module scheme1_selector() {
             translate([0, -2.10, 0])
                 cube([6.80, 1.80, 3.20], center = true);
         }
-}
-
-module selector_magnetic_shoe() {
-    // Legacy diagnostic only. The canonical first-article shoe is the native
-    // cabinet-clutch/center_selector_shoe part emitted by cabinet_clutch.scad;
-    // this old chain-frame source remains solely for regression comparison.
-    c = scheme1_selector_center();
-    scheme1_place_y(c, CHAIN_Y + 2.35)
-        center_clutch_selector_shoe();
 }
 
 module rear_blunt_idlers() {
@@ -543,14 +533,6 @@ emit_chain("scheme1_selector") {
         scheme1_selector();
     }
 }
-// Retained as an explicit hidden legacy diagnostic; never emit this into the
-// canonical cabinet-clutch manifest or use it as the physical center shoe.
-emit_chain("selector_magnetic_shoe") {
-    if (CHAIN_PART == "assembly")
-        color("#c8d3dc") selector_magnetic_shoe();
-    else
-        selector_magnetic_shoe();
-}
 //#endregion
 
 //#region 视图层
@@ -578,6 +560,6 @@ emit_chain("selector_magnetic_shoe") {
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"selector_magnetic_shoe"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion

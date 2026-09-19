@@ -100,13 +100,6 @@ REQUIRED = {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
-    "selectorShoePart", "selectorShoeSupport", "selectorShoeRotationMode",
-    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm",
-    "selectorShoeAnchorZMm", "selectorShoeTangentOffsetMm",
-    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
-    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
-    "selectorShoeSupportArmDiameterMm", "selectorShoeTargetYMm",
-    "selectorShoeTriggerClearanceMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -296,9 +289,6 @@ def validate_contract(contract: dict[str, object]) -> None:
         "frontTimingBearingSupport": "integral-shelf-stepped-seat",
         "frontTimingBearingFit": "press-fit-3x6x2-bottom-captive",
         "frontDshaftProfile": "D",
-        "selectorShoePart": "cabinet-clutch/center_selector_shoe",
-        "selectorShoeSupport": "chain-mounted-smooth-hull-arm",
-        "selectorShoeRotationMode": "fixed-world-center-row",
         "drawerFrontPinionBearing": "integral-shelf-stepped-3x6x2",
         "drawerGuideBearing": "681-1x3x1-X-axis-C-slot",
         "drawerGuideRail": "partition-integral-inward-C-lips",
@@ -316,44 +306,6 @@ def validate_contract(contract: dict[str, object]) -> None:
 
     if n(contract, "verticalSplineBearingCount") != 5:
         raise RuntimeError("抽屉电机花键轴必须为 5 根列轴各配一枚固定轴承")
-    if n(contract, "selectorShoeTangentOffsetMm") <= 0:
-        raise RuntimeError("选择指磁力靴必须保留正的半间距触发位")
-    if n(contract, "selectorShoeNormalOffsetMm") != 0:
-        raise RuntimeError("选择指锚点必须直接落在中心链条路径，不得再叠加法向偏移")
-    expect(
-        contract,
-        "selectorShoeAnchorXMm",
-        n(contract, "axisXMm"),
-        "选择指路径锚点 X",
-    )
-    chain_pitch = n(contract, "drawerBayHeightMm") + n(contract, "drawerShelfThicknessMm")
-    expected_selector_y = (
-        n(contract, "snakeChainReferencePathCenterYMm")
-        + (n(contract, "centerRow") - n(contract, "snakeChainReferenceRow")) * chain_pitch
-        + n(contract, "snakeChainVerticalShiftMm")
-    )
-    expect(
-        contract,
-        "selectorShoeAnchorYMm",
-        expected_selector_y,
-        "选择指中心行链条路径锚点 Y",
-    )
-    expect(
-        contract,
-        "selectorShoeChainAttachYMm",
-        expected_selector_y,
-        "选择指链条接触 Y",
-    )
-    expect(
-        contract,
-        "selectorShoeChainAttachZMm",
-        n(contract, "selectorShoeAnchorZMm"),
-        "选择指链条接触 Z",
-    )
-    if n(contract, "selectorShoeSupportArmDiameterMm") < 2.4:
-        raise RuntimeError("选择指平滑支撑臂直径不足 2.4 mm")
-    if n(contract, "selectorShoeTriggerClearanceMm") <= 0:
-        raise RuntimeError("选择指磁铁触发净空无效")
     expect(contract, "verticalSplineBearingIdMm", 3.0, "花键轴承内径")
     expect(contract, "verticalSplineBearingOdMm", 6.0, "花键轴承外径")
     expect(contract, "verticalSplineBearingWidthMm", 2.0, "花键轴承宽度")

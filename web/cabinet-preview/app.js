@@ -8,7 +8,6 @@ import {
   focusCenterClutch,
   playCenterClutchDemo,
   onPartLoaded,
-  setCenterClutchPreviewFocus,
   tickPlay,
 } from "./js/cabinet-chain-play.js?v=cabinet-frame-view-13";
 //#endregion
@@ -122,7 +121,6 @@ const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_mechanism_plate",
   "cabinet-clutch/center_output_bearings_reference",
   "cabinet-clutch/center_output_shaft_reference",
-  "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_FRAME_IDS = new Set([
   ...CENTER_CLUTCH_FOCUS_IDS,
@@ -138,8 +136,7 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/15_front_pinion_candidate",
   "cabinet-clutch/16_drawer_linear_rack_candidate",
   // Keep the authored snake-chain assets available as a low-opacity spatial
-  // reference. The active native selector shoe is in CENTER_CLUTCH_FOCUS_IDS
-  // and follows the center-row chain datum from the same contract.
+  // reference for the center mechanism.
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
@@ -1410,7 +1407,6 @@ async function applyViewPreset(name) {
 
   const applied = await applyViewVisibility(focusIds, contextIds, request, !profile);
   if (!applied || request !== state.viewRequest) return;
-  setCenterClutchPreviewFocus(viewName === "center-clutch");
   state.viewProfile = profile ? viewName : null;
   const frameIds = profile?.frame
     ? new Set(listingParts.filter(profile.frame).map((part) => part.id))

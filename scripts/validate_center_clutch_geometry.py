@@ -30,7 +30,6 @@ FIXED_PARTS = (
     "center_mechanism_plate",
     "center_output_shaft",
     "center_output_bearings",
-    "center_selector_shoe",
     "vertical_spline_bearing_support",
     "vertical_spline_bearings",
     "front_gear",
@@ -45,7 +44,6 @@ PRINTED_PARTS = {
     "center_output_bearing_bar",
     "center_mechanism_plate",
     "center_input_sleeve",
-    "center_selector_shoe",
     "vertical_spline_bearing_support",
     "front_gear",
     "front_pulley",
@@ -227,56 +225,6 @@ def validate_contract(contract: Contract) -> None:
         fail("直线轴承必须是固定座内的公轮同轴单枚配置")
     if contract.get("rotaryBearingArrangement") != "output-two-3x6x2-in-one-integral-bar-input-free":
         fail("当前公轮端不应残留输入旋转轴承组")
-    if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
-        fail("中心选择指必须引用唯一的中心磁力靴零件")
-    if contract.get("selectorShoeSupport") != "chain-mounted-smooth-hull-arm":
-        fail("中心选择指支撑臂必须是链条承力的平滑一体臂")
-    if contract.get("selectorShoeRotationMode") != "fixed-world-center-row":
-        fail("中心首件选择指必须沿中心行保持固定世界朝向")
-    expect_close(
-        number(contract, "selectorShoeNormalOffsetMm"),
-        0.0,
-        "选择指链条路径法向偏移",
-        0.001,
-    )
-    expect_close(
-        number(contract, "selectorShoeAnchorXMm"),
-        number(contract, "axisXMm"),
-        "选择指路径锚点 X",
-        0.001,
-    )
-    chain_pitch = (
-        number(contract, "drawerBayHeightMm")
-        + number(contract, "drawerShelfThicknessMm")
-    )
-    expected_selector_y = (
-        number(contract, "snakeChainReferencePathCenterYMm")
-        + (
-            number(contract, "centerRow")
-            - number(contract, "snakeChainReferenceRow")
-        ) * chain_pitch
-        + number(contract, "snakeChainVerticalShiftMm")
-    )
-    expect_close(
-        number(contract, "selectorShoeAnchorYMm"),
-        expected_selector_y,
-        "选择指中心行链条路径锚点 Y",
-        0.001,
-    )
-    expect_close(
-        number(contract, "selectorShoeChainAttachYMm"),
-        expected_selector_y,
-        "选择指链条接触 Y",
-        0.001,
-    )
-    expect_close(
-        number(contract, "selectorShoeChainAttachZMm"),
-        number(contract, "selectorShoeAnchorZMm"),
-        "选择指链条接触 Z",
-        0.001,
-    )
-    if number(contract, "selectorShoeSupportArmDiameterMm") < 2.4:
-        fail("选择指平滑支撑臂直径不足 2.4 mm")
     if contract.get("drawerGuideBearing") != "681-1x3x1-X-axis-C-slot":
         fail("抽屉导向轴承必须改为 X 轴 C 槽结构")
     if contract.get("drawerGuideRail") != "partition-integral-inward-C-lips":
@@ -1068,30 +1016,6 @@ def main() -> int:
         ):
             fail("花键轴承固定条侧键进入前后仓隔板皮带孔")
 
-        for travel, label in ((0.0, "open"), (1.5, "mid"), (3.0, "engaged")):
-            selector_witness = temp_dir / f"center_selector_male_collision_{label}.stl"
-            if run_intersection_export(
-                openscad,
-                scad,
-                selector_witness,
-                inspect_py,
-                "center_selector_male_collision",
-                False,
-                travel,
-            ):
-                fail(f"选择指磁力靴与公轮 {label} 位存在实体交集")
-        selector_contact = temp_dir / "center_selector_chain_support_contact.stl"
-        if not run_intersection_export(
-            openscad,
-            scad,
-            selector_contact,
-            inspect_py,
-            "center_selector_chain_support_contact",
-            False,
-            0.0,
-        ):
-            fail("选择指平滑支撑臂没有与真实蛇链接触基准形成正体积连接")
-
         validate_intermediate_sweep(openscad, scad, inspect_py, temp_dir, contract)
         validate_sweep(contract, reports)
         metrics = validate_interference(contract, reports)
@@ -1112,7 +1036,7 @@ def main() -> int:
         "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、"
         "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 轴承固定条、"
         "固定条与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
-        "选择指与公轮三位置无交集且与蛇链接触基准正交集"
+        "中心离合实体碰撞见证"
     )
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
     return 0

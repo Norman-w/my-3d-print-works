@@ -318,12 +318,6 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
-    "cabinet-clutch/center_selector_shoe": {
-        "name": "中心 R3C3 · 选择指永磁磁力靴 + 平滑一体链条支撑臂（唯一活动件）",
-        "color": "#c8d3dc",
-        "visible": True,
-        "role": "printed",
-    },
     "cabinet-clutch/center_input_sleeve": {
         "name": "中心 R3C3 · 公轮底部 D 型圆套（下端 Ø8 圆形；Ø5×5 磁铁盲槽）",
         "color": "#7c909d",
@@ -392,12 +386,6 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_connector": {"name": "03C 链条连接节（带槽双穿销+圆弧夹片）", "color": "#ff2fd0", "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
     "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
-    "cabinet-chain/cabinet_chain_selector_magnetic_shoe": {
-        "name": "旧方案1·链条坐标磁力靴（文件保留，默认隐藏）",
-        "color": "#c8d3dc",
-        "role": "diagnostic",
-        "visible": False,
-    },
     "cabinet-chain/cabinet_chain_scheme1_power_wheels": {"name": "旧方案1·常转动力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_output_wheels": {"name": "旧方案1·抽屉受力轮（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
     "cabinet-chain/cabinet_chain_scheme1_clutch_faces": {"name": "旧方案1·狗牙离合面（文件保留，默认隐藏）", "visible": False, "role": "diagnostic"},
@@ -435,7 +423,6 @@ group_map = {
     "center_output_shaft_reference": "02·离合机构",
     "center_input_bearings_reference": "02·离合机构",
     "center_output_bearings_reference": "02·离合机构",
-    "center_selector_shoe": "02·离合机构",
     "10_clutch_spring_reference": "02·离合机构",
     "11_t_countersunk_screw_reference": "02·离合机构",
     "12_clutch_fork_candidate": "02·离合机构",
@@ -688,7 +675,6 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
             part_node("cabinet-clutch/center_mechanism_plate"),
-            part_node("cabinet-clutch/center_selector_shoe"),
             part_node("cabinet-clutch/24_center_station_kit_template"),
             input_axis,
             rotary_support,
@@ -928,15 +914,15 @@ for old_file in "${OBSOLETE_DRAWER_DRIVE_OUTPUTS[@]}"; do
         "${REPORT_DIR}/${old_file%.stl}.watertight.json"
 done
 
-# The current male-end assembly uses the Ø5×5 magnet in its printed sleeve;
-# neither the old chain-frame shoe nor the retired native shoe is canonical.
-# Remove both stale outputs so a refresh can never show a second actuator at a
-# different coordinate origin.
+# The selector-shoe mechanism has been deleted. Remove stale outputs so a
+# refresh can never show the retired actuator at a different coordinate origin.
 LEGACY_CHAIN_SELECTOR_OUTPUTS=(
     "cabinet_chain_selector_magnetic_shoe.stl"
+    "center_selector_shoe.stl"
 )
 for old_file in "${LEGACY_CHAIN_SELECTOR_OUTPUTS[@]}"; do
     rm -f "${OUT_CHAIN}/${old_file}" \
+        "${OUT_DIR}/${old_file}" \
         "${REPORT_DIR}/${old_file%.stl}.json" \
         "${REPORT_DIR}/${old_file%.stl}.watertight.json"
 done
@@ -1054,7 +1040,6 @@ export_part "center_input_sleeve" "${OUT_DIR}/center_input_sleeve.stl" false 0
 export_part "center_input_sleeve_magnet" "${OUT_DIR}/center_input_sleeve_magnet_reference.stl" false 0
 export_part "center_output_shaft" "${OUT_DIR}/center_output_shaft_reference.stl" false 0
 export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_reference.stl" false 0
-export_part "center_selector_shoe" "${OUT_DIR}/center_selector_shoe.stl" false 0
 
 # The center printed pieces are the current first-article outputs. Purchased
 # shaft/bearing/magnet references remain ordinary inspection artifacts, while
@@ -1066,7 +1051,6 @@ for printable_part in \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl" \
-    "${OUT_DIR}/center_selector_shoe.stl" \
     "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl"; do
     require_watertight_print_part "${printable_part}"
 done
