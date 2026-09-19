@@ -123,8 +123,9 @@ const CENTER_DEMO_APPROACH_SECONDS = 0.80;
 const CENTER_DEMO_ENGAGE_SECONDS = 1.10;
 const CENTER_DEMO_HOLD_SECONDS = 0.80;
 const CENTER_DEMO_RELEASE_SECONDS = 1.20;
-// Display-only span for optional legacy chain focus. The current center
-// contract deliberately has no selector-shoe attachment fields.
+// Display-only span for the center first-article chain focus. The native shoe
+// now exposes its chain datum through the same centerClutch contract used by
+// the OpenSCAD exporter.
 const CENTER_CLUTCH_CHAIN_PREVIEW_HALF_SPAN = 4;
 const CURRENT_CLUTCH_ROW = 1;
 const CURRENT_CLUTCH_COL = 2;
@@ -537,6 +538,13 @@ function validateCenterClutchContract(contract) {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
+    "selectorShoePart", "selectorShoeSupport", "selectorShoeRotationMode",
+    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm",
+    "selectorShoeAnchorZMm", "selectorShoeTangentOffsetMm",
+    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
+    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
+    "selectorShoeSupportArmDiameterMm", "selectorShoeTargetYMm",
+    "selectorShoeTriggerClearanceMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -625,7 +633,10 @@ function validateCenterClutchContract(contract) {
     outputShaftProfile: "D-round",
     rotaryBearingArrangement: "output-two-3x6x2-in-one-integral-bar-input-free",
     linearBearingArrangement: "single-coaxial-with-integrated-seat",
-    plateSupport: "partition-through-M3",
+    plateSupport: "partition-boss-locators-plus-four-self-tapping-screws",
+    selectorShoePart: "cabinet-clutch/center_selector_shoe",
+    selectorShoeSupport: "chain-mounted-smooth-hull-arm",
+    selectorShoeRotationMode: "fixed-world-center-row",
     drawerRackMount: "drawer-bottom-moving",
     drawerMassLoadPath: "side-slides-not-rack",
     drawerGuideBearing: "681-1x3x1-X-axis-C-slot",
@@ -645,6 +656,22 @@ function validateCenterClutchContract(contract) {
     if (contract[key] !== value) {
       throw new Error(`centerClutch 字段错误: ${key}=${contract[key]}`);
     }
+  }
+  const selectorPitch = Number(contract.drawerBayHeightMm)
+    + Number(contract.drawerShelfThicknessMm);
+  const selectorPathY = Number(contract.snakeChainReferencePathCenterYMm)
+    + (Number(contract.centerRow) - Number(contract.snakeChainReferenceRow))
+      * selectorPitch
+    + Number(contract.snakeChainVerticalShiftMm);
+  if (Math.abs(Number(contract.selectorShoeNormalOffsetMm)) > 0.001
+      || Math.abs(Number(contract.selectorShoeAnchorXMm)
+        - Number(contract.axisXMm)) > 0.001
+      || Math.abs(Number(contract.selectorShoeAnchorYMm) - selectorPathY) > 0.001
+      || Math.abs(Number(contract.selectorShoeChainAttachYMm) - selectorPathY) > 0.001
+      || Math.abs(Number(contract.selectorShoeChainAttachZMm)
+        - Number(contract.selectorShoeAnchorZMm)) > 0.001
+      || Number(contract.selectorShoeSupportArmDiameterMm) < 2.4) {
+    throw new Error("centerClutch 选择指路径锚点/平滑支撑臂契约不满足");
   }
   const positive = [
     "openGapMm", "dogInsertionMm", "strokeMm", "pocketDepthMm",
@@ -702,6 +729,8 @@ function validateCenterClutchContract(contract) {
     "frontTimingBearingGearClearanceMm",
     "frontTimingBearingPulleyClearanceMm", "frontDshaftStartYMm",
     "frontDshaftEndYMm", "frontDshaftLengthMm", "frontPinionThicknessMm",
+    "selectorShoeTangentOffsetMm", "selectorShoeSupportArmDiameterMm",
+    "selectorShoeTriggerClearanceMm",
     "drawerGuideRailClearanceMm", "drawerGuideRailWallThicknessMm",
     "drawerGuideBearingSeatDiameterMm",
     "drawerGuideSlotHeightMm", "drawerGuideRailDepthMm",
@@ -739,6 +768,10 @@ function validateCenterClutchContract(contract) {
     "outputBearingBarY0OffsetMm", "outputBearingBarZMinMm",
     "outputBearingBarZMaxMm",
     "plateBeltPassageRadialClearanceMm", "plateBeltPassageAxialClearanceMm",
+    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm", "selectorShoeAnchorZMm",
+    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
+    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
+    "selectorShoeTargetYMm",
   ];
   for (const key of finite) {
     if (!Number.isFinite(Number(contract[key]))) {
@@ -2008,7 +2041,14 @@ async function bindScheme1SelectorMesh(item) {
 
 function poseNativeSelectorShoe(part, deltaMm) {
   if (!play.path || !part) return;
-  const tangentOffset = part.demoTangentOffset ?? part.tangentOffset;
+  // The exported shoe is authored at its engagement tangent (+6 mm) and its
+  // anchor is the centre-row chain datum.  The centre-row path runs toward
+  // -X, so a requested physical shoe tangent t maps to a path displacement
+  // of (sourceTangent - t).  This keeps the static STL at its authored
+  // engagement position and moves the release magnet to the same axis
+  // without duplicating or rotating the part.
+  const physicalTangent = part.demoTangentOffset ?? part.tangentOffset;
+  const tangentOffset = part.sourceTangentOffset - physicalTangent;
   const sample = samplePath(
     play.path,
     part.s + deltaMm + tangentOffset,
@@ -2023,8 +2063,12 @@ function poseNativeSelectorShoe(part, deltaMm) {
     sample.point[2] + normal[1] * part.normalOffset,
     part.z,
   );
-  const yaw = Math.atan2(tangent[1], tangent[0]);
-  part.group.rotation.z = yaw - part.restYaw;
+  if (part.rotationMode === "fixed-world-center-row") {
+    part.group.rotation.z = 0;
+  } else {
+    const yaw = Math.atan2(tangent[1], tangent[0]);
+    part.group.rotation.z = yaw - part.restYaw;
+  }
 }
 
 function poseCenterDemoShoe(tangentOffsetMm = null) {
@@ -2076,9 +2120,11 @@ function bindNativeSelectorShoeMesh(item) {
     group: pivot,
     s: scheme.stationS[centerIndex],
     tangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
+    sourceTangentOffset: Number(play.currentClutch.contract.selectorShoeTangentOffsetMm),
     normalOffset: Number(play.currentClutch.contract.selectorShoeNormalOffsetMm),
     z: anchor.z,
     restYaw: 0,
+    rotationMode: play.currentClutch.contract.selectorShoeRotationMode,
     demoTangentOffset: null,
     native: true,
   };

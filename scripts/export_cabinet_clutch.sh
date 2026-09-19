@@ -84,13 +84,15 @@ export_part() {
 }
 
 patch_native_preview_manifest() {
-    python3 - "${PREVIEW_DIR}/manifest.json" <<'PY'
+    python3 - "${PREVIEW_DIR}/manifest.json" "${CENTER_CONTRACT_JSON}" <<'PY'
 from pathlib import Path
 import json
 import sys
 
 path = Path(sys.argv[1])
+contract_path = Path(sys.argv[2])
 payload = json.loads(path.read_text(encoding="utf-8"))
+contract = json.loads(contract_path.read_text(encoding="utf-8"))["centerClutch"]
 payload["up"] = "y"
 # The root preview owns one cabinet frame.  The old closed shell and the old
 # wire/grid context were coincident alternatives, not additional hardware.
@@ -151,6 +153,13 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
+    "cabinet-clutch/24_center_station_kit_template": {
+        "name": "中心 R3C3 同款离合总成模板（14 个非中心实例；单一 STL 引用）",
+        "color": "#718b99",
+        "opacity": 1.0,
+        "visible": True,
+        "role": "diagnostic",
+    },
     "cabinet-clutch/00_tensioner_t_solid_reference": {
         "name": "列同步张紧滑台 · SKP 参数重建",
         "color": "#aebdce",
@@ -198,6 +207,18 @@ labels = {
         "color": "#9a77c7",
         "visible": True,
         "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support": {
+        "name": "抽屉电机花键轴·5枚3×6×2轴承后伸固定条（C1绕开蛇链；实际与前后仓隔板一体）",
+        "color": "#657f8c",
+        "visible": True,
+        "role": "diagnostic",
+    },
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference": {
+        "name": "抽屉电机花键轴·3×6×2固定轴承×5（与花键轴同轴；采购件）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom": {
         "name": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
@@ -298,10 +319,10 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/center_selector_shoe": {
-        "name": "legacy · 中心 R3C3 选择指磁力靴（待按 M5 圆套重定位）",
+        "name": "中心 R3C3 · 选择指永磁磁力靴 + 平滑一体链条支撑臂（唯一活动件）",
         "color": "#c8d3dc",
-        "visible": False,
-        "role": "diagnostic",
+        "visible": True,
+        "role": "printed",
     },
     "cabinet-clutch/center_input_sleeve": {
         "name": "中心 R3C3 · 公轮底部 D 型圆套（下端 Ø8 圆形；Ø5×5 磁铁盲槽）",
@@ -394,6 +415,8 @@ group_map = {
     "cabinet_clutch_power_column_2": "01·动力母线",
     "cabinet_clutch_power_column_3": "01·动力母线",
     "cabinet_clutch_power_column_4": "01·动力母线",
+    "cabinet_clutch_vertical_spline_bearing_support": "01·动力母线",
+    "cabinet_clutch_vertical_spline_bearings_reference": "01·动力母线",
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
@@ -424,6 +447,7 @@ group_map = {
     "18_drawer_rack_guide_rails_candidate": "03·抽屉驱动",
     "22_front_timing_bearing_reference": "03·抽屉驱动",
     "23_front_d_axis_reference": "03·抽屉驱动",
+    "24_center_station_kit_template": "02·离合机构",
 }
 name_map = {
     "cabinet_clutch_cabinet_frame": "箱体框架（上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面；前后仓隔板另列）",
@@ -455,6 +479,7 @@ name_map = {
     "18_drawer_rack_guide_rails_candidate": "中心格左右内开口 C 形导向槽×2（Z向；尾部滚轮+前端下托）",
     "22_front_timing_bearing_reference": "中心格前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
     "23_front_d_axis_reference": "中心格前端主动轮到下层同步轮 3mm 短 D 轴",
+    "24_center_station_kit_template": "中心 R3C3 同款离合总成模板 · 14 个非中心实例",
     "cabinet_clutch_power_motor_body": "抽屉开合动力电机 · 竖直本体（+X末列）",
     "cabinet_clutch_power_motor_shaft": "抽屉开合动力电机 · 竖直D输出轴",
     "cabinet_clutch_power_column_0": "列同步轴 C1 · Y向长花键 + 上下2GT",
@@ -462,6 +487,8 @@ name_map = {
     "cabinet_clutch_power_column_2": "列同步轴 C3 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_3": "列同步轴 C4 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_4": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
+    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3×6×2 后伸固定条×5 · C1 后仓折线避让蛇链",
+    "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 3×6×2 固定轴承×5 · 采购件",
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_tensioner": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
@@ -475,6 +502,43 @@ for part in payload.get("parts", []):
     patch = labels.get(part.get("id")) or chain_labels.get(part.get("id"))
     if patch:
         part.update(patch)
+
+# The SCAD file owns one local center-station kit. The browser owns only these
+# placement instances; it must never receive fourteen copied STL files. The
+# center cell is intentionally omitted because its native components remain
+# the existing animated center IDs.
+station_template_ids = {
+    "cabinet-clutch/24_center_station_kit_template",
+}
+origin_x = float(contract["drawerStationTemplateOriginXMm"])
+origin_y = float(contract["drawerStationTemplateOriginYMm"])
+column_pitch = float(contract["drawerStationColumnPitchMm"])
+row_pitch = float(contract["drawerStationRowPitchMm"])
+center_col = int(contract["centerCol"])
+center_row = int(contract["centerRow"])
+instances = [
+    {
+        "id": f"R{row + 1}C{col + 1}",
+        "position": [
+            origin_x + col * column_pitch,
+            origin_y + row * row_pitch,
+            0,
+        ],
+    }
+    for row in range(int(contract["drawerLayerCount"]))
+    for col in range(int(contract["drawerColumnCount"]))
+    if (col, row) != (center_col, center_row)
+]
+if len(instances) != int(contract["drawerStationInstanceCount"]):
+    raise RuntimeError(
+        f"抽屉模板实例数不匹配: {len(instances)} != "
+        f"{contract['drawerStationInstanceCount']}"
+    )
+for part in payload.get("parts", []):
+    if part.get("id") in station_template_ids:
+        part["instanceMode"] = "world-xy-translation"
+        part["instanceCount"] = len(instances)
+        part["instances"] = instances
 group_order = [
     "00·箱体框架",
     "01·动力母线",
@@ -558,6 +622,12 @@ for group_id in ordered_group_ids:
         )
         active_power_parts = [
             motor_body,
+            part_node(
+                "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support",
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference",
+            ),
             *[
                 part_node(
                     f"cabinet-clutch/cabinet_clutch_power_column_{column}"
@@ -618,6 +688,8 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
             part_node("cabinet-clutch/center_mechanism_plate"),
+            part_node("cabinet-clutch/center_selector_shoe"),
+            part_node("cabinet-clutch/24_center_station_kit_template"),
             input_axis,
             rotary_support,
             fit_coupon,
@@ -793,7 +865,6 @@ LEGACY_CLUTCH_OUTPUTS=(
     "center_linear_bearing_retainers.stl"
     "center_stops.stl"
     "center_input_bearings_reference.stl"
-    "center_selector_shoe.stl"
     "center_linear_bearing_block.stl"
     "center_output_cage.stl"
 )
@@ -840,6 +911,16 @@ OBSOLETE_DRAWER_DRIVE_OUTPUTS=(
     "19_front_pinion_bearing_support_candidate.stl"
     "20_front_pinion_bearings_reference.stl"
     "21_front_timing_bearing_support_candidate.stl"
+    "24_drawer_station_timing_belt_template.stl"
+    "25_drawer_station_front_pulley_template.stl"
+    "26_drawer_station_front_gear_template.stl"
+    "27_drawer_station_front_axis_template.stl"
+    "28_drawer_station_rack_template.stl"
+    "29_drawer_station_guide_rollers_template.stl"
+    "30_drawer_station_guide_rails_template.stl"
+    "31_drawer_station_front_bearing_support_template.stl"
+    "32_drawer_station_front_bearings_template.stl"
+    "33_drawer_station_takeoff_template.stl"
 )
 for old_file in "${OBSOLETE_DRAWER_DRIVE_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" \
@@ -893,6 +974,8 @@ export_part "motor_shaft" "${OUT_DIR}/cabinet_clutch_power_motor_shaft.stl" fals
 for column in 0 1 2 3 4; do
     export_part "column" "${OUT_DIR}/cabinet_clutch_power_column_${column}.stl" false 0 "${column}"
 done
+export_part "vertical_spline_bearing_support" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" false 0
+export_part "vertical_spline_bearings" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearings_reference.stl" false 0
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
 export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
@@ -971,6 +1054,7 @@ export_part "center_input_sleeve" "${OUT_DIR}/center_input_sleeve.stl" false 0
 export_part "center_input_sleeve_magnet" "${OUT_DIR}/center_input_sleeve_magnet_reference.stl" false 0
 export_part "center_output_shaft" "${OUT_DIR}/center_output_shaft_reference.stl" false 0
 export_part "center_output_bearings" "${OUT_DIR}/center_output_bearings_reference.stl" false 0
+export_part "center_selector_shoe" "${OUT_DIR}/center_selector_shoe.stl" false 0
 
 # The center printed pieces are the current first-article outputs. Purchased
 # shaft/bearing/magnet references remain ordinary inspection artifacts, while
@@ -981,7 +1065,9 @@ for printable_part in \
     "${OUT_DIR}/center_output_rotor.stl" \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
-    "${OUT_DIR}/center_input_sleeve.stl"; do
+    "${OUT_DIR}/center_input_sleeve.stl" \
+    "${OUT_DIR}/center_selector_shoe.stl" \
+    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 
@@ -993,6 +1079,11 @@ export_part "drawer_rack_guide_rollers" "${OUT_DIR}/17_drawer_rack_guide_rollers
 export_part "drawer_rack_guide_rails" "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" false 0
 export_part "front_timing_bearing" "${OUT_DIR}/22_front_timing_bearing_reference.stl" false 0
 export_part "front_d_axis" "${OUT_DIR}/23_front_d_axis_reference.stl" false 0
+
+# The center station is the only canonical kit. The browser places this one
+# source at fourteen non-center datums; no old generic drawer-side templates
+# or per-cell STL copies are generated.
+export_part "center_station_template_assembly" "${OUT_DIR}/24_center_station_kit_template.stl" false 0
 
 for printable_part in \
     "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl"; do

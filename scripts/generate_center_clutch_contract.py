@@ -36,6 +36,31 @@ REQUIRED = {
     "frontTimingBearingPulleyClearanceMm", "frontTimingBearingSupport",
     "frontTimingBearingFit", "frontDshaftProfile", "frontDshaftStartYMm",
     "frontDshaftEndYMm", "frontDshaftLengthMm", "frontPinionThicknessMm",
+    "verticalSplineBearingNominal", "verticalSplineBearingCount",
+    "verticalSplineBearingIdMm", "verticalSplineBearingOdMm",
+    "verticalSplineBearingWidthMm", "verticalSplineBearingSeatDiameterMm",
+    "verticalSplineBearingAxisZMm", "verticalSplineBearingCenterYMm",
+    "verticalSplineBearingBarY0Mm", "verticalSplineBearingBarY1Mm",
+    "verticalSplineBearingBarXWidthMm", "verticalSplineBearingBarYThicknessMm",
+    "verticalSplineBearingBarZMinMm", "verticalSplineBearingBarZMaxMm",
+    "verticalSplineBearingBarZLengthMm",
+    "verticalSplineBearingPartitionOverlapMm",
+    "verticalSplineBearingPartitionKeyWidthMm",
+    "verticalSplineBearingPartitionKeyClearanceMm",
+    "verticalSplineBearingPartitionKeyZLengthMm",
+    "verticalSplineBearingChainTopYMm",
+    "verticalSplineBearingLowerPulleyBottomYMm",
+    "verticalSplineBearingReturnGuideClearanceMm",
+    "verticalSplineBearingLowerPulleyClearanceMm",
+    "verticalSplineBearingReturnDriveClearanceMm",
+    "verticalSplineBearingDetourColumn",
+    "verticalSplineBearingDetourXOffsetMm",
+    "verticalSplineBearingDetourXClearanceMm",
+    "verticalSplineBearingDetourZClearanceMm",
+    "verticalSplineBearingLowerDStubLengthMm",
+    "verticalSplineBearingUpperDStubLengthMm",
+    "verticalSplineBearingSupport", "verticalSplineBearingSupportPart",
+    "verticalSplineBearingsPart",
     "inputBaseYMm",
     "maleBottomYMm", "outputBaseYMm", "openGapMm", "dogInsertionMm",
     "strokeMm", "pocketDepthMm", "bottomClearanceMm",
@@ -75,6 +100,13 @@ REQUIRED = {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
+    "selectorShoePart", "selectorShoeSupport", "selectorShoeRotationMode",
+    "selectorShoeAnchorXMm", "selectorShoeAnchorYMm",
+    "selectorShoeAnchorZMm", "selectorShoeTangentOffsetMm",
+    "selectorShoeNormalOffsetMm", "selectorShoeChainAttachXMm",
+    "selectorShoeChainAttachYMm", "selectorShoeChainAttachZMm",
+    "selectorShoeSupportArmDiameterMm", "selectorShoeTargetYMm",
+    "selectorShoeTriggerClearanceMm",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -113,8 +145,11 @@ REQUIRED = {
     "partitionBeltPassageAxialClearanceMm",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
-    "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
+    "drawerLayerCount", "drawerColumnCount", "serviceLayerCount", "drawerBayHeightMm",
     "drawerShelfThicknessMm",
+    "drawerStationTemplateOriginXMm", "drawerStationTemplateOriginYMm",
+    "drawerStationColumnPitchMm", "drawerStationRowPitchMm",
+    "drawerStationInstanceCount",
     "drawerRackBodyWidthMm", "drawerRackBodyHeightMm",
     "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
@@ -141,12 +176,14 @@ INT_KEYS = {
     "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
     "outputBearingCount", "bearingCount", "matingMagnetCount",
     "inputSleeveMagnetCount", "totalModeledMagnetCount", "centerCol", "centerRow",
-    "drawerLayerCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
+    "drawerLayerCount", "drawerColumnCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
     "plateBeltPassageSlotCount", "partitionBeltPassageWindowCount",
     "partitionBeltPassage2GTWindowCount", "plateFastenerCount",
     "partitionBossPerCellCount", "partitionBossCount",
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
+    "verticalSplineBearingCount", "verticalSplineBearingDetourColumn",
+    "drawerStationInstanceCount",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -228,6 +265,10 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("一体式 LM3UU 轴承座不得保留座体 M3 固定孔")
 
     exact = {
+        "verticalSplineBearingNominal": "3x6x2",
+        "verticalSplineBearingSupport": "partition-integral-rearward-stepped-bar-with-side-keys",
+        "verticalSplineBearingSupportPart": "cabinet-clutch/vertical_spline_bearing_support",
+        "verticalSplineBearingsPart": "cabinet-clutch/vertical_spline_bearings_reference",
         "linearBearingBlockMount": "mechanism-plate-integral-press-fit",
         "linearBearingModel": "LM3UU-cutaway-reference",
         "linearBearingFitCouponPart": "cabinet-clutch/center_linear_bearing_fit_coupon",
@@ -252,6 +293,9 @@ def validate_contract(contract: dict[str, object]) -> None:
         "frontTimingBearingSupport": "integral-shelf-stepped-seat",
         "frontTimingBearingFit": "press-fit-3x6x2-bottom-captive",
         "frontDshaftProfile": "D",
+        "selectorShoePart": "cabinet-clutch/center_selector_shoe",
+        "selectorShoeSupport": "chain-mounted-smooth-hull-arm",
+        "selectorShoeRotationMode": "fixed-world-center-row",
         "drawerFrontPinionBearing": "integral-shelf-stepped-3x6x2",
         "drawerGuideBearing": "681-1x3x1-X-axis-C-slot",
         "drawerGuideRail": "dual-inward-C-slot",
@@ -264,6 +308,103 @@ def validate_contract(contract: dict[str, object]) -> None:
     for key, value in exact.items():
         if contract.get(key) != value:
             raise RuntimeError(f"中心离合契约字段错误: {key}={contract.get(key)!r}")
+
+    if n(contract, "verticalSplineBearingCount") != 5:
+        raise RuntimeError("抽屉电机花键轴必须为 5 根列轴各配一枚固定轴承")
+    if n(contract, "selectorShoeTangentOffsetMm") <= 0:
+        raise RuntimeError("选择指磁力靴必须保留正的半间距触发位")
+    if n(contract, "selectorShoeNormalOffsetMm") != 0:
+        raise RuntimeError("选择指锚点必须直接落在中心链条路径，不得再叠加法向偏移")
+    expect(
+        contract,
+        "selectorShoeAnchorXMm",
+        n(contract, "axisXMm"),
+        "选择指路径锚点 X",
+    )
+    chain_pitch = n(contract, "drawerBayHeightMm") + n(contract, "drawerShelfThicknessMm")
+    expected_selector_y = (
+        n(contract, "snakeChainReferencePathCenterYMm")
+        + (n(contract, "centerRow") - n(contract, "snakeChainReferenceRow")) * chain_pitch
+        + n(contract, "snakeChainVerticalShiftMm")
+    )
+    expect(
+        contract,
+        "selectorShoeAnchorYMm",
+        expected_selector_y,
+        "选择指中心行链条路径锚点 Y",
+    )
+    expect(
+        contract,
+        "selectorShoeChainAttachYMm",
+        expected_selector_y,
+        "选择指链条接触 Y",
+    )
+    expect(
+        contract,
+        "selectorShoeChainAttachZMm",
+        n(contract, "selectorShoeAnchorZMm"),
+        "选择指链条接触 Z",
+    )
+    if n(contract, "selectorShoeSupportArmDiameterMm") < 2.4:
+        raise RuntimeError("选择指平滑支撑臂直径不足 2.4 mm")
+    if n(contract, "selectorShoeTriggerClearanceMm") <= 0:
+        raise RuntimeError("选择指磁铁触发净空无效")
+    expect(contract, "verticalSplineBearingIdMm", 3.0, "花键轴承内径")
+    expect(contract, "verticalSplineBearingOdMm", 6.0, "花键轴承外径")
+    expect(contract, "verticalSplineBearingWidthMm", 2.0, "花键轴承宽度")
+    expect(contract, "verticalSplineBearingSeatDiameterMm", 6.10, "花键轴承座孔")
+    expect(contract, "verticalSplineBearingBarXWidthMm", 14.0, "花键轴承长方条 X 宽")
+    expect(contract, "verticalSplineBearingBarYThicknessMm", 2.20, "花键轴承长方条 Y 厚")
+    expect(
+        contract,
+        "verticalSplineBearingBarY1Mm"
+        , n(contract, "verticalSplineBearingBarY0Mm")
+        + n(contract, "verticalSplineBearingBarYThicknessMm"),
+        "花键轴承长方条 Y 包络",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingCenterYMm",
+        (n(contract, "verticalSplineBearingChainTopYMm")
+         + n(contract, "verticalSplineBearingLowerPulleyBottomYMm")) / 2,
+        "花键轴承高度必须位于链条和下方 2GT 轮之间",
+    )
+    if n(contract, "verticalSplineBearingBarY0Mm") <= n(contract, "verticalSplineBearingChainTopYMm"):
+        raise RuntimeError("花键轴承长方条下沿进入蛇链回程包络")
+    if n(contract, "verticalSplineBearingBarY1Mm") >= n(contract, "verticalSplineBearingLowerPulleyBottomYMm"):
+        raise RuntimeError("花键轴承长方条上沿进入下方 2GT 轮包络")
+    if n(contract, "verticalSplineBearingReturnGuideClearanceMm") < 0.45:
+        raise RuntimeError("花键轴承长方条与 8T 蛇链导向轮净空不足")
+    if n(contract, "verticalSplineBearingLowerPulleyClearanceMm") < 0.45:
+        raise RuntimeError("花键轴承长方条与下方 2GT 轮净空不足")
+    if n(contract, "verticalSplineBearingReturnDriveClearanceMm") < 0.45:
+        raise RuntimeError("花键轴承长方条与 12T 蛇链回程主动轮净空不足")
+    expect(
+        contract,
+        "verticalSplineBearingBarZLengthMm",
+        n(contract, "verticalSplineBearingBarZMaxMm")
+        - n(contract, "verticalSplineBearingBarZMinMm"),
+        "花键轴承长方条 Z 长度",
+    )
+    if n(contract, "verticalSplineBearingBarXWidthMm") <= 2 * n(contract, "partitionBeltPassageHalfWidthMm"):
+        raise RuntimeError("花键轴承长方条不能形成隔板皮带孔外侧定位键")
+    if n(contract, "verticalSplineBearingPartitionKeyWidthMm") <= 0 or n(contract, "verticalSplineBearingPartitionKeyClearanceMm") <= 0:
+        raise RuntimeError("花键轴承隔板侧键必须在皮带孔外侧并留出净空")
+    expect(
+        contract,
+        "verticalSplineBearingPartitionKeyZLengthMm",
+        n(contract, "partitionBeltPassagePlateThicknessMm")
+        + n(contract, "verticalSplineBearingPartitionOverlapMm")
+        + 0.0,
+        "花键轴承隔板侧键穿板长度",
+    )
+    expect(contract, "verticalSplineBearingDetourColumn", 0.0, "花键轴承避让列")
+    expect(contract, "verticalSplineBearingDetourXOffsetMm", 14.0, "花键轴承 C1 避让 X 偏移")
+    expect(contract, "verticalSplineBearingDetourZClearanceMm", 0.60, "花键轴承 C1 避让 Z 净空")
+    if n(contract, "verticalSplineBearingDetourXClearanceMm") < 0.45:
+        raise RuntimeError("C1 花键轴承折线支架与 12T 蛇链主动轮净空不足")
+    expect(contract, "verticalSplineBearingLowerDStubLengthMm", 12.0, "花键轴下端 D 段")
+    expect(contract, "verticalSplineBearingUpperDStubLengthMm", 6.0, "花键轴上端 D 段")
 
     if n(contract, "platePartitionGapMm") != 0:
         raise RuntimeError("离合机构板必须贴合前后仓隔板后表面")
@@ -631,6 +772,12 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("输出圆轴直径必须与 3 mm D 轴名义尺寸一致")
     if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 1:
         raise RuntimeError("当前契约必须锁定三层柜体中心格（零基准 2,1）")
+    if n(contract, "drawerStationInstanceCount") != 14:
+        raise RuntimeError("中心同款离合总成模板必须由 14 个非中心实例补齐 5×3 世界总装")
+    if n(contract, "drawerColumnCount") != 5:
+        raise RuntimeError("当前中心同款离合总成模板实例布局必须锁定 5 列")
+    if n(contract, "drawerStationColumnPitchMm") <= 0 or n(contract, "drawerStationRowPitchMm") <= 0:
+        raise RuntimeError("中心同款离合总成模板实例间距必须为正")
     if n(contract, "frontTimingPulleyDrawerRow") != n(contract, "centerRow") - 1:
         raise RuntimeError("前端同步轮必须落在中心抽屉的下一层格口")
     if n(contract, "drawerLayerCount") != 3 or n(contract, "serviceLayerCount") != 1:

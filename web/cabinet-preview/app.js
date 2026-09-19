@@ -103,6 +103,7 @@ const DRAWER_DRIVE_TAILS = new Set([
   "14_front_timing_pulley_candidate",
   "15_front_pinion_candidate",
   "16_drawer_linear_rack_candidate",
+  "24_center_station_kit_template",
 ]);
 const LEGACY_SCHEME1_TAILS = new Set([
   "cabinet_chain_scheme1_power_wheels",
@@ -121,6 +122,7 @@ const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_mechanism_plate",
   "cabinet-clutch/center_output_bearings_reference",
   "cabinet-clutch/center_output_shaft_reference",
+  "cabinet-clutch/center_selector_shoe",
 ]);
 const CENTER_CLUTCH_FRAME_IDS = new Set([
   ...CENTER_CLUTCH_FOCUS_IDS,
@@ -136,8 +138,8 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-clutch/15_front_pinion_candidate",
   "cabinet-clutch/16_drawer_linear_rack_candidate",
   // Keep the authored snake-chain assets available as a low-opacity spatial
-  // reference. They are surrounding-coordinate context only; the current
-  // male-end mechanism does not contain or animate a selector shoe.
+  // reference. The active native selector shoe is in CENTER_CLUTCH_FOCUS_IDS
+  // and follows the center-row chain datum from the same contract.
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
@@ -161,7 +163,7 @@ const UPPER_TENSIONER_TAILS = new Set([
 //#endregion
 
 //#region 模型/类型
-/** @typedef {{id:string,name:string,file:string,group?:string,role?:string,color?:string,opacity?:number,visible?:boolean,explosion?:number[],bytes?:number}} PreviewPart */
+/** @typedef {{id:string,name:string,file:string,group?:string,role?:string,color?:string,opacity?:number,visible?:boolean,explosion?:number[],bytes?:number,instanceMode?:string,instanceCount?:number,instances?:Array<{id?:string,position?:number[],rotation?:number[],scale?:number[]}>}} PreviewPart */
 /** @typedef {{title?:string,units?:string,up?:string,count?:number,totalCount?:number,groups?:{id:string,name:string,count:number}[],parts:PreviewPart[]}} PreviewListing */
 //#endregion
 
@@ -1546,12 +1548,58 @@ async function loadPart(item) {
       opacity: partOpacity(item.part),
       side: THREE.DoubleSide,
     });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.visible = state.visibleIds.has(item.part.id);
     const parent = coordinateParent(item.part);
-    parent.add(mesh);
-    item.mesh = mesh;
-    item.box = geometry.boundingBox.clone();
+    const instances = Array.isArray(item.part.instances) && item.part.instances.length
+      ? item.part.instances
+      : null;
+    if (instances) {
+      // A manifest instance is a placement reference, not a copied STL. Keep
+      // one BufferGeometry/material source and create lightweight Three.js
+      // mesh nodes at the authored world datums. This is the CAD equivalent
+      // of new DrawerStation() for every non-center cell.
+      const group = new THREE.Group();
+      group.name = `stl-template-instances:${item.part.id}`;
+      for (const instance of instances) {
+        const mesh = new THREE.Mesh(geometry, material);
+        const position = Array.isArray(instance.position)
+          ? instance.position
+          : [0, 0, 0];
+        const rotation = Array.isArray(instance.rotation)
+          ? instance.rotation
+          : [0, 0, 0];
+        const scale = Array.isArray(instance.scale)
+          ? instance.scale
+          : [1, 1, 1];
+        mesh.position.set(
+          Number(position[0]) || 0,
+          Number(position[1]) || 0,
+          Number(position[2]) || 0,
+        );
+        mesh.rotation.set(
+          Number(rotation[0]) || 0,
+          Number(rotation[1]) || 0,
+          Number(rotation[2]) || 0,
+        );
+        mesh.scale.set(
+          Number(scale[0]) || 1,
+          Number(scale[1]) || 1,
+          Number(scale[2]) || 1,
+        );
+        mesh.userData.instanceId = instance.id || "";
+        group.add(mesh);
+      }
+      group.visible = state.visibleIds.has(item.part.id);
+      parent.add(group);
+      item.mesh = group;
+      group.updateMatrixWorld(true);
+      item.box = new THREE.Box3().setFromObject(group);
+    } else {
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.visible = state.visibleIds.has(item.part.id);
+      parent.add(mesh);
+      item.mesh = mesh;
+      item.box = geometry.boundingBox.clone();
+    }
     try {
       await onPartLoaded(item);
     } catch (playError) {

@@ -38,10 +38,10 @@ CLUTCH_EXPLODE = is_undef(CLUTCH_EXPLODE) ? 0 : CLUTCH_EXPLODE;
 ENGAGED = is_undef(ENGAGED) ? false : ENGAGED;
 SELECTED_COLUMN = is_undef(SELECTED_COLUMN) ? 2 : SELECTED_COLUMN;
 SELECTED_ROW = is_undef(SELECTED_ROW) ? 1 : SELECTED_ROW;
-// Start the physical validation scene with one known-good center station.
-// Set SHOW_LEGACY_STATIONS=true only when the remaining 24 old stations are
-// ready to be reviewed again; this keeps unverified legacy clutches out of the
-// main assembly and out of the drawer-drive preview by default.
+// Start the physical validation scene with one known-good center clutch.
+// SHOW_LEGACY_STATIONS controls only the retired non-center clutch diagnostics;
+// all 15 stations in the default world use the same canonical center assembly
+// instance, with the center station kept as the one animated/native source.
 SHOW_LEGACY_STATIONS = is_undef(SHOW_LEGACY_STATIONS)
     ? false
     : SHOW_LEGACY_STATIONS;
@@ -278,6 +278,12 @@ VERTICAL_GEAR_TIP_START = 0.20;
 VERTICAL_GEAR_TIP_END = 0.50;
 VERTICAL_GEAR_ROOT_END = 0.80;
 VERTICAL_GEAR_END_STUB_LENGTH = 6.0;
+// The lower timing pulley sits above the chain return envelope.  Give the
+// printed spline shaft a longer lower D stub so a purchased 3×6×2 bearing can
+// sit in the fixed partition bar below that pulley; the upper stub remains the
+// original short pulley engagement.
+VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH = 12.0;
+VERTICAL_GEAR_TOP_END_STUB_LENGTH = 6.0;
 VERTICAL_GEAR_STUB_OVERLAP = 0.20;
 
 // Timing dimensions remain available for the drawer take-offs. The former
@@ -549,6 +555,11 @@ COLOR_AXIS_Z = "#3b82f6";
 //   clutch_detail  selected center mechanism (or a legacy station when enabled)
 //   motor/motor_body/motor_shaft/left_d_axis/side_axes/column/vertical_rack
 //   column_sync_belt_bottom/column_sync_belt_top/column_sync_tensioner
+//   center_station_template_assembly  one local center-station assembly kit;
+//                                    Three.js places fourteen world instances
+//   vertical_spline_bearing_support/vertical_spline_bearings
+//   vertical_spline_support_chain_collision/vertical_spline_support_drive_collision
+//   vertical_spline_support_partition_window_collision
 //   tensioner_t_solid
 //   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
 //   spring/screw/fork/drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
@@ -565,6 +576,11 @@ COLOR_AXIS_Z = "#3b82f6";
 // shafts and two 3×6×2 bearing references in its fixed cage. The other 24
 // legacy stations are intentionally suppressed until this physical prototype
 // is approved.
+// Each of the five drawer-motor spline shafts also receives one fixed 3×6×2
+// bearing in a rearward rectangular bar fused to the front/rear compartment
+// partition. The C1 bar steps around the lower snake return drive; the bar
+// height is derived from the chain and lower 2GT envelopes and is checked by
+// explicit CSG intersection witnesses before it enters the assembly.
 //#endregion
 
 //#region 私有成员：几何函数
@@ -804,8 +820,7 @@ CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM = 1.20;
 CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T = 2.40;
 CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM = 0.30;
 CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM = 2.40;
-CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM =
-    world_row_center_y(CENTER_GT2_ROW);
+CENTER_SELECTOR_SHOE_SUPPORT_ARM_D = 2.60;
 CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM = SNAKE_CHAIN_CENTER_Z;
 CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM = clutch_col_x(CENTER_GT2_COL)
     + CENTER_SELECTOR_SHOE_SUPPORT_X_OFFSET_MM;
@@ -1612,7 +1627,9 @@ module vertical_gear_rack(x, z) {
                 VERTICAL_GEAR_END_STUB_LENGTH,
                 VERTICAL_GEAR_STUB_OVERLAP,
                 ROD_D,
-                ROD_FLAT_DEPTH
+                ROD_FLAT_DEPTH,
+                VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH,
+                VERTICAL_GEAR_TOP_END_STUB_LENGTH
             );
 }
 
@@ -1794,7 +1811,8 @@ module drawer_front_pinion_bearing_support(
     x,
     gear_y,
     z,
-    include_lower_mr63 = true
+    include_lower_mr63 = true,
+    include_bearings = true
 ) {
     // Legacy stations retain two separate fixed cheeks.  The center station
     // replaces the lower cheek with the shelf-thickness timing-bearing
@@ -1836,8 +1854,9 @@ module drawer_front_pinion_bearing_support(
                             $fn = 40
                         );
             }
-        color("#cfd4da")
-            drawer_drive_mr63_bearing_y(x, bearing_y, z);
+        if (include_bearings)
+            color("#cfd4da")
+                drawer_drive_mr63_bearing_y(x, bearing_y, z);
     }
 }
 
@@ -2310,6 +2329,10 @@ module cabinet_frame_partition_with_belt_passage() {
     difference() {
         union() {
             world_partition_plate();
+            // Five rearward integral bars capture the lower D stub of each
+            // drawer-motor spline shaft. Their side keys sit outside the
+            // per-cell 2GT belt windows, so the belt passages remain open.
+            vertical_spline_bearing_support_bars();
             // Repeat the same relative Boss pattern in every one of the 15
             // drawer cells. The center mechanism plate is the reference
             // geometry; the other cells receive the same mounting datums.
@@ -2430,6 +2453,7 @@ module power_bus() {
     // couple all five columns to that motor; the low-X wheel is the adjustable
     // return/tension point and is not an extra drawer column.
     all_vertical_axes();
+    vertical_spline_bearing_references();
     power_column_sync_belts();
     column_sync_tensioner();
 }
@@ -2471,6 +2495,310 @@ SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM =
     (h2 - SNAKE_CHAIN_TRIGGER_MAGNET_D) / 2;
 SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.00;
 SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = outer_face + 0.05;
+
+// The selector arm follows the shifted centre-row chain run, not the
+// unshifted drawer-grid row.  This is the same vertical datum consumed by
+// solve_cabinet_chain.py and keeps the printed arm on the real chain pin after
+// the magnet-bottom height correction.
+function center_selector_chain_attach_y() =
+    world_row_center_y(CENTER_GT2_ROW) + SNAKE_CHAIN_VERTICAL_SHIFT_MM;
+
+// The five long Y-axis spline shafts are now radially captured at their lower
+// D stubs.  The support is an integral rearward bar from the fixed
+// front/rear compartment partition.  Its center height is derived from the
+// real 8T return-guide envelope and the lower 2GT pulley bottom, so the bar
+// does not choose a visually convenient but mechanically colliding height.
+SNAKE_CHAIN_GUIDE_TEETH = 8;
+SNAKE_CHAIN_DRIVE_TEETH = 12;
+SNAKE_CHAIN_GUIDE_PITCH_R_MM =
+    P / (2 * sin(180 / SNAKE_CHAIN_GUIDE_TEETH));
+SNAKE_CHAIN_DRIVE_PITCH_R_MM =
+    P / (2 * sin(180 / SNAKE_CHAIN_DRIVE_TEETH));
+SNAKE_CHAIN_GUIDE_OUTER_R_MM =
+    SNAKE_CHAIN_GUIDE_PITCH_R_MM + 0.12 * P;
+SNAKE_CHAIN_DRIVE_OUTER_R_MM =
+    SNAKE_CHAIN_DRIVE_PITCH_R_MM + 0.38 * P;
+SNAKE_CHAIN_GUIDE_ANCHOR_DX_MM =
+    SNAKE_CHAIN_DRIVE_PITCH_R_MM - SNAKE_CHAIN_GUIDE_PITCH_R_MM;
+SNAKE_CHAIN_WALL_INSET_MM =
+    WALL + SNAKE_CHAIN_DRIVE_OUTER_R_MM + 0.40;
+SNAKE_CHAIN_LEFT_VERTICAL_GUIDE_X_MM =
+    clutch_col_x(0)
+        - ((W - SNAKE_CHAIN_WALL_INSET_MM)
+            - clutch_col_x(N_COL - 1))
+        - SNAKE_CHAIN_GUIDE_ANCHOR_DX_MM;
+SNAKE_CHAIN_RIGHT_VERTICAL_GUIDE_X_MM =
+    W - SNAKE_CHAIN_WALL_INSET_MM + SNAKE_CHAIN_GUIDE_ANCHOR_DX_MM;
+SNAKE_CHAIN_RETURN_DRIVE_X_MM =
+    SNAKE_CHAIN_WALL_INSET_MM
+        + 2 * SNAKE_CHAIN_DRIVE_PITCH_R_MM
+        + SNAKE_CHAIN_GUIDE_PITCH_R_MM
+        - 0.1018;
+
+VERTICAL_SPLINE_BEARING_NOMINAL = "3x6x2";
+VERTICAL_SPLINE_BEARING_ID_MM = 3.0;
+VERTICAL_SPLINE_BEARING_OD_MM = 6.0;
+VERTICAL_SPLINE_BEARING_WIDTH_MM = 2.0;
+VERTICAL_SPLINE_BEARING_SEAT_D_MM = 6.10;
+VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM = 14.0;
+VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM = 2.20;
+VERTICAL_SPLINE_BEARING_BAR_Z_MARGIN_MM = 0.80;
+VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM = 0.50;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM = 1.50;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM = 0.20;
+VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM =
+    SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM
+        + SNAKE_CHAIN_GUIDE_OUTER_R_MM;
+VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM =
+    BUS_BOTTOM_Y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
+VERTICAL_SPLINE_BEARING_CENTER_Y_MM =
+    (VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM
+        + VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM) / 2;
+VERTICAL_SPLINE_BEARING_BAR_Y0_MM =
+    VERTICAL_SPLINE_BEARING_CENTER_Y_MM
+        - VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM / 2;
+VERTICAL_SPLINE_BEARING_BAR_Y1_MM =
+    VERTICAL_SPLINE_BEARING_CENTER_Y_MM
+        + VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM / 2;
+VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM =
+    DRIVE_AXIS_Z
+        - VERTICAL_SPLINE_BEARING_OD_MM / 2
+        - VERTICAL_SPLINE_BEARING_BAR_Z_MARGIN_MM;
+VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM =
+    WORLD_PARTITION_BACK_Z - VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM;
+VERTICAL_SPLINE_BEARING_BAR_Z_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+        - VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_MAX_MM =
+    WORLD_PARTITION_FRONT_Z;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_MAX_MM
+        - VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM;
+VERTICAL_SPLINE_BEARING_RETURN_GUIDE_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_BAR_Y0_MM
+        - VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM;
+VERTICAL_SPLINE_BEARING_LOWER_PULLEY_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM
+        - VERTICAL_SPLINE_BEARING_BAR_Y1_MM;
+VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM =
+    SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM
+        + SNAKE_CHAIN_DRIVE_OUTER_R_MM
+        - VERTICAL_SPLINE_BEARING_BAR_Y1_MM;
+// C1 is adjacent to the lower snake return drive.  Only that column needs a
+// short rear-cavity dog-leg: the bearing remains on the C1 shaft, while the
+// partition-side rail shifts +X before crossing the chain plane.
+VERTICAL_SPLINE_BEARING_DETOUR_COLUMN = 0;
+VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM = 14.0;
+VERTICAL_SPLINE_BEARING_DETOUR_X_MM =
+    clutch_col_x(VERTICAL_SPLINE_BEARING_DETOUR_COLUMN)
+        + VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM;
+VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM = 0.60;
+VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM =
+    SNAKE_CHAIN_REAR_EDGE_Z
+        - VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM;
+VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM =
+    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM - 1.60;
+VERTICAL_SPLINE_BEARING_DETOUR_NECK_Z_MAX_MM =
+    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM + 0.25;
+VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_DETOUR_X_MM
+        - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2
+        - (SNAKE_CHAIN_RETURN_DRIVE_X_MM
+            + SNAKE_CHAIN_DRIVE_OUTER_R_MM);
+
+module vertical_spline_bearing_partition_keys(x) {
+    for (side = [-1, 1])
+        translate([
+            x + side * (
+                PARTITION_BELT_PASSAGE_WINDOW_HALF_X
+                + VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM
+                + VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM / 2
+            )
+            - VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM / 2,
+            VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
+            VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+        ])
+            cube([
+                VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM,
+                VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
+                VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM
+            ]);
+}
+
+module vertical_spline_bearing_support_bar_neck(x, z0, z1) {
+    translate([
+        x - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2,
+        VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
+        z0
+    ])
+        cube([
+            VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM,
+            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
+            z1 - z0
+        ]);
+}
+
+module vertical_spline_bearing_support_bar(x) {
+    // The central bar is deliberately 14 mm wide.  It stops 0.50 mm behind
+    // the partition's rear face; two 1.50 mm side keys then pass through the
+    // partition outside the 2GT window.  Thus the belt opening remains open,
+    // while the bar is still fused to the load-bearing partition instead of
+    // merely touching it at a coplanar face.
+    difference() {
+        union() {
+            vertical_spline_bearing_support_bar_neck(
+                x,
+                VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM,
+                VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+            );
+            vertical_spline_bearing_partition_keys(x);
+        }
+        // One round press-fit seat is coaxial with the vertical D shaft. The
+        // purchased bearing itself is 3×6×2; the printed seat is 6.10 mm.
+        cylinder_y(
+            x,
+            VERTICAL_SPLINE_BEARING_BAR_Y0_MM - EPS,
+            DRIVE_AXIS_Z,
+            VERTICAL_SPLINE_BEARING_SEAT_D_MM,
+            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM + 2 * EPS
+        );
+    }
+}
+
+module vertical_spline_bearing_support_bar_detoured(x) {
+    difference() {
+        union() {
+            // Shaft-side bearing neck stops behind the chain plane.
+            vertical_spline_bearing_support_bar_neck(
+                x,
+                VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM,
+                VERTICAL_SPLINE_BEARING_DETOUR_NECK_Z_MAX_MM
+            );
+            // A shallow rear bridge moves the support to the +X side before
+            // it crosses the 12T return-drive envelope.
+            translate([
+                x - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2,
+                VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
+                VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM
+            ])
+                cube([
+                    VERTICAL_SPLINE_BEARING_DETOUR_X_MM - x
+                        + VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM,
+                    VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
+                    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM
+                        - VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM
+                ]);
+            vertical_spline_bearing_support_bar_neck(
+                VERTICAL_SPLINE_BEARING_DETOUR_X_MM,
+                VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM,
+                VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+            );
+            // The detoured rail is already outside the C1 window at the
+            // partition, so it can pass through as one solid rectangular
+            // anchor; adding keys around the shifted center would point them
+            // back into the original C1 belt opening.
+        }
+        cylinder_y(
+            x,
+            VERTICAL_SPLINE_BEARING_BAR_Y0_MM - EPS,
+            DRIVE_AXIS_Z,
+            VERTICAL_SPLINE_BEARING_SEAT_D_MM,
+            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM + 2 * EPS
+        );
+    }
+}
+
+module vertical_spline_bearing_support_bars() {
+    for (i = [0:N_COL - 1])
+        if (i == VERTICAL_SPLINE_BEARING_DETOUR_COLUMN)
+            vertical_spline_bearing_support_bar_detoured(clutch_col_x(i));
+        else
+            vertical_spline_bearing_support_bar(clutch_col_x(i));
+}
+
+module vertical_spline_bearing_reference_y(x) {
+    color("#cfd4da")
+        translate([x, VERTICAL_SPLINE_BEARING_CENTER_Y_MM, DRIVE_AXIS_Z])
+            rotate([90, 0, 0])
+                difference() {
+                    cylinder(
+                        d = VERTICAL_SPLINE_BEARING_OD_MM,
+                        h = VERTICAL_SPLINE_BEARING_WIDTH_MM,
+                        center = true,
+                        $fn = 64
+                    );
+                    cylinder(
+                        d = VERTICAL_SPLINE_BEARING_ID_MM,
+                        h = VERTICAL_SPLINE_BEARING_WIDTH_MM + 2 * EPS,
+                        center = true,
+                        $fn = 48
+                    );
+                }
+}
+
+module vertical_spline_bearing_references() {
+    for (i = [0:N_COL - 1])
+        vertical_spline_bearing_reference_y(clutch_col_x(i));
+}
+
+module vertical_spline_chain_clearance_envelope() {
+    // World-space conservative envelopes for the lower snake return: both
+    // fixed 8T side guides and the 12T return drive. The support candidate is
+    // tested against these volumes before it is added to the partition union.
+    for (x = [
+        SNAKE_CHAIN_LEFT_VERTICAL_GUIDE_X_MM,
+        SNAKE_CHAIN_RIGHT_VERTICAL_GUIDE_X_MM
+    ])
+        translate([
+            x,
+            SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM,
+            SNAKE_CHAIN_CENTER_Z - SNAKE_CHAIN_HALF_DEPTH
+        ])
+            cylinder(
+                d = 2 * SNAKE_CHAIN_GUIDE_OUTER_R_MM,
+                h = 2 * SNAKE_CHAIN_HALF_DEPTH,
+                $fn = 64
+            );
+    translate([
+        SNAKE_CHAIN_RETURN_DRIVE_X_MM,
+        SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM,
+        SNAKE_CHAIN_CENTER_Z - SNAKE_CHAIN_HALF_DEPTH
+    ])
+        cylinder(
+            d = 2 * SNAKE_CHAIN_DRIVE_OUTER_R_MM,
+            h = 2 * SNAKE_CHAIN_HALF_DEPTH,
+            $fn = 96
+        );
+}
+
+module selected_vertical_spline_bearing_support_part() {
+    vertical_spline_bearing_support_bars();
+}
+
+module selected_vertical_spline_bearing_references_part() {
+    vertical_spline_bearing_references();
+}
+
+module selected_vertical_spline_support_chain_collision_part() {
+    intersection() {
+        vertical_spline_bearing_support_bars();
+        vertical_spline_chain_clearance_envelope();
+    }
+}
+
+module selected_vertical_spline_support_drive_collision_part() {
+    intersection() {
+        vertical_spline_bearing_support_bars();
+        all_vertical_axes();
+    }
+}
+
+module selected_vertical_spline_support_partition_window_collision_part() {
+    intersection() {
+        vertical_spline_bearing_support_bars();
+        all_drawer_belt_partition_windows();
+    }
+}
 
 //#region 公开 API：离合与抽屉取力
 module clutch_upper_carrier(col, row, engaged = false, include_screw = false) {
@@ -2596,6 +2924,11 @@ module center_gt2_clutch(col, row, engaged = false) {
     center_clutch_carrier(col, row, engaged, true);
     center_gt2_female(col, row);
     center_gt2_male(col, row, engaged);
+    // One canonical selector-shoe module is used by both the complete center
+    // assembly and the one-by-one STL selector below.  The exporter publishes
+    // only the one active part ID, so this call never creates a second loaded
+    // copy in the root preview.
+    selected_center_selector_shoe_part();
 }
 
 module all_clutches() {
@@ -2604,6 +2937,14 @@ module all_clutches() {
             && CENTER_GT2_COL == selected_col()
             && CENTER_GT2_ROW == selected_row();
     center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, center_station_engaged);
+
+    // Keep the world assembly complete: the fourteen non-center stations are
+    // translated instances of the same finished center clutch. They are
+    // static references in OpenSCAD; only R3C3 is driven by the browser demo.
+    for (row = [0:N_ROW - 1])
+        for (col = [0:N_COL - 1])
+            if (!is_center_gt2_station(col, row))
+                center_station_clutch_instance(col, row, false);
 
     // The old 24 stations stay available behind an explicit review switch,
     // but are intentionally absent from the default physical-validation view.
@@ -2634,50 +2975,109 @@ module clutch_fork(col, row, engaged = false) {
             }
 }
 
-module drawer_front_compound(col, row) {
+module drawer_front_belt_at(col, row) {
     x = clutch_col_x(col);
-    front_z = FRONT_PULLEY_Z;
-    belt_y = drawer_belt_y(row);
-    gear_y = drawer_front_gear_y(row);
-    color(COLOR_TIMING)
-        timing_pulley_y(x, belt_y, front_z, TIMING_TEETH, "round");
-    // The upper, larger gear is the pinion that contacts the rack below the drawer.
-    color(COLOR_GEAR)
-        spur_gear_y(
+    if (is_center_gt2_station(col, row))
+        color(COLOR_BELT, 0.18)
+            center_gt2_belt_loop_z(
+                x,
+                center_gt2_z(),
+                CENTER_GT2_FRONT_PULLEY_Z,
+                center_gt2_belt_y(row)
+            );
+    else
+        color(COLOR_BELT, 0.14)
+            belt_loop_z(
+                x,
+                DRIVE_AXIS_Z,
+                FRONT_PULLEY_Z,
+                drawer_belt_y(row)
+            );
+}
+
+module drawer_front_pulley_at(col, row) {
+    x = clutch_col_x(col);
+    if (is_center_gt2_station(col, row))
+        center_gt2_front_pulley_y(
             x,
-            gear_y,
-            front_z,
-            FRONT_GEAR_TEETH,
-            CLUTCH_PITCH_MM,
-            FRONT_GEAR_TOOTH_DEPTH,
-            FRONT_GEAR_T
+            center_gt2_belt_y(row),
+            CENTER_GT2_FRONT_PULLEY_Z
         );
-    color(COLOR_SHAFT)
-        cylinder_y(
-            x,
-            min(
-                belt_y - TIMING_PULLEY_W / 2 - 0.25,
-                gear_y - FRONT_GEAR_T / 2 - 0.25
-            ),
-            front_z,
-            CLUTCH_HUB_D,
-            max(
-                belt_y - TIMING_PULLEY_W / 2 - 0.25,
-                gear_y - FRONT_GEAR_T / 2 - 0.25
-            )
-                - min(
-                    belt_y - TIMING_PULLEY_W / 2 - 0.25,
-                    gear_y - FRONT_GEAR_T / 2 - 0.25
-                )
-                + 0.50
+    else
+        color(COLOR_TIMING)
+            timing_pulley_y(
+                x,
+                drawer_belt_y(row),
+                FRONT_PULLEY_Z,
+                TIMING_TEETH,
+                "round"
+            );
+}
+
+module drawer_front_gear_at(col, row) {
+    x = clutch_col_x(col);
+    if (is_center_gt2_station(col, row))
+        color(COLOR_GEAR)
+            spur_gear_y(
+                x,
+                center_gt2_front_gear_y(row),
+                CENTER_GT2_FRONT_PULLEY_Z,
+                FRONT_GEAR_TEETH,
+                CLUTCH_PITCH_MM,
+                FRONT_GEAR_TOOTH_DEPTH,
+                FRONT_GEAR_T,
+                ROD_D,
+                "d"
+            );
+    else
+        color(COLOR_GEAR)
+            spur_gear_y(
+                x,
+                drawer_front_gear_y(row),
+                FRONT_PULLEY_Z,
+                FRONT_GEAR_TEETH,
+                CLUTCH_PITCH_MM,
+                FRONT_GEAR_TOOTH_DEPTH,
+                FRONT_GEAR_T
+            );
+}
+
+module drawer_front_axis_at(col, row) {
+    x = clutch_col_x(col);
+    if (is_center_gt2_station(col, row))
+        color(COLOR_SHAFT)
+            d_rod_y(
+                x,
+                center_gt2_front_d_shaft_start_y(row),
+                CENTER_GT2_FRONT_PULLEY_Z,
+                center_gt2_front_d_shaft_length(row),
+                ROD_D
+            );
+    else {
+        belt_y = drawer_belt_y(row);
+        gear_y = drawer_front_gear_y(row);
+        y0 = min(
+            belt_y - TIMING_PULLEY_W / 2 - 0.25,
+            gear_y - FRONT_GEAR_T / 2 - 0.25
         );
+        y1 = max(
+            belt_y - TIMING_PULLEY_W / 2 - 0.25,
+            gear_y - FRONT_GEAR_T / 2 - 0.25
+        );
+        color(COLOR_SHAFT)
+            cylinder_y(x, y0, FRONT_PULLEY_Z, CLUTCH_HUB_D, y1 - y0 + 0.50);
+    }
+}
+
+module drawer_front_compound(col, row) {
+    drawer_front_pulley_at(col, row);
+    drawer_front_gear_at(col, row);
+    drawer_front_axis_at(col, row);
 }
 
 module drawer_front_drive(col, row) {
     x = clutch_col_x(col);
-    belt_y = drawer_belt_y(row);
-    color(COLOR_BELT, 0.14)
-        belt_loop_z(x, DRIVE_AXIS_Z, FRONT_PULLEY_Z, belt_y);
+    drawer_front_belt_at(col, row);
     drawer_front_compound(col, row);
     horizontal_drawer_rack(
         x,
@@ -2754,15 +3154,8 @@ module center_gt2_front_compound(col, row) {
 
 module center_gt2_drawer_drive(col, row) {
     x = clutch_col_x(col);
-    belt_y = center_gt2_belt_y(row);
-    color(COLOR_BELT, 0.18)
-        center_gt2_belt_loop_z(
-            x,
-            center_gt2_z(),
-            CENTER_GT2_FRONT_PULLEY_Z,
-            belt_y
-        );
-    center_gt2_front_compound(col, row);
+    drawer_front_belt_at(col, row);
+    drawer_front_compound(col, row);
     horizontal_drawer_rack(
         x,
         WORLD_PARTITION_FRONT_Z + 1.5,
@@ -2772,15 +3165,71 @@ module center_gt2_drawer_drive(col, row) {
     drawer_front_drive_guide_system(col, row, CENTER_GT2_FRONT_PULLEY_Z);
 }
 
+// One canonical center-station assembly.  The source is authored once at the
+// real R3C3 datum; every other station is a translated instance of this exact
+// geometry.  This prevents the old round-bore/legacy-MR63 drawer-side branch
+// from silently becoming fourteen different mechanisms.
+module center_station_instance_transform(col, row) {
+    translate([
+        clutch_col_x(col) - clutch_col_x(CENTER_GT2_COL),
+        world_row_center_y(row) - world_row_center_y(CENTER_GT2_ROW),
+        0
+    ])
+        children();
+}
+
+module center_station_clutch_instance(col, row, engaged = false) {
+    center_station_instance_transform(col, row)
+        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged);
+}
+
+module center_station_drawer_drive_instance(col, row) {
+    center_station_instance_transform(col, row)
+        center_gt2_drawer_drive(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
+module center_station_assembly_instance(col, row, engaged = false) {
+    center_station_instance_transform(col, row) {
+        center_gt2_clutch(CENTER_GT2_COL, CENTER_GT2_ROW, engaged);
+        center_gt2_drawer_drive(CENTER_GT2_COL, CENTER_GT2_ROW);
+    }
+}
+
+module drawer_side_assembly(col, row) {
+    // Compatibility name retained for callers outside this file. It now
+    // resolves to the center-proven 2GT drawer drive, never the old branch.
+    center_station_drawer_drive_instance(col, row);
+}
+
 module drawer_drive() {
-    center_gt2_drawer_drive(CENTER_GT2_COL, CENTER_GT2_ROW);
-    if (SHOW_LEGACY_STATIONS)
-        for (row = [0:N_ROW - 1])
-            for (col = [0:N_COL - 1])
-                if (!is_center_gt2_station(col, row)) {
-                    clutch_lower_takeoff(col, row);
-                    drawer_front_drive(col, row);
-                }
+    // All fifteen drawer drive assemblies are instances of the center
+    // station's finished 2GT/rack/guide geometry. The center source remains
+    // the native animated station; the other fourteen are translated copies.
+    for (row = [0:N_ROW - 1])
+        for (col = [0:N_COL - 1])
+            center_station_drawer_drive_instance(col, row);
+}
+
+// The browser exports one local center-station kit. Three.js creates fourteen
+// translated instances from that single STL and keeps the center cell's
+// component IDs for the native animation. The local origin is the center
+// station axis; Z remains the authored cabinet datum.
+module center_station_template_frame() {
+    translate([
+        -clutch_col_x(CENTER_GT2_COL),
+        -world_row_center_y(CENTER_GT2_ROW),
+        0
+    ])
+        children();
+}
+
+module selected_center_station_template_assembly_part() {
+    center_station_template_frame()
+        center_station_assembly_instance(
+            CENTER_GT2_COL,
+            CENTER_GT2_ROW,
+            false
+        );
 }
 
 // 单件检查入口。它们都使用同一组装坐标，便于把检查过的零件直接放回总装。
@@ -2983,10 +3432,20 @@ module selected_center_selector_linear_bearing_collision_part() {
     }
 }
 
-// The selector shoe is a single printed part with a narrow support arm. The
-// arm intentionally leaves the magnetic shoe at the rotor's lower face while
-// reaching to the existing snake-chain plane at -Z; this is the mechanical
-// bridge that the old free-floating browser mesh did not contain.
+// The selector shoe is a single printed part with a continuous, rounded
+// support arm.  Each segment is a hull of two spherical pads, so the arm has
+// no two-cube corner seam or zero-thickness diagonal transition.  It leaves
+// the magnetic shoe at the rotor's lower face, passes rearward to the real
+// snake-chain plane, then drops onto the shifted centre-row pin datum.
+module center_selector_smooth_segment(a, b, d) {
+    hull() {
+        translate(a)
+            sphere(d = d, $fn = 24);
+        translate(b)
+            sphere(d = d, $fn = 24);
+    }
+}
+
 module center_clutch_selector_support_arm() {
     x = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM
         + CENTER_SELECTOR_SHOE_SUPPORT_ARM_X_OFFSET_MM;
@@ -2996,37 +3455,32 @@ module center_clutch_selector_support_arm() {
         - CENTER_SELECTOR_SHOE_SUPPORT_BRIDGE_OVERLAP_MM;
     bridge_z1 = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
         + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2;
-    support_y0 = CENTER_SELECTOR_SHOE_TARGET_Y_MM
-        - CENTER_SELECTOR_SHOE_SUPPORT_Y_T / 2;
-    support_y1 = CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM
+    attach_y = center_selector_chain_attach_y();
+    support_y1 = attach_y
         + CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Y_OVERHANG_MM;
     color("#92a4b0")
         union() {
-            // Depth bridge: overlap the shoe body by 0.30 mm and terminate
-            // inside the chain-plane support arm.
-            translate([
-                x - CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM / 2,
-                support_y0,
-                min(bridge_z0, bridge_z1)
-            ])
-                cube([
-                    CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM,
-                    CENTER_SELECTOR_SHOE_SUPPORT_Y_T,
-                    abs(bridge_z1 - bridge_z0)
-                ]);
-            // Vertical-in-Y drop: the chain link/roller bracket sees the
-            // support through its center datum rather than relying on gravity.
-            translate([
-                x - CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM / 2,
-                support_y0,
-                CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
-                    - CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T / 2
-            ])
-                cube([
-                    CENTER_SELECTOR_SHOE_SUPPORT_X_WIDTH_MM,
-                    support_y1 - support_y0,
-                    CENTER_SELECTOR_SHOE_SUPPORT_CHAIN_Z_T
-                ]);
+            // Rearward bridge: start inside the shoe's front edge and end
+            // inside the chain-plane drop.  The capsule stays fully solid at
+            // the bend and is printable without overlapping rectangular tabs.
+            center_selector_smooth_segment(
+                [x, CENTER_SELECTOR_SHOE_TARGET_Y_MM, bridge_z0],
+                [x, CENTER_SELECTOR_SHOE_TARGET_Y_MM, bridge_z1],
+                CENTER_SELECTOR_SHOE_SUPPORT_ARM_D
+            );
+            // Rounded elbow plus the vertical-in-Y drop.  The lower end
+            // deliberately overhangs the pin datum so the contact witness
+            // sees positive volume instead of a tangent-only touch.
+            center_selector_smooth_segment(
+                [x, CENTER_SELECTOR_SHOE_TARGET_Y_MM, bridge_z1],
+                [x, attach_y, CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM],
+                CENTER_SELECTOR_SHOE_SUPPORT_ARM_D
+            );
+            center_selector_smooth_segment(
+                [x, attach_y, CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM],
+                [x, support_y1, CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM],
+                CENTER_SELECTOR_SHOE_SUPPORT_ARM_D
+            );
         }
 }
 
@@ -3075,7 +3529,7 @@ module center_clutch_selector_shoe_body_sweep() {
 module center_selector_chain_contact_reference() {
     translate([
         CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM,
-        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Y_MM,
+        center_selector_chain_attach_y(),
         CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM
     ])
         sphere(d = CENTER_SELECTOR_SHOE_CHAIN_CONTACT_D_MM, $fn = 48);
@@ -3490,9 +3944,10 @@ module clutch_detail() {
     z = DRIVE_AXIS_Z;
     if (is_center_gt2_station(col, row)) {
         center_gt2_clutch(col, row, ENGAGED);
-        // The center detail contains only the current plate with integral seats,
-        // output D-round shaft and D-round-D input shaft/sleeve. The old selector shoe
-        // remains an optional diagnostic source, not a male-end component.
+        // The center detail contains the current plate with integral seats,
+        // output D-round shaft, D-round-D input shaft/sleeve and the one
+        // chain-mounted selector shoe.  All are canonical modules shared by
+        // the assembly and the one-by-one exports.
     } else if (SHOW_LEGACY_STATIONS)
         translate([0, 0, -CLUTCH_EXPLODE])
             clutch_station(col, row, ENGAGED, true);
@@ -3541,6 +3996,8 @@ module clutch_scene_geometry() {
         all_vertical_axes();
     } else if (CLUTCH_PART == "drawer_drive") {
         drawer_drive();
+    } else if (CLUTCH_PART == "center_station_template_assembly") {
+        selected_center_station_template_assembly_part();
     } else if (CLUTCH_PART == "clutch") {
         all_clutches();
     } else if (CLUTCH_PART == "clutch_detail") {
@@ -3559,6 +4016,10 @@ module clutch_scene_geometry() {
         side_axes();
     } else if (CLUTCH_PART == "column") {
         selected_column_part();
+    } else if (CLUTCH_PART == "vertical_spline_bearing_support") {
+        selected_vertical_spline_bearing_support_part();
+    } else if (CLUTCH_PART == "vertical_spline_bearings") {
+        selected_vertical_spline_bearing_references_part();
     } else if (CLUTCH_PART == "vertical_rack") {
         selected_vertical_rack_part();
     } else if (CLUTCH_PART == "column_sync_belt_bottom") {
@@ -3595,6 +4056,12 @@ module clutch_scene_geometry() {
         selected_center_plate_belt_collision_part();
     } else if (CLUTCH_PART == "center_partition_belt_collision") {
         selected_center_partition_belt_collision_part();
+    } else if (CLUTCH_PART == "vertical_spline_support_chain_collision") {
+        selected_vertical_spline_support_chain_collision_part();
+    } else if (CLUTCH_PART == "vertical_spline_support_drive_collision") {
+        selected_vertical_spline_support_drive_collision_part();
+    } else if (CLUTCH_PART == "vertical_spline_support_partition_window_collision") {
+        selected_vertical_spline_support_partition_window_collision_part();
     } else if (CLUTCH_PART == "center_clutch_pair_collision") {
         selected_center_clutch_pair_collision_part();
     } else if (CLUTCH_PART == "center_selector_rail_collision") {
@@ -3693,9 +4160,15 @@ echo(
     str("centerClutchDriveLayerOffsetMm=", CENTER_CLUTCH_DRIVE_LAYER_OFFSET_MM),
     str("centerClutchVerticalLiftMm=", CENTER_CLUTCH_VERTICAL_LIFT_MM),
     str("drawerLayerCount=", N_ROW),
+    str("drawerColumnCount=", N_COL),
     str("serviceLayerCount=", SERVICE_LAYERS),
     str("drawerBayHeightMm=", BAY_H),
     str("drawerShelfThicknessMm=", WORLD_SHELF_T),
+    str("drawerStationTemplateOriginXMm=", clutch_col_x(0)),
+    str("drawerStationTemplateOriginYMm=", world_row_center_y(0)),
+    str("drawerStationColumnPitchMm=", WORLD_COL_PITCH),
+    str("drawerStationRowPitchMm=", WORLD_ROW_PITCH),
+    str("drawerStationInstanceCount=", N_COL * N_ROW - 1),
     str("drawerRackBodyWidthMm=", DRAWER_RACK_BODY_X),
     str("drawerRackBodyHeightMm=", DRAWER_RACK_BODY_Y),
     str("drawerRackToothHeightMm=", DRAWER_RACK_TOOTH_H),
@@ -3732,6 +4205,39 @@ echo(
     str("drawerFrontPinionBearingSeatDiameterMm=", DRAWER_PINION_MR63_SEAT_D),
     str("axisXMm=", clutch_col_x(CENTER_GT2_COL)),
     str("axisZMm=", center_gt2_z()),
+    str("verticalSplineBearingNominal=", VERTICAL_SPLINE_BEARING_NOMINAL),
+    str("verticalSplineBearingCount=", N_COL),
+    str("verticalSplineBearingIdMm=", VERTICAL_SPLINE_BEARING_ID_MM),
+    str("verticalSplineBearingOdMm=", VERTICAL_SPLINE_BEARING_OD_MM),
+    str("verticalSplineBearingWidthMm=", VERTICAL_SPLINE_BEARING_WIDTH_MM),
+    str("verticalSplineBearingSeatDiameterMm=", VERTICAL_SPLINE_BEARING_SEAT_D_MM),
+    str("verticalSplineBearingAxisZMm=", DRIVE_AXIS_Z),
+    str("verticalSplineBearingCenterYMm=", VERTICAL_SPLINE_BEARING_CENTER_Y_MM),
+    str("verticalSplineBearingBarY0Mm=", VERTICAL_SPLINE_BEARING_BAR_Y0_MM),
+    str("verticalSplineBearingBarY1Mm=", VERTICAL_SPLINE_BEARING_BAR_Y1_MM),
+    str("verticalSplineBearingBarXWidthMm=", VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM),
+    str("verticalSplineBearingBarYThicknessMm=", VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM),
+    str("verticalSplineBearingBarZMinMm=", VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM),
+    str("verticalSplineBearingBarZMaxMm=", VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM),
+    str("verticalSplineBearingBarZLengthMm=", VERTICAL_SPLINE_BEARING_BAR_Z_LENGTH_MM),
+    str("verticalSplineBearingPartitionOverlapMm=", VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM),
+    str("verticalSplineBearingPartitionKeyWidthMm=", VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM),
+    str("verticalSplineBearingPartitionKeyClearanceMm=", VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM),
+    str("verticalSplineBearingPartitionKeyZLengthMm=", VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM),
+    str("verticalSplineBearingChainTopYMm=", VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM),
+    str("verticalSplineBearingLowerPulleyBottomYMm=", VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM),
+    str("verticalSplineBearingReturnGuideClearanceMm=", VERTICAL_SPLINE_BEARING_RETURN_GUIDE_CLEARANCE_MM),
+    str("verticalSplineBearingLowerPulleyClearanceMm=", VERTICAL_SPLINE_BEARING_LOWER_PULLEY_CLEARANCE_MM),
+    str("verticalSplineBearingReturnDriveClearanceMm=", VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM),
+    str("verticalSplineBearingDetourColumn=", VERTICAL_SPLINE_BEARING_DETOUR_COLUMN),
+    str("verticalSplineBearingDetourXOffsetMm=", VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM),
+    str("verticalSplineBearingDetourXClearanceMm=", VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM),
+    str("verticalSplineBearingDetourZClearanceMm=", VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM),
+    str("verticalSplineBearingLowerDStubLengthMm=", VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH),
+    str("verticalSplineBearingUpperDStubLengthMm=", VERTICAL_GEAR_TOP_END_STUB_LENGTH),
+    "verticalSplineBearingSupport=partition-integral-rearward-stepped-bar-with-side-keys",
+    "verticalSplineBearingSupportPart=cabinet-clutch/vertical_spline_bearing_support",
+    "verticalSplineBearingsPart=cabinet-clutch/vertical_spline_bearings_reference",
     str("drawerBottomYMm=", drawer_bottom_y(CENTER_GT2_ROW)),
     str("drawerRackYMm=", center_gt2_front_gear_y(CENTER_GT2_ROW)),
     str("frontPinionCenterYMm=", center_gt2_front_gear_y(CENTER_GT2_ROW)),
@@ -3891,6 +4397,25 @@ echo(
         SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM),
     str("snakeChainTriggerMagnetAxialStartOffsetMm=",
         SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM),
+    "selectorShoePart=cabinet-clutch/center_selector_shoe",
+    "selectorShoeSupport=chain-mounted-smooth-hull-arm",
+    "selectorShoeRotationMode=fixed-world-center-row",
+    str("selectorShoeAnchorXMm=", clutch_col_x(CENTER_GT2_COL)),
+    str("selectorShoeAnchorYMm=", center_selector_chain_attach_y()),
+    str("selectorShoeAnchorZMm=", SNAKE_CHAIN_CENTER_Z),
+    str("selectorShoeTangentOffsetMm=",
+        CENTER_SELECTOR_SHOE_TANGENT_OFFSET_MM),
+    str("selectorShoeNormalOffsetMm=", 0),
+    str("selectorShoeChainAttachXMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_X_MM),
+    str("selectorShoeChainAttachYMm=", center_selector_chain_attach_y()),
+    str("selectorShoeChainAttachZMm=",
+        CENTER_SELECTOR_SHOE_CHAIN_ATTACH_Z_MM),
+    str("selectorShoeSupportArmDiameterMm=",
+        CENTER_SELECTOR_SHOE_SUPPORT_ARM_D),
+    str("selectorShoeTargetYMm=", CENTER_SELECTOR_SHOE_TARGET_Y_MM),
+    str("selectorShoeTriggerClearanceMm=",
+        CENTER_SELECTOR_SHOE_TRIGGER_CLEARANCE_MM),
     "inputShaftPart=cabinet-clutch/center_input_shaft_reference",
     "inputSleevePart=cabinet-clutch/center_input_sleeve",
     "inputSleeveMagnetPart=cabinet-clutch/center_input_sleeve_magnet_reference",
@@ -4027,10 +4552,13 @@ assert(
     || CLUTCH_PART == "tensioner_t_solid"
     || CLUTCH_PART == "side_axes"
     || CLUTCH_PART == "column"
+    || CLUTCH_PART == "vertical_spline_bearing_support"
+    || CLUTCH_PART == "vertical_spline_bearings"
     || CLUTCH_PART == "vertical_rack"
     || CLUTCH_PART == "column_sync_belt_bottom"
     || CLUTCH_PART == "column_sync_belt_top"
     || CLUTCH_PART == "column_sync_tensioner"
+    || CLUTCH_PART == "center_station_template_assembly"
     || CLUTCH_PART == "center_input_rotor"
     || CLUTCH_PART == "center_output_rotor"
     || CLUTCH_PART == "center_input_sleeve"
@@ -4045,6 +4573,9 @@ assert(
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_partition_belt_collision"
+    || CLUTCH_PART == "vertical_spline_support_chain_collision"
+    || CLUTCH_PART == "vertical_spline_support_drive_collision"
+    || CLUTCH_PART == "vertical_spline_support_partition_window_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_selector_rail_collision"
     || CLUTCH_PART == "center_selector_linear_bearing_collision"
@@ -4246,6 +4777,33 @@ assert(COLUMN_SYNC_PULLEY_AXIAL_WIDTH > GT2_BELT_WIDTH,
     "column GT2 guide stack must be wider than the belt");
 assert(VERTICAL_GEAR_LENGTH > 0,
     "vertical gear body must remain positive after pulley clearance");
+assert(VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH >= 12.0,
+    "lower spline D stub must reach the fixed 3x6x2 bearing");
+assert(VERTICAL_GEAR_TOP_END_STUB_LENGTH > 0,
+    "upper spline D stub must remain positive");
+assert(VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM
+        > 2 * PARTITION_BELT_PASSAGE_WINDOW_HALF_X,
+    "spline bearing bar must leave side keys outside the partition belt window");
+assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM > 0,
+    "spline bearing partition side key must be positive");
+assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM > 0,
+    "spline bearing partition side key must clear the belt window");
+assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM
+        >= WORLD_PARTITION_T - EPS,
+    "spline bearing side key must cross the full partition thickness");
+assert(VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM < DRIVE_AXIS_Z
+        && VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM < WORLD_PARTITION_BACK_Z,
+    "spline bearing bar must reach the shaft and stop behind the partition");
+assert(VERTICAL_SPLINE_BEARING_BAR_Y0_MM
+        > VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM + 0.45,
+    "lower spline bearing bar must clear the snake return guide");
+assert(VERTICAL_SPLINE_BEARING_BAR_Y1_MM
+        < VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM - 0.45,
+    "lower spline bearing bar must clear the lower 2GT pulley");
+assert(VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM > 0.45,
+    "lower spline bearing bar must clear the 12T snake return drive");
+assert(VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM > 0.45,
+    "C1 detoured spline bearing rail must clear the 12T return drive");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
 assert(abs(MOTOR_X - clutch_col_x(N_COL - 1)) < 0.001,
     "motor must be centered on the +X-most drawer column");

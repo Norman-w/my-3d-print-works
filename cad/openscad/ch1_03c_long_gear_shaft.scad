@@ -194,8 +194,16 @@ module long_gear_shaft_solid_param(
     end_stub_length,
     stub_overlap,
     end_d,
-    end_flat_depth
+    end_flat_depth,
+    lower_end_stub_length = undef,
+    upper_end_stub_length = undef
 ) {
+    lower_stub = is_undef(lower_end_stub_length)
+        ? end_stub_length
+        : lower_end_stub_length;
+    upper_stub = is_undef(upper_end_stub_length)
+        ? end_stub_length
+        : upper_end_stub_length;
     // The overlap is hidden inside the gear body so each D stub is materially
     // connected rather than merely touching a coplanar end face.
     union() {
@@ -209,14 +217,14 @@ module long_gear_shaft_solid_param(
             length
         );
         d_axis_segment_y_param(
-            -length / 2 - end_stub_length,
-            end_stub_length + stub_overlap,
+            -length / 2 - lower_stub,
+            lower_stub + stub_overlap,
             end_d,
             end_flat_depth
         );
         d_axis_segment_y_param(
             length / 2 - stub_overlap,
-            end_stub_length + stub_overlap,
+            upper_stub + stub_overlap,
             end_d,
             end_flat_depth
         );

@@ -30,6 +30,9 @@ FIXED_PARTS = (
     "center_mechanism_plate",
     "center_output_shaft",
     "center_output_bearings",
+    "center_selector_shoe",
+    "vertical_spline_bearing_support",
+    "vertical_spline_bearings",
     "front_gear",
     "front_pulley",
     "front_timing_bearing_support",
@@ -42,6 +45,8 @@ PRINTED_PARTS = {
     "center_output_bearing_bar",
     "center_mechanism_plate",
     "center_input_sleeve",
+    "center_selector_shoe",
+    "vertical_spline_bearing_support",
     "front_gear",
     "front_pulley",
     "front_timing_bearing_support",
@@ -222,6 +227,56 @@ def validate_contract(contract: Contract) -> None:
         fail("直线轴承必须是固定座内的公轮同轴单枚配置")
     if contract.get("rotaryBearingArrangement") != "output-two-3x6x2-in-one-integral-bar-input-free":
         fail("当前公轮端不应残留输入旋转轴承组")
+    if contract.get("selectorShoePart") != "cabinet-clutch/center_selector_shoe":
+        fail("中心选择指必须引用唯一的中心磁力靴零件")
+    if contract.get("selectorShoeSupport") != "chain-mounted-smooth-hull-arm":
+        fail("中心选择指支撑臂必须是链条承力的平滑一体臂")
+    if contract.get("selectorShoeRotationMode") != "fixed-world-center-row":
+        fail("中心首件选择指必须沿中心行保持固定世界朝向")
+    expect_close(
+        number(contract, "selectorShoeNormalOffsetMm"),
+        0.0,
+        "选择指链条路径法向偏移",
+        0.001,
+    )
+    expect_close(
+        number(contract, "selectorShoeAnchorXMm"),
+        number(contract, "axisXMm"),
+        "选择指路径锚点 X",
+        0.001,
+    )
+    chain_pitch = (
+        number(contract, "drawerBayHeightMm")
+        + number(contract, "drawerShelfThicknessMm")
+    )
+    expected_selector_y = (
+        number(contract, "snakeChainReferencePathCenterYMm")
+        + (
+            number(contract, "centerRow")
+            - number(contract, "snakeChainReferenceRow")
+        ) * chain_pitch
+        + number(contract, "snakeChainVerticalShiftMm")
+    )
+    expect_close(
+        number(contract, "selectorShoeAnchorYMm"),
+        expected_selector_y,
+        "选择指中心行链条路径锚点 Y",
+        0.001,
+    )
+    expect_close(
+        number(contract, "selectorShoeChainAttachYMm"),
+        expected_selector_y,
+        "选择指链条接触 Y",
+        0.001,
+    )
+    expect_close(
+        number(contract, "selectorShoeChainAttachZMm"),
+        number(contract, "selectorShoeAnchorZMm"),
+        "选择指链条接触 Z",
+        0.001,
+    )
+    if number(contract, "selectorShoeSupportArmDiameterMm") < 2.4:
+        fail("选择指平滑支撑臂直径不足 2.4 mm")
     if contract.get("drawerGuideBearing") != "681-1x3x1-X-axis-C-slot":
         fail("抽屉导向轴承必须改为 X 轴 C 槽结构")
     if contract.get("drawerGuideRail") != "dual-inward-C-slot":
@@ -236,6 +291,14 @@ def validate_contract(contract: Contract) -> None:
         fail("输出轴截面必须是短 D-round")
     if contract.get("outputBearingSupportPart") != "cabinet-clutch/center_mechanism_plate":
         fail("输出轴承固定条必须与离合机构板一体")
+    if contract.get("verticalSplineBearingNominal") != "3x6x2":
+        fail("抽屉电机花键轴固定轴承必须是 3x6x2")
+    if contract.get("verticalSplineBearingSupport") != "partition-integral-rearward-stepped-bar-with-side-keys":
+        fail("花键轴承固定条必须是带隔板侧键的后伸折线长方条")
+    if contract.get("verticalSplineBearingSupportPart") != "cabinet-clutch/vertical_spline_bearing_support":
+        fail("花键轴承固定条输出件路径错误")
+    if contract.get("verticalSplineBearingsPart") != "cabinet-clutch/vertical_spline_bearings_reference":
+        fail("花键轴承采购件输出路径错误")
     if contract.get("plateSupport") != "partition-boss-locators-plus-four-self-tapping-screws":
         fail("离合机构板必须使用隔板圆 Boss 定位和自攻螺丝固定")
     expect_close(number(contract, "platePartitionGapMm"), 0.0, "机构板/隔板贴合间隙", 0.001)
@@ -334,6 +397,21 @@ def validate_contract(contract: Contract) -> None:
         "outputBearingBarZMarginMm": 1.00,
         "outputBearingBarMotherClearanceMm": 0.40,
         "outputBearingBarPlateOverlapMm": 0.20,
+        "verticalSplineBearingCount": 5.0,
+        "verticalSplineBearingIdMm": 3.0,
+        "verticalSplineBearingOdMm": 6.0,
+        "verticalSplineBearingWidthMm": 2.0,
+        "verticalSplineBearingSeatDiameterMm": 6.10,
+        "verticalSplineBearingBarXWidthMm": 14.0,
+        "verticalSplineBearingBarYThicknessMm": 2.20,
+        "verticalSplineBearingPartitionOverlapMm": 0.50,
+        "verticalSplineBearingPartitionKeyWidthMm": 1.50,
+        "verticalSplineBearingPartitionKeyClearanceMm": 0.20,
+        "verticalSplineBearingDetourColumn": 0.0,
+        "verticalSplineBearingDetourXOffsetMm": 14.0,
+        "verticalSplineBearingDetourZClearanceMm": 0.60,
+        "verticalSplineBearingLowerDStubLengthMm": 12.0,
+        "verticalSplineBearingUpperDStubLengthMm": 6.0,
     }.items():
         expect_close(number(contract, key), expected, f"冻结参数 {key}", 0.001)
     if number(contract, "centerCol") != 2 or number(contract, "centerRow") != 1:
@@ -459,6 +537,52 @@ def validate_contract(contract: Contract) -> None:
         fail("前端 D 轴没有跨过层间轴承")
     if number(contract, "frontTimingBeltYMm") >= number(contract, "frontPinionCenterYMm"):
         fail("前端 2GT 皮带没有位于主动轮下方")
+    expect_close(
+        number(contract, "verticalSplineBearingBarY1Mm")
+        - number(contract, "verticalSplineBearingBarY0Mm"),
+        number(contract, "verticalSplineBearingBarYThicknessMm"),
+        "花键轴承长方条 Y 厚度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingCenterYMm"),
+        (
+            number(contract, "verticalSplineBearingChainTopYMm")
+            + number(contract, "verticalSplineBearingLowerPulleyBottomYMm")
+        ) / 2.0,
+        "花键轴承高度中心",
+        0.001,
+    )
+    if number(contract, "verticalSplineBearingBarY0Mm") <= number(contract, "verticalSplineBearingChainTopYMm"):
+        fail("花键轴承长方条下沿进入蛇链回程包络")
+    if number(contract, "verticalSplineBearingBarY1Mm") >= number(contract, "verticalSplineBearingLowerPulleyBottomYMm"):
+        fail("花键轴承长方条上沿进入下方 2GT 轮包络")
+    for key, label in (
+        ("verticalSplineBearingReturnGuideClearanceMm", "8T 蛇链导向轮"),
+        ("verticalSplineBearingLowerPulleyClearanceMm", "下方 2GT 轮"),
+        ("verticalSplineBearingReturnDriveClearanceMm", "12T 蛇链回程主动轮"),
+        ("verticalSplineBearingDetourXClearanceMm", "C1 避让后的 12T 蛇链主动轮"),
+    ):
+        if number(contract, key) < 0.45:
+            fail(f"花键轴承支架与{label}净空不足")
+    expect_close(
+        number(contract, "verticalSplineBearingBarZLengthMm"),
+        number(contract, "verticalSplineBearingBarZMaxMm")
+        - number(contract, "verticalSplineBearingBarZMinMm"),
+        "花键轴承长方条 Z 长度",
+        0.001,
+    )
+    if number(contract, "verticalSplineBearingBarXWidthMm") <= 2 * number(contract, "partitionBeltPassageHalfWidthMm"):
+        fail("花键轴承长方条没有形成隔板皮带孔外侧支撑")
+    if number(contract, "verticalSplineBearingPartitionKeyClearanceMm") <= 0:
+        fail("花键轴承隔板侧键没有避开皮带孔")
+    expect_close(
+        number(contract, "verticalSplineBearingPartitionKeyZLengthMm"),
+        number(contract, "partitionBeltPassagePlateThicknessMm")
+        + number(contract, "verticalSplineBearingPartitionOverlapMm"),
+        "花键轴承隔板侧键穿板长度",
+        0.001,
+    )
     if not (
         number(contract, "drawerGuideSlotHeightMm")
         > number(contract, "drawerGuideBearingSeatDiameterMm")
@@ -902,6 +1026,63 @@ def main() -> int:
             0.0,
         ):
             fail("中心直齿排/主动轮与层板或一体轴承座存在实体干涉")
+        spline_chain_witness = temp_dir / "vertical_spline_support_chain_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_chain_witness,
+            inspect_py,
+            "vertical_spline_support_chain_collision",
+            False,
+            0.0,
+        ):
+            fail("抽屉电机花键轴下方轴承长方条与蛇链/回程主动轮存在实体干涉")
+        spline_drive_witness = temp_dir / "vertical_spline_support_drive_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_drive_witness,
+            inspect_py,
+            "vertical_spline_support_drive_collision",
+            False,
+            0.0,
+        ):
+            fail("抽屉电机花键轴轴承长方条与花键轴/2GT轮/电机存在实体干涉")
+        spline_window_witness = temp_dir / "vertical_spline_support_partition_window_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_window_witness,
+            inspect_py,
+            "vertical_spline_support_partition_window_collision",
+            False,
+            0.0,
+        ):
+            fail("花键轴承固定条侧键进入前后仓隔板皮带孔")
+
+        for travel, label in ((0.0, "open"), (1.5, "mid"), (3.0, "engaged")):
+            selector_witness = temp_dir / f"center_selector_male_collision_{label}.stl"
+            if run_intersection_export(
+                openscad,
+                scad,
+                selector_witness,
+                inspect_py,
+                "center_selector_male_collision",
+                False,
+                travel,
+            ):
+                fail(f"选择指磁力靴与公轮 {label} 位存在实体交集")
+        selector_contact = temp_dir / "center_selector_chain_support_contact.stl"
+        if not run_intersection_export(
+            openscad,
+            scad,
+            selector_contact,
+            inspect_py,
+            "center_selector_chain_support_contact",
+            False,
+            0.0,
+        ):
+            fail("选择指平滑支撑臂没有与真实蛇链接触基准形成正体积连接")
 
         validate_intermediate_sweep(openscad, scad, inspect_py, temp_dir, contract)
         validate_sweep(contract, reports)
@@ -917,7 +1098,14 @@ def main() -> int:
         f"{number(contract, 'linearBearingNominalLengthMm'):.0f}mm, "
         f"M5×5 sleeve magnet, socket_overlap={metrics['sleeveSocketOverlap']:.2f}mm"
     )
-    print("已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、C 槽凸缘后壁交集")
+    print(
+        "已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、"
+        "圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、"
+        "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、"
+        "C 槽凸缘后壁交集、5 根抽屉电机花键轴 3×6×2 轴承固定条、"
+        "固定条与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
+        "选择指与公轮三位置无交集且与蛇链接触基准正交集"
+    )
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
     return 0
 
