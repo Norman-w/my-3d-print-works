@@ -575,11 +575,14 @@ function validateCenterClutchContract(contract) {
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
     "drawerGuideLoadPath", "drawerFrontPinionBearing",
-    "drawerGuideRailClearanceMm", "drawerGuideRailWallThicknessMm",
+    "drawerGuideRailSupport", "drawerGuideFlangeDirection",
+    "drawerGuideRailClearanceMm", "drawerGuidePartitionThicknessMm",
+    "drawerGuideRailAttachOverlapMm",
     "drawerGuideBearingSeatDiameterMm",
     "drawerGuideSlotHeightMm", "drawerGuideRailDepthMm",
     "drawerGuideFlangeThicknessMm", "drawerGuideFlangeProjectionMm",
-    "drawerGuideFlangeClearanceMm", "drawerGuideFlangeBackClearanceMm",
+    "drawerGuideFlangeClearanceMm", "drawerGuideDrawerEdgeInsetMm",
+    "drawerGuideFlangeEndClearanceMm",
     "drawerGuideFrontSupportClearanceMm", "drawerGuideTailBearingAxis",
     "drawerGuideFrontBearingAxis",
     "drawerFrontPinionBearingSeatDiameterMm",
@@ -640,7 +643,9 @@ function validateCenterClutchContract(contract) {
     drawerRackMount: "drawer-bottom-moving",
     drawerMassLoadPath: "side-slides-not-rack",
     drawerGuideBearing: "681-1x3x1-X-axis-C-slot",
-    drawerGuideRail: "dual-inward-C-slot",
+    drawerGuideRail: "partition-integral-inward-C-lips",
+    drawerGuideRailSupport: "existing-divider-or-side-panel-vertical-member",
+    drawerGuideFlangeDirection: "toward-drawer-center",
     drawerGuideBearingArrangement: "tail-moving-plus-front-lower-fixed",
     drawerGuideBearingAxis: "+X/-X",
     drawerGuideLoadPath: "Y-support-Z-travel",
@@ -731,11 +736,13 @@ function validateCenterClutchContract(contract) {
     "frontDshaftEndYMm", "frontDshaftLengthMm", "frontPinionThicknessMm",
     "selectorShoeTangentOffsetMm", "selectorShoeSupportArmDiameterMm",
     "selectorShoeTriggerClearanceMm",
-    "drawerGuideRailClearanceMm", "drawerGuideRailWallThicknessMm",
+    "drawerGuideRailClearanceMm", "drawerGuidePartitionThicknessMm",
+    "drawerGuideRailAttachOverlapMm",
     "drawerGuideBearingSeatDiameterMm",
     "drawerGuideSlotHeightMm", "drawerGuideRailDepthMm",
     "drawerGuideFlangeThicknessMm", "drawerGuideFlangeProjectionMm",
-    "drawerGuideFlangeClearanceMm", "drawerGuideFlangeBackClearanceMm",
+    "drawerGuideFlangeClearanceMm", "drawerGuideDrawerEdgeInsetMm",
+    "drawerGuideFlangeEndClearanceMm",
     "drawerFrontPinionBearingSeatDiameterMm",
   ];
   for (const key of positive) {
@@ -889,19 +896,21 @@ function validateCenterClutchContract(contract) {
         > n("drawerGuideBearingSeatDiameterMm")
         && n("drawerGuideFlangeThicknessMm")
           < n("drawerGuideSlotHeightMm")
+        && n("drawerGuidePartitionThicknessMm") > 0
+        && n("drawerGuideRailAttachOverlapMm") > 0
+        && n("drawerGuideRailAttachOverlapMm")
+          < n("drawerGuidePartitionThicknessMm")
         && n("drawerGuideRailDepthMm")
-          > n("drawerGuideFlangeThicknessMm")
-        && n("drawerGuideRailDepthMm")
-          > n("drawerGuideFlangeProjectionMm")
+          > n("drawerGuideDrawerEdgeInsetMm")
+            + n("drawerGuideFlangeProjectionMm")
             + n("drawerGuideRailClearanceMm")
         && close(
-          n("drawerGuideFlangeBackClearanceMm"),
+          n("drawerGuideFlangeEndClearanceMm"),
           n("drawerGuideRailDepthMm")
-            + n("drawerGuideFlangeClearanceMm")
-            - n("drawerGuideFlangeProjectionMm")
-            - n("drawerGuideRailWallThicknessMm"),
+            - n("drawerGuideDrawerEdgeInsetMm")
+            - n("drawerGuideFlangeProjectionMm"),
         )
-        && n("drawerGuideFlangeBackClearanceMm")
+        && n("drawerGuideFlangeEndClearanceMm")
           >= n("drawerGuideRailClearanceMm")
         && n("drawerGuideFrontSupportClearanceMm") === 0)
       || n("frontTimingBearingSeatDiameterMm") <= n("frontTimingBearingOdMm")

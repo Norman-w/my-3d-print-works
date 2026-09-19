@@ -279,8 +279,12 @@ def validate_contract(contract: Contract) -> None:
         fail("选择指平滑支撑臂直径不足 2.4 mm")
     if contract.get("drawerGuideBearing") != "681-1x3x1-X-axis-C-slot":
         fail("抽屉导向轴承必须改为 X 轴 C 槽结构")
-    if contract.get("drawerGuideRail") != "dual-inward-C-slot":
-        fail("抽屉导向轨必须是左右开口朝中心的 C 槽")
+    if contract.get("drawerGuideRail") != "partition-integral-inward-C-lips":
+        fail("抽屉导向轨必须是依托立板、唇边向格内伸出的 C 槽")
+    if contract.get("drawerGuideRailSupport") != "existing-divider-or-side-panel-vertical-member":
+        fail("抽屉导向 C 槽必须直接依托现有立板/侧板")
+    if contract.get("drawerGuideFlangeDirection") != "toward-drawer-center":
+        fail("抽屉侧凸缘必须朝本格内侧伸出")
     if contract.get("drawerGuideBearingArrangement") != "tail-moving-plus-front-lower-fixed":
         fail("抽屉导向轴承布置不是尾部随动+前端下方承托")
     if contract.get("drawerGuideBearingAxis") != "+X/-X":
@@ -382,13 +386,15 @@ def validate_contract(contract: Contract) -> None:
         "frontTimingBearingRetainerThicknessMm": 0.40,
         "frontTimingBearingRetainerBoreDiameterMm": 3.40,
         "drawerGuideRailClearanceMm": 0.30,
-        "drawerGuideRailWallThicknessMm": 1.20,
+        "drawerGuidePartitionThicknessMm": 2.40,
+        "drawerGuideRailAttachOverlapMm": 0.05,
         "drawerGuideSlotHeightMm": 3.60,
         "drawerGuideRailDepthMm": 4.50,
         "drawerGuideFlangeThicknessMm": 2.40,
         "drawerGuideFlangeProjectionMm": 3.00,
         "drawerGuideFlangeClearanceMm": 0.30,
-        "drawerGuideFlangeBackClearanceMm": 0.60,
+        "drawerGuideDrawerEdgeInsetMm": 1.00,
+        "drawerGuideFlangeEndClearanceMm": 0.50,
         "drawerGuideFrontSupportClearanceMm": 0.00,
         "outputBearingBarWidthMm": 14.00,
         "outputBearingBarYLengthMm": 6.40,
@@ -588,26 +594,28 @@ def validate_contract(contract: Contract) -> None:
         > number(contract, "drawerGuideBearingSeatDiameterMm")
         and number(contract, "drawerGuideFlangeThicknessMm")
         < number(contract, "drawerGuideSlotHeightMm")
+        and number(contract, "drawerGuidePartitionThicknessMm") > 0
+        and number(contract, "drawerGuideRailAttachOverlapMm") > 0
+        and number(contract, "drawerGuideRailAttachOverlapMm")
+            < number(contract, "drawerGuidePartitionThicknessMm")
         and number(contract, "drawerGuideRailDepthMm")
-        > number(contract, "drawerGuideFlangeThicknessMm")
-        and number(contract, "drawerGuideRailDepthMm")
-        > number(contract, "drawerGuideFlangeProjectionMm")
+        > number(contract, "drawerGuideDrawerEdgeInsetMm")
+            + number(contract, "drawerGuideFlangeProjectionMm")
             + number(contract, "drawerGuideRailClearanceMm")
-        and number(contract, "drawerGuideFlangeBackClearanceMm")
+        and number(contract, "drawerGuideFlangeEndClearanceMm")
             >= number(contract, "drawerGuideRailClearanceMm")
         and number(contract, "drawerGuideFrontSupportClearanceMm") == 0
     ):
         fail("左右 C 形导向槽没有给 681 轴承和抽屉侧向凸缘留出空间")
-    expected_guide_back_clearance = (
+    expected_guide_end_clearance = (
         number(contract, "drawerGuideRailDepthMm")
-        + number(contract, "drawerGuideFlangeClearanceMm")
+        - number(contract, "drawerGuideDrawerEdgeInsetMm")
         - number(contract, "drawerGuideFlangeProjectionMm")
-        - number(contract, "drawerGuideRailWallThicknessMm")
     )
     expect_close(
-        number(contract, "drawerGuideFlangeBackClearanceMm"),
-        expected_guide_back_clearance,
-        "C 形导向槽凸缘后壁净空推导",
+        number(contract, "drawerGuideFlangeEndClearanceMm"),
+        expected_guide_end_clearance,
+        "内向 C 形导向唇端部净空推导",
         0.001,
     )
     if abs(number(contract, "strokeMm") - number(contract, "openGapMm")
@@ -1014,7 +1022,7 @@ def main() -> int:
             False,
             0.0,
         ):
-            fail("抽屉侧向凸缘进入 C 形导轨后壁，存在实体干涉")
+            fail("抽屉侧向凸缘进入立板一体 C 槽唇边，存在实体干涉")
         rack_shelf_witness = temp_dir / "drawer_front_drive_shelf_collision.stl"
         if run_intersection_export(
             openscad,
@@ -1102,7 +1110,7 @@ def main() -> int:
         "已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、"
         "圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、"
         "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、"
-        "C 槽凸缘后壁交集、5 根抽屉电机花键轴 3×6×2 轴承固定条、"
+        "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 轴承固定条、"
         "固定条与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
         "选择指与公轮三位置无交集且与蛇链接触基准正交集"
     )

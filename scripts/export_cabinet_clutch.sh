@@ -136,7 +136,7 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/18_drawer_rack_guide_rails_candidate": {
-        "name": "中心格·左右内开口 C 形导向槽×2（Z向；尾部滚轮+前端下托）",
+        "name": "中心格·立板一体内向 C 槽唇边×2（Z向；尾部滚轮+前端下托）",
         "color": "#657f8c",
         "visible": True,
         "role": "printed",
@@ -476,7 +476,7 @@ name_map = {
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
     "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
     "17_drawer_rack_guide_rollers_reference": "中心格抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
-    "18_drawer_rack_guide_rails_candidate": "中心格左右内开口 C 形导向槽×2（Z向；尾部滚轮+前端下托）",
+    "18_drawer_rack_guide_rails_candidate": "中心格立板一体内向 C 槽唇边×2（Z向；尾部滚轮+前端下托）",
     "22_front_timing_bearing_reference": "中心格前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
     "23_front_d_axis_reference": "中心格前端主动轮到下层同步轮 3mm 短 D 轴",
     "24_center_station_kit_template": "中心 R3C3 同款离合总成模板 · 14 个非中心实例",

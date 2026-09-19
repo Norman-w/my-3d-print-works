@@ -452,27 +452,29 @@ DRAWER_RACK_TOOTH_H = CENTER_FRONT_RACK_TOOTH_HEIGHT_X;
 DRAWER_RACK_TOOTH_OVERHANG_X = CENTER_FRONT_RACK_TOOTH_OVERHANG_X;
 DRAWER_RACK_TOOTH_Y_MARGIN = CENTER_FRONT_RACK_TOOTH_Y_MARGIN;
 DRAWER_RACK_TO_DRAWER_GAP = 0.00;
-DRAWER_GUIDE_RAIL_T = 1.20;
 DRAWER_GUIDE_RAIL_GAP = 0.30;
 DRAWER_GUIDE_C_SLOT_H = DRAWER_GUIDE_681_OD
     + 2 * DRAWER_GUIDE_RAIL_GAP;
 DRAWER_GUIDE_C_TOP_LIP_T = 1.20;
 DRAWER_GUIDE_C_BOTTOM_RAIL_H = DRAWER_GUIDE_681_OD
     + 2 * DRAWER_GUIDE_RAIL_GAP;
-// The rear wall reaches the adjacent cabinet divider with a small nominal
-// overlap, so the C rail has a real fixed datum instead of floating beside the
-// drawer. The flange still stops short of the wall inside the captured slot.
+// The cabinet divider/side panel is the C-slot's vertical member. The printed
+// rail contributes only the lower support and upper retaining lip, starting at
+// that panel's inner face and extending into the current drawer cell. This is
+// deliberately not a second wall placed outside the divider: an independent
+// wall was the reason the old rail crossed into the neighboring cell.
 DRAWER_GUIDE_C_DEPTH = 4.50;
 DRAWER_GUIDE_C_FLANGE_T = 2.40;
-// The projection is measured from the drawer side to the flange's back edge.
-// Account for the 0.30 mm opening offset and the 1.20 mm C-rail back wall;
-// 3.00 mm leaves 0.60 mm between the flange and the wall's inner face.
+DRAWER_GUIDE_PARTITION_SUPPORT_T = WORLD_DIV_T;
+DRAWER_GUIDE_RAIL_ATTACH_OVERLAP = EPS;
+// The drawer side is inset from the partition inner face by DRAWER_CLEAR. The
+// flange projects back toward the partition-facing guide, leaving a positive
+// end gap at the free end of the inward lip.
 DRAWER_GUIDE_C_FLANGE_PROJECTION = 3.00;
 DRAWER_GUIDE_C_FLANGE_CLEARANCE = 0.30;
-DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE = DRAWER_GUIDE_C_DEPTH
-    + DRAWER_GUIDE_C_FLANGE_CLEARANCE
-    - DRAWER_GUIDE_C_FLANGE_PROJECTION
-    - DRAWER_GUIDE_RAIL_T;
+DRAWER_GUIDE_C_FLANGE_END_CLEARANCE = DRAWER_GUIDE_C_DEPTH
+    - DRAWER_CLEAR
+    - DRAWER_GUIDE_C_FLANGE_PROJECTION;
 // The +Z/front roller is the actual lower support for the drawer-side flange.
 // Keep nominal contact at the support datum; the 0.30 mm running clearance is
 // reserved for the tail roller against the C-slot top/bottom faces.
@@ -619,29 +621,31 @@ function drawer_left_x(col) = world_col_x(col) + DRAWER_CLEAR;
 function drawer_right_x(col) = world_col_x(col)
     + WORLD_BAY_W - DRAWER_CLEAR;
 
-function drawer_left_guide_rail_opening_x(col) = drawer_left_x(col)
-    - DRAWER_GUIDE_C_FLANGE_CLEARANCE;
+// The left service cheek/internal divider and the right divider/+X side panel
+// already provide the vertical C-slot members. These are their inner faces;
+// every guide lip grows from here toward the center of its own drawer cell.
+function drawer_left_guide_partition_face_x(col) = world_col_x(col);
 
-function drawer_right_guide_rail_opening_x(col) = drawer_right_x(col)
-    + DRAWER_GUIDE_C_FLANGE_CLEARANCE;
+function drawer_right_guide_partition_face_x(col) = world_col_x(col)
+    + WORLD_BAY_W;
 
-function drawer_left_guide_rail_back_x(col) =
-    drawer_left_guide_rail_opening_x(col) - DRAWER_GUIDE_C_DEPTH;
+function drawer_left_guide_rail_end_x(col) =
+    drawer_left_guide_partition_face_x(col) + DRAWER_GUIDE_C_DEPTH;
 
-function drawer_right_guide_rail_back_x(col) =
-    drawer_right_guide_rail_opening_x(col) + DRAWER_GUIDE_C_DEPTH;
+function drawer_right_guide_rail_end_x(col) =
+    drawer_right_guide_partition_face_x(col) - DRAWER_GUIDE_C_DEPTH;
 
 function drawer_left_guide_tail_bearing_x(col) = drawer_left_x(col)
-    - DRAWER_GUIDE_C_FLANGE_PROJECTION / 2;
-
-function drawer_right_guide_tail_bearing_x(col) = drawer_right_x(col)
     + DRAWER_GUIDE_C_FLANGE_PROJECTION / 2;
 
+function drawer_right_guide_tail_bearing_x(col) = drawer_right_x(col)
+    - DRAWER_GUIDE_C_FLANGE_PROJECTION / 2;
+
 function drawer_left_guide_front_bearing_x(col) =
-    drawer_left_guide_rail_opening_x(col) - 0.80;
+    drawer_left_guide_tail_bearing_x(col);
 
 function drawer_right_guide_front_bearing_x(col) =
-    drawer_right_guide_rail_opening_x(col) + 0.80;
+    drawer_right_guide_tail_bearing_x(col);
 
 function drawer_guide_slot_bottom_y(row) = drawer_guide_y(row)
     - DRAWER_GUIDE_C_SLOT_H / 2;
@@ -1673,38 +1677,33 @@ module drawer_c_guide_rail_at(col, row, front_z, side) {
     z0 = drawer_guide_z0(front_z);
     z1 = drawer_guide_z1(front_z);
     length = z1 - z0;
-    opening_x = side < 0
-        ? drawer_left_guide_rail_opening_x(col)
-        : drawer_right_guide_rail_opening_x(col);
-    back_x = side < 0
-        ? drawer_left_guide_rail_back_x(col)
-        : drawer_right_guide_rail_back_x(col);
-    x_min = min(opening_x, back_x);
-    depth = abs(opening_x - back_x);
+    partition_face_x = side < 0
+        ? drawer_left_guide_partition_face_x(col)
+        : drawer_right_guide_partition_face_x(col);
+    rail_end_x = side < 0
+        ? drawer_left_guide_rail_end_x(col)
+        : drawer_right_guide_rail_end_x(col);
+    // Start a tiny amount inside the real divider/side panel so the two
+    // separately previewed meshes have a positive structural overlap. There
+    // is no printed C-slot back wall here: the cabinet panel is that wall.
+    x_min = side < 0
+        ? partition_face_x - DRAWER_GUIDE_RAIL_ATTACH_OVERLAP
+        : rail_end_x;
+    depth = abs(rail_end_x - partition_face_x)
+        + DRAWER_GUIDE_RAIL_ATTACH_OVERLAP;
     y = drawer_guide_y(row);
     slot_bottom = drawer_guide_slot_bottom_y(row);
     total_bottom = slot_bottom - DRAWER_GUIDE_C_BOTTOM_RAIL_H;
-    total_height = DRAWER_GUIDE_C_BOTTOM_RAIL_H
-        + DRAWER_GUIDE_C_SLOT_H
-        + DRAWER_GUIDE_C_TOP_LIP_T;
-    wall_x = side < 0
-        ? x_min
-        : max(opening_x, back_x) - DRAWER_GUIDE_RAIL_T;
     front_bearing_x = side < 0
-        ? opening_x - 0.80
-        : opening_x + 0.80;
+        ? drawer_left_guide_front_bearing_x(col)
+        : drawer_right_guide_front_bearing_x(col);
     front_bearing_y = drawer_guide_front_bearing_y(row);
     difference() {
         color("#657f8c")
             union() {
-                // The back wall closes the C and the opening faces the
-                // drawer centre: +X on the left, -X on the right.
-                translate([wall_x, total_bottom, z0])
-                    cube([
-                        DRAWER_GUIDE_RAIL_T,
-                        total_height,
-                        length
-                    ]);
+                // The fixed divider/side panel is the vertical member of the
+                // C. These two inward lips are the only new guide geometry;
+                // left grows +X and right grows -X into this cell.
                 translate([x_min, total_bottom, z0])
                     cube([
                         depth,
@@ -1722,9 +1721,9 @@ module drawer_c_guide_rail_at(col, row, front_z, side) {
                         length
                     ]);
             }
-        // The front support 681 is seated in the lower rail, with its axis
-        // along X. Only the local seat is opened; the rail remains a solid
-        // captive support along the rest of its Z travel.
+        // The front support 681 is seated in the lower inward lip, with its
+        // axis along X. Only the local seat is opened; the lip remains a
+        // solid captive support along the rest of its Z travel.
         translate([
             front_bearing_x,
             front_bearing_y,
@@ -1746,8 +1745,11 @@ module drawer_c_guide_flanges_at(col, row, front_z) {
     length = z1 - z0;
     y = drawer_guide_flange_y(row);
     color("#9a77c7") {
+        // The drawer-side bearing flange now points toward the drawer centre,
+        // matching the partition-integral inward lips. It no longer projects
+        // through the divider into the neighboring cell.
         translate([
-            drawer_left_x(col) - DRAWER_GUIDE_C_FLANGE_PROJECTION,
+            drawer_left_x(col),
             y - DRAWER_GUIDE_C_FLANGE_T / 2,
             z0
         ])
@@ -1757,7 +1759,7 @@ module drawer_c_guide_flanges_at(col, row, front_z) {
                 length
             ]);
         translate([
-            drawer_right_x(col),
+            drawer_right_x(col) - DRAWER_GUIDE_C_FLANGE_PROJECTION,
             y - DRAWER_GUIDE_C_FLANGE_T / 2,
             z0
         ])
@@ -3850,8 +3852,10 @@ module selected_drawer_rack_guide_rails_part() {
 }
 
 // Empty CSG witness: the moving drawer flanges must remain inside the slot
-// envelope and must not enter either C-rail back wall. A non-empty result is
-// a real geometric collision, not a merely analytic warning.
+// envelope and must not enter either inward guide lip. A non-empty result is
+// a real geometric collision, not a merely analytic warning. The fixed
+// divider/side-panel vertical member is intentionally not part of this
+// witness because the flange is allowed to pass beside its inner face.
 module selected_drawer_guide_flange_rail_collision_part() {
     intersection() {
         drawer_c_guide_flanges_at(
@@ -4185,20 +4189,24 @@ echo(
     "drawerRackMount=drawer-bottom-moving",
     "drawerMassLoadPath=side-slides-not-rack",
     "drawerGuideBearing=681-1x3x1-X-axis-C-slot",
-    "drawerGuideRail=dual-inward-C-slot",
+    "drawerGuideRail=partition-integral-inward-C-lips",
+    "drawerGuideRailSupport=existing-divider-or-side-panel-vertical-member",
+    "drawerGuideFlangeDirection=toward-drawer-center",
     "drawerGuideBearingArrangement=tail-moving-plus-front-lower-fixed",
     "drawerGuideBearingAxis=+X/-X",
     "drawerGuideLoadPath=Y-support-Z-travel",
     "drawerFrontPinionBearing=integral-shelf-stepped-3x6x2",
     str("drawerGuideRailClearanceMm=", DRAWER_GUIDE_RAIL_GAP),
-    str("drawerGuideRailWallThicknessMm=", DRAWER_GUIDE_RAIL_T),
+    str("drawerGuidePartitionThicknessMm=", DRAWER_GUIDE_PARTITION_SUPPORT_T),
+    str("drawerGuideRailAttachOverlapMm=", DRAWER_GUIDE_RAIL_ATTACH_OVERLAP),
     str("drawerGuideBearingSeatDiameterMm=", DRAWER_GUIDE_681_SEAT_D),
     str("drawerGuideSlotHeightMm=", DRAWER_GUIDE_C_SLOT_H),
     str("drawerGuideRailDepthMm=", DRAWER_GUIDE_C_DEPTH),
     str("drawerGuideFlangeThicknessMm=", DRAWER_GUIDE_C_FLANGE_T),
     str("drawerGuideFlangeProjectionMm=", DRAWER_GUIDE_C_FLANGE_PROJECTION),
     str("drawerGuideFlangeClearanceMm=", DRAWER_GUIDE_C_FLANGE_CLEARANCE),
-    str("drawerGuideFlangeBackClearanceMm=", DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE),
+    str("drawerGuideDrawerEdgeInsetMm=", DRAWER_CLEAR),
+    str("drawerGuideFlangeEndClearanceMm=", DRAWER_GUIDE_C_FLANGE_END_CLEARANCE),
     str("drawerGuideFrontSupportClearanceMm=", DRAWER_GUIDE_C_FRONT_SUPPORT_CLEARANCE),
     "drawerGuideTailBearingAxis=+X/-X",
     "drawerGuideFrontBearingAxis=+X/-X",
@@ -4751,12 +4759,38 @@ assert(drawer_guide_z1(CENTER_GT2_FRONT_PULLEY_Z)
 assert(DRAWER_GUIDE_681_OD > DRAWER_GUIDE_681_ID
         && DRAWER_GUIDE_681_SEAT_D > DRAWER_GUIDE_681_OD,
     "681 guide bearing seat must leave a press-fit annulus");
+assert(DRAWER_GUIDE_PARTITION_SUPPORT_T >= WORLD_DIV_T - EPS
+        && DRAWER_GUIDE_RAIL_ATTACH_OVERLAP > 0
+        && DRAWER_GUIDE_RAIL_ATTACH_OVERLAP < DRAWER_GUIDE_PARTITION_SUPPORT_T,
+    "C rail must attach to the real divider/side-panel vertical member");
 assert(DRAWER_GUIDE_C_DEPTH
-        > DRAWER_GUIDE_C_FLANGE_PROJECTION
+        > DRAWER_CLEAR + DRAWER_GUIDE_C_FLANGE_PROJECTION
             + DRAWER_GUIDE_C_FLANGE_CLEARANCE,
-    "C rail depth must capture the drawer flange without bottoming at the back wall");
-assert(DRAWER_GUIDE_C_FLANGE_BACK_CLEARANCE >= DRAWER_GUIDE_RAIL_GAP,
-    "C rail flange must clear the back wall by at least the running gap");
+    "inward C rail must extend beyond the drawer flange with a running gap");
+assert(DRAWER_GUIDE_C_FLANGE_END_CLEARANCE >= DRAWER_GUIDE_C_FLANGE_CLEARANCE,
+    "inward C rail flange must stop before its free end with the running gap");
+for (guide_col = [0:N_COL - 1]) {
+    assert(drawer_left_guide_partition_face_x(guide_col)
+            >= world_col_x(guide_col) - EPS
+        && drawer_left_guide_rail_end_x(guide_col)
+            <= world_col_x(guide_col) + WORLD_BAY_W + EPS,
+        "left C rail must stay inside its own drawer cell");
+    assert(drawer_right_guide_partition_face_x(guide_col)
+            <= world_col_x(guide_col) + WORLD_BAY_W + EPS
+        && drawer_right_guide_rail_end_x(guide_col)
+            >= world_col_x(guide_col) - EPS,
+        "right C rail must stay inside its own drawer cell");
+    assert(drawer_left_guide_tail_bearing_x(guide_col)
+            >= drawer_left_guide_partition_face_x(guide_col)
+        && drawer_left_guide_tail_bearing_x(guide_col)
+            <= drawer_left_guide_rail_end_x(guide_col),
+        "left 681 tail bearing must remain inside the inward lip");
+    assert(drawer_right_guide_tail_bearing_x(guide_col)
+            <= drawer_right_guide_partition_face_x(guide_col)
+        && drawer_right_guide_tail_bearing_x(guide_col)
+            >= drawer_right_guide_rail_end_x(guide_col),
+        "right 681 tail bearing must remain inside the inward lip");
+}
 assert(DRAWER_PINION_MR63_OD > DRAWER_PINION_MR63_ID
         && DRAWER_PINION_MR63_SEAT_D > DRAWER_PINION_MR63_OD,
     "MR63 pinion bearing seat must leave a press-fit annulus");

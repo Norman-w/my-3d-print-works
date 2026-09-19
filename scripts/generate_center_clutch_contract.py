@@ -160,11 +160,14 @@ REQUIRED = {
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
     "drawerGuideLoadPath", "drawerFrontPinionBearing",
-    "drawerGuideRailClearanceMm", "drawerGuideRailWallThicknessMm",
+    "drawerGuideRailSupport", "drawerGuideFlangeDirection",
+    "drawerGuideRailClearanceMm", "drawerGuidePartitionThicknessMm",
+    "drawerGuideRailAttachOverlapMm",
     "drawerGuideBearingSeatDiameterMm",
     "drawerGuideSlotHeightMm", "drawerGuideRailDepthMm",
     "drawerGuideFlangeThicknessMm", "drawerGuideFlangeProjectionMm",
-    "drawerGuideFlangeClearanceMm", "drawerGuideFlangeBackClearanceMm",
+    "drawerGuideFlangeClearanceMm", "drawerGuideDrawerEdgeInsetMm",
+    "drawerGuideFlangeEndClearanceMm",
     "drawerGuideFrontSupportClearanceMm", "drawerGuideTailBearingAxis",
     "drawerGuideFrontBearingAxis",
     "drawerFrontPinionBearingSeatDiameterMm",
@@ -298,7 +301,9 @@ def validate_contract(contract: dict[str, object]) -> None:
         "selectorShoeRotationMode": "fixed-world-center-row",
         "drawerFrontPinionBearing": "integral-shelf-stepped-3x6x2",
         "drawerGuideBearing": "681-1x3x1-X-axis-C-slot",
-        "drawerGuideRail": "dual-inward-C-slot",
+        "drawerGuideRail": "partition-integral-inward-C-lips",
+        "drawerGuideRailSupport": "existing-divider-or-side-panel-vertical-member",
+        "drawerGuideFlangeDirection": "toward-drawer-center",
         "drawerGuideBearingArrangement": "tail-moving-plus-front-lower-fixed",
         "drawerGuideBearingAxis": "+X/-X",
         "drawerGuideLoadPath": "Y-support-Z-travel",
@@ -504,13 +509,15 @@ def validate_contract(contract: dict[str, object]) -> None:
         "frontTimingBearingRetainerThicknessMm": 0.40,
         "frontTimingBearingRetainerBoreDiameterMm": 3.40,
         "drawerGuideRailClearanceMm": 0.30,
-        "drawerGuideRailWallThicknessMm": 1.20,
+        "drawerGuidePartitionThicknessMm": 2.40,
+        "drawerGuideRailAttachOverlapMm": 0.05,
         "drawerGuideSlotHeightMm": 3.60,
         "drawerGuideRailDepthMm": 4.50,
         "drawerGuideFlangeThicknessMm": 2.40,
         "drawerGuideFlangeProjectionMm": 3.00,
         "drawerGuideFlangeClearanceMm": 0.30,
-        "drawerGuideFlangeBackClearanceMm": 0.60,
+        "drawerGuideDrawerEdgeInsetMm": 1.00,
+        "drawerGuideFlangeEndClearanceMm": 0.50,
         "drawerGuideFrontSupportClearanceMm": 0.00,
         "plateBeltPassageSlotCount": 2.0,
         "plateBeltPassageRadialClearanceMm": 0.45,
@@ -886,30 +893,36 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("层板一体轴承座没有从层板下侧连续落到承托肩")
     if n(contract, "frontTimingBearingBossFusionOverlapMm") <= 0:
         raise RuntimeError("层板一体轴承座必须保留正的实体融合重叠量")
+    if contract.get("drawerGuideRailSupport") != "existing-divider-or-side-panel-vertical-member":
+        raise RuntimeError("C 形导向槽必须直接使用箱体立板/侧板作为竖直承力段")
+    if contract.get("drawerGuideFlangeDirection") != "toward-drawer-center":
+        raise RuntimeError("抽屉导向凸缘必须朝本格抽屉内侧伸出")
     if n(contract, "drawerGuideSlotHeightMm") <= n(contract, "drawerGuideBearingSeatDiameterMm"):
         raise RuntimeError("C 形导向槽高度不足以容纳 681 轴承")
+    if n(contract, "drawerGuidePartitionThicknessMm") <= 0:
+        raise RuntimeError("C 形导向槽立板承力厚度无效")
+    if not 0 < n(contract, "drawerGuideRailAttachOverlapMm") < n(contract, "drawerGuidePartitionThicknessMm"):
+        raise RuntimeError("C 形导向槽与立板的融合重叠无效")
     if n(contract, "drawerGuideFlangeThicknessMm") >= n(contract, "drawerGuideSlotHeightMm"):
         raise RuntimeError("抽屉侧向导轨凸缘没有留出 C 槽上下间隙")
-    if n(contract, "drawerGuideRailDepthMm") <= n(contract, "drawerGuideFlangeThicknessMm"):
-        raise RuntimeError("C 形导向槽深度不足以捕获抽屉侧向凸缘")
     if n(contract, "drawerGuideRailDepthMm") <= (
-        n(contract, "drawerGuideFlangeProjectionMm")
-        + n(contract, "drawerGuideRailClearanceMm")
-    ):
-        raise RuntimeError("C 形导向槽深度不足以让抽屉凸缘在后壁前停止")
-    expected_back_clearance = (
-        n(contract, "drawerGuideRailDepthMm")
+        n(contract, "drawerGuideDrawerEdgeInsetMm")
+        + n(contract, "drawerGuideFlangeProjectionMm")
         + n(contract, "drawerGuideFlangeClearanceMm")
+    ):
+        raise RuntimeError("内向 C 形导向唇没有越过抽屉凸缘并留出端部间隙")
+    expected_end_clearance = (
+        n(contract, "drawerGuideRailDepthMm")
+        - n(contract, "drawerGuideDrawerEdgeInsetMm")
         - n(contract, "drawerGuideFlangeProjectionMm")
-        - n(contract, "drawerGuideRailWallThicknessMm")
     )
     if abs(
-        n(contract, "drawerGuideFlangeBackClearanceMm")
-        - expected_back_clearance
+        n(contract, "drawerGuideFlangeEndClearanceMm")
+        - expected_end_clearance
     ) > 0.001:
-        raise RuntimeError("C 形导向槽凸缘后壁净空推导不一致")
-    if n(contract, "drawerGuideFlangeBackClearanceMm") < n(contract, "drawerGuideRailClearanceMm"):
-        raise RuntimeError("C 形导向槽凸缘与后壁的净空不足")
+        raise RuntimeError("内向 C 形导向唇端部净空推导不一致")
+    if n(contract, "drawerGuideFlangeEndClearanceMm") < n(contract, "drawerGuideFlangeClearanceMm"):
+        raise RuntimeError("内向 C 形导向唇端部净空不足")
     if n(contract, "drawerGuideFrontSupportClearanceMm") != 0:
         raise RuntimeError("前端下托 681 必须与抽屉凸缘保持名义承托接触")
     if n(contract, "frontTimingBearingSeatDiameterMm") <= n(contract, "frontTimingBearingOdMm"):
