@@ -2443,11 +2443,15 @@ SNAKE_CHAIN_VERTICAL_SHIFT_MM =
         - SNAKE_CHAIN_REFERENCE_PATH_CENTER_Y_MM;
 SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM =
     row_center_z(0) - ROW_PITCH + SNAKE_CHAIN_VERTICAL_SHIFT_MM;
-// The service run is shifted down to the magnet datum.  This independent
-// lower-return guide center closes the 250 mm / 44 mm 03C loop at 256 pins
-// while leaving the small guide wheel safely above the floor.
+// The service run is shifted down to the magnet datum.  The paired upper
+// return guide and lower service-press guide are deliberately staggered in
+// opposite X directions; the corrected internal-tangent route is re-solved
+// by scripts/solve_cabinet_chain.py and closes at 260 pins.
 SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM = 41.20;
-SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143;
+SNAKE_CHAIN_RETURN_DRIVE_X_TRIM_MM = -4.00;
+SNAKE_CHAIN_SERVICE_PRESS_X_TRIM_MM = 16.00;
+SNAKE_CHAIN_MOTOR_X_OFFSET_MM = -2.00;
+SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182;
 SNAKE_CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
 SNAKE_CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
 SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM =
@@ -2485,7 +2489,12 @@ SNAKE_CHAIN_RETURN_DRIVE_X_MM =
     SNAKE_CHAIN_WALL_INSET_MM
         + 2 * SNAKE_CHAIN_DRIVE_PITCH_R_MM
         + SNAKE_CHAIN_GUIDE_PITCH_R_MM
-        - 2.10;
+        + SNAKE_CHAIN_RETURN_DRIVE_X_TRIM_MM;
+SNAKE_CHAIN_SERVICE_PRESS_X_MM =
+    SNAKE_CHAIN_WALL_INSET_MM
+        + 2 * SNAKE_CHAIN_DRIVE_PITCH_R_MM
+        + SNAKE_CHAIN_GUIDE_PITCH_R_MM
+        + SNAKE_CHAIN_SERVICE_PRESS_X_TRIM_MM;
 
 VERTICAL_SPLINE_BEARING_NOMINAL = "3x6x2";
 VERTICAL_SPLINE_BEARING_ID_MM = 3.0;
@@ -4202,7 +4211,11 @@ echo(
         SNAKE_CHAIN_SERVICE_PATH_CENTER_Y_MM),
     str("snakeChainReturnGuideCenterYMm=",
         SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM),
-    str("snakeChainReturnDriveXTrimMm=", -2.10),
+    str("snakeChainReturnDriveXTrimMm=",
+        SNAKE_CHAIN_RETURN_DRIVE_X_TRIM_MM),
+    str("snakeChainServicePressXTrimMm=",
+        SNAKE_CHAIN_SERVICE_PRESS_X_TRIM_MM),
+    str("snakeChainMotorXOffsetMm=", SNAKE_CHAIN_MOTOR_X_OFFSET_MM),
     str("snakeChainTriggerMagnetSegmentIndex=",
         SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX),
     str("snakeChainTriggerMagnetDiameterMm=", SNAKE_CHAIN_TRIGGER_MAGNET_D),
@@ -4640,9 +4653,13 @@ assert(SNAKE_MOTOR_MOUNT_CENTER_X - SNAKE_MOTOR_MOUNT_SEAT_CENTER_X
 assert(SNAKE_MOTOR_BOSS_STAGE1_EMBED > 0
     && SNAKE_MOTOR_BOSS_STAGE1_EMBED < WALL,
     "snake motor boss first step must fuse into the cabinet floor");
+// The motor is intentionally allowed to rise inside the Ω tensioner stroke;
+// the floor boss therefore follows the raised seat stop instead of assuming
+// the old motor-at-floor datum.  Keep the stop in the low rear-cavity zone,
+// but do not reject the valid +Z tension adjustment at 7 mm.
 assert(SNAKE_MOTOR_BOSS_STAGE1_TOP_Y > WALL
-    && SNAKE_MOTOR_BOSS_STAGE1_TOP_Y < 7.0,
-    "snake motor boss first step must expose as a low floor stop");
+    && SNAKE_MOTOR_BOSS_STAGE1_TOP_Y < 12.0,
+    "snake motor boss first step must remain a low printable floor stop");
 assert(SNAKE_MOTOR_BOSS_GUIDE_OD > SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
     "snake motor boss guide must leave an annular wall");
 assert(SNAKE_MOTOR_BOSS_GUIDE_TOP_Y < WORLD_GRID_ORIGIN_Y,

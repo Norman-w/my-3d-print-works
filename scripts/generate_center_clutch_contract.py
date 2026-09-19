@@ -95,7 +95,8 @@ REQUIRED = {
     "snakeChainLinkTopOffsetMm", "snakeChainReferenceRow",
     "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
     "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
-    "snakeChainReturnDriveXTrimMm",
+    "snakeChainReturnDriveXTrimMm", "snakeChainServicePressXTrimMm",
+    "snakeChainMotorXOffsetMm",
     "snakeChainTriggerMagnetSegmentIndex",
     "snakeChainTriggerMagnetDiameterMm", "snakeChainTriggerMagnetLengthMm",
     "snakeChainTriggerMagnetNormalOffsetMm",
@@ -268,7 +269,9 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("后仓连续离合承载板必须按三层抽屉生成三条")
     if n(contract, "rearClutchRowPlateStationCount") != 5:
         raise RuntimeError("每条后仓连续离合承载板必须覆盖五个站点")
-    expect(contract, "snakeChainReturnDriveXTrimMm", -2.10, "蛇链回程主动轮 X 相位偏移")
+    expect(contract, "snakeChainReturnDriveXTrimMm", -4.00, "蛇链上方回程轮 X 相位偏移")
+    expect(contract, "snakeChainServicePressXTrimMm", 16.00, "蛇链下方回程轮 X 相位偏移")
+    expect(contract, "snakeChainMotorXOffsetMm", -2.00, "蛇链电机轮 X 偏移")
     expect(contract, "centerClutchDriveLayerOffsetMm", 0.0, "中心驱动层偏置")
     expect(contract, "centerClutchVerticalLiftMm", 0.0, "兼容垂直偏置")
     if contract.get("actuation") != "permanent-magnet":
@@ -633,6 +636,18 @@ def validate_contract(contract: dict[str, object]) -> None:
     )
     expect(
         contract,
+        "snakeChainReturnDriveXTrimMm",
+        -4.00,
+        "蛇链上方回程轮 X 相位偏移",
+    )
+    expect(
+        contract,
+        "snakeChainServicePressXTrimMm",
+        16.00,
+        "蛇链下方回程轮 X 相位偏移",
+    )
+    expect(
+        contract,
         "snakeChainTriggerMagnetDiameterMm",
         2.0,
         "蛇链触发磁铁直径",
@@ -661,8 +676,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         2.44,
         "蛇链触发磁铁轴向起点",
     )
-    if n(contract, "snakeChainTriggerMagnetSegmentIndex") != 143:
-        raise RuntimeError("蛇链触发磁铁节号必须落在中心服务直线段 143")
+    if n(contract, "snakeChainTriggerMagnetSegmentIndex") != 182:
+        raise RuntimeError("蛇链触发磁铁节号必须落在中心服务直线段 182")
 
     if abs(n(contract, "bearingReferenceCenterOffsetMm")) > 0.001:
         raise RuntimeError("输出轴承参考件必须与长方条轴承孔同心")

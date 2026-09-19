@@ -25,15 +25,26 @@ SHELF_T = 2.4
 SPROCKET_TEETH = 12
 BLUNT_TEETH = 8  # 所有绿色导向轮统一使用的小轮
 WALL_CLEAR = 0.40
-# The 250 mm / 44 mm cabinet changes the discrete serpentine phase.  This
-# X-minus trim keeps the motor return wheel inside the service zone while
-# closing the 4.7625 mm pin pitch at the final link instead of accepting a
-# short non-pitch chord at the loop seam.
-DRIVE_RETURN_X_TRIM = -2.10
+# The two small return wheels are deliberately staggered in opposite X
+# directions.  In the rear view this is the pair shown in the user's arrow
+# sketch: the lower wheel moves toward world X+ and the upper wheel toward
+# world X−.  They are not allowed to share an X coordinate because that was
+# the source of the old twisted loop.
+DRIVE_RETURN_X_TRIM = -4.00       # upper 8T guide, world X−
+SERVICE_PRESS_RETURN_X_TRIM = 16.00  # lower 8T guide, world X+
+MOTOR_RETURN_X_OFFSET_MM = -2.00
 TEN_TRAVEL = 10.0
+TENSIONER_HOME_RISE_MM = 6.0
 PITCH_TOL = 0.02
 CLOSE_TOL = 0.05
-EXPECTED_PIN_COUNT = 256
+EXPECTED_PIN_COUNT = 260
+POWER_SERVICE_MIN_CLEARANCE = 0.40
+PATH_TANGENCY_MIN_DOT = 0.999
+CHAIN_PATH_ENVELOPE_RADIUS_MM = 3.00
+SERVICE_MOTOR_ENVELOPE_MIN_CLEARANCE = 0.40
+RETURN_PATH_SELF_CLEARANCE_MIN_MM = (
+    2.0 * CHAIN_PATH_ENVELOPE_RADIUS_MM + 0.40
+)
 
 # 方案 1 选择离合的网页/SCAD 共用装配参数（单位 mm）。输入轮与输出轮
 # 同轴，狗牙面默认开 2.6 mm；输出狗牙向输入侧移动 2.5 mm 后只剩 0.1 mm
@@ -41,7 +52,10 @@ EXPECTED_PIN_COUNT = 256
 CHAIN_Y = 75.0
 CHAIN_VERTICAL_SHIFT = 0.0
 CHAIN_HEIGHT_CONTRACT: dict[str, object] = {}
-CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143
+# Segment 182 is on the horizontal service run at the clutch magnet datum,
+# near the center column.  The former 143 was on the middle drawer row and
+# could never trigger the center clutch at its lower installation height.
+CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182
 CHAIN_REFERENCE_ROW = 0
 CHAIN_LINK_TOP_OFFSET_MM = 2.15
 CHAIN_TRIGGER_MAGNET_D_MM = 2.0
@@ -291,6 +305,20 @@ def drive_c() -> Vec:
     )
 
 
+def service_press_c() -> Vec:
+    """Lower 8T press/return guide that creates the horizontal service run."""
+    return (
+        wall_inset() + 2.0 * drive_pitch_r() + translator_r()
+        + SERVICE_PRESS_RETURN_X_TRIM,
+        service_chain_z() + translator_r(),
+    )
+
+
+def power_service_envelope_clearance(tz: float) -> float:
+    """Return the 2-D radial clearance between the motor drive and press guide."""
+    return dist(ten_c(tz), service_press_c()) - drive_outer_r() - guide_outer_r()
+
+
 def entry_c() -> Vec:
     return (wall_inset() + translator_r(), chain_row_center_z(N_ROW - 1) - translator_r())
 
@@ -301,11 +329,11 @@ def power_c() -> Vec:
 
 
 def ten_home_z() -> float:
-    return WALL + drive_outer_r() + 1.2
+    return ten_z_min() + TENSIONER_HOME_RISE_MM
 
 
 def ten_c(tz: float) -> Vec:
-    return (wall_inset() + drive_pitch_r(), tz)
+    return (wall_inset() + drive_pitch_r() + MOTOR_RETURN_X_OFFSET_MM, tz)
 
 
 def north(c: Vec) -> Vec:
@@ -314,6 +342,58 @@ def north(c: Vec) -> Vec:
 
 def ang(deg: float) -> float:
     return math.radians(deg)
+
+
+def common_tangent(
+    c1: Vec,
+    r1: float,
+    c2: Vec,
+    r2: float,
+    side: int,
+    branch: int,
+) -> dict[str, object]:
+    """Return one oriented common tangent between two pulley envelopes.
+
+    ``side=1`` is an external tangent and ``side=-1`` is an internal
+    tangent.  ``branch`` selects the two mirror solutions.  The returned
+    signs are the only safe way to choose the arc direction: guessing CW/CCW
+    from the screen view was what produced the old knot.
+    """
+    if side not in (-1, 1) or branch not in (-1, 1):
+        raise ValueError("common tangent side/branch must be ±1")
+    d = dist(c1, c2)
+    if d < 1e-9:
+        raise RuntimeError("两个回程轮中心重合，没有可用切线")
+    gamma = math.atan2(c2[1] - c1[1], c2[0] - c1[0])
+    cosine = (r1 - side * r2) / d
+    if abs(cosine) > 1.0 + 1e-9:
+        raise RuntimeError("回程轮包络没有可用公共切线")
+    normal_angle = gamma + branch * math.acos(max(-1.0, min(1.0, cosine)))
+    normal = (math.cos(normal_angle), math.sin(normal_angle))
+    other_normal = (side * normal[0], side * normal[1])
+    p1 = add(c1, (r1 * normal[0], r1 * normal[1]))
+    p2 = add(c2, (r2 * other_normal[0], r2 * other_normal[1]))
+    tangent = unit(sub(p2, p1))
+
+    def arc_sign(radial: Vec) -> int:
+        return 1 if dot((-radial[1], radial[0]), tangent) >= 0.0 else -1
+
+    return {
+        "p1": p1,
+        "p2": p2,
+        "a1": math.atan2(normal[1], normal[0]),
+        "a2": math.atan2(other_normal[1], other_normal[0]),
+        "sign1": arc_sign(normal),
+        "sign2": arc_sign(other_normal),
+        "side": side,
+        "branch": branch,
+    }
+
+
+def directed_arc(c: Vec, r: float, a0: float, a1: float, sign: int) -> Arc:
+    """Create the shortest arc that follows the requested tangent direction."""
+    delta = (sign * (a1 - a0)) % (2.0 * math.pi)
+    return Arc(c, r, a0, a0 + sign * delta)
 
 
 def right_s(z_hi: float, z_lo: float) -> list:
@@ -368,16 +448,76 @@ def path_segments(tz: float) -> list:
                 )
             )
             side = "right"
-    # For an odd row count the bottom row exits on the right, then crosses the
-    # service layer and enters the motor/tensioner return loop.
+    # For an odd row count the bottom row exits on the right.  The chain must
+    # first run horizontally through the service/magnet datum and only then
+    # enter the corrected three-wheel return.  Traversed from the service
+    # run, the non-crossing order is:
+    #
+    #     lower green -> upper green -> blue 12T drive -> entry return
+    #
+    # Reversing the same closed chain gives the user's arrow direction from
+    # the drive side without making a second, mirrored chain.  The two
+    # green wheels use opposite-X datums and the two internal tangents use
+    # opposite branches; this is the part the old vertical dogleg got wrong.
     segs.extend(right_s(chain_row_center_z(0), z_svc))
-    segs.append(Line(polar(right_blunt_c(z_svc), rb, ang(-90.0)), north(drive_c())))
-    segs.append(Arc(drive_c(), rb, ang(90.0), ang(180.0)))
+    lower = service_press_c()
+    upper = drive_c()
     ten = ten_c(tz)
-    segs.append(Line(polar(drive_c(), rb, math.pi), polar(ten, r12, 0.0)))
-    segs.append(Arc(ten, r12, ang(0.0), ang(-180.0)))
-    segs.append(Line(polar(ten, r12, math.pi), polar(entry_c(), rb, math.pi)))
-    segs.append(Arc(entry_c(), rb, ang(180.0), ang(90.0)))
+    entry = entry_c()
+    service_exit = polar(right_blunt_c(z_svc), rb, ang(-90.0))
+    lower_to_upper = common_tangent(lower, rb, upper, rb, side=-1, branch=1)
+    upper_to_motor = common_tangent(upper, rb, ten, r12, side=-1, branch=-1)
+    motor_to_entry = common_tangent(ten, r12, entry, rb, side=1, branch=1)
+
+    if lower_to_upper["sign1"] != -1:
+        raise RuntimeError("下方绿轮没有从服务水平段连续离开")
+    if lower_to_upper["sign2"] != upper_to_motor["sign1"]:
+        raise RuntimeError("上下绿轮之间的内切线旋向不连续")
+    if upper_to_motor["sign2"] != motor_to_entry["sign1"]:
+        raise RuntimeError("上方绿轮到蓝色主动轮的内切线旋向不连续")
+    if motor_to_entry["sign2"] != -1:
+        raise RuntimeError("蓝色主动轮到左侧回程的切线旋向不连续")
+
+    segs.append(Line(service_exit, polar(lower, rb, ang(-90.0))))
+    segs.append(
+        directed_arc(
+            lower,
+            rb,
+            ang(-90.0),
+            lower_to_upper["a1"],
+            -1,
+        )
+    )
+    segs.append(Line(lower_to_upper["p1"], lower_to_upper["p2"]))
+    segs.append(
+        directed_arc(
+            upper,
+            rb,
+            lower_to_upper["a2"],
+            upper_to_motor["a1"],
+            int(lower_to_upper["sign2"]),
+        )
+    )
+    segs.append(Line(upper_to_motor["p1"], upper_to_motor["p2"]))
+    segs.append(
+        directed_arc(
+            ten,
+            r12,
+            upper_to_motor["a2"],
+            motor_to_entry["a1"],
+            int(upper_to_motor["sign2"]),
+        )
+    )
+    segs.append(Line(motor_to_entry["p1"], motor_to_entry["p2"]))
+    segs.append(
+        directed_arc(
+            entry,
+            rb,
+            motor_to_entry["a2"],
+            ang(90.0),
+            -1,
+        )
+    )
     return segs
 
 
@@ -416,6 +556,139 @@ def walk_pins(tz: float):
 
 def close_err(pins: list[Vec]) -> float:
     return dist(pins[-1], pins[0]) - P
+
+
+def unit(v: Vec) -> Vec:
+    length = math.hypot(v[0], v[1])
+    if length < 1e-12:
+        raise RuntimeError("链条路径出现零长度切线")
+    return (v[0] / length, v[1] / length)
+
+
+def segment_tangent(segment, at_end: bool) -> Vec:
+    if isinstance(segment, Line):
+        return unit(sub(segment.b, segment.a))
+    theta = segment.a1 if at_end else segment.a0
+    return unit((
+        -math.sin(theta) * segment.sign,
+        math.cos(theta) * segment.sign,
+    ))
+
+
+def point_segment_distance(point: Vec, a: Vec, b: Vec) -> float:
+    ab = sub(b, a)
+    denom = dot(ab, ab)
+    if denom < 1e-12:
+        return dist(point, a)
+    t = max(0.0, min(1.0, dot(sub(point, a), ab) / denom))
+    return dist(point, add(a, (ab[0] * t, ab[1] * t)))
+
+
+def cross(a: Vec, b: Vec) -> float:
+    return a[0] * b[1] - a[1] * b[0]
+
+
+def segment_segment_distance(a: Vec, b: Vec, c: Vec, d: Vec) -> float:
+    """Minimum distance between two finite 2-D segments."""
+    ab = sub(b, a)
+    cd = sub(d, c)
+    ac = sub(c, a)
+    ad = sub(d, a)
+    ca = sub(a, c)
+    cb = sub(b, c)
+    denom = cross(ab, cd)
+    if abs(denom) > 1e-12:
+        t = cross(ac, cd) / denom
+        u = cross(ac, ab) / denom
+        if -1e-9 <= t <= 1.0 + 1e-9 and -1e-9 <= u <= 1.0 + 1e-9:
+            return 0.0
+    return min(
+        point_segment_distance(a, c, d),
+        point_segment_distance(b, c, d),
+        point_segment_distance(c, a, b),
+        point_segment_distance(d, a, b),
+    )
+
+
+def polyline_segments(segment, step: float = 0.75) -> list[tuple[Vec, Vec]]:
+    """Approximate a line/arc with short chords for self-clearance checks."""
+    count = max(1, int(math.ceil(segment.length / step)))
+    points = [segment.point(segment.length * i / count) for i in range(count + 1)]
+    return list(zip(points, points[1:]))
+
+
+def path_self_clearance(segments: list) -> tuple[float, tuple[int, int]]:
+    """Measure non-adjacent centerline clearance, including line crossings."""
+    pieces: list[tuple[int, Vec, Vec]] = []
+    for index, segment in enumerate(segments):
+        pieces.extend(
+            (index, start, end)
+            for start, end in polyline_segments(segment)
+        )
+    minimum = float("inf")
+    pair = (-1, -1)
+    last = len(segments) - 1
+    for first, (owner_a, a0, a1) in enumerate(pieces):
+        for owner_b, b0, b1 in pieces[first + 1:]:
+            if owner_a == owner_b:
+                continue
+            if owner_b == owner_a + 1 or (owner_a == 0 and owner_b == last):
+                continue
+            clearance = segment_segment_distance(a0, a1, b0, b1)
+            if clearance < minimum:
+                minimum = clearance
+                pair = (owner_a, owner_b)
+    return minimum, pair
+
+
+def audit_path_geometry(tz: float) -> dict[str, float]:
+    """Reject tangent reversal, knotting, and chain-envelope self-intersection."""
+    segments = path_segments(tz)
+    joints = [
+        dot(
+            segment_tangent(segments[index], True),
+            segment_tangent(segments[(index + 1) % len(segments)], False),
+        )
+        for index in range(len(segments))
+    ]
+    tangent_min = min(joints)
+    if tangent_min < PATH_TANGENCY_MIN_DOT:
+        raise RuntimeError(
+            "蛇链回程路径存在反向/折角切线: "
+            f"minDot={tangent_min:.6f} < {PATH_TANGENCY_MIN_DOT:.3f}"
+        )
+
+    upper = drive_c()
+    lower = service_press_c()
+    center_clearance = dist(upper, lower) - 2.0 * guide_outer_r()
+    if center_clearance < 0.40:
+        raise RuntimeError(
+            "上下绿色导向轮实体包络相交: "
+            f"clear={center_clearance:.6f} mm < 0.40 mm"
+        )
+    self_clearance, pair = path_self_clearance(segments)
+    if self_clearance < RETURN_PATH_SELF_CLEARANCE_MIN_MM:
+        raise RuntimeError(
+            "蛇链回程路径形成麻花/自交或包络干涉: "
+            f"clear={self_clearance:.6f} mm "
+            f"< {RETURN_PATH_SELF_CLEARANCE_MIN_MM:.2f} mm "
+            f"segments={pair[0]}-{pair[1]}"
+        )
+    service_motor_envelope_clearance = power_service_envelope_clearance(tz)
+    if service_motor_envelope_clearance < SERVICE_MOTOR_ENVELOPE_MIN_CLEARANCE:
+        raise RuntimeError(
+            "下方服务轮与蓝色主动轮实体包络发生干涉: "
+            f"clear={service_motor_envelope_clearance:.6f} mm "
+            f"< {SERVICE_MOTOR_ENVELOPE_MIN_CLEARANCE:.2f} mm"
+        )
+    return {
+        "tangentMinDot": tangent_min,
+        "upperMotorTangentAngleDeg": 0.0,
+        "upperMotorLineClearanceMm": center_clearance,
+        "serviceMotorCenterlineClearanceMm": self_clearance,
+        "serviceMotorEnvelopeClearanceMm": service_motor_envelope_clearance,
+        "returnPathSelfClearanceMm": self_clearance,
+    }
 
 
 def ten_z_min() -> float:
@@ -521,7 +794,12 @@ def motion_wheels(tz: float) -> list[dict]:
         {"id": "power", "kind": "sprocket", "teeth": 12, "sign": -1, "x": ten_c(tz)[0], "z": ten_c(tz)[1]},
         {"id": "upper-guide", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": power_c()[0], "z": power_c()[1]},
         {"id": "entry", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": entry_c()[0], "z": entry_c()[1]},
+        # The upper return wheel is face-flipped in the rear assembly.  Its
+        # visible model therefore needs the opposite browser yaw sign from
+        # the lower service-press wheel; using the same sign for both made the
+        # chain appear to wind back over the upper wheel in the preview.
         {"id": "drive", "kind": "idler", "teeth": BLUNT_TEETH, "sign": 1, "x": drive_c()[0], "z": drive_c()[1]},
+        {"id": "service-press", "kind": "idler", "teeth": BLUNT_TEETH, "sign": -1, "x": service_press_c()[0], "z": service_press_c()[1]},
     ]
     for row in range(N_ROW - 3, -1, -2):
         z = chain_row_center_z(row)
@@ -587,6 +865,8 @@ def load_center_clutch_contract(root: Path) -> dict | None:
 def configure_chain_height(contract: dict | None) -> None:
     """Apply the OpenSCAD magnet-bottom datum before solving the chain."""
     global CHAIN_VERTICAL_SHIFT, CHAIN_HEIGHT_CONTRACT
+    global DRIVE_RETURN_X_TRIM, SERVICE_PRESS_RETURN_X_TRIM
+    global MOTOR_RETURN_X_OFFSET_MM
     global CHAIN_REFERENCE_ROW, CHAIN_LINK_TOP_OFFSET_MM
     global CHAIN_TRIGGER_MAGNET_D_MM, CHAIN_TRIGGER_MAGNET_L_MM
     global CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM
@@ -607,6 +887,9 @@ def configure_chain_height(contract: dict | None) -> None:
         "snakeChainVerticalShiftMm",
         "snakeChainServicePathCenterYMm",
         "snakeChainReturnGuideCenterYMm",
+        "snakeChainReturnDriveXTrimMm",
+        "snakeChainServicePressXTrimMm",
+        "snakeChainMotorXOffsetMm",
         "snakeChainTriggerMagnetSegmentIndex",
         "snakeChainTriggerMagnetDiameterMm",
         "snakeChainTriggerMagnetLengthMm",
@@ -621,6 +904,11 @@ def configure_chain_height(contract: dict | None) -> None:
         raise RuntimeError("蛇链高度基准必须是公轮底部 M5 磁铁下沿")
 
     CHAIN_HEIGHT_CONTRACT = contract
+    DRIVE_RETURN_X_TRIM = float(contract["snakeChainReturnDriveXTrimMm"])
+    SERVICE_PRESS_RETURN_X_TRIM = float(
+        contract["snakeChainServicePressXTrimMm"]
+    )
+    MOTOR_RETURN_X_OFFSET_MM = float(contract["snakeChainMotorXOffsetMm"])
     CHAIN_REFERENCE_ROW = int(float(contract["snakeChainReferenceRow"]))
     CHAIN_LINK_TOP_OFFSET_MM = float(contract["snakeChainLinkTopOffsetMm"])
     CHAIN_TRIGGER_MAGNET_D_MM = float(contract["snakeChainTriggerMagnetDiameterMm"])
@@ -669,12 +957,19 @@ def write_motion(
     pins: list[Vec],
     wheels: list[dict],
     center_contract: dict | None = None,
+    path_audit: dict[str, float] | None = None,
 ) -> None:
+    path_audit = path_audit or {}
     payload = {
         "p": P,
         "driveTeeth": SPROCKET_TEETH,
         "guideTeeth": BLUNT_TEETH,
         "driveReturnXTrimMm": DRIVE_RETURN_X_TRIM,
+        "servicePressReturnXTrimMm": SERVICE_PRESS_RETURN_X_TRIM,
+        "motorReturnXOffsetMm": MOTOR_RETURN_X_OFFSET_MM,
+        "powerServiceEnvelopeClearanceMm": round(
+            power_service_envelope_clearance(tz), 6
+        ),
         "guidePitchRadiusMm": round(translator_r(), 6),
         "guideOuterRadiusMm": round(guide_outer_r(), 6),
         "guideBendAngleDeg": round(360.0 / BLUNT_TEETH, 6),
@@ -707,6 +1002,9 @@ def write_motion(
             "topClearanceMm": round(CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM, 6),
             "axialStartOffsetMm": round(CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM, 6),
             "axis": "world-Z-",
+        },
+        "returnPathAudit": {
+            key: round(value, 6) for key, value in path_audit.items()
         },
         "tenZ": tz,
         "pins": [[round(x, 6), round(z, 6)] for x, z in pins],
@@ -747,13 +1045,20 @@ def main() -> int:
     tz, pins = search_tensioner()
     n = len(pins)
     chords = [dist(pins[i], pins[(i + 1) % n]) for i in range(n)]
+    path_audit = audit_path_geometry(tz)
     wheels = motion_wheels(tz)
+    envelope_clearance = power_service_envelope_clearance(tz)
+    if envelope_clearance < POWER_SERVICE_MIN_CLEARANCE:
+        raise SystemExit(
+            "12T 电机主动轮与下压服务轮实体包络净空不足: "
+            f"{envelope_clearance:.6f} mm < {POWER_SERVICE_MIN_CLEARANCE:.2f} mm"
+        )
     apply_seat_phase(wheels, pins)
     seating = audit_wheel_seating(wheels, pins)
     write_gen(out, tz, pins, wheels)
     motion = root / "output/3d-print/cabinet-chain/cabinet_chain_motion.json"
     motion.parent.mkdir(parents=True, exist_ok=True)
-    write_motion(motion, tz, pins, wheels, center_contract)
+    write_motion(motion, tz, pins, wheels, center_contract, path_audit)
     print(
         f"pins={n} even={n % 2 == 0} ten_z={tz:.4f} "
         f"home={ten_home_z():.4f} drop={ten_home_z() - tz:.4f} "
@@ -761,6 +1066,11 @@ def main() -> int:
         f"close={chords[-1]:.6f} P={P} "
         f"guide={BLUNT_TEETH}T R={translator_r():.6f} "
         f"bend={360.0 / BLUNT_TEETH:.2f}deg "
+        f"power_service_clear={envelope_clearance:.6f} "
+        f"tangent_dot={path_audit['tangentMinDot']:.6f} "
+        f"return_wheel_clear={path_audit['upperMotorLineClearanceMm']:.6f} "
+        f"return_self_clear={path_audit['returnPathSelfClearanceMm']:.6f} "
+        f"service_motor_clear={path_audit['serviceMotorEnvelopeClearanceMm']:.6f} "
         f"seat_error={seating['maxContactErrorMm']:.6f} "
         f"seat_contacts={seating['minContactCount']}-{seating['maxContactCount']}"
     )
@@ -768,7 +1078,7 @@ def main() -> int:
         raise SystemExit("pin count must be even")
     if n != EXPECTED_PIN_COUNT:
         raise SystemExit(
-            f"250 mm / 44 mm 方案应有 {EXPECTED_PIN_COUNT} 个销，实际为 {n}"
+            f"250 mm / 44 mm / 错向修正回程方案应有 {EXPECTED_PIN_COUNT} 个销，实际为 {n}"
         )
     if min(chords) < P - PITCH_TOL or max(chords) > P + PITCH_TOL:
         raise SystemExit("pin spacing is not true pitch")

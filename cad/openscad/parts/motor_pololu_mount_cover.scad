@@ -91,7 +91,7 @@ module omega_sleeve_shell() {
     }
 }
 
-module omega_mount_seat(x) {
+module omega_mount_seat(x, seat_w) {
     union() {
         difference() {
             // A horizontal seat is visible as the outward underscore in the
@@ -99,7 +99,7 @@ module omega_mount_seat(x) {
             // The holes are clearance for the cabinet guide posts;
             // the M3 screw remains on the same axis through each hole.
             motor_mount_rounded_prism_xy(
-                MOTOR_MOUNT_OMEGA_SEAT_W,
+                seat_w,
                 MOTOR_MOUNT_OMEGA_SEAT_L,
                 MOTOR_MOUNT_OMEGA_SEAT_T,
                 MOTOR_MOUNT_OMEGA_SEAT_R,
@@ -139,9 +139,16 @@ module omega_mount_seat(x) {
 }
 
 module omega_mount_seats() {
-    for (x = [-MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
-        MOTOR_MOUNT_OMEGA_SEAT_CENTER_X])
-        omega_mount_seat(x);
+    // The X− seat is the compact one required by the corrected motor datum;
+    // the X+ seat retains the original wider reaction arm.
+    omega_mount_seat(
+        -MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X,
+        MOTOR_MOUNT_OMEGA_LEFT_SEAT_W
+    );
+    omega_mount_seat(
+        MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
+        MOTOR_MOUNT_OMEGA_SEAT_W
+    );
 }
 //#endregion
 
@@ -176,6 +183,8 @@ assert(MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D
     "omega mounting seats must clear the cabinet guide posts");
 assert(MOTOR_MOUNT_OMEGA_SEAT_L > MOTOR_MOUNT_SCREW_HEAD_D,
     "omega mounting seats must contain a usable front/rear fastener span");
+assert(MOTOR_MOUNT_OMEGA_LEFT_SEAT_W > MOTOR_MOUNT_SCREW_HEAD_D,
+    "X-minus omega mounting seat must contain the fastener head");
 assert(MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD
         > MOTOR_MOUNT_SPRING_OD,
     "omega spring collars must support the spring");

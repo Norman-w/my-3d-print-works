@@ -70,24 +70,24 @@ module cabinet_motor_mount_floor_seats_local() {
         // The two continuous rounded base rails are the bottom-end platforms:
         // they fuse into the cabinet floor, support the two posts on each
         // side, and stop the moving Omega seat above the cabinet floor.
-        for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+        for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
             rounded_pad_xy(
-                MOTOR_MOUNT_BOSS_STAGE1_RAIL_W,
+                spec[1],
                 MOTOR_MOUNT_BOSS_STAGE1_RAIL_L,
                 MOTOR_MOUNT_BOSS_STAGE1_H,
                 MOTOR_MOUNT_BOSS_STAGE1_RAIL_R,
-                c[0] + offset_x,
+                c[0] + spec[0],
                 rail_y0,
                 MOTOR_MOUNT_BOSS_STAGE1_Z0
             );
         // Each fixing point has a solid guide post.  The moving seat's larger
         // hole slides over the post; only the top pilot is removed later.
-        for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+        for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
             for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
                 local_z_cylinder(
                     MOTOR_MOUNT_BOSS_GUIDE_OD,
                     MOTOR_MOUNT_BOSS_GUIDE_H,
-                    c[0] + offset_x,
+                    c[0] + spec[0],
                     floor_y + y_offset,
                     MOTOR_MOUNT_BOSS_STAGE1_TOP_Z
                 );
@@ -101,12 +101,12 @@ module cabinet_motor_mount_floor_pilot_holes_local() {
     c = motor_mount_c();
     floor_y = MOTOR_MOUNT_CHAIN_Y
         + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
-    for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+    for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
         for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
             local_z_cylinder(
                 MOTOR_MOUNT_BOSS_PILOT_D,
                 MOTOR_MOUNT_BOSS_PILOT_DEPTH + 2 * MOTOR_MOUNT_EPS,
-                c[0] + offset_x,
+                c[0] + spec[0],
                 floor_y + y_offset,
                 MOTOR_MOUNT_BOSS_PILOT_BOTTOM_Z - MOTOR_MOUNT_EPS
             );
@@ -122,9 +122,9 @@ module cabinet_motor_mount_spring_hardware_local() {
     c = motor_mount_c();
     floor_y = MOTOR_MOUNT_CHAIN_Y
         + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
-    for (offset_x = MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X)
+    for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
         for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y) {
-            x = c[0] + offset_x;
+            x = c[0] + spec[0];
             y = floor_y + y_offset;
             motor_mount_spring_coil(x, y);
             motor_mount_mushroom_screw(x, y);

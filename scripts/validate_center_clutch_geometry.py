@@ -217,7 +217,9 @@ def validate_contract(contract: Contract) -> None:
         ("rearClutchRowPlateX1Mm", 244.8, "连续离合行板 X+ 终点"),
         ("rearClutchRowPlateLeftClearanceMm", 2.0, "连续离合行板左侧净空"),
         ("rearClutchRowPlateRightClearanceMm", 2.0, "连续离合行板右侧净空"),
-        ("snakeChainReturnDriveXTrimMm", -2.10, "蛇链回程主动轮 X 相位偏移"),
+        ("snakeChainReturnDriveXTrimMm", -4.00, "蛇链上方回程轮 X 相位偏移"),
+        ("snakeChainServicePressXTrimMm", 16.00, "蛇链下方回程轮 X 相位偏移"),
+        ("snakeChainMotorXOffsetMm", -2.00, "蛇链电机轮 X 偏移"),
     ):
         expect_close(number(contract, key), expected, label, 0.001)
     expect_close(number(contract, "rearClutchRowPlateCount"), 3.0, "连续离合行板数量", 0.001)

@@ -14,6 +14,10 @@ include <cabinet_chain_pins.gen.scad>
 //#region 常量/配置
 MOTOR_MOUNT_SPROCKET_TEETH = 12;
 MOTOR_MOUNT_WALL_CLEAR = 0.40;
+// The corrected chain route uses the same X− motor offset as
+// cabinet_chain_path.scad.  Keeping it here makes the printed Ω mount follow
+// the actual 12T return wheel instead of the former upper-guide datum.
+MOTOR_MOUNT_RETURN_X_OFFSET_MM = -2.00;
 MOTOR_MOUNT_CHAIN_Y = PARTITION_BACK_Y + 12.0;
 MOTOR_MOUNT_SLIDE_STROKE = 6.0;  // Ω套/电机沿柜体 Z 调节
 
@@ -82,6 +86,12 @@ MOTOR_MOUNT_OMEGA_SEAT_CENTER_X =
     MOTOR_MOUNT_OMEGA_OUTER_W / 2
         + MOTOR_MOUNT_OMEGA_SEAT_W / 2
         - MOTOR_MOUNT_OMEGA_SEAT_OVERLAP;
+// The X− seat is narrowed and moved inward because the motor wheel itself
+// moved 2 mm toward the service bay.  Its inner edge still overlaps the Ω
+// sleeve, while its floor rail remains outside the cabinet wall with a print
+// clearance margin.  The X+ seat keeps the original wider support.
+MOTOR_MOUNT_OMEGA_LEFT_SEAT_W = 10.5;
+MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X = 13.1;
 
 MOTOR_MOUNT_OMEGA_SPRING_SEAT_H = 1.0;
 
@@ -112,6 +122,7 @@ MOTOR_MOUNT_BOSS_STAGE1_TOP_Z =
 MOTOR_MOUNT_BOSS_STAGE1_H =
     MOTOR_MOUNT_BOSS_STAGE1_TOP_Z - MOTOR_MOUNT_BOSS_STAGE1_Z0;
 MOTOR_MOUNT_BOSS_STAGE1_RAIL_W = MOTOR_MOUNT_OMEGA_SEAT_W + 2.0;
+MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W = MOTOR_MOUNT_OMEGA_LEFT_SEAT_W;
 MOTOR_MOUNT_BOSS_STAGE1_RAIL_L = MOTOR_MOUNT_OMEGA_SEAT_L + 4.0;
 MOTOR_MOUNT_BOSS_STAGE1_RAIL_R = 1.2;
 MOTOR_MOUNT_BOSS_POST_TOP_CLEARANCE = 0.30;
@@ -148,6 +159,15 @@ MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X = [
     -MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
     MOTOR_MOUNT_OMEGA_SEAT_CENTER_X
 ];
+// [local X offset, matching continuous floor-rail width].  Use this list in
+// the actual mount geometry; the offset-only list above remains a compatibility
+// alias for older preview callers.
+MOTOR_MOUNT_FLOOR_SEAT_SPECS = [
+    [-MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X,
+        MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W],
+    [MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
+        MOTOR_MOUNT_BOSS_STAGE1_RAIL_W]
+];
 //#endregion
 
 //#region 模型/类型
@@ -165,7 +185,8 @@ function motor_mount_return_x() =
     WALL + motor_mount_outer_r() + MOTOR_MOUNT_WALL_CLEAR;
 
 function motor_mount_c() = [
-    motor_mount_return_x() + motor_mount_pitch_r(),
+    motor_mount_return_x() + motor_mount_pitch_r()
+        + MOTOR_MOUNT_RETURN_X_OFFSET_MM,
     TEN_Z,
     0
 ];
@@ -190,6 +211,20 @@ assert(MOTOR_MOUNT_OMEGA_SEAT_CENTER_X
         - MOTOR_MOUNT_SCREW_HEAD_D / 2
         > MOTOR_MOUNT_OMEGA_OUTER_W / 2 + 0.20,
     "screw-head relief must clear the outside of the sleeve");
+assert(MOTOR_MOUNT_OMEGA_LEFT_SEAT_W > MOTOR_MOUNT_SCREW_HEAD_D,
+    "X-minus Omega seat must contain the mushroom-head fixing point");
+assert(MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X
+        > MOTOR_MOUNT_OMEGA_OUTER_W / 2,
+    "X-minus Omega seat must overlap the sleeve wall");
+assert(MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X
+        - MOTOR_MOUNT_SCREW_HEAD_D / 2
+        >= MOTOR_MOUNT_OMEGA_OUTER_W / 2 - MOTOR_MOUNT_EPS,
+    "X-minus screw-head relief must not enter the sleeve");
+assert(motor_mount_c()[0]
+        - MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X
+        - MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W / 2
+        > WALL + 0.20,
+    "X-minus motor floor rail must clear the cabinet wall");
 assert(MOTOR_MOUNT_BOSS_STAGE1_EMBED > 0
     && MOTOR_MOUNT_BOSS_STAGE1_EMBED < WALL,
     "stage-one boss embedment must fuse into, not pass through, the cabinet floor");

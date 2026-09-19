@@ -8,7 +8,9 @@ include <cabinet_chain_pins.gen.scad>
 SPROCKET_TEETH = 12;
 BLUNT_TEETH = 8;                 // 所有绿色导向轮统一使用的最小轮
 WALL_CLEAR = 0.40;
-DRIVE_RETURN_X_TRIM = -2.10;     // 250/44 方案在地板安全高度闭合真实 P 节距
+DRIVE_RETURN_X_TRIM = -4.00;     // 上方 8T 导向轮向世界 X− 错开
+SERVICE_PRESS_RETURN_X_TRIM = 16.00; // 下方 8T 导向轮向世界 X+ 错开
+MOTOR_RETURN_X_OFFSET_MM = -2.00; // 下方电机 12T 轮保持箱壁安全轴心
 // The generated solver receives this from the center-clutch contract. Keep a
 // zero fallback so the path file remains inspectable by itself, but do not
 // assign back to the same OpenSCAD variable: self-redefinition would shadow
@@ -98,14 +100,24 @@ function drive_c() = [
     0
 ];
 
+// 上方回程轮正下方的 8T 下压/服务轮。其下切线与离合磁铁触发高度
+// 重合，底部链段因此可以水平穿过全部五个离合站。
+function service_press_c() = [
+    return_x() + 2 * drive_pitch_r() + translator_r()
+        + SERVICE_PRESS_RETURN_X_TRIM,
+    service_chain_z() + translator_r(),
+    0
+];
+
 function entry_c() = [
     return_x() + translator_r(),
     chain_row_center_z(N_ROW - 1) - translator_r(),
     0
 ];
 
-// 后视图中，蛇形链条唯一的动力位放在右下方的回程张紧位；旧的高-X
-// 上方转向位仍保留，但现在只承担普通导向，不再连接电机。
+// 后视图中，蛇形链条唯一的动力位放在右下方的回程张紧位；回程顺序
+// 为服务水平段→下方绿轮→上方绿轮→蓝色主动轮→左侧回程。两只绿轮
+// 不共享 X 坐标，生成脚本用相反侧内切线避免旧的麻花环。
 function power_c() = right_sprocket_c(chain_row_center_z(N_ROW - 1));
 
 function right_turn_sprockets_without_power() = [
@@ -114,7 +126,7 @@ function right_turn_sprockets_without_power() = [
 ];
 
 function ten_path_c() = [
-    return_x() + drive_pitch_r(),
+    return_x() + drive_pitch_r() + MOTOR_RETURN_X_OFFSET_MM,
     TEN_Z,
     0
 ];
@@ -158,7 +170,9 @@ function wheel_pose_rot(x, z) =
 //#region 业务逻辑
 // 销轴由 solve_cabinet_chain.py 按弦长 P 走出；只动底端张紧轮 Z 闭合闭环。
 // 所有固定绿色导向位统一采用 8T 钝齿节圆，侧边同半径后直接形成四分之一圆弧；
-// 只有底部张紧/主动轮保留 12T。抽屉层数保持奇数，底仓横穿后进张紧 U。
+// 新增的下压/服务轮与上方回程轮组成竖直折返；两轮按同一减角方向挂链，
+// 上方回程轮再通过外切线接入向 X− 偏移的 12T 电机轮，只有底部主动轮保留 12T。
+// 抽屉层数保持奇数，底仓横穿后进入这组回程导向，再进张紧 U。
 // 后视左 = 柜体 +X；power_c() 是旧高 X 上方普通导向轮，entry_c() 是低 X
 // 的普通导向轮，snake_drive_c() 是右下方带电机的回程张紧轮位。
 //#endregion
@@ -172,6 +186,15 @@ assert(BLUNT_TEETH >= 8, "03C guide wheel must be at least 8T");
 assert(translator_r() > P / 2, "8T guide wheel must accept one-pitch pin chord");
 assert(guide_outer_r() < drive_outer_r(), "small guide envelope should stay below the 12T drive envelope");
 assert(abs(s_span_check() - 90) < 1, "8T guide wrap should be a quarter turn onto the vertical chain");
+assert(service_press_c()[1] + guide_outer_r() < drive_c()[1] - guide_outer_r(),
+    "lower service press guide must stay separated from the upper return guide");
+assert(abs(service_press_c()[0] - drive_c()[0]) > 0.1,
+    "upper and lower return guides must not share an X coordinate");
+assert(norm(snake_drive_c() - service_press_c()) > drive_outer_r() + guide_outer_r() + 0.40,
+    "lower service press guide must clear the 12T motor drive envelope");
+assert(abs(snake_drive_c()[0]
+        - (return_x() + drive_pitch_r() + MOTOR_RETURN_X_OFFSET_MM)) < 0.01,
+    "motor return X offset must stay in the generated chain path");
 assert(norm(snake_drive_c() - motor_mount_c()) < 0.01,
     "snake drive and motor cover/floor fixing-seat center must stay aligned");
 //#endregion

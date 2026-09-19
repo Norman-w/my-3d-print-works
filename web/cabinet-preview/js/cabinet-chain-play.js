@@ -482,6 +482,7 @@ function validateCenterClutchContract(contract) {
     "snakeChainLinkTopOffsetMm", "snakeChainReferenceRow",
     "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
     "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainReturnDriveXTrimMm", "snakeChainServicePressXTrimMm",
     "snakeChainTriggerMagnetSegmentIndex",
     "snakeChainTriggerMagnetDiameterMm", "snakeChainTriggerMagnetLengthMm",
     "snakeChainTriggerMagnetNormalOffsetMm",
@@ -687,6 +688,7 @@ function validateCenterClutchContract(contract) {
     "inputSleeveMagnetOpenBottomYMm", "snakeChainReferenceRow",
     "snakeChainReferencePathCenterYMm", "snakeChainVerticalShiftMm",
     "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
+    "snakeChainReturnDriveXTrimMm", "snakeChainServicePressXTrimMm",
     "snakeChainTriggerMagnetSegmentIndex",
     "snakeChainTriggerMagnetTopClearanceMm",
     "linearBearingCenterYOffsetMm", "linearBearingCenterYMm",
@@ -732,13 +734,16 @@ function validateCenterClutchContract(contract) {
         expectedChainReference - chainPitch + n("snakeChainVerticalShiftMm"),
       )
       || !close(n("snakeChainReturnGuideCenterYMm"), 41.20)
+      || !close(n("snakeChainReturnDriveXTrimMm"), -4.00)
+      || !close(n("snakeChainServicePressXTrimMm"), 16.00)
+      || !close(n("snakeChainMotorXOffsetMm"), -2.00)
       || !close(n("snakeChainLinkTopOffsetMm"), 2.15)
       || !close(n("snakeChainTriggerMagnetDiameterMm"), 2.0)
       || !close(n("snakeChainTriggerMagnetLengthMm"), 1.8)
       || !close(n("snakeChainTriggerMagnetNormalOffsetMm"), 1.15)
       || !close(n("snakeChainTriggerMagnetTopClearanceMm"), 0)
       || !close(n("snakeChainTriggerMagnetAxialStartOffsetMm"), 2.44)
-      || n("snakeChainTriggerMagnetSegmentIndex") !== 143) {
+      || n("snakeChainTriggerMagnetSegmentIndex") !== 182) {
     throw new Error("蛇链服务层与公轮底部磁铁下沿的高度契约不满足");
   }
   if (n("frontTimingPulleyDrawerRow") !== n("centerRow") - 1
@@ -2382,7 +2387,7 @@ async function bindChainTriggerMagnetMesh(item) {
   if (!play.path || !item.mesh?.isMesh || !playScene()) return;
   const motion = play.motion;
   const trigger = motion?.chainTriggerMagnet;
-  const segmentIndex = Number(trigger?.segmentIndex ?? 143);
+  const segmentIndex = Number(trigger?.segmentIndex ?? 182);
   const seg = play.path.segs[segmentIndex];
   if (!seg) throw new Error(`触发磁铁路径节不存在: ${segmentIndex}`);
 

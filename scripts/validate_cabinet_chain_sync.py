@@ -23,7 +23,7 @@ REQUIRED_STL_NAMES = (
     "cabinet_chain_bearings.stl",
     "cabinet_chain_clutch_trigger_magnet.stl",
 )
-EXPECTED_PIN_COUNT = 256
+EXPECTED_PIN_COUNT = 260
 
 
 def fail(message: str) -> None:
@@ -69,7 +69,7 @@ def main() -> int:
     sprockets = [wheel for wheel in wheels if wheel.get("kind") == "sprocket"]
     idlers = [wheel for wheel in wheels if wheel.get("kind") == "idler"]
     if len(pins) != EXPECTED_PIN_COUNT:
-        fail(f"当前 250 mm / 44 mm / 5×3 蛇链应有 {EXPECTED_PIN_COUNT} 个销，实际为 {len(pins)}")
+        fail(f"当前 250 mm / 44 mm / 错向修正 5×3 蛇链应有 {EXPECTED_PIN_COUNT} 个销，实际为 {len(pins)}")
     if abs(float(payload.get("chainY", 0)) - 75.0) > 0.01:
         fail(f"后仓链条层位应为 chainY=75.000，实际为 {payload.get('chainY')!r}")
     if abs(pitch - 4.7625) > 0.001:
@@ -78,10 +78,59 @@ def main() -> int:
         fail(f"主动轮数量应为 1，实际为 {len(sprockets)}")
     if sprockets[0].get("teeth") != drive_teeth:
         fail("主动轮齿数与运动契约不一致")
-    if len(idlers) != 8 or any(wheel.get("teeth") != guide_teeth for wheel in idlers):
-        if len(idlers) != 8:
-            fail(f"当前 5×3 蛇链应有 8 个导向轮，实际为 {len(idlers)}")
+    if len(idlers) != 9 or any(wheel.get("teeth") != guide_teeth for wheel in idlers):
+        if len(idlers) != 9:
+            fail(f"当前 5×3 蛇链含下压服务轮应有 9 个导向轮，实际为 {len(idlers)}")
         fail("导向轮齿数与运动契约不一致")
+
+    audit = payload.get("returnPathAudit")
+    if not isinstance(audit, dict):
+        fail("缺少右上双轮回程路径审计")
+    try:
+        tangent_min = float(audit["tangentMinDot"])
+        return_wheel_clearance = float(audit["upperMotorLineClearanceMm"])
+        return_self_clearance = float(audit["returnPathSelfClearanceMm"])
+        service_motor_clearance = float(audit["serviceMotorEnvelopeClearanceMm"])
+        trim = float(payload["driveReturnXTrimMm"])
+        service_press_trim = float(payload["servicePressReturnXTrimMm"])
+        motor_offset = float(payload["motorReturnXOffsetMm"])
+    except (KeyError, TypeError, ValueError) as exc:
+        fail(f"右上双轮回程路径审计字段无效: {exc}")
+    if tangent_min < 0.999:
+        fail(f"右上双轮切线未连续: minDot={tangent_min:.6f}")
+    if return_wheel_clearance < 0.40:
+        fail(
+            "上下回程导向轮实体包络净空不足: "
+            f"clearance={return_wheel_clearance:.3f} mm"
+        )
+    if return_self_clearance < 6.40:
+        fail(
+            "蛇链回程路径存在麻花/自交: "
+            f"clearance={return_self_clearance:.3f} mm"
+        )
+    if service_motor_clearance < 0.40:
+        fail(
+            "下方服务链段与电机回程斜段的包络发生干涉: "
+            f"clearance={service_motor_clearance:.3f} mm"
+        )
+    if (
+        abs(trim + 4.00) > 0.001
+        or abs(service_press_trim - 16.00) > 0.001
+        or abs(motor_offset + 2.00) > 0.001
+    ):
+        fail(
+            "错向修正回程 X 基准错误: "
+            f"upper={trim:.3f} lower={service_press_trim:.3f} "
+            f"motorOffset={motor_offset:.3f}"
+        )
+    wheel_by_id = {wheel.get("id"): wheel for wheel in wheels}
+    expected_return_signs = {"drive": 1, "service-press": -1}
+    for wheel_id, expected_sign in expected_return_signs.items():
+        if wheel_by_id.get(wheel_id, {}).get("sign") != expected_sign:
+            fail(
+                f"{wheel_id} 旋向错误: "
+                f"expected={expected_sign} actual={wheel_by_id.get(wheel_id, {}).get('sign')!r}"
+            )
 
     center = payload.get("centerClutch")
     datum = payload.get("chainTopDatum")

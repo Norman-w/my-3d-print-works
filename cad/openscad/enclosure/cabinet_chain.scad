@@ -43,7 +43,7 @@ CLUTCH_CONNECTOR_HIGHLIGHT = "#00d9ff";
 // the center station.  Its upper edge is tied to the open male-sleeve magnet
 // bottom by the generated vertical path shift; its axis protrudes toward the
 // browser/world Z- direction after snake_in_rear() and the legacy adapter.
-CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 143;
+CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182;
 CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
 CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
 CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET = (h2 - CHAIN_TRIGGER_MAGNET_D) / 2;
@@ -79,7 +79,7 @@ CLUTCH_CONNECTOR_PIN_FACE_OFFSET = -outer_face;
 
 //#region 私有成员
 echo("snake_pins", len(snake_pins()), "length_mm", len(snake_pins()) * P);
-echo("snake_drive", snake_drive_c(), "upper_guide", power_c(), "entry", entry_c(), "service_return", drive_c(), "tensioner", ten_path_c(), "ten_z", TEN_Z);
+echo("snake_drive", snake_drive_c(), "upper_guide", power_c(), "entry", entry_c(), "service_return", drive_c(), "service_press", service_press_c(), "tensioner", ten_path_c(), "ten_z", TEN_Z);
 
 module snake_in_rear() {
     translate([0, CHAIN_Y, 0])
@@ -226,7 +226,7 @@ module rear_blunt_idlers() {
 module rear_guide_idlers() {
     // 所有绿色固定导向位统一替换为小尺寸 8T 钝齿轮；路径求解器已同步
     // 把这些位置的弯折半径和切线改为 8T，不能只替换外形而保留 12T 节圆。
-    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
+    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c(), service_press_c()]))
         place_geared(c) ch1_03c_bearing_blunt_idler(BLUNT_TEETH);
     rear_blunt_idlers();
 }
@@ -234,7 +234,7 @@ module rear_guide_idlers() {
 module rear_bearing_visuals() {
     // 与轴承版齿轮一一对应；旧高 X 转向位 power_c() 现在也是普通轴承轮，
     // 右下 snake_drive_c() 才是 D 轴动力轮。
-    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c()]))
+    for (c = concat([entry_c(), power_c()], right_turn_sprockets_without_power(), left_turn_sprockets(), [drive_c(), service_press_c()]))
         place_geared(c) ch1_03c_bearing_visual();
     for (c = blunt_centers())
         place_geared(c) ch1_03c_bearing_visual();
@@ -544,7 +544,7 @@ emit_chain("scheme1_selector") {
 // 闭环按真实节距闭合；底端张紧轮吃掉余量。长于 210L×1 m SKU，只做后仓走线可视化。
 // 红点是每格矩形中心；水平段节圆线必须穿过这些点。
 // 蓝色 snake_drive_c() 背面右下/正面左下 12T 承接 D 轴动力，并在轮后接入真实 Pololu 1101 电机模型与贴合电机外形、下向固定的 Ω 夹套；
-// 全部 12 个绿色固定导向位统一使用小尺寸 8T 钝齿轴承轮，路径与轮心由求解器
+// 全部 9 个绿色固定导向位统一使用小尺寸 8T 钝齿轴承轮，路径与轮心由求解器
 // 按 8T 节圆重算；并显示独立的 3×6×2 轴承。所有导向轮不再使用蓝色尖齿外形。
 // 所有轮子安装面翻转 180°。
 // 蛇链电机 Ω 套的四个底部固定孔对应柜底两条承托/限位基台，
