@@ -107,7 +107,7 @@ def open_scad_command(
         "-D", f"ENGAGED={'true' if engaged else 'false'}",
         "-D", f"CENTER_CLUTCH_TRAVEL_MM={travel:.6f}",
         "-D", "SELECTED_COLUMN=2", "-D", "SELECTED_ROW=1",
-        "-D", "SHOW_LEGACY_STATIONS=false", "-o", str(output), str(scad),
+        "-o", str(output), str(scad),
     ]
 
 
@@ -290,6 +290,121 @@ def validate_contract(contract: Contract) -> None:
     )
     if contract.get("plateSupport") != "partition-boss-locators-plus-four-self-tapping-screws":
         fail("离合机构板必须使用隔板圆 Boss 定位和自攻螺丝固定")
+    if contract.get("partitionMountType") != "skp-mm-d-receiver-plus-open-d-ring-cover-full-d-screw-face":
+        fail("前后仓隔板必须使用 SKP 毫米 D 泪滴耳接收件+全外轮廓开放 D 环外套")
+    if contract.get("partitionMountScrewEntry") != "-X,+X,+Y,-Y":
+        fail("前后仓隔板螺丝轴线必须覆盖 x+/x-/y-/y+ 四条边")
+    if contract.get("partitionMountScrewAxes") != "-X,+X,+Y,-Y":
+        fail("前后仓隔板挂接件方向契约必须覆盖 -X,+X,+Y,-Y")
+    if contract.get("partitionMountInstallDirection") != "+Z":
+        fail("前后仓隔板装入方向必须是从后向前的 +Z")
+    if contract.get("partitionReferenceReceiverCapDirection") != "-Z":
+        fail("箱体接收件圆头必须朝 -Z")
+    if contract.get("partitionReferenceReceiverProfile") != "D-r3-straight9-through-hole2p4":
+        fail("箱体接收件必须是 SKP 的 R3/直段9/通孔2.4 D 泪滴耳")
+    if contract.get("partitionMountSleeveEntryProfile") != "full-width-d-mouth-no-narrow-neck":
+        fail("隔板外套入口必须按 D 泪滴耳全宽开放，不能有窄 C 收口")
+    if contract.get("partitionMountSleeveCrossSectionProfile") != "skp-open-d-ring-around-d-door-full-d-screw-face":
+        fail("隔板外套必须是 SKP 开放 D 环包住 D 泪滴耳并保留完整外 D 螺丝面")
+    if contract.get("partitionMountSleeveMouthProfile") != "complete-d-profile-entry":
+        fail("隔板外套入口必须是完整 D 泪滴轮廓")
+    if contract.get("partitionMountSleeveSupportType") != "integral-skp-cover-to-partition-with-dual-root-ribs":
+        fail("隔板开放 D 环外套必须用双根部肋与隔板一体连接")
+    if contract.get("partitionMountInsertionReliefType") != "open-edge-slot-full-width-entry":
+        fail("隔板挂接导入让位必须是全宽开放槽，而不是收口 C 槽")
+    if contract.get("partitionServiceWindowType") != "compact-x-minus-service-column-plus-compact-y-minus-service-row":
+        fail("隔板必须按 Three.js 左手坐标保留连续但收窄的 x- / y- 服务通道")
+    if contract.get("partitionMountLoadPath") != "cabinet-wall-receiver-to-partition-sleeve":
+        fail("前后仓隔板承力路径必须落在箱体墙接收件与隔板套筒")
+    if contract.get("partitionMountPanelRole") != "locating-sleeve-and-clamped-independent-panel":
+        fail("前后仓隔板挂接件角色错误")
+    expect_close(number(contract, "partitionMountCount"), 8.0, "隔板四边各两套壁法向挂接点数量", 0.001)
+    expect_close(number(contract, "partitionMountPerSideCount"), 2.0, "隔板每边挂接点数量", 0.001)
+    for key, expected, label in (
+        ("partitionReferenceReceiverLengthMm", 12.0, "SKP 箱体泪滴耳总长"),
+        ("partitionReferenceReceiverHeightMm", 6.0, "SKP 箱体泪滴耳总高"),
+        ("partitionReferenceReceiverThicknessMm", 3.0, "SKP 箱体泪滴耳厚度"),
+        ("partitionReferenceReceiverRadiusMm", 3.0, "SKP 箱体泪滴耳圆头半径"),
+        ("partitionReferenceReceiverStraightMm", 9.0, "SKP 箱体泪滴耳直段"),
+        ("partitionReferenceReceiverHoleDiameterMm", 2.4, "SKP 箱体泪滴耳通孔"),
+        ("partitionReferenceCoverLengthMm", 14.0, "SKP 隔板泪滴外套总长"),
+        ("partitionReferenceCoverHeightMm", 10.0, "SKP 隔板泪滴外套总高"),
+        ("partitionReferenceCoverRadiusMm", 5.0, "SKP 隔板泪滴外套外圆头半径"),
+        ("partitionReferenceCoverInnerRadiusMm", 3.0, "SKP 隔板泪滴外套内圆头半径"),
+        ("partitionReferenceCoverStraightMm", 9.0, "SKP 隔板泪滴外套直段"),
+        ("partitionReferenceCoverBaseDepthMm", 3.0, "SKP 隔板泪滴外套 U 环深"),
+        ("partitionReferenceCoverStepDepthMm", 2.0, "SKP 隔板泪滴外套 D 台阶深"),
+        ("partitionReferenceCoverTotalDepthMm", 5.0, "SKP 隔板泪滴外套总深"),
+        ("partitionReferenceCoverHoleDiameterMm", 3.0, "SKP 隔板泪滴外套螺丝孔"),
+        ("partitionReferenceRoundSleeveOuterDiameterMm", 5.0, "SKP 独立圆套外径"),
+        ("partitionReferenceRoundSleeveInnerDiameterMm", 3.0, "SKP 独立圆套内径"),
+        ("partitionReferenceRoundSleeveLengthMm", 7.0, "SKP 独立圆套总长"),
+        ("partitionReferenceRoundSleeveCollarDepthMm", 2.0, "SKP 独立圆套台阶深"),
+        ("partitionMountSleeveMouthWidthMm", 10.0, "隔板完整D入口宽"),
+        ("partitionMountSleeveSupportArmWidthMm", 2.0, "隔板开放D环外套承力臂宽"),
+        ("partitionMountSleeveSupportArmLengthMm", 7.0, "隔板开放D环外套承力臂长"),
+        ("partitionMountSleeveSupportPlateOverlapMm", 3.0, "隔板开放D环外套与板厚重叠"),
+        ("partitionMountSleeveSupportRootOverlapMm", 2.0, "隔板开放D环外套与根部重叠"),
+        ("partitionMountSleeveSupportRibWidthMm", 2.0, "隔板开放D环外套根部肋宽"),
+        ("partitionMountSleeveSupportRibTangentClearanceMm", 0.2, "隔板开放D环外套根部肋切向净空"),
+        ("partitionMountSleeveWallMm", 2.0, "隔板套筒壁厚"),
+        ("partitionMountSleeveLengthMm", 5.0, "隔板套筒轴向长度"),
+        ("partitionFramePlateClearanceMm", 0.3, "隔板外框内净装配间隙"),
+        ("partitionFramePlateX0Mm", 3.5, "隔板内净 X 起点"),
+        ("partitionFramePlateY0Mm", 3.5, "隔板内净 Y 起点"),
+        ("partitionFramePlateWidthMm", 243.0, "隔板内净宽"),
+        ("partitionFramePlateHeightMm", 227.8, "隔板内净高"),
+        ("partitionMountEdgeMarginMm", 36.0, "隔板四边挂接件边距"),
+        ("partitionMountXSideLowYMm", 74.2, "隔板 x+ 边 y- 挂接件 Y 坐标"),
+        ("partitionMountXSideHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标"),
+        ("partitionMountXPlusLowYMm", 74.2, "隔板 x+ 边 y- 挂接件 Y 坐标"),
+        ("partitionMountXPlusHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标"),
+        ("partitionMountXMinusLowYMm", 18.0, "隔板 x- 边低位挂接件 Y 坐标"),
+        ("partitionMountXMinusHighYMm", 195.3, "隔板 x- 边高位挂接件 Y 坐标"),
+        ("partitionMountYSideLowXMm", 39.5, "隔板 y 边低位挂接件 X 坐标"),
+        ("partitionMountYSideHighXMm", 210.5, "隔板 y 边高位挂接件 X 坐标"),
+        ("partitionReferenceCoverScrewFaceRadiusMm", 5.0, "隔板完整外D螺丝面圆头半径"),
+        ("partitionReferenceCoverScrewFaceStraightMm", 9.0, "隔板完整外D螺丝面直段"),
+        ("partitionMountInsertionReliefWidthMm", 10.2, "隔板挂接导入槽宽"),
+        ("partitionMountInsertionReliefDepthMm", 3.1, "隔板挂接导入槽深"),
+        ("partitionMountInsertionReliefEndClearanceMm", 0.1, "隔板挂接导入槽止端余量"),
+        ("partitionServiceWindowX0Mm", 2.5, "隔板服务窗 X 起点"),
+        ("partitionServiceWindowX1Mm", 15.5, "隔板服务窗 X 终点"),
+        ("partitionServiceWindowY0Mm", 2.5, "隔板服务窗 Y 起点"),
+        ("partitionServiceWindowY1Mm", 15.5, "隔板服务窗 Y 终点"),
+        ("partitionServiceWindowWidthMm", 13.0, "隔板服务窗宽"),
+        ("partitionServiceWindowHeightMm", 13.0, "隔板服务窗高"),
+        ("partitionServiceWindowCornerRadiusMm", 0.0, "隔板服务窗圆角"),
+        ("partitionServiceCutOvertravelMm", 1.0, "隔板服务口过切量"),
+        ("partitionServiceXMinusOpenX0Mm", 2.5, "隔板 x- 服务口 X 起点"),
+        ("partitionServiceXMinusOpenX1Mm", 15.5, "隔板 x- 服务口 X 终点"),
+        ("partitionServiceXMinusOpenY0Mm", 2.5, "隔板 x- 服务口 Y 起点"),
+        ("partitionServiceXMinusOpenY1Mm", 232.3, "隔板 x- 服务口 Y 终点"),
+        ("partitionServiceXMinusOpenWidthMm", 13.0, "隔板 x- 服务口宽"),
+        ("partitionServiceXMinusOpenHeightMm", 229.8, "隔板 x- 服务口高"),
+        ("partitionServiceYMinusOpenX0Mm", 2.5, "隔板 y- 服务口 X 起点"),
+        ("partitionServiceYMinusOpenX1Mm", 247.5, "隔板 y- 服务口 X 终点"),
+        ("partitionServiceYMinusOpenY0Mm", 2.5, "隔板 y- 服务口 Y 起点"),
+        ("partitionServiceYMinusOpenY1Mm", 15.5, "隔板 y- 服务口 Y 终点"),
+        ("partitionServiceYMinusOpenWidthMm", 245.0, "隔板 y- 服务口宽"),
+        ("partitionServiceYMinusOpenHeightMm", 13.0, "隔板 y- 服务口高"),
+        ("partitionServiceXMinusOpenCornerRadiusMm", 0.0, "隔板 x- 服务口圆角"),
+        ("partitionServiceYMinusOpenCornerRadiusMm", 0.0, "隔板 y- 服务口圆角"),
+        ("partitionServiceMountPierHalfWidthMm", 8.0, "隔板安装耳承力墩半宽"),
+        ("partitionServiceRemainingGridWebXMm", 31.7, "隔板 x- 服务口后剩余承力网格宽"),
+        ("partitionServiceRemainingGridWebYMm", 45.4, "隔板 y- 服务口后剩余承力网格高"),
+        ("partitionSleeveFrontOverlapMm", 0.0, "隔板套 z+ 实体重叠"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_close(
+        number(contract, "partitionMountCenterZMm")
+        + number(contract, "partitionReferenceCoverStraightMm")
+        - number(contract, "partitionBeltPassagePlateZMm")
+        - number(contract, "partitionBeltPassagePlateThicknessMm"),
+        number(contract, "partitionSleeveFrontOverlapMm"),
+        "隔板开放D环外套平面/隔板前表面实体重叠",
+        0.001,
+    )
     expect_close(number(contract, "platePartitionGapMm"), 0.0, "机构板/隔板贴合间隙", 0.001)
     expect_close(number(contract, "partitionBossPerCellCount"), 4.0, "每格四角 Boss 数量", 0.001)
     expect_close(
@@ -1154,14 +1269,6 @@ def main() -> int:
                     f"limit={X1C_BUILD_VOLUME_MM[axis]:.4f} mm"
                 )
 
-        coupon_stl = temp_dir / "center_linear_bearing_fit_coupon.stl"
-        run_export(openscad, scad, coupon_stl, "center_linear_bearing_fit_coupon", False)
-        coupon = bounds(inspect(inspect_py, coupon_stl))
-        assert_watertight(inspect(inspect_py, coupon_stl), coupon_stl.name)
-        expect_close(coupon["max"][0] - coupon["min"][0], 42.0, "轴承测试片总宽", 0.05)
-        expect_close(coupon["max"][1] - coupon["min"][1], 10.0, "轴承测试片 Y 厚", 0.05)
-        expect_close(coupon["max"][2] - coupon["min"][2], 12.0, "轴承测试片 Z 高", 0.05)
-
         for travel, label in ((0.0, "open"), (1.5, "mid"), (3.0, "engaged")):
             witness = temp_dir / f"center_clutch_pair_collision_{label}.stl"
             if run_intersection_export(openscad, scad, witness, inspect_py, "center_clutch_pair_collision", False, travel):
@@ -1180,6 +1287,28 @@ def main() -> int:
             0.0,
         ):
             fail("箱体后背基准板与中心 R3C3 真实皮带存在实体交集")
+        partition_mount_witness = temp_dir / "partition_mount_mechanism_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_mount_witness,
+            inspect_py,
+            "partition_mount_mechanism_collision",
+            False,
+            0.0,
+        ):
+            fail("前后仓隔板壁法向挂接件/套筒进入抽屉、离合、花键或同步带包络")
+        partition_mount_insertion_witness = temp_dir / "partition_mount_insertion_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_mount_insertion_witness,
+            inspect_py,
+            "partition_mount_insertion_collision",
+            False,
+            0.0,
+        ):
+            fail("前后仓隔板 +Z 推入导入槽仍与箱体 D 泪滴耳接收件发生实体干涉")
         guide_witness = temp_dir / "drawer_guide_flange_rail_collision.stl"
         if run_intersection_export(
             openscad,
@@ -1264,7 +1393,9 @@ def main() -> int:
     print(
         "已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、"
         "圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、"
-        "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、15 格四角 Boss 定位/自攻导孔、"
+        "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、隔板四边各两套全外 D 环外套/导入槽、"
+        "左下 x-/y- 双向设备服务口、"
+        "15 格四角 Boss 定位/自攻导孔、"
         "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 可拆承载板/轴承塔、"
         "下方承载板与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
         "上方 Boss 套装承载板与上方花键轴/2GT 轮实体交集见证、"

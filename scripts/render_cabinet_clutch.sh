@@ -12,7 +12,6 @@ SCAD_FILE="cabinet_clutch.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_DIR="${PROJECT_ROOT}/output/previews/cabinet-clutch"
 QUALITY="${QUALITY:-2}"
-SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
 
 # ===== 分区：模型/类型 =====
 # Cameras use the user/world coordinate contract: X=width, Y=height, Z=depth.
@@ -49,8 +48,6 @@ render_view() {
         -D "ENGAGED=${engaged}" \
         -D "SELECTED_COLUMN=2" \
         -D "SELECTED_ROW=1" \
-        -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
-        -D "CLUTCH_EXPLODE=8" \
         -D "TENSIONER_SCREW_OUT_MM=${screw_out}" \
         -o "${target}" \
         "${SCAD_DIR}/${SCAD_FILE}"
@@ -67,10 +64,6 @@ render_view "assembly-back" "assembly" false "130,116,60,0,180,0,500" "1600,1200
 render_view "assembly-front" "assembly" false "130,116,60,0,0,0,500" "1600,1200"
 render_view "assembly-iso" "assembly" false "130,116,60,-25,215,0,650" "1600,1200"
 render_view "world-axes" "world_axes" false "0,0,0,-25,215,0,100" "1000,900"
-render_view "clutch-detail-open" "clutch_detail" false "150,140,76,-20,215,0,500" "1200,1000"
-render_view "clutch-detail-engaged" "clutch_detail" true "150,140,76,-20,215,0,500" "1200,1000"
-render_view "clutch-detail-side-open" "clutch_detail" false "150,140,76,0,90,0,500" "1200,1000"
-render_view "clutch-detail-side-engaged" "clutch_detail" true "150,140,76,0,90,0,500" "1200,1000"
 
 # ===== 分区：逐件预览 =====
 # The selected verification station is column 2 / row 1. These views are
@@ -80,10 +73,6 @@ render_view "parts/02-drive-column" "column" false "130,130,76,-20,0,0,500" "110
 render_view "parts/03-vertical-rack" "vertical_rack" false "130,130,76,-20,0,0,500" "900,1200"
 render_view "parts/04-right-tensioner" "tensioner_t_solid" false "18,214,86,-20,215,0,500" "1000,1200"
 render_view "parts/05-power-bus" "power_bus" false "130,130,76,-20,180,0,500" "1500,900"
-render_view "parts/06-upper-axis-z-spur" "upper_spur" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/07-upper-downward-dog" "upper_dog" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/08-lower-upward-dog" "lower_dog" false "140,140,76,-20,215,0,500" "900,800"
-render_view "parts/09-rear-takeoff-pulley" "rear_pulley" false "140,140,76,-20,215,0,500" "900,800"
 render_view "parts/13-drawer-belt" "drawer_belt" false "140,140,76,-20,215,0,500" "1100,850"
 render_view "parts/14-front-timing-pulley" "front_pulley" false "140,140,14,-20,0,0,500" "900,800"
 render_view "parts/15-front-pinion" "front_gear" false "140,140,14,-20,0,0,500" "900,800"

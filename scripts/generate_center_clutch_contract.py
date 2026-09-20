@@ -137,7 +137,7 @@ REQUIRED = {
     "linearBearingBlockMountHoleCount", "linearBearingBlockMountXOffsetMm",
     "linearBearingBlockMountYOffsetMm", "linearBearingBlockMount",
     "linearBearingModel", "linearBearingMovesWithInput",
-    "linearBearingFitCouponPart", "linearBearingPart", "linearBearingBlockPart",
+    "linearBearingPart", "linearBearingBlockPart",
     "inputShaftProfile", "inputShaftUpperDStartMm",
     "inputShaftUpperDLengthMm", "inputShaftRoundStartMm",
     "inputShaftRoundLengthMm", "inputShaftRoundDiameterMm",
@@ -195,6 +195,66 @@ REQUIRED = {
     "partitionBeltPassageAxialWidthMm",
     "partitionBeltPassageRadialClearanceMm",
     "partitionBeltPassageAxialClearanceMm",
+    "partitionMountType", "partitionMountScrewEntry",
+    "partitionMountInstallDirection", "partitionMountCount",
+    "partitionMountPerSideCount", "partitionMountEdgeMarginMm",
+    "partitionMountXSideLowYMm", "partitionMountXSideHighYMm",
+    "partitionMountXPlusLowYMm", "partitionMountXPlusHighYMm",
+    "partitionMountXMinusLowYMm", "partitionMountXMinusHighYMm",
+    "partitionMountYSideLowXMm", "partitionMountYSideHighXMm",
+    "partitionMountScrewAxes",
+    "partitionReferenceReceiverLengthMm", "partitionReferenceReceiverHeightMm",
+    "partitionReferenceReceiverThicknessMm", "partitionReferenceReceiverRadiusMm",
+    "partitionReferenceReceiverStraightMm", "partitionReferenceReceiverHoleDiameterMm",
+    "partitionReferenceReceiverCapDirection", "partitionReferenceReceiverProfile",
+    "partitionReferenceCoverLengthMm", "partitionReferenceCoverHeightMm",
+    "partitionReferenceCoverRadiusMm", "partitionReferenceCoverInnerRadiusMm",
+    "partitionReferenceCoverStraightMm", "partitionReferenceCoverBaseDepthMm",
+    "partitionReferenceCoverStepDepthMm", "partitionReferenceCoverTotalDepthMm",
+    "partitionReferenceCoverHoleDiameterMm", "partitionReferenceCoverProfile",
+    "partitionReferenceCoverScrewFaceRadiusMm",
+    "partitionReferenceCoverScrewFaceStraightMm",
+    "partitionReferenceCoverScrewFaceProfile",
+    "partitionReferenceRoundSleeveOuterDiameterMm",
+    "partitionReferenceRoundSleeveInnerDiameterMm",
+    "partitionReferenceRoundSleeveLengthMm",
+    "partitionReferenceRoundSleeveCollarDepthMm",
+    "partitionMountSleeveEntryProfile",
+    "partitionMountSleeveCrossSectionProfile",
+    "partitionMountSleeveMouthProfile", "partitionMountSleeveMouthWidthMm",
+    "partitionMountSleeveSupportType",
+    "partitionMountSleeveSupportArmWidthMm",
+    "partitionMountSleeveSupportArmLengthMm",
+    "partitionMountSleeveSupportPlateOverlapMm",
+    "partitionMountSleeveSupportRootOverlapMm",
+    "partitionMountSleeveSupportRibWidthMm",
+    "partitionMountSleeveSupportRibTangentClearanceMm",
+    "partitionMountSleeveWallMm", "partitionMountSleeveLengthMm",
+    "partitionMountCenterZMm",
+    "partitionFramePlateClearanceMm", "partitionFramePlateX0Mm",
+    "partitionFramePlateY0Mm", "partitionFramePlateWidthMm",
+    "partitionFramePlateHeightMm", "partitionMountInsertionReliefWidthMm",
+    "partitionMountInsertionReliefType",
+    "partitionMountInsertionReliefDepthMm",
+    "partitionMountInsertionReliefEndClearanceMm",
+    "partitionServiceWindowType", "partitionServiceWindowX0Mm",
+    "partitionServiceWindowX1Mm", "partitionServiceWindowY0Mm",
+    "partitionServiceWindowY1Mm", "partitionServiceWindowWidthMm",
+    "partitionServiceWindowHeightMm", "partitionServiceWindowCornerRadiusMm",
+    "partitionServiceCutOvertravelMm",
+    "partitionServiceXMinusOpenX0Mm", "partitionServiceXMinusOpenX1Mm",
+    "partitionServiceXMinusOpenY0Mm", "partitionServiceXMinusOpenY1Mm",
+    "partitionServiceXMinusOpenWidthMm", "partitionServiceXMinusOpenHeightMm",
+    "partitionServiceYMinusOpenX0Mm", "partitionServiceYMinusOpenX1Mm",
+    "partitionServiceYMinusOpenY0Mm", "partitionServiceYMinusOpenY1Mm",
+    "partitionServiceYMinusOpenWidthMm", "partitionServiceYMinusOpenHeightMm",
+    "partitionServiceXMinusOpenCornerRadiusMm",
+    "partitionServiceYMinusOpenCornerRadiusMm",
+    "partitionServiceMountPierHalfWidthMm",
+    "partitionServiceRemainingGridWebXMm",
+    "partitionServiceRemainingGridWebYMm",
+    "partitionSleeveFrontOverlapMm",
+    "partitionMountLoadPath", "partitionMountPanelRole",
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow", "inputPart",
     "drawerLayerCount", "drawerColumnCount", "serviceLayerCount", "drawerBayHeightMm",
@@ -231,7 +291,9 @@ REQUIRED = {
     "outputPart", "outputBearingSupportPart", "mechanismPlatePart", "outputShaftPart",
     "outputBearingsPart",
 }
-FLOAT_KEYS = {key for key in REQUIRED if key.endswith("Mm") or key.endswith("Deg")}
+FLOAT_KEYS = {
+    key for key in REQUIRED if key.endswith("Mm") or key.endswith("Deg")
+}
 INT_KEYS = {
     "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
     "outputBearingCount", "bearingCount", "matingMagnetCount",
@@ -239,6 +301,7 @@ INT_KEYS = {
     "drawerLayerCount", "drawerColumnCount", "serviceLayerCount", "frontTimingPulleyDrawerRow",
     "plateBeltPassageSlotCount", "partitionBeltPassageWindowCount",
     "partitionBeltPassage2GTWindowCount", "plateFastenerCount",
+    "partitionMountCount", "partitionMountPerSideCount",
     "partitionBossPerCellCount", "partitionBossCount",
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
@@ -359,7 +422,6 @@ def validate_contract(contract: dict[str, object]) -> None:
         "verticalSplineBearingsPart": "cabinet-clutch/vertical_spline_bearings_reference",
         "linearBearingBlockMount": "mechanism-plate-integral-press-fit",
         "linearBearingModel": "LM3UU-cutaway-reference",
-        "linearBearingFitCouponPart": "cabinet-clutch/center_linear_bearing_fit_coupon",
         "linearBearingPart": "cabinet-clutch/center_linear_bearings_reference",
         "linearBearingBlockPart": "cabinet-clutch/center_mechanism_plate",
         "inputShaftProfile": "D-round-D",
@@ -392,6 +454,21 @@ def validate_contract(contract: dict[str, object]) -> None:
         "drawerGuideTailBearingAxis": "+X/-X",
         "drawerGuideFrontBearingAxis": "+X/-X",
         "rearClutchCarrierMode": "row-strip",
+        "partitionMountType": "skp-mm-d-receiver-plus-open-d-ring-cover-full-d-screw-face",
+        "partitionMountScrewEntry": "-X,+X,+Y,-Y",
+        "partitionMountInstallDirection": "+Z",
+        "partitionReferenceReceiverCapDirection": "-Z",
+        "partitionReferenceReceiverProfile": "D-r3-straight9-through-hole2p4",
+        "partitionReferenceCoverProfile": "open-D-ring-r5-inner-r3-plus-full-outer-D-backplate-r5-hole3",
+        "partitionReferenceCoverScrewFaceProfile": "full-outer-D-backplate-r5-straight9-hole3",
+        "partitionMountSleeveEntryProfile": "full-width-d-mouth-no-narrow-neck",
+        "partitionMountSleeveCrossSectionProfile": "skp-open-d-ring-around-d-door-full-d-screw-face",
+        "partitionMountSleeveMouthProfile": "complete-d-profile-entry",
+        "partitionMountSleeveSupportType": "integral-skp-cover-to-partition-with-dual-root-ribs",
+        "partitionMountInsertionReliefType": "open-edge-slot-full-width-entry",
+        "partitionServiceWindowType": "compact-x-minus-service-column-plus-compact-y-minus-service-row",
+        "partitionMountLoadPath": "cabinet-wall-receiver-to-partition-sleeve",
+        "partitionMountPanelRole": "locating-sleeve-and-clamped-independent-panel",
     }
     for key, value in exact.items():
         if contract.get(key) != value:
@@ -399,6 +476,85 @@ def validate_contract(contract: dict[str, object]) -> None:
 
     if n(contract, "verticalSplineBearingCount") != 5:
         raise RuntimeError("抽屉电机花键轴必须为 5 根列轴")
+    if n(contract, "partitionMountCount") != 8:
+        raise RuntimeError("前后仓隔板必须使用四边各两套壁法向挂接件")
+    if n(contract, "partitionMountPerSideCount") != 2:
+        raise RuntimeError("前后仓隔板每条边必须有两套挂接件")
+    if contract.get("partitionMountScrewAxes") != "-X,+X,+Y,-Y":
+        raise RuntimeError("前后仓隔板螺丝轴线必须覆盖 x+/x-/y-/y+ 四条边")
+    expect(contract, "partitionReferenceReceiverLengthMm", 12.0, "SKP 箱体泪滴耳总长")
+    expect(contract, "partitionReferenceReceiverHeightMm", 6.0, "SKP 箱体泪滴耳总高")
+    expect(contract, "partitionReferenceReceiverThicknessMm", 3.0, "SKP 箱体泪滴耳厚度")
+    expect(contract, "partitionReferenceReceiverRadiusMm", 3.0, "SKP 箱体泪滴耳圆头半径")
+    expect(contract, "partitionReferenceReceiverStraightMm", 9.0, "SKP 箱体泪滴耳直段")
+    expect(contract, "partitionReferenceReceiverHoleDiameterMm", 2.4, "SKP 箱体泪滴耳通孔")
+    expect(contract, "partitionReferenceCoverLengthMm", 14.0, "SKP 隔板泪滴外套总长")
+    expect(contract, "partitionReferenceCoverHeightMm", 10.0, "SKP 隔板泪滴外套总高")
+    expect(contract, "partitionReferenceCoverRadiusMm", 5.0, "SKP 隔板泪滴外套外圆头半径")
+    expect(contract, "partitionReferenceCoverInnerRadiusMm", 3.0, "SKP 隔板泪滴外套内圆头半径")
+    expect(contract, "partitionReferenceCoverStraightMm", 9.0, "SKP 隔板泪滴外套直段")
+    expect(contract, "partitionReferenceCoverBaseDepthMm", 3.0, "SKP 隔板泪滴外套 U 环深")
+    expect(contract, "partitionReferenceCoverStepDepthMm", 2.0, "SKP 隔板泪滴外套 D 台阶深")
+    expect(contract, "partitionReferenceCoverTotalDepthMm", 5.0, "SKP 隔板泪滴外套总深")
+    expect(contract, "partitionReferenceCoverHoleDiameterMm", 3.0, "SKP 隔板泪滴外套螺丝孔")
+    expect(contract, "partitionReferenceRoundSleeveOuterDiameterMm", 5.0, "SKP 独立圆套外径")
+    expect(contract, "partitionReferenceRoundSleeveInnerDiameterMm", 3.0, "SKP 独立圆套内径")
+    expect(contract, "partitionReferenceRoundSleeveLengthMm", 7.0, "SKP 独立圆套总长")
+    expect(contract, "partitionReferenceRoundSleeveCollarDepthMm", 2.0, "SKP 独立圆套台阶深")
+    expect(contract, "partitionMountSleeveMouthWidthMm", 10.0, "隔板完整D入口宽")
+    expect(contract, "partitionMountSleeveSupportArmWidthMm", 2.0, "隔板开放D环外套承力臂宽")
+    expect(contract, "partitionMountSleeveSupportArmLengthMm", 7.0, "隔板开放D环外套承力臂长")
+    expect(contract, "partitionMountSleeveSupportPlateOverlapMm", 3.0, "隔板开放D环外套与板厚重叠")
+    expect(contract, "partitionMountSleeveSupportRootOverlapMm", 2.0, "隔板开放D环外套与根部重叠")
+    expect(contract, "partitionMountSleeveSupportRibWidthMm", 2.0, "隔板开放D环外套根部肋宽")
+    expect(contract, "partitionMountSleeveSupportRibTangentClearanceMm", 0.2, "隔板开放D环外套根部肋切向净空")
+    expect(contract, "partitionMountSleeveWallMm", 2.0, "隔板套筒壁厚")
+    expect(contract, "partitionMountSleeveLengthMm", 5.0, "隔板套筒轴向长度")
+    expect(contract, "partitionFramePlateClearanceMm", 0.3, "隔板外框内净装配间隙")
+    expect(contract, "partitionFramePlateX0Mm", 3.5, "隔板内净 X 起点")
+    expect(contract, "partitionFramePlateY0Mm", 3.5, "隔板内净 Y 起点")
+    expect(contract, "partitionFramePlateWidthMm", 243.0, "隔板内净宽")
+    expect(contract, "partitionFramePlateHeightMm", 227.8, "隔板内净高")
+    expect(contract, "partitionMountEdgeMarginMm", 36.0, "隔板四边挂接件边距")
+    expect(contract, "partitionMountXSideLowYMm", 74.2, "隔板 x+ 边 y- 挂接件 Y 坐标")
+    expect(contract, "partitionMountXSideHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标")
+    expect(contract, "partitionMountXPlusLowYMm", 74.2, "隔板 x+ 边 y- 挂接件 Y 坐标")
+    expect(contract, "partitionMountXPlusHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标")
+    expect(contract, "partitionMountXMinusLowYMm", 18.0, "隔板 x- 边低位挂接件 Y 坐标")
+    expect(contract, "partitionMountXMinusHighYMm", 195.3, "隔板 x- 边高位挂接件 Y 坐标")
+    expect(contract, "partitionMountYSideLowXMm", 39.5, "隔板 y 边低位挂接件 X 坐标")
+    expect(contract, "partitionMountYSideHighXMm", 210.5, "隔板 y 边高位挂接件 X 坐标")
+    expect(contract, "partitionReferenceCoverScrewFaceRadiusMm", 5.0, "隔板完整外D螺丝面圆头半径")
+    expect(contract, "partitionReferenceCoverScrewFaceStraightMm", 9.0, "隔板完整外D螺丝面直段")
+    expect(contract, "partitionMountInsertionReliefWidthMm", 10.2, "隔板挂接导入槽宽")
+    expect(contract, "partitionMountInsertionReliefDepthMm", 3.1, "隔板挂接导入槽深")
+    expect(contract, "partitionMountInsertionReliefEndClearanceMm", 0.1, "隔板挂接导入槽止端余量")
+    expect(contract, "partitionServiceWindowX0Mm", 2.5, "隔板服务窗 X 起点")
+    expect(contract, "partitionServiceWindowX1Mm", 15.5, "隔板服务窗 X 终点")
+    expect(contract, "partitionServiceWindowY0Mm", 2.5, "隔板服务窗 Y 起点")
+    expect(contract, "partitionServiceWindowY1Mm", 15.5, "隔板服务窗 Y 终点")
+    expect(contract, "partitionServiceWindowWidthMm", 13.0, "隔板服务窗宽")
+    expect(contract, "partitionServiceWindowHeightMm", 13.0, "隔板服务窗高")
+    expect(contract, "partitionServiceWindowCornerRadiusMm", 0.0, "隔板服务窗圆角")
+    expect(contract, "partitionServiceCutOvertravelMm", 1.0, "隔板服务口过切量")
+    expect(contract, "partitionServiceXMinusOpenX0Mm", 2.5, "隔板 x- 服务口 X 起点")
+    expect(contract, "partitionServiceXMinusOpenX1Mm", 15.5, "隔板 x- 服务口 X 终点")
+    expect(contract, "partitionServiceXMinusOpenY0Mm", 2.5, "隔板 x- 服务口 Y 起点")
+    expect(contract, "partitionServiceXMinusOpenY1Mm", 232.3, "隔板 x- 服务口 Y 终点")
+    expect(contract, "partitionServiceXMinusOpenWidthMm", 13.0, "隔板 x- 服务口宽")
+    expect(contract, "partitionServiceXMinusOpenHeightMm", 229.8, "隔板 x- 服务口高")
+    expect(contract, "partitionServiceYMinusOpenX0Mm", 2.5, "隔板 y- 服务口 X 起点")
+    expect(contract, "partitionServiceYMinusOpenX1Mm", 247.5, "隔板 y- 服务口 X 终点")
+    expect(contract, "partitionServiceYMinusOpenY0Mm", 2.5, "隔板 y- 服务口 Y 起点")
+    expect(contract, "partitionServiceYMinusOpenY1Mm", 15.5, "隔板 y- 服务口 Y 终点")
+    expect(contract, "partitionServiceYMinusOpenWidthMm", 245.0, "隔板 y- 服务口宽")
+    expect(contract, "partitionServiceYMinusOpenHeightMm", 13.0, "隔板 y- 服务口高")
+    expect(contract, "partitionServiceXMinusOpenCornerRadiusMm", 0.0, "隔板 x- 服务口圆角")
+    expect(contract, "partitionServiceYMinusOpenCornerRadiusMm", 0.0, "隔板 y- 服务口圆角")
+    expect(contract, "partitionServiceMountPierHalfWidthMm", 8.0, "隔板安装耳承力墩半宽")
+    expect(contract, "partitionServiceRemainingGridWebXMm", 31.7, "隔板 x- 服务口后剩余承力网格宽")
+    expect(contract, "partitionServiceRemainingGridWebYMm", 45.4, "隔板 y- 服务口后剩余承力网格高")
+    expect(contract, "partitionSleeveFrontOverlapMm", 0.0, "隔板套 z+ 实体重叠")
     if n(contract, "verticalSplineBearingUpperCount") != 5:
         raise RuntimeError("抽屉电机花键轴上方必须为 5 枚固定轴承")
     if n(contract, "verticalSplineBearingTotalCount") != 10:

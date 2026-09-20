@@ -218,11 +218,6 @@ CENTER_CLUTCH_SHAFT_OUTPUT_LENGTH =
         + CENTER_CLUTCH_SHAFT_OUTPUT_ROUND_LENGTH
         - CENTER_CLUTCH_SHAFT_OUTPUT_START;
 
-// A small printed fit coupon contains three rectangular bearing-bar samples.
-CENTER_CLUTCH_FIT_COUPON_BLOCK_W = 12.00;
-CENTER_CLUTCH_FIT_COUPON_BLOCK_H = 12.00;
-CENTER_CLUTCH_FIT_COUPON_BLOCK_T = 10.00;
-CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS = [7.20, 7.30, 7.40];
 //#endregion
 
 //#region 尺寸函数
@@ -830,52 +825,7 @@ module center_clutch_purchased_references(col, row, engaged = false) {
 }
 //#endregion
 
-//#region 公开 API：配合测试片与兼容空接口
-module center_clutch_linear_bearing_fit_coupon_sample(x, seat_d) {
-    difference() {
-        translate([
-            x - CENTER_CLUTCH_FIT_COUPON_BLOCK_W / 2,
-            -CENTER_CLUTCH_FIT_COUPON_BLOCK_T / 2,
-            -CENTER_CLUTCH_FIT_COUPON_BLOCK_H / 2
-        ])
-            cube([
-                CENTER_CLUTCH_FIT_COUPON_BLOCK_W,
-                CENTER_CLUTCH_FIT_COUPON_BLOCK_T,
-                CENTER_CLUTCH_FIT_COUPON_BLOCK_H
-            ]);
-        cylinder_y(
-            x,
-            -CENTER_CLUTCH_FIT_COUPON_BLOCK_T / 2 - EPS,
-            0,
-            seat_d,
-            CENTER_CLUTCH_FIT_COUPON_BLOCK_T + 2 * EPS
-        );
-    }
-}
-
-module center_clutch_linear_bearing_fit_coupon() {
-    // Three long-bar seat samples. Install one real LM3UU in each candidate
-    // and slide the round Ø3 section through by hand before printing the bar.
-    for (index = [0:len(CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS) - 1])
-        center_clutch_linear_bearing_fit_coupon_sample(
-            (index - 1) * 15.00,
-            CENTER_CLUTCH_FIT_COUPON_SEAT_VARIANTS[index]
-        );
-}
-
-// Retired input-side structures are kept as named empty diagnostic entry
-// points so an old command cannot silently reintroduce the orange mechanism.
-module center_clutch_input_carriage(col, row, engaged = false) {}
-module center_clutch_guide_rails(col, row) {}
-module center_clutch_linear_bearing_retainers(col, row, engaged = false) {}
-module center_clutch_stops(col, row) {}
-module center_clutch_input_bearings(col, row, engaged = false) {}
-module center_clutch_linear_bearing_holder_y(x, y, z, seat_d = 7.20) {}
-module center_clutch_linear_bearing_retainer_y(x, y1, z) {}
-module center_clutch_stop_bar(col, row, y) {}
-module center_clutch_stop_lugs(col, row, y) {}
-module center_clutch_linear_bearing_support_web_y(x, base_y, bearing_z) {}
-module center_clutch_carriage_stop_bridge(x, base_y, z, sx) {}
+//#region 公开 API
 //#endregion
 
 //#region 公开 API：中心机构总装

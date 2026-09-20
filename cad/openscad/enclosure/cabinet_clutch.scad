@@ -5,8 +5,8 @@
 // material: PETG/nylon for printed parts; motor, belts, springs and screws are purchased parts
 // parting_plane: cabinet front face Z = 0 and back face Z = -D; all new drive parts stay in the rear cavity or below drawers
 // opening_direction: drawers pull toward +Z; the removable back panel is serviced toward -Z
-// fastener: center clutch uses a removable M3 mechanism plate; old screw/fork
-// follower remains legacy-only; motor/rod mounts are parameterized
+// fastener: center clutch uses a removable M3 mechanism plate; motor/rod
+// mounts are parameterized
 // seal: none — this is a mechanism prototype, not a watertight enclosure
 // print_orientation: gears/pulleys flat with their axis vertical (+Y); center
 // the fixed LM3UU seat is printed integral with the mechanism plate, while the
@@ -34,18 +34,12 @@ QUALITY = is_undef(QUALITY) ? 2 : QUALITY;
 // cabinet.scad owns the generic PART/EXPLODE variables, so use namespaced
 // controls for this root entry to keep its library include side-effect free.
 CLUTCH_PART = is_undef(CLUTCH_PART) ? "assembly" : CLUTCH_PART;
-CLUTCH_EXPLODE = is_undef(CLUTCH_EXPLODE) ? 0 : CLUTCH_EXPLODE;
 ENGAGED = is_undef(ENGAGED) ? false : ENGAGED;
 SELECTED_COLUMN = is_undef(SELECTED_COLUMN) ? 2 : SELECTED_COLUMN;
 SELECTED_ROW = is_undef(SELECTED_ROW) ? 1 : SELECTED_ROW;
-// Start the physical validation scene with one known-good center clutch.
-// SHOW_LEGACY_STATIONS controls only the retired non-center clutch diagnostics;
-// all 15 stations in the default world use the same canonical center assembly
-// instance, with the center station kept as the one animated/native source.
-SHOW_LEGACY_STATIONS = is_undef(SHOW_LEGACY_STATIONS)
-    ? false
-    : SHOW_LEGACY_STATIONS;
-
+PARTITION_MOUNT_DETAIL = is_undef(PARTITION_MOUNT_DETAIL)
+    ? 0
+    : PARTITION_MOUNT_DETAIL;
 // Read the frozen cabinet dimensions directly. The old cabinet geometry file
 // is intentionally not included; this scene owns its native X/Y/Z geometry.
 include <cabinet_params.scad>
@@ -143,38 +137,11 @@ ROD_FLAT_CLEARANCE = 0.12;
 ROD_WALL_CLEAR = 0.35;
 ROUND_BORE_D = ROD_D + 2 * ROD_CLEARANCE;
 
-// The upper clutch wheel is a 12T spur/dog prototype.  The pitch and all mating
-// wheels are shared so the open/closed relation is not hidden in placements.
+// The 12T / 3 mm pitch and tooth profile are shared by the vertical power
+// gears, the center clutch input gear, and the drawer pinions.
 CLUTCH_PITCH_MM = 3.0;
 CLUTCH_GEAR_TEETH = 12;
 CLUTCH_GEAR_TOOTH_DEPTH = 0.82;
-CLUTCH_GEAR_T = 3.0;
-CLUTCH_GEAR_PITCH_R = CLUTCH_GEAR_TEETH * CLUTCH_PITCH_MM / (2 * PI);
-CLUTCH_GEAR_OUTER_R = CLUTCH_GEAR_PITCH_R + CLUTCH_GEAR_TOOTH_DEPTH;
-CLUTCH_DOG_TEETH = 12;
-CLUTCH_DOG_TOOTH_H = 0.90;
-CLUTCH_DOG_T = 3.0;
-CLUTCH_DOG_R = CLUTCH_GEAR_OUTER_R;
-CLUTCH_HUB_D = 4.0;
-CLUTCH_CARRIER_STEM_H = 0.60;
-CLUTCH_DOG_CLEAR = 0.25;
-CLUTCH_ENGAGED_OVERLAP = 0.20;
-CLUTCH_DROP_MM = 10.0;
-
-// The fork compresses a spring between the stationary lower dog and the upper
-// carrier.  The open gap is deliberately 2× one dog tooth height as requested.
-CLUTCH_OPEN_GAP = 2 * CLUTCH_DOG_TOOTH_H;
-CLUTCH_SPRING_WIRE_D = 0.65;
-CLUTCH_SPRING_OD = 4.8;
-CLUTCH_SPRING_TURNS = 4;
-CLUTCH_SPRING_MIN_H = 0.70;
-CLUTCH_SCREW_D = 3.0;
-CLUTCH_SCREW_HEAD_D = 6.0;
-CLUTCH_SCREW_HEAD_H = 1.35;
-CLUTCH_SCREW_SHAFT_L = 9.0;
-CLUTCH_SCREW_RECESS_OPEN = 2 * CLUTCH_DOG_TOOTH_H;
-CLUTCH_SCREW_FLUSH = 0.18;
-COMPOUND_LAYER_GAP = 0.35;
 
 // Rear cavity locations. The horizontal bus is behind the partition; the
 // complete pulley OD must clear the partition rear edge, not just its center.
@@ -194,6 +161,213 @@ WORLD_ROW_PITCH = ROW_PITCH;
 WORLD_DIV_T = DIV_T;
 WORLD_SHELF_T = SHELF_T;
 WORLD_BACK_PANEL_T = BACK_PANEL_T;
+
+// The front/rear compartment partition is an independent XY plate inserted
+// from the rear (+Z).  The mount geometry below is reconstructed from the
+// supplied SketchUp groups, in millimetres.  The profile's long direction is
+// world Z: its round cap is toward -Z and its straight tail runs toward +Z.
+// There are two paired mounts on every wall: x+ (-X into the cabinet), x-
+// (+X into the cabinet), y- (+Y into the cabinet), and y+ (-Y into the
+// cabinet).  The paired positions leave a broad load path into the plate.
+PARTITION_FRAME_MOUNT_COUNT = 8;
+PARTITION_FRAME_MOUNT_PER_SIDE_COUNT = 2;
+PARTITION_FRAME_MOUNT_TYPE =
+    "skp-mm-d-receiver-plus-open-d-ring-cover-full-d-screw-face";
+// Screw axes are listed by wall: x+ -> -X, x- -> +X, y- -> +Y, y+ -> -Y.
+PARTITION_FRAME_MOUNT_SCREW_ENTRY = "-X,+X,+Y,-Y";
+PARTITION_FRAME_MOUNT_INSTALL_DIRECTION = "+Z";
+
+// Group#4: fixed cabinet-side receiver, exact SKP dimensions.
+PARTITION_FRAME_MOUNT_RECEIVER_LENGTH = 12.00;
+PARTITION_FRAME_MOUNT_RECEIVER_HEIGHT = 6.00;
+PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS = 3.00;
+PARTITION_FRAME_MOUNT_RECEIVER_RADIUS = 3.00;
+PARTITION_FRAME_MOUNT_RECEIVER_STRAIGHT = 9.00;
+PARTITION_FRAME_MOUNT_RECEIVER_HOLE_D = 2.40;
+PARTITION_FRAME_MOUNT_RECEIVER_CAP_DIRECTION = "-Z";
+PARTITION_FRAME_MOUNT_RECEIVER_PROFILE =
+    "D-r3-straight9-through-hole2p4";
+
+// Group#5: removable partition-side cover, exact SKP dimensions.  Its first
+// 3 mm is the open D/U ring; the next 2 mm is a full outer-D screw face with
+// the 3 mm screw passage.  The two sections are one printed cover.  The
+// screw face is deliberately not reduced to the inner R3 profile: the full
+// R5 outer contour is the partition-side load-bearing face.
+PARTITION_FRAME_MOUNT_COVER_LENGTH = 14.00;
+PARTITION_FRAME_MOUNT_COVER_HEIGHT = 10.00;
+PARTITION_FRAME_MOUNT_COVER_RADIUS = 5.00;
+PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS = 3.00;
+PARTITION_FRAME_MOUNT_COVER_STRAIGHT = 9.00;
+PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH = 3.00;
+PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH = 2.00;
+PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH =
+    PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH
+        + PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH;
+PARTITION_FRAME_MOUNT_COVER_HOLE_D = 3.00;
+PARTITION_FRAME_MOUNT_COVER_WALL =
+    PARTITION_FRAME_MOUNT_COVER_RADIUS
+        - PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS;
+PARTITION_FRAME_MOUNT_COVER_PROFILE =
+    "open-D-ring-r5-inner-r3-plus-full-outer-D-backplate-r5-hole3";
+PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_RADIUS =
+    PARTITION_FRAME_MOUNT_COVER_RADIUS;
+PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_STRAIGHT =
+    PARTITION_FRAME_MOUNT_COVER_STRAIGHT;
+PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_PROFILE =
+    "full-outer-D-backplate-r5-straight9-hole3";
+
+// Group#7 is a separate reference sleeve in the supplied SKP.  It is kept as
+// a diagnostic/purchase-reference part and is not silently fused into either
+// grouped assembly.
+PARTITION_FRAME_MOUNT_ROUND_SLEEVE_OD = 5.00;
+PARTITION_FRAME_MOUNT_ROUND_SLEEVE_ID = 3.00;
+PARTITION_FRAME_MOUNT_ROUND_SLEEVE_LENGTH = 7.00;
+PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH = 2.00;
+
+// These values describe the exact cover-to-panel datum, not a guessed wall
+// offset. The cover starts at the corresponding plate edge and grows toward
+// the cabinet interior along the wall normal. Two positions are used on every
+// wall so the panel is clamped on both sides of each edge.
+PARTITION_FRAME_MOUNT_FRONT_OVERLAP = 0.00;
+PARTITION_FRAME_MOUNT_CENTER_Z = WORLD_PARTITION_FRONT_Z
+    - PARTITION_FRAME_MOUNT_COVER_STRAIGHT
+    + PARTITION_FRAME_MOUNT_FRONT_OVERLAP;
+PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_PROFILE =
+    "full-width-d-mouth-no-narrow-neck";
+PARTITION_FRAME_MOUNT_SLEEVE_CROSS_SECTION_PROFILE =
+    "skp-open-d-ring-around-d-door-full-d-screw-face";
+PARTITION_FRAME_MOUNT_SLEEVE_MOUTH_PROFILE =
+    "complete-d-profile-entry";
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_TYPE =
+    "integral-skp-cover-to-partition-with-dual-root-ribs";
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH =
+    PARTITION_FRAME_MOUNT_COVER_WALL;
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH =
+    PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH + 2.00;
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_PLATE_OVERLAP =
+    WORLD_PARTITION_T;
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ROOT_OVERLAP = 2.00;
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH = 2.00;
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE = 0.20;
+PARTITION_FRAME_PLATE_CLEARANCE = 0.30;
+PARTITION_FRAME_PLATE_X0 = WALL + PARTITION_FRAME_PLATE_CLEARANCE;
+PARTITION_FRAME_PLATE_Y0 = WALL + PARTITION_FRAME_PLATE_CLEARANCE;
+PARTITION_FRAME_PLATE_W = W - 2 * WALL
+    - 2 * PARTITION_FRAME_PLATE_CLEARANCE;
+PARTITION_FRAME_PLATE_H = H - 2 * WALL
+    - 2 * PARTITION_FRAME_PLATE_CLEARANCE;
+
+// Two positions are used on every wall.  The x+ / y- receiver is deliberately
+// centered in the clear gap between the lowest two continuous clutch strips:
+// its paired cover is therefore not forced into either rear carrier plate.
+// The x- / y- receiver remains in the lower service perimeter, where the
+// x-minus service opening already reserves a load-bearing bridge.  Keep these
+// as separate arrays: the two x walls do not have the same mechanism envelope.
+PARTITION_FRAME_MOUNT_EDGE_MARGIN = 36.00;
+PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS = [
+    PARTITION_FRAME_PLATE_Y0 + 14.50,
+    PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
+        - PARTITION_FRAME_MOUNT_EDGE_MARGIN
+];
+PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS = [
+    PARTITION_FRAME_PLATE_X0 + PARTITION_FRAME_MOUNT_EDGE_MARGIN,
+    PARTITION_FRAME_PLATE_X0 + PARTITION_FRAME_PLATE_W
+        - PARTITION_FRAME_MOUNT_EDGE_MARGIN
+];
+
+// The cover's screw axis is registered to the corresponding partition edge,
+// not to an arbitrary wall offset.  This keeps each receiver and cover
+// coaxial while preserving the 0.30 mm plate-to-wall service clearance.
+PARTITION_FRAME_MOUNT_COVER_FIT_CLEARANCE = 0.10;
+
+function partition_frame_mount_cover_axis_start(mount) =
+    mount == "x+"
+        ? PARTITION_FRAME_PLATE_X0 + PARTITION_FRAME_PLATE_W
+        : (mount == "x-"
+            ? PARTITION_FRAME_PLATE_X0
+            : (mount == "y-"
+            ? PARTITION_FRAME_PLATE_Y0
+            : (mount == "y+"
+                ? PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
+                : 0)));
+
+PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET =
+    PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS
+        + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE
+        + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH / 2;
+
+PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH =
+    PARTITION_FRAME_MOUNT_COVER_HEIGHT
+        + 2 * PARTITION_FRAME_MOUNT_COVER_FIT_CLEARANCE;
+PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH =
+    PARTITION_FRAME_MOUNT_COVER_HEIGHT;
+PARTITION_FRAME_MOUNT_INSERTION_RELIEF_TYPE =
+    "open-edge-slot-full-width-entry";
+PARTITION_FRAME_MOUNT_INSERTION_RELIEF_DEPTH = PARTITION_T + 2 * EPS;
+PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE = 0.10;
+// In the Three.js left-handed view, x- is the side service column and y- is
+// the bottom service layer.  They still need a continuous pass-through, but
+// they do not need to consume the full no-drawer envelope.  Leave a wide
+// active web between each compact opening and the five-column drawer field.
+PARTITION_SERVICE_CUT_OVERTRAVEL = 1.00;
+PARTITION_SERVICE_WINDOW_TYPE =
+    "compact-x-minus-service-column-plus-compact-y-minus-service-row";
+PARTITION_SERVICE_X_MINUS_TARGET_WIDTH = 12.00;
+PARTITION_SERVICE_Y_MINUS_TARGET_HEIGHT = 12.00;
+PARTITION_SERVICE_WINDOW_X0 = PARTITION_FRAME_PLATE_X0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_WINDOW_X1 = PARTITION_FRAME_PLATE_X0
+    + PARTITION_SERVICE_X_MINUS_TARGET_WIDTH;
+PARTITION_SERVICE_WINDOW_Y0 = PARTITION_FRAME_PLATE_Y0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_WINDOW_Y1 = PARTITION_FRAME_PLATE_Y0
+    + PARTITION_SERVICE_Y_MINUS_TARGET_HEIGHT;
+PARTITION_SERVICE_WINDOW_W = PARTITION_SERVICE_WINDOW_X1
+    - PARTITION_SERVICE_WINDOW_X0;
+PARTITION_SERVICE_WINDOW_H = PARTITION_SERVICE_WINDOW_Y1
+    - PARTITION_SERVICE_WINDOW_Y0;
+PARTITION_SERVICE_WINDOW_CORNER_R = 0.00;
+PARTITION_SERVICE_X_MINUS_OPEN_X0 = PARTITION_FRAME_PLATE_X0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_X_MINUS_OPEN_X1 = PARTITION_SERVICE_WINDOW_X1;
+PARTITION_SERVICE_X_MINUS_OPEN_Y0 = PARTITION_FRAME_PLATE_Y0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_X_MINUS_OPEN_Y1 = PARTITION_FRAME_PLATE_Y0
+    + PARTITION_FRAME_PLATE_H
+    + PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_X_MINUS_OPEN_W = PARTITION_SERVICE_X_MINUS_OPEN_X1
+    - PARTITION_SERVICE_X_MINUS_OPEN_X0;
+PARTITION_SERVICE_X_MINUS_OPEN_H = PARTITION_SERVICE_X_MINUS_OPEN_Y1
+    - PARTITION_SERVICE_X_MINUS_OPEN_Y0;
+PARTITION_SERVICE_Y_MINUS_OPEN_X0 = PARTITION_FRAME_PLATE_X0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_Y_MINUS_OPEN_X1 = PARTITION_FRAME_PLATE_X0
+    + PARTITION_FRAME_PLATE_W
+    + PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_Y_MINUS_OPEN_Y0 = PARTITION_FRAME_PLATE_Y0
+    - PARTITION_SERVICE_CUT_OVERTRAVEL;
+PARTITION_SERVICE_Y_MINUS_OPEN_Y1 = PARTITION_SERVICE_WINDOW_Y1;
+PARTITION_SERVICE_Y_MINUS_OPEN_W = PARTITION_SERVICE_Y_MINUS_OPEN_X1
+    - PARTITION_SERVICE_Y_MINUS_OPEN_X0;
+PARTITION_SERVICE_Y_MINUS_OPEN_H = PARTITION_SERVICE_Y_MINUS_OPEN_Y1
+    - PARTITION_SERVICE_Y_MINUS_OPEN_Y0;
+PARTITION_SERVICE_X_MINUS_OPEN_CORNER_R = 0.00;
+PARTITION_SERVICE_Y_MINUS_OPEN_CORNER_R = 0.00;
+PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH =
+    PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH / 2
+        + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH
+        + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE
+        + 0.80;
+// The compact service cuts are allowed to remain open except for broad,
+// load-bearing bridges around both x- and y- edge sleeve pairs. The bridges
+// are later cut again by partition_frame_mount_insertion_relief_slots(), so
+// they support the sleeves without sealing the actual insertion path.
+PARTITION_FRAME_MOUNT_SLEEVE_FRONT_OVERLAP =
+    PARTITION_FRAME_MOUNT_FRONT_OVERLAP;
+PARTITION_SERVICE_REMAINING_GRID_WEB_X = WORLD_GRID_ORIGIN_X
+    - PARTITION_SERVICE_X_MINUS_OPEN_X1;
+PARTITION_SERVICE_REMAINING_GRID_WEB_Y = WORLD_GRID_ORIGIN_Y
+    - PARTITION_SERVICE_Y_MINUS_OPEN_Y1;
 // The native drawer drive shares the rear cavity with the legacy snake-chain
 // world adapter. That adapter places the chain at local Y=PARTITION_BACK_Y+
 // 12 mm, which becomes world Z=-(PARTITION_BACK_Y+12) after the rear-view
@@ -289,26 +463,6 @@ VERTICAL_GEAR_STUB_OVERLAP = 0.20;
 TIMING_PITCH_R = TIMING_TEETH * TIMING_PITCH_MM / (2 * PI);
 TIMING_ROOT_R = TIMING_PITCH_R - TIMING_TOOTH_DEPTH;
 TIMING_OUTER_R = TIMING_PITCH_R + TIMING_TOOTH_DEPTH;
-// Keep the front pulley at the existing drawer-front interface while the rear
-// bus moves backward. The default front datum is the former 60T-loop location
-// (-16 mm in this cabinet); the nearest integer tooth count is then chosen so
-// the new belt remains on the 3 mm pitch instead of being stretched.
-DRAWER_FRONT_INTERFACE_Z = is_undef(DRAWER_FRONT_INTERFACE_Z)
-    ? DRIVE_AXIS_Z_BASE + 60.0
-    : DRAWER_FRONT_INTERFACE_Z;
-DRAWER_BELT_TEETH = is_undef(DRAWER_BELT_TEETH)
-    ? round(
-        (2 * (DRAWER_FRONT_INTERFACE_Z - DRIVE_AXIS_Z)
-            + 2 * PI * TIMING_PITCH_R) / TIMING_PITCH_MM
-      )
-    : DRAWER_BELT_TEETH;
-DRAWER_BELT_CENTER_DISTANCE = (
-    DRAWER_BELT_TEETH * TIMING_PITCH_MM - 2 * PI * TIMING_PITCH_R
-) / 2;
-// The rear take-off is at DRIVE_AXIS_Z; +Z leads toward the drawer front.
-// With the default shift this is a 72T loop: its 78 mm centre distance puts
-// the front pulley back at the original -16 mm drawer interface.
-FRONT_PULLEY_Z = DRIVE_AXIS_Z + DRAWER_BELT_CENTER_DISTANCE;
 // The belt base is dimensioned from the mating pulley: its inner base radius
 // is the pulley pitch radius, and its radial base thickness is exactly the
 // belt thickness.  TIMING_BELT_CLEAR is reserved for cabinet passage/fit
@@ -496,6 +650,7 @@ DRAWER_PINION_SUPPORT_CHEEK_OFFSET =
     + DRAWER_PINION_SUPPORT_CHEEK_Y / 2;
 DRAWER_PINION_SUPPORT_SIDE_X = FRONT_GEAR_OUTER_R + 1.20;
 DRAWER_PINION_SUPPORT_SIDE_T = 1.40;
+COMPOUND_LAYER_GAP = 0.35;
 // The center first article no longer stacks the timing pulley immediately
 // below the front pinion.  It leaves a shelf-thickness bearing in the gap and
 // sends the lower 2GT pulley into the next drawer bay on the same D shaft.
@@ -505,14 +660,6 @@ CENTER_GT2_FRONT_TIMING_BEARING_PULLEY_GAP =
     COMPOUND_LAYER_GAP + DRAWER_FRONT_TIMING_BEARING_RETAINER_T;
 CENTER_GT2_FRONT_D_SHAFT_OVERLAP = 0.50;
 
-// Fork clearance is a real parameter: open state leaves the fork just above
-// the recessed screw head; engaged state makes it nearly flush with the gear.
-FORK_W = 14.0;
-FORK_D = 9.0;
-FORK_T = 2.4;
-FORK_CLEAR_OPEN = 0.55;
-FORK_CONTACT = 0.08;
-
 // Colors are only for the assembly preview; STL units remain millimeters.
 COLOR_CABINET = "#6f8f9a";
 COLOR_DRAWER = "#d3b184";
@@ -520,9 +667,6 @@ COLOR_SHAFT = "#5c6876";
 COLOR_TIMING = "#f0a23b";
 COLOR_BELT = "#ce5c31";
 COLOR_GEAR = "#d6a64a";
-COLOR_DOG = "#a9b4c0";
-COLOR_SPRING = "#e6c24a";
-COLOR_FORK = "#45d85c";
 COLOR_RACK = "#9a77c7";
 COLOR_MOTOR = "#343a40";
 COLOR_TENSIONER_T_SOLID = "#aebdce";
@@ -551,8 +695,7 @@ COLOR_AXIS_Z = "#3b82f6";
 //   power_bus      active motor + five-column 2GT bus and adjustable return wheel
 //   all_vertical_axes  active D drive + five drawer axes
 //   drawer_drive   rear/front compound wheels, +Z drawer belts and racks
-//   clutch         center clutch by default; old stations require SHOW_LEGACY_STATIONS
-//   clutch_detail  selected center mechanism (or a legacy station when enabled)
+//   clutch         complete 15-station center-clutch assembly
 //   motor/motor_body/motor_shaft/left_d_axis/side_axes/column/vertical_rack
 //   column_sync_belt_bottom/column_sync_belt_top/column_sync_tensioner
 //   center_station_template_assembly  one local center-station assembly kit;
@@ -561,8 +704,7 @@ COLOR_AXIS_Z = "#3b82f6";
 //   vertical_spline_support_chain_collision/vertical_spline_support_drive_collision
 //   vertical_spline_support_partition_window_collision
 //   tensioner_t_solid
-//   upper_clutch/upper_spur/upper_dog/lower_takeoff/lower_dog/rear_pulley
-//   spring/screw/fork/drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
+//   drawer_belt/front_compound/front_pulley/front_gear/drawer_rack
 //   world_axes                 native +X/+Y/+Z diagnostic triad at the origin
 //                  individual verification pieces for the one-by-one workflow
 //
@@ -670,42 +812,6 @@ function drawer_rack_z1(front_z) = front_z - 3.5;
 function drawer_guide_z0(front_z) = drawer_rack_z0() + 2.0;
 
 function drawer_guide_z1(front_z) = drawer_rack_z1(front_z) - 2.0;
-
-function clutch_upper_open_y(row) = world_row_center_y(row) - CLUTCH_DROP_MM;
-
-function clutch_fixed_dog_y(row) =
-    clutch_upper_open_y(row)
-    - CLUTCH_GEAR_T / 2
-    - CLUTCH_DOG_T
-    - CLUTCH_CARRIER_STEM_H
-    - CLUTCH_OPEN_GAP
-    - CLUTCH_DOG_T / 2;
-
-function clutch_upper_y(row, engaged) =
-    clutch_upper_open_y(row)
-    - (engaged ? CLUTCH_OPEN_GAP + CLUTCH_ENGAGED_OVERLAP : 0);
-
-function clutch_upper_dog_y(row, engaged) =
-    clutch_upper_y(row, engaged)
-    - CLUTCH_GEAR_T / 2
-    - CLUTCH_DOG_T / 2
-    - CLUTCH_CARRIER_STEM_H;
-
-function clutch_takeoff_pulley_y(row) =
-    clutch_fixed_dog_y(row)
-    - CLUTCH_DOG_T / 2
-    - COMPOUND_LAYER_GAP
-    - TIMING_PULLEY_W / 2;
-
-function drawer_belt_y(row) = clutch_takeoff_pulley_y(row);
-
-function clutch_screw_top_y(row, engaged) =
-    clutch_upper_y(row, engaged)
-    + CLUTCH_GEAR_OUTER_R
-    - (engaged ? CLUTCH_SCREW_FLUSH : CLUTCH_SCREW_RECESS_OPEN);
-
-function drawer_front_gear_y(row) =
-    drawer_rack_y(row);
 
 function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 
@@ -1157,27 +1263,6 @@ module spur_gear_z(x, y, z, teeth, pitch_mm, tooth_depth, thickness, bore_d = 3.
                 gear_profile_2d(teeth, pitch_r - tooth_depth, pitch_r + tooth_depth);
             cylinder(d = bore_d, h = thickness + 2 * EPS);
         }
-}
-
-module dog_face_y(x, y, z, teeth = CLUTCH_DOG_TEETH, upward = true) {
-    root_r = CLUTCH_DOG_R - CLUTCH_DOG_TOOTH_H;
-    // The same symmetric dog profile can face up or down.  The explicit
-    // rotation documents which face the spring-loaded carrier presents.
-    translate([x, y, z])
-        rotate(upward ? [-90, 0, 0] : [90, 0, 0])
-            difference() {
-                linear_extrude(
-                    height = CLUTCH_DOG_T,
-                    center = true,
-                    convexity = 8
-                )
-                    gear_profile_2d(teeth, root_r, CLUTCH_DOG_R);
-                cylinder(
-                    d = CLUTCH_HUB_D,
-                    h = CLUTCH_DOG_T + 2 * EPS,
-                    center = true
-                );
-            }
 }
 
 module belt_tooth_prism_z(x, z, y, inward) {
@@ -1909,65 +1994,11 @@ module drawer_front_drive_guide_system(col, row, front_z) {
     drawer_c_guide_flanges_at(col, row, front_z);
     drawer_rack_guide_rails_at(col, row, front_z);
     drawer_rack_guide_rollers(col, row, front_z);
-    if (is_center_gt2_station(col, row)) {
-        // The center pinion has no upper MR63 cheek. Its only front-drive
-        // rotary support is the 3×6×2 bearing seated in the shelf-integrated
-        // stepped boss.
-        center_gt2_front_shelf_bearing_boss(col, row, front_z, true);
-    } else {
-        drawer_front_pinion_bearing_support(
-            clutch_col_x(col),
-            drawer_front_gear_y(row),
-            front_z,
-            true
-        );
-    }
+    // Every station is the same center-proven front drive. Its only rotary
+    // support is the 3×6×2 bearing seated in the shelf-integrated stepped boss.
+    center_gt2_front_shelf_bearing_boss(col, row, front_z, true);
 }
 
-module compression_spring_y(x, y0, y1, z) {
-    h = max(CLUTCH_SPRING_MIN_H, y1 - y0);
-    translate([x, y0, z])
-        rotate([-90, 0, 0])
-            linear_extrude(
-                height = h,
-                twist = 360 * CLUTCH_SPRING_TURNS,
-                slices = max(24, CLUTCH_SPRING_TURNS * 12),
-                convexity = 4
-            )
-                translate([CLUTCH_SPRING_OD / 2 - CLUTCH_SPRING_WIRE_D / 2, 0])
-                    circle(d = CLUTCH_SPRING_WIRE_D);
-}
-
-module t_countersunk_screw_y(x, z, top_y) {
-    head_bottom = top_y - CLUTCH_SCREW_HEAD_H;
-    color("#707985")
-        difference() {
-            union() {
-                cylinder_y(
-                    x,
-                    head_bottom - CLUTCH_SCREW_SHAFT_L,
-                    z,
-                    CLUTCH_SCREW_D,
-                    CLUTCH_SCREW_SHAFT_L
-                );
-                // The head is a flat-topped countersink: narrow at the lower
-                // face and full diameter at the top face.
-                translate([x, head_bottom, z])
-                    rotate([-90, 0, 0])
-                        cylinder(
-                            d1 = CLUTCH_SCREW_D + 0.30,
-                            d2 = CLUTCH_SCREW_HEAD_D,
-                            h = CLUTCH_SCREW_HEAD_H
-                        );
-            }
-            // Recess the T driver slot instead of adding a misleading raised
-            // cross. The shallow cut remains visible in the assembly preview.
-            translate([x - 1.8, top_y - 0.42, z - 0.35])
-                cube([3.6, 0.50, 0.70]);
-            translate([x - 0.35, top_y - 0.42, z - 1.8])
-                cube([0.70, 0.50, 3.6]);
-        }
-}
 //#endregion
 
 //#region 公开 API：柜体与动力母线
@@ -2097,9 +2128,604 @@ module tensioner_t_solid() {
     tensioner_skp_parametric();
 }
 
+// The reference part is an arched door, not a cylinder with a decorative
+// notch.  In 2D the profile is a D: a semicircular cap toward world -Z and a
+// straight section toward +Z.  It is extruded along the screw axis.  Keeping
+// the profile in one module makes the x-, y-, and y+ mounts identical instead
+// of mirroring three subtly different approximations.
+// Exact SKP D profile.  Local u is the long direction: a radius-r round cap
+// centered at u=0, followed by a straight tail from u=0 to +straight.  The
+// resulting bounding length is r+straight and the cross width is 2r.
+module partition_frame_mount_d_profile_2d(radius, straight) {
+    union() {
+        circle(r = radius, $fn = 24);
+        translate([0, -radius])
+            square([straight, 2 * radius]);
+    }
+}
+
+module partition_frame_mount_d_ring_profile_2d(
+    outer_radius,
+    inner_radius,
+    straight
+) {
+    difference() {
+        partition_frame_mount_d_profile_2d(outer_radius, straight);
+        partition_frame_mount_d_profile_2d(inner_radius, straight + EPS);
+    }
+}
+
+// Map local profile coordinates [u, v] and extrusion coordinate w directly
+// into world space.  Local u is always world Z (cap toward world -Z), local v
+// is the wall tangent, and w is the wall-normal screw direction.
+module partition_frame_mount_d_prism(
+    axis,
+    axis_start,
+    axis_direction,
+    axis_length,
+    center_x,
+    center_y,
+    center_z,
+    radius,
+    straight
+) {
+    if (axis == "x")
+        multmatrix([
+            [0, 0, axis_direction, axis_start],
+            [0, 1, 0, center_y],
+            [1, 0, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            linear_extrude(height = axis_length)
+                partition_frame_mount_d_profile_2d(radius, straight);
+    else
+        multmatrix([
+            [0, 1, 0, center_x],
+            [0, 0, axis_direction, axis_start],
+            [1, 0, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            linear_extrude(height = axis_length)
+                partition_frame_mount_d_profile_2d(radius, straight);
+}
+
+module partition_frame_mount_d_ring_prism(
+    axis,
+    axis_start,
+    axis_direction,
+    axis_length,
+    center_x,
+    center_y,
+    center_z,
+    outer_radius,
+    inner_radius,
+    straight
+) {
+    if (axis == "x")
+        multmatrix([
+            [0, 0, axis_direction, axis_start],
+            [0, 1, 0, center_y],
+            [1, 0, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            linear_extrude(height = axis_length)
+                partition_frame_mount_d_ring_profile_2d(
+                    outer_radius,
+                    inner_radius,
+                    straight
+                );
+    else
+        multmatrix([
+            [0, 1, 0, center_x],
+            [0, 0, axis_direction, axis_start],
+            [1, 0, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            linear_extrude(height = axis_length)
+                partition_frame_mount_d_ring_profile_2d(
+                    outer_radius,
+                    inner_radius,
+                    straight
+                );
+}
+
+module partition_frame_mount_axis_cylinder(
+    axis,
+    axis_start,
+    axis_direction,
+    axis_length,
+    center_x,
+    center_y,
+    center_z,
+    diameter
+) {
+    if (axis == "x")
+        multmatrix([
+            [0, 0, axis_direction, axis_start],
+            [1, 0, 0, center_y],
+            [0, 1, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            cylinder(d = diameter, h = axis_length, $fn = 48);
+    else
+        multmatrix([
+            [1, 0, 0, center_x],
+            [0, 0, axis_direction, axis_start],
+            [0, 1, 0, center_z],
+            [0, 0, 0, 1]
+        ])
+            cylinder(d = diameter, h = axis_length, $fn = 48);
+}
+
+module partition_frame_mount_receiver_axis(
+    axis,
+    axis_start,
+    axis_direction,
+    center_x,
+    center_y
+) {
+    difference() {
+        partition_frame_mount_d_prism(
+            axis,
+            axis_start,
+            axis_direction,
+            PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS,
+            center_x,
+            center_y,
+            PARTITION_FRAME_MOUNT_CENTER_Z,
+            PARTITION_FRAME_MOUNT_RECEIVER_RADIUS,
+            PARTITION_FRAME_MOUNT_RECEIVER_STRAIGHT
+        );
+        // The supplied receiver is a through-hole D ear.  The eventual M3
+        // self-tapper forms its thread in the wall-side material behind it.
+        partition_frame_mount_axis_cylinder(
+            axis,
+            axis_start - axis_direction * EPS,
+            axis_direction,
+            PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS + 2 * EPS,
+            center_x,
+            center_y,
+            PARTITION_FRAME_MOUNT_CENTER_Z,
+            PARTITION_FRAME_MOUNT_RECEIVER_HOLE_D
+        );
+    }
+}
+
+module partition_frame_mount_receiver_bosses() {
+    // Eight cabinet-side receivers: two on each wall.  They are all the
+    // same SKP D profile; only the wall-normal screw direction changes.
+    for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) {
+        partition_frame_mount_receiver_axis(
+            "x", W - WALL + EPS, -1, 0, mount_y
+        );
+    }
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) {
+        partition_frame_mount_receiver_axis(
+            "x", WALL - EPS, 1, 0, mount_y
+        );
+    }
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) {
+        partition_frame_mount_receiver_axis(
+            "y", WALL - EPS, 1, mount_x, 0
+        );
+        partition_frame_mount_receiver_axis(
+            "y", H - WALL + EPS, -1, mount_x, 0
+        );
+    }
+}
+
+module partition_frame_mount_sleeve_outer_axis(
+    axis,
+    axis_start,
+    axis_direction,
+    center_x,
+    center_y
+) {
+    // Group#5 base: the large open D/U ring, 3 mm deep.
+    partition_frame_mount_d_prism(
+        axis,
+        axis_start,
+        axis_direction,
+        PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH,
+        center_x,
+        center_y,
+        PARTITION_FRAME_MOUNT_CENTER_Z,
+        PARTITION_FRAME_MOUNT_COVER_RADIUS,
+        PARTITION_FRAME_MOUNT_COVER_STRAIGHT
+    );
+    // Group#5 step: the full outer-D solid, 2 mm deep, is the screw-side
+    // face.  Keeping the R5 contour makes the screw load enter the panel over
+    // the complete outer profile instead of through a corner-sized R3 pad.
+    partition_frame_mount_d_prism(
+        axis,
+        axis_start
+            + axis_direction
+                * (PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH - EPS),
+        axis_direction,
+        PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH + EPS,
+        center_x,
+        center_y,
+        PARTITION_FRAME_MOUNT_CENTER_Z,
+        PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_RADIUS,
+        PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_STRAIGHT
+    );
+}
+
+module partition_frame_mount_sleeve_support_rib_axis(
+    axis,
+    axis_start,
+    axis_direction,
+    center_x,
+    center_y,
+    tangent_offset
+) {
+    // Two full-height root ribs per cover.  They are deliberately fused into
+    // the partition thickness and extend 2 mm past the 5 mm cover depth, so
+    // the cover is not held by a point/corner overlap.
+    if (axis == "x")
+        translate([
+            axis_direction > 0
+                ? axis_start
+                : axis_start - PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH,
+            center_y + tangent_offset
+                - PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH / 2,
+            WORLD_PARTITION_BACK_Z
+        ])
+            cube([
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH,
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH,
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_PLATE_OVERLAP + EPS
+            ]);
+    else
+        translate([
+            center_x + tangent_offset
+                - PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH / 2,
+            axis_direction > 0
+                ? axis_start
+                : axis_start - PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH,
+            WORLD_PARTITION_BACK_Z
+        ])
+            cube([
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH,
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH,
+                PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_PLATE_OVERLAP + EPS
+            ]);
+}
+
+module partition_frame_mount_sleeve_support_ribs() {
+    for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_support_rib_axis(
+            "x", partition_frame_mount_cover_axis_start("x+"), -1,
+            0, mount_y,
+            PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+        partition_frame_mount_sleeve_support_rib_axis(
+            "x", partition_frame_mount_cover_axis_start("x+"), -1,
+            0, mount_y,
+            -PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+    }
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_support_rib_axis(
+            "x", partition_frame_mount_cover_axis_start("x-"), 1,
+            0, mount_y,
+            PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+        partition_frame_mount_sleeve_support_rib_axis(
+            "x", partition_frame_mount_cover_axis_start("x-"), 1,
+            0, mount_y,
+            -PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+    }
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) {
+        partition_frame_mount_sleeve_support_rib_axis(
+            "y", partition_frame_mount_cover_axis_start("y-"), 1,
+            mount_x, 0,
+            PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+        partition_frame_mount_sleeve_support_rib_axis(
+            "y", partition_frame_mount_cover_axis_start("y-"), 1,
+            mount_x, 0,
+            -PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+        partition_frame_mount_sleeve_support_rib_axis(
+            "y", partition_frame_mount_cover_axis_start("y+"), -1,
+            mount_x, 0,
+            PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+        partition_frame_mount_sleeve_support_rib_axis(
+            "y", partition_frame_mount_cover_axis_start("y+"), -1,
+            mount_x, 0,
+            -PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+        );
+    }
+}
+
+module partition_frame_mount_sleeve_outers() {
+    for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_outer_axis(
+            "x", partition_frame_mount_cover_axis_start("x+"), -1,
+            0, mount_y
+        );
+    }
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_outer_axis(
+            "x", partition_frame_mount_cover_axis_start("x-"), 1,
+            0, mount_y
+        );
+    }
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) {
+        partition_frame_mount_sleeve_outer_axis(
+            "y", partition_frame_mount_cover_axis_start("y-"), 1,
+            mount_x, 0
+        );
+        partition_frame_mount_sleeve_outer_axis(
+            "y", partition_frame_mount_cover_axis_start("y+"), -1,
+            mount_x, 0
+        );
+    }
+    partition_frame_mount_sleeve_support_ribs();
+}
+
+module partition_frame_mount_sleeve_bore_axis(
+    axis,
+    axis_start,
+    axis_direction,
+    center_x,
+    center_y
+) {
+    // Cut the exact open D/U cavity from the 3 mm base.
+    partition_frame_mount_d_prism(
+        axis,
+        axis_start - axis_direction * EPS,
+        axis_direction,
+        PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH + 2 * EPS,
+        center_x,
+        center_y,
+        PARTITION_FRAME_MOUNT_CENTER_Z,
+        PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS,
+        PARTITION_FRAME_MOUNT_COVER_STRAIGHT + EPS
+    );
+    // The step has the exact circular Ø3 passage from the SKP, with no
+    // invented mushroom-head counterbore.
+    partition_frame_mount_axis_cylinder(
+        axis,
+        axis_start
+            + axis_direction * PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH
+            - axis_direction * EPS,
+        axis_direction,
+        PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH + 2 * EPS,
+        center_x,
+        center_y,
+        PARTITION_FRAME_MOUNT_CENTER_Z,
+        PARTITION_FRAME_MOUNT_COVER_HOLE_D
+    );
+}
+
+module partition_frame_mount_sleeve_bores() {
+    for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_bore_axis(
+            "x", partition_frame_mount_cover_axis_start("x+"), -1,
+            0, mount_y
+        );
+    }
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) {
+        partition_frame_mount_sleeve_bore_axis(
+            "x", partition_frame_mount_cover_axis_start("x-"), 1,
+            0, mount_y
+        );
+    }
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) {
+        partition_frame_mount_sleeve_bore_axis(
+            "y", partition_frame_mount_cover_axis_start("y-"), 1,
+            mount_x, 0
+        );
+        partition_frame_mount_sleeve_bore_axis(
+            "y", partition_frame_mount_cover_axis_start("y+"), -1,
+            mount_x, 0
+        );
+    }
+}
+
+// Group#7 is the separate stepped round reference from the supplied SKP:
+// Ø5 collar for 2 mm followed by the Ø3 round shank for 5 mm.  It is exposed
+// only as an inspection selector; it is not duplicated into the box or the
+// partition assembly groups.
+module partition_frame_mount_round_sleeve_reference_axis(
+    axis,
+    axis_start,
+    axis_direction,
+    center_x,
+    center_y
+) {
+    color("#d2a84a")
+        partition_frame_mount_axis_cylinder(
+            axis,
+            axis_start,
+            axis_direction,
+            PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH,
+            center_x,
+            center_y,
+            PARTITION_FRAME_MOUNT_CENTER_Z,
+            PARTITION_FRAME_MOUNT_ROUND_SLEEVE_OD
+        );
+    color("#b58d38")
+        partition_frame_mount_axis_cylinder(
+            axis,
+            axis_start
+                + axis_direction
+                    * PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH,
+            axis_direction,
+            PARTITION_FRAME_MOUNT_ROUND_SLEEVE_LENGTH
+                - PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH,
+            center_x,
+            center_y,
+            PARTITION_FRAME_MOUNT_CENTER_Z,
+            PARTITION_FRAME_MOUNT_ROUND_SLEEVE_ID
+        );
+}
+
+module partition_frame_mount_insertion_relief_axis(
+    axis,
+    axis_min,
+    axis_max,
+    center_x,
+    center_y
+) {
+    if (axis == "x")
+        translate([
+            axis_min,
+            center_y - PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH / 2,
+            WORLD_PARTITION_BACK_Z - EPS
+        ])
+            cube([
+                axis_max - axis_min,
+                PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH,
+                PARTITION_FRAME_MOUNT_INSERTION_RELIEF_DEPTH
+            ]);
+    else
+        translate([
+            center_x - PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH / 2,
+            axis_min,
+            WORLD_PARTITION_BACK_Z - EPS
+        ])
+            cube([
+                PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH,
+                axis_max - axis_min,
+                PARTITION_FRAME_MOUNT_INSERTION_RELIEF_DEPTH
+            ]);
+}
+
+module partition_frame_mount_insertion_relief_slots() {
+    // Every opening is a true edge-open slot, not a narrowed C mouth.  There
+    // are two slots on each wall, matching the eight receiver/cover pairs.
+    // The overtravel makes the +Z panel insertion path unambiguous in the
+    // printed part and avoids leaving a closed skin at the entry edge.
+    x_plus_min = W - WALL - PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH
+        - PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE;
+    x_plus_max = PARTITION_FRAME_PLATE_X0 + PARTITION_FRAME_PLATE_W
+        + PARTITION_SERVICE_CUT_OVERTRAVEL;
+    x_minus_min = PARTITION_FRAME_PLATE_X0
+        - PARTITION_SERVICE_CUT_OVERTRAVEL;
+    x_minus_max = WALL + PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH
+        + PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE;
+    y_minus_min = PARTITION_FRAME_PLATE_Y0
+        - PARTITION_SERVICE_CUT_OVERTRAVEL;
+    y_minus_max = WALL + PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH
+        + PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE;
+    y_plus_min = H - WALL - PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH
+        - PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE;
+    y_plus_max = PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
+        + PARTITION_SERVICE_CUT_OVERTRAVEL;
+
+    for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) {
+        partition_frame_mount_insertion_relief_axis(
+            "x", x_plus_min, x_plus_max, 0, mount_y
+        );
+    }
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) {
+        partition_frame_mount_insertion_relief_axis(
+            "x", x_minus_min, x_minus_max, 0, mount_y
+        );
+    }
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) {
+        partition_frame_mount_insertion_relief_axis(
+            "y", y_minus_min, y_minus_max, mount_x, 0
+        );
+        partition_frame_mount_insertion_relief_axis(
+            "y", y_plus_min, y_plus_max, mount_x, 0
+        );
+    }
+}
+
+module partition_service_opening_box(x0, x1, y0, y1) {
+    // Keep the coordinates in the same XY datum as the plate.  The previous
+    // version used only the box dimensions, so every service cut silently
+    // started at the world origin and made the opening larger/asymmetric.
+    translate([x0, y0, WORLD_PARTITION_BACK_Z - EPS])
+        cube([
+            x1 - x0,
+            y1 - y0,
+            WORLD_PARTITION_T + 2 * EPS
+        ]);
+}
+
+module partition_service_mount_keep_zones() {
+    // The x- and y- service cuts are kept open except for broad, repeated
+    // load-bearing bridges around every sleeve pair.  These bridges are
+    // intentionally wider than the two cover side arms and are later
+    // relieved by the exact insertion slots.
+    for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS)
+        translate([
+            mount_x - PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH,
+            PARTITION_SERVICE_Y_MINUS_OPEN_Y0 - EPS,
+            WORLD_PARTITION_BACK_Z - 2 * EPS
+        ])
+            cube([
+                2 * PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH,
+                PARTITION_SERVICE_Y_MINUS_OPEN_H + 2 * EPS,
+                WORLD_PARTITION_T + 4 * EPS
+            ]);
+    for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS)
+        translate([
+            PARTITION_SERVICE_X_MINUS_OPEN_X0 - EPS,
+            mount_y - PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH,
+            WORLD_PARTITION_BACK_Z - 2 * EPS
+        ])
+            cube([
+                PARTITION_SERVICE_X_MINUS_OPEN_W + 2 * EPS,
+                2 * PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH,
+                WORLD_PARTITION_T + 4 * EPS
+            ]);
+}
+
+module partition_service_window_cut() {
+    // Compact, edge-open L passage: narrow enough to preserve a strong web,
+    // continuous enough to pass tools/wiring through the x- side and y-
+    // bottom service zones.  Both boxes over-travel the panel thickness.
+    difference() {
+        union() {
+            partition_service_opening_box(
+                PARTITION_SERVICE_X_MINUS_OPEN_X0,
+                PARTITION_SERVICE_X_MINUS_OPEN_X1,
+                PARTITION_SERVICE_X_MINUS_OPEN_Y0,
+                PARTITION_SERVICE_X_MINUS_OPEN_Y1
+            );
+            partition_service_opening_box(
+                PARTITION_SERVICE_Y_MINUS_OPEN_X0,
+                PARTITION_SERVICE_Y_MINUS_OPEN_X1,
+                PARTITION_SERVICE_Y_MINUS_OPEN_Y0,
+                PARTITION_SERVICE_Y_MINUS_OPEN_Y1
+            );
+        }
+        partition_service_mount_keep_zones();
+    }
+}
+
 module world_partition_plate() {
-    translate([0, 0, WORLD_PARTITION_BACK_Z])
-        cube([W, H, WORLD_PARTITION_T]);
+    translate([
+        PARTITION_FRAME_PLATE_X0,
+        PARTITION_FRAME_PLATE_Y0,
+        WORLD_PARTITION_BACK_Z
+    ])
+        cube([
+            PARTITION_FRAME_PLATE_W,
+            PARTITION_FRAME_PLATE_H,
+            WORLD_PARTITION_T
+        ]);
+}
+
+module partition_frame_plate_with_reliefs() {
+    // Both the compact service passage and the three insertion entries are
+    // true through-cuts.  The arched covers overlap the remaining solid plate
+    // directly; no detached bridge or narrow C neck is rebuilt here.
+    difference() {
+        world_partition_plate();
+        union() {
+            partition_service_window_cut();
+            partition_frame_mount_insertion_relief_slots();
+        }
+    }
 }
 
 module world_bay_grid() {
@@ -2228,6 +2854,9 @@ module clutch_cabinet_frame() {
             cabinet_frame_grid();
             cabinet_frame_front_service_cheek();
             cabinet_frame_front_lower_face();
+            // The cabinet walls carry the partition receivers. They are
+            // separate from the clutch-plate locating bosses on the panel.
+            partition_frame_mount_receiver_bosses();
             // The world preview uses this open frame as its single cabinet
             // carrier. Keep the motor's four round base bosses and Ø5 x 12
             // guide posts in that same canonical mesh; they used to exist
@@ -2290,11 +2919,11 @@ module clutch_cabinet_shell() {
                     cube([W - 2 * WALL, H - 2 * WALL, D - 2 * WALL]);
             }
             snake_motor_mount_bosses();
-            // The internal partition is the load-bearing datum for the
-            // removable center mechanism plate. It is separate from the thin
-            // rear cover and contains the belt passages plus plate support
-            // slots/holes.
-            clutch_partition_with_belt_passages();
+            // The front/rear partition is a separate printed part.  Keeping
+            // its D cover out of the box STL prevents coincident mating faces
+            // with the fixed wall receiver; the assembly preview still places
+            // the two canonical parts together.
+            partition_frame_mount_receiver_bosses();
             vertical_spline_bearing_floor_bosses();
             vertical_spline_bearing_upper_roof_bosses();
         }
@@ -2308,8 +2937,8 @@ module clutch_partition_with_belt_passages() {
     cabinet_frame_partition_with_belt_passage();
 }
 
-// The full-size XY plate at the rear edge of the drawer bay is the fixed
-// front/rear compartment partition. It is not the thin removable rear panel
+// The inner-opening-sized XY plate at the rear edge of the drawer bay is the
+// fixed front/rear compartment partition. It is not the thin removable rear panel
 // at z=-D: the rear service cavity behind this partition remains open through
 // the outer frame. Every drawer cell has its own true belt passage and the
 // same four-corner Boss mounting datum; the center cell is the 2GT first
@@ -2317,7 +2946,10 @@ module clutch_partition_with_belt_passages() {
 module cabinet_frame_partition_with_belt_passage() {
     difference() {
         union() {
-            world_partition_plate();
+            partition_frame_plate_with_reliefs();
+            // The four corner collars are part of this one removable partition STL;
+            // their bores are cut below so the cabinet pins can enter them.
+            partition_frame_mount_sleeve_outers();
             // Repeat the same relative Boss pattern in every one of the 15
             // drawer cells. The center mechanism plate is the reference
             // geometry; the other cells receive the same mounting datums.
@@ -2330,6 +2962,7 @@ module cabinet_frame_partition_with_belt_passage() {
         // fifteen windows use the center cell's normalized relative Y datum.
         // The final rear panel is not part of these cuts.
         all_drawer_belt_partition_windows();
+        partition_frame_mount_sleeve_bores();
     }
 }
 
@@ -2452,6 +3085,17 @@ module power_bus() {
 // world-coordinate helpers
 // makes the carrier consume the same station datums as the rotors.
 include <cabinet_clutch_carrier.scad>
+
+// The x+ / y- receiver is centered in the actual open gap between the
+// lowest two rear clutch row plates.  Define it only after the carrier include
+// so the position is derived from center_clutch_plate_y0/y1 rather than from a
+// duplicated height constant.  The x- wall intentionally keeps its separate
+// lower service-perimeter position above.
+PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS = [
+    (center_clutch_plate_y1(0) + center_clutch_plate_y0(1)) / 2,
+    PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
+        - PARTITION_FRAME_MOUNT_EDGE_MARGIN
+];
 
 // The snake-chain service runs use the bottom edge of the open male-sleeve
 // magnet as their vertical datum.  The chain source is authored in XZ and is
@@ -3161,93 +3805,6 @@ module selected_vertical_spline_support_partition_window_collision_part() {
 }
 
 //#region 公开 API：离合与抽屉取力
-module clutch_upper_carrier(col, row, engaged = false, include_screw = false) {
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    upper_y = clutch_upper_y(row, engaged);
-    upper_dog_y = clutch_upper_dog_y(row, engaged);
-
-    // Axis-Z upper gear: its teeth stay in the vertical (+Y) rack. A short
-    // carrier stem links this wheel to the downward dog face.
-    color(COLOR_GEAR)
-        spur_gear_z(
-            x,
-            upper_y,
-            z,
-            CLUTCH_GEAR_TEETH,
-            CLUTCH_PITCH_MM,
-            CLUTCH_GEAR_TOOTH_DEPTH,
-            CLUTCH_GEAR_T,
-            ROD_D + 2 * ROD_CLEARANCE
-        );
-    color(COLOR_DOG)
-        dog_face_y(x, upper_dog_y, z, CLUTCH_DOG_TEETH, false);
-    color(COLOR_SHAFT)
-        cylinder_y(
-            x,
-            upper_dog_y + CLUTCH_DOG_T / 2,
-            z,
-            CLUTCH_HUB_D,
-            CLUTCH_CARRIER_STEM_H
-        );
-
-    if (include_screw)
-        t_countersunk_screw_y(x, z, clutch_screw_top_y(row, engaged));
-}
-
-module clutch_lower_takeoff(col, row) {
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    fixed_y = clutch_fixed_dog_y(row);
-    takeoff_pulley_y = clutch_takeoff_pulley_y(row);
-
-    // Fixed lower dog presents its teeth upward. The timing pulley is a second
-    // coaxial layer below it; both layers are on the same vertical (+Y) axis.
-    color(COLOR_DOG)
-        dog_face_y(x, fixed_y, z, CLUTCH_DOG_TEETH, true);
-    color(COLOR_TIMING)
-        timing_pulley_y(x, takeoff_pulley_y, z, TIMING_TEETH, "round");
-    color(COLOR_SHAFT)
-        cylinder_y(
-            x,
-            takeoff_pulley_y - TIMING_PULLEY_W / 2 - 0.25,
-            z,
-            ROD_D,
-            fixed_y - takeoff_pulley_y
-                    + CLUTCH_DOG_T / 2 + TIMING_PULLEY_W / 2 + 0.50
-        );
-}
-
-module clutch_spring_only(col, row, engaged = false) {
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    fixed_y = clutch_fixed_dog_y(row);
-    upper_dog_y = clutch_upper_dog_y(row, engaged);
-    spring_bottom = fixed_y + CLUTCH_DOG_T / 2 + 0.30;
-    spring_open_top = upper_dog_y - CLUTCH_DOG_T / 2 - 0.30;
-    spring_top = engaged ? spring_bottom + CLUTCH_SPRING_MIN_H : spring_open_top;
-
-    color(COLOR_SPRING)
-        compression_spring_y(x, spring_bottom, spring_top, z);
-}
-
-module clutch_spring_and_screw(col, row, engaged = false) {
-    clutch_spring_only(col, row, engaged);
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    t_countersunk_screw_y(x, z, clutch_screw_top_y(row, engaged));
-}
-
-module clutch_station(col, row, engaged = false, detail = false) {
-    clutch_upper_carrier(col, row, engaged, false);
-    clutch_lower_takeoff(col, row);
-    clutch_spring_and_screw(col, row, engaged);
-
-    if (detail)
-        color(COLOR_FORK, 0.12)
-            clutch_fork(col, row, engaged);
-}
-
 // Finished CH1 03C pair embedded in the cabinet's center cell. The input male
 // child is below and moves along +Y into the fixed output female mother above.
 // Both bodies use the same +Z-shifted parallel axis, while the existing long
@@ -3310,127 +3867,54 @@ module all_clutches() {
             if (!is_center_gt2_station(col, row))
                 center_station_clutch_instance(col, row, false);
 
-    // The old 24 stations stay available behind an explicit review switch,
-    // but are intentionally absent from the default physical-validation view.
-    if (SHOW_LEGACY_STATIONS)
-        for (row = [0:N_ROW - 1])
-            for (col = [0:N_COL - 1])
-                if (!is_center_gt2_station(col, row))
-                    clutch_station(
-                        col,
-                        row,
-                        ENGAGED && col == selected_col() && row == selected_row(),
-                        false
-                    );
-}
-
-module clutch_fork(col, row, engaged = false) {
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    upper_gear_top = clutch_upper_y(row, engaged) + CLUTCH_GEAR_OUTER_R;
-    y = upper_gear_top + (engaged ? FORK_CONTACT : FORK_CLEAR_OPEN);
-    // The fork is a U-shaped pressure shoe with its opening around the rod.
-    color(COLOR_FORK)
-        translate([x - FORK_W / 2, y, z - FORK_D / 2])
-            difference() {
-                cube([FORK_W, FORK_T, FORK_D]);
-                translate([FORK_W / 2 - 2.0, -EPS, -EPS])
-                    cube([4.0, FORK_T + 2 * EPS, FORK_D + 2 * EPS]);
-            }
 }
 
 module drawer_front_belt_at(col, row) {
     x = clutch_col_x(col);
-    if (is_center_gt2_station(col, row))
-        color(COLOR_BELT, 0.18)
-            center_gt2_belt_loop_z(
-                x,
-                center_gt2_z(),
-                CENTER_GT2_FRONT_PULLEY_Z,
-                center_gt2_belt_y(row)
-            );
-    else
-        color(COLOR_BELT, 0.14)
-            belt_loop_z(
-                x,
-                DRIVE_AXIS_Z,
-                FRONT_PULLEY_Z,
-                drawer_belt_y(row)
-            );
+    color(COLOR_BELT, 0.18)
+        center_gt2_belt_loop_z(
+            x,
+            center_gt2_z(),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_belt_y(row)
+        );
 }
 
 module drawer_front_pulley_at(col, row) {
     x = clutch_col_x(col);
-    if (is_center_gt2_station(col, row))
-        center_gt2_front_pulley_y(
-            x,
-            center_gt2_belt_y(row),
-            CENTER_GT2_FRONT_PULLEY_Z
-        );
-    else
-        color(COLOR_TIMING)
-            timing_pulley_y(
-                x,
-                drawer_belt_y(row),
-                FRONT_PULLEY_Z,
-                TIMING_TEETH,
-                "round"
-            );
+    center_gt2_front_pulley_y(
+        x,
+        center_gt2_belt_y(row),
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
 }
 
 module drawer_front_gear_at(col, row) {
     x = clutch_col_x(col);
-    if (is_center_gt2_station(col, row))
-        color(COLOR_GEAR)
-            spur_gear_y(
-                x,
-                center_gt2_front_gear_y(row),
-                CENTER_GT2_FRONT_PULLEY_Z,
-                FRONT_GEAR_TEETH,
-                CLUTCH_PITCH_MM,
-                FRONT_GEAR_TOOTH_DEPTH,
-                FRONT_GEAR_T,
-                ROD_D,
-                "d"
-            );
-    else
-        color(COLOR_GEAR)
-            spur_gear_y(
-                x,
-                drawer_front_gear_y(row),
-                FRONT_PULLEY_Z,
-                FRONT_GEAR_TEETH,
-                CLUTCH_PITCH_MM,
-                FRONT_GEAR_TOOTH_DEPTH,
-                FRONT_GEAR_T
-            );
+    color(COLOR_GEAR)
+        spur_gear_y(
+            x,
+            center_gt2_front_gear_y(row),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            FRONT_GEAR_TEETH,
+            CLUTCH_PITCH_MM,
+            FRONT_GEAR_TOOTH_DEPTH,
+            FRONT_GEAR_T,
+            ROD_D,
+            "d"
+        );
 }
 
 module drawer_front_axis_at(col, row) {
     x = clutch_col_x(col);
-    if (is_center_gt2_station(col, row))
-        color(COLOR_SHAFT)
-            d_rod_y(
-                x,
-                center_gt2_front_d_shaft_start_y(row),
-                CENTER_GT2_FRONT_PULLEY_Z,
-                center_gt2_front_d_shaft_length(row),
-                ROD_D
-            );
-    else {
-        belt_y = drawer_belt_y(row);
-        gear_y = drawer_front_gear_y(row);
-        y0 = min(
-            belt_y - TIMING_PULLEY_W / 2 - 0.25,
-            gear_y - FRONT_GEAR_T / 2 - 0.25
+    color(COLOR_SHAFT)
+        d_rod_y(
+            x,
+            center_gt2_front_d_shaft_start_y(row),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_front_d_shaft_length(row),
+            ROD_D
         );
-        y1 = max(
-            belt_y - TIMING_PULLEY_W / 2 - 0.25,
-            gear_y - FRONT_GEAR_T / 2 - 0.25
-        );
-        color(COLOR_SHAFT)
-            cylinder_y(x, y0, FRONT_PULLEY_Z, CLUTCH_HUB_D, y1 - y0 + 0.50);
-    }
 }
 
 module drawer_front_compound(col, row) {
@@ -3445,11 +3929,11 @@ module drawer_front_drive(col, row) {
     drawer_front_compound(col, row);
     horizontal_drawer_rack(
         x,
-        WORLD_PARTITION_FRONT_Z + 1.5,
-        FRONT_PULLEY_Z - 3.5,
-        drawer_front_gear_y(row)
+        drawer_rack_z0(),
+        CENTER_GT2_FRONT_PULLEY_Z - 3.5,
+        center_gt2_front_gear_y(row)
     );
-    drawer_front_drive_guide_system(col, row, FRONT_PULLEY_Z);
+    drawer_front_drive_guide_system(col, row, CENTER_GT2_FRONT_PULLEY_Z);
 }
 
 module center_gt2_front_pulley_y(x, belt_y, z, bore = "d") {
@@ -3656,12 +4140,6 @@ module selected_center_output_rotor_part() {
     center_gt2_female(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
-module selected_center_input_carriage_part() {
-    // Retained only as an empty compatibility entry point. The current male
-    // end has no printed carriage; its shaft slides directly in the fixed
-    // integral LM3UU seat in the mechanism plate.
-}
-
 module selected_center_input_sleeve_part() {
     center_clutch_input_sleeve(
         CENTER_GT2_COL,
@@ -3684,32 +4162,12 @@ module selected_center_output_bearing_bar_part() {
     center_clutch_output_bearing_bar_y(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
-module selected_center_guide_rails_part() {
-    center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
-}
-
 module selected_center_linear_bearings_part() {
     center_clutch_linear_bearings(
         CENTER_GT2_COL,
         CENTER_GT2_ROW,
         false
     );
-}
-
-module selected_center_linear_bearing_retainers_part() {
-    center_clutch_linear_bearing_retainers(
-        CENTER_GT2_COL,
-        CENTER_GT2_ROW,
-        ENGAGED
-    );
-}
-
-module selected_center_linear_bearing_fit_coupon_part() {
-    center_clutch_linear_bearing_fit_coupon();
-}
-
-module selected_center_stops_part() {
-    center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
 module selected_center_mechanism_plate_part() {
@@ -3725,6 +4183,162 @@ module selected_center_mechanism_plate_part() {
 // as a second installed partition in the default assembly.
 module selected_cabinet_partition_part() {
     cabinet_frame_partition_with_belt_passage();
+}
+
+// Diagnostic-only split views for the new wall-normal partition interface.
+// The installed assembly still owns exactly one frame and one partition STL;
+// these selectors are only for a section/fit inspection.
+module selected_partition_mount_receivers_part() {
+    partition_frame_mount_receiver_bosses();
+}
+
+function partition_mount_detail_wall(detail) =
+    detail < 2
+        ? "x+"
+        : (detail < 4
+            ? "x-"
+            : (detail < 6 ? "y-" : "y+"));
+function partition_mount_detail_axis(detail) = detail < 4 ? "x" : "y";
+function partition_mount_detail_direction(detail) =
+    detail < 2 || detail >= 6 ? -1 : 1;
+function partition_mount_detail_center_x(detail) =
+    detail < 4
+        ? 0
+        : (detail < 6
+            ? PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS[detail - 4]
+            : PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS[detail - 6]);
+function partition_mount_detail_center_y(detail) =
+    detail < 4
+        ? (detail < 2
+            ? PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS[detail % 2]
+            : PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS[detail % 2])
+        : 0;
+function partition_mount_detail_receiver_start(detail) =
+    partition_mount_detail_wall(detail) == "x+"
+        ? W - WALL + EPS
+        : (partition_mount_detail_wall(detail) == "x-"
+            ? WALL - EPS
+            : (partition_mount_detail_wall(detail) == "y-"
+                ? WALL - EPS
+                : H - WALL + EPS));
+function partition_mount_detail_cover_start(detail) =
+    partition_frame_mount_cover_axis_start(
+        partition_mount_detail_wall(detail)
+    );
+
+module selected_partition_mount_receiver_detail_part() {
+    // Detail mapping: 0/1=x+ low/high Y, 2/3=x- low/high Y,
+    // 4/5=y- low/high X, 6/7=y+ low/high X.
+    partition_frame_mount_receiver_axis(
+        partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_receiver_start(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL)
+    );
+}
+
+module selected_partition_mount_sleeves_part() {
+    difference() {
+        union() {
+            partition_frame_plate_with_reliefs();
+            partition_frame_mount_sleeve_outers();
+        }
+        partition_frame_mount_sleeve_bores();
+    }
+}
+
+module selected_partition_mount_sleeve_detail_part() {
+    // Show one mating cover without the plate hiding the interface.  The
+    // eight detail indices use the same wall/position mapping as receivers.
+    difference() {
+        partition_frame_mount_sleeve_outer_axis(
+            partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_cover_start(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL)
+        );
+        partition_frame_mount_sleeve_bore_axis(
+            partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_cover_start(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+            partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL)
+        );
+    }
+}
+
+module selected_partition_mount_sleeve_support_ribs_detail_part() {
+    partition_frame_mount_sleeve_support_rib_axis(
+        partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_cover_start(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL),
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+    );
+    partition_frame_mount_sleeve_support_rib_axis(
+        partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_cover_start(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL),
+        -PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_OFFSET
+    );
+}
+
+module selected_partition_mount_round_sleeve_detail_part() {
+    partition_frame_mount_round_sleeve_reference_axis(
+        partition_mount_detail_axis(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_cover_start(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_direction(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_x(PARTITION_MOUNT_DETAIL),
+        partition_mount_detail_center_y(PARTITION_MOUNT_DETAIL)
+    );
+}
+
+module selected_partition_mount_mechanism_collision_part() {
+    intersection() {
+        union() {
+            partition_frame_mount_receiver_bosses();
+            partition_frame_mount_sleeve_outers();
+        }
+        union() {
+            center_clutch_mechanism_row_plates();
+            all_vertical_axes();
+            power_column_sync_belts();
+            world_drawer_ghosts();
+        }
+    }
+}
+
+module selected_partition_mount_detail_mechanism_collision_part() {
+    // Per-mount diagnostic used by the geometry audit to identify which of the
+    // eight wall positions, if any, enters an active rear mechanism envelope.
+    intersection() {
+        union() {
+            selected_partition_mount_receiver_detail_part();
+            selected_partition_mount_sleeve_detail_part();
+            selected_partition_mount_sleeve_support_ribs_detail_part();
+        }
+        union() {
+            center_clutch_mechanism_row_plates();
+            all_vertical_axes();
+            power_column_sync_belts();
+            world_drawer_ghosts();
+        }
+    }
+}
+
+module selected_partition_mount_insertion_collision_part() {
+    // The receiver must never intersect the plate body during the +Z slide.
+    // The full-round sleeve is intentionally excluded: it is the mating
+    // collar, while this witness checks the newly cut insertion reliefs.
+    intersection() {
+        partition_frame_mount_receiver_bosses();
+        partition_frame_plate_with_reliefs();
+    }
 }
 
 // Collision witness for the first-article audit. The service plate sits in
@@ -3773,61 +4387,6 @@ module selected_center_clutch_pair_collision_part() {
     }
 }
 
-module selected_center_carriage_rail_collision_part() {
-    intersection() {
-        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
-        center_clutch_input_carriage(
-            CENTER_GT2_COL,
-            CENTER_GT2_ROW,
-            ENGAGED
-        );
-    }
-}
-
-module selected_center_input_rotor_carriage_collision_part() {
-    intersection() {
-        center_gt2_male(CENTER_GT2_COL, CENTER_GT2_ROW, ENGAGED);
-        center_clutch_input_carriage(
-            CENTER_GT2_COL,
-            CENTER_GT2_ROW,
-            ENGAGED
-        );
-    }
-}
-
-module selected_center_stops_carriage_collision_part() {
-    intersection() {
-        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
-        center_clutch_input_carriage(
-            CENTER_GT2_COL,
-            CENTER_GT2_ROW,
-            ENGAGED
-        );
-    }
-}
-
-// The retainer caps travel with the input carriage, but they extend past the
-// carriage stop shoe.  Keep this witness separate from the carriage witness:
-// a cap/stop collision is a real hard bind even when the carrier body itself
-// only touches the designed stop face.
-module selected_center_stops_retainer_collision_part() {
-    intersection() {
-        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
-        center_clutch_linear_bearing_retainers(
-            CENTER_GT2_COL,
-            CENTER_GT2_ROW,
-            ENGAGED
-        );
-    }
-}
-
-module selected_center_guide_stop_collision_part() {
-    intersection() {
-        center_clutch_guide_rails(CENTER_GT2_COL, CENTER_GT2_ROW);
-        center_clutch_stops(CENTER_GT2_COL, CENTER_GT2_ROW);
-    }
-}
-
 module selected_center_input_shaft_part() {
     center_clutch_input_shaft(
         CENTER_GT2_COL,
@@ -3840,205 +4399,62 @@ module selected_center_output_shaft_part() {
     center_clutch_output_shaft(CENTER_GT2_COL, CENTER_GT2_ROW);
 }
 
-module selected_center_input_bearings_part() {
-    center_clutch_input_bearings(
-        CENTER_GT2_COL,
-        CENTER_GT2_ROW,
-        ENGAGED
-    );
-}
-
 module selected_center_output_bearings_part() {
     center_clutch_output_bearings(CENTER_GT2_COL, CENTER_GT2_ROW);
-}
-
-module selected_upper_clutch_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_male(selected_col(), selected_row(), ENGAGED);
-    else
-        clutch_upper_carrier(selected_col(), selected_row(), ENGAGED, false);
-}
-
-module selected_upper_spur_part() {
-    col = selected_col();
-    row = selected_row();
-    if (is_center_gt2_station(col, row))
-        center_gt2_male(col, row, ENGAGED);
-    else
-        spur_gear_z(
-            clutch_col_x(col),
-            clutch_upper_y(row, ENGAGED),
-            DRIVE_AXIS_Z,
-            CLUTCH_GEAR_TEETH,
-            CLUTCH_PITCH_MM,
-            CLUTCH_GEAR_TOOTH_DEPTH,
-            CLUTCH_GEAR_T,
-            ROD_D + 2 * ROD_CLEARANCE
-        );
-}
-
-module selected_upper_dog_part() {
-    col = selected_col();
-    row = selected_row();
-    if (is_center_gt2_station(col, row))
-        center_gt2_male(col, row, ENGAGED);
-    else
-        dog_face_y(
-            clutch_col_x(col),
-            clutch_upper_dog_y(row, ENGAGED),
-            DRIVE_AXIS_Z,
-            CLUTCH_DOG_TEETH,
-            false
-        );
-}
-
-module selected_lower_takeoff_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_female(selected_col(), selected_row());
-    else
-        clutch_lower_takeoff(selected_col(), selected_row());
-}
-
-module selected_lower_dog_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_female(selected_col(), selected_row());
-    else
-        dog_face_y(
-            clutch_col_x(selected_col()),
-            clutch_fixed_dog_y(selected_row()),
-            DRIVE_AXIS_Z,
-            CLUTCH_DOG_TEETH,
-            true
-        );
-}
-
-module selected_rear_pulley_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_female(selected_col(), selected_row());
-    else
-        timing_pulley_y(
-            clutch_col_x(selected_col()),
-            clutch_takeoff_pulley_y(selected_row()),
-            DRIVE_AXIS_Z,
-            TIMING_TEETH,
-            "round"
-        );
-}
-
-module selected_spring_part() {
-    if (!is_center_gt2_station(selected_col(), selected_row()))
-        clutch_spring_only(selected_col(), selected_row(), ENGAGED);
-}
-
-module selected_screw_part() {
-    col = selected_col();
-    row = selected_row();
-    if (!is_center_gt2_station(col, row))
-        t_countersunk_screw_y(
-            clutch_col_x(col),
-            DRIVE_AXIS_Z,
-            clutch_screw_top_y(row, ENGAGED)
-        );
-}
-
-module selected_fork_part() {
-    if (!is_center_gt2_station(selected_col(), selected_row()))
-        clutch_fork(selected_col(), selected_row(), ENGAGED);
 }
 
 module selected_drawer_belt_part() {
     col = selected_col();
     row = selected_row();
     color(COLOR_BELT, 0.18)
-        if (is_center_gt2_station(col, row))
-            center_gt2_belt_loop_z(
-                clutch_col_x(col),
-                center_gt2_z(),
-                CENTER_GT2_FRONT_PULLEY_Z,
-                center_gt2_belt_y(row)
-            );
-        else
-            belt_loop_z(
-                clutch_col_x(col),
-                DRIVE_AXIS_Z,
-                FRONT_PULLEY_Z,
-                drawer_belt_y(row)
-            );
+        center_gt2_belt_loop_z(
+            clutch_col_x(col),
+            center_gt2_z(),
+            CENTER_GT2_FRONT_PULLEY_Z,
+            center_gt2_belt_y(row)
+        );
 }
 
 module selected_front_compound_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_front_compound(selected_col(), selected_row());
-    else
-        drawer_front_compound(selected_col(), selected_row());
+    drawer_front_compound(selected_col(), selected_row());
 }
 
 module selected_front_pulley_part() {
-    if (is_center_gt2_station(selected_col(), selected_row()))
-        center_gt2_front_pulley_y(
-            clutch_col_x(selected_col()),
-            center_gt2_belt_y(selected_row()),
-            CENTER_GT2_FRONT_PULLEY_Z
-        );
-    else
-        timing_pulley_y(
-            clutch_col_x(selected_col()),
-            drawer_belt_y(selected_row()),
-            FRONT_PULLEY_Z,
-            TIMING_TEETH,
-            "round"
-        );
+    center_gt2_front_pulley_y(
+        clutch_col_x(selected_col()),
+        center_gt2_belt_y(selected_row()),
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
 }
 
 module selected_front_gear_part() {
     col = selected_col();
     row = selected_row();
-    if (is_center_gt2_station(col, row))
-        spur_gear_y(
-            clutch_col_x(col),
-            center_gt2_front_gear_y(row),
-            CENTER_GT2_FRONT_PULLEY_Z,
-            FRONT_GEAR_TEETH,
-            CLUTCH_PITCH_MM,
-            FRONT_GEAR_TOOTH_DEPTH,
-            FRONT_GEAR_T,
-            ROD_D,
-            "d"
-        );
-    else
-        spur_gear_y(
-            clutch_col_x(col),
-            drawer_front_gear_y(row),
-            FRONT_PULLEY_Z,
-            FRONT_GEAR_TEETH,
-            CLUTCH_PITCH_MM,
-            FRONT_GEAR_TOOTH_DEPTH,
-            FRONT_GEAR_T
-        );
+    spur_gear_y(
+        clutch_col_x(col),
+        center_gt2_front_gear_y(row),
+        CENTER_GT2_FRONT_PULLEY_Z,
+        FRONT_GEAR_TEETH,
+        CLUTCH_PITCH_MM,
+        FRONT_GEAR_TOOTH_DEPTH,
+        FRONT_GEAR_T,
+        ROD_D,
+        "d"
+    );
 }
 
 module selected_drawer_rack_part() {
     row = selected_row();
-    if (is_center_gt2_station(selected_col(), row))
-        horizontal_drawer_rack(
-            clutch_col_x(selected_col()),
-            drawer_rack_z0(),
-            drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
-            center_gt2_front_gear_y(row)
-        );
-    else
-        horizontal_drawer_rack(
-            clutch_col_x(selected_col()),
-            WORLD_PARTITION_FRONT_Z + 1.5,
-            FRONT_PULLEY_Z - 3.5,
-            drawer_front_gear_y(row)
-        );
+    horizontal_drawer_rack(
+        clutch_col_x(selected_col()),
+        drawer_rack_z0(),
+        drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
+        center_gt2_front_gear_y(row)
+    );
     drawer_c_guide_flanges_at(
         selected_col(),
         row,
-        is_center_gt2_station(selected_col(), row)
-            ? CENTER_GT2_FRONT_PULLEY_Z
-            : FRONT_PULLEY_Z
+        CENTER_GT2_FRONT_PULLEY_Z
     );
 }
 
@@ -4145,37 +4561,6 @@ module selected_front_d_axis_part() {
         );
 }
 
-module clutch_detail() {
-    // A selected station is rendered in place.  The migrated center station
-    // is magnetic and has no legacy spring/screw/fork; EXPLODE only separates
-    // the visual reference without changing its mating datums.
-    col = selected_col();
-    row = selected_row();
-    x = clutch_col_x(col);
-    z = DRIVE_AXIS_Z;
-    if (is_center_gt2_station(col, row)) {
-        // Detail mode is a single-station inspection view.  The world
-        // assembly uses the shared row carrier above; this local plate is
-        // intentionally only a diagnostic overlay for the selected station.
-        center_gt2_clutch(col, row, ENGAGED, true);
-        // The center detail contains the current plate with integral seats,
-        // output D-round shaft, D-round-D input shaft/sleeve and the sleeve
-        // magnet interface.  The retired selector shoe/support arm is not
-        // part of the canonical assembly or any one-by-one export.
-    } else if (SHOW_LEGACY_STATIONS)
-        translate([0, 0, -CLUTCH_EXPLODE])
-            clutch_station(col, row, ENGAGED, true);
-    if (CLUTCH_EXPLODE > 0
-        && SHOW_LEGACY_STATIONS
-        && !is_center_gt2_station(col, row))
-        color(COLOR_RACK, 0.45)
-            translate([
-                x - 1.0,
-                clutch_upper_open_y(row) - 1.0,
-                z - CLUTCH_EXPLODE - 1.0
-            ])
-                cube([2.0, 30, 2.0]);
-}
 //#endregion
 
 //#region 公开 API：输出入口
@@ -4186,9 +4571,6 @@ module clutch_scene_geometry() {
         power_bus();
         all_clutches();
         drawer_drive();
-        if (SHOW_LEGACY_STATIONS
-            && !is_center_gt2_station(selected_col(), selected_row()))
-            clutch_fork(selected_col(), selected_row(), ENGAGED);
     } else if (CLUTCH_PART == "cabinet") {
         // Export the shell alone as a watertight printed part; internal panels and
         // drawer ghosts are visual context only and intentionally do not enter it.
@@ -4200,6 +4582,22 @@ module clutch_scene_geometry() {
         // Standalone inspection/reference mesh; cabinet_frame owns the
         // installed copy so this selector is not a second assembly body.
         color(COLOR_CABINET) selected_cabinet_partition_part();
+    } else if (CLUTCH_PART == "partition_mount_receivers") {
+        selected_partition_mount_receivers_part();
+    } else if (CLUTCH_PART == "partition_mount_receiver_detail") {
+        selected_partition_mount_receiver_detail_part();
+    } else if (CLUTCH_PART == "partition_mount_sleeves") {
+        selected_partition_mount_sleeves_part();
+    } else if (CLUTCH_PART == "partition_mount_sleeve_detail") {
+        selected_partition_mount_sleeve_detail_part();
+    } else if (CLUTCH_PART == "partition_mount_round_sleeve_detail") {
+        selected_partition_mount_round_sleeve_detail_part();
+    } else if (CLUTCH_PART == "partition_mount_mechanism_collision") {
+        selected_partition_mount_mechanism_collision_part();
+    } else if (CLUTCH_PART == "partition_mount_detail_mechanism_collision") {
+        selected_partition_mount_detail_mechanism_collision_part();
+    } else if (CLUTCH_PART == "partition_mount_insertion_collision") {
+        selected_partition_mount_insertion_collision_part();
     } else if (CLUTCH_PART == "cabinet_context") {
         // Compatibility alias: the context now uses the same single canonical
         // frame, with optional drawer ghosts, instead of a second wire shell.
@@ -4214,8 +4612,6 @@ module clutch_scene_geometry() {
         selected_center_station_template_assembly_part();
     } else if (CLUTCH_PART == "clutch") {
         all_clutches();
-    } else if (CLUTCH_PART == "clutch_detail") {
-        clutch_detail();
     } else if (CLUTCH_PART == "motor") {
         power_motor_vertical();
     } else if (CLUTCH_PART == "motor_body") {
@@ -4252,20 +4648,10 @@ module clutch_scene_geometry() {
         selected_center_input_sleeve_part();
     } else if (CLUTCH_PART == "center_input_sleeve_magnet") {
         selected_center_input_sleeve_magnet_part();
-    } else if (CLUTCH_PART == "center_input_carriage") {
-        selected_center_input_carriage_part();
     } else if (CLUTCH_PART == "center_output_bearing_bar") {
         selected_center_output_bearing_bar_part();
-    } else if (CLUTCH_PART == "center_guide_rails") {
-        selected_center_guide_rails_part();
     } else if (CLUTCH_PART == "center_linear_bearings") {
         selected_center_linear_bearings_part();
-    } else if (CLUTCH_PART == "center_linear_bearing_retainers") {
-        selected_center_linear_bearing_retainers_part();
-    } else if (CLUTCH_PART == "center_linear_bearing_fit_coupon") {
-        selected_center_linear_bearing_fit_coupon_part();
-    } else if (CLUTCH_PART == "center_stops") {
-        selected_center_stops_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
         selected_center_mechanism_plate_part();
     } else if (CLUTCH_PART == "center_plate_belt_collision") {
@@ -4282,45 +4668,15 @@ module clutch_scene_geometry() {
         selected_vertical_spline_support_partition_window_collision_part();
     } else if (CLUTCH_PART == "center_clutch_pair_collision") {
         selected_center_clutch_pair_collision_part();
-    } else if (CLUTCH_PART == "center_carriage_rail_collision") {
-        selected_center_carriage_rail_collision_part();
-    } else if (CLUTCH_PART == "center_input_rotor_carriage_collision") {
-        selected_center_input_rotor_carriage_collision_part();
-    } else if (CLUTCH_PART == "center_stops_carriage_collision") {
-        selected_center_stops_carriage_collision_part();
-    } else if (CLUTCH_PART == "center_stops_retainer_collision") {
-        selected_center_stops_retainer_collision_part();
-    } else if (CLUTCH_PART == "center_guide_stop_collision") {
-        selected_center_guide_stop_collision_part();
     } else if (CLUTCH_PART == "center_input_shaft") {
         selected_center_input_shaft_part();
     } else if (CLUTCH_PART == "center_output_shaft") {
         selected_center_output_shaft_part();
-    } else if (CLUTCH_PART == "center_input_bearings") {
-        selected_center_input_bearings_part();
     } else if (CLUTCH_PART == "center_output_bearings") {
         selected_center_output_bearings_part();
     } else if (CLUTCH_PART == "contract") {
         // Contract mode intentionally emits no geometry. The machine-readable
         // echo below is parsed by the export helper.
-    } else if (CLUTCH_PART == "upper_clutch") {
-        selected_upper_clutch_part();
-    } else if (CLUTCH_PART == "upper_spur") {
-        selected_upper_spur_part();
-    } else if (CLUTCH_PART == "upper_dog") {
-        selected_upper_dog_part();
-    } else if (CLUTCH_PART == "lower_takeoff") {
-        selected_lower_takeoff_part();
-    } else if (CLUTCH_PART == "lower_dog") {
-        selected_lower_dog_part();
-    } else if (CLUTCH_PART == "rear_pulley") {
-        selected_rear_pulley_part();
-    } else if (CLUTCH_PART == "spring") {
-        selected_spring_part();
-    } else if (CLUTCH_PART == "screw") {
-        selected_screw_part();
-    } else if (CLUTCH_PART == "fork") {
-        selected_fork_part();
     } else if (CLUTCH_PART == "drawer_belt") {
         selected_drawer_belt_part();
     } else if (CLUTCH_PART == "front_compound") {
@@ -4671,7 +5027,6 @@ echo(
     "linearBearingBlockMount=mechanism-plate-integral-press-fit",
     "linearBearingModel=LM3UU-cutaway-reference",
     "linearBearingMovesWithInput=false",
-    "linearBearingFitCouponPart=cabinet-clutch/center_linear_bearing_fit_coupon",
     "linearBearingPart=cabinet-clutch/center_linear_bearings_reference",
     "linearBearingBlockPart=cabinet-clutch/center_mechanism_plate",
     str("inputShaftProfile=", GT2_INPUT_SHAFT_PROFILE),
@@ -4835,6 +5190,170 @@ echo(
             + GT2_BELT_RADIAL_CLEARANCE),
     str("partitionBeltPassageAxialClearanceMm=",
         PARTITION_BELT_PASSAGE_WINDOW_AXIAL_CLEAR),
+    str("partitionMountType=", PARTITION_FRAME_MOUNT_TYPE),
+    str("partitionMountScrewEntry=", PARTITION_FRAME_MOUNT_SCREW_ENTRY),
+    str("partitionMountInstallDirection=",
+        PARTITION_FRAME_MOUNT_INSTALL_DIRECTION),
+    str("partitionMountCount=", PARTITION_FRAME_MOUNT_COUNT),
+    str("partitionMountPerSideCount=", PARTITION_FRAME_MOUNT_PER_SIDE_COUNT),
+    str("partitionMountEdgeMarginMm=", PARTITION_FRAME_MOUNT_EDGE_MARGIN),
+    str("partitionMountXSideLowYMm=",
+        PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS[0]),
+    str("partitionMountXSideHighYMm=",
+        PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS[1]),
+    str("partitionMountXPlusLowYMm=",
+        PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS[0]),
+    str("partitionMountXPlusHighYMm=",
+        PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS[1]),
+    str("partitionMountXMinusLowYMm=",
+        PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS[0]),
+    str("partitionMountXMinusHighYMm=",
+        PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS[1]),
+    str("partitionMountYSideLowXMm=",
+        PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS[0]),
+    str("partitionMountYSideHighXMm=",
+        PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS[1]),
+    str("partitionMountScrewAxes=", PARTITION_FRAME_MOUNT_SCREW_ENTRY),
+    str("partitionReferenceReceiverLengthMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_LENGTH),
+    str("partitionReferenceReceiverHeightMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_HEIGHT),
+    str("partitionReferenceReceiverThicknessMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS),
+    str("partitionReferenceReceiverRadiusMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_RADIUS),
+    str("partitionReferenceReceiverStraightMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_STRAIGHT),
+    str("partitionReferenceReceiverHoleDiameterMm=",
+        PARTITION_FRAME_MOUNT_RECEIVER_HOLE_D),
+    str("partitionReferenceReceiverCapDirection=",
+        PARTITION_FRAME_MOUNT_RECEIVER_CAP_DIRECTION),
+    str("partitionReferenceReceiverProfile=",
+        PARTITION_FRAME_MOUNT_RECEIVER_PROFILE),
+    str("partitionReferenceCoverLengthMm=",
+        PARTITION_FRAME_MOUNT_COVER_LENGTH),
+    str("partitionReferenceCoverHeightMm=",
+        PARTITION_FRAME_MOUNT_COVER_HEIGHT),
+    str("partitionReferenceCoverRadiusMm=",
+        PARTITION_FRAME_MOUNT_COVER_RADIUS),
+    str("partitionReferenceCoverInnerRadiusMm=",
+        PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS),
+    str("partitionReferenceCoverStraightMm=",
+        PARTITION_FRAME_MOUNT_COVER_STRAIGHT),
+    str("partitionReferenceCoverBaseDepthMm=",
+        PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH),
+    str("partitionReferenceCoverStepDepthMm=",
+        PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH),
+    str("partitionReferenceCoverTotalDepthMm=",
+        PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH),
+    str("partitionReferenceCoverHoleDiameterMm=",
+        PARTITION_FRAME_MOUNT_COVER_HOLE_D),
+    str("partitionReferenceCoverProfile=",
+        PARTITION_FRAME_MOUNT_COVER_PROFILE),
+    str("partitionReferenceCoverScrewFaceRadiusMm=",
+        PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_RADIUS),
+    str("partitionReferenceCoverScrewFaceStraightMm=",
+        PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_STRAIGHT),
+    str("partitionReferenceCoverScrewFaceProfile=",
+        PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_PROFILE),
+    str("partitionReferenceRoundSleeveOuterDiameterMm=",
+        PARTITION_FRAME_MOUNT_ROUND_SLEEVE_OD),
+    str("partitionReferenceRoundSleeveInnerDiameterMm=",
+        PARTITION_FRAME_MOUNT_ROUND_SLEEVE_ID),
+    str("partitionReferenceRoundSleeveLengthMm=",
+        PARTITION_FRAME_MOUNT_ROUND_SLEEVE_LENGTH),
+    str("partitionReferenceRoundSleeveCollarDepthMm=",
+        PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH),
+    str("partitionMountSleeveEntryProfile=",
+        PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_PROFILE),
+    str("partitionMountSleeveCrossSectionProfile=",
+        PARTITION_FRAME_MOUNT_SLEEVE_CROSS_SECTION_PROFILE),
+    str("partitionMountSleeveMouthProfile=",
+        PARTITION_FRAME_MOUNT_SLEEVE_MOUTH_PROFILE),
+    str("partitionMountSleeveMouthWidthMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH),
+    str("partitionMountSleeveSupportType=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_TYPE),
+    str("partitionMountSleeveSupportArmWidthMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH),
+    str("partitionMountSleeveSupportArmLengthMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH),
+    str("partitionMountSleeveSupportPlateOverlapMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_PLATE_OVERLAP),
+    str("partitionMountSleeveSupportRootOverlapMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ROOT_OVERLAP),
+    str("partitionMountSleeveSupportRibWidthMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH),
+    str("partitionMountSleeveSupportRibTangentClearanceMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE),
+    str("partitionMountSleeveWallMm=",
+        PARTITION_FRAME_MOUNT_COVER_WALL),
+    str("partitionMountSleeveLengthMm=",
+        PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH),
+    str("partitionMountCenterZMm=", PARTITION_FRAME_MOUNT_CENTER_Z),
+    str("partitionFramePlateClearanceMm=",
+        PARTITION_FRAME_PLATE_CLEARANCE),
+    str("partitionFramePlateX0Mm=", PARTITION_FRAME_PLATE_X0),
+    str("partitionFramePlateY0Mm=", PARTITION_FRAME_PLATE_Y0),
+    str("partitionFramePlateWidthMm=", PARTITION_FRAME_PLATE_W),
+    str("partitionFramePlateHeightMm=", PARTITION_FRAME_PLATE_H),
+    str("partitionMountInsertionReliefWidthMm=",
+        PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH),
+    str("partitionMountInsertionReliefType=",
+        PARTITION_FRAME_MOUNT_INSERTION_RELIEF_TYPE),
+    str("partitionMountInsertionReliefDepthMm=",
+        PARTITION_FRAME_MOUNT_INSERTION_RELIEF_DEPTH),
+    str("partitionMountInsertionReliefEndClearanceMm=",
+        PARTITION_FRAME_MOUNT_INSERTION_RELIEF_END_CLEARANCE),
+    str("partitionServiceWindowType=", PARTITION_SERVICE_WINDOW_TYPE),
+    str("partitionServiceWindowX0Mm=", PARTITION_SERVICE_WINDOW_X0),
+    str("partitionServiceWindowX1Mm=", PARTITION_SERVICE_WINDOW_X1),
+    str("partitionServiceWindowY0Mm=", PARTITION_SERVICE_WINDOW_Y0),
+    str("partitionServiceWindowY1Mm=", PARTITION_SERVICE_WINDOW_Y1),
+    str("partitionServiceWindowWidthMm=", PARTITION_SERVICE_WINDOW_W),
+    str("partitionServiceWindowHeightMm=", PARTITION_SERVICE_WINDOW_H),
+    str("partitionServiceWindowCornerRadiusMm=",
+        PARTITION_SERVICE_WINDOW_CORNER_R),
+    str("partitionServiceCutOvertravelMm=",
+        PARTITION_SERVICE_CUT_OVERTRAVEL),
+    str("partitionServiceXMinusOpenX0Mm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_X0),
+    str("partitionServiceXMinusOpenX1Mm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_X1),
+    str("partitionServiceXMinusOpenY0Mm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_Y0),
+    str("partitionServiceXMinusOpenY1Mm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_Y1),
+    str("partitionServiceXMinusOpenWidthMm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_W),
+    str("partitionServiceXMinusOpenHeightMm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_H),
+    str("partitionServiceYMinusOpenX0Mm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_X0),
+    str("partitionServiceYMinusOpenX1Mm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_X1),
+    str("partitionServiceYMinusOpenY0Mm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_Y0),
+    str("partitionServiceYMinusOpenY1Mm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_Y1),
+    str("partitionServiceYMinusOpenWidthMm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_W),
+    str("partitionServiceYMinusOpenHeightMm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_H),
+    str("partitionServiceXMinusOpenCornerRadiusMm=",
+        PARTITION_SERVICE_X_MINUS_OPEN_CORNER_R),
+    str("partitionServiceYMinusOpenCornerRadiusMm=",
+        PARTITION_SERVICE_Y_MINUS_OPEN_CORNER_R),
+    str("partitionServiceMountPierHalfWidthMm=",
+        PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH),
+    str("partitionServiceRemainingGridWebXMm=",
+        PARTITION_SERVICE_REMAINING_GRID_WEB_X),
+    str("partitionServiceRemainingGridWebYMm=",
+        PARTITION_SERVICE_REMAINING_GRID_WEB_Y),
+    str("partitionSleeveFrontOverlapMm=",
+        PARTITION_FRAME_MOUNT_SLEEVE_FRONT_OVERLAP),
+    "partitionMountLoadPath=cabinet-wall-receiver-to-partition-sleeve",
+    "partitionMountPanelRole=locating-sleeve-and-clamped-independent-panel",
     "plateSupport=partition-boss-locators-plus-four-self-tapping-screws",
     "actuation=permanent-magnet",
     "engageOnlyWhenStopped=true",
@@ -4854,12 +5373,18 @@ assert(
     || CLUTCH_PART == "cabinet"
     || CLUTCH_PART == "cabinet_frame"
     || CLUTCH_PART == "cabinet_partition"
+    || CLUTCH_PART == "partition_mount_receivers"
+    || CLUTCH_PART == "partition_mount_receiver_detail"
+    || CLUTCH_PART == "partition_mount_sleeves"
+    || CLUTCH_PART == "partition_mount_sleeve_detail"
+    || CLUTCH_PART == "partition_mount_mechanism_collision"
+    || CLUTCH_PART == "partition_mount_detail_mechanism_collision"
+    || CLUTCH_PART == "partition_mount_insertion_collision"
     || CLUTCH_PART == "cabinet_context"
     || CLUTCH_PART == "power_bus"
     || CLUTCH_PART == "all_vertical_axes"
     || CLUTCH_PART == "drawer_drive"
     || CLUTCH_PART == "clutch"
-    || CLUTCH_PART == "clutch_detail"
     || CLUTCH_PART == "motor"
     || CLUTCH_PART == "motor_body"
     || CLUTCH_PART == "motor_shaft"
@@ -4879,13 +5404,8 @@ assert(
     || CLUTCH_PART == "center_output_rotor"
     || CLUTCH_PART == "center_input_sleeve"
     || CLUTCH_PART == "center_input_sleeve_magnet"
-    || CLUTCH_PART == "center_input_carriage"
     || CLUTCH_PART == "center_output_bearing_bar"
-    || CLUTCH_PART == "center_guide_rails"
     || CLUTCH_PART == "center_linear_bearings"
-    || CLUTCH_PART == "center_linear_bearing_retainers"
-    || CLUTCH_PART == "center_linear_bearing_fit_coupon"
-    || CLUTCH_PART == "center_stops"
     || CLUTCH_PART == "center_mechanism_plate"
     || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_partition_belt_collision"
@@ -4894,25 +5414,10 @@ assert(
     || CLUTCH_PART == "vertical_spline_upper_carrier_drive_collision"
     || CLUTCH_PART == "vertical_spline_support_partition_window_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
-    || CLUTCH_PART == "center_carriage_rail_collision"
-    || CLUTCH_PART == "center_input_rotor_carriage_collision"
-    || CLUTCH_PART == "center_stops_carriage_collision"
-    || CLUTCH_PART == "center_stops_retainer_collision"
-    || CLUTCH_PART == "center_guide_stop_collision"
     || CLUTCH_PART == "center_input_shaft"
     || CLUTCH_PART == "center_output_shaft"
-    || CLUTCH_PART == "center_input_bearings"
     || CLUTCH_PART == "center_output_bearings"
     || CLUTCH_PART == "contract"
-    || CLUTCH_PART == "upper_clutch"
-    || CLUTCH_PART == "upper_spur"
-    || CLUTCH_PART == "upper_dog"
-    || CLUTCH_PART == "lower_takeoff"
-    || CLUTCH_PART == "lower_dog"
-    || CLUTCH_PART == "rear_pulley"
-    || CLUTCH_PART == "spring"
-    || CLUTCH_PART == "screw"
-    || CLUTCH_PART == "fork"
     || CLUTCH_PART == "drawer_belt"
     || CLUTCH_PART == "front_compound"
     || CLUTCH_PART == "front_pulley"
@@ -4929,7 +5434,6 @@ assert(
     || CLUTCH_PART == "front_d_axis"
     || CLUTCH_PART == "world_axes"
 );
-assert(abs(CLUTCH_OPEN_GAP - 2 * CLUTCH_DOG_TOOTH_H) < 0.001, "open clutch gap must be two dog tooth heights");
 assert(abs(TIMING_BELT_W - TIMING_PULLEY_W) < 0.001,
     "timing belt axial width must match the mating pulley width along world Y");
 assert(abs((TIMING_BELT_BASE_OUTER_R - TIMING_BELT_BASE_INNER_R) - TIMING_BELT_T) < 0.001,
@@ -4952,6 +5456,171 @@ assert(CENTER_GT2_BELT_CENTER_DISTANCE > 0,
     "center 2GT belt center distance must be positive");
 assert(CENTER_GT2_Z > DRIVE_AXIS_Z,
     "center clutch axis must be on the vertical shaft +Z side");
+    assert(PARTITION_FRAME_MOUNT_COUNT == 8
+        && PARTITION_FRAME_MOUNT_PER_SIDE_COUNT == 2
+        && len(PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS) == 2
+        && len(PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS) == 2
+        && len(PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS) == 2,
+    "partition must use two paired receivers on all four walls");
+assert(PARTITION_MOUNT_DETAIL >= 0 && PARTITION_MOUNT_DETAIL <= 7,
+    "partition mount detail selector must address all eight wall ears");
+assert(PARTITION_FRAME_MOUNT_SCREW_ENTRY == "-X,+X,+Y,-Y"
+        && PARTITION_FRAME_MOUNT_INSTALL_DIRECTION == "+Z",
+    "partition mount screw axes must cover x+/x-/y-/y+ and insertion must be +Z");
+assert(abs(
+    PARTITION_FRAME_MOUNT_RECEIVER_LENGTH
+        - (PARTITION_FRAME_MOUNT_RECEIVER_RADIUS
+            + PARTITION_FRAME_MOUNT_RECEIVER_STRAIGHT)
+) < EPS
+    && abs(
+        PARTITION_FRAME_MOUNT_RECEIVER_HEIGHT
+            - 2 * PARTITION_FRAME_MOUNT_RECEIVER_RADIUS
+    ) < EPS
+    && PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS == 3.0
+    && PARTITION_FRAME_MOUNT_RECEIVER_HOLE_D == 2.4
+    && PARTITION_FRAME_MOUNT_RECEIVER_CAP_DIRECTION == "-Z"
+    && PARTITION_FRAME_MOUNT_RECEIVER_PROFILE
+        == "D-r3-straight9-through-hole2p4",
+    "SKP receiver must retain its exact 12x6x3 mm D profile and through hole");
+assert(abs(
+    PARTITION_FRAME_MOUNT_COVER_LENGTH
+        - (PARTITION_FRAME_MOUNT_COVER_RADIUS
+            + PARTITION_FRAME_MOUNT_COVER_STRAIGHT)
+) < EPS
+    && abs(
+        PARTITION_FRAME_MOUNT_COVER_HEIGHT
+            - 2 * PARTITION_FRAME_MOUNT_COVER_RADIUS
+    ) < EPS
+    && PARTITION_FRAME_MOUNT_COVER_INNER_RADIUS
+        == PARTITION_FRAME_MOUNT_RECEIVER_RADIUS
+    && PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH
+        == PARTITION_FRAME_MOUNT_RECEIVER_THICKNESS
+    && PARTITION_FRAME_MOUNT_COVER_BASE_DEPTH == 3.0
+    && PARTITION_FRAME_MOUNT_COVER_STEP_DEPTH == 2.0
+    && PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH == 5.0
+    && PARTITION_FRAME_MOUNT_COVER_HOLE_D == 3.0
+    && PARTITION_FRAME_MOUNT_COVER_PROFILE
+        == "open-D-ring-r5-inner-r3-plus-full-outer-D-backplate-r5-hole3"
+    && PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_RADIUS
+        == PARTITION_FRAME_MOUNT_COVER_RADIUS
+    && PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_STRAIGHT
+        == PARTITION_FRAME_MOUNT_COVER_STRAIGHT
+    && PARTITION_FRAME_MOUNT_COVER_SCREW_FACE_PROFILE
+        == "full-outer-D-backplate-r5-straight9-hole3",
+    "SKP cover must retain its exact 14x10x5 mm open-ring plus full outer-D screw face");
+assert(PARTITION_FRAME_MOUNT_ROUND_SLEEVE_OD == 5.0
+    && PARTITION_FRAME_MOUNT_ROUND_SLEEVE_ID == 3.0
+    && PARTITION_FRAME_MOUNT_ROUND_SLEEVE_LENGTH == 7.0
+    && PARTITION_FRAME_MOUNT_ROUND_SLEEVE_COLLAR_DEPTH == 2.0,
+    "SKP round sleeve reference must retain OD5 ID3 length7 collar2");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_CROSS_SECTION_PROFILE
+        == "skp-open-d-ring-around-d-door-full-d-screw-face",
+    "partition cover must be the SKP open D-ring around the receiver with a full-D screw face");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH
+        == PARTITION_FRAME_MOUNT_COVER_HEIGHT
+    && PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH
+        <= PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH
+    && PARTITION_FRAME_MOUNT_COVER_FIT_CLEARANCE > 0,
+    "partition cover entry must be the full 10 mm SKP cover width");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH
+        == PARTITION_FRAME_MOUNT_COVER_WALL
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH >= 2.0,
+    "partition cover side arms must retain the exact 2 mm SKP wall");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH > 0
+        && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH
+            < PARTITION_FRAME_MOUNT_COVER_RADIUS,
+    "partition arch cover support width must stay printable");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_LENGTH
+        == PARTITION_FRAME_MOUNT_COVER_TOTAL_DEPTH
+            + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ROOT_OVERLAP
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_PLATE_OVERLAP
+        == WORLD_PARTITION_T
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ROOT_OVERLAP == 2.0
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_WIDTH == 2.0
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE == 0.2,
+    "partition cover must have two full-height root ribs beyond the cover depth");
+assert(abs(
+    PARTITION_FRAME_MOUNT_CENTER_Z
+        + PARTITION_FRAME_MOUNT_COVER_STRAIGHT
+        - WORLD_PARTITION_FRONT_Z
+        - PARTITION_FRAME_MOUNT_SLEEVE_FRONT_OVERLAP
+) < EPS,
+    "partition cover D tail must meet the partition front datum");
+for (mount_y = PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS)
+    assert(mount_y
+            > WALL + PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 + 1.0
+        && mount_y
+            < H - WALL - PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 - 1.0,
+        "partition x-side mounts must stay inside the cabinet perimeter");
+for (mount_y = PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS)
+    assert(mount_y
+            > WALL + PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 + 1.0
+        && mount_y
+            < H - WALL - PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 - 1.0,
+        "partition x-side mounts must stay inside the cabinet perimeter");
+for (mount_x = PARTITION_FRAME_MOUNT_Y_SIDE_X_POSITIONS)
+    assert(mount_x
+            > WALL + PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 + 1.0
+        && mount_x
+            < W - WALL - PARTITION_FRAME_MOUNT_COVER_HEIGHT / 2 - 1.0,
+        "partition y-side mounts must stay inside the cabinet perimeter");
+assert(abs(
+    PARTITION_FRAME_PLATE_W
+        - (W - 2 * WALL - 2 * PARTITION_FRAME_PLATE_CLEARANCE)
+) < EPS
+    && abs(
+        PARTITION_FRAME_PLATE_H
+            - (H - 2 * WALL - 2 * PARTITION_FRAME_PLATE_CLEARANCE)
+    ) < EPS,
+    "partition plate must use the frame inner opening minus wall thickness");
+assert(PARTITION_FRAME_MOUNT_INSERTION_RELIEF_WIDTH
+        >= PARTITION_FRAME_MOUNT_COVER_HEIGHT
+    && PARTITION_FRAME_MOUNT_INSERTION_RELIEF_DEPTH >= PARTITION_T,
+    "partition insertion relief must clear the complete SKP cover");
+assert(PARTITION_SERVICE_WINDOW_W > 0
+        && PARTITION_SERVICE_WINDOW_H > 0
+        && PARTITION_SERVICE_WINDOW_X0 < PARTITION_FRAME_PLATE_X0
+        && PARTITION_SERVICE_WINDOW_X1 < WORLD_GRID_ORIGIN_X
+        && PARTITION_SERVICE_WINDOW_Y0 < PARTITION_FRAME_PLATE_Y0
+        && PARTITION_SERVICE_WINDOW_Y1 < WORLD_GRID_ORIGIN_Y
+        && PARTITION_SERVICE_WINDOW_CORNER_R
+            >= 0
+        && PARTITION_SERVICE_CUT_OVERTRAVEL > EPS
+        && PARTITION_SERVICE_REMAINING_GRID_WEB_X >= 20.0
+        && PARTITION_SERVICE_REMAINING_GRID_WEB_Y >= 30.0,
+    "compact partition service window must leave a strong grid web");
+assert(PARTITION_SERVICE_X_MINUS_OPEN_X0 < PARTITION_FRAME_PLATE_X0
+        && PARTITION_SERVICE_X_MINUS_OPEN_X1
+            < WORLD_GRID_ORIGIN_X
+        && PARTITION_SERVICE_X_MINUS_OPEN_Y0 < PARTITION_FRAME_PLATE_Y0
+        && PARTITION_SERVICE_X_MINUS_OPEN_Y1
+            > PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
+        && PARTITION_SERVICE_X_MINUS_OPEN_W > 0
+        && PARTITION_SERVICE_X_MINUS_OPEN_H > 0,
+    "x- service opening must be a continuous compact edge passage");
+assert(PARTITION_SERVICE_Y_MINUS_OPEN_X0 < PARTITION_FRAME_PLATE_X0
+        && PARTITION_SERVICE_Y_MINUS_OPEN_X1
+            > PARTITION_FRAME_PLATE_X0 + PARTITION_FRAME_PLATE_W
+        && PARTITION_SERVICE_Y_MINUS_OPEN_Y0 < PARTITION_FRAME_PLATE_Y0
+        && PARTITION_SERVICE_Y_MINUS_OPEN_Y1
+            < WORLD_GRID_ORIGIN_Y
+        && PARTITION_SERVICE_Y_MINUS_OPEN_W > 0
+        && PARTITION_SERVICE_Y_MINUS_OPEN_H > 0,
+    "y- service opening must be a continuous compact edge passage");
+assert(PARTITION_SERVICE_MOUNT_PIER_HALF_WIDTH
+        > PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH / 2
+            + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH
+            + PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_RIB_TANGENT_CLEARANCE,
+    "compact service cuts must retain broad arched-cover clearance");
+assert(PARTITION_FRAME_MOUNT_SLEEVE_ENTRY_WIDTH
+        >= PARTITION_FRAME_MOUNT_COVER_HEIGHT
+    && PARTITION_FRAME_MOUNT_SLEEVE_SUPPORT_ARM_WIDTH >= 2.0
+    && PARTITION_FRAME_MOUNT_RECEIVER_STRAIGHT >= 3.0
+    && PARTITION_FRAME_MOUNT_COVER_STRAIGHT >= 3.0
+    && PARTITION_FRAME_MOUNT_CENTER_Z
+        - PARTITION_FRAME_MOUNT_COVER_RADIUS
+        > SNAKE_CHAIN_REAR_EDGE_Z + 0.5,
+    "partition arch cover must retain its -Z cap, printable wall, and chain clearance");
 assert(CENTER_GT2_BELT_BASE_OUTER_R < gt2_belt_guide_r(),
     "center 2GT belt back envelope must stay inside its guide wall");
 assert(CENTER_GT2_FRONT_PULLEY_Z < 0
@@ -5258,9 +5927,6 @@ assert(TENSIONER_SKP_WORLD_SIZE_X > TENSIONER_SKP_WORLD_SIZE_Z,
 assert(TENSIONER_SKP_WORLD_SIZE_Z > TENSIONER_SKP_WORLD_SIZE_Y,
     "mapped SKP dimensions must satisfy world Z > Y");
 assert(TIMING_FLANGE_R > TIMING_OUTER_R, "timing pulley retaining flange must exceed toothed outer circle");
-assert(FRONT_PULLEY_Z < 0 && FRONT_PULLEY_Z > WORLD_PARTITION_FRONT_Z, "front pulley must stay in the drawer bay");
-assert(abs(FRONT_PULLEY_Z - DRAWER_FRONT_INTERFACE_Z) < TIMING_PITCH_MM / 2 + 0.01,
-    "belt tooth count must keep the front pulley near the drawer interface datum");
 assert(SELECTED_COLUMN >= 0 && SELECTED_COLUMN < N_COL, "SELECTED_COLUMN out of range");
 assert(SELECTED_ROW >= 0 && SELECTED_ROW < N_ROW, "SELECTED_ROW out of range");
 //#endregion
@@ -5268,6 +5934,6 @@ assert(SELECTED_ROW >= 0 && SELECTED_ROW < N_ROW, "SELECTED_ROW out of range");
 //#region 方法/工具
 // Preview examples:
 //   openscad -D 'CLUTCH_PART="assembly"' -o assembly.stl cabinet_clutch.scad
-//   openscad -D 'CLUTCH_PART="clutch_detail"' -D 'CLUTCH_EXPLODE=8' -D 'ENGAGED=true' -o detail.stl cabinet_clutch.scad
+//   openscad -D 'CLUTCH_PART="center_station_template_assembly"' -o center_kit.stl cabinet_clutch.scad
 //   openscad -D 'CLUTCH_PART="power_bus"' -o power_bus.stl cabinet_clutch.scad
 //#endregion

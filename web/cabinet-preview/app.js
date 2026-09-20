@@ -16,7 +16,6 @@ import {
 const ROLE_FALLBACK_OPACITY = {
   printed: 1,
   purchased: 0.72,
-  diagnostic: 0.45,
 };
 const AUTO_EXPLODE_SCALE = 0.55;
 const SEARCH_DELAY_MS = 160;
@@ -28,7 +27,6 @@ const VIEWS_POSITION_KEY = "smartpartsdrawer.preview.views.position";
 const CABINET_TRANSPARENCY_KEY = "smartpartsdrawer.preview.cabinet.transparency";
 const FLOATING_PANEL_MARGIN = 12;
 const VIEW_HELPER_SIZE = 128;
-const LEGACY_ASSEMBLY_WIDTH = 260;
 const CABINET_TRANSPARENCY_CONTROLS = Object.freeze([
   {
     partId: "cabinet-clutch/cabinet_clutch_cabinet_frame",
@@ -40,15 +38,8 @@ const CABINET_TRANSPARENCY_CONTROLS = Object.freeze([
 const CABINET_CONTROL_BY_PART_ID = new Map(
   CABINET_TRANSPARENCY_CONTROLS.map((control) => [control.partId, control]),
 );
-const DEFAULT_HIDDEN_PART_IDS = new Set([
-  "cabinet/cabinet_back_panel",
-  // Retired coincident cabinet meshes; the canonical frame is the only
-  // cabinet object published by the root preview.
-  "cabinet-clutch/cabinet_clutch_cabinet",
-  "cabinet-clutch/cabinet_clutch_cabinet_context",
-]);
-const LEGACY_COORDINATE_GROUPS = new Set([
-  "cabinet",
+const DEFAULT_HIDDEN_PART_IDS = new Set();
+const CHAIN_COORDINATE_GROUPS = new Set([
   "cabinet-chain",
 ]);
 const CAMERA_VIEWS = {
@@ -76,9 +67,6 @@ const DRAWER_DRIVE_TAILS = new Set([
   "cabinet_clutch_column_sync_belt_bottom",
   "cabinet_clutch_column_sync_belt_top",
   "cabinet_clutch_column_sync_tensioner",
-  "00_tensioner_t_solid_reference",
-  "04_right_round_axis_reference",
-  "05_top_bottom_bus_belts_reference",
   "center_input_rotor",
   "center_output_rotor",
   "center_input_shaft_reference",
@@ -123,21 +111,10 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
-  "cabinet-chain/cabinet_chain_connector",
-  "cabinet-chain/cabinet_chain_clutch_connector",
-  "cabinet-chain/cabinet_chain_clutch_bearing",
   "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
 ]);
 const UPPER_TENSIONER_TAILS = new Set([
-  "00_tensioner_t_solid_reference",
   "cabinet_clutch_column_sync_tensioner",
-  "00_cabinet_tensioner_receiver_candidate",
-  "00_left_d_axis_candidate",
-  "00_tensioner_adjust_screw_reference",
-  "00_tensioner_base_candidate",
-  "00_tensioner_carriage_candidate",
-  "00_tensioner_slide_assembly_reference",
-  "00_tensioner_spring_reference",
 ]);
 //#endregion
 
@@ -188,8 +165,7 @@ const state = {
   camera: null,
   controls: null,
   scene: null,
-  legacyRoot: null,
-  legacyTensionerRoot: null,
+  chainRoot: null,
   viewHelper: null,
   searchTimer: 0,
   lastMs: 0,
@@ -813,23 +789,13 @@ function initScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0b0d12);
-  // 早期蛇形链条 STL 以 X=宽、Y=深、Z=高导出。把这批旧坐标整体旋转到
-  // 当前世界：X=宽、Y=高、Z=深；离合/滑台 STL 已经使用当前世界坐标，直接
-  // 挂在 scene 下。这样相机、轨道控制和右上角轴向都只面对一个世界。
-  const legacyRoot = new THREE.Group();
-  legacyRoot.name = "legacy-coordinate-adapter";
-  legacyRoot.rotation.x = -Math.PI / 2;
-  scene.add(legacyRoot);
-  const legacyTensionerRoot = new THREE.Group();
-  legacyTensionerRoot.name = "legacy-tensioner-coordinate-adapter";
-  // The detailed slide STL predates the canonical SCAD frame: old X=width,
-  // Y=depth (rear +Y), Z=height, with the tensioner on old high-X. Mirror X
-  // as well while bringing it into the current X=width, Y=height, Z=depth
-  // world, so the detailed reference lands on the current low-X rear side.
-  legacyTensionerRoot.position.x = LEGACY_ASSEMBLY_WIDTH;
-  legacyTensionerRoot.scale.x = -1;
-  legacyTensionerRoot.rotation.x = -Math.PI / 2;
-  scene.add(legacyTensionerRoot);
+  // 蛇形链条源文件仍以 X=宽、Y=深、Z=高导出；只对这组真实链条资产
+  // 做一次坐标适配到当前世界 X=宽、Y=高、Z=深。当前离合/箱体 STL
+  // 已经是原生世界坐标，直接挂在 scene 下。
+  const chainRoot = new THREE.Group();
+  chainRoot.name = "chain-coordinate-adapter";
+  chainRoot.rotation.x = -Math.PI / 2;
+  scene.add(chainRoot);
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 4000);
   camera.up.set(0, 1, 0);
   const controls = new OrbitControls(camera, canvas);
@@ -881,8 +847,7 @@ function initScene() {
   canvas.addEventListener("pointerdown", onViewHelperPointerDown, true);
   canvas.addEventListener("click", onViewHelperClick, true);
   state.scene = scene;
-  state.legacyRoot = legacyRoot;
-  state.legacyTensionerRoot = legacyTensionerRoot;
+  state.chainRoot = chainRoot;
   state.camera = camera;
   state.controls = controls;
   state.viewHelper = viewHelper;
@@ -1107,18 +1072,13 @@ function partTail(part) {
   return String(part?.id || "").split("/").pop().toLowerCase();
 }
 
-function usesLegacyCoordinates(part) {
-  return part?.coordinateFrame === "legacy-tensioner"
-    || LEGACY_COORDINATE_GROUPS.has(part?.group)
-    || String(part?.id || "").startsWith("cabinet/");
+function usesChainCoordinates(part) {
+  return CHAIN_COORDINATE_GROUPS.has(part?.group);
 }
 
 function coordinateParent(part) {
-  if (part?.coordinateFrame === "legacy-tensioner") {
-    return state.legacyTensionerRoot || state.scene;
-  }
-  return usesLegacyCoordinates(part)
-    ? (state.legacyRoot || state.scene)
+  return usesChainCoordinates(part)
+    ? (state.chainRoot || state.scene)
     : state.scene;
 }
 

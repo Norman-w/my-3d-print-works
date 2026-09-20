@@ -38,7 +38,6 @@ SELECTED_COLUMN="${SELECTED_COLUMN:-2}"
 # the center clutch with the third drawer layer and produced a legacy 20T
 # timing belt under the "center 2GT" labels.
 SELECTED_ROW="${SELECTED_ROW:-1}"
-SHOW_LEGACY_STATIONS="${SHOW_LEGACY_STATIONS:-false}"
 PREVIEW_PORT="${PREVIEW_PORT:-8876}"
 
 # ===== 分区：模型/类型 =====
@@ -55,7 +54,6 @@ export_part() {
     local part="$1"
     local target="$2"
     local engaged="$3"
-    local explode="$4"
     local selected_column="${5:-${SELECTED_COLUMN}}"
     local tmp="${target}.tmp.$$"
     echo "→ CLUTCH_PART=${part} ENGAGED=${engaged} → ${target}"
@@ -67,10 +65,8 @@ export_part() {
             -D "QUALITY=${QUALITY}" \
             -D "CLUTCH_PART=\"${part}\"" \
             -D "ENGAGED=${engaged}" \
-            -D "CLUTCH_EXPLODE=${explode}" \
             -D "SELECTED_COLUMN=${selected_column}" \
             -D "SELECTED_ROW=${SELECTED_ROW}" \
-            -D "SHOW_LEGACY_STATIONS=${SHOW_LEGACY_STATIONS}" \
             -o "${tmp}" \
             "${SCAD_FILE}"
     )
@@ -94,6 +90,36 @@ contract_path = Path(sys.argv[2])
 payload = json.loads(path.read_text(encoding="utf-8"))
 contract = json.loads(contract_path.read_text(encoding="utf-8"))["centerClutch"]
 payload["up"] = "y"
+# The browser manifest is the installed-world assembly, not a catch-all CAD
+# library. Fit coupons, retired T-shaped tensioners, highlighted chain
+# connectors, and every other diagnostic-only artifact stay out of it. The
+# shared 14-station kit is the one intentional exception: it is the real
+# printed template that Three.js instantiates at the other drawer datums.
+retired_ids = {
+    "cabinet-clutch/00_tensioner_t_solid_reference",
+    "cabinet-clutch/center_linear_bearing_fit_coupon",
+    "cabinet-chain/cabinet_chain_connector",
+    "cabinet-chain/cabinet_chain_clutch_connector",
+    "cabinet-chain/cabinet_chain_clutch_bearing",
+}
+all_parts = payload.get("parts", [])
+kept_parts = []
+for part in all_parts:
+    part_id = str(part.get("id", ""))
+    retired = (
+        part_id in retired_ids
+        or part.get("role") == "diagnostic"
+            and part_id != "cabinet-clutch/24_center_station_kit_template"
+        or part_id.startswith("cabinet/")
+        or part_id.startswith("ch1_03c_")
+    )
+    if retired:
+        stale_path = path.parent / str(part.get("file", ""))
+        if stale_path.is_file() or stale_path.is_symlink():
+            stale_path.unlink()
+        continue
+    kept_parts.append(part)
+payload["parts"] = kept_parts
 # The root preview owns one cabinet frame.  The old closed shell and the old
 # wire/grid context were coincident alternatives, not additional hardware.
 # Drop both IDs from the manifest and remove their generated links so stale
@@ -116,13 +142,13 @@ for stale_name in (
         stale_path.unlink()
 labels = {
     "cabinet-clutch/cabinet_clutch_cabinet_frame": {
-        "name": "箱体框架·上下左右外框 + 屋顶8个花键轴承Boss + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面 + 蛇链电机四点Boss（前后仓隔板另列）",
+        "name": "箱体框架·上下左右外框 + x+/x-/y+/y-四边各两套前后仓隔板D泪滴耳接收件 + 屋顶8个花键轴承Boss + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面 + 蛇链电机四点Boss（隔板另列）",
         "color": "#6f8f9a",
         "opacity": 0.30,
         "visible": True,
     },
     "cabinet-clutch/cabinet_clutch_partition": {
-        "name": "前后仓隔板·5×3抽屉格统一2GT皮带通孔 + 每格四角 Boss（独立安装件）",
+        "name": "前后仓隔板·内净尺寸 + 四边各两套D泪滴耳接收/开放D环全外轮廓承压外套 + x-/y-紧凑贯通服务口 + 宽承力网格 + 5×3皮带通孔 + 每格四角离合板Boss（独立安装件）",
         "group": "00·箱体框架",
         "color": "#91a7b2",
         "opacity": 1.0,
@@ -158,13 +184,7 @@ labels = {
         "color": "#718b99",
         "opacity": 1.0,
         "visible": True,
-        "role": "diagnostic",
-    },
-    "cabinet-clutch/00_tensioner_t_solid_reference": {
-        "name": "列同步张紧滑台 · SKP 参数重建",
-        "color": "#aebdce",
-        "visible": True,
-        "role": "diagnostic",
+        "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_power_motor_body": {
         "name": "抽屉开合动力电机 · 竖直本体（+X末列）",
@@ -264,12 +284,6 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
-    "cabinet-clutch/center_linear_bearing_fit_coupon": {
-        "name": "中心 R3C3 · LM3UU 长方条轴承孔配合测试片（默认隐藏）",
-        "color": "#788a95",
-        "visible": False,
-        "role": "diagnostic",
-    },
     "cabinet-clutch/center_mechanism_plate": {
         "name": "后仓离合共用承载板×3（每层一条、跨 5 站；四角孔/Boss + 一体 LM3UU + 输出双轴承长方条）",
         "color": "#536d78",
@@ -353,14 +367,10 @@ chain_labels = {
         "color": "#5b6670",
         "role": "purchased",
     },
-    "cabinet-chain/cabinet_chain_connector": {"name": "03C 链条连接节（带槽双穿销+圆弧夹片）", "color": "#ff2fd0", "role": "diagnostic"},
-    "cabinet-chain/cabinet_chain_clutch_connector": {"name": "03C 链条加长接头（默认隐藏）", "color": "#00d9ff", "role": "diagnostic", "visible": False},
-    "cabinet-chain/cabinet_chain_clutch_bearing": {"name": "加长接头 681 轴承（默认隐藏）", "color": "#cfd4da", "role": "purchased", "visible": False},
 }
 group_map = {
     "cabinet_clutch_cabinet_frame": "00·箱体框架",
     "cabinet_clutch_partition": "00·箱体框架",
-    "00_tensioner_t_solid_reference": "01·动力母线",
     "cabinet_clutch_power_motor_body": "01·动力母线",
     "cabinet_clutch_power_motor_shaft": "01·动力母线",
     "cabinet_clutch_power_column_0": "01·动力母线",
@@ -379,7 +389,6 @@ group_map = {
     "center_input_sleeve": "02·离合机构",
     "center_input_sleeve_magnet_reference": "02·离合机构",
     "center_linear_bearings_reference": "02·离合机构",
-    "center_linear_bearing_fit_coupon": "02·离合机构",
     "center_mechanism_plate": "02·离合机构",
     "center_input_shaft_reference": "02·离合机构",
     "center_output_shaft_reference": "02·离合机构",
@@ -396,14 +405,12 @@ group_map = {
 }
 name_map = {
     "cabinet_clutch_cabinet_frame": "箱体框架（上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面；前后仓隔板另列）",
-    "cabinet_clutch_partition": "前后仓隔板·5×3抽屉格统一2GT皮带通孔 + 每格四角 Boss（独立安装件）",
-    "00_tensioner_t_solid_reference": "右侧张紧滑台 · SKP 参数化",
+    "cabinet_clutch_partition": "前后仓隔板·内净尺寸 + 四边各两套D泪滴耳接收/开放D环全外轮廓承压外套 + x-/y-紧凑贯通服务口 + 宽承力网格 + 5×3皮带通孔 + 每格四角 Boss（独立安装件）",
     "center_input_rotor": "中心 R3C3 输入公轮 · 12T/3mm + 圆角公牙",
     "center_output_rotor": "中心 R3C3 输出母轮 · 母槽 + 12T/2GT",
     "center_input_sleeve": "中心 R3C3 公轮底部 D 型圆套 · 下端 Ø8 + Ø5×5 磁铁盲槽",
     "center_input_sleeve_magnet_reference": "中心 R3C3 圆套内 Ø5×5 圆柱磁铁 · 采购件",
     "center_linear_bearings_reference": "中心 R3C3 固定 LM3UU×1 · Ø3×Ø7×10（与公轮同轴；采购件）",
-    "center_linear_bearing_fit_coupon": "中心 R3C3 LM3UU 长方条轴承孔配合测试片 · Ø7.20/7.30/7.40",
     "center_mechanism_plate": "后仓离合共用承载板×3 · 每层连续跨 5 站 · 四角孔/Boss 自攻固定 · 一体 LM3UU + 输出双轴承长方条",
     "center_input_shaft_reference": "中心 R3C3 输入独立 3mm D 轴 · 采购件",
     "center_output_shaft_reference": "中心 R3C3 输出 D-round 短轴 · 母轮D段 + 双轴承圆轴 · 采购件",
@@ -582,9 +589,6 @@ for group_id in ordered_group_ids:
                 "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
             ),
             part_node(
-                "cabinet-clutch/00_tensioner_t_solid_reference",
-            ),
-            part_node(
                 "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
             ),
         ]
@@ -617,14 +621,6 @@ for group_id in ordered_group_ids:
                 part_node("cabinet-clutch/center_output_bearings_reference"),
             ],
         )
-        fit_coupon = call_node(
-            "center_clutch/fit-coupon",
-            "LM3UU 长方条轴承座配合测试片（默认隐藏）",
-            "打印后实装一枚真实 Ø3×Ø7×10 LM3UU，先比较 Ø7.20/7.30/7.40 三档长方条座孔；该测试片不承担装机载荷。",
-            children=[
-                part_node("cabinet-clutch/center_linear_bearing_fit_coupon"),
-            ],
-        )
         active_center = [
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
@@ -632,7 +628,6 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/24_center_station_kit_template"),
             input_axis,
             rotary_support,
-            fit_coupon,
         ]
         root["children"] = [
             call_node(
@@ -753,6 +748,7 @@ rm -rf "${PREVIEW_DIR}/models/cabinet-clutch"
 # Remove only the derived slide/tensioner/bus-belt artifacts from the previous
 # design. Source files and unrelated mechanism outputs are left untouched.
 OLD_TENSIONER_OUTPUTS=(
+    "00_tensioner_t_solid_reference.stl"
     "00_right_round_axis_candidate.stl"
     "00_right_round_axis_reference.stl"
     "00_tensioner_pulley_top_reference.stl"
@@ -787,6 +783,7 @@ LEGACY_CLUTCH_OUTPUTS=(
     "center_input_carriage.stl"
     "center_guide_rails.stl"
     "center_linear_bearing_retainers.stl"
+    "center_linear_bearing_fit_coupon.stl"
     "center_stops.stl"
     "center_input_bearings_reference.stl"
     "center_linear_bearing_block.stl"
@@ -968,11 +965,9 @@ require_watertight_print_part() {
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be
 # corrected without hiding it inside a full assembly export.
-export_part "tensioner_t_solid" "${OUT_DIR}/00_tensioner_t_solid_reference.stl" false 0
 export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
 export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
-export_part "center_linear_bearing_fit_coupon" "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" false 0
 export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
 export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
 export_part "center_input_sleeve" "${OUT_DIR}/center_input_sleeve.stl" false 0
@@ -987,7 +982,6 @@ for printable_part in \
     "${OUT_DIR}/cabinet_clutch_partition.stl" \
     "${OUT_DIR}/center_input_rotor.stl" \
     "${OUT_DIR}/center_output_rotor.stl" \
-    "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl" \
     "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" \
@@ -1013,12 +1007,6 @@ for printable_part in \
     "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl"; do
     require_watertight_print_part "${printable_part}"
 done
-
-if [[ "${SHOW_LEGACY_STATIONS}" == "true" ]]; then
-    export_part "spring" "${OUT_DIR}/10_clutch_spring_reference.stl" false 0
-    export_part "screw" "${OUT_DIR}/11_t_countersunk_screw_reference.stl" false 0
-    export_part "fork" "${OUT_DIR}/12_clutch_fork_candidate.stl" false 0
-fi
 
 # Run the center-only open/engaged sweep in a temporary directory. This checks
 # the actual OpenSCAD positions and keeps analytic motion/clearance regressions

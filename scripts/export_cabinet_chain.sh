@@ -13,24 +13,9 @@ SCAD_FILE="cabinet_chain.scad"
 OPENSCAD_BIN="${OPENSCAD_BIN:-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD}"
 OUT_STL="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
 OUT_CLUTCH="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
-OUT_MOTOR="${PROJECT_ROOT}/output/3d-print/motor-library"
-OUT_MOUNT="${PROJECT_ROOT}/output/3d-print/motor-mount"
-OUT_CHAIN_HARDWARE="${PROJECT_ROOT}/output/3d-print/chain-hardware"
-OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
-OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware connector clutch_connector clutch_bearing)
-MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
-MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
-MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
-CHAIN_PIN_SCAD_FILE="ch1_03c_connecting_pin.scad"
-CHAIN_CLIP_SCAD_FILE="ch1_03c_retaining_clip.scad"
-EXTENDED_PIN_SCAD_FILE="ch1_03c_extended_connecting_pin.scad"
-EXTENDED_CLIPS_SCAD_FILE="ch1_03c_extended_retaining_clips.scad"
-CLUTCH_PLATFORM_SCAD_FILE="ch1_03c_clutch_platform.scad"
-CLUTCH_BEARING_SCAD_FILE="ch1_03c_clutch_bearing.scad"
-CLUTCH_RETAINER_SCAD_FILE="ch1_03c_clutch_bearing_retainer.scad"
+PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware)
 QUALITY="${QUALITY:-2}"
 
 # ===== 分区：模型/类型 =====
@@ -171,91 +156,6 @@ names = {
         "color": "#c9a227",
         "explosion": [0, 0, 0],
     },
-    "cabinet_chain_connector": {
-        "name": "03C 链条连接节（带槽双穿销+圆弧夹片，高亮）",
-        "role": "diagnostic",
-        "color": "#ff2fd0",
-        "opacity": 1.0,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_clutch_connector": {
-        "name": "03C 链条加长接头（双夹片+前向离合座，高亮）",
-        "role": "diagnostic",
-        "color": "#00d9ff",
-        "opacity": 1.0,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_clutch_bearing": {
-        "name": "加长接头 681 轴承（银色装配显示）",
-        "role": "purchased",
-        "color": "#cfd4da",
-        "opacity": 1.0,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_power_motor_pololu_100_1_hp_6v": {
-        "name": "Pololu 100:1 HP 6V D轴电机（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#424a54",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_power_motor_cover": {
-        "name": "动力轮电机 Ω 形贴合固定套（独立模型库，默认隐藏）",
-        "role": "printed",
-        "color": "#56616d",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_connecting_pin": {
-        "name": "03C 连接节双穿销（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#b08d57",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_retaining_clip": {
-        "name": "03C 连接节固定弹片/夹片（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#9aa7b6",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_extended_connecting_pin": {
-        "name": "03C 加长连接节双穿销（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#b08d57",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_extended_retaining_clips": {
-        "name": "03C 加长销双固定弹片/夹片（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#9aa7b6",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_clutch_platform": {
-        "name": "传动离合轴承平台（独立模型库，默认隐藏）",
-        "role": "printed",
-        "color": "#d17a3d",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_clutch_bearing": {
-        "name": "681 1×3×1 离合转动基础轴承（独立模型库，默认隐藏）",
-        "role": "purchased",
-        "color": "#b9c2ca",
-        "visible": False,
-        "opacity": 1.0,
-        "explosion": [0, 0, 0],
-    },
-    "ch1_03c_clutch_bearing_retainer": {
-        "name": "681 离合轴承下承托环（独立模型库，默认隐藏）",
-        "role": "printed",
-        "color": "#a85c2a",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
 }
 # Keep the single root viewer complete when this chain export is run after
 # the drawer/clutch export.  The manifest writer scans all supplied folders;
@@ -306,7 +206,21 @@ PY
 
 # ===== 分区：公开 API =====
 [[ -x "$OPENSCAD_BIN" ]] || die "找不到 OpenSCAD: $OPENSCAD_BIN"
-mkdir -p "$OUT_STL" "$OUT_MOTOR" "$OUT_MOUNT" "$OUT_CHAIN_HARDWARE" "$OUT_CHAIN_CLUTCH" "$OUT_PNG"
+mkdir -p "$OUT_STL" "$OUT_PNG"
+
+# The current world assembly has one canonical motor/cover and one ordinary
+# 03C chain. Remove retired standalone libraries and highlighted connector
+# meshes so a stale scan cannot reintroduce duplicate or non-installed parts.
+rm -rf \
+    "${PROJECT_ROOT}/output/3d-print/cabinet" \
+    "${PROJECT_ROOT}/output/3d-print/motor-library" \
+    "${PROJECT_ROOT}/output/3d-print/motor-mount" \
+    "${PROJECT_ROOT}/output/3d-print/chain-hardware" \
+    "${PROJECT_ROOT}/output/3d-print/chain-clutch" \
+    "${PREVIEW_DIR}/models/motor-library" \
+    "${PREVIEW_DIR}/models/motor-mount" \
+    "${PREVIEW_DIR}/models/chain-hardware" \
+    "${PREVIEW_DIR}/models/chain-clutch"
 
 # Retired chain diagnostics were intentionally hidden before, but their stale
 # STLs were still scanned into the tree. Remove the derived files now that the
@@ -318,6 +232,9 @@ OBSOLETE_CHAIN_OUTPUTS=(
     "cabinet_chain_scheme1_clutch_faces.stl"
     "cabinet_chain_scheme1_bearings.stl"
     "cabinet_chain_scheme1_selector.stl"
+    "cabinet_chain_connector.stl"
+    "cabinet_chain_clutch_connector.stl"
+    "cabinet_chain_clutch_bearing.stl"
 )
 for old_file in "${OBSOLETE_CHAIN_OUTPUTS[@]}"; do
     rm -f "${OUT_STL}/${old_file}"
@@ -331,93 +248,6 @@ for part in "${PARTS[@]}"; do
     export_stl "$part"
 done
 
-export_library_motor() {
-    local dest="${OUT_MOTOR}/ch1_03c_power_motor_pololu_100_1_hp_6v.stl"
-    local tmp="${dest}.tmp.$$.$RANDOM.stl"
-    echo "→ 独立模型库电机 → ${dest}"
-    (
-        cd "$MOTOR_SCAD_DIR"
-        "$OPENSCAD_BIN" \
-            --backend Manifold \
-            --export-format binstl \
-            -D 'PART="motor"' \
-            -o "$tmp" \
-            "$MOTOR_SCAD_FILE"
-    )
-    [[ -s "$tmp" ]] || die "空 STL: $dest"
-    mv -f "$tmp" "$dest"
-}
-
-export_library_motor
-
-export_library_motor_cover() {
-    local dest="${OUT_MOUNT}/ch1_03c_power_motor_cover.stl"
-    local tmp="${dest}.tmp.$$.$RANDOM.stl"
-    echo "→ 独立模型库电机固定罩 → ${dest}"
-    (
-        cd "$MOTOR_SCAD_DIR"
-        "$OPENSCAD_BIN" \
-            --backend Manifold \
-            --export-format binstl \
-            -D 'PART="cover"' \
-            -o "$tmp" \
-            "$MOTOR_COVER_SCAD_FILE"
-    )
-    [[ -s "$tmp" ]] || die "空 STL: $dest"
-    mv -f "$tmp" "$dest"
-}
-
-export_library_motor_cover
-
-export_library_chain_hardware() {
-    local source="$1"
-    local mode="$2"
-    local name="$3"
-    local dest="${OUT_CHAIN_HARDWARE}/${name}.stl"
-    local tmp="${dest}.tmp.$$.$RANDOM.stl"
-    echo "→ 独立模型库链条连接件 ${name} → ${dest}"
-    (
-        cd "$MOTOR_SCAD_DIR"
-        "$OPENSCAD_BIN" \
-            --backend Manifold \
-            --export-format binstl \
-            -D "PART=\"${mode}\"" \
-            -o "$tmp" \
-            "$source"
-    )
-    [[ -s "$tmp" ]] || die "空 STL: $dest"
-    mv -f "$tmp" "$dest"
-}
-
-export_library_chain_hardware "$CHAIN_PIN_SCAD_FILE" "pin" "ch1_03c_connecting_pin"
-export_library_chain_hardware "$CHAIN_CLIP_SCAD_FILE" "clip" "ch1_03c_retaining_clip"
-
-export_library_chain_clutch() {
-    local source="$1"
-    local mode="$2"
-    local name="$3"
-    local dest="${OUT_CHAIN_CLUTCH}/${name}.stl"
-    local tmp="${dest}.tmp.$$.$RANDOM.stl"
-    echo "→ 独立模型库离合连接件 ${name} → ${dest}"
-    (
-        cd "$MOTOR_SCAD_DIR"
-        "$OPENSCAD_BIN" \
-            --backend Manifold \
-            --export-format binstl \
-            -D "PART=\"${mode}\"" \
-            -o "$tmp" \
-            "$source"
-    )
-    [[ -s "$tmp" ]] || die "空 STL: $dest"
-    mv -f "$tmp" "$dest"
-}
-
-export_library_chain_clutch "$EXTENDED_PIN_SCAD_FILE" "pin" "ch1_03c_extended_connecting_pin"
-export_library_chain_clutch "$EXTENDED_CLIPS_SCAD_FILE" "clips" "ch1_03c_extended_retaining_clips"
-export_library_chain_clutch "$CLUTCH_PLATFORM_SCAD_FILE" "platform" "ch1_03c_clutch_platform"
-export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutch_bearing"
-export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
-
 if [[ -f "$INSPECT_PY" ]]; then
     for part in sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware; do
         echo "→ inspect cabinet_chain_${part}.stl"
@@ -426,14 +256,6 @@ if [[ -f "$INSPECT_PY" ]]; then
     for part in plates rollers pins; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" "${OUT_STL}/cabinet_chain_${part}.stl"
-    done
-    echo "→ inspect cabinet_chain_connector.stl"
-    python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_connector.stl"
-    echo "→ inspect cabinet_chain_clutch_connector.stl"
-    python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_clutch_connector.stl"
-for part in extended_connecting_pin extended_retaining_clips clutch_platform clutch_bearing clutch_bearing_retainer; do
-        echo "→ inspect ch1_03c_${part}.stl"
-        python3 "$INSPECT_PY" --require-watertight "${OUT_CHAIN_CLUTCH}/ch1_03c_${part}.stl"
     done
 fi
 
@@ -447,12 +269,7 @@ if [[ -f "$MANIFEST_PY" ]]; then
     # left by retired parts from an older export.
     rm -rf "$PREVIEW_DIR/models/cabinet-clutch"
     args=(--preview-dir "$PREVIEW_DIR" --title "零件柜 · 后仓横走 03C + 张紧 U" --no-recursive)
-    [[ -d "$OUT_CABINET" ]] && args+=(--stl-dir "$OUT_CABINET")
     [[ -d "$OUT_CLUTCH" ]] && args+=(--stl-dir "$OUT_CLUTCH")
-    args+=(--stl-dir "$OUT_MOTOR")
-    args+=(--stl-dir "$OUT_MOUNT")
-    args+=(--stl-dir "$OUT_CHAIN_HARDWARE")
-    args+=(--stl-dir "$OUT_CHAIN_CLUTCH")
     args+=(--stl-dir "$OUT_STL")
     python3 "$MANIFEST_PY" "${args[@]}"
     patch_manifest
@@ -470,15 +287,6 @@ echo "完成:"
 for part in "${PARTS[@]}"; do
     echo "  STL  ${OUT_STL}/cabinet_chain_${part}.stl"
 done
-echo "  STL  ${OUT_MOTOR}/ch1_03c_power_motor_pololu_100_1_hp_6v.stl"
-echo "  STL  ${OUT_MOUNT}/ch1_03c_power_motor_cover.stl"
-echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_connecting_pin.stl"
-echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_retaining_clip.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_connecting_pin.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_retaining_clips.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
-echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing_retainer.stl"
 echo "  预览保持现有 HTTP 服务，刷新即可"
 
 # ===== 分区：业务逻辑 =====

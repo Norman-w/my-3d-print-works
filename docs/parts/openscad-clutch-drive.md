@@ -154,7 +154,6 @@ center_input_shaft
 center_input_sleeve
 center_input_sleeve_magnet
 center_linear_bearings
-center_linear_bearing_fit_coupon
 center_output_shaft
 center_output_bearings
 center_mechanism_plate
@@ -171,8 +170,8 @@ cabinet
 模板 STL 只存在一份；Three.js 按契约生成 14 个非中心 `R1C1…R3C5` 实例，中心站继续引用
 自己的唯一动态零件，不会在浏览器或 STL 目录中复制 15 份几何。此前的
 `drawer_station_template_*` 旧圆孔/旧支架模板已从默认场景和导出目录移除。旧 `center_input_carriage`、
-`center_guide_rails`、`center_stops`、旧压盖/输入轴承组、弹簧、螺丝、拨叉和
-`scheme1_*` 入口只为显式 legacy 诊断兼容保留，不进入默认清单。前端旧的
+`center_guide_rails`、`center_stops`、旧压盖/输入轴承组、弹簧、螺丝、拨叉以及旧连接节/扩展链节入口
+均已删除；`scheme1_*` 仍是当前链条运动状态机，不是旧几何件。前端旧的
 `drawer_front_pinion_bearing_support`、`drawer_front_pinion_bearings` 和独立
 `front_timing_bearing_support` 也不再导出；层板一体座和采购轴承由实际柜体/层板总成提供。
 

@@ -24,8 +24,6 @@ include <cabinet_chain_path.scad>
 use <../parts/ch1_03c_sprocket.scad>
 use <../parts/ch1_03c_blunt_idler.scad>
 use <../parts/ch1_03c_bearing_visual.scad>
-use <../parts/ch1_03c_connecting_link_params.scad>
-use <../parts/ch1_03c_extended_link_params.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../parts/motor_pololu_mount_cover.scad>
 include <../parts/ch1_03c_gt2_clutch_pair_params.scad>
@@ -35,10 +33,6 @@ include <../parts/ch1_03c_gt2_clutch_pair_params.scad>
 $fa = 8;
 $fs = 0.22;
 CHAIN_Y = MOTOR_MOUNT_CHAIN_Y;
-CONNECTOR_LINK_INDEX = 20;       // 顶部直线段上的一节；不放在转向轮上
-CONNECTOR_HIGHLIGHT = "#ff2fd0";
-CLUTCH_CONNECTOR_LINK_INDEX = 140; // 三层路径中部直线段上的一节；避开转向轮
-CLUTCH_CONNECTOR_HIGHLIGHT = "#00d9ff";
 // One purchased/reference magnet is carried by a straight service link near
 // the center station.  Its upper edge is tied to the open male-sleeve magnet
 // bottom by the generated vertical path shift; its axis protrudes toward the
@@ -48,9 +42,6 @@ CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
 CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
 CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET = (h2 - CHAIN_TRIGGER_MAGNET_D) / 2;
 CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET = outer_face + 0.05;
-// 加长销模型的固定头内侧面是局部 Y=0；把它移到链条后侧外板面，
-// 销杆沿局部 +Y 经过链板并伸向前方，拨叉平台/离合座因此朝前。
-CLUTCH_CONNECTOR_PIN_FACE_OFFSET = -outer_face;
 //#endregion
 
 //#region 模型/类型
@@ -120,81 +111,25 @@ module rear_sprockets() {
     place_geared(snake_drive_c()) ch1_03c_sprocket(SPROCKET_TEETH);
 }
 
-module connector_plain_plate() {
-    // The clip is on the +Y outer side of the pink connecting link.  The
-    // opposite side is a normal single outer 8-shaped plate, not a second
-    // clip and not a solid replacement link.  chain_plate() uses the generic
-    // 0..P pin datum, while the connecting-pin/clip pair uses -P/2..+P/2;
-    // re-center the generic plate before highlighted_connector() applies its
-    // +P/2 placement so all three features share p0/p1 exactly.
-    translate([-P / 2, -(inner_width / 2 + T), 0])
-        chain_plate(d2 + clearance);
-}
-
-module plates_on_path_with_connector_replacement(pins) {
-    // Reserve the opposite-side plate at the pink connection position for
-    // highlighted_connector().  Keeping it out of the base plates STL avoids
-    // a coincident duplicate; the highlighted pink part supplies that plate.
+module plates_on_path(pins) {
+    // The current mechanism uses the real 03C chain envelope throughout.
+    // There is no special highlighted connector or extended clutch link in
+    // the installed logic; a normal chain link remains at every segment.
     n = len(pins);
     axis = [0, 0, 1];
-    for (i = [0:n - 1]) {
+    for (i = [0:n - 1])
         place_from_to(pins[i], pins[(i + 1) % n], axis) {
-            if (i == CONNECTOR_LINK_INDEX && i % 2 == 0)
-                translate([0, inner_width / 2 + 2 * T, 0])
-                    chain_plate(d2 + clearance);
-            else if (i % 2 == 0)
+            if (i % 2 == 0)
                 outer_plates();
             else
                 inner_plates();
         }
-    }
-}
-
-module highlighted_connector() {
-    // 接头只替换这两个销位的普通销：链板保持原位，带槽双穿销和夹片
-    // 必须共用普通销的中心线，不能再叠加一套外板。
-    p0 = snake_pins()[CONNECTOR_LINK_INDEX];
-    p1 = snake_pins()[(CONNECTOR_LINK_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([P / 2, 0, 0])
-                color(CONNECTOR_HIGHLIGHT) {
-                    ch1_03c_connecting_pin_pair();
-                    ch1_03c_retaining_clip();
-                    connector_plain_plate();
-                }
-}
-
-module highlighted_clutch_connector_bearing() {
-    p0 = snake_pins()[CLUTCH_CONNECTOR_LINK_INDEX];
-    p1 = snake_pins()[(CLUTCH_CONNECTOR_LINK_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([P / 2, CLUTCH_CONNECTOR_PIN_FACE_OFFSET, 0])
-                ch1_03c_clutch_bearing_visual();
-}
-
-module highlighted_clutch_connector() {
-    // 第二处接头仍复用原链板和原销中心，只替换两根普通销；加长销、双夹片和离合座
-    // 共用这两个中心线。这里不再 mirror Y：局部 +Y 在 snake_in_rear() 中映射到柜体前方，
-    // 所以加长部分和离合座面都朝前；平台内的 681 轴承轴向仍保持 Z（上下）。
-    p0 = snake_pins()[CLUTCH_CONNECTOR_LINK_INDEX];
-    p1 = snake_pins()[(CLUTCH_CONNECTOR_LINK_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([P / 2, CLUTCH_CONNECTOR_PIN_FACE_OFFSET, 0])
-                color(CLUTCH_CONNECTOR_HIGHLIGHT) {
-                    ch1_03c_extended_connecting_pin_pair();
-                    ch1_03c_extended_retaining_clips();
-                    ch1_03c_clutch_platform();
-                    ch1_03c_clutch_bearing_retainer();
-                }
 }
 
 module clutch_trigger_magnet_reference() {
     // place_from_to's local Y axis is the chain axial axis.  rotate(+90 X)
     // sends the cylinder along local -Y; after place_from_to and
-    // snake_in_rear this becomes source +Y, which the browser legacyRoot
+    // snake_in_rear this becomes source +Y, which the browser chainRoot
     // maps to world Z-.  The local -Z offset puts the 2 mm magnet on the
     // upper edge of the 4.3 mm chain link, leaving its top on the datum.
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
@@ -215,21 +150,14 @@ module clutch_trigger_magnet_reference() {
                         );
 }
 
-module pins_on_path_without_connectors(pins) {
-    // 从普通销集合中拿掉两处接头各自占用的两个销位，由两个高亮接头补回对应销。
+module pins_on_path(pins) {
+    // Every real 03C pin stays in the path. The trigger magnet is an
+    // independent Ø2×1.8 reference and does not replace a link or a pin.
     n = len(pins);
     axis = [0, 0, 1];
-    connector_b = (CONNECTOR_LINK_INDEX + 1) % n;
-    clutch_connector_b = (CLUTCH_CONNECTOR_LINK_INDEX + 1) % n;
     for (i = [0:n - 1])
-        if (
-            i != CONNECTOR_LINK_INDEX
-            && i != connector_b
-            && i != CLUTCH_CONNECTOR_LINK_INDEX
-            && i != clutch_connector_b
-        )
-            place_from_to(pins[i], pins[(i + 1) % n], axis)
-                pin_solid();
+        place_from_to(pins[i], pins[(i + 1) % n], axis)
+            pin_solid();
 }
 
 module bay_center_dots() {
@@ -268,11 +196,11 @@ if (CHAIN_PART == "mesh_check") {
     // branch makes bend interference visible instead of hiding it in a dense
     // assembly preview.
     color("#8A919C") snake_in_rear()
-        plates_on_path_with_connector_replacement(snake_pins());
+        plates_on_path(snake_pins());
     color("#E8EDF2") snake_in_rear()
         rollers_on_path(snake_pins());
     color("#B08D57") snake_in_rear()
-        pins_on_path_without_connectors(snake_pins());
+        pins_on_path(snake_pins());
     color("#5b9fd6") place_geared(snake_drive_c())
         ch1_03c_sprocket(SPROCKET_TEETH);
 }
@@ -286,17 +214,17 @@ if (CHAIN_PART == "assembly") {
 emit_chain("plates") {
     if (CHAIN_PART == "assembly")
         color("#8A919C") snake_in_rear()
-            plates_on_path_with_connector_replacement(snake_pins());
+            plates_on_path(snake_pins());
     else
-        snake_in_rear() plates_on_path_with_connector_replacement(snake_pins());
+        snake_in_rear() plates_on_path(snake_pins());
 }
 emit_chain("rollers") {
     if (CHAIN_PART == "assembly") color("#E8EDF2") snake_in_rear() rollers_on_path(snake_pins());
     else snake_in_rear() rollers_on_path(snake_pins());
 }
 emit_chain("pins") {
-    if (CHAIN_PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path_without_connectors(snake_pins());
-    else snake_in_rear() pins_on_path_without_connectors(snake_pins());
+    if (CHAIN_PART == "assembly") color("#B08D57") snake_in_rear() pins_on_path(snake_pins());
+    else snake_in_rear() pins_on_path(snake_pins());
 }
 emit_chain("sprockets") {
     if (CHAIN_PART == "assembly") {
@@ -351,20 +279,6 @@ emit_chain("motor_spring_hardware") {
     else
         cabinet_motor_mount_spring_hardware_local();
 }
-emit_chain("connector") {
-    highlighted_connector();
-}
-emit_chain("clutch_connector") {
-    highlighted_clutch_connector();
-}
-emit_chain("clutch_bearing") {
-    // Separate from the cyan structural highlight so the purchased bearing
-    // is visibly silver in the assembly and follows the connector as one part.
-    if (CHAIN_PART == "assembly")
-        color("#cfd4da") highlighted_clutch_connector_bearing();
-    else
-        highlighted_clutch_connector_bearing();
-}
 //#endregion
 
 //#region 视图层
@@ -382,13 +296,12 @@ emit_chain("clutch_bearing") {
 // 蛇链电机 Ω 套的四个底部固定孔对应柜底四个独立圆形承托/限位基台，
 // 每孔向上套入 Ø5、柱段高 12 mm 的实体导向柱；硬弹簧套在导向柱外，M3 大蘑菇头螺钉从上向下拧入柱顶盲孔，
 // 这组采购件单独作为 motor_spring_hardware 显示，不与柜体或固定套合并。
-// 高亮 CONNECTOR_LINK_INDEX 节为普通 03C 接头：普通双销换成带槽销和夹片，
-// 夹片对侧由高亮零件补一块普通单面 8 字外链板；CLUTCH_CONNECTOR_LINK_INDEX 节为加长接头，
-// 保持原链板并加装双夹片、前向离合座；681 轴承单独导出为银色随动零件。
-// 两个接头以及单独轴承都会随链条运动；电机本体固定，独立 D 输出轴与动力轮 1:1 转动。
+// 链条不再叠加旧的高亮接头、加长离合座或 681 随动件；
+// 每个真实 03C 链节保持原节距，独立触发磁铁只作为链节上的采购件参考。
+// 电机本体固定，独立 D 输出轴与动力轮 1:1 转动。
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"clutch_trigger_magnet"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion

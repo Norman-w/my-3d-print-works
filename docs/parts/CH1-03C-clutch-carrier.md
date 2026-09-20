@@ -51,7 +51,6 @@ LM3UU 只有一枚，轴心与公轮同轴（`X/Z` 偏置为 `0/0 mm`）。它�
 | 输出轴承固定条 | `center_mechanism_plate` 内含输出端上下两枚轴承孔的一体长方条 | PETG 打印 |
 | 输出轴/轴承 | `center_output_shaft_reference`、`center_output_bearings_reference` | 采购件，D-round 短轴 + 2×3×6×2 |
 | 机构板 | `center_mechanism_plate`，可拆后仓件、定位键 + 4×M3 | PETG 打印 |
-| 配合测试片 | `center_linear_bearing_fit_coupon`，Ø7.20/7.30/7.40 三档 | PETG 试配，不装机 |
 
 输出母轮仍由两枚 `3×6×2` 轴承支撑并保持固定轴向位置；它们属于输出端，不能
 移到公轮端，也不能与公轮阶梯轴合并成一根贯通轴。输出端不再使用独立轴承笼：两枚
