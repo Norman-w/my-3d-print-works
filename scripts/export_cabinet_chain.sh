@@ -160,7 +160,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_motor_cover": {
-        "name": "蛇形链条电机 Ω 形贴合固定套（下向安装）",
+        "name": "蛇形链条电机 Ω 固定套（四孔套 Ø5×12 Boss；M3 下压）",
         "role": "printed",
         "color": "#56616d",
         "explosion": [0, 0, 0],

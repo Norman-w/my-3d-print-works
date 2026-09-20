@@ -11,25 +11,14 @@ module local_z_cylinder(d, h, x, y, z0) {
         cylinder(d = d, h = h);
 }
 
-module rounded_pad_xy(w, d, h, r, x, y0, z0) {
-    // Rounded rectangular pad in the cabinet floor's XY plane.  The x
-    // argument is the pad centre; y0 is its front edge in the legacy source
-    // frame.  It is intentionally a continuous rail, not four floating disks.
-    translate([x, y0, z0])
-        hull() {
-            for (dx = [-w / 2 + r, w / 2 - r], dy = [r, d - r])
-                translate([dx, dy, 0])
-                    cylinder(r = r, h = h);
-        }
-}
-
 module motor_mount_spring_coil(x, y) {
-    // Preview-only purchased spring.  It is coaxial with the solid guide post
-    // and starts just above the printed collar on the moving Omega seat.
+    // Preview-only purchased spring.  It is coaxial with the solid Ø5 guide
+    // post and is shown at the installed/preloaded length, not its 14 mm free
+    // length.  The real spring remains a purchased part.
     translate([x, y, MOTOR_MOUNT_SPRING_START_Z])
         linear_extrude(
-            height = MOTOR_MOUNT_SPRING_FREE_L,
-            twist = 360 * 6,
+            height = MOTOR_MOUNT_SPRING_INSTALLED_L,
+            twist = 360 * 3,
             slices = 48
         )
             translate([
@@ -65,23 +54,22 @@ module cabinet_motor_mount_floor_seats_local() {
     c = motor_mount_c();
     floor_y = MOTOR_MOUNT_CHAIN_Y
         + MOTOR_MOUNT_OMEGA_SEAT_CENTER_Y_LOCAL;
-    rail_y0 = floor_y - MOTOR_MOUNT_BOSS_STAGE1_RAIL_L / 2;
     union() {
-        // The two continuous rounded base rails are the bottom-end platforms:
-        // they fuse into the cabinet floor, support the two posts on each
-        // side, and stop the moving Omega seat above the cabinet floor.
+        // Four independent circular root bosses fuse into the cabinet floor.
+        // They are deliberately not a pair of long rails: each Ω-seat hole
+        // has its own load path and its own coaxial M3 pilot.
         for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
-            rounded_pad_xy(
-                spec[1],
-                MOTOR_MOUNT_BOSS_STAGE1_RAIL_L,
-                MOTOR_MOUNT_BOSS_STAGE1_H,
-                MOTOR_MOUNT_BOSS_STAGE1_RAIL_R,
-                c[0] + spec[0],
-                rail_y0,
-                MOTOR_MOUNT_BOSS_STAGE1_Z0
-            );
-        // Each fixing point has a solid guide post.  The moving seat's larger
-        // hole slides over the post; only the top pilot is removed later.
+            for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
+                local_z_cylinder(
+                    spec[1],
+                    MOTOR_MOUNT_BOSS_STAGE1_H,
+                    c[0] + spec[0],
+                    floor_y + y_offset,
+                    MOTOR_MOUNT_BOSS_STAGE1_Z0
+                );
+        // Each fixing point continues as a solid Ø5 guide post.  The moving
+        // Ω seat's Ø5.8 hole slides over it; the post section above the base
+        // shoulder is exactly 12 mm high.
         for (spec = MOTOR_MOUNT_FLOOR_SEAT_SPECS)
             for (y_offset = MOTOR_MOUNT_OMEGA_SEAT_FASTENER_OFFSETS_Y)
                 local_z_cylinder(
@@ -96,7 +84,7 @@ module cabinet_motor_mount_floor_seats_local() {
 
 module cabinet_motor_mount_floor_pilot_holes_local() {
     // These are blind M3 tapping pilots.  They open at the post top but stop
-    // above the base rail and cabinet floor, so a screw threads into the boss
+    // above the circular base shoulder and cabinet floor, so a screw threads into the boss
     // instead of falling through the box.
     c = motor_mount_c();
     floor_y = MOTOR_MOUNT_CHAIN_Y
@@ -133,10 +121,10 @@ module cabinet_motor_mount_spring_hardware_local() {
 //#endregion
 
 //#region 业务逻辑
-// 该模块在 cabinet.scad 的 cabinet_shell() 局部坐标内调用：两条连续的
-// 一级承托/限位基台从柜底长出，四个实体二级导向柱对应 Ω 套的四个孔。
-// 座子从上方套入导向柱并由基台托住；弹簧套在柱外，固定螺钉从上方沿
-// 世界 -Z 进入柱顶盲孔。
+// 该模块在 cabinet.scad 的 cabinet_shell() 局部坐标内调用：四个独立的
+// 圆形一级根部基台从柜底长出，四个 Ø5 实体二级导向柱对应 Ω 套四个孔。
+// 座子从上方套入导向柱并由根部基台托住；弹簧套在柱外，M3 固定螺钉从
+// 上方沿世界 -Z 进入柱顶盲孔。
 // cabinet_motor_mount_spring_hardware_local() 只在链条总装配中显示采购件
 // 弹簧和螺钉，不把它们并入柜体打印 STL。
 //#endregion

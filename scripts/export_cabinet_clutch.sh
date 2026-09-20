@@ -116,7 +116,7 @@ for stale_name in (
         stale_path.unlink()
 labels = {
     "cabinet-clutch/cabinet_clutch_cabinet_frame": {
-        "name": "箱体框架·上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面（前后仓隔板另列）",
+        "name": "箱体框架·上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面 + 蛇链电机四点Boss（前后仓隔板另列）",
         "color": "#6f8f9a",
         "opacity": 0.30,
         "visible": True,
@@ -349,7 +349,7 @@ chain_labels = {
         "role": "purchased",
     },
     "cabinet-chain/cabinet_chain_motor_cover": {
-        "name": "蛇形链条电机 Ω 形贴合固定套（下向安装）",
+        "name": "蛇形链条电机 Ω 固定套（四孔套 Ø5×12 Boss；M3 下压）",
         "color": "#56616d",
         "role": "printed",
     },

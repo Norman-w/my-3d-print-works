@@ -88,8 +88,8 @@ MOTOR_MOUNT_OMEGA_SEAT_CENTER_X =
         - MOTOR_MOUNT_OMEGA_SEAT_OVERLAP;
 // The X− seat is narrowed and moved inward because the motor wheel itself
 // moved 2 mm toward the service bay.  Its inner edge still overlaps the Ω
-// sleeve, while its floor rail remains outside the cabinet wall with a print
-// clearance margin.  The X+ seat keeps the original wider support.
+// sleeve, while its circular floor Boss remains outside the cabinet wall with
+// a print-clearance margin.  The X+ seat keeps the original wider support.
 MOTOR_MOUNT_OMEGA_LEFT_SEAT_W = 10.5;
 MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X = 13.1;
 
@@ -101,18 +101,18 @@ MOTOR_MOUNT_SPRING_OD = 8.0;
 MOTOR_MOUNT_SPRING_WIRE_D = 1.1;
 MOTOR_MOUNT_SPRING_ID =
     MOTOR_MOUNT_SPRING_OD - 2 * MOTOR_MOUNT_SPRING_WIRE_D;
-MOTOR_MOUNT_SPRING_FREE_L = 14.0;
+MOTOR_MOUNT_SPRING_FREE_L = 14.0; // 采购件自由长；装配时按预紧量压缩
 MOTOR_MOUNT_SPRING_START_CLEAR = 0.25;
 MOTOR_MOUNT_SPRING_SEAT_TOP_Z =
     TEN_Z + MOTOR_MOUNT_OMEGA_SEAT_TOP_Z
         + MOTOR_MOUNT_OMEGA_SPRING_SEAT_H;
 MOTOR_MOUNT_SPRING_START_Z =
     MOTOR_MOUNT_SPRING_SEAT_TOP_Z + MOTOR_MOUNT_SPRING_START_CLEAR;
-MOTOR_MOUNT_SPRING_TOP_Z =
-    MOTOR_MOUNT_SPRING_START_Z + MOTOR_MOUNT_SPRING_FREE_L;
 
-// 柜体上的四组 Boss：底部是比座子更大的承托/限位基台，上方是可套入座孔
-// 的实体导向柱。基台露出柜底并决定座子最低高度；导向柱不打穿箱底。
+// 柜体底板上的四组圆形 Boss。每组由一个与底板融合的圆形根部基台和一段
+// Ø5 mm 实体柱组成；电机 Ω 套四个孔直接套在这四根柱上。柱段从承托基台
+// 顶面起严格升高 12 mm，不能再由弹簧自由长度反推，避免预览中柱子过长或
+// 看不见。柱心是从上方攻入的 M3 自攻导孔，不能打穿底板。
 MOTOR_MOUNT_BOSS_STAGE1_EMBED = 0.45;
 MOTOR_MOUNT_BOSS_STAGE1_Z0 = WALL - MOTOR_MOUNT_BOSS_STAGE1_EMBED;
 MOTOR_MOUNT_BOSS_SEAT_STOP_CLEARANCE = 0.20;
@@ -121,36 +121,42 @@ MOTOR_MOUNT_BOSS_STAGE1_TOP_Z =
         - MOTOR_MOUNT_BOSS_SEAT_STOP_CLEARANCE;
 MOTOR_MOUNT_BOSS_STAGE1_H =
     MOTOR_MOUNT_BOSS_STAGE1_TOP_Z - MOTOR_MOUNT_BOSS_STAGE1_Z0;
-MOTOR_MOUNT_BOSS_STAGE1_RAIL_W = MOTOR_MOUNT_OMEGA_SEAT_W + 2.0;
-MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W = MOTOR_MOUNT_OMEGA_LEFT_SEAT_W;
-MOTOR_MOUNT_BOSS_STAGE1_RAIL_L = MOTOR_MOUNT_OMEGA_SEAT_L + 4.0;
-MOTOR_MOUNT_BOSS_STAGE1_RAIL_R = 1.2;
-MOTOR_MOUNT_BOSS_POST_TOP_CLEARANCE = 0.30;
+MOTOR_MOUNT_BOSS_STAGE1_BASE_D = 8.0;
+MOTOR_MOUNT_BOSS_GUIDE_H = 12.0;
 MOTOR_MOUNT_BOSS_GUIDE_TOP_Z =
-    MOTOR_MOUNT_SPRING_TOP_Z - MOTOR_MOUNT_BOSS_POST_TOP_CLEARANCE;
-MOTOR_MOUNT_BOSS_GUIDE_H =
-    MOTOR_MOUNT_BOSS_GUIDE_TOP_Z - MOTOR_MOUNT_BOSS_STAGE1_TOP_Z;
+    MOTOR_MOUNT_BOSS_STAGE1_TOP_Z + MOTOR_MOUNT_BOSS_GUIDE_H;
 MOTOR_MOUNT_BOSS_GUIDE_OD = 5.0;
 MOTOR_MOUNT_BOSS_PILOT_D = 2.5;
-MOTOR_MOUNT_BOSS_PILOT_DEPTH = 12.0;
+MOTOR_MOUNT_BOSS_PILOT_DEPTH = 7.5;
 MOTOR_MOUNT_BOSS_PILOT_BOTTOM_Z =
     MOTOR_MOUNT_BOSS_GUIDE_TOP_Z - MOTOR_MOUNT_BOSS_PILOT_DEPTH;
 MOTOR_MOUNT_BOSS_PILOT_END_CLEARANCE = 4.0;
+
+// 四根柱上的弹簧采用安装状态的长度显示；14 mm 是采购件自由长，实际由
+// M3 螺钉压到柱顶附近。弹簧始终包在 Ø5 柱外，顶部留 0.10 mm 让位。
+MOTOR_MOUNT_SPRING_TOP_CLEARANCE = 0.10;
+MOTOR_MOUNT_SPRING_INSTALLED_L =
+    MOTOR_MOUNT_BOSS_GUIDE_TOP_Z
+        - MOTOR_MOUNT_SPRING_TOP_CLEARANCE
+        - MOTOR_MOUNT_SPRING_START_Z;
+MOTOR_MOUNT_SPRING_TOP_Z =
+    MOTOR_MOUNT_SPRING_START_Z + MOTOR_MOUNT_SPRING_INSTALLED_L;
 
 // Ω 套固定座的孔放大为导向柱滑动孔；M3 螺钉从中心进入柱顶盲孔。
 // 弹簧套在柱外，座子上的座圈承托弹簧下端。
 MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D = MOTOR_MOUNT_BOSS_GUIDE_OD + 0.8;
 MOTOR_MOUNT_OMEGA_SPRING_SEAT_OD = MOTOR_MOUNT_SPRING_OD + 1.0;
 
-MOTOR_MOUNT_SCREW_SHAFT_D = 3.2;
+MOTOR_MOUNT_SCREW_NOMINAL_D = 3.0; // M3
+MOTOR_MOUNT_SCREW_SHAFT_D = MOTOR_MOUNT_SCREW_NOMINAL_D;
 MOTOR_MOUNT_SCREW_HEAD_D = MOTOR_MOUNT_SPRING_OD + 1.0;
 MOTOR_MOUNT_SCREW_HEAD_H = 2.4;
-MOTOR_MOUNT_SCREW_HEAD_Z = MOTOR_MOUNT_SPRING_TOP_Z;
+MOTOR_MOUNT_SCREW_HEAD_Z = MOTOR_MOUNT_BOSS_GUIDE_TOP_Z;
 MOTOR_MOUNT_SCREW_CLEAR_D = MOTOR_MOUNT_OMEGA_SEAT_GUIDE_HOLE_D;
 
-// 旧名称保留为兼容别名，避免已有入口因重命名失效；实际几何由上面的
-// 台阶导轨和导向柱生成，不再使用旧的四个独立圆柱接收座。
-MOTOR_MOUNT_FLOOR_SEAT_D = MOTOR_MOUNT_BOSS_STAGE1_RAIL_W;
+// 旧入口名保留为兼容别名；实际几何已经改为四个独立圆形底座，不再生成
+// 横向连续承托条。
+MOTOR_MOUNT_FLOOR_SEAT_D = MOTOR_MOUNT_BOSS_STAGE1_BASE_D;
 MOTOR_MOUNT_FLOOR_SEAT_H = MOTOR_MOUNT_BOSS_STAGE1_H;
 MOTOR_MOUNT_FLOOR_BORE_D = MOTOR_MOUNT_BOSS_PILOT_D;
 MOTOR_MOUNT_EPS = 0.05;
@@ -159,14 +165,14 @@ MOTOR_MOUNT_FLOOR_SEAT_OFFSETS_X = [
     -MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
     MOTOR_MOUNT_OMEGA_SEAT_CENTER_X
 ];
-// [local X offset, matching continuous floor-rail width].  Use this list in
+// [local X offset, matching circular floor-Boss diameter].  Use this list in
 // the actual mount geometry; the offset-only list above remains a compatibility
 // alias for older preview callers.
 MOTOR_MOUNT_FLOOR_SEAT_SPECS = [
     [-MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X,
-        MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W],
+        MOTOR_MOUNT_BOSS_STAGE1_BASE_D],
     [MOTOR_MOUNT_OMEGA_SEAT_CENTER_X,
-        MOTOR_MOUNT_BOSS_STAGE1_RAIL_W]
+        MOTOR_MOUNT_BOSS_STAGE1_BASE_D]
 ];
 //#endregion
 
@@ -222,9 +228,9 @@ assert(MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X
     "X-minus screw-head relief must not enter the sleeve");
 assert(motor_mount_c()[0]
         - MOTOR_MOUNT_OMEGA_LEFT_SEAT_CENTER_X
-        - MOTOR_MOUNT_BOSS_STAGE1_LEFT_RAIL_W / 2
+        - MOTOR_MOUNT_BOSS_STAGE1_BASE_D / 2
         > WALL + 0.20,
-    "X-minus motor floor rail must clear the cabinet wall");
+    "X-minus motor floor Boss must clear the cabinet wall");
 assert(MOTOR_MOUNT_BOSS_STAGE1_EMBED > 0
     && MOTOR_MOUNT_BOSS_STAGE1_EMBED < WALL,
     "stage-one boss embedment must fuse into, not pass through, the cabinet floor");
@@ -238,14 +244,24 @@ assert(MOTOR_MOUNT_BOSS_STAGE1_TOP_Z > WALL
     "boss base must be above the floor and define the seat stop");
 assert(MOTOR_MOUNT_BOSS_STAGE1_H > 2.0,
     "boss base must have a printable support height");
-assert(MOTOR_MOUNT_BOSS_GUIDE_H > 8.0,
-    "guide post must be long enough to constrain the moving seat");
-assert(MOTOR_MOUNT_BOSS_GUIDE_TOP_Z < MOTOR_MOUNT_SCREW_HEAD_Z,
-    "guide post must end below the spring-loaded screw head");
+assert(abs(MOTOR_MOUNT_BOSS_GUIDE_H - 12.0) < 0.01,
+    "motor Boss guide post must rise exactly 12 mm above the base shoulder");
+assert(MOTOR_MOUNT_BOSS_STAGE1_BASE_D
+        > MOTOR_MOUNT_BOSS_GUIDE_OD + 2.0,
+    "round Boss base must provide a wider printable root than the guide post");
+assert(MOTOR_MOUNT_BOSS_GUIDE_TOP_Z <= MOTOR_MOUNT_SCREW_HEAD_Z + MOTOR_MOUNT_EPS,
+    "M3 screw head must sit at or above the guide-post top");
+assert(MOTOR_MOUNT_SPRING_INSTALLED_L > 5.0
+        && MOTOR_MOUNT_SPRING_INSTALLED_L < MOTOR_MOUNT_SPRING_FREE_L,
+    "installed spring length must be compressed and remain on the guide post");
 assert(MOTOR_MOUNT_BOSS_PILOT_BOTTOM_Z
         > MOTOR_MOUNT_BOSS_STAGE1_TOP_Z
             + MOTOR_MOUNT_BOSS_PILOT_END_CLEARANCE,
     "blind pilot hole must leave solid material above the boss base");
+assert(MOTOR_MOUNT_BOSS_PILOT_DEPTH
+        + MOTOR_MOUNT_BOSS_PILOT_END_CLEARANCE
+        < MOTOR_MOUNT_BOSS_GUIDE_H,
+    "M3 blind pilot must stop inside the 12 mm Boss post");
 assert(MOTOR_MOUNT_BOSS_GUIDE_OD
         - MOTOR_MOUNT_BOSS_PILOT_D > 1.0,
     "guide post must leave a printable annular wall around the pilot hole");

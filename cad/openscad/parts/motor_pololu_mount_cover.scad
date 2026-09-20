@@ -3,12 +3,13 @@
 // material: printed motor-fit Ω clamp; mating motor is purchased Pololu #1101
 // parting_plane: n/a; one printed clamp, open at the lower Ω mouth and at both axial ends
 // opening_direction: motor slides through the sleeve along local Y; fixing seats face local -Z
-// fastener: four M3 screws through local-Z holes in the two bottom seats into blind floor-boss pilots
+// fastener: four M3 screws through local-Z holes in the two bottom seats into blind floor-boss pilots; the Ø5 floor Boss posts rise 12 mm through the Ø5.8 seat holes
 // seal: n/a; rear electrical tabs remain open
 // print_orientation: rotate as needed in the slicer; source axis follows the assembly datum
 // units: mm
 // note: the clamp follows the motor's rounded rectangular 10×12 mm envelope;
-//       the bottom profile is two short outward seats, not two hanging legs.
+//       the bottom profile is two short outward seats, not two hanging legs;
+//       each seat carries two holes for the four circular floor Boss posts.
 
 //#region 导入/依赖
 include <../enclosure/cabinet_motor_mount_params.scad>

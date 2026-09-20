@@ -218,9 +218,7 @@ SNAKE_MOTOR_BOSS_STAGE1_H = MOTOR_MOUNT_BOSS_STAGE1_H;
 SNAKE_MOTOR_BOSS_STAGE1_EMBED = MOTOR_MOUNT_BOSS_STAGE1_EMBED;
 SNAKE_MOTOR_BOSS_STAGE1_Y0 = MOTOR_MOUNT_BOSS_STAGE1_Z0;
 SNAKE_MOTOR_BOSS_STAGE1_TOP_Y = MOTOR_MOUNT_BOSS_STAGE1_TOP_Z;
-SNAKE_MOTOR_BOSS_RAIL_W = MOTOR_MOUNT_BOSS_STAGE1_RAIL_W;
-SNAKE_MOTOR_BOSS_RAIL_L = MOTOR_MOUNT_BOSS_STAGE1_RAIL_L;
-SNAKE_MOTOR_BOSS_RAIL_R = MOTOR_MOUNT_BOSS_STAGE1_RAIL_R;
+SNAKE_MOTOR_BOSS_BASE_D = MOTOR_MOUNT_BOSS_STAGE1_BASE_D;
 SNAKE_MOTOR_BOSS_GUIDE_H = MOTOR_MOUNT_BOSS_GUIDE_H;
 SNAKE_MOTOR_BOSS_GUIDE_OD = MOTOR_MOUNT_BOSS_GUIDE_OD;
 SNAKE_MOTOR_BOSS_GUIDE_BORE_D = MOTOR_MOUNT_BOSS_PILOT_D;
@@ -2223,8 +2221,15 @@ module clutch_cabinet_frame() {
             cabinet_frame_grid();
             cabinet_frame_front_service_cheek();
             cabinet_frame_front_lower_face();
+            // The world preview uses this open frame as its single cabinet
+            // carrier. Keep the motor's four round base bosses and Ø5 x 12
+            // guide posts in that same canonical mesh; they used to exist
+            // only in clutch_cabinet_shell(), so the close-up showed them
+            // while the world assembly silently omitted them.
+            snake_motor_mount_bosses();
             vertical_spline_bearing_floor_bosses();
         }
+        snake_motor_mount_boss_floor_bores();
         vertical_spline_bearing_floor_boss_pilot_holes();
     }
 }
@@ -2245,7 +2250,7 @@ module world_drawer_ghosts() {
 }
 
 module snake_motor_mount_bosses() {
-    // Reuse the same continuous base rails, solid guide posts, and top-open
+    // Reuse the same four round base bosses, solid guide posts, and top-open
     // blind pilots as the printable cabinet.  R_x(-90) maps local
     // [x, depth, height] to native [x, -depth, height].
     rotate([-90, 0, 0])
@@ -4966,10 +4971,10 @@ assert(SNAKE_MOTOR_BOSS_GUIDE_OD > SNAKE_MOTOR_BOSS_GUIDE_BORE_D,
 assert(SNAKE_MOTOR_BOSS_GUIDE_TOP_Y < WORLD_GRID_ORIGIN_Y,
     "snake motor boss guides must remain below the drawer grid");
 assert(SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
-        - SNAKE_MOTOR_BOSS_RAIL_L / 2 > -D + WALL
+        - SNAKE_MOTOR_BOSS_BASE_D / 2 > -D + WALL
     && SNAKE_MOTOR_MOUNT_SEAT_CENTER_Z
-        + SNAKE_MOTOR_BOSS_RAIL_L / 2 < -WALL,
-    "snake motor boss rails must stay inside the rear depth");
+        + SNAKE_MOTOR_BOSS_BASE_D / 2 < -WALL,
+    "snake motor Boss bases must stay inside the rear depth");
 assert(SNAKE_CHAIN_REAR_EDGE_Z - (DRIVE_AXIS_Z + TIMING_FLANGE_R)
         >= DRAWER_BUS_CHAIN_CLEARANCE,
     "drawer drive rear pulley must stay behind the snake-chain envelope");
