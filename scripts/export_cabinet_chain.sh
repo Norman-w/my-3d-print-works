@@ -20,7 +20,7 @@ OUT_CHAIN_CLUTCH="${PROJECT_ROOT}/output/3d-print/chain-clutch"
 OUT_CABINET="${PROJECT_ROOT}/output/3d-print/cabinet"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware motor_tensioner connector clutch_connector clutch_bearing scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector)
+PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware connector clutch_connector clutch_bearing)
 MOTOR_SCAD_DIR="${PROJECT_ROOT}/cad/openscad"
 MOTOR_SCAD_FILE="ch1_03c_power_motor.scad"
 MOTOR_COVER_SCAD_FILE="ch1_03c_power_motor_cover.scad"
@@ -171,13 +171,6 @@ names = {
         "color": "#c9a227",
         "explosion": [0, 0, 0],
     },
-    "cabinet_chain_motor_tensioner": {
-        "name": "旧蛇形电机张紧螺杆（源文件保留，默认隐藏）",
-        "role": "printed",
-        "color": "#c9a227",
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
     "cabinet_chain_connector": {
         "name": "03C 链条连接节（带槽双穿销+圆弧夹片，高亮）",
         "role": "diagnostic",
@@ -197,46 +190,6 @@ names = {
         "role": "purchased",
         "color": "#cfd4da",
         "opacity": 1.0,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_scheme1_power_wheels": {
-        "name": "旧方案1·25 个常转动力轮（世界默认隐藏，文件保留）",
-        "role": "diagnostic",
-        "color": "#e6a23c",
-        "opacity": 1.0,
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_scheme1_output_wheels": {
-        "name": "旧方案1·25 个抽屉受力轮（世界默认隐藏，文件保留）",
-        "role": "diagnostic",
-        "color": "#5b9fd6",
-        "opacity": 1.0,
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_scheme1_clutch_faces": {
-        "name": "旧方案1·25 组狗牙离合面（世界默认隐藏，文件保留）",
-        "role": "diagnostic",
-        "color": "#f0c36a",
-        "opacity": 1.0,
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_scheme1_bearings": {
-        "name": "旧方案1·抽屉输出轴承（世界默认隐藏，文件保留）",
-        "role": "purchased",
-        "color": "#cfd4da",
-        "opacity": 1.0,
-        "visible": False,
-        "explosion": [0, 0, 0],
-    },
-    "cabinet_chain_scheme1_selector": {
-        "name": "旧方案1·链条拨叉/8T 选择轮（世界默认隐藏，文件保留）",
-        "role": "diagnostic",
-        "color": "#72e06a",
-        "opacity": 1.0,
-        "visible": False,
         "explosion": [0, 0, 0],
     },
     "ch1_03c_power_motor_pololu_100_1_hp_6v": {
@@ -313,26 +266,7 @@ names.update({
         "name": "箱体·上下左右外框 + X+立板 + 前部层格/立格 + 前后仓隔板皮带孔 + 后仓贯通 + 前下实体面",
         "role": "printed", "color": "#6f8f9a", "opacity": 0.30, "visible": True,
     },
-    "cabinet_clutch_assembly": {
-        "name": "总装配合并检查体（可选）", "role": "diagnostic", "color": "#7f8ea3", "opacity": 0.28, "visible": False,
-    },
-    "cabinet_clutch_all_clutches": {"name": "离合器合并检查体（可选）", "role": "diagnostic", "visible": False},
-    "cabinet_clutch_detail_open": {"name": "离合细节·打开状态（可选）", "role": "diagnostic", "visible": False},
-    "cabinet_clutch_detail_engaged": {"name": "离合细节·闭合状态（可选）", "role": "diagnostic", "visible": False},
-    "cabinet_clutch_drawer_drive": {"name": "抽屉驱动合并检查体（可选）", "role": "diagnostic", "visible": False},
-    "cabinet_clutch_power_bus": {"name": "动力母线合并检查体（可选）", "role": "diagnostic", "visible": False},
     "00_tensioner_t_solid_reference": {"name": "右侧张紧滑台 · SKP 参数化", "color": "#aebdce"},
-    "00_left_d_axis_candidate": {"name": "左侧驱动轴 · D 型"},
-    "01_motor_vertical_reference": {"name": "抽屉开合电机 · 竖直"},
-    "02_drive_column_reference": {"name": "传动轴 · 代表列"},
-    "03_vertical_rack_candidate": {"name": "Y 向长花键齿轮杆 · 两端 D 轴"},
-    "06_upper_axis_z_spur_candidate": {"name": "离合上方齿轮 · Z 轴"},
-    "07_upper_downward_dog_candidate": {"name": "上方离合齿 · 向下"},
-    "08_lower_upward_dog_candidate": {"name": "下方离合齿 · 向上"},
-    "09_rear_takeoff_timing_pulley_candidate": {"name": "后方取力同步轮"},
-    "10_clutch_spring_reference": {"name": "离合压簧"},
-    "11_t_countersunk_screw_reference": {"name": "T 形沉头螺丝"},
-    "12_clutch_fork_candidate": {"name": "离合拨叉"},
     "13_drawer_timing_belt_reference": {"name": "抽屉同步皮带"},
     "14_front_timing_pulley_candidate": {"name": "前方同步轮"},
     "15_front_pinion_candidate": {"name": "抽屉底部驱动齿轮"},
@@ -340,28 +274,11 @@ names.update({
 })
 clutch_group_map = {
     "cabinet_clutch_cabinet_frame": "00·箱体框架",
-    "00_left_d_axis_candidate": "01·动力母线",
     "00_tensioner_t_solid_reference": "01·动力母线",
-    "01_motor_vertical_reference": "01·动力母线",
-    "02_drive_column_reference": "01·动力母线",
-    "03_vertical_rack_candidate": "01·动力母线",
-    "cabinet_clutch_power_bus": "01·动力母线",
-    "06_upper_axis_z_spur_candidate": "02·离合机构",
-    "07_upper_downward_dog_candidate": "02·离合机构",
-    "08_lower_upward_dog_candidate": "02·离合机构",
-    "09_rear_takeoff_timing_pulley_candidate": "02·离合机构",
-    "10_clutch_spring_reference": "02·离合机构",
-    "11_t_countersunk_screw_reference": "02·离合机构",
-    "12_clutch_fork_candidate": "02·离合机构",
-    "cabinet_clutch_all_clutches": "02·离合机构",
-    "cabinet_clutch_detail_open": "02·离合机构",
-    "cabinet_clutch_detail_engaged": "02·离合机构",
     "13_drawer_timing_belt_reference": "03·抽屉驱动",
     "14_front_timing_pulley_candidate": "03·抽屉驱动",
     "15_front_pinion_candidate": "03·抽屉驱动",
     "16_drawer_linear_rack_candidate": "03·抽屉驱动",
-    "cabinet_clutch_drawer_drive": "03·抽屉驱动",
-    "cabinet_clutch_assembly": "99·总装配检查体",
 }
 for part in payload.get("parts", []):
     extra = names.get(Path(str(part.get("file", ""))).stem)
@@ -390,6 +307,22 @@ PY
 # ===== 分区：公开 API =====
 [[ -x "$OPENSCAD_BIN" ]] || die "找不到 OpenSCAD: $OPENSCAD_BIN"
 mkdir -p "$OUT_STL" "$OUT_MOTOR" "$OUT_MOUNT" "$OUT_CHAIN_HARDWARE" "$OUT_CHAIN_CLUTCH" "$OUT_PNG"
+
+# Retired chain diagnostics were intentionally hidden before, but their stale
+# STLs were still scanned into the tree. Remove the derived files now that the
+# current world uses the native center clutch and the single trigger magnet.
+OBSOLETE_CHAIN_OUTPUTS=(
+    "cabinet_chain_motor_tensioner.stl"
+    "cabinet_chain_scheme1_power_wheels.stl"
+    "cabinet_chain_scheme1_output_wheels.stl"
+    "cabinet_chain_scheme1_clutch_faces.stl"
+    "cabinet_chain_scheme1_bearings.stl"
+    "cabinet_chain_scheme1_selector.stl"
+)
+for old_file in "${OBSOLETE_CHAIN_OUTPUTS[@]}"; do
+    rm -f "${OUT_STL}/${old_file}"
+    rm -f "${PREVIEW_DIR}/models/cabinet-chain/${old_file}"
+done
 
 echo "→ 按真实节距闭合链条 / 张紧轮"
 python3 "${PROJECT_ROOT}/scripts/solve_cabinet_chain.py"
@@ -486,7 +419,7 @@ export_library_chain_clutch "$CLUTCH_BEARING_SCAD_FILE" "bearing" "ch1_03c_clutc
 export_library_chain_clutch "$CLUTCH_RETAINER_SCAD_FILE" "retainer" "ch1_03c_clutch_bearing_retainer"
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware motor_tensioner scheme1_power_wheels scheme1_output_wheels scheme1_clutch_faces scheme1_bearings scheme1_selector; do
+    for part in sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done
@@ -543,10 +476,9 @@ echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_connecting_pin.stl"
 echo "  STL  ${OUT_CHAIN_HARDWARE}/ch1_03c_retaining_clip.stl"
 echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_connecting_pin.stl"
 echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_extended_retaining_clips.stl"
-  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
-  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
-  echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing_retainer.stl"
-echo "  方案1视图: 输入轮 / 输出轮 / 狗牙离合 / 银色轴承 / 链条拨叉"
+echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_platform.stl"
+echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing.stl"
+echo "  STL  ${OUT_CHAIN_CLUTCH}/ch1_03c_clutch_bearing_retainer.stl"
 echo "  预览保持现有 HTTP 服务，刷新即可"
 
 # ===== 分区：业务逻辑 =====

@@ -48,26 +48,6 @@ CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
 CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
 CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET = (h2 - CHAIN_TRIGGER_MAGNET_D) / 2;
 CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET = outer_face + 0.05;
-// 方案 1：每个抽屉位置一组同轴的常转输入轮与受力输出轮；两张狗牙面
-// 默认轴向留 2.6 mm，只有停稳后的拨叉把目标输出狗牙推过去才闭合。
-// These are retained as standalone diagnostic/export parts, but the old
-// scheme is deliberately absent from the canonical world assembly.  The
-// current drawer drive is the separate Y-spline/HTD belt system; keeping this
-// switch here prevents an old diagnostic wheel pair from being mistaken for
-// the current clutch while preserving every source and STL entry.
-SHOW_SCHEME1_IN_ASSEMBLY = is_undef(SHOW_SCHEME1_IN_ASSEMBLY)
-    ? false
-    : SHOW_SCHEME1_IN_ASSEMBLY;
-SCHEME1_POWER_Y_OFFSET = -5.20;
-SCHEME1_OUTPUT_Y_OFFSET = 5.20;
-SCHEME1_DOG_INPUT_Y_OFFSET = -1.80;
-SCHEME1_DOG_OUTPUT_Y_OFFSET = 1.80;
-SCHEME1_DOG_T = 1.00;
-SCHEME1_DOG_OD = 9.00;
-SCHEME1_DOG_BORE_D = 3.40;
-SCHEME1_DOG_LUG_W = 2.00;
-SCHEME1_DOG_LUG_H = 1.60;
-SCHEME1_SELECTOR_HIGHLIGHT = "#72e06a";
 // 加长销模型的固定头内侧面是局部 Y=0；把它移到链条后侧外板面，
 // 销杆沿局部 +Y 经过链板并伸向前方，拨叉平台/离合座因此朝前。
 CLUTCH_CONNECTOR_PIN_FACE_OFFSET = -outer_face;
@@ -111,111 +91,6 @@ module place_power_motor(c) {
 module place_power_motor_cover(c) {
     translate([c[0], CHAIN_Y, c[1]])
         children();
-}
-
-module scheme1_place_y(c, y) {
-    translate([c[0], y, c[1]])
-        rotate([90, 0, 0])
-            children();
-}
-
-function scheme1_station_centers() = [
-    for (j = [0:N_ROW - 1], i = [0:N_COL - 1])
-        [col_center_x(i), chain_row_center_z(j), 0]
-];
-
-function scheme1_selector_center() = [
-    col_center_x(0),
-    chain_row_center_z(N_ROW - 1),
-    0
-];
-
-module scheme1_axis_cylinder(d, h, y) {
-    translate([0, y, 0])
-        rotate([90, 0, 0])
-            cylinder(d = d, h = h, center = true);
-}
-
-module scheme1_dog_ring() {
-    union() {
-        difference() {
-            cylinder(d = SCHEME1_DOG_OD, h = SCHEME1_DOG_T, center = true);
-            cylinder(d = SCHEME1_DOG_BORE_D, h = SCHEME1_DOG_T + 2 * EPS, center = true);
-        }
-        // 四个轴向端面凸齿；两组凸齿相对，默认留出开口间隙。
-        for (a = [0:3])
-            rotate([0, 0, a * 90])
-                translate([SCHEME1_DOG_OD / 2 - SCHEME1_DOG_LUG_W / 2, 0, 0])
-                    cube([
-                        SCHEME1_DOG_LUG_W,
-                        SCHEME1_DOG_LUG_H,
-                        SCHEME1_DOG_T
-                    ], center = true);
-    }
-}
-
-module scheme1_dog_carrier(y_gear, y_dog) {
-    scheme1_axis_cylinder(
-        5.30,
-        abs(y_gear - y_dog),
-        (y_gear + y_dog) / 2
-    );
-}
-
-module scheme1_power_wheels() {
-    for (c = scheme1_station_centers())
-        scheme1_place_y(c, CHAIN_Y + SCHEME1_POWER_Y_OFFSET)
-            ch1_03c_sprocket(SPROCKET_TEETH);
-}
-
-module scheme1_output_wheels() {
-    for (c = scheme1_station_centers())
-        scheme1_place_y(c, CHAIN_Y + SCHEME1_OUTPUT_Y_OFFSET)
-            rotate([180, 0, 0])
-                ch1_03c_bearing_sprocket(SPROCKET_TEETH);
-}
-
-module scheme1_clutch_faces() {
-    for (c = scheme1_station_centers()) {
-        translate([c[0], 0, c[1]]) {
-            scheme1_dog_carrier(
-                CHAIN_Y + SCHEME1_POWER_Y_OFFSET,
-                CHAIN_Y + SCHEME1_DOG_INPUT_Y_OFFSET
-            );
-            scheme1_dog_carrier(
-                CHAIN_Y + SCHEME1_OUTPUT_Y_OFFSET,
-                CHAIN_Y + SCHEME1_DOG_OUTPUT_Y_OFFSET
-            );
-        }
-        scheme1_place_y(c, CHAIN_Y + SCHEME1_DOG_INPUT_Y_OFFSET)
-            scheme1_dog_ring();
-        scheme1_place_y(c, CHAIN_Y + SCHEME1_DOG_OUTPUT_Y_OFFSET)
-            scheme1_dog_ring();
-    }
-}
-
-module scheme1_bearings() {
-    for (c = scheme1_station_centers())
-        scheme1_place_y(c, CHAIN_Y + SCHEME1_OUTPUT_Y_OFFSET)
-            ch1_03c_bearing_visual();
-}
-
-module scheme1_selector() {
-    c = scheme1_selector_center();
-    // 8T 选择轮固定在拨叉本体中；它随链条走到哪个格口，就对应哪个离合站。
-    scheme1_place_y(c, CHAIN_Y)
-        rotate([180, 0, 0])
-            ch1_03c_bearing_blunt_idler(BLUNT_TEETH);
-    // 两个叉指伸向输出侧狗牙，只有停稳后才会把目标狗牙推过开口间隙。
-    color(SCHEME1_SELECTOR_HIGHLIGHT)
-        translate([c[0], CHAIN_Y + 2.35, c[1]]) {
-            for (x = [-4.0, 4.0])
-                translate([x, 0, 0])
-                    cube([1.40, 4.70, 2.40], center = true);
-            cube([9.40, 1.40, 2.40], center = true);
-            translate([0, -2.10, 0])
-                cube([6.80, 1.80, 3.20], center = true);
-        }
 }
 
 module rear_blunt_idlers() {
@@ -476,14 +351,6 @@ emit_chain("motor_spring_hardware") {
     else
         cabinet_motor_mount_spring_hardware_local();
 }
-emit_chain("motor_tensioner") {
-    // Legacy centerline tensioner hardware is kept as a standalone source part
-    // for reference.  The current world uses the four-hole Omega motor seat;
-    // the old bolt/spring assembly is hidden from the default preview manifest
-    // until it is redesigned around that seat instead of crossing the drive wheel.
-    if (CHAIN_PART == "motor_tensioner")
-        tensioner_hardware();
-}
 emit_chain("connector") {
     highlighted_connector();
 }
@@ -497,46 +364,6 @@ emit_chain("clutch_bearing") {
         color("#cfd4da") highlighted_clutch_connector_bearing();
     else
         highlighted_clutch_connector_bearing();
-}
-emit_chain("scheme1_power_wheels") {
-    if (CHAIN_PART == "assembly") {
-        if (SHOW_SCHEME1_IN_ASSEMBLY)
-            color("#e6a23c") scheme1_power_wheels();
-    } else {
-        scheme1_power_wheels();
-    }
-}
-emit_chain("scheme1_output_wheels") {
-    if (CHAIN_PART == "assembly") {
-        if (SHOW_SCHEME1_IN_ASSEMBLY)
-            color("#5b9fd6") scheme1_output_wheels();
-    } else {
-        scheme1_output_wheels();
-    }
-}
-emit_chain("scheme1_clutch_faces") {
-    if (CHAIN_PART == "assembly") {
-        if (SHOW_SCHEME1_IN_ASSEMBLY)
-            color("#f0c36a") scheme1_clutch_faces();
-    } else {
-        scheme1_clutch_faces();
-    }
-}
-emit_chain("scheme1_bearings") {
-    if (CHAIN_PART == "assembly") {
-        if (SHOW_SCHEME1_IN_ASSEMBLY)
-            color("#cfd4da") scheme1_bearings();
-    } else {
-        scheme1_bearings();
-    }
-}
-emit_chain("scheme1_selector") {
-    if (CHAIN_PART == "assembly") {
-        if (SHOW_SCHEME1_IN_ASSEMBLY)
-            color(SCHEME1_SELECTOR_HIGHLIGHT) scheme1_selector();
-    } else {
-        scheme1_selector();
-    }
 }
 //#endregion
 
@@ -559,12 +386,9 @@ emit_chain("scheme1_selector") {
 // 夹片对侧由高亮零件补一块普通单面 8 字外链板；CLUTCH_CONNECTOR_LINK_INDEX 节为加长接头，
 // 保持原链板并加装双夹片、前向离合座；681 轴承单独导出为银色随动零件。
 // 两个接头以及单独轴承都会随链条运动；电机本体固定，独立 D 输出轴与动力轮 1:1 转动。
-// 旧方案 1 的输入/输出轮、狗牙面、轴承和选择轮保留为独立诊断输出，
-// 但默认不进入 canonical world assembly；SHOW_SCHEME1_IN_ASSEMBLY=true
-// 才会把它们重新放回总装配。
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"' / '"scheme1_power_wheels"' / '"scheme1_output_wheels"' / '"scheme1_clutch_faces"' / '"scheme1_bearings"' / '"scheme1_selector"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"' / '"connector"' / '"clutch_connector"' / '"clutch_bearing"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion

@@ -42,16 +42,6 @@ const CABINET_CONTROL_BY_PART_ID = new Map(
 );
 const DEFAULT_HIDDEN_PART_IDS = new Set([
   "cabinet/cabinet_back_panel",
-  // Retired center candidate names are kept only for explicit legacy
-  // diagnostics. The active center station is role-named input/output.
-  "cabinet-clutch/06_upper_axis_y_spur_candidate",
-  "cabinet-clutch/06_upper_axis_z_spur_candidate",
-  "cabinet-clutch/07_upper_downward_dog_candidate",
-  "cabinet-clutch/08_lower_upward_dog_candidate",
-  "cabinet-clutch/09_rear_takeoff_timing_pulley_candidate",
-  "cabinet-clutch/10_clutch_spring_reference",
-  "cabinet-clutch/11_t_countersunk_screw_reference",
-  "cabinet-clutch/12_clutch_fork_candidate",
   // Retired coincident cabinet meshes; the canonical frame is the only
   // cabinet object published by the root preview.
   "cabinet-clutch/cabinet_clutch_cabinet",
@@ -104,13 +94,6 @@ const DRAWER_DRIVE_TAILS = new Set([
   "16_drawer_linear_rack_candidate",
   "24_center_station_kit_template",
 ]);
-const LEGACY_SCHEME1_TAILS = new Set([
-  "cabinet_chain_scheme1_power_wheels",
-  "cabinet_chain_scheme1_output_wheels",
-  "cabinet_chain_scheme1_clutch_faces",
-  "cabinet_chain_scheme1_bearings",
-  "cabinet_chain_scheme1_selector",
-]);
 const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_input_rotor",
   "cabinet-clutch/center_output_rotor",
@@ -145,7 +128,6 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-chain/cabinet_chain_clutch_bearing",
   "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
 ]);
-const LEGACY_MOTOR_TENSIONER_ID = "cabinet-chain/cabinet_chain_motor_tensioner";
 const UPPER_TENSIONER_TAILS = new Set([
   "00_tensioner_t_solid_reference",
   "cabinet_clutch_column_sync_tensioner",
@@ -1202,9 +1184,7 @@ function isDefaultVisiblePart(part) {
 }
 
 function isSnakePart(part) {
-  return part?.group === "cabinet-chain"
-    && part?.id !== LEGACY_MOTOR_TENSIONER_ID
-    && !LEGACY_SCHEME1_TAILS.has(partTail(part));
+  return part?.group === "cabinet-chain";
 }
 
 function isNativeClutchPart(part) {
@@ -1221,9 +1201,7 @@ function isUpperTensionerPart(part) {
 }
 
 function isLowerTensionerPart(part) {
-  return part?.group === "cabinet-chain"
-    && part?.id !== LEGACY_MOTOR_TENSIONER_ID
-    && !LEGACY_SCHEME1_TAILS.has(partTail(part));
+  return part?.group === "cabinet-chain";
 }
 
 function isCenterClutchPart(part) {

@@ -43,11 +43,6 @@ const CHAIN_BEARING_ID = "cabinet-chain/cabinet_chain_bearings";
 const MOTOR_SHAFT_IDS = new Set([
   "cabinet-chain/cabinet_chain_motor_shaft",
 ]);
-const SCHEME1_POWER_ID = "cabinet-chain/cabinet_chain_scheme1_power_wheels";
-const SCHEME1_OUTPUT_ID = "cabinet-chain/cabinet_chain_scheme1_output_wheels";
-const SCHEME1_CLUTCH_ID = "cabinet-chain/cabinet_chain_scheme1_clutch_faces";
-const SCHEME1_BEARING_ID = "cabinet-chain/cabinet_chain_scheme1_bearings";
-const SCHEME1_SELECTOR_ID = "cabinet-chain/cabinet_chain_scheme1_selector";
 const DRAWER_BELT_ID = "cabinet-clutch/13_drawer_timing_belt_reference";
 const CURRENT_CLUTCH_IDS = new Map([
   // The native center prototype is the only visible clutch pair in the
@@ -133,7 +128,6 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} BearingPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
-/** @typedef {{group:THREE.Group, stationIndex:number, side:string, baseY:number, openY:number, engagedY:number, restY:number}} ClutchPivot */
 /** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
 //#endregion
 
@@ -160,10 +154,6 @@ const play = {
     ready: false,
     stationS: /** @type {number[]} */ ([]),
     stations: /** @type {any[]} */ ([]),
-    powerWheels: /** @type {WheelPivot[]} */ ([]),
-    outputWheels: /** @type {WheelPivot[]} */ ([]),
-    clutches: /** @type {ClutchPivot[]} */ ([]),
-    selectorPart: null,
     selectorS: 0,
     targetIndex: 0,
     phase: SCHEME1_PHASE.INDEX,
@@ -1814,166 +1804,6 @@ async function bindMotorShaftMesh(item) {
   replaceMesh(item, group);
 }
 
-function scheme1CandidateCenter(station, side) {
-  if (side === "input") {
-    return {
-      x: station.x,
-      y: (station.powerY + station.dogInputY) / 2,
-      z: station.z,
-    };
-  }
-  return {
-    x: station.x,
-    y: (station.outputY + station.dogOutputY) / 2,
-    z: station.z,
-  };
-}
-
-async function bindScheme1WheelMesh(item, side) {
-  const motion = play.motion;
-  const scheme = play.scheme1;
-  if (!motion || !scheme.ready || !item.mesh?.isMesh || !playScene()) return;
-  const isPower = side === "power";
-  const islands = await splitIslands(item.mesh.geometry);
-  const group = new THREE.Group();
-  const used = new Set();
-  const bound = isPower ? scheme.powerWheels : scheme.outputWheels;
-  for (const geo of islands) {
-    const center = geo.boundingBox.getCenter(new THREE.Vector3());
-    let best = null;
-    let bestD = Infinity;
-    for (let index = 0; index < scheme.stations.length; index += 1) {
-      if (used.has(index)) continue;
-      const station = scheme.stations[index];
-      const y = isPower ? station.powerY : station.outputY;
-      const d =
-        (center.x - station.x) ** 2 +
-        (center.z - station.z) ** 2 +
-        0.35 * (center.y - y) ** 2;
-      if (d < bestD) {
-        bestD = d;
-        best = { index, station, y };
-      }
-    }
-    if (!best) continue;
-    used.add(best.index);
-    // STL 坐标已经是装配坐标；把每个轮的轴心放到自己的 pivot，之后只
-    // 绕世界 Y 轴转动，不再对整个 25 轮 STL 进行整体缩放或形变。
-    geo.translate(-best.station.x, -best.y, -best.station.z);
-    const pivot = new THREE.Group();
-    pivot.position.set(best.station.x, best.y, best.station.z);
-    pivot.add(new THREE.Mesh(geo, item.mesh.material));
-    group.add(pivot);
-    bound.push({
-      group: pivot,
-      teeth: 12,
-      sign: 1,
-      restY: 0,
-      stationIndex: best.index,
-    });
-  }
-  if (used.size !== scheme.stations.length) {
-    console.warn(`方案1 ${side}轮绑定数量 ${used.size}/${scheme.stations.length}`);
-  }
-  replaceMesh(item, group);
-}
-
-async function bindScheme1ClutchMesh(item) {
-  const motion = play.motion;
-  const scheme = play.scheme1;
-  if (!motion || !scheme.ready || !item.mesh?.isMesh || !playScene()) return;
-  const islands = await splitIslands(item.mesh.geometry);
-  const group = new THREE.Group();
-  const used = new Set();
-  const candidates = [];
-  for (let index = 0; index < scheme.stations.length; index += 1) {
-    const station = scheme.stations[index];
-    const inputCenter = scheme1CandidateCenter(station, "input");
-    const outputCenter = scheme1CandidateCenter(station, "output");
-    candidates.push({
-      index,
-      side: "input",
-      station,
-      axisY: station.dogInputY,
-      center: inputCenter,
-    });
-    candidates.push({
-      index,
-      side: "output",
-      station,
-      axisY: station.dogOutputY,
-      center: outputCenter,
-    });
-  }
-  for (const geo of islands) {
-    const center = geo.boundingBox.getCenter(new THREE.Vector3());
-    let best = null;
-    let bestD = Infinity;
-    for (const candidate of candidates) {
-      const key = `${candidate.index}:${candidate.side}`;
-      if (used.has(key)) continue;
-      const d =
-        (center.x - candidate.center.x) ** 2 +
-        (center.z - candidate.center.z) ** 2 +
-        0.55 * (center.y - candidate.center.y) ** 2;
-      if (d < bestD) {
-        bestD = d;
-        best = { ...candidate, key };
-      }
-    }
-    if (!best) continue;
-    used.add(best.key);
-    geo.translate(-best.station.x, -best.axisY, -best.station.z);
-    const pivot = new THREE.Group();
-    pivot.position.set(best.station.x, best.axisY, best.station.z);
-    pivot.add(new THREE.Mesh(geo, item.mesh.material));
-    group.add(pivot);
-    scheme.clutches.push({
-      group: pivot,
-      stationIndex: best.index,
-      side: best.side,
-      baseY: best.axisY,
-      openY: best.axisY,
-      engagedY: best.side === "output" ? best.station.dogEngagedY : best.axisY,
-      restY: 0,
-    });
-  }
-  if (used.size !== candidates.length) {
-    console.warn(`方案1离合绑定数量 ${used.size}/${candidates.length}`);
-  }
-  replaceMesh(item, group);
-}
-
-async function bindScheme1SelectorMesh(item) {
-  const scheme = play.scheme1;
-  if (!scheme.ready || !item.mesh?.isMesh || !playScene()) return;
-  const geometry = item.mesh.geometry;
-  geometry.computeBoundingBox();
-  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
-  const proj = projectPoint(play.path, center.x, center.y, center.z);
-  geometry.translate(-center.x, -center.y, -center.z);
-  const pivot = new THREE.Group();
-  pivot.position.copy(center);
-  pivot.add(new THREE.Mesh(geometry, item.mesh.material));
-  const group = new THREE.Group();
-  group.add(pivot);
-  scheme.selectorPart = {
-    group: pivot,
-    s: proj.s,
-    along: proj.along,
-    side: proj.side,
-    lift: proj.lift,
-    restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
-    halfSpan: 0,
-  };
-  replaceMesh(item, group);
-  poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
-}
-
-function poseSelectorPart(part, deltaMm) {
-  poseChainPart(part, deltaMm);
-}
-
 function initScheme1Motion() {
   const motion = play.motion;
   const scheme = motion?.scheme1;
@@ -2028,9 +1858,6 @@ function snapScheme1ToCenter() {
   scheme.cycleStartOutputTurns = 0;
   scheme.cycleProgressTurns = 0;
   play.motorTurns = 0;
-  if (scheme.selectorPart) {
-    poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
-  }
   return true;
 }
 
@@ -2145,35 +1972,6 @@ function tickScheme1(dt) {
     }
   }
 
-  if (scheme.selectorPart) {
-    poseSelectorPart(scheme.selectorPart, scheme.selectorS - scheme.selectorPart.s);
-  }
-  const powerAngle = -2 * Math.PI * scheme.powerTurns;
-  for (const wheel of scheme.powerWheels) {
-    wheel.group.rotation.y = wheel.restY - wheel.sign * powerAngle;
-  }
-  const active = scheme.phase === SCHEME1_PHASE.ENGAGE
-    || scheme.phase === SCHEME1_PHASE.OPEN
-    || scheme.phase === SCHEME1_PHASE.CLOSE;
-  for (const wheel of scheme.outputWheels) {
-    const turns = scheme.outputTurns[wheel.stationIndex] || 0;
-    wheel.group.rotation.y = wheel.restY - wheel.sign * 2 * Math.PI * turns;
-  }
-  for (const clutch of scheme.clutches) {
-    const isTarget = clutch.stationIndex === scheme.targetIndex;
-    const engagement = active && isTarget
-      ? scheme.phase === SCHEME1_PHASE.ENGAGE
-        ? Math.min(1, scheme.phaseTime / 0.28)
-        : 1
-      : scheme.phase === SCHEME1_PHASE.RELEASE && isTarget
-        ? Math.max(0, 1 - scheme.phaseTime / 0.24)
-        : 0;
-    clutch.group.position.y = clutch.baseY + (clutch.engagedY - clutch.openY) * engagement;
-    const turns = clutch.side === "input"
-      ? scheme.powerTurns
-      : (scheme.outputTurns[clutch.stationIndex] || 0);
-    clutch.group.rotation.y = clutch.restY - 2 * Math.PI * turns;
-  }
   return transportDistance;
 }
 
@@ -2560,44 +2358,6 @@ export function playCenterClutchDemo() {
 export async function onPartLoaded(item) {
   const id = item.part?.id;
   if (!id || !play.path || item.playBound) return;
-  if (id === SCHEME1_POWER_ID) {
-    item.playBound = true;
-    enqueueBind(() => bindScheme1WheelMesh(item, "power").catch((error) => {
-      console.error("scheme1 power wheel bind failed", id, error);
-      item.playBound = false;
-    }), true);
-    return;
-  }
-  if (id === SCHEME1_OUTPUT_ID) {
-    item.playBound = true;
-    enqueueBind(() => bindScheme1WheelMesh(item, "output").catch((error) => {
-      console.error("scheme1 output wheel bind failed", id, error);
-      item.playBound = false;
-    }), true);
-    return;
-  }
-  if (id === SCHEME1_CLUTCH_ID) {
-    item.playBound = true;
-    enqueueBind(() => bindScheme1ClutchMesh(item).catch((error) => {
-      console.error("scheme1 clutch bind failed", id, error);
-      item.playBound = false;
-    }), true);
-    return;
-  }
-  if (id === SCHEME1_SELECTOR_ID) {
-    item.playBound = true;
-    enqueueBind(() => bindScheme1SelectorMesh(item).catch((error) => {
-      console.error("scheme1 selector bind failed", id, error);
-      item.playBound = false;
-    }), true);
-    return;
-  }
-  if (id === SCHEME1_BEARING_ID) {
-    // 轴承是银色的静态装配参考件；它不参与旋转驱动，避免把采购件误当
-    // 成齿轮主体或在网页中拆成可形变的链节。
-    item.playBound = true;
-    return;
-  }
   if (id === POWER_MOTOR_SHAFT_ID) {
     item.playBound = true;
     enqueueBind(() => Promise.resolve(bindWorldYAxisRotaryMesh(
