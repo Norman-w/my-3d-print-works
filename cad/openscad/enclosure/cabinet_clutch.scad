@@ -575,11 +575,13 @@ COLOR_AXIS_Z = "#3b82f6";
 // shafts and two 3×6×2 bearing references in its fixed cage. The other 24
 // legacy stations are intentionally suppressed until this physical prototype
 // is approved.
-// Each of the five drawer-motor spline shafts also receives one fixed 3×6×2
-// bearing in a rearward rectangular bar fused to the front/rear compartment
-// partition. The C1 bar steps around the lower snake return drive; the bar
-// height is derived from the chain and lower 2GT envelopes and is checked by
-// explicit CSG intersection witnesses before it enters the assembly.
+// Each of the five drawer-motor spline shafts receives one fixed 3×6×2 bearing
+// in a removable 3 mm lower carrier. Eight plain circular Ø5 mm floor bosses
+// pass through Ø5.2 mm carrier holes and are clamped by top-entry screws;
+// five round Y+ bearing pillars run down to the carrier top and carry the
+// radial load. The C5 tower splits into two round side legs around the
+// purchased motor envelope. The carrier stays in the open rear cavity and is
+// not fused to the partition.
 //#endregion
 
 //#region 私有成员：几何函数
@@ -2212,12 +2214,16 @@ module cabinet_frame_front_lower_face() {
 }
 
 module clutch_cabinet_frame() {
-    union() {
-        cabinet_frame_outer();
-        cabinet_frame_xplus_side_panel();
-        cabinet_frame_grid();
-        cabinet_frame_front_service_cheek();
-        cabinet_frame_front_lower_face();
+    difference() {
+        union() {
+            cabinet_frame_outer();
+            cabinet_frame_xplus_side_panel();
+            cabinet_frame_grid();
+            cabinet_frame_front_service_cheek();
+            cabinet_frame_front_lower_face();
+            vertical_spline_bearing_floor_bosses();
+        }
+        vertical_spline_bearing_floor_boss_pilot_holes();
     }
 }
 
@@ -2269,8 +2275,10 @@ module clutch_cabinet_shell() {
             // rear cover and contains the belt passages plus plate support
             // slots/holes.
             clutch_partition_with_belt_passages();
+            vertical_spline_bearing_floor_bosses();
         }
         snake_motor_mount_boss_floor_bores();
+        vertical_spline_bearing_floor_boss_pilot_holes();
     }
 }
 
@@ -2288,10 +2296,6 @@ module cabinet_frame_partition_with_belt_passage() {
     difference() {
         union() {
             world_partition_plate();
-            // Five rearward integral bars capture the lower D stub of each
-            // drawer-motor spline shaft. Their side keys sit outside the
-            // per-cell 2GT belt windows, so the belt passages remain open.
-            vertical_spline_bearing_support_bars();
             // Repeat the same relative Boss pattern in every one of the 15
             // drawer cells. The center mechanism plate is the reference
             // geometry; the other cells receive the same mounting datums.
@@ -2412,6 +2416,7 @@ module power_bus() {
     // couple all five columns to that motor; the low-X wheel is the adjustable
     // return/tension point and is not an extra drawer column.
     all_vertical_axes();
+    vertical_spline_bearing_support_bars();
     vertical_spline_bearing_references();
     power_column_sync_belts();
     column_sync_tensioner();
@@ -2459,11 +2464,13 @@ SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM =
 SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.00;
 SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = outer_face + 0.05;
 
-// The five long Y-axis spline shafts are now radially captured at their lower
-// D stubs.  The support is an integral rearward bar from the fixed
-// front/rear compartment partition.  Its center height is derived from the
-// real 8T return-guide envelope and the lower 2GT pulley bottom, so the bar
-// does not choose a visually convenient but mechanically colliding height.
+// The five long Y-axis spline shafts are radially captured at their lower D
+// stubs by one removable 3 mm carrier whose bottom is coplanar with the
+// cabinet floor top. Eight plain circular Ø5 mm floor bosses pass through its
+// Ø5.2 mm holes and clamp the carrier from its top; they sit in the four gaps
+// between the five bearing towers. The bearing towers rise from that carrier
+// in +Y.
+// The C5 tower uses two side legs so the purchased motor body remains clear.
 SNAKE_CHAIN_GUIDE_TEETH = 8;
 SNAKE_CHAIN_DRIVE_TEETH = 12;
 SNAKE_CHAIN_GUIDE_PITCH_R_MM =
@@ -2501,180 +2508,365 @@ VERTICAL_SPLINE_BEARING_ID_MM = 3.0;
 VERTICAL_SPLINE_BEARING_OD_MM = 6.0;
 VERTICAL_SPLINE_BEARING_WIDTH_MM = 2.0;
 VERTICAL_SPLINE_BEARING_SEAT_D_MM = 6.10;
-VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM = 14.0;
-VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM = 2.20;
-VERTICAL_SPLINE_BEARING_BAR_Z_MARGIN_MM = 0.80;
-VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM = 0.50;
-VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM = 1.50;
-VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM = 0.20;
 VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM =
     SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM
         + SNAKE_CHAIN_GUIDE_OUTER_R_MM;
 VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM =
     BUS_BOTTOM_Y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
+// The carrier bottom is coplanar with the cabinet floor top.  Each floor Boss
+// is a plain Ø5 mm cylinder that passes through the carrier's Ø5.2 mm hole;
+// its top is flush with the carrier top so a washer or wide-head M3 screw can
+// clamp the plate from above.  The blind pilot remains inside the Boss/floor
+// material for an M3 self-tapping screw.
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM = 3.0;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_OD_MM = 5.0;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_BASE_OD_MM =
+    VERTICAL_SPLINE_BEARING_FLOOR_BOSS_OD_MM;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_BASE_H_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_HEIGHT_MM =
+    VERTICAL_SPLINE_BEARING_FLOOR_BOSS_BASE_H_MM;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM =
+    WALL + VERTICAL_SPLINE_BEARING_FLOOR_BOSS_HEIGHT_MM;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_D_MM = 2.4;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_DEPTH_MM = 3.0;
+VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_DEPTH_MM;
+// The new carrier is a wider XZ plate sitting directly on circular floor
+// bosses. The eight bosses are placed in the four gaps between adjacent
+// bearing towers, so no locating cylinder occupies a tower footprint.
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM = 48.0;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM = 245.0;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM
+        - VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM = DRIVE_AXIS_Z - 10.0;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM = DRIVE_AXIS_Z + 10.0;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM
+        - VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM = WALL;
+VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM;
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_XS = [
+    (clutch_col_x(0) + clutch_col_x(1)) / 2,
+    (clutch_col_x(1) + clutch_col_x(2)) / 2,
+    (clutch_col_x(2) + clutch_col_x(3)) / 2,
+    (clutch_col_x(3) + clutch_col_x(4)) / 2
+];
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_ZS = [
+    DRIVE_AXIS_Z - 5.5,
+    DRIVE_AXIS_Z + 5.5
+];
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT = 8;
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_CLEAR_D_MM = 5.2;
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_D_MM = 0.0;
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_DEPTH_MM = 0.0;
+VERTICAL_SPLINE_BEARING_CARRIER_BOSS_MOUNT =
+    "top-washer-or-wide-head-M3-over-5.2-hole";
+
+VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM + 0.55;
+VERTICAL_SPLINE_BEARING_CAP_T_MM = 2.20;
+VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM =
+    VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_CAP_T_MM;
+VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM = 2.0;
+VERTICAL_SPLINE_BEARING_SEAT_SHOULDER_T_MM =
+    VERTICAL_SPLINE_BEARING_CAP_T_MM
+        - VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM;
+VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM;
 VERTICAL_SPLINE_BEARING_CENTER_Y_MM =
-    (VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM
-        + VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM) / 2;
-VERTICAL_SPLINE_BEARING_BAR_Y0_MM =
-    VERTICAL_SPLINE_BEARING_CENTER_Y_MM
-        - VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM / 2;
-VERTICAL_SPLINE_BEARING_BAR_Y1_MM =
-    VERTICAL_SPLINE_BEARING_CENTER_Y_MM
-        + VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM / 2;
+    VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_WIDTH_MM / 2;
+VERTICAL_SPLINE_BEARING_CAP_X_WIDTH_MM = 14.0;
+VERTICAL_SPLINE_BEARING_CAP_Z_DEPTH_MM = 14.0;
+VERTICAL_SPLINE_BEARING_TOWER_BODY_X_WIDTH_MM = 12.0;
+VERTICAL_SPLINE_BEARING_TOWER_BODY_Z_DEPTH_MM = 12.0;
+VERTICAL_SPLINE_BEARING_TOWER_COLUMN_DIAMETER_MM =
+    VERTICAL_SPLINE_BEARING_TOWER_BODY_X_WIDTH_MM;
+VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM = 3.6;
+VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM = 5.5;
+// Both the lower load-transfer collar and the long bearing pillar are round;
+// the pillar is continuous down to the carrier top.  The old tapered/rounded
+// rectangular root helper is intentionally no longer used by this assembly.
+VERTICAL_SPLINE_BEARING_TOWER_ROOT_X_WIDTH_MM = 20.0;
+VERTICAL_SPLINE_BEARING_TOWER_ROOT_Z_DEPTH_MM = 20.0;
+VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM = 3.2;
+VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM = 16.4;
+VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM = 8.0;
+VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM
+        - VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM / 2
+        - 5.0;
+VERTICAL_SPLINE_BEARING_CAP_C5_X_WIDTH_MM = 20.0;
+VERTICAL_SPLINE_BEARING_CAP_C5_Z_DEPTH_MM = 18.0;
+VERTICAL_SPLINE_BEARING_SUPPORT_MODE =
+    "removable-floor-carrier-with-y-rising-bearing-towers";
+
+// Compatibility aliases for the existing contract/preview API. They now
+// describe the carrier/cap envelope; no partition keys or detour solids are
+// generated anymore.
+VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM =
+    VERTICAL_SPLINE_BEARING_CAP_X_WIDTH_MM;
+VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM =
+    VERTICAL_SPLINE_BEARING_CAP_T_MM;
+VERTICAL_SPLINE_BEARING_BAR_Z_MARGIN_MM = 0.0;
+VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM = 0.0;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM = 0.0;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM = 0.0;
+VERTICAL_SPLINE_BEARING_BAR_Y0_MM = VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM;
+VERTICAL_SPLINE_BEARING_BAR_Y1_MM = VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM;
 VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM =
-    DRIVE_AXIS_Z
-        - VERTICAL_SPLINE_BEARING_OD_MM / 2
-        - VERTICAL_SPLINE_BEARING_BAR_Z_MARGIN_MM;
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM;
 VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM =
-    WORLD_PARTITION_BACK_Z - VERTICAL_SPLINE_BEARING_PARTITION_OVERLAP_MM;
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM;
 VERTICAL_SPLINE_BEARING_BAR_Z_LENGTH_MM =
-    VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
-        - VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM;
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z_LENGTH_MM;
 VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_MAX_MM =
     WORLD_PARTITION_FRONT_Z;
-VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM =
-    VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_MAX_MM
-        - VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM;
+VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM = 0.0;
 VERTICAL_SPLINE_BEARING_RETURN_GUIDE_CLEARANCE_MM =
-    VERTICAL_SPLINE_BEARING_BAR_Y0_MM
+    VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM
         - VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM;
 VERTICAL_SPLINE_BEARING_LOWER_PULLEY_CLEARANCE_MM =
     VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM
-        - VERTICAL_SPLINE_BEARING_BAR_Y1_MM;
+        - VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM;
 VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM =
-    SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM
-        + SNAKE_CHAIN_DRIVE_OUTER_R_MM
-        - VERTICAL_SPLINE_BEARING_BAR_Y1_MM;
-// C1 is adjacent to the lower snake return drive.  Only that column needs a
-// short rear-cavity dog-leg: the bearing remains on the C1 shaft, while the
-// partition-side rail shifts +X before crossing the chain plane.
-VERTICAL_SPLINE_BEARING_DETOUR_COLUMN = 0;
-VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM = 14.0;
-VERTICAL_SPLINE_BEARING_DETOUR_X_MM =
-    clutch_col_x(VERTICAL_SPLINE_BEARING_DETOUR_COLUMN)
-        + VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM;
-VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM = 0.60;
-VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM =
-    SNAKE_CHAIN_REAR_EDGE_Z
-        - VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM;
-VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM =
-    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM - 1.60;
-VERTICAL_SPLINE_BEARING_DETOUR_NECK_Z_MAX_MM =
-    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM + 0.25;
-VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM =
-    VERTICAL_SPLINE_BEARING_DETOUR_X_MM
-        - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2
+    clutch_col_x(0)
+        - VERTICAL_SPLINE_BEARING_CAP_X_WIDTH_MM / 2
         - (SNAKE_CHAIN_RETURN_DRIVE_X_MM
             + SNAKE_CHAIN_DRIVE_OUTER_R_MM);
+VERTICAL_SPLINE_BEARING_DETOUR_COLUMN = 0;
+VERTICAL_SPLINE_BEARING_DETOUR_X_OFFSET_MM = 0.0;
+VERTICAL_SPLINE_BEARING_DETOUR_X_MM = clutch_col_x(0);
+VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM = 0.0;
+VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM = 0.0;
 
-module vertical_spline_bearing_partition_keys(x) {
-    for (side = [-1, 1])
+function vertical_spline_bearing_carrier_boss_xs() = [
+    for (x = VERTICAL_SPLINE_BEARING_CARRIER_BOSS_XS) x
+];
+
+function vertical_spline_bearing_carrier_boss_zs() = [
+    for (z = VERTICAL_SPLINE_BEARING_CARRIER_BOSS_ZS) z
+];
+
+module vertical_spline_bearing_floor_bosses() {
+    for (x = vertical_spline_bearing_carrier_boss_xs())
+        for (z = vertical_spline_bearing_carrier_boss_zs()) {
+            // One plain circular post, fused directly to the cabinet floor.
+            // There is no stepped or shaped locating foot.
+            cylinder_y(
+                x,
+                WALL - EPS,
+                z,
+                VERTICAL_SPLINE_BEARING_FLOOR_BOSS_OD_MM,
+                VERTICAL_SPLINE_BEARING_FLOOR_BOSS_HEIGHT_MM + EPS
+            );
+        }
+}
+
+module vertical_spline_bearing_floor_boss_pilot_holes() {
+    for (x = vertical_spline_bearing_carrier_boss_xs())
+        for (z = vertical_spline_bearing_carrier_boss_zs())
+            cylinder_y(
+                x,
+                VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_BOTTOM_Y_MM,
+                z,
+                VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_D_MM,
+                VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_DEPTH_MM + EPS
+            );
+}
+
+module vertical_spline_bearing_carrier_plate() {
+    difference() {
         translate([
-            x + side * (
-                PARTITION_BELT_PASSAGE_WINDOW_HALF_X
-                + VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM
-                + VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM / 2
-            )
-            - VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM / 2,
-            VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
-            VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM,
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM,
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM
         ])
             cube([
-                VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM,
-                VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
-                VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM
+                VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X_LENGTH_MM,
+                VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM,
+                VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z_LENGTH_MM
             ]);
+        for (x = vertical_spline_bearing_carrier_boss_xs())
+            for (z = vertical_spline_bearing_carrier_boss_zs()) {
+                // Clearance around the self-tapping screw shank.
+                cylinder_y(
+                    x,
+                    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM - EPS,
+                    z,
+                    VERTICAL_SPLINE_BEARING_CARRIER_BOSS_CLEAR_D_MM,
+                    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM + 2 * EPS
+                );
+            }
+    }
 }
 
-module vertical_spline_bearing_support_bar_neck(x, z0, z1) {
-    translate([
-        x - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2,
-        VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
-        z0
-    ])
-        cube([
-            VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM,
-            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
-            z1 - z0
-        ]);
+module vertical_spline_round_column_y(x, z, y0, d, h) {
+    cylinder_y(x, y0, z, d, h);
 }
 
-module vertical_spline_bearing_support_bar(x) {
-    // The central bar is deliberately 14 mm wide.  It stops 0.50 mm behind
-    // the partition's rear face; two 1.50 mm side keys then pass through the
-    // partition outside the 2GT window.  Thus the belt opening remains open,
-    // while the bar is still fused to the load-bearing partition instead of
-    // merely touching it at a coplanar face.
-    difference() {
-        union() {
-            vertical_spline_bearing_support_bar_neck(
-                x,
-                VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM,
-                VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
-            );
-            vertical_spline_bearing_partition_keys(x);
-        }
-        // One round press-fit seat is coaxial with the vertical D shaft. The
-        // purchased bearing itself is 3×6×2; the printed seat is 6.10 mm.
-        cylinder_y(
+module vertical_spline_rounded_prism_y(x, z, y0, w, d, h, r = 1.0) {
+    hull()
+        for (dx = [-w / 2 + r, w / 2 - r])
+            for (dz = [-d / 2 + r, d / 2 - r])
+                cylinder_y(x + dx, y0, z + dz, 2 * r, h);
+}
+
+module vertical_spline_tapered_root_y(
+    x,
+    z,
+    y0,
+    h,
+    root_w,
+    root_d,
+    body_w,
+    body_d
+) {
+    hull() {
+        vertical_spline_rounded_prism_y(
             x,
-            VERTICAL_SPLINE_BEARING_BAR_Y0_MM - EPS,
-            DRIVE_AXIS_Z,
-            VERTICAL_SPLINE_BEARING_SEAT_D_MM,
-            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM + 2 * EPS
+            z,
+            y0,
+            root_w,
+            root_d,
+            EPS,
+            min(root_w, root_d) / 2 - 0.20
+        );
+        vertical_spline_rounded_prism_y(
+            x,
+            z,
+            y0 + h - EPS,
+            body_w,
+            body_d,
+            EPS,
+            min(body_w, body_d) / 2 - 0.20
         );
     }
 }
 
-module vertical_spline_bearing_support_bar_detoured(x) {
+module vertical_spline_bearing_tower(x, z, cap_w = VERTICAL_SPLINE_BEARING_CAP_X_WIDTH_MM) {
+    root_top_y = VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
+        + VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM;
+    body_y0 = root_top_y - 0.20;
     difference() {
         union() {
-            // Shaft-side bearing neck stops behind the chain plane.
-            vertical_spline_bearing_support_bar_neck(
+            vertical_spline_round_column_y(
                 x,
-                VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM,
-                VERTICAL_SPLINE_BEARING_DETOUR_NECK_Z_MAX_MM
+                z,
+                VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM,
+                VERTICAL_SPLINE_BEARING_TOWER_ROOT_X_WIDTH_MM,
+                VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM + EPS
             );
-            // A shallow rear bridge moves the support to the +X side before
-            // it crosses the 12T return-drive envelope.
-            translate([
-                x - VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM / 2,
-                VERTICAL_SPLINE_BEARING_BAR_Y0_MM,
-                VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM
-            ])
-                cube([
-                    VERTICAL_SPLINE_BEARING_DETOUR_X_MM - x
-                        + VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM,
-                    VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM,
-                    VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MAX_MM
-                        - VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM
-                ]);
-            vertical_spline_bearing_support_bar_neck(
-                VERTICAL_SPLINE_BEARING_DETOUR_X_MM,
-                VERTICAL_SPLINE_BEARING_DETOUR_BRIDGE_Z_MIN_MM,
-                VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM
+            vertical_spline_round_column_y(
+                x,
+                z,
+                body_y0,
+                VERTICAL_SPLINE_BEARING_TOWER_COLUMN_DIAMETER_MM,
+                VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM - body_y0
             );
-            // The detoured rail is already outside the C1 window at the
-            // partition, so it can pass through as one solid rectangular
-            // anchor; adding keys around the shifted center would point them
-            // back into the original C1 belt opening.
+            vertical_spline_rounded_prism_y(
+                x,
+                z,
+                VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM,
+                cap_w,
+                VERTICAL_SPLINE_BEARING_CAP_Z_DEPTH_MM,
+                VERTICAL_SPLINE_BEARING_CAP_T_MM,
+                1.2
+            );
         }
         cylinder_y(
             x,
-            VERTICAL_SPLINE_BEARING_BAR_Y0_MM - EPS,
-            DRIVE_AXIS_Z,
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM - EPS,
+            z,
+            VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM,
+            VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM
+                - VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
+                + 2 * EPS
+        );
+        // The 6.10 mm printed pocket opens from +Y and leaves a 0.20 mm
+        // shoulder under the 2 mm purchased bearing.
+        cylinder_y(
+            x,
+            VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM - EPS,
+            z,
             VERTICAL_SPLINE_BEARING_SEAT_D_MM,
-            VERTICAL_SPLINE_BEARING_BAR_Y_THICKNESS_MM + 2 * EPS
+            VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM + 2 * EPS
+        );
+    }
+}
+
+module vertical_spline_bearing_c5_tower(x, z) {
+    root_top_y = VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
+        + VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM;
+    body_y0 = root_top_y - 0.20;
+    rail_body_h = VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM - body_y0;
+    difference() {
+        union() {
+            for (side = [-1, 1]) {
+                rail_x = x
+                    + side
+                        * VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM;
+                vertical_spline_round_column_y(
+                    rail_x,
+                    z,
+                    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM,
+                    VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM + 2.0,
+                    VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM + EPS
+                );
+                vertical_spline_round_column_y(
+                    rail_x,
+                    z,
+                    body_y0,
+                    VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM,
+                    rail_body_h
+                );
+            }
+            vertical_spline_rounded_prism_y(
+                x,
+                z,
+                VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM,
+                VERTICAL_SPLINE_BEARING_CAP_C5_X_WIDTH_MM,
+                VERTICAL_SPLINE_BEARING_CAP_C5_Z_DEPTH_MM,
+                VERTICAL_SPLINE_BEARING_CAP_T_MM,
+                1.2
+            );
+        }
+        cylinder_y(
+            x,
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM - EPS,
+            z,
+            VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM,
+            VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM
+                - VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
+                + 2 * EPS
+        );
+        cylinder_y(
+            x,
+            VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM - EPS,
+            z,
+            VERTICAL_SPLINE_BEARING_SEAT_D_MM,
+            VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM + 2 * EPS
         );
     }
 }
 
 module vertical_spline_bearing_support_bars() {
-    for (i = [0:N_COL - 1])
-        if (i == VERTICAL_SPLINE_BEARING_DETOUR_COLUMN)
-            vertical_spline_bearing_support_bar_detoured(clutch_col_x(i));
-        else
-            vertical_spline_bearing_support_bar(clutch_col_x(i));
+    color("#718096") {
+        vertical_spline_bearing_carrier_plate();
+        for (i = [0:N_COL - 2])
+            vertical_spline_bearing_tower(clutch_col_x(i), DRIVE_AXIS_Z);
+        vertical_spline_bearing_c5_tower(
+            clutch_col_x(N_COL - 1),
+            DRIVE_AXIS_Z
+        );
+    }
 }
 
 module vertical_spline_bearing_reference_y(x) {
@@ -4035,8 +4227,49 @@ echo(
     str("verticalSplineBearingOdMm=", VERTICAL_SPLINE_BEARING_OD_MM),
     str("verticalSplineBearingWidthMm=", VERTICAL_SPLINE_BEARING_WIDTH_MM),
     str("verticalSplineBearingSeatDiameterMm=", VERTICAL_SPLINE_BEARING_SEAT_D_MM),
+    str("verticalSplineBearingSeatDepthMm=", VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM),
+    str("verticalSplineBearingSeatShoulderMm=", VERTICAL_SPLINE_BEARING_SEAT_SHOULDER_T_MM),
+    str("verticalSplineBearingSeatBottomYMm=", VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM),
     str("verticalSplineBearingAxisZMm=", DRIVE_AXIS_Z),
     str("verticalSplineBearingCenterYMm=", VERTICAL_SPLINE_BEARING_CENTER_Y_MM),
+    str("verticalSplineBearingCapBottomYMm=", VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM),
+    str("verticalSplineBearingCapTopYMm=", VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM),
+    str("verticalSplineBearingCarrierPlateX0Mm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM),
+    str("verticalSplineBearingCarrierPlateX1Mm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM),
+    str("verticalSplineBearingCarrierPlateXLengthMm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X_LENGTH_MM),
+    str("verticalSplineBearingCarrierPlateZ0Mm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM),
+    str("verticalSplineBearingCarrierPlateZ1Mm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM),
+    str("verticalSplineBearingCarrierPlateZLengthMm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z_LENGTH_MM),
+    str("verticalSplineBearingCarrierPlateBottomYMm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM),
+    str("verticalSplineBearingCarrierPlateTopYMm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM),
+    str("verticalSplineBearingCarrierPlateThicknessMm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM),
+    str("verticalSplineBearingCarrierBossCount=", VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT),
+    str("verticalSplineBearingFloorBossOdMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_OD_MM),
+    str("verticalSplineBearingFloorBossBaseOdMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_BASE_OD_MM),
+    str("verticalSplineBearingFloorBossBaseHeightMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_BASE_H_MM),
+    str("verticalSplineBearingFloorBossTopYMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM),
+    str("verticalSplineBearingFloorBossHeightMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_HEIGHT_MM),
+    str("verticalSplineBearingFloorBossPilotDiameterMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_D_MM),
+    str("verticalSplineBearingFloorBossPilotDepthMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_DEPTH_MM),
+    str("verticalSplineBearingFloorBossPilotBottomYMm=", VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_BOTTOM_Y_MM),
+    str("verticalSplineBearingCarrierBossClearDiameterMm=", VERTICAL_SPLINE_BEARING_CARRIER_BOSS_CLEAR_D_MM),
+    str("verticalSplineBearingCarrierBossCounterboreDiameterMm=", VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_D_MM),
+    str("verticalSplineBearingCarrierBossCounterboreDepthMm=", VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_DEPTH_MM),
+    str("verticalSplineBearingCarrierBossMount=", VERTICAL_SPLINE_BEARING_CARRIER_BOSS_MOUNT),
+    str("verticalSplineBearingTowerBodyXWidthMm=", VERTICAL_SPLINE_BEARING_TOWER_BODY_X_WIDTH_MM),
+    str("verticalSplineBearingTowerBodyZDepthMm=", VERTICAL_SPLINE_BEARING_TOWER_BODY_Z_DEPTH_MM),
+    str("verticalSplineBearingTowerBoreDiameterMm=", VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM),
+    str("verticalSplineBearingTowerRootFlareHeightMm=", VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM),
+    str("verticalSplineBearingTowerRootXWidthMm=", VERTICAL_SPLINE_BEARING_TOWER_ROOT_X_WIDTH_MM),
+    str("verticalSplineBearingTowerRootZDepthMm=", VERTICAL_SPLINE_BEARING_TOWER_ROOT_Z_DEPTH_MM),
+    str("verticalSplineBearingTowerColumnDiameterMm=", VERTICAL_SPLINE_BEARING_TOWER_COLUMN_DIAMETER_MM),
+    str("verticalSplineBearingTowerCapC5XWidthMm=", VERTICAL_SPLINE_BEARING_CAP_C5_X_WIDTH_MM),
+    str("verticalSplineBearingTowerCapZDepthMm=", VERTICAL_SPLINE_BEARING_CAP_Z_DEPTH_MM),
+    str("verticalSplineBearingTowerCapC5ZDepthMm=", VERTICAL_SPLINE_BEARING_CAP_C5_Z_DEPTH_MM),
+    str("verticalSplineBearingC5RailWidthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM),
+    str("verticalSplineBearingC5RailZDepthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM),
+    str("verticalSplineBearingC5RailCenterOffsetXMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM),
+    str("verticalSplineBearingC5RailClearanceMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM),
     str("verticalSplineBearingBarY0Mm=", VERTICAL_SPLINE_BEARING_BAR_Y0_MM),
     str("verticalSplineBearingBarY1Mm=", VERTICAL_SPLINE_BEARING_BAR_Y1_MM),
     str("verticalSplineBearingBarXWidthMm=", VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM),
@@ -4059,7 +4292,8 @@ echo(
     str("verticalSplineBearingDetourZClearanceMm=", VERTICAL_SPLINE_BEARING_DETOUR_Z_CLEARANCE_MM),
     str("verticalSplineBearingLowerDStubLengthMm=", VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH),
     str("verticalSplineBearingUpperDStubLengthMm=", VERTICAL_GEAR_TOP_END_STUB_LENGTH),
-    "verticalSplineBearingSupport=partition-integral-rearward-stepped-bar-with-side-keys",
+    str("verticalSplineBearingSupport=", VERTICAL_SPLINE_BEARING_SUPPORT_MODE),
+    "verticalSplineBearingCarrierPart=cabinet-clutch/vertical_spline_bearing_support",
     "verticalSplineBearingSupportPart=cabinet-clutch/vertical_spline_bearing_support",
     "verticalSplineBearingsPart=cabinet-clutch/vertical_spline_bearings_reference",
     str("drawerBottomYMm=", drawer_bottom_y(CENTER_GT2_ROW)),
@@ -4612,29 +4846,50 @@ assert(VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH >= 12.0,
     "lower spline D stub must reach the fixed 3x6x2 bearing");
 assert(VERTICAL_GEAR_TOP_END_STUB_LENGTH > 0,
     "upper spline D stub must remain positive");
-assert(VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM
-        > 2 * PARTITION_BELT_PASSAGE_WINDOW_HALF_X,
-    "spline bearing bar must leave side keys outside the partition belt window");
-assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_WIDTH_MM > 0,
-    "spline bearing partition side key must be positive");
-assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_CLEARANCE_MM > 0,
-    "spline bearing partition side key must clear the belt window");
-assert(VERTICAL_SPLINE_BEARING_PARTITION_KEY_Z_LENGTH_MM
-        >= WORLD_PARTITION_T - EPS,
-    "spline bearing side key must cross the full partition thickness");
-assert(VERTICAL_SPLINE_BEARING_BAR_Z_MIN_MM < DRIVE_AXIS_Z
-        && VERTICAL_SPLINE_BEARING_BAR_Z_MAX_MM < WORLD_PARTITION_BACK_Z,
-    "spline bearing bar must reach the shaft and stop behind the partition");
-assert(VERTICAL_SPLINE_BEARING_BAR_Y0_MM
+assert(VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT == 8,
+    "removable spline bearing carrier must use eight floor bosses");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM > WALL
+        && VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM < W - WALL,
+    "removable spline bearing carrier must stay inside the cabinet width");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM > -D + WALL
+        && VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM
+            < WORLD_PARTITION_BACK_Z - EPS,
+    "removable spline bearing carrier must stay in the rear cavity");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_T_MM >= 3.0,
+    "removable spline bearing carrier plate must retain a printable load path");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
+        > VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM);
+assert(VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM
+        >= VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM - EPS
+    && VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM
+        <= VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM + EPS
+    && VERTICAL_SPLINE_BEARING_FLOOR_BOSS_PILOT_BOTTOM_Y_MM >= WALL - EPS,
+    "floor boss must pass through the carrier and keep its blind pilot inside the floor");
+assert(abs(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_BOTTOM_Y_MM - WALL) < EPS
+    && abs(VERTICAL_SPLINE_BEARING_FLOOR_BOSS_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM) < EPS,
+    "carrier bottom must meet the cabinet floor top and Boss top must flush with carrier top");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_BOSS_CLEAR_D_MM
+        > VERTICAL_SPLINE_BEARING_FLOOR_BOSS_OD_MM,
+    "carrier Ø5.2 holes must clear the Ø5 floor bosses");
+assert(VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_D_MM == 0
+    && VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNTERBORE_DEPTH_MM == 0,
+    "carrier must use top screws over plain circular bosses, not underside pockets");
+assert(VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM
         > VERTICAL_SPLINE_BEARING_CHAIN_TOP_Y_MM + 0.45,
-    "lower spline bearing bar must clear the snake return guide");
-assert(VERTICAL_SPLINE_BEARING_BAR_Y1_MM
+    "bearing caps must clear the snake return guide");
+assert(VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM
         < VERTICAL_SPLINE_BEARING_LOWER_PULLEY_BOTTOM_Y_MM - 0.45,
-    "lower spline bearing bar must clear the lower 2GT pulley");
+    "bearing caps must clear the lower 2GT pulley");
+assert(VERTICAL_SPLINE_BEARING_SEAT_SHOULDER_T_MM >= 0.20 - EPS,
+    "bearing seat must retain a positive lower shoulder");
+assert(VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM
+        > VERTICAL_SPLINE_BEARING_ID_MM,
+    "tower bore must clear the 3 mm spline shaft");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM >= 0.45,
+    "C5 split tower rails must clear the purchased motor body");
 assert(VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM > 0.45,
-    "lower spline bearing bar must clear the 12T snake return drive");
-assert(VERTICAL_SPLINE_BEARING_DETOUR_CHAIN_CLEARANCE_MM > 0.45,
-    "C1 detoured spline bearing rail must clear the 12T return drive");
+    "bearing caps must clear the 12T snake return drive");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");
 assert(abs(MOTOR_X - clutch_col_x(N_COL - 1)) < 0.001,
     "motor must be centered on the +X-most drawer column");

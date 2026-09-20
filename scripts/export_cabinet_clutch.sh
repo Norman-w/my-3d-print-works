@@ -209,10 +209,10 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support": {
-        "name": "抽屉电机花键轴·5枚3×6×2轴承后伸固定条（C1绕开蛇链；实际与前后仓隔板一体）",
+        "name": "抽屉电机花键轴·3 mm可拆承载板 + 8个Ø5圆柱Boss/Ø5.2通孔 + Y向圆柱轴承座（C5双侧避让）",
         "color": "#657f8c",
         "visible": True,
-        "role": "diagnostic",
+        "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference": {
         "name": "抽屉电机花键轴·3×6×2固定轴承×5（与花键轴同轴；采购件）",
@@ -474,7 +474,7 @@ name_map = {
     "cabinet_clutch_power_column_2": "列同步轴 C3 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_3": "列同步轴 C4 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_4": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
-    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3×6×2 后伸固定条×5 · C1 后仓折线避让蛇链",
+    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · Y向圆柱轴承座×5 · C5双侧避让",
     "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 3×6×2 固定轴承×5 · 采购件",
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
