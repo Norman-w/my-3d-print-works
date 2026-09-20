@@ -209,7 +209,7 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support": {
-        "name": "抽屉电机花键轴·3 mm可拆承载板 + 8个Ø5圆柱Boss/Ø5.2通孔 + Y向圆柱轴承座（C5双侧避让）",
+        "name": "抽屉电机花键轴·3 mm可拆承载板 + 8个Ø5圆柱Boss/Ø5.2通孔 + C1-C4圆柱座/C5圆角梯形双侧座",
         "color": "#657f8c",
         "visible": True,
         "role": "printed",
@@ -474,7 +474,7 @@ name_map = {
     "cabinet_clutch_power_column_2": "列同步轴 C3 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_3": "列同步轴 C4 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_4": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
-    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · Y向圆柱轴承座×5 · C5双侧避让",
+    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · C1-C4圆柱座/C5圆角梯形双侧座",
     "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 3×6×2 固定轴承×5 · 采购件",
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",

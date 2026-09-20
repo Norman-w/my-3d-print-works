@@ -578,10 +578,12 @@ COLOR_AXIS_Z = "#3b82f6";
 // Each of the five drawer-motor spline shafts receives one fixed 3×6×2 bearing
 // in a removable 3 mm lower carrier. Eight plain circular Ø5 mm floor bosses
 // pass through Ø5.2 mm carrier holes and are clamped by top-entry screws;
-// five round Y+ bearing pillars run down to the carrier top and carry the
-// radial load. The C5 tower splits into two round side legs around the
-// purchased motor envelope. The carrier stays in the open rear cavity and is
-// not fused to the partition.
+// four round Y+ bearing pillars and one C5 motor-side tower run down to the
+// carrier top and carry the radial load. The C5 tower uses two symmetric,
+// Z-deep rounded trapezoid braces: each brace flares outward at the carrier
+// and closes inward at the bearing cap, leaving the motor envelope captured
+// without relying on two thin legs. The carrier stays in the open rear cavity
+// and is not fused to the partition.
 //#endregion
 
 //#region 私有成员：几何函数
@@ -2470,7 +2472,10 @@ SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = outer_face + 0.05;
 // Ø5.2 mm holes and clamp the carrier from its top; they sit in the four gaps
 // between the five bearing towers. The bearing towers rise from that carrier
 // in +Y.
-// The C5 tower uses two side legs so the purchased motor body remains clear.
+// The C5 tower uses two Z-deep rounded trapezoid braces so the purchased motor
+// body remains clear while the bearing load has a broad, printable path into
+// the removable carrier. The top offset is the motor-clearance datum; the
+// larger bottom offset and root section make the XY profile read /|   |\\.
 SNAKE_CHAIN_GUIDE_TEETH = 8;
 SNAKE_CHAIN_DRIVE_TEETH = 12;
 SNAKE_CHAIN_GUIDE_PITCH_R_MM =
@@ -2591,17 +2596,27 @@ VERTICAL_SPLINE_BEARING_TOWER_COLUMN_DIAMETER_MM =
     VERTICAL_SPLINE_BEARING_TOWER_BODY_X_WIDTH_MM;
 VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM = 3.6;
 VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM = 5.5;
-// Both the lower load-transfer collar and the long bearing pillar are round;
-// the pillar is continuous down to the carrier top.  The old tapered/rounded
-// rectangular root helper is intentionally no longer used by this assembly.
+// The four ordinary columns keep the round load-transfer collar and the long
+// round pillar.  C5 is the motor-side exception: its split support is a pair
+// of Z-deep rounded trapezoid braces, continuous from the carrier to the cap.
 VERTICAL_SPLINE_BEARING_TOWER_ROOT_X_WIDTH_MM = 20.0;
 VERTICAL_SPLINE_BEARING_TOWER_ROOT_Z_DEPTH_MM = 20.0;
-VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM = 3.2;
+VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM = 4.5;
 VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM = 16.4;
 VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM = 8.0;
+VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CENTER_OFFSET_X_MM = 10.5;
+VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_WIDTH_MM = 6.4;
+VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_Z_DEPTH_MM = 18.4;
+VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM = 1.2;
+VERTICAL_SPLINE_BEARING_C5_RAIL_PROFILE =
+    "rounded-trapezoid-xy-with-rounded-xz-section";
 VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM =
     VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM
         - VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM / 2
+        - 5.0;
+VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CENTER_OFFSET_X_MM
+        - VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_WIDTH_MM / 2
         - 5.0;
 VERTICAL_SPLINE_BEARING_CAP_C5_X_WIDTH_MM = 20.0;
 VERTICAL_SPLINE_BEARING_CAP_C5_Z_DEPTH_MM = 18.0;
@@ -2802,31 +2817,41 @@ module vertical_spline_bearing_tower(x, z, cap_w = VERTICAL_SPLINE_BEARING_CAP_X
     }
 }
 
+module vertical_spline_c5_trapezoid_brace_y(x, z, side) {
+    // The brace is a single printable solid.  In the XY rear view its two
+    // side members flare from the carrier and lean inward toward the cap;
+    // in XZ it is a rounded rectangle, not a 3.2 mm circular whisker.
+    x_bottom = x
+        + side * VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CENTER_OFFSET_X_MM;
+    x_top = x
+        + side * VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM;
+    hull() {
+        vertical_spline_rounded_prism_y(
+            x_bottom,
+            z,
+            VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_WIDTH_MM,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_Z_DEPTH_MM,
+            EPS,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM
+        );
+        vertical_spline_rounded_prism_y(
+            x_top,
+            z,
+            VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM - EPS,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM,
+            EPS,
+            VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM
+        );
+    }
+}
+
 module vertical_spline_bearing_c5_tower(x, z) {
-    root_top_y = VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM
-        + VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM;
-    body_y0 = root_top_y - 0.20;
-    rail_body_h = VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM - body_y0;
     difference() {
         union() {
             for (side = [-1, 1]) {
-                rail_x = x
-                    + side
-                        * VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM;
-                vertical_spline_round_column_y(
-                    rail_x,
-                    z,
-                    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_TOP_Y_MM,
-                    VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM + 2.0,
-                    VERTICAL_SPLINE_BEARING_TOWER_ROOT_FLARE_H_MM + EPS
-                );
-                vertical_spline_round_column_y(
-                    rail_x,
-                    z,
-                    body_y0,
-                    VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM,
-                    rail_body_h
-                );
+                vertical_spline_c5_trapezoid_brace_y(x, z, side);
             }
             vertical_spline_rounded_prism_y(
                 x,
@@ -4269,7 +4294,13 @@ echo(
     str("verticalSplineBearingC5RailWidthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM),
     str("verticalSplineBearingC5RailZDepthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM),
     str("verticalSplineBearingC5RailCenterOffsetXMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM),
+    str("verticalSplineBearingC5RailBottomCenterOffsetXMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CENTER_OFFSET_X_MM),
+    str("verticalSplineBearingC5RailRootWidthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_WIDTH_MM),
+    str("verticalSplineBearingC5RailRootZDepthMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_Z_DEPTH_MM),
+    str("verticalSplineBearingC5RailCornerRadiusMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM),
+    str("verticalSplineBearingC5RailProfile=", VERTICAL_SPLINE_BEARING_C5_RAIL_PROFILE),
     str("verticalSplineBearingC5RailClearanceMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM),
+    str("verticalSplineBearingC5RailBottomClearanceMm=", VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CLEARANCE_MM),
     str("verticalSplineBearingBarY0Mm=", VERTICAL_SPLINE_BEARING_BAR_Y0_MM),
     str("verticalSplineBearingBarY1Mm=", VERTICAL_SPLINE_BEARING_BAR_Y1_MM),
     str("verticalSplineBearingBarXWidthMm=", VERTICAL_SPLINE_BEARING_BAR_X_WIDTH_MM),
@@ -4888,6 +4919,21 @@ assert(VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM
     "tower bore must clear the 3 mm spline shaft");
 assert(VERTICAL_SPLINE_BEARING_C5_RAIL_CLEARANCE_MM >= 0.45,
     "C5 split tower rails must clear the purchased motor body");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CLEARANCE_MM >= 0.45,
+    "C5 split tower roots must clear the purchased motor body");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CENTER_OFFSET_X_MM
+        > VERTICAL_SPLINE_BEARING_C5_RAIL_CENTER_OFFSET_X_MM,
+    "C5 split tower braces must flare outward toward the carrier");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_WIDTH_MM
+        > VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM,
+    "C5 split tower roots must be wider than the upper braces");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_ROOT_Z_DEPTH_MM
+        > VERTICAL_SPLINE_BEARING_C5_RAIL_Z_DEPTH_MM,
+    "C5 split tower roots must have a deeper Z load footprint");
+assert(VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM > 0.80
+        && VERTICAL_SPLINE_BEARING_C5_RAIL_CORNER_RADIUS_MM
+            < VERTICAL_SPLINE_BEARING_C5_RAIL_WIDTH_MM / 2,
+    "C5 split tower rounded brace radius must be printable");
 assert(VERTICAL_SPLINE_BEARING_RETURN_DRIVE_CLEARANCE_MM > 0.45,
     "bearing caps must clear the 12T snake return drive");
 assert(N_COL == 5, "current clutch layout requires five drawer transmission columns");

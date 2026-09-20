@@ -58,7 +58,7 @@
 | 尺寸参数 | `cad/openscad/parts/ch1_03c_gt2_clutch_pair_params.scad` | 行程、齿形、D 轴、圆套和磁铁槽尺寸 |
 | 承力机构 | `cad/openscad/enclosure/cabinet_clutch_carrier.scad` | 固定 LM3UU 长方条、阶梯轴、圆套、输出短轴、双轴承长方条和机构板 |
 | 抽屉/前端轴承 | `cad/openscad/parts/drawer_drive_bearings.scad` | X轴 681 导向轴承、层板内 3×6×2 主动轮轴承采购参考 |
-| 抽屉电机花键轴承 | `cad/openscad/enclosure/cabinet_clutch.scad` | 5 枚同轴 3×6×2、3 mm 可拆承载板底面贴箱体底板顶面、8 个 Ø5 圆柱 Boss 穿过 Ø5.2 通孔、圆柱轴承座支柱、C5 电机双侧避让 |
+| 抽屉电机花键轴承 | `cad/openscad/enclosure/cabinet_clutch.scad` | 5 枚同轴 3×6×2、3 mm 可拆承载板底面贴箱体底板顶面、8 个 Ø5 圆柱 Boss 穿过 Ø5.2 通孔、C1-C4 圆柱支柱、C5 Z 向加深的圆角梯形双侧支撑 |
 | 世界总装 | `cad/openscad/enclosure/cabinet_clutch.scad` | R3C3 定位、输出/输入角色、柜体皮带通道和导出入口 |
 | 机械契约 | `scripts/generate_center_clutch_contract.py` | 解析 OpenSCAD 回显并生成 `centerClutch` JSON |
 | 几何验证 | `scripts/validate_center_clutch_geometry.py` | 开/合/中间行程导出、包围盒和 CSG 干涉检查 |

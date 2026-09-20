@@ -401,10 +401,15 @@ def validate_contract(contract: Contract) -> None:
         "verticalSplineBearingTowerCapC5XWidthMm": 20.0,
         "verticalSplineBearingTowerCapZDepthMm": 14.0,
         "verticalSplineBearingTowerCapC5ZDepthMm": 18.0,
-        "verticalSplineBearingC5RailWidthMm": 3.2,
+        "verticalSplineBearingC5RailWidthMm": 4.5,
         "verticalSplineBearingC5RailZDepthMm": 16.4,
         "verticalSplineBearingC5RailCenterOffsetXMm": 8.0,
-        "verticalSplineBearingC5RailClearanceMm": 1.4,
+        "verticalSplineBearingC5RailBottomCenterOffsetXMm": 10.5,
+        "verticalSplineBearingC5RailRootWidthMm": 6.4,
+        "verticalSplineBearingC5RailRootZDepthMm": 18.4,
+        "verticalSplineBearingC5RailCornerRadiusMm": 1.2,
+        "verticalSplineBearingC5RailClearanceMm": 0.75,
+        "verticalSplineBearingC5RailBottomClearanceMm": 2.3,
         "verticalSplineBearingLowerDStubLengthMm": 12.0,
         "verticalSplineBearingUpperDStubLengthMm": 6.0,
     }.items():
@@ -577,6 +582,14 @@ def validate_contract(contract: Contract) -> None:
     ):
         if number(contract, key) < 0.45:
             fail(f"花键轴承支架与{label}净空不足")
+    if contract.get("verticalSplineBearingC5RailProfile") != "rounded-trapezoid-xy-with-rounded-xz-section":
+        fail("C5 电机侧支撑必须是 XY 圆角梯形、XZ 圆角矩形截面")
+    if number(contract, "verticalSplineBearingC5RailBottomClearanceMm") < 0.45:
+        fail("C5 支撑根部与电机包络净空不足")
+    if number(contract, "verticalSplineBearingC5RailRootWidthMm") <= number(contract, "verticalSplineBearingC5RailWidthMm"):
+        fail("C5 支撑根部必须比上段更宽")
+    if number(contract, "verticalSplineBearingC5RailRootZDepthMm") <= number(contract, "verticalSplineBearingC5RailZDepthMm"):
+        fail("C5 支撑根部必须比上段更深")
     expect_close(
         number(contract, "verticalSplineBearingBarZLengthMm"),
         number(contract, "verticalSplineBearingBarZMaxMm")

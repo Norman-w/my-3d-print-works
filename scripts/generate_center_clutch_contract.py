@@ -65,7 +65,11 @@ REQUIRED = {
     "verticalSplineBearingTowerCapC5XWidthMm", "verticalSplineBearingTowerCapZDepthMm",
     "verticalSplineBearingTowerCapC5ZDepthMm",
     "verticalSplineBearingC5RailWidthMm", "verticalSplineBearingC5RailZDepthMm",
-    "verticalSplineBearingC5RailCenterOffsetXMm", "verticalSplineBearingC5RailClearanceMm",
+    "verticalSplineBearingC5RailCenterOffsetXMm",
+    "verticalSplineBearingC5RailBottomCenterOffsetXMm",
+    "verticalSplineBearingC5RailRootWidthMm", "verticalSplineBearingC5RailRootZDepthMm",
+    "verticalSplineBearingC5RailCornerRadiusMm", "verticalSplineBearingC5RailProfile",
+    "verticalSplineBearingC5RailClearanceMm", "verticalSplineBearingC5RailBottomClearanceMm",
     "verticalSplineBearingBarY0Mm", "verticalSplineBearingBarY1Mm",
     "verticalSplineBearingBarXWidthMm", "verticalSplineBearingBarYThicknessMm",
     "verticalSplineBearingBarZMinMm", "verticalSplineBearingBarZMaxMm",
@@ -459,7 +463,17 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(contract, "verticalSplineBearingTowerRootZDepthMm", 20.0, "轴承塔根部 Z 深")
     expect(contract, "verticalSplineBearingTowerCapC5XWidthMm", 20.0, "C5 轴承塔帽 X 宽")
     expect(contract, "verticalSplineBearingTowerCapC5ZDepthMm", 18.0, "C5 轴承塔帽 Z 深")
-    expect(contract, "verticalSplineBearingC5RailClearanceMm", 1.4, "C5 电机旁轴承塔净空")
+    expect(contract, "verticalSplineBearingC5RailWidthMm", 4.5, "C5 圆角梯形支撑上段宽")
+    expect(contract, "verticalSplineBearingC5RailZDepthMm", 16.4, "C5 圆角梯形支撑上段 Z 深")
+    expect(contract, "verticalSplineBearingC5RailCenterOffsetXMm", 8.0, "C5 支撑上段中心偏移")
+    expect(contract, "verticalSplineBearingC5RailBottomCenterOffsetXMm", 10.5, "C5 支撑根部中心偏移")
+    expect(contract, "verticalSplineBearingC5RailRootWidthMm", 6.4, "C5 支撑根部宽")
+    expect(contract, "verticalSplineBearingC5RailRootZDepthMm", 18.4, "C5 支撑根部 Z 深")
+    expect(contract, "verticalSplineBearingC5RailCornerRadiusMm", 1.2, "C5 支撑圆角半径")
+    if contract.get("verticalSplineBearingC5RailProfile") != "rounded-trapezoid-xy-with-rounded-xz-section":
+        raise RuntimeError("C5 支撑必须是 XY 圆角梯形、XZ 圆角矩形截面")
+    expect(contract, "verticalSplineBearingC5RailClearanceMm", 0.75, "C5 电机旁轴承塔上段净空")
+    expect(contract, "verticalSplineBearingC5RailBottomClearanceMm", 2.3, "C5 电机旁轴承塔根部净空")
     expect(contract, "verticalSplineBearingLowerDStubLengthMm", 12.0, "花键轴下端 D 段")
     expect(contract, "verticalSplineBearingUpperDStubLengthMm", 6.0, "花键轴上端 D 段")
 
