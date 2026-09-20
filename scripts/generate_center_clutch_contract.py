@@ -42,6 +42,31 @@ REQUIRED = {
     "verticalSplineBearingSeatDepthMm", "verticalSplineBearingSeatShoulderMm",
     "verticalSplineBearingSeatBottomYMm",
     "verticalSplineBearingAxisZMm", "verticalSplineBearingCenterYMm",
+    "verticalSplineBearingUpperCount", "verticalSplineBearingTotalCount",
+    "verticalSplineBearingUpperPulleyTopYMm",
+    "verticalSplineBearingUpperCarrierClearanceMm",
+    "verticalSplineBearingUpperCarrierPlateX0Mm",
+    "verticalSplineBearingUpperCarrierPlateX1Mm",
+    "verticalSplineBearingUpperCarrierPlateXLengthMm",
+    "verticalSplineBearingUpperCarrierPlateZ0Mm",
+    "verticalSplineBearingUpperCarrierPlateZ1Mm",
+    "verticalSplineBearingUpperCarrierPlateZLengthMm",
+    "verticalSplineBearingUpperCarrierPlateBottomYMm",
+    "verticalSplineBearingUpperCarrierPlateTopYMm",
+    "verticalSplineBearingUpperCarrierPlateThicknessMm",
+    "verticalSplineBearingUpperBossCount",
+    "verticalSplineBearingUpperBossOdMm",
+    "verticalSplineBearingUpperBossHeightMm",
+    "verticalSplineBearingUpperBossTopYMm",
+    "verticalSplineBearingUpperBossBottomYMm",
+    "verticalSplineBearingUpperBossPilotDiameterMm",
+    "verticalSplineBearingUpperBossPilotDepthMm",
+    "verticalSplineBearingUpperBossPilotTopYMm",
+    "verticalSplineBearingUpperCarrierBossClearDiameterMm",
+    "verticalSplineBearingUpperBossMount",
+    "verticalSplineBearingUpperSeatBottomYMm", "verticalSplineBearingUpperSeatTopYMm",
+    "verticalSplineBearingUpperCenterYMm", "verticalSplineBearingUpperBearingTopYMm",
+    "verticalSplineBearingUpperDStubEndYMm",
     "verticalSplineBearingCapBottomYMm", "verticalSplineBearingCapTopYMm",
     "verticalSplineBearingCarrierPlateX0Mm", "verticalSplineBearingCarrierPlateX1Mm",
     "verticalSplineBearingCarrierPlateXLengthMm",
@@ -90,6 +115,7 @@ REQUIRED = {
     "verticalSplineBearingLowerDStubLengthMm",
     "verticalSplineBearingUpperDStubLengthMm",
     "verticalSplineBearingSupport", "verticalSplineBearingSupportPart",
+    "verticalSplineBearingUpperSupportPart",
     "verticalSplineBearingCarrierPart",
     "verticalSplineBearingsPart",
     "inputBaseYMm",
@@ -216,7 +242,9 @@ INT_KEYS = {
     "partitionBossPerCellCount", "partitionBossCount",
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
-    "verticalSplineBearingCount", "verticalSplineBearingCarrierBossCount",
+    "verticalSplineBearingCount", "verticalSplineBearingUpperCount",
+    "verticalSplineBearingTotalCount", "verticalSplineBearingCarrierBossCount",
+    "verticalSplineBearingUpperBossCount",
     "verticalSplineBearingDetourColumn",
     "drawerStationInstanceCount", "rearClutchRowPlateCount",
     "rearClutchRowPlateStationCount",
@@ -324,8 +352,9 @@ def validate_contract(contract: dict[str, object]) -> None:
 
     exact = {
         "verticalSplineBearingNominal": "3x6x2",
-        "verticalSplineBearingSupport": "removable-floor-carrier-with-y-rising-bearing-towers",
+        "verticalSplineBearingSupport": "removable-floor-carrier-plus-roof-boss-mounted-upper-carrier",
         "verticalSplineBearingSupportPart": "cabinet-clutch/vertical_spline_bearing_support",
+        "verticalSplineBearingUpperSupportPart": "cabinet-clutch/vertical_spline_bearing_upper_support",
         "verticalSplineBearingCarrierPart": "cabinet-clutch/vertical_spline_bearing_support",
         "verticalSplineBearingsPart": "cabinet-clutch/vertical_spline_bearings_reference",
         "linearBearingBlockMount": "mechanism-plate-integral-press-fit",
@@ -369,16 +398,82 @@ def validate_contract(contract: dict[str, object]) -> None:
             raise RuntimeError(f"中心离合契约字段错误: {key}={contract.get(key)!r}")
 
     if n(contract, "verticalSplineBearingCount") != 5:
-        raise RuntimeError("抽屉电机花键轴必须为 5 根列轴各配一枚固定轴承")
+        raise RuntimeError("抽屉电机花键轴必须为 5 根列轴")
+    if n(contract, "verticalSplineBearingUpperCount") != 5:
+        raise RuntimeError("抽屉电机花键轴上方必须为 5 枚固定轴承")
+    if n(contract, "verticalSplineBearingTotalCount") != 10:
+        raise RuntimeError("抽屉电机花键轴上下固定轴承总数必须为 10 枚")
+    if n(contract, "verticalSplineBearingTotalCount") != (
+        n(contract, "verticalSplineBearingCount")
+        + n(contract, "verticalSplineBearingUpperCount")
+    ):
+        raise RuntimeError("抽屉电机花键轴上下轴承数量契约不一致")
     expect(contract, "verticalSplineBearingIdMm", 3.0, "花键轴承内径")
     expect(contract, "verticalSplineBearingOdMm", 6.0, "花键轴承外径")
     expect(contract, "verticalSplineBearingWidthMm", 2.0, "花键轴承宽度")
     expect(contract, "verticalSplineBearingSeatDiameterMm", 6.10, "花键轴承座孔")
     expect(contract, "verticalSplineBearingSeatDepthMm", 2.0, "花键轴承座深度")
     expect(contract, "verticalSplineBearingSeatShoulderMm", 0.20, "花键轴承座底部肩厚")
-    if contract.get("verticalSplineBearingSupport") != "removable-floor-carrier-with-y-rising-bearing-towers":
-        raise RuntimeError("花键轴承必须使用底板 Boss + 可拆承载板 + Y 向轴承塔")
+    expect(
+        contract,
+        "verticalSplineBearingUpperSeatBottomYMm",
+        n(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm"),
+        "上方轴承座底面/可拆上承载板底面",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingUpperSeatTopYMm",
+        n(contract, "verticalSplineBearingUpperSeatBottomYMm")
+        + n(contract, "verticalSplineBearingSeatDepthMm"),
+        "上方轴承座深度",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingUpperCenterYMm",
+        n(contract, "verticalSplineBearingUpperSeatBottomYMm")
+        + n(contract, "verticalSplineBearingWidthMm") / 2,
+        "上方轴承中心",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingUpperBearingTopYMm",
+        n(contract, "verticalSplineBearingUpperCenterYMm")
+        + n(contract, "verticalSplineBearingWidthMm") / 2,
+        "上方轴承上沿",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingUpperCarrierPlateThicknessMm",
+        n(contract, "verticalSplineBearingSeatDepthMm")
+        + n(contract, "verticalSplineBearingSeatShoulderMm"),
+        "可拆上承载板厚度",
+    )
+    expect(
+        contract,
+        "verticalSplineBearingUpperCarrierClearanceMm",
+        n(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm")
+        - n(contract, "verticalSplineBearingUpperPulleyTopYMm"),
+        "可拆上承载板/上方2GT轮净空",
+    )
+    if n(contract, "verticalSplineBearingUpperCarrierClearanceMm") < 0.45:
+        raise RuntimeError("可拆上承载板与上方 2GT 轮净空不足")
+    if n(contract, "verticalSplineBearingUpperDStubEndYMm") < (
+        n(contract, "verticalSplineBearingUpperBearingTopYMm") - 0.15
+    ):
+        raise RuntimeError("花键齿上端 D 轴没有穿过上方轴承")
+    if contract.get("verticalSplineBearingSupport") != "removable-floor-carrier-plus-roof-boss-mounted-upper-carrier":
+        raise RuntimeError("花键轴承必须使用下方 Boss 板 + 屋顶 Boss 套板 + 下方蘑菇头 M3")
     expect(contract, "verticalSplineBearingCarrierBossCount", 8.0, "花键轴承可拆承载板 Boss 数")
+    expect(contract, "verticalSplineBearingUpperBossCount", 8.0, "上方花键轴承承载板 Boss 数")
+    expect(contract, "verticalSplineBearingUpperBossOdMm", 5.0, "上方屋顶 Boss 外径")
+    expect(contract, "verticalSplineBearingUpperBossPilotDiameterMm", 2.4, "上方屋顶 Boss 自攻导孔")
+    expect(contract, "verticalSplineBearingUpperBossHeightMm", n(contract, "verticalSplineBearingUpperCarrierPlateThicknessMm"), "上方屋顶 Boss 高度")
+    expect(contract, "verticalSplineBearingUpperBossTopYMm", n(contract, "verticalSplineBearingUpperCarrierPlateTopYMm"), "上方屋顶 Boss 顶面")
+    expect(contract, "verticalSplineBearingUpperBossBottomYMm", n(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm"), "上方屋顶 Boss 底面")
+    expect(contract, "verticalSplineBearingUpperBossPilotTopYMm", n(contract, "verticalSplineBearingUpperBossBottomYMm") + n(contract, "verticalSplineBearingUpperBossPilotDepthMm"), "上方屋顶 Boss 导孔顶面")
+    expect(contract, "verticalSplineBearingUpperCarrierBossClearDiameterMm", 5.2, "上方承载板 Boss 通孔")
+    if contract.get("verticalSplineBearingUpperBossMount") != "bottom-mushroom-head-M3-into-roof-boss-over-5.2-hole":
+        raise RuntimeError("上方承载板必须由下方蘑菇头 M3 自攻螺丝锁入屋顶 Boss")
     if n(contract, "verticalSplineBearingCarrierPlateX0Mm") >= n(contract, "verticalSplineBearingCarrierPlateX1Mm"):
         raise RuntimeError("花键轴承可拆承载板 X 范围无效")
     if n(contract, "verticalSplineBearingCarrierPlateZ0Mm") >= n(contract, "verticalSplineBearingCarrierPlateZ1Mm"):
@@ -475,7 +570,7 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(contract, "verticalSplineBearingC5RailClearanceMm", 0.75, "C5 电机旁轴承塔上段净空")
     expect(contract, "verticalSplineBearingC5RailBottomClearanceMm", 2.3, "C5 电机旁轴承塔根部净空")
     expect(contract, "verticalSplineBearingLowerDStubLengthMm", 12.0, "花键轴下端 D 段")
-    expect(contract, "verticalSplineBearingUpperDStubLengthMm", 6.0, "花键轴上端 D 段")
+    expect(contract, "verticalSplineBearingUpperDStubLengthMm", 11.7, "花键轴上端 D 段")
 
     if n(contract, "platePartitionGapMm") != 0:
         raise RuntimeError("离合机构板必须贴合前后仓隔板后表面")

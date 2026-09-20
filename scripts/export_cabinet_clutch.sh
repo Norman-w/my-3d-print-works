@@ -116,7 +116,7 @@ for stale_name in (
         stale_path.unlink()
 labels = {
     "cabinet-clutch/cabinet_clutch_cabinet_frame": {
-        "name": "箱体框架·上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面 + 蛇链电机四点Boss（前后仓隔板另列）",
+        "name": "箱体框架·上下左右外框 + 屋顶8个花键轴承Boss + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面 + 蛇链电机四点Boss（前后仓隔板另列）",
         "color": "#6f8f9a",
         "opacity": 0.30,
         "visible": True,
@@ -209,13 +209,19 @@ labels = {
         "role": "printed",
     },
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support": {
-        "name": "抽屉电机花键轴·3 mm可拆承载板 + 8个Ø5圆柱Boss/Ø5.2通孔 + C1-C4圆柱座/C5圆角梯形双侧座",
+        "name": "抽屉电机花键轴·下方3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 + C1-C4圆柱座/C5圆角梯形双侧座",
         "color": "#657f8c",
         "visible": True,
         "role": "printed",
     },
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_upper_support": {
+        "name": "抽屉电机花键轴·上方2.2 mm可拆承载板 + 8个Ø5屋顶Boss/Ø5.2通孔 + 下方蘑菇头M3自攻固定",
+        "color": "#718b99",
+        "visible": True,
+        "role": "printed",
+    },
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference": {
-        "name": "抽屉电机花键轴·3×6×2固定轴承×5（与花键轴同轴；采购件）",
+        "name": "抽屉电机花键轴·上下各5枚3×6×2固定轴承×10（与花键轴同轴；采购件）",
         "color": "#cfd4da",
         "visible": True,
         "role": "purchased",
@@ -363,6 +369,7 @@ group_map = {
     "cabinet_clutch_power_column_3": "01·动力母线",
     "cabinet_clutch_power_column_4": "01·动力母线",
     "cabinet_clutch_vertical_spline_bearing_support": "01·动力母线",
+    "cabinet_clutch_vertical_spline_bearing_upper_support": "01·动力母线",
     "cabinet_clutch_vertical_spline_bearings_reference": "01·动力母线",
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
@@ -417,8 +424,9 @@ name_map = {
     "cabinet_clutch_power_column_2": "列同步轴 C3 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_3": "列同步轴 C4 · Y向长花键 + 上下2GT",
     "cabinet_clutch_power_column_4": "列同步轴 C5 · Y向长花键 + 上下2GT · 电机直连",
-    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · C1-C4圆柱座/C5圆角梯形双侧座",
-    "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 3×6×2 固定轴承×5 · 采购件",
+    "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 下方3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · C1-C4圆柱座/C5圆角梯形双侧座",
+    "cabinet_clutch_vertical_spline_bearing_upper_support": "抽屉电机花键轴 上方2.2 mm可拆承载板 + 8个Ø5屋顶Boss/Ø5.2通孔 · 下方蘑菇头M3自攻固定",
+    "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 上下各5枚3×6×2固定轴承×10 · 采购件",
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
     "cabinet_clutch_column_sync_tensioner": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
@@ -554,6 +562,9 @@ for group_id in ordered_group_ids:
             motor_body,
             part_node(
                 "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support",
+            ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_upper_support",
             ),
             part_node(
                 "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference",
@@ -888,6 +899,7 @@ for column in 0 1 2 3 4; do
     export_part "column" "${OUT_DIR}/cabinet_clutch_power_column_${column}.stl" false 0 "${column}"
 done
 export_part "vertical_spline_bearing_support" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" false 0
+export_part "vertical_spline_bearing_upper_support" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_upper_support.stl" false 0
 export_part "vertical_spline_bearings" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearings_reference.stl" false 0
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
@@ -978,7 +990,8 @@ for printable_part in \
     "${OUT_DIR}/center_linear_bearing_fit_coupon.stl" \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl" \
-    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl"; do
+    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" \
+    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_upper_support.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 

@@ -278,7 +278,10 @@ VERTICAL_GEAR_END_STUB_LENGTH = 6.0;
 // sit in the fixed partition bar below that pulley; the upper stub remains the
 // original short pulley engagement.
 VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH = 12.0;
-VERTICAL_GEAR_TOP_END_STUB_LENGTH = 6.0;
+// The upper D stub continues through the top GT2 wheel and into the new roof
+// bearing. It stops just below the bearing's upper face so it cannot fuse
+// into the roof shoulder while remaining axially captured by the bearing.
+VERTICAL_GEAR_TOP_END_STUB_LENGTH = 11.7;
 VERTICAL_GEAR_STUB_OVERLAP = 0.20;
 
 // Timing dimensions remain available for the drawer take-offs. The former
@@ -554,7 +557,7 @@ COLOR_AXIS_Z = "#3b82f6";
 //   column_sync_belt_bottom/column_sync_belt_top/column_sync_tensioner
 //   center_station_template_assembly  one local center-station assembly kit;
 //                                    Three.js places fourteen world instances
-//   vertical_spline_bearing_support/vertical_spline_bearings
+//   vertical_spline_bearing_support/vertical_spline_bearing_upper_support/vertical_spline_bearings
 //   vertical_spline_support_chain_collision/vertical_spline_support_drive_collision
 //   vertical_spline_support_partition_window_collision
 //   tensioner_t_solid
@@ -573,11 +576,15 @@ COLOR_AXIS_Z = "#3b82f6";
 // shafts and two 3×6×2 bearing references in its fixed cage. The other 24
 // legacy stations are intentionally suppressed until this physical prototype
 // is approved.
-// Each of the five drawer-motor spline shafts receives one fixed 3×6×2 bearing
-// in a removable 3 mm lower carrier. Eight plain circular Ø5 mm floor bosses
-// pass through Ø5.2 mm carrier holes and are clamped by top-entry screws;
+// Each of the five drawer-motor spline shafts receives a lower fixed 3×6×2
+// bearing in a removable 3 mm carrier and an upper fixed 3×6×2 bearing in a
+// separate removable upper carrier. Eight plain circular Ø5 mm floor bosses
+// pass through Ø5.2 mm lower-carrier holes and are clamped by top-entry screws;
+// the roof has a mirrored set of Ø5 bosses, the upper carrier sleeves over
+// them, and mushroom-head M3 self-tapping screws enter from the carrier's -Y
+// side into the roof bosses.
 // four round Y+ bearing pillars and one C5 motor-side tower run down to the
-// carrier top and carry the radial load. The C5 tower uses two symmetric,
+// carrier top and carry the lower radial load. The C5 tower uses two symmetric,
 // Z-deep rounded trapezoid braces: each brace flares outward at the carrier
 // and closes inward at the bearing cap, leaving the motor envelope captured
 // without relying on two thin legs. The carrier stays in the open rear cavity
@@ -2228,9 +2235,15 @@ module clutch_cabinet_frame() {
             // while the world assembly silently omitted them.
             snake_motor_mount_bosses();
             vertical_spline_bearing_floor_bosses();
+            // The upper carrier is a separate printed part. Only its eight
+            // round roof bosses belong to the cabinet frame; the carrier is
+            // exported and installed independently with mushroom-head M3
+            // screws from below.
+            vertical_spline_bearing_upper_roof_bosses();
         }
         snake_motor_mount_boss_floor_bores();
         vertical_spline_bearing_floor_boss_pilot_holes();
+        vertical_spline_bearing_upper_roof_boss_pilot_holes();
     }
 }
 
@@ -2283,9 +2296,11 @@ module clutch_cabinet_shell() {
             // slots/holes.
             clutch_partition_with_belt_passages();
             vertical_spline_bearing_floor_bosses();
+            vertical_spline_bearing_upper_roof_bosses();
         }
         snake_motor_mount_boss_floor_bores();
         vertical_spline_bearing_floor_boss_pilot_holes();
+        vertical_spline_bearing_upper_roof_boss_pilot_holes();
     }
 }
 
@@ -2424,6 +2439,7 @@ module power_bus() {
     // return/tension point and is not an extra drawer column.
     all_vertical_axes();
     vertical_spline_bearing_support_bars();
+    vertical_spline_bearing_upper_carrier_plate();
     vertical_spline_bearing_references();
     power_column_sync_belts();
     column_sync_tensioner();
@@ -2593,6 +2609,70 @@ VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM =
 VERTICAL_SPLINE_BEARING_CENTER_Y_MM =
     VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM
         + VERTICAL_SPLINE_BEARING_WIDTH_MM / 2;
+
+// The upper row is a second removable carrier, mirrored against the roof.
+// Its top face is flush with the roof underside, so the five upper bearings
+// stay just above the upper GT2 pulley row while the carrier can still be
+// removed from -Y. The carrier uses the same XZ envelope and eight-hole Boss
+// pattern as the lower carrier; the roof owns only the matching round bosses.
+VERTICAL_SPLINE_BEARING_UPPER_COUNT = N_COL;
+VERTICAL_SPLINE_BEARING_TOTAL_COUNT =
+    N_COL + VERTICAL_SPLINE_BEARING_UPPER_COUNT;
+VERTICAL_SPLINE_BEARING_UPPER_PULLEY_TOP_Y_MM =
+    BUS_TOP_Y + GT2_PULLEY_FACE_T / 2 + GT2_BELT_GUIDE_LIP_T;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM = 2.20;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_TOP_Y_MM = H - WALL;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X0_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X1_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X1_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X0_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z0_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z0_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z1_MM =
+    VERTICAL_SPLINE_BEARING_CARRIER_PLATE_Z1_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z_LENGTH_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z1_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z0_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_CLEARANCE_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_PULLEY_TOP_Y_MM;
+VERTICAL_SPLINE_BEARING_UPPER_SEAT_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM;
+VERTICAL_SPLINE_BEARING_UPPER_SEAT_TOP_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_SEAT_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CENTER_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_SEAT_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_WIDTH_MM / 2;
+VERTICAL_SPLINE_BEARING_UPPER_BEARING_TOP_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CENTER_Y_MM
+        + VERTICAL_SPLINE_BEARING_WIDTH_MM / 2;
+VERTICAL_SPLINE_BEARING_UPPER_D_STUB_END_Y_MM =
+    BUS_TOP_Y - VERTICAL_GEAR_END_CLEARANCE
+        + VERTICAL_GEAR_TOP_END_STUB_LENGTH;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_COUNT =
+    VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_OD_MM = 5.0;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_HEIGHT_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_TOP_Y_MM = H - WALL;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_BOSS_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_BOSS_HEIGHT_MM;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_D_MM = 2.4;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_DEPTH_MM = 2.0;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_TOP_Y_MM =
+    VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM
+        + VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_DEPTH_MM;
+VERTICAL_SPLINE_BEARING_UPPER_CARRIER_BOSS_CLEAR_D_MM = 5.2;
+VERTICAL_SPLINE_BEARING_UPPER_BOSS_MOUNT =
+    "bottom-mushroom-head-M3-into-roof-boss-over-5.2-hole";
 VERTICAL_SPLINE_BEARING_CAP_X_WIDTH_MM = 14.0;
 VERTICAL_SPLINE_BEARING_CAP_Z_DEPTH_MM = 14.0;
 VERTICAL_SPLINE_BEARING_TOWER_BODY_X_WIDTH_MM = 12.0;
@@ -2626,7 +2706,7 @@ VERTICAL_SPLINE_BEARING_C5_RAIL_BOTTOM_CLEARANCE_MM =
 VERTICAL_SPLINE_BEARING_CAP_C5_X_WIDTH_MM = 20.0;
 VERTICAL_SPLINE_BEARING_CAP_C5_Z_DEPTH_MM = 18.0;
 VERTICAL_SPLINE_BEARING_SUPPORT_MODE =
-    "removable-floor-carrier-with-y-rising-bearing-towers";
+    "removable-floor-carrier-plus-roof-boss-mounted-upper-carrier";
 
 // Compatibility aliases for the existing contract/preview API. They now
 // describe the carrier/cap envelope; no partition keys or detour solids are
@@ -2887,6 +2967,80 @@ module vertical_spline_bearing_c5_tower(x, z) {
     }
 }
 
+module vertical_spline_bearing_upper_roof_bosses() {
+    // The roof carries only the eight plain circular Boss posts. Their nominal
+    // top is the roof underside; EPS overlap at the top makes the union a
+    // printable load path. The upper carrier sleeves over these posts and is
+    // clamped from -Y by mushroom-head M3 self-tapping screws.
+    for (x = vertical_spline_bearing_carrier_boss_xs())
+        for (z = vertical_spline_bearing_carrier_boss_zs())
+            cylinder_y(
+                x,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM - EPS,
+                z,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_OD_MM,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_HEIGHT_MM + EPS
+            );
+}
+
+module vertical_spline_bearing_upper_roof_boss_pilot_holes() {
+    // Blind pilot holes open on the carrier side. The remaining roof material
+    // above the pilot is retained; it is not a through-hole in the cabinet.
+    for (x = vertical_spline_bearing_carrier_boss_xs())
+        for (z = vertical_spline_bearing_carrier_boss_zs())
+            cylinder_y(
+                x,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM - EPS,
+                z,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_D_MM,
+                VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_DEPTH_MM + EPS
+            );
+}
+
+module vertical_spline_bearing_upper_carrier_plate() {
+    // A separate 2.2 mm printed board mirrors the lower removable carrier.
+    // The 3.6 mm shaft bore is opened through the board and the 6.10 mm x
+    // 2.0 mm bearing seat opens from -Y, leaving a 0.20 mm roof-side shoulder.
+    // Eight Ø5.2 mm through-holes sleeve over the roof's Ø5 mm Boss posts.
+    difference() {
+        translate([
+            VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X0_MM,
+            VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM,
+            VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z0_MM
+        ])
+            cube([
+                VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X_LENGTH_MM,
+                VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM,
+                VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z_LENGTH_MM
+            ]);
+        for (i = [0:N_COL - 1]) {
+            cylinder_y(
+                clutch_col_x(i),
+                VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM - EPS,
+                DRIVE_AXIS_Z,
+                VERTICAL_SPLINE_BEARING_TOWER_BORE_D_MM,
+                VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM + 2 * EPS
+            );
+            cylinder_y(
+                clutch_col_x(i),
+                VERTICAL_SPLINE_BEARING_UPPER_SEAT_BOTTOM_Y_MM - EPS,
+                DRIVE_AXIS_Z,
+                VERTICAL_SPLINE_BEARING_SEAT_D_MM,
+                VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM + 2 * EPS
+            );
+        }
+        for (x = vertical_spline_bearing_carrier_boss_xs())
+            for (z = vertical_spline_bearing_carrier_boss_zs())
+                cylinder_y(
+                    x,
+                    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM - EPS,
+                    z,
+                    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_BOSS_CLEAR_D_MM,
+                    VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM + 2 * EPS
+                );
+    }
+}
+
 module vertical_spline_bearing_support_bars() {
     color("#718096") {
         vertical_spline_bearing_carrier_plate();
@@ -2899,9 +3053,9 @@ module vertical_spline_bearing_support_bars() {
     }
 }
 
-module vertical_spline_bearing_reference_y(x) {
+module vertical_spline_bearing_reference_y(x, y) {
     color("#cfd4da")
-        translate([x, VERTICAL_SPLINE_BEARING_CENTER_Y_MM, DRIVE_AXIS_Z])
+        translate([x, y, DRIVE_AXIS_Z])
             rotate([90, 0, 0])
                 difference() {
                     cylinder(
@@ -2921,7 +3075,15 @@ module vertical_spline_bearing_reference_y(x) {
 
 module vertical_spline_bearing_references() {
     for (i = [0:N_COL - 1])
-        vertical_spline_bearing_reference_y(clutch_col_x(i));
+        vertical_spline_bearing_reference_y(
+            clutch_col_x(i),
+            VERTICAL_SPLINE_BEARING_CENTER_Y_MM
+        );
+    for (i = [0:N_COL - 1])
+        vertical_spline_bearing_reference_y(
+            clutch_col_x(i),
+            VERTICAL_SPLINE_BEARING_UPPER_CENTER_Y_MM
+        );
 }
 
 module vertical_spline_chain_clearance_envelope() {
@@ -2958,6 +3120,10 @@ module selected_vertical_spline_bearing_support_part() {
     vertical_spline_bearing_support_bars();
 }
 
+module selected_vertical_spline_bearing_upper_support_part() {
+    vertical_spline_bearing_upper_carrier_plate();
+}
+
 module selected_vertical_spline_bearing_references_part() {
     vertical_spline_bearing_references();
 }
@@ -2972,6 +3138,17 @@ module selected_vertical_spline_support_chain_collision_part() {
 module selected_vertical_spline_support_drive_collision_part() {
     intersection() {
         vertical_spline_bearing_support_bars();
+        all_vertical_axes();
+    }
+}
+
+module selected_vertical_spline_upper_carrier_drive_collision_part() {
+    // The removable upper carrier intentionally surrounds the shaft
+    // through-bores. This empty intersection witness catches a missing bore,
+    // a short D stub, or an upper GT2 guide stack that has climbed into the
+    // carrier plate.
+    intersection() {
+        vertical_spline_bearing_upper_carrier_plate();
         all_vertical_axes();
     }
 }
@@ -4055,6 +4232,8 @@ module clutch_scene_geometry() {
         selected_column_part();
     } else if (CLUTCH_PART == "vertical_spline_bearing_support") {
         selected_vertical_spline_bearing_support_part();
+    } else if (CLUTCH_PART == "vertical_spline_bearing_upper_support") {
+        selected_vertical_spline_bearing_upper_support_part();
     } else if (CLUTCH_PART == "vertical_spline_bearings") {
         selected_vertical_spline_bearing_references_part();
     } else if (CLUTCH_PART == "vertical_rack") {
@@ -4097,6 +4276,8 @@ module clutch_scene_geometry() {
         selected_vertical_spline_support_chain_collision_part();
     } else if (CLUTCH_PART == "vertical_spline_support_drive_collision") {
         selected_vertical_spline_support_drive_collision_part();
+    } else if (CLUTCH_PART == "vertical_spline_upper_carrier_drive_collision") {
+        selected_vertical_spline_upper_carrier_drive_collision_part();
     } else if (CLUTCH_PART == "vertical_spline_support_partition_window_collision") {
         selected_vertical_spline_support_partition_window_collision_part();
     } else if (CLUTCH_PART == "center_clutch_pair_collision") {
@@ -4262,6 +4443,58 @@ echo(
     str("verticalSplineBearingSeatBottomYMm=", VERTICAL_SPLINE_BEARING_SEAT_BOTTOM_Y_MM),
     str("verticalSplineBearingAxisZMm=", DRIVE_AXIS_Z),
     str("verticalSplineBearingCenterYMm=", VERTICAL_SPLINE_BEARING_CENTER_Y_MM),
+    str("verticalSplineBearingUpperCount=", VERTICAL_SPLINE_BEARING_UPPER_COUNT),
+    str("verticalSplineBearingTotalCount=", VERTICAL_SPLINE_BEARING_TOTAL_COUNT),
+    str("verticalSplineBearingUpperPulleyTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_PULLEY_TOP_Y_MM),
+    str("verticalSplineBearingUpperCarrierClearanceMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_CLEARANCE_MM),
+    str("verticalSplineBearingUpperCarrierPlateX0Mm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X0_MM),
+    str("verticalSplineBearingUpperCarrierPlateX1Mm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X1_MM),
+    str("verticalSplineBearingUpperCarrierPlateXLengthMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X_LENGTH_MM),
+    str("verticalSplineBearingUpperCarrierPlateZ0Mm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z0_MM),
+    str("verticalSplineBearingUpperCarrierPlateZ1Mm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z1_MM),
+    str("verticalSplineBearingUpperCarrierPlateZLengthMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z_LENGTH_MM),
+    str("verticalSplineBearingUpperCarrierPlateBottomYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM),
+    str("verticalSplineBearingUpperCarrierPlateTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_TOP_Y_MM),
+    str("verticalSplineBearingUpperCarrierPlateThicknessMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM),
+    str("verticalSplineBearingUpperBossCount=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_COUNT),
+    str("verticalSplineBearingUpperBossOdMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_OD_MM),
+    str("verticalSplineBearingUpperBossHeightMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_HEIGHT_MM),
+    str("verticalSplineBearingUpperBossTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_TOP_Y_MM),
+    str("verticalSplineBearingUpperBossBottomYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM),
+    str("verticalSplineBearingUpperBossPilotDiameterMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_D_MM),
+    str("verticalSplineBearingUpperBossPilotDepthMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_DEPTH_MM),
+    str("verticalSplineBearingUpperBossPilotTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_TOP_Y_MM),
+    str("verticalSplineBearingUpperCarrierBossClearDiameterMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CARRIER_BOSS_CLEAR_D_MM),
+    str("verticalSplineBearingUpperSeatBottomYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_SEAT_BOTTOM_Y_MM),
+    str("verticalSplineBearingUpperSeatTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_SEAT_TOP_Y_MM),
+    str("verticalSplineBearingUpperCenterYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_CENTER_Y_MM),
+    str("verticalSplineBearingUpperBearingTopYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_BEARING_TOP_Y_MM),
+    str("verticalSplineBearingUpperDStubEndYMm=",
+        VERTICAL_SPLINE_BEARING_UPPER_D_STUB_END_Y_MM),
     str("verticalSplineBearingCapBottomYMm=", VERTICAL_SPLINE_BEARING_CAP_BOTTOM_Y_MM),
     str("verticalSplineBearingCapTopYMm=", VERTICAL_SPLINE_BEARING_CAP_TOP_Y_MM),
     str("verticalSplineBearingCarrierPlateX0Mm=", VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM),
@@ -4329,8 +4562,10 @@ echo(
     str("verticalSplineBearingLowerDStubLengthMm=", VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH),
     str("verticalSplineBearingUpperDStubLengthMm=", VERTICAL_GEAR_TOP_END_STUB_LENGTH),
     str("verticalSplineBearingSupport=", VERTICAL_SPLINE_BEARING_SUPPORT_MODE),
+    str("verticalSplineBearingUpperBossMount=", VERTICAL_SPLINE_BEARING_UPPER_BOSS_MOUNT),
     "verticalSplineBearingCarrierPart=cabinet-clutch/vertical_spline_bearing_support",
     "verticalSplineBearingSupportPart=cabinet-clutch/vertical_spline_bearing_support",
+    "verticalSplineBearingUpperSupportPart=cabinet-clutch/vertical_spline_bearing_upper_support",
     "verticalSplineBearingsPart=cabinet-clutch/vertical_spline_bearings_reference",
     str("drawerBottomYMm=", drawer_bottom_y(CENTER_GT2_ROW)),
     str("drawerRackYMm=", center_gt2_front_gear_y(CENTER_GT2_ROW)),
@@ -4633,6 +4868,7 @@ assert(
     || CLUTCH_PART == "side_axes"
     || CLUTCH_PART == "column"
     || CLUTCH_PART == "vertical_spline_bearing_support"
+    || CLUTCH_PART == "vertical_spline_bearing_upper_support"
     || CLUTCH_PART == "vertical_spline_bearings"
     || CLUTCH_PART == "vertical_rack"
     || CLUTCH_PART == "column_sync_belt_bottom"
@@ -4655,6 +4891,7 @@ assert(
     || CLUTCH_PART == "center_partition_belt_collision"
     || CLUTCH_PART == "vertical_spline_support_chain_collision"
     || CLUTCH_PART == "vertical_spline_support_drive_collision"
+    || CLUTCH_PART == "vertical_spline_upper_carrier_drive_collision"
     || CLUTCH_PART == "vertical_spline_support_partition_window_collision"
     || CLUTCH_PART == "center_clutch_pair_collision"
     || CLUTCH_PART == "center_carriage_rail_collision"
@@ -4882,8 +5119,40 @@ assert(VERTICAL_GEAR_BOTTOM_END_STUB_LENGTH >= 12.0,
     "lower spline D stub must reach the fixed 3x6x2 bearing");
 assert(VERTICAL_GEAR_TOP_END_STUB_LENGTH > 0,
     "upper spline D stub must remain positive");
+assert(VERTICAL_SPLINE_BEARING_UPPER_CARRIER_CLEARANCE_MM >= 0.45,
+    "upper spline bearing carrier must clear the top GT2 pulley");
+assert(VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_T_MM
+        >= VERTICAL_SPLINE_BEARING_SEAT_DEPTH_MM
+            + VERTICAL_SPLINE_BEARING_SEAT_SHOULDER_T_MM,
+    "upper spline bearing carrier must retain a roof-side shoulder");
+assert(VERTICAL_SPLINE_BEARING_UPPER_D_STUB_END_Y_MM
+        >= VERTICAL_SPLINE_BEARING_UPPER_BEARING_TOP_Y_MM - 0.15,
+    "upper spline D stub must pass through the roof bearing");
 assert(VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT == 8,
     "removable spline bearing carrier must use eight floor bosses");
+assert(VERTICAL_SPLINE_BEARING_UPPER_BOSS_COUNT
+        == VERTICAL_SPLINE_BEARING_CARRIER_BOSS_COUNT,
+    "upper spline bearing carrier must use the same eight-hole Boss pattern");
+assert(VERTICAL_SPLINE_BEARING_UPPER_BOSS_OD_MM == 5.0
+        && VERTICAL_SPLINE_BEARING_UPPER_CARRIER_BOSS_CLEAR_D_MM >
+            VERTICAL_SPLINE_BEARING_UPPER_BOSS_OD_MM,
+    "upper carrier must sleeve over Ø5 roof bosses with larger clearance holes");
+assert(abs(VERTICAL_SPLINE_BEARING_UPPER_BOSS_TOP_Y_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_TOP_Y_MM) < EPS
+    && abs(VERTICAL_SPLINE_BEARING_UPPER_BOSS_BOTTOM_Y_MM
+        - VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_BOTTOM_Y_MM) < EPS,
+    "upper roof bosses must mirror the carrier thickness and flush with its top");
+assert(VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_DEPTH_MM
+        < VERTICAL_SPLINE_BEARING_UPPER_BOSS_HEIGHT_MM
+    && VERTICAL_SPLINE_BEARING_UPPER_BOSS_PILOT_TOP_Y_MM
+        < VERTICAL_SPLINE_BEARING_UPPER_BOSS_TOP_Y_MM - EPS,
+    "upper roof Boss pilot must be blind and leave roof material above it");
+assert(VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X0_MM > WALL
+        && VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_X1_MM < W - WALL
+        && VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z0_MM > -D + WALL
+        && VERTICAL_SPLINE_BEARING_UPPER_CARRIER_PLATE_Z1_MM
+            < WORLD_PARTITION_BACK_Z - EPS,
+    "upper removable spline bearing carrier must stay inside the rear cavity");
 assert(VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X0_MM > WALL
         && VERTICAL_SPLINE_BEARING_CARRIER_PLATE_X1_MM < W - WALL,
     "removable spline bearing carrier must stay inside the cabinet width");
