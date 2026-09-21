@@ -109,7 +109,7 @@ def stl_component_centers(path: Path) -> list[tuple[float, float, float]]:
 def audit_chain_axis_seating(
     payload: dict,
     stl_dir: Path,
-) -> tuple[int, int, float]:
+) -> tuple[int, int, int, float]:
     """Check every roller/pin island against the same authoritative pin path."""
 
     pins = payload.get("pins")
@@ -160,7 +160,19 @@ def audit_chain_axis_seating(
                 f"{name} 每个销位必须有 {expected_per_pin} 件，"
                 f"实际异常={', '.join(bad[:8])}"
             )
-    return component_counts["rollers"], component_counts["pins"], max_error
+    physical_roller_count = len(pins)
+    if component_counts["rollers"] != physical_roller_count * 2:
+        fail(
+            "滚子 STL 环岛数量不等于每个销位的内衬套+外滚子两件: "
+            f"ringComponents={component_counts['rollers']} "
+            f"expected={physical_roller_count * 2}"
+        )
+    return (
+        component_counts["rollers"],
+        component_counts["pins"],
+        physical_roller_count,
+        max_error,
+    )
 
 
 def main() -> int:
@@ -265,7 +277,7 @@ def main() -> int:
                 f"expected={expected_sign} actual={wheel_by_id.get(wheel_id, {}).get('sign')!r}"
             )
 
-    roller_components, pin_components, axis_error = audit_chain_axis_seating(
+    roller_ring_components, pin_components, roller_count, axis_error = audit_chain_axis_seating(
         payload,
         args.stl_dir,
     )
@@ -327,7 +339,8 @@ def main() -> int:
         f"drive={drive_teeth}T idlers={len(idlers)}×{guide_teeth}T "
         f"chainY={float(payload.get('chainY', 0)):.3f} "
         f"verticalShift={shift:.3f} triggerSegment={trigger_index} "
-        f"axisSeating=rollers:{roller_components}/pins:{pin_components} "
+        f"axisSeating=outerRollers:{roller_count}/bushings:{roller_count}/"
+        f"pins:{pin_components}/ringComponents:{roller_ring_components} "
         f"maxAxisError={axis_error:.4f}mm"
     )
     return 0

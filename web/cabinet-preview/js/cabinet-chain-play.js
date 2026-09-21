@@ -270,7 +270,7 @@ function validateChainAxisCounts(itemId, counts) {
       .map(({ index, count }) => `${index}:${count}`)
       .join(", ");
     throw new Error(
-      `链条轴线挂载数量错误: ${itemId} 应为每销 ${expected} 个，异常=${sample}`,
+      `链条环件轴线挂载数量错误: ${itemId} 应为每销 ${expected} 个（内衬套+外滚子），异常=${sample}`,
     );
   }
 }
