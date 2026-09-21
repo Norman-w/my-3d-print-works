@@ -70,10 +70,18 @@
 
 ## 动力母线和抽屉驱动
 
-动力母线继续使用 5 根沿世界 Y 的长花键列轴、上下两条 2GT 同步带和低 X 侧张紧
-机构；电机接驳 +X 末列。中心 R3C3 通过后侧中心 2GT 皮带把输出母轮的旋转传到
+动力母线继续使用 5 根沿世界 Y 的长花键列轴、上下两条 `220T/440 mm/6 mm` 2GT 同步带和低 X 侧张紧
+机构；电机接驳 +X 末列。张紧轮轴与现有 SKP 张紧机构的 Ø6 轴承环中心按 X 对位，
+上下两只同步轮共用一根轴，不再让上轮单独偏移；220T 的离散节距留下约 `0.4 mm`
+的名义中心距差，由张紧机构的正常调节吸收。中心 R3C3 通过后侧中心 2GT 皮带把输出母轮的旋转传到
 抽屉前端的同步轮、粗齿轮和直线齿排。中心机构板开有按实际皮带包络生成的贯穿槽，
-皮带不能被机构板截断；薄后盖不承受中心传动载荷。
+皮带不能被机构板截断；薄后盖不承受中心传动载荷。网页世界中的张紧机构按“单一模板 + 世界实例”挂载，
+不复制相同 STL：`cabinet_clutch_column_sync_tensioner.stl` 只包含上下 2GT 轮、共轴张紧轴和轮毂轴承座；
+`cabinet_clutch_column_sync_tensioner_support_template.stl` 是唯一一份 SKP 承载支撑模板，由 manifest 在上/下
+两个世界位置实例化。`3×6×2` 采购轴承沿用已有的共享参考几何/采购件定义，只在中心契约中记录两处
+相对轴位和轮内 `Ø6.10 mm` 座孔，不再新增张紧轴承 STL。两处支撑环沿世界 `+Y` 穿过同一根张紧轴，
+支撑定位采用皮带轮边缘相对计算：下支撑从下轮上沿向 `Y+`，上支撑从上轮下沿向 `Y−`，支撑包络与轮/皮带
+之间保留 `0.60 mm` 轴向净空；不再使用旧的绝对 `Y−15 mm` 偏移。
 
 配合箱体缩宽后的蛇链由同一求解器重新生成：`P=4.7625 mm`、当前回程闭环为 `260` 个销；右侧服务段
 在离合磁铁基准 `z=11.35 mm` 保持水平。回程顺序固定为“服务水平段 → 下方绿轮 →
@@ -157,6 +165,8 @@ center_linear_bearings
 center_output_shaft
 center_output_bearings
 center_mechanism_plate
+column_sync_tensioner
+column_sync_tensioner_support_template
 drawer_rack_guide_rollers
 drawer_rack_guide_rails
 front_timing_bearing

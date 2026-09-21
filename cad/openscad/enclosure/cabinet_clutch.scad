@@ -503,11 +503,6 @@ TENSIONER_SKP_WORLD_SIZE_Y = TENSIONER_SKP_NATIVE_SIZE_X;
 TENSIONER_SKP_WORLD_SIZE_Z = TENSIONER_SKP_NATIVE_SIZE_Z;
 // Low-X placement: this is the right-hand side in the canonical rear view.
 TENSIONER_SKP_WORLD_CENTER_X = WALL + 1.0 + TENSIONER_SKP_WORLD_SIZE_X / 2;
-TENSIONER_SKP_WORLD_CENTER_Y = BUS_TOP_Y;
-// The SKP bearing ring is one millimetre toward the rear from the mapped T
-// envelope centre.  Put that ring on the same Z axis as the vertical-column
-// bus wheels; the wheel/shaft assembly below can then move along X without
-// changing the verified SKP orientation.
 TENSIONER_SKP_WORLD_CENTER_Z = DRIVE_AXIS_Z + 1.0;
 
 // Main SKP body: a 9×42×22 mm envelope made from a 2 mm base and a 5×20 mm
@@ -566,6 +561,41 @@ TENSIONER_RING_DY = 10.0;
 TENSIONER_RING_DZ = 10.0;
 TENSIONER_RING_OUTER_D = 10.0;
 TENSIONER_RING_INNER_D = 6.0;
+
+// One reusable support template is mounted at two edge-relative world
+// datums. The lower instance is calculated upward from the lower pulley upper
+// edge; the upper instance is calculated downward from the upper pulley lower
+// edge. This keeps both support bearing rings on the continuous shaft while
+// keeping the 9 mm support envelope out of the two belt/pulley stacks.
+TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM = 0.60;
+TENSIONER_SUPPORT_RING_CENTER_OFFSET_Y_MM =
+    TENSIONER_RING_X0 + TENSIONER_RING_DX / 2
+        - (
+            TENSIONER_SKP_NATIVE_MIN_X
+                + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        );
+function column_sync_tensioner_pulley_lower_edge_y(axis_y) =
+    axis_y
+        - GT2_BELT_LOWER_RETAINER_T
+        - GT2_PULLEY_FACE_T / 2;
+function column_sync_tensioner_pulley_upper_edge_y(axis_y) =
+    column_sync_tensioner_pulley_lower_edge_y(axis_y)
+        + GT2_BELT_LOWER_RETAINER_T
+        + GT2_PULLEY_FACE_T
+        + GT2_BELT_GUIDE_LIP_T;
+TENSIONER_SUPPORT_CENTER_X = TENSIONER_SKP_WORLD_CENTER_X;
+TENSIONER_SUPPORT_CENTER_Z = TENSIONER_SKP_WORLD_CENTER_Z;
+TENSIONER_SUPPORT_UPPER_CENTER_Y =
+    column_sync_tensioner_pulley_lower_edge_y(BUS_TOP_Y)
+        - TENSIONER_SKP_WORLD_SIZE_Y / 2
+        - TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM;
+TENSIONER_SUPPORT_LOWER_CENTER_Y =
+    column_sync_tensioner_pulley_upper_edge_y(BUS_BOTTOM_Y)
+        + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        + TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM;
+// Standalone/legacy selector placement follows the upper world instance.
+// The canonical world assembly uses the two explicit support centres above.
+TENSIONER_SKP_WORLD_CENTER_Y = TENSIONER_SUPPORT_UPPER_CENTER_Y;
 
 // The second nested SKP group is a 3 mm plate with an axis-red Ø10 through
 // bore and a native-green Ø2 blind bore.  Its local origin is retained so the
@@ -859,9 +889,16 @@ PARTITION_BELT_PASSAGE_WINDOW_AXIAL_WIDTH = GT2_BELT_WIDTH
 
 // The five vertical drawer columns share two horizontal open 2GT loops.  The
 // loop length is deliberately expressed in catalog teeth, not inferred from
-// a bounding box: 226T × 2 mm gives a nominal 452 mm closed belt and a 214 mm
-// centre distance for the +X motor column and the -X tensioner wheel.
-COLUMN_SYNC_BELT_TEETH = 226;
+// The default SKP tensioner has a real Ø6 bearing ring. Use its world-X
+// centre as the lateral datum for the replacement column-sync wheel shaft;
+// this prevents the upper wheel from sitting too far toward -X beside the
+// spline columns. A catalog 220T × 2 mm loop is the nearest standard belt:
+// it gives a nominal 440 mm closed belt and about 208 mm centre distance.
+COLUMN_SYNC_TENSIONER_REFERENCE_BEARING_X =
+    TENSIONER_PARAM_WORLD_ORIGIN_X
+    + TENSIONER_RING_Y0
+    + TENSIONER_RING_DY / 2;
+COLUMN_SYNC_BELT_TEETH = 220;
 COLUMN_SYNC_BELT_LENGTH_MM =
     COLUMN_SYNC_BELT_TEETH * GT2_PULLEY_PITCH_MM;
 COLUMN_SYNC_BELT_CENTER_DISTANCE = (
@@ -878,6 +915,9 @@ COLUMN_SYNC_TENSIONER_NOMINAL_X =
     MOTOR_X - COLUMN_SYNC_BELT_CENTER_DISTANCE;
 COLUMN_SYNC_TENSIONER_X =
     COLUMN_SYNC_TENSIONER_NOMINAL_X - VERTICAL_TENSIONER_OFFSET_X;
+COLUMN_SYNC_TENSIONER_BEARING_ALIGNMENT_ERROR_X =
+    COLUMN_SYNC_TENSIONER_NOMINAL_X
+    - COLUMN_SYNC_TENSIONER_REFERENCE_BEARING_X;
 COLUMN_SYNC_BELT_BASE_INNER_R = gt2_pulley_pitch_r();
 COLUMN_SYNC_BELT_T = GT2_BELT_BACK_OFFSET;
 COLUMN_SYNC_BELT_BASE_OUTER_R =
@@ -896,6 +936,19 @@ COLUMN_SYNC_PULLEY_AXIAL_WIDTH =
     + GT2_BELT_GUIDE_LIP_T;
 COLUMN_SYNC_PULLEY_INNER_HALF_WIDTH =
     GT2_BELT_LOWER_RETAINER_T + GT2_PULLEY_FACE_T / 2;
+COLUMN_SYNC_TENSIONER_BEARING_NOMINAL = "3x6x2";
+COLUMN_SYNC_TENSIONER_BEARING_ID_MM = 3.0;
+COLUMN_SYNC_TENSIONER_BEARING_OD_MM = 6.0;
+COLUMN_SYNC_TENSIONER_BEARING_WIDTH_MM = 2.0;
+COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM = 6.10;
+COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM =
+    GT2_BELT_LOWER_RETAINER_T
+        + GT2_PULLEY_FACE_T
+        + GT2_BELT_GUIDE_LIP_T;
+COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM =
+    -GT2_BELT_LOWER_RETAINER_T
+        - GT2_PULLEY_FACE_T / 2
+        + COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM / 2;
 VERTICAL_GEAR_END_CLEARANCE = COLUMN_SYNC_PULLEY_INNER_HALF_WIDTH + 0.35;
 VERTICAL_GEAR_LENGTH = BUS_TOP_Y - BUS_BOTTOM_Y
     - 2 * VERTICAL_GEAR_END_CLEARANCE;
@@ -1230,6 +1283,46 @@ module column_gt2_pulley_y(x, y, z, bore = "d") {
                                 + 2 * GT2_EPS
                         );
             }
+}
+
+module column_sync_tensioner_pulley_y(x, y, z) {
+    // The tensioner wheels have a real MR63/3x6x2 bearing pocket.  Keep the
+    // ordinary Ø3.24 round shaft clearance through the pulley, then open only
+    // the centered 2 mm seat for the Ø6 bearing; this leaves printable cheeks
+    // on both sides and puts the bearing center on the wheel/shaft datum.
+    base_y = y - GT2_BELT_LOWER_RETAINER_T - GT2_PULLEY_FACE_T / 2;
+    bearing_seat_y0 = (
+        COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM
+            - COLUMN_SYNC_TENSIONER_BEARING_WIDTH_MM
+    ) / 2;
+    translate([x, base_y, z])
+        rotate([-90, 0, 0])
+            difference() {
+                gt2_pulley_local();
+                translate([0, 0, -GT2_EPS])
+                    cylinder(
+                        d = ROUND_BORE_D,
+                        h = COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM
+                            + 2 * GT2_EPS
+                    );
+                translate([0, 0, bearing_seat_y0 - GT2_EPS])
+                    cylinder(
+                        d = COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM,
+                        h = COLUMN_SYNC_TENSIONER_BEARING_WIDTH_MM
+                            + 2 * GT2_EPS
+                    );
+            }
+}
+
+module column_sync_tensioner_bearing_reference_y(x, y) {
+    // Reuse the existing 3×6×2 bearing reference convention. The tensioner
+    // only records the bearing datum and seat in the mechanical contract; it
+    // does not create a second bearing STL/template. The prior shared module
+    // owns the visible purchased-part reference in the focused source view.
+    vertical_spline_bearing_reference_y(
+        x,
+        y + COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM
+    );
 }
 
 module spur_gear_y(
@@ -1643,8 +1736,10 @@ module column_sync_belt_loop_x_teeth(x0, x1, y, z) {
     arc_count = max(1,
         round(PI * GT2_PULLEY_TEETH * GT2_PULLEY_PITCH_MM
             / (2 * PI) / GT2_PULLEY_PITCH_MM));
-    // The default 20.4→234.4 span is 107 pitches. Together with six teeth on
-    // each half-wrap this is exactly 226 teeth around the closed belt.
+    // The selected catalog span is approximately 104 pitches. Together with
+    // six teeth on each half-wrap this is exactly 220 teeth around the closed
+    // belt; the remaining sub-millimetre datum mismatch is absorbed by the
+    // tensioner's normal adjustment, not by skewing either wheel.
     for (i = [0:run_count - 1]) {
         x = x0 + (i + 0.5) * GT2_PULLEY_PITCH_MM;
         column_sync_belt_tooth_x(x, z - inner, y, 1);
@@ -2114,16 +2209,41 @@ module tensioner_skp_parametric() {
     // Align the mapped native envelope with the existing rear/low-X datum.
     // The translation is placement only; all shape dimensions remain editable
     // in the parameter block above.
-    color(COLOR_TENSIONER_T_SOLID)
-        translate([
-            TENSIONER_PARAM_WORLD_ORIGIN_X,
-            TENSIONER_PARAM_WORLD_ORIGIN_Y,
-            TENSIONER_PARAM_WORLD_ORIGIN_Z
-        ]) {
-            tensioner_main_parametric();
-            tensioner_ring_parametric();
-            tensioner_plate_parametric();
-        }
+    translate([
+        TENSIONER_PARAM_WORLD_ORIGIN_X,
+        TENSIONER_PARAM_WORLD_ORIGIN_Y,
+        TENSIONER_PARAM_WORLD_ORIGIN_Z
+    ])
+        tensioner_skp_parametric_local();
+}
+
+module tensioner_skp_parametric_local() {
+    color(COLOR_TENSIONER_T_SOLID) {
+        tensioner_main_parametric();
+        tensioner_ring_parametric();
+        tensioner_plate_parametric();
+    }
+}
+
+module tensioner_skp_template_local() {
+    // Export one support around a local origin. The browser translates this
+    // same geometry to upper/lower world datums; it never needs a duplicate
+    // support STL for the second physical mount.
+    translate([
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_X
+                + TENSIONER_SKP_WORLD_SIZE_X / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Y
+                + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Z
+                + TENSIONER_SKP_WORLD_SIZE_Z / 2
+        )
+    ])
+        tensioner_skp_parametric_local();
 }
 
 // Keep the existing part selector name stable for the exporter and viewer.
@@ -3024,7 +3144,7 @@ module all_vertical_axes() {
 }
 
 module power_column_sync_belts() {
-    // Both belts are the same 226T/2GT loop, one at each end of every Y-axis
+    // Both belts are the same 220T/2GT loop, one at each end of every Y-axis
     // column.  The intermediate pulleys sit on the two tangent runs, so all
     // five shafts are mechanically represented on the same closed path.
     color(COLOR_BELT, 0.18) {
@@ -3044,9 +3164,11 @@ module power_column_sync_belts() {
 }
 
 module column_sync_tensioner_wheels() {
-    // The bearing/slide body is static; this shaft and its two 2GT wheels are
-    // the moving part.  Positive VERTICAL_TENSIONER_OFFSET_X moves this whole
-    // set toward world -X, increasing the belt centre distance.
+    // This STL owns only the adjustable shaft and its two 2GT wheels. The
+    // existing 3×6×2 bearing reference is metadata/source-view geometry, not
+    // a newly exported bearing mesh.
+    // Positive VERTICAL_TENSIONER_OFFSET_X moves this whole set toward world
+    // -X, increasing the belt centre distance.
     color(COLOR_SHAFT)
         cylinder_y(
             COLUMN_SYNC_TENSIONER_X,
@@ -3055,19 +3177,50 @@ module column_sync_tensioner_wheels() {
             ROD_D,
             BUS_TOP_Y - BUS_BOTTOM_Y + 10.0
         );
-    for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
+    for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y]) {
         color(COLOR_TIMING)
-            column_gt2_pulley_y(
+            column_sync_tensioner_pulley_y(
                 COLUMN_SYNC_TENSIONER_X,
                 axis_y,
-                DRIVE_AXIS_Z,
-                "round"
+                DRIVE_AXIS_Z
             );
+    }
+}
+
+module column_sync_tensioner_support_instance(center_y) {
+    translate([
+        TENSIONER_SUPPORT_CENTER_X,
+        center_y,
+        TENSIONER_SUPPORT_CENTER_Z
+    ])
+        tensioner_skp_template_local();
+}
+
+module column_sync_tensioner_support_world() {
+    // One SKP-derived support, mounted twice in world space. The lower mount
+    // is the missing lower-half structure from the previous preview.
+    column_sync_tensioner_support_instance(
+        TENSIONER_SUPPORT_UPPER_CENTER_Y
+    );
+    column_sync_tensioner_support_instance(
+        TENSIONER_SUPPORT_LOWER_CENTER_Y
+    );
+}
+
+module column_sync_tensioner_bearings_world() {
+    // Reuse the existing 3×6×2 reference module at the two pulley datums;
+    // no separate tensioner-bearing STL is exported.
+    for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y])
+        column_sync_tensioner_bearing_reference_y(
+            COLUMN_SYNC_TENSIONER_X,
+            axis_y
+        );
 }
 
 module column_sync_tensioner() {
-    tensioner_t_solid();
+    column_sync_tensioner_support_world();
     column_sync_tensioner_wheels();
+    column_sync_tensioner_bearings_world();
 }
 
 module power_bus() {
@@ -4123,7 +4276,55 @@ module selected_column_sync_belt_top_part() {
 }
 
 module selected_column_sync_tensioner_part() {
+    // Canonical wheel/shaft assembly. The support is the one template asset
+    // mounted by manifest instances; the existing purchased bearing remains
+    // a contract/source-view reference rather than a new STL.
     column_sync_tensioner_wheels();
+}
+
+module selected_column_sync_tensioner_support_template_part() {
+    tensioner_skp_template_local();
+}
+
+module selected_column_sync_tensioner_world_part() {
+    // Focused verification scene: the complete tensioner, its two belts, and
+    // no unrelated cabinet/column geometry. This is a diagnostic view only;
+    // the browser still loads the canonical meshes and their instances.
+    power_column_sync_belts();
+    column_sync_tensioner();
+}
+
+module selected_column_sync_tensioner_belt_collision_part() {
+    // Non-empty output means either edge-relative SKP support physically
+    // intersects its corresponding 2GT belt. Both upper and lower instances
+    // are checked so the old lower-only diagnostic cannot hide an upper
+    // placement regression.
+    union() {
+        intersection() {
+            column_sync_tensioner_support_instance(
+                TENSIONER_SUPPORT_LOWER_CENTER_Y
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_BOTTOM_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+        intersection() {
+            column_sync_tensioner_support_instance(
+                TENSIONER_SUPPORT_UPPER_CENTER_Y
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_TOP_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+    }
 }
 
 module selected_vertical_rack_part() {
@@ -4645,6 +4846,12 @@ module clutch_scene_geometry() {
         selected_column_sync_belt_top_part();
     } else if (CLUTCH_PART == "column_sync_tensioner") {
         selected_column_sync_tensioner_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_support_template") {
+        selected_column_sync_tensioner_support_template_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_world") {
+        selected_column_sync_tensioner_world_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_belt_collision") {
+        selected_column_sync_tensioner_belt_collision_part();
     } else if (CLUTCH_PART == "center_input_rotor") {
         selected_center_input_rotor_part();
     } else if (CLUTCH_PART == "center_output_rotor") {
@@ -4793,6 +5000,61 @@ echo(
     str("drawerFrontPinionBearingSeatDiameterMm=", DRAWER_PINION_MR63_SEAT_D),
     str("axisXMm=", clutch_col_x(CENTER_GT2_COL)),
     str("axisZMm=", center_gt2_z()),
+    str("columnSyncBeltTeeth=", COLUMN_SYNC_BELT_TEETH),
+    str("columnSyncBeltLengthMm=", COLUMN_SYNC_BELT_LENGTH_MM),
+    str("columnSyncBeltCenterDistanceMm=", COLUMN_SYNC_BELT_CENTER_DISTANCE),
+    str("columnSyncTensionerReferenceBearingXMm=",
+        COLUMN_SYNC_TENSIONER_REFERENCE_BEARING_X),
+    str("columnSyncTensionerNominalXMm=", COLUMN_SYNC_TENSIONER_NOMINAL_X),
+    str("columnSyncTensionerAxisXMm=", COLUMN_SYNC_TENSIONER_X),
+    str("columnSyncTensionerBearingAlignmentErrorXMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_ALIGNMENT_ERROR_X),
+    str("columnSyncTensionerBearingNominal=",
+        COLUMN_SYNC_TENSIONER_BEARING_NOMINAL),
+    str("columnSyncTensionerBearingCount=", 2),
+    str("columnSyncTensionerBearingIdMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_ID_MM),
+    str("columnSyncTensionerBearingOdMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_OD_MM),
+    str("columnSyncTensionerBearingWidthMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_WIDTH_MM),
+    str("columnSyncTensionerBearingSeatDiameterMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM),
+    str("columnSyncTensionerBearingCenterOffsetYMm=",
+        COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM),
+    "columnSyncTensionerBearingReferenceMode=existing-3x6x2-reference",
+    str("columnSyncTensionerPulleyTotalHeightMm=",
+        COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM),
+    str("columnSyncTensionerSupportHeightYMm=",
+        TENSIONER_SKP_WORLD_SIZE_Y),
+    str("columnSyncTensionerSupportEdgeClearanceYMm=",
+        TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM),
+    str("columnSyncTensionerSupportRingCenterOffsetYMm=",
+        TENSIONER_SUPPORT_RING_CENTER_OFFSET_Y_MM),
+    "columnSyncTensionerSupportPlacementMode=pulley-edge-relative",
+    "columnSyncTensionerBearingAxis=+Y",
+    str("columnSyncTensionerBearingAxisXMm=", COLUMN_SYNC_TENSIONER_X),
+    str("columnSyncTensionerBearingAxisZMm=", DRIVE_AXIS_Z),
+    str("columnSyncTensionerLowerPulleyLowerEdgeYMm=",
+        column_sync_tensioner_pulley_lower_edge_y(BUS_BOTTOM_Y)),
+    str("columnSyncTensionerLowerPulleyUpperEdgeYMm=",
+        column_sync_tensioner_pulley_upper_edge_y(BUS_BOTTOM_Y)),
+    str("columnSyncTensionerUpperPulleyLowerEdgeYMm=",
+        column_sync_tensioner_pulley_lower_edge_y(BUS_TOP_Y)),
+    str("columnSyncTensionerUpperPulleyUpperEdgeYMm=",
+        column_sync_tensioner_pulley_upper_edge_y(BUS_TOP_Y)),
+    str("columnSyncTensionerLowerBearingCenterYMm=",
+        BUS_BOTTOM_Y + COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM),
+    str("columnSyncTensionerUpperBearingCenterYMm=",
+        BUS_TOP_Y + COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM),
+    str("columnSyncTensionerSupportCenterXMm=",
+        TENSIONER_SUPPORT_CENTER_X),
+    str("columnSyncTensionerSupportCenterZMm=",
+        TENSIONER_SUPPORT_CENTER_Z),
+    str("columnSyncTensionerUpperSupportCenterYMm=",
+        TENSIONER_SUPPORT_UPPER_CENTER_Y),
+    str("columnSyncTensionerLowerSupportCenterYMm=",
+        TENSIONER_SUPPORT_LOWER_CENTER_Y),
     str("verticalSplineBearingNominal=", VERTICAL_SPLINE_BEARING_NOMINAL),
     str("verticalSplineBearingCount=", N_COL),
     str("verticalSplineBearingIdMm=", VERTICAL_SPLINE_BEARING_ID_MM),
@@ -5404,6 +5666,9 @@ assert(
     || CLUTCH_PART == "column_sync_belt_bottom"
     || CLUTCH_PART == "column_sync_belt_top"
     || CLUTCH_PART == "column_sync_tensioner"
+    || CLUTCH_PART == "column_sync_tensioner_support_template"
+    || CLUTCH_PART == "column_sync_tensioner_world"
+    || CLUTCH_PART == "column_sync_tensioner_belt_collision"
     || CLUTCH_PART == "center_station_template_assembly"
     || CLUTCH_PART == "center_input_rotor"
     || CLUTCH_PART == "center_output_rotor"
@@ -5772,11 +6037,65 @@ for (guide_col = [0:N_COL - 1]) {
 assert(DRAWER_PINION_MR63_OD > DRAWER_PINION_MR63_ID
         && DRAWER_PINION_MR63_SEAT_D > DRAWER_PINION_MR63_OD,
     "MR63 pinion bearing seat must leave a press-fit annulus");
-assert(COLUMN_SYNC_BELT_TEETH == 226,
-    "column sync must use the selected 226T / 452 mm 2GT loop");
+assert(COLUMN_SYNC_BELT_TEETH == 220,
+    "column sync must use the selected 220T / 440 mm 2GT loop");
 assert(abs(COLUMN_SYNC_BELT_LENGTH_MM
         - COLUMN_SYNC_BELT_TEETH * GT2_PULLEY_PITCH_MM) < 0.001,
     "column sync belt length must be derived from 2GT pitch");
+assert(abs(COLUMN_SYNC_TENSIONER_BEARING_ALIGNMENT_ERROR_X) <= 0.45,
+    "column sync tensioner must align to the default SKP bearing datum");
+assert(COLUMN_SYNC_TENSIONER_BEARING_NOMINAL == "3x6x2"
+        && COLUMN_SYNC_TENSIONER_BEARING_ID_MM == 3.0
+        && COLUMN_SYNC_TENSIONER_BEARING_OD_MM == 6.0
+        && COLUMN_SYNC_TENSIONER_BEARING_WIDTH_MM == 2.0,
+    "tensioner wheels must use two coaxial 3x6x2 bearings");
+assert(COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
+        > COLUMN_SYNC_TENSIONER_BEARING_OD_MM
+        && COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
+            < 2 * gt2_belt_guide_r(),
+    "tensioner bearing seat must leave a printable GT2 pulley rim");
+assert(abs(
+    COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM
+        - (
+            -GT2_BELT_LOWER_RETAINER_T
+                - GT2_PULLEY_FACE_T / 2
+                + COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM / 2
+    )
+    ) < 0.001,
+    "tensioner bearing center must match the wheel axial datum");
+assert(TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM >= 0.50,
+    "tensioner support must retain a printable pulley-edge clearance");
+assert(abs(
+    TENSIONER_SUPPORT_LOWER_CENTER_Y
+        - (
+            column_sync_tensioner_pulley_upper_edge_y(BUS_BOTTOM_Y)
+                + TENSIONER_SKP_WORLD_SIZE_Y / 2
+                + TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM
+        )
+    ) < 0.001,
+    "lower tensioner support must be derived upward from the lower pulley upper edge");
+assert(abs(
+    TENSIONER_SUPPORT_UPPER_CENTER_Y
+        - (
+            column_sync_tensioner_pulley_lower_edge_y(BUS_TOP_Y)
+                - TENSIONER_SKP_WORLD_SIZE_Y / 2
+                - TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM
+        )
+    ) < 0.001,
+    "upper tensioner support must be derived downward from the upper pulley lower edge");
+assert(TENSIONER_SUPPORT_LOWER_CENTER_Y - TENSIONER_SKP_WORLD_SIZE_Y / 2
+        > column_sync_tensioner_pulley_upper_edge_y(BUS_BOTTOM_Y) + EPS,
+    "lower tensioner support must stay above the lower pulley stack");
+assert(TENSIONER_SUPPORT_UPPER_CENTER_Y + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        < column_sync_tensioner_pulley_lower_edge_y(BUS_TOP_Y) - EPS,
+    "upper tensioner support must stay below the upper pulley stack");
+assert(TENSIONER_SUPPORT_LOWER_CENTER_Y
+            + TENSIONER_SUPPORT_RING_CENTER_OFFSET_Y_MM
+        > column_sync_tensioner_pulley_lower_edge_y(BUS_BOTTOM_Y)
+        && TENSIONER_SUPPORT_UPPER_CENTER_Y
+            + TENSIONER_SUPPORT_RING_CENTER_OFFSET_Y_MM
+        < column_sync_tensioner_pulley_upper_edge_y(BUS_TOP_Y),
+    "both tensioner support rings must lie on the continuous shaft span");
 assert(COLUMN_SYNC_TENSIONER_NOMINAL_X < MOTOR_X,
     "column sync tensioner must be on the -X side of the motor");
 assert(VERTICAL_TENSIONER_OFFSET_X >= 0,

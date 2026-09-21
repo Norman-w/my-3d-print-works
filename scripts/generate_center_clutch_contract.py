@@ -288,6 +288,34 @@ REQUIRED = {
     "drawerGuideFrontSupportClearanceMm", "drawerGuideTailBearingAxis",
     "drawerGuideFrontBearingAxis",
     "drawerFrontPinionBearingSeatDiameterMm",
+    "columnSyncBeltTeeth", "columnSyncBeltLengthMm",
+    "columnSyncBeltCenterDistanceMm",
+    "columnSyncTensionerReferenceBearingXMm",
+    "columnSyncTensionerNominalXMm", "columnSyncTensionerAxisXMm",
+    "columnSyncTensionerBearingAlignmentErrorXMm",
+    "columnSyncTensionerBearingNominal", "columnSyncTensionerBearingCount",
+    "columnSyncTensionerBearingIdMm", "columnSyncTensionerBearingOdMm",
+    "columnSyncTensionerBearingWidthMm",
+    "columnSyncTensionerBearingSeatDiameterMm",
+    "columnSyncTensionerBearingCenterOffsetYMm",
+    "columnSyncTensionerBearingReferenceMode",
+    "columnSyncTensionerPulleyTotalHeightMm",
+    "columnSyncTensionerSupportHeightYMm",
+    "columnSyncTensionerSupportEdgeClearanceYMm",
+    "columnSyncTensionerSupportRingCenterOffsetYMm",
+    "columnSyncTensionerSupportPlacementMode",
+    "columnSyncTensionerBearingAxis", "columnSyncTensionerBearingAxisXMm",
+    "columnSyncTensionerBearingAxisZMm",
+    "columnSyncTensionerLowerPulleyLowerEdgeYMm",
+    "columnSyncTensionerLowerPulleyUpperEdgeYMm",
+    "columnSyncTensionerUpperPulleyLowerEdgeYMm",
+    "columnSyncTensionerUpperPulleyUpperEdgeYMm",
+    "columnSyncTensionerLowerBearingCenterYMm",
+    "columnSyncTensionerUpperBearingCenterYMm",
+    "columnSyncTensionerSupportCenterXMm",
+    "columnSyncTensionerSupportCenterZMm",
+    "columnSyncTensionerUpperSupportCenterYMm",
+    "columnSyncTensionerLowerSupportCenterYMm",
     "outputPart", "outputBearingSupportPart", "mechanismPlatePart", "outputShaftPart",
     "outputBearingsPart",
 }
@@ -305,6 +333,8 @@ INT_KEYS = {
     "partitionBossPerCellCount", "partitionBossCount",
     "snakeChainReferenceRow",
     "snakeChainTriggerMagnetSegmentIndex",
+    "columnSyncBeltTeeth",
+    "columnSyncTensionerBearingCount",
     "verticalSplineBearingCount", "verticalSplineBearingUpperCount",
     "verticalSplineBearingTotalCount", "verticalSplineBearingCarrierBossCount",
     "verticalSplineBearingUpperBossCount",
@@ -397,6 +427,111 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(contract, "snakeChainMotorXOffsetMm", -2.00, "蛇链电机轮 X 偏移")
     expect(contract, "centerClutchDriveLayerOffsetMm", 0.0, "中心驱动层偏置")
     expect(contract, "centerClutchVerticalLiftMm", 0.0, "兼容垂直偏置")
+    if n(contract, "columnSyncBeltTeeth") != 220:
+        raise RuntimeError("列同步皮带必须使用 220T 2GT 闭环")
+    expect(contract, "columnSyncBeltLengthMm", 440.0, "列同步皮带长度")
+    if n(contract, "columnSyncBeltCenterDistanceMm") <= 0:
+        raise RuntimeError("列同步皮带中心距无效")
+    if abs(n(contract, "columnSyncTensionerBearingAlignmentErrorXMm")) > 0.45:
+        raise RuntimeError("列同步张紧轮没有对到默认张紧轴承基准")
+    if abs(
+        n(contract, "columnSyncTensionerAxisXMm")
+        - n(contract, "columnSyncTensionerNominalXMm")
+    ) > 0.001:
+        raise RuntimeError("列同步张紧轮轴位置没有保持在默认调节基准")
+    if contract.get("columnSyncTensionerBearingNominal") != "3x6x2":
+        raise RuntimeError("张紧轮轴承必须是 3x6x2")
+    if contract.get("columnSyncTensionerBearingReferenceMode") != "existing-3x6x2-reference":
+        raise RuntimeError("张紧轮必须复用既有 3x6x2 轴承参考件，不得新增独立轴承 STL")
+    if contract.get("columnSyncTensionerSupportPlacementMode") != "pulley-edge-relative":
+        raise RuntimeError("张紧轮支撑必须按皮带轮上下沿相对定位")
+    if n(contract, "columnSyncTensionerBearingCount") != 2:
+        raise RuntimeError("张紧轮必须安装上下两枚轴承")
+    for key, value, label in (
+        ("columnSyncTensionerBearingIdMm", 3.0, "张紧轮轴承内径"),
+        ("columnSyncTensionerBearingOdMm", 6.0, "张紧轮轴承外径"),
+        ("columnSyncTensionerBearingWidthMm", 2.0, "张紧轮轴承宽度"),
+        ("columnSyncTensionerBearingSeatDiameterMm", 6.10, "张紧轮轴承座直径"),
+    ):
+        expect(contract, key, value, label)
+    if contract.get("columnSyncTensionerBearingAxis") != "+Y":
+        raise RuntimeError("张紧轮轴承轴向必须是世界 +Y")
+    if abs(
+        n(contract, "columnSyncTensionerBearingAxisXMm")
+        - n(contract, "columnSyncTensionerAxisXMm")
+    ) > 0.001:
+        raise RuntimeError("张紧轮轴承 X 轴位没有对到张紧轮轴")
+    if n(contract, "columnSyncTensionerUpperBearingCenterYMm") <= n(
+        contract, "columnSyncTensionerLowerBearingCenterYMm"
+    ):
+        raise RuntimeError("张紧轮上下轴承中心 Y 轴位顺序无效")
+    expect(
+        contract,
+        "columnSyncTensionerSupportCenterXMm",
+        n(contract, "columnSyncTensionerBearingAxisXMm") + 5.4,
+        "张紧轮支撑模板 X 中心",
+    )
+    expect(
+        contract,
+        "columnSyncTensionerSupportCenterZMm",
+        n(contract, "columnSyncTensionerBearingAxisZMm") + 1.0,
+        "张紧轮支撑模板 Z 中心",
+    )
+    if n(contract, "columnSyncTensionerUpperSupportCenterYMm") <= n(
+        contract, "columnSyncTensionerLowerSupportCenterYMm"
+    ):
+        raise RuntimeError("张紧轮上下支撑模板中心 Y 轴位顺序无效")
+    expect(
+        contract,
+        "columnSyncTensionerPulleyTotalHeightMm",
+        8.8,
+        "张紧轮总轴向高度",
+    )
+    expect(
+        contract,
+        "columnSyncTensionerSupportHeightYMm",
+        9.0,
+        "张紧轮支撑模板 Y 高度",
+    )
+    expect(
+        contract,
+        "columnSyncTensionerSupportEdgeClearanceYMm",
+        0.6,
+        "张紧轮支撑与皮带轮边缘净空",
+    )
+    expect(
+        contract,
+        "columnSyncTensionerSupportRingCenterOffsetYMm",
+        1.0,
+        "张紧轮支撑环相对模板中心偏移",
+    )
+    lower_pulley_lower = n(contract, "columnSyncTensionerLowerPulleyLowerEdgeYMm")
+    lower_pulley_upper = n(contract, "columnSyncTensionerLowerPulleyUpperEdgeYMm")
+    upper_pulley_lower = n(contract, "columnSyncTensionerUpperPulleyLowerEdgeYMm")
+    upper_pulley_upper = n(contract, "columnSyncTensionerUpperPulleyUpperEdgeYMm")
+    if not lower_pulley_lower < lower_pulley_upper < upper_pulley_lower < upper_pulley_upper:
+        raise RuntimeError("张紧轮上下皮带轮边缘顺序无效")
+    support_half_height = n(contract, "columnSyncTensionerSupportHeightYMm") / 2
+    edge_clearance = n(contract, "columnSyncTensionerSupportEdgeClearanceYMm")
+    if abs(
+        n(contract, "columnSyncTensionerLowerSupportCenterYMm")
+        - (lower_pulley_upper + support_half_height + edge_clearance)
+    ) > 0.001:
+        raise RuntimeError("下张紧支撑没有按下轮上沿向 Y+ 相对定位")
+    if abs(
+        n(contract, "columnSyncTensionerUpperSupportCenterYMm")
+        - (upper_pulley_lower - support_half_height - edge_clearance)
+    ) > 0.001:
+        raise RuntimeError("上张紧支撑没有按上轮下沿向 Y− 相对定位")
+    if n(contract, "columnSyncTensionerLowerSupportCenterYMm") - support_half_height <= lower_pulley_upper:
+        raise RuntimeError("下张紧支撑仍与下皮带轮轴向包络重叠")
+    if n(contract, "columnSyncTensionerUpperSupportCenterYMm") + support_half_height >= upper_pulley_lower:
+        raise RuntimeError("上张紧支撑仍与上皮带轮轴向包络重叠")
+    ring_offset = n(contract, "columnSyncTensionerSupportRingCenterOffsetYMm")
+    if n(contract, "columnSyncTensionerLowerSupportCenterYMm") + ring_offset <= lower_pulley_lower:
+        raise RuntimeError("下张紧支撑轴承环没有落在连续张紧轴跨度内")
+    if n(contract, "columnSyncTensionerUpperSupportCenterYMm") + ring_offset >= upper_pulley_upper:
+        raise RuntimeError("上张紧支撑轴承环没有落在连续张紧轴跨度内")
     if contract.get("actuation") != "permanent-magnet":
         raise RuntimeError("中心离合必须使用永磁动作")
     if contract.get("engageOnlyWhenStopped") is not True:

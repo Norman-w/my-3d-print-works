@@ -79,6 +79,36 @@ export_part() {
     fi
 }
 
+verify_empty_tensioner_collision_selector() {
+    local tmp="${TMPDIR:-/tmp}/smartpartsdrawer-tensioner-collision.$$.stl"
+    local log="${tmp%.stl}.log"
+    local status=0
+    echo "→ 检查上下张紧支撑与对应皮带实体交集必须为空"
+    (
+        cd "${SCAD_DIR}"
+        "${OPENSCAD_BIN}" \
+            --backend Manifold \
+            --export-format binstl \
+            -D "QUALITY=${QUALITY}" \
+            -D 'CLUTCH_PART="column_sync_tensioner_belt_collision"' \
+            -o "${tmp}" \
+            "${SCAD_FILE}"
+    ) >"${log}" 2>&1 || status=$?
+    if [[ -s "${tmp}" ]]; then
+        local triangles
+        triangles="$(python3 -c 'import struct,sys; data=open(sys.argv[1], "rb").read(); print(struct.unpack_from("<I", data, 80)[0] if len(data) >= 84 else 0)' "${tmp}")"
+        rm -f "${tmp}" "${log}"
+        [[ "${triangles}" == "0" ]] || die "上下张紧支撑与对应皮带发生实体干涉: ${triangles} triangles"
+    else
+        rm -f "${tmp}" "${log}"
+    fi
+    # OpenSCAD returns non-zero for an intentionally empty top-level object;
+    # that is the expected success state for this diagnostic selector.
+    [[ "${status}" == "0" || "${status}" == "1" ]] \
+        || die "上下张紧支撑干涉检查执行失败: exit ${status}"
+    return 0
+}
+
 patch_native_preview_manifest() {
     python3 - "${PREVIEW_DIR}/manifest.json" "${CENTER_CONTRACT_JSON}" <<'PY'
 from pathlib import Path
@@ -247,22 +277,28 @@ labels = {
         "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom": {
-        "name": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
+        "name": "列同步2GT皮带 · 下端 · 220T/440mm/6mm",
         "color": "#ce5c31",
         "opacity": 1.0,
         "visible": True,
         "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_column_sync_belt_top": {
-        "name": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
+        "name": "列同步2GT皮带 · 上端 · 220T/440mm/6mm",
         "color": "#ce5c31",
         "opacity": 1.0,
         "visible": True,
         "role": "purchased",
     },
     "cabinet-clutch/cabinet_clutch_column_sync_tensioner": {
-        "name": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
+        "name": "列同步张紧轮轴组件 · 上下2GT轮 + 轴（沿−X调节；复用既有3×6×2轴承参考）",
         "color": "#f0a23b",
+        "visible": True,
+        "role": "printed",
+    },
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template": {
+        "name": "列同步张紧机构 · 单一SKP承载支撑模板（上/下世界实例×2）",
+        "color": "#657f8c",
         "visible": True,
         "role": "printed",
     },
@@ -384,6 +420,7 @@ group_map = {
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
+    "cabinet_clutch_column_sync_tensioner_support_template": "01·动力母线",
     "center_input_rotor": "02·离合机构",
     "center_output_rotor": "02·离合机构",
     "center_input_sleeve": "02·离合机构",
@@ -434,9 +471,10 @@ name_map = {
     "cabinet_clutch_vertical_spline_bearing_support": "抽屉电机花键轴 下方3 mm可拆承载板 + 8个Ø5底板Boss/Ø5.2通孔 · C1-C4圆柱座/C5圆角梯形双侧座",
     "cabinet_clutch_vertical_spline_bearing_upper_support": "抽屉电机花键轴 上方2.2 mm可拆承载板 + 8个Ø5屋顶Boss/Ø5.2通孔 · 下方蘑菇头M3自攻固定",
     "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 上下各5枚3×6×2固定轴承×10 · 采购件",
-    "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 226T/452mm/6mm",
-    "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 226T/452mm/6mm",
-    "cabinet_clutch_column_sync_tensioner": "列同步张紧轮 · 上下2GT轮 + 轴（沿−X调节）",
+    "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 220T/440mm/6mm",
+    "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 220T/440mm/6mm",
+    "cabinet_clutch_column_sync_tensioner": "列同步张紧轮轴组件 · 上下2GT轮 + 轴（沿−X调节；复用既有3×6×2轴承参考）",
+    "cabinet_clutch_column_sync_tensioner_support_template": "列同步张紧机构 · 单一SKP承载支撑模板（上/下世界实例×2）",
 }
 for part in payload.get("parts", []):
     stem = str(part.get("id", "")).rsplit("/", 1)[-1]
@@ -484,6 +522,36 @@ for part in payload.get("parts", []):
         part["instanceMode"] = "world-xy-translation"
         part["instanceCount"] = len(instances)
         part["instances"] = instances
+
+# The tensioner support is authored once and mounted at two world-space
+# instances. The purchased 3×6×2 bearing is an existing shared reference; its
+# two relative datums stay in the contract and are not emitted as a new STL.
+tensioner_support_template_id = (
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template"
+)
+tensioner_support_instances = [
+    {
+        "id": "lower",
+        "position": [
+            float(contract["columnSyncTensionerSupportCenterXMm"]),
+            float(contract["columnSyncTensionerLowerSupportCenterYMm"]),
+            float(contract["columnSyncTensionerSupportCenterZMm"]),
+        ],
+    },
+    {
+        "id": "upper",
+        "position": [
+            float(contract["columnSyncTensionerSupportCenterXMm"]),
+            float(contract["columnSyncTensionerUpperSupportCenterYMm"]),
+            float(contract["columnSyncTensionerSupportCenterZMm"]),
+        ],
+    },
+]
+for part in payload.get("parts", []):
+    if part.get("id") == tensioner_support_template_id:
+        part["instanceMode"] = "world-xyz-translation"
+        part["instanceCount"] = len(tensioner_support_instances)
+        part["instances"] = tensioner_support_instances
 group_order = [
     "00·箱体框架",
     "01·动力母线",
@@ -591,12 +659,15 @@ for group_id in ordered_group_ids:
             part_node(
                 "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
             ),
+            part_node(
+                "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template",
+            ),
         ]
         root["children"] = [
             call_node(
                 "power_bus/active",
-                "列同步动力母线 · 电机 + 5列2GT + 上下同步带 + 张紧轮",
-                "power_motor_vertical() + vertical_gear_column(0 .. N_COL - 1) + power_column_sync_belts()",
+                "列同步动力母线 · 电机 + 5列2GT + 上下同步带 + 完整张紧机构",
+                "power_motor_vertical() + vertical_gear_column(0 .. N_COL - 1) + power_column_sync_belts() + column_sync_tensioner()",
                 children=active_power_parts,
             ),
         ]
@@ -705,6 +776,7 @@ python3 "${PROJECT_ROOT}/scripts/generate_center_clutch_contract.py" \
     --openscad "${OPENSCAD_BIN}" \
     --scad "${SCAD_DIR}/${SCAD_FILE}" \
     --output "${CENTER_CONTRACT_JSON}"
+verify_empty_tensioner_collision_selector
 
 # The canonical page owns the chain animation as well as the meshes.  Always
 # rebuild the chain meshes from the same solver invocation; otherwise a new
@@ -768,6 +840,7 @@ OLD_TENSIONER_OUTPUTS=(
     "05_top_bottom_bus_belts_reference.stl"
     "05_top_bottom_bus_belts_base_reference.stl"
     "05_top_bottom_bus_belts_teeth_reference.stl"
+    "cabinet_clutch_column_sync_tensioner_bearing_template.stl"
 )
 for old_file in "${OLD_TENSIONER_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
@@ -901,6 +974,7 @@ export_part "vertical_spline_bearings" "${OUT_DIR}/cabinet_clutch_vertical_splin
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
 export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
+export_part "column_sync_tensioner_support_template" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_support_template.stl" false 0
 
 # The root page also owns the snake drive.  Export its motor sleeve here so a
 # canonical refresh can never leave an older motor-cover STL beside the new
