@@ -234,6 +234,47 @@ function buildPath(motion) {
   return { segs, length: total, count: pts.length, grid, cell };
 }
 
+function nearestChainPin(center) {
+  const motion = play.motion;
+  const pins = motion?.pins || [];
+  if (!pins.length) throw new Error("链条运动契约没有销轴路径");
+  let bestIndex = -1;
+  let bestDistanceSq = Infinity;
+  for (let i = 0; i < pins.length; i += 1) {
+    const pin = pins[i];
+    const dx = center.x - Number(pin[0]);
+    const dy = center.y - Number(motion.chainY);
+    const dz = center.z - Number(pin[1]);
+    const distanceSq = dx * dx + dy * dy + dz * dz;
+    if (distanceSq < bestDistanceSq) {
+      bestDistanceSq = distanceSq;
+      bestIndex = i;
+    }
+  }
+  const tolerance = Math.max(0.05, (Number(motion.p) || 4.7625) * 0.02);
+  if (bestIndex < 0 || Math.sqrt(bestDistanceSq) > tolerance) {
+    throw new Error(
+      `链条零件没有落在真实销中心上: distance=${Math.sqrt(bestDistanceSq).toFixed(4)} mm`,
+    );
+  }
+  return { index: bestIndex, distance: Math.sqrt(bestDistanceSq) };
+}
+
+function validateChainAxisCounts(itemId, counts) {
+  const expected = itemId.endsWith("cabinet_chain_rollers") ? 2 : 1;
+  const bad = counts
+    .map((count, index) => ({ count, index }))
+    .filter(({ count }) => count !== expected);
+  if (bad.length) {
+    const sample = bad.slice(0, 6)
+      .map(({ index, count }) => `${index}:${count}`)
+      .join(", ");
+    throw new Error(
+      `链条轴线挂载数量错误: ${itemId} 应为每销 ${expected} 个，异常=${sample}`,
+    );
+  }
+}
+
 function samplePath(path, sRaw) {
   let s = ((sRaw % path.length) + path.length) % path.length;
   let lo = 0;
@@ -2094,8 +2135,11 @@ function tickColumnSyncDrive() {
 async function bindChainMesh(item) {
   if (!play.path || !item.mesh?.isMesh || !playScene()) return;
   const isPlateMesh = item.part.id.endsWith("cabinet_chain_plates");
+  const isRollerMesh = item.part.id.endsWith("cabinet_chain_rollers");
+  const isPinMesh = item.part.id.endsWith("cabinet_chain_pins");
   // 普通链板从直线段模板实例化，避免把拐角三角形切到相邻链节；滚子和
-  // 销轴则按真实 STL 的拓扑岛分别跟随各自的路径销位。
+  // 销轴则按真实 STL 的拓扑岛分别跟随各自的真实路径销位。滚子每个销位
+  // 必须有两件同轴环岛（内套筒+外滚子），销轴每个销位必须恰好一件。
   const plateTemplates = isPlateMesh ? await extractPlateTemplates(item.mesh.geometry) : null;
   const islands = isPlateMesh
     ? Array.from({ length: play.path.count }, (_, i) => i)
@@ -2103,6 +2147,9 @@ async function bindChainMesh(item) {
   const group = new THREE.Group();
   const mat = item.mesh.material;
   const added = [];
+  const axisCounts = (isRollerMesh || isPinMesh)
+    ? Array.from({ length: play.path.count }, () => 0)
+    : null;
   for (let i = 0; i < islands.length; i += 1) {
     const isPlate = isPlateMesh;
     const plateKind = i % 2 === 0 ? "outer" : "inner";
@@ -2130,25 +2177,43 @@ async function bindChainMesh(item) {
       };
     } else {
       const center = geo.boundingBox.getCenter(new THREE.Vector3());
-      const proj = projectPoint(play.path, center.x, center.y, center.z);
       geo.translate(-center.x, -center.y, -center.z);
-      part = {
-        group: pivot,
-        s: proj.s,
-        along: proj.along,
-        side: proj.side,
-        lift: proj.lift,
-        restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
-        halfSpan: 0,
-        pinIndex: Math.round(proj.s / (Number(play.motion?.p) || 1))
-          % play.path.count,
-        scaleAlong: false,
-      };
+      if (isRollerMesh || isPinMesh) {
+        const anchor = nearestChainPin(center);
+        const seg = play.path.segs[anchor.index];
+        axisCounts[anchor.index] += 1;
+        part = {
+          group: pivot,
+          s: seg.s0,
+          along: 0,
+          side: 0,
+          lift: 0,
+          restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
+          halfSpan: 0,
+          pinIndex: anchor.index,
+          scaleAlong: false,
+        };
+      } else {
+        const proj = projectPoint(play.path, center.x, center.y, center.z);
+        part = {
+          group: pivot,
+          s: proj.s,
+          along: proj.along,
+          side: proj.side,
+          lift: proj.lift,
+          restYaw: Math.atan2(proj.tangent[2], proj.tangent[0]),
+          halfSpan: 0,
+          pinIndex: Math.round(proj.s / (Number(play.motion?.p) || 1))
+            % play.path.count,
+          scaleAlong: false,
+        };
+      }
     }
     added.push(part);
     play.chain.push(part);
     if (i % 80 === 0) await yieldFrame();
   }
+  if (axisCounts) validateChainAxisCounts(item.part.id, axisCounts);
   const offsetMm = chainOffsetMm();
   for (const part of added) poseChainPart(part, offsetMm);
   replaceMesh(item, group);

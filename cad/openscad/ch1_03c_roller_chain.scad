@@ -123,6 +123,25 @@ module place_at_pin(i) {
             children();
 }
 
+// Path assembly datum: a roller and its pin are both centered on the same
+// authored pin p[i].  Keep this separate from the link-segment helper below;
+// a link spans p[i]→p[i+1], while a roller/pin is a point feature at p[i].
+// This explicit distinction prevents a future animation/export change from
+// accidentally putting the two concentric roller rings at a segment center.
+module place_at_path_pin(pins, i) {
+    n = len(pins);
+    assert(i >= 0 && i < n, "path pin index out of range");
+    place_from_to(pins[i], pins[(i + 1) % n], [0, 0, 1])
+        children();
+}
+
+module place_at_path_link(pins, i) {
+    n = len(pins);
+    assert(i >= 0 && i < n, "path link index out of range");
+    place_from_to(pins[i], pins[(i + 1) % n], [0, 0, 1])
+        children();
+}
+
 module bushing_solid() {
     hardware_along_y(journal_od, d2 + clearance, inner_width + 2 * T);
 }
@@ -160,9 +179,8 @@ module emit(name) {
 module plates_on_path(pins) {
     n = len(pins);
     assert(n >= 4 && n % 2 == 0, "pin path must have even count");
-    axis = [0, 0, 1];
     for (i = [0:n - 1])
-        place_from_to(pins[i], pins[(i + 1) % n], axis) {
+        place_at_path_link(pins, i) {
             if (i % 2 == 0) outer_plates();
             else inner_plates();
         }
@@ -170,17 +188,15 @@ module plates_on_path(pins) {
 
 module rollers_on_path(pins) {
     n = len(pins);
-    axis = [0, 0, 1];
     for (i = [0:n - 1])
-        place_from_to(pins[i], pins[(i + 1) % n], axis)
+        place_at_path_pin(pins, i)
             roller_solid();
 }
 
 module pins_on_path(pins) {
     n = len(pins);
-    axis = [0, 0, 1];
     for (i = [0:n - 1])
-        place_from_to(pins[i], pins[(i + 1) % n], axis)
+        place_at_path_pin(pins, i)
             pin_solid();
 }
 

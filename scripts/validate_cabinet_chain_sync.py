@@ -9,9 +9,11 @@ meshes in the browser preview.
 from __future__ import annotations
 
 import argparse
+from array import array
 import json
 import math
 from pathlib import Path
+import struct
 
 
 REQUIRED_STL_NAMES = (
@@ -28,6 +30,137 @@ EXPECTED_PIN_COUNT = 260
 
 def fail(message: str) -> None:
     raise SystemExit(f"链条预览同步检查失败: {message}")
+
+
+def stl_component_centers(path: Path) -> list[tuple[float, float, float]]:
+    """Return bounding-box centers for each disconnected binary STL island.
+
+    The 03C export deliberately keeps the inner bushing and visible roller as
+    two islands.  Their centers, rather than a triangle centroid, are the
+    useful datum for checking that both rings are seated on one pin axis.
+    """
+
+    data = path.read_bytes()
+    if len(data) < 84:
+        fail(f"链条 STL 太短: {path}")
+    triangle_count = struct.unpack_from("<I", data, 80)[0]
+    if 84 + triangle_count * 50 > len(data):
+        fail(f"链条 STL 三角形数量越界: {path}")
+
+    parent: list[int] = []
+    weld: dict[tuple[int, int, int], int] = {}
+    corners = array("i")
+
+    def vertex_id(vertex: tuple[float, float, float]) -> int:
+        key = tuple(round(value * 10000) for value in vertex)
+        existing = weld.get(key)
+        if existing is not None:
+            return existing
+        index = len(parent)
+        parent.append(index)
+        weld[key] = index
+        return index
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    for triangle in range(triangle_count):
+        offset = 84 + triangle * 50 + 12
+        ids = []
+        for corner in range(3):
+            ids.append(vertex_id(struct.unpack_from("<3f", data, offset + corner * 12)))
+        corners.extend(ids)
+        union(ids[0], ids[1])
+        union(ids[0], ids[2])
+
+    bounds: dict[int, list[float]] = {}
+    for triangle in range(triangle_count):
+        root = find(corners[triangle * 3])
+        bound = bounds.setdefault(root, [
+            math.inf, math.inf, math.inf,
+            -math.inf, -math.inf, -math.inf,
+        ])
+        offset = 84 + triangle * 50 + 12
+        for corner in range(3):
+            x, y, z = struct.unpack_from("<3f", data, offset + corner * 12)
+            bound[0] = min(bound[0], x)
+            bound[1] = min(bound[1], y)
+            bound[2] = min(bound[2], z)
+            bound[3] = max(bound[3], x)
+            bound[4] = max(bound[4], y)
+            bound[5] = max(bound[5], z)
+    return [
+        ((bound[0] + bound[3]) / 2,
+         (bound[1] + bound[4]) / 2,
+         (bound[2] + bound[5]) / 2)
+        for bound in bounds.values()
+    ]
+
+
+def audit_chain_axis_seating(
+    payload: dict,
+    stl_dir: Path,
+) -> tuple[int, int, float]:
+    """Check every roller/pin island against the same authoritative pin path."""
+
+    pins = payload.get("pins")
+    if not isinstance(pins, list) or not pins:
+        fail("轴线复核缺少销轴路径")
+    chain_y = float(payload.get("chainY", 0))
+    pitch = float(payload.get("p", 0))
+    tolerance = max(0.05, pitch * 0.02)
+    counts = {
+        "rollers": [0] * len(pins),
+        "pins": [0] * len(pins),
+    }
+    max_error = 0.0
+    component_counts = {}
+    for name, expected_per_pin in (("rollers", 2), ("pins", 1)):
+        path = stl_dir / f"cabinet_chain_{name}.stl"
+        centers = stl_component_centers(path)
+        component_counts[name] = len(centers)
+        for center in centers:
+            nearest_index, nearest_error = min(
+                (
+                    (
+                        index,
+                        math.sqrt(
+                            (center[0] - float(pin[0])) ** 2
+                            + (center[1] - chain_y) ** 2
+                            + (center[2] - float(pin[1])) ** 2
+                        ),
+                    )
+                    for index, pin in enumerate(pins)
+                ),
+                key=lambda value: value[1],
+            )
+            if nearest_error > tolerance:
+                fail(
+                    f"{name} 环/轴偏离真实销中心: component={center!r} "
+                    f"nearestPin={nearest_index} error={nearest_error:.4f} mm"
+                )
+            counts[name][nearest_index] += 1
+            max_error = max(max_error, nearest_error)
+        bad = [
+            f"{index}:{count}"
+            for index, count in enumerate(counts[name])
+            if count != expected_per_pin
+        ]
+        if bad:
+            fail(
+                f"{name} 每个销位必须有 {expected_per_pin} 件，"
+                f"实际异常={', '.join(bad[:8])}"
+            )
+    return component_counts["rollers"], component_counts["pins"], max_error
 
 
 def main() -> int:
@@ -132,6 +265,11 @@ def main() -> int:
                 f"expected={expected_sign} actual={wheel_by_id.get(wheel_id, {}).get('sign')!r}"
             )
 
+    roller_components, pin_components, axis_error = audit_chain_axis_seating(
+        payload,
+        args.stl_dir,
+    )
+
     center = payload.get("centerClutch")
     datum = payload.get("chainTopDatum")
     trigger = payload.get("chainTriggerMagnet")
@@ -188,7 +326,9 @@ def main() -> int:
         f"pins={len(pins)} wheels={len(wheels)} "
         f"drive={drive_teeth}T idlers={len(idlers)}×{guide_teeth}T "
         f"chainY={float(payload.get('chainY', 0)):.3f} "
-        f"verticalShift={shift:.3f} triggerSegment={trigger_index}"
+        f"verticalShift={shift:.3f} triggerSegment={trigger_index} "
+        f"axisSeating=rollers:{roller_components}/pins:{pin_components} "
+        f"maxAxisError={axis_error:.4f}mm"
     )
     return 0
 
