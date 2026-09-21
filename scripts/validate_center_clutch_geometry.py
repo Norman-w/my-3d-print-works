@@ -558,6 +558,29 @@ def validate_contract(contract: Contract) -> None:
         "直齿排下沿/层板上沿间隙",
         0.001,
     )
+    expect_close(number(contract, "drawerRackPitchMm"), 3.0, "直线齿排圆周齿距", 0.001)
+    expect_close(number(contract, "drawerRackGearTeeth"), 16.0, "前端直齿主动轮齿数", 0.001)
+    expect_close(number(contract, "frontTimingPulleyTeeth"), 12.0, "前端 2GT 同步轮齿数", 0.001)
+    expect_close(number(contract, "frontTimingBeltPitchMm"), 2.0, "前端 2GT 同步轮齿距", 0.001)
+    expect_close(
+        number(contract, "drawerRackTravelMmPerShaftTurn"),
+        number(contract, "drawerRackGearTeeth") * number(contract, "drawerRackPitchMm"),
+        "直线齿排每同轴轴转一圈行程",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBeltAdvanceMmPerShaftTurn"),
+        number(contract, "frontTimingPulleyTeeth") * number(contract, "frontTimingBeltPitchMm"),
+        "前端 2GT 每同轴轴转一圈推进量",
+        0.001,
+    )
+    expect_close(
+        number(contract, "drawerRackTravelMmPerShaftTurn")
+        / number(contract, "frontTimingBeltAdvanceMmPerShaftTurn"),
+        2.0,
+        "同轴直齿排/2GT 传动比",
+        0.001,
+    )
     if number(contract, "drawerRackLowerYMm") <= number(contract, "drawerShelfTopYMm"):
         fail("直齿排仍沉入完整层板")
     expect_close(

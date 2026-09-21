@@ -631,7 +631,11 @@ TENSIONER_PARAM_WORLD_ORIGIN_Z = TENSIONER_SKP_WORLD_CENTER_Z
 // The drawer rack/drive geometry is intentionally explicit.  The horizontal
 // rack is directly attached under each drawer and moves in +Z with it; the
 // fixed front pinion only transmits torque and never carries drawer weight.
-DRAWER_RACK_PITCH = 3.0;
+// The rack pitch is the circular pitch of the 16T front pinion, not the
+// 2GT/2 mm pitch of the lower timing pulley on the same D shaft. Keeping this
+// datum linked to the front gear prevents the browser from treating the
+// timing-belt pitch as the rack pitch.
+DRAWER_RACK_PITCH = CENTER_FRONT_RACK_GEAR_PITCH_MM;
 DRAWER_RACK_BODY_Y = CENTER_FRONT_RACK_BODY_HEIGHT;
 DRAWER_RACK_BODY_X = CENTER_FRONT_RACK_BODY_X;
 DRAWER_RACK_TOOTH_H = CENTER_FRONT_RACK_TOOTH_HEIGHT_X;
@@ -4999,8 +5003,16 @@ echo(
     "stationDriveMode=sequential-selected-station",
     str("drawerRackBodyWidthMm=", DRAWER_RACK_BODY_X),
     str("drawerRackBodyHeightMm=", DRAWER_RACK_BODY_Y),
+    str("drawerRackPitchMm=", DRAWER_RACK_PITCH),
+    str("drawerRackGearTeeth=", FRONT_GEAR_TEETH),
     str("drawerRackToothHeightMm=", DRAWER_RACK_TOOTH_H),
     str("drawerRackToothOverhangMm=", DRAWER_RACK_TOOTH_OVERHANG_X),
+    str("frontTimingPulleyTeeth=", GT2_PULLEY_TEETH),
+    str("frontTimingBeltPitchMm=", GT2_PULLEY_PITCH_MM),
+    str("drawerRackTravelMmPerShaftTurn=",
+        FRONT_GEAR_TEETH * DRAWER_RACK_PITCH),
+    str("frontTimingBeltAdvanceMmPerShaftTurn=",
+        GT2_PULLEY_TEETH * GT2_PULLEY_PITCH_MM),
     str("centerFrontDriveLiftMm=", CENTER_FRONT_DRIVE_LIFT_MM),
     str("frontRackAboveShelfGapMm=", CENTER_FRONT_RACK_ABOVE_SHELF_GAP),
     str("drawerRackLowerYMm=",

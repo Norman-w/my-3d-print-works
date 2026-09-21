@@ -267,8 +267,10 @@ REQUIRED = {
     "drawerStationTemplateOriginXMm", "drawerStationTemplateOriginYMm",
     "drawerStationColumnPitchMm", "drawerStationRowPitchMm",
     "drawerStationCount", "drawerStationInstanceCount", "stationDriveMode",
-    "drawerRackBodyWidthMm", "drawerRackBodyHeightMm",
-    "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
+    "drawerRackBodyWidthMm", "drawerRackBodyHeightMm", "drawerRackPitchMm",
+    "drawerRackGearTeeth", "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
+    "frontTimingPulleyTeeth", "frontTimingBeltPitchMm",
+    "drawerRackTravelMmPerShaftTurn", "frontTimingBeltAdvanceMmPerShaftTurn",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
     "drawerRackLowerYMm", "drawerShelfTopYMm",
     "frontTimingBearingReinforcementDiscDiameterMm",
@@ -322,6 +324,10 @@ REQUIRED = {
 FLOAT_KEYS = {
     key for key in REQUIRED if key.endswith("Mm") or key.endswith("Deg")
 }
+FLOAT_KEYS.update({
+    "drawerRackTravelMmPerShaftTurn",
+    "frontTimingBeltAdvanceMmPerShaftTurn",
+})
 INT_KEYS = {
     "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
     "outputBearingCount", "bearingCount", "matingMagnetCount",
@@ -341,6 +347,7 @@ INT_KEYS = {
     "verticalSplineBearingDetourColumn",
     "drawerStationCount", "drawerStationInstanceCount", "rearClutchRowPlateCount",
     "rearClutchRowPlateStationCount",
+    "drawerRackGearTeeth", "frontTimingPulleyTeeth",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -1273,6 +1280,30 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("抽屉底部齿条背板高度无效")
     if n(contract, "drawerRackBodyWidthMm") <= 0:
         raise RuntimeError("抽屉底部齿条背板宽度无效")
+    expect(contract, "drawerRackPitchMm", 3.0, "直线齿排/前端主动轮圆周齿距")
+    if n(contract, "drawerRackGearTeeth") != 16:
+        raise RuntimeError("前端直齿主动轮必须是 16T")
+    if n(contract, "frontTimingPulleyTeeth") != 12:
+        raise RuntimeError("前端同步轮必须是 12T")
+    expect(contract, "frontTimingBeltPitchMm", 2.0, "前端同步轮皮带齿距")
+    expect(
+        contract,
+        "drawerRackTravelMmPerShaftTurn",
+        n(contract, "drawerRackGearTeeth") * n(contract, "drawerRackPitchMm"),
+        "直线齿排每根同轴轴转一圈的行程",
+    )
+    expect(
+        contract,
+        "frontTimingBeltAdvanceMmPerShaftTurn",
+        n(contract, "frontTimingPulleyTeeth") * n(contract, "frontTimingBeltPitchMm"),
+        "同步皮带每根同轴轴转一圈的推进量",
+    )
+    if abs(
+        n(contract, "drawerRackTravelMmPerShaftTurn")
+        / n(contract, "frontTimingBeltAdvanceMmPerShaftTurn")
+        - 2.0
+    ) > 0.001:
+        raise RuntimeError("直线齿排与下层 2GT 同步轮的同轴传动比必须是 2:1")
     if n(contract, "drawerRackToothHeightMm") <= 0:
         raise RuntimeError("抽屉底部直齿高度无效")
     if n(contract, "centerFrontDriveLiftMm") <= 0:

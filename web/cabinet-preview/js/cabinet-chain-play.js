@@ -63,9 +63,12 @@ const DRAWER_ROTARY_IDS = new Map([
   // The center clutch pair is bound separately so its +Y engagement stroke
   // cannot be mistaken for a plain rotary pivot.  The front compound remains
   // a downstream rotary load of the engaged clutch.
-  ["cabinet-clutch/14_front_timing_pulley_candidate", -1],
-  ["cabinet-clutch/15_front_pinion_candidate", -1],
-  ["cabinet-clutch/23_front_d_axis_reference", -1],
+  // The front rack is on the pinion's +X side.  Positive drawer travel is +Z,
+  // so the common D shaft rotates in the negative Three.js +Y sense while
+  // the rack and the 2GT belt advance toward +Z.
+  ["cabinet-clutch/14_front_timing_pulley_candidate", 1],
+  ["cabinet-clutch/15_front_pinion_candidate", 1],
+  ["cabinet-clutch/23_front_d_axis_reference", 1],
 ]);
 const DRAWER_MOVING_IDS = new Set([
   "cabinet-clutch/16_drawer_linear_rack_candidate",
@@ -79,10 +82,8 @@ const TEMPLATE_CLUTCH_CONFIGS = new Map([
   ["clutch-output-rotor", { role: "output", moves: false, rotates: true }],
   ["clutch-output-shaft", { role: "output", moves: false, rotates: true }],
 ]);
-// This is the default center station's mating pulley tooth count, not the
-// total teeth in the closed belt. One pulley revolution advances the 2GT belt
-// by 12 * 2 mm; using the belt's total 80 teeth would move it by one whole
-// loop and make it appear stationary in the preview.
+// Fallbacks used only before the motion contract is available. The live
+// values are the OpenSCAD-exported front timing pulley/rack datums below.
 const DRAWER_PULLEY_TEETH = 12;
 const DRAWER_BELT_PITCH_MM = 2;
 const POWER_MOTOR_SHAFT_ID = "cabinet-clutch/cabinet_clutch_power_motor_shaft";
@@ -102,13 +103,11 @@ const SCHEME1_PHASE = {
   CLOSE: "CLOSE",
   RELEASE: "RELEASE",
 };
-// One complete drawer travel is represented by the former 0.90-turn drive
-// window at 1 Hz.  The value is a travel amount, not a duration, so changing
-// the preview speed changes the time taken but never changes the open/close
-// end positions or leaves accumulated angular error between cycles.
+// One complete drawer travel is represented by the former 0.90-shaft-turn
+// drive window at 1 Hz. The value is a travel amount, not a duration, so
+// changing the preview speed changes the time taken but never changes the
+// open/close end positions or leaves accumulated angular error between cycles.
 const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
-const DRAWER_TRAVEL_MM = DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM
-  * SCHEME1_DRAWER_TRAVEL_TURNS;
 const SCHEME1_ENGAGE_SECONDS = 0.28;
 const SCHEME1_RELEASE_SECONDS = 0.24;
 const CENTER_DEMO_APPROACH_SECONDS = 0.80;
@@ -554,7 +553,10 @@ function validateCenterClutchContract(contract) {
     "inputSideAdditionalMechanism", "centerCol", "centerRow",
     "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
     "drawerStationCount", "drawerStationInstanceCount", "stationDriveMode",
-    "drawerRackBodyHeightMm", "drawerRackMount", "drawerMassLoadPath",
+    "drawerRackBodyHeightMm", "drawerRackPitchMm", "drawerRackGearTeeth",
+    "frontTimingPulleyTeeth", "frontTimingBeltPitchMm",
+    "drawerRackTravelMmPerShaftTurn", "frontTimingBeltAdvanceMmPerShaftTurn",
+    "drawerRackMount", "drawerMassLoadPath",
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
     "drawerGuideLoadPath", "drawerFrontPinionBearing",
@@ -682,6 +684,9 @@ function validateCenterClutchContract(contract) {
     "plateBeltPassageSlotWidthMm",
     "plateBeltPassageAxialWidthMm",
     "drawerBayHeightMm", "drawerShelfThicknessMm", "drawerRackBodyHeightMm",
+    "drawerRackPitchMm", "drawerRackGearTeeth", "frontTimingPulleyTeeth",
+    "frontTimingBeltPitchMm", "drawerRackTravelMmPerShaftTurn",
+    "frontTimingBeltAdvanceMmPerShaftTurn",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
     "drawerRackLowerYMm", "drawerShelfTopYMm",
     "drawerBottomYMm", "drawerRackYMm", "frontPinionCenterYMm",
@@ -716,6 +721,29 @@ function validateCenterClutchContract(contract) {
       throw new Error(`centerClutch 尺寸无效: ${key}`);
     }
   }
+  const n = (key) => Number(contract[key]);
+  const close = (a, b, tolerance = 0.001) => Math.abs(a - b) <= tolerance;
+  if (!Number.isInteger(n("drawerRackGearTeeth"))
+      || !Number.isInteger(n("frontTimingPulleyTeeth"))
+      || n("drawerRackGearTeeth") !== 16
+      || n("frontTimingPulleyTeeth") !== 12
+      || !close(n("drawerRackPitchMm"), 3)
+      || !close(n("frontTimingBeltPitchMm"), 2)
+      || !close(
+        n("drawerRackTravelMmPerShaftTurn"),
+        n("drawerRackGearTeeth") * n("drawerRackPitchMm"),
+      )
+      || !close(
+        n("frontTimingBeltAdvanceMmPerShaftTurn"),
+        n("frontTimingPulleyTeeth") * n("frontTimingBeltPitchMm"),
+      )
+      || !close(
+        n("drawerRackTravelMmPerShaftTurn")
+          / n("frontTimingBeltAdvanceMmPerShaftTurn"),
+        2,
+      )) {
+    throw new Error("centerClutch 直线齿排/2GT 同轴传动比契约不匹配");
+  }
   const finite = [
     "axisXMm", "axisZMm", "centerClutchDriveLayerOffsetMm",
     "centerClutchVerticalLiftMm", "centerFrontDriveLiftMm",
@@ -748,8 +776,6 @@ function validateCenterClutchContract(contract) {
       throw new Error(`centerClutch 坐标无效: ${key}`);
     }
   }
-  const n = (key) => Number(contract[key]);
-  const close = (a, b, tolerance = 0.001) => Math.abs(a - b) <= tolerance;
   if (n("centerCol") !== 2 || n("centerRow") !== 1
       || n("drawerLayerCount") !== 3 || n("serviceLayerCount") !== 1
       || n("drawerBayHeightMm") < 55.29) {
@@ -1128,11 +1154,12 @@ function buildDrawerBeltPath(geometry) {
   // canonical world frame: X is radial width, Y is belt width, Z is drawer
   // travel.
   const outerRadius = Math.max(1, size.x / 2);
-  // The authored center belt is a 12T 2GT pulley.  Its STL outer radius is
-  // the belt back envelope, not the pitch radius; subtracting an arbitrary
-  // fraction of the pitch made every tooth sit inside the pulley root.  Keep
-  // the animation path on the exact mating pitch circle.
-  const pitchRadius = DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM / (2 * Math.PI);
+  // The authored center belt is the lower 12T/2GT pulley. Its STL outer
+  // radius is the belt back envelope, not the pitch radius; subtracting an
+  // arbitrary fraction of the pitch made every tooth sit inside the pulley
+  // root. Keep the animation path on the exact contract pitch circle.
+  const pitchRadius = drawerTimingPulleyTeeth() * drawerTimingBeltPitchMm()
+    / (2 * Math.PI);
   const z0 = bounds.min.z + outerRadius;
   const z1 = bounds.max.z - outerRadius;
   const y = (bounds.min.y + bounds.max.y) / 2;
@@ -1209,6 +1236,49 @@ function projectDrawerBeltPoint(path, x, z) {
     }
   }
   return best.s;
+}
+
+function contractNumber(key, fallback) {
+  const value = Number(play.currentClutch.contract?.[key]);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function drawerRackPitchMm() {
+  return contractNumber("drawerRackPitchMm", 3);
+}
+
+function drawerRackGearTeeth() {
+  return contractNumber("drawerRackGearTeeth", 16);
+}
+
+function drawerTimingPulleyTeeth() {
+  return contractNumber("frontTimingPulleyTeeth", DRAWER_PULLEY_TEETH);
+}
+
+function drawerTimingBeltPitchMm() {
+  return contractNumber("frontTimingBeltPitchMm", DRAWER_BELT_PITCH_MM);
+}
+
+function drawerRackTravelMmPerShaftTurn() {
+  return contractNumber(
+    "drawerRackTravelMmPerShaftTurn",
+    drawerRackGearTeeth() * drawerRackPitchMm(),
+  );
+}
+
+function drawerTimingBeltAdvanceMmPerShaftTurn() {
+  return contractNumber(
+    "frontTimingBeltAdvanceMmPerShaftTurn",
+    drawerTimingPulleyTeeth() * drawerTimingBeltPitchMm(),
+  );
+}
+
+function drawerTravelMm() {
+  // The rack is on the same D shaft as the 16T pinion. It therefore advances
+  // by 16 * 3 = 48 mm per shaft revolution; the lower 12T/2GT pulley only
+  // advances its belt by 24 mm per revolution and must not be used as the
+  // rack travel datum.
+  return drawerRackTravelMmPerShaftTurn() * SCHEME1_DRAWER_TRAVEL_TURNS;
 }
 
 function stationKey(station) {
@@ -1478,8 +1548,8 @@ function bindDrawerBeltTarget(item, stationIndex = centerStationIndex(), dispose
   const belt = createAnimatedBelt(
     item,
     path,
-    DRAWER_BELT_PITCH_MM,
-    -1,
+    drawerTimingBeltPitchMm(),
+    1,
     disposeSource,
   );
   belt.stationIndex = stationIndex;
@@ -2322,13 +2392,12 @@ function tickTemplateClutches() {
 function tickDrawerDrive() {
   const turns = drawerDriveTurns();
   const angle = -2 * Math.PI * turns;
-  // The rear female pulley is downstream of the parallel spur mesh, so its
-  // rotation is opposite to the vertical spline shaft.  The drawer belt path
-  // is oriented rear-to-front on its right run; a positive pulley rotation
-  // therefore advances the belt in the negative path direction.
+  // The front compound is one D shaft. Its rack sits on the pinion's +X
+  // side, so the corrected negative shaft rotation advances both the 2GT belt
+  // and the drawer rack toward +Z.
   for (const belt of play.drawerBelts) {
     const active = stationDriveActive(belt.stationIndex);
-    const phaseMm = active ? turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM : 0;
+    const phaseMm = active ? turns * drawerTimingBeltAdvanceMmPerShaftTurn() : 0;
     poseBeltTeeth(belt, phaseMm * belt.phaseSign);
   }
   for (const rotary of play.drawerRotaries) {
@@ -2337,7 +2406,7 @@ function tickDrawerDrive() {
   }
   const scheme = play.scheme1;
   const progress = scheme.phase === SCHEME1_PHASE.OPEN || scheme.phase === SCHEME1_PHASE.CLOSE
-    ? scheme.cycleSign * scheme.cycleProgressTurns / SCHEME1_DRAWER_TRAVEL_TURNS * DRAWER_TRAVEL_MM
+    ? scheme.cycleSign * scheme.cycleProgressTurns / SCHEME1_DRAWER_TRAVEL_TURNS * drawerTravelMm()
     : 0;
   for (const mover of play.drawerMovers) {
     mover.group.position.copy(mover.basePosition);
@@ -2700,7 +2769,7 @@ export async function onPartLoaded(item) {
   }
   if (templateRole === "drawer-rotary") {
     item.playBound = true;
-    enqueueBind(() => Promise.resolve(bindTemplateDrawerRotaryMesh(item, -1)).catch((error) => {
+    enqueueBind(() => Promise.resolve(bindTemplateDrawerRotaryMesh(item, 1)).catch((error) => {
       console.error("template drawer rotary bind failed", id, error);
       item.playBound = false;
     }), true);
