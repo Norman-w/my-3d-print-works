@@ -1479,7 +1479,9 @@ async function applyViewPreset(name) {
   if (profile) {
     for (const part of listingParts) {
       if (profile.focus(part)) focusIds.add(part.id);
-      else if (profile.context(part)) contextIds.add(part.id);
+      else if (typeof profile.context === "function" && profile.context(part)) {
+        contextIds.add(part.id);
+      }
     }
     // 当前清单被搜索过滤时，特写也必须保证有可取景对象；空特写回到该清单
     // 的默认可见件，避免相机被送到原点。

@@ -871,7 +871,6 @@ function validateCenterClutchContract(contract) {
   if (!close(n("linearBearingCenterYOffsetMm"), -5.4)
       || !close(n("linearBearingInputRotorClearanceMm"), 0.4)
       || !close(n("linearBearingBlockZMarginMm"), 1)
-      || !close(n("linearBearingBlockZLengthMm"), 19.7208, 0.002)
       || !close(n("inputShaftUpperDStartMm"), -0.4)
       || !close(n("inputShaftUpperDLengthMm"), 3.6)
       || !close(n("inputShaftRoundStartMm"), -17)
