@@ -314,11 +314,17 @@ function poseDiscreteChainPart(part, offsetMm) {
   const p1 = discretePinPoint(part.pinIndex + 1, phase);
   const chord = Math.max(1e-6, length3(sub(p1, p0)));
   const tangent = normalize(sub(p1, p0));
-  const center = [
-    (p0[0] + p1[0]) / 2,
-    (p0[1] + p1[1]) / 2,
-    (p0[2] + p1[2]) / 2,
-  ];
+  // 链板是跨越 p[i]→p[i+1] 的线性零件；滚子和销轴则是落在 p[i]
+  // 上的点零件。之前这里无条件取两点中点，导致滚子/销轴整体沿链条
+  // 错开半个节距，转弯处尤其明显。点零件必须严格使用 p[i]，但仍用
+  // p[i]→p[i+1] 的出射切向确定其绕 Y 姿态。
+  const center = part.halfSpan > 1e-6
+    ? [
+        (p0[0] + p1[0]) / 2,
+        (p0[1] + p1[1]) / 2,
+        (p0[2] + p1[2]) / 2,
+      ]
+    : p0;
   const normal = [-tangent[2], 0, tangent[0]];
   part.group.position.set(
     center[0] + normal[0] * (part.side || 0),

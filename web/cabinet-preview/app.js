@@ -9,7 +9,7 @@ import {
   playCenterClutchDemo,
   onPartLoaded,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-13";
+} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-17";
 //#endregion
 
 //#region 常量/配置
