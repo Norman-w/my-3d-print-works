@@ -65,6 +65,19 @@ const DRAWER_ROTARY_IDS = new Map([
   // a downstream rotary load of the engaged clutch.
   ["cabinet-clutch/14_front_timing_pulley_candidate", -1],
   ["cabinet-clutch/15_front_pinion_candidate", -1],
+  ["cabinet-clutch/23_front_d_axis_reference", -1],
+]);
+const DRAWER_MOVING_IDS = new Set([
+  "cabinet-clutch/16_drawer_linear_rack_candidate",
+  "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
+]);
+const TEMPLATE_CLUTCH_CONFIGS = new Map([
+  ["clutch-input-rotor", { role: "input", moves: true, rotates: true }],
+  ["clutch-input-shaft", { role: "input", moves: true, rotates: true }],
+  ["clutch-input-sleeve", { role: "input", moves: true, rotates: true }],
+  ["clutch-input-magnet", { role: "input", moves: true, rotates: false }],
+  ["clutch-output-rotor", { role: "output", moves: false, rotates: true }],
+  ["clutch-output-shaft", { role: "output", moves: false, rotates: true }],
 ]);
 // This is the default center station's mating pulley tooth count, not the
 // total teeth in the closed belt. One pulley revolution advances the 2GT belt
@@ -94,6 +107,8 @@ const SCHEME1_PHASE = {
 // the preview speed changes the time taken but never changes the open/close
 // end positions or leaves accumulated angular error between cycles.
 const SCHEME1_DRAWER_TRAVEL_TURNS = 0.90;
+const DRAWER_TRAVEL_MM = DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM
+  * SCHEME1_DRAWER_TRAVEL_TURNS;
 const SCHEME1_ENGAGE_SECONDS = 0.28;
 const SCHEME1_RELEASE_SECONDS = 0.24;
 const CENTER_DEMO_APPROACH_SECONDS = 0.80;
@@ -112,6 +127,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} BearingPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
 /** @typedef {{group:THREE.Group, role:string, sign:number, basePosition:THREE.Vector3, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
+/** @typedef {{group:THREE.Group, stationIndex:number, sign:number, basePosition:THREE.Vector3, restY:number, moves:boolean, rotates:boolean}} TemplateClutchPivot */
 //#endregion
 
 //#region 私有成员
@@ -124,7 +140,9 @@ const play = {
   bearingRotaries: /** @type {BearingPivot[]} */ ([]),
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
   drawerBelts: /** @type {Array<{mesh:THREE.Mesh,baseMesh:THREE.Mesh,path:any,toothS:Float32Array,toothCount:number,toothPitch:number,toothHeight:number,toothBase:number,toothTip:number,lastPhase:number}>} */ ([]),
-  drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number}>} */ ([]),
+  drawerRotaries: /** @type {Array<{group:THREE.Group, sign:number, restY:number, stationIndex:number}>} */ ([]),
+  drawerMovers: /** @type {Array<{group:THREE.Group, basePosition:THREE.Vector3, stationIndex:number}>} */ ([]),
+  templateClutchParts: /** @type {TemplateClutchPivot[]} */ ([]),
   currentClutch: /** @type {{contract:any,input:CurrentClutchPivot|null,output:CurrentClutchPivot|null,parts:CurrentClutchPivot[]}} */ ({
     contract: null,
     input: null,
@@ -137,6 +155,7 @@ const play = {
     ready: false,
     stationS: /** @type {number[]} */ ([]),
     stations: /** @type {any[]} */ ([]),
+    stationIndexByKey: new Map(),
     selectorS: 0,
     targetIndex: 0,
     phase: SCHEME1_PHASE.INDEX,
@@ -534,6 +553,7 @@ function validateCenterClutchContract(contract) {
     "engageOnlyWhenStopped", "releaseBeforeReturn",
     "inputSideAdditionalMechanism", "centerCol", "centerRow",
     "drawerLayerCount", "serviceLayerCount", "drawerBayHeightMm",
+    "drawerStationCount", "drawerStationInstanceCount", "stationDriveMode",
     "drawerRackBodyHeightMm", "drawerRackMount", "drawerMassLoadPath",
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
@@ -572,6 +592,11 @@ function validateCenterClutchContract(contract) {
       || contract.releaseBeforeReturn !== true
       || contract.inputSideAdditionalMechanism !== "none") {
     throw new Error("centerClutch 永磁动作/公轮端无额外机构门槛不满足");
+  }
+  if (contract.stationDriveMode !== "sequential-selected-station"
+      || Number(contract.drawerStationCount) !== 15
+      || Number(contract.drawerStationInstanceCount) !== 14) {
+    throw new Error("centerClutch 必须锁定 15 站逐站选择动力模式");
   }
   if (contract.snakeChainHeightDatum !== "input-sleeve-magnet-bottom") {
     throw new Error("蛇链高度基准必须是公轮底部磁铁下沿");
@@ -1186,30 +1211,67 @@ function projectDrawerBeltPoint(path, x, z) {
   return best.s;
 }
 
+function stationKey(station) {
+  if (!station) return "";
+  return `R${Number(station.row) + 1}C${Number(station.col) + 1}`;
+}
+
+function stationIndexForKey(key) {
+  return play.scheme1.stationIndexByKey.get(String(key)) ?? -1;
+}
+
+function stationIndexForInstanceId(instanceId) {
+  return stationIndexForKey(instanceId);
+}
+
+function centerStationIndex() {
+  const mapped = stationIndexForKey(`R${CURRENT_CLUTCH_ROW + 1}C${CURRENT_CLUTCH_COL + 1}`);
+  if (mapped >= 0) return mapped;
+  return play.scheme1.stations.findIndex((station) => (
+    Number(station.row) === CURRENT_CLUTCH_ROW
+      && Number(station.col) === CURRENT_CLUTCH_COL
+  ));
+}
+
 function isCurrentClutchStation(index = play.scheme1.targetIndex) {
-  const station = play.scheme1.stations[index];
-  return Boolean(
-    station
-      && Number(station.row) === CURRENT_CLUTCH_ROW
-      && Number(station.col) === CURRENT_CLUTCH_COL,
-  );
+  return index >= 0 && index === centerStationIndex();
+}
+
+function stationEngagement(index) {
+  if (!play.scheme1.ready || index < 0 || play.scheme1.targetIndex !== index) return 0;
+  if (play.centerDemo.active) {
+    return isCurrentClutchStation(index) ? play.centerDemo.engagement : 0;
+  }
+  const phase = play.scheme1.phase;
+  if (phase === SCHEME1_PHASE.ENGAGE) {
+    return Math.min(1, play.scheme1.phaseTime / SCHEME1_ENGAGE_SECONDS);
+  }
+  if (phase === SCHEME1_PHASE.OPEN || phase === SCHEME1_PHASE.CLOSE) return 1;
+  if (phase === SCHEME1_PHASE.RELEASE) {
+    return Math.max(0, 1 - play.scheme1.phaseTime / SCHEME1_RELEASE_SECONDS);
+  }
+  return 0;
+}
+
+function stationDriveActive(index) {
+  if (!play.scheme1.ready || index < 0 || play.scheme1.targetIndex !== index) return false;
+  return play.scheme1.phase === SCHEME1_PHASE.OPEN
+    || play.scheme1.phase === SCHEME1_PHASE.CLOSE;
 }
 
 function currentClutchDrivesDrawer() {
-  if (!play.scheme1.ready || !play.currentClutch.contract) return false;
-  // The current assembly contains one real clutch pair: the center-cell first
-  // article. Never proxy that pair onto the other selector stations. Once
-  // the selector leaves the center cell it may continue indexing, but the center input
-  // must stay open and the drawer/power belts must stop until a real clutch is
-  // added for that station.
-  return isCurrentClutchStation();
+  return Boolean(
+    play.scheme1.ready
+      && play.currentClutch.contract
+      && stationDriveActive(centerStationIndex()),
+  );
 }
 
 function drawerDriveTurns() {
   // Do not let the drawer take-off borrow the snake motor while the motion
   // manifest is still loading.  The drawer power datum becomes live only
   // inside the explicit OPEN/CLOSE phases below.
-  if (!play.scheme1.ready || !currentClutchDrivesDrawer()) return 0;
+  if (!play.scheme1.ready) return 0;
   const phase = play.scheme1.phase;
   if (phase !== SCHEME1_PHASE.OPEN && phase !== SCHEME1_PHASE.CLOSE) return 0;
   return play.scheme1.powerTurns;
@@ -1352,7 +1414,7 @@ function poseBeltTeeth(belt, phaseMm) {
   belt.lastPhase = phaseMm;
 }
 
-function createAnimatedBelt(item, path, pitchMm, phaseSign = 1) {
+function createAnimatedBelt(item, path, pitchMm, phaseSign = 1, disposeSource = true) {
   const sourceMesh = item.mesh;
   const sourceGeometry = sourceMesh.geometry;
   sourceGeometry.computeBoundingBox();
@@ -1401,19 +1463,31 @@ function createAnimatedBelt(item, path, pitchMm, phaseSign = 1) {
   group.visible = sourceMesh.visible;
   group.add(baseMesh, toothMesh);
   replaceMesh(item, group, sourceMesh.parent || playScene());
-  sourceGeometry.dispose();
+  if (disposeSource) sourceGeometry.dispose();
   belt.mesh = toothMesh;
   belt.baseMesh = baseMesh;
   return belt;
 }
 
-function bindDrawerBeltMesh(item) {
+function bindDrawerBeltTarget(item, stationIndex = centerStationIndex(), disposeSource = true) {
   if (!item.mesh?.isMesh || !play.host?.state?.scene) return;
   const geometry = item.mesh.geometry;
   const path = buildDrawerBeltPath(geometry);
   path.sample = (s) => sampleDrawerBeltPath(path, s);
   path.normal = drawerPathNormal;
-  play.drawerBelts.push(createAnimatedBelt(item, path, DRAWER_BELT_PITCH_MM, -1));
+  const belt = createAnimatedBelt(
+    item,
+    path,
+    DRAWER_BELT_PITCH_MM,
+    -1,
+    disposeSource,
+  );
+  belt.stationIndex = stationIndex;
+  play.drawerBelts.push(belt);
+}
+
+function bindDrawerBeltMesh(item) {
+  bindDrawerBeltTarget(item, centerStationIndex(), true);
 }
 
 function bindDrawerRotaryMesh(item, sign = 1) {
@@ -1431,7 +1505,134 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   group.name = "drawer-drive-rotary-animated";
   group.add(pivot);
   replaceMesh(item, group, parent);
-  play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
+  play.drawerRotaries.push({
+    group: pivot,
+    sign,
+    restY: 0,
+    stationIndex: centerStationIndex(),
+  });
+}
+
+function templateMesh(holder) {
+  return holder?.children?.find((child) => child.isMesh) || null;
+}
+
+function templateHolders(item) {
+  return Array.isArray(item?.renderObjects) ? item.renderObjects : [];
+}
+
+function bindTemplateStationClutchMesh(item, config) {
+  const holders = templateHolders(item);
+  const sourceMesh = templateMesh(holders[0]);
+  if (!sourceMesh || !play.host?.state?.scene) return;
+  const geometry = sourceMesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  const contract = play.currentClutch.contract;
+  const axisX = Number(contract?.axisXMm);
+  const axisZ = Number(contract?.axisZMm);
+  const pivotX = Number.isFinite(axisX) ? axisX : center.x;
+  const pivotZ = Number.isFinite(axisZ) ? axisZ : center.z;
+  if (!geometry.userData.templateClutchPivotTranslated) {
+    geometry.translate(-pivotX, -center.y, -pivotZ);
+    geometry.userData.templateClutchPivotTranslated = true;
+  }
+  for (const holder of holders) {
+    const mesh = templateMesh(holder);
+    const stationIndex = stationIndexForInstanceId(holder.userData.instanceId);
+    if (!mesh || stationIndex < 0) continue;
+    const pivot = new THREE.Group();
+    pivot.name = `template-clutch-${config.role}-${holder.userData.instanceId}`;
+    pivot.position.set(pivotX, center.y, pivotZ);
+    pivot.add(mesh);
+    holder.add(pivot);
+    play.templateClutchParts.push({
+      group: pivot,
+      stationIndex,
+      sign: -1,
+      basePosition: pivot.position.clone(),
+      restY: 0,
+      moves: Boolean(config.moves),
+      rotates: Boolean(config.rotates),
+    });
+  }
+}
+
+function bindTemplateDrawerBeltMesh(item) {
+  for (const holder of templateHolders(item)) {
+    const mesh = templateMesh(holder);
+    const stationIndex = stationIndexForInstanceId(holder.userData.instanceId);
+    if (!mesh || stationIndex < 0) continue;
+    bindDrawerBeltTarget(
+      { mesh, part: item.part },
+      stationIndex,
+      false,
+    );
+  }
+}
+
+function bindTemplateDrawerRotaryMesh(item, sign = 1) {
+  const holders = templateHolders(item);
+  const sourceMesh = templateMesh(holders[0]);
+  if (!sourceMesh) return;
+  const geometry = sourceMesh.geometry;
+  geometry.computeBoundingBox();
+  const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  if (!geometry.userData.templateDrawerPivotTranslated) {
+    geometry.translate(-center.x, -center.y, -center.z);
+    geometry.userData.templateDrawerPivotTranslated = true;
+  }
+  for (const holder of holders) {
+    const mesh = templateMesh(holder);
+    const stationIndex = stationIndexForInstanceId(holder.userData.instanceId);
+    if (!mesh || stationIndex < 0) continue;
+    const pivot = new THREE.Group();
+    pivot.name = `template-drawer-drive-${holder.userData.instanceId}`;
+    pivot.position.copy(center);
+    pivot.add(mesh);
+    holder.add(pivot);
+    play.drawerRotaries.push({ group: pivot, sign, restY: 0, stationIndex });
+  }
+}
+
+function bindDrawerMoverTarget(item, stationIndex = centerStationIndex()) {
+  if (!item.mesh?.isMesh) return;
+  const sourceMesh = item.mesh;
+  const parent = sourceMesh.parent || playScene();
+  const group = new THREE.Group();
+  group.name = "drawer-moving-animated";
+  sourceMesh.parent?.remove(sourceMesh);
+  group.add(sourceMesh);
+  parent?.add(group);
+  item.mesh = group;
+  item.renderObjects = [group];
+  item.box = new THREE.Box3().setFromObject(group);
+  play.drawerMovers.push({
+    group,
+    basePosition: group.position.clone(),
+    stationIndex,
+  });
+}
+
+function bindDrawerMoverMesh(item) {
+  bindDrawerMoverTarget(item, centerStationIndex());
+}
+
+function bindTemplateDrawerMoverMesh(item) {
+  for (const holder of templateHolders(item)) {
+    const mesh = templateMesh(holder);
+    const stationIndex = stationIndexForInstanceId(holder.userData.instanceId);
+    if (!mesh || stationIndex < 0) continue;
+    const group = new THREE.Group();
+    group.name = `template-drawer-moving-${holder.userData.instanceId}`;
+    group.add(mesh);
+    holder.add(group);
+    play.drawerMovers.push({
+      group,
+      basePosition: group.position.clone(),
+      stationIndex,
+    });
+  }
 }
 
 function bindCurrentClutchMesh(item, config) {
@@ -1863,6 +2064,9 @@ function initScheme1Motion() {
     Math.max(0, Number(scheme.selectorStart) || 0),
   );
   play.scheme1.stations = stations;
+  play.scheme1.stationIndexByKey = new Map(
+    stations.map((station, index) => [stationKey(station), index]),
+  );
   play.scheme1.stationS = stationS;
   play.scheme1.selectorS = stationS[start];
   play.scheme1.targetIndex = start;
@@ -2074,24 +2278,14 @@ function tickCenterClutchDemo(dt) {
 }
 
 function currentClutchEngagement() {
-  if (play.centerDemo.active) return play.centerDemo.engagement;
-  if (!currentClutchDrivesDrawer()) return 0;
-  const phase = play.scheme1.phase;
-  if (phase === SCHEME1_PHASE.ENGAGE) {
-    return Math.min(1, play.scheme1.phaseTime / SCHEME1_ENGAGE_SECONDS);
-  }
-  if (phase === SCHEME1_PHASE.OPEN || phase === SCHEME1_PHASE.CLOSE) return 1;
-  if (phase === SCHEME1_PHASE.RELEASE) {
-    return Math.max(0, 1 - play.scheme1.phaseTime / SCHEME1_RELEASE_SECONDS);
-  }
-  return 0;
+  return stationEngagement(centerStationIndex());
 }
 
 function tickCurrentClutch() {
   const contract = play.currentClutch.contract;
   if (!contract) return;
   const engagement = currentClutchEngagement();
-  const turns = drawerDriveTurns();
+  const turns = stationDriveActive(centerStationIndex()) ? drawerDriveTurns() : 0;
   const angle = -2 * Math.PI * turns;
   const stroke = Number(contract.strokeMm);
   for (const part of play.currentClutch.parts) {
@@ -2109,6 +2303,22 @@ function tickCurrentClutch() {
   }
 }
 
+function tickTemplateClutches() {
+  const contract = play.currentClutch.contract;
+  if (!contract) return;
+  const stroke = Number(contract.strokeMm);
+  for (const part of play.templateClutchParts) {
+    const engaged = stationEngagement(part.stationIndex);
+    const turns = stationDriveActive(part.stationIndex) ? drawerDriveTurns() : 0;
+    const angle = -2 * Math.PI * turns;
+    part.group.position.y = part.basePosition.y
+      + (part.moves ? stroke * engaged : 0);
+    if (part.rotates) {
+      part.group.rotation.y = part.restY + part.sign * angle;
+    }
+  }
+}
+
 function tickDrawerDrive() {
   const turns = drawerDriveTurns();
   const angle = -2 * Math.PI * turns;
@@ -2116,14 +2326,25 @@ function tickDrawerDrive() {
   // rotation is opposite to the vertical spline shaft.  The drawer belt path
   // is oriented rear-to-front on its right run; a positive pulley rotation
   // therefore advances the belt in the negative path direction.
-  const phaseMm = turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM;
   for (const belt of play.drawerBelts) {
+    const active = stationDriveActive(belt.stationIndex);
+    const phaseMm = active ? turns * DRAWER_PULLEY_TEETH * DRAWER_BELT_PITCH_MM : 0;
     poseBeltTeeth(belt, phaseMm * belt.phaseSign);
   }
   for (const rotary of play.drawerRotaries) {
-    rotary.group.rotation.y = rotary.restY + rotary.sign * angle;
+    const active = stationDriveActive(rotary.stationIndex);
+    rotary.group.rotation.y = rotary.restY + (active ? rotary.sign * angle : 0);
+  }
+  const scheme = play.scheme1;
+  const progress = scheme.phase === SCHEME1_PHASE.OPEN || scheme.phase === SCHEME1_PHASE.CLOSE
+    ? scheme.cycleSign * scheme.cycleProgressTurns / SCHEME1_DRAWER_TRAVEL_TURNS * DRAWER_TRAVEL_MM
+    : 0;
+  for (const mover of play.drawerMovers) {
+    mover.group.position.copy(mover.basePosition);
+    if (stationDriveActive(mover.stationIndex)) mover.group.position.z += progress;
   }
   tickCurrentClutch();
+  tickTemplateClutches();
 }
 
 function tickColumnSyncDrive() {
@@ -2457,6 +2678,42 @@ export async function onPartLoaded(item) {
     }), true);
     return;
   }
+  const templateRole = item.part?.animationRole;
+  if (TEMPLATE_CLUTCH_CONFIGS.has(templateRole)) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindTemplateStationClutchMesh(
+      item,
+      TEMPLATE_CLUTCH_CONFIGS.get(templateRole),
+    )).catch((error) => {
+      console.error("template clutch bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (templateRole === "drawer-belt") {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindTemplateDrawerBeltMesh(item)).catch((error) => {
+      console.error("template drawer timing belt bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (templateRole === "drawer-rotary") {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindTemplateDrawerRotaryMesh(item, -1)).catch((error) => {
+      console.error("template drawer rotary bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (templateRole === "drawer-moving") {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindTemplateDrawerMoverMesh(item)).catch((error) => {
+      console.error("template drawer mover bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
   if (id === CHAIN_TRIGGER_MAGNET_ID) {
     item.playBound = true;
     enqueueBind(() => bindChainTriggerMagnetMesh(item).catch((error) => {
@@ -2493,6 +2750,14 @@ export async function onPartLoaded(item) {
     item.playBound = true;
     enqueueBind(() => Promise.resolve(bindDrawerRotaryMesh(item, DRAWER_ROTARY_IDS.get(id))).catch((error) => {
       console.error("drawer drive rotary bind failed", id, error);
+      item.playBound = false;
+    }), true);
+    return;
+  }
+  if (DRAWER_MOVING_IDS.has(id)) {
+    item.playBound = true;
+    enqueueBind(() => Promise.resolve(bindDrawerMoverMesh(item)).catch((error) => {
+      console.error("drawer mover bind failed", id, error);
       item.playBound = false;
     }), true);
     return;

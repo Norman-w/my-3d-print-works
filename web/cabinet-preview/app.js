@@ -80,7 +80,6 @@ const DRAWER_DRIVE_TAILS = new Set([
   "14_front_timing_pulley_candidate",
   "15_front_pinion_candidate",
   "16_drawer_linear_rack_candidate",
-  "24_center_station_kit_template",
 ]);
 const CENTER_CLUTCH_FOCUS_IDS = new Set([
   "cabinet-clutch/center_input_rotor",
@@ -1723,10 +1722,20 @@ function fitCamera() {
   frameBox(viewBox(), state.activeView || "rear");
 }
 
+const geometryCache = new Map();
+
 async function loadGeometry(url) {
-  const loader = new STLLoader();
-  return new Promise((resolve, reject) => {
-    loader.load(url, resolve, undefined, reject);
-  });
+  // Multiple station entries intentionally point at the same canonical STL.
+  // Cache the parsed source by path, then clone per manifest part so animation
+  // binders may translate/replace geometry without mutating another station.
+  const cacheKey = String(url).split("?", 1)[0];
+  if (!geometryCache.has(cacheKey)) {
+    const loader = new STLLoader();
+    geometryCache.set(cacheKey, new Promise((resolve, reject) => {
+      loader.load(url, resolve, undefined, reject);
+    }));
+  }
+  const source = await geometryCache.get(cacheKey);
+  return source.clone();
 }
 //#endregion

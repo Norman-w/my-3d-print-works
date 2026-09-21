@@ -749,9 +749,9 @@ COLOR_AXIS_Z = "#3b82f6";
 // Ø3 round section slides directly in one fixed LM3UU held by a rectangular
 // bar formed as part of the mechanism plate, while the lower D enters the Ø8 round
 // sleeve with a Ø5×5 magnet pocket. The output side has two independent D
-// shafts and two 3×6×2 bearing references in its fixed cage. The other 24
-// legacy stations are intentionally suppressed until this physical prototype
-// is approved.
+// shafts and two 3×6×2 bearing references in its fixed cage. The 15-station
+// world assembly reuses this center-proven component set; the browser chooses
+// one station at a time for motion.
 // Each of the five drawer-motor spline shafts receives a lower fixed 3×6×2
 // bearing in a removable 3 mm carrier and an upper fixed 3×6×2 bearing in a
 // separate removable upper carrier. Eight plain circular Ø5 mm floor bosses
@@ -1927,12 +1927,17 @@ module drawer_rack_guide_rails_at(col, row, front_z) {
 }
 
 module drawer_rack_guide_rollers(col, row, front_z) {
+    drawer_tail_guide_rollers(col, row, front_z);
+    drawer_front_lower_guide_bearings(col, row, front_z);
+}
+
+// The two rear/tail bearings are attached to the drawer flange and travel
+// with the rack along +Z. Keep them as a separate selector so the browser can
+// instantiate one shared geometry at all 15 stations without accidentally
+// moving the two fixed front support bearings with the drawer.
+module drawer_tail_guide_rollers(col, row, front_z) {
     z0 = drawer_guide_z0(front_z);
-    z1 = drawer_guide_z1(front_z);
     tail_z = z0 + DRAWER_GUIDE_ROLLER_Z_MARGIN;
-    front_z_bearing = z1 - DRAWER_GUIDE_ROLLER_Z_MARGIN;
-    // Two tail bearings travel with the drawer flange. Their axes are ±X,
-    // and their outer rings react the drawer's ±Y load in the C slots.
     color("#cfd4da") {
         drawer_drive_681_bearing_x(
             drawer_left_guide_tail_bearing_x(col),
@@ -1944,6 +1949,16 @@ module drawer_rack_guide_rollers(col, row, front_z) {
             drawer_guide_flange_y(row) + DRAWER_GUIDE_TAIL_BEARING_Y_OFFSET,
             tail_z
         );
+    }
+}
+
+// The two front lower bearings are fixed to the cabinet-side C rails. They
+// support the drawer flange at the +Z/front end, but must remain at the
+// station datum while the drawer and its tail bearings translate.
+module drawer_front_lower_guide_bearings(col, row, front_z) {
+    z1 = drawer_guide_z1(front_z);
+    front_z_bearing = z1 - DRAWER_GUIDE_ROLLER_Z_MARGIN;
+    color("#cfd4da") {
         // Two fixed front lower bearings lift the drawer-side flange at the
         // +Z/front end. They sit in the C rail's bottom support, also on X.
         drawer_drive_681_bearing_x(
@@ -4672,6 +4687,22 @@ module selected_drawer_rack_guide_rollers_part() {
     );
 }
 
+module selected_drawer_tail_guide_rollers_part() {
+    drawer_tail_guide_rollers(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
+}
+
+module selected_drawer_front_lower_guide_bearings_part() {
+    drawer_front_lower_guide_bearings(
+        CENTER_GT2_COL,
+        CENTER_GT2_ROW,
+        CENTER_GT2_FRONT_PULLEY_Z
+    );
+}
+
 module selected_drawer_rack_guide_rails_part() {
     drawer_rack_guide_rails_at(
         CENTER_GT2_COL,
@@ -4901,6 +4932,10 @@ module clutch_scene_geometry() {
         selected_drawer_rack_part();
     } else if (CLUTCH_PART == "drawer_rack_guide_rollers") {
         selected_drawer_rack_guide_rollers_part();
+    } else if (CLUTCH_PART == "drawer_tail_guide_rollers") {
+        selected_drawer_tail_guide_rollers_part();
+    } else if (CLUTCH_PART == "drawer_front_lower_guide_bearings") {
+        selected_drawer_front_lower_guide_bearings_part();
     } else if (CLUTCH_PART == "drawer_rack_guide_rails") {
         selected_drawer_rack_guide_rails_part();
     } else if (CLUTCH_PART == "drawer_guide_flange_rail_collision") {
@@ -4959,7 +4994,9 @@ echo(
     str("drawerStationTemplateOriginYMm=", world_row_center_y(0)),
     str("drawerStationColumnPitchMm=", WORLD_COL_PITCH),
     str("drawerStationRowPitchMm=", WORLD_ROW_PITCH),
+    str("drawerStationCount=", N_COL * N_ROW),
     str("drawerStationInstanceCount=", N_COL * N_ROW - 1),
+    "stationDriveMode=sequential-selected-station",
     str("drawerRackBodyWidthMm=", DRAWER_RACK_BODY_X),
     str("drawerRackBodyHeightMm=", DRAWER_RACK_BODY_Y),
     str("drawerRackToothHeightMm=", DRAWER_RACK_TOOTH_H),
@@ -5694,6 +5731,8 @@ assert(
     || CLUTCH_PART == "front_gear"
     || CLUTCH_PART == "drawer_rack"
     || CLUTCH_PART == "drawer_rack_guide_rollers"
+    || CLUTCH_PART == "drawer_tail_guide_rollers"
+    || CLUTCH_PART == "drawer_front_lower_guide_bearings"
     || CLUTCH_PART == "drawer_rack_guide_rails"
     || CLUTCH_PART == "drawer_guide_flange_rail_collision"
     || CLUTCH_PART == "drawer_front_drive_shelf_collision"

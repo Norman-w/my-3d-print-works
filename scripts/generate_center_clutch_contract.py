@@ -266,7 +266,7 @@ REQUIRED = {
     "rearClutchRowPlateLeftClearanceMm", "rearClutchRowPlateRightClearanceMm",
     "drawerStationTemplateOriginXMm", "drawerStationTemplateOriginYMm",
     "drawerStationColumnPitchMm", "drawerStationRowPitchMm",
-    "drawerStationInstanceCount",
+    "drawerStationCount", "drawerStationInstanceCount", "stationDriveMode",
     "drawerRackBodyWidthMm", "drawerRackBodyHeightMm",
     "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
@@ -339,7 +339,7 @@ INT_KEYS = {
     "verticalSplineBearingTotalCount", "verticalSplineBearingCarrierBossCount",
     "verticalSplineBearingUpperBossCount",
     "verticalSplineBearingDetourColumn",
-    "drawerStationInstanceCount", "rearClutchRowPlateCount",
+    "drawerStationCount", "drawerStationInstanceCount", "rearClutchRowPlateCount",
     "rearClutchRowPlateStationCount",
 }
 BOOL_KEYS = {
@@ -1253,8 +1253,12 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("输出圆轴直径必须与 3 mm D 轴名义尺寸一致")
     if n(contract, "centerCol") != 2 or n(contract, "centerRow") != 1:
         raise RuntimeError("当前契约必须锁定三层柜体中心格（零基准 2,1）")
+    if n(contract, "drawerStationCount") != 15:
+        raise RuntimeError("当前柜体必须有 15 个抽屉离合站点")
     if n(contract, "drawerStationInstanceCount") != 14:
         raise RuntimeError("中心同款离合总成模板必须由 14 个非中心实例补齐 5×3 世界总装")
+    if contract.get("stationDriveMode") != "sequential-selected-station":
+        raise RuntimeError("当前预览必须使用逐站选择、单站接合的动力模式")
     if n(contract, "drawerColumnCount") != 5:
         raise RuntimeError("当前中心同款离合总成模板实例布局必须锁定 5 列")
     if n(contract, "drawerStationColumnPitchMm") <= 0 or n(contract, "drawerStationRowPitchMm") <= 0:

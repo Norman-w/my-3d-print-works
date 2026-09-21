@@ -124,14 +124,18 @@ payload["up"] = "y"
 # The browser manifest is the installed-world assembly, not a catch-all CAD
 # library. Fit coupons, retired T-shaped tensioners, highlighted chain
 # connectors, and every other diagnostic-only artifact stay out of it. The
-# shared 14-station kit is the one intentional exception: it is the real
-# printed template that Three.js instantiates at the other drawer datums.
+# Each animated station component is still one shared STL source. The browser
+# instantiates that source fourteen times around the native R3C3 first article;
+# no merged kit is published because one merged mesh cannot move a drawer,
+# belt, clutch rotor, and fixed guide independently.
 retired_ids = {
     "cabinet-clutch/00_tensioner_t_solid_reference",
     "cabinet-clutch/center_linear_bearing_fit_coupon",
     "cabinet-chain/cabinet_chain_connector",
     "cabinet-chain/cabinet_chain_clutch_connector",
     "cabinet-chain/cabinet_chain_clutch_bearing",
+    "cabinet-clutch/17_drawer_rack_guide_rollers_reference",
+    "cabinet-clutch/24_center_station_kit_template",
 }
 all_parts = payload.get("parts", [])
 kept_parts = []
@@ -140,7 +144,6 @@ for part in all_parts:
     retired = (
         part_id in retired_ids
         or part.get("role") == "diagnostic"
-            and part_id != "cabinet-clutch/24_center_station_kit_template"
         or part_id.startswith("cabinet/")
         or part_id.startswith("ch1_03c_")
     )
@@ -186,8 +189,14 @@ labels = {
         "visible": False,
         "role": "printed",
     },
-    "cabinet-clutch/17_drawer_rack_guide_rollers_reference": {
-        "name": "中心格·抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
+    "cabinet-clutch/17_drawer_tail_guide_rollers_reference": {
+        "name": "中心格·抽屉尾部随动 681 导向轴承×2（1×3×1；X轴向）",
+        "color": "#cfd4da",
+        "visible": True,
+        "role": "purchased",
+    },
+    "cabinet-clutch/19_drawer_front_lower_guide_bearings_reference": {
+        "name": "中心格·C形槽前端下托 681 固定轴承×2（1×3×1；X轴向）",
         "color": "#cfd4da",
         "visible": True,
         "role": "purchased",
@@ -210,10 +219,9 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
-    "cabinet-clutch/24_center_station_kit_template": {
-        "name": "中心 R3C3 同款离合活动/采购件模板（14 个非中心实例；不含共用行承载板）",
-        "color": "#718b99",
-        "opacity": 1.0,
+    "cabinet-clutch/21_front_timing_bearing_support_candidate": {
+        "name": "中心格·前端主动轮层板一体 MR63 轴承座（打印件）",
+        "color": "#657f8c",
         "visible": True,
         "role": "printed",
     },
@@ -435,11 +443,12 @@ group_map = {
     "14_front_timing_pulley_candidate": "03·抽屉驱动",
     "15_front_pinion_candidate": "03·抽屉驱动",
     "16_drawer_linear_rack_candidate": "03·抽屉驱动",
-    "17_drawer_rack_guide_rollers_reference": "03·抽屉驱动",
+    "17_drawer_tail_guide_rollers_reference": "03·抽屉驱动",
+    "19_drawer_front_lower_guide_bearings_reference": "03·抽屉驱动",
     "18_drawer_rack_guide_rails_candidate": "03·抽屉驱动",
+    "21_front_timing_bearing_support_candidate": "03·抽屉驱动",
     "22_front_timing_bearing_reference": "03·抽屉驱动",
     "23_front_d_axis_reference": "03·抽屉驱动",
-    "24_center_station_kit_template": "02·离合机构",
 }
 name_map = {
     "cabinet_clutch_cabinet_frame": "箱体框架（上下左右外框 + 左侧服务回程立板 + X+立板 + 前部层格/立格 + 后仓贯通 + 前下实体面；前后仓隔板另列）",
@@ -457,11 +466,12 @@ name_map = {
     "14_front_timing_pulley_candidate": "中心格新版前端2GT同步轮",
     "15_front_pinion_candidate": "中心格新版前端粗齿驱动轮",
     "16_drawer_linear_rack_candidate": "中心格新版抽屉底部直线齿排",
-    "17_drawer_rack_guide_rollers_reference": "中心格抽屉 C 形槽 681 导向轴承×4（1×3×1；X轴向）",
+    "17_drawer_tail_guide_rollers_reference": "中心格抽屉尾部随动 681 导向轴承×2（1×3×1；X轴向）",
+    "19_drawer_front_lower_guide_bearings_reference": "中心格 C 形槽前端下托 681 固定轴承×2（1×3×1；X轴向）",
     "18_drawer_rack_guide_rails_candidate": "中心格立板一体内向 C 槽唇边×2（Z向；尾部滚轮+前端下托）",
     "22_front_timing_bearing_reference": "中心格前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
     "23_front_d_axis_reference": "中心格前端主动轮到下层同步轮 3mm 短 D 轴",
-    "24_center_station_kit_template": "中心 R3C3 同款离合总成模板 · 14 个非中心实例",
+    "21_front_timing_bearing_support_candidate": "中心格前端主动轮层板一体 MR63 轴承座（打印件）",
     "cabinet_clutch_power_motor_body": "抽屉开合动力电机 · 竖直本体（+X末列）",
     "cabinet_clutch_power_motor_shaft": "抽屉开合动力电机 · 竖直D输出轴",
     "cabinet_clutch_power_column_0": "列同步轴 C1 · Y向长花键 + 上下2GT",
@@ -487,19 +497,99 @@ for part in payload.get("parts", []):
     if patch:
         part.update(patch)
 
-# The SCAD file owns one local center-station kit. The browser owns only these
-# placement instances; it must never receive fourteen copied STL files. The
-# center cell is intentionally omitted because its native components remain
-# the existing animated center IDs.
-station_template_ids = {
-    "cabinet-clutch/24_center_station_kit_template",
+# The SCAD file owns one canonical R3C3 component set. The browser reuses those
+# existing STL paths as fourteen lightweight station instances. Each entry is
+# a separate component role so Three.js can move only the selected drawer,
+# clutch carriage, belt, and rotary take-off; no merged kit is duplicated.
+template_specs = [
+    ("cabinet-clutch/template_station_input_rotor",
+     "cabinet-clutch/center_input_rotor", "02·离合机构", "clutch-input-rotor",
+     "其他14站·输入公轮（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_input_shaft",
+     "cabinet-clutch/center_input_shaft_reference", "02·离合机构", "clutch-input-shaft",
+     "其他14站·输入D-round-D轴（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_input_sleeve",
+     "cabinet-clutch/center_input_sleeve", "02·离合机构", "clutch-input-sleeve",
+     "其他14站·公轮底部圆套（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_input_magnet",
+     "cabinet-clutch/center_input_sleeve_magnet_reference", "02·离合机构", "clutch-input-magnet",
+     "其他14站·公轮底部M5磁铁参考（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_output_rotor",
+     "cabinet-clutch/center_output_rotor", "02·离合机构", "clutch-output-rotor",
+     "其他14站·输出母轮（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_output_shaft",
+     "cabinet-clutch/center_output_shaft_reference", "02·离合机构", "clutch-output-shaft",
+     "其他14站·输出D-round轴（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_linear_bearings",
+     "cabinet-clutch/center_linear_bearings_reference", "02·离合机构", None,
+     "其他14站·固定LM3UU参考（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_output_bearings",
+     "cabinet-clutch/center_output_bearings_reference", "02·离合机构", None,
+     "其他14站·输出双轴承参考（共享R3C3 STL）"),
+    ("cabinet-clutch/template_station_drawer_belt",
+     "cabinet-clutch/13_drawer_timing_belt_reference", "03·抽屉驱动", "drawer-belt",
+     "其他14站·2GT抽屉皮带（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_pulley",
+     "cabinet-clutch/14_front_timing_pulley_candidate", "03·抽屉驱动", "drawer-rotary",
+     "其他14站·前端2GT同步轮（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_pinion",
+     "cabinet-clutch/15_front_pinion_candidate", "03·抽屉驱动", "drawer-rotary",
+     "其他14站·前端直齿驱动轮（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_d_axis",
+     "cabinet-clutch/23_front_d_axis_reference", "03·抽屉驱动", "drawer-rotary",
+     "其他14站·前端短D轴（共享中心格STL）"),
+    ("cabinet-clutch/template_station_drawer_rack",
+     "cabinet-clutch/16_drawer_linear_rack_candidate", "03·抽屉驱动", "drawer-moving",
+     "其他14站·抽屉底部直齿排/导向翼（共享中心格STL）"),
+    ("cabinet-clutch/template_station_drawer_tail_bearings",
+     "cabinet-clutch/17_drawer_tail_guide_rollers_reference", "03·抽屉驱动", "drawer-moving",
+     "其他14站·抽屉尾部随动681轴承（共享中心格STL）"),
+    ("cabinet-clutch/template_station_drawer_guide_rails",
+     "cabinet-clutch/18_drawer_rack_guide_rails_candidate", "03·抽屉驱动", None,
+     "其他14站·立板一体C形导轨（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_lower_bearings",
+     "cabinet-clutch/19_drawer_front_lower_guide_bearings_reference", "03·抽屉驱动", None,
+     "其他14站·C形槽前端下托轴承（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_bearing_support",
+     "cabinet-clutch/21_front_timing_bearing_support_candidate", "03·抽屉驱动", None,
+     "其他14站·层板一体MR63轴承座（共享中心格STL）"),
+    ("cabinet-clutch/template_station_front_bearing",
+     "cabinet-clutch/22_front_timing_bearing_reference", "03·抽屉驱动", None,
+     "其他14站·前端MR63轴承参考（共享中心格STL）"),
+]
+source_by_id = {
+    str(part.get("id")): part
+    for part in payload.get("parts", [])
+    if isinstance(part, dict) and part.get("id")
 }
+template_clutch_ids = {spec[0] for spec in template_specs if spec[2] == "02·离合机构"}
+template_drawer_ids = {spec[0] for spec in template_specs if spec[2] == "03·抽屉驱动"}
+template_ids = template_clutch_ids | template_drawer_ids
+for template_id, source_id, group_id, animation_role, display_name in template_specs:
+    source = source_by_id.get(source_id)
+    if source is None:
+        raise RuntimeError(f"共享模板来源不存在: {source_id}")
+    template = dict(source)
+    template.update({
+        "id": template_id,
+        "name": display_name,
+        "group": group_id,
+        "visible": True,
+        "templateSourceId": source_id,
+    })
+    if animation_role:
+        template["animationRole"] = animation_role
+    for key in ("instances", "instanceCount", "instanceMode", "placement", "motion"):
+        template.pop(key, None)
+    payload["parts"].append(template)
 origin_x = float(contract["drawerStationTemplateOriginXMm"])
 origin_y = float(contract["drawerStationTemplateOriginYMm"])
 column_pitch = float(contract["drawerStationColumnPitchMm"])
 row_pitch = float(contract["drawerStationRowPitchMm"])
 center_col = int(contract["centerCol"])
 center_row = int(contract["centerRow"])
+center_x = origin_x + center_col * column_pitch
+center_y = origin_y + center_row * row_pitch
 instances = [
     {
         "id": f"R{row + 1}C{col + 1}",
@@ -508,6 +598,15 @@ instances = [
             origin_y + row * row_pitch,
             0,
         ],
+        "parentFrameId": "world",
+        "localTransform": {
+            "position": [
+                origin_x + col * column_pitch - center_x,
+                origin_y + row * row_pitch - center_y,
+                0,
+            ],
+            "rotation": [0, 0, 0],
+        },
     }
     for row in range(int(contract["drawerLayerCount"]))
     for col in range(int(contract["drawerColumnCount"]))
@@ -519,10 +618,10 @@ if len(instances) != int(contract["drawerStationInstanceCount"]):
         f"{contract['drawerStationInstanceCount']}"
     )
 for part in payload.get("parts", []):
-    if part.get("id") in station_template_ids:
-        part["instanceMode"] = "world-xy-translation"
+    if part.get("id") in template_ids:
+        part["instanceMode"] = "world-offset-from-center-native"
         part["instanceCount"] = len(instances)
-        part["instances"] = instances
+        part["instances"] = [dict(instance) for instance in instances]
 
 # The tensioner support is authored once and mounted at two world-space
 # instances. The purchased 3×6×2 bearing is an existing shared reference; its
@@ -693,8 +792,10 @@ drawer_ids = {
     "cabinet-clutch/14_front_timing_pulley_candidate",
     "cabinet-clutch/15_front_pinion_candidate",
     "cabinet-clutch/16_drawer_linear_rack_candidate",
-    "cabinet-clutch/17_drawer_rack_guide_rollers_reference",
+    "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
+    "cabinet-clutch/19_drawer_front_lower_guide_bearings_reference",
     "cabinet-clutch/18_drawer_rack_guide_rails_candidate",
+    "cabinet-clutch/21_front_timing_bearing_support_candidate",
     "cabinet-clutch/22_front_timing_bearing_reference",
     "cabinet-clutch/23_front_d_axis_reference",
 }
@@ -775,22 +876,15 @@ for part in payload.get("parts", []):
             "role": "drawer-drive",
         }
 
-# Instances are local children of their station/support frames. Keep the old
-# world `position` as an audit datum for older preview tools, but the current
-# app consumes `parentFrameId` + `localTransform` and never recomputes the
-# column/row pitch itself.
+# Template instances retain the authored center-native STL coordinates and use
+# an explicit world-space delta from R3C3. Keep the absolute `position` as an
+# audit datum, while the current app consumes `parentFrameId` + `localTransform`
+# and never recomputes the column/row pitch itself.
 for part in payload.get("parts", []):
-    if part.get("id") in station_template_ids:
-        for instance in part.get("instances", []):
-            instance_id = str(instance.get("id"))
-            instance["parentFrameId"] = f"station:{instance_id}"
-            instance["localTransform"] = {
-                "position": [0, 0, 0],
-                "rotation": [0, 0, 0],
-            }
+    if part.get("id") in template_ids:
         part["placement"].update({
-            "geometrySpace": "local-template",
-            "instanceFrameMode": "station-frame",
+            "geometrySpace": "world",
+            "instanceFrameMode": "world-offset-from-center-native",
         })
     elif part.get("id") == tensioner_support_template_id:
         for instance in part.get("instances", []):
@@ -947,9 +1041,14 @@ for group_id in ordered_group_ids:
             part_node("cabinet-clutch/center_input_rotor"),
             part_node("cabinet-clutch/center_output_rotor"),
             part_node("cabinet-clutch/center_mechanism_plate"),
-            part_node("cabinet-clutch/24_center_station_kit_template"),
             input_axis,
             rotary_support,
+            call_node(
+                "center_clutch/station-templates",
+                "其他14站·共享离合活动零件实例",
+                "输入公轮/轴/圆套、输出母轮/轴和采购轴承均引用同一组R3C3 STL，并按站点世界偏移实例化；只有选择指当前到站的这一站接合并旋转。",
+                children=[part_node(template_id) for template_id in sorted(template_clutch_ids)],
+            ),
         ]
         root["children"] = [
             call_node(
@@ -974,16 +1073,28 @@ for group_id in ordered_group_ids:
                 "cabinet-clutch/16_drawer_linear_rack_candidate",
             ),
             part_node(
-                "cabinet-clutch/17_drawer_rack_guide_rollers_reference",
+                "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
+            ),
+            part_node(
+                "cabinet-clutch/19_drawer_front_lower_guide_bearings_reference",
             ),
             part_node(
                 "cabinet-clutch/18_drawer_rack_guide_rails_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/21_front_timing_bearing_support_candidate",
             ),
             part_node(
                 "cabinet-clutch/22_front_timing_bearing_reference",
             ),
             part_node(
                 "cabinet-clutch/23_front_d_axis_reference",
+            ),
+            call_node(
+                "drawer-drive/station-templates",
+                "其他14站·共享抽屉驱动零件实例",
+                "皮带、前端同步轮/直齿轮/D轴、直齿排、尾部随动轴承和固定导向件均复用中心格 STL；动画按当前选择站过滤。",
+                children=[part_node(template_id) for template_id in sorted(template_drawer_ids)],
             ),
         ]
     else:
@@ -1153,6 +1264,7 @@ done
 # three old standalone support/reference meshes so a refresh cannot reintroduce
 # the obsolete upper-MR63 stack into the manifest.
 OBSOLETE_DRAWER_DRIVE_OUTPUTS=(
+    "17_drawer_rack_guide_rollers_reference.stl"
     "19_front_pinion_bearing_support_candidate.stl"
     "20_front_pinion_bearings_reference.stl"
     "21_front_timing_bearing_support_candidate.stl"
@@ -1166,6 +1278,7 @@ OBSOLETE_DRAWER_DRIVE_OUTPUTS=(
     "31_drawer_station_front_bearing_support_template.stl"
     "32_drawer_station_front_bearings_template.stl"
     "33_drawer_station_takeoff_template.stl"
+    "24_center_station_kit_template.stl"
 )
 for old_file in "${OBSOLETE_DRAWER_DRIVE_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" \
@@ -1318,18 +1431,17 @@ export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0
 export_part "drawer_rack" "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" false 0
-export_part "drawer_rack_guide_rollers" "${OUT_DIR}/17_drawer_rack_guide_rollers_reference.stl" false 0
+export_part "drawer_tail_guide_rollers" "${OUT_DIR}/17_drawer_tail_guide_rollers_reference.stl" false 0
+export_part "drawer_front_lower_guide_bearings" "${OUT_DIR}/19_drawer_front_lower_guide_bearings_reference.stl" false 0
 export_part "drawer_rack_guide_rails" "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" false 0
+export_part "front_timing_bearing_support" "${OUT_DIR}/21_front_timing_bearing_support_candidate.stl" false 0
 export_part "front_timing_bearing" "${OUT_DIR}/22_front_timing_bearing_reference.stl" false 0
 export_part "front_d_axis" "${OUT_DIR}/23_front_d_axis_reference.stl" false 0
 
-# The center station is the only canonical kit. The browser places this one
-# source at fourteen non-center datums; no old generic drawer-side templates
-# or per-cell STL copies are generated.
-export_part "center_station_template_assembly" "${OUT_DIR}/24_center_station_kit_template.stl" false 0
-
 for printable_part in \
-    "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl"; do
+    "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" \
+    "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" \
+    "${OUT_DIR}/21_front_timing_bearing_support_candidate.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 
