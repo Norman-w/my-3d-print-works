@@ -111,7 +111,7 @@ const MOTION_URL = "./models/cabinet-chain/cabinet_chain_motion.json";
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} WheelPivot */
 /** @typedef {{group:THREE.Group, teeth:number, sign:number, restY:number}} BearingPivot */
 /** @typedef {{group:THREE.Group, restY:number}} MotorShaftPivot */
-/** @typedef {{group:THREE.Group, role:string, sign:number, baseY:number, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
+/** @typedef {{group:THREE.Group, role:string, sign:number, basePosition:THREE.Vector3, restY:number, moves:boolean, rotates:boolean}} CurrentClutchPivot */
 //#endregion
 
 //#region 私有成员
@@ -957,18 +957,29 @@ function playScene() {
   return play.host?.state?.chainRoot ?? play.host?.state?.scene ?? null;
 }
 
-function replaceMesh(item, group, parent = playScene()) {
-  if (!parent || !item.mesh) return;
+function motionParent(item) {
+  const frameId = item?.part?.placement?.motionFrameId;
+  const frames = play.host?.state?.assemblyFrames;
+  return frames?.get?.(String(frameId || ""))
+    || item?.mesh?.parent
+    || play.host?.state?.assemblyFrames?.get?.("world")
+    || play.host?.state?.scene
+    || playScene();
+}
+
+function replaceMesh(item, group, parent = null) {
+  if (!item.mesh) return;
   group.visible = item.mesh.visible;
   // Keep the coordinate parent that app.js selected for this part.  Native
   // cabinet-clutch STL files live directly in the world scene, while the
   // Snake-chain assets stay under the chain coordinate adapter; native
   // cabinet-clutch assets stay in the current world scene. Reparenting every
   // animated mesh to the adapter would rotate drawer pulleys incorrectly.
-  const currentParent = item.mesh.parent || parent;
+  const currentParent = parent || item.mesh.parent || playScene();
   item.mesh.parent?.remove(item.mesh);
   currentParent.add(group);
   item.mesh = group;
+  item.renderObjects = [group];
   item.box = new THREE.Box3().setFromObject(group);
 }
 
@@ -1366,12 +1377,14 @@ function bindDrawerRotaryMesh(item, sign = 1) {
   const center = geometry.boundingBox.getCenter(new THREE.Vector3());
   geometry.translate(-center.x, -center.y, -center.z);
   const pivot = new THREE.Group();
-  pivot.position.copy(center);
+  const parent = motionParent(item);
+  parent.updateMatrixWorld(true);
+  pivot.position.copy(parent.worldToLocal(center.clone()));
   pivot.add(new THREE.Mesh(geometry, item.mesh.material));
   const group = new THREE.Group();
   group.name = "drawer-drive-rotary-animated";
   group.add(pivot);
-  replaceMesh(item, group, play.host.state.scene);
+  replaceMesh(item, group, parent);
   play.drawerRotaries.push({ group: pivot, sign, restY: 0 });
 }
 
@@ -1390,22 +1403,25 @@ function bindCurrentClutchMesh(item, config) {
   // datum whenever the contract provides it so rotations stay coaxial and
   // only the explicitly moving parts receive the +Y stroke.
   geometry.translate(-pivotX, -center.y, -pivotZ);
+  const parent = motionParent(item);
+  parent.updateMatrixWorld(true);
   const pivot = new THREE.Group();
-  pivot.position.set(pivotX, center.y, pivotZ);
+  pivot.position.copy(parent.worldToLocal(new THREE.Vector3(pivotX, center.y, pivotZ)));
   pivot.name = `current-clutch-${config.role}`;
   pivot.add(new THREE.Mesh(geometry, item.mesh.material));
   const group = new THREE.Group();
   group.name = `current-clutch-${config.role}-container`;
   group.add(pivot);
-  // Native center parts belong directly to the canonical world scene. Do not
-  // send them through the chain coordinate adapter: that -90° transform is
-  // only for the cabinet-chain coordinate frame.
-  replaceMesh(item, group, play.host.state.scene);
+  // The manifest declares the physical motion frame. The STL may still be
+  // authored in the SCAD world frame for export/inspection, so convert its
+  // vertices once around the declared datum and then keep all runtime motion
+  // on this local pivot. No animation step guesses a world-space bbox center.
+  replaceMesh(item, group, parent);
   const part = {
     group: pivot,
     role: config.role,
     sign: -1,
-    baseY: center.y,
+    basePosition: pivot.position.clone(),
     restY: 0,
     moves: Boolean(config.moves),
     rotates: Boolean(config.rotates),
@@ -1421,13 +1437,15 @@ function bindWorldYAxisRotaryMesh(item, target, name, sign = 1) {
   const center = geometry.boundingBox.getCenter(new THREE.Vector3());
   geometry.translate(-center.x, -center.y, -center.z);
   const pivot = new THREE.Group();
-  pivot.position.copy(center);
+  const parent = motionParent(item);
+  parent.updateMatrixWorld(true);
+  pivot.position.copy(parent.worldToLocal(center.clone()));
   pivot.name = name;
   pivot.add(new THREE.Mesh(geometry, item.mesh.material));
   const group = new THREE.Group();
   group.name = `${name}-container`;
   group.add(pivot);
-  replaceMesh(item, group);
+  replaceMesh(item, group, parent);
   target.push({ group: pivot, sign, restY: 0 });
 }
 
@@ -2032,8 +2050,10 @@ function tickCurrentClutch() {
   const stroke = Number(contract.strokeMm);
   for (const part of play.currentClutch.parts) {
     // The input rotor, stepped shaft, sleeve and sleeve magnet are one moving
-  // +Y assembly. The fixed LM3UU block, output rotor, and integral bearing bar stay in Y.
-    part.group.position.y = part.baseY + (part.moves ? stroke * engagement : 0);
+    // +Y assembly. The fixed LM3UU block, output rotor, and integral bearing
+    // bar stay in Y. basePosition is local to the declared motion parent.
+    part.group.position.y = part.basePosition.y
+      + (part.moves ? stroke * engagement : 0);
     if (part.rotates) {
       // Once engaged, input and output share the coaxial clutch rotation. The
       // output does not rotate during INDEX/RELEASE because drawerDriveTurns

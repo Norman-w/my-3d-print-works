@@ -113,6 +113,7 @@ patch_native_preview_manifest() {
     python3 - "${PREVIEW_DIR}/manifest.json" "${CENTER_CONTRACT_JSON}" <<'PY'
 from pathlib import Path
 import json
+import math
 import sys
 
 path = Path(sys.argv[1])
@@ -552,6 +553,256 @@ for part in payload.get("parts", []):
         part["instanceMode"] = "world-xyz-translation"
         part["instanceCount"] = len(tensioner_support_instances)
         part["instances"] = tensioner_support_instances
+
+# The STL scanner only knows files.  Keep the assembly semantics beside it so
+# the browser can reconstruct a real world -> fixed assembly -> motion-frame
+# tree instead of guessing parents from part names or bounding boxes.
+center_station_y = origin_y + center_row * row_pitch
+center_station_id = f"station:R{center_row + 1}C{center_col + 1}"
+frames = [
+    {
+        "id": "world",
+        "parentFrameId": None,
+        "kind": "fixed",
+        "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+    },
+    {
+        "id": "cabinet-fixed",
+        "parentFrameId": "world",
+        "kind": "fixed",
+        "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+    },
+    {
+        "id": "power-bus-fixed",
+        "parentFrameId": "cabinet-fixed",
+        "kind": "fixed",
+        "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+    },
+    {
+        "id": "drawer-drive-fixed",
+        "parentFrameId": "cabinet-fixed",
+        "kind": "fixed",
+        "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+    },
+    {
+        "id": "chain-source",
+        "parentFrameId": "world",
+        "kind": "coordinate-adapter",
+        "localTransform": {
+            "position": [0, 0, 0],
+            "rotation": [-math.pi / 2, 0, 0],
+        },
+    },
+]
+for row in range(int(contract["drawerLayerCount"])):
+    for col in range(int(contract["drawerColumnCount"])):
+        station_id = f"station:R{row + 1}C{col + 1}"
+        frames.append({
+            "id": station_id,
+            "parentFrameId": "cabinet-fixed",
+            "kind": "fixed",
+            "localTransform": {
+                "position": [
+                    origin_x + col * column_pitch,
+                    origin_y + row * row_pitch,
+                    0,
+                ],
+                "rotation": [0, 0, 0],
+            },
+        })
+frames.extend([
+    {
+        "id": "center-input-carriage",
+        "parentFrameId": center_station_id,
+        "kind": "prismatic",
+        "axis": [0, 1, 0],
+        "contract": "centerClutch",
+        "localTransform": {
+            "position": [
+                0,
+                float(contract["inputBaseYMm"]) - center_station_y,
+                float(contract["axisZMm"]),
+            ],
+            "rotation": [0, 0, 0],
+        },
+    },
+    {
+        "id": "center-output-rotor",
+        "parentFrameId": center_station_id,
+        "kind": "revolute",
+        "axis": [0, 1, 0],
+        "contract": "centerClutch",
+        "localTransform": {
+            "position": [
+                0,
+                float(contract["outputBaseYMm"]) - center_station_y,
+                float(contract["axisZMm"]),
+            ],
+            "rotation": [0, 0, 0],
+        },
+    },
+    {
+        "id": "center-front-drive",
+        "parentFrameId": center_station_id,
+        "kind": "revolute",
+        "axis": [0, 1, 0],
+        "contract": "centerClutch",
+        "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+    },
+])
+for support_id, position in (
+    ("tensioner-lower", tensioner_support_instances[0]["position"]),
+    ("tensioner-upper", tensioner_support_instances[1]["position"]),
+):
+    frames.append({
+        "id": support_id,
+        "parentFrameId": "power-bus-fixed",
+        "kind": "fixed",
+        "localTransform": {"position": position, "rotation": [0, 0, 0]},
+    })
+
+payload["assembly"] = {
+    "schemaVersion": 1,
+    "rootFrameId": "world",
+    "source": "cad/openscad/enclosure/cabinet_clutch.scad",
+    "coordinateSystem": {
+        "units": "mm",
+        "up": "y",
+        "world": "openscad-native-world",
+    },
+    "frames": frames,
+}
+
+world_ids = {
+    "cabinet-clutch/cabinet_clutch_cabinet_frame",
+    "cabinet-clutch/cabinet_clutch_partition",
+}
+power_ids = {
+    "cabinet-clutch/cabinet_clutch_power_motor_body",
+    "cabinet-clutch/cabinet_clutch_power_motor_shaft",
+    "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
+    "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template",
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support",
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_upper_support",
+    "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference",
+}
+drawer_ids = {
+    "cabinet-clutch/13_drawer_timing_belt_reference",
+    "cabinet-clutch/14_front_timing_pulley_candidate",
+    "cabinet-clutch/15_front_pinion_candidate",
+    "cabinet-clutch/16_drawer_linear_rack_candidate",
+    "cabinet-clutch/17_drawer_rack_guide_rollers_reference",
+    "cabinet-clutch/18_drawer_rack_guide_rails_candidate",
+    "cabinet-clutch/22_front_timing_bearing_reference",
+    "cabinet-clutch/23_front_d_axis_reference",
+}
+center_input_ids = {
+    "cabinet-clutch/center_input_rotor",
+    "cabinet-clutch/center_input_shaft_reference",
+    "cabinet-clutch/center_input_sleeve",
+    "cabinet-clutch/center_input_sleeve_magnet_reference",
+}
+center_output_ids = {
+    "cabinet-clutch/center_output_rotor",
+    "cabinet-clutch/center_output_shaft_reference",
+}
+center_fixed_ids = {
+    "cabinet-clutch/center_linear_bearings_reference",
+    "cabinet-clutch/center_output_bearings_reference",
+    "cabinet-clutch/center_mechanism_plate",
+}
+front_rotary_ids = {
+    "cabinet-clutch/14_front_timing_pulley_candidate",
+    "cabinet-clutch/15_front_pinion_candidate",
+    "cabinet-clutch/23_front_d_axis_reference",
+}
+for part in payload.get("parts", []):
+    part_id = str(part.get("id", ""))
+    parent_frame = "world"
+    if part_id in world_ids:
+        parent_frame = "cabinet-fixed"
+    elif part_id in power_ids:
+        parent_frame = "power-bus-fixed"
+    elif part_id in drawer_ids:
+        parent_frame = "drawer-drive-fixed"
+    elif part_id.startswith("cabinet-chain/"):
+        parent_frame = "chain-source"
+    part["placement"] = {
+        "geometrySpace": "world",
+        "parentFrameId": parent_frame,
+        "mode": "instances" if part.get("instances") else "single",
+    }
+    if part_id in center_input_ids:
+        part["placement"].update({
+            "parentFrameId": "world",
+            "motionFrameId": "center-input-carriage",
+            "motionGeometrySpace": "world-at-motion-datum",
+        })
+        part["motion"] = {
+            "frameId": "center-input-carriage",
+            "kind": "prismatic+revolute",
+            "axis": [0, 1, 0],
+            "role": "input",
+        }
+    elif part_id in center_output_ids:
+        part["placement"].update({
+            "parentFrameId": "world",
+            "motionFrameId": "center-output-rotor",
+            "motionGeometrySpace": "world-at-motion-datum",
+        })
+        part["motion"] = {
+            "frameId": "center-output-rotor",
+            "kind": "revolute",
+            "axis": [0, 1, 0],
+            "role": "output",
+        }
+    elif part_id in center_fixed_ids:
+        part["placement"]["parentFrameId"] = "cabinet-fixed"
+        part["placement"]["assemblyFrameId"] = center_station_id
+    elif part_id.startswith("cabinet-chain/"):
+        part["placement"]["geometrySpace"] = "source-adapter"
+    if part_id in front_rotary_ids:
+        part["placement"].update({
+            "motionFrameId": "center-front-drive",
+            "motionGeometrySpace": "world-at-motion-datum",
+        })
+        part["motion"] = {
+            "frameId": "center-front-drive",
+            "kind": "revolute",
+            "axis": [0, 1, 0],
+            "role": "drawer-drive",
+        }
+
+# Instances are local children of their station/support frames. Keep the old
+# world `position` as an audit datum for older preview tools, but the current
+# app consumes `parentFrameId` + `localTransform` and never recomputes the
+# column/row pitch itself.
+for part in payload.get("parts", []):
+    if part.get("id") in station_template_ids:
+        for instance in part.get("instances", []):
+            instance_id = str(instance.get("id"))
+            instance["parentFrameId"] = f"station:{instance_id}"
+            instance["localTransform"] = {
+                "position": [0, 0, 0],
+                "rotation": [0, 0, 0],
+            }
+        part["placement"].update({
+            "geometrySpace": "local-template",
+            "instanceFrameMode": "station-frame",
+        })
+    elif part.get("id") == tensioner_support_template_id:
+        for instance in part.get("instances", []):
+            instance["parentFrameId"] = f"tensioner-{instance['id']}"
+            instance["localTransform"] = {
+                "position": [0, 0, 0],
+                "rotation": [0, 0, 0],
+            }
+        part["placement"].update({
+            "geometrySpace": "local-template",
+            "instanceFrameMode": "tensioner-frame",
+        })
 group_order = [
     "00·箱体框架",
     "01·动力母线",
@@ -1108,6 +1359,8 @@ python3 "${MANIFEST_PY}" \
     --role printed \
     --no-recursive
 patch_native_preview_manifest
+python3 "${PROJECT_ROOT}/scripts/validate_assembly_manifest.py" \
+    --manifest "${PREVIEW_DIR}/manifest.json"
 cp "${PREVIEW_SOURCE_DIR}/index.html" "${PREVIEW_DIR}/index.html"
 cp "${PREVIEW_SOURCE_DIR}/app.js" "${PREVIEW_DIR}/app.js"
 mkdir -p "${PREVIEW_DIR}/js"

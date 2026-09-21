@@ -165,6 +165,9 @@ const state = {
   camera: null,
   controls: null,
   scene: null,
+  assemblyRoot: null,
+  assemblyFrames: new Map(),
+  assemblyManifest: null,
   chainRoot: null,
   viewHelper: null,
   searchTimer: 0,
@@ -574,14 +577,14 @@ async function setTreeNodeVisible(node, visible) {
     } else {
       state.visibleIds.delete(id);
       const item = state.items.get(id);
-      if (item?.mesh) item.mesh.visible = false;
+      if (item) setItemVisible(item, false);
     }
   }
   await Promise.all([...selected].map(async (id) => {
     const item = state.items.get(id);
     if (!item) return;
     await loadPart(item);
-    if (item.mesh) item.mesh.visible = true;
+    setItemVisible(item, true);
   }));
   renderPartList();
   applyExplode();
@@ -779,7 +782,7 @@ function refreshMeta() {
   const total = state.listing?.totalCount ?? state.items.size;
   const listed = state.listing?.parts?.length ?? 0;
   const loaded = [...state.items.values()].filter((item) => item.mesh).length;
-  const visible = [...state.items.values()].filter((item) => item.mesh && item.mesh.visible).length;
+  const visible = [...state.items.values()].filter((item) => itemIsVisible(item)).length;
   setMeta(`${listed}/${total} 件清单 · ${loaded} 已加载 · ${visible} 显示中 · ${state.units}`);
 }
 
@@ -789,13 +792,18 @@ function initScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0b0d12);
+  const assemblyRoot = new THREE.Group();
+  assemblyRoot.name = "assembly-root";
+  const worldFrame = new THREE.Group();
+  worldFrame.name = "frame:world";
+  assemblyRoot.add(worldFrame);
+  scene.add(assemblyRoot);
   // 蛇形链条源文件仍以 X=宽、Y=深、Z=高导出；只对这组真实链条资产
   // 做一次坐标适配到当前世界 X=宽、Y=高、Z=深。当前离合/箱体 STL
   // 已经是原生世界坐标，直接挂在 scene 下。
   const chainRoot = new THREE.Group();
-  chainRoot.name = "chain-coordinate-adapter";
-  chainRoot.rotation.x = -Math.PI / 2;
-  scene.add(chainRoot);
+  chainRoot.name = "frame:chain-source";
+  worldFrame.add(chainRoot);
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 4000);
   camera.up.set(0, 1, 0);
   const controls = new OrbitControls(camera, canvas);
@@ -847,6 +855,11 @@ function initScene() {
   canvas.addEventListener("pointerdown", onViewHelperPointerDown, true);
   canvas.addEventListener("click", onViewHelperClick, true);
   state.scene = scene;
+  state.assemblyRoot = assemblyRoot;
+  state.assemblyFrames = new Map([
+    ["world", worldFrame],
+    ["chain-source", chainRoot],
+  ]);
   state.chainRoot = chainRoot;
   state.camera = camera;
   state.controls = controls;
@@ -941,6 +954,7 @@ async function fetchListing() {
         const manifest = await manifestResponse.json();
         listing.tree = manifest.tree;
         listing.treeVersion = manifest.treeVersion;
+        listing.assembly = manifest.assembly;
       }
     } catch {
       // The flat API result is still usable through the fallback tree.
@@ -969,10 +983,98 @@ async function fetchListing() {
   };
 }
 
+function applyFrameTransform(frame, transform = {}) {
+  const position = Array.isArray(transform.position)
+    ? transform.position
+    : [0, 0, 0];
+  const rotation = Array.isArray(transform.rotation)
+    ? transform.rotation
+    : [0, 0, 0];
+  const scale = Array.isArray(transform.scale)
+    ? transform.scale
+    : [1, 1, 1];
+  frame.position.set(
+    Number(position[0]) || 0,
+    Number(position[1]) || 0,
+    Number(position[2]) || 0,
+  );
+  frame.rotation.set(
+    Number(rotation[0]) || 0,
+    Number(rotation[1]) || 0,
+    Number(rotation[2]) || 0,
+  );
+  frame.scale.set(
+    Number(scale[0]) || 1,
+    Number(scale[1]) || 1,
+    Number(scale[2]) || 1,
+  );
+}
+
+function installAssemblyFrames(assembly) {
+  const frames = Array.isArray(assembly?.frames) ? assembly.frames : [];
+  const world = state.assemblyFrames.get("world");
+  const chain = state.assemblyFrames.get("chain-source");
+  if (!world || !chain) return;
+  const previous = state.assemblyFrames;
+  const byId = new Map(frames.map((frame) => [String(frame.id), frame]));
+  const nodes = new Map([
+    ["world", world],
+    ["chain-source", chain],
+  ]);
+  const pending = frames.filter((frame) => !nodes.has(String(frame.id)));
+  let progress = true;
+  while (pending.length && progress) {
+    progress = false;
+    for (let index = pending.length - 1; index >= 0; index -= 1) {
+      const spec = pending[index];
+      const id = String(spec.id || "");
+      const parentId = spec.parentFrameId == null
+        ? "world"
+        : String(spec.parentFrameId);
+      const parent = nodes.get(parentId);
+      if (!id || !parent) continue;
+      // Listing refreshes must re-use the existing runtime frame nodes.  A
+      // search/group change should not leave an old, detached coordinate tree
+      // in the scene or create a second parent for the same STL template.
+      const frame = previous.get(id) || new THREE.Group();
+      frame.name = `frame:${id}`;
+      frame.userData.frameId = id;
+      frame.userData.frameKind = spec.kind || "fixed";
+      frame.userData.motion = spec.motion || null;
+      applyFrameTransform(frame, spec.localTransform);
+      if (frame.parent !== parent) {
+        frame.parent?.remove(frame);
+        parent.add(frame);
+      }
+      nodes.set(id, frame);
+      pending.splice(index, 1);
+      progress = true;
+    }
+  }
+  if (pending.length) {
+    const unresolved = pending.map((frame) => `${frame.id}<-${frame.parentFrameId}`).join(", ");
+    throw new Error(`装配坐标树存在缺失父级或环: ${unresolved}`);
+  }
+  for (const [id, frame] of previous) {
+    if (id !== "world" && id !== "chain-source" && !nodes.has(id)) {
+      frame.parent?.remove(frame);
+    }
+  }
+  // The chain adapter is a pre-created runtime node so the animation module
+  // can keep its reference. Its rotation still comes from the manifest, not
+  // from a second hard-coded coordinate convention in the viewer.
+  const chainSpec = byId.get("chain-source");
+  if (chainSpec) applyFrameTransform(chain, chainSpec.localTransform);
+  state.assemblyManifest = assembly;
+  state.assemblyFrames = nodes;
+  state.assemblyRoot?.updateMatrixWorld(true);
+}
+
 async function refreshListing({ autoload = false } = {}) {
   const listing = await fetchListing();
   state.listing = listing;
   state.units = listing.units || "mm";
+  installAssemblyFrames(listing.assembly);
   syncCabinetTransparencyControls();
   els.title.textContent = listing.title || "STL 预览";
   renderGroupOptions(listing.groups || []);
@@ -981,6 +1083,7 @@ async function refreshListing({ autoload = false } = {}) {
       state.items.set(part.id, {
         part,
         mesh: null,
+        renderObjects: [],
         box: null,
         base: new THREE.Vector3(0, 0, 0),
         explosion: new THREE.Vector3(0, 0, 0),
@@ -1021,15 +1124,15 @@ async function setPartVisible(partId, visible, { enforceExclusivity = true } = {
       for (const peerId of exclusivePeerIds(partId)) {
         state.visibleIds.delete(peerId);
         const peer = state.items.get(peerId);
-        if (peer?.mesh) peer.mesh.visible = false;
+        if (peer) setItemVisible(peer, false);
       }
     }
     state.visibleIds.add(partId);
     await loadPart(item);
-    if (item.mesh) item.mesh.visible = true;
+    setItemVisible(item, true);
   } else {
     state.visibleIds.delete(partId);
-    if (item.mesh) item.mesh.visible = false;
+    setItemVisible(item, false);
   }
   renderPartList();
   applyExplode();
@@ -1054,14 +1157,14 @@ async function setFilteredVisible(visible) {
   for (const item of state.items.values()) {
     if (selected.has(item.part.id)) continue;
     state.visibleIds.delete(item.part.id);
-    if (item?.mesh) item.mesh.visible = false;
+    if (item) setItemVisible(item, false);
   }
   await Promise.all([...selected].map(async (partId) => {
     const item = state.items.get(partId);
     if (!item) return;
     state.visibleIds.add(partId);
     await loadPart(item);
-    if (item.mesh) item.mesh.visible = true;
+    setItemVisible(item, true);
   }));
   renderPartList();
   applyExplode();
@@ -1076,10 +1179,21 @@ function usesChainCoordinates(part) {
   return CHAIN_COORDINATE_GROUPS.has(part?.group);
 }
 
+function assemblyFrame(frameId) {
+  return state.assemblyFrames.get(String(frameId || "")) || null;
+}
+
 function coordinateParent(part) {
+  const declaredParent = assemblyFrame(part?.placement?.parentFrameId);
+  if (declaredParent) return declaredParent;
   return usesChainCoordinates(part)
     ? (state.chainRoot || state.scene)
-    : state.scene;
+    : (assemblyFrame("world") || state.scene);
+}
+
+function motionParent(part) {
+  return assemblyFrame(part?.placement?.motionFrameId)
+    || coordinateParent(part);
 }
 
 function isCabinetContext(part) {
@@ -1238,6 +1352,37 @@ function setObjectOpacity(root, opacity) {
   });
 }
 
+function itemRenderObjects(item) {
+  if (Array.isArray(item?.renderObjects) && item.renderObjects.length) {
+    return item.renderObjects;
+  }
+  return item?.mesh ? [item.mesh] : [];
+}
+
+function itemIsVisible(item) {
+  return itemRenderObjects(item).some((object) => object.visible);
+}
+
+function setItemVisible(item, visible) {
+  for (const object of itemRenderObjects(item)) object.visible = visible;
+  if (item?.mesh && !item?.renderObjects?.length) item.mesh.visible = visible;
+}
+
+function setItemOpacity(item, opacity) {
+  for (const object of itemRenderObjects(item)) setObjectOpacity(object, opacity);
+}
+
+function itemWorldBox(item) {
+  const box = new THREE.Box3();
+  let has = false;
+  for (const object of itemRenderObjects(item)) {
+    if (!object.visible) continue;
+    box.expandByObject(object);
+    has = true;
+  }
+  return has ? box : null;
+}
+
 function applyCabinetTransparency() {
   const profile = state.viewProfile ? VIEW_PROFILES[state.viewProfile] : null;
   for (const item of state.items.values()) {
@@ -1246,7 +1391,7 @@ function applyCabinetTransparency() {
     const opacity = profile?.context?.(item.part)
       ? Math.min(0.08, baseOpacity)
       : baseOpacity;
-    setObjectOpacity(item.mesh, opacity);
+    setItemOpacity(item, opacity);
   }
 }
 
@@ -1256,10 +1401,13 @@ function viewBox(ids = null) {
   const box = new THREE.Box3();
   let has = false;
   for (const item of state.items.values()) {
-    if (!item.mesh || !item.mesh.visible) continue;
+    if (!item.mesh || !itemIsVisible(item)) continue;
     if (ids && !ids.has(item.part.id)) continue;
-    box.expandByObject(item.mesh);
-    has = true;
+    const itemBox = itemWorldBox(item);
+    if (itemBox) {
+      box.union(itemBox);
+      has = true;
+    }
   }
   return has ? box : null;
 }
@@ -1291,7 +1439,7 @@ async function applyViewVisibility(focusIds, contextIds, request, restorePartOpa
   const desiredIds = new Set([...focusIds, ...contextIds]);
   state.visibleIds.clear();
   for (const item of state.items.values()) {
-    if (item.mesh) item.mesh.visible = false;
+    setItemVisible(item, false);
   }
   for (const id of desiredIds) state.visibleIds.add(id);
 
@@ -1299,7 +1447,7 @@ async function applyViewVisibility(focusIds, contextIds, request, restorePartOpa
   await Promise.all(targets.map(async (item) => {
     await loadPart(item);
     if (request !== state.viewRequest) return;
-    if (item.mesh) item.mesh.visible = true;
+    setItemVisible(item, true);
   }));
   if (request !== state.viewRequest) return false;
 
@@ -1310,7 +1458,7 @@ async function applyViewVisibility(focusIds, contextIds, request, restorePartOpa
       : focusIds.has(item.part.id)
         ? 1
         : Math.min(0.08, partOpacity(item.part));
-    setObjectOpacity(item.mesh, opacity);
+    setItemOpacity(item, opacity);
   }
   applyExplode();
   renderPartList();
@@ -1459,6 +1607,16 @@ function applyExplode() {
   const amount = state.explode;
   for (const item of state.items.values()) {
     if (!item.mesh) continue;
+    if (item.renderObjects?.length > 1) {
+      const delta = item.explosion.clone().multiplyScalar(amount);
+      for (const object of item.renderObjects) {
+        const baseWorld = object.userData.baseWorldPosition;
+        if (!baseWorld || !object.parent) continue;
+        const targetWorld = baseWorld.clone().add(delta);
+        object.position.copy(object.parent.worldToLocal(targetWorld));
+      }
+      continue;
+    }
     item.mesh.position.copy(item.base).addScaledVector(item.explosion, amount);
   }
   els.explodeRange.value = String(Math.round(amount * 100));
@@ -1488,50 +1646,39 @@ async function loadPart(item) {
       : null;
     if (instances) {
       // A manifest instance is a placement reference, not a copied STL. Keep
-      // one BufferGeometry/material source and create lightweight Three.js
-      // mesh nodes at the authored world datums. This is the CAD equivalent
-      // of new DrawerStation() for every non-center cell.
+      // one BufferGeometry/material source and mount lightweight nodes below
+      // the declared station/support frames. This is the CAD equivalent of
+      // new DrawerStation() for every non-center cell.
       const group = new THREE.Group();
       group.name = `stl-template-instances:${item.part.id}`;
-      for (const instance of instances) {
-        const mesh = new THREE.Mesh(geometry, material);
-        const position = Array.isArray(instance.position)
-          ? instance.position
-          : [0, 0, 0];
-        const rotation = Array.isArray(instance.rotation)
-          ? instance.rotation
-          : [0, 0, 0];
-        const scale = Array.isArray(instance.scale)
-          ? instance.scale
-          : [1, 1, 1];
-        mesh.position.set(
-          Number(position[0]) || 0,
-          Number(position[1]) || 0,
-          Number(position[2]) || 0,
-        );
-        mesh.rotation.set(
-          Number(rotation[0]) || 0,
-          Number(rotation[1]) || 0,
-          Number(rotation[2]) || 0,
-        );
-        mesh.scale.set(
-          Number(scale[0]) || 1,
-          Number(scale[1]) || 1,
-          Number(scale[2]) || 1,
-        );
-        mesh.userData.instanceId = instance.id || "";
-        group.add(mesh);
-      }
-      group.visible = state.visibleIds.has(item.part.id);
+      group.visible = false;
       parent.add(group);
+      item.renderObjects = [];
+      for (const instance of instances) {
+        const instanceParent = assemblyFrame(instance.parentFrameId) || parent;
+        const holder = new THREE.Group();
+        holder.name = `instance:${item.part.id}:${instance.id || ""}`;
+        holder.userData.instanceId = instance.id || "";
+        const localTransform = instance.localTransform || {};
+        applyFrameTransform(holder, localTransform);
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.userData.instanceId = instance.id || "";
+        holder.add(mesh);
+        instanceParent.add(holder);
+        holder.userData.baseWorldPosition = holder.getWorldPosition(new THREE.Vector3());
+        item.renderObjects.push(holder);
+      }
       item.mesh = group;
+      setItemVisible(item, state.visibleIds.has(item.part.id));
       group.updateMatrixWorld(true);
-      item.box = new THREE.Box3().setFromObject(group);
+      const itemBox = itemWorldBox(item);
+      item.box = itemBox || new THREE.Box3();
     } else {
       const mesh = new THREE.Mesh(geometry, material);
       mesh.visible = state.visibleIds.has(item.part.id);
       parent.add(mesh);
       item.mesh = mesh;
+      item.renderObjects = [mesh];
       item.box = geometry.boundingBox.clone();
     }
     try {
