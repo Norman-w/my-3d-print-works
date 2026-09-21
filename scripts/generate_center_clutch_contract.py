@@ -269,6 +269,11 @@ REQUIRED = {
     "drawerStationCount", "drawerStationInstanceCount", "stationDriveMode",
     "drawerRackBodyWidthMm", "drawerRackBodyHeightMm", "drawerRackPitchMm",
     "drawerRackGearTeeth", "drawerRackToothHeightMm", "drawerRackToothOverhangMm",
+    "drawerBodyPart", "drawerBodyOuterWidthMm", "drawerBodyOuterHeightMm",
+    "drawerBodyDepthMm", "drawerBodyRearZMm", "drawerBodyFrontZMm",
+    "drawerBodyWallMm", "drawerBodyFloorMm", "drawerBodyFrontWallMm",
+    "drawerBodyRearWallMm", "drawerBodyGuideReliefClearanceMm",
+    "drawerBodyDriveClearanceMm",
     "frontTimingPulleyTeeth", "frontTimingBeltPitchMm",
     "drawerRackTravelMmPerShaftTurn", "frontTimingBeltAdvanceMmPerShaftTurn",
     "centerFrontDriveLiftMm", "frontRackAboveShelfGapMm",
@@ -1280,6 +1285,31 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("抽屉底部齿条背板高度无效")
     if n(contract, "drawerRackBodyWidthMm") <= 0:
         raise RuntimeError("抽屉底部齿条背板宽度无效")
+    if contract.get("drawerBodyPart") != "cabinet-clutch/20_drawer_body_candidate":
+        raise RuntimeError("真实抽屉壳体必须使用唯一 20_drawer_body_candidate 源件")
+    expect(contract, "drawerBodyOuterWidthMm", n(contract, "drawerBayWidthMm") - 2 * n(contract, "drawerGuideDrawerEdgeInsetMm"), "真实抽屉壳体外宽")
+    expect(contract, "drawerBodyOuterHeightMm", n(contract, "drawerBayHeightMm") - 2 * n(contract, "drawerGuideDrawerEdgeInsetMm"), "真实抽屉壳体外高")
+    if n(contract, "drawerBodyDepthMm") <= 0:
+        raise RuntimeError("真实抽屉壳体深度无效")
+    expect(contract, "drawerBodyDepthMm", n(contract, "drawerBodyFrontZMm") - n(contract, "drawerBodyRearZMm"), "真实抽屉壳体 Z 深度")
+    expect(contract, "drawerBodyRearZMm", -59.6, "真实抽屉壳体后端 Z")
+    expect(contract, "drawerBodyFrontZMm", -0.2, "真实抽屉壳体前端 Z")
+    for key, label in (
+        ("drawerBodyWallMm", "真实抽屉壳体侧壁厚度"),
+        ("drawerBodyFloorMm", "真实抽屉壳体底板厚度"),
+        ("drawerBodyFrontWallMm", "真实抽屉壳体前壁厚度"),
+        ("drawerBodyRearWallMm", "真实抽屉壳体后壁厚度"),
+        ("drawerBodyGuideReliefClearanceMm", "真实抽屉 C 槽让位余量"),
+        ("drawerBodyDriveClearanceMm", "真实抽屉齿排/主动轮让位余量"),
+    ):
+        if n(contract, key) <= 0:
+            raise RuntimeError(f"{label}必须为正")
+    if n(contract, "drawerBodyOuterWidthMm") <= 2 * n(contract, "drawerBodyWallMm"):
+        raise RuntimeError("真实抽屉壳体侧壁占满外宽，无法形成内腔")
+    if n(contract, "drawerBodyOuterHeightMm") <= n(contract, "drawerBodyFloorMm"):
+        raise RuntimeError("真实抽屉壳体底板占满外高，无法形成内腔")
+    if n(contract, "drawerBodyDepthMm") <= n(contract, "drawerBodyRearWallMm") + n(contract, "drawerBodyFrontWallMm"):
+        raise RuntimeError("真实抽屉壳体前后壁占满 Z 深度，无法形成内腔")
     expect(contract, "drawerRackPitchMm", 3.0, "直线齿排/前端主动轮圆周齿距")
     if n(contract, "drawerRackGearTeeth") != 16:
         raise RuntimeError("前端直齿主动轮必须是 16T")

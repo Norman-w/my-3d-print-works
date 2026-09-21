@@ -207,6 +207,14 @@ labels = {
         "visible": True,
         "role": "printed",
     },
+    "cabinet-clutch/20_drawer_body_candidate": {
+        "name": "中心格·真实抽屉壳体（共享源件；底部齿排让位 + 两侧 C 槽/681 让位；随 +Z 运动）",
+        "color": "#d3b184",
+        "opacity": 0.22,
+        "visible": True,
+        "role": "printed",
+        "animationRole": "drawer-moving",
+    },
     "cabinet-clutch/22_front_timing_bearing_reference": {
         "name": "中心格·前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
         "color": "#cfd4da",
@@ -446,6 +454,7 @@ group_map = {
     "17_drawer_tail_guide_rollers_reference": "03·抽屉驱动",
     "19_drawer_front_lower_guide_bearings_reference": "03·抽屉驱动",
     "18_drawer_rack_guide_rails_candidate": "03·抽屉驱动",
+    "20_drawer_body_candidate": "03·抽屉驱动",
     "21_front_timing_bearing_support_candidate": "03·抽屉驱动",
     "22_front_timing_bearing_reference": "03·抽屉驱动",
     "23_front_d_axis_reference": "03·抽屉驱动",
@@ -469,6 +478,7 @@ name_map = {
     "17_drawer_tail_guide_rollers_reference": "中心格抽屉尾部随动 681 导向轴承×2（1×3×1；X轴向）",
     "19_drawer_front_lower_guide_bearings_reference": "中心格 C 形槽前端下托 681 固定轴承×2（1×3×1；X轴向）",
     "18_drawer_rack_guide_rails_candidate": "中心格立板一体内向 C 槽唇边×2（Z向；尾部滚轮+前端下托）",
+    "20_drawer_body_candidate": "中心格真实抽屉壳体·底部齿排让位 + 两侧 C 槽/681 让位·随 +Z 运动",
     "22_front_timing_bearing_reference": "中心格前端主动轮层板内 MR63/3×6×2 轴承（采购件）",
     "23_front_d_axis_reference": "中心格前端主动轮到下层同步轮 3mm 短 D 轴",
     "21_front_timing_bearing_support_candidate": "中心格前端主动轮层板一体 MR63 轴承座（打印件）",
@@ -541,6 +551,9 @@ template_specs = [
     ("cabinet-clutch/template_station_drawer_rack",
      "cabinet-clutch/16_drawer_linear_rack_candidate", "03·抽屉驱动", "drawer-moving",
      "其他14站·抽屉底部直齿排/导向翼（共享中心格STL）"),
+    ("cabinet-clutch/template_station_drawer_body",
+     "cabinet-clutch/20_drawer_body_candidate", "03·抽屉驱动", "drawer-moving",
+     "其他14站·真实抽屉壳体（共享中心格 STL）"),
     ("cabinet-clutch/template_station_drawer_tail_bearings",
      "cabinet-clutch/17_drawer_tail_guide_rollers_reference", "03·抽屉驱动", "drawer-moving",
      "其他14站·抽屉尾部随动681轴承（共享中心格STL）"),
@@ -792,6 +805,7 @@ drawer_ids = {
     "cabinet-clutch/14_front_timing_pulley_candidate",
     "cabinet-clutch/15_front_pinion_candidate",
     "cabinet-clutch/16_drawer_linear_rack_candidate",
+    "cabinet-clutch/20_drawer_body_candidate",
     "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
     "cabinet-clutch/19_drawer_front_lower_guide_bearings_reference",
     "cabinet-clutch/18_drawer_rack_guide_rails_candidate",
@@ -1071,6 +1085,9 @@ for group_id in ordered_group_ids:
             ),
             part_node(
                 "cabinet-clutch/16_drawer_linear_rack_candidate",
+            ),
+            part_node(
+                "cabinet-clutch/20_drawer_body_candidate",
             ),
             part_node(
                 "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
@@ -1431,6 +1448,7 @@ export_part "drawer_belt" "${OUT_DIR}/13_drawer_timing_belt_reference.stl" false
 export_part "front_pulley" "${OUT_DIR}/14_front_timing_pulley_candidate.stl" false 0
 export_part "front_gear" "${OUT_DIR}/15_front_pinion_candidate.stl" false 0
 export_part "drawer_rack" "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" false 0
+export_part "drawer_body" "${OUT_DIR}/20_drawer_body_candidate.stl" false 0
 export_part "drawer_tail_guide_rollers" "${OUT_DIR}/17_drawer_tail_guide_rollers_reference.stl" false 0
 export_part "drawer_front_lower_guide_bearings" "${OUT_DIR}/19_drawer_front_lower_guide_bearings_reference.stl" false 0
 export_part "drawer_rack_guide_rails" "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" false 0
@@ -1441,7 +1459,8 @@ export_part "front_d_axis" "${OUT_DIR}/23_front_d_axis_reference.stl" false 0
 for printable_part in \
     "${OUT_DIR}/16_drawer_linear_rack_candidate.stl" \
     "${OUT_DIR}/18_drawer_rack_guide_rails_candidate.stl" \
-    "${OUT_DIR}/21_front_timing_bearing_support_candidate.stl"; do
+    "${OUT_DIR}/21_front_timing_bearing_support_candidate.stl" \
+    "${OUT_DIR}/20_drawer_body_candidate.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 

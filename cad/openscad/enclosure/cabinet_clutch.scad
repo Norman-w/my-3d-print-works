@@ -672,6 +672,19 @@ DRAWER_GUIDE_C_FRONT_SUPPORT_CLEARANCE = 0.00;
 DRAWER_GUIDE_ROLLER_Y_OFFSET = 4.00;
 DRAWER_GUIDE_ROLLER_Z_MARGIN = 6.00;
 DRAWER_GUIDE_TAIL_BEARING_Y_OFFSET = 0.00;
+// The drawer is a real open-top tray, not a transparent collision ghost.  Its
+// rear/front clearances keep the printed shell inside the cabinet datum while
+// the shell remains deep enough to carry the rack and the two side guide
+// interfaces.  The rack and guide hardware are still separate canonical
+// source parts; the tray is the single moving body that the browser follows.
+DRAWER_BODY_WALL_T = 1.60;
+DRAWER_BODY_FLOOR_T = 1.60;
+DRAWER_BODY_FRONT_WALL_T = 2.00;
+DRAWER_BODY_REAR_WALL_T = 1.60;
+DRAWER_BODY_REAR_CLEARANCE = 0.40;
+DRAWER_BODY_FRONT_CLEARANCE = 0.20;
+DRAWER_BODY_DRIVE_CLEARANCE = 0.40;
+DRAWER_BODY_GUIDE_RELIEF_CLEARANCE = DRAWER_GUIDE_RAIL_GAP;
 FRONT_GEAR_TEETH = CENTER_FRONT_RACK_GEAR_TEETH;
 FRONT_GEAR_TOOTH_DEPTH = CENTER_FRONT_RACK_GEAR_TOOTH_DEPTH;
 FRONT_GEAR_T = CENTER_FRONT_RACK_GEAR_THICKNESS;
@@ -850,6 +863,31 @@ function drawer_rack_z1(front_z) = front_z - 3.5;
 function drawer_guide_z0(front_z) = drawer_rack_z0() + 2.0;
 
 function drawer_guide_z1(front_z) = drawer_rack_z1(front_z) - 2.0;
+
+function drawer_body_z0() = WORLD_PARTITION_FRONT_Z
+    + DRAWER_BODY_REAR_CLEARANCE;
+
+function drawer_body_z1() = -DRAWER_BODY_FRONT_CLEARANCE;
+
+function drawer_body_depth() = drawer_body_z1() - drawer_body_z0();
+
+function drawer_body_rack_relief_x0(col) =
+    center_front_rack_face_x(clutch_col_x(col))
+        - DRAWER_RACK_TOOTH_H
+        - DRAWER_BODY_DRIVE_CLEARANCE;
+
+function drawer_body_rack_relief_x1(col) =
+    center_front_rack_face_x(clutch_col_x(col))
+        + DRAWER_RACK_BODY_X
+        + DRAWER_BODY_DRIVE_CLEARANCE;
+
+function drawer_body_rack_relief_y0(row) =
+    drawer_bottom_y(row) - DRAWER_BODY_DRIVE_CLEARANCE;
+
+function drawer_body_rack_relief_y1(row) =
+    center_gt2_front_gear_y(row)
+        + DRAWER_RACK_BODY_Y / 2
+        + DRAWER_BODY_DRIVE_CLEARANCE;
 
 function selected_col() = min(max(0, SELECTED_COLUMN), N_COL - 1);
 
@@ -3019,19 +3057,108 @@ module clutch_cabinet_frame() {
     }
 }
 
-module world_drawer_ghosts() {
-    drawer_depth = -WORLD_PARTITION_FRONT_Z - 0.6;
-    for (i = [0:N_COL - 1], j = [0:N_ROW - 1])
+module drawer_body_candidate(col, row) {
+    x0 = drawer_left_x(col);
+    y0 = drawer_bottom_y(row);
+    z0 = drawer_body_z0();
+    body_w = world_drawer_outer_w();
+    body_h = world_drawer_outer_h();
+    body_d = drawer_body_depth();
+    rack_x0 = drawer_body_rack_relief_x0(col);
+    rack_x1 = drawer_body_rack_relief_x1(col);
+    rack_y0 = drawer_body_rack_relief_y0(row);
+    rack_y1 = drawer_body_rack_relief_y1(row);
+    guide_z0 = drawer_guide_z0(CENTER_GT2_FRONT_PULLEY_Z)
+        - DRAWER_BODY_GUIDE_RELIEF_CLEARANCE;
+    guide_z1 = drawer_guide_z1(CENTER_GT2_FRONT_PULLEY_Z)
+        + DRAWER_BODY_GUIDE_RELIEF_CLEARANCE;
+    guide_y0 = drawer_guide_slot_bottom_y(row)
+        - DRAWER_GUIDE_C_BOTTOM_RAIL_H
+        - DRAWER_BODY_GUIDE_RELIEF_CLEARANCE;
+    guide_y1 = drawer_guide_slot_bottom_y(row)
+        + DRAWER_GUIDE_C_SLOT_H
+        + DRAWER_GUIDE_C_TOP_LIP_T
+        + DRAWER_BODY_GUIDE_RELIEF_CLEARANCE;
+    difference() {
+        // Open-top tray: the floor, front wall, rear wall and both side walls
+        // remain one connected printable shell. The top is intentionally open
+        // so the drawer contents and rear mechanism remain inspectable.
+        translate([x0, y0, z0])
+            cube([body_w, body_h, body_d]);
         translate([
-            world_col_x(i) + DRAWER_CLEAR,
-            world_row_y(j) + DRAWER_CLEAR,
-            WORLD_PARTITION_FRONT_Z + 0.4
+            x0 + DRAWER_BODY_WALL_T,
+            y0 + DRAWER_BODY_FLOOR_T,
+            z0 + DRAWER_BODY_REAR_WALL_T
         ])
             cube([
-                world_drawer_outer_w(),
-                world_drawer_outer_h(),
-                drawer_depth
+                body_w - 2 * DRAWER_BODY_WALL_T,
+                body_h - DRAWER_BODY_FLOOR_T + EPS,
+                body_d
+                    - DRAWER_BODY_REAR_WALL_T
+                    - DRAWER_BODY_FRONT_WALL_T
+                    + EPS
             ]);
+
+        // The rack is mounted directly below the drawer floor.  This opening
+        // is a continuous drive slot and also opens the rear wall so the rack
+        // can be installed without drilling through the finished tray.
+        translate([
+            rack_x0,
+            rack_y0,
+            drawer_rack_z0() - DRAWER_BODY_DRIVE_CLEARANCE
+        ])
+            cube([
+                rack_x1 - rack_x0,
+                rack_y1 - rack_y0,
+                drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z)
+                    - drawer_rack_z0()
+                    + 2 * DRAWER_BODY_DRIVE_CLEARANCE
+            ]);
+
+        // The fixed front pinion lives above the shelf. Its circular envelope
+        // must pass through the tray floor without cutting the side/front
+        // walls; the hole is deliberately larger than the printed tooth tip.
+        cylinder_y(
+            clutch_col_x(col),
+            y0 - DRAWER_BODY_DRIVE_CLEARANCE,
+            CENTER_GT2_FRONT_PULLEY_Z,
+            2 * (FRONT_GEAR_OUTER_R + DRAWER_BODY_DRIVE_CLEARANCE),
+            DRAWER_BODY_FLOOR_T + 2 * DRAWER_BODY_DRIVE_CLEARANCE
+        );
+
+        // Each side relief clears the divider-integral C rail, its upper/lower
+        // lips, the moving flange and both 681 bearing envelopes. The relief
+        // is only in the low side band; the upper side wall stays intact.
+        translate([
+            drawer_left_x(col) - DRAWER_BODY_GUIDE_RELIEF_CLEARANCE,
+            guide_y0,
+            guide_z0
+        ])
+            cube([
+                DRAWER_GUIDE_C_DEPTH
+                    + 2 * DRAWER_BODY_GUIDE_RELIEF_CLEARANCE,
+                guide_y1 - guide_y0,
+                guide_z1 - guide_z0
+            ]);
+        translate([
+            drawer_right_x(col)
+                - DRAWER_GUIDE_C_DEPTH
+                - DRAWER_BODY_GUIDE_RELIEF_CLEARANCE,
+            guide_y0,
+            guide_z0
+        ])
+            cube([
+                DRAWER_GUIDE_C_DEPTH
+                    + 2 * DRAWER_BODY_GUIDE_RELIEF_CLEARANCE,
+                guide_y1 - guide_y0,
+                guide_z1 - guide_z0
+            ]);
+    }
+}
+
+module world_drawer_bodies() {
+    for (i = [0:N_COL - 1], j = [0:N_ROW - 1])
+        drawer_body_candidate(i, j);
 }
 
 module snake_motor_mount_bosses() {
@@ -3117,7 +3244,7 @@ module clutch_cabinet_context(include_drawers = true, include_partition = true) 
         // remain defined by clutch_partition_with_belt_passages().
         color(COLOR_CABINET, 0.16) clutch_partition_with_belt_passages();
     if (include_drawers)
-        color(COLOR_DRAWER, 0.22) world_drawer_ghosts();
+        color(COLOR_DRAWER, 0.22) world_drawer_bodies();
 }
 
 module power_motor_vertical() {
@@ -4533,7 +4660,7 @@ module selected_partition_mount_mechanism_collision_part() {
             center_clutch_mechanism_row_plates();
             all_vertical_axes();
             power_column_sync_belts();
-            world_drawer_ghosts();
+            world_drawer_bodies();
         }
     }
 }
@@ -4551,7 +4678,7 @@ module selected_partition_mount_detail_mechanism_collision_part() {
             center_clutch_mechanism_row_plates();
             all_vertical_axes();
             power_column_sync_belts();
-            world_drawer_ghosts();
+            world_drawer_bodies();
         }
     }
 }
@@ -4683,6 +4810,13 @@ module selected_drawer_rack_part() {
     );
 }
 
+module selected_drawer_body_part() {
+    // Export one center-source tray in native world coordinates. The browser
+    // owns the fourteen translated instances; OpenSCAD owns this one real
+    // shell and its exact rack/pinion/C-rail reliefs.
+    drawer_body_candidate(CENTER_GT2_COL, CENTER_GT2_ROW);
+}
+
 module selected_drawer_rack_guide_rollers_part() {
     drawer_rack_guide_rollers(
         CENTER_GT2_COL,
@@ -4751,6 +4885,40 @@ module selected_drawer_front_drive_shelf_collision_part() {
             selected_front_gear_part();
         }
         world_bay_grid();
+    }
+}
+
+// Empty CSG witness: the real drawer shell must clear every fixed/moving
+// hardware envelope that can occupy its floor or the two low side bands.
+// The body intentionally has explicit rack, pinion and C-rail reliefs; a
+// non-empty result means a geometry change has reopened one of those clashes.
+module selected_drawer_body_hardware_collision_part() {
+    intersection() {
+        drawer_body_candidate(CENTER_GT2_COL, CENTER_GT2_ROW);
+        union() {
+            horizontal_drawer_rack(
+                clutch_col_x(CENTER_GT2_COL),
+                drawer_rack_z0(),
+                drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
+                center_gt2_front_gear_y(CENTER_GT2_ROW)
+            );
+            selected_front_gear_part();
+            drawer_c_guide_flanges_at(
+                CENTER_GT2_COL,
+                CENTER_GT2_ROW,
+                CENTER_GT2_FRONT_PULLEY_Z
+            );
+            drawer_rack_guide_rails_at(
+                CENTER_GT2_COL,
+                CENTER_GT2_ROW,
+                CENTER_GT2_FRONT_PULLEY_Z
+            );
+            drawer_rack_guide_rollers(
+                CENTER_GT2_COL,
+                CENTER_GT2_ROW,
+                CENTER_GT2_FRONT_PULLEY_Z
+            );
+        }
     }
 }
 
@@ -4934,6 +5102,8 @@ module clutch_scene_geometry() {
         selected_front_gear_part();
     } else if (CLUTCH_PART == "drawer_rack") {
         selected_drawer_rack_part();
+    } else if (CLUTCH_PART == "drawer_body") {
+        selected_drawer_body_part();
     } else if (CLUTCH_PART == "drawer_rack_guide_rollers") {
         selected_drawer_rack_guide_rollers_part();
     } else if (CLUTCH_PART == "drawer_tail_guide_rollers") {
@@ -4946,6 +5116,8 @@ module clutch_scene_geometry() {
         selected_drawer_guide_flange_rail_collision_part();
     } else if (CLUTCH_PART == "drawer_front_drive_shelf_collision") {
         selected_drawer_front_drive_shelf_collision_part();
+    } else if (CLUTCH_PART == "drawer_body_hardware_collision") {
+        selected_drawer_body_hardware_collision_part();
     } else if (CLUTCH_PART == "drawer_front_pinion_bearing_support") {
         selected_drawer_front_pinion_bearing_support_part();
     } else if (CLUTCH_PART == "drawer_front_pinion_bearings") {
@@ -5018,6 +5190,19 @@ echo(
     str("drawerRackLowerYMm=",
         center_gt2_front_gear_y(CENTER_GT2_ROW) - DRAWER_RACK_BODY_Y / 2),
     str("drawerShelfTopYMm=", world_row_y(CENTER_GT2_ROW)),
+    "drawerBodyPart=cabinet-clutch/20_drawer_body_candidate",
+    str("drawerBodyOuterWidthMm=", world_drawer_outer_w()),
+    str("drawerBodyOuterHeightMm=", world_drawer_outer_h()),
+    str("drawerBodyDepthMm=", drawer_body_depth()),
+    str("drawerBodyRearZMm=", drawer_body_z0()),
+    str("drawerBodyFrontZMm=", drawer_body_z1()),
+    str("drawerBodyWallMm=", DRAWER_BODY_WALL_T),
+    str("drawerBodyFloorMm=", DRAWER_BODY_FLOOR_T),
+    str("drawerBodyFrontWallMm=", DRAWER_BODY_FRONT_WALL_T),
+    str("drawerBodyRearWallMm=", DRAWER_BODY_REAR_WALL_T),
+    str("drawerBodyGuideReliefClearanceMm=",
+        DRAWER_BODY_GUIDE_RELIEF_CLEARANCE),
+    str("drawerBodyDriveClearanceMm=", DRAWER_BODY_DRIVE_CLEARANCE),
     str("frontTimingBearingReinforcementDiscDiameterMm=",
         CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER),
     str("frontTimingBearingReinforcementDiscThicknessMm=",
@@ -5742,12 +5927,14 @@ assert(
     || CLUTCH_PART == "front_pulley"
     || CLUTCH_PART == "front_gear"
     || CLUTCH_PART == "drawer_rack"
+    || CLUTCH_PART == "drawer_body"
     || CLUTCH_PART == "drawer_rack_guide_rollers"
     || CLUTCH_PART == "drawer_tail_guide_rollers"
     || CLUTCH_PART == "drawer_front_lower_guide_bearings"
     || CLUTCH_PART == "drawer_rack_guide_rails"
     || CLUTCH_PART == "drawer_guide_flange_rail_collision"
     || CLUTCH_PART == "drawer_front_drive_shelf_collision"
+    || CLUTCH_PART == "drawer_body_hardware_collision"
     || CLUTCH_PART == "drawer_front_pinion_bearing_support"
     || CLUTCH_PART == "drawer_front_pinion_bearings"
     || CLUTCH_PART == "front_timing_bearing_support"
@@ -5960,6 +6147,22 @@ assert(DRAWER_RACK_BODY_X > 0
         && DRAWER_RACK_TOOTH_H > 0
         && DRAWER_RACK_TOOTH_OVERHANG_X >= 0,
     "drawer rack X envelope and tooth geometry must be positive");
+assert(DRAWER_BODY_WALL_T > 0
+        && DRAWER_BODY_FLOOR_T > 0
+        && DRAWER_BODY_FRONT_WALL_T > 0
+        && DRAWER_BODY_REAR_WALL_T > 0
+        && drawer_body_depth() > 0
+        && drawer_body_z1() < 0
+        && drawer_body_z0() > WORLD_PARTITION_FRONT_Z,
+    "real drawer tray shell must stay inside the cabinet front/rear datum");
+assert(world_drawer_outer_w() > 2 * DRAWER_BODY_WALL_T
+        && world_drawer_outer_h() > DRAWER_BODY_FLOOR_T
+        && drawer_body_depth()
+            > DRAWER_BODY_REAR_WALL_T + DRAWER_BODY_FRONT_WALL_T,
+    "real drawer tray shell wall/floor dimensions must leave a printable cavity");
+assert(DRAWER_BODY_DRIVE_CLEARANCE > 0
+        && DRAWER_BODY_GUIDE_RELIEF_CLEARANCE >= DRAWER_GUIDE_RAIL_GAP,
+    "real drawer tray drive/guide reliefs must have positive clearance");
 assert(CENTER_FRONT_DRIVE_LIFT_MM > 0,
     "center front drive must lift above the intact shelf");
 assert(abs(

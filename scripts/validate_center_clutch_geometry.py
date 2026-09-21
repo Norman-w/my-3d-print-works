@@ -38,6 +38,7 @@ FIXED_PARTS = (
     "front_timing_bearing_support",
     "front_timing_bearing",
     "front_d_axis",
+    "drawer_body",
 )
 PRINTED_PARTS = {
     "center_input_rotor",
@@ -50,6 +51,7 @@ PRINTED_PARTS = {
     "front_gear",
     "front_pulley",
     "front_timing_bearing_support",
+    "drawer_body",
 }
 TOLERANCE_MM = 0.02
 CLEARANCE_FLOOR_MM = 0.45
@@ -262,6 +264,44 @@ def validate_contract(contract: Contract) -> None:
         fail("抽屉导向轴承轴向必须是 X")
     if contract.get("drawerGuideLoadPath") != "Y-support-Z-travel":
         fail("抽屉导向载荷路径必须是 Y 承力、Z 运动")
+    if contract.get("drawerBodyPart") != "cabinet-clutch/20_drawer_body_candidate":
+        fail("真实抽屉壳体必须使用唯一 20_drawer_body_candidate 源件")
+    expect_close(
+        number(contract, "drawerBodyOuterWidthMm"),
+        number(contract, "drawerBayWidthMm")
+        - 2 * number(contract, "drawerGuideDrawerEdgeInsetMm"),
+        "真实抽屉壳体外宽",
+    )
+    expect_close(
+        number(contract, "drawerBodyOuterHeightMm"),
+        number(contract, "drawerBayHeightMm")
+        - 2 * number(contract, "drawerGuideDrawerEdgeInsetMm"),
+        "真实抽屉壳体外高",
+    )
+    expect_close(
+        number(contract, "drawerBodyDepthMm"),
+        number(contract, "drawerBodyFrontZMm")
+        - number(contract, "drawerBodyRearZMm"),
+        "真实抽屉壳体 Z 深度",
+    )
+    expect_close(number(contract, "drawerBodyRearZMm"), -59.6, "真实抽屉壳体后端 Z")
+    expect_close(number(contract, "drawerBodyFrontZMm"), -0.2, "真实抽屉壳体前端 Z")
+    for key, label in (
+        ("drawerBodyWallMm", "真实抽屉壳体侧壁厚度"),
+        ("drawerBodyFloorMm", "真实抽屉壳体底板厚度"),
+        ("drawerBodyFrontWallMm", "真实抽屉壳体前壁厚度"),
+        ("drawerBodyRearWallMm", "真实抽屉壳体后壁厚度"),
+        ("drawerBodyGuideReliefClearanceMm", "真实抽屉 C 槽让位余量"),
+        ("drawerBodyDriveClearanceMm", "真实抽屉齿排/主动轮让位余量"),
+    ):
+        if number(contract, key) <= 0:
+            fail(f"{label}必须为正")
+    if number(contract, "drawerBodyOuterWidthMm") <= 2 * number(contract, "drawerBodyWallMm"):
+        fail("真实抽屉壳体侧壁占满外宽，无法形成内腔")
+    if number(contract, "drawerBodyOuterHeightMm") <= number(contract, "drawerBodyFloorMm"):
+        fail("真实抽屉壳体底板占满外高，无法形成内腔")
+    if number(contract, "drawerBodyDepthMm") <= number(contract, "drawerBodyRearWallMm") + number(contract, "drawerBodyFrontWallMm"):
+        fail("真实抽屉壳体前后壁占满 Z 深度，无法形成内腔")
     if contract.get("outputShaftProfile") != "D-round":
         fail("输出轴截面必须是短 D-round")
     if contract.get("outputBearingSupportPart") != "cabinet-clutch/center_mechanism_plate":
@@ -1179,6 +1219,55 @@ def validate_interference(contract: Contract, reports: dict[tuple[str, bool], di
         fail("前端 D 轴 X 包络没有覆盖契约轴心")
     expect_close((front_d_axis["min"][2] + front_d_axis["max"][2]) / 2, axis_z, "前端 D 轴轴心 Z")
 
+    drawer_body = bounds(reports[("drawer_body", False)])
+    body_center_x = (
+        number(contract, "drawerStationTemplateOriginXMm")
+        + number(contract, "centerCol")
+        * number(contract, "drawerStationColumnPitchMm")
+    )
+    body_center_y = (
+        number(contract, "drawerStationTemplateOriginYMm")
+        + number(contract, "centerRow")
+        * number(contract, "drawerStationRowPitchMm")
+    )
+    expect_close(
+        drawer_body["min"][0],
+        body_center_x - number(contract, "drawerBodyOuterWidthMm") / 2,
+        "真实抽屉壳体 X- 起点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][0],
+        body_center_x + number(contract, "drawerBodyOuterWidthMm") / 2,
+        "真实抽屉壳体 X+ 终点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["min"][1],
+        body_center_y - number(contract, "drawerBodyOuterHeightMm") / 2,
+        "真实抽屉壳体 Y- 起点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][1],
+        body_center_y + number(contract, "drawerBodyOuterHeightMm") / 2,
+        "真实抽屉壳体 Y+ 终点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["min"][2],
+        number(contract, "drawerBodyRearZMm"),
+        "真实抽屉壳体 Z- 后端",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][2],
+        number(contract, "drawerBodyFrontZMm"),
+        "真实抽屉壳体 Z+ 前端",
+        0.01,
+    )
+    assert_watertight(reports[("drawer_body", False)], "真实抽屉壳体")
+
     spline_support = bounds(reports[("vertical_spline_bearing_support", False)])
     for axis, key, label in (
         (0, "verticalSplineBearingCarrierPlateX0Mm", "可拆花键轴承承载板 X- 起点"),
@@ -1354,6 +1443,17 @@ def main() -> int:
             0.0,
         ):
             fail("中心直齿排/主动轮与层板或一体轴承座存在实体干涉")
+        drawer_body_witness = temp_dir / "drawer_body_hardware_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            drawer_body_witness,
+            inspect_py,
+            "drawer_body_hardware_collision",
+            False,
+            0.0,
+        ):
+            fail("真实抽屉壳体与齿排/主动轮/C形导轨/681轴承存在实体干涉")
         spline_chain_witness = temp_dir / "vertical_spline_support_chain_collision.stl"
         if run_intersection_export(
             openscad,

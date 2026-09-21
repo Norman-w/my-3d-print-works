@@ -8,7 +8,8 @@
 // seal: none — parts cabinet, not watertight
 // print_orientation: shell front (Y=0) on bed; panel outer face down in slicer
 // units: mm
-// note: drawers not modeled this round; 1 mm bay clearance reserved on 4 sides
+// note: the authoritative world drawer bodies live in cabinet_clutch.scad;
+// this standalone shell exporter intentionally emits no drawer ghost geometry.
 
 //#region 导入/依赖
 include <cabinet_motor_mount_params.scad>
@@ -176,20 +177,6 @@ module back_panel() {
     cube([PANEL_W, BACK_PANEL_T, PANEL_H]);
 }
 
-module drawer_ghosts() {
-    for (i = [0:N_COL - 1], j = [0:N_ROW - 1])
-        translate([
-            col_x(i) + DRAWER_CLEAR,
-            0.2,
-            row_z(j) + DRAWER_CLEAR
-        ])
-            cube([
-                drawer_outer_w(),
-                FRONT_NET - 0.6,
-                drawer_outer_h()
-            ]);
-}
-
 module emit_part(name) {
     if (PART == "assembly" || PART == name)
         children();
@@ -214,9 +201,6 @@ if (is_undef(CABINET_LIB_ONLY) || !CABINET_LIB_ONLY) {
                 back_panel();
         }
     }
-
-    if (PART == "assembly")
-        color("#d9ff62", 0.18) drawer_ghosts();
 }
 //#endregion
 

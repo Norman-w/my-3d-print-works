@@ -72,6 +72,7 @@ const DRAWER_ROTARY_IDS = new Map([
 ]);
 const DRAWER_MOVING_IDS = new Set([
   "cabinet-clutch/16_drawer_linear_rack_candidate",
+  "cabinet-clutch/20_drawer_body_candidate",
   "cabinet-clutch/17_drawer_tail_guide_rollers_reference",
 ]);
 const TEMPLATE_CLUTCH_CONFIGS = new Map([
