@@ -264,6 +264,10 @@ PARTITION_FRAME_PLATE_H = H - 2 * WALL
 // x-minus service opening already reserves a load-bearing bridge.  Keep these
 // as separate arrays: the two x walls do not have the same mechanism envelope.
 PARTITION_FRAME_MOUNT_EDGE_MARGIN = 36.00;
+// The x+ / y- receiver sits beside the snake-chain return. Lift only this
+// low receiver within the open gap so its full outer-D cover gains chain-side
+// clearance without entering the adjacent clutch carrier plate.
+PARTITION_FRAME_MOUNT_X_PLUS_LOW_Y_LIFT = 2.00;
 PARTITION_FRAME_MOUNT_X_MINUS_Y_POSITIONS = [
     PARTITION_FRAME_PLATE_Y0 + 14.50,
     PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
@@ -3086,13 +3090,14 @@ module power_bus() {
 // makes the carrier consume the same station datums as the rotors.
 include <cabinet_clutch_carrier.scad>
 
-// The x+ / y- receiver is centered in the actual open gap between the
-// lowest two rear clutch row plates.  Define it only after the carrier include
-// so the position is derived from center_clutch_plate_y0/y1 rather than from a
-// duplicated height constant.  The x- wall intentionally keeps its separate
-// lower service-perimeter position above.
+// The x+ / y- receiver is lifted slightly within the actual open gap between
+// the lowest two rear clutch row plates. Define it only after the carrier
+// include so the position is derived from center_clutch_plate_y0/y1 rather
+// than from a duplicated height constant. The x- wall intentionally keeps its
+// separate lower service-perimeter position above.
 PARTITION_FRAME_MOUNT_X_PLUS_Y_POSITIONS = [
-    (center_clutch_plate_y1(0) + center_clutch_plate_y0(1)) / 2,
+    (center_clutch_plate_y1(0) + center_clutch_plate_y0(1)) / 2
+        + PARTITION_FRAME_MOUNT_X_PLUS_LOW_Y_LIFT,
     PARTITION_FRAME_PLATE_Y0 + PARTITION_FRAME_PLATE_H
         - PARTITION_FRAME_MOUNT_EDGE_MARGIN
 ];
