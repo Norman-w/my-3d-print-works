@@ -54,6 +54,12 @@ use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
 include <../ch1_03c_params.scad>
 include <../parts/drawer_drive_bearings.scad>
+// Reuse the purchased 03C link geometry for the chain/plate collision witness.
+// This file is library-only here; cabinet_chain.scad remains the sole assembly
+// owner of the visible chain STL.
+CHAIN_LIB_ONLY = true;
+use <../ch1_03c_roller_chain.scad>
+use <../parts/ch1_03c_blunt_idler.scad>
 // The center station reuses the finished CH1 03C rounded-triangle/magnet
 // construction.  This main scene's vertical shaft is the existing 12T / 3 mm
 // profile, so override the standalone pair's 10T / 2.4 mm datum after
@@ -4529,6 +4535,31 @@ module selected_center_mechanism_plate_part() {
     center_clutch_mechanism_row_plates();
 }
 
+module selected_center_mechanism_row_plate_debug_part() {
+    // Hidden diagnostic selector: isolate one continuous row strip while
+    // debugging manifold seams in the generated chain-side cheek. It is not
+    // published as a second installed part.
+    center_clutch_mechanism_row_plate(SELECTED_ROW);
+}
+
+module selected_center_chain_emboss_detail_part() {
+    // Diagnostic-only detail: show the +X outer station's actual bearing bar,
+    // its generated opposite-side cheek, and only the chain guides whose
+    // envelope intersects that bar. The production assembly still owns one
+    // mechanism-plate STL and does not load this selector by default.
+    col = selected_col();
+    row = selected_row();
+    center_clutch_output_bearing_bar_y(col, row);
+    for (wheel = WHEEL_POSES)
+        if (center_clutch_chain_wheel_hits_bar(col, row, wheel))
+            translate([
+                wheel[0],
+                wheel[1],
+                SNAKE_CHAIN_CENTER_Z
+            ])
+                ch1_03c_bearing_blunt_idler(SNAKE_CHAIN_GUIDE_TEETH);
+}
+
 // Standalone inspection export for the fixed front/rear compartment
 // partition. The canonical cabinet_frame already contains the same solid, so
 // this part is published only as a hidden inspection/reference mesh and never
@@ -4725,6 +4756,39 @@ module selected_center_partition_belt_collision_part() {
             CENTER_GT2_FRONT_PULLEY_Z,
             center_gt2_belt_y(CENTER_GT2_ROW)
         );
+    }
+}
+
+// Native-world collision witness for the actual purchased 03C chain links
+// and the generated 8T guide envelopes.  cabinet_chain.scad owns the visible
+// source-adapter assembly; this library-only copy exists solely so the mother
+// bearing bars are checked in the same X/Y/Z frame as the clutch plate.
+function center_clutch_native_snake_path() = [
+    for (pin = SNAKE_PINS) [pin[0], pin[1], 0]
+];
+
+module center_clutch_native_snake_chain() {
+    translate([0, 0, SNAKE_CHAIN_CENTER_Z])
+        chain_on_path(center_clutch_native_snake_path());
+}
+
+module center_clutch_native_snake_guides() {
+    for (wheel = WHEEL_POSES)
+        translate([
+            wheel[0],
+            wheel[1],
+            SNAKE_CHAIN_CENTER_Z
+        ])
+            ch1_03c_bearing_blunt_idler(SNAKE_CHAIN_GUIDE_TEETH);
+}
+
+module selected_center_clutch_chain_bearing_collision_part() {
+    intersection() {
+        center_clutch_mechanism_row_plates();
+        union() {
+            center_clutch_native_snake_chain();
+            center_clutch_native_snake_guides();
+        }
     }
 }
 
@@ -5069,10 +5133,16 @@ module clutch_scene_geometry() {
         selected_center_linear_bearings_part();
     } else if (CLUTCH_PART == "center_mechanism_plate") {
         selected_center_mechanism_plate_part();
+    } else if (CLUTCH_PART == "center_mechanism_row_plate_debug") {
+        selected_center_mechanism_row_plate_debug_part();
     } else if (CLUTCH_PART == "center_plate_belt_collision") {
         selected_center_plate_belt_collision_part();
     } else if (CLUTCH_PART == "center_partition_belt_collision") {
         selected_center_partition_belt_collision_part();
+    } else if (CLUTCH_PART == "center_clutch_chain_bearing_collision") {
+        selected_center_clutch_chain_bearing_collision_part();
+    } else if (CLUTCH_PART == "center_chain_emboss_detail") {
+        selected_center_chain_emboss_detail_part();
     } else if (CLUTCH_PART == "vertical_spline_support_chain_collision") {
         selected_vertical_spline_support_chain_collision_part();
     } else if (CLUTCH_PART == "vertical_spline_support_drive_collision") {
@@ -5587,6 +5657,54 @@ echo(
         SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM),
     str("snakeChainTriggerMagnetAxialStartOffsetMm=",
         SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM),
+    "chainMotherSupportReliefMode=axial-window-around-generated-guide-envelope",
+    str("chainMotherSupportReliefRadialClearanceMm=",
+        CENTER_CLUTCH_CHAIN_RELIEF_RADIAL_CLEARANCE),
+    str("chainMotherSupportReliefAxialClearanceMm=",
+        CENTER_CLUTCH_CHAIN_RELIEF_AXIAL_CLEARANCE),
+    str("chainMotherSupportReliefZMinMm=",
+        center_clutch_chain_relief_z0()),
+    str("chainMotherSupportReliefZMaxMm=",
+        center_clutch_chain_relief_z1()),
+    str("chainMotherSupportReliefBearingWebMm=",
+        center_clutch_chain_relief_z0()
+            - (center_clutch_axis_z() + CENTER_CLUTCH_BEARING_OD / 2)),
+    "chainMotherSupportCollisionPart=cabinet-clutch/center_clutch_chain_bearing_collision",
+    str("chainMotherSupportEmbossMode=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_MODE),
+    str("chainMotherSupportEmbossDepthMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH),
+    str("chainMotherSupportEmbossRootWidthMm=",
+        center_clutch_chain_emboss_root_width(1, 0)),
+    str("chainMotherSupportEmbossRootMinimumWidthMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_WIDTH),
+    str("chainMotherSupportEmbossOuterWidthMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_WIDTH),
+    str("chainMotherSupportEmbossRootRadiusMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_RADIUS),
+    str("chainMotherSupportEmbossOuterRadiusMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS),
+    str("chainMotherSupportEmbossRootOverlapMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP),
+    str("chainMotherSupportEmbossZMarginMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_Z_MARGIN),
+    str("chainMotherSupportEmbossRootSupportMarginMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_SUPPORT_MARGIN),
+    str("chainMotherSupportEmbossRadialBulgeMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_RADIAL_BULGE),
+    str("chainMotherSupportEmbossEdgeRadiusMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_EDGE_RADIUS),
+    str("chainMotherSupportEmbossRootFilletRadiusMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_RADIUS),
+    str("chainMotherSupportEmbossRootFlareMm=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE),
+    str("chainMotherSupportEmbossRootFilletSteps=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_STEPS),
+    str("chainMotherSupportEmbossProfileSteps=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS),
+    str("chainMotherSupportEmbossCapSteps=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_CAP_STEPS),
+    "chainMotherSupportEmbossPart=cabinet-clutch/center_mechanism_plate",
     "inputShaftPart=cabinet-clutch/center_input_shaft_reference",
     "inputSleevePart=cabinet-clutch/center_input_sleeve",
     "inputSleeveMagnetPart=cabinet-clutch/center_input_sleeve_magnet_reference",
@@ -5911,8 +6029,11 @@ assert(
     || CLUTCH_PART == "center_output_bearing_bar"
     || CLUTCH_PART == "center_linear_bearings"
     || CLUTCH_PART == "center_mechanism_plate"
+    || CLUTCH_PART == "center_mechanism_row_plate_debug"
     || CLUTCH_PART == "center_plate_belt_collision"
     || CLUTCH_PART == "center_partition_belt_collision"
+    || CLUTCH_PART == "center_clutch_chain_bearing_collision"
+    || CLUTCH_PART == "center_chain_emboss_detail"
     || CLUTCH_PART == "vertical_spline_support_chain_collision"
     || CLUTCH_PART == "vertical_spline_support_drive_collision"
     || CLUTCH_PART == "vertical_spline_upper_carrier_drive_collision"

@@ -976,6 +976,114 @@ def validate_contract(contract: Contract) -> None:
         fail("输出轴承长方条没有接到机构板")
     if number(contract, "outputBearingBarMotherClearanceMm") <= 0:
         fail("母轮与输出轴承固定条没有防摩擦间隙")
+    if contract.get("chainMotherSupportReliefMode") != "axial-window-around-generated-guide-envelope":
+        fail("母轮轴承固定条没有锁定链条轴向窗口让位模式")
+    if contract.get("chainMotherSupportCollisionPart") != "cabinet-clutch/center_clutch_chain_bearing_collision":
+        fail("母轮轴承固定条没有绑定链条交集见证")
+    if contract.get("chainMotherSupportEmbossMode") != "generated-opposite-side-full-face-radiused-tapered-cheek":
+        fail("母轮轴承固定条没有使用参数化对侧圆角偏置加强")
+    if contract.get("chainMotherSupportEmbossPart") != "cabinet-clutch/center_mechanism_plate":
+        fail("母轮对侧加强没有融合到正式离合主板零件")
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossDepthMm"),
+        3.0,
+        "母轮对侧偏置加强深度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootWidthMm"),
+        4.0,
+        "母轮对侧加强根部宽度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootMinimumWidthMm"),
+        4.0,
+        "母轮对侧加强根部最小宽度",
+    )
+    if number(contract, "chainMotherSupportEmbossRootWidthMm") \
+            < number(contract, "chainMotherSupportEmbossRootMinimumWidthMm") - TOLERANCE_MM:
+        fail("母轮对侧加强的实际根部宽度小于参数化最小宽度")
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossOuterWidthMm"),
+        3.0,
+        "母轮对侧加强外侧宽度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootRadiusMm"),
+        0.8,
+        "母轮对侧加强根部圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossOuterRadiusMm"),
+        1.0,
+        "母轮对侧加强外侧圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootOverlapMm"),
+        0.5,
+        "母轮对侧加强根部融合量",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossZMarginMm"),
+        0.8,
+        "母轮对侧加强 Z 向过渡余量",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootSupportMarginMm"),
+        0.3,
+        "母轮对侧加强根部承力肩宽",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRadialBulgeMm"),
+        0.05,
+        "母轮对侧加强放射曲线凸度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossEdgeRadiusMm"),
+        0.30,
+        "母轮对侧加强三维接触面圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootFilletRadiusMm"),
+        0.50,
+        "母轮对侧加强根部三维圆滑过渡半径",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootFlareMm"),
+        0.25,
+        "母轮对侧加强根部放射过渡宽度",
+    )
+    if number(contract, "chainMotherSupportEmbossRootFilletRadiusMm") \
+            > number(contract, "chainMotherSupportEmbossRootOverlapMm"):
+        fail("母轮对侧加强根部圆滑过渡不能超出根部融合量")
+    if number(contract, "chainMotherSupportEmbossRootFilletSteps") < 6:
+        fail("母轮对侧加强根部圆滑过渡采样不足")
+    if number(contract, "chainMotherSupportEmbossProfileSteps") < 16:
+        fail("母轮对侧加强曲线采样不足")
+    if number(contract, "chainMotherSupportEmbossCapSteps") < 8:
+        fail("母轮对侧加强端部圆弧采样不足")
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefRadialClearanceMm"),
+        0.45,
+        "链条/8T导向轮径向让位净空",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefAxialClearanceMm"),
+        0.40,
+        "链条轴向窗口净空",
+    )
+    relief_z0 = number(contract, "chainMotherSupportReliefZMinMm")
+    relief_z1 = number(contract, "chainMotherSupportReliefZMaxMm")
+    if relief_z1 <= relief_z0:
+        fail("链条轴向让位窗口 Z 范围无效")
+    if relief_z0 <= number(contract, "outputBearingBarZMinMm") + 0.01:
+        fail("链条让位窗口侵入输出轴承后端支撑区")
+    if relief_z1 >= number(contract, "outputBearingBarZMaxMm") - 0.01:
+        fail("链条让位窗口没有保留到机构板的前端承载区")
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefBearingWebMm"),
+        0.45,
+        "链条窗口与母轮轴承外缘之间的承载 web",
+    )
 
     bar_y0 = number(contract, "outputBearingBarY0OffsetMm")
     bar_y1 = bar_y0 + number(contract, "outputBearingBarYLengthMm")
@@ -1399,6 +1507,17 @@ def main() -> int:
             0.0,
         ):
             fail("箱体后背基准板与中心 R3C3 真实皮带存在实体交集")
+        chain_bearing_witness = temp_dir / "center_clutch_chain_bearing_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            chain_bearing_witness,
+            inspect_py,
+            "center_clutch_chain_bearing_collision",
+            False,
+            0.0,
+        ):
+            fail("03C 链条/8T 导向轮与 15 站母轮轴承固定条存在实体交集")
         partition_mount_witness = temp_dir / "partition_mount_mechanism_collision.stl"
         if run_intersection_export(
             openscad,
