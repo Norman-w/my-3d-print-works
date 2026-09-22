@@ -166,7 +166,25 @@ REQUIRED = {
     "chainMotherSupportReliefZMaxMm",
     "chainMotherSupportReliefBearingWebMm",
     "chainMotherSupportCollisionPart",
+    "chainIdlerCount", "chainIdlerPartitionMountCount", "chainIdlerRowMountCount",
+    "chainIdlerPowerWheelExcluded", "chainIdlerBearingNominal",
+    "chainIdlerBearingIdMm", "chainIdlerBearingOdMm", "chainIdlerBearingWidthMm",
+    "chainIdlerAxleAxis", "chainIdlerAxleProfile",
+    "chainIdlerAxleSmoothDiameterMm", "chainIdlerAxleSmoothLengthMm",
+    "chainIdlerThreadLengthMm", "chainIdlerThreadPilotDiameterMm",
+    "chainIdlerThreadPilotDepthMm", "chainIdlerBossOuterDiameterMm",
+    "chainIdlerBossRootDiameterMm", "chainIdlerBossRootFlareThicknessMm",
+    "chainIdlerBossRootOverlapMm",
+    "chainIdlerBossRearZMm", "chainIdlerBossAxialClearanceMm",
+    "chainIdlerBossMountMode", "chainIdlerBossScrewEntry",
+    "chainIdlerMountPart", "chainIdlerAxlePart",
     "chainMotherSupportEmbossMode",
+    "chainMotherSupportEmbossForcePoint",
+    "chainMotherSupportEmbossForceDirection",
+    "chainMotherSupportEmbossForceMagnitudeScale",
+    "chainMotherSupportEmbossBrushRadiusScale",
+    "chainMotherSupportEmbossBrushAxialScale",
+    "chainMotherSupportEmbossBrushFalloff",
     "chainMotherSupportEmbossDepthMm",
     "chainMotherSupportEmbossRootWidthMm",
     "chainMotherSupportEmbossRootMinimumWidthMm",
@@ -357,6 +375,10 @@ FLOAT_KEYS = {
 FLOAT_KEYS.update({
     "drawerRackTravelMmPerShaftTurn",
     "frontTimingBeltAdvanceMmPerShaftTurn",
+    "chainMotherSupportEmbossForceMagnitudeScale",
+    "chainMotherSupportEmbossBrushRadiusScale",
+    "chainMotherSupportEmbossBrushAxialScale",
+    "chainMotherSupportEmbossBrushFalloff",
 })
 INT_KEYS = {
     "version", "linearBearingCount", "linearBearingBlockMountHoleCount",
@@ -374,6 +396,7 @@ INT_KEYS = {
     "chainMotherSupportEmbossProfileSteps",
     "chainMotherSupportEmbossCapSteps",
     "chainMotherSupportEmbossRootFilletSteps",
+    "chainIdlerCount", "chainIdlerPartitionMountCount", "chainIdlerRowMountCount",
     "verticalSplineBearingCount", "verticalSplineBearingUpperCount",
     "verticalSplineBearingTotalCount", "verticalSplineBearingCarrierBossCount",
     "verticalSplineBearingUpperBossCount",
@@ -384,6 +407,7 @@ INT_KEYS = {
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
+    "chainIdlerPowerWheelExcluded",
 }
 
 # ===== 分区：私有成员 =====

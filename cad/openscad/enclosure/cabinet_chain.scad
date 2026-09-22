@@ -106,6 +106,30 @@ module rear_bearing_visuals() {
         place_geared(c) ch1_03c_bearing_visual();
 }
 
+module chain_idler_shoulder_screw_local() {
+    // The rendered axle is a purchased M3 shoulder screw: the smooth Ø3
+    // shoulder passes through the MR63 inner race, the short threaded tip
+    // enters the printed Ø2.4 blind pilot, and the head/washer stays on the
+    // chain's -Z side. It is a static reference; the green wheel/bearing
+    // group may rotate around it.
+    color("#aeb6bf") {
+        translate([0, 0, -8.45])
+            cylinder(d = 2.40, h = 4.20, $fn = 36);
+        translate([0, 0, -4.25])
+            cylinder(d = 3.00, h = 8.50, $fn = 48);
+        translate([0, 0, 4.25])
+            cylinder(d = 5.50, h = 1.60, $fn = 48);
+    }
+}
+
+module rear_idler_axles() {
+    // WHEEL_POSES[0] is the blue 12T motor sprocket. Only the nine generated
+    // 8T green guide positions receive a fixed shoulder axle.
+    for (i = [1:len(WHEEL_POSES) - 1])
+        place_geared([WHEEL_POSES[i][0], WHEEL_POSES[i][1], 0])
+            chain_idler_shoulder_screw_local();
+}
+
 module rear_sprockets() {
     // 右下回程/张紧位承接唯一 D 轴动力；所有其它位置都在 rear_guide_idlers() 中。
     place_geared(snake_drive_c()) ch1_03c_sprocket(SPROCKET_TEETH);
@@ -242,6 +266,10 @@ emit_chain("bearings") {
     if (CHAIN_PART == "assembly") color("#b9c2ca") rear_bearing_visuals();
     else rear_bearing_visuals();
 }
+emit_chain("idler_axles") {
+    if (CHAIN_PART == "assembly") rear_idler_axles();
+    else rear_idler_axles();
+}
 emit_chain("clutch_trigger_magnet") {
     clutch_trigger_magnet_reference();
 }
@@ -302,6 +330,6 @@ emit_chain("motor_spring_hardware") {
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"clutch_trigger_magnet"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"idler_axles"' / '"clutch_trigger_magnet"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion

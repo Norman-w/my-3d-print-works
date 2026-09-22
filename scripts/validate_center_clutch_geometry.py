@@ -57,6 +57,7 @@ TOLERANCE_MM = 0.02
 CLEARANCE_FLOOR_MM = 0.45
 INTERSECTION_VOLUME_TOLERANCE_MM3 = 0.01
 X1C_BUILD_VOLUME_MM = (256.0, 256.0, 256.0)
+MERGE_STL_SCRIPT = Path(__file__).resolve().with_name("merge_binary_stl.py")
 
 # ===== 分区：模型/类型 =====
 Contract = dict[str, object]
@@ -93,6 +94,13 @@ def expect_at_least(actual: float, expected: float, label: str) -> None:
         fail(f"{label}: 实际={actual:.4f} mm, 需要至少={expected:.4f} mm")
 
 
+def expect_between(actual: float, minimum: float, maximum: float, label: str) -> None:
+    if actual < minimum - TOLERANCE_MM or actual > maximum + TOLERANCE_MM:
+        fail(
+            f"{label}: 实际={actual:.4f}, 允许范围={minimum:.4f}..{maximum:.4f}"
+        )
+
+
 def open_scad_command(
     openscad: Path,
     scad: Path,
@@ -100,6 +108,8 @@ def open_scad_command(
     part: str,
     engaged: bool,
     travel_mm: float | None = None,
+    selected_row: int = 1,
+    selected_column: int = 2,
 ) -> list[str]:
     travel = travel_mm if travel_mm is not None else (3.0 if engaged else 0.0)
     return [
@@ -108,7 +118,8 @@ def open_scad_command(
         "-D", "QUALITY=2", "-D", f'CLUTCH_PART="{part}"',
         "-D", f"ENGAGED={'true' if engaged else 'false'}",
         "-D", f"CENTER_CLUTCH_TRAVEL_MM={travel:.6f}",
-        "-D", "SELECTED_COLUMN=2", "-D", "SELECTED_ROW=1",
+        "-D", f"SELECTED_COLUMN={selected_column}",
+        "-D", f"SELECTED_ROW={selected_row}",
         "-o", str(output), str(scad),
     ]
 
@@ -120,9 +131,20 @@ def run_export(
     part: str,
     engaged: bool,
     travel_mm: float | None = None,
+    selected_row: int = 1,
+    selected_column: int = 2,
 ) -> None:
     completed = subprocess.run(
-        open_scad_command(openscad, scad, output, part, engaged, travel_mm),
+        open_scad_command(
+            openscad,
+            scad,
+            output,
+            part,
+            engaged,
+            travel_mm,
+            selected_row,
+            selected_column,
+        ),
         cwd=scad.parent,
         capture_output=True,
         text=True,
@@ -148,6 +170,46 @@ def inspect(inspect_py: Path, stl: Path) -> dict[str, object]:
         return json.loads(completed.stdout)
     except json.JSONDecodeError as exc:
         fail(f"STL 检查不是 JSON: {stl}: {exc}")
+
+
+def merge_binary_stls(output: Path, inputs: list[Path]) -> None:
+    completed = subprocess.run(
+        [sys.executable, str(MERGE_STL_SCRIPT), str(output), *(str(path) for path in inputs)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0 or not output.is_file() or output.stat().st_size < 84:
+        detail = (completed.stderr or completed.stdout)[-3000:]
+        fail(f"多壳 STL 合并失败: {output}\n{detail}")
+
+
+def run_center_mechanism_plate_export(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+    inspect_py: Path,
+    temp_dir: Path,
+) -> dict[str, object]:
+    row_stls: list[Path] = []
+    for row in range(3):
+        row_stl = temp_dir / f"center_mechanism_row_{row}.stl"
+        run_export(
+            openscad,
+            scad,
+            row_stl,
+            "center_mechanism_row_plate_debug",
+            False,
+            0.0,
+            selected_row=row,
+        )
+        row_report = inspect(inspect_py, row_stl)
+        assert_watertight(row_report, row_stl.name)
+        row_stls.append(row_stl)
+    merge_binary_stls(output, row_stls)
+    report = inspect(inspect_py, output)
+    assert_watertight(report, output.name)
+    return report
 
 
 def bounds(report: dict[str, object]) -> Bounds:
@@ -980,8 +1042,36 @@ def validate_contract(contract: Contract) -> None:
         fail("母轮轴承固定条没有锁定链条轴向窗口让位模式")
     if contract.get("chainMotherSupportCollisionPart") != "cabinet-clutch/center_clutch_chain_bearing_collision":
         fail("母轮轴承固定条没有绑定链条交集见证")
-    if contract.get("chainMotherSupportEmbossMode") != "generated-opposite-side-full-face-radiused-tapered-cheek":
-        fail("母轮轴承固定条没有使用参数化对侧圆角偏置加强")
+    if contract.get("chainMotherSupportEmbossMode") != "relief-volume-inflated-nomad-brush":
+        fail("母轮轴承固定条没有使用基于让位体积的软泥笔刷式加强")
+    if contract.get("chainMotherSupportEmbossForcePoint") != "relief-centroid":
+        fail("母轮软泥加强没有使用让位体积中心作为作用点")
+    if contract.get("chainMotherSupportEmbossForceDirection") != "relief-to-opposite-host-face":
+        fail("母轮软泥加强没有使用让位体积到主体对侧面的作用方向")
+    expect_between(
+        number(contract, "chainMotherSupportEmbossForceMagnitudeScale"),
+        0.50,
+        1.50,
+        "母轮软泥加强作用力大小比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushRadiusScale"),
+        0.50,
+        1.20,
+        "母轮软泥加强刷头半径比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushAxialScale"),
+        0.50,
+        1.20,
+        "母轮软泥加强刷头轴向比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushFalloff"),
+        0.50,
+        3.00,
+        "母轮软泥加强刷头衰减",
+    )
     if contract.get("chainMotherSupportEmbossPart") != "cabinet-clutch/center_mechanism_plate":
         fail("母轮对侧加强没有融合到正式离合主板零件")
     expect_at_least(
@@ -1083,6 +1173,69 @@ def validate_contract(contract: Contract) -> None:
         number(contract, "chainMotherSupportReliefBearingWebMm"),
         0.45,
         "链条窗口与母轮轴承外缘之间的承载 web",
+    )
+
+    # The green chain guides are fixed idlers, not additional 12T drive
+    # sprockets. Their axle-seat contract is deliberately separate from the
+    # mother-wheel bearing-bar relief above.
+    expect_close(number(contract, "chainIdlerCount"), 9.0, "绿色 8T 导向轮数量", 0.001)
+    expect_close(
+        number(contract, "chainIdlerPartitionMountCount"),
+        6.0,
+        "隔板一体绿色导向轮盲孔座数量",
+        0.001,
+    )
+    expect_close(
+        number(contract, "chainIdlerRowMountCount"),
+        3.0,
+        "离合连续行板一体绿色导向轮盲孔座数量",
+        0.001,
+    )
+    if contract.get("chainIdlerPowerWheelExcluded") is not True:
+        fail("蓝色 12T 主动轮不能复用绿色导向轮盲孔座")
+    if contract.get("chainIdlerBearingNominal") != "3x6x2":
+        fail("绿色导向轮必须使用 3x6x2 轴承")
+    if contract.get("chainIdlerAxleAxis") != "+Z":
+        fail("绿色导向轮固定轴必须沿世界 +Z 进入后仓")
+    if contract.get("chainIdlerAxleProfile") != "M3-shoulder-screw-smooth-3mm-round":
+        fail("绿色导向轮必须使用 Ø3 光杆肩螺钉，不得用全牙 M3 穿轴承")
+    if contract.get("chainIdlerBossMountMode") != "partition-or-row-strip-integral-blind-pilot":
+        fail("绿色导向轮 Boss 必须融合到隔板或离合连续行板")
+    if contract.get("chainIdlerBossScrewEntry") != "-Z":
+        fail("绿色导向轮盲导孔必须从后仓 -Z 侧装入")
+    if contract.get("chainIdlerMountPart") != "cabinet-clutch/cabinet_clutch_partition+center_mechanism_plate":
+        fail("绿色导向轮盲孔座没有绑定正式隔板/离合行板零件")
+    if contract.get("chainIdlerAxlePart") != "cabinet-chain/cabinet_chain_idler_axles":
+        fail("绿色导向轮轴参考件输出路径错误")
+    for key, expected, label in (
+        ("chainIdlerBearingIdMm", 3.0, "绿色导向轮轴承内径"),
+        ("chainIdlerBearingOdMm", 6.0, "绿色导向轮轴承外径"),
+        ("chainIdlerBearingWidthMm", 2.0, "绿色导向轮轴承宽度"),
+        ("chainIdlerAxleSmoothDiameterMm", 3.0, "绿色导向轮肩轴光杆直径"),
+        ("chainIdlerThreadPilotDiameterMm", 2.4, "绿色导向轮 M3 盲导孔直径"),
+        ("chainIdlerThreadPilotDepthMm", 4.2, "绿色导向轮 M3 盲导孔深度"),
+        ("chainIdlerBossOuterDiameterMm", 8.0, "绿色导向轮 Boss 外径"),
+        ("chainIdlerBossRootDiameterMm", 11.0, "绿色导向轮 Boss 根部外径"),
+        ("chainIdlerBossRootFlareThicknessMm", 1.5, "绿色导向轮 Boss 根部展开厚度"),
+        ("chainIdlerBossRootOverlapMm", 0.25, "绿色导向轮 Boss 根部板内融合量"),
+        ("chainIdlerBossAxialClearanceMm", 0.45, "绿色导向轮 Boss 轴向净空"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_at_least(
+        number(contract, "chainIdlerAxleSmoothLengthMm"),
+        8.0,
+        "绿色导向轮肩轴光杆长度",
+    )
+    expect_at_least(
+        number(contract, "chainIdlerThreadLengthMm"),
+        number(contract, "chainIdlerThreadPilotDepthMm") - 0.2,
+        "绿色导向轮螺纹啮合长度",
+    )
+    expect_close(
+        number(contract, "chainIdlerBossRearZMm"),
+        number(contract, "chainMotherSupportReliefZMaxMm"),
+        "绿色导向轮 Boss 后端/链条前侧让位边界",
+        0.001,
     )
 
     bar_y0 = number(contract, "outputBearingBarY0OffsetMm")
@@ -1460,10 +1613,19 @@ def main() -> int:
                 reports[(part, engaged)] = report
         for part in FIXED_PARTS:
             stl = temp_dir / f"{part}_open.stl"
-            run_export(openscad, scad, stl, part, False)
-            report = inspect(inspect_py, stl)
-            if part in PRINTED_PARTS:
-                assert_watertight(report, stl.name)
+            if part == "center_mechanism_plate":
+                report = run_center_mechanism_plate_export(
+                    openscad,
+                    scad,
+                    stl,
+                    inspect_py,
+                    temp_dir,
+                )
+            else:
+                run_export(openscad, scad, stl, part, False)
+                report = inspect(inspect_py, stl)
+                if part in PRINTED_PARTS:
+                    assert_watertight(report, stl.name)
             reports[(part, False)] = report
 
         cabinet_stl = temp_dir / "cabinet.stl"
@@ -1540,6 +1702,17 @@ def main() -> int:
             0.0,
         ):
             fail("前后仓隔板 +Z 推入导入槽仍与箱体 D 泪滴耳接收件发生实体干涉")
+        idler_mount_witness = temp_dir / "center_clutch_chain_idler_mount_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_mount_witness,
+            inspect_py,
+            "center_clutch_chain_idler_mount_collision",
+            False,
+            0.0,
+        ):
+            fail("绿色 8T 导向轮一体盲孔 Boss 进入链条/轮体包络，存在实体干涉")
         guide_witness = temp_dir / "drawer_guide_flange_rail_collision.stl"
         if run_intersection_export(
             openscad,
@@ -1639,6 +1812,7 @@ def main() -> int:
         "左下 x-/y- 双向设备服务口、"
         "15 格四角 Boss 定位/自攻导孔、"
         "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 可拆承载板/轴承塔、"
+        "9 个绿色 8T 导向轮的隔板/连续离合行板一体盲孔 Boss 与轮体空交集、"
         "下方承载板与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
         "上方 Boss 套装承载板与上方花键轴/2GT 轮实体交集见证、"
         "中心离合实体碰撞见证"

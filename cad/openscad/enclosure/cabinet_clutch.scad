@@ -2886,6 +2886,10 @@ module partition_service_window_cut() {
             );
         }
         partition_service_mount_keep_zones();
+        // The lowest partition-hosted green idler sits immediately above the
+        // y- service opening. Preserve its broad Boss root before the opening
+        // cut is applied; otherwise the blind axle seat would be a weak tab.
+        center_clutch_chain_idler_partition_keep_zones();
     }
 }
 
@@ -3232,6 +3236,11 @@ module cabinet_frame_partition_with_belt_passage() {
             for (row = [0:N_ROW - 1])
                 for (col = [0:N_COL - 1])
                     center_clutch_partition_mount_bosses(col, row);
+            // The remaining six green 8T idlers are fixed directly to the
+            // independent front/rear partition with the same generated blind
+            // axle Boss datum. The three row-hosted idlers are fused into the
+            // removable clutch row strips instead.
+            center_clutch_chain_idler_partition_mounts();
         }
         // Fifteen actual drawer-cell windows: center R3C3 uses the migrated
         // 2GT straight run; the other fourteen use the 3M envelope. All
@@ -4517,7 +4526,7 @@ module selected_center_input_sleeve_magnet_part() {
 module selected_center_output_bearing_bar_part() {
     // Diagnostic-only standalone view of the output support. The canonical
     // printed part is center_mechanism_plate, which contains this bar.
-    center_clutch_output_bearing_bar_y(CENTER_GT2_COL, CENTER_GT2_ROW);
+    center_clutch_output_bearing_bar_y(selected_col(), selected_row());
 }
 
 module selected_center_linear_bearings_part() {
@@ -4550,7 +4559,7 @@ module selected_center_chain_emboss_detail_part() {
     col = selected_col();
     row = selected_row();
     center_clutch_output_bearing_bar_y(col, row);
-    for (wheel = WHEEL_POSES)
+    for (wheel = center_clutch_chain_idler_wheel_poses())
         if (center_clutch_chain_wheel_hits_bar(col, row, wheel))
             translate([
                 wheel[0],
@@ -4558,6 +4567,15 @@ module selected_center_chain_emboss_detail_part() {
                 SNAKE_CHAIN_CENTER_Z
             ])
                 ch1_03c_bearing_blunt_idler(SNAKE_CHAIN_GUIDE_TEETH);
+}
+
+module selected_center_chain_emboss_brush_only_part() {
+    // Hidden diagnostic-only view of the actual generated "inflate brush"
+    // volume.  It intentionally omits the bearing bar, chain and wheel so the
+    // continuous root, dome and rounded nose can be inspected without an
+    // occluding assembly part.  It is never exported by the production
+    // manifest; the canonical result remains fused into center_mechanism_plate.
+    center_clutch_chain_emboss_cheeks(selected_col(), selected_row());
 }
 
 // Standalone inspection export for the fixed front/rear compartment
@@ -4773,7 +4791,7 @@ module center_clutch_native_snake_chain() {
 }
 
 module center_clutch_native_snake_guides() {
-    for (wheel = WHEEL_POSES)
+    for (wheel = center_clutch_chain_idler_wheel_poses())
         translate([
             wheel[0],
             wheel[1],
@@ -4789,6 +4807,20 @@ module selected_center_clutch_chain_bearing_collision_part() {
             center_clutch_native_snake_chain();
             center_clutch_native_snake_guides();
         }
+    }
+}
+
+// Empty CSG witness: every generated green idler axle boss must stop before
+// the actual 8T wheel/bearing envelope. A non-empty result means a board-side
+// blind-pilot support has intruded into a rotating guide wheel.
+module selected_center_clutch_chain_idler_mount_collision_part() {
+    intersection() {
+        union() {
+            center_clutch_chain_idler_partition_mounts();
+            for (row = [0:N_ROW - 1])
+                center_clutch_chain_idler_row_mounts(row);
+        }
+        center_clutch_native_snake_guides();
     }
 }
 
@@ -5141,8 +5173,12 @@ module clutch_scene_geometry() {
         selected_center_partition_belt_collision_part();
     } else if (CLUTCH_PART == "center_clutch_chain_bearing_collision") {
         selected_center_clutch_chain_bearing_collision_part();
+    } else if (CLUTCH_PART == "center_clutch_chain_idler_mount_collision") {
+        selected_center_clutch_chain_idler_mount_collision_part();
     } else if (CLUTCH_PART == "center_chain_emboss_detail") {
         selected_center_chain_emboss_detail_part();
+    } else if (CLUTCH_PART == "center_chain_emboss_brush_only") {
+        selected_center_chain_emboss_brush_only_part();
     } else if (CLUTCH_PART == "vertical_spline_support_chain_collision") {
         selected_vertical_spline_support_chain_collision_part();
     } else if (CLUTCH_PART == "vertical_spline_support_drive_collision") {
@@ -5670,8 +5706,51 @@ echo(
         center_clutch_chain_relief_z0()
             - (center_clutch_axis_z() + CENTER_CLUTCH_BEARING_OD / 2)),
     "chainMotherSupportCollisionPart=cabinet-clutch/center_clutch_chain_bearing_collision",
+    str("chainIdlerCount=", len(center_clutch_chain_idler_wheel_poses())),
+    str("chainIdlerPartitionMountCount=",
+        center_clutch_chain_idler_partition_count()),
+    str("chainIdlerRowMountCount=", center_clutch_chain_idler_row_count()),
+    "chainIdlerPowerWheelExcluded=true",
+    "chainIdlerBearingNominal=3x6x2",
+    str("chainIdlerBearingIdMm=", CENTER_CLUTCH_CHAIN_IDLER_BEARING_ID),
+    str("chainIdlerBearingOdMm=", CENTER_CLUTCH_CHAIN_IDLER_BEARING_OD),
+    str("chainIdlerBearingWidthMm=", CENTER_CLUTCH_CHAIN_IDLER_BEARING_W),
+    "chainIdlerAxleAxis=+Z",
+    str("chainIdlerAxleProfile=", CENTER_CLUTCH_CHAIN_IDLER_AXLE_PROFILE),
+    str("chainIdlerAxleSmoothDiameterMm=", CENTER_CLUTCH_CHAIN_IDLER_AXLE_D),
+    str("chainIdlerAxleSmoothLengthMm=", CENTER_CLUTCH_CHAIN_IDLER_AXLE_SMOOTH_L),
+    str("chainIdlerThreadLengthMm=", CENTER_CLUTCH_CHAIN_IDLER_THREAD_L),
+    str("chainIdlerThreadPilotDiameterMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_D),
+    str("chainIdlerThreadPilotDepthMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_DEPTH),
+    str("chainIdlerBossOuterDiameterMm=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_OD),
+    str("chainIdlerBossRootDiameterMm=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD),
+    str("chainIdlerBossRootFlareThicknessMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_FLARE_T),
+    str("chainIdlerBossRootOverlapMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OVERLAP),
+    str("chainIdlerBossRearZMm=", center_clutch_chain_idler_boss_rear_z()),
+    str("chainIdlerBossAxialClearanceMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_AXIAL_CLEARANCE),
+    str("chainIdlerBossMountMode=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_MOUNT_MODE),
+    str("chainIdlerBossScrewEntry=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_SCREW_ENTRY),
+    "chainIdlerMountPart=cabinet-clutch/cabinet_clutch_partition+center_mechanism_plate",
+    "chainIdlerAxlePart=cabinet-chain/cabinet_chain_idler_axles",
     str("chainMotherSupportEmbossMode=",
         CENTER_CLUTCH_CHAIN_EMBOSS_MODE),
+    str("chainMotherSupportEmbossForcePoint=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_POINT_MODE),
+    str("chainMotherSupportEmbossForceDirection=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_DIRECTION_MODE),
+    str("chainMotherSupportEmbossForceMagnitudeScale=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_MAGNITUDE_SCALE),
+    str("chainMotherSupportEmbossBrushRadiusScale=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_RADIUS_SCALE),
+    str("chainMotherSupportEmbossBrushAxialScale=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_AXIAL_SCALE),
+    str("chainMotherSupportEmbossBrushFalloff=",
+        CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_FALLOFF),
     str("chainMotherSupportEmbossDepthMm=",
         CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH),
     str("chainMotherSupportEmbossRootWidthMm=",
@@ -6034,6 +6113,7 @@ assert(
     || CLUTCH_PART == "center_partition_belt_collision"
     || CLUTCH_PART == "center_clutch_chain_bearing_collision"
     || CLUTCH_PART == "center_chain_emboss_detail"
+    || CLUTCH_PART == "center_chain_emboss_brush_only"
     || CLUTCH_PART == "vertical_spline_support_chain_collision"
     || CLUTCH_PART == "vertical_spline_support_drive_collision"
     || CLUTCH_PART == "vertical_spline_upper_carrier_drive_collision"

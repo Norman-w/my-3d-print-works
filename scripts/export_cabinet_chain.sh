@@ -15,7 +15,7 @@ OUT_STL="${PROJECT_ROOT}/output/3d-print/cabinet-chain"
 OUT_CLUTCH="${PROJECT_ROOT}/output/3d-print/cabinet-clutch"
 OUT_PNG="${PROJECT_ROOT}/output/previews"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
-PARTS=(plates rollers pins sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware)
+PARTS=(plates rollers pins sprockets idlers bearings idler_axles clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware)
 QUALITY="${QUALITY:-2}"
 
 # ===== 分区：模型/类型 =====
@@ -113,9 +113,15 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_idlers": {
-        "name": "8T 小尺寸绿色钝齿轴承导向轮（8颗）",
+        "name": "8T 小尺寸绿色钝齿轴承导向轮（9颗）",
         "role": "printed",
         "color": "#7dcc4a",
+        "explosion": [0, 0, 0],
+    },
+    "cabinet_chain_idler_axles": {
+        "name": "绿色导向轮固定轴·M3 肩螺钉/Ø3 光杆×9（采购件参考）",
+        "role": "purchased",
+        "color": "#aeb6bf",
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_bearings": {
@@ -249,7 +255,7 @@ for part in "${PARTS[@]}"; do
 done
 
 if [[ -f "$INSPECT_PY" ]]; then
-    for part in sprockets idlers bearings clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware; do
+    for part in sprockets idlers bearings idler_axles clutch_trigger_magnet motor motor_shaft motor_cover motor_spring_hardware; do
         echo "→ inspect cabinet_chain_${part}.stl"
         python3 "$INSPECT_PY" --require-watertight "${OUT_STL}/cabinet_chain_${part}.stl"
     done

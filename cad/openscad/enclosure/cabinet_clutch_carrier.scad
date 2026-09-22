@@ -56,13 +56,22 @@ CENTER_CLUTCH_BEARING_BLOCK_Z_OVERLAP = 0.20;
 CENTER_CLUTCH_CHAIN_RELIEF_RADIAL_CLEARANCE = 0.55;
 CENTER_CLUTCH_CHAIN_RELIEF_AXIAL_CLEARANCE = 0.45;
 
-// The relief is paired with a generated opposite-side offset cheek.  This is
-// the FDM equivalent of a formed/embossed flange: the chain-side window stays
-// open, while a smooth radial-flow cheek carries the local bending load back
-// into the solid bar.  All placement comes from the hit wheel pose below;
-// these values are section/printability constraints, not station coordinates.
+// The relief is paired with a generated opposite-side "clay brush" bulge.  It
+// is deliberately not a second rectangular gusset: the removed relief volume
+// supplies the brush's point, direction and strength, just as an Inflate/Clay
+// brush in a sculpting app would push the host material outward.  The chain
+// window stays open; the rounded bulge carries the local bending load back into
+// the solid bar.  All placement comes from the hit wheel pose below.
 CENTER_CLUTCH_CHAIN_EMBOSS_MODE =
-    "generated-opposite-side-full-face-radiused-tapered-cheek";
+    "relief-volume-inflated-nomad-brush";
+CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_POINT_MODE =
+    "relief-centroid";
+CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_DIRECTION_MODE =
+    "relief-to-opposite-host-face";
+CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_MAGNITUDE_SCALE = 1.00;
+CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_RADIUS_SCALE = 0.82;
+CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_AXIAL_SCALE = 1.00;
+CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_FALLOFF = 1.50;
 CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH = 3.40;
 CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_WIDTH = 5.80;
 CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_WIDTH = 3.40;
@@ -72,21 +81,44 @@ CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP = 1.20;
 CENTER_CLUTCH_CHAIN_EMBOSS_Z_MARGIN = 0.90;
 CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_SUPPORT_MARGIN = 0.75;
 CENTER_CLUTCH_CHAIN_EMBOSS_RADIAL_BULGE = 0.12;
-CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS = 28;
+CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS = 47;
 CENTER_CLUTCH_CHAIN_EMBOSS_CAP_STEPS = 16;
-// A small 3D edge radius rounds the cheek's chain-facing, top and bottom
-// surfaces as well as its outer nose.  The root still penetrates the bar, so
+// The lofted section radius rounds the cheek's chain-facing, top and bottom
+// surfaces as well as its outer nose. The root still penetrates the bar, so
 // this rounds the exposed load path instead of leaving a sharp plate edge.
 CENTER_CLUTCH_CHAIN_EMBOSS_EDGE_RADIUS = 0.50;
-// The edge radius above rounds the cheek itself, but cannot round the seam
-// where the cheek grows out of the rectangular bearing bar.  This separate
-// root transition is a shallow, fully parametric 3D flare: it is wider and
-// taller inside the bar, then eases back to the cheek section outside the bar.
-// It is deliberately small so the load path stays broad without making a
-// mushroom-shaped overhang.  The same transition exists on the hidden face.
+// These root parameters define the broad embedded blend and remain part of
+// the exported mechanical contract. The actual visible transition is one
+// continuous smoothstep loft, not a second root block or overlay.
 CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_RADIUS = 0.85;
-CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE = 0.60;
+CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE = 1.10;
 CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_STEPS = 10;
+
+// 固定绿色 8T 导向轮的唯一机械接口。绿色轮不是主动轮：轮内压入
+// MR63/3×6×2，内圈由可采购的 M3 肩螺钉（光杆 Ø3）承载，螺纹端从
+// 后仓 -Z 侧拧入板上一体 Boss 的盲导孔。普通全牙 M3 不穿过轴承。
+// 轮心来自生成的 WHEEL_POSES；蓝色 12T 主动轮故意排除在这组安装座之外。
+CENTER_CLUTCH_CHAIN_IDLER_BEARING_ID = 3.00;
+CENTER_CLUTCH_CHAIN_IDLER_BEARING_OD = 6.00;
+CENTER_CLUTCH_CHAIN_IDLER_BEARING_W = 2.00;
+CENTER_CLUTCH_CHAIN_IDLER_AXLE_D = 3.00;
+CENTER_CLUTCH_CHAIN_IDLER_AXLE_PROFILE =
+    "M3-shoulder-screw-smooth-3mm-round";
+CENTER_CLUTCH_CHAIN_IDLER_AXLE_SMOOTH_L = 8.50;
+CENTER_CLUTCH_CHAIN_IDLER_THREAD_L = 4.20;
+CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_D = 2.40;
+CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_DEPTH = 4.20;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_OD = 8.00;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD = 11.00;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_FLARE_T = 1.50;
+// Do not leave the tapered root merely coplanar with the board face.  The
+// extra 0.25 mm is buried inside the partition/row strip so the Boss and its
+// host are one printable solid even at the row-1 idler near the support bar.
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OVERLAP = 0.25;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_AXIAL_CLEARANCE = 0.45;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_MOUNT_MODE =
+    "partition-or-row-strip-integral-blind-pilot";
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_SCREW_ENTRY = "-Z";
 
 // The removable plate seats directly on the rear face of the fixed partition.
 // Every drawer cell repeats the same four-corner boss pattern: the bosses
@@ -344,6 +376,64 @@ function center_clutch_chain_relief_radius() =
     SNAKE_CHAIN_GUIDE_OUTER_R_MM
         + CENTER_CLUTCH_CHAIN_RELIEF_RADIAL_CLEARANCE;
 
+// Treat the removed chain window as a sculpting brush rather than a hard-coded
+// added block.  The three force elements are explicit and traceable:
+//   point     = the generated relief cylinder centroid (the hit wheel pose),
+//   direction = from that relief toward the opposite solid host face, and
+//   magnitude = the requested emboss depth scaled by the brush strength.
+// The radius and Z span are likewise taken from the same relief envelope, so a
+// future chain/guide change reshapes the bulge instead of leaving a stale lug.
+function center_clutch_chain_emboss_force_magnitude() =
+    CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
+        * CENTER_CLUTCH_CHAIN_EMBOSS_FORCE_MAGNITUDE_SCALE;
+
+function center_clutch_chain_emboss_brush_radius() =
+    center_clutch_chain_relief_radius()
+        * CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_RADIUS_SCALE;
+
+function center_clutch_chain_emboss_brush_half_z() =
+    center_clutch_chain_relief_z_length() / 2
+        * CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_AXIAL_SCALE
+        + CENTER_CLUTCH_CHAIN_EMBOSS_Z_MARGIN;
+
+// WHEEL_POSES 的第 0 项是唯一的 12T 动力轮；其余九项才是网页中显示为
+// 绿色的 8T 固定导向轮。这个过滤器同时被安装座、链条碰撞和输出固定条
+// 让位使用，避免把蓝色主动轮误切成绿色轴承座。
+function center_clutch_chain_idler_wheel_poses() = [
+    for (i = [1:len(WHEEL_POSES) - 1]) WHEEL_POSES[i]
+];
+
+function center_clutch_chain_idler_boss_rear_z() =
+    SNAKE_CHAIN_CENTER_Z
+        + SNAKE_CHAIN_HALF_DEPTH
+        + CENTER_CLUTCH_CHAIN_IDLER_BOSS_AXIAL_CLEARANCE;
+
+function center_clutch_chain_idler_row_host(wheel) =
+    let(
+        matches = [
+            for (row = [0:N_ROW - 1])
+                if (
+                    wheel[0] >= center_clutch_row_plate_x0()
+                    && wheel[0] <= center_clutch_row_plate_x1()
+                    && wheel[1] >= center_clutch_plate_y0(row)
+                    && wheel[1] <= center_clutch_plate_y1(row)
+                ) row
+        ]
+    )
+        len(matches) == 0 ? -1 : matches[0];
+
+function center_clutch_chain_idler_partition_count() =
+    len([
+        for (wheel = center_clutch_chain_idler_wheel_poses())
+            if (center_clutch_chain_idler_row_host(wheel) < 0) wheel
+    ]);
+
+function center_clutch_chain_idler_row_count() =
+    len([
+        for (wheel = center_clutch_chain_idler_wheel_poses())
+            if (center_clutch_chain_idler_row_host(wheel) >= 0) wheel
+    ]);
+
 function center_clutch_chain_emboss_smoothstep(u) =
     u * u * (3 - 2 * u);
 
@@ -382,39 +472,94 @@ function center_clutch_chain_emboss_root_width(nx, ny) =
 function center_clutch_chain_emboss_profile_half_width(
     u,
     root_face_width,
-    root_width
+    root_width,
+    force_depth = CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
 ) =
     let(
-        // Use the larger of the overlap and the declared root radius as the
-        // longitudinal blend length.  This keeps the radius parameter tied to
-        // the actual load path instead of leaving it as display metadata.
-        root_blend_s = max(
-            CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP,
-            CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_RADIUS
-        ),
-        outer_blend_s = CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
+        // The bar face is at u = overlap / total path.  The inner blend
+        // finishes exactly there, and the outer taper starts from the same
+        // width.  Smoothstep has zero slope at both ends, so no shoulder is
+        // introduced where the cheek emerges from the solid bar.
+        total_s = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP
+            + force_depth
             - CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS,
-        root_blend_u = root_blend_s / (root_blend_s + outer_blend_s),
+        bar_face_u = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP / total_s,
         root_face_half = root_face_width / 2,
         root_half = root_width / 2,
         outer_half = CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_WIDTH / 2,
-        blend_u = u <= root_blend_u
-            ? u / root_blend_u
-            : (u - root_blend_u) / (1 - root_blend_u),
-        eased = center_clutch_chain_emboss_smoothstep(blend_u),
-        start_half = u <= root_blend_u ? root_face_half : root_half,
-        end_half = u <= root_blend_u ? root_half : outer_half,
-        radial_bulge = u > root_blend_u
-            ? CENTER_CLUTCH_CHAIN_EMBOSS_RADIAL_BULGE
-                * sin(180 * blend_u)
-            : 0
+        inside_u = min(1, u / bar_face_u),
+        outside_u = max(
+            0,
+            min(1, (u - bar_face_u) / (1 - bar_face_u))
+        ),
+        inside_eased = center_clutch_chain_emboss_smoothstep(inside_u),
+        outside_eased = center_clutch_chain_emboss_smoothstep(outside_u),
+        brush_falloff = pow(
+            max(0, sin(180 * outside_u)),
+            CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_FALLOFF
+        ),
+        brush_bulge = center_clutch_chain_emboss_brush_radius()
+            * CENTER_CLUTCH_CHAIN_EMBOSS_RADIAL_BULGE
+            * brush_falloff,
+        half_width = u <= bar_face_u
+            ? root_face_half + (root_half - root_face_half) * inside_eased
+            : root_half + (outer_half - root_half) * outside_eased,
+        radial_bulge = u > bar_face_u ? brush_bulge : 0
     )
-        start_half + (end_half - start_half) * eased + radial_bulge;
+        half_width + radial_bulge;
 
-function center_clutch_chain_emboss_point(cx, cy, nx, ny, tx, ty, s, t) = [
-    cx + nx * s + tx * t,
-    cy + ny * s + ty * t
-];
+function center_clutch_chain_emboss_profile_half_z(
+    u,
+    base_half_z,
+    force_depth = CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
+) =
+    let(
+        total_s = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP
+            + force_depth
+            - CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS,
+        bar_face_u = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP / total_s,
+        inside_u = min(1, u / bar_face_u),
+        inside_eased = center_clutch_chain_emboss_smoothstep(inside_u),
+        outside_u = max(
+            0,
+            min(1, (u - bar_face_u) / (1 - bar_face_u))
+        ),
+        brush_falloff = pow(
+            max(0, sin(180 * outside_u)),
+            CENTER_CLUTCH_CHAIN_EMBOSS_BRUSH_FALLOFF
+        ),
+        brush_z_bulge = center_clutch_chain_emboss_brush_radius()
+            * 0.08
+            * brush_falloff
+    )
+        base_half_z + (
+            u <= bar_face_u
+                ? CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE * (1 - inside_eased)
+                : brush_z_bulge
+        );
+
+function center_clutch_chain_emboss_profile_half_s(
+    u,
+    force_depth = CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
+) =
+    let(
+        total_s = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP
+            + force_depth
+            - CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS,
+        bar_face_u = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP / total_s,
+        outside_u = max(
+            0,
+            min(1, (u - bar_face_u) / (1 - bar_face_u))
+        ),
+        outside_eased = center_clutch_chain_emboss_smoothstep(outside_u),
+        root_half_s = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_RADIUS
+            + CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE,
+        outer_half_s = CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS
+    )
+        u <= bar_face_u
+            ? root_half_s
+            : root_half_s
+                + (outer_half_s - root_half_s) * outside_eased;
 
 module center_clutch_chain_emboss_root_section(
     cx,
@@ -438,53 +583,7 @@ module center_clutch_chain_emboss_root_section(
     ])
         rotate([0, 0, atan2(ny, nx)])
             scale([half_s, half_t, half_z])
-                sphere(r = 1, $fn = 24);
-}
-
-module center_clutch_chain_emboss_root_transition(
-    cx,
-    cy,
-    nx,
-    ny,
-    support_distance,
-    root_width,
-    z0,
-    z1
-) {
-    root_r = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_RADIUS;
-    root_flare = CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FLARE;
-    z_center = (z0 + z1) / 2;
-    cheek_half_z = (z1 - z0) / 2;
-    start_s = support_distance
-        - CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP
-        + root_r;
-    end_s = support_distance + root_r;
-    for (i = [0:CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_STEPS - 1]) {
-        u0 = i / CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_STEPS;
-        u1 = (i + 1) / CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_FILLET_STEPS;
-        s0 = start_s + (end_s - start_s) * u0;
-        s1 = start_s + (end_s - start_s) * u1;
-        // Smoothstep keeps the tangent and Z dimensions from changing with a
-        // visible kink at the rectangular bar's outside face.
-        e0 = center_clutch_chain_emboss_smoothstep(u0);
-        e1 = center_clutch_chain_emboss_smoothstep(u1);
-        t0 = root_width / 2
-            + root_flare * (1 - e0);
-        t1 = root_width / 2
-            + root_flare * (1 - e1);
-        z_half0 = cheek_half_z + root_flare * (1 - e0);
-        z_half1 = cheek_half_z + root_flare * (1 - e1);
-        hull() {
-            center_clutch_chain_emboss_root_section(
-                cx, cy, nx, ny, s0,
-                root_r * 0.84, t0, z_half0, z_center
-            );
-            center_clutch_chain_emboss_root_section(
-                cx, cy, nx, ny, s1,
-                root_r * 0.84, t1, z_half1, z_center
-            );
-        }
-    }
+                sphere(r = 1, $fn = 48);
 }
 
 function center_clutch_chain_wheel_hits_bar(col, row, wheel) =
@@ -516,109 +615,108 @@ function center_clutch_chain_emboss_normal_y(col, row, wheel) =
         abs(dx) >= abs(dy) ? 0 : (dy >= 0 ? 1 : -1);
 
 module center_clutch_chain_emboss_cheek(col, row, wheel) {
+    // The radiused cheek is the formed-looking reinforcement on the opposite
+    // side of the chain relief. It is fused into the same carrier as the blind
+    // idler Boss; it is not a second STL or a viewer-only overlay.
     if (center_clutch_chain_wheel_hits_bar(col, row, wheel)) {
         cx = center_clutch_axis_x(col);
         cy = center_clutch_output_bearing_bar_center_y(row);
         nx = center_clutch_chain_emboss_normal_x(col, row, wheel);
         ny = center_clutch_chain_emboss_normal_y(col, row, wheel);
-        tx = -ny;
-        ty = nx;
         support_distance = center_clutch_chain_emboss_support_half_width(nx, ny);
+        // The wheel pose is the brush force point. nx/ny is the force direction
+        // from the removed relief toward the opposite solid host face, and the
+        // depth below is the force magnitude. Keeping these values local makes
+        // the sculpt-like deformation follow each generated wheel independently.
+        force_point = [wheel[0], wheel[1], SNAKE_CHAIN_CENTER_Z];
+        force_direction = [nx, ny, 0];
+        force_depth = center_clutch_chain_emboss_force_magnitude();
         root_width = center_clutch_chain_emboss_root_width(nx, ny);
-        // The mating face is deliberately at least the generated root width.
-        // It is embedded in the bar by root overlap, so the extra 0.60 mm
-        // support margin does not protrude into the chain envelope; it makes
-        // the visible bar-to-cheek contact broad instead of a thin neck.
-        root_face_width = root_width;
+        support_edge_span = center_clutch_chain_emboss_support_edge_span(nx, ny);
+        // Match the real bar-face span at the load root.  The cheek then
+        // tapers continuously toward the chain-side nose; it does not start
+        // with a narrow neck or a wider-than-supported mushroom head.
+        // Keep the visible root just inside the actual support face.  This
+        // avoids a coplanar strip along the bar's top/bottom edges while the
+        // cheek still overlaps deeply in the normal direction; the result is
+        // a fused, printable root rather than an edge-to-edge attachment.
+        root_face_width = min(root_width, support_edge_span - 2 * EPS);
+        profile_root_width = root_face_width;
         root_face_s = support_distance
             - CENTER_CLUTCH_CHAIN_EMBOSS_ROOT_OVERLAP;
         outer_center_s = support_distance
-            + CENTER_CLUTCH_CHAIN_EMBOSS_DEPTH
+            + force_depth
             - CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS;
-        z0 = center_clutch_chain_relief_z0()
-            - CENTER_CLUTCH_CHAIN_EMBOSS_Z_MARGIN;
-        z1 = center_clutch_chain_relief_z1()
-            + CENTER_CLUTCH_CHAIN_EMBOSS_Z_MARGIN;
-        color("#536d78")
-            union() {
-                // Round every exposed cheek edge in 3D.  The source profile
-                // is still the parameterized full-face/tapered section;
-                // Minkowski is only the small print-friendly edge treatment
-                // and is fused into the bar before the cuts are made.
-                minkowski() {
-                    translate([
-                        0,
-                        0,
-                        z0 + CENTER_CLUTCH_CHAIN_EMBOSS_EDGE_RADIUS
-                    ])
-                        linear_extrude(
-                            height = z1 - z0
-                                - 2 * CENTER_CLUTCH_CHAIN_EMBOSS_EDGE_RADIUS,
-                            convexity = 10
-                        )
-                            polygon(points = concat(
-                            [
-                                for (i = [0:CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS])
-                                    let(u = i / CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS)
-                                        center_clutch_chain_emboss_point(
-                                            cx, cy, nx, ny, tx, ty,
-                                            center_clutch_chain_emboss_profile_s(
-                                                u, root_face_s, outer_center_s
-                                            ),
-                                            center_clutch_chain_emboss_profile_half_width(
-                                                u, root_face_width, root_width
-                                            )
-                                        )
-                            ],
-                            [
-                                for (i = [1:CENTER_CLUTCH_CHAIN_EMBOSS_CAP_STEPS])
-                                    let(theta = 180 * i
-                                        / CENTER_CLUTCH_CHAIN_EMBOSS_CAP_STEPS)
-                                        center_clutch_chain_emboss_point(
-                                            cx, cy, nx, ny, tx, ty,
-                                            outer_center_s
-                                                + CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_RADIUS
-                                                    * sin(theta),
-                                            (CENTER_CLUTCH_CHAIN_EMBOSS_OUTER_WIDTH / 2)
-                                                * cos(theta)
-                                        )
-                            ],
-                            [
-                                for (i = [CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS - 1:-1:0])
-                                    let(u = i / CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS)
-                                        center_clutch_chain_emboss_point(
-                                            cx, cy, nx, ny, tx, ty,
-                                            center_clutch_chain_emboss_profile_s(
-                                                u, root_face_s, outer_center_s
-                                            ),
-                                            -center_clutch_chain_emboss_profile_half_width(
-                                                u, root_face_width, root_width
-                                            )
-                                        )
-                            ]
-                            ));
-                    sphere(
-                        r = CENTER_CLUTCH_CHAIN_EMBOSS_EDGE_RADIUS,
-                        $fn = 20
+        brush_half_z = center_clutch_chain_emboss_brush_half_z();
+        z0 = force_point[2] - brush_half_z;
+        z1 = force_point[2] + brush_half_z;
+        // Use one continuous family of overlapping convex-hull brush dabs,
+        // fused into the bar before the chain window is cut. The relief
+        // supplies the force point, radius and axial span; the generated
+        // opposite-face normal supplies the push axis. The broad root is
+        // buried in the bar so the visible result is one material volume,
+        // not a colored add-on or a narrow-neck mushroom.
+        hull() {
+            for (i = [0:CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS - 1]) {
+                    u0 = i / CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS;
+                    u1 = (i + 1) / CENTER_CLUTCH_CHAIN_EMBOSS_PROFILE_STEPS;
+                    s0 = center_clutch_chain_emboss_profile_s(
+                        u0, root_face_s, outer_center_s
+                    );
+                    s1 = center_clutch_chain_emboss_profile_s(
+                        u1, root_face_s, outer_center_s
+                    );
+                    t0 = center_clutch_chain_emboss_profile_half_width(
+                        u0, root_face_width, profile_root_width, force_depth
+                    );
+                    t1 = center_clutch_chain_emboss_profile_half_width(
+                        u1, root_face_width, profile_root_width, force_depth
+                    );
+                    // Keep the longitudinal section radius constant across
+                    // adjacent hulls.  The width and Z profiles carry the
+                    // root fillet; a changing hull radius would make the
+                    // shared section edge numerically overlap itself in the
+                    // Manifold STL triangulator.
+                    half_s0 = center_clutch_chain_emboss_profile_half_s(
+                        u0, force_depth
+                    );
+                    half_s1 = center_clutch_chain_emboss_profile_half_s(
+                        u1, force_depth
+                    );
+                    half_z0 = center_clutch_chain_emboss_profile_half_z(
+                        u0, (z1 - z0) / 2, force_depth
+                    );
+                    half_z1 = center_clutch_chain_emboss_profile_half_z(
+                        u1, (z1 - z0) / 2, force_depth
+                    );
+                    // A single hull over the complete brush path is
+                    // intentional. Pairwise hulls leave visible lobe seams;
+                    // the global hull makes the material read as one
+                    // continuous inflated mound, like a clay/Inflate stroke.
+                    center_clutch_chain_emboss_root_section(
+                        cx, cy, nx, ny,
+                        s0,
+                        half_s0,
+                        t0,
+                        half_z0,
+                        (z0 + z1) / 2
+                    );
+                    center_clutch_chain_emboss_root_section(
+                        cx, cy, nx, ny,
+                        s1,
+                        half_s1,
+                        t1,
+                        half_z1,
+                        (z0 + z1) / 2
                     );
                 }
-                // Blend the two faces which were previously hidden behind
-                // the bar as well as the visible upper/lower faces.  It is a
-                // fused root transition, not a second support part.
-                center_clutch_chain_emboss_root_transition(
-                    cx, cy, nx, ny,
-                    support_distance,
-                    root_width,
-                    z0,
-                    z1
-                );
             }
-    }
+        }
 }
 
 module center_clutch_chain_emboss_cheeks(col, row) {
     if (col == 0 || col == N_COL - 1)
-        for (wheel = WHEEL_POSES)
+        for (wheel = center_clutch_chain_idler_wheel_poses())
             center_clutch_chain_emboss_cheek(col, row, wheel);
 }
 
@@ -628,7 +726,7 @@ module center_clutch_chain_axial_window(col) {
     // subtract nothing, while a future route change automatically updates the
     // affected station without a second hand-authored notch.
     if (col == 0 || col == N_COL - 1)
-        for (wheel = WHEEL_POSES)
+        for (wheel = center_clutch_chain_idler_wheel_poses())
             translate([
                 wheel[0],
                 wheel[1],
@@ -804,22 +902,27 @@ module center_clutch_output_bearing_bar_y(col, row) {
         // One solid rectangular bar runs directly from the two bearing seats
         // back into the removable mechanism plate.  It has no separate arms,
         // collars, cap or holder mounting holes.
-        union() {
-            translate([
-                x - CENTER_CLUTCH_BEARING_BLOCK_X / 2,
-                y0,
-                z0
-            ])
-                cube([
-                    CENTER_CLUTCH_BEARING_BLOCK_X,
-                    CENTER_CLUTCH_BEARING_BLOCK_Y,
-                    center_clutch_output_bearing_bar_z_length()
-                ]);
-            // The offset cheek is generated from the same relief envelope as
-            // the chain passage, then fused into the bar before all bearing
-            // pockets are cut. It is not a second printed component.
-            center_clutch_chain_emboss_cheeks(col, row);
-        }
+        // Resolve the cube-to-cheek union before cutting the chain and bearing
+        // windows.  This keeps the radiused opposite-side reinforcement a
+        // single solid at the outer row, where the generated guide pose sits
+        // within a fraction of a millimetre of the bar's Y edge.
+        render(convexity = 12)
+            union() {
+                translate([
+                    x - CENTER_CLUTCH_BEARING_BLOCK_X / 2,
+                    y0,
+                    z0
+                ])
+                    cube([
+                        CENTER_CLUTCH_BEARING_BLOCK_X,
+                        CENTER_CLUTCH_BEARING_BLOCK_Y,
+                        center_clutch_output_bearing_bar_z_length()
+                    ]);
+                // The offset cheek is generated from the same relief envelope as
+                // the chain passage, then fused into the bar before all bearing
+                // pockets are cut. It is not a second printed component.
+                center_clutch_chain_emboss_cheeks(col, row);
+            }
         // Let the side-return chain and its 8T guide pass through a bounded
         // axial window.  This is a local relief in the bar's +Z-facing chain
         // band, not a full-depth notch: both 3×6×2 bearing seats remain in
@@ -891,46 +994,145 @@ module center_clutch_mechanism_row_plate(row) {
     x0 = center_clutch_row_plate_x0();
     y0 = center_clutch_plate_y0(row);
     h = center_clutch_plate_h(row);
-    difference() {
-        union() {
-            // One continuous rear-cavity carrier strip for this drawer row.
-            // Its station supports are fused into the same printed solid.
-            translate([x0, y0, CENTER_CLUTCH_PLATE_REAR_Z])
-                cube([
-                    center_clutch_row_plate_length(),
-                    h,
-                    CENTER_CLUTCH_PLATE_T
-                ]);
-            for (col = [0:N_COL - 1]) {
-                center_clutch_linear_bearing_block_y(col, row);
-                center_clutch_output_bearing_bar_y(col, row);
+    union() {
+        render(convexity = 12)
+            difference() {
+                union() {
+                    // One continuous rear-cavity carrier strip for this drawer row.
+                    // Its station supports are fused into the same printed solid.
+                    translate([x0, y0, CENTER_CLUTCH_PLATE_REAR_Z])
+                        cube([
+                            center_clutch_row_plate_length(),
+                            h,
+                            CENTER_CLUTCH_PLATE_T
+                        ]);
+                    for (col = [0:N_COL - 1]) {
+                        center_clutch_linear_bearing_block_y(col, row);
+                        center_clutch_output_bearing_bar_y(col, row);
+                    }
+                }
+                // Keep the repeated cell datum at every station.  These holes line up
+                // with the four blind-pilot bosses already fused to the partition.
+                for (col = [0:N_COL - 1]) {
+                    x = center_clutch_axis_x(col);
+                    for (sx = [-1, 1], sy = [-1, 1])
+                        translate([
+                            x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
+                            y0 + (sy < 0
+                                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
+                                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+                            CENTER_CLUTCH_PLATE_REAR_Z - EPS
+                        ])
+                            cylinder(
+                                d = CENTER_CLUTCH_M3_CLEAR_D,
+                                h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
+                                $fn = 40
+                            );
+                    center_clutch_plate_belt_passage(col, row);
+                }
             }
-        }
-        // Keep the repeated cell datum at every station.  These holes line up
-        // with the four blind-pilot bosses already fused to the partition.
-        for (col = [0:N_COL - 1]) {
-            x = center_clutch_axis_x(col);
-            for (sx = [-1, 1], sy = [-1, 1])
-                translate([
-                    x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-                    y0 + (sy < 0
-                        ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                        : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
-                    CENTER_CLUTCH_PLATE_REAR_Z - EPS
-                ])
-                    cylinder(
-                        d = CENTER_CLUTCH_M3_CLEAR_D,
-                        h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
-                        $fn = 40
-                    );
-            center_clutch_plate_belt_passage(col, row);
-        }
+            // Add each green-idler Boss after the row-strip's belt and mounting
+            // cuts. Its own blind pilot remains local to the Boss and cannot pick
+            // up a coincident edge from a neighboring bearing-bar relief.
+            center_clutch_chain_idler_row_mounts(row);
     }
 }
 
 module center_clutch_mechanism_row_plates() {
+    // The three carrier strips are disjoint physical shells in one published
+    // STL. Keep them as separate children so Manifold does not invent a
+    // coincident seam while merging the repeated X/Z profiles; each row is
+    // already rendered and validated as its own closed solid.
     for (row = [0:N_ROW - 1])
         center_clutch_mechanism_row_plate(row);
+}
+
+// 一体化的导向轮轴承座。根部用 11 mm 圆角/锥形承力台，后端缩到 Ø8
+// 轴承轴座，避免“细腿+大头”悬空结构；盲孔从 -Z 后仓侧开口，孔底不
+// 穿入隔板或离合行板。这个模块只在两个真实承载板里被引用，不产生第二
+// 套独立 STL。
+module center_clutch_chain_idler_mount_boss(x, y, host_rear_z) {
+    rear_z = center_clutch_chain_idler_boss_rear_z();
+    flare_t = CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_FLARE_T;
+    flare_z = host_rear_z - flare_t;
+    host_overlap = CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OVERLAP;
+    main_length = flare_z - rear_z;
+    pilot_depth = min(
+        CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_DEPTH,
+        main_length + flare_t - 0.75
+    );
+    assert(main_length > 0.50,
+        "green idler boss must reach from the board to the chain datum");
+    assert(pilot_depth > 2.50,
+        "green idler M3 blind pilot must retain useful thread engagement");
+    difference() {
+        union() {
+            translate([x, y, rear_z])
+                cylinder(
+                    d = CENTER_CLUTCH_CHAIN_IDLER_BOSS_OD,
+                    h = main_length,
+                    $fn = 48
+                );
+            // The broad root is at the board side (+Z), so the bending load
+            // flows into the plate instead of ending in a thin cylindrical leg.
+            translate([x, y, flare_z])
+                cylinder(
+                    d1 = CENTER_CLUTCH_CHAIN_IDLER_BOSS_OD,
+                    d2 = CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD,
+                    h = flare_t + host_overlap,
+                    $fn = 48
+                );
+        }
+        // Ø2.4 is the same M3 self-tapping pilot datum already used by the
+        // partition/clutch-board bosses. It opens at the rear end and leaves
+        // at least 0.75 mm before the host board's rear face.
+        translate([x, y, rear_z - EPS])
+            cylinder(
+                d = CENTER_CLUTCH_CHAIN_IDLER_THREAD_PILOT_D,
+                h = pilot_depth + EPS,
+                $fn = 40
+            );
+    }
+}
+
+module center_clutch_chain_idler_row_mounts(row) {
+    for (wheel = center_clutch_chain_idler_wheel_poses())
+        if (center_clutch_chain_idler_row_host(wheel) == row)
+            center_clutch_chain_idler_mount_boss(
+                wheel[0],
+                wheel[1],
+                CENTER_CLUTCH_PLATE_REAR_Z
+            );
+}
+
+module center_clutch_chain_idler_partition_mounts() {
+    for (wheel = center_clutch_chain_idler_wheel_poses())
+        if (center_clutch_chain_idler_row_host(wheel) < 0)
+            center_clutch_chain_idler_mount_boss(
+                wheel[0],
+                wheel[1],
+                WORLD_PARTITION_BACK_Z
+            );
+}
+
+// The bottom service opening runs just below the lowest green guide. Keep a
+// broad board-side root around every partition-hosted axle. This is not a
+// filled-through hole: it only prevents the service cut from slicing away the
+// integral boss root and leaves the remaining opening continuous elsewhere.
+module center_clutch_chain_idler_partition_keep_zones() {
+    keep_d = CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD + 0.20;
+    for (wheel = center_clutch_chain_idler_wheel_poses())
+        if (center_clutch_chain_idler_row_host(wheel) < 0)
+            translate([
+                wheel[0] - keep_d / 2,
+                wheel[1] - keep_d / 2,
+                WORLD_PARTITION_BACK_Z - 2 * EPS
+            ])
+                cube([
+                    keep_d,
+                    keep_d,
+                    WORLD_PARTITION_T + 4 * EPS
+                ]);
 }
 
 module center_clutch_partition_mount_bosses(col, row) {

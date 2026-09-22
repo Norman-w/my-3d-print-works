@@ -21,6 +21,7 @@ CENTER_CONTRACT_JSON="${OUT_DIR}/center_clutch_contract.json"
 PREVIEW_DIR="${PROJECT_ROOT}/output/3d-preview"
 LEGACY_PREVIEW_DIR="${PREVIEW_DIR}/cabinet-clutch"
 PREVIEW_SOURCE_DIR="${PROJECT_ROOT}/web/cabinet-preview"
+MERGE_STL_PY="${PROJECT_ROOT}/scripts/merge_binary_stl.py"
 # These are retained as standalone library/fit-check outputs, but are not
 # published as root-page parts.  The active cabinet-chain assembly calls the
 # same parametric modules in-place, so exposing both paths creates duplicate
@@ -131,6 +132,10 @@ payload["up"] = "y"
 retired_ids = {
     "cabinet-clutch/00_tensioner_t_solid_reference",
     "cabinet-clutch/center_linear_bearing_fit_coupon",
+    # Diagnostic-only cheek/bar preview.  The production cheek and the new
+    # green-idler Bosses are already fused into center_mechanism_plate; keeping
+    # this old world-space STL visible creates a coplanar duplicate in Three.js.
+    "cabinet-clutch/center_chain_emboss_detail",
     "cabinet-chain/cabinet_chain_connector",
     "cabinet-chain/cabinet_chain_clutch_connector",
     "cabinet-chain/cabinet_chain_clutch_bearing",
@@ -407,9 +412,14 @@ chain_labels = {
         "role": "printed",
     },
     "cabinet-chain/cabinet_chain_idlers": {
-        "name": "8T 小尺寸绿色钝齿轴承导向轮（8颗）",
+        "name": "8T 小尺寸绿色钝齿轴承导向轮（9颗）",
         "color": "#7dcc4a",
         "role": "printed",
+    },
+    "cabinet-chain/cabinet_chain_idler_axles": {
+        "name": "绿色导向轮固定轴·M3 肩螺钉/Ø3 光杆×9（采购件参考）",
+        "color": "#aeb6bf",
+        "role": "purchased",
     },
     "cabinet-chain/cabinet_chain_plates": {"name": "03C 蛇形链板", "color": "#8A919C", "role": "purchased"},
     "cabinet-chain/cabinet_chain_rollers": {"name": "03C 滚子", "color": "#E8EDF2", "role": "purchased"},
@@ -1232,6 +1242,7 @@ LEGACY_CLUTCH_OUTPUTS=(
     "10_clutch_spring_reference.stl"
     "11_t_countersunk_screw_reference.stl"
     "12_clutch_fork_candidate.stl"
+    "center_chain_emboss_detail.stl"
     "center_input_carriage.stl"
     "center_guide_rails.stl"
     "center_linear_bearing_retainers.stl"
@@ -1417,13 +1428,59 @@ require_watertight_print_part() {
         --output "${REPORT_DIR}/${report_name}"
 }
 
+export_center_mechanism_plate() (
+    # Each row is generated from the same center_clutch_mechanism_row_plate()
+    # module.  The row shells are deliberately kept separate until the final
+    # binary STL container is written: a direct OpenSCAD merge of the three
+    # disjoint rows can create a two-edge seam even when every row is closed.
+    # This still publishes exactly one physical center_mechanism_plate.stl;
+    # the temporary row files never enter output/ or the browser manifest.
+    set -euo pipefail
+    local target="$1"
+    local temp_rows
+    temp_rows="$(mktemp -d "${TMPDIR:-/tmp}/smartparts-center-rows.XXXXXX")"
+    trap 'rm -rf -- "${temp_rows}"' EXIT
+
+    local row
+    local row_stl
+    local -a row_stls=()
+    for row in 0 1 2; do
+        row_stl="${temp_rows}/center_mechanism_row_${row}.stl"
+        echo "→ CLUTCH_PART=center_mechanism_row_plate_debug SELECTED_ROW=${row} → ${row_stl}"
+        (
+            cd "${SCAD_DIR}"
+            "${OPENSCAD_BIN}" \
+                --backend Manifold \
+                --export-format binstl \
+                -D "QUALITY=${QUALITY}" \
+                -D 'CLUTCH_PART="center_mechanism_row_plate_debug"' \
+                -D "ENGAGED=false" \
+                -D "SELECTED_COLUMN=${SELECTED_COLUMN}" \
+                -D "SELECTED_ROW=${row}" \
+                -o "${row_stl}" \
+                "${SCAD_FILE}"
+        )
+        [[ -s "${row_stl}" ]] || die "空中心离合行板 STL: row=${row}"
+        python3 "${INSPECT_PY}" "${row_stl}" --require-watertight --json \
+            --output "${temp_rows}/center_mechanism_row_${row}.watertight.json"
+        row_stls+=("${row_stl}")
+    done
+
+    local merged="${temp_rows}/center_mechanism_plate.stl"
+    python3 "${MERGE_STL_PY}" "${merged}" "${row_stls[@]}"
+    python3 "${INSPECT_PY}" "${merged}" --require-watertight --json \
+        --output "${REPORT_DIR}/center_mechanism_plate.json"
+    mv -f "${merged}" "${target}"
+    echo "→ 单一正式中心离合主板 → ${target}"
+)
+
 # ===== 分区：逐件输出 =====
 # These are intentionally emitted in mechanism order so a failed fit can be
 # corrected without hiding it inside a full assembly export.
 export_part "center_input_rotor" "${OUT_DIR}/center_input_rotor.stl" false 0
 export_part "center_output_rotor" "${OUT_DIR}/center_output_rotor.stl" false 0
 export_part "center_linear_bearings" "${OUT_DIR}/center_linear_bearings_reference.stl" false 0
-export_part "center_mechanism_plate" "${OUT_DIR}/center_mechanism_plate.stl" false 0
+export_center_mechanism_plate "${OUT_DIR}/center_mechanism_plate.stl"
 export_part "center_input_shaft" "${OUT_DIR}/center_input_shaft_reference.stl" false 0
 export_part "center_input_sleeve" "${OUT_DIR}/center_input_sleeve.stl" false 0
 export_part "center_input_sleeve_magnet" "${OUT_DIR}/center_input_sleeve_magnet_reference.stl" false 0
