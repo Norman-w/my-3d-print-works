@@ -114,6 +114,10 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
 ]);
 const UPPER_TENSIONER_TAILS = new Set([
   "cabinet_clutch_column_sync_tensioner",
+  // The fixed housing and its Z− opening C-capture are exported as one
+  // canonical STL. Keep it in the same focused view as the X-adjusting wheel
+  // shaft so the preview cannot hide the integral fixed part.
+  "cabinet_clutch_column_sync_tensioner_integral",
 ]);
 //#endregion
 

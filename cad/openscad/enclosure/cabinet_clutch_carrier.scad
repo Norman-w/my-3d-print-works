@@ -948,6 +948,26 @@ module center_clutch_output_bearing_bar_y(col, row) {
     }
 }
 
+module center_clutch_station_fastener_holes(x, y0, h) {
+    // Keep the four plate-to-partition clearance holes as the final CSG cut
+    // on both a single station plate and a continuous row strip.  The outer
+    // green-idler Boss roots may approach a lower corner hole, but they must
+    // never refill the hole just because their support is fused afterwards.
+    for (sx = [-1, 1], sy = [-1, 1])
+        translate([
+            x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
+            y0 + (sy < 0
+                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
+                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+            CENTER_CLUTCH_PLATE_REAR_Z - EPS
+        ])
+            cylinder(
+                d = CENTER_CLUTCH_M3_CLEAR_D,
+                h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
+                $fn = 40
+            );
+}
+
 module center_clutch_mechanism_plate(col, row) {
     x = center_clutch_axis_x(col);
     y0 = center_clutch_plate_y0(row);
@@ -973,19 +993,7 @@ module center_clutch_mechanism_plate(col, row) {
             center_clutch_output_bearing_bar_y(col, row);
         }
         // Four plate-to-partition self-tapping screw clearance holes.
-        for (sx = [-1, 1], sy = [-1, 1])
-            translate([
-                x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-                y0 + (sy < 0
-                    ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                    : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
-                CENTER_CLUTCH_PLATE_REAR_Z - EPS
-            ])
-                cylinder(
-                    d = CENTER_CLUTCH_M3_CLEAR_D,
-                    h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
-                    $fn = 40
-                );
+        center_clutch_station_fastener_holes(x, y0, h);
         center_clutch_plate_belt_passage(col, row);
     }
 }
@@ -1010,31 +1018,26 @@ module center_clutch_mechanism_row_plate(row) {
                         center_clutch_linear_bearing_block_y(col, row);
                         center_clutch_output_bearing_bar_y(col, row);
                     }
+                    // The green idler Bosses are part of the same row-strip solid.
+                    // Fuse them before the station mounting holes and belt slots
+                    // are cut, so a nearby root reinforces the plate without
+                    // blocking the M3 screw path.
+                    for (wheel = center_clutch_chain_idler_wheel_poses())
+                        if (center_clutch_chain_idler_row_host(wheel) == row)
+                            center_clutch_chain_idler_mount_boss(
+                                wheel[0],
+                                wheel[1],
+                                CENTER_CLUTCH_PLATE_REAR_Z
+                            );
                 }
                 // Keep the repeated cell datum at every station.  These holes line up
                 // with the four blind-pilot bosses already fused to the partition.
                 for (col = [0:N_COL - 1]) {
                     x = center_clutch_axis_x(col);
-                    for (sx = [-1, 1], sy = [-1, 1])
-                        translate([
-                            x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-                            y0 + (sy < 0
-                                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
-                            CENTER_CLUTCH_PLATE_REAR_Z - EPS
-                        ])
-                            cylinder(
-                                d = CENTER_CLUTCH_M3_CLEAR_D,
-                                h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
-                                $fn = 40
-                            );
+                    center_clutch_station_fastener_holes(x, y0, h);
                     center_clutch_plate_belt_passage(col, row);
                 }
             }
-            // Add each green-idler Boss after the row-strip's belt and mounting
-            // cuts. Its own blind pilot remains local to the Boss and cannot pick
-            // up a coincident edge from a neighboring bearing-bar relief.
-            center_clutch_chain_idler_row_mounts(row);
     }
 }
 

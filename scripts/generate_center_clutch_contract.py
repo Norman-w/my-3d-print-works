@@ -366,6 +366,26 @@ REQUIRED = {
     "columnSyncTensionerSupportCenterZMm",
     "columnSyncTensionerUpperSupportCenterYMm",
     "columnSyncTensionerLowerSupportCenterYMm",
+    "columnSyncTensionerOuterCShellMode",
+    "columnSyncTensionerOuterCShellAxis",
+    "columnSyncTensionerOuterCShellDepthXMm",
+    "columnSyncTensionerOuterCShellJunctionOverlapMm",
+    "columnSyncTensionerOuterCShellCutZMm",
+    "columnSyncTensionerOuterCShellArmLengthZMm",
+    "columnSyncTensionerOuterCShellHolePattern",
+    "columnSyncTensionerOuterCShellClearanceMm",
+    "columnSyncTensionerOuterCShellWallMm",
+    "columnSyncTensionerOuterCShellBossCount",
+    "columnSyncTensionerOuterCShellBossOdMm",
+    "columnSyncTensionerOuterCShellBossLengthXMm",
+    "columnSyncTensionerOuterCShellBossClearanceHoleMm",
+    "columnSyncTensionerOuterCShellBossPilotDiameterMm",
+    "columnSyncTensionerOuterCShellBossPilotDepthMm",
+    "columnSyncTensionerOuterCShellBossPilotFloorMm",
+    "columnSyncTensionerOuterCShellBossRadialClearanceMm",
+    "columnSyncTensionerOuterCShellTStemClearanceMm",
+    "columnSyncTensionerOuterCShellPart",
+    "columnSyncTensionerOuterCShellCabinetBossPart",
     "outputPart", "outputBearingSupportPart", "mechanismPlatePart", "outputShaftPart",
     "outputBearingsPart",
 }
@@ -393,6 +413,7 @@ INT_KEYS = {
     "snakeChainTriggerMagnetSegmentIndex",
     "columnSyncBeltTeeth",
     "columnSyncTensionerBearingCount",
+    "columnSyncTensionerOuterCShellBossCount",
     "chainMotherSupportEmbossProfileSteps",
     "chainMotherSupportEmbossCapSteps",
     "chainMotherSupportEmbossRootFilletSteps",
@@ -596,6 +617,41 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("下张紧支撑轴承环没有落在连续张紧轴跨度内")
     if n(contract, "columnSyncTensionerUpperSupportCenterYMm") + ring_offset >= upper_pulley_upper:
         raise RuntimeError("上张紧支撑轴承环没有落在连续张紧轴跨度内")
+    if contract.get("columnSyncTensionerOuterCShellMode") != "low-x-wall-mounted-large-C-over-small-c":
+        raise RuntimeError("张紧轮外包络必须是低 X 箱壁安装的大 C 套小 c")
+    if contract.get("columnSyncTensionerOuterCShellAxis") != "+X":
+        raise RuntimeError("张紧轮外包络安装 boss 轴向必须是世界 +X")
+    if contract.get("columnSyncTensionerOuterCShellPart") != (
+        "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral"
+    ):
+        raise RuntimeError("张紧轮外包络必须复用唯一张紧总成 STL")
+    if contract.get("columnSyncTensionerOuterCShellCabinetBossPart") != (
+        "cabinet-clutch/cabinet_frame"
+    ):
+        raise RuntimeError("张紧轮外包络 boss 必须落在唯一箱体框架件中")
+    if n(contract, "columnSyncTensionerOuterCShellBossCount") != 4:
+        raise RuntimeError("张紧轮外包络必须有四个 boss 通孔")
+    if contract.get("columnSyncTensionerOuterCShellHolePattern") != (
+        "backRail2-topArm1-bottomArm1"
+    ):
+        raise RuntimeError("张紧轮外包络孔位必须是后/左竖边两孔、上下臂各一孔")
+    if n(contract, "columnSyncTensionerOuterCShellArmLengthZMm") < 7.0:
+        raise RuntimeError("张紧轮外包络上下臂长度不足以容纳 Ø6 通孔")
+    for key, value, label in (
+        ("columnSyncTensionerOuterCShellDepthXMm", 3.0, "张紧轮外 C 轴向厚度"),
+        ("columnSyncTensionerOuterCShellJunctionOverlapMm", 3.0, "张紧轮外 C 根部承力重叠"),
+        ("columnSyncTensionerOuterCShellClearanceMm", 0.6, "张紧轮大小 C 间隙"),
+        ("columnSyncTensionerOuterCShellWallMm", 7.0, "张紧轮外 C 壁厚"),
+        ("columnSyncTensionerOuterCShellBossOdMm", 5.0, "张紧轮箱体 boss 外径"),
+        ("columnSyncTensionerOuterCShellBossLengthXMm", 2.5, "张紧轮箱体 boss 长度"),
+        ("columnSyncTensionerOuterCShellBossClearanceHoleMm", 6.0, "张紧轮外套 boss 通孔"),
+        ("columnSyncTensionerOuterCShellBossPilotDiameterMm", 2.4, "张紧轮 boss 盲孔"),
+        ("columnSyncTensionerOuterCShellBossPilotDepthMm", 2.0, "张紧轮 boss 盲孔深度"),
+        ("columnSyncTensionerOuterCShellBossPilotFloorMm", 0.5, "张紧轮 boss 盲孔底厚"),
+        ("columnSyncTensionerOuterCShellBossRadialClearanceMm", 0.5, "张紧轮 boss 径向间隙"),
+        ("columnSyncTensionerOuterCShellTStemClearanceMm", 0.8, "张紧轮 T 竖杆避让"),
+    ):
+        expect(contract, key, value, label)
     if contract.get("actuation") != "permanent-magnet":
         raise RuntimeError("中心离合必须使用永磁动作")
     if contract.get("engageOnlyWhenStopped") is not True:

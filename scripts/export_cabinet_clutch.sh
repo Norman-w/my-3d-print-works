@@ -318,11 +318,12 @@ labels = {
         "visible": True,
         "role": "printed",
     },
-    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template": {
-        "name": "列同步张紧机构 · 单一SKP承载支撑模板（上/下世界实例×2）",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral": {
+        "name": "列同步张紧机构总成 · 原总成+C包T+大C箱壁安装套（上/下实例×2）",
         "color": "#657f8c",
         "visible": True,
         "role": "printed",
+        "assemblyRole": "integral-fixed-housing-capture",
     },
     "cabinet-clutch/center_input_rotor": {
         "name": "中心 R3C3 · 输入公轮（随 D-round-D 轴 +Y 接合）",
@@ -447,7 +448,7 @@ group_map = {
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner": "01·动力母线",
-    "cabinet_clutch_column_sync_tensioner_support_template": "01·动力母线",
+    "cabinet_clutch_column_sync_tensioner_integral": "01·动力母线",
     "center_input_rotor": "02·离合机构",
     "center_output_rotor": "02·离合机构",
     "center_input_sleeve": "02·离合机构",
@@ -505,7 +506,7 @@ name_map = {
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 220T/440mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 220T/440mm/6mm",
     "cabinet_clutch_column_sync_tensioner": "列同步张紧轮轴组件 · 上下2GT轮 + 轴（沿−X调节；复用既有3×6×2轴承参考）",
-    "cabinet_clutch_column_sync_tensioner_support_template": "列同步张紧机构 · 单一SKP承载支撑模板（上/下世界实例×2）",
+    "cabinet_clutch_column_sync_tensioner_integral": "列同步张紧机构总成 · 原总成+C形扣架一体固定件（上/下实例×2）",
 }
 for part in payload.get("parts", []):
     stem = str(part.get("id", "")).rsplit("/", 1)[-1]
@@ -649,8 +650,8 @@ for part in payload.get("parts", []):
 # The tensioner support is authored once and mounted at two world-space
 # instances. The purchased 3×6×2 bearing is an existing shared reference; its
 # two relative datums stay in the contract and are not emitted as a new STL.
-tensioner_support_template_id = (
-    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template"
+tensioner_integral_part_id = (
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral"
 )
 tensioner_support_instances = [
     {
@@ -671,7 +672,7 @@ tensioner_support_instances = [
     },
 ]
 for part in payload.get("parts", []):
-    if part.get("id") == tensioner_support_template_id:
+    if part.get("id") == tensioner_integral_part_id:
         part["instanceMode"] = "world-xyz-translation"
         part["instanceCount"] = len(tensioner_support_instances)
         part["instances"] = tensioner_support_instances
@@ -805,7 +806,7 @@ power_ids = {
     "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
     "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
     "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
-    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support",
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_upper_support",
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearings_reference",
@@ -910,7 +911,7 @@ for part in payload.get("parts", []):
             "geometrySpace": "world",
             "instanceFrameMode": "world-offset-from-center-native",
         })
-    elif part.get("id") == tensioner_support_template_id:
+    elif part.get("id") == tensioner_integral_part_id:
         for instance in part.get("instances", []):
             instance["parentFrameId"] = f"tensioner-{instance['id']}"
             instance["localTransform"] = {
@@ -1025,11 +1026,18 @@ for group_id in ordered_group_ids:
             part_node(
                 "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
             ),
-            part_node(
-                "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
-            ),
-            part_node(
-                "cabinet-clutch/cabinet_clutch_column_sync_tensioner_support_template",
+            call_node(
+                "power_bus/tensioner-assembly",
+                "列同步张紧机构总成 · 一体原壳+C形扣架 + X向张紧轮轴",
+                "固定件只有一个 STL：原张紧机构外壳、C形扣架和加固件已在源端 union 成一个实体并以两处实例挂载；轮轴/轮系仅因 X 向张紧调节作为运动子件，不重复创建固定壳体。",
+                children=[
+                    part_node(
+                        "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
+                    ),
+                    part_node(
+                        "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
+                    ),
+                ],
             ),
         ]
         root["children"] = [
@@ -1230,6 +1238,7 @@ OLD_TENSIONER_OUTPUTS=(
     "05_top_bottom_bus_belts_base_reference.stl"
     "05_top_bottom_bus_belts_teeth_reference.stl"
     "cabinet_clutch_column_sync_tensioner_bearing_template.stl"
+    "cabinet_clutch_column_sync_tensioner_support_template.stl"
 )
 for old_file in "${OLD_TENSIONER_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
@@ -1366,7 +1375,7 @@ export_part "vertical_spline_bearings" "${OUT_DIR}/cabinet_clutch_vertical_splin
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
 export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
-export_part "column_sync_tensioner_support_template" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_support_template.stl" false 0
+export_part "column_sync_tensioner_integral" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_integral.stl" false 0
 
 # The root page also owns the snake drive.  Export its motor sleeve here so a
 # canonical refresh can never leave an older motor-cover STL beside the new

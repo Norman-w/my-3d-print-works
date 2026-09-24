@@ -1713,6 +1713,28 @@ def main() -> int:
             0.0,
         ):
             fail("绿色 8T 导向轮一体盲孔 Boss 进入链条/轮体包络，存在实体干涉")
+        idler_partition_boss_witness = temp_dir / "center_clutch_chain_idler_partition_boss_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_partition_boss_witness,
+            inspect_py,
+            "center_clutch_chain_idler_partition_boss_collision",
+            False,
+            0.0,
+        ):
+            fail("隔板上的绿色 8T 导向轮 Boss 与相邻 15 格定位 Boss 发生实体干涉")
+        idler_row_fastener_witness = temp_dir / "center_clutch_chain_idler_row_fastener_block.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_row_fastener_witness,
+            inspect_py,
+            "center_clutch_chain_idler_row_fastener_block",
+            False,
+            0.0,
+        ):
+            fail("连续离合行板上的绿色 8T 导向轮 Boss 堵住了四角 M3 固定孔")
         guide_witness = temp_dir / "drawer_guide_flange_rail_collision.stl"
         if run_intersection_export(
             openscad,
@@ -1813,6 +1835,7 @@ def main() -> int:
         "15 格四角 Boss 定位/自攻导孔、"
         "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 可拆承载板/轴承塔、"
         "9 个绿色 8T 导向轮的隔板/连续离合行板一体盲孔 Boss 与轮体空交集、"
+        "绿色导向 Boss/15 格隔板定位 Boss 空交集、绿色导向 Boss/行板四角 M3 孔空交集、"
         "下方承载板与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
         "上方 Boss 套装承载板与上方花键轴/2GT 轮实体交集见证、"
         "中心离合实体碰撞见证"
