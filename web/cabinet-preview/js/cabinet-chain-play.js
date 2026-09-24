@@ -93,7 +93,7 @@ const POWER_COLUMN_SYNC_BELT_IDS = new Set([
   "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
   "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
 ]);
-const POWER_COLUMN_SYNC_TENSIONER_ID = "cabinet-clutch/cabinet_clutch_column_sync_tensioner";
+const POWER_COLUMN_SYNC_TENSIONER_ROTOR_ID = "cabinet-clutch/cabinet_clutch_column_sync_tensioner_rotor";
 const POWER_COLUMN_COUNT = 5;
 const POWER_COLUMN_PULLEY_TEETH = 12;
 const POWER_COLUMN_BELT_PITCH_MM = 2;
@@ -2727,12 +2727,12 @@ export async function onPartLoaded(item) {
     }), true);
     return;
   }
-  if (id === POWER_COLUMN_SYNC_TENSIONER_ID) {
+  if (id === POWER_COLUMN_SYNC_TENSIONER_ROTOR_ID) {
     item.playBound = true;
     enqueueBind(() => Promise.resolve(bindWorldYAxisRotaryMesh(
       item,
       play.powerRotaries,
-      "column-sync-tensioner",
+      "column-sync-tensioner-rotor",
       1,
     )).catch((error) => {
       console.error("column sync tensioner bind failed", id, error);

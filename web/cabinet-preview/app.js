@@ -66,7 +66,7 @@ const DRAWER_DRIVE_TAILS = new Set([
   "cabinet_clutch_power_column_4",
   "cabinet_clutch_column_sync_belt_bottom",
   "cabinet_clutch_column_sync_belt_top",
-  "cabinet_clutch_column_sync_tensioner",
+  "cabinet_clutch_column_sync_tensioner_rotor",
   "center_input_rotor",
   "center_output_rotor",
   "center_input_shaft_reference",
@@ -113,7 +113,7 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
 ]);
 const UPPER_TENSIONER_TAILS = new Set([
-  "cabinet_clutch_column_sync_tensioner",
+  "cabinet_clutch_column_sync_tensioner_rotor",
   // The fixed housing and its Z− opening C-capture are exported as one
   // canonical STL. Keep it in the same focused view as the X-adjusting wheel
   // shaft so the preview cannot hide the integral fixed part.

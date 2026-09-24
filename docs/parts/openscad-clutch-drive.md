@@ -76,7 +76,9 @@
 的名义中心距差，由张紧机构的正常调节吸收。中心 R3C3 通过后侧中心 2GT 皮带把输出母轮的旋转传到
 抽屉前端的同步轮、粗齿轮和直线齿排。中心机构板开有按实际皮带包络生成的贯穿槽，
 皮带不能被机构板截断；薄后盖不承受中心传动载荷。网页世界中的张紧机构按“单一模板 + 世界实例”挂载，
-不复制相同 STL：`cabinet_clutch_column_sync_tensioner.stl` 只包含上下 2GT 轮、共轴张紧轴和轮毂轴承座；
+不复制相同 STL：`cabinet_clutch_column_sync_tensioner_rotor.stl` 只包含上下 2GT 轮和共轴圆轴。
+此前拆出的独立矩形轮轴导向桥只有 `0.50 mm` 轴向实体长度，不能构成有效轴承承力路径，已从默认总装、导出目录和网页清单移除；
+后续必须按真实轴承外圈和滑台受力路径重新设计一体式承载结构，不能用薄方块占位；
 `cabinet_clutch_column_sync_tensioner_support_template.stl` 是唯一一份 SKP 承载支撑模板，由 manifest 在上/下
 两个世界位置实例化。`3×6×2` 采购轴承沿用已有的共享参考几何/采购件定义，只在中心契约中记录两处
 相对轴位和轮内 `Ø6.10 mm` 座孔，不再新增张紧轴承 STL。两处支撑环沿世界 `+Y` 穿过同一根张紧轴，
@@ -165,7 +167,7 @@ center_linear_bearings
 center_output_shaft
 center_output_bearings
 center_mechanism_plate
-column_sync_tensioner
+column_sync_tensioner_rotor
 column_sync_tensioner_support_template
 drawer_rack_guide_rollers
 drawer_rack_guide_rails

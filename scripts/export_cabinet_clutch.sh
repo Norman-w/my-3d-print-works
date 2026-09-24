@@ -312,8 +312,8 @@ labels = {
         "visible": True,
         "role": "purchased",
     },
-    "cabinet-clutch/cabinet_clutch_column_sync_tensioner": {
-        "name": "列同步张紧轮轴组件 · 上下2GT轮 + 轴（沿−X调节；复用既有3×6×2轴承参考）",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_rotor": {
+        "name": "列同步张紧轮转子组 · 上下2GT轮 + 共轴圆轴（只旋转；沿−X调节）",
         "color": "#f0a23b",
         "visible": True,
         "role": "printed",
@@ -447,7 +447,7 @@ group_map = {
     "cabinet_clutch_vertical_spline_bearings_reference": "01·动力母线",
     "cabinet_clutch_column_sync_belt_bottom": "01·动力母线",
     "cabinet_clutch_column_sync_belt_top": "01·动力母线",
-    "cabinet_clutch_column_sync_tensioner": "01·动力母线",
+    "cabinet_clutch_column_sync_tensioner_rotor": "01·动力母线",
     "cabinet_clutch_column_sync_tensioner_integral": "01·动力母线",
     "center_input_rotor": "02·离合机构",
     "center_output_rotor": "02·离合机构",
@@ -505,7 +505,7 @@ name_map = {
     "cabinet_clutch_vertical_spline_bearings_reference": "抽屉电机花键轴 上下各5枚3×6×2固定轴承×10 · 采购件",
     "cabinet_clutch_column_sync_belt_bottom": "列同步2GT皮带 · 下端 · 220T/440mm/6mm",
     "cabinet_clutch_column_sync_belt_top": "列同步2GT皮带 · 上端 · 220T/440mm/6mm",
-    "cabinet_clutch_column_sync_tensioner": "列同步张紧轮轴组件 · 上下2GT轮 + 轴（沿−X调节；复用既有3×6×2轴承参考）",
+    "cabinet_clutch_column_sync_tensioner_rotor": "列同步张紧轮转子组 · 上下2GT轮 + 共轴圆轴（只旋转；沿−X调节）",
     "cabinet_clutch_column_sync_tensioner_integral": "列同步张紧机构总成 · 原总成+C形扣架一体固定件（上/下实例×2）",
 }
 for part in payload.get("parts", []):
@@ -805,7 +805,7 @@ power_ids = {
     "cabinet-clutch/cabinet_clutch_power_motor_shaft",
     "cabinet-clutch/cabinet_clutch_column_sync_belt_bottom",
     "cabinet-clutch/cabinet_clutch_column_sync_belt_top",
-    "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
+    "cabinet-clutch/cabinet_clutch_column_sync_tensioner_rotor",
     "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_support",
     "cabinet-clutch/cabinet_clutch_vertical_spline_bearing_upper_support",
@@ -1035,7 +1035,7 @@ for group_id in ordered_group_ids:
                         "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
                     ),
                     part_node(
-                        "cabinet-clutch/cabinet_clutch_column_sync_tensioner",
+                        "cabinet-clutch/cabinet_clutch_column_sync_tensioner_rotor",
                     ),
                 ],
             ),
@@ -1239,6 +1239,8 @@ OLD_TENSIONER_OUTPUTS=(
     "05_top_bottom_bus_belts_teeth_reference.stl"
     "cabinet_clutch_column_sync_tensioner_bearing_template.stl"
     "cabinet_clutch_column_sync_tensioner_support_template.stl"
+    "cabinet_clutch_column_sync_tensioner.stl"
+    "cabinet_clutch_column_sync_tensioner_slider_bridge.stl"
 )
 for old_file in "${OLD_TENSIONER_OUTPUTS[@]}"; do
     rm -f "${OUT_DIR}/${old_file}" "${REPORT_DIR}/${old_file%.stl}.json"
@@ -1374,7 +1376,7 @@ export_part "vertical_spline_bearing_upper_support" "${OUT_DIR}/cabinet_clutch_v
 export_part "vertical_spline_bearings" "${OUT_DIR}/cabinet_clutch_vertical_spline_bearings_reference.stl" false 0
 export_part "column_sync_belt_bottom" "${OUT_DIR}/cabinet_clutch_column_sync_belt_bottom.stl" false 0
 export_part "column_sync_belt_top" "${OUT_DIR}/cabinet_clutch_column_sync_belt_top.stl" false 0
-export_part "column_sync_tensioner" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner.stl" false 0
+export_part "column_sync_tensioner_rotor" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_rotor.stl" false 0
 export_part "column_sync_tensioner_integral" "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_integral.stl" false 0
 
 # The root page also owns the snake drive.  Export its motor sleeve here so a
@@ -1506,7 +1508,8 @@ for printable_part in \
     "${OUT_DIR}/center_mechanism_plate.stl" \
     "${OUT_DIR}/center_input_sleeve.stl" \
     "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" \
-    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_upper_support.stl"; do
+    "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_upper_support.stl" \
+    "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_rotor.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 

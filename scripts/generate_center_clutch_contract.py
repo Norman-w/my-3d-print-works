@@ -370,6 +370,12 @@ REQUIRED = {
     "columnSyncTensionerOuterCShellAxis",
     "columnSyncTensionerOuterCShellDepthXMm",
     "columnSyncTensionerOuterCShellJunctionOverlapMm",
+    "columnSyncTensionerOuterCShellIntegralJoinOverlapMm",
+    "columnSyncTensionerOuterCShellBackIntegralJoinOverlapMm",
+    "columnSyncTensionerOuterCShellArmBossZShiftMm",
+    "columnSyncTensionerOuterCShellBackRailExtraZMm",
+    "columnSyncTensionerOuterCShellBackBossCenterPullYMm",
+    "columnSyncTensionerOuterCShellArmWidthYMm",
     "columnSyncTensionerOuterCShellCutZMm",
     "columnSyncTensionerOuterCShellArmLengthZMm",
     "columnSyncTensionerOuterCShellHolePattern",
@@ -617,8 +623,10 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("下张紧支撑轴承环没有落在连续张紧轴跨度内")
     if n(contract, "columnSyncTensionerUpperSupportCenterYMm") + ring_offset >= upper_pulley_upper:
         raise RuntimeError("上张紧支撑轴承环没有落在连续张紧轴跨度内")
-    if contract.get("columnSyncTensionerOuterCShellMode") != "low-x-wall-mounted-large-C-over-small-c":
-        raise RuntimeError("张紧轮外包络必须是低 X 箱壁安装的大 C 套小 c")
+    if contract.get("columnSyncTensionerOuterCShellMode") != (
+        "low-x-wall-mounted-integral-large-C-over-small-c"
+    ):
+        raise RuntimeError("张紧轮外包络必须是低 X 箱壁安装且与小 c 一体的大 C")
     if contract.get("columnSyncTensionerOuterCShellAxis") != "+X":
         raise RuntimeError("张紧轮外包络安装 boss 轴向必须是世界 +X")
     if contract.get("columnSyncTensionerOuterCShellPart") != (
@@ -640,8 +648,14 @@ def validate_contract(contract: dict[str, object]) -> None:
     for key, value, label in (
         ("columnSyncTensionerOuterCShellDepthXMm", 3.0, "张紧轮外 C 轴向厚度"),
         ("columnSyncTensionerOuterCShellJunctionOverlapMm", 3.0, "张紧轮外 C 根部承力重叠"),
+        ("columnSyncTensionerOuterCShellIntegralJoinOverlapMm", 2.2, "张紧轮外 C 与原小 c 的实体融合宽度"),
+        ("columnSyncTensionerOuterCShellBackIntegralJoinOverlapMm", 2.2, "张紧轮外 C 后竖边与原小 c 的实体融合宽度"),
+        ("columnSyncTensionerOuterCShellArmBossZShiftMm", -0.5, "张紧轮外 C 上下臂孔向开口方向偏移"),
+        ("columnSyncTensionerOuterCShellBackRailExtraZMm", 1.3, "张紧轮外 C 左侧承力竖边局部加厚"),
+        ("columnSyncTensionerOuterCShellBackBossCenterPullYMm", 5.0, "张紧轮外 C 左侧上下孔向中心收拢"),
+        ("columnSyncTensionerOuterCShellArmWidthYMm", 10.8, "张紧轮外 C 融合臂实际宽度"),
         ("columnSyncTensionerOuterCShellClearanceMm", 0.6, "张紧轮大小 C 间隙"),
-        ("columnSyncTensionerOuterCShellWallMm", 7.0, "张紧轮外 C 壁厚"),
+        ("columnSyncTensionerOuterCShellWallMm", 8.0, "张紧轮外 C 壁厚"),
         ("columnSyncTensionerOuterCShellBossOdMm", 5.0, "张紧轮箱体 boss 外径"),
         ("columnSyncTensionerOuterCShellBossLengthXMm", 2.5, "张紧轮箱体 boss 长度"),
         ("columnSyncTensionerOuterCShellBossClearanceHoleMm", 6.0, "张紧轮外套 boss 通孔"),

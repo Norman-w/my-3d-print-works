@@ -753,13 +753,33 @@ TENSIONER_CAPTURE_X1_MM = TENSIONER_CAPTURE_BODY_X0_MM
 // 自攻钉沿 -X 攻入 2.4 mm 盲孔。这样不会把 42 mm 的张紧器运动/皮带包络
 // 误扩大成一根贯穿全长的第二个实体。
 TENSIONER_OUTER_C_SHELL_CLEARANCE_MM = 0.60;
-// The Ø6 shell holes need solid material around their X-axis section. 7 mm
-// gives 0.5 mm radial material outside the hole without adding separate pads.
-TENSIONER_OUTER_C_SHELL_WALL_MM = 7.00;
+// Widen all three load-bearing members of the outer C together. The left/back
+// rail still receives a small additional Z thickness, but the top and bottom
+// arms now also have a real wall around their Ø6 through-holes.
+TENSIONER_OUTER_C_SHELL_WALL_MM = 8.00;
+TENSIONER_OUTER_C_SHELL_BACK_RAIL_EXTRA_Z_MM = 1.30;
 TENSIONER_OUTER_C_SHELL_DEPTH_X_MM = 3.00;
 // The outer side legs must enter the top rail by a real load-bearing length;
 // reusing the 0.25 mm C/T seam overlap here would only make a visual touch.
 TENSIONER_OUTER_C_SHELL_JUNCTION_OVERLAP_MM = 3.00;
+// The outer C is one printed body with the original small c.  Its two arms
+// overlap the small c's outside wall by exactly that wall thickness, stopping
+// at the small c's declared T clearance instead of becoming a second part.
+TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM =
+    TENSIONER_CAPTURE_WALL_MM;
+// Close the visible vertical split as a real material bridge: the outer
+// back rail overlaps the original small-c top rail by one small-c wall.  The
+// bridge stops above the T crossbar, so it cannot enter the T's running gap.
+TENSIONER_OUTER_C_SHELL_BACK_INTEGRAL_JOIN_OVERLAP_MM =
+    TENSIONER_CAPTURE_WALL_MM;
+// Move the two arm holes toward the C opening (-Z) so each arm hole clears
+// the corresponding back-rail hole. The shift is derived from the same arm
+// envelope and is checked against both open and closed arm edges below.
+TENSIONER_OUTER_C_SHELL_ARM_BOSS_Z_SHIFT_MM = -0.50;
+// Pull the two holes on the left/back rail farther toward its middle.  This
+// increases the diagonal separation from the matching top/bottom-arm screws
+// while retaining a real material web between the two back-rail holes.
+TENSIONER_OUTER_C_SHELL_BACK_BOSS_CENTER_PULL_Y_MM = 5.00;
 TENSIONER_OUTER_C_SHELL_BOSS_SHORT_MM = 0.50;
 TENSIONER_OUTER_C_SHELL_BOSS_OD_MM = 5.00;
 TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM = 6.00;
@@ -805,10 +825,11 @@ TENSIONER_OUTER_C_SHELL_BACK_Y1_MM =
         + TENSIONER_OUTER_C_SHELL_CLEARANCE_MM;
 TENSIONER_OUTER_C_SHELL_BACK_Z0_MM =
     TENSIONER_CAPTURE_C_TOP_Z1_MM
-        + TENSIONER_OUTER_C_SHELL_CLEARANCE_MM;
+        - TENSIONER_OUTER_C_SHELL_BACK_INTEGRAL_JOIN_OVERLAP_MM;
 TENSIONER_OUTER_C_SHELL_BACK_Z1_MM =
     TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
-        + TENSIONER_OUTER_C_SHELL_WALL_MM;
+        + TENSIONER_OUTER_C_SHELL_WALL_MM
+        + TENSIONER_OUTER_C_SHELL_BACK_RAIL_EXTRA_Z_MM;
 TENSIONER_OUTER_C_SHELL_CUT_Z_MM =
     TENSIONER_CAPTURE_C_RETURN_Z0_MM;
 TENSIONER_OUTER_C_SHELL_ARM_Z1_MM =
@@ -819,22 +840,29 @@ TENSIONER_OUTER_C_SHELL_ARM_LENGTH_Z_MM =
         - TENSIONER_OUTER_C_SHELL_CUT_Z_MM;
 TENSIONER_OUTER_C_SHELL_BOTTOM_ARM_Y0_MM =
     TENSIONER_OUTER_C_SHELL_BACK_Y0_MM;
-TENSIONER_OUTER_C_SHELL_BOTTOM_ARM_Y1_MM =
-    TENSIONER_OUTER_C_SHELL_BOTTOM_ARM_Y0_MM
-        + TENSIONER_OUTER_C_SHELL_WALL_MM;
 TENSIONER_OUTER_C_SHELL_TOP_ARM_Y1_MM =
     TENSIONER_OUTER_C_SHELL_BACK_Y1_MM;
 TENSIONER_OUTER_C_SHELL_TOP_ARM_Y0_MM =
+    TENSIONER_CAPTURE_C_TOP_Y1_MM
+        - TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM;
+TENSIONER_OUTER_C_SHELL_BOTTOM_ARM_Y1_MM =
+    TENSIONER_CAPTURE_C_TOP_Y0_MM
+        + TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM;
+TENSIONER_OUTER_C_SHELL_ARM_WIDTH_Y_MM =
     TENSIONER_OUTER_C_SHELL_TOP_ARM_Y1_MM
-        - TENSIONER_OUTER_C_SHELL_WALL_MM;
+        - TENSIONER_OUTER_C_SHELL_TOP_ARM_Y0_MM;
 
 // Four clearance holes match the requested C-ring pattern: two in the
 // back/left rail, one in the top arm, and one in the bottom arm.
 function tensioner_outer_c_shell_boss_local_y(index) =
     index == 0
-        ? TENSIONER_OUTER_C_SHELL_BACK_Y0_MM + 5.00
+        ? TENSIONER_OUTER_C_SHELL_BACK_Y0_MM
+            + 5.00
+            + TENSIONER_OUTER_C_SHELL_BACK_BOSS_CENTER_PULL_Y_MM
         : index == 1
-            ? TENSIONER_OUTER_C_SHELL_BACK_Y1_MM - 5.00
+            ? TENSIONER_OUTER_C_SHELL_BACK_Y1_MM
+                - 5.00
+                - TENSIONER_OUTER_C_SHELL_BACK_BOSS_CENTER_PULL_Y_MM
             : index == 2
                 ? (
                     TENSIONER_OUTER_C_SHELL_TOP_ARM_Y0_MM
@@ -853,7 +881,8 @@ function tensioner_outer_c_shell_boss_local_z(index) =
         : (
             TENSIONER_OUTER_C_SHELL_CUT_Z_MM
                 + TENSIONER_OUTER_C_SHELL_ARM_Z1_MM
-        ) / 2;
+        ) / 2
+            + TENSIONER_OUTER_C_SHELL_ARM_BOSS_Z_SHIFT_MM;
 
 // The drawer rack/drive geometry is intentionally explicit.  The horizontal
 // rack is directly attached under each drawer and moves in +Z with it; the
@@ -1224,24 +1253,6 @@ COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM =
 // the T stem only by the declared amount, while the 0.60 mm edge gap keeps it
 // out of the belt/pulley envelope.  The bore is along +Y, the same axis as
 // the shaft and the reused 3x6x2 bearing references.
-COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM =
-    TENSIONER_SUPPORT_EDGE_CLEARANCE_Y_MM;
-COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM = 0.50;
-COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM = 10.0;
-COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM = 8.0;
-COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_BORE_D_MM = ROD_D + 0.40;
-function column_sync_tensioner_slider_mount_y0(axis_y, support_center_y) =
-    axis_y < support_center_y
-        ? column_sync_tensioner_pulley_upper_edge_y(axis_y)
-            + COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM
-        : support_center_y + TENSIONER_MAIN_UPPER_DX / 2
-            - COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM;
-function column_sync_tensioner_slider_mount_y1(axis_y, support_center_y) =
-    axis_y < support_center_y
-        ? support_center_y - TENSIONER_MAIN_UPPER_DX / 2
-            + COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM
-        : column_sync_tensioner_pulley_lower_edge_y(axis_y)
-            - COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM;
 VERTICAL_GEAR_END_CLEARANCE = COLUMN_SYNC_PULLEY_INNER_HALF_WIDTH + 0.35;
 VERTICAL_GEAR_LENGTH = BUS_TOP_Y - BUS_BOTTOM_Y
     - 2 * VERTICAL_GEAR_END_CLEARANCE;
@@ -1733,43 +1744,6 @@ module column_sync_tensioner_pulley_y(x, y, z) {
                             + 2 * GT2_EPS
                     );
             }
-}
-
-module column_sync_tensioner_slider_axle_mount_y(
-    x,
-    y0,
-    y1,
-    z
-) {
-    // A single solid bridge belongs to the moving T slider.  It reaches from
-    // the pulley-side edge to the T-stem face, then carries the round shaft
-    // through a transverse clearance bore.  No second bearing body is
-    // authored here: the existing shared 3x6x2 reference remains the
-    // purchased part and this is only its printed load path.
-    assert(y1 > y0, "tensioner slider axle mount must have positive Y length");
-    translate([
-        x - COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM / 2,
-        y0,
-        z - COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM / 2
-    ])
-        difference() {
-            cube([
-                COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM,
-                y1 - y0,
-                COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM
-            ]);
-            translate([
-                COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM / 2,
-                -EPS,
-                COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM / 2
-            ])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        d = COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_BORE_D_MM,
-                        h = y1 - y0 + 2 * EPS,
-                        $fn = TENSIONER_SKP_ARC_SEGMENTS
-                    );
-        }
 }
 
 module column_sync_tensioner_bearing_reference_y(x, y) {
@@ -2798,7 +2772,9 @@ module tensioner_outer_c_shell_parametric() {
     difference() {
         union() {
             // Back/left vertical rail: this is the rail carrying the two
-            // vertically separated Ø6 boss holes.
+            // vertically separated Ø6 boss holes.  Its lower edge overlaps
+            // the original small-c top rail, closing the former visible
+            // split instead of leaving a floating-looking shell.
             tensioner_prism_x(
                 shell_back_y,
                 shell_back_z,
@@ -2808,9 +2784,10 @@ module tensioner_outer_c_shell_parametric() {
                 TENSIONER_OUTER_C_SHELL_WALL_MM,
                 shell_x_length
             );
-            // Top and bottom arms overlap the back rail by the declared
-            // 3 mm root length. Their free ends stop exactly at the blue
-            // cut plane; no material exists beyond that plane.
+            // 3 mm root length. Their inner edges deliberately overlap the
+            // original small-c outside wall by 2.2 mm, so this outer C is
+            // fused into the same printed body instead of being a loose ring.
+            // The overlap ends at the small-c/T clearance boundary.
             tensioner_prism_x(
                 (
                     TENSIONER_OUTER_C_SHELL_TOP_ARM_Y0_MM
@@ -2818,7 +2795,7 @@ module tensioner_outer_c_shell_parametric() {
                 ) / 2,
                 shell_arm_z,
                 shell_x0,
-                TENSIONER_OUTER_C_SHELL_WALL_MM,
+                TENSIONER_OUTER_C_SHELL_ARM_WIDTH_Y_MM,
                 TENSIONER_OUTER_C_SHELL_ARM_LENGTH_Z_MM,
                 shell_x_length
             );
@@ -2829,24 +2806,31 @@ module tensioner_outer_c_shell_parametric() {
                 ) / 2,
                 shell_arm_z,
                 shell_x0,
-                TENSIONER_OUTER_C_SHELL_WALL_MM,
+                TENSIONER_OUTER_C_SHELL_ARM_WIDTH_Y_MM,
                 TENSIONER_OUTER_C_SHELL_ARM_LENGTH_Z_MM,
                 shell_x_length
             );
         }
 
-        // 箱体 boss 从低 X 端进入，外套上只留 Ø6 贯通孔；孔不会把
-        // Ø5 boss 变成过盈配合，也不会把 M3 螺丝头埋入承力面。
-        for (i = [0:TENSIONER_OUTER_C_SHELL_BOSS_COUNT - 1])
-            cylinder_x(
-                shell_x0 - EPS,
-                tensioner_outer_c_shell_boss_local_y(i),
-                tensioner_outer_c_shell_boss_local_z(i),
-                TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM,
-                shell_x_length + 2 * EPS
-            );
-
+        tensioner_outer_c_shell_boss_cuts();
     }
+}
+
+module tensioner_outer_c_shell_boss_cuts() {
+    // The boss holes are cut again from the final small-c + outer-C union so
+    // the original small c cannot refill a hole corner after assembly union.
+    // The cutter spans the complete integrated bracket depth, making these
+    // actual Ø6 through-holes for the cabinet Ø5 boss and M3 screw head.
+    for (i = [0:TENSIONER_OUTER_C_SHELL_BOSS_COUNT - 1])
+        cylinder_x(
+            TENSIONER_CAPTURE_X0_MM - EPS,
+            tensioner_outer_c_shell_boss_local_y(i),
+            tensioner_outer_c_shell_boss_local_z(i),
+            TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM,
+            TENSIONER_CAPTURE_X1_MM
+                - TENSIONER_CAPTURE_X0_MM
+                + 2 * EPS
+        );
 }
 
 module tensioner_skp_parametric() {
@@ -2863,14 +2847,17 @@ module tensioner_skp_parametric() {
 
 module tensioner_skp_parametric_local() {
     color(COLOR_TENSIONER_T_SOLID) {
-        // The original T and the C capture are exported together as one
-        // canonical assembly asset, but remain two watertight solids with the
-        // calculated clearance between them. The C capture itself is one
-        // connected bracket; only the moving pulley/shaft is another part.
-        union() {
-            tensioner_skp_original_assembly_local();
-            tensioner_housing_c_capture_parametric();
-            tensioner_outer_c_shell_parametric();
+        // The original T remains clear of the fixed guide by the calculated
+        // running clearance. The small c and its outer reinforcing C overlap
+        // and fuse into one printed fixed bracket; only the moving
+        // pulley/shaft is another part.
+        difference() {
+            union() {
+                tensioner_skp_original_assembly_local();
+                tensioner_housing_c_capture_parametric();
+                tensioner_outer_c_shell_parametric();
+            }
+            tensioner_outer_c_shell_boss_cuts();
         }
     }
 }
@@ -3982,10 +3969,12 @@ module power_column_sync_belts() {
     }
 }
 
-module column_sync_tensioner_wheels() {
-    // This STL owns only the adjustable shaft and its two 2GT wheels. The
-    // existing 3×6×2 bearing reference is metadata/source-view geometry, not
-    // a newly exported bearing mesh.
+module column_sync_tensioner_rotor() {
+    // The rotary subassembly is deliberately separate from the rectangular
+    // slider bridges.  A browser rotary pivot may own this module, but it
+    // must never own the bridge that carries the transverse shaft.
+    // The existing 3×6×2 bearing reference is metadata/source-view geometry,
+    // not a newly exported bearing mesh.
     // Positive VERTICAL_TENSIONER_OFFSET_X moves this whole set toward world
     // -X, increasing the belt centre distance.
     color(COLOR_SHAFT)
@@ -4003,24 +3992,15 @@ module column_sync_tensioner_wheels() {
                 axis_y,
                 DRIVE_AXIS_Z
             );
-        color(COLOR_TENSIONER_T_SOLID)
-            column_sync_tensioner_slider_axle_mount_y(
-                COLUMN_SYNC_TENSIONER_X,
-                column_sync_tensioner_slider_mount_y0(
-                    axis_y,
-                    axis_y < BUS_TOP_Y
-                        ? TENSIONER_SUPPORT_LOWER_CENTER_Y
-                        : TENSIONER_SUPPORT_UPPER_CENTER_Y
-                ),
-                column_sync_tensioner_slider_mount_y1(
-                    axis_y,
-                    axis_y < BUS_TOP_Y
-                        ? TENSIONER_SUPPORT_LOWER_CENTER_Y
-                        : TENSIONER_SUPPORT_UPPER_CENTER_Y
-                ),
-                DRIVE_AXIS_Z
-            );
     }
+}
+
+module column_sync_tensioner_wheels() {
+    // The canonical preview contains only the actual rotating shaft and its
+    // two 2GT wheels. The former independent rectangular bridge was a 0.5 mm
+    // axial stub, not a valid bearing support, so it is intentionally absent
+    // until a real bearing-carriage load path is designed.
+    column_sync_tensioner_rotor();
 }
 
 module column_sync_tensioner_support_instance(center_y) {
@@ -5112,10 +5092,13 @@ module selected_column_sync_belt_top_part() {
 }
 
 module selected_column_sync_tensioner_part() {
-    // Canonical wheel/shaft assembly. The support is the one template asset
-    // mounted by manifest instances; the existing purchased bearing remains
-    // a contract/source-view reference rather than a new STL.
+    // Legacy focused selector kept for source inspection. Canonical export is
+    // the rotating shaft and wheel group only.
     column_sync_tensioner_wheels();
+}
+
+module selected_column_sync_tensioner_rotor_part() {
+    column_sync_tensioner_rotor();
 }
 
 module selected_column_sync_tensioner_integral_part() {
@@ -5128,6 +5111,30 @@ module selected_column_sync_tensioner_outer_c_shell_part() {
     // Diagnostic-only selector for inspecting the mounting collar. The
     // canonical export still keeps it inside the one integral tensioner STL.
     tensioner_outer_c_shell_parametric();
+}
+
+module selected_column_sync_tensioner_outer_c_join_collision_part() {
+    // Diagnostic-only non-empty intersection: proves the reinforcing outer C
+    // shares real volume with the original small c. This is never exported as
+    // a printable part and never appears in the assembly manifest.
+    intersection() {
+        tensioner_housing_c_capture_parametric();
+        tensioner_outer_c_shell_parametric();
+    }
+}
+
+module selected_column_sync_tensioner_outer_c_integral_preview_part() {
+    // Single-color diagnostic view of the actual printed fixed bracket. The
+    // red/green overlay remains available for dimension reading; this view
+    // makes the absence of a seam or second loose accessory unambiguous.
+    color(COLOR_TENSIONER_T_SOLID)
+        difference() {
+            union() {
+                tensioner_housing_c_capture_parametric();
+                tensioner_outer_c_shell_parametric();
+            }
+            tensioner_outer_c_shell_boss_cuts();
+        }
 }
 
 module selected_column_sync_tensioner_outer_c_overlay_part() {
@@ -5905,10 +5912,16 @@ module clutch_scene_geometry() {
         selected_column_sync_belt_top_part();
     } else if (CLUTCH_PART == "column_sync_tensioner") {
         selected_column_sync_tensioner_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_rotor") {
+        selected_column_sync_tensioner_rotor_part();
     } else if (CLUTCH_PART == "column_sync_tensioner_integral") {
         selected_column_sync_tensioner_integral_part();
     } else if (CLUTCH_PART == "column_sync_tensioner_outer_c_shell") {
         selected_column_sync_tensioner_outer_c_shell_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_outer_c_join_collision") {
+        selected_column_sync_tensioner_outer_c_join_collision_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_outer_c_integral_preview") {
+        selected_column_sync_tensioner_outer_c_integral_preview_part();
     } else if (CLUTCH_PART == "column_sync_tensioner_outer_c_overlay") {
         selected_column_sync_tensioner_outer_c_overlay_part();
     } else if (CLUTCH_PART == "column_sync_tensioner_world") {
@@ -6131,17 +6144,7 @@ echo(
     str("columnSyncTensionerBearingCenterOffsetYMm=",
         COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM),
     "columnSyncTensionerBearingReferenceMode=existing-3x6x2-reference",
-    "columnSyncTensionerSliderMount=integral-wheel-carriage-bridge",
-    str("columnSyncTensionerSliderMountClearanceYMm=",
-        COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM),
-    str("columnSyncTensionerSliderMountOverlapYMm=",
-        COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM),
-    str("columnSyncTensionerSliderMountXWidthMm=",
-        COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM),
-    str("columnSyncTensionerSliderMountZHeightMm=",
-        COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM),
-    str("columnSyncTensionerSliderMountBoreDiameterMm=",
-        COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_BORE_D_MM),
+    "columnSyncTensionerSliderMount=deferred-bearing-carriage-redesign",
     str("columnSyncTensionerPulleyTotalHeightMm=",
         COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM),
     str("columnSyncTensionerSupportHeightYMm=",
@@ -6174,12 +6177,24 @@ echo(
         TENSIONER_SUPPORT_UPPER_CENTER_Y),
     str("columnSyncTensionerLowerSupportCenterYMm=",
         TENSIONER_SUPPORT_LOWER_CENTER_Y),
-    "columnSyncTensionerOuterCShellMode=low-x-wall-mounted-large-C-over-small-c",
+    "columnSyncTensionerOuterCShellMode=low-x-wall-mounted-integral-large-C-over-small-c",
     "columnSyncTensionerOuterCShellAxis=+X",
     str("columnSyncTensionerOuterCShellDepthXMm=",
         TENSIONER_OUTER_C_SHELL_DEPTH_X_MM),
     str("columnSyncTensionerOuterCShellJunctionOverlapMm=",
         TENSIONER_OUTER_C_SHELL_JUNCTION_OVERLAP_MM),
+    str("columnSyncTensionerOuterCShellIntegralJoinOverlapMm=",
+        TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM),
+    str("columnSyncTensionerOuterCShellBackIntegralJoinOverlapMm=",
+        TENSIONER_OUTER_C_SHELL_BACK_INTEGRAL_JOIN_OVERLAP_MM),
+    str("columnSyncTensionerOuterCShellArmBossZShiftMm=",
+        TENSIONER_OUTER_C_SHELL_ARM_BOSS_Z_SHIFT_MM),
+    str("columnSyncTensionerOuterCShellBackRailExtraZMm=",
+        TENSIONER_OUTER_C_SHELL_BACK_RAIL_EXTRA_Z_MM),
+    str("columnSyncTensionerOuterCShellBackBossCenterPullYMm=",
+        TENSIONER_OUTER_C_SHELL_BACK_BOSS_CENTER_PULL_Y_MM),
+    str("columnSyncTensionerOuterCShellArmWidthYMm=",
+        TENSIONER_OUTER_C_SHELL_ARM_WIDTH_Y_MM),
     str("columnSyncTensionerOuterCShellCutZMm=",
         TENSIONER_OUTER_C_SHELL_CUT_Z_MM),
     str("columnSyncTensionerOuterCShellArmLengthZMm=",
@@ -6914,8 +6929,11 @@ assert(
     || CLUTCH_PART == "column_sync_belt_bottom"
     || CLUTCH_PART == "column_sync_belt_top"
     || CLUTCH_PART == "column_sync_tensioner"
+    || CLUTCH_PART == "column_sync_tensioner_rotor"
     || CLUTCH_PART == "column_sync_tensioner_integral"
     || CLUTCH_PART == "column_sync_tensioner_outer_c_shell"
+    || CLUTCH_PART == "column_sync_tensioner_outer_c_join_collision"
+    || CLUTCH_PART == "column_sync_tensioner_outer_c_integral_preview"
     || CLUTCH_PART == "column_sync_tensioner_outer_c_overlay"
     || CLUTCH_PART == "column_sync_tensioner_world"
     || CLUTCH_PART == "column_sync_tensioner_belt_collision"
@@ -7330,48 +7348,6 @@ assert(COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
         && COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
             < 2 * gt2_belt_guide_r(),
     "tensioner bearing seat must leave a printable GT2 pulley rim");
-assert(COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM >= 0.50
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM > 0
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_OVERLAP_Y_MM
-            < TENSIONER_MAIN_UPPER_DX / 2
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_X_WIDTH_MM >= 2 * ROD_D
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM >= 2 * ROD_D
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_BORE_D_MM > ROD_D
-        && COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_BORE_D_MM
-            < COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_Z_HEIGHT_MM,
-    "tensioner slider axle mount must retain a printable shaft load path");
-for (axis_y = [BUS_BOTTOM_Y, BUS_TOP_Y]) {
-    support_center_y = axis_y < BUS_TOP_Y
-        ? TENSIONER_SUPPORT_LOWER_CENTER_Y
-        : TENSIONER_SUPPORT_UPPER_CENTER_Y;
-    mount_y0 = column_sync_tensioner_slider_mount_y0(
-        axis_y,
-        support_center_y
-    );
-    mount_y1 = column_sync_tensioner_slider_mount_y1(
-        axis_y,
-        support_center_y
-    );
-    assert(mount_y1 > mount_y0,
-        "tensioner slider axle mount must bridge pulley and T stem");
-    if (axis_y < BUS_TOP_Y) {
-        assert(mount_y0
-                >= column_sync_tensioner_pulley_upper_edge_y(axis_y)
-                    + COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM
-                    - EPS
-            && mount_y1
-                > support_center_y - TENSIONER_MAIN_UPPER_DX / 2,
-            "lower slider mount must clear the pulley and overlap the lower T stem");
-    } else {
-        assert(mount_y1
-                <= column_sync_tensioner_pulley_lower_edge_y(axis_y)
-                    - COLUMN_SYNC_TENSIONER_SLIDER_MOUNT_CLEARANCE_Y_MM
-                    + EPS
-            && mount_y0
-                < support_center_y + TENSIONER_MAIN_UPPER_DX / 2,
-            "upper slider mount must clear the pulley and overlap the upper T stem");
-    }
-}
 assert(abs(
     COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM
         - (
@@ -7474,6 +7450,28 @@ assert(TENSIONER_OUTER_C_SHELL_DEPTH_X_MM > 0
         && TENSIONER_OUTER_C_SHELL_WALL_MM
             >= TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM + 1.00
         && TENSIONER_OUTER_C_SHELL_CLEARANCE_MM >= 0.40
+        && abs(
+            TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM
+                - TENSIONER_CAPTURE_WALL_MM
+        ) < 0.001
+        && abs(
+            TENSIONER_OUTER_C_SHELL_BACK_INTEGRAL_JOIN_OVERLAP_MM
+                - TENSIONER_CAPTURE_WALL_MM
+        ) < 0.001
+        && TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
+            <= TENSIONER_CAPTURE_C_TOP_Z1_MM + EPS
+        && TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
+            >= TENSIONER_CAPTURE_C_TOP_Z0_MM - EPS
+        && TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM
+            <= TENSIONER_CAPTURE_WALL_MM + EPS
+        && abs(
+            TENSIONER_OUTER_C_SHELL_ARM_WIDTH_Y_MM
+                - (
+                    TENSIONER_OUTER_C_SHELL_WALL_MM
+                        + TENSIONER_OUTER_C_SHELL_CLEARANCE_MM
+                        + TENSIONER_OUTER_C_SHELL_INTEGRAL_JOIN_OVERLAP_MM
+                )
+        ) < 0.001
         && TENSIONER_OUTER_C_SHELL_JUNCTION_OVERLAP_MM >= 2.00
         && TENSIONER_OUTER_C_SHELL_JUNCTION_OVERLAP_MM
             < TENSIONER_OUTER_C_SHELL_WALL_MM
@@ -7484,6 +7482,21 @@ assert(TENSIONER_OUTER_C_SHELL_DEPTH_X_MM > 0
             < TENSIONER_OUTER_C_SHELL_BOSS_OD_MM
         && TENSIONER_OUTER_C_SHELL_BOSS_SHORT_MM > 0,
     "大 C 外包络必须有可打印材料、装配间隙和四个可攻螺丝耳座");
+assert(
+        tensioner_outer_c_shell_boss_local_z(2)
+            - TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM / 2
+            >= TENSIONER_OUTER_C_SHELL_CUT_Z_MM + EPS
+        && tensioner_outer_c_shell_boss_local_z(2)
+            + TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM / 2
+            <= TENSIONER_OUTER_C_SHELL_ARM_Z1_MM - EPS
+        && (
+            (
+                TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
+                    + TENSIONER_OUTER_C_SHELL_BACK_Z1_MM
+            ) / 2
+                - tensioner_outer_c_shell_boss_local_z(2)
+        ) >= TENSIONER_OUTER_C_SHELL_BOSS_HOLE_D_MM + 0.50,
+    "外 C 上下臂孔必须留在臂内，并与后竖边孔保持至少 0.5 mm 圆边间隙");
 assert(abs(
         TENSIONER_OUTER_C_SHELL_BOSS_LENGTH_X_MM
             - (
@@ -7506,15 +7519,16 @@ assert(abs(
             )
     ) < 0.001
         && TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
-            > TENSIONER_CAPTURE_C_TOP_Z1_MM
-                + TENSIONER_OUTER_C_SHELL_CLEARANCE_MM - EPS
+            <= TENSIONER_CAPTURE_C_TOP_Z1_MM + EPS
+        && TENSIONER_OUTER_C_SHELL_BACK_Z0_MM
+            >= TENSIONER_CAPTURE_C_TOP_Z0_MM - EPS
         && abs(
             TENSIONER_OUTER_C_SHELL_CUT_Z_MM
                 - TENSIONER_CAPTURE_C_RETURN_Z0_MM
         ) < 0.001
         && TENSIONER_OUTER_C_SHELL_CUT_Z_MM
             < TENSIONER_OUTER_C_SHELL_BACK_Z0_MM,
-    "大 C 必须从小 c 的真实包络推导，蓝线必须与小 c 最外边缘齐平");
+    "大 C 后竖边必须与原小 c 顶梁实体搭接，且不能进入 T 横梁");
 assert(abs(
         TENSIONER_OUTER_C_SHELL_ARM_Z1_MM
             - (
