@@ -603,6 +603,48 @@ TENSIONER_SUPPORT_LOWER_CENTER_Y =
 // The canonical world assembly uses the two explicit support centres above.
 TENSIONER_SKP_WORLD_CENTER_Y = TENSIONER_SUPPORT_UPPER_CENTER_Y;
 
+// X-adjustable tensioner load path. The printed SKP-derived support carries a
+// shallow integral shoe; the cabinet carries the fixed captured rail. The
+// nominal support is aligned with the existing 3×6×2 bearing/shaft datum, and
+// the rail leaves a finite +X adjustment stroke instead of relying on a loose
+// floating housing or on the belt itself as a retainer.
+TENSIONER_SLIDE_STROKE_X_MM = 6.0;
+TENSIONER_SLIDE_CLEARANCE_MM = 0.35;
+TENSIONER_SLIDE_RAIL_WIDTH_Y_MM = 11.0;
+TENSIONER_SLIDE_RAIL_BASE_T_Z_MM = 0.90;
+TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM = 0.90;
+TENSIONER_SLIDE_RAIL_SIDE_T_Y_MM = 0.50;
+TENSIONER_SLIDE_RAIL_LOCAL_Z0_MM = 7.00;
+TENSIONER_SLIDE_RAIL_LOCAL_Z1_MM = 10.40;
+TENSIONER_SLIDE_SHOE_LOCAL_X0_MM = -21.50;
+TENSIONER_SLIDE_SHOE_LOCAL_X1_MM = 21.50;
+TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM = -4.65;
+TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM = 4.65;
+TENSIONER_SLIDE_SHOE_LOCAL_Z0_MM = 8.80;
+TENSIONER_SLIDE_SHOE_LOCAL_Z1_MM = 9.30;
+TENSIONER_SLIDE_SHOE_BOSS_X0_MM = 20.50;
+TENSIONER_SLIDE_SHOE_BOSS_X1_MM = 24.00;
+TENSIONER_SLIDE_SHOE_BOSS_Y0_MM = -2.50;
+TENSIONER_SLIDE_SHOE_BOSS_Y1_MM = 2.50;
+TENSIONER_SLIDE_SHOE_BOSS_Z0_MM = 8.00;
+TENSIONER_SLIDE_SHOE_BOSS_Z1_MM = 10.20;
+TENSIONER_SLIDE_ADJUSTER_PILOT_D_MM = 2.40;
+TENSIONER_SLIDE_ADJUSTER_PILOT_DEPTH_X_MM = 3.00;
+TENSIONER_SLIDE_FASTENER_HEAD_D_MM = 6.00;
+TENSIONER_SLIDE_TOOL_CLEARANCE_MM = 8.00;
+// The adjuster boss rises through the moving shoe.  The fixed C rail therefore
+// gets a narrow, swept relief over the boss instead of pretending that the
+// boss can occupy the same volume as the upper capture face.  The relief is
+// only as long/wide as the boss plus its declared running clearance.
+TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM =
+    TENSIONER_SLIDE_CLEARANCE_MM;
+TENSIONER_SLIDE_RAIL_X0_MM = WALL - EPS;
+TENSIONER_SLIDE_RAIL_X1_MM = TENSIONER_SUPPORT_CENTER_X
+    + TENSIONER_SLIDE_SHOE_LOCAL_X1_MM
+    + TENSIONER_SLIDE_STROKE_X_MM
+    + 4.00;
+TENSIONER_SLIDE_END_STOP_LENGTH_X_MM = 4.00;
+
 // The second nested SKP group is a 3 mm plate with an axis-red Ø10 through
 // bore and a native-green Ø2 blind bore.  Its local origin is retained so the
 // two nested bodies remain adjustable relative to the main rail.
@@ -941,6 +983,31 @@ DRAWER_BODY_REAR_CLEARANCE = 0.40;
 DRAWER_BODY_FRONT_CLEARANCE = 0.20;
 DRAWER_BODY_DRIVE_CLEARANCE = 0.40;
 DRAWER_BODY_GUIDE_RELIEF_CLEARANCE = DRAWER_GUIDE_RAIL_GAP;
+// The rack is still a separate, shared STL, but it now has a real captured
+// load path into the drawer floor. Two longitudinal T keys sit outside the
+// tooth/backing envelope and slide into matching floor slots from the rear.
+// The side guides carry drawer mass; these keys carry rack torque and keep the
+// rack registered in X/Y while the complete assembly travels in Z.
+DRAWER_RACK_MOUNT_CLEARANCE = 0.25;
+DRAWER_RACK_MOUNT_RACK_OVERLAP_X = 0.60;
+DRAWER_RACK_MOUNT_EAR_X0_OFFSET = DRAWER_RACK_BODY_X
+    - DRAWER_RACK_MOUNT_RACK_OVERLAP_X;
+DRAWER_RACK_MOUNT_EAR_LENGTH_X = 7.50;
+DRAWER_RACK_MOUNT_EAR_T_Y = 0.90;
+// The rack root stays below the drawer floor. Only the two narrow necks enter
+// the floor's underside; this prevents a separate rack STL from fusing into
+// the tray while the captured heads still carry rack torque.
+DRAWER_RACK_MOUNT_EAR_Y0_OFFSET = -0.95;
+DRAWER_RACK_MOUNT_NECK_WIDTH_X = 0.85;
+DRAWER_RACK_MOUNT_NECK_HEIGHT_Y = 0.55;
+DRAWER_RACK_MOUNT_CAP_WIDTH_X = 1.80;
+DRAWER_RACK_MOUNT_CAP_HEIGHT_Y = 0.55;
+DRAWER_RACK_MOUNT_CAP_Y0_OFFSET = 0.35;
+DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET = 0.20;
+DRAWER_RACK_MOUNT_POCKET_HEIGHT_Y = 0.95;
+DRAWER_RACK_MOUNT_KEY1_X_OFFSET = DRAWER_RACK_BODY_X + 1.55;
+DRAWER_RACK_MOUNT_KEY2_X_OFFSET = DRAWER_RACK_BODY_X + 5.55;
+DRAWER_RACK_MOUNT_KEY_COUNT = 2;
 FRONT_GEAR_TEETH = CENTER_FRONT_RACK_GEAR_TEETH;
 FRONT_GEAR_TOOTH_DEPTH = CENTER_FRONT_RACK_GEAR_TOOTH_DEPTH;
 FRONT_GEAR_T = CENTER_FRONT_RACK_GEAR_THICKNESS;
@@ -2231,7 +2298,107 @@ module vertical_gear_column(x, z) {
             column_gt2_pulley_y(x, axis_y, z, "d");
 }
 
-module horizontal_drawer_rack(x, z0, z1, y) {
+function drawer_rack_mount_key_x_offset(index) = index == 0
+    ? DRAWER_RACK_MOUNT_KEY1_X_OFFSET
+    : DRAWER_RACK_MOUNT_KEY2_X_OFFSET;
+
+module drawer_rack_mount_ears(x, z0, z1, y, row) {
+    length = z1 - z0;
+    rack_face_x = center_front_rack_face_x(x);
+    floor_y = drawer_bottom_y(row);
+    ear_x0 = rack_face_x + DRAWER_RACK_MOUNT_EAR_X0_OFFSET;
+    ear_y0 = floor_y + DRAWER_RACK_MOUNT_EAR_Y0_OFFSET;
+    key_neck_y0 = floor_y - 0.05;
+    key_neck_y1 = key_neck_y0 + DRAWER_RACK_MOUNT_NECK_HEIGHT_Y;
+    key_cap_y0 = floor_y + DRAWER_RACK_MOUNT_CAP_Y0_OFFSET;
+    key_cap_y1 = key_cap_y0 + DRAWER_RACK_MOUNT_CAP_HEIGHT_Y;
+    assert(ear_x0 < rack_face_x + DRAWER_RACK_BODY_X,
+        "齿排安装耳必须与齿排背板形成实体重叠");
+    assert(ear_x0 + DRAWER_RACK_MOUNT_EAR_LENGTH_X
+            < x + WORLD_BAY_W / 2 - DRAWER_CLEAR + 0.001,
+        "齿排安装耳不得越过抽屉右侧承力边");
+    assert(ear_y0 < y + DRAWER_RACK_BODY_Y / 2
+            && ear_y0 + DRAWER_RACK_MOUNT_EAR_T_Y > y - DRAWER_RACK_BODY_Y / 2,
+        "齿排安装耳必须与齿排背板在 Y 方向重叠");
+    color(COLOR_RACK)
+        union() {
+            // This beam is the rack's root. It runs along the complete rack
+            // length and overlaps the backing by the declared
+            // DRAWER_RACK_MOUNT_RACK_OVERLAP_X, so the keys are not loose
+            // decorative tabs.
+            translate([ear_x0, ear_y0, z0])
+                cube([
+                    DRAWER_RACK_MOUNT_EAR_LENGTH_X,
+                    DRAWER_RACK_MOUNT_EAR_T_Y,
+                    length
+                ]);
+            for (index = [0:DRAWER_RACK_MOUNT_KEY_COUNT - 1]) {
+                key_x = rack_face_x + drawer_rack_mount_key_x_offset(index);
+                translate([
+                    key_x - DRAWER_RACK_MOUNT_NECK_WIDTH_X / 2,
+                    key_neck_y0,
+                    z0
+                ])
+                    cube([
+                        DRAWER_RACK_MOUNT_NECK_WIDTH_X,
+                        key_neck_y1 - key_neck_y0,
+                        length
+                    ]);
+                translate([
+                    key_x - DRAWER_RACK_MOUNT_CAP_WIDTH_X / 2,
+                    key_cap_y0,
+                    z0
+                ])
+                    cube([
+                        DRAWER_RACK_MOUNT_CAP_WIDTH_X,
+                        key_cap_y1 - key_cap_y0,
+                        length
+                    ]);
+            }
+        }
+}
+
+module drawer_rack_mount_t_slot_cuts(x, z0, z1, row) {
+    length = z1 - z0;
+    rack_face_x = center_front_rack_face_x(x);
+    floor_y = drawer_bottom_y(row);
+    for (index = [0:DRAWER_RACK_MOUNT_KEY_COUNT - 1]) {
+        key_x = rack_face_x + drawer_rack_mount_key_x_offset(index);
+        // The narrow opening starts at the floor underside and connects into
+        // an internal wider pocket. The pocket deliberately stops short of
+        // the floor top, so the T head is captured in Y while the complete
+        // rack can still slide in/out along Z from the rear.
+        translate([
+            key_x - DRAWER_RACK_MOUNT_NECK_WIDTH_X / 2
+                - DRAWER_RACK_MOUNT_CLEARANCE,
+            floor_y - DRAWER_RACK_MOUNT_CLEARANCE,
+            z0 - EPS
+        ])
+            cube([
+                DRAWER_RACK_MOUNT_NECK_WIDTH_X
+                    + 2 * DRAWER_RACK_MOUNT_CLEARANCE,
+                DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET
+                    + DRAWER_RACK_MOUNT_CLEARANCE,
+                length + 2 * EPS
+            ]);
+        translate([
+            key_x - DRAWER_RACK_MOUNT_CAP_WIDTH_X / 2
+                - DRAWER_RACK_MOUNT_CLEARANCE,
+            floor_y + DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET
+                - DRAWER_RACK_MOUNT_CLEARANCE,
+            z0 - EPS
+        ])
+            cube([
+                DRAWER_RACK_MOUNT_CAP_WIDTH_X
+                    + 2 * DRAWER_RACK_MOUNT_CLEARANCE,
+                DRAWER_RACK_MOUNT_POCKET_HEIGHT_Y
+                    + 2 * DRAWER_RACK_MOUNT_CLEARANCE,
+                length + 2 * EPS
+            ]);
+    }
+}
+
+module horizontal_drawer_rack(x, z0, z1, y, row) {
     length = z1 - z0;
     rack_face_x = center_front_rack_face_x(x);
     rack_body_y = y - DRAWER_RACK_BODY_Y / 2;
@@ -2252,6 +2419,7 @@ module horizontal_drawer_rack(x, z0, z1, y) {
                     DRAWER_RACK_BODY_Y - 2 * DRAWER_RACK_TOOTH_Y_MARGIN,
                     0.84
                 ]);
+        drawer_rack_mount_ears(x, z0, z1, y, row);
     }
 }
 
@@ -2845,17 +3013,99 @@ module tensioner_skp_parametric() {
         tensioner_skp_parametric_local();
 }
 
+module tensioner_slide_shoe_pretemplate() {
+    // The STL template is centered after this module is built. Express the
+    // shoe in the same centered local datum used by the fixed rail, then map it
+    // back to the native pre-template coordinates explicitly. This keeps the
+    // shoe integral to the one tensioner STL and prevents a second loose
+    // carriage part from appearing in the world assembly.
+    template_center_x = TENSIONER_SKP_WORLD_BBOX_MIN_X
+        + TENSIONER_SKP_WORLD_SIZE_X / 2;
+    template_center_y = TENSIONER_SKP_WORLD_BBOX_MIN_Y
+        + TENSIONER_SKP_WORLD_SIZE_Y / 2;
+    template_center_z = TENSIONER_SKP_WORLD_BBOX_MIN_Z
+        + TENSIONER_SKP_WORLD_SIZE_Z / 2;
+    shoe_x0 = template_center_x + TENSIONER_SLIDE_SHOE_LOCAL_X0_MM;
+    shoe_y0 = template_center_y + TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM;
+    shoe_z0 = template_center_z + TENSIONER_SLIDE_SHOE_LOCAL_Z0_MM;
+    boss_x0 = template_center_x + TENSIONER_SLIDE_SHOE_BOSS_X0_MM;
+    boss_y0 = template_center_y + TENSIONER_SLIDE_SHOE_BOSS_Y0_MM;
+    boss_z0 = template_center_z + TENSIONER_SLIDE_SHOE_BOSS_Z0_MM;
+    difference() {
+        union() {
+            translate([shoe_x0, shoe_y0, shoe_z0])
+                cube([
+                    TENSIONER_SLIDE_SHOE_LOCAL_X1_MM
+                        - TENSIONER_SLIDE_SHOE_LOCAL_X0_MM,
+                    TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM
+                        - TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM,
+                    TENSIONER_SLIDE_SHOE_LOCAL_Z1_MM
+                        - TENSIONER_SLIDE_SHOE_LOCAL_Z0_MM
+                ]);
+            // A wider, taller screw boss grows from the shoe into the original
+            // base. It is the load path for the +X adjuster; it is not a visual
+            // spacer and is fused into the same printable support.
+            translate([boss_x0, boss_y0, boss_z0])
+                cube([
+                    TENSIONER_SLIDE_SHOE_BOSS_X1_MM
+                        - TENSIONER_SLIDE_SHOE_BOSS_X0_MM,
+                    TENSIONER_SLIDE_SHOE_BOSS_Y1_MM
+                        - TENSIONER_SLIDE_SHOE_BOSS_Y0_MM,
+                    TENSIONER_SLIDE_SHOE_BOSS_Z1_MM
+                        - TENSIONER_SLIDE_SHOE_BOSS_Z0_MM
+                ]);
+        }
+        // Opening is at the +X end of the boss. The blind Ø2.4 pilot leaves
+        // solid material at its -X floor for a captured M3 adjuster insert.
+        cylinder_x(
+            template_center_x + TENSIONER_SLIDE_SHOE_BOSS_X1_MM
+                - TENSIONER_SLIDE_ADJUSTER_PILOT_DEPTH_X_MM,
+            template_center_y
+                + (TENSIONER_SLIDE_SHOE_BOSS_Y0_MM
+                    + TENSIONER_SLIDE_SHOE_BOSS_Y1_MM) / 2,
+            template_center_z
+                + (TENSIONER_SLIDE_SHOE_BOSS_Z0_MM
+                    + TENSIONER_SLIDE_SHOE_BOSS_Z1_MM) / 2,
+            TENSIONER_SLIDE_ADJUSTER_PILOT_D_MM,
+            TENSIONER_SLIDE_ADJUSTER_PILOT_DEPTH_X_MM + EPS
+        );
+    }
+}
+
+module tensioner_slide_shoe_template_local() {
+    // The moving shoe is a subassembly of the one exported tensioner support;
+    // this centered view is only a collision witness and never a second STL.
+    translate([
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_X
+                + TENSIONER_SKP_WORLD_SIZE_X / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Y
+                + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Z
+                + TENSIONER_SKP_WORLD_SIZE_Z / 2
+        )
+    ])
+        tensioner_slide_shoe_pretemplate();
+}
+
 module tensioner_skp_parametric_local() {
     color(COLOR_TENSIONER_T_SOLID) {
-        // The original T remains clear of the fixed guide by the calculated
-        // running clearance. The small c and its outer reinforcing C overlap
-        // and fuse into one printed fixed bracket; only the moving
-        // pulley/shaft is another part.
+        // This is deliberately one source STL with two connected solids:
+        // the small-c + outer-C fixed capture and the original-T + shoe
+        // moving housing.  The running clearance keeps those solids separate
+        // in the print; the preview manifest splits the islands and mounts
+        // them on their respective fixed/moving frames.  It is not a second
+        // duplicate STL or an untracked loose accessory.
         difference() {
             union() {
                 tensioner_skp_original_assembly_local();
                 tensioner_housing_c_capture_parametric();
                 tensioner_outer_c_shell_parametric();
+                tensioner_slide_shoe_pretemplate();
             }
             tensioner_outer_c_shell_boss_cuts();
         }
@@ -2881,6 +3131,56 @@ module tensioner_skp_template_local() {
         )
     ])
         tensioner_skp_parametric_local();
+}
+
+// Connected-island views of the one canonical tensioner STL.  These helpers
+// exist for the preview collision witness and for documenting the frame split;
+// they do not create additional exported parts.  The fixed C is the host-side
+// load path, while the original T and integral shoe travel together on +X.
+module tensioner_fixed_capture_template_local() {
+    translate([
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_X
+                + TENSIONER_SKP_WORLD_SIZE_X / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Y
+                + TENSIONER_SKP_WORLD_SIZE_Y / 2
+        ),
+        -(
+            TENSIONER_SKP_WORLD_BBOX_MIN_Z
+                + TENSIONER_SKP_WORLD_SIZE_Z / 2
+        )
+    ])
+        difference() {
+            union() {
+                tensioner_housing_c_capture_parametric();
+                tensioner_outer_c_shell_parametric();
+            }
+            tensioner_outer_c_shell_boss_cuts();
+        }
+}
+
+module tensioner_moving_housing_template_local(travel_x = 0) {
+    translate([travel_x, 0, 0])
+        translate([
+            -(
+                TENSIONER_SKP_WORLD_BBOX_MIN_X
+                    + TENSIONER_SKP_WORLD_SIZE_X / 2
+            ),
+            -(
+                TENSIONER_SKP_WORLD_BBOX_MIN_Y
+                    + TENSIONER_SKP_WORLD_SIZE_Y / 2
+            ),
+            -(
+                TENSIONER_SKP_WORLD_BBOX_MIN_Z
+                    + TENSIONER_SKP_WORLD_SIZE_Z / 2
+            )
+        ])
+            union() {
+                tensioner_skp_original_assembly_local();
+                tensioner_slide_shoe_pretemplate();
+            }
 }
 
 // Keep the existing part selector name stable for the exporter and viewer.
@@ -3611,6 +3911,190 @@ module cabinet_frame_front_lower_face() {
         cube([W, WORLD_GRID_ORIGIN_Y, WALL]);
 }
 
+module column_sync_tensioner_slide_rail_at(center_y) {
+    rail_length = TENSIONER_SLIDE_RAIL_X1_MM
+        - TENSIONER_SLIDE_RAIL_X0_MM;
+    rail_z0 = TENSIONER_SUPPORT_CENTER_Z
+        + TENSIONER_SLIDE_RAIL_LOCAL_Z0_MM;
+    rail_z1 = TENSIONER_SUPPORT_CENTER_Z
+        + TENSIONER_SLIDE_RAIL_LOCAL_Z1_MM;
+    inner_z0 = rail_z0 + TENSIONER_SLIDE_RAIL_BASE_T_Z_MM;
+    inner_z1 = rail_z1 - TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM;
+    rail_y0 = center_y - TENSIONER_SLIDE_RAIL_WIDTH_Y_MM / 2;
+    assert(inner_z1 > inner_z0 + TENSIONER_SLIDE_CLEARANCE_MM,
+        "张紧轮固定导轨必须在上下捕获面之间留出滑台间隙");
+    assert(TENSIONER_SLIDE_RAIL_WIDTH_Y_MM
+            >= TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM
+                - TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM
+                + 2 * TENSIONER_SLIDE_CLEARANCE_MM,
+        "张紧轮固定导轨 Y 向内宽必须包住一体滑台并留出间隙");
+    boss_relief_x0 = TENSIONER_SUPPORT_CENTER_X
+        + TENSIONER_SLIDE_SHOE_BOSS_X0_MM
+        - TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM;
+    boss_relief_x1 = TENSIONER_SUPPORT_CENTER_X
+        + TENSIONER_SLIDE_SHOE_BOSS_X1_MM
+        + TENSIONER_SLIDE_STROKE_X_MM
+        + TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM;
+    boss_relief_y0 = center_y
+        + TENSIONER_SLIDE_SHOE_BOSS_Y0_MM
+        - TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM;
+    boss_relief_y1 = center_y
+        + TENSIONER_SLIDE_SHOE_BOSS_Y1_MM
+        + TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM;
+    shoe_relief_x0 = TENSIONER_SUPPORT_CENTER_X
+        + TENSIONER_SLIDE_SHOE_LOCAL_X0_MM
+        - TENSIONER_SLIDE_CLEARANCE_MM;
+    shoe_relief_x1 = TENSIONER_SUPPORT_CENTER_X
+        + TENSIONER_SLIDE_SHOE_LOCAL_X1_MM
+        + TENSIONER_SLIDE_STROKE_X_MM
+        + TENSIONER_SLIDE_CLEARANCE_MM;
+    shoe_relief_y0 = center_y
+        + TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM
+        - TENSIONER_SLIDE_CLEARANCE_MM;
+    shoe_relief_y1 = center_y
+        + TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM
+        + TENSIONER_SLIDE_CLEARANCE_MM;
+    shoe_relief_z0 = TENSIONER_SUPPORT_CENTER_Z
+        + TENSIONER_SLIDE_SHOE_LOCAL_Z0_MM
+        - TENSIONER_SLIDE_CLEARANCE_MM;
+    shoe_relief_z1 = TENSIONER_SUPPORT_CENTER_Z
+        + TENSIONER_SLIDE_SHOE_LOCAL_Z1_MM
+        + TENSIONER_SLIDE_CLEARANCE_MM;
+    color(COLOR_CABINET)
+        union() {
+            // Full-width base and roof are the Z capture faces. The root web
+            // overlaps the cabinet's -X wall and carries belt reaction into
+            // the frame rather than into a thin floating arm.
+            translate([
+                TENSIONER_SLIDE_RAIL_X0_MM,
+                rail_y0,
+                rail_z0
+            ])
+                cube([
+                    rail_length,
+                    TENSIONER_SLIDE_RAIL_WIDTH_Y_MM,
+                    TENSIONER_SLIDE_RAIL_BASE_T_Z_MM
+                ]);
+            // The upper capture face is split only by the swept adjuster-boss
+            // relief.  The shoe remains captured on both sides and under the
+            // roof; the boss is allowed to pass through this service slot over
+            // the complete +X adjustment stroke.
+            difference() {
+                translate([
+                    TENSIONER_SLIDE_RAIL_X0_MM,
+                    rail_y0,
+                    rail_z1 - TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM
+                ])
+                    cube([
+                        rail_length,
+                        TENSIONER_SLIDE_RAIL_WIDTH_Y_MM,
+                        TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM
+                    ]);
+                translate([
+                    boss_relief_x0,
+                    boss_relief_y0,
+                    rail_z1 - TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM - EPS
+                ])
+                    cube([
+                        boss_relief_x1 - boss_relief_x0,
+                        boss_relief_y1 - boss_relief_y0,
+                        TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM + 2 * EPS
+                    ]);
+            }
+            translate([
+                TENSIONER_SLIDE_RAIL_X0_MM,
+                rail_y0,
+                inner_z0
+            ])
+                cube([
+                    rail_length,
+                    TENSIONER_SLIDE_RAIL_SIDE_T_Y_MM,
+                    inner_z1 - inner_z0
+                ]);
+            translate([
+                TENSIONER_SLIDE_RAIL_X0_MM,
+                rail_y0 + TENSIONER_SLIDE_RAIL_WIDTH_Y_MM
+                    - TENSIONER_SLIDE_RAIL_SIDE_T_Y_MM,
+                inner_z0
+            ])
+                cube([
+                    rail_length,
+                    TENSIONER_SLIDE_RAIL_SIDE_T_Y_MM,
+                    inner_z1 - inner_z0
+                ]);
+            // The first 2 mm is a solid wall-root gusset/web, not an isolated
+            // pair of legs. The end block is the hard +X travel stop and also
+            // carries the blind pilot for the M3 adjuster.
+            // The root web remains thick around the moving envelope.  Its
+            // central swept opening is necessary because the shoe starts
+            // only 0.55 mm beyond the cabinet wall; without this relief the
+            // wall gusset would block the very slide it is meant to support.
+            difference() {
+                translate([
+                    TENSIONER_SLIDE_RAIL_X0_MM,
+                    rail_y0,
+                    rail_z0
+                ])
+                    cube([2.00, TENSIONER_SLIDE_RAIL_WIDTH_Y_MM, rail_z1 - rail_z0]);
+                translate([
+                    shoe_relief_x0,
+                    shoe_relief_y0,
+                    shoe_relief_z0
+                ])
+                    cube([
+                        shoe_relief_x1 - shoe_relief_x0,
+                        shoe_relief_y1 - shoe_relief_y0,
+                        shoe_relief_z1 - shoe_relief_z0
+                    ]);
+            }
+            // The end stop begins exactly at the declared shoe end position.
+            // Its central opening is the same swept boss relief, so it stops
+            // the wide shoe body while never pinching the adjuster boss.
+            difference() {
+                translate([
+                    TENSIONER_SLIDE_RAIL_X1_MM
+                        - TENSIONER_SLIDE_END_STOP_LENGTH_X_MM,
+                    rail_y0,
+                    inner_z0
+                ])
+                    cube([
+                        TENSIONER_SLIDE_END_STOP_LENGTH_X_MM,
+                        TENSIONER_SLIDE_RAIL_WIDTH_Y_MM,
+                        inner_z1 - inner_z0
+                    ]);
+                translate([
+                    boss_relief_x0,
+                    boss_relief_y0,
+                    inner_z0 - EPS
+                ])
+                    cube([
+                        boss_relief_x1 - boss_relief_x0,
+                        boss_relief_y1 - boss_relief_y0,
+                        inner_z1 - inner_z0 + 2 * EPS
+                    ]);
+            }
+        }
+}
+
+module column_sync_tensioner_slide_rails_world() {
+    column_sync_tensioner_slide_rail_at(TENSIONER_SUPPORT_LOWER_CENTER_Y);
+    column_sync_tensioner_slide_rail_at(TENSIONER_SUPPORT_UPPER_CENTER_Y);
+}
+
+module column_sync_tensioner_adjuster_tool_envelope(center_y) {
+    // A real +X tool/fastener envelope is kept outside the end stop. The
+    // witness below proves that a 6 mm mushroom-head M3 and an 8 mm radial
+    // driver clearance do not enter the cabinet frame or either belt.
+    cylinder_x(
+        TENSIONER_SLIDE_RAIL_X1_MM + 0.50,
+        center_y,
+        TENSIONER_SUPPORT_CENTER_Z + 9.10,
+        TENSIONER_SLIDE_FASTENER_HEAD_D_MM
+            + 2 * TENSIONER_SLIDE_TOOL_CLEARANCE_MM,
+        TENSIONER_SLIDE_TOOL_CLEARANCE_MM + 2.00
+    );
+}
+
 module tensioner_outer_c_shell_cabinet_bosses(center_y) {
     // The two tensioner instances share this one boss pattern. The pattern is
     // authored in the same pre-template local YZ frame as the outer C and
@@ -3693,21 +4177,26 @@ module clutch_cabinet_frame() {
             // exported and installed independently with mushroom-head M3
             // screws from below.
             vertical_spline_bearing_upper_roof_bosses();
-            tensioner_outer_c_shell_cabinet_bosses(
-                TENSIONER_SUPPORT_UPPER_CENTER_Y
-            );
+            // The tensioner is not pinned to a fixed four-boss pattern. The
+            // cabinet owns two integral X rails.  The outer C island also
+            // lands on four Ø5 host bosses; the moving T/shoe remains captured
+            // by the rails and translates along +X.
+            column_sync_tensioner_slide_rails_world();
             tensioner_outer_c_shell_cabinet_bosses(
                 TENSIONER_SUPPORT_LOWER_CENTER_Y
+            );
+            tensioner_outer_c_shell_cabinet_bosses(
+                TENSIONER_SUPPORT_UPPER_CENTER_Y
             );
         }
         snake_motor_mount_boss_floor_bores();
         vertical_spline_bearing_floor_boss_pilot_holes();
         vertical_spline_bearing_upper_roof_boss_pilot_holes();
         tensioner_outer_c_shell_cabinet_boss_pilot_holes(
-            TENSIONER_SUPPORT_UPPER_CENTER_Y
+            TENSIONER_SUPPORT_LOWER_CENTER_Y
         );
         tensioner_outer_c_shell_cabinet_boss_pilot_holes(
-            TENSIONER_SUPPORT_LOWER_CENTER_Y
+            TENSIONER_SUPPORT_UPPER_CENTER_Y
         );
     }
 }
@@ -3769,6 +4258,17 @@ module drawer_body_candidate(col, row) {
                     - drawer_rack_z0()
                     + 2 * DRAWER_BODY_DRIVE_CLEARANCE
             ]);
+
+        // Two captured T-slot mouths are the rack's positive X/Y registration
+        // to the drawer floor. They run with the rack in Z so the rack can be
+        // slid in from the rear, while the wider cap prevents vertical
+        // separation after insertion.
+        drawer_rack_mount_t_slot_cuts(
+            clutch_col_x(col),
+            drawer_rack_z0(),
+            drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
+            row
+        );
 
         // The fixed front pinion lives above the shelf. Its circular envelope
         // must pass through the tray floor without cutting the side/front
@@ -4003,9 +4503,9 @@ module column_sync_tensioner_wheels() {
     column_sync_tensioner_rotor();
 }
 
-module column_sync_tensioner_support_instance(center_y) {
+module column_sync_tensioner_support_instance(center_y, travel_x = 0) {
     translate([
-        TENSIONER_SUPPORT_CENTER_X,
+        TENSIONER_SUPPORT_CENTER_X + travel_x,
         center_y,
         TENSIONER_SUPPORT_CENTER_Z
     ])
@@ -4905,7 +5405,8 @@ module drawer_front_drive(col, row) {
         x,
         drawer_rack_z0(),
         CENTER_GT2_FRONT_PULLEY_Z - 3.5,
-        center_gt2_front_gear_y(row)
+        center_gt2_front_gear_y(row),
+        row
     );
     drawer_front_drive_guide_system(col, row, CENTER_GT2_FRONT_PULLEY_Z);
 }
@@ -4982,7 +5483,8 @@ module center_gt2_drawer_drive(col, row) {
         x,
         WORLD_PARTITION_FRONT_Z + 1.5,
         CENTER_GT2_FRONT_PULLEY_Z - 3.5,
-        center_gt2_front_gear_y(row)
+        center_gt2_front_gear_y(row),
+        row
     );
     drawer_front_drive_guide_system(col, row, CENTER_GT2_FRONT_PULLEY_Z);
 }
@@ -5175,7 +5677,8 @@ module selected_column_sync_tensioner_belt_collision_part() {
     union() {
         intersection() {
             column_sync_tensioner_support_instance(
-                TENSIONER_SUPPORT_LOWER_CENTER_Y
+                TENSIONER_SUPPORT_LOWER_CENTER_Y,
+                0
             );
             color(COLOR_BELT)
                 column_sync_belt_loop_x(
@@ -5187,6 +5690,128 @@ module selected_column_sync_tensioner_belt_collision_part() {
         }
         intersection() {
             column_sync_tensioner_support_instance(
+                TENSIONER_SUPPORT_UPPER_CENTER_Y,
+                0
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_TOP_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+        intersection() {
+            column_sync_tensioner_support_instance(
+                TENSIONER_SUPPORT_LOWER_CENTER_Y,
+                TENSIONER_SLIDE_STROKE_X_MM
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_BOTTOM_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+        intersection() {
+            column_sync_tensioner_support_instance(
+                TENSIONER_SUPPORT_UPPER_CENTER_Y,
+                TENSIONER_SLIDE_STROKE_X_MM
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_TOP_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+    }
+}
+
+module column_sync_tensioner_shoe_instance(center_y, travel_x = 0) {
+    translate([
+        TENSIONER_SUPPORT_CENTER_X + travel_x,
+        center_y,
+        TENSIONER_SUPPORT_CENTER_Z
+    ])
+        tensioner_slide_shoe_template_local();
+}
+
+module selected_column_sync_tensioner_shoe_rail_collision_part() {
+    // Empty witness: the moving shoe and its swept adjuster boss must clear
+    // the fixed C rail at both the nominal datum and the full +X stroke. The
+    // C/T nesting itself is intentional; this selector isolates only the
+    // moving shoe so a boss/roof mistake cannot be hidden by that nesting.
+    union() {
+        for (center_y = [
+            TENSIONER_SUPPORT_LOWER_CENTER_Y,
+            TENSIONER_SUPPORT_UPPER_CENTER_Y
+        ]) {
+            intersection() {
+                column_sync_tensioner_shoe_instance(center_y, 0);
+                column_sync_tensioner_slide_rail_at(center_y);
+            }
+            intersection() {
+                column_sync_tensioner_shoe_instance(
+                    center_y,
+                    TENSIONER_SLIDE_STROKE_X_MM
+                );
+                column_sync_tensioner_slide_rail_at(center_y);
+            }
+        }
+    }
+}
+
+module selected_column_sync_tensioner_capture_collision_part() {
+    // Empty witness: the fixed small-c/outer-C island must remain clear of
+    // the moving original-T + shoe at the nominal position, mid-stroke, and
+    // full +X stroke.  End-point checks alone can miss a swept shoulder, so
+    // the three sampled positions are part of the source-level gate.
+    union() {
+        for (center_y = [
+            TENSIONER_SUPPORT_LOWER_CENTER_Y,
+            TENSIONER_SUPPORT_UPPER_CENTER_Y
+        ]) {
+            translate([
+                TENSIONER_SUPPORT_CENTER_X,
+                center_y,
+                TENSIONER_SUPPORT_CENTER_Z
+            ]) {
+                for (travel_x = [
+                    0,
+                    TENSIONER_SLIDE_STROKE_X_MM / 2,
+                    TENSIONER_SLIDE_STROKE_X_MM
+                ])
+                    intersection() {
+                        tensioner_fixed_capture_template_local();
+                        tensioner_moving_housing_template_local(travel_x);
+                    }
+            }
+        }
+    }
+}
+
+module selected_column_sync_tensioner_slide_collision_part() {
+    // Empty witness: the fixed X rails must not enter either 220T belt. The
+    // rail/shoe capture is checked separately so this selector remains a
+    // neighbouring-power-geometry witness.
+    union() {
+        intersection() {
+            column_sync_tensioner_slide_rail_at(
+                TENSIONER_SUPPORT_LOWER_CENTER_Y
+            );
+            color(COLOR_BELT)
+                column_sync_belt_loop_x(
+                    COLUMN_SYNC_TENSIONER_X,
+                    MOTOR_X,
+                    BUS_BOTTOM_Y,
+                    DRIVE_AXIS_Z
+                );
+        }
+        intersection() {
+            column_sync_tensioner_slide_rail_at(
                 TENSIONER_SUPPORT_UPPER_CENTER_Y
             );
             color(COLOR_BELT)
@@ -5196,6 +5821,25 @@ module selected_column_sync_tensioner_belt_collision_part() {
                     BUS_TOP_Y,
                     DRIVE_AXIS_Z
                 );
+        }
+    }
+}
+
+module selected_column_sync_tensioner_fastener_tool_collision_part() {
+    // Empty witness: the +X adjuster head/driver envelope must remain outside
+    // the rail end stop and the rest of the cabinet frame for service access.
+    union() {
+        intersection() {
+            column_sync_tensioner_adjuster_tool_envelope(
+                TENSIONER_SUPPORT_LOWER_CENTER_Y
+            );
+            clutch_cabinet_frame();
+        }
+        intersection() {
+            column_sync_tensioner_adjuster_tool_envelope(
+                TENSIONER_SUPPORT_UPPER_CENTER_Y
+            );
+            clutch_cabinet_frame();
         }
     }
 }
@@ -5664,7 +6308,8 @@ module selected_drawer_rack_part() {
         clutch_col_x(selected_col()),
         drawer_rack_z0(),
         drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
-        center_gt2_front_gear_y(row)
+        center_gt2_front_gear_y(row),
+        row
     );
     drawer_c_guide_flanges_at(
         selected_col(),
@@ -5743,7 +6388,8 @@ module selected_drawer_front_drive_shelf_collision_part() {
                 clutch_col_x(CENTER_GT2_COL),
                 drawer_rack_z0(),
                 drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
-                center_gt2_front_gear_y(CENTER_GT2_ROW)
+                center_gt2_front_gear_y(CENTER_GT2_ROW),
+                CENTER_GT2_ROW
             );
             selected_front_gear_part();
         }
@@ -5763,7 +6409,8 @@ module selected_drawer_body_hardware_collision_part() {
                 clutch_col_x(CENTER_GT2_COL),
                 drawer_rack_z0(),
                 drawer_rack_z1(CENTER_GT2_FRONT_PULLEY_Z),
-                center_gt2_front_gear_y(CENTER_GT2_ROW)
+                center_gt2_front_gear_y(CENTER_GT2_ROW),
+                CENTER_GT2_ROW
             );
             selected_front_gear_part();
             drawer_c_guide_flanges_at(
@@ -5928,6 +6575,14 @@ module clutch_scene_geometry() {
         selected_column_sync_tensioner_world_part();
     } else if (CLUTCH_PART == "column_sync_tensioner_belt_collision") {
         selected_column_sync_tensioner_belt_collision_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_shoe_rail_collision") {
+        selected_column_sync_tensioner_shoe_rail_collision_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_capture_collision") {
+        selected_column_sync_tensioner_capture_collision_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_slide_collision") {
+        selected_column_sync_tensioner_slide_collision_part();
+    } else if (CLUTCH_PART == "column_sync_tensioner_fastener_tool_collision") {
+        selected_column_sync_tensioner_fastener_tool_collision_part();
     } else if (CLUTCH_PART == "center_input_rotor") {
         selected_center_input_rotor_part();
     } else if (CLUTCH_PART == "center_output_rotor") {
@@ -6059,7 +6714,7 @@ echo(
     str("drawerStationRowPitchMm=", WORLD_ROW_PITCH),
     str("drawerStationCount=", N_COL * N_ROW),
     str("drawerStationInstanceCount=", N_COL * N_ROW - 1),
-    "stationDriveMode=sequential-selected-station",
+    "stationDriveMode=simultaneous-all-stations",
     str("drawerRackBodyWidthMm=", DRAWER_RACK_BODY_X),
     str("drawerRackBodyHeightMm=", DRAWER_RACK_BODY_Y),
     str("drawerRackPitchMm=", DRAWER_RACK_PITCH),
@@ -6094,7 +6749,20 @@ echo(
         CENTER_FRONT_BEARING_REINFORCEMENT_DISC_DIAMETER),
     str("frontTimingBearingReinforcementDiscThicknessMm=",
         CENTER_FRONT_BEARING_REINFORCEMENT_DISC_THICKNESS),
-    "drawerRackMount=drawer-bottom-moving",
+    "drawerRackMount=drawer-bottom-moving-captive-two-t-slot-ears",
+    "drawerRackMountLoadPath=captured-t-keys-into-drawer-floor",
+    str("drawerRackMountClearanceMm=", DRAWER_RACK_MOUNT_CLEARANCE),
+    str("drawerRackMountEarLengthMm=", DRAWER_RACK_MOUNT_EAR_LENGTH_X),
+    str("drawerRackMountEarThicknessYMm=", DRAWER_RACK_MOUNT_EAR_T_Y),
+    str("drawerRackMountNeckWidthMm=", DRAWER_RACK_MOUNT_NECK_WIDTH_X),
+    str("drawerRackMountNeckHeightMm=", DRAWER_RACK_MOUNT_NECK_HEIGHT_Y),
+    str("drawerRackMountCapWidthMm=", DRAWER_RACK_MOUNT_CAP_WIDTH_X),
+    str("drawerRackMountCapHeightMm=", DRAWER_RACK_MOUNT_CAP_HEIGHT_Y),
+    str("drawerRackMountCapY0OffsetMm=", DRAWER_RACK_MOUNT_CAP_Y0_OFFSET),
+    str("drawerRackMountPocketY0OffsetMm=", DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET),
+    str("drawerRackMountPocketHeightMm=", DRAWER_RACK_MOUNT_POCKET_HEIGHT_Y),
+    str("drawerRackMountKeyCount=", DRAWER_RACK_MOUNT_KEY_COUNT),
+    "drawerRackMountTravelAxis=+Z",
     "drawerMassLoadPath=side-slides-not-rack",
     "drawerGuideBearing=681-1x3x1-X-axis-C-slot",
     "drawerGuideRail=partition-integral-inward-C-lips",
@@ -6144,7 +6812,34 @@ echo(
     str("columnSyncTensionerBearingCenterOffsetYMm=",
         COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM),
     "columnSyncTensionerBearingReferenceMode=existing-3x6x2-reference",
-    "columnSyncTensionerSliderMount=deferred-bearing-carriage-redesign",
+    "columnSyncTensionerSliderMount=wall-integral-x-captured-shoe",
+    str("columnSyncTensionerSlideStrokeXMm=", TENSIONER_SLIDE_STROKE_X_MM),
+    str("columnSyncTensionerSlideClearanceMm=", TENSIONER_SLIDE_CLEARANCE_MM),
+    str("columnSyncTensionerSlideRailWidthYMm=", TENSIONER_SLIDE_RAIL_WIDTH_Y_MM),
+    str("columnSyncTensionerSlideRailBaseTZMm=", TENSIONER_SLIDE_RAIL_BASE_T_Z_MM),
+    str("columnSyncTensionerSlideRailUpperTZMm=", TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM),
+    str("columnSyncTensionerSlideRailSideTYMm=", TENSIONER_SLIDE_RAIL_SIDE_T_Y_MM),
+    str("columnSyncTensionerSlideRailLocalZ0Mm=", TENSIONER_SLIDE_RAIL_LOCAL_Z0_MM),
+    str("columnSyncTensionerSlideRailLocalZ1Mm=", TENSIONER_SLIDE_RAIL_LOCAL_Z1_MM),
+    str("columnSyncTensionerSlideShoeWidthYMm=",
+        TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM - TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM),
+    str("columnSyncTensionerSlideBossReliefClearanceMm=",
+        TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM),
+    str("columnSyncTensionerSlideEndStopLengthXMm=",
+        TENSIONER_SLIDE_END_STOP_LENGTH_X_MM),
+    str("columnSyncTensionerSlideRailX0Mm=", TENSIONER_SLIDE_RAIL_X0_MM),
+    str("columnSyncTensionerSlideRailX1Mm=", TENSIONER_SLIDE_RAIL_X1_MM),
+    "columnSyncTensionerSlideRailSupport=integral-cabinet-frame",
+    "columnSyncTensionerSlideTravelAxis=+X",
+    "columnSyncTensionerAdjusterAxis=+X",
+    str("columnSyncTensionerAdjusterPilotDiameterMm=",
+        TENSIONER_SLIDE_ADJUSTER_PILOT_D_MM),
+    str("columnSyncTensionerAdjusterPilotDepthMm=",
+        TENSIONER_SLIDE_ADJUSTER_PILOT_DEPTH_X_MM),
+    str("columnSyncTensionerFastenerHeadDiameterMm=",
+        TENSIONER_SLIDE_FASTENER_HEAD_D_MM),
+    str("columnSyncTensionerAdjusterToolClearanceMm=",
+        TENSIONER_SLIDE_TOOL_CLEARANCE_MM),
     str("columnSyncTensionerPulleyTotalHeightMm=",
         COLUMN_SYNC_TENSIONER_WHEEL_TOTAL_H_MM),
     str("columnSyncTensionerSupportHeightYMm=",
@@ -6226,7 +6921,11 @@ echo(
     str("columnSyncTensionerOuterCShellTStemClearanceMm=",
         TENSIONER_OUTER_C_SHELL_T_STEM_CLEARANCE_MM),
     "columnSyncTensionerOuterCShellPart=cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
-    "columnSyncTensionerOuterCShellCabinetBossPart=cabinet-clutch/cabinet_frame",
+    "columnSyncTensionerOuterCShellCabinetBossPart=cabinet-clutch/cabinet_clutch_cabinet_frame",
+    "columnSyncTensionerIntegralGeometryMode=one-stl-two-connected-islands",
+    "columnSyncTensionerFixedComponent=small-c-plus-outer-C",
+    "columnSyncTensionerMovingComponent=original-T-plus-slide-shoe",
+    "columnSyncTensionerFixedComponentSelection=largest-bounds-y",
     str("verticalSplineBearingNominal=", VERTICAL_SPLINE_BEARING_NOMINAL),
     str("verticalSplineBearingCount=", N_COL),
     str("verticalSplineBearingIdMm=", VERTICAL_SPLINE_BEARING_ID_MM),
@@ -6937,6 +7636,10 @@ assert(
     || CLUTCH_PART == "column_sync_tensioner_outer_c_overlay"
     || CLUTCH_PART == "column_sync_tensioner_world"
     || CLUTCH_PART == "column_sync_tensioner_belt_collision"
+    || CLUTCH_PART == "column_sync_tensioner_shoe_rail_collision"
+    || CLUTCH_PART == "column_sync_tensioner_capture_collision"
+    || CLUTCH_PART == "column_sync_tensioner_slide_collision"
+    || CLUTCH_PART == "column_sync_tensioner_fastener_tool_collision"
     || CLUTCH_PART == "center_station_template_assembly"
     || CLUTCH_PART == "center_input_rotor"
     || CLUTCH_PART == "center_output_rotor"
@@ -7306,6 +8009,31 @@ assert(DRAWER_GUIDE_C_DEPTH
     "inward C rail must extend beyond the drawer flange with a running gap");
 assert(DRAWER_GUIDE_C_FLANGE_END_CLEARANCE >= DRAWER_GUIDE_C_FLANGE_CLEARANCE,
     "inward C rail flange must stop before its free end with the running gap");
+assert(DRAWER_RACK_MOUNT_KEY_COUNT == 2
+        && DRAWER_RACK_MOUNT_CLEARANCE > 0
+        && DRAWER_RACK_MOUNT_EAR_LENGTH_X > 0
+        && DRAWER_RACK_MOUNT_EAR_T_Y > 0
+        && DRAWER_RACK_MOUNT_NECK_WIDTH_X > 0
+        && DRAWER_RACK_MOUNT_CAP_WIDTH_X > DRAWER_RACK_MOUNT_NECK_WIDTH_X
+        && DRAWER_RACK_MOUNT_CAP_HEIGHT_Y > 0
+        && DRAWER_RACK_MOUNT_NECK_HEIGHT_Y > 0
+        && DRAWER_RACK_MOUNT_CAP_Y0_OFFSET
+            >= DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET
+        && DRAWER_RACK_MOUNT_POCKET_HEIGHT_Y
+            >= DRAWER_RACK_MOUNT_CAP_Y0_OFFSET
+                + DRAWER_RACK_MOUNT_CAP_HEIGHT_Y
+        && DRAWER_RACK_MOUNT_POCKET_Y0_OFFSET
+            + DRAWER_RACK_MOUNT_POCKET_HEIGHT_Y
+            < DRAWER_BODY_FLOOR_T,
+    "直线齿排必须有两条正尺寸、带间隙的捕获 T 键安装路径");
+assert(DRAWER_RACK_MOUNT_KEY1_X_OFFSET
+            - DRAWER_RACK_MOUNT_CAP_WIDTH_X / 2
+        > DRAWER_RACK_MOUNT_EAR_X0_OFFSET
+        && DRAWER_RACK_MOUNT_KEY2_X_OFFSET
+            + DRAWER_RACK_MOUNT_CAP_WIDTH_X / 2
+        < DRAWER_RACK_MOUNT_EAR_X0_OFFSET
+            + DRAWER_RACK_MOUNT_EAR_LENGTH_X,
+    "直线齿排两个 T 键必须完全落在连续安装耳梁内");
 for (guide_col = [0:N_COL - 1]) {
     assert(drawer_left_guide_partition_face_x(guide_col)
             >= world_col_x(guide_col) - EPS
@@ -7348,6 +8076,37 @@ assert(COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
         && COLUMN_SYNC_TENSIONER_BEARING_SEAT_D_MM
             < 2 * gt2_belt_guide_r(),
     "tensioner bearing seat must leave a printable GT2 pulley rim");
+assert(TENSIONER_SLIDE_STROKE_X_MM > 0
+        && TENSIONER_SLIDE_CLEARANCE_MM > 0
+        && TENSIONER_SLIDE_BOSS_RELIEF_CLEARANCE_MM
+            >= TENSIONER_SLIDE_CLEARANCE_MM
+        && TENSIONER_SLIDE_RAIL_X1_MM
+            > TENSIONER_SLIDE_RAIL_X0_MM + TENSIONER_SLIDE_STROKE_X_MM
+        && TENSIONER_SLIDE_RAIL_X1_MM
+            > TENSIONER_SUPPORT_CENTER_X
+                + TENSIONER_SLIDE_SHOE_LOCAL_X1_MM
+                + TENSIONER_SLIDE_STROKE_X_MM
+        && TENSIONER_SLIDE_RAIL_LOCAL_Z1_MM
+            > TENSIONER_SLIDE_RAIL_LOCAL_Z0_MM
+                + TENSIONER_SLIDE_RAIL_BASE_T_Z_MM
+                + TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM
+        && TENSIONER_SLIDE_SHOE_LOCAL_Z0_MM
+            > TENSIONER_SLIDE_RAIL_LOCAL_Z0_MM
+                + TENSIONER_SLIDE_RAIL_BASE_T_Z_MM
+        && TENSIONER_SLIDE_SHOE_LOCAL_Z1_MM
+            < TENSIONER_SLIDE_RAIL_LOCAL_Z1_MM
+                - TENSIONER_SLIDE_RAIL_UPPER_T_Z_MM
+        && TENSIONER_SLIDE_RAIL_WIDTH_Y_MM
+            > TENSIONER_SLIDE_SHOE_LOCAL_Y1_MM
+                - TENSIONER_SLIDE_SHOE_LOCAL_Y0_MM
+                + 2 * TENSIONER_SLIDE_CLEARANCE_MM
+        && TENSIONER_SLIDE_SHOE_BOSS_X1_MM
+            > TENSIONER_SLIDE_SHOE_BOSS_X0_MM
+        && TENSIONER_SLIDE_ADJUSTER_PILOT_D_MM < 3.0
+        && TENSIONER_SLIDE_ADJUSTER_PILOT_DEPTH_X_MM
+            < TENSIONER_SLIDE_SHOE_BOSS_X1_MM
+                - TENSIONER_SLIDE_SHOE_BOSS_X0_MM,
+    "张紧轮必须有可调 X 向滑台、上下捕获面、侧向导向和盲孔调节座");
 assert(abs(
     COLUMN_SYNC_TENSIONER_BEARING_CENTER_OFFSET_Y_MM
         - (

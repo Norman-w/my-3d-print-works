@@ -184,6 +184,55 @@ def merge_binary_stls(output: Path, inputs: list[Path]) -> None:
         fail(f"多壳 STL 合并失败: {output}\n{detail}")
 
 
+def stl_component_y_spans(stl: Path) -> list[float]:
+    """Return Y spans of binary-STL connected components for one-source checks."""
+    data = stl.read_bytes()
+    if len(data) < 84:
+        fail(f"STL 太短，无法检查连接岛: {stl}")
+    triangle_count = struct.unpack_from("<I", data, 80)[0]
+    triangles: list[list[tuple[float, float, float]]] = []
+    offset = 84
+    for _ in range(triangle_count):
+        if offset + 50 > len(data):
+            fail(f"STL 三角形数据截断: {stl}")
+        offset += 12
+        triangle: list[tuple[float, float, float]] = []
+        for _ in range(3):
+            triangle.append(struct.unpack_from("<3f", data, offset))
+            offset += 12
+        offset += 2
+        triangles.append(triangle)
+    edge_owner: dict[tuple[tuple[float, float, float], tuple[float, float, float]], int] = {}
+    adjacent = [set() for _ in triangles]
+    for index, triangle in enumerate(triangles):
+        rounded = [tuple(round(value, 3) for value in vertex) for vertex in triangle]
+        for first, second in ((0, 1), (1, 2), (2, 0)):
+            edge = tuple(sorted((rounded[first], rounded[second])))
+            previous = edge_owner.get(edge)
+            if previous is None:
+                edge_owner[edge] = index
+            else:
+                adjacent[index].add(previous)
+                adjacent[previous].add(index)
+    seen: set[int] = set()
+    spans: list[float] = []
+    for start in range(len(triangles)):
+        if start in seen:
+            continue
+        stack = [start]
+        seen.add(start)
+        points: list[tuple[float, float, float]] = []
+        while stack:
+            index = stack.pop()
+            points.extend(triangles[index])
+            for neighbour in adjacent[index]:
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    stack.append(neighbour)
+        spans.append(max(point[1] for point in points) - min(point[1] for point in points))
+    return sorted(spans, reverse=True)
+
+
 def run_center_mechanism_plate_export(
     openscad: Path,
     scad: Path,
@@ -1628,6 +1677,21 @@ def main() -> int:
                     assert_watertight(report, stl.name)
             reports[(part, False)] = report
 
+        # The tensioner remains one canonical STL, but its intentional fixed C
+        # and moving T/shoe solids must remain two connected islands so the
+        # browser can mount them on different frames without duplicating a
+        # source model.  The larger Y envelope is the fixed capture island.
+        tensioner_stl = temp_dir / "column_sync_tensioner_integral.stl"
+        run_export(openscad, scad, tensioner_stl, "column_sync_tensioner_integral", False)
+        tensioner_report = inspect(inspect_py, tensioner_stl)
+        assert_watertight(tensioner_report, tensioner_stl.name)
+        tensioner_spans = stl_component_y_spans(tensioner_stl)
+        if len(tensioner_spans) != 2 or tensioner_spans[0] <= tensioner_spans[1]:
+            fail(
+                "张紧总成 STL 必须保持两个连接岛且固定 C 的 Y 包络更大: "
+                f"spans={tensioner_spans}"
+            )
+
         cabinet_stl = temp_dir / "cabinet.stl"
         run_export(openscad, scad, cabinet_stl, "cabinet", False)
         cabinet_report = inspect(inspect_py, cabinet_stl)
@@ -1812,6 +1876,50 @@ def main() -> int:
             0.0,
         ):
             fail("可拆花键轴承承载板/轴承塔进入前后仓隔板皮带孔")
+        tensioner_slide_witness = temp_dir / "column_sync_tensioner_slide_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_slide_witness,
+            inspect_py,
+            "column_sync_tensioner_slide_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮 X 向一体捕获滑台与上下 220T 同步皮带存在实体交集")
+        tensioner_shoe_rail_witness = temp_dir / "column_sync_tensioner_shoe_rail_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_shoe_rail_witness,
+            inspect_py,
+            "column_sync_tensioner_shoe_rail_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮一体滑台/调节凸台在名义位或 +X 满行程进入固定 C 导轨")
+        tensioner_capture_witness = temp_dir / "column_sync_tensioner_capture_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_capture_witness,
+            inspect_py,
+            "column_sync_tensioner_capture_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮固定 C 与移动 T/一体滑台在全行程发生实体干涉")
+        tensioner_tool_witness = temp_dir / "column_sync_tensioner_fastener_tool_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_tool_witness,
+            inspect_py,
+            "column_sync_tensioner_fastener_tool_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮 +X 调节螺丝头/工具包络进入箱体框架")
 
         validate_intermediate_sweep(openscad, scad, inspect_py, temp_dir, contract)
         validate_sweep(contract, reports)
@@ -1838,6 +1946,9 @@ def main() -> int:
         "绿色导向 Boss/15 格隔板定位 Boss 空交集、绿色导向 Boss/行板四角 M3 孔空交集、"
         "下方承载板与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
         "上方 Boss 套装承载板与上方花键轴/2GT 轮实体交集见证、"
+        "张紧轮 X 向一体捕获滑台/上下 220T 皮带空交集、名义位与满行程滑台/C 导轨空交集、"
+        "固定 C 与移动 T/滑台三点全行程空交集、"
+        "+X 调节螺丝头工具空间见证、"
         "中心离合实体碰撞见证"
     )
     print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")

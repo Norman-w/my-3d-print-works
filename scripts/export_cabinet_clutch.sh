@@ -110,6 +110,34 @@ verify_empty_tensioner_collision_selector() {
     return 0
 }
 
+verify_empty_tensioner_capture_selector() {
+    local tmp="${TMPDIR:-/tmp}/smartpartsdrawer-tensioner-capture.$$.stl"
+    local log="${tmp%.stl}.log"
+    local rc=0
+    echo "→ 检查张紧机构固定 C 与移动 T/滑台在全行程实体交集必须为空"
+    (
+        cd "${SCAD_DIR}"
+        "${OPENSCAD_BIN}" \
+            --backend Manifold \
+            --export-format binstl \
+            -D "QUALITY=${QUALITY}" \
+            -D 'CLUTCH_PART="column_sync_tensioner_capture_collision"' \
+            -o "${tmp}" \
+            "${SCAD_FILE}"
+    ) >"${log}" 2>&1 || rc=$?
+    if [[ -s "${tmp}" ]]; then
+        local triangles
+        triangles="$(python3 -c 'import struct,sys; data=open(sys.argv[1], "rb").read(); print(struct.unpack_from("<I", data, 80)[0] if len(data) >= 84 else 0)' "${tmp}")"
+        rm -f "${tmp}" "${log}"
+        [[ "${triangles}" == "0" ]] || die "张紧机构固定 C 与移动 T/滑台发生实体干涉: ${triangles} triangles"
+    else
+        rm -f "${tmp}" "${log}"
+    fi
+    [[ "${rc}" == "0" || "${rc}" == "1" ]] \
+        || die "张紧机构固定 C/T 全行程干涉检查执行失败: exit ${rc}"
+    return 0
+}
+
 patch_native_preview_manifest() {
     python3 - "${PREVIEW_DIR}/manifest.json" "${CENTER_CONTRACT_JSON}" <<'PY'
 from pathlib import Path
@@ -520,8 +548,8 @@ for part in payload.get("parts", []):
 
 # The SCAD file owns one canonical R3C3 component set. The browser reuses those
 # existing STL paths as fourteen lightweight station instances. Each entry is
-# a separate component role so Three.js can move only the selected drawer,
-# clutch carriage, belt, and rotary take-off; no merged kit is duplicated.
+# a separate component role so Three.js can move every drawer station without
+# duplicating the underlying STL geometry.
 template_specs = [
     ("cabinet-clutch/template_station_input_rotor",
      "cabinet-clutch/center_input_rotor", "02·离合机构", "clutch-input-rotor",
@@ -676,6 +704,27 @@ for part in payload.get("parts", []):
         part["instanceMode"] = "world-xyz-translation"
         part["instanceCount"] = len(tensioner_support_instances)
         part["instances"] = tensioner_support_instances
+        # One canonical STL intentionally contains the fixed small-c + outer-C
+        # island and the moving original-T + integral shoe island.  The viewer
+        # splits connected islands once and mounts them on the correct frames;
+        # this is still one source model instantiated twice, not two duplicate
+        # tensioner files.
+        part["componentMode"] = "connected-islands"
+        part["componentCount"] = 2
+        part["componentBindings"] = [
+            {
+                "id": "fixed-capture",
+                "selection": "largest-bounds-y",
+                "parentFrameId": "power-bus-fixed",
+                "transform": "instance-world-position",
+            },
+            {
+                "id": "moving-housing",
+                "selection": "remaining",
+                "parentFrameId": "instance-parent",
+                "transform": "instance-local-transform",
+            },
+        ]
 
 # The STL scanner only knows files.  Keep the assembly semantics beside it so
 # the browser can reconstruct a real world -> fixed assembly -> motion-frame
@@ -773,13 +822,21 @@ frames.extend([
         "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
     },
 ])
+frames.append({
+    "id": "tensioner-shaft-adjustment",
+    "parentFrameId": "power-bus-fixed",
+    "kind": "prismatic",
+    "axis": [1, 0, 0],
+    "contract": "centerClutch",
+    "localTransform": {"position": [0, 0, 0], "rotation": [0, 0, 0]},
+})
 for support_id, position in (
     ("tensioner-lower", tensioner_support_instances[0]["position"]),
     ("tensioner-upper", tensioner_support_instances[1]["position"]),
 ):
     frames.append({
         "id": support_id,
-        "parentFrameId": "power-bus-fixed",
+        "parentFrameId": "tensioner-shaft-adjustment",
         "kind": "fixed",
         "localTransform": {"position": position, "rotation": [0, 0, 0]},
     })
@@ -900,6 +957,18 @@ for part in payload.get("parts", []):
             "axis": [0, 1, 0],
             "role": "drawer-drive",
         }
+    elif part_id == "cabinet-clutch/cabinet_clutch_column_sync_tensioner_rotor":
+        part["placement"].update({
+            "motionFrameId": "tensioner-shaft-adjustment",
+            "motionGeometrySpace": "world-at-motion-datum",
+        })
+        part["motion"] = {
+            "frameId": "tensioner-shaft-adjustment",
+            "kind": "prismatic+revolute",
+            "axis": [1, 0, 0],
+            "rotationAxis": [0, 1, 0],
+            "role": "tensioner-shaft",
+        }
 
 # Template instances retain the authored center-native STL coordinates and use
 # an explicit world-space delta from R3C3. Keep the absolute `position` as an
@@ -920,7 +989,7 @@ for part in payload.get("parts", []):
             }
         part["placement"].update({
             "geometrySpace": "local-template",
-            "instanceFrameMode": "tensioner-frame",
+            "instanceFrameMode": "tensioner-component-frames",
         })
 group_order = [
     "00·箱体框架",
@@ -1028,8 +1097,8 @@ for group_id in ordered_group_ids:
             ),
             call_node(
                 "power_bus/tensioner-assembly",
-                "列同步张紧机构总成 · 一体原壳+C形扣架 + X向张紧轮轴",
-                "固定件只有一个 STL：原张紧机构外壳、C形扣架和加固件已在源端 union 成一个实体并以两处实例挂载；轮轴/轮系仅因 X 向张紧调节作为运动子件，不重复创建固定壳体。",
+                "列同步张紧机构总成 · 一体原壳+C包T滑台 + X向张紧轮轴",
+                "固定件只有一个 STL：原张紧机构外壳、C包T扣架、滑台鞋和加固件已在源端 union 成一个实体并以两处实例挂载；箱体一体导轨通过共享 X 向运动坐标承接两处实例，轮轴/轮系只保留一个旋转模板。",
                 children=[
                     part_node(
                         "cabinet-clutch/cabinet_clutch_column_sync_tensioner_integral",
@@ -1078,7 +1147,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "center_clutch/station-templates",
                 "其他14站·共享离合活动零件实例",
-                "输入公轮/轴/圆套、输出母轮/轴和采购轴承均引用同一组R3C3 STL，并按站点世界偏移实例化；只有选择指当前到站的这一站接合并旋转。",
+                "输入公轮/轴/圆套、输出母轮/轴和采购轴承均引用同一组R3C3 STL，并按站点世界偏移实例化；选择指只决定链条当前触发目标，15站离合和抽屉驱动共享同一动力相位并同时接合/运动。",
                 children=[part_node(template_id) for template_id in sorted(template_clutch_ids)],
             ),
         ]
@@ -1128,7 +1197,7 @@ for group_id in ordered_group_ids:
             call_node(
                 "drawer-drive/station-templates",
                 "其他14站·共享抽屉驱动零件实例",
-                "皮带、前端同步轮/直齿轮/D轴、直齿排、尾部随动轴承和固定导向件均复用中心格 STL；动画按当前选择站过滤。",
+                "皮带、前端同步轮/直齿轮/D轴、直齿排、尾部随动轴承和固定导向件均复用中心格 STL；动画按同一动力相位驱动全部15个站点，选择指只负责触发站定位。",
                 children=[part_node(template_id) for template_id in sorted(template_drawer_ids)],
             ),
         ]
@@ -1174,6 +1243,7 @@ python3 "${PROJECT_ROOT}/scripts/generate_center_clutch_contract.py" \
     --scad "${SCAD_DIR}/${SCAD_FILE}" \
     --output "${CENTER_CONTRACT_JSON}"
 verify_empty_tensioner_collision_selector
+verify_empty_tensioner_capture_selector
 
 # The canonical page owns the chain animation as well as the meshes.  Always
 # rebuild the chain meshes from the same solver invocation; otherwise a new
@@ -1509,7 +1579,8 @@ for printable_part in \
     "${OUT_DIR}/center_input_sleeve.stl" \
     "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_support.stl" \
     "${OUT_DIR}/cabinet_clutch_vertical_spline_bearing_upper_support.stl" \
-    "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_rotor.stl"; do
+    "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_rotor.stl" \
+    "${OUT_DIR}/cabinet_clutch_column_sync_tensioner_integral.stl"; do
     require_watertight_print_part "${printable_part}"
 done
 

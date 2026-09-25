@@ -9,7 +9,7 @@ import {
   playCenterClutchDemo,
   onPartLoaded,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-17";
+} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-18";
 //#endregion
 
 //#region 常量/配置
@@ -122,7 +122,7 @@ const UPPER_TENSIONER_TAILS = new Set([
 //#endregion
 
 //#region 模型/类型
-/** @typedef {{id:string,name:string,file:string,group?:string,role?:string,color?:string,opacity?:number,visible?:boolean,explosion?:number[],bytes?:number,instanceMode?:string,instanceCount?:number,instances?:Array<{id?:string,position?:number[],rotation?:number[],scale?:number[]}>}} PreviewPart */
+/** @typedef {{id:string,name:string,file:string,group?:string,role?:string,color?:string,opacity?:number,visible?:boolean,explosion?:number[],bytes?:number,instanceMode?:string,instanceCount?:number,instances?:Array<{id?:string,position?:number[],rotation?:number[],scale?:number[]}>,componentMode?:string,componentCount?:number,componentBindings?:Array<{id:string,selection:string,parentFrameId:string,transform:string}>}} PreviewPart */
 /** @typedef {{title?:string,units?:string,up?:string,count?:number,totalCount?:number,groups?:{id:string,name:string,count:number}[],parts:PreviewPart[]}} PreviewListing */
 //#endregion
 
@@ -1628,6 +1628,136 @@ function applyExplode() {
   els.explodeOut.textContent = String(Math.round(amount * 100));
 }
 
+function weldKey(position, index) {
+  const x = Math.round(position.getX(index) * 1000);
+  const y = Math.round(position.getY(index) * 1000);
+  const z = Math.round(position.getZ(index) * 1000);
+  return `${x},${y},${z}`;
+}
+
+function unionFindFind(parent, value) {
+  let root = value;
+  while (parent[root] !== root) root = parent[root];
+  while (parent[value] !== value) {
+    const next = parent[value];
+    parent[value] = root;
+    value = next;
+  }
+  return root;
+}
+
+function unionFindJoin(parent, left, right) {
+  const leftRoot = unionFindFind(parent, left);
+  const rightRoot = unionFindFind(parent, right);
+  if (leftRoot !== rightRoot) parent[rightRoot] = leftRoot;
+}
+
+/**
+ * Split a deliberately multi-solid STL by welded triangle connectivity.
+ * This is only used for parts whose manifest explicitly declares
+ * componentMode=connected-islands.  It preserves one canonical STL source
+ * while allowing fixed and moving islands to use different assembly frames.
+ */
+function splitConnectedGeometry(source) {
+  const geometry = source.index ? source.toNonIndexed() : source;
+  const position = geometry.getAttribute("position");
+  if (!position || position.count < 3 || position.count % 3 !== 0) {
+    return [geometry];
+  }
+  const parent = new Int32Array(position.count);
+  const welded = new Map();
+  for (let vertex = 0; vertex < position.count; vertex += 1) {
+    parent[vertex] = vertex;
+    const key = weldKey(position, vertex);
+    const prior = welded.get(key);
+    if (prior === undefined) welded.set(key, vertex);
+    else unionFindJoin(parent, vertex, prior);
+  }
+  // STLLoader returns non-indexed triangles.  Welded geometric vertices are
+  // not enough on their own: the three corners of every individual triangle
+  // must also belong to the same surface component before adjacent triangles
+  // can be traversed.
+  for (let triangle = 0; triangle < position.count; triangle += 3) {
+    unionFindJoin(parent, triangle, triangle + 1);
+    unionFindJoin(parent, triangle + 1, triangle + 2);
+  }
+  const trianglesByRoot = new Map();
+  for (let triangle = 0; triangle < position.count; triangle += 3) {
+    const root = unionFindFind(parent, triangle);
+    let triangleList = trianglesByRoot.get(root);
+    if (!triangleList) {
+      triangleList = [];
+      trianglesByRoot.set(root, triangleList);
+    }
+    triangleList.push(triangle);
+  }
+  if (trianglesByRoot.size <= 1) return [geometry];
+  const islands = [];
+  for (const triangleList of trianglesByRoot.values()) {
+    const islandPositions = new Float32Array(triangleList.length * 9);
+    let cursor = 0;
+    for (const triangle of triangleList) {
+      for (let corner = 0; corner < 3; corner += 1) {
+        const vertex = triangle + corner;
+        islandPositions[cursor++] = position.getX(vertex);
+        islandPositions[cursor++] = position.getY(vertex);
+        islandPositions[cursor++] = position.getZ(vertex);
+      }
+    }
+    const island = new THREE.BufferGeometry();
+    island.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(islandPositions, 3),
+    );
+    island.computeVertexNormals();
+    island.computeBoundingBox();
+    island.computeBoundingSphere();
+    islands.push(island);
+  }
+  return islands;
+}
+
+function selectComponentIndices(islands, binding, used) {
+  if (binding.selection === "remaining") {
+    return islands
+      .map((_, index) => index)
+      .filter((index) => !used.has(index));
+  }
+  if (binding.selection === "largest-bounds-y") {
+    let selected = -1;
+    let largest = -Infinity;
+    islands.forEach((island, index) => {
+      if (used.has(index)) return;
+      const size = island.boundingBox
+        ? island.boundingBox.max.y - island.boundingBox.min.y
+        : -Infinity;
+      if (size > largest) {
+        largest = size;
+        selected = index;
+      }
+    });
+    return selected < 0 ? [] : [selected];
+  }
+  throw new Error(`未知的 STL 分岛选择器: ${binding.selection}`);
+}
+
+function applyComponentTransform(holder, instance, binding, localTransform, bindingParent) {
+  if (binding.transform !== "instance-world-position") {
+    applyFrameTransform(holder, localTransform);
+    return;
+  }
+  const worldPosition = Array.isArray(instance.position)
+    ? new THREE.Vector3(...instance.position)
+    : new THREE.Vector3();
+  bindingParent.updateMatrixWorld(true);
+  holder.position.copy(bindingParent.worldToLocal(worldPosition));
+  const rotation = Array.isArray(instance.rotation)
+    ? instance.rotation
+    : (Array.isArray(localTransform.rotation) ? localTransform.rotation : [0, 0, 0]);
+  holder.rotation.set(...rotation);
+  if (Array.isArray(instance.scale)) holder.scale.set(...instance.scale);
+}
+
 async function loadPart(item) {
   if (item.mesh || item.loading) return;
   item.loading = true;
@@ -1637,6 +1767,19 @@ async function loadPart(item) {
     const geometry = await loadGeometry(`${item.part.file}?v=${item.part.mtime || Date.now()}`);
     geometry.computeVertexNormals();
     geometry.computeBoundingBox();
+    const componentBindings = Array.isArray(item.part.componentBindings)
+      ? item.part.componentBindings
+      : null;
+    const componentIslands = componentBindings
+      ? splitConnectedGeometry(geometry)
+      : null;
+    if (componentBindings
+        && Number(item.part.componentCount) !== componentIslands.length) {
+      throw new Error(
+        `STL 分岛数量不符: ${item.part.id} `
+          + `${componentIslands.length} != ${item.part.componentCount}`,
+      );
+    }
     const material = new THREE.MeshStandardMaterial({
       color: toColor(item.part.color),
       roughness: 0.5,
@@ -1661,19 +1804,57 @@ async function loadPart(item) {
       item.renderObjects = [];
       for (const instance of instances) {
         const instanceParent = assemblyFrame(instance.parentFrameId) || parent;
-        const holder = new THREE.Group();
-        holder.name = `instance:${item.part.id}:${instance.id || ""}`;
-        holder.userData.instanceId = instance.id || "";
         const localTransform = instance.localTransform || {};
-        applyFrameTransform(holder, localTransform);
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.userData.instanceId = instance.id || "";
-        holder.add(mesh);
-        instanceParent.add(holder);
-        holder.userData.baseWorldPosition = holder.getWorldPosition(new THREE.Vector3());
-        item.renderObjects.push(holder);
+        if (!componentBindings) {
+          const holder = new THREE.Group();
+          holder.name = `instance:${item.part.id}:${instance.id || ""}`;
+          holder.userData.instanceId = instance.id || "";
+          applyFrameTransform(holder, localTransform);
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.userData.instanceId = instance.id || "";
+          holder.add(mesh);
+          instanceParent.add(holder);
+          item.renderObjects.push(holder);
+          continue;
+        }
+        const used = new Set();
+        for (const binding of componentBindings) {
+          const indices = selectComponentIndices(componentIslands, binding, used);
+          if (!indices.length) {
+            throw new Error(`STL 分岛绑定为空: ${item.part.id}/${binding.id}`);
+          }
+          indices.forEach((index) => used.add(index));
+          const bindingParent = binding.parentFrameId === "instance-parent"
+            ? instanceParent
+            : assemblyFrame(binding.parentFrameId) || instanceParent;
+          const holder = new THREE.Group();
+          holder.name = `instance:${item.part.id}:${instance.id || ""}:${binding.id}`;
+          holder.userData.instanceId = instance.id || "";
+          holder.userData.componentId = binding.id;
+          applyComponentTransform(
+            holder,
+            instance,
+            binding,
+            localTransform,
+            bindingParent,
+          );
+          for (const index of indices) {
+            const mesh = new THREE.Mesh(componentIslands[index], material);
+            mesh.userData.instanceId = instance.id || "";
+            mesh.userData.componentId = binding.id;
+            holder.add(mesh);
+          }
+          bindingParent.add(holder);
+          item.renderObjects.push(holder);
+        }
       }
       item.mesh = group;
+      state.scene.updateMatrixWorld(true);
+      for (const object of item.renderObjects) {
+        object.userData.baseWorldPosition = object.getWorldPosition(
+          new THREE.Vector3(),
+        );
+      }
       setItemVisible(item, state.visibleIds.has(item.part.id));
       group.updateMatrixWorld(true);
       const itemBox = itemWorldBox(item);

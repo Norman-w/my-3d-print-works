@@ -164,7 +164,7 @@ const play = {
     outputTurns: /** @type {number[]} */ ([]),
     cycleSign: 1,
     cycleStartPowerTurns: 0,
-    cycleStartOutputTurns: 0,
+    cycleStartOutputTurns: /** @type {number[]} */ ([]),
     cycleProgressTurns: 0,
   },
   centerDemo: {
@@ -557,7 +557,14 @@ function validateCenterClutchContract(contract) {
     "drawerRackBodyHeightMm", "drawerRackPitchMm", "drawerRackGearTeeth",
     "frontTimingPulleyTeeth", "frontTimingBeltPitchMm",
     "drawerRackTravelMmPerShaftTurn", "frontTimingBeltAdvanceMmPerShaftTurn",
-    "drawerRackMount", "drawerMassLoadPath",
+    "drawerRackMount", "drawerRackMountLoadPath",
+    "drawerRackMountClearanceMm", "drawerRackMountEarLengthMm",
+    "drawerRackMountEarThicknessYMm", "drawerRackMountNeckWidthMm",
+    "drawerRackMountNeckHeightMm", "drawerRackMountCapWidthMm",
+    "drawerRackMountCapHeightMm", "drawerRackMountKeyCount",
+    "drawerRackMountCapY0OffsetMm", "drawerRackMountPocketY0OffsetMm",
+    "drawerRackMountPocketHeightMm",
+    "drawerRackMountTravelAxis", "drawerMassLoadPath",
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
     "drawerGuideLoadPath", "drawerFrontPinionBearing",
@@ -572,6 +579,19 @@ function validateCenterClutchContract(contract) {
     "drawerGuideFrontSupportClearanceMm", "drawerGuideTailBearingAxis",
     "drawerGuideFrontBearingAxis",
     "drawerFrontPinionBearingSeatDiameterMm",
+    "columnSyncTensionerSliderMount", "columnSyncTensionerSlideStrokeXMm",
+    "columnSyncTensionerSlideClearanceMm", "columnSyncTensionerSlideRailWidthYMm",
+    "columnSyncTensionerSlideRailBaseTZMm", "columnSyncTensionerSlideRailUpperTZMm",
+    "columnSyncTensionerSlideRailSideTYMm", "columnSyncTensionerSlideRailLocalZ0Mm",
+    "columnSyncTensionerSlideRailLocalZ1Mm", "columnSyncTensionerSlideShoeWidthYMm",
+    "columnSyncTensionerSlideBossReliefClearanceMm", "columnSyncTensionerSlideEndStopLengthXMm",
+    "columnSyncTensionerSlideRailX0Mm", "columnSyncTensionerSlideRailX1Mm",
+    "columnSyncTensionerSlideRailSupport", "columnSyncTensionerSlideTravelAxis",
+    "columnSyncTensionerAdjusterAxis", "columnSyncTensionerAdjusterPilotDiameterMm",
+    "columnSyncTensionerAdjusterPilotDepthMm", "columnSyncTensionerFastenerHeadDiameterMm",
+    "columnSyncTensionerAdjusterToolClearanceMm", "columnSyncTensionerOuterCShellCabinetBossPart",
+    "columnSyncTensionerIntegralGeometryMode", "columnSyncTensionerFixedComponent",
+    "columnSyncTensionerMovingComponent", "columnSyncTensionerFixedComponentSelection",
     "inputPart", "outputPart", "outputBearingSupportPart", "mechanismPlatePart",
     "outputShaftPart", "outputBearingsPart",
   ];
@@ -596,10 +616,10 @@ function validateCenterClutchContract(contract) {
       || contract.inputSideAdditionalMechanism !== "none") {
     throw new Error("centerClutch 永磁动作/公轮端无额外机构门槛不满足");
   }
-  if (contract.stationDriveMode !== "sequential-selected-station"
+  if (contract.stationDriveMode !== "simultaneous-all-stations"
       || Number(contract.drawerStationCount) !== 15
       || Number(contract.drawerStationInstanceCount) !== 14) {
-    throw new Error("centerClutch 必须锁定 15 站逐站选择动力模式");
+    throw new Error("centerClutch 必须锁定 15 站同时驱动动力模式");
   }
   if (contract.snakeChainHeightDatum !== "input-sleeve-magnet-bottom") {
     throw new Error("蛇链高度基准必须是公轮底部磁铁下沿");
@@ -627,7 +647,9 @@ function validateCenterClutchContract(contract) {
     rotaryBearingArrangement: "output-two-3x6x2-in-one-integral-bar-input-free",
     linearBearingArrangement: "single-coaxial-with-integrated-seat",
     plateSupport: "partition-boss-locators-plus-four-self-tapping-screws",
-    drawerRackMount: "drawer-bottom-moving",
+    drawerRackMount: "drawer-bottom-moving-captive-two-t-slot-ears",
+    drawerRackMountLoadPath: "captured-t-keys-into-drawer-floor",
+    drawerRackMountTravelAxis: "+Z",
     drawerMassLoadPath: "side-slides-not-rack",
     drawerGuideBearing: "681-1x3x1-X-axis-C-slot",
     drawerGuideRail: "partition-integral-inward-C-lips",
@@ -643,6 +665,16 @@ function validateCenterClutchContract(contract) {
     frontTimingBearingSupport: "integral-shelf-stepped-seat",
     frontTimingBearingFit: "press-fit-3x6x2-bottom-captive",
     frontDshaftProfile: "D",
+    columnSyncTensionerSliderMount: "wall-integral-x-captured-shoe",
+    columnSyncTensionerSlideRailSupport: "integral-cabinet-frame",
+    columnSyncTensionerSlideTravelAxis: "+X",
+    columnSyncTensionerAdjusterAxis: "+X",
+    columnSyncTensionerOuterCShellCabinetBossPart:
+      "cabinet-clutch/cabinet_clutch_cabinet_frame",
+    columnSyncTensionerIntegralGeometryMode: "one-stl-two-connected-islands",
+    columnSyncTensionerFixedComponent: "small-c-plus-outer-C",
+    columnSyncTensionerMovingComponent: "original-T-plus-slide-shoe",
+    columnSyncTensionerFixedComponentSelection: "largest-bounds-y",
   };
   for (const [key, value] of Object.entries(exact)) {
     if (contract[key] !== value) {
@@ -685,6 +717,12 @@ function validateCenterClutchContract(contract) {
     "plateBeltPassageSlotWidthMm",
     "plateBeltPassageAxialWidthMm",
     "drawerBayHeightMm", "drawerShelfThicknessMm", "drawerRackBodyHeightMm",
+    "drawerRackMountClearanceMm", "drawerRackMountEarLengthMm",
+    "drawerRackMountEarThicknessYMm", "drawerRackMountNeckWidthMm",
+    "drawerRackMountNeckHeightMm", "drawerRackMountCapWidthMm",
+    "drawerRackMountCapHeightMm", "drawerRackMountKeyCount",
+    "drawerRackMountCapY0OffsetMm", "drawerRackMountPocketY0OffsetMm",
+    "drawerRackMountPocketHeightMm",
     "drawerRackPitchMm", "drawerRackGearTeeth", "frontTimingPulleyTeeth",
     "frontTimingBeltPitchMm", "drawerRackTravelMmPerShaftTurn",
     "frontTimingBeltAdvanceMmPerShaftTurn",
@@ -716,6 +754,15 @@ function validateCenterClutchContract(contract) {
     "drawerGuideFlangeClearanceMm", "drawerGuideDrawerEdgeInsetMm",
     "drawerGuideFlangeEndClearanceMm",
     "drawerFrontPinionBearingSeatDiameterMm",
+    "columnSyncTensionerSlideStrokeXMm", "columnSyncTensionerSlideClearanceMm",
+    "columnSyncTensionerSlideRailWidthYMm", "columnSyncTensionerSlideRailBaseTZMm",
+    "columnSyncTensionerSlideRailUpperTZMm", "columnSyncTensionerSlideRailSideTYMm",
+    "columnSyncTensionerSlideRailLocalZ0Mm", "columnSyncTensionerSlideRailLocalZ1Mm",
+    "columnSyncTensionerSlideShoeWidthYMm", "columnSyncTensionerSlideBossReliefClearanceMm",
+    "columnSyncTensionerSlideEndStopLengthXMm", "columnSyncTensionerSlideRailX0Mm",
+    "columnSyncTensionerSlideRailX1Mm", "columnSyncTensionerAdjusterPilotDiameterMm",
+    "columnSyncTensionerAdjusterPilotDepthMm", "columnSyncTensionerFastenerHeadDiameterMm",
+    "columnSyncTensionerAdjusterToolClearanceMm",
   ];
   for (const key of positive) {
     if (!Number.isFinite(Number(contract[key])) || Number(contract[key]) <= 0) {
@@ -781,6 +828,10 @@ function validateCenterClutchContract(contract) {
       || n("drawerLayerCount") !== 3 || n("serviceLayerCount") !== 1
       || n("drawerBayHeightMm") < 55.29) {
     throw new Error("centerClutch 必须锁定三层柜体中心格（零基准 2,1）");
+  }
+  if (n("columnSyncTensionerSlideBossReliefClearanceMm")
+      < n("columnSyncTensionerSlideClearanceMm")) {
+    throw new Error("张紧轮调节凸台让位不能小于滑台运行间隙");
   }
   const chainPitch = n("drawerBayHeightMm") + n("drawerShelfThicknessMm");
   const expectedChainReference = n("drawerShelfTopYMm")
@@ -1308,8 +1359,13 @@ function isCurrentClutchStation(index = play.scheme1.targetIndex) {
   return index >= 0 && index === centerStationIndex();
 }
 
+function simultaneousStationMode() {
+  return play.currentClutch.contract?.stationDriveMode === "simultaneous-all-stations";
+}
+
 function stationEngagement(index) {
-  if (!play.scheme1.ready || index < 0 || play.scheme1.targetIndex !== index) return 0;
+  if (!play.scheme1.ready || index < 0
+      || (!simultaneousStationMode() && play.scheme1.targetIndex !== index)) return 0;
   if (play.centerDemo.active) {
     return isCurrentClutchStation(index) ? play.centerDemo.engagement : 0;
   }
@@ -1325,7 +1381,8 @@ function stationEngagement(index) {
 }
 
 function stationDriveActive(index) {
-  if (!play.scheme1.ready || index < 0 || play.scheme1.targetIndex !== index) return false;
+  if (!play.scheme1.ready || index < 0
+      || (!simultaneousStationMode() && play.scheme1.targetIndex !== index)) return false;
   return play.scheme1.phase === SCHEME1_PHASE.OPEN
     || play.scheme1.phase === SCHEME1_PHASE.CLOSE;
 }
@@ -2147,7 +2204,7 @@ function initScheme1Motion() {
   play.scheme1.outputTurns = Array.from({ length: stations.length }, () => 0);
   play.scheme1.cycleSign = 1;
   play.scheme1.cycleStartPowerTurns = 0;
-  play.scheme1.cycleStartOutputTurns = 0;
+  play.scheme1.cycleStartOutputTurns = Array.from({ length: stations.length }, () => 0);
   play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
   if (play.centerViewRequested && snapScheme1ToCenter()) {
@@ -2173,7 +2230,10 @@ function snapScheme1ToCenter() {
   scheme.outputTurns.fill(0);
   scheme.cycleSign = 1;
   scheme.cycleStartPowerTurns = 0;
-  scheme.cycleStartOutputTurns = 0;
+  scheme.cycleStartOutputTurns = Array.from(
+    { length: scheme.stations.length },
+    () => 0,
+  );
   scheme.cycleProgressTurns = 0;
   play.motorTurns = 0;
   return true;
@@ -2187,7 +2247,7 @@ function setScheme1Phase(phase) {
     // a half-open drawer angle from the preceding station.
     scheme.cycleSign = play.dir || scheme.cycleSign || 1;
     scheme.cycleStartPowerTurns = scheme.powerTurns;
-    scheme.cycleStartOutputTurns = scheme.outputTurns[scheme.targetIndex] || 0;
+    scheme.cycleStartOutputTurns = scheme.outputTurns.slice();
     scheme.cycleProgressTurns = 0;
   }
   scheme.phase = phase;
@@ -2220,6 +2280,20 @@ function scheme1TransportSpeed() {
   // the old independently-authored selectorSpeed value could introduce a
   // small phase error after each station stop.
   return chainLinearSpeedMmPerHz() * play.motorHz;
+}
+
+function setCycleOutputTurns(progress) {
+  const scheme = play.scheme1;
+  if (simultaneousStationMode()) {
+    for (let index = 0; index < scheme.outputTurns.length; index += 1) {
+      scheme.outputTurns[index] = (scheme.cycleStartOutputTurns[index] || 0)
+        + scheme.cycleSign * progress;
+    }
+    return;
+  }
+  scheme.outputTurns[scheme.targetIndex] =
+    (scheme.cycleStartOutputTurns[scheme.targetIndex] || 0)
+    + scheme.cycleSign * progress;
 }
 
 function tickScheme1(dt) {
@@ -2260,8 +2334,7 @@ function tickScheme1(dt) {
       );
       scheme.powerTurns = scheme.cycleStartPowerTurns
         + scheme.cycleSign * scheme.cycleProgressTurns;
-      scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns
-        + scheme.cycleSign * scheme.cycleProgressTurns;
+      setCycleOutputTurns(scheme.cycleProgressTurns);
       if (scheme.cycleProgressTurns >= SCHEME1_DRAWER_TRAVEL_TURNS - 1e-6) {
         setScheme1Phase(SCHEME1_PHASE.CLOSE);
       }
@@ -2272,14 +2345,13 @@ function tickScheme1(dt) {
       );
       scheme.powerTurns = scheme.cycleStartPowerTurns
         + scheme.cycleSign * scheme.cycleProgressTurns;
-      scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns
-        + scheme.cycleSign * scheme.cycleProgressTurns;
+      setCycleOutputTurns(scheme.cycleProgressTurns);
       if (scheme.cycleProgressTurns <= 1e-6) {
         // Snap the return datum once, rather than accumulating floating-point
         // error across 25 stations and repeated direction changes.
         scheme.cycleProgressTurns = 0;
         scheme.powerTurns = scheme.cycleStartPowerTurns;
-        scheme.outputTurns[scheme.targetIndex] = scheme.cycleStartOutputTurns;
+        setCycleOutputTurns(0);
         setScheme1Phase(SCHEME1_PHASE.RELEASE);
       }
     } else if (scheme.phase === SCHEME1_PHASE.RELEASE
@@ -2863,7 +2935,7 @@ export function holdScheme1Engaged() {
   scheme.selectorS = scheme.stationS[scheme.targetIndex];
   scheme.cycleSign = play.dir || 1;
   scheme.cycleStartPowerTurns = scheme.powerTurns;
-  scheme.cycleStartOutputTurns = scheme.outputTurns[scheme.targetIndex] || 0;
+  scheme.cycleStartOutputTurns = scheme.outputTurns.slice();
   scheme.cycleProgressTurns = 0;
   scheme.phase = SCHEME1_PHASE.ENGAGE;
   scheme.phaseTime = SCHEME1_ENGAGE_SECONDS;

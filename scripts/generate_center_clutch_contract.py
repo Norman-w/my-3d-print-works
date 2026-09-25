@@ -323,7 +323,14 @@ REQUIRED = {
     "drawerRackLowerYMm", "drawerShelfTopYMm",
     "frontTimingBearingReinforcementDiscDiameterMm",
     "frontTimingBearingReinforcementDiscThicknessMm",
-    "drawerRackMount", "drawerMassLoadPath",
+    "drawerRackMount", "drawerRackMountLoadPath",
+    "drawerRackMountClearanceMm", "drawerRackMountEarLengthMm",
+    "drawerRackMountEarThicknessYMm", "drawerRackMountNeckWidthMm",
+    "drawerRackMountNeckHeightMm", "drawerRackMountCapWidthMm",
+    "drawerRackMountCapHeightMm", "drawerRackMountKeyCount",
+    "drawerRackMountCapY0OffsetMm", "drawerRackMountPocketY0OffsetMm",
+    "drawerRackMountPocketHeightMm",
+    "drawerRackMountTravelAxis", "drawerMassLoadPath",
     "drawerGuideBearing", "drawerGuideRail",
     "drawerGuideBearingArrangement", "drawerGuideBearingAxis",
     "drawerGuideLoadPath", "drawerFrontPinionBearing",
@@ -349,6 +356,27 @@ REQUIRED = {
     "columnSyncTensionerBearingSeatDiameterMm",
     "columnSyncTensionerBearingCenterOffsetYMm",
     "columnSyncTensionerBearingReferenceMode",
+    "columnSyncTensionerSliderMount",
+    "columnSyncTensionerSlideStrokeXMm",
+    "columnSyncTensionerSlideClearanceMm",
+    "columnSyncTensionerSlideRailWidthYMm",
+    "columnSyncTensionerSlideRailBaseTZMm",
+    "columnSyncTensionerSlideRailUpperTZMm",
+    "columnSyncTensionerSlideRailSideTYMm",
+    "columnSyncTensionerSlideRailLocalZ0Mm",
+    "columnSyncTensionerSlideRailLocalZ1Mm",
+    "columnSyncTensionerSlideShoeWidthYMm",
+    "columnSyncTensionerSlideBossReliefClearanceMm",
+    "columnSyncTensionerSlideEndStopLengthXMm",
+    "columnSyncTensionerSlideRailX0Mm",
+    "columnSyncTensionerSlideRailX1Mm",
+    "columnSyncTensionerSlideRailSupport",
+    "columnSyncTensionerSlideTravelAxis",
+    "columnSyncTensionerAdjusterAxis",
+    "columnSyncTensionerAdjusterPilotDiameterMm",
+    "columnSyncTensionerAdjusterPilotDepthMm",
+    "columnSyncTensionerFastenerHeadDiameterMm",
+    "columnSyncTensionerAdjusterToolClearanceMm",
     "columnSyncTensionerPulleyTotalHeightMm",
     "columnSyncTensionerSupportHeightYMm",
     "columnSyncTensionerSupportEdgeClearanceYMm",
@@ -392,6 +420,10 @@ REQUIRED = {
     "columnSyncTensionerOuterCShellTStemClearanceMm",
     "columnSyncTensionerOuterCShellPart",
     "columnSyncTensionerOuterCShellCabinetBossPart",
+    "columnSyncTensionerIntegralGeometryMode",
+    "columnSyncTensionerFixedComponent",
+    "columnSyncTensionerMovingComponent",
+    "columnSyncTensionerFixedComponentSelection",
     "outputPart", "outputBearingSupportPart", "mechanismPlatePart", "outputShaftPart",
     "outputBearingsPart",
 }
@@ -430,7 +462,7 @@ INT_KEYS = {
     "verticalSplineBearingDetourColumn",
     "drawerStationCount", "drawerStationInstanceCount", "rearClutchRowPlateCount",
     "rearClutchRowPlateStationCount",
-    "drawerRackGearTeeth", "frontTimingPulleyTeeth",
+    "drawerRackGearTeeth", "frontTimingPulleyTeeth", "drawerRackMountKeyCount",
 }
 BOOL_KEYS = {
     "linearBearingMovesWithInput", "engageOnlyWhenStopped", "releaseBeforeReturn",
@@ -536,6 +568,42 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("张紧轮必须复用既有 3x6x2 轴承参考件，不得新增独立轴承 STL")
     if contract.get("columnSyncTensionerSupportPlacementMode") != "pulley-edge-relative":
         raise RuntimeError("张紧轮支撑必须按皮带轮上下沿相对定位")
+    if contract.get("columnSyncTensionerSliderMount") != "wall-integral-x-captured-shoe":
+        raise RuntimeError("张紧轮必须使用箱体一体 X 向捕获滑台")
+    if contract.get("columnSyncTensionerSlideRailSupport") != "integral-cabinet-frame":
+        raise RuntimeError("张紧轮滑台导轨必须接入箱体框架")
+    if contract.get("columnSyncTensionerSlideTravelAxis") != "+X":
+        raise RuntimeError("张紧轮滑台行程轴必须是 +X")
+    if contract.get("columnSyncTensionerAdjusterAxis") != "+X":
+        raise RuntimeError("张紧轮调节螺丝必须从 +X 进入")
+    for key, label in (
+        ("columnSyncTensionerSlideStrokeXMm", "张紧轮滑台 X 行程"),
+        ("columnSyncTensionerSlideClearanceMm", "张紧轮滑台运行间隙"),
+        ("columnSyncTensionerSlideRailWidthYMm", "张紧轮滑台导轨 Y 内宽"),
+        ("columnSyncTensionerSlideRailBaseTZMm", "张紧轮滑台下捕获厚度"),
+        ("columnSyncTensionerSlideRailUpperTZMm", "张紧轮滑台上捕获厚度"),
+        ("columnSyncTensionerSlideShoeWidthYMm", "张紧轮一体滑台 Y 宽"),
+        ("columnSyncTensionerSlideBossReliefClearanceMm", "张紧轮调节凸台让位间隙"),
+        ("columnSyncTensionerSlideEndStopLengthXMm", "张紧轮滑台端部止挡长度"),
+        ("columnSyncTensionerAdjusterPilotDiameterMm", "张紧轮调节盲孔直径"),
+        ("columnSyncTensionerAdjusterPilotDepthMm", "张紧轮调节盲孔深度"),
+        ("columnSyncTensionerFastenerHeadDiameterMm", "张紧轮调节螺丝头直径"),
+        ("columnSyncTensionerAdjusterToolClearanceMm", "张紧轮调节工具空间"),
+    ):
+        if n(contract, key) <= 0:
+            raise RuntimeError(f"{label}必须为正")
+    if n(contract, "columnSyncTensionerSlideRailX1Mm") <= n(
+        contract, "columnSyncTensionerSlideRailX0Mm"
+    ):
+        raise RuntimeError("张紧轮滑台导轨 X 范围无效")
+    if n(contract, "columnSyncTensionerSlideBossReliefClearanceMm") < n(
+        contract, "columnSyncTensionerSlideClearanceMm"
+    ):
+        raise RuntimeError("张紧轮调节凸台让位不能小于滑台运行间隙")
+    if n(contract, "columnSyncTensionerSlideRailWidthYMm") <= n(
+        contract, "columnSyncTensionerSlideShoeWidthYMm"
+    ) + 2 * n(contract, "columnSyncTensionerSlideClearanceMm"):
+        raise RuntimeError("张紧轮滑台导轨没有包住一体滑台并保留 Y 间隙")
     if n(contract, "columnSyncTensionerBearingCount") != 2:
         raise RuntimeError("张紧轮必须安装上下两枚轴承")
     for key, value, label in (
@@ -634,9 +702,19 @@ def validate_contract(contract: dict[str, object]) -> None:
     ):
         raise RuntimeError("张紧轮外包络必须复用唯一张紧总成 STL")
     if contract.get("columnSyncTensionerOuterCShellCabinetBossPart") != (
-        "cabinet-clutch/cabinet_frame"
+        "cabinet-clutch/cabinet_clutch_cabinet_frame"
     ):
-        raise RuntimeError("张紧轮外包络 boss 必须落在唯一箱体框架件中")
+        raise RuntimeError("张紧轮外 C 必须由箱体框架四 Boss 承接，不能悬空")
+    if contract.get("columnSyncTensionerIntegralGeometryMode") != (
+        "one-stl-two-connected-islands"
+    ):
+        raise RuntimeError("张紧轮必须保持一份 STL、固定 C 与移动 T 分岛装配")
+    if contract.get("columnSyncTensionerFixedComponent") != "small-c-plus-outer-C":
+        raise RuntimeError("张紧轮固定岛必须是小 c 加外 C")
+    if contract.get("columnSyncTensionerMovingComponent") != "original-T-plus-slide-shoe":
+        raise RuntimeError("张紧轮移动岛必须是原 T 加一体滑台")
+    if contract.get("columnSyncTensionerFixedComponentSelection") != "largest-bounds-y":
+        raise RuntimeError("张紧轮固定岛选择规则必须锁定为 Y 包络较大者")
     if n(contract, "columnSyncTensionerOuterCShellBossCount") != 4:
         raise RuntimeError("张紧轮外包络必须有四个 boss 通孔")
     if contract.get("columnSyncTensionerOuterCShellHolePattern") != (
@@ -1391,8 +1469,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("当前柜体必须有 15 个抽屉离合站点")
     if n(contract, "drawerStationInstanceCount") != 14:
         raise RuntimeError("中心同款离合总成模板必须由 14 个非中心实例补齐 5×3 世界总装")
-    if contract.get("stationDriveMode") != "sequential-selected-station":
-        raise RuntimeError("当前预览必须使用逐站选择、单站接合的动力模式")
+    if contract.get("stationDriveMode") != "simultaneous-all-stations":
+        raise RuntimeError("当前预览必须使用 15 站同时接合/驱动的动力模式")
     if n(contract, "drawerColumnCount") != 5:
         raise RuntimeError("当前中心同款离合总成模板实例布局必须锁定 5 列")
     if n(contract, "drawerStationColumnPitchMm") <= 0 or n(contract, "drawerStationRowPitchMm") <= 0:
@@ -1407,6 +1485,41 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("抽屉底部齿条背板高度无效")
     if n(contract, "drawerRackBodyWidthMm") <= 0:
         raise RuntimeError("抽屉底部齿条背板宽度无效")
+    if contract.get("drawerRackMount") != "drawer-bottom-moving-captive-two-t-slot-ears":
+        raise RuntimeError("直线齿排必须使用抽屉底部两条捕获 T 键安装")
+    if contract.get("drawerRackMountLoadPath") != "captured-t-keys-into-drawer-floor":
+        raise RuntimeError("直线齿排承力路径必须进入抽屉底板捕获槽")
+    if contract.get("drawerRackMountTravelAxis") != "+Z":
+        raise RuntimeError("直线齿排安装键的装入/运行方向必须是 +Z")
+    if n(contract, "drawerRackMountKeyCount") != 2:
+        raise RuntimeError("直线齿排必须有两条安装 T 键")
+    for key, label in (
+        ("drawerRackMountClearanceMm", "直线齿排安装间隙"),
+        ("drawerRackMountEarLengthMm", "直线齿排安装耳长度"),
+        ("drawerRackMountEarThicknessYMm", "直线齿排安装耳厚度"),
+        ("drawerRackMountNeckWidthMm", "直线齿排 T 键颈宽"),
+        ("drawerRackMountNeckHeightMm", "直线齿排 T 键颈高"),
+        ("drawerRackMountCapWidthMm", "直线齿排 T 键帽宽"),
+        ("drawerRackMountCapHeightMm", "直线齿排 T 键帽高"),
+    ):
+        if n(contract, key) <= 0:
+            raise RuntimeError(f"{label}必须为正")
+    if n(contract, "drawerRackMountCapWidthMm") <= n(
+        contract, "drawerRackMountNeckWidthMm"
+    ):
+        raise RuntimeError("直线齿排 T 键帽必须宽于颈部")
+    if n(contract, "drawerRackMountCapY0OffsetMm") < n(
+        contract, "drawerRackMountPocketY0OffsetMm"
+    ):
+        raise RuntimeError("直线齿排 T 键帽必须完全落在底板内部捕获腔")
+    if n(contract, "drawerRackMountPocketHeightMm") < n(
+        contract, "drawerRackMountCapY0OffsetMm"
+    ) + n(contract, "drawerRackMountCapHeightMm"):
+        raise RuntimeError("直线齿排底板捕获腔必须覆盖 T 键帽")
+    if n(contract, "drawerRackMountPocketY0OffsetMm") + n(
+        contract, "drawerRackMountPocketHeightMm"
+    ) >= n(contract, "drawerBodyFloorMm"):
+        raise RuntimeError("直线齿排底板捕获腔必须保留顶面实体")
     if contract.get("drawerBodyPart") != "cabinet-clutch/20_drawer_body_candidate":
         raise RuntimeError("真实抽屉壳体必须使用唯一 20_drawer_body_candidate 源件")
     expect(contract, "drawerBodyOuterWidthMm", n(contract, "drawerBayWidthMm") - 2 * n(contract, "drawerGuideDrawerEdgeInsetMm"), "真实抽屉壳体外宽")
