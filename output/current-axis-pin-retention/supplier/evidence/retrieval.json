@@ -1,0 +1,14 @@
+[
+  {
+    "file": "mbo-8x32-lh27_4.pdf",
+    "url": "https://www.mbo-osswald.de/daten/mbodrawing/410800320274003-en.pdf",
+    "sha256": "7f6e94b6476d76a92fe765f3eeb7070dd9e498269e547198c5a897d1cc1be689",
+    "bytes": 862090
+  },
+  {
+    "file": "ampg-transmission.pdf",
+    "url": "https://ampg.com/public/assets/imgs/uploads/AMPG%20Power%20Transmission%20Catalog.pdf",
+    "sha256": "fdc8ef1b69983c4698650e3eadd5a21d9df2266b923e2870aa6227de62e08a97",
+    "bytes": 8047507
+  }
+]

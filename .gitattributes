@@ -1,0 +1,4 @@
+# Frozen evidence is hashed byte-for-byte; do not normalize its line endings.
+/output/** -text
+# Python's CSV writer uses CRLF. Keep it without treating CR as trailing space.
+*.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

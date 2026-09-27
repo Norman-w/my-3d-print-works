@@ -1,0 +1,93 @@
+{
+  "status": "V2_FRONTEND_PURE_FUNCTIONS_PASS_NOT_PUBLISHED",
+  "checks": [
+    {
+      "name": "schema validates 85-row fixture including the terminal cap; mesh identity is not asserted",
+      "passed": true
+    },
+    {
+      "name": "401 native-asserted working samples x three adjuster settings match the SCAD function",
+      "passed": true
+    },
+    {
+      "name": "rigid lever, terminal cap and moving metal share the same nonlinear pivot rotation",
+      "passed": true
+    },
+    {
+      "name": "world-space pull is proximal and release reverses it in the retained scene mapping",
+      "passed": true
+    },
+    {
+      "name": "continuous sampled core contains the moving endpoint, tangent, guide and stationary ferrule",
+      "passed": true
+    },
+    {
+      "name": "shared cache returns one solution for repeated pose and invalidates if a contract changes",
+      "passed": true
+    },
+    {
+      "name": "compatibility radius_cable does not act as the direct-pull moment arm",
+      "passed": true
+    },
+    {
+      "name": "missing or unknown law, malformed parameters and invalid motion rows fail closed",
+      "passed": true
+    },
+    {
+      "name": "existing carriage, gate, spring and independent spin motion remain unchanged",
+      "passed": true
+    },
+    {
+      "name": "UI source retains shared graph/camera/loader and includes cap shell display",
+      "passed": true
+    }
+  ],
+  "metrics": {
+    "native_sample_comparisons": 1203,
+    "max_native_angle_error_deg": 4.440892098500626e-14,
+    "max_takeup_error_mm": 3.907985046680551e-14,
+    "max_core_polyline_length_error_mm": 6.130693890327166e-7,
+    "full": {
+      "outputStroke": 20,
+      "fraction": 1,
+      "angleRadians": -0.3374463545041313,
+      "angleDegrees": -19.33425192516212,
+      "rearward": 11.91882766321422,
+      "fullRearward": 11.91882766321422,
+      "pivot": [
+        75,
+        -82,
+        5
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "referenceOnly": true,
+      "fingerPoint": [
+        59.40766792938447,
+        -80,
+        -27.44809979952069
+      ]
+    }
+  },
+  "source_sha256": {
+    "web/cable-scene-kinematics.mjs": "83dd0fbf8278662aef1946435ba37f7484ef06ea6d4657340a569e65c2356539",
+    "web/feeder-motion.mjs": "aaeb97dfb4a735f4411843abc19491442025238b8277a989728942dba9cdeaac",
+    "web/feeder-motion.html": "23967a634c1c58c55d424aec51887d17c5579b6c2f8a83597a4514c717dd967d",
+    "web/feeder-motion-kinematics.mjs": "08fbc63cb631faf8524ec96c0048ec93db2ddcc495bb48e5a895a164c1fc3427",
+    "output/cable-direct-pull-v2/candidate.scad": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "output/cable-direct-pull-v2/independent/native-verification.json": "83a9ed2f19aab1a2bc95b7830f1bd7a5136aff541ded4f026079f2af0666a187",
+    "output/cable-direct-pull-v2/independent/native-assertions.scad": "d309ccf69c463568fe545d2a20a6b17d84379acd1c7bec473bdba1955ac37b08",
+    "output/cable-scene-export/20260927T071458613482Z/inventory.json": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+    "output/cable-scene-export/20260927T071458613482Z/report.json": "4e81d6f79450e58e3518f89b49f96f2280adb03c5da5c48dcf1faaad0224fadd",
+    "output/cable-direct-pull-v2/web-review/test-kinematics.mjs": "ff2a488333767bbb4ae6b6b7f989ea0cd0542ef5f5100e51a6793da5cdab3981"
+  },
+  "metadata_fixture": "Historical 84-row inventory expanded to 85 with explicit v2 contract and terminal-cap metadata; no current v2 mesh identity or browser rendering claim.",
+  "preserved_source_backup": "output/cable-direct-pull-v2/pre-adoption/web/",
+  "scope": "Pure motion/schema/coordinate tests and bounded UI source assertions only. No browser or LAN publication, official CAD/inventory changes, geometry clearance, physical load or return acceptance.",
+  "published": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

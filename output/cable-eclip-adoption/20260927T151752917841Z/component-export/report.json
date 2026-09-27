@@ -1,0 +1,168 @@
+{
+  "id": "feeder/cable-input-hardware-fixed",
+  "name": "扳机轴、端口、止挡和M4×60安装五金",
+  "role": "purchased",
+  "group": "feeder",
+  "family": "input-fixed-hardware",
+  "source": "cad/cable-scene-export.scad",
+  "definitions": {
+    "cse_part": "input-fixed-hardware",
+    "cse_t": 0
+  },
+  "backend": "component-specific",
+  "motion": {
+    "kind": "fixed"
+  },
+  "procurement_status": "candidate-not-confirmed-purchased",
+  "instance_kind": "rigid-reference-subassembly",
+  "export_mode": "separate-axis-pin-display-merge",
+  "execution_ok": true,
+  "components_export": [
+    {
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.log",
+      "execution_ok": true,
+      "label": "pin",
+      "backend": "CGAL",
+      "wrapper": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.scad",
+      "wrapper_sha256": "782f917a0fd94fb68e07eeccd0fd9a22cef20824be2e8b0955de0d76837621f7",
+      "file": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.stl",
+      "sha256": "77fb14821cda72a56bbc324e2494d4c6e1065bb00723da4e5e8e6753a6b9459c",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-pin.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1436,
+        "uniqueVertexCount": 720,
+        "bounds": {
+          "min": [
+            69.0,
+            -103.3499984741211,
+            -0.9999997019767761
+          ],
+          "max": [
+            81.0,
+            -68.30000305175781,
+            11.0
+          ],
+          "size": [
+            12.0,
+            35.04999542236328,
+            11.999999701976776
+          ]
+        },
+        "surfaceArea": 1154.95634599706,
+        "signedVolume": 1866.0876691020203,
+        "volume": 1866.0876691020203,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.log",
+      "execution_ok": true,
+      "label": "other",
+      "backend": "Manifold",
+      "wrapper": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.scad",
+      "wrapper_sha256": "0cc3a14ce0108edb31abe66187bccb3805830065faae46399b6ad13e35675c81",
+      "file": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.stl",
+      "sha256": "d678b391ee42cf67c279e7ba33e4a259dab2ae4db29d215d085804fddd4c5796",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed-other.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 14534,
+        "uniqueVertexCount": 7232,
+        "bounds": {
+          "min": [
+            -20.5,
+            -100.5,
+            -64.5
+          ],
+          "max": [
+            165.42127964422977,
+            -34.8,
+            74.96803743153548
+          ],
+          "size": [
+            185.92127964422977,
+            65.7,
+            139.4680374315355
+          ]
+        },
+        "surfaceArea": 9292.827878279888,
+        "signedVolume": 6605.707803394739,
+        "volume": 6605.707803394739,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 38,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      }
+    }
+  ],
+  "display_composition": "Triangle concatenation of separate source parts; no Boolean fusion or printable-solid claim.",
+  "passed": true,
+  "file": "output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed.stl",
+  "sha256": "51749565f4b630c5bbd479140aedd56dd8fff439382ab30c660f713ed567a4d7",
+  "bytes": 4233527,
+  "mesh": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/component-export/feeder__cable-input-hardware-fixed.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 15970,
+    "uniqueVertexCount": 7952,
+    "bounds": {
+      "min": [
+        -20.5,
+        -103.3499984741211,
+        -64.5
+      ],
+      "max": [
+        165.42127964422977,
+        -34.8,
+        74.96803743153548
+      ],
+      "size": [
+        185.92127964422977,
+        68.5499984741211,
+        139.4680374315355
+      ]
+    },
+    "surfaceArea": 10447.784224277017,
+    "signedVolume": 8471.795472496808,
+    "volume": 8471.795472496808,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 38,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": false
+  },
+  "display_only": "Reference assembly may contain multiple touching bodies; no printable-solid claim."
+}

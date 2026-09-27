@@ -1,0 +1,136 @@
+{
+  "scope": "Nominal bare cam carriage versus four actual-envelope shoulder screws and carriers only. Concrete supports checked separately in feeder-support-check.json; physical tolerance/load/airflow remain OPEN.",
+  "units": "mm",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007"
+  },
+  "candidate_parameters": {
+    "closed_radius": 21,
+    "open_radius": 26,
+    "gate_spacing": 28.5,
+    "cam_stroke": 20,
+    "pin_d": 4,
+    "pin_head_d": 7,
+    "cam_bridge_y": 48
+  },
+  "moving_members_full_stroke_envelope_xyz": [
+    108,
+    59.25,
+    100.5
+  ],
+  "background_plus_moving_envelope_xyz": [
+    108,
+    89,
+    116
+  ],
+  "samples": [
+    {
+      "name": "cam-overlap-0",
+      "path": "output/analysis/cam-overlap-0.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.2",
+      "path": "output/analysis/cam-overlap-0.2.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.4",
+      "path": "output/analysis/cam-overlap-0.4.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.5",
+      "path": "output/analysis/cam-overlap-0.5.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.6",
+      "path": "output/analysis/cam-overlap-0.6.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.8",
+      "path": "output/analysis/cam-overlap-0.8.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-1",
+      "path": "output/analysis/cam-overlap-1.stl",
+      "exit_code": 1,
+      "empty": true
+    }
+  ],
+  "positive_control": {
+    "name": "cam-control",
+    "path": "output/analysis/cam-misaligned-control.stl",
+    "exit_code": 0,
+    "empty": false,
+    "sha256": "99f735cf649d4d0c9a910892c2f399845200e9f5803123428bcef699f825caf7",
+    "volume_mm3": 32.008064817815594,
+    "bounds_mm": [
+      [
+        -44.0,
+        44.0
+      ],
+      [
+        8.0,
+        13.0
+      ],
+      [
+        -30.048980150179112,
+        1.5489801501791116
+      ]
+    ]
+  },
+  "nominal_samples_passed": true,
+  "artifact_sha256": {
+    "output/preview/cam-isometric.png": "4ca3cb55b44d74d55eddc3629a0e30f5ad87f63e211ea8a0142c410ad142ceaf",
+    "output/preview/cam-front.png": "b40c87accce8518afc0e18d0d5264ed15782033c0b2a547a8357b79b6411dc11",
+    "output/preview/cam-top.png": "e7b038bf06b4debdacdb334839c46527395a12787e4525ccadffeef7efd29910",
+    "output/preview/cam-installation.png": "c5f7376f2568a31bfe4f48b9e2439ce4720d42112ba141f6a69f1c74193ff77e",
+    "output/analysis/cam-carriage-study.stl": "c0e8f2634ffb3560797e3ab63ac8646a81f21e6e6ee325724e96410b3c94332f",
+    "output/analysis/cam-misaligned-control.stl": "99f735cf649d4d0c9a910892c2f399845200e9f5803123428bcef699f825caf7"
+  },
+  "carriage_mesh_check": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/cam-carriage-study.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 1996,
+    "uniqueVertexCount": 990,
+    "bounds": {
+      "min": [
+        -52.0,
+        8.0,
+        -64.5
+      ],
+      "max": [
+        52.0,
+        54.0,
+        16.0
+      ],
+      "size": [
+        104.0,
+        46.0,
+        80.5
+      ]
+    },
+    "surfaceArea": 14791.427469697313,
+    "signedVolume": 20954.22479356969,
+    "volume": 20954.22479356969,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "tolerance_budget": "Refer current assembly-budget.json. The 0.544812mm pin/slot baseline alone does not include finite guide play, 3D yaw or deformation.",
+  "manufacturing_release": false
+}

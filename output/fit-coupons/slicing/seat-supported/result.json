@@ -1,0 +1,66 @@
+{
+    "error_string": "Success.",
+    "export_time": 444,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 5,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 17.0280704498291,
+                "Bridge": 65.92604064941406,
+                "Custom": 35.21331024169922,
+                "Gap infill": 24.506153106689453,
+                "Inner wall": 327.8257141113281,
+                "Internal solid infill": 260.099853515625,
+                "Outer wall": 484.3190002441406,
+                "Overhang wall": 33.61030197143555,
+                "Sparse infill": 143.4762725830078,
+                "Support": 411.64697265625,
+                "Support interface": 31.472795486450195,
+                "Top surface": 43.044185638427734,
+                "Travel": 470.5876159667969,
+                "Undefined": 455.1925048828125
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 6.346137046813965,
+                    "total_used_g": 8.393417358398438
+                }
+            ],
+            "generate_support_material_time": 306,
+            "id": 1,
+            "infill_time": 80,
+            "layer_filament_change": 0,
+            "main_predication": 2313.513427734375,
+            "make_perimeters_time": 32,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 42.20000076293945,
+                        "height": 30.0,
+                        "width": 31.0,
+                        "x": 112.5,
+                        "y": 106.9000015258789,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "fit-slider-seat.stl",
+                    "triangle_count": 2678
+                }
+            ],
+            "sliced_time": 755,
+            "sliced_time_with_cache": 309,
+            "total_predication": 2333.301025390625,
+            "triangle_count": 2678,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 15.0,
+    "wall_loops": 2
+}

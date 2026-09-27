@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "file": "paired-return.csv",
+  "actual_measurement_required": true,
+  "entry_owner": "Assistant/script fills identity, paths and normalization; person provides readings/traces, distances and actual posture/load state.",
+  "fields": [
+    {
+      "name": "record_id",
+      "type": "string",
+      "required": true,
+      "description": "助手分配的记录编号"
+    },
+    {
+      "name": "configuration_id",
+      "type": "string",
+      "required": true,
+      "description": "实际装配配置编号，不是仅有CAD名"
+    },
+    {
+      "name": "assembly_source_sha256",
+      "type": "sha256",
+      "required": true,
+      "description": "该配置源身份，由助手填写"
+    },
+    {
+      "name": "route_identity",
+      "type": "string",
+      "required": true,
+      "description": "实际护套路线、端套和调节器设置的记录身份"
+    },
+    {
+      "name": "spring_specimen_id",
+      "type": "string",
+      "required": true,
+      "description": "同一实际弹簧编号及型号"
+    },
+    {
+      "name": "cable_specimen_id",
+      "type": "string",
+      "required": true,
+      "description": "同一实际拉索编号及型号"
+    },
+    {
+      "name": "orientation_id",
+      "type": "string",
+      "required": true,
+      "description": "同一持握姿态记录身份"
+    },
+    {
+      "name": "gravity_cad_unit_x",
+      "type": "number",
+      "required": true,
+      "description": "实测姿态下重力CAD单位向量X"
+    },
+    {
+      "name": "gravity_cad_unit_y",
+      "type": "number",
+      "required": true,
+      "description": "实测姿态下重力CAD单位向量Y"
+    },
+    {
+      "name": "gravity_cad_unit_z",
+      "type": "number",
+      "required": true,
+      "description": "实测姿态下重力CAD单位向量Z"
+    },
+    {
+      "name": "ball_state",
+      "type": "string",
+      "required": true,
+      "description": "实际球载状态，首次为empty"
+    },
+    {
+      "name": "air_state",
+      "type": "string",
+      "required": true,
+      "description": "实际风状态，首次为off-unpowered"
+    },
+    {
+      "name": "output_u_mm",
+      "type": "number",
+      "required": true,
+      "description": "相对于实际输出零位的位置mm"
+    },
+    {
+      "name": "output_u_uncertainty_mm",
+      "type": "nonnegative",
+      "required": true,
+      "description": "配对位置区间半宽mm；力误差还须覆盖该区间"
+    },
+    {
+      "name": "spring_force_min_N",
+      "type": "number",
+      "required": true,
+      "description": "同朝向、同针距实测回缩端力最小值N，不是名义值"
+    },
+    {
+      "name": "spring_force_uncertainty_N",
+      "type": "nonnegative",
+      "required": true,
+      "description": "弹簧力绝对不利误差界N，包含位置配对影响"
+    },
+    {
+      "name": "chain_return_force_max_N",
+      "type": "number",
+      "required": true,
+      "description": "整链拆弹簧后的实测回程起动/运行外力最大值N"
+    },
+    {
+      "name": "chain_force_uncertainty_N",
+      "type": "nonnegative",
+      "required": true,
+      "description": "整链力绝对不利误差界N，包含位置配对影响"
+    },
+    {
+      "name": "fixture_unincluded_adverse_bound_N",
+      "type": "nonnegative",
+      "required": true,
+      "description": "未已计入测量误差的工装/失配可能助推回程的校正上界N；未知不能填0"
+    },
+    {
+      "name": "spring_trials",
+      "type": "positive_integer",
+      "required": true,
+      "description": "该条件弹簧实測重复次数"
+    },
+    {
+      "name": "chain_trials",
+      "type": "positive_integer",
+      "required": true,
+      "description": "该条件整链实測重复次数"
+    },
+    {
+      "name": "dwell_s",
+      "type": "nonnegative",
+      "required": true,
+      "description": "起动前实际驻留秒数"
+    },
+    {
+      "name": "quasistatic_speed_mm_s",
+      "type": "positive",
+      "required": true,
+      "description": "实际回程测量速度mm/s"
+    },
+    {
+      "name": "core_taut",
+      "type": "boolean",
+      "required": true,
+      "description": "实测区间线芯保持张紧；CSV用true/false"
+    },
+    {
+      "name": "fixture_matches_spring_line",
+      "type": "boolean",
+      "required": true,
+      "description": "外力通过原挂点且与原弹簧力线一致；CSV用true/false"
+    },
+    {
+      "name": "spring_trace_ref",
+      "type": "evidence_path",
+      "required": true,
+      "description": "弹簧原始曲线/录像和仪表误差依据"
+    },
+    {
+      "name": "chain_trace_ref",
+      "type": "evidence_path",
+      "required": true,
+      "description": "整链原始曲线/录像、实际姿态/载荷和工装误差依据"
+    },
+    {
+      "name": "observer",
+      "type": "string",
+      "required": true,
+      "description": "实际记录者或可追溯记录身份"
+    },
+    {
+      "name": "timestamp_utc",
+      "type": "datetime",
+      "required": true,
+      "description": "实际测量UTC时间；不由报告生成时刻冒充"
+    }
+  ],
+  "all_numeric_rows_must_be_actual_measurements": true,
+  "blank_or_nominal_must_not_pass": true,
+  "negative_chain_force": "A measured assisted return is permitted; upper requirement clips at zero. Slack gauge zero is not proof of assisted return.",
+  "paired_condition_requirement": "Same specimen, configuration, route, actual pose, u uncertainty interval and associated ball/air state. Spring test reproduces actual pin geometry/orientation; identity fields alone do not prove this.",
+  "measurement_error_requirement": "Force bounds must include instrument, alignment, zero drift, attachment gravity and u interval effects, or separately bound remaining favorable fixture effects; no assumed CAD slope.",
+  "formula": {
+    "S_lower_N": "spring_force_min_N - spring_force_uncertainty_N",
+    "Q_upper_N": "max(0, chain_return_force_max_N + chain_force_uncertainty_N) + fixture_unincluded_adverse_bound_N",
+    "margin_N": "S_lower_N - Q_upper_N",
+    "positive_status": "SAMPLE_POSITIVE_MARGIN only if margin_N > 0 and all evidence/identity/tautness guards pass"
+  },
+  "overall_pass_from_finite_samples": false,
+  "release_video_requirement": "Separately retain refitted spring free-return video at measured starts, observing both input and output zero; table margin alone is not release acceptance.",
+  "no_repeated_gravity_or_eta_deduction": true
+}

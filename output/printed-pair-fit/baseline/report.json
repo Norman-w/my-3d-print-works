@@ -1,0 +1,7097 @@
+{
+  "status": "PRINTED_PAIR_POSE_FAIL_OR_STALE",
+  "source_report": "output/launcher-final/report.json",
+  "source_report_sha256": "3dc13c3a25f49bf382a327bb96c19d43d1dcbb2bf903ff719b6ffbeef8294f52",
+  "script_sha256": "62653bc922d93ddbc02f30bb424e1de8411a41f7cd774e7b5cdc77c91ad59c30",
+  "source_stable": true,
+  "printed_instances": 33,
+  "strictly_separated_pairs": [
+    [
+      "positive-half",
+      "left-support"
+    ],
+    [
+      "positive-half",
+      "x-gib"
+    ],
+    [
+      "positive-half",
+      "x-cover"
+    ],
+    [
+      "positive-half",
+      "fixed-spacer"
+    ],
+    [
+      "positive-half",
+      "moving-spacer"
+    ],
+    [
+      "positive-half",
+      "pipe-clamp-right"
+    ],
+    [
+      "positive-half",
+      "y-cap-right"
+    ],
+    [
+      "positive-half",
+      "y-gib-right-front"
+    ],
+    [
+      "positive-half",
+      "y-keeper-right-front"
+    ],
+    [
+      "positive-half",
+      "pin-block-right-front"
+    ],
+    [
+      "positive-half",
+      "y-gib-right-rear"
+    ],
+    [
+      "positive-half",
+      "y-keeper-right-rear"
+    ],
+    [
+      "positive-half",
+      "pin-block-right-rear"
+    ],
+    [
+      "positive-half",
+      "pipe-clamp-left"
+    ],
+    [
+      "positive-half",
+      "y-cap-left"
+    ],
+    [
+      "positive-half",
+      "y-gib-left-front"
+    ],
+    [
+      "positive-half",
+      "y-keeper-left-front"
+    ],
+    [
+      "positive-half",
+      "finger-left-front"
+    ],
+    [
+      "positive-half",
+      "pin-block-left-front"
+    ],
+    [
+      "positive-half",
+      "y-gib-left-rear"
+    ],
+    [
+      "positive-half",
+      "y-keeper-left-rear"
+    ],
+    [
+      "positive-half",
+      "finger-left-rear"
+    ],
+    [
+      "positive-half",
+      "pin-block-left-rear"
+    ],
+    [
+      "negative-half",
+      "right-support"
+    ],
+    [
+      "negative-half",
+      "x-gib"
+    ],
+    [
+      "negative-half",
+      "x-cover"
+    ],
+    [
+      "negative-half",
+      "fixed-spacer"
+    ],
+    [
+      "negative-half",
+      "moving-spacer"
+    ],
+    [
+      "negative-half",
+      "pipe-clamp-right"
+    ],
+    [
+      "negative-half",
+      "y-cap-right"
+    ],
+    [
+      "negative-half",
+      "y-gib-right-front"
+    ],
+    [
+      "negative-half",
+      "y-keeper-right-front"
+    ],
+    [
+      "negative-half",
+      "finger-right-front"
+    ],
+    [
+      "negative-half",
+      "pin-block-right-front"
+    ],
+    [
+      "negative-half",
+      "y-gib-right-rear"
+    ],
+    [
+      "negative-half",
+      "y-keeper-right-rear"
+    ],
+    [
+      "negative-half",
+      "finger-right-rear"
+    ],
+    [
+      "negative-half",
+      "pin-block-right-rear"
+    ],
+    [
+      "negative-half",
+      "pipe-clamp-left"
+    ],
+    [
+      "negative-half",
+      "y-cap-left"
+    ],
+    [
+      "negative-half",
+      "y-gib-left-front"
+    ],
+    [
+      "negative-half",
+      "y-keeper-left-front"
+    ],
+    [
+      "negative-half",
+      "pin-block-left-front"
+    ],
+    [
+      "negative-half",
+      "y-gib-left-rear"
+    ],
+    [
+      "negative-half",
+      "y-keeper-left-rear"
+    ],
+    [
+      "negative-half",
+      "pin-block-left-rear"
+    ],
+    [
+      "beam-grip",
+      "liner"
+    ],
+    [
+      "beam-grip",
+      "right-support"
+    ],
+    [
+      "beam-grip",
+      "left-support"
+    ],
+    [
+      "beam-grip",
+      "x-gib"
+    ],
+    [
+      "beam-grip",
+      "x-cover"
+    ],
+    [
+      "beam-grip",
+      "frame"
+    ],
+    [
+      "beam-grip",
+      "fixed-spacer"
+    ],
+    [
+      "beam-grip",
+      "moving-spacer"
+    ],
+    [
+      "beam-grip",
+      "capture-right"
+    ],
+    [
+      "beam-grip",
+      "pipe-clamp-right"
+    ],
+    [
+      "beam-grip",
+      "y-cap-right"
+    ],
+    [
+      "beam-grip",
+      "y-gib-right-front"
+    ],
+    [
+      "beam-grip",
+      "y-keeper-right-front"
+    ],
+    [
+      "beam-grip",
+      "finger-right-front"
+    ],
+    [
+      "beam-grip",
+      "pin-block-right-front"
+    ],
+    [
+      "beam-grip",
+      "y-gib-right-rear"
+    ],
+    [
+      "beam-grip",
+      "y-keeper-right-rear"
+    ],
+    [
+      "beam-grip",
+      "finger-right-rear"
+    ],
+    [
+      "beam-grip",
+      "pin-block-right-rear"
+    ],
+    [
+      "beam-grip",
+      "capture-left"
+    ],
+    [
+      "beam-grip",
+      "pipe-clamp-left"
+    ],
+    [
+      "beam-grip",
+      "y-cap-left"
+    ],
+    [
+      "beam-grip",
+      "y-gib-left-front"
+    ],
+    [
+      "beam-grip",
+      "y-keeper-left-front"
+    ],
+    [
+      "beam-grip",
+      "finger-left-front"
+    ],
+    [
+      "beam-grip",
+      "pin-block-left-front"
+    ],
+    [
+      "beam-grip",
+      "y-gib-left-rear"
+    ],
+    [
+      "beam-grip",
+      "y-keeper-left-rear"
+    ],
+    [
+      "beam-grip",
+      "finger-left-rear"
+    ],
+    [
+      "beam-grip",
+      "pin-block-left-rear"
+    ],
+    [
+      "liner",
+      "right-support"
+    ],
+    [
+      "liner",
+      "left-support"
+    ],
+    [
+      "liner",
+      "x-gib"
+    ],
+    [
+      "liner",
+      "x-cover"
+    ],
+    [
+      "liner",
+      "frame"
+    ],
+    [
+      "liner",
+      "fixed-spacer"
+    ],
+    [
+      "liner",
+      "moving-spacer"
+    ],
+    [
+      "liner",
+      "y-cap-right"
+    ],
+    [
+      "liner",
+      "y-gib-right-front"
+    ],
+    [
+      "liner",
+      "y-keeper-right-front"
+    ],
+    [
+      "liner",
+      "finger-right-front"
+    ],
+    [
+      "liner",
+      "pin-block-right-front"
+    ],
+    [
+      "liner",
+      "y-gib-right-rear"
+    ],
+    [
+      "liner",
+      "y-keeper-right-rear"
+    ],
+    [
+      "liner",
+      "finger-right-rear"
+    ],
+    [
+      "liner",
+      "pin-block-right-rear"
+    ],
+    [
+      "liner",
+      "y-cap-left"
+    ],
+    [
+      "liner",
+      "y-gib-left-front"
+    ],
+    [
+      "liner",
+      "y-keeper-left-front"
+    ],
+    [
+      "liner",
+      "finger-left-front"
+    ],
+    [
+      "liner",
+      "pin-block-left-front"
+    ],
+    [
+      "liner",
+      "y-gib-left-rear"
+    ],
+    [
+      "liner",
+      "y-keeper-left-rear"
+    ],
+    [
+      "liner",
+      "finger-left-rear"
+    ],
+    [
+      "liner",
+      "pin-block-left-rear"
+    ],
+    [
+      "right-support",
+      "left-support"
+    ],
+    [
+      "right-support",
+      "fixed-spacer"
+    ],
+    [
+      "right-support",
+      "moving-spacer"
+    ],
+    [
+      "right-support",
+      "capture-right"
+    ],
+    [
+      "right-support",
+      "pipe-clamp-right"
+    ],
+    [
+      "right-support",
+      "capture-left"
+    ],
+    [
+      "right-support",
+      "pipe-clamp-left"
+    ],
+    [
+      "right-support",
+      "y-cap-left"
+    ],
+    [
+      "right-support",
+      "y-gib-left-front"
+    ],
+    [
+      "right-support",
+      "y-keeper-left-front"
+    ],
+    [
+      "right-support",
+      "finger-left-front"
+    ],
+    [
+      "right-support",
+      "pin-block-left-front"
+    ],
+    [
+      "right-support",
+      "y-gib-left-rear"
+    ],
+    [
+      "right-support",
+      "y-keeper-left-rear"
+    ],
+    [
+      "right-support",
+      "finger-left-rear"
+    ],
+    [
+      "right-support",
+      "pin-block-left-rear"
+    ],
+    [
+      "left-support",
+      "x-gib"
+    ],
+    [
+      "left-support",
+      "x-cover"
+    ],
+    [
+      "left-support",
+      "moving-spacer"
+    ],
+    [
+      "left-support",
+      "capture-right"
+    ],
+    [
+      "left-support",
+      "pipe-clamp-right"
+    ],
+    [
+      "left-support",
+      "y-cap-right"
+    ],
+    [
+      "left-support",
+      "y-gib-right-front"
+    ],
+    [
+      "left-support",
+      "y-keeper-right-front"
+    ],
+    [
+      "left-support",
+      "finger-right-front"
+    ],
+    [
+      "left-support",
+      "pin-block-right-front"
+    ],
+    [
+      "left-support",
+      "y-gib-right-rear"
+    ],
+    [
+      "left-support",
+      "y-keeper-right-rear"
+    ],
+    [
+      "left-support",
+      "finger-right-rear"
+    ],
+    [
+      "left-support",
+      "pin-block-right-rear"
+    ],
+    [
+      "left-support",
+      "capture-left"
+    ],
+    [
+      "left-support",
+      "pipe-clamp-left"
+    ],
+    [
+      "x-gib",
+      "fixed-spacer"
+    ],
+    [
+      "x-gib",
+      "moving-spacer"
+    ],
+    [
+      "x-gib",
+      "capture-right"
+    ],
+    [
+      "x-gib",
+      "pipe-clamp-right"
+    ],
+    [
+      "x-gib",
+      "y-gib-right-front"
+    ],
+    [
+      "x-gib",
+      "y-keeper-right-front"
+    ],
+    [
+      "x-gib",
+      "finger-right-front"
+    ],
+    [
+      "x-gib",
+      "pin-block-right-front"
+    ],
+    [
+      "x-gib",
+      "y-gib-right-rear"
+    ],
+    [
+      "x-gib",
+      "y-keeper-right-rear"
+    ],
+    [
+      "x-gib",
+      "finger-right-rear"
+    ],
+    [
+      "x-gib",
+      "pin-block-right-rear"
+    ],
+    [
+      "x-gib",
+      "capture-left"
+    ],
+    [
+      "x-gib",
+      "pipe-clamp-left"
+    ],
+    [
+      "x-gib",
+      "y-cap-left"
+    ],
+    [
+      "x-gib",
+      "y-gib-left-front"
+    ],
+    [
+      "x-gib",
+      "y-keeper-left-front"
+    ],
+    [
+      "x-gib",
+      "finger-left-front"
+    ],
+    [
+      "x-gib",
+      "pin-block-left-front"
+    ],
+    [
+      "x-gib",
+      "y-gib-left-rear"
+    ],
+    [
+      "x-gib",
+      "y-keeper-left-rear"
+    ],
+    [
+      "x-gib",
+      "finger-left-rear"
+    ],
+    [
+      "x-gib",
+      "pin-block-left-rear"
+    ],
+    [
+      "x-cover",
+      "fixed-spacer"
+    ],
+    [
+      "x-cover",
+      "moving-spacer"
+    ],
+    [
+      "x-cover",
+      "capture-right"
+    ],
+    [
+      "x-cover",
+      "pipe-clamp-right"
+    ],
+    [
+      "x-cover",
+      "y-cap-right"
+    ],
+    [
+      "x-cover",
+      "y-gib-right-front"
+    ],
+    [
+      "x-cover",
+      "y-keeper-right-front"
+    ],
+    [
+      "x-cover",
+      "finger-right-front"
+    ],
+    [
+      "x-cover",
+      "pin-block-right-front"
+    ],
+    [
+      "x-cover",
+      "y-gib-right-rear"
+    ],
+    [
+      "x-cover",
+      "y-keeper-right-rear"
+    ],
+    [
+      "x-cover",
+      "finger-right-rear"
+    ],
+    [
+      "x-cover",
+      "pin-block-right-rear"
+    ],
+    [
+      "x-cover",
+      "capture-left"
+    ],
+    [
+      "x-cover",
+      "pipe-clamp-left"
+    ],
+    [
+      "x-cover",
+      "y-cap-left"
+    ],
+    [
+      "x-cover",
+      "y-gib-left-front"
+    ],
+    [
+      "x-cover",
+      "y-keeper-left-front"
+    ],
+    [
+      "x-cover",
+      "finger-left-front"
+    ],
+    [
+      "x-cover",
+      "pin-block-left-front"
+    ],
+    [
+      "x-cover",
+      "y-gib-left-rear"
+    ],
+    [
+      "x-cover",
+      "y-keeper-left-rear"
+    ],
+    [
+      "x-cover",
+      "finger-left-rear"
+    ],
+    [
+      "x-cover",
+      "pin-block-left-rear"
+    ],
+    [
+      "frame",
+      "capture-right"
+    ],
+    [
+      "frame",
+      "pipe-clamp-right"
+    ],
+    [
+      "frame",
+      "y-gib-right-front"
+    ],
+    [
+      "frame",
+      "y-keeper-right-front"
+    ],
+    [
+      "frame",
+      "y-gib-right-rear"
+    ],
+    [
+      "frame",
+      "y-keeper-right-rear"
+    ],
+    [
+      "frame",
+      "capture-left"
+    ],
+    [
+      "frame",
+      "pipe-clamp-left"
+    ],
+    [
+      "frame",
+      "y-gib-left-front"
+    ],
+    [
+      "frame",
+      "y-keeper-left-front"
+    ],
+    [
+      "frame",
+      "y-gib-left-rear"
+    ],
+    [
+      "frame",
+      "y-keeper-left-rear"
+    ],
+    [
+      "fixed-spacer",
+      "moving-spacer"
+    ],
+    [
+      "fixed-spacer",
+      "capture-right"
+    ],
+    [
+      "fixed-spacer",
+      "pipe-clamp-right"
+    ],
+    [
+      "fixed-spacer",
+      "y-cap-right"
+    ],
+    [
+      "fixed-spacer",
+      "y-gib-right-front"
+    ],
+    [
+      "fixed-spacer",
+      "y-keeper-right-front"
+    ],
+    [
+      "fixed-spacer",
+      "finger-right-front"
+    ],
+    [
+      "fixed-spacer",
+      "pin-block-right-front"
+    ],
+    [
+      "fixed-spacer",
+      "y-gib-right-rear"
+    ],
+    [
+      "fixed-spacer",
+      "y-keeper-right-rear"
+    ],
+    [
+      "fixed-spacer",
+      "finger-right-rear"
+    ],
+    [
+      "fixed-spacer",
+      "pin-block-right-rear"
+    ],
+    [
+      "fixed-spacer",
+      "capture-left"
+    ],
+    [
+      "fixed-spacer",
+      "pipe-clamp-left"
+    ],
+    [
+      "fixed-spacer",
+      "y-cap-left"
+    ],
+    [
+      "fixed-spacer",
+      "y-gib-left-front"
+    ],
+    [
+      "fixed-spacer",
+      "y-keeper-left-front"
+    ],
+    [
+      "fixed-spacer",
+      "finger-left-front"
+    ],
+    [
+      "fixed-spacer",
+      "pin-block-left-front"
+    ],
+    [
+      "fixed-spacer",
+      "y-gib-left-rear"
+    ],
+    [
+      "fixed-spacer",
+      "y-keeper-left-rear"
+    ],
+    [
+      "fixed-spacer",
+      "finger-left-rear"
+    ],
+    [
+      "fixed-spacer",
+      "pin-block-left-rear"
+    ],
+    [
+      "moving-spacer",
+      "capture-right"
+    ],
+    [
+      "moving-spacer",
+      "pipe-clamp-right"
+    ],
+    [
+      "moving-spacer",
+      "y-cap-right"
+    ],
+    [
+      "moving-spacer",
+      "y-gib-right-front"
+    ],
+    [
+      "moving-spacer",
+      "y-keeper-right-front"
+    ],
+    [
+      "moving-spacer",
+      "finger-right-front"
+    ],
+    [
+      "moving-spacer",
+      "pin-block-right-front"
+    ],
+    [
+      "moving-spacer",
+      "y-gib-right-rear"
+    ],
+    [
+      "moving-spacer",
+      "y-keeper-right-rear"
+    ],
+    [
+      "moving-spacer",
+      "finger-right-rear"
+    ],
+    [
+      "moving-spacer",
+      "pin-block-right-rear"
+    ],
+    [
+      "moving-spacer",
+      "capture-left"
+    ],
+    [
+      "moving-spacer",
+      "pipe-clamp-left"
+    ],
+    [
+      "moving-spacer",
+      "y-cap-left"
+    ],
+    [
+      "moving-spacer",
+      "y-gib-left-front"
+    ],
+    [
+      "moving-spacer",
+      "y-keeper-left-front"
+    ],
+    [
+      "moving-spacer",
+      "finger-left-front"
+    ],
+    [
+      "moving-spacer",
+      "pin-block-left-front"
+    ],
+    [
+      "moving-spacer",
+      "y-gib-left-rear"
+    ],
+    [
+      "moving-spacer",
+      "y-keeper-left-rear"
+    ],
+    [
+      "moving-spacer",
+      "finger-left-rear"
+    ],
+    [
+      "moving-spacer",
+      "pin-block-left-rear"
+    ],
+    [
+      "capture-right",
+      "pipe-clamp-right"
+    ],
+    [
+      "capture-right",
+      "y-cap-right"
+    ],
+    [
+      "capture-right",
+      "y-gib-right-front"
+    ],
+    [
+      "capture-right",
+      "y-keeper-right-front"
+    ],
+    [
+      "capture-right",
+      "finger-right-front"
+    ],
+    [
+      "capture-right",
+      "pin-block-right-front"
+    ],
+    [
+      "capture-right",
+      "y-gib-right-rear"
+    ],
+    [
+      "capture-right",
+      "y-keeper-right-rear"
+    ],
+    [
+      "capture-right",
+      "finger-right-rear"
+    ],
+    [
+      "capture-right",
+      "pin-block-right-rear"
+    ],
+    [
+      "capture-right",
+      "pipe-clamp-left"
+    ],
+    [
+      "capture-right",
+      "y-cap-left"
+    ],
+    [
+      "capture-right",
+      "y-gib-left-front"
+    ],
+    [
+      "capture-right",
+      "y-keeper-left-front"
+    ],
+    [
+      "capture-right",
+      "finger-left-front"
+    ],
+    [
+      "capture-right",
+      "pin-block-left-front"
+    ],
+    [
+      "capture-right",
+      "y-gib-left-rear"
+    ],
+    [
+      "capture-right",
+      "y-keeper-left-rear"
+    ],
+    [
+      "capture-right",
+      "finger-left-rear"
+    ],
+    [
+      "capture-right",
+      "pin-block-left-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-cap-right"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-gib-right-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-keeper-right-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "finger-right-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "pin-block-right-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-gib-right-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-keeper-right-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "finger-right-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "pin-block-right-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "capture-left"
+    ],
+    [
+      "pipe-clamp-right",
+      "pipe-clamp-left"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-cap-left"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-gib-left-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-keeper-left-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "finger-left-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "pin-block-left-front"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-gib-left-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "y-keeper-left-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "finger-left-rear"
+    ],
+    [
+      "pipe-clamp-right",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-cap-right",
+      "y-gib-right-front"
+    ],
+    [
+      "y-cap-right",
+      "y-keeper-right-front"
+    ],
+    [
+      "y-cap-right",
+      "finger-right-front"
+    ],
+    [
+      "y-cap-right",
+      "pin-block-right-front"
+    ],
+    [
+      "y-cap-right",
+      "y-gib-right-rear"
+    ],
+    [
+      "y-cap-right",
+      "y-keeper-right-rear"
+    ],
+    [
+      "y-cap-right",
+      "finger-right-rear"
+    ],
+    [
+      "y-cap-right",
+      "pin-block-right-rear"
+    ],
+    [
+      "y-cap-right",
+      "capture-left"
+    ],
+    [
+      "y-cap-right",
+      "pipe-clamp-left"
+    ],
+    [
+      "y-cap-right",
+      "y-cap-left"
+    ],
+    [
+      "y-cap-right",
+      "y-gib-left-front"
+    ],
+    [
+      "y-cap-right",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-cap-right",
+      "finger-left-front"
+    ],
+    [
+      "y-cap-right",
+      "pin-block-left-front"
+    ],
+    [
+      "y-cap-right",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-cap-right",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-cap-right",
+      "finger-left-rear"
+    ],
+    [
+      "y-cap-right",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "y-keeper-right-front"
+    ],
+    [
+      "y-gib-right-front",
+      "finger-right-front"
+    ],
+    [
+      "y-gib-right-front",
+      "pin-block-right-front"
+    ],
+    [
+      "y-gib-right-front",
+      "y-gib-right-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "y-keeper-right-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "finger-right-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "pin-block-right-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "capture-left"
+    ],
+    [
+      "y-gib-right-front",
+      "pipe-clamp-left"
+    ],
+    [
+      "y-gib-right-front",
+      "y-cap-left"
+    ],
+    [
+      "y-gib-right-front",
+      "y-gib-left-front"
+    ],
+    [
+      "y-gib-right-front",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-gib-right-front",
+      "finger-left-front"
+    ],
+    [
+      "y-gib-right-front",
+      "pin-block-left-front"
+    ],
+    [
+      "y-gib-right-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "finger-left-rear"
+    ],
+    [
+      "y-gib-right-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "finger-right-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "pin-block-right-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-gib-right-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-keeper-right-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "finger-right-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "pin-block-right-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "capture-left"
+    ],
+    [
+      "y-keeper-right-front",
+      "pipe-clamp-left"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-cap-left"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-gib-left-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "finger-left-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "pin-block-left-front"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "finger-left-rear"
+    ],
+    [
+      "y-keeper-right-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "finger-right-front",
+      "y-gib-right-rear"
+    ],
+    [
+      "finger-right-front",
+      "y-keeper-right-rear"
+    ],
+    [
+      "finger-right-front",
+      "finger-right-rear"
+    ],
+    [
+      "finger-right-front",
+      "pin-block-right-rear"
+    ],
+    [
+      "finger-right-front",
+      "capture-left"
+    ],
+    [
+      "finger-right-front",
+      "pipe-clamp-left"
+    ],
+    [
+      "finger-right-front",
+      "y-cap-left"
+    ],
+    [
+      "finger-right-front",
+      "y-gib-left-front"
+    ],
+    [
+      "finger-right-front",
+      "y-keeper-left-front"
+    ],
+    [
+      "finger-right-front",
+      "finger-left-front"
+    ],
+    [
+      "finger-right-front",
+      "pin-block-left-front"
+    ],
+    [
+      "finger-right-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "finger-right-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "finger-right-front",
+      "finger-left-rear"
+    ],
+    [
+      "finger-right-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "y-gib-right-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "y-keeper-right-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "finger-right-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "pin-block-right-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "capture-left"
+    ],
+    [
+      "pin-block-right-front",
+      "pipe-clamp-left"
+    ],
+    [
+      "pin-block-right-front",
+      "y-cap-left"
+    ],
+    [
+      "pin-block-right-front",
+      "y-gib-left-front"
+    ],
+    [
+      "pin-block-right-front",
+      "y-keeper-left-front"
+    ],
+    [
+      "pin-block-right-front",
+      "finger-left-front"
+    ],
+    [
+      "pin-block-right-front",
+      "pin-block-left-front"
+    ],
+    [
+      "pin-block-right-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "finger-left-rear"
+    ],
+    [
+      "pin-block-right-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-keeper-right-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "finger-right-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "pin-block-right-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "capture-left"
+    ],
+    [
+      "y-gib-right-rear",
+      "pipe-clamp-left"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-cap-left"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-gib-left-front"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-gib-right-rear",
+      "finger-left-front"
+    ],
+    [
+      "y-gib-right-rear",
+      "pin-block-left-front"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "finger-left-rear"
+    ],
+    [
+      "y-gib-right-rear",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "finger-right-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "pin-block-right-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "capture-left"
+    ],
+    [
+      "y-keeper-right-rear",
+      "pipe-clamp-left"
+    ],
+    [
+      "y-keeper-right-rear",
+      "y-cap-left"
+    ],
+    [
+      "y-keeper-right-rear",
+      "y-gib-left-front"
+    ],
+    [
+      "y-keeper-right-rear",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-keeper-right-rear",
+      "finger-left-front"
+    ],
+    [
+      "y-keeper-right-rear",
+      "pin-block-left-front"
+    ],
+    [
+      "y-keeper-right-rear",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "finger-left-rear"
+    ],
+    [
+      "y-keeper-right-rear",
+      "pin-block-left-rear"
+    ],
+    [
+      "finger-right-rear",
+      "capture-left"
+    ],
+    [
+      "finger-right-rear",
+      "pipe-clamp-left"
+    ],
+    [
+      "finger-right-rear",
+      "y-cap-left"
+    ],
+    [
+      "finger-right-rear",
+      "y-gib-left-front"
+    ],
+    [
+      "finger-right-rear",
+      "y-keeper-left-front"
+    ],
+    [
+      "finger-right-rear",
+      "finger-left-front"
+    ],
+    [
+      "finger-right-rear",
+      "pin-block-left-front"
+    ],
+    [
+      "finger-right-rear",
+      "y-gib-left-rear"
+    ],
+    [
+      "finger-right-rear",
+      "y-keeper-left-rear"
+    ],
+    [
+      "finger-right-rear",
+      "finger-left-rear"
+    ],
+    [
+      "finger-right-rear",
+      "pin-block-left-rear"
+    ],
+    [
+      "pin-block-right-rear",
+      "capture-left"
+    ],
+    [
+      "pin-block-right-rear",
+      "pipe-clamp-left"
+    ],
+    [
+      "pin-block-right-rear",
+      "y-cap-left"
+    ],
+    [
+      "pin-block-right-rear",
+      "y-gib-left-front"
+    ],
+    [
+      "pin-block-right-rear",
+      "y-keeper-left-front"
+    ],
+    [
+      "pin-block-right-rear",
+      "finger-left-front"
+    ],
+    [
+      "pin-block-right-rear",
+      "pin-block-left-front"
+    ],
+    [
+      "pin-block-right-rear",
+      "y-gib-left-rear"
+    ],
+    [
+      "pin-block-right-rear",
+      "y-keeper-left-rear"
+    ],
+    [
+      "pin-block-right-rear",
+      "finger-left-rear"
+    ],
+    [
+      "pin-block-right-rear",
+      "pin-block-left-rear"
+    ],
+    [
+      "capture-left",
+      "pipe-clamp-left"
+    ],
+    [
+      "capture-left",
+      "y-cap-left"
+    ],
+    [
+      "capture-left",
+      "y-gib-left-front"
+    ],
+    [
+      "capture-left",
+      "y-keeper-left-front"
+    ],
+    [
+      "capture-left",
+      "finger-left-front"
+    ],
+    [
+      "capture-left",
+      "pin-block-left-front"
+    ],
+    [
+      "capture-left",
+      "y-gib-left-rear"
+    ],
+    [
+      "capture-left",
+      "y-keeper-left-rear"
+    ],
+    [
+      "capture-left",
+      "finger-left-rear"
+    ],
+    [
+      "capture-left",
+      "pin-block-left-rear"
+    ],
+    [
+      "pipe-clamp-left",
+      "y-cap-left"
+    ],
+    [
+      "pipe-clamp-left",
+      "y-gib-left-front"
+    ],
+    [
+      "pipe-clamp-left",
+      "y-keeper-left-front"
+    ],
+    [
+      "pipe-clamp-left",
+      "finger-left-front"
+    ],
+    [
+      "pipe-clamp-left",
+      "pin-block-left-front"
+    ],
+    [
+      "pipe-clamp-left",
+      "y-gib-left-rear"
+    ],
+    [
+      "pipe-clamp-left",
+      "y-keeper-left-rear"
+    ],
+    [
+      "pipe-clamp-left",
+      "finger-left-rear"
+    ],
+    [
+      "pipe-clamp-left",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-cap-left",
+      "y-gib-left-front"
+    ],
+    [
+      "y-cap-left",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-cap-left",
+      "finger-left-front"
+    ],
+    [
+      "y-cap-left",
+      "pin-block-left-front"
+    ],
+    [
+      "y-cap-left",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-cap-left",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-cap-left",
+      "finger-left-rear"
+    ],
+    [
+      "y-cap-left",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-gib-left-front",
+      "y-keeper-left-front"
+    ],
+    [
+      "y-gib-left-front",
+      "finger-left-front"
+    ],
+    [
+      "y-gib-left-front",
+      "pin-block-left-front"
+    ],
+    [
+      "y-gib-left-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-gib-left-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-gib-left-front",
+      "finger-left-rear"
+    ],
+    [
+      "y-gib-left-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-keeper-left-front",
+      "finger-left-front"
+    ],
+    [
+      "y-keeper-left-front",
+      "pin-block-left-front"
+    ],
+    [
+      "y-keeper-left-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "y-keeper-left-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-keeper-left-front",
+      "finger-left-rear"
+    ],
+    [
+      "y-keeper-left-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "finger-left-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "finger-left-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "finger-left-front",
+      "finger-left-rear"
+    ],
+    [
+      "finger-left-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "pin-block-left-front",
+      "y-gib-left-rear"
+    ],
+    [
+      "pin-block-left-front",
+      "y-keeper-left-rear"
+    ],
+    [
+      "pin-block-left-front",
+      "finger-left-rear"
+    ],
+    [
+      "pin-block-left-front",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-gib-left-rear",
+      "y-keeper-left-rear"
+    ],
+    [
+      "y-gib-left-rear",
+      "finger-left-rear"
+    ],
+    [
+      "y-gib-left-rear",
+      "pin-block-left-rear"
+    ],
+    [
+      "y-keeper-left-rear",
+      "finger-left-rear"
+    ],
+    [
+      "y-keeper-left-rear",
+      "pin-block-left-rear"
+    ]
+  ],
+  "checked_pairs": [
+    {
+      "pair": [
+        "positive-half",
+        "negative-half"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--negative-half.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--negative-half.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 2398,
+      "components": [
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -35.0,
+              -31.989689578713964
+            ],
+            [
+              -81.29647238195899,
+              -78.98763962233546
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -25.383781520328824,
+              -21.251607538802663
+            ],
+            [
+              -98.0,
+              -80.0
+            ]
+          ]
+        },
+        {
+          "triangles": 118,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -45.0,
+              -39.21782767479885
+            ],
+            [
+              -74.93892626146237,
+              -67.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.93892626146236,
+              -40.71845104495919
+            ],
+            [
+              -76.45503262094184,
+              -73.47224318643354
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.545084971874736,
+              -35.0
+            ],
+            [
+              -77.84347812970192,
+              -73.64207390469142
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -43.53553390593274,
+              -41.092738936467114
+            ],
+            [
+              -75.53553390593274,
+              -73.20208152801713
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.28154895504081,
+              -36.82475972406679
+            ],
+            [
+              -75.85817217347069,
+              -73.39255847529128
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -38.907261063532886,
+              -36.7547422909192
+            ],
+            [
+              -75.58903134880639,
+              -73.09273893646711
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -38.459276762037696,
+              -36.68447694323608
+            ],
+            [
+              -75.03336687425443,
+              -72.58143424365363
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -38.60744152470871,
+              -36.5101912730234
+            ],
+            [
+              -75.60349693769027,
+              -72.97507994179678
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.41856575634636,
+              -37.730047501302266
+            ],
+            [
+              -70.45927676203769,
+              -67.24471741852423
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -38.79791847198287,
+              -35.0
+            ],
+            [
+              -70.79791847198287,
+              -68.46446609406726
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.93844170297569,
+              -41.59747745533605
+            ],
+            [
+              -47.545084971874736,
+              -46.43999237667428
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.455032620941836,
+              -41.472243186433545
+            ],
+            [
+              -48.93892626146236,
+              -46.85
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -43.53553390593274,
+              -40.97507994179678
+            ],
+            [
+              -50.045084971874736,
+              -47.092738936467114
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -45.0,
+              -41.540723237962304
+            ],
+            [
+              -46.0,
+              -43.730047501302266
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.045084971874736,
+              -40.85
+            ],
+            [
+              -45.02492005820322,
+              -41.544967379058164
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.269952498697734,
+              -40.58143424365364
+            ],
+            [
+              -50.75528258147577,
+              -47.540723237962304
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -40.78217232520115,
+              -40.29520190203378
+            ],
+            [
+              -50.93844170297569,
+              -47.642073904691415
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.545084971874736,
+              -40.58143424365364
+            ],
+            [
+              -44.40252254466395,
+              -41.06155829702431
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -40.0,
+              -39.21782767479885
+            ],
+            [
+              -44.30646901324403,
+              -41.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.41856575634636,
+              -37.730047501302266
+            ],
+            [
+              -44.459276762037696,
+              -41.24471741852423
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -33.1,
+              -29.436115373742734
+            ],
+            [
+              -55.49214183856016,
+              -46.18648792162267
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -33.1,
+              -21.25
+            ],
+            [
+              -41.19742593088048,
+              24.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -28.355109526913633,
+              -21.25
+            ],
+            [
+              -50.395559857416,
+              -46.7953559213836
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.93844170297569,
+              -41.59747745533605
+            ],
+            [
+              -11.545084971874736,
+              -10.439992376674285
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.455032620941836,
+              -41.39255847529129
+            ],
+            [
+              -12.938926261462367,
+              -10.718451044959188
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -43.53553390593274,
+              -40.97507994179678
+            ],
+            [
+              -14.045084971874736,
+              -11.302275553302263
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -45.0,
+              -41.540723237962304
+            ],
+            [
+              -10.0,
+              -7.730047501302266
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.045084971874736,
+              -40.85
+            ],
+            [
+              -9.024920058203222,
+              -5.544967379058161
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.269952498697734,
+              -40.58143424365364
+            ],
+            [
+              -14.755282581475768,
+              -11.540723237962304
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -40.78217232520115,
+              -40.29520190203378
+            ],
+            [
+              -14.93844170297569,
+              -11.642073904691417
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.545084971874736,
+              -40.58143424365364
+            ],
+            [
+              -8.402522544663956,
+              -5.061558297024311
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -40.0,
+              -39.21782767479885
+            ],
+            [
+              -8.306469013244033,
+              -5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 30,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.70479809796622,
+              -36.46446609406726
+            ],
+            [
+              -8.697724446697737,
+              -5.544967379058161
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -35.0,
+              -33.9
+            ],
+            [
+              -18.530499879325777,
+              11.264000120674229
+            ]
+          ]
+        },
+        {
+          "triangles": 434,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -44.0,
+              -39.41908726454806
+            ],
+            [
+              0.658937213680715,
+              6.758770483143634
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.91254102135077,
+              -42.56130750848598
+            ],
+            [
+              -0.0024582177684169975,
+              0.3416270987906185
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.81415531247913,
+              -42.54800505649067
+            ],
+            [
+              0.23535800415119237,
+              0.5637023179207824
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.66011703596928,
+              -40.67370490118483
+            ],
+            [
+              0.33839210538627446,
+              1.7529834235206743
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.7570876930671,
+              -38.36329353125721
+            ],
+            [
+              -0.9392310120488321,
+              1.4750510859802672
+            ]
+          ]
+        },
+        {
+          "triangles": 28,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.29962901398555,
+              -41.989119043034414
+            ],
+            [
+              1.5732193327707253,
+              3.44573502111416
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.27926902289129,
+              -41.974157996949515
+            ],
+            [
+              1.556135271752762,
+              3.166836644321654
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.02405552499286,
+              -41.620878635077986
+            ],
+            [
+              2.2547885379318404,
+              2.501253312406119
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.00739567476606,
+              -41.8533718211813
+            ],
+            [
+              2.555917470787546,
+              2.723319001754318
+            ]
+          ]
+        },
+        {
+          "triangles": 54,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.04308919567933,
+              -40.37131641156507
+            ],
+            [
+              4.809794025975361,
+              5.379412604481051
+            ]
+          ]
+        },
+        {
+          "triangles": 58,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.03527618041008,
+              -39.30540728933228
+            ],
+            [
+              6.290513306118197,
+              7.0
+            ]
+          ]
+        },
+        {
+          "triangles": 64,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -45.0,
+              -41.59747745533605
+            ],
+            [
+              15.139760394919843,
+              18.269952498697734
+            ]
+          ]
+        },
+        {
+          "triangles": 36,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -43.49692114919726,
+              -40.97507994179678
+            ],
+            [
+              13.80669229556356,
+              15.281548955040812
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -43.53553390593274,
+              -41.20208152801713
+            ],
+            [
+              17.202081528017132,
+              20.045084971874736
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.857206380574496,
+              -40.71845104495919
+            ],
+            [
+              11.790489138257726,
+              14.527756813566455
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -42.56691025673436,
+              -41.674173180120754
+            ],
+            [
+              15.598536763577878,
+              15.85183523732898
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -41.545084971874736,
+              -40.29520190203378
+            ],
+            [
+              17.597477455336044,
+              20.755282581475768
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -40.0,
+              -39.21782767479885
+            ],
+            [
+              17.693530986755967,
+              21.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -39.28154895504081,
+              -37.06107373853764
+            ],
+            [
+              17.302275553302263,
+              20.45503262094184
+            ]
+          ]
+        },
+        {
+          "triangles": 42,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -28.25,
+              -25.25
+            ],
+            [
+              44.0,
+              69.0
+            ]
+          ]
+        },
+        {
+          "triangles": 46,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              21.25,
+              33.1
+            ],
+            [
+              -80.0,
+              -57.90657702903614
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              22.7,
+              24.7
+            ],
+            [
+              -126.0,
+              -124.96955181300451
+            ]
+          ]
+        },
+        {
+          "triangles": 472,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              33.9,
+              41.545084971874736
+            ],
+            [
+              -78.6,
+              -6.464466094067262
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.135382341243215,
+              38.022109731882246
+            ],
+            [
+              -74.83479906376246,
+              -74.33104006185062
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              36.46446609406726,
+              39.02492005820322
+            ],
+            [
+              -70.69772444669773,
+              -67.95491502812526
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.730047501302266,
+              39.41856575634636
+            ],
+            [
+              -70.45927676203769,
+              -67.24471741852423
+            ]
+          ]
+        },
+        {
+          "triangles": 34,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.96659094702412,
+              38.49649180674255
+            ],
+            [
+              -59.11901270853607,
+              -58.45276777067893
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.15229543549721,
+              38.40608848305321
+            ],
+            [
+              -59.24026708025941,
+              -58.860550811603744
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.37002260565052,
+              38.47832728492236
+            ],
+            [
+              -59.586078884364234,
+              -59.41411047216403
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.29072910027735,
+              38.424307595180466
+            ],
+            [
+              -59.395646938559786,
+              -59.139449188396256
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.14697962810982,
+              38.241686249571025
+            ],
+            [
+              -58.7161164478749,
+              -58.648168701956905
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.29135632889133,
+              38.470415623190924
+            ],
+            [
+              -58.56621656176037,
+              -58.380176682030914
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.514788288246216,
+              38.6883500479414
+            ],
+            [
+              -58.29595088378421,
+              -58.08364979247818
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.29520190203378,
+              41.545084971874736
+            ],
+            [
+              -76.9384417029757,
+              -73.59747745533605
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.71845104495919,
+              42.93892626146236
+            ],
+            [
+              -76.45503262094184,
+              -73.39255847529128
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.20208152801713,
+              44.045084971874736
+            ],
+            [
+              -75.53553390593274,
+              -72.97507994179678
+            ]
+          ]
+        },
+        {
+          "triangles": 28,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.59747745533605,
+              44.93844170297569
+            ],
+            [
+              -71.70479809796622,
+              -70.23694357764647
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              39.21782767479885,
+              40.18778442182196
+            ],
+            [
+              -69.25773890780114,
+              -67.0615582970243
+            ]
+          ]
+        },
+        {
+          "triangles": 90,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.39072539772612,
+              41.39255847529129
+            ],
+            [
+              -71.02492005820322,
+              -68.80916099152483
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.0,
+              41.45027546042829
+            ],
+            [
+              -68.76961217878403,
+              -67.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.472243186433545,
+              42.20770633529435
+            ],
+            [
+              -71.2815489550408,
+              -70.6901729499704
+            ]
+          ]
+        },
+        {
+          "triangles": 22,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.67242732659743,
+              42.61062490693763
+            ],
+            [
+              -69.69675426706155,
+              -67.91181671262983
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.540723237962304,
+              44.75528258147577
+            ],
+            [
+              -74.26995249869773,
+              -72.58143424365363
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.674173180120754,
+              45.0
+            ],
+            [
+              -72.78217232520116,
+              -72.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              42.404724812732674,
+              43.5052203211059
+            ],
+            [
+              -70.38409831673462,
+              -69.43518725204763
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              42.269952498697734,
+              44.455032620941836
+            ],
+            [
+              -69.73004750130227,
+              -67.54496737905816
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.316570580333924,
+              41.085028340527145
+            ],
+            [
+              -62.98477879236698,
+              -60.173835935917616
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.209765919698405,
+              41.314296824537024
+            ],
+            [
+              -60.422618990444796,
+              -59.91198736765336
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.01103424080628,
+              41.6904730469628
+            ],
+            [
+              -57.971539824501534,
+              -55.241229516856365
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.67760752633989,
+              42.29430574540419
+            ],
+            [
+              -59.32103277297882,
+              -55.723391822844036
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              43.276608177155964,
+              43.70117761195784
+            ],
+            [
+              -61.29430574540419,
+              -57.0
+            ]
+          ]
+        },
+        {
+          "triangles": 22,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              43.6252311481466,
+              43.98477879236698
+            ],
+            [
+              -60.6904730469628,
+              -59.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              42.90915207402861,
+              43.1508141351559
+            ],
+            [
+              -58.32118306423603,
+              -57.19556319428916
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              35.0,
+              40.78217232520115
+            ],
+            [
+              -51.84347812970193,
+              -46.148164762671016
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.06107373853764,
+              39.15
+            ],
+            [
+              -44.60744152470871,
+              -41.544967379058164
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.71845104495919,
+              42.93892626146236
+            ],
+            [
+              -50.455032620941836,
+              -47.39255847529129
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.0,
+              40.78217232520115
+            ],
+            [
+              -44.325826819879246,
+              -41.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.302275553302266,
+              44.045084971874736
+            ],
+            [
+              -45.28154895504081,
+              -42.46446609406726
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.58143424365364,
+              42.269952498697734
+            ],
+            [
+              -44.459276762037696,
+              -41.24471741852423
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.540723237962304,
+              44.75528258147577
+            ],
+            [
+              -48.269952498697734,
+              -46.58143424365364
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.674173180120754,
+              45.0
+            ],
+            [
+              -46.78217232520115,
+              -46.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.06107373853764,
+              39.15
+            ],
+            [
+              -8.607441524708713,
+              -5.544967379058161
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.092738936467114,
+              43.53553390593274
+            ],
+            [
+              -14.045084971874736,
+              -11.20208152801713
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.29520190203378,
+              40.78217232520115
+            ],
+            [
+              -8.357926095308583,
+              -5.061558297024311
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.85,
+              42.93892626146236
+            ],
+            [
+              -8.607441524708713,
+              -5.544967379058161
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.540723237962304,
+              44.75528258147577
+            ],
+            [
+              -12.269952498697734,
+              -10.581434243653637
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.69353098675597,
+              45.0
+            ],
+            [
+              -10.782172325201154,
+              -10.0
+            ]
+          ]
+        },
+        {
+          "triangles": 38,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              34.90879091562006,
+              41.545084971874736
+            ],
+            [
+              10.156521870298073,
+              18.281508964068163
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              37.730047501302266,
+              39.41856575634636
+            ],
+            [
+              17.540723237962304,
+              20.45503262094184
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              38.454915028125264,
+              39.70479809796622
+            ],
+            [
+              17.642073904691415,
+              20.755282581475768
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              39.47044700475569,
+              39.70479809796622
+            ],
+            [
+              14.159920459526136,
+              14.357926095308583
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.0,
+              40.78217232520115
+            ],
+            [
+              17.674173180120754,
+              21.0
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              40.58143424365364,
+              42.93892626146236
+            ],
+            [
+              17.392558475291285,
+              20.755282581475768
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              41.302275553302266,
+              44.045084971874736
+            ],
+            [
+              16.71845104495919,
+              19.535533905932738
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              42.14376891237814,
+              42.74612689445655
+            ],
+            [
+              11.84340135902764,
+              12.563686495767127
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              43.199276270295115,
+              44.75528258147577
+            ],
+            [
+              13.039117987324051,
+              14.454915028125264
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              31.989689578713968,
+              33.13044818699549
+            ],
+            [
+              22.6,
+              24.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              28.25,
+              35.0
+            ],
+            [
+              24.0,
+              42.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "beam-grip"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--beam-grip.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--beam-grip.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 164,
+      "components": [
+        {
+          "triangles": 96,
+          "volume_mm3": 1.1766587704187259e-11,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              10.0,
+              22.0
+            ],
+            [
+              -48.0,
+              -48.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        },
+        {
+          "triangles": 68,
+          "volume_mm3": 2.2737367544323206e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              10.0,
+              22.0
+            ],
+            [
+              -48.0,
+              -48.0
+            ],
+            [
+              -3.0,
+              9.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "liner"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--liner.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--liner.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 150,
+      "components": [
+        {
+          "triangles": 8,
+          "volume_mm3": 1.7053025658242404e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              1.9784353606315848,
+              6.470476127563018
+            ],
+            [
+              -24.90486745229364,
+              -21.92651626019774
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.947598300641403e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              7.763857254511981,
+              10.565456543517485
+            ],
+            [
+              -23.418017899441026,
+              -20.573186769418154
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 120,
+          "volume_mm3": 1.9184653865522705e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              11.350000001490116,
+              24.866395763558252
+            ],
+            [
+              -21.546318892596588,
+              6.330725127324336
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.526512829121202e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              1.9849293176746081
+            ],
+            [
+              22.613619649651515,
+              25.0
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.353672812205332e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.9418136360702367,
+              6.470476127563018
+            ],
+            [
+              21.926516259640533,
+              24.190167200032125
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.1041835768519377e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              7.763857256890444,
+              10.565456543517485
+            ],
+            [
+              20.57318676843296,
+              22.731992296122932
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 3.9679370900103095e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              18.59475140780138,
+              20.625452321586543
+            ],
+            [
+              11.35000004112991,
+              14.339410908776149
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "right-support"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--right-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--right-support.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 34,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 1.9895196601282805e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -11.1,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 6.075140390748857e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -4.699999809265137
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.657894736842108
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--frame.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "capture-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--capture-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--capture-right.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "finger-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--finger-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--finger-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "finger-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--finger-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--finger-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "positive-half",
+        "capture-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--capture-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/positive-half--capture-left.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "beam-grip"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--beam-grip.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--beam-grip.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 112,
+      "components": [
+        {
+          "triangles": 24,
+          "volume_mm3": 5.713207684721056e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -22.0,
+              -18.0625
+            ],
+            [
+              -48.0,
+              -48.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        },
+        {
+          "triangles": 58,
+          "volume_mm3": 6.252776074688882e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -22.0,
+              -10.0
+            ],
+            [
+              -48.0,
+              -48.0
+            ],
+            [
+              -3.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 30,
+          "volume_mm3": 2.1032064978498966e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -16.65314052382254,
+              -10.0
+            ],
+            [
+              -48.0,
+              -48.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "liner"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--liner.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--liner.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 152,
+      "components": [
+        {
+          "triangles": 6,
+          "volume_mm3": 9.237055564881302e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -20.625452321586543,
+              -18.59475140780138
+            ],
+            [
+              -14.339410908776149,
+              -11.35000004112991
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 110,
+          "volume_mm3": 1.8676171720244383e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -24.866395763558252,
+              -15.308771704110745
+            ],
+            [
+              -6.330725127324336,
+              19.019945889164045
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.2263672386929224e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -14.339410908776149,
+              -12.663743637761641
+            ],
+            [
+              18.59475140780138,
+              21.546318892596588
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.9421501443888824e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -10.386086221162465,
+              -7.76385725451198
+            ],
+            [
+              -23.49231551964771,
+              -21.331022493655432
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.1316282072803006e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -6.280929197093613,
+              -3.9418136360702367
+            ],
+            [
+              -24.6201938253052,
+              -21.926516259640533
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.473903143247421e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -4.148716375725468,
+              -1.9784353606315848
+            ],
+            [
+              -24.90486745229364,
+              -22.613619649315485
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.686458367330308e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -1.9849293176746081,
+              0.0
+            ],
+            [
+              -25.0,
+              -22.700000002867938
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.447494307714683e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -12.5,
+              -10.737668843369066
+            ],
+            [
+              19.658776668487715,
+              22.568046626913777
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.5631940186722204e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -10.565456543517485,
+              -7.763857254511981
+            ],
+            [
+              20.573186769418154,
+              23.418017899441026
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.4868995751603507e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -6.470476127563018,
+              -3.9418136335568312
+            ],
+            [
+              21.92651626019774,
+              24.578172282499782
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -2.1788935686914543,
+              0.0
+            ],
+            [
+              22.61361964976381,
+              24.99153133791006
+            ],
+            [
+              44.0,
+              44.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "left-support"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--left-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--left-support.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 28,
+      "components": [
+        {
+          "triangles": 10,
+          "volume_mm3": 6.821210263296962e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.75
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.4210854715202004e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -16.9
+            ],
+            [
+              11.767303571356768,
+              21.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.684341886080802e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.75
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 1.6342482922482304e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -5.45008810284618,
+              -0.05873314304939381
+            ],
+            [
+              -24.25,
+              -21.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -4.699999809265137,
+              7.25
+            ],
+            [
+              -7.5,
+              -4.25
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--frame.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "capture-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--capture-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--capture-right.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "capture-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--capture-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--capture-left.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "finger-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--finger-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--finger-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "negative-half",
+        "finger-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--finger-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/negative-half--finger-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "liner",
+        "capture-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--capture-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--capture-right.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "liner",
+        "pipe-clamp-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--pipe-clamp-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--pipe-clamp-right.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "liner",
+        "capture-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--capture-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--capture-left.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "liner",
+        "pipe-clamp-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--pipe-clamp-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/liner--pipe-clamp-left.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "x-gib"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--x-gib.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--x-gib.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "x-cover"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--x-cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--x-cover.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 92,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2737367544323206e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              10.5,
+              28.0
+            ],
+            [
+              -23.999993818147995,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 4.618527782440651e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              13.31663876714585,
+              13.429404258728027
+            ],
+            [
+              -23.668346405029297,
+              -6.331652641296387
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.4135727116651425e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              13.586501121520996,
+              14.05553054197843
+            ],
+            [
+              -22.79791831970215,
+              -6.9444684982299805
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.1368683772161603e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              14.349438164979347,
+              15.0
+            ],
+            [
+              -22.332664489746094,
+              -7.570595205269187
+            ]
+          ]
+        },
+        {
+          "triangles": 28,
+          "volume_mm3": 1.3073986337985843e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              16.413497924804688,
+              20.799999237060547
+            ],
+            [
+              -32.39693556099898,
+              -16.43109882113411
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 8.810729923425242e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              15.000000004313419,
+              15.650561320306512
+            ],
+            [
+              -22.429404638593986,
+              -7.667335064850144
+            ]
+          ]
+        },
+        {
+          "triangles": 22,
+          "volume_mm3": 1.1232126340132709e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              15.944469396133323,
+              17.168104604924604
+            ],
+            [
+              -22.797918471982868,
+              -6.331652641296387
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              24.200000762939453,
+              28.0
+            ],
+            [
+              -39.0,
+              -18.200000762939453
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--frame.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 8,
+      "components": [
+        {
+          "triangles": 8,
+          "volume_mm3": 8.992806499463768e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              19.0,
+              24.0
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "y-cap-right"
+      ],
+      "passed": false,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-cap-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-cap-right.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 378,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 7.457731584281646e-06,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              51.5,
+              53.79999923706055
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -35.0,
+              -30.75
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 4.2114244763524766e-05,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              51.5,
+              53.79999923706055
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -26.25,
+              -2.25
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 4.825590512069766e-06,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              51.5,
+              53.79999923706055
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              2.25,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 342,
+          "volume_mm3": 0.00018686054255019087,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              58.20000076293945,
+              65.97999572753906
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -31.899999618530273,
+              1.8999996185302734
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "pair": [
+        "right-support",
+        "y-gib-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-gib-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-gib-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "y-keeper-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-keeper-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-keeper-right-front.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 226,
+      "components": [
+        {
+          "triangles": 114,
+          "volume_mm3": 1.4175327578413999e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              46.5,
+              55.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -14.0,
+              -6.699999809265137
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.0613732115416497e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              46.5,
+              49.429404794730814
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              8.277924537658691,
+              10.0
+            ]
+          ]
+        },
+        {
+          "triangles": 102,
+          "volume_mm3": 8.562039965909207e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              46.586463928222656,
+              55.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              6.699999809265137,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "finger-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--finger-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--finger-right-front.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 8,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999923706055,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999923706055,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              3.0,
+              4.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "pin-block-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--pin-block-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--pin-block-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "y-gib-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-gib-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-gib-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "y-keeper-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-keeper-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--y-keeper-right-rear.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 238,
+      "components": [
+        {
+          "triangles": 118,
+          "volume_mm3": 4.82458517581108e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              46.5,
+              55.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -42.5,
+              -35.20000076293945
+            ]
+          ]
+        },
+        {
+          "triangles": 66,
+          "volume_mm3": 5.32018873400375e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              46.5,
+              55.15745544433594
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -20.222074508666992,
+              -14.5
+            ]
+          ]
+        },
+        {
+          "triangles": 54,
+          "volume_mm3": 2.460254222569347e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.258384704589844,
+              55.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -21.799999237060547,
+              -17.622093200683594
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "finger-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--finger-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--finger-right-rear.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 12,
+      "components": [
+        {
+          "triangles": 6,
+          "volume_mm3": 8.526512829121202e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999923706055,
+              54.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 4.8183679268731794e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999923706055,
+              49.57777956884001
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "right-support",
+        "pin-block-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--pin-block-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/right-support--pin-block-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--frame.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "fixed-spacer"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--fixed-spacer.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--fixed-spacer.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "y-cap-left"
+      ],
+      "passed": false,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-cap-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-cap-left.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 386,
+      "components": [
+        {
+          "triangles": 350,
+          "volume_mm3": 0.0002547897368207037,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -67.0,
+              -58.20000076293945
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -35.0,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 7.457730610838098e-06,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -53.79999923706055,
+              -51.5
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -35.0,
+              -30.75
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 4.211424453615109e-05,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -53.79999923706055,
+              -51.5
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              -26.25,
+              -2.25
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 4.825590306012373e-06,
+          "planar_error_mm": 7.629394538355427e-07,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -53.79999923706055,
+              -51.5
+            ],
+            [
+              24.2,
+              24.200000762939453
+            ],
+            [
+              2.25,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "pair": [
+        "left-support",
+        "y-gib-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-gib-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-gib-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "y-keeper-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-keeper-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-keeper-left-front.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 224,
+      "components": [
+        {
+          "triangles": 116,
+          "volume_mm3": 1.3322676295501878e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -55.5,
+              -46.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -14.0,
+              -6.699999809265137
+            ]
+          ]
+        },
+        {
+          "triangles": 108,
+          "volume_mm3": 4.227729277772596e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -55.5,
+              -46.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              6.699999809265137,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "finger-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--finger-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--finger-left-front.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 8,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999923706055
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -3.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999923706055
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              3.0,
+              4.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "pin-block-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--pin-block-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--pin-block-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "y-gib-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-gib-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-gib-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "y-keeper-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-keeper-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--y-keeper-left-rear.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 218,
+      "components": [
+        {
+          "triangles": 18,
+          "volume_mm3": 3.235189893757706e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -55.5,
+              -52.41349834091433
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -39.377906799316406,
+              -35.99993133544922
+            ]
+          ]
+        },
+        {
+          "triangles": 36,
+          "volume_mm3": 9.769971290318757e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -55.15745544433594,
+              -47.81801986694336
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -42.5,
+              -39.44446939613332
+            ]
+          ]
+        },
+        {
+          "triangles": 28,
+          "volume_mm3": 6.643574579356937e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.18198013305664,
+              -47.258384704589844
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -37.29791847198287,
+              -35.20000076293945
+            ]
+          ]
+        },
+        {
+          "triangles": 70,
+          "volume_mm3": 1.0809131367750524e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -55.5,
+              -46.586463928222656
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -20.222074508666992,
+              -14.5
+            ]
+          ]
+        },
+        {
+          "triangles": 44,
+          "volume_mm3": 1.4139800441625994e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.74161148071289,
+              -46.586463928222656
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -21.799999237060547,
+              -18.831653594970703
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.7763568394002505e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.603195650164075,
+              -46.586463928222656
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -41.000064849853516,
+              -39.042525480385414
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 1.6822099269120372e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.429404794730814,
+              -46.5
+            ],
+            [
+              -13.5,
+              -13.5
+            ],
+            [
+              -38.8316535949707,
+              -36.777923583984375
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "finger-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--finger-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--finger-left-rear.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 12,
+      "components": [
+        {
+          "triangles": 6,
+          "volume_mm3": 4.618527782440651e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.0,
+              -44.29999923706055
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 1.4788170688007085e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.577768383779855,
+              -44.29999923706055
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "left-support",
+        "pin-block-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--pin-block-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/left-support--pin-block-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "x-gib",
+        "x-cover"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--x-cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--x-cover.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 1.5276668818842154e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              69.4,
+              70.5
+            ],
+            [
+              24.0,
+              24.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "x-gib",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--frame.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "x-gib",
+        "y-cap-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--y-cap-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-gib--y-cap-right.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "x-cover",
+        "frame"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-cover--frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/x-cover--frame.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "fixed-spacer"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--fixed-spacer.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--fixed-spacer.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "moving-spacer"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--moving-spacer.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--moving-spacer.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "y-cap-right"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--y-cap-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--y-cap-right.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 1.6076029396572267e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              59.0
+            ],
+            [
+              24.2,
+              25.0
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "finger-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "pin-block-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "finger-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "pin-block-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "y-cap-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--y-cap-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--y-cap-left.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 1.5232259897857148e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -59.0,
+              -53.0
+            ],
+            [
+              24.2,
+              25.0
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "finger-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "pin-block-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "finger-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--finger-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "frame",
+        "pin-block-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/frame--pin-block-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "capture-right",
+        "capture-left"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/capture-right--capture-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/capture-right--capture-left.scad"
+      ],
+      "returncode": 0,
+      "triangle_count": 22,
+      "components": [
+        {
+          "triangles": 10,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -52.79323311909273,
+              -47.3
+            ],
+            [
+              40.0,
+              53.0
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              30.3,
+              42.7
+            ],
+            [
+              40.0,
+              53.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              57.07872894815039,
+              63.0
+            ],
+            [
+              40.0,
+              53.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "finger-right-front",
+        "pin-block-right-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-right-front--pin-block-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-right-front--pin-block-right-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "finger-right-rear",
+        "pin-block-right-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-right-rear--pin-block-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-right-rear--pin-block-right-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "finger-left-front",
+        "pin-block-left-front"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-left-front--pin-block-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-left-front--pin-block-left-front.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "pair": [
+        "finger-left-rear",
+        "pin-block-left-rear"
+      ],
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-left-rear--pin-block-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/printed-pair-fit/baseline/finger-left-rear--pin-block-left-rear.scad"
+      ],
+      "returncode": 1,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    }
+  ],
+  "scope": "Every unordered printed-STL pair at the exported pose only. No whole-motion, tolerance, hardware, or physical acceptance claim.",
+  "physical_acceptance": false
+}

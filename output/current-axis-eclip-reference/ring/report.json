@@ -1,0 +1,155 @@
+{
+  "created_at": "2026-09-27T14:54:46.934362+00:00",
+  "status": "OFFICIAL_DIMENSION_REFERENCE_FOUND_INSTALLED_SWEEP_AND_TOOL_FIT_NOT_CLOSED",
+  "scope": "Public read-only sources; no form submission, purchase, main CAD edit or tool simulation.",
+  "product": {
+    "manufacturer": "MISUMI",
+    "parts": [
+      "NETW7",
+      "NETWS7"
+    ],
+    "type": "radially installed E-type shaft retaining ring; not DIN471 C circlip",
+    "d_mm": [
+      6.85,
+      7.0
+    ],
+    "D_mm": [
+      13.8,
+      14.2
+    ],
+    "H_mm": [
+      5.75,
+      6.1
+    ],
+    "t_mm": [
+      0.76,
+      0.84
+    ],
+    "reference_groove_d2_mm": [
+      7.0,
+      7.09
+    ],
+    "reference_groove_m_mm": [
+      0.9,
+      1.0
+    ],
+    "edge_margin_n_min_mm": 1.5,
+    "source_status": "Current official indexed table agrees with text extraction from official 2015 PDF. PDF/image could not be downloaded from MISUMI: HTTP503. H orientation not visually verified in this task.",
+    "material_notice": "Current Japanese page announces sequential stainless material change from July2025; do not treat old SUS304-CSP catalogue as current SKU material guarantee.",
+    "installed_CAD_obtained": false,
+    "installed_radial_sweep_guaranteed": false,
+    "not_inferred": [
+      "D14.2 is not assigned as guaranteed installed full-rotation diameter",
+      "Free-to-installed deformation and eccentricity are not quantified",
+      "No CAD generated from catalog silhouettes",
+      "DSH8 C-circlip dimensions not reused"
+    ]
+  },
+  "tool_candidate": {
+    "manufacturer": "OCHIAI",
+    "model": "ETH-7 / ETH-7.0",
+    "maker_declared_ring": "ETW-7 (not explicit NETW7 qualification)",
+    "ring_reference_d_D_t_mm": [
+      7,
+      14,
+      0.8
+    ],
+    "L_mm": 154,
+    "F1_mm": 54,
+    "E_mm": 21,
+    "G_mm": 18,
+    "H_mm": 12,
+    "drawing_interpretation": "Official PDF visual review confirms L overall length, F1 exposed front length, E front width. G/H table entries retained without assigning unlabelled axes in the drawing.",
+    "CAD_obtained": false,
+    "NETW7_fit_guaranteed": false,
+    "installation_channel_guaranteed": false,
+    "limits": [
+      "Ring-grip recess detailed fit and tolerances absent",
+      "Head thickness/profile and entire tool opening/handling envelope not dimensioned enough for closed channel",
+      "Removal method/clearance not established by insertion holder drawing",
+      "Must not substitute circlip RPA pliers for radial E-ring holder"
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://jp.misumi-ec.com/vona2/detail/110300258420/",
+      "role": "current MISUMI family table, CAD buttons and material revision notice",
+      "retrieval": "web index available, subsequent direct GET503"
+    },
+    {
+      "url": "https://jp.misumi-ec.com/pdf/fa/2015/p2_293.pdf",
+      "role": "official text-extracted dimensions; original page2-293",
+      "retrieval": "web PDF extracted, direct GET503; local bytes not available; visual H direction not verified"
+    },
+    {
+      "url": "https://www.ochiai-if.co.jp/products/tool/",
+      "role": "manufacturer link to official holder drawing",
+      "retrieval": "web success"
+    },
+    {
+      "url": "https://www.ochiai-if.co.jp/assets/file/pdf/products/tool/tool_spec_et-holder.pdf",
+      "role": "official holder dimension drawing",
+      "local": "ochiai-eth-holder.pdf",
+      "retrieval": "download success; rendered and viewed"
+    },
+    {
+      "url": "https://jp.misumi-ec.com/vona2/detail/221000531666/",
+      "role": "MISUMI distributor lists ETH-7.0 and maker matching ETW-7",
+      "retrieval": "web success"
+    },
+    {
+      "url": "https://misumi.partcommunity.com/3d-cad-models/?info=misumi%2Fmetric%2F28_keys_magnets%2Fnetw.prj&languageIso=en",
+      "role": "MISUMI named CAD catalogue discovered",
+      "retrieval": "web inaccessible; no CAD downloaded; no account or form submitted"
+    }
+  ],
+  "download_failures": [
+    {
+      "url": "https://jp.misumi-ec.com/vona2/detail/110300258420/?HissuCode=NETW7",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://jp.misumi-ec.com/vona2/detail/110300258420/",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://us.misumi-ec.com/vona2/detail/110300258420/?HissuCode=NETW7",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://uk.misumi-ec.com/pdf/fa/2014/P2_0265-0266_F35_EN.pdf",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://jp.misumi-ec.com/archive/pdf/fa/2014/14-35.pdf",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://jp.misumi-ec.com/pdf/fa/2015/p2_293.pdf",
+      "status": "HTTP503",
+      "files_created": false
+    },
+    {
+      "url": "https://tw.misumi-ec.com/pdf/fa/2019/p1989.pdf",
+      "status": "HTTP503",
+      "files_created": false
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "ochiai-eth-holder.pdf",
+      "sha256": "f7fbd1b4a858a1b2d80c44c2257e832ddb1e4b3d369fa8f83ee6cace3b0151ed",
+      "bytes": 215132
+    },
+    {
+      "file": "ochiai-eth-holder.png",
+      "sha256": "9e3baa29b5932dfeb9d3ac96f6cb7398f367e5a4345917ce938e0d327dfbe10c",
+      "bytes": 126543
+    }
+  ]
+}

@@ -1,0 +1,794 @@
+{
+  "status": "FAIL_OR_STALE",
+  "source_sha256": {
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "sources_stable": true,
+  "analysis_sha256": "3939913f98d187c597ff2cbea97987d719a08568220e8255387b16f9774b72e0",
+  "old_guide_sha256": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+  "fixed_guide_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+  "exports": [
+    {
+      "name": "right-support",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/right-support.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "c881a238021a062915abbbe153639d0f18b2c94f6c7c3f51e1982ab8fc387259",
+        "triangle_count": 3484,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 3.0557912396034226e-05,
+        "area_mm2": 17319.664054288376,
+        "signed_volume_mm3": 26474.233602433735,
+        "bounds_mm": [
+          [
+            35.5,
+            75.0
+          ],
+          [
+            -19.0,
+            28.0
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          39.5,
+          47.0,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": true
+      }
+    },
+    {
+      "name": "unfixed-right-support",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-right-support.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-right-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/unfixed-right-support.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "1f8aedc3f92517c1fbbc8782cd7495f01eb6b024639f2f6b1a601b897816af31",
+        "triangle_count": 3468,
+        "zero_area_face_indices_0_based": [
+          684,
+          691,
+          754,
+          761
+        ],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 0.0,
+        "area_mm2": 17320.020062192423,
+        "signed_volume_mm3": 26475.88963992266,
+        "bounds_mm": [
+          [
+            35.5,
+            75.0
+          ],
+          [
+            -19.0,
+            28.0
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          39.5,
+          47.0,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": false
+      }
+    },
+    {
+      "name": "left-support",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/left-support.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "e666b97d4b8453e4b410b029889a58aa3aa27c90eccd8936dccff97eb6415e53",
+        "triangle_count": 2832,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 3.0557912396034226e-05,
+        "area_mm2": 15526.763694484633,
+        "signed_volume_mm3": 22850.187110825816,
+        "bounds_mm": [
+          [
+            -76.0,
+            -35.5
+          ],
+          [
+            -19.0,
+            24.200000762939453
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          40.5,
+          43.20000076293945,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": true
+      }
+    },
+    {
+      "name": "unfixed-left-support",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-left-support.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-left-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/unfixed-left-support.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "4738fe8d2590688c877c8b67b07dc4367116fb8031ddf0fcc56bf821d603e2c0",
+        "triangle_count": 2816,
+        "zero_area_face_indices_0_based": [
+          649,
+          658,
+          713,
+          718
+        ],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 0.0,
+        "area_mm2": 15527.11970238868,
+        "signed_volume_mm3": 22851.843148314747,
+        "bounds_mm": [
+          [
+            -76.0,
+            -35.5
+          ],
+          [
+            -19.0,
+            24.200000762939453
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          40.5,
+          43.20000076293945,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": false
+      }
+    }
+  ],
+  "boolean_reimports": [
+    {
+      "name": "right-support-boolean-reimport",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support-boolean-reimport.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support-boolean-reimport.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/right-support-boolean-reimport.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "9f866813134c48b4c5ce39473da12171395dcff9d4b20ca8a42e1b22f63c214d",
+        "triangle_count": 3476,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 3.0557912396034226e-05,
+        "area_mm2": 17319.66405642991,
+        "signed_volume_mm3": 26474.233602607357,
+        "bounds_mm": [
+          [
+            35.5,
+            75.0
+          ],
+          [
+            -19.0,
+            28.0
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          39.5,
+          47.0,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": true
+      },
+      "expected_failure_control": false,
+      "expected_result_observed": true,
+      "volume_difference_mm3": 1.73622538568452e-07
+    },
+    {
+      "name": "unfixed-right-support-boolean-reimport",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-right-support-boolean-reimport.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-right-support-boolean-reimport.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": true,
+      "file": null,
+      "passed": false,
+      "expected_failure_control": true,
+      "expected_result_observed": true
+    },
+    {
+      "name": "left-support-boolean-reimport",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support-boolean-reimport.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support-boolean-reimport.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/left-support-boolean-reimport.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "f297a11326aef377833c69fead73bac37c714caf99e117d0b515a40da3789df5",
+        "triangle_count": 2820,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 3.0557912396034226e-05,
+        "area_mm2": 15526.763696626163,
+        "signed_volume_mm3": 22850.18711099944,
+        "bounds_mm": [
+          [
+            -76.0,
+            -35.5
+          ],
+          [
+            -19.0,
+            24.200000762939453
+          ],
+          [
+            -50.0,
+            21.0
+          ]
+        ],
+        "size_mm": [
+          40.5,
+          43.20000076293945,
+          71.0
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 1,
+        "passed": true
+      },
+      "expected_failure_control": false,
+      "expected_result_observed": true,
+      "volume_difference_mm3": 1.73622538568452e-07
+    },
+    {
+      "name": "unfixed-left-support-boolean-reimport",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-left-support-boolean-reimport.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/unfixed-left-support-boolean-reimport.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": true,
+      "file": null,
+      "passed": false,
+      "expected_failure_control": true,
+      "expected_result_observed": true
+    }
+  ],
+  "source_deltas": [
+    {
+      "name": "right-removed",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-removed.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-removed.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": false,
+      "expected_result_observed": false
+    },
+    {
+      "name": "right-added",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-added.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-added.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": true,
+      "expected_result_observed": false
+    },
+    {
+      "name": "right-outside-band",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-outside-band.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-outside-band.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": true,
+      "expected_result_observed": false
+    },
+    {
+      "name": "left-removed",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-removed.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-removed.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": false,
+      "expected_result_observed": false
+    },
+    {
+      "name": "left-added",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-added.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-added.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": true,
+      "expected_result_observed": false
+    },
+    {
+      "name": "left-outside-band",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-outside-band.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-outside-band.scad"
+      ],
+      "returncode": 1,
+      "warnings_or_errors": true,
+      "empty": false,
+      "file": null,
+      "passed": false,
+      "expected_empty": true,
+      "expected_result_observed": false
+    }
+  ],
+  "functional_probes": [
+    {
+      "name": "guide-overtravel",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/guide-overtravel.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/guide-overtravel.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/guide-overtravel.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "a0472bc338376dbf756b283cc55a43ca4910f1b8c2e826916ddc7abdc57c20b6",
+        "triangle_count": 144,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 0.10999940872170555,
+        "area_mm2": 484.8639547119092,
+        "signed_volume_mm3": 23.007873107882926,
+        "bounds_mm": [
+          [
+            -62.5,
+            62.5
+          ],
+          [
+            -9.049999237060547,
+            -8.949999809265137
+          ],
+          [
+            -35.0,
+            6.5
+          ]
+        ],
+        "size_mm": [
+          125.0,
+          0.09999942779541016,
+          41.5
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 12,
+        "passed": false
+      },
+      "expected_overlap_control": true,
+      "expected_result_observed": true
+    },
+    {
+      "name": "guide-overtravel_back",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/guide-overtravel_back.stl",
+        "--export-format",
+        "asciistl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/guide-overtravel_back.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/guide-overtravel_back.stl",
+      "passed": true,
+      "mesh": {
+        "sha256": "919c874f8fb394ec9184d84d2222fe83492ac694703dd471da16cc911b6cc9c3",
+        "triangle_count": 96,
+        "zero_area_face_indices_0_based": [],
+        "area_method": "Exact Fraction of ASCII decimal coordinates; cross=(0,0,0)",
+        "minimum_area_mm2": 0.1200004863740105,
+        "area_mm2": 363.84022232056304,
+        "signed_volume_mm3": 17.28007347109815,
+        "bounds_mm": [
+          [
+            -55.0,
+            55.0
+          ],
+          [
+            -11.149999618530273,
+            -11.049999237060547
+          ],
+          [
+            -35.0,
+            6.5
+          ]
+        ],
+        "size_mm": [
+          110.0,
+          0.10000038146972656,
+          41.5
+        ],
+        "weld_tolerance_mm": 1e-06,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edges": 0,
+        "non_single_cycle_vertex_links": [],
+        "components": 8,
+        "passed": false
+      },
+      "expected_overlap_control": true,
+      "expected_result_observed": true
+    }
+  ],
+  "previews": [
+    {
+      "name": "right-iso",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-iso.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=54,3,-15,65,0,35,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/right-iso.png",
+      "passed": true
+    },
+    {
+      "name": "right-front",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-front.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=54,3,-15,90,0,0,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/right-front.png",
+      "passed": true
+    },
+    {
+      "name": "right-top",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-top.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=54,3,-15,0,0,0,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/right-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/right-top.png",
+      "passed": true
+    },
+    {
+      "name": "left-iso",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-iso.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=-54,3,-15,65,0,35,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/left-iso.png",
+      "passed": true
+    },
+    {
+      "name": "left-front",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-front.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=-54,3,-15,90,0,0,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/left-front.png",
+      "passed": true
+    },
+    {
+      "name": "left-top",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-top.png",
+        "--imgsize=1100,900",
+        "--viewall",
+        "--camera=-54,3,-15,0,0,0,210",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/support-export-fix/left-support.scad"
+      ],
+      "returncode": 0,
+      "warnings_or_errors": false,
+      "empty": false,
+      "file": "output/support-export-fix/left-top.png",
+      "passed": true
+    }
+  ],
+  "contract": {
+    "units": "mm",
+    "process": "FDM, X1C, 0.4 nozzle, PETG",
+    "cutter_outer_x_before_nominal": 58,
+    "cutter_outer_x_after_nominal": 58.02,
+    "working_datum_y_unchanged": 4.5,
+    "datum_x_interval_unchanged": [
+      43.8,
+      57.8
+    ],
+    "datum_z_bands_unchanged": [
+      [
+        -4.1,
+        -2.5
+      ],
+      [
+        2.5,
+        4.1
+      ]
+    ],
+    "rod_holes_and_fasteners": "No source edit",
+    "mechanical_effect": "Only .02 mm end-band material removed; no new material."
+  },
+  "limits": [
+    "Exact zero-area and welded edge/link checks are not a universal self-intersection proof.",
+    "Real CGAL Boolean reimport and targeted source-difference checks pass only when reported.",
+    "Not print, fit, preload, strength, sealing, dynamics or total-error acceptance."
+  ]
+}

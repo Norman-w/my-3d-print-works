@@ -1,0 +1,76 @@
+{
+    "error_string": "Success.",
+    "export_time": 343,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 10,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 11.24618148803711,
+                "Custom": 428.8181457519531,
+                "Flush": 29.0,
+                "Gap infill": 4.5128350257873535,
+                "Inner wall": 89.10975646972656,
+                "Internal solid infill": 25.37312889099121,
+                "Outer wall": 46.3593864440918,
+                "Sparse infill": 3.943483829498291,
+                "Top surface": 26.878313064575195,
+                "Travel": 38.707942962646484,
+                "Undefined": 23.32457160949707
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 1.3473848104476929,
+                    "total_used_g": 1.3473848104476929
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 14,
+            "layer_filament_change": 0,
+            "main_predication": 217.15945434570313,
+            "make_perimeters_time": 13,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 37.0,
+                        "height": 3.0,
+                        "width": 7.00000524520874,
+                        "x": 128.99998474121094,
+                        "y": 109.5,
+                        "z": -8.881784197001252e-16
+                    },
+                    "id": 38,
+                    "name": "feeder__frame-y-gib-right.stl",
+                    "triangle_count": 68
+                },
+                {
+                    "bbox": {
+                        "depth": 36.999996185302734,
+                        "height": 3.0,
+                        "width": 7.000002384185791,
+                        "x": 120.00000762939453,
+                        "y": 109.49999237060547,
+                        "z": -8.881784197001252e-16
+                    },
+                    "id": 49,
+                    "name": "feeder__frame-y-gib-left.stl",
+                    "triangle_count": 68
+                }
+            ],
+            "sliced_time": 128,
+            "sliced_time_with_cache": 89,
+            "total_predication": 688.5636596679688,
+            "triangle_count": 136,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+}

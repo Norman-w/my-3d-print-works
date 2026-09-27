@@ -1,0 +1,226 @@
+{
+  "part": "spring-seat",
+  "checks": {
+    "native_zero": true,
+    "no_native_warning": true,
+    "five_official_templates": true,
+    "first_layer_setpoint": true,
+    "first_layer_M109": true,
+    "source_stl_identity": true,
+    "source_cad_identity": true,
+    "embedded_mesh_matches": true,
+    "mesh_single_closed_surface": true,
+    "vertex_links_single_cycle": true,
+    "no_exact_zero_area_triangles": true
+  },
+  "input_sha256": "599177c2dadf0a543ca4685c5362595e06120030514bd4c8e613778ce938314b",
+  "material": "PETG",
+  "orientation": "full back disk down; pilot grows upward",
+  "warnings": [],
+  "first_layer_M109_c": 255.0,
+  "template_matches": {
+    "machine_start_gcode": true,
+    "machine_end_gcode": true,
+    "time_lapse_gcode": true,
+    "change_filament_gcode": true,
+    "layer_change_gcode": true
+  },
+  "three_mf": {
+    "source_file": "spin-spring-seat.stl",
+    "source_offset": [
+      50.75,
+      0.0,
+      43.0
+    ],
+    "component_transform": [
+      2.22044605e-16,
+      0.0,
+      -1.0,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      2.22044605e-16,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "build_transform": [
+      -0.976293215,
+      -0.216452209,
+      0.0,
+      0.216452209,
+      -0.976293215,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      127.99999,
+      128.0,
+      2.0
+    ],
+    "face_count": 572,
+    "canonical_source_mesh_sha256_5dp": "0ead41b1900b2165499b2692b719cb99713b31bb6d8a41a56c71ed52029a9484"
+  },
+  "model_path_assembly_bounds_mm": [
+    [
+      48.75,
+      -5.984014614917015,
+      37.00408223671165
+    ],
+    [
+      52.550000000000004,
+      5.9886790994932255,
+      48.98784456247941
+    ]
+  ],
+  "support": {
+    "segments": 0,
+    "assembly_centerline_bounds_mm": null,
+    "maximum_reported_line_width_mm": 0,
+    "maximum_layer_height_mm": 0,
+    "interpretation": "Centerline bounds only; footprint expands laterally by half line width and downward by full layer height. Not a proof of support removal."
+  },
+  "feature_segment_counts": {
+    "Inner wall": 186,
+    "Outer wall": 70,
+    "Bottom surface": 35,
+    "Internal solid infill": 421,
+    "Sparse infill": 92,
+    "Floating vertical shell": 34,
+    "Bridge": 43,
+    "Top surface": 50,
+    "Gap infill": 43
+  },
+  "actual_line_widths_mm": {
+    "Inner wall": [
+      0.45,
+      0.5
+    ],
+    "Outer wall": [
+      0.42,
+      0.5
+    ],
+    "Bottom surface": [
+      0.51657
+    ],
+    "Internal solid infill": [
+      0.41999,
+      0.4288,
+      0.42901,
+      0.49304,
+      0.49328,
+      0.49468
+    ],
+    "Sparse infill": [
+      0.45
+    ],
+    "Floating vertical shell": [
+      0.38292
+    ],
+    "Bridge": [
+      0.41332
+    ],
+    "Top surface": [
+      0.42
+    ],
+    "Gap infill": [
+      0.0933914,
+      0.100764,
+      0.10077,
+      0.100781,
+      0.100795,
+      0.104158,
+      0.104235,
+      0.106544,
+      0.106675,
+      0.114417,
+      0.114544,
+      0.119768,
+      0.125954,
+      0.12596,
+      0.126026,
+      0.126035,
+      0.148548,
+      0.148612,
+      0.162081,
+      0.167693,
+      0.167788,
+      0.183124,
+      0.183206,
+      0.183232,
+      0.18333,
+      0.192624,
+      0.192636,
+      0.204393,
+      0.210503,
+      0.246706,
+      0.255104,
+      0.275477,
+      0.275578,
+      0.281188,
+      0.299704,
+      0.307389,
+      0.307495,
+      0.307829,
+      0.335974,
+      0.341213,
+      0.341304,
+      0.35907,
+      0.366995
+    ]
+  },
+  "actual_layer_heights_mm": [
+    0.2,
+    0.4
+  ],
+  "layer_count": 21,
+  "mesh_topology": {
+    "triangles": 572,
+    "unique_vertices": 288,
+    "bounds_min_mm": [
+      48.75,
+      -6.199999809265137,
+      36.79999923706055
+    ],
+    "bounds_max_mm": [
+      52.75,
+      6.199999809265137,
+      49.20000076293945
+    ],
+    "signed_volume_mm3": 390.06729439221925,
+    "surface_area_mm2": 376.8929716996194,
+    "degenerate_triangles": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "inconsistently_oriented_two_face_edges": 0,
+    "edge_connected_surface_components": 1,
+    "component_triangle_counts": [
+      572
+    ],
+    "scope": "Surface topology at 1e-8 mm vertex welding precision. No general triangle self-intersection proof and no mechanical strength or split-half sealing claim."
+  },
+  "vertex_links": {
+    "vertex_count": 288,
+    "vertex_link_faults": [],
+    "non_two_face_edges": 0,
+    "weld_decimals": 7
+  },
+  "exact_zero_area_triangles": 0,
+  "seconds_estimate": 648.3966674804688,
+  "grams_estimate": 0.7378392815589905,
+  "artifact_sha256": {
+    "spin-slice-review.3mf": "e57f5a1a29423bc82d8042527155fb38040aa95954e9a2692200c1f04c13714e",
+    "plate_1.gcode": "5469dfcecaf530f6df721da8d8e2f8560aa784f64c1378cf5e146150bae37e96",
+    "support-paths.npz": "ab42575b10204e739737d02520b33f8dcc705b981c85d5ed5ec2b5f3395c172d"
+  },
+  "sent_to_printer": false,
+  "embedded_mesh_comparison": {
+    "max_vertex_displacement_mm": 6.029434727616696e-09,
+    "vertex_bijection": true,
+    "same_triangle_connectivity": true,
+    "numerical_tolerance_mm": 1e-05,
+    "decimal_bin_hash_equal": true
+  }
+}

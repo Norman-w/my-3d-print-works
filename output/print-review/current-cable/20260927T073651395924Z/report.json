@@ -1,0 +1,18 @@
+{
+  "status": "OFFLINE_SLICES_GENERATED_REVIEW_REQUIRED",
+  "source_stable": true,
+  "parts": [
+    {
+      "part": "cable-route-base",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T073651395924Z/cable-route-base",
+      "warnings": [
+        ""
+      ]
+    }
+  ],
+  "scope": "Native slice generation only; support removal, toolpath features, strength and physical fit need separate evidence.",
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

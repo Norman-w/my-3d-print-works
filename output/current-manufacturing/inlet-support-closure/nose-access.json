@@ -1,0 +1,350 @@
+{
+  "status": "ALL_DECLARED_NOSE_WINDOWS_CLEAR_WITH_REAL_SUPPORT_PRESENT",
+  "windows": [
+    {
+      "id": "M4_neck_-1",
+      "lo": [
+        -47,
+        -30,
+        -119
+      ],
+      "hi": [
+        -41,
+        -12.5,
+        -117
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -118,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 65,
+      "support_lines": [
+        151350,
+        151351,
+        151352,
+        151353,
+        151354,
+        151355,
+        152041,
+        152042,
+        152043,
+        152044,
+        152045,
+        152724
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "M2_5_rear_-1",
+      "lo": [
+        -14.0,
+        -65,
+        -147
+      ],
+      "hi": [
+        -7.0,
+        -54.1,
+        -145
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -146,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 81,
+      "support_lines": [
+        21767,
+        21768,
+        21769,
+        21770,
+        21771,
+        21772,
+        21773,
+        21777,
+        22365,
+        22384,
+        22385,
+        22386
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "M2_5_front_-1",
+      "lo": [
+        -14.0,
+        -41.7,
+        -147
+      ],
+      "hi": [
+        -7.0,
+        -28,
+        -145
+      ],
+      "approach": "+Y",
+      "cut_plane_CAD_Z": -146,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 144,
+      "support_lines": [
+        21737,
+        21738,
+        21739,
+        21740,
+        21741,
+        21742,
+        21743,
+        21744,
+        21745,
+        21746,
+        21747,
+        21749
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "strap_rear_-1",
+      "lo": [
+        -23.5,
+        -65,
+        -138
+      ],
+      "hi": [
+        -17.5,
+        -48.3,
+        -136
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -137,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 70,
+      "support_lines": [
+        55060,
+        55063,
+        55064,
+        55755,
+        55756,
+        55758,
+        55759,
+        56450,
+        56451,
+        56452,
+        56454,
+        56455
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "strap_front_-1",
+      "lo": [
+        -22.9,
+        -41.7,
+        -138
+      ],
+      "hi": [
+        -18.1,
+        -28,
+        -136
+      ],
+      "approach": "+Y",
+      "cut_plane_CAD_Z": -137,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 64,
+      "support_lines": [
+        55037,
+        55038,
+        55039,
+        55040,
+        55041,
+        55042,
+        55043,
+        55733,
+        55734,
+        55735,
+        55736,
+        55737
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "M4_neck_1",
+      "lo": [
+        39.5,
+        -30,
+        -119
+      ],
+      "hi": [
+        44.7,
+        -12.5,
+        -117
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -118,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 63,
+      "support_lines": [
+        151374,
+        151375,
+        151376,
+        151377,
+        151378,
+        151379,
+        152063,
+        152064,
+        152065,
+        152066,
+        152067,
+        152746
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "M2_5_rear_1",
+      "lo": [
+        7.0,
+        -65,
+        -147
+      ],
+      "hi": [
+        14.0,
+        -54.1,
+        -145
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -146,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 82,
+      "support_lines": [
+        21817,
+        21822,
+        21823,
+        21824,
+        21825,
+        21826,
+        21827,
+        22428,
+        22433,
+        22434,
+        22435,
+        22436
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "M2_5_front_1",
+      "lo": [
+        7.0,
+        -41.7,
+        -147
+      ],
+      "hi": [
+        14.0,
+        -28,
+        -145
+      ],
+      "approach": "+Y",
+      "cut_plane_CAD_Z": -146,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 93,
+      "support_lines": [
+        21843,
+        21844,
+        21845,
+        21849,
+        21850,
+        21851,
+        21852,
+        22453,
+        22454,
+        22455,
+        22459,
+        22460
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "strap_rear_1",
+      "lo": [
+        17.5,
+        -65,
+        -138
+      ],
+      "hi": [
+        23.5,
+        -48.3,
+        -136
+      ],
+      "approach": "-Y",
+      "cut_plane_CAD_Z": -137,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 73,
+      "support_lines": [
+        55256,
+        55257,
+        55258,
+        55259,
+        55260,
+        55261,
+        55954,
+        55955,
+        55956,
+        55957,
+        55958,
+        55959
+      ],
+      "nominal_nose_space_clear": true
+    },
+    {
+      "id": "strap_front_1",
+      "lo": [
+        18.1,
+        -41.7,
+        -138
+      ],
+      "hi": [
+        22.9,
+        -28,
+        -136
+      ],
+      "approach": "+Y",
+      "cut_plane_CAD_Z": -137,
+      "source_triangle_intersections": 0,
+      "center_inside": false,
+      "model_commands": 0,
+      "support_commands": 112,
+      "support_lines": [
+        55210,
+        55211,
+        55212,
+        55213,
+        55216,
+        55233,
+        55234,
+        55235,
+        55236,
+        55237,
+        55238,
+        55909
+      ],
+      "nominal_nose_space_clear": true
+    }
+  ],
+  "source_stl_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+  "gcode_sha256": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+  "script_sha256": "af7036170551c4ebbb4e02e06590d99c7808df79647f2b75fc7631f06b8854a1",
+  "helper_sha256": "2b611e944a4bf74d2f5ec1716d0c022c55f9b2541a40e837f074116ddaa8bdde",
+  "interpretation": "Each box includes the complete declared nose entry from the exterior to an actual support neck. It is larger than an infinitesimal probe, but is only a design allowance for a cutter nose: jaws, handle, grasp, closing sweep, exact commercial tool and cut force are unverified. These boxes do not imply the six removal pieces have all been detached or can pass unchanged through each bore."
+}

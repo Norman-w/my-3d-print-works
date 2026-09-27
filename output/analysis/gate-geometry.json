@@ -1,0 +1,292 @@
+{
+  "schema_version": 2,
+  "generated_at_utc": "2026-09-24T02:58:41.068020+00:00",
+  "source": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/parameters.scad",
+    "sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "guide_opening_source": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/kinematic-study.scad",
+    "sha256": "a44f5ef1e0ca0fc51e74c6f7781a5b3492b375951f618d4ee6849a315ab89382"
+  },
+  "units": "mm except stated dimensionless fractions",
+  "overall_physical_acceptance": "OPEN_NOT_EVALUATED",
+  "static_screen_status": "NO_COUNTEREXAMPLE_WITHIN_STATED_STATIC_MODEL",
+  "checks": {
+    "guide_fit_positive": true,
+    "guide_axially_contains_full_parked_pair_envelope": true,
+    "closed_gate_blocks_all_declared_lateral_centers": true,
+    "open_gate_clears_all_declared_lateral_centers": true,
+    "spacing_inside_conservative_parked_pair_window": true,
+    "closed_pocket_cannot_contain_two_rigid_ball_centers": true,
+    "sampled_mixed_pair_insertions_have_no_intersections": true,
+    "candidate_cam_position_curve_maintains_one_blocking_gate": true
+  },
+  "parameters_used": {
+    "ball_min_d": 40.0,
+    "ball_max_d": 41.0,
+    "guide_id": 42.5,
+    "guide_od": 47.0,
+    "guide_start_z": -80.0,
+    "guide_length": 104.0,
+    "finger_tip_radius": 2.5,
+    "finger_closed_center_r": 21.0,
+    "finger_open_center_r": 26.0,
+    "gate_spacing": 28.5,
+    "gate_overlap_fraction": 0.2,
+    "cam_stroke": 20.0,
+    "guide_clearance_budget": 0.25,
+    "gate_position_budget": 1.0,
+    "radial_print_clearance": 0.25
+  },
+  "budget_interpretation": {
+    "guide_clearance_budget": "Independent +/- radial guide-radius budget, not diameter budget and not a measured printer tolerance.",
+    "gate_position_budget": "Each finger has independent +/- radial center error; each gate plane has independent +/- axial error, giving twice this budget in relative gate spacing.",
+    "other_print_clearances": "radial_print_clearance enlarges the nominal radial-hole radius according to its CAD expression; it is not additionally counted as a hole-size manufacturing tolerance. axial_print_clearance is an assembly design gap, not automatically a manufacturing error.",
+    "tip_radius": "Exact spherical cap radius from SCAD; no separate tip-size, wear, seam, ovality or angular-misalignment tolerance has been supplied.",
+    "guide_axial_endpoints": "Nominal start and length from SCAD; the gate axial-position budget is included in the ball envelope, but no additional measured guide-length/placement tolerance has been supplied.",
+    "ball_envelope": "40-41 mm is a selected analysis envelope read from parameters; not a statement of the user's measured balls or a sport standard."
+  },
+  "model_assumptions": [
+    "Rigid perfect spheres; the recognized cylindrical guide with aligned round side holes constrains centers to the enclosing disk e=sqrt(A^2-hole_radius^2)-sqrt(R^2-hole_radius^2). This holds for all lateral directions in the interior connected component, not just centers aligned with a hole.",
+    "Opposed spherical caps of equal radius have centers in one gate plane; radial cylindrical shanks extend outward and do not protrude farther into the ball-center disk.",
+    "The two X-directed through-holes (four wall openings) are included by a recognized CSG source contract and a continuous enclosing bound. Additional bypass ports, seams, joints, slots or guide-end escape paths are not inherited. Outward cylindrical rods are covered only by the ideal radial capsule condition, not by a parsed assembled solid model.",
+    "Insertion proof starts with the first ball parked against the closed front gate and a second ball touching it, with no shell deformation.",
+    "Every lateral ball center is allowed anywhere in its side-hole-expanded enclosing disk, a deliberately larger domain than the true anisotropic feasible set. This includes unequal mixed-diameter balls and opposite-wall offsets.",
+    "The candidate cam law is explicitly defined in this report; parameters alone do not specify or prove manufactured cam tracks."
+  ],
+  "guide_fit": {
+    "guide_id_interval_mm": [
+      42.0,
+      43.0
+    ],
+    "minimum_diametral_clearance_mm": 1.0,
+    "maximum_ball_center_eccentricity_mm": 1.513367300882443,
+    "uncut_bore_maximum_eccentricity_mm": 1.5,
+    "additional_eccentricity_from_nominal_side_holes_mm": 0.01336730088244309,
+    "guide_length_mm": 104.0,
+    "cad_axis_convention": "CAD z is the feed axis; front gate nominal z=0 and rear gate nominal z=-gate_spacing. The pair derivation uses x for the same axis.",
+    "guide_axial_interval_mm": [
+      -80.0,
+      24.0
+    ],
+    "conservative_full_parked_pair_axial_envelope_mm": [
+      -75.47421252963274,
+      17.03236982141317
+    ],
+    "axial_envelope_formula": "upstream=-gate_budget-h_max-2*R_max-R_max; downstream=+gate_budget-h_min+R_max. Full sphere extents, all diameter mixtures and bounded lateral offsets are included conservatively.",
+    "upstream_and_downstream_containment_margins_mm": [
+      4.525787470367263,
+      6.96763017858683
+    ],
+    "axial_placement_caveat": "Full stationary parked-pair extents fit only if both reported margins are positive. Nominal round-hole eccentricity is included; moving arrival/departure through ends, entrance transitions, hole manufacturing error and additional bypass/slot cuts remain unverified."
+  },
+  "guide_openings": {
+    "source_contract": {
+      "status": "RECOGNIZED_NARROW_CSG_CONTRACT",
+      "hole_axis": "X",
+      "hole_radius_expression": "finger_tip_radius+radial_print_clearance",
+      "hole_radius_mm": 2.75,
+      "hole_axis_x_interval_mm": [
+        -60.0,
+        60.0
+      ],
+      "hole_axis_z_mm": [
+        0.0,
+        -28.5
+      ],
+      "guide_cut_count": 2,
+      "wall_opening_count": 4,
+      "scope": "The unsectioned guide() CSG dimensions/topology only. section_view=true deliberately removes material and is excluded. This is not an evaluated mesh or manufacturing inspection."
+    },
+    "continuous_proof": {
+      "domain": "Rigid perfect sphere center in the guide's interior connected component, with its equatorial plane inside the unsectioned cylindrical guide.",
+      "global_bound": "e <= sqrt(A^2-h^2)-sqrt(R^2-h^2), with 0<=h<R<=A.",
+      "parameter_envelope": "The bound increases with guide radius A and hole radius h, and decreases with sphere radius R. Thus A_max and R_min bound the whole declared continuous parameter envelope; h is nominal because no manufacturing allowance for hole radius was supplied.",
+      "equatorial_slice": "At axial center z, a round X-directed hole removes only arcs with |Y|<k, where k=sqrt(max(0,h^2-(z-z_hole)^2))<=h. With two aligned holes, use the largest k at that slice; their union does not widen this Y band.",
+      "directional_bound": "Let alpha=asin(k/A), and theta be the direction from the nearer +/-X axis. If |theta|>=alpha, e<=A-R. Otherwise delta=alpha-|theta| and e<=A*cos(delta)-sqrt(R^2-A^2*sin(delta)^2).",
+      "all_direction_argument": "The directional limit increases with delta when A>R and k<R. Thus its maximum is on the hole axis (theta=0), and then increases with k up to h. This establishes the bound for all lateral directions and all interior axial positions.",
+      "three_dimensional_attainment": "For center (e,0,0) on one hole axis, the closest surviving wall has X=sqrt(A^2-Y^2), Z^2=max(0,h^2-Y^2). Squared distance decreases with Y^2 up to h^2 and increases thereafter; its minimum is at Y=+/-h,Z=0. The global bound is attained there for a single round hole. Additional aligned holes only remove material; the equatorial necessary bound still applies.",
+      "disconnected_exterior": "Ball centers already outside the tube are a different feasible component. This theorem does not assert a bound on arbitrary points in exterior space or prevent entering around an open tube end."
+    },
+    "standalone_check": "python3 -B analysis/guide_openings.py; output/analysis/guide-openings.json",
+    "manufacturing_hole_size_tolerance": "NOT_SUPPLIED_OPEN"
+  },
+  "gate_blocking": {
+    "formula": "max_(y^2+z^2<=e^2) min(|(y,z)-(c_plus,0)|, |(y,z)-(-c_minus,0)|) < R+r; for symmetric tips this is sqrt(c^2+e^2)<R+r.",
+    "closed_worst_ball_diameter_mm": 40.0,
+    "closed_worst_tip_center_radius_mm": 22.0,
+    "closed_worst_ball_center_yz_mm": [
+      0.0,
+      1.513367300882443
+    ],
+    "closed_witness_scope": "Worst point of the expanded enclosing disk; this particular off-axis point need not be physically reachable in the perforated guide. Its positive margin is a sufficient all-position bound.",
+    "closed_minimum_configuration_space_overlap_mm": 0.44800960032450377,
+    "closed_squared_margin_mm2": 19.959719412619734,
+    "open_formula": "c_open_min-R_min-e(A_max,R_min,hole_radius)-tip_radius>0. R+e(A,R,h) decreases with R, so the smallest sphere supplies the largest radial reach.",
+    "open_minimum_surface_clearance_mm": 0.9866326991175569
+  },
+  "coaxial_touching_ball_window": {
+    "formula_equal_balls": "h=sqrt((R+r)^2-c^2); 2*h <= L <= 2*R. Equality is contact, not design margin.",
+    "formula_mixed_balls": "h1+h_rear1 <= L <= h1+(R1+R2)-h_rear2; equal front/rear geometries give 2*h1 <= L <= h1+R1+R2-h2.",
+    "conservative_nominal_window_over_all_mixed_diameters_mm": [
+      18.76166303929372,
+      38.6969156910549
+    ],
+    "nominal_fixed_spacing_mm": 28.5
+  },
+  "eccentric_touching_ball_window": {
+    "continuous_bound": "h_min <= each front stop depth <= h_max; axial touching pitch >= p_min. Sufficient interval: 2*h_max <= L <= h_min+p_min-h_max. Independent worst cases make this conservative, not a necessary condition.",
+    "extrema_basis": "Use E(R)=sqrt(A_max^2-hole_radius^2)-sqrt(R^2-hole_radius^2). h_min^2=(R+tip)^2-c_max^2-E(R)^2 increases with R. For h_max^2, put C=sqrt(A_max^2-hole_radius^2), q=c_min-C: h_max^2=hole_radius^2+2*R*tip+tip^2-q^2-2*q*sqrt(R^2-hole_radius^2). If q<=0 this increases; if q>0 it is convex, so a maximum is always at a radius endpoint. Mixed-pair pitch is bounded by sqrt((2*R_min)^2-(2*E(R_min))^2). These arguments cover continuous mixtures, not just sampled diameters.",
+    "global_stop_depth_interval_mm": [
+      4.46763017858683,
+      12.974212529632736
+    ],
+    "minimum_touching_pair_axial_pitch_mm": 39.88532158138479,
+    "sufficient_spacing_window_mm": [
+      25.94842505926547,
+      31.37873923033888
+    ],
+    "actual_spacing_budget_interval_mm": [
+      26.5,
+      30.5
+    ],
+    "minimum_spacing_margin_mm": 0.551574940734529,
+    "full_sweep_condition": "Radial closure is monotone and both tip centers remain radially outside the allowed ball-center disk. Under that condition the final tip positions are closest to each stationary ball.",
+    "sampled_cross_check": {
+      "method": "Direct sphere versus both spherical tips, including unequal left/right tip offsets, touching mixed-size balls, and boundary/interior centers of the side-hole-expanded enclosing disks.",
+      "diameters_sampled_mm": [
+        40.0,
+        40.5,
+        41.0
+      ],
+      "lateral_points_per_ball": 25,
+      "sampled_states": 810000,
+      "intersecting_states": 0,
+      "min_surface_clearance_mm": 0.31558997601100813,
+      "worst_sample": {
+        "ball_diameters_mm": [
+          41.0,
+          40.0
+        ],
+        "guide_id_mm": 43.0,
+        "first_center_yz_mm": [
+          1.0086912184567716,
+          0.0
+        ],
+        "second_center_yz_mm": [
+          0.0,
+          0.0
+        ],
+        "front_tip_centers_radial_mm": [
+          20.0,
+          20.0
+        ],
+        "rear_tip_centers_radial_mm": [
+          20.0,
+          20.0
+        ],
+        "spacing_mm": 26.5,
+        "axial_ball_pitch_mm": 40.48743684188724,
+        "first_center_x_mm": -12.974212529632736,
+        "second_center_x_mm": -53.461649371519975,
+        "min_tip_to_ball_surface_clearance_mm": 0.31558997601100813
+      },
+      "counterexamples": [],
+      "scope": "Sampled cross-check only; continuous coverage is provided by the separate conservative interval bound. Requires the first ball to be seated at the front gate. The expanded disks are a superset of physical center positions; any intersection reported in them alone is a conservative-screen failure, not a proven physically reachable collision."
+    }
+  },
+  "static_closed_pocket_capacity": {
+    "formula": "Any ball center between both closed gate planes must lie at least h_min from each. Its axial interval has length <= L_max-2*h_min. Two nonintersecting spheres need axial center spacing >= p_min.",
+    "maximum_between_gate_center_span_mm": 21.56473964282634,
+    "minimum_two_ball_axial_pitch_mm": 39.88532158138479,
+    "two_ball_exclusion_margin_mm": 18.320581938558448,
+    "scope": "This excludes two rigid balls wholly between two closed blocking gates. It does not prove successful loading, departing-ball clearance, or a full dynamic cycle."
+  },
+  "cam_and_actual_position_interlock": {
+    "profile_status": "ANALYSIS_CANDIDATE_ONLY_NOT_SOLID_CAM_VERIFICATION",
+    "profile": {
+      "press_rear_closes_trigger_mm": [
+        0,
+        8.0
+      ],
+      "press_both_closed_trigger_mm": [
+        8.0,
+        12.0
+      ],
+      "press_front_opens_trigger_mm": [
+        12.0,
+        20.0
+      ],
+      "return": "Traverse exactly the same position curve in reverse; partial reversal remains on that curve only with positive captive linkage."
+    },
+    "geometric_invariant": "For every trigger position, at least one actual gate center radius is below the worst-case blocking threshold; this is about actual positions, not commanded timing.",
+    "critical_actual_center_radius_mm": 22.449047182734056,
+    "minimum_blocking_center_radius_margin_mm": 0.44904718273405564,
+    "sampled_trigger_positions": 1001,
+    "sample_counterexamples": [],
+    "continuous_argument": "With nonnegative overlap, at least one commanded gate remains fully closed throughout each linear segment and the central dwell; include the stated outward center-position budget in its blocking test.",
+    "conditioned_result": "HOLDS_FOR_STATED_POSITION_CURVE",
+    "required_physical_constraints": [
+      "Each of four sliders must follow its actual closed-track cam; obstruction of either slider must prevent further common trigger travel before the other gate opens.",
+      "No follower escape, spring override, unbudgeted groove clearance, sliding pin, linkage buckling or housing deflection may let the trigger bypass a stalled gate.",
+      "A gate means both opposed fingers and their guide restrictions, not the average position of two independent fingers.",
+      "One-ball pocket capacity and departure/arrival state must be separately demonstrated; this invariant alone is not an exactly-one release proof."
+    ],
+    "asynchronous_counterexamples": [
+      {
+        "case": "Late ball centered on the rear gate plane during closure",
+        "ball_diameter_mm": 40.0,
+        "ball_center_yz_mm": [
+          1.513367300882443,
+          0
+        ],
+        "rear_finger_first_contact_center_mm": 24.013367300882443,
+        "ideal_rigid_trigger_stall_fraction": 0.15893061592940455,
+        "front_center_at_that_fraction_mm": 21.0,
+        "rear_profile_center_at_that_fraction_mm": 24.013367300882443,
+        "outcome_with_positive_rigid_cam": "The trigger stalls with the front gate still closed; no claim of smooth cycling or absence of ball damage.",
+        "outcome_if_linkage_can_override": {
+          "front_eventually_open_center_mm": 26.0,
+          "rear_left_behind_center_mm": 24.013367300882443,
+          "rear_off_axis_escape_center_yz_mm": [
+            0.0,
+            1.5
+          ],
+          "escape_witness_uses_intact_bore_disk_radius_mm": 1.5,
+          "rear_escape_surface_clearance_mm": 1.5601705963837702,
+          "only_one_rear_finger_lags_other_at_closed_outward_budget": {
+            "tip_center_radii_mm": [
+              24.013367300882443,
+              22.0
+            ],
+            "escape_center_yz_mm": [
+              1.0066836504412215,
+              1.1120197965568492
+            ],
+            "escape_surface_clearance_mm": 0.5335425112902215
+          },
+          "meaning": "A geometrically open path exists if both rear fingers remain retracted here while the front opens. This is a counterexample to timing-only assurance, not a simulated double shot."
+        }
+      },
+      {
+        "case": "Trigger pressed before any ball is seated",
+        "outcome": "Rear can close and front open around an empty pocket; an arriving ball remains upstream. Exactly one shot per press is impossible without a ready condition or a wait/arming mechanism."
+      },
+      {
+        "case": "Return starts while released ball still intersects the front gate closing sweep",
+        "outcome": "A rigid cam can stall or load the ball shell. Feed speed, trigger reversal and spin-pad drag are absent from this static calculation."
+      }
+    ]
+  },
+  "not_covered": [
+    "Dynamic arrival, feed pauses, rebounding, changing lateral positions while inserting a finger, trigger velocity and arbitrary partial-cycle timing.",
+    "Exactly-one output, pocket occupancy through the moving portions of the cycle, and exit clearance before gate return.",
+    "Ball shell stiffness, denting, buckling, seams, real ovality, wear, dirt or sphere-size distribution outside the candidate envelope.",
+    "Finger/cam/follower/housing stiffness, finite follower size, groove undercut, contact stress, friction, spring force and mechanical return reliability.",
+    "Complete assembled shanks/slots/fasteners, guide-end transition motion, unrecognized extra openings, actual hole-size/shape tolerance, assembly access and printability.",
+    "Air bypass pressure loss, pneumatic force, feeder hose bends, guide transitions and adjustable spin-pad drag.",
+    "Printer calibration, measured dimensions, physical assembly, damage inspection and repeated end-to-end firing."
+  ],
+  "interpretation": "A useful static candidate screen only. No CAD mechanism completion, simulation of motion/contact/airflow, physical reliability or first-print guarantee is claimed."
+}

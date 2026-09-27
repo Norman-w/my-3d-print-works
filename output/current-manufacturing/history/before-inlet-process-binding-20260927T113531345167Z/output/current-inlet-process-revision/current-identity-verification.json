@@ -1,0 +1,303 @@
+{
+  "created_utc": "2026-09-27T11:25:23.902504+00:00",
+  "status": "CURRENT_MECHANICAL_AND_CANONICAL_PACKAGE_IDENTITIES_UNCHANGED",
+  "report_identity_checks": [
+    {
+      "report": "output/cable-trigger-system/20260927T091437982269Z/report.json",
+      "sha256": "619043660a24c83df32ce188c1736d43f4e803c3b7899b6d9e185db9cede3c6a",
+      "bound_sources": 27,
+      "mismatches": []
+    },
+    {
+      "report": "output/cable-actuation-v2/20260927T091604751038Z/report.json",
+      "sha256": "134a8aa6c971210b09a0bb559244c6d808ea5b612e7ec305dbba41f8a44c50f9",
+      "bound_sources": 25,
+      "mismatches": []
+    },
+    {
+      "report": "output/current-assembly-budget/report.json",
+      "sha256": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+      "bound_sources": 45,
+      "mismatches": []
+    },
+    {
+      "report": "output/current-return-budget/report.json",
+      "sha256": "b8525a0c4ffaf3ca629a42e1df7a807a7c7ebb7a3a8c8ea5027285e6222789fe",
+      "bound_sources": 61,
+      "mismatches": []
+    },
+    {
+      "report": "output/current-assembly-package/runs/20260927T104027787103Z/manifest.json",
+      "sha256": "db9afb3b2ab7786a7d70e8a9ef4b53ae0288ef1b1cdb62aa23688e9aafc6f9e9",
+      "bound_sources": 106,
+      "mismatches": []
+    }
+  ],
+  "local_links": [
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "key-growth-review.md",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T110029857048Z/key-growth-review.md",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/key-bed-start-review.md",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/current-review.json",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hit-localization.json",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/hit-localization.json",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/underlay-review.json",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "../current-manufacturing/manifest.json",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "../current-assembly-package/runs/20260927T104027787103Z/README.md",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "../current-cable-supplier-closure/README.md",
+      "exists": true
+    },
+    {
+      "from": "output/current-inlet-process-revision/README.md",
+      "to": "../../docs/current-mechanical-review.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "cable-assembly-inventory.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-trigger-system/20260927T091437982269Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-scene-export/20260927T091627124663Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-actuation-v2/20260927T091604751038Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "current-mechanical-review.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/current-return-budget/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/current-airway-review/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "current-assembly.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/current-assembly-package/runs/20260927T104027787103Z/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-scene-export/20260927T091627124663Z/browser-review.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "cable-trigger-integration.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-direct-adoption/render/20260927T091713271855Z/whole-pulled-reverse.png",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "current-manufacturing.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/current-inlet-process-revision/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-direct-pull-v3/first-layer-island-review/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/current-manufacturing/input-process/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-direct-adoption/pre-doc-update/current-status.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-status.md",
+      "to": "../output/cable-direct-adoption/mesh-parity.json",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-manufacturing/history/goal-acceptance-audit.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "owned-blowers-review.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "cable-trigger-integration.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/cable-trigger-system/20260927T091437982269Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/cable-scene-export/20260927T091627124663Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/cable-scene-export/20260927T091627124663Z/browser-review.json",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-manufacturing/manifest.json",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/cable-direct-adoption/service/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "current-assembly.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-assembly-package/runs/20260927T104027787103Z/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "current-mechanical-review.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-airway-review/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-inlet-process-revision/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/goal-acceptance-audit.md",
+      "to": "../output/current-cable-supplier-closure/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "cable-trigger-integration.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "cable-trigger-input.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/cable-trigger-system/20260927T091437982269Z/report.json",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/current-assembly-budget/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/current-return-budget/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/current-airway-review/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "current-manufacturing.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/current-inlet-process-revision/README.md",
+      "exists": true
+    },
+    {
+      "from": "docs/current-mechanical-review.md",
+      "to": "../output/current-manufacturing/inlet-support-closure/README.md",
+      "exists": true
+    }
+  ],
+  "mechanical_cad_changed": false,
+  "candidate_adopted": false,
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

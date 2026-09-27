@@ -1,0 +1,6402 @@
+{
+  "family": "y-cap",
+  "slice_folder": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported",
+  "quantity": 2,
+  "status": "BOUNDED_PATH_CHECKS_PASS_PHYSICAL_OPEN",
+  "checks": {
+    "native_success": true,
+    "native_warning_empty": true,
+    "actual_quantity": true,
+    "actual_gcode_identity": true,
+    "3mf_identity": true,
+    "profile_identity": true,
+    "sources_current": true,
+    "shared_profiles_untouched": true,
+    "actual_X1C_04_PETG": true,
+    "actual_process": true,
+    "support_mode_matches": true,
+    "units_mm": true,
+    "no_scale_or_reflection": true,
+    "intended_face_to_bed": true,
+    "mesh_correspondence": true,
+    "bed_model_brim_support_bounds": true
+  },
+  "warnings": [
+    ""
+  ],
+  "sources_and_artifacts_stable": true,
+  "source_sha256_at_slice": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-manufacturing/feeder-new/slice.py": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+    "scripts/review_final_feeder_slice.py": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea"
+  },
+  "artifacts": {
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/invocation.json": "0bcd6765a9627d207587caac35ae8437724d760e177acd5110fa3a0fa3cff7fc",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/slice-review.3mf": "197af019afd9dfc732d8c390da358d3cee1217b1a5b02f6198ea447df5f35df1",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/plate_1.gcode": "46f762be3475da908ad8f006f5d21d0294b88d4421ae7b1b23ccd4b896db24c2",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/process.json": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "instances": [
+    {
+      "instance_id": "feeder/y-cap-right",
+      "input": {
+        "id": "y-cap-right",
+        "name": "右公共架Y调节盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-cap",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-cap",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-cap\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "bytes": 224390,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 908,
+          "uniqueVertexCount": 448,
+          "bounds": {
+            "min": [
+              51.5,
+              24.200000762939453,
+              -35.0
+            ],
+            "max": [
+              67.0,
+              39.0,
+              5.0
+            ],
+            "size": [
+              15.5,
+              14.799999237060547,
+              40.0
+            ]
+          },
+          "surfaceArea": 3467.366600700075,
+          "signedVolume": 5877.924178662276,
+          "volume": 5877.924178662276,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 448
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-cap-right"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-cap-right.stl",
+        "archive_member": "3D/Objects/object_1.model",
+        "archive_object_id": "1",
+        "build_id": "2",
+        "source_offset": [
+          59.25,
+          31.600000381469727,
+          -15.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            3.55271368e-15
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            147.74999
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            128.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            7.39999962
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            88.49999
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            141.0
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            39.00000000146973
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 908,
+        "actual_3mf_triangles": 908,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.0017826200190787e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 5877.924178662251,
+        "volume_actual_3mf_mm3": 5877.924130563912,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "open_gib_nut_pockets",
+          "lo": [
+            53.35,
+            24.15,
+            -33.65
+          ],
+          "hi": [
+            60.65,
+            31.15,
+            3.65
+          ],
+          "kind": "functional_void",
+          "note": "Open -Y/upward in this pose; no support allowed in working pocket.",
+          "pick": false,
+          "instance_id": "feeder/y-cap-right",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        },
+        {
+          "name": "M3_core_55.5_-30.5",
+          "lo": [
+            54.85,
+            23,
+            -31.15
+          ],
+          "hi": [
+            56.15,
+            40,
+            -29.85
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-right",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_55.5_0.5",
+          "lo": [
+            54.85,
+            23,
+            -0.15000000000000002
+          ],
+          "hi": [
+            56.15,
+            40,
+            1.15
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-right",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_62.75_-29",
+          "lo": [
+            62.1,
+            23,
+            -29.65
+          ],
+          "hi": [
+            63.4,
+            40,
+            -28.35
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-right",
+          "support_commands": 70,
+          "model_commands": 0,
+          "support_lines": [
+            1357,
+            1359,
+            1361,
+            2562,
+            2563,
+            2564,
+            2565,
+            2566,
+            2567,
+            2568,
+            3945,
+            3948,
+            3949,
+            5195,
+            5196,
+            5197
+          ],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_62.75_-1",
+          "lo": [
+            62.1,
+            23,
+            -1.65
+          ],
+          "hi": [
+            63.4,
+            40,
+            -0.35
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-right",
+          "support_commands": 55,
+          "model_commands": 0,
+          "support_lines": [
+            1357,
+            1359,
+            1361,
+            2671,
+            2672,
+            2673,
+            2674,
+            2675,
+            4079,
+            4080,
+            4081,
+            5552,
+            5553,
+            5559,
+            5560,
+            5561
+          ],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    },
+    {
+      "instance_id": "feeder/y-cap-left",
+      "input": {
+        "id": "y-cap-left",
+        "name": "左公共架Y调节盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-cap",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-cap",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-cap\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "bytes": 227144,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 908,
+          "uniqueVertexCount": 448,
+          "bounds": {
+            "min": [
+              -67.0,
+              24.200000762939453,
+              -35.0
+            ],
+            "max": [
+              -51.5,
+              39.0,
+              5.0
+            ],
+            "size": [
+              15.5,
+              14.799999237060547,
+              40.0
+            ]
+          },
+          "surfaceArea": 3467.366600700075,
+          "signedVolume": 5877.92417866227,
+          "volume": 5877.92417866227,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 448
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-cap-left"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-cap-left.stl",
+        "archive_member": "3D/Objects/object_2.model",
+        "archive_object_id": "3",
+        "build_id": "4",
+        "source_offset": [
+          -59.25,
+          31.600000381469727,
+          -15.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            3.55271368e-15
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            108.25001
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            127.99999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            7.39999962
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            167.50001
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            140.99999
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            39.00000000146973
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 908,
+        "actual_3mf_triangles": 908,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.0017826200190787e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 5877.924178662254,
+        "volume_actual_3mf_mm3": 5877.924130563911,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "open_gib_nut_pockets",
+          "lo": [
+            -60.65,
+            24.15,
+            -33.65
+          ],
+          "hi": [
+            -53.35,
+            31.15,
+            3.65
+          ],
+          "kind": "functional_void",
+          "note": "Open -Y/upward in this pose; no support allowed in working pocket.",
+          "pick": false,
+          "instance_id": "feeder/y-cap-left",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        },
+        {
+          "name": "M3_core_55.5_-30.5",
+          "lo": [
+            -56.15,
+            23,
+            -31.15
+          ],
+          "hi": [
+            -54.85,
+            40,
+            -29.85
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-left",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_55.5_0.5",
+          "lo": [
+            -56.15,
+            23,
+            -0.15000000000000002
+          ],
+          "hi": [
+            -54.85,
+            40,
+            1.15
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-left",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_62.75_-29",
+          "lo": [
+            -63.4,
+            23,
+            -29.65
+          ],
+          "hi": [
+            -62.1,
+            40,
+            -28.35
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-left",
+          "support_commands": 45,
+          "model_commands": 0,
+          "support_lines": [
+            1958,
+            1960,
+            1962,
+            3120,
+            3121,
+            4713,
+            4714,
+            6217,
+            6218,
+            7578,
+            9190,
+            10876,
+            10877,
+            10878,
+            10879,
+            11054
+          ],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_62.75_-1",
+          "lo": [
+            -63.4,
+            23,
+            -1.65
+          ],
+          "hi": [
+            -62.1,
+            40,
+            -0.35
+          ],
+          "kind": "functional_void",
+          "note": "1.3x1.3 mm core; not full fastener-fit proof.",
+          "pick": true,
+          "instance_id": "feeder/y-cap-left",
+          "support_commands": 37,
+          "model_commands": 0,
+          "support_lines": [
+            1958,
+            1960,
+            1962,
+            3271,
+            3272,
+            3273,
+            3364,
+            3365,
+            3366,
+            4587,
+            4588,
+            4674,
+            4675,
+            4676,
+            4677,
+            6077
+          ],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    }
+  ],
+  "support_path_records": 12130,
+  "feature_counts": {
+    "Support": 10815,
+    "Outer wall": 5476,
+    "Gap infill": 7000,
+    "Inner wall": 26402,
+    "Support interface": 1315,
+    "Overhang wall": 336,
+    "Bridge": 910,
+    "Internal solid infill": 5878,
+    "Sparse infill": 3961,
+    "Floating vertical shell": 1342,
+    "Top surface": 708
+  },
+  "extrusion_bounds": [
+    [
+      96.5026303177026,
+      101.21593641270343,
+      0.0
+    ],
+    [
+      159.4456940281613,
+      151.529132565184,
+      14.8
+    ]
+  ],
+  "bed_violations": [],
+  "first_model_layer_footprint_mm2": 97.52762206251569,
+  "bridge_paths": [
+    {
+      "line": 34405,
+      "layer": 3.8,
+      "path_length_mm": 0.8870000000000005,
+      "endpoint_chord_mm": 0.8870000000000005
+    },
+    {
+      "line": 34406,
+      "layer": 3.8,
+      "path_length_mm": 0.1449413674559517,
+      "endpoint_chord_mm": 0.1449413674559517
+    },
+    {
+      "line": 34407,
+      "layer": 3.8,
+      "path_length_mm": 0.6250007999994713,
+      "endpoint_chord_mm": 0.6250007999994713
+    },
+    {
+      "line": 34408,
+      "layer": 3.8,
+      "path_length_mm": 1.549999999999983,
+      "endpoint_chord_mm": 1.549999999999983
+    },
+    {
+      "line": 34472,
+      "layer": 3.8,
+      "path_length_mm": 1.8760000000000048,
+      "endpoint_chord_mm": 1.8760000000000048
+    },
+    {
+      "line": 34473,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34474,
+      "layer": 3.8,
+      "path_length_mm": 1.5300000000000011,
+      "endpoint_chord_mm": 1.5300000000000011
+    },
+    {
+      "line": 34475,
+      "layer": 3.8,
+      "path_length_mm": 0.4696058611832918,
+      "endpoint_chord_mm": 0.4667868892760358
+    },
+    {
+      "line": 34476,
+      "layer": 3.8,
+      "path_length_mm": 1.2690000000000055,
+      "endpoint_chord_mm": 1.2690000000000055
+    },
+    {
+      "line": 34477,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34478,
+      "layer": 3.8,
+      "path_length_mm": 1.0630000000000024,
+      "endpoint_chord_mm": 1.0630000000000024
+    },
+    {
+      "line": 34479,
+      "layer": 3.8,
+      "path_length_mm": 0.40517773877645524,
+      "endpoint_chord_mm": 0.40517773877645524
+    },
+    {
+      "line": 34480,
+      "layer": 3.8,
+      "path_length_mm": 0.9429999999999978,
+      "endpoint_chord_mm": 0.9429999999999978
+    },
+    {
+      "line": 34481,
+      "layer": 3.8,
+      "path_length_mm": 0.3859999999999957,
+      "endpoint_chord_mm": 0.3859999999999957
+    },
+    {
+      "line": 34482,
+      "layer": 3.8,
+      "path_length_mm": 0.847999999999999,
+      "endpoint_chord_mm": 0.847999999999999
+    },
+    {
+      "line": 34483,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414233,
+      "endpoint_chord_mm": 0.3888611577414233
+    },
+    {
+      "line": 34484,
+      "layer": 3.8,
+      "path_length_mm": 0.8100000000000023,
+      "endpoint_chord_mm": 0.8100000000000023
+    },
+    {
+      "line": 34485,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34486,
+      "layer": 3.8,
+      "path_length_mm": 0.8140000000000072,
+      "endpoint_chord_mm": 0.8140000000000072
+    },
+    {
+      "line": 34487,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414233,
+      "endpoint_chord_mm": 0.3888611577414233
+    },
+    {
+      "line": 34488,
+      "layer": 3.8,
+      "path_length_mm": 0.8520000000000039,
+      "endpoint_chord_mm": 0.8520000000000039
+    },
+    {
+      "line": 34489,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34490,
+      "layer": 3.8,
+      "path_length_mm": 0.9549999999999983,
+      "endpoint_chord_mm": 0.9549999999999983
+    },
+    {
+      "line": 34491,
+      "layer": 3.8,
+      "path_length_mm": 0.4066693988979484,
+      "endpoint_chord_mm": 0.4066693988979484
+    },
+    {
+      "line": 34492,
+      "layer": 3.8,
+      "path_length_mm": 1.0829999999999984,
+      "endpoint_chord_mm": 1.0829999999999984
+    },
+    {
+      "line": 34493,
+      "layer": 3.8,
+      "path_length_mm": 0.38699999999997203,
+      "endpoint_chord_mm": 0.38699999999997203
+    },
+    {
+      "line": 34494,
+      "layer": 3.8,
+      "path_length_mm": 1.2890000000000015,
+      "endpoint_chord_mm": 1.2890000000000015
+    },
+    {
+      "line": 34495,
+      "layer": 3.8,
+      "path_length_mm": 0.4753537093753013,
+      "endpoint_chord_mm": 0.47245105566608775
+    },
+    {
+      "line": 34496,
+      "layer": 3.8,
+      "path_length_mm": 1.5600000000000023,
+      "endpoint_chord_mm": 1.5600000000000023
+    },
+    {
+      "line": 34497,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34498,
+      "layer": 3.8,
+      "path_length_mm": 1.913000000000011,
+      "endpoint_chord_mm": 1.913000000000011
+    },
+    {
+      "line": 34499,
+      "layer": 3.8,
+      "path_length_mm": 0.5393078897995081,
+      "endpoint_chord_mm": 0.5393078897995081
+    },
+    {
+      "line": 34500,
+      "layer": 3.8,
+      "path_length_mm": 0.0944139820153825,
+      "endpoint_chord_mm": 0.0944139820153825
+    },
+    {
+      "line": 34501,
+      "layer": 3.8,
+      "path_length_mm": 2.413000000000011,
+      "endpoint_chord_mm": 2.413000000000011
+    },
+    {
+      "line": 34502,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34503,
+      "layer": 3.8,
+      "path_length_mm": 36.50200000000001,
+      "endpoint_chord_mm": 36.50200000000001
+    },
+    {
+      "line": 34504,
+      "layer": 3.8,
+      "path_length_mm": 0.3860000000000241,
+      "endpoint_chord_mm": 0.3860000000000241
+    },
+    {
+      "line": 34505,
+      "layer": 3.8,
+      "path_length_mm": 36.50200000000001,
+      "endpoint_chord_mm": 36.50200000000001
+    },
+    {
+      "line": 34506,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34507,
+      "layer": 3.8,
+      "path_length_mm": 1.3810000000000002,
+      "endpoint_chord_mm": 1.3810000000000002
+    },
+    {
+      "line": 34508,
+      "layer": 3.8,
+      "path_length_mm": 0.6250007999994838,
+      "endpoint_chord_mm": 0.6250007999994838
+    },
+    {
+      "line": 34509,
+      "layer": 3.8,
+      "path_length_mm": 0.1449413674559517,
+      "endpoint_chord_mm": 0.1449413674559517
+    },
+    {
+      "line": 34510,
+      "layer": 3.8,
+      "path_length_mm": 0.8870000000000005,
+      "endpoint_chord_mm": 0.8870000000000005
+    },
+    {
+      "line": 34582,
+      "layer": 3.8,
+      "path_length_mm": 26.001999999999995,
+      "endpoint_chord_mm": 26.001999999999995
+    },
+    {
+      "line": 34583,
+      "layer": 3.8,
+      "path_length_mm": 0.48887217143133277,
+      "endpoint_chord_mm": 0.48887217143133277
+    },
+    {
+      "line": 34584,
+      "layer": 3.8,
+      "path_length_mm": 25.182000000000002,
+      "endpoint_chord_mm": 25.182000000000002
+    },
+    {
+      "line": 34585,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677261005,
+      "endpoint_chord_mm": 0.4384119067726101
+    },
+    {
+      "line": 34586,
+      "layer": 3.8,
+      "path_length_mm": 24.769999999999996,
+      "endpoint_chord_mm": 24.769999999999996
+    },
+    {
+      "line": 34587,
+      "layer": 3.8,
+      "path_length_mm": 0.41831881113709585,
+      "endpoint_chord_mm": 0.4157799898984995
+    },
+    {
+      "line": 34588,
+      "layer": 3.8,
+      "path_length_mm": 24.466000000000008,
+      "endpoint_chord_mm": 24.466000000000008
+    },
+    {
+      "line": 34589,
+      "layer": 3.8,
+      "path_length_mm": 0.40429939401389337,
+      "endpoint_chord_mm": 0.40429939401389337
+    },
+    {
+      "line": 34590,
+      "layer": 3.8,
+      "path_length_mm": 24.232000000000014,
+      "endpoint_chord_mm": 24.232000000000014
+    },
+    {
+      "line": 34591,
+      "layer": 3.8,
+      "path_length_mm": 0.38938156093991005,
+      "endpoint_chord_mm": 0.38938156093991005
+    },
+    {
+      "line": 34592,
+      "layer": 3.8,
+      "path_length_mm": 24.146,
+      "endpoint_chord_mm": 24.146
+    },
+    {
+      "line": 34593,
+      "layer": 3.8,
+      "path_length_mm": 0.38674539428414145,
+      "endpoint_chord_mm": 0.38674539428414145
+    },
+    {
+      "line": 34594,
+      "layer": 3.8,
+      "path_length_mm": 24.098000000000013,
+      "endpoint_chord_mm": 24.098000000000013
+    },
+    {
+      "line": 34595,
+      "layer": 3.8,
+      "path_length_mm": 0.3889601522007098,
+      "endpoint_chord_mm": 0.3889601522007098
+    },
+    {
+      "line": 34596,
+      "layer": 3.8,
+      "path_length_mm": 24.175999999999988,
+      "endpoint_chord_mm": 24.175999999999988
+    },
+    {
+      "line": 34597,
+      "layer": 3.8,
+      "path_length_mm": 0.39609350807389737,
+      "endpoint_chord_mm": 0.39382483415853986
+    },
+    {
+      "line": 34598,
+      "layer": 3.8,
+      "path_length_mm": 24.322000000000003,
+      "endpoint_chord_mm": 24.322000000000003
+    },
+    {
+      "line": 34599,
+      "layer": 3.8,
+      "path_length_mm": 0.40458991584071785,
+      "endpoint_chord_mm": 0.40458991584071785
+    },
+    {
+      "line": 34600,
+      "layer": 3.8,
+      "path_length_mm": 24.557999999999993,
+      "endpoint_chord_mm": 24.557999999999993
+    },
+    {
+      "line": 34601,
+      "layer": 3.8,
+      "path_length_mm": 0.09080198235723486,
+      "endpoint_chord_mm": 0.09080198235723486
+    },
+    {
+      "line": 34602,
+      "layer": 3.8,
+      "path_length_mm": 0.33999999999998337,
+      "endpoint_chord_mm": 0.33999999999998337
+    },
+    {
+      "line": 34603,
+      "layer": 3.8,
+      "path_length_mm": 24.930000000000007,
+      "endpoint_chord_mm": 24.930000000000007
+    },
+    {
+      "line": 34604,
+      "layer": 3.8,
+      "path_length_mm": 0.33823660357802793,
+      "endpoint_chord_mm": 0.33823660357802793
+    },
+    {
+      "line": 34605,
+      "layer": 3.8,
+      "path_length_mm": 0.11370136322841214,
+      "endpoint_chord_mm": 0.11370136322841214
+    },
+    {
+      "line": 34606,
+      "layer": 3.8,
+      "path_length_mm": 25.394000000000005,
+      "endpoint_chord_mm": 25.394000000000005
+    },
+    {
+      "line": 34607,
+      "layer": 3.8,
+      "path_length_mm": 0.5008922039720712,
+      "endpoint_chord_mm": 0.5008922039720712
+    },
+    {
+      "line": 34608,
+      "layer": 3.8,
+      "path_length_mm": 26.029999999999987,
+      "endpoint_chord_mm": 26.029999999999987
+    },
+    {
+      "line": 34609,
+      "layer": 3.8,
+      "path_length_mm": 0.595040334767337,
+      "endpoint_chord_mm": 0.595040334767337
+    },
+    {
+      "line": 34610,
+      "layer": 3.8,
+      "path_length_mm": 26.93400000000001,
+      "endpoint_chord_mm": 26.93400000000001
+    },
+    {
+      "line": 34611,
+      "layer": 3.8,
+      "path_length_mm": 0.1449413674559517,
+      "endpoint_chord_mm": 0.1449413674559517
+    },
+    {
+      "line": 34612,
+      "layer": 3.8,
+      "path_length_mm": 0.6250007999994838,
+      "endpoint_chord_mm": 0.6250007999994838
+    },
+    {
+      "line": 34613,
+      "layer": 3.8,
+      "path_length_mm": 28.808999999999997,
+      "endpoint_chord_mm": 28.808999999999997
+    },
+    {
+      "line": 34626,
+      "layer": 3.8,
+      "path_length_mm": 2.772999999999996,
+      "endpoint_chord_mm": 2.772999999999996
+    },
+    {
+      "line": 34627,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34628,
+      "layer": 3.8,
+      "path_length_mm": 1.913000000000011,
+      "endpoint_chord_mm": 1.913000000000011
+    },
+    {
+      "line": 34629,
+      "layer": 3.8,
+      "path_length_mm": 0.13853880322854956,
+      "endpoint_chord_mm": 0.13853880322854956
+    },
+    {
+      "line": 34630,
+      "layer": 3.8,
+      "path_length_mm": 0.3871911672546373,
+      "endpoint_chord_mm": 0.3871911672546373
+    },
+    {
+      "line": 34631,
+      "layer": 3.8,
+      "path_length_mm": 1.5600000000000023,
+      "endpoint_chord_mm": 1.5600000000000023
+    },
+    {
+      "line": 34632,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34633,
+      "layer": 3.8,
+      "path_length_mm": 1.2890000000000157,
+      "endpoint_chord_mm": 1.2890000000000157
+    },
+    {
+      "line": 34634,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677259834,
+      "endpoint_chord_mm": 0.43841190677259834
+    },
+    {
+      "line": 34635,
+      "layer": 3.8,
+      "path_length_mm": 1.0829999999999984,
+      "endpoint_chord_mm": 1.0829999999999984
+    },
+    {
+      "line": 34636,
+      "layer": 3.8,
+      "path_length_mm": 0.3860000000000241,
+      "endpoint_chord_mm": 0.3860000000000241
+    },
+    {
+      "line": 34637,
+      "layer": 3.8,
+      "path_length_mm": 0.9540000000000077,
+      "endpoint_chord_mm": 0.9540000000000077
+    },
+    {
+      "line": 34638,
+      "layer": 3.8,
+      "path_length_mm": 0.3251861005639486,
+      "endpoint_chord_mm": 0.3251861005639486
+    },
+    {
+      "line": 34639,
+      "layer": 3.8,
+      "path_length_mm": 0.07632168761239093,
+      "endpoint_chord_mm": 0.07632168761239093
+    },
+    {
+      "line": 34640,
+      "layer": 3.8,
+      "path_length_mm": 0.8520000000000039,
+      "endpoint_chord_mm": 0.8520000000000039
+    },
+    {
+      "line": 34641,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34642,
+      "layer": 3.8,
+      "path_length_mm": 0.813999999999993,
+      "endpoint_chord_mm": 0.813999999999993
+    },
+    {
+      "line": 34643,
+      "layer": 3.8,
+      "path_length_mm": 0.38932955461166413,
+      "endpoint_chord_mm": 0.387020671282556
+    },
+    {
+      "line": 34644,
+      "layer": 3.8,
+      "path_length_mm": 0.8100000000000023,
+      "endpoint_chord_mm": 0.8100000000000023
+    },
+    {
+      "line": 34645,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34646,
+      "layer": 3.8,
+      "path_length_mm": 0.8480000000000132,
+      "endpoint_chord_mm": 0.8480000000000132
+    },
+    {
+      "line": 34647,
+      "layer": 3.8,
+      "path_length_mm": 0.40009911324921543,
+      "endpoint_chord_mm": 0.3975185530261405
+    },
+    {
+      "line": 34648,
+      "layer": 3.8,
+      "path_length_mm": 0.943000000000012,
+      "endpoint_chord_mm": 0.943000000000012
+    },
+    {
+      "line": 34649,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34650,
+      "layer": 3.8,
+      "path_length_mm": 1.0630000000000166,
+      "endpoint_chord_mm": 1.0630000000000166
+    },
+    {
+      "line": 34651,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677261005,
+      "endpoint_chord_mm": 0.4384119067726101
+    },
+    {
+      "line": 34652,
+      "layer": 3.8,
+      "path_length_mm": 1.2690000000000055,
+      "endpoint_chord_mm": 1.2690000000000055
+    },
+    {
+      "line": 34653,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 34654,
+      "layer": 3.8,
+      "path_length_mm": 1.5300000000000011,
+      "endpoint_chord_mm": 1.5300000000000011
+    },
+    {
+      "line": 34655,
+      "layer": 3.8,
+      "path_length_mm": 0.3503212811120622,
+      "endpoint_chord_mm": 0.3503212811120622
+    },
+    {
+      "line": 34656,
+      "layer": 3.8,
+      "path_length_mm": 0.16404877323529862,
+      "endpoint_chord_mm": 0.16404877323529862
+    },
+    {
+      "line": 34657,
+      "layer": 3.8,
+      "path_length_mm": 1.8049999999999784,
+      "endpoint_chord_mm": 1.8049999999999784
+    },
+    {
+      "line": 34721,
+      "layer": 3.8,
+      "path_length_mm": 23.010000000000005,
+      "endpoint_chord_mm": 23.010000000000005
+    },
+    {
+      "line": 34722,
+      "layer": 3.8,
+      "path_length_mm": 0.1640487732352886,
+      "endpoint_chord_mm": 0.1640487732352886
+    },
+    {
+      "line": 34723,
+      "layer": 3.8,
+      "path_length_mm": 0.3503212811120622,
+      "endpoint_chord_mm": 0.3503212811120622
+    },
+    {
+      "line": 34724,
+      "layer": 3.8,
+      "path_length_mm": 22.557999999999993,
+      "endpoint_chord_mm": 22.557999999999993
+    },
+    {
+      "line": 34725,
+      "layer": 3.8,
+      "path_length_mm": 0.46960586118328906,
+      "endpoint_chord_mm": 0.4667868892760358
+    },
+    {
+      "line": 34726,
+      "layer": 3.8,
+      "path_length_mm": 22.036,
+      "endpoint_chord_mm": 22.036
+    },
+    {
+      "line": 34727,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677261677,
+      "endpoint_chord_mm": 0.43841190677261677
+    },
+    {
+      "line": 34728,
+      "layer": 3.8,
+      "path_length_mm": 21.62400000000001,
+      "endpoint_chord_mm": 21.62400000000001
+    },
+    {
+      "line": 34729,
+      "layer": 3.8,
+      "path_length_mm": 0.40517773877645524,
+      "endpoint_chord_mm": 0.40517773877645524
+    },
+    {
+      "line": 34730,
+      "layer": 3.8,
+      "path_length_mm": 21.384,
+      "endpoint_chord_mm": 21.384
+    },
+    {
+      "line": 34731,
+      "layer": 3.8,
+      "path_length_mm": 0.39978812597260976,
+      "endpoint_chord_mm": 0.3975185530261405
+    },
+    {
+      "line": 34732,
+      "layer": 3.8,
+      "path_length_mm": 21.194000000000003,
+      "endpoint_chord_mm": 21.194000000000003
+    },
+    {
+      "line": 34733,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414247,
+      "endpoint_chord_mm": 0.3888611577414247
+    },
+    {
+      "line": 34734,
+      "layer": 3.8,
+      "path_length_mm": 21.117999999999995,
+      "endpoint_chord_mm": 21.117999999999995
+    },
+    {
+      "line": 34735,
+      "layer": 3.8,
+      "path_length_mm": 0.3893976697011253,
+      "endpoint_chord_mm": 0.3870206712825562
+    },
+    {
+      "line": 34736,
+      "layer": 3.8,
+      "path_length_mm": 21.12599999999999,
+      "endpoint_chord_mm": 21.12599999999999
+    },
+    {
+      "line": 34737,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414247,
+      "endpoint_chord_mm": 0.3888611577414247
+    },
+    {
+      "line": 34738,
+      "layer": 3.8,
+      "path_length_mm": 21.201999999999998,
+      "endpoint_chord_mm": 21.201999999999998
+    },
+    {
+      "line": 34739,
+      "layer": 3.8,
+      "path_length_mm": 0.07632168761239093,
+      "endpoint_chord_mm": 0.07632168761239093
+    },
+    {
+      "line": 34740,
+      "layer": 3.8,
+      "path_length_mm": 0.3251861005639486,
+      "endpoint_chord_mm": 0.3251861005639486
+    },
+    {
+      "line": 34741,
+      "layer": 3.8,
+      "path_length_mm": 21.40700000000001,
+      "endpoint_chord_mm": 21.40700000000001
+    },
+    {
+      "line": 34742,
+      "layer": 3.8,
+      "path_length_mm": 0.4066693988979439,
+      "endpoint_chord_mm": 0.4066693988979439
+    },
+    {
+      "line": 34743,
+      "layer": 3.8,
+      "path_length_mm": 21.663999999999987,
+      "endpoint_chord_mm": 21.663999999999987
+    },
+    {
+      "line": 34744,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677259173,
+      "endpoint_chord_mm": 0.43841190677259173
+    },
+    {
+      "line": 34745,
+      "layer": 3.8,
+      "path_length_mm": 22.076000000000008,
+      "endpoint_chord_mm": 22.076000000000008
+    },
+    {
+      "line": 34746,
+      "layer": 3.8,
+      "path_length_mm": 0.47535370937528915,
+      "endpoint_chord_mm": 0.47245105566607964
+    },
+    {
+      "line": 34747,
+      "layer": 3.8,
+      "path_length_mm": 22.617999999999995,
+      "endpoint_chord_mm": 22.617999999999995
+    },
+    {
+      "line": 34748,
+      "layer": 3.8,
+      "path_length_mm": 0.3871911672546373,
+      "endpoint_chord_mm": 0.3871911672546373
+    },
+    {
+      "line": 34749,
+      "layer": 3.8,
+      "path_length_mm": 0.13853880322854956,
+      "endpoint_chord_mm": 0.13853880322854956
+    },
+    {
+      "line": 34750,
+      "layer": 3.8,
+      "path_length_mm": 23.324000000000012,
+      "endpoint_chord_mm": 23.324000000000012
+    },
+    {
+      "line": 34751,
+      "layer": 3.8,
+      "path_length_mm": 0.539307889799519,
+      "endpoint_chord_mm": 0.539307889799519
+    },
+    {
+      "line": 34752,
+      "layer": 3.8,
+      "path_length_mm": 0.09441398201537,
+      "endpoint_chord_mm": 0.09441398201537
+    },
+    {
+      "line": 34753,
+      "layer": 3.8,
+      "path_length_mm": 24.68400000000001,
+      "endpoint_chord_mm": 24.68400000000001
+    },
+    {
+      "line": 35461,
+      "layer": 3.8,
+      "path_length_mm": 0.8859999999999957,
+      "endpoint_chord_mm": 0.8859999999999957
+    },
+    {
+      "line": 35462,
+      "layer": 3.8,
+      "path_length_mm": 0.14571547618561204,
+      "endpoint_chord_mm": 0.14571547618561204
+    },
+    {
+      "line": 35464,
+      "layer": 3.8,
+      "path_length_mm": 0.625000799999478,
+      "endpoint_chord_mm": 0.625000799999478
+    },
+    {
+      "line": 35465,
+      "layer": 3.8,
+      "path_length_mm": 1.3810000000000002,
+      "endpoint_chord_mm": 1.3810000000000002
+    },
+    {
+      "line": 35466,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35467,
+      "layer": 3.8,
+      "path_length_mm": 36.50200000000001,
+      "endpoint_chord_mm": 36.50200000000001
+    },
+    {
+      "line": 35468,
+      "layer": 3.8,
+      "path_length_mm": 0.3859999999999957,
+      "endpoint_chord_mm": 0.3859999999999957
+    },
+    {
+      "line": 35469,
+      "layer": 3.8,
+      "path_length_mm": 36.50200000000001,
+      "endpoint_chord_mm": 36.50200000000001
+    },
+    {
+      "line": 35470,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35471,
+      "layer": 3.8,
+      "path_length_mm": 2.4140000000000157,
+      "endpoint_chord_mm": 2.4140000000000157
+    },
+    {
+      "line": 35472,
+      "layer": 3.8,
+      "path_length_mm": 0.09529428104561516,
+      "endpoint_chord_mm": 0.09529428104561516
+    },
+    {
+      "line": 35473,
+      "layer": 3.8,
+      "path_length_mm": 0.53930788979951,
+      "endpoint_chord_mm": 0.53930788979951
+    },
+    {
+      "line": 35474,
+      "layer": 3.8,
+      "path_length_mm": 1.913000000000011,
+      "endpoint_chord_mm": 1.913000000000011
+    },
+    {
+      "line": 35475,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35476,
+      "layer": 3.8,
+      "path_length_mm": 1.561000000000007,
+      "endpoint_chord_mm": 1.561000000000007
+    },
+    {
+      "line": 35477,
+      "layer": 3.8,
+      "path_length_mm": 0.47584510668103336,
+      "endpoint_chord_mm": 0.47302536929851413
+    },
+    {
+      "line": 35478,
+      "layer": 3.8,
+      "path_length_mm": 1.2890000000000157,
+      "endpoint_chord_mm": 1.2890000000000157
+    },
+    {
+      "line": 35479,
+      "layer": 3.8,
+      "path_length_mm": 0.3859999999999957,
+      "endpoint_chord_mm": 0.3859999999999957
+    },
+    {
+      "line": 35480,
+      "layer": 3.8,
+      "path_length_mm": 1.0829999999999984,
+      "endpoint_chord_mm": 1.0829999999999984
+    },
+    {
+      "line": 35481,
+      "layer": 3.8,
+      "path_length_mm": 0.4079338181617184,
+      "endpoint_chord_mm": 0.4079338181617184
+    },
+    {
+      "line": 35482,
+      "layer": 3.8,
+      "path_length_mm": 0.9540000000000077,
+      "endpoint_chord_mm": 0.9540000000000077
+    },
+    {
+      "line": 35483,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35484,
+      "layer": 3.8,
+      "path_length_mm": 0.8520000000000039,
+      "endpoint_chord_mm": 0.8520000000000039
+    },
+    {
+      "line": 35485,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414247,
+      "endpoint_chord_mm": 0.3888611577414247
+    },
+    {
+      "line": 35486,
+      "layer": 3.8,
+      "path_length_mm": 0.813999999999993,
+      "endpoint_chord_mm": 0.813999999999993
+    },
+    {
+      "line": 35487,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35488,
+      "layer": 3.8,
+      "path_length_mm": 0.8100000000000023,
+      "endpoint_chord_mm": 0.8100000000000023
+    },
+    {
+      "line": 35489,
+      "layer": 3.8,
+      "path_length_mm": 0.387865956227159,
+      "endpoint_chord_mm": 0.387865956227159
+    },
+    {
+      "line": 35490,
+      "layer": 3.8,
+      "path_length_mm": 0.8480000000000132,
+      "endpoint_chord_mm": 0.8480000000000132
+    },
+    {
+      "line": 35491,
+      "layer": 3.8,
+      "path_length_mm": 0.38699999999998624,
+      "endpoint_chord_mm": 0.38699999999998624
+    },
+    {
+      "line": 35492,
+      "layer": 3.8,
+      "path_length_mm": 0.943000000000012,
+      "endpoint_chord_mm": 0.943000000000012
+    },
+    {
+      "line": 35493,
+      "layer": 3.8,
+      "path_length_mm": 0.40517773877645524,
+      "endpoint_chord_mm": 0.40517773877645524
+    },
+    {
+      "line": 35494,
+      "layer": 3.8,
+      "path_length_mm": 1.0630000000000166,
+      "endpoint_chord_mm": 1.0630000000000166
+    },
+    {
+      "line": 35495,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35496,
+      "layer": 3.8,
+      "path_length_mm": 1.2690000000000055,
+      "endpoint_chord_mm": 1.2690000000000055
+    },
+    {
+      "line": 35497,
+      "layer": 3.8,
+      "path_length_mm": 0.46974794036305284,
+      "endpoint_chord_mm": 0.4667868892760358
+    },
+    {
+      "line": 35498,
+      "layer": 3.8,
+      "path_length_mm": 1.5300000000000011,
+      "endpoint_chord_mm": 1.5300000000000011
+    },
+    {
+      "line": 35499,
+      "layer": 3.8,
+      "path_length_mm": 0.3860000000000099,
+      "endpoint_chord_mm": 0.3860000000000099
+    },
+    {
+      "line": 35500,
+      "layer": 3.8,
+      "path_length_mm": 1.8770000000000095,
+      "endpoint_chord_mm": 1.8770000000000095
+    },
+    {
+      "line": 35562,
+      "layer": 3.8,
+      "path_length_mm": 24.684999999999988,
+      "endpoint_chord_mm": 24.684999999999988
+    },
+    {
+      "line": 35563,
+      "layer": 3.8,
+      "path_length_mm": 0.09529428104561516,
+      "endpoint_chord_mm": 0.09529428104561516
+    },
+    {
+      "line": 35564,
+      "layer": 3.8,
+      "path_length_mm": 0.5393078897994991,
+      "endpoint_chord_mm": 0.5393078897994991
+    },
+    {
+      "line": 35565,
+      "layer": 3.8,
+      "path_length_mm": 23.324000000000012,
+      "endpoint_chord_mm": 23.324000000000012
+    },
+    {
+      "line": 35566,
+      "layer": 3.8,
+      "path_length_mm": 0.13853880322855858,
+      "endpoint_chord_mm": 0.13853880322855858
+    },
+    {
+      "line": 35567,
+      "layer": 3.8,
+      "path_length_mm": 0.38655659352803395,
+      "endpoint_chord_mm": 0.38655659352803395
+    },
+    {
+      "line": 35568,
+      "layer": 3.8,
+      "path_length_mm": 22.620000000000005,
+      "endpoint_chord_mm": 22.620000000000005
+    },
+    {
+      "line": 35569,
+      "layer": 3.8,
+      "path_length_mm": 0.4758451066810367,
+      "endpoint_chord_mm": 0.47302536929852224
+    },
+    {
+      "line": 35570,
+      "layer": 3.8,
+      "path_length_mm": 22.076000000000008,
+      "endpoint_chord_mm": 22.076000000000008
+    },
+    {
+      "line": 35572,
+      "layer": 3.8,
+      "path_length_mm": 0.4375294275817385,
+      "endpoint_chord_mm": 0.4375294275817385
+    },
+    {
+      "line": 35573,
+      "layer": 3.8,
+      "path_length_mm": 21.663999999999987,
+      "endpoint_chord_mm": 21.663999999999987
+    },
+    {
+      "line": 35574,
+      "layer": 3.8,
+      "path_length_mm": 0.4079338181617184,
+      "endpoint_chord_mm": 0.4079338181617184
+    },
+    {
+      "line": 35575,
+      "layer": 3.8,
+      "path_length_mm": 21.406000000000006,
+      "endpoint_chord_mm": 21.406000000000006
+    },
+    {
+      "line": 35576,
+      "layer": 3.8,
+      "path_length_mm": 0.3248953677724619,
+      "endpoint_chord_mm": 0.3248953677724619
+    },
+    {
+      "line": 35577,
+      "layer": 3.8,
+      "path_length_mm": 0.07641989269816567,
+      "endpoint_chord_mm": 0.07641989269816567
+    },
+    {
+      "line": 35578,
+      "layer": 3.8,
+      "path_length_mm": 21.201999999999998,
+      "endpoint_chord_mm": 21.201999999999998
+    },
+    {
+      "line": 35579,
+      "layer": 3.8,
+      "path_length_mm": 0.3888611577414233,
+      "endpoint_chord_mm": 0.3888611577414233
+    },
+    {
+      "line": 35580,
+      "layer": 3.8,
+      "path_length_mm": 21.12599999999999,
+      "endpoint_chord_mm": 21.12599999999999
+    },
+    {
+      "line": 35581,
+      "layer": 3.8,
+      "path_length_mm": 0.38933479492420814,
+      "endpoint_chord_mm": 0.387020671282556
+    },
+    {
+      "line": 35582,
+      "layer": 3.8,
+      "path_length_mm": 21.117999999999995,
+      "endpoint_chord_mm": 21.117999999999995
+    },
+    {
+      "line": 35583,
+      "layer": 3.8,
+      "path_length_mm": 0.38786595622715764,
+      "endpoint_chord_mm": 0.38786595622715764
+    },
+    {
+      "line": 35584,
+      "layer": 3.8,
+      "path_length_mm": 21.194000000000003,
+      "endpoint_chord_mm": 21.194000000000003
+    },
+    {
+      "line": 35585,
+      "layer": 3.8,
+      "path_length_mm": 0.4008437178526902,
+      "endpoint_chord_mm": 0.3984896485481011
+    },
+    {
+      "line": 35586,
+      "layer": 3.8,
+      "path_length_mm": 21.384,
+      "endpoint_chord_mm": 21.384
+    },
+    {
+      "line": 35587,
+      "layer": 3.8,
+      "path_length_mm": 0.40517773877645524,
+      "endpoint_chord_mm": 0.40517773877645524
+    },
+    {
+      "line": 35588,
+      "layer": 3.8,
+      "path_length_mm": 21.62400000000001,
+      "endpoint_chord_mm": 21.62400000000001
+    },
+    {
+      "line": 35589,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677261005,
+      "endpoint_chord_mm": 0.4384119067726101
+    },
+    {
+      "line": 35590,
+      "layer": 3.8,
+      "path_length_mm": 22.036,
+      "endpoint_chord_mm": 22.036
+    },
+    {
+      "line": 35591,
+      "layer": 3.8,
+      "path_length_mm": 0.4697479403630538,
+      "endpoint_chord_mm": 0.4667868892760358
+    },
+    {
+      "line": 35592,
+      "layer": 3.8,
+      "path_length_mm": 22.557999999999993,
+      "endpoint_chord_mm": 22.557999999999993
+    },
+    {
+      "line": 35593,
+      "layer": 3.8,
+      "path_length_mm": 0.3503212811120731,
+      "endpoint_chord_mm": 0.35032128111207317
+    },
+    {
+      "line": 35594,
+      "layer": 3.8,
+      "path_length_mm": 0.16334319698109653,
+      "endpoint_chord_mm": 0.16334319698109653
+    },
+    {
+      "line": 35595,
+      "layer": 3.8,
+      "path_length_mm": 23.010999999999996,
+      "endpoint_chord_mm": 23.010999999999996
+    },
+    {
+      "line": 35657,
+      "layer": 3.8,
+      "path_length_mm": 1.8050000000000068,
+      "endpoint_chord_mm": 1.8050000000000068
+    },
+    {
+      "line": 35658,
+      "layer": 3.8,
+      "path_length_mm": 0.16334319698108646,
+      "endpoint_chord_mm": 0.16334319698108646
+    },
+    {
+      "line": 35659,
+      "layer": 3.8,
+      "path_length_mm": 0.3503212811120731,
+      "endpoint_chord_mm": 0.35032128111207317
+    },
+    {
+      "line": 35660,
+      "layer": 3.8,
+      "path_length_mm": 1.5300000000000011,
+      "endpoint_chord_mm": 1.5300000000000011
+    },
+    {
+      "line": 35661,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35662,
+      "layer": 3.8,
+      "path_length_mm": 1.2690000000000055,
+      "endpoint_chord_mm": 1.2690000000000055
+    },
+    {
+      "line": 35663,
+      "layer": 3.8,
+      "path_length_mm": 0.43841190677261677,
+      "endpoint_chord_mm": 0.43841190677261677
+    },
+    {
+      "line": 35664,
+      "layer": 3.8,
+      "path_length_mm": 1.0630000000000024,
+      "endpoint_chord_mm": 1.0630000000000024
+    },
+    {
+      "line": 35665,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35666,
+      "layer": 3.8,
+      "path_length_mm": 0.9429999999999978,
+      "endpoint_chord_mm": 0.9429999999999978
+    },
+    {
+      "line": 35667,
+      "layer": 3.8,
+      "path_length_mm": 0.40080047833185695,
+      "endpoint_chord_mm": 0.3984896485481011
+    },
+    {
+      "line": 35668,
+      "layer": 3.8,
+      "path_length_mm": 0.847999999999999,
+      "endpoint_chord_mm": 0.847999999999999
+    },
+    {
+      "line": 35669,
+      "layer": 3.8,
+      "path_length_mm": 0.3860000000000099,
+      "endpoint_chord_mm": 0.3860000000000099
+    },
+    {
+      "line": 35670,
+      "layer": 3.8,
+      "path_length_mm": 0.8100000000000023,
+      "endpoint_chord_mm": 0.8100000000000023
+    },
+    {
+      "line": 35671,
+      "layer": 3.8,
+      "path_length_mm": 0.3893976697011254,
+      "endpoint_chord_mm": 0.3870206712825562
+    },
+    {
+      "line": 35672,
+      "layer": 3.8,
+      "path_length_mm": 0.8140000000000072,
+      "endpoint_chord_mm": 0.8140000000000072
+    },
+    {
+      "line": 35673,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35674,
+      "layer": 3.8,
+      "path_length_mm": 0.8520000000000039,
+      "endpoint_chord_mm": 0.8520000000000039
+    },
+    {
+      "line": 35675,
+      "layer": 3.8,
+      "path_length_mm": 0.07641989269816418,
+      "endpoint_chord_mm": 0.07641989269816418
+    },
+    {
+      "line": 35676,
+      "layer": 3.8,
+      "path_length_mm": 0.324895367772466,
+      "endpoint_chord_mm": 0.324895367772466
+    },
+    {
+      "line": 35677,
+      "layer": 3.8,
+      "path_length_mm": 0.9540000000000077,
+      "endpoint_chord_mm": 0.9540000000000077
+    },
+    {
+      "line": 35678,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35679,
+      "layer": 3.8,
+      "path_length_mm": 1.0829999999999984,
+      "endpoint_chord_mm": 1.0829999999999984
+    },
+    {
+      "line": 35680,
+      "layer": 3.8,
+      "path_length_mm": 0.43752942758173186,
+      "endpoint_chord_mm": 0.43752942758173186
+    },
+    {
+      "line": 35681,
+      "layer": 3.8,
+      "path_length_mm": 1.2890000000000015,
+      "endpoint_chord_mm": 1.2890000000000015
+    },
+    {
+      "line": 35682,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35683,
+      "layer": 3.8,
+      "path_length_mm": 1.561000000000007,
+      "endpoint_chord_mm": 1.561000000000007
+    },
+    {
+      "line": 35684,
+      "layer": 3.8,
+      "path_length_mm": 0.38655659352803395,
+      "endpoint_chord_mm": 0.38655659352803395
+    },
+    {
+      "line": 35685,
+      "layer": 3.8,
+      "path_length_mm": 0.13853880322855858,
+      "endpoint_chord_mm": 0.13853880322855858
+    },
+    {
+      "line": 35686,
+      "layer": 3.8,
+      "path_length_mm": 1.913000000000011,
+      "endpoint_chord_mm": 1.913000000000011
+    },
+    {
+      "line": 35687,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35688,
+      "layer": 3.8,
+      "path_length_mm": 2.7730000000000103,
+      "endpoint_chord_mm": 2.7730000000000103
+    },
+    {
+      "line": 35759,
+      "layer": 3.8,
+      "path_length_mm": 1.0170000000000101,
+      "endpoint_chord_mm": 1.0170000000000101
+    },
+    {
+      "line": 35760,
+      "layer": 3.8,
+      "path_length_mm": 0.38700000000000045,
+      "endpoint_chord_mm": 0.38700000000000045
+    },
+    {
+      "line": 35761,
+      "layer": 3.8,
+      "path_length_mm": 1.3810000000000002,
+      "endpoint_chord_mm": 1.3810000000000002
+    },
+    {
+      "line": 35762,
+      "layer": 3.8,
+      "path_length_mm": 0.7292914369441148,
+      "endpoint_chord_mm": 0.7292914369441148
+    },
+    {
+      "line": 35763,
+      "layer": 3.8,
+      "path_length_mm": 0.678317035021232,
+      "endpoint_chord_mm": 0.678317035021232
+    },
+    {
+      "line": 35764,
+      "layer": 3.8,
+      "path_length_mm": 0.678317035021232,
+      "endpoint_chord_mm": 0.678317035021232
+    },
+    {
+      "line": 35765,
+      "layer": 3.8,
+      "path_length_mm": 0.7292914369441148,
+      "endpoint_chord_mm": 0.7292914369441148
+    },
+    {
+      "line": 35766,
+      "layer": 3.8,
+      "path_length_mm": 28.25999999999999,
+      "endpoint_chord_mm": 28.25999999999999
+    },
+    {
+      "line": 35767,
+      "layer": 3.8,
+      "path_length_mm": 0.625000799999478,
+      "endpoint_chord_mm": 0.625000799999478
+    },
+    {
+      "line": 35768,
+      "layer": 3.8,
+      "path_length_mm": 0.14571547618561204,
+      "endpoint_chord_mm": 0.14571547618561204
+    },
+    {
+      "line": 35769,
+      "layer": 3.8,
+      "path_length_mm": 26.932000000000002,
+      "endpoint_chord_mm": 26.932000000000002
+    },
+    {
+      "line": 35770,
+      "layer": 3.8,
+      "path_length_mm": 0.594281078278616,
+      "endpoint_chord_mm": 0.5942810782786159
+    },
+    {
+      "line": 35771,
+      "layer": 3.8,
+      "path_length_mm": 26.029999999999987,
+      "endpoint_chord_mm": 26.029999999999987
+    },
+    {
+      "line": 35772,
+      "layer": 3.8,
+      "path_length_mm": 0.5008922039720621,
+      "endpoint_chord_mm": 0.5008922039720621
+    },
+    {
+      "line": 35773,
+      "layer": 3.8,
+      "path_length_mm": 25.394000000000005,
+      "endpoint_chord_mm": 25.394000000000005
+    },
+    {
+      "line": 35774,
+      "layer": 3.8,
+      "path_length_mm": 0.11370136322841214,
+      "endpoint_chord_mm": 0.11370136322841214
+    },
+    {
+      "line": 35775,
+      "layer": 3.8,
+      "path_length_mm": 0.3391179735726239,
+      "endpoint_chord_mm": 0.3391179735726239
+    },
+    {
+      "line": 35776,
+      "layer": 3.8,
+      "path_length_mm": 24.930000000000007,
+      "endpoint_chord_mm": 24.930000000000007
+    },
+    {
+      "line": 35777,
+      "layer": 3.8,
+      "path_length_mm": 0.3391179735726239,
+      "endpoint_chord_mm": 0.3391179735726239
+    },
+    {
+      "line": 35778,
+      "layer": 3.8,
+      "path_length_mm": 0.09080198235720761,
+      "endpoint_chord_mm": 0.09080198235720761
+    },
+    {
+      "line": 35779,
+      "layer": 3.8,
+      "path_length_mm": 24.557999999999993,
+      "endpoint_chord_mm": 24.557999999999993
+    },
+    {
+      "line": 35780,
+      "layer": 3.8,
+      "path_length_mm": 0.40458991584071785,
+      "endpoint_chord_mm": 0.40458991584071785
+    },
+    {
+      "line": 35781,
+      "layer": 3.8,
+      "path_length_mm": 24.322000000000003,
+      "endpoint_chord_mm": 24.322000000000003
+    },
+    {
+      "line": 35782,
+      "layer": 3.8,
+      "path_length_mm": 0.39634162615310653,
+      "endpoint_chord_mm": 0.39382483415853986
+    },
+    {
+      "line": 35783,
+      "layer": 3.8,
+      "path_length_mm": 24.175999999999988,
+      "endpoint_chord_mm": 24.175999999999988
+    },
+    {
+      "line": 35784,
+      "layer": 3.8,
+      "path_length_mm": 0.3889601522007098,
+      "endpoint_chord_mm": 0.3889601522007098
+    },
+    {
+      "line": 35785,
+      "layer": 3.8,
+      "path_length_mm": 24.098000000000013,
+      "endpoint_chord_mm": 24.098000000000013
+    },
+    {
+      "line": 35786,
+      "layer": 3.8,
+      "path_length_mm": 0.3877434718986258,
+      "endpoint_chord_mm": 0.3877434718986258
+    },
+    {
+      "line": 35787,
+      "layer": 3.8,
+      "path_length_mm": 24.146,
+      "endpoint_chord_mm": 24.146
+    },
+    {
+      "line": 35788,
+      "layer": 3.8,
+      "path_length_mm": 0.3883876929049081,
+      "endpoint_chord_mm": 0.3883876929049081
+    },
+    {
+      "line": 35789,
+      "layer": 3.8,
+      "path_length_mm": 24.232000000000014,
+      "endpoint_chord_mm": 24.232000000000014
+    },
+    {
+      "line": 35790,
+      "layer": 3.8,
+      "path_length_mm": 0.4042993940138892,
+      "endpoint_chord_mm": 0.4042993940138892
+    },
+    {
+      "line": 35791,
+      "layer": 3.8,
+      "path_length_mm": 24.466000000000008,
+      "endpoint_chord_mm": 24.466000000000008
+    },
+    {
+      "line": 35792,
+      "layer": 3.8,
+      "path_length_mm": 0.41837601304966243,
+      "endpoint_chord_mm": 0.4157799898985047
+    },
+    {
+      "line": 35793,
+      "layer": 3.8,
+      "path_length_mm": 24.769999999999996,
+      "endpoint_chord_mm": 24.769999999999996
+    },
+    {
+      "line": 35794,
+      "layer": 3.8,
+      "path_length_mm": 0.4388826722485287,
+      "endpoint_chord_mm": 0.4388826722485287
+    },
+    {
+      "line": 35795,
+      "layer": 3.8,
+      "path_length_mm": 25.18400000000001,
+      "endpoint_chord_mm": 25.18400000000001
+    },
+    {
+      "line": 35796,
+      "layer": 3.8,
+      "path_length_mm": 0.48905009968305324,
+      "endpoint_chord_mm": 0.48905009968305324
+    },
+    {
+      "line": 35797,
+      "layer": 3.8,
+      "path_length_mm": 26.001999999999995,
+      "endpoint_chord_mm": 26.001999999999995
+    },
+    {
+      "line": 62993,
+      "layer": 7.2,
+      "path_length_mm": 0.6901362184380697,
+      "endpoint_chord_mm": 0.6901362184380697
+    },
+    {
+      "line": 62994,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000157,
+      "endpoint_chord_mm": 0.6640000000000157
+    },
+    {
+      "line": 62995,
+      "layer": 7.2,
+      "path_length_mm": 1.0026774157225289,
+      "endpoint_chord_mm": 1.0026774157225289
+    },
+    {
+      "line": 62996,
+      "layer": 7.2,
+      "path_length_mm": 0.08309632964216174,
+      "endpoint_chord_mm": 0.08309632964216175
+    },
+    {
+      "line": 62997,
+      "layer": 7.2,
+      "path_length_mm": 0.4035294289144166,
+      "endpoint_chord_mm": 0.4035294289144166
+    },
+    {
+      "line": 62998,
+      "layer": 7.2,
+      "path_length_mm": 1.5973543752091985,
+      "endpoint_chord_mm": 1.5973543752091985
+    },
+    {
+      "line": 62999,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 63000,
+      "layer": 7.2,
+      "path_length_mm": 2.255670631985085,
+      "endpoint_chord_mm": 2.255670631985085
+    },
+    {
+      "line": 63001,
+      "layer": 7.2,
+      "path_length_mm": 0.4565008214669626,
+      "endpoint_chord_mm": 0.4565008214669626
+    },
+    {
+      "line": 63002,
+      "layer": 7.2,
+      "path_length_mm": 0.0854751425854136,
+      "endpoint_chord_mm": 0.08547514258541358
+    },
+    {
+      "line": 63003,
+      "layer": 7.2,
+      "path_length_mm": 2.9938901115438283,
+      "endpoint_chord_mm": 2.9938901115438283
+    },
+    {
+      "line": 63004,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000157,
+      "endpoint_chord_mm": 0.6640000000000157
+    },
+    {
+      "line": 63005,
+      "layer": 7.2,
+      "path_length_mm": 3.8509035303419363,
+      "endpoint_chord_mm": 3.8509035303419363
+    },
+    {
+      "line": 63006,
+      "layer": 7.2,
+      "path_length_mm": 0.6763268440628417,
+      "endpoint_chord_mm": 0.6763268440628417
+    },
+    {
+      "line": 63007,
+      "layer": 7.2,
+      "path_length_mm": 0.08572630868061391,
+      "endpoint_chord_mm": 0.08572630868061391
+    },
+    {
+      "line": 63008,
+      "layer": 7.2,
+      "path_length_mm": 0.9043898495671165,
+      "endpoint_chord_mm": 0.9043898495671165
+    },
+    {
+      "line": 63009,
+      "layer": 7.2,
+      "path_length_mm": 0.7273738103821014,
+      "endpoint_chord_mm": 0.7267805721123908
+    },
+    {
+      "line": 63010,
+      "layer": 7.2,
+      "path_length_mm": 0.21104738804351983,
+      "endpoint_chord_mm": 0.21104738804351983
+    },
+    {
+      "line": 63011,
+      "layer": 7.2,
+      "path_length_mm": 8.507908791236547,
+      "endpoint_chord_mm": 8.507908791236547
+    },
+    {
+      "line": 63012,
+      "layer": 7.2,
+      "path_length_mm": 0.6630000000000109,
+      "endpoint_chord_mm": 0.6630000000000109
+    },
+    {
+      "line": 63013,
+      "layer": 7.2,
+      "path_length_mm": 4.212235154879192,
+      "endpoint_chord_mm": 4.212235154879192
+    },
+    {
+      "line": 63014,
+      "layer": 7.2,
+      "path_length_mm": 0.08572630868061391,
+      "endpoint_chord_mm": 0.08572630868061391
+    },
+    {
+      "line": 63015,
+      "layer": 7.2,
+      "path_length_mm": 0.6763268440628417,
+      "endpoint_chord_mm": 0.6763268440628417
+    },
+    {
+      "line": 63016,
+      "layer": 7.2,
+      "path_length_mm": 3.143796749155389,
+      "endpoint_chord_mm": 3.143796749155389
+    },
+    {
+      "line": 63017,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000157,
+      "endpoint_chord_mm": 0.6640000000000157
+    },
+    {
+      "line": 63018,
+      "layer": 7.2,
+      "path_length_mm": 2.286783330357281,
+      "endpoint_chord_mm": 2.286783330357281
+    },
+    {
+      "line": 63019,
+      "layer": 7.2,
+      "path_length_mm": 0.541449381525037,
+      "endpoint_chord_mm": 0.5407078693712497
+    },
+    {
+      "line": 63020,
+      "layer": 7.2,
+      "path_length_mm": 1.5485638507985375,
+      "endpoint_chord_mm": 1.5485638507985375
+    },
+    {
+      "line": 63021,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 63022,
+      "layer": 7.2,
+      "path_length_mm": 0.8902477183346119,
+      "endpoint_chord_mm": 0.8902477183346119
+    },
+    {
+      "line": 63023,
+      "layer": 7.2,
+      "path_length_mm": 0.4898826390065146,
+      "endpoint_chord_mm": 0.4898826390065145
+    },
+    {
+      "line": 63024,
+      "layer": 7.2,
+      "path_length_mm": 0.565685424949226,
+      "endpoint_chord_mm": 0.5656854249492259
+    },
+    {
+      "line": 63086,
+      "layer": 7.2,
+      "path_length_mm": 2.2104157979891306,
+      "endpoint_chord_mm": 2.2104157979891306
+    },
+    {
+      "line": 63087,
+      "layer": 7.2,
+      "path_length_mm": 0.6630000000000109,
+      "endpoint_chord_mm": 0.6630000000000109
+    },
+    {
+      "line": 63088,
+      "layer": 7.2,
+      "path_length_mm": 1.0832875887777984,
+      "endpoint_chord_mm": 1.0832875887777984
+    },
+    {
+      "line": 63089,
+      "layer": 7.2,
+      "path_length_mm": 0.47433427032000086,
+      "endpoint_chord_mm": 0.47433427032000086
+    },
+    {
+      "line": 63090,
+      "layer": 7.2,
+      "path_length_mm": 0.21811235636709178,
+      "endpoint_chord_mm": 0.21811235636709178
+    },
+    {
+      "line": 63091,
+      "layer": 7.2,
+      "path_length_mm": 1.047932249718443,
+      "endpoint_chord_mm": 1.047932249718443
+    },
+    {
+      "line": 63092,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000157,
+      "endpoint_chord_mm": 0.6640000000000157
+    },
+    {
+      "line": 63093,
+      "layer": 7.2,
+      "path_length_mm": 1.1631908699779314,
+      "endpoint_chord_mm": 1.1631908699779314
+    },
+    {
+      "line": 63094,
+      "layer": 7.2,
+      "path_length_mm": 0.5330337700371254,
+      "endpoint_chord_mm": 0.5330337700371254
+    },
+    {
+      "line": 63095,
+      "layer": 7.2,
+      "path_length_mm": 1.3809797246882396,
+      "endpoint_chord_mm": 1.3809797246882396
+    },
+    {
+      "line": 63096,
+      "layer": 7.2,
+      "path_length_mm": 0.17900000000000205,
+      "endpoint_chord_mm": 0.17900000000000205
+    },
+    {
+      "line": 63097,
+      "layer": 7.2,
+      "path_length_mm": 0.4849999999999852,
+      "endpoint_chord_mm": 0.4849999999999852
+    },
+    {
+      "line": 63098,
+      "layer": 7.2,
+      "path_length_mm": 1.0168195513462672,
+      "endpoint_chord_mm": 1.016819551346267
+    },
+    {
+      "line": 63099,
+      "layer": 7.2,
+      "path_length_mm": 0.48101367575797405,
+      "endpoint_chord_mm": 0.4781631520725847
+    },
+    {
+      "line": 63100,
+      "layer": 7.2,
+      "path_length_mm": 0.7438763338082628,
+      "endpoint_chord_mm": 0.7438763338082628
+    },
+    {
+      "line": 63210,
+      "layer": 7.2,
+      "path_length_mm": 2.7874149314373353,
+      "endpoint_chord_mm": 2.7874149314373353
+    },
+    {
+      "line": 63211,
+      "layer": 7.2,
+      "path_length_mm": 0.4596194077712599,
+      "endpoint_chord_mm": 0.4596194077712599
+    },
+    {
+      "line": 63212,
+      "layer": 7.2,
+      "path_length_mm": 3.256226804140024,
+      "endpoint_chord_mm": 3.2562268041400237
+    },
+    {
+      "line": 63213,
+      "layer": 7.2,
+      "path_length_mm": 5.930511697990317,
+      "endpoint_chord_mm": 5.930511697990317
+    },
+    {
+      "line": 63214,
+      "layer": 7.2,
+      "path_length_mm": 0.4915536593292821,
+      "endpoint_chord_mm": 0.4915536593292821
+    },
+    {
+      "line": 63215,
+      "layer": 7.2,
+      "path_length_mm": 6.078289891079565,
+      "endpoint_chord_mm": 6.078289891079565
+    },
+    {
+      "line": 63216,
+      "layer": 7.2,
+      "path_length_mm": 0.46951890270785857,
+      "endpoint_chord_mm": 0.46951890270785857
+    },
+    {
+      "line": 63217,
+      "layer": 7.2,
+      "path_length_mm": 6.329312837899541,
+      "endpoint_chord_mm": 6.329312837899541
+    },
+    {
+      "line": 63218,
+      "layer": 7.2,
+      "path_length_mm": 0.12212288892752302,
+      "endpoint_chord_mm": 0.12212288892752302
+    },
+    {
+      "line": 63219,
+      "layer": 7.2,
+      "path_length_mm": 0.46726972938547884,
+      "endpoint_chord_mm": 0.46726972938547884
+    },
+    {
+      "line": 63220,
+      "layer": 7.2,
+      "path_length_mm": 8.758931727100038,
+      "endpoint_chord_mm": 8.758931727100038
+    },
+    {
+      "line": 63233,
+      "layer": 7.2,
+      "path_length_mm": 2.7860007178749955,
+      "endpoint_chord_mm": 2.7860007178749955
+    },
+    {
+      "line": 63234,
+      "layer": 7.2,
+      "path_length_mm": 0.48119697709376696,
+      "endpoint_chord_mm": 0.4781631520725964
+    },
+    {
+      "line": 63235,
+      "layer": 7.2,
+      "path_length_mm": 5.931211680592764,
+      "endpoint_chord_mm": 5.931211680592764
+    },
+    {
+      "line": 63236,
+      "layer": 7.2,
+      "path_length_mm": 0.4688123291893979,
+      "endpoint_chord_mm": 0.4688123291893979
+    },
+    {
+      "line": 63237,
+      "layer": 7.2,
+      "path_length_mm": 6.078289891079565,
+      "endpoint_chord_mm": 6.078289891079565
+    },
+    {
+      "line": 63238,
+      "layer": 7.2,
+      "path_length_mm": 0.5330337700371254,
+      "endpoint_chord_mm": 0.5330337700371254
+    },
+    {
+      "line": 63239,
+      "layer": 7.2,
+      "path_length_mm": 6.582457064045298,
+      "endpoint_chord_mm": 6.582457064045298
+    },
+    {
+      "line": 63240,
+      "layer": 7.2,
+      "path_length_mm": 1.4658529939936054,
+      "endpoint_chord_mm": 1.4658529939936054
+    },
+    {
+      "line": 63241,
+      "layer": 7.2,
+      "path_length_mm": 0.2136937060374044,
+      "endpoint_chord_mm": 0.2136937060374044
+    },
+    {
+      "line": 63242,
+      "layer": 7.2,
+      "path_length_mm": 8.360830580749727,
+      "endpoint_chord_mm": 8.360830580749727
+    },
+    {
+      "line": 63243,
+      "layer": 7.2,
+      "path_length_mm": 0.21811235636707765,
+      "endpoint_chord_mm": 0.21811235636707765
+    },
+    {
+      "line": 63244,
+      "layer": 7.2,
+      "path_length_mm": 0.4743342703199867,
+      "endpoint_chord_mm": 0.47433427031998676
+    },
+    {
+      "line": 63245,
+      "layer": 7.2,
+      "path_length_mm": 8.507908791236527,
+      "endpoint_chord_mm": 8.507908791236527
+    },
+    {
+      "line": 63246,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999967,
+      "endpoint_chord_mm": 0.6629999999999967
+    },
+    {
+      "line": 63247,
+      "layer": 7.2,
+      "path_length_mm": 4.212235154879182,
+      "endpoint_chord_mm": 4.212235154879182
+    },
+    {
+      "line": 63248,
+      "layer": 7.2,
+      "path_length_mm": 0.08572630868061391,
+      "endpoint_chord_mm": 0.08572630868061391
+    },
+    {
+      "line": 63249,
+      "layer": 7.2,
+      "path_length_mm": 0.6763268440628404,
+      "endpoint_chord_mm": 0.6763268440628404
+    },
+    {
+      "line": 63250,
+      "layer": 7.2,
+      "path_length_mm": 3.1437967491553787,
+      "endpoint_chord_mm": 3.1437967491553787
+    },
+    {
+      "line": 63251,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63252,
+      "layer": 7.2,
+      "path_length_mm": 2.286783330357281,
+      "endpoint_chord_mm": 2.286783330357281
+    },
+    {
+      "line": 63253,
+      "layer": 7.2,
+      "path_length_mm": 0.0854751425854121,
+      "endpoint_chord_mm": 0.0854751425854121
+    },
+    {
+      "line": 63254,
+      "layer": 7.2,
+      "path_length_mm": 0.4565008214669626,
+      "endpoint_chord_mm": 0.4565008214669626
+    },
+    {
+      "line": 63255,
+      "layer": 7.2,
+      "path_length_mm": 1.5485638507985375,
+      "endpoint_chord_mm": 1.5485638507985375
+    },
+    {
+      "line": 63256,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63257,
+      "layer": 7.2,
+      "path_length_mm": 0.8902477183346119,
+      "endpoint_chord_mm": 0.8902477183346119
+    },
+    {
+      "line": 63258,
+      "layer": 7.2,
+      "path_length_mm": 0.48988263900652124,
+      "endpoint_chord_mm": 0.48988263900652124
+    },
+    {
+      "line": 63259,
+      "layer": 7.2,
+      "path_length_mm": 0.5656854249492461,
+      "endpoint_chord_mm": 0.5656854249492461
+    },
+    {
+      "line": 63343,
+      "layer": 7.2,
+      "path_length_mm": 0.7735748186180789,
+      "endpoint_chord_mm": 0.7735748186180789
+    },
+    {
+      "line": 63344,
+      "layer": 7.2,
+      "path_length_mm": 0.47183259743261763,
+      "endpoint_chord_mm": 0.47183259743261763
+    },
+    {
+      "line": 63345,
+      "layer": 7.2,
+      "path_length_mm": 1.0026774157225289,
+      "endpoint_chord_mm": 1.0026774157225289
+    },
+    {
+      "line": 63346,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 63347,
+      "layer": 7.2,
+      "path_length_mm": 1.5973543752092085,
+      "endpoint_chord_mm": 1.5973543752092085
+    },
+    {
+      "line": 63348,
+      "layer": 7.2,
+      "path_length_mm": 0.5097568486611358,
+      "endpoint_chord_mm": 0.5067119497307991
+    },
+    {
+      "line": 63349,
+      "layer": 7.2,
+      "path_length_mm": 2.255670631985085,
+      "endpoint_chord_mm": 2.255670631985085
+    },
+    {
+      "line": 63350,
+      "layer": 7.2,
+      "path_length_mm": 0.6630000000000109,
+      "endpoint_chord_mm": 0.6630000000000109
+    },
+    {
+      "line": 63351,
+      "layer": 7.2,
+      "path_length_mm": 2.9938901115438386,
+      "endpoint_chord_mm": 2.9938901115438386
+    },
+    {
+      "line": 63352,
+      "layer": 7.2,
+      "path_length_mm": 0.6087692502089709,
+      "endpoint_chord_mm": 0.6087692502089709
+    },
+    {
+      "line": 63353,
+      "layer": 7.2,
+      "path_length_mm": 3.8509035303419465,
+      "endpoint_chord_mm": 3.8509035303419465
+    },
+    {
+      "line": 63354,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 63355,
+      "layer": 7.2,
+      "path_length_mm": 1.4219919127758747,
+      "endpoint_chord_mm": 1.4219919127758749
+    },
+    {
+      "line": 63356,
+      "layer": 7.2,
+      "path_length_mm": 0.7264798689571641,
+      "endpoint_chord_mm": 0.7264798689571641
+    },
+    {
+      "line": 63357,
+      "layer": 7.2,
+      "path_length_mm": 0.211047388043517,
+      "endpoint_chord_mm": 0.211047388043517
+    },
+    {
+      "line": 63358,
+      "layer": 7.2,
+      "path_length_mm": 1.0832875887778084,
+      "endpoint_chord_mm": 1.0832875887778084
+    },
+    {
+      "line": 63359,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 63360,
+      "layer": 7.2,
+      "path_length_mm": 1.047932249718453,
+      "endpoint_chord_mm": 1.047932249718453
+    },
+    {
+      "line": 63361,
+      "layer": 7.2,
+      "path_length_mm": 0.46726972938547606,
+      "endpoint_chord_mm": 0.46726972938547606
+    },
+    {
+      "line": 63362,
+      "layer": 7.2,
+      "path_length_mm": 0.1221228889275271,
+      "endpoint_chord_mm": 0.1221228889275271
+    },
+    {
+      "line": 63363,
+      "layer": 7.2,
+      "path_length_mm": 1.1631908699779314,
+      "endpoint_chord_mm": 1.1631908699779314
+    },
+    {
+      "line": 63364,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999825,
+      "endpoint_chord_mm": 0.6629999999999825
+    },
+    {
+      "line": 63365,
+      "layer": 7.2,
+      "path_length_mm": 1.3809797246882396,
+      "endpoint_chord_mm": 1.3809797246882396
+    },
+    {
+      "line": 63366,
+      "layer": 7.2,
+      "path_length_mm": 0.4915536593292755,
+      "endpoint_chord_mm": 0.4915536593292755
+    },
+    {
+      "line": 63367,
+      "layer": 7.2,
+      "path_length_mm": 1.016819551346247,
+      "endpoint_chord_mm": 1.016819551346247
+    },
+    {
+      "line": 63368,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63369,
+      "layer": 7.2,
+      "path_length_mm": 0.6604377336282236,
+      "endpoint_chord_mm": 0.6604377336282236
+    },
+    {
+      "line": 63456,
+      "layer": 7.2,
+      "path_length_mm": 2.1206133546688966,
+      "endpoint_chord_mm": 2.1206133546688966
+    },
+    {
+      "line": 63963,
+      "layer": 7.2,
+      "path_length_mm": 0.7735748186180789,
+      "endpoint_chord_mm": 0.7735748186180789
+    },
+    {
+      "line": 63964,
+      "layer": 7.2,
+      "path_length_mm": 0.47183259743260864,
+      "endpoint_chord_mm": 0.4718325974326086
+    },
+    {
+      "line": 63965,
+      "layer": 7.2,
+      "path_length_mm": 1.0026774157225289,
+      "endpoint_chord_mm": 1.0026774157225289
+    },
+    {
+      "line": 63966,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63967,
+      "layer": 7.2,
+      "path_length_mm": 1.5973543752091985,
+      "endpoint_chord_mm": 1.5973543752091985
+    },
+    {
+      "line": 63968,
+      "layer": 7.2,
+      "path_length_mm": 0.509756848661154,
+      "endpoint_chord_mm": 0.5067119497308178
+    },
+    {
+      "line": 63969,
+      "layer": 7.2,
+      "path_length_mm": 2.2549636360704306,
+      "endpoint_chord_mm": 2.2549636360704306
+    },
+    {
+      "line": 63970,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63971,
+      "layer": 7.2,
+      "path_length_mm": 2.9938901115438283,
+      "endpoint_chord_mm": 2.9938901115438283
+    },
+    {
+      "line": 63972,
+      "layer": 7.2,
+      "path_length_mm": 0.6087692502089709,
+      "endpoint_chord_mm": 0.6087692502089709
+    },
+    {
+      "line": 63973,
+      "layer": 7.2,
+      "path_length_mm": 3.850903530341926,
+      "endpoint_chord_mm": 3.8509035303419266
+    },
+    {
+      "line": 63974,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63975,
+      "layer": 7.2,
+      "path_length_mm": 1.4226988437473338,
+      "endpoint_chord_mm": 1.4226988437473338
+    },
+    {
+      "line": 63976,
+      "layer": 7.2,
+      "path_length_mm": 0.7270455369013451,
+      "endpoint_chord_mm": 0.7267805721123772
+    },
+    {
+      "line": 63977,
+      "layer": 7.2,
+      "path_length_mm": 0.2110473880435481,
+      "endpoint_chord_mm": 0.2110473880435481
+    },
+    {
+      "line": 63978,
+      "layer": 7.2,
+      "path_length_mm": 1.0832875887777782,
+      "endpoint_chord_mm": 1.0832875887777782
+    },
+    {
+      "line": 63979,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 63980,
+      "layer": 7.2,
+      "path_length_mm": 1.047932249718453,
+      "endpoint_chord_mm": 1.047932249718453
+    },
+    {
+      "line": 63981,
+      "layer": 7.2,
+      "path_length_mm": 0.3878659562271449,
+      "endpoint_chord_mm": 0.3878659562271449
+    },
+    {
+      "line": 63982,
+      "layer": 7.2,
+      "path_length_mm": 0.20183797238076193,
+      "endpoint_chord_mm": 0.20066140635410015
+    },
+    {
+      "line": 63983,
+      "layer": 7.2,
+      "path_length_mm": 1.1631908699779214,
+      "endpoint_chord_mm": 1.1631908699779212
+    },
+    {
+      "line": 63984,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999967,
+      "endpoint_chord_mm": 0.6629999999999967
+    },
+    {
+      "line": 63985,
+      "layer": 7.2,
+      "path_length_mm": 1.3809797246882396,
+      "endpoint_chord_mm": 1.3809797246882396
+    },
+    {
+      "line": 63986,
+      "layer": 7.2,
+      "path_length_mm": 0.4915536593292821,
+      "endpoint_chord_mm": 0.4915536593292821
+    },
+    {
+      "line": 63987,
+      "layer": 7.2,
+      "path_length_mm": 1.0168195513462672,
+      "endpoint_chord_mm": 1.016819551346267
+    },
+    {
+      "line": 63988,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000157,
+      "endpoint_chord_mm": 0.6640000000000157
+    },
+    {
+      "line": 63989,
+      "layer": 7.2,
+      "path_length_mm": 0.6604377336282236,
+      "endpoint_chord_mm": 0.6604377336282236
+    },
+    {
+      "line": 64051,
+      "layer": 7.2,
+      "path_length_mm": 2.7874149314373553,
+      "endpoint_chord_mm": 2.7874149314373553
+    },
+    {
+      "line": 64052,
+      "layer": 7.2,
+      "path_length_mm": 0.4596194077712498,
+      "endpoint_chord_mm": 0.4596194077712498
+    },
+    {
+      "line": 64053,
+      "layer": 7.2,
+      "path_length_mm": 3.256226804140024,
+      "endpoint_chord_mm": 3.2562268041400237
+    },
+    {
+      "line": 64054,
+      "layer": 7.2,
+      "path_length_mm": 5.930511697990308,
+      "endpoint_chord_mm": 5.930511697990308
+    },
+    {
+      "line": 64055,
+      "layer": 7.2,
+      "path_length_mm": 0.4915536593292755,
+      "endpoint_chord_mm": 0.4915536593292755
+    },
+    {
+      "line": 64056,
+      "layer": 7.2,
+      "path_length_mm": 6.078289891079565,
+      "endpoint_chord_mm": 6.078289891079565
+    },
+    {
+      "line": 64057,
+      "layer": 7.2,
+      "path_length_mm": 0.4695189027078686,
+      "endpoint_chord_mm": 0.4695189027078686
+    },
+    {
+      "line": 64058,
+      "layer": 7.2,
+      "path_length_mm": 6.3293128378995505,
+      "endpoint_chord_mm": 6.329312837899551
+    },
+    {
+      "line": 64059,
+      "layer": 7.2,
+      "path_length_mm": 0.1221228889275271,
+      "endpoint_chord_mm": 0.1221228889275271
+    },
+    {
+      "line": 64060,
+      "layer": 7.2,
+      "path_length_mm": 0.46726972938547606,
+      "endpoint_chord_mm": 0.46726972938547606
+    },
+    {
+      "line": 64061,
+      "layer": 7.2,
+      "path_length_mm": 8.463366056126826,
+      "endpoint_chord_mm": 8.463366056126826
+    },
+    {
+      "line": 64062,
+      "layer": 7.2,
+      "path_length_mm": 0.650999999999982,
+      "endpoint_chord_mm": 0.650999999999982
+    },
+    {
+      "line": 64063,
+      "layer": 7.2,
+      "path_length_mm": 8.850148473330833,
+      "endpoint_chord_mm": 8.850148473330833
+    },
+    {
+      "line": 64068,
+      "layer": 7.2,
+      "path_length_mm": 2.1213203435596424,
+      "endpoint_chord_mm": 2.1213203435596424
+    },
+    {
+      "line": 64079,
+      "layer": 7.2,
+      "path_length_mm": 4.641448911708503,
+      "endpoint_chord_mm": 4.641448911708503
+    },
+    {
+      "line": 64080,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 64081,
+      "layer": 7.2,
+      "path_length_mm": 3.143796749155399,
+      "endpoint_chord_mm": 3.143796749155399
+    },
+    {
+      "line": 64082,
+      "layer": 7.2,
+      "path_length_mm": 0.6087692502089709,
+      "endpoint_chord_mm": 0.6087692502089709
+    },
+    {
+      "line": 64083,
+      "layer": 7.2,
+      "path_length_mm": 2.286783330357291,
+      "endpoint_chord_mm": 2.286783330357291
+    },
+    {
+      "line": 64084,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 64085,
+      "layer": 7.2,
+      "path_length_mm": 1.5478569055310143,
+      "endpoint_chord_mm": 1.547856905531014
+    },
+    {
+      "line": 64086,
+      "layer": 7.2,
+      "path_length_mm": 0.5098860468693162,
+      "endpoint_chord_mm": 0.5067119497307991
+    },
+    {
+      "line": 64087,
+      "layer": 7.2,
+      "path_length_mm": 0.8902477183346219,
+      "endpoint_chord_mm": 0.8902477183346219
+    },
+    {
+      "line": 64088,
+      "layer": 7.2,
+      "path_length_mm": 0.6639999999999873,
+      "endpoint_chord_mm": 0.6639999999999873
+    },
+    {
+      "line": 64089,
+      "layer": 7.2,
+      "path_length_mm": 0.48931789258109604,
+      "endpoint_chord_mm": 0.48931789258109604
+    },
+    {
+      "line": 64248,
+      "layer": 7.2,
+      "path_length_mm": 0.7438763338082427,
+      "endpoint_chord_mm": 0.7438763338082427
+    },
+    {
+      "line": 64249,
+      "layer": 7.2,
+      "path_length_mm": 0.4798422112521621,
+      "endpoint_chord_mm": 0.4781631520725964
+    },
+    {
+      "line": 64250,
+      "layer": 7.2,
+      "path_length_mm": 1.016819551346247,
+      "endpoint_chord_mm": 1.016819551346247
+    },
+    {
+      "line": 64251,
+      "layer": 7.2,
+      "path_length_mm": 0.48499999999999943,
+      "endpoint_chord_mm": 0.48499999999999943
+    },
+    {
+      "line": 64252,
+      "layer": 7.2,
+      "path_length_mm": 0.17900000000000205,
+      "endpoint_chord_mm": 0.17900000000000205
+    },
+    {
+      "line": 64253,
+      "layer": 7.2,
+      "path_length_mm": 1.3809797246882396,
+      "endpoint_chord_mm": 1.3809797246882396
+    },
+    {
+      "line": 64254,
+      "layer": 7.2,
+      "path_length_mm": 0.5330337700371254,
+      "endpoint_chord_mm": 0.5330337700371254
+    },
+    {
+      "line": 64255,
+      "layer": 7.2,
+      "path_length_mm": 1.1631908699779214,
+      "endpoint_chord_mm": 1.1631908699779212
+    },
+    {
+      "line": 64256,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 64257,
+      "layer": 7.2,
+      "path_length_mm": 1.0479322497184629,
+      "endpoint_chord_mm": 1.0479322497184629
+    },
+    {
+      "line": 64258,
+      "layer": 7.2,
+      "path_length_mm": 0.2181123563670791,
+      "endpoint_chord_mm": 0.2181123563670791
+    },
+    {
+      "line": 64259,
+      "layer": 7.2,
+      "path_length_mm": 0.47433427031998815,
+      "endpoint_chord_mm": 0.47433427031998815
+    },
+    {
+      "line": 64260,
+      "layer": 7.2,
+      "path_length_mm": 1.0832875887777882,
+      "endpoint_chord_mm": 1.0832875887777882
+    },
+    {
+      "line": 64261,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999967,
+      "endpoint_chord_mm": 0.6629999999999967
+    },
+    {
+      "line": 64262,
+      "layer": 7.2,
+      "path_length_mm": 1.4226988437473338,
+      "endpoint_chord_mm": 1.4226988437473338
+    },
+    {
+      "line": 64263,
+      "layer": 7.2,
+      "path_length_mm": 0.6415294225520746,
+      "endpoint_chord_mm": 0.6415294225520746
+    },
+    {
+      "line": 64264,
+      "layer": 7.2,
+      "path_length_mm": 0.685656619599055,
+      "endpoint_chord_mm": 0.685656619599055
+    },
+    {
+      "line": 64265,
+      "layer": 7.2,
+      "path_length_mm": 0.685656619599055,
+      "endpoint_chord_mm": 0.685656619599055
+    },
+    {
+      "line": 64266,
+      "layer": 7.2,
+      "path_length_mm": 0.6415294225520746,
+      "endpoint_chord_mm": 0.6415294225520747
+    },
+    {
+      "line": 64267,
+      "layer": 7.2,
+      "path_length_mm": 0.9043898495670964,
+      "endpoint_chord_mm": 0.9043898495670964
+    },
+    {
+      "line": 64268,
+      "layer": 7.2,
+      "path_length_mm": 0.08572630868058673,
+      "endpoint_chord_mm": 0.08572630868058673
+    },
+    {
+      "line": 64269,
+      "layer": 7.2,
+      "path_length_mm": 0.6763268440628404,
+      "endpoint_chord_mm": 0.6763268440628404
+    },
+    {
+      "line": 64270,
+      "layer": 7.2,
+      "path_length_mm": 3.8509035303419363,
+      "endpoint_chord_mm": 3.8509035303419363
+    },
+    {
+      "line": 64271,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 64272,
+      "layer": 7.2,
+      "path_length_mm": 2.9938901115438386,
+      "endpoint_chord_mm": 2.9938901115438386
+    },
+    {
+      "line": 64273,
+      "layer": 7.2,
+      "path_length_mm": 0.08547514258544035,
+      "endpoint_chord_mm": 0.08547514258544035
+    },
+    {
+      "line": 64274,
+      "layer": 7.2,
+      "path_length_mm": 0.456500821466949,
+      "endpoint_chord_mm": 0.456500821466949
+    },
+    {
+      "line": 64275,
+      "layer": 7.2,
+      "path_length_mm": 2.255670631985085,
+      "endpoint_chord_mm": 2.255670631985085
+    },
+    {
+      "line": 64276,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 64277,
+      "layer": 7.2,
+      "path_length_mm": 1.5973543752092085,
+      "endpoint_chord_mm": 1.5973543752092085
+    },
+    {
+      "line": 64278,
+      "layer": 7.2,
+      "path_length_mm": 0.4035294289144292,
+      "endpoint_chord_mm": 0.4035294289144292
+    },
+    {
+      "line": 64279,
+      "layer": 7.2,
+      "path_length_mm": 0.08309632964217081,
+      "endpoint_chord_mm": 0.08309632964217081
+    },
+    {
+      "line": 64280,
+      "layer": 7.2,
+      "path_length_mm": 1.0026774157225289,
+      "endpoint_chord_mm": 1.0026774157225289
+    },
+    {
+      "line": 64281,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999967,
+      "endpoint_chord_mm": 0.6629999999999967
+    },
+    {
+      "line": 64282,
+      "layer": 7.2,
+      "path_length_mm": 0.6908436870957162,
+      "endpoint_chord_mm": 0.6908436870957162
+    },
+    {
+      "line": 64369,
+      "layer": 7.2,
+      "path_length_mm": 0.49002550954006313,
+      "endpoint_chord_mm": 0.49002550954006313
+    },
+    {
+      "line": 64370,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 64371,
+      "layer": 7.2,
+      "path_length_mm": 0.8902477183346219,
+      "endpoint_chord_mm": 0.8902477183346219
+    },
+    {
+      "line": 64372,
+      "layer": 7.2,
+      "path_length_mm": 0.5097568486611403,
+      "endpoint_chord_mm": 0.5067119497308048
+    },
+    {
+      "line": 64373,
+      "layer": 7.2,
+      "path_length_mm": 1.5485638507985375,
+      "endpoint_chord_mm": 1.5485638507985375
+    },
+    {
+      "line": 64374,
+      "layer": 7.2,
+      "path_length_mm": 0.6629999999999967,
+      "endpoint_chord_mm": 0.6629999999999967
+    },
+    {
+      "line": 64375,
+      "layer": 7.2,
+      "path_length_mm": 2.286783330357291,
+      "endpoint_chord_mm": 2.286783330357291
+    },
+    {
+      "line": 64376,
+      "layer": 7.2,
+      "path_length_mm": 0.6087692502089709,
+      "endpoint_chord_mm": 0.6087692502089709
+    },
+    {
+      "line": 64377,
+      "layer": 7.2,
+      "path_length_mm": 3.143796749155389,
+      "endpoint_chord_mm": 3.143796749155389
+    },
+    {
+      "line": 64378,
+      "layer": 7.2,
+      "path_length_mm": 0.6640000000000015,
+      "endpoint_chord_mm": 0.6640000000000015
+    },
+    {
+      "line": 64379,
+      "layer": 7.2,
+      "path_length_mm": 4.641448911708493,
+      "endpoint_chord_mm": 4.641448911708493
+    },
+    {
+      "line": 64390,
+      "layer": 7.2,
+      "path_length_mm": 2.7874149314373757,
+      "endpoint_chord_mm": 2.7874149314373757
+    },
+    {
+      "line": 64391,
+      "layer": 7.2,
+      "path_length_mm": 0.21142611002428716,
+      "endpoint_chord_mm": 0.21142611002428716
+    },
+    {
+      "line": 64392,
+      "layer": 7.2,
+      "path_length_mm": 3.2569338341452343,
+      "endpoint_chord_mm": 3.2569338341452343
+    },
+    {
+      "line": 64393,
+      "layer": 7.2,
+      "path_length_mm": 0.2588010819142661,
+      "endpoint_chord_mm": 0.2588010819142661
+    },
+    {
+      "line": 64394,
+      "layer": 7.2,
+      "path_length_mm": 5.930504615966493,
+      "endpoint_chord_mm": 5.930504615966493
+    },
+    {
+      "line": 64395,
+      "layer": 7.2,
+      "path_length_mm": 0.4915536593292755,
+      "endpoint_chord_mm": 0.4915536593292755
+    },
+    {
+      "line": 64396,
+      "layer": 7.2,
+      "path_length_mm": 6.078289891079565,
+      "endpoint_chord_mm": 6.078289891079565
+    },
+    {
+      "line": 64397,
+      "layer": 7.2,
+      "path_length_mm": 0.4695189027078686,
+      "endpoint_chord_mm": 0.4695189027078686
+    },
+    {
+      "line": 64398,
+      "layer": 7.2,
+      "path_length_mm": 6.3293128378995505,
+      "endpoint_chord_mm": 6.329312837899551
+    },
+    {
+      "line": 64399,
+      "layer": 7.2,
+      "path_length_mm": 0.12212288892751348,
+      "endpoint_chord_mm": 0.12212288892751348
+    },
+    {
+      "line": 64400,
+      "layer": 7.2,
+      "path_length_mm": 0.4672697293855043,
+      "endpoint_chord_mm": 0.4672697293855043
+    },
+    {
+      "line": 64401,
+      "layer": 7.2,
+      "path_length_mm": 7.321383612405523,
+      "endpoint_chord_mm": 7.321383612405523
+    },
+    {
+      "line": 64402,
+      "layer": 7.2,
+      "path_length_mm": 0.9724299460629464,
+      "endpoint_chord_mm": 0.9724299460629464
+    },
+    {
+      "line": 64403,
+      "layer": 7.2,
+      "path_length_mm": 0.382000000000005,
+      "endpoint_chord_mm": 0.382000000000005
+    },
+    {
+      "line": 64404,
+      "layer": 7.2,
+      "path_length_mm": 8.850148473330822,
+      "endpoint_chord_mm": 8.850148473330822
+    },
+    {
+      "line": 88698,
+      "layer": 10.0,
+      "path_length_mm": 0.772160605055699,
+      "endpoint_chord_mm": 0.772160605055699
+    },
+    {
+      "line": 88699,
+      "layer": 10.0,
+      "path_length_mm": 2.2209018438463333,
+      "endpoint_chord_mm": 2.2209018438463333
+    },
+    {
+      "line": 88700,
+      "layer": 10.0,
+      "path_length_mm": 0.046669047558334,
+      "endpoint_chord_mm": 0.046669047558334
+    },
+    {
+      "line": 88701,
+      "layer": 10.0,
+      "path_length_mm": 5.0635917094489376,
+      "endpoint_chord_mm": 5.0635917094489376
+    },
+    {
+      "line": 88702,
+      "layer": 10.0,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 88703,
+      "layer": 10.0,
+      "path_length_mm": 4.607507786211538,
+      "endpoint_chord_mm": 4.607507786211538
+    },
+    {
+      "line": 88704,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841405,
+      "endpoint_chord_mm": 0.4553767670841405
+    },
+    {
+      "line": 88705,
+      "layer": 10.0,
+      "path_length_mm": 5.752313708413331,
+      "endpoint_chord_mm": 5.752313708413331
+    },
+    {
+      "line": 88706,
+      "layer": 10.0,
+      "path_length_mm": 0.4722044048926395,
+      "endpoint_chord_mm": 0.4722044048926395
+    },
+    {
+      "line": 88707,
+      "layer": 10.0,
+      "path_length_mm": 5.874643138097872,
+      "endpoint_chord_mm": 5.874643138097872
+    },
+    {
+      "line": 88708,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841204,
+      "endpoint_chord_mm": 0.45537676708412034
+    },
+    {
+      "line": 88709,
+      "layer": 10.0,
+      "path_length_mm": 5.996265504461916,
+      "endpoint_chord_mm": 5.996265504461916
+    },
+    {
+      "line": 88710,
+      "layer": 10.0,
+      "path_length_mm": 0.4713385195376935,
+      "endpoint_chord_mm": 0.4713385195376935
+    },
+    {
+      "line": 88711,
+      "layer": 10.0,
+      "path_length_mm": 9.374821704971234,
+      "endpoint_chord_mm": 9.374821704971234
+    },
+    {
+      "line": 88712,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841405,
+      "endpoint_chord_mm": 0.4553767670841405
+    },
+    {
+      "line": 88713,
+      "layer": 10.0,
+      "path_length_mm": 9.497151204440211,
+      "endpoint_chord_mm": 9.497151204440211
+    },
+    {
+      "line": 88714,
+      "layer": 10.0,
+      "path_length_mm": 0.4708386135397094,
+      "endpoint_chord_mm": 0.4708386135397094
+    },
+    {
+      "line": 88715,
+      "layer": 10.0,
+      "path_length_mm": 12.120517356944788,
+      "endpoint_chord_mm": 12.120517356944788
+    },
+    {
+      "line": 88716,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88717,
+      "layer": 10.0,
+      "path_length_mm": 12.698223576548019,
+      "endpoint_chord_mm": 12.698223576548019
+    },
+    {
+      "line": 88718,
+      "layer": 10.0,
+      "path_length_mm": 0.47133851953773237,
+      "endpoint_chord_mm": 0.47133851953773237
+    },
+    {
+      "line": 88719,
+      "layer": 10.0,
+      "path_length_mm": 13.190369896253854,
+      "endpoint_chord_mm": 13.190369896253854
+    },
+    {
+      "line": 88720,
+      "layer": 10.0,
+      "path_length_mm": 0.11264102272262463,
+      "endpoint_chord_mm": 0.11264102272262463
+    },
+    {
+      "line": 88721,
+      "layer": 10.0,
+      "path_length_mm": 0.36769552621699186,
+      "endpoint_chord_mm": 0.36769552621699186
+    },
+    {
+      "line": 88722,
+      "layer": 10.0,
+      "path_length_mm": 13.556651208908487,
+      "endpoint_chord_mm": 13.556651208908487
+    },
+    {
+      "line": 88723,
+      "layer": 10.0,
+      "path_length_mm": 1.7598227183441078,
+      "endpoint_chord_mm": 1.7598227183441078
+    },
+    {
+      "line": 88724,
+      "layer": 10.0,
+      "path_length_mm": 15.256535910880965,
+      "endpoint_chord_mm": 15.256535910880965
+    },
+    {
+      "line": 88725,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841405,
+      "endpoint_chord_mm": 0.4553767670841405
+    },
+    {
+      "line": 88726,
+      "layer": 10.0,
+      "path_length_mm": 15.347045578872832,
+      "endpoint_chord_mm": 15.347045578872832
+    },
+    {
+      "line": 88727,
+      "layer": 10.0,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 88728,
+      "layer": 10.0,
+      "path_length_mm": 15.562006040353525,
+      "endpoint_chord_mm": 15.562006040353525
+    },
+    {
+      "line": 88729,
+      "layer": 10.0,
+      "path_length_mm": 1.6014493435635089,
+      "endpoint_chord_mm": 1.6014493435635089
+    },
+    {
+      "line": 88730,
+      "layer": 10.0,
+      "path_length_mm": 0.2600000000000051,
+      "endpoint_chord_mm": 0.2600000000000051
+    },
+    {
+      "line": 88731,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986283,
+      "endpoint_chord_mm": 16.868739371986283
+    },
+    {
+      "line": 88732,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88733,
+      "layer": 10.0,
+      "path_length_mm": 16.867325158423903,
+      "endpoint_chord_mm": 16.867325158423903
+    },
+    {
+      "line": 88734,
+      "layer": 10.0,
+      "path_length_mm": 0.5240009541976054,
+      "endpoint_chord_mm": 0.5240009541976054
+    },
+    {
+      "line": 88735,
+      "layer": 10.0,
+      "path_length_mm": 0.08485281374238891,
+      "endpoint_chord_mm": 0.08485281374238891
+    },
+    {
+      "line": 88736,
+      "layer": 10.0,
+      "path_length_mm": 16.781765252797445,
+      "endpoint_chord_mm": 16.781765252797445
+    },
+    {
+      "line": 88737,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88738,
+      "layer": 10.0,
+      "path_length_mm": 16.326388486128838,
+      "endpoint_chord_mm": 16.326388486128838
+    },
+    {
+      "line": 88739,
+      "layer": 10.0,
+      "path_length_mm": 0.45537676708413044,
+      "endpoint_chord_mm": 0.45537676708413044
+    },
+    {
+      "line": 88740,
+      "layer": 10.0,
+      "path_length_mm": 15.871011719484043,
+      "endpoint_chord_mm": 15.871011719484043
+    },
+    {
+      "line": 88741,
+      "layer": 10.0,
+      "path_length_mm": 0.6449999999999818,
+      "endpoint_chord_mm": 0.6449999999999818
+    },
+    {
+      "line": 88742,
+      "layer": 10.0,
+      "path_length_mm": 15.414927829866745,
+      "endpoint_chord_mm": 15.414927829866745
+    },
+    {
+      "line": 88743,
+      "layer": 10.0,
+      "path_length_mm": 0.29981327522311085,
+      "endpoint_chord_mm": 0.29981327522311085
+    },
+    {
+      "line": 88744,
+      "layer": 10.0,
+      "path_length_mm": 0.879367954840294,
+      "endpoint_chord_mm": 0.879367954840294
+    },
+    {
+      "line": 88745,
+      "layer": 10.0,
+      "path_length_mm": 15.825049762954931,
+      "endpoint_chord_mm": 15.825049762954931
+    },
+    {
+      "line": 88746,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88747,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986276,
+      "endpoint_chord_mm": 16.868739371986276
+    },
+    {
+      "line": 88748,
+      "layer": 10.0,
+      "path_length_mm": 0.644999999999996,
+      "endpoint_chord_mm": 0.644999999999996
+    },
+    {
+      "line": 88749,
+      "layer": 10.0,
+      "path_length_mm": 16.869446493587144,
+      "endpoint_chord_mm": 16.869446493587144
+    },
+    {
+      "line": 88750,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88751,
+      "layer": 10.0,
+      "path_length_mm": 16.869446493587144,
+      "endpoint_chord_mm": 16.869446493587144
+    },
+    {
+      "line": 88752,
+      "layer": 10.0,
+      "path_length_mm": 0.1280000000000001,
+      "endpoint_chord_mm": 0.1280000000000001
+    },
+    {
+      "line": 88753,
+      "layer": 10.0,
+      "path_length_mm": 3.3665354594894703,
+      "endpoint_chord_mm": 3.3665354594894703
+    },
+    {
+      "line": 88754,
+      "layer": 10.0,
+      "path_length_mm": 0.3648670990922623,
+      "endpoint_chord_mm": 0.36486709909226234
+    },
+    {
+      "line": 88755,
+      "layer": 10.0,
+      "path_length_mm": 13.137336906694594,
+      "endpoint_chord_mm": 13.137336906694594
+    },
+    {
+      "line": 88756,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88757,
+      "layer": 10.0,
+      "path_length_mm": 12.68125301379953,
+      "endpoint_chord_mm": 12.681253013799532
+    },
+    {
+      "line": 88758,
+      "layer": 10.0,
+      "path_length_mm": 0.45608442200977256,
+      "endpoint_chord_mm": 0.45608442200977256
+    },
+    {
+      "line": 88759,
+      "layer": 10.0,
+      "path_length_mm": 12.22658337394385,
+      "endpoint_chord_mm": 12.22658337394385
+    },
+    {
+      "line": 88760,
+      "layer": 10.0,
+      "path_length_mm": 0.6439999999999912,
+      "endpoint_chord_mm": 0.6439999999999912
+    },
+    {
+      "line": 88761,
+      "layer": 10.0,
+      "path_length_mm": 8.514979859048397,
+      "endpoint_chord_mm": 8.514979859048397
+    },
+    {
+      "line": 88762,
+      "layer": 10.0,
+      "path_length_mm": 0.3075922625814811,
+      "endpoint_chord_mm": 0.3075922625814811
+    },
+    {
+      "line": 88763,
+      "layer": 10.0,
+      "path_length_mm": 1.0295474734076253,
+      "endpoint_chord_mm": 1.0295474734076253
+    },
+    {
+      "line": 88764,
+      "layer": 10.0,
+      "path_length_mm": 0.4350000000000023,
+      "endpoint_chord_mm": 0.4350000000000023
+    },
+    {
+      "line": 88765,
+      "layer": 10.0,
+      "path_length_mm": 2.5349779091739593,
+      "endpoint_chord_mm": 2.5349779091739593
+    },
+    {
+      "line": 88766,
+      "layer": 10.0,
+      "path_length_mm": 0.06788225099391114,
+      "endpoint_chord_mm": 0.06788225099391114
+    },
+    {
+      "line": 88767,
+      "layer": 10.0,
+      "path_length_mm": 3.256226804140034,
+      "endpoint_chord_mm": 3.256226804140034
+    },
+    {
+      "line": 88768,
+      "layer": 10.0,
+      "path_length_mm": 0.38749451609022934,
+      "endpoint_chord_mm": 0.38749451609022934
+    },
+    {
+      "line": 88769,
+      "layer": 10.0,
+      "path_length_mm": 14.572056546692375,
+      "endpoint_chord_mm": 14.572056546692375
+    },
+    {
+      "line": 88770,
+      "layer": 10.0,
+      "path_length_mm": 0.644999999999996,
+      "endpoint_chord_mm": 0.644999999999996
+    },
+    {
+      "line": 88771,
+      "layer": 10.0,
+      "path_length_mm": 14.116679779608234,
+      "endpoint_chord_mm": 14.116679779608234
+    },
+    {
+      "line": 88772,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841405,
+      "endpoint_chord_mm": 0.4553767670841405
+    },
+    {
+      "line": 88773,
+      "layer": 10.0,
+      "path_length_mm": 13.661303012524094,
+      "endpoint_chord_mm": 13.661303012524094
+    },
+    {
+      "line": 88774,
+      "layer": 10.0,
+      "path_length_mm": 0.6439999999999912,
+      "endpoint_chord_mm": 0.6439999999999912
+    },
+    {
+      "line": 88775,
+      "layer": 10.0,
+      "path_length_mm": 12.982480502585021,
+      "endpoint_chord_mm": 12.982480502585021
+    },
+    {
+      "line": 88776,
+      "layer": 10.0,
+      "path_length_mm": 0.4000049999687458,
+      "endpoint_chord_mm": 0.4000049999687458
+    },
+    {
+      "line": 88777,
+      "layer": 10.0,
+      "path_length_mm": 0.16513025161975942,
+      "endpoint_chord_mm": 0.16513025161975942
+    },
+    {
+      "line": 88778,
+      "layer": 10.0,
+      "path_length_mm": 12.196177761905565,
+      "endpoint_chord_mm": 12.196177761905565
+    },
+    {
+      "line": 88779,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88780,
+      "layer": 10.0,
+      "path_length_mm": 11.496849177057154,
+      "endpoint_chord_mm": 11.496849177057154
+    },
+    {
+      "line": 88781,
+      "layer": 10.0,
+      "path_length_mm": 0.4759999999999907,
+      "endpoint_chord_mm": 0.4759999999999907
+    },
+    {
+      "line": 88782,
+      "layer": 10.0,
+      "path_length_mm": 10.902879482045106,
+      "endpoint_chord_mm": 10.902879482045106
+    },
+    {
+      "line": 88783,
+      "layer": 10.0,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 88784,
+      "layer": 10.0,
+      "path_length_mm": 10.360528557945285,
+      "endpoint_chord_mm": 10.360528557945285
+    },
+    {
+      "line": 88785,
+      "layer": 10.0,
+      "path_length_mm": 0.4570951760847999,
+      "endpoint_chord_mm": 0.4570951760847999
+    },
+    {
+      "line": 88786,
+      "layer": 10.0,
+      "path_length_mm": 9.86555381111471,
+      "endpoint_chord_mm": 9.86555381111471
+    },
+    {
+      "line": 88787,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88788,
+      "layer": 10.0,
+      "path_length_mm": 9.455431878026513,
+      "endpoint_chord_mm": 9.455431878026513
+    },
+    {
+      "line": 88789,
+      "layer": 10.0,
+      "path_length_mm": 0.4690472395063341,
+      "endpoint_chord_mm": 0.46625851198665946
+    },
+    {
+      "line": 88790,
+      "layer": 10.0,
+      "path_length_mm": 9.096928767446732,
+      "endpoint_chord_mm": 9.096928767446732
+    },
+    {
+      "line": 88791,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88792,
+      "layer": 10.0,
+      "path_length_mm": 7.7109994812605205,
+      "endpoint_chord_mm": 7.71099948126052
+    },
+    {
+      "line": 88793,
+      "layer": 10.0,
+      "path_length_mm": 1.7598227183441006,
+      "endpoint_chord_mm": 1.7598227183441006
+    },
+    {
+      "line": 88794,
+      "layer": 10.0,
+      "path_length_mm": 5.555030873001513,
+      "endpoint_chord_mm": 5.555030873001513
+    },
+    {
+      "line": 88795,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88796,
+      "layer": 10.0,
+      "path_length_mm": 3.3997694039449153,
+      "endpoint_chord_mm": 3.3997694039449153
+    },
+    {
+      "line": 88797,
+      "layer": 10.0,
+      "path_length_mm": 0.21954498400099923,
+      "endpoint_chord_mm": 0.21954498400099923
+    },
+    {
+      "line": 88798,
+      "layer": 10.0,
+      "path_length_mm": 0.4126717824130973,
+      "endpoint_chord_mm": 0.4126717824130973
+    },
+    {
+      "line": 88799,
+      "layer": 10.0,
+      "path_length_mm": 2.6261945853268465,
+      "endpoint_chord_mm": 2.6261945853268465
+    },
+    {
+      "line": 88800,
+      "layer": 10.0,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 88801,
+      "layer": 10.0,
+      "path_length_mm": 2.047781238316252,
+      "endpoint_chord_mm": 2.047781238316252
+    },
+    {
+      "line": 88802,
+      "layer": 10.0,
+      "path_length_mm": 0.47133851953771816,
+      "endpoint_chord_mm": 0.47133851953771816
+    },
+    {
+      "line": 88803,
+      "layer": 10.0,
+      "path_length_mm": 1.4707821048680076,
+      "endpoint_chord_mm": 1.4707821048680076
+    },
+    {
+      "line": 88804,
+      "layer": 10.0,
+      "path_length_mm": 0.644999999999996,
+      "endpoint_chord_mm": 0.644999999999996
+    },
+    {
+      "line": 88805,
+      "layer": 10.0,
+      "path_length_mm": 0.8923687578574233,
+      "endpoint_chord_mm": 0.8923687578574233
+    },
+    {
+      "line": 88806,
+      "layer": 10.0,
+      "path_length_mm": 0.47133851953772526,
+      "endpoint_chord_mm": 0.47133851953772526
+    },
+    {
+      "line": 88807,
+      "layer": 10.0,
+      "path_length_mm": 0.6024549775709311,
+      "endpoint_chord_mm": 0.6024549775709311
+    },
+    {
+      "line": 89537,
+      "layer": 10.0,
+      "path_length_mm": 0.5225523897180102,
+      "endpoint_chord_mm": 0.5225523897180102
+    },
+    {
+      "line": 89538,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89539,
+      "layer": 10.0,
+      "path_length_mm": 0.8895403307326736,
+      "endpoint_chord_mm": 0.8895403307326736
+    },
+    {
+      "line": 89540,
+      "layer": 10.0,
+      "path_length_mm": 0.4704731660785686,
+      "endpoint_chord_mm": 0.4704731660785686
+    },
+    {
+      "line": 89541,
+      "layer": 10.0,
+      "path_length_mm": 1.4651252506185284,
+      "endpoint_chord_mm": 1.4651252506185284
+    },
+    {
+      "line": 89542,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89543,
+      "layer": 10.0,
+      "path_length_mm": 2.0407101705043633,
+      "endpoint_chord_mm": 2.0407101705043633
+    },
+    {
+      "line": 89544,
+      "layer": 10.0,
+      "path_length_mm": 0.4708386135397076,
+      "endpoint_chord_mm": 0.4708386135397076
+    },
+    {
+      "line": 89545,
+      "layer": 10.0,
+      "path_length_mm": 2.617709303952598,
+      "endpoint_chord_mm": 2.617709303952598
+    },
+    {
+      "line": 89546,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89547,
+      "layer": 10.0,
+      "path_length_mm": 3.365121245958309,
+      "endpoint_chord_mm": 3.365121245958309
+    },
+    {
+      "line": 89548,
+      "layer": 10.0,
+      "path_length_mm": 1.754858683769153,
+      "endpoint_chord_mm": 1.754858683769153
+    },
+    {
+      "line": 89549,
+      "layer": 10.0,
+      "path_length_mm": 5.514018679692699,
+      "endpoint_chord_mm": 5.514018679692699
+    },
+    {
+      "line": 89550,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89551,
+      "layer": 10.0,
+      "path_length_mm": 7.665037508062167,
+      "endpoint_chord_mm": 7.665037508062167
+    },
+    {
+      "line": 89552,
+      "layer": 10.0,
+      "path_length_mm": 0.36603005341090905,
+      "endpoint_chord_mm": 0.36603005341090905
+    },
+    {
+      "line": 89553,
+      "layer": 10.0,
+      "path_length_mm": 0.5079999999999814,
+      "endpoint_chord_mm": 0.5079999999999814
+    },
+    {
+      "line": 89554,
+      "layer": 10.0,
+      "path_length_mm": 8.11334320733446,
+      "endpoint_chord_mm": 8.11334320733446
+    },
+    {
+      "line": 89555,
+      "layer": 10.0,
+      "path_length_mm": 0.6429999999999723,
+      "endpoint_chord_mm": 0.6429999999999723
+    },
+    {
+      "line": 89556,
+      "layer": 10.0,
+      "path_length_mm": 9.444118169527524,
+      "endpoint_chord_mm": 9.444118169527524
+    },
+    {
+      "line": 89557,
+      "layer": 10.0,
+      "path_length_mm": 0.45621266970570534,
+      "endpoint_chord_mm": 0.4562126697057053
+    },
+    {
+      "line": 89558,
+      "layer": 10.0,
+      "path_length_mm": 9.853533021206141,
+      "endpoint_chord_mm": 9.853533021206141
+    },
+    {
+      "line": 89559,
+      "layer": 10.0,
+      "path_length_mm": 0.6420000000000243,
+      "endpoint_chord_mm": 0.6420000000000243
+    },
+    {
+      "line": 89560,
+      "layer": 10.0,
+      "path_length_mm": 10.344972208759186,
+      "endpoint_chord_mm": 10.344972208759186
+    },
+    {
+      "line": 89561,
+      "layer": 10.0,
+      "path_length_mm": 0.4649352779229339,
+      "endpoint_chord_mm": 0.4621352615847273
+    },
+    {
+      "line": 89562,
+      "layer": 10.0,
+      "path_length_mm": 10.882373362460976,
+      "endpoint_chord_mm": 10.882373362460976
+    },
+    {
+      "line": 89563,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89564,
+      "layer": 10.0,
+      "path_length_mm": 11.474928845095299,
+      "endpoint_chord_mm": 11.474928845095299
+    },
+    {
+      "line": 89565,
+      "layer": 10.0,
+      "path_length_mm": 0.5130522841451779,
+      "endpoint_chord_mm": 0.5130341119262841
+    },
+    {
+      "line": 89566,
+      "layer": 10.0,
+      "path_length_mm": 12.168600617983989,
+      "endpoint_chord_mm": 12.168600617983989
+    },
+    {
+      "line": 89567,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89568,
+      "layer": 10.0,
+      "path_length_mm": 12.948539377088055,
+      "endpoint_chord_mm": 12.948539377088055
+    },
+    {
+      "line": 89569,
+      "layer": 10.0,
+      "path_length_mm": 0.5064740862077802,
+      "endpoint_chord_mm": 0.5064740862077802
+    },
+    {
+      "line": 89570,
+      "layer": 10.0,
+      "path_length_mm": 0.07792945527847434,
+      "endpoint_chord_mm": 0.07792945527847434
+    },
+    {
+      "line": 89571,
+      "layer": 10.0,
+      "path_length_mm": 13.678273575272572,
+      "endpoint_chord_mm": 13.678273575272572
+    },
+    {
+      "line": 89572,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89573,
+      "layer": 10.0,
+      "path_length_mm": 14.095466576172646,
+      "endpoint_chord_mm": 14.095466576172646
+    },
+    {
+      "line": 89574,
+      "layer": 10.0,
+      "path_length_mm": 0.4539625535217606,
+      "endpoint_chord_mm": 0.4539625535217606
+    },
+    {
+      "line": 89575,
+      "layer": 10.0,
+      "path_length_mm": 14.549429129694406,
+      "endpoint_chord_mm": 14.549429129694406
+    },
+    {
+      "line": 89576,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89577,
+      "layer": 10.0,
+      "path_length_mm": 15.004805896778548,
+      "endpoint_chord_mm": 15.004805896778548
+    },
+    {
+      "line": 89578,
+      "layer": 10.0,
+      "path_length_mm": 0.12445079348884378,
+      "endpoint_chord_mm": 0.12445079348884378
+    },
+    {
+      "line": 89579,
+      "layer": 10.0,
+      "path_length_mm": 1.3873435046879985,
+      "endpoint_chord_mm": 1.3873435046879985
+    },
+    {
+      "line": 89580,
+      "layer": 10.0,
+      "path_length_mm": 0.4570886128531249,
+      "endpoint_chord_mm": 0.4570886128531249
+    },
+    {
+      "line": 89581,
+      "layer": 10.0,
+      "path_length_mm": 14.388208783583869,
+      "endpoint_chord_mm": 14.388208783583869
+    },
+    {
+      "line": 89582,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89583,
+      "layer": 10.0,
+      "path_length_mm": 15.280577541441291,
+      "endpoint_chord_mm": 15.280577541441293
+    },
+    {
+      "line": 89584,
+      "layer": 10.0,
+      "path_length_mm": 0.6311140942808997,
+      "endpoint_chord_mm": 0.6311140942808997
+    },
+    {
+      "line": 89585,
+      "layer": 10.0,
+      "path_length_mm": 16.172946299298715,
+      "endpoint_chord_mm": 16.172946299298715
+    },
+    {
+      "line": 89586,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89587,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986276,
+      "endpoint_chord_mm": 16.868739371986276
+    },
+    {
+      "line": 89588,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89589,
+      "layer": 10.0,
+      "path_length_mm": 16.869446493587155,
+      "endpoint_chord_mm": 16.869446493587155
+    },
+    {
+      "line": 89590,
+      "layer": 10.0,
+      "path_length_mm": 0.6420000000000101,
+      "endpoint_chord_mm": 0.6420000000000101
+    },
+    {
+      "line": 89591,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986283,
+      "endpoint_chord_mm": 16.868739371986283
+    },
+    {
+      "line": 89592,
+      "layer": 10.0,
+      "path_length_mm": 0.14000000000001478,
+      "endpoint_chord_mm": 0.14000000000001478
+    },
+    {
+      "line": 89593,
+      "layer": 10.0,
+      "path_length_mm": 2.295975827398876,
+      "endpoint_chord_mm": 2.295975827398876
+    },
+    {
+      "line": 89594,
+      "layer": 10.0,
+      "path_length_mm": 0.3563818177180234,
+      "endpoint_chord_mm": 0.3563818177180234
+    },
+    {
+      "line": 89595,
+      "layer": 10.0,
+      "path_length_mm": 14.928438364410377,
+      "endpoint_chord_mm": 14.928438364410377
+    },
+    {
+      "line": 89596,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89597,
+      "layer": 10.0,
+      "path_length_mm": 15.38310804096492,
+      "endpoint_chord_mm": 15.38310804096492
+    },
+    {
+      "line": 89598,
+      "layer": 10.0,
+      "path_length_mm": 0.45467021015237014,
+      "endpoint_chord_mm": 0.45467021015237014
+    },
+    {
+      "line": 89599,
+      "layer": 10.0,
+      "path_length_mm": 15.83636347145391,
+      "endpoint_chord_mm": 15.83636347145391
+    },
+    {
+      "line": 89600,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89601,
+      "layer": 10.0,
+      "path_length_mm": 16.29174023853805,
+      "endpoint_chord_mm": 16.29174023853805
+    },
+    {
+      "line": 89602,
+      "layer": 10.0,
+      "path_length_mm": 0.18597042775667688,
+      "endpoint_chord_mm": 0.18597042775667688
+    },
+    {
+      "line": 89603,
+      "layer": 10.0,
+      "path_length_mm": 0.2782175407841876,
+      "endpoint_chord_mm": 0.2782175407841876
+    },
+    {
+      "line": 89604,
+      "layer": 10.0,
+      "path_length_mm": 0.1279999999999859,
+      "endpoint_chord_mm": 0.1279999999999859
+    },
+    {
+      "line": 89605,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986283,
+      "endpoint_chord_mm": 16.868739371986283
+    },
+    {
+      "line": 89606,
+      "layer": 10.0,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 89607,
+      "layer": 10.0,
+      "path_length_mm": 16.868739371986283,
+      "endpoint_chord_mm": 16.868739371986283
+    },
+    {
+      "line": 89608,
+      "layer": 10.0,
+      "path_length_mm": 0.6420000000000243,
+      "endpoint_chord_mm": 0.6420000000000243
+    },
+    {
+      "line": 89609,
+      "layer": 10.0,
+      "path_length_mm": 16.869446493587144,
+      "endpoint_chord_mm": 16.869446493587144
+    },
+    {
+      "line": 89610,
+      "layer": 10.0,
+      "path_length_mm": 0.6419999999999959,
+      "endpoint_chord_mm": 0.6419999999999959
+    },
+    {
+      "line": 89611,
+      "layer": 10.0,
+      "path_length_mm": 16.625494639258108,
+      "endpoint_chord_mm": 16.625494639258108
+    },
+    {
+      "line": 89612,
+      "layer": 10.0,
+      "path_length_mm": 1.8024386258622007,
+      "endpoint_chord_mm": 1.8024386258622007
+    },
+    {
+      "line": 89613,
+      "layer": 10.0,
+      "path_length_mm": 0.12798828071349722,
+      "endpoint_chord_mm": 0.12798828071349722
+    },
+    {
+      "line": 89614,
+      "layer": 10.0,
+      "path_length_mm": 15.306740508677862,
+      "endpoint_chord_mm": 15.306740508677862
+    },
+    {
+      "line": 89615,
+      "layer": 10.0,
+      "path_length_mm": 0.5379999999999967,
+      "endpoint_chord_mm": 0.5379999999999967
+    },
+    {
+      "line": 89616,
+      "layer": 10.0,
+      "path_length_mm": 0.2854084792013022,
+      "endpoint_chord_mm": 0.2854084792013022
+    },
+    {
+      "line": 89617,
+      "layer": 10.0,
+      "path_length_mm": 15.412099402741983,
+      "endpoint_chord_mm": 15.412099402741983
+    },
+    {
+      "line": 89618,
+      "layer": 10.0,
+      "path_length_mm": 0.45467021015237014,
+      "endpoint_chord_mm": 0.45467021015237014
+    },
+    {
+      "line": 89619,
+      "layer": 10.0,
+      "path_length_mm": 13.715043127894265,
+      "endpoint_chord_mm": 13.715043127894265
+    },
+    {
+      "line": 89620,
+      "layer": 10.0,
+      "path_length_mm": 0.5152475133370329,
+      "endpoint_chord_mm": 0.5152475133370329
+    },
+    {
+      "line": 89621,
+      "layer": 10.0,
+      "path_length_mm": 0.3324154027718888,
+      "endpoint_chord_mm": 0.3324154027718888
+    },
+    {
+      "line": 89622,
+      "layer": 10.0,
+      "path_length_mm": 13.130972926634183,
+      "endpoint_chord_mm": 13.130972926634183
+    },
+    {
+      "line": 89623,
+      "layer": 10.0,
+      "path_length_mm": 0.19940411229461394,
+      "endpoint_chord_mm": 0.19940411229461394
+    },
+    {
+      "line": 89624,
+      "layer": 10.0,
+      "path_length_mm": 0.36099999999999,
+      "endpoint_chord_mm": 0.36099999999999
+    },
+    {
+      "line": 89625,
+      "layer": 10.0,
+      "path_length_mm": 12.754792119042952,
+      "endpoint_chord_mm": 12.754792119042952
+    },
+    {
+      "line": 89626,
+      "layer": 10.0,
+      "path_length_mm": 0.4708386135397146,
+      "endpoint_chord_mm": 0.4708386135397147
+    },
+    {
+      "line": 89627,
+      "layer": 10.0,
+      "path_length_mm": 12.178500112903887,
+      "endpoint_chord_mm": 12.178500112903887
+    },
+    {
+      "line": 89628,
+      "layer": 10.0,
+      "path_length_mm": 0.5150000000000006,
+      "endpoint_chord_mm": 0.5150000000000006
+    },
+    {
+      "line": 89629,
+      "layer": 10.0,
+      "path_length_mm": 0.5226700680161396,
+      "endpoint_chord_mm": 0.5226700680161396
+    },
+    {
+      "line": 89630,
+      "layer": 10.0,
+      "path_length_mm": 11.177943996996937,
+      "endpoint_chord_mm": 11.177943996996937
+    },
+    {
+      "line": 89631,
+      "layer": 10.0,
+      "path_length_mm": 0.4699723396115955,
+      "endpoint_chord_mm": 0.4699723396115955
+    },
+    {
+      "line": 89632,
+      "layer": 10.0,
+      "path_length_mm": 9.388256760442793,
+      "endpoint_chord_mm": 9.388256760442793
+    },
+    {
+      "line": 89633,
+      "layer": 10.0,
+      "path_length_mm": 0.4539625535217606,
+      "endpoint_chord_mm": 0.4539625535217606
+    },
+    {
+      "line": 89634,
+      "layer": 10.0,
+      "path_length_mm": 9.265927260668509,
+      "endpoint_chord_mm": 9.265927260668509
+    },
+    {
+      "line": 89635,
+      "layer": 10.0,
+      "path_length_mm": 0.47047316607857576,
+      "endpoint_chord_mm": 0.47047316607857576
+    },
+    {
+      "line": 89636,
+      "layer": 10.0,
+      "path_length_mm": 5.888078209399056,
+      "endpoint_chord_mm": 5.888078209399055
+    },
+    {
+      "line": 89637,
+      "layer": 10.0,
+      "path_length_mm": 0.4553767670841405,
+      "endpoint_chord_mm": 0.4553767670841405
+    },
+    {
+      "line": 89638,
+      "layer": 10.0,
+      "path_length_mm": 5.765748693795106,
+      "endpoint_chord_mm": 5.765748693795106
+    },
+    {
+      "line": 89639,
+      "layer": 10.0,
+      "path_length_mm": 0.4699723396115955,
+      "endpoint_chord_mm": 0.4699723396115955
+    },
+    {
+      "line": 89640,
+      "layer": 10.0,
+      "path_length_mm": 5.644126327431022,
+      "endpoint_chord_mm": 5.644126327431022
+    },
+    {
+      "line": 89641,
+      "layer": 10.0,
+      "path_length_mm": 0.4539625535217606,
+      "endpoint_chord_mm": 0.4539625535217606
+    },
+    {
+      "line": 89642,
+      "layer": 10.0,
+      "path_length_mm": 5.732514718690219,
+      "endpoint_chord_mm": 5.732514718690219
+    },
+    {
+      "line": 89820,
+      "layer": 10.0,
+      "path_length_mm": 3.2611764748323533,
+      "endpoint_chord_mm": 3.2611764748323533
+    },
+    {
+      "line": 121524,
+      "layer": 14.0,
+      "path_length_mm": 0.6293250352560478,
+      "endpoint_chord_mm": 0.6293250352560478
+    },
+    {
+      "line": 121525,
+      "layer": 14.0,
+      "path_length_mm": 0.4795883651632941,
+      "endpoint_chord_mm": 0.4795883651632941
+    },
+    {
+      "line": 121526,
+      "layer": 14.0,
+      "path_length_mm": 0.940452018978127,
+      "endpoint_chord_mm": 0.9404520189781271
+    },
+    {
+      "line": 121527,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121528,
+      "layer": 14.0,
+      "path_length_mm": 1.5782623356083836,
+      "endpoint_chord_mm": 1.5782623356083838
+    },
+    {
+      "line": 121529,
+      "layer": 14.0,
+      "path_length_mm": 0.5234825689552468,
+      "endpoint_chord_mm": 0.5234825689552468
+    },
+    {
+      "line": 121530,
+      "layer": 14.0,
+      "path_length_mm": 2.2896117574820405,
+      "endpoint_chord_mm": 2.2896117574820405
+    },
+    {
+      "line": 121531,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121532,
+      "layer": 14.0,
+      "path_length_mm": 3.1239977592821613,
+      "endpoint_chord_mm": 3.1239977592821613
+    },
+    {
+      "line": 121533,
+      "layer": 14.0,
+      "path_length_mm": 0.7094575392509341,
+      "endpoint_chord_mm": 0.7094575392509341
+    },
+    {
+      "line": 121534,
+      "layer": 14.0,
+      "path_length_mm": 4.1245539152737365,
+      "endpoint_chord_mm": 4.1245539152737365
+    },
+    {
+      "line": 121535,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 121536,
+      "layer": 14.0,
+      "path_length_mm": 5.594628852747979,
+      "endpoint_chord_mm": 5.594628852747978
+    },
+    {
+      "line": 121537,
+      "layer": 14.0,
+      "path_length_mm": 0.2822941728055973,
+      "endpoint_chord_mm": 0.2822941728055973
+    },
+    {
+      "line": 121538,
+      "layer": 14.0,
+      "path_length_mm": 0.5641453713361557,
+      "endpoint_chord_mm": 0.5641453713361557
+    },
+    {
+      "line": 121539,
+      "layer": 14.0,
+      "path_length_mm": 0.12303657992645388,
+      "endpoint_chord_mm": 0.12303657992645388
+    },
+    {
+      "line": 121540,
+      "layer": 14.0,
+      "path_length_mm": 0.28000000000000114,
+      "endpoint_chord_mm": 0.28000000000000114
+    },
+    {
+      "line": 121541,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 121542,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121543,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121544,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 121545,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 121546,
+      "layer": 14.0,
+      "path_length_mm": 0.07399999999999807,
+      "endpoint_chord_mm": 0.07399999999999807
+    },
+    {
+      "line": 121547,
+      "layer": 14.0,
+      "path_length_mm": 0.5740000000000123,
+      "endpoint_chord_mm": 0.5740000000000123
+    },
+    {
+      "line": 121548,
+      "layer": 14.0,
+      "path_length_mm": 5.874643138097832,
+      "endpoint_chord_mm": 5.874643138097832
+    },
+    {
+      "line": 121549,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121550,
+      "layer": 14.0,
+      "path_length_mm": 4.9582327496800715,
+      "endpoint_chord_mm": 4.9582327496800715
+    },
+    {
+      "line": 121551,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121552,
+      "layer": 14.0,
+      "path_length_mm": 4.040408147699932,
+      "endpoint_chord_mm": 4.040408147699932
+    },
+    {
+      "line": 121553,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 121554,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121555,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121556,
+      "layer": 14.0,
+      "path_length_mm": 3.8586817697239613,
+      "endpoint_chord_mm": 3.8586817697239613
+    },
+    {
+      "line": 121557,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121558,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121559,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121560,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121561,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121562,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538154,
+      "endpoint_chord_mm": 3.8579745981538154
+    },
+    {
+      "line": 121563,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121564,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538154,
+      "endpoint_chord_mm": 3.8579745981538154
+    },
+    {
+      "line": 121565,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121566,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538154,
+      "endpoint_chord_mm": 3.8579745981538154
+    },
+    {
+      "line": 121567,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121568,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121569,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121570,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121571,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121572,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121573,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121574,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121575,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121576,
+      "layer": 14.0,
+      "path_length_mm": 3.858681769723951,
+      "endpoint_chord_mm": 3.8586817697239515
+    },
+    {
+      "line": 121577,
+      "layer": 14.0,
+      "path_length_mm": 0.6489999999999867,
+      "endpoint_chord_mm": 0.6489999999999867
+    },
+    {
+      "line": 121578,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 121579,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000246,
+      "endpoint_chord_mm": 0.6480000000000246
+    },
+    {
+      "line": 121580,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538154,
+      "endpoint_chord_mm": 3.8579745981538154
+    },
+    {
+      "line": 121581,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121582,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121583,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121584,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121585,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121586,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121587,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121588,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121589,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121590,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121591,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121592,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121593,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121594,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722900006,
+      "endpoint_chord_mm": 6.686401722900006
+    },
+    {
+      "line": 121595,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121596,
+      "layer": 14.0,
+      "path_length_mm": 6.68710886706654,
+      "endpoint_chord_mm": 6.68710886706654
+    },
+    {
+      "line": 121597,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121598,
+      "layer": 14.0,
+      "path_length_mm": 5.1774358518479024,
+      "endpoint_chord_mm": 5.1774358518479024
+    },
+    {
+      "line": 121599,
+      "layer": 14.0,
+      "path_length_mm": 0.5381087250733043,
+      "endpoint_chord_mm": 0.5381087250733043
+    },
+    {
+      "line": 121600,
+      "layer": 14.0,
+      "path_length_mm": 0.3225910724121165,
+      "endpoint_chord_mm": 0.3225910724121165
+    },
+    {
+      "line": 121601,
+      "layer": 14.0,
+      "path_length_mm": 3.9951533137039776,
+      "endpoint_chord_mm": 3.9951533137039776
+    },
+    {
+      "line": 121602,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121603,
+      "layer": 14.0,
+      "path_length_mm": 3.0688434303495984,
+      "endpoint_chord_mm": 3.0688434303495984
+    },
+    {
+      "line": 121604,
+      "layer": 14.0,
+      "path_length_mm": 0.5661115149316905,
+      "endpoint_chord_mm": 0.5652114648518662
+    },
+    {
+      "line": 121605,
+      "layer": 14.0,
+      "path_length_mm": 2.2790052654612167,
+      "endpoint_chord_mm": 2.2790052654612167
+    },
+    {
+      "line": 121606,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 121607,
+      "layer": 14.0,
+      "path_length_mm": 1.5782623356083534,
+      "endpoint_chord_mm": 1.5782623356083534
+    },
+    {
+      "line": 121608,
+      "layer": 14.0,
+      "path_length_mm": 0.4787065907212863,
+      "endpoint_chord_mm": 0.4787065907212863
+    },
+    {
+      "line": 121609,
+      "layer": 14.0,
+      "path_length_mm": 0.9814642122869116,
+      "endpoint_chord_mm": 0.9814642122869116
+    },
+    {
+      "line": 121610,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 121611,
+      "layer": 14.0,
+      "path_length_mm": 0.6420529573173961,
+      "endpoint_chord_mm": 0.6420529573173961
+    },
+    {
+      "line": 121767,
+      "layer": 14.0,
+      "path_length_mm": 1.6659435764755222,
+      "endpoint_chord_mm": 1.6659435764755222
+    },
+    {
+      "line": 121768,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000246,
+      "endpoint_chord_mm": 0.6480000000000246
+    },
+    {
+      "line": 121769,
+      "layer": 14.0,
+      "path_length_mm": 0.7488264151323706,
+      "endpoint_chord_mm": 0.7488264151323706
+    },
+    {
+      "line": 122288,
+      "layer": 14.0,
+      "path_length_mm": 0.6293250352560277,
+      "endpoint_chord_mm": 0.6293250352560277
+    },
+    {
+      "line": 122289,
+      "layer": 14.0,
+      "path_length_mm": 0.4795883651632941,
+      "endpoint_chord_mm": 0.4795883651632941
+    },
+    {
+      "line": 122290,
+      "layer": 14.0,
+      "path_length_mm": 0.940452018978107,
+      "endpoint_chord_mm": 0.940452018978107
+    },
+    {
+      "line": 122291,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122292,
+      "layer": 14.0,
+      "path_length_mm": 1.5782623356083736,
+      "endpoint_chord_mm": 1.5782623356083736
+    },
+    {
+      "line": 122293,
+      "layer": 14.0,
+      "path_length_mm": 0.5236253026771949,
+      "endpoint_chord_mm": 0.5234825689552604
+    },
+    {
+      "line": 122294,
+      "layer": 14.0,
+      "path_length_mm": 2.2896117574820405,
+      "endpoint_chord_mm": 2.2896117574820405
+    },
+    {
+      "line": 122295,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122296,
+      "layer": 14.0,
+      "path_length_mm": 3.123997759282151,
+      "endpoint_chord_mm": 3.123997759282151
+    },
+    {
+      "line": 122297,
+      "layer": 14.0,
+      "path_length_mm": 0.7094575392509482,
+      "endpoint_chord_mm": 0.7094575392509482
+    },
+    {
+      "line": 122298,
+      "layer": 14.0,
+      "path_length_mm": 4.1245539152737365,
+      "endpoint_chord_mm": 4.1245539152737365
+    },
+    {
+      "line": 122299,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 122300,
+      "layer": 14.0,
+      "path_length_mm": 5.594628852747959,
+      "endpoint_chord_mm": 5.594628852747959
+    },
+    {
+      "line": 122301,
+      "layer": 14.0,
+      "path_length_mm": 0.28229417280560987,
+      "endpoint_chord_mm": 0.28229417280560987
+    },
+    {
+      "line": 122302,
+      "layer": 14.0,
+      "path_length_mm": 0.5641453713361447,
+      "endpoint_chord_mm": 0.5641453713361447
+    },
+    {
+      "line": 122303,
+      "layer": 14.0,
+      "path_length_mm": 0.12303657992646393,
+      "endpoint_chord_mm": 0.12303657992646393
+    },
+    {
+      "line": 122304,
+      "layer": 14.0,
+      "path_length_mm": 0.28000000000000114,
+      "endpoint_chord_mm": 0.28000000000000114
+    },
+    {
+      "line": 122305,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899985,
+      "endpoint_chord_mm": 6.686401722899985
+    },
+    {
+      "line": 122306,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122307,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122308,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 122309,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899985,
+      "endpoint_chord_mm": 6.686401722899985
+    },
+    {
+      "line": 122310,
+      "layer": 14.0,
+      "path_length_mm": 0.07399999999999807,
+      "endpoint_chord_mm": 0.07399999999999807
+    },
+    {
+      "line": 122311,
+      "layer": 14.0,
+      "path_length_mm": 0.5739999999999981,
+      "endpoint_chord_mm": 0.5739999999999981
+    },
+    {
+      "line": 122312,
+      "layer": 14.0,
+      "path_length_mm": 5.874643138097832,
+      "endpoint_chord_mm": 5.874643138097832
+    },
+    {
+      "line": 122313,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122314,
+      "layer": 14.0,
+      "path_length_mm": 4.9582327496800715,
+      "endpoint_chord_mm": 4.9582327496800715
+    },
+    {
+      "line": 122315,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122316,
+      "layer": 14.0,
+      "path_length_mm": 4.040408147699932,
+      "endpoint_chord_mm": 4.040408147699932
+    },
+    {
+      "line": 122317,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000103,
+      "endpoint_chord_mm": 0.6480000000000103
+    },
+    {
+      "line": 122318,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122319,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122320,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122321,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122322,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122323,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122324,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122325,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122326,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 122327,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122328,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 122329,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122330,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981538056,
+      "endpoint_chord_mm": 3.8579745981538056
+    },
+    {
+      "line": 122331,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122332,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122333,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122334,
+      "layer": 14.0,
+      "path_length_mm": 3.8586817697239515,
+      "endpoint_chord_mm": 3.8586817697239515
+    },
+    {
+      "line": 122335,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122336,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122337,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122338,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122339,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122340,
+      "layer": 14.0,
+      "path_length_mm": 3.8586817697239413,
+      "endpoint_chord_mm": 3.8586817697239413
+    },
+    {
+      "line": 122341,
+      "layer": 14.0,
+      "path_length_mm": 0.6489999999999867,
+      "endpoint_chord_mm": 0.6489999999999867
+    },
+    {
+      "line": 122342,
+      "layer": 14.0,
+      "path_length_mm": 3.8579745981537954,
+      "endpoint_chord_mm": 3.8579745981537954
+    },
+    {
+      "line": 122343,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000246,
+      "endpoint_chord_mm": 0.6480000000000246
+    },
+    {
+      "line": 122344,
+      "layer": 14.0,
+      "path_length_mm": 4.145059951315548,
+      "endpoint_chord_mm": 4.145059951315548
+    },
+    {
+      "line": 122355,
+      "layer": 14.0,
+      "path_length_mm": 0.7488264151323706,
+      "endpoint_chord_mm": 0.7488264151323706
+    },
+    {
+      "line": 122356,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122357,
+      "layer": 14.0,
+      "path_length_mm": 1.3788582233137798,
+      "endpoint_chord_mm": 1.3788582233137796
+    },
+    {
+      "line": 122358,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122359,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122360,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122361,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122362,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122363,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122364,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122365,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122366,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122367,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122368,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122369,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122370,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122371,
+      "layer": 14.0,
+      "path_length_mm": 6.686401722899996,
+      "endpoint_chord_mm": 6.686401722899996
+    },
+    {
+      "line": 122372,
+      "layer": 14.0,
+      "path_length_mm": 0.6480000000000246,
+      "endpoint_chord_mm": 0.6480000000000246
+    },
+    {
+      "line": 122373,
+      "layer": 14.0,
+      "path_length_mm": 6.68710886706653,
+      "endpoint_chord_mm": 6.68710886706653
+    },
+    {
+      "line": 122374,
+      "layer": 14.0,
+      "path_length_mm": 0.11899999999999977,
+      "endpoint_chord_mm": 0.11899999999999977
+    },
+    {
+      "line": 122375,
+      "layer": 14.0,
+      "path_length_mm": 1.05135388904022,
+      "endpoint_chord_mm": 1.05135388904022
+    },
+    {
+      "line": 122376,
+      "layer": 14.0,
+      "path_length_mm": 0.14616429112474053,
+      "endpoint_chord_mm": 0.14616429112474053
+    },
+    {
+      "line": 122377,
+      "layer": 14.0,
+      "path_length_mm": 5.1774358518479024,
+      "endpoint_chord_mm": 5.1774358518479024
+    },
+    {
+      "line": 122378,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122379,
+      "layer": 14.0,
+      "path_length_mm": 3.9951533137039874,
+      "endpoint_chord_mm": 3.9951533137039874
+    },
+    {
+      "line": 122380,
+      "layer": 14.0,
+      "path_length_mm": 0.6590782660947516,
+      "endpoint_chord_mm": 0.6550374035121976
+    },
+    {
+      "line": 122381,
+      "layer": 14.0,
+      "path_length_mm": 3.0688434303496086,
+      "endpoint_chord_mm": 3.0688434303496086
+    },
+    {
+      "line": 122382,
+      "layer": 14.0,
+      "path_length_mm": 0.6490000000000009,
+      "endpoint_chord_mm": 0.6490000000000009
+    },
+    {
+      "line": 122383,
+      "layer": 14.0,
+      "path_length_mm": 2.2790052654612167,
+      "endpoint_chord_mm": 2.2790052654612167
+    },
+    {
+      "line": 122384,
+      "layer": 14.0,
+      "path_length_mm": 0.5190616533707654,
+      "endpoint_chord_mm": 0.5190616533707654
+    },
+    {
+      "line": 122385,
+      "layer": 14.0,
+      "path_length_mm": 1.5782623356083636,
+      "endpoint_chord_mm": 1.5782623356083636
+    },
+    {
+      "line": 122386,
+      "layer": 14.0,
+      "path_length_mm": 0.6479999999999961,
+      "endpoint_chord_mm": 0.6479999999999961
+    },
+    {
+      "line": 122387,
+      "layer": 14.0,
+      "path_length_mm": 0.9814642122869216,
+      "endpoint_chord_mm": 0.9814642122869216
+    },
+    {
+      "line": 122388,
+      "layer": 14.0,
+      "path_length_mm": 0.3795023236350502,
+      "endpoint_chord_mm": 0.3771962354000976
+    },
+    {
+      "line": 122389,
+      "layer": 14.0,
+      "path_length_mm": 0.08886506625216492,
+      "endpoint_chord_mm": 0.08886506625216492
+    },
+    {
+      "line": 122390,
+      "layer": 14.0,
+      "path_length_mm": 0.7261990085369168,
+      "endpoint_chord_mm": 0.7261990085369168
+    }
+  ],
+  "exact_datum_checks": [],
+  "pending_review": [],
+  "layer_image": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/layer-path-review.png",
+  "resolved_process": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "filament_settings_id": [
+      "Generic PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.2",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_top_z_distance": "0.2",
+    "support_object_xy_distance": "0.35"
+  },
+  "method": "Actual G-code positive extrusion with .00125 mm maximum arc sagitta, width/2+.002 mm circumscribed footprint and full layer slab; explicit 3MF affine maps. Feature box intersections are conservative. Core checks are finite declared pick paths, not entire-hole dimensional acceptance. Exact X54 face disambiguates only that specific datum.",
+  "limits": [
+    "No physical support separation/grip/debris or dimensional/strength proof.",
+    "Bridge path length is not unsupported span.",
+    "Open channels require clipping tree branches before gibs, nuts, keeper, hose or host installation.",
+    "Textured PEI and Generic PETG remain analysis assumptions."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false,
+  "auditor_sha256": "51253cf850e231d702b3a642cedd1ece1468a3592d3df36e05cbf0031ddceb4b",
+  "auditor_archived_source": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/first-probe-definition/review.py"
+}

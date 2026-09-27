@@ -1,0 +1,104 @@
+{
+    "error_string": "Success.",
+    "export_time": 438,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 121,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 18.26682472229004,
+                "Bridge": 20.213298797607422,
+                "Custom": 428.8055114746094,
+                "Flush": 29.0,
+                "Gap infill": 26.64780044555664,
+                "Inner wall": 274.0316467285156,
+                "Internal solid infill": 137.63560485839844,
+                "Outer wall": 197.06216430664063,
+                "Overhang wall": 33.879703521728516,
+                "Sparse infill": 25.78133773803711,
+                "Top surface": 47.84676742553711,
+                "Travel": 171.23388671875,
+                "Undefined": 155.87515258789063
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 5.468506336212158,
+                    "total_used_g": 5.468506336212158
+                }
+            ],
+            "generate_support_material_time": 15,
+            "id": 1,
+            "infill_time": 166,
+            "layer_filament_change": 0,
+            "main_predication": 923.6118774414063,
+            "make_perimeters_time": 141,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 9.000000953674316,
+                        "height": 8.0,
+                        "width": 30.492294311523438,
+                        "x": 118.25383758544922,
+                        "y": 134.49996948242188,
+                        "z": 0.0
+                    },
+                    "id": 74,
+                    "name": "finger-right-front.stl",
+                    "triangle_count": 1964
+                },
+                {
+                    "bbox": {
+                        "depth": 9.0,
+                        "height": 8.0,
+                        "width": 30.492294311523438,
+                        "x": 118.25383758544922,
+                        "y": 123.5,
+                        "z": 0.0
+                    },
+                    "id": 85,
+                    "name": "finger-right-rear.stl",
+                    "triangle_count": 1964
+                },
+                {
+                    "bbox": {
+                        "depth": 8.999999046325684,
+                        "height": 8.0,
+                        "width": 30.492292404174805,
+                        "x": 118.25382995605469,
+                        "y": 112.50003051757813,
+                        "z": 0.0
+                    },
+                    "id": 96,
+                    "name": "finger-left-front.stl",
+                    "triangle_count": 1964
+                },
+                {
+                    "bbox": {
+                        "depth": 30.49228858947754,
+                        "height": 8.0,
+                        "width": 9.000001907348633,
+                        "x": 107.25386810302734,
+                        "y": 112.75385284423828,
+                        "z": 0.0
+                    },
+                    "id": 107,
+                    "name": "finger-left-rear.stl",
+                    "triangle_count": 1964
+                }
+            ],
+            "sliced_time": 1748,
+            "sliced_time_with_cache": 1337,
+            "total_predication": 1395.028076171875,
+            "triangle_count": 7856,
+            "warning_message": "It seems object finger-right-front.stl has floating cantilever. Please re-orient the object or enable support generation."
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+}

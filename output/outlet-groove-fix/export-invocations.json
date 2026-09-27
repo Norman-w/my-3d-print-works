@@ -1,0 +1,146 @@
+[
+  {
+    "name": "negative-half",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/negative-half.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/negative-half.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+  },
+  {
+    "name": "positive-half",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/positive-half.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/positive-half.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+  },
+  {
+    "name": "reservoir-cutters",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/reservoir-cutters.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/reservoir-cutters.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "b7a829385b2dccddccd9df1b64a6559e5de1f09dbe195018d4d5351f673ffe11"
+  },
+  {
+    "name": "removed-material",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/removed-material.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/removed-material.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "bdd5ddd1748e99599e9d805cd63115a69b9d607a924cd9601dcda5b46820cd5f"
+  },
+  {
+    "name": "unexpected-added-material",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/unexpected-added-material.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/unexpected-added-material.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "eab9546930e8f2b28857f747a29f8a9dceabaf12643fb87f54ecdce59bdaa572"
+  },
+  {
+    "name": "removal-outside-original-cutters",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/removal-outside-original-cutters.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/removal-outside-original-cutters.scad"
+    ],
+    "return_code": 1,
+    "recognized_empty_result": true,
+    "execution_ok": true,
+    "stl_sha256": null
+  },
+  {
+    "name": "new-material-inside-original-cutters",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/new-material-inside-original-cutters.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/new-material-inside-original-cutters.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "a8d7a5f30ce075f5cd0bc71cf616e9c182359bbbfad3b8e2d0260118e4dc3667"
+  },
+  {
+    "name": "old-refill-control",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "--export-format",
+      "asciistl",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/old-refill-control.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/outlet-groove-fix/old-refill-control.scad"
+    ],
+    "return_code": 0,
+    "recognized_empty_result": false,
+    "execution_ok": true,
+    "stl_sha256": "b2c8686321e049bda17139a877dc47263a97e1be0e1bf1de240361b896ebe4f1"
+  }
+]

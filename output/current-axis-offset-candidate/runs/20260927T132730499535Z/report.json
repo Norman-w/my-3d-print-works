@@ -1,0 +1,660 @@
+{
+  "status": "FAIL_OR_REVIEW_REQUIRED",
+  "source_sha256": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/current-axis-offset-candidate/candidate.scad": "bba7bdac5457e302365b6d13eae18056dabcea3143e29fcb4e85f378cb498d72",
+    "output/current-axis-offset-candidate/review.py": "b871b6851523c44fc6c1e4827c2023ce1778c565cbde76cb436797c9d42dacdf",
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec"
+  },
+  "sources_stable": true,
+  "external_inspector": {
+    "path": "/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py",
+    "sha256": "06ac6daea97664a42f0088bbc090e4b1016dc24b036c2fad4971199285b00dc7"
+  },
+  "checks": {
+    "body_one_solid": false,
+    "cover_one_solid": true,
+    "axis_only_capture_plane_contact": true,
+    "axis_other_metal_clear": true,
+    "body_other_metal_clear": false,
+    "original_host_mount_not_removed": false,
+    "axis_rotor_three_poses_clear": true,
+    "rotor_plastic_three_poses_clear": true,
+    "short_axis_positive": true,
+    "missing_root_relief_positive": true
+  },
+  "cases": [
+    {
+      "case": "body-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"body\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/body-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "28a31f7fb549a3288f59f9d9720bbec19a8b08129ef023d2a33fb111d1af5b6f",
+      "mesh": {
+        "triangles": 6064,
+        "signed_volume_mm3": 269835.766219501,
+        "bounds_mm": [
+          [
+            -28.200000000000017,
+            159.2462120245875
+          ],
+          [
+            -97.0,
+            -49.0
+          ],
+          [
+            -125.25840533340727,
+            78.46803743153546
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "eabebcf91268487292d421970e16b23f74f302911f2f0bf96daf3e45df200f0f",
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [
+          [
+            156.31728,
+            -89.0,
+            22.67767
+          ],
+          [
+            147.90186,
+            -89.0,
+            14.26225
+          ],
+          [
+            150.590564,
+            -89.0,
+            16.950954
+          ]
+        ],
+        "vertex_count": 3011
+      },
+      "mesh_inspector": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/body-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 6064,
+        "uniqueVertexCount": 3011,
+        "bounds": {
+          "min": [
+            -28.200000000000017,
+            -97.0,
+            -125.25840533340727
+          ],
+          "max": [
+            159.2462120245875,
+            -49.0,
+            78.46803743153546
+          ],
+          "size": [
+            187.4462120245875,
+            48.0,
+            203.72644276494273
+          ]
+        },
+        "surfaceArea": 65171.69534887752,
+        "signedVolume": 269835.76621950034,
+        "volume": 269835.76621950034,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 2,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "components": 1,
+      "one_closed_solid": false
+    },
+    {
+      "case": "cover-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"cover\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/cover-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "67196e7dfe42a60e74551b27d1a9ac78cad6f53ce4c4f8e8228ba3196ea819df",
+      "mesh": {
+        "triangles": 3006,
+        "signed_volume_mm3": 24085.043060577616,
+        "bounds_mm": [
+          [
+            28.81623381592643,
+            140.28279434183946
+          ],
+          [
+            -77.0,
+            -71.0
+          ],
+          [
+            -10.071067811865479,
+            79.46803743153546
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "500b8c41398da590b0442c2e4e859b8b61d8d25c925eee8b5e6ac6cfef1eb095",
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 1497
+      },
+      "mesh_inspector": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/cover-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3006,
+        "uniqueVertexCount": 1497,
+        "bounds": {
+          "min": [
+            28.81623381592643,
+            -77.0,
+            -10.071067811865479
+          ],
+          "max": [
+            140.28279434183946,
+            -71.0,
+            79.46803743153546
+          ],
+          "size": [
+            111.46656052591302,
+            6.0,
+            89.53910524340094
+          ]
+        },
+        "surfaceArea": 11450.658805464278,
+        "signedVolume": 24085.043060577664,
+        "volume": 24085.043060577664,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "one_closed_solid": true
+    },
+    {
+      "case": "plastic-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"plastic-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/plastic-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "5f2dc7524ed8b83d09fdfc45d6938bd70cfd3d71fb8f8610ac923e89b5f0562f",
+      "mesh": {
+        "triangles": 622,
+        "signed_volume_mm3": -1.2780964844414863e-14,
+        "bounds_mm": [
+          [
+            -6.606287722077911,
+            6.606287722077911
+          ],
+          [
+            -6.58114880280261,
+            6.58114880280261
+          ],
+          [
+            -12.0,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": true,
+        "each_triangle_on_one_contact_plane": true
+      },
+      "stl_sha256": "e46d026903b33c81c1f443c3a0393d236fa6a5b2223113868c2ae5e1eb8b00cb"
+    },
+    {
+      "case": "metal-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"metal-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/metal-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "body-metal-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"body-metal-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/body-metal-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "b46f58011f2c4ee8964d56e88a55ef75c7aa3293d067330a6fd9ce0c7eadf86e",
+      "mesh": {
+        "triangles": 818,
+        "signed_volume_mm3": 4.707893485320948e-12,
+        "bounds_mm": [
+          [
+            -45.0,
+            76.75
+          ],
+          [
+            -112.72969172984207,
+            63.30570440799518
+          ],
+          [
+            -9.0,
+            4.75
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "ac27759378c5eb96e4b9854b4fd3b078f4d3f6254abee10ebf14a03b7ac47359"
+    },
+    {
+      "case": "mount-missing-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"mount-missing-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/mount-missing-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "1e8db973d9030bf7c9a835be0f3dd052d3f85048e1fba24a01e0524ad0c016e5",
+      "mesh": {
+        "triangles": 48,
+        "signed_volume_mm3": 7.477574115455354e-12,
+        "bounds_mm": [
+          [
+            19.599999999999994,
+            28.2
+          ],
+          [
+            -94.0,
+            -49.0
+          ],
+          [
+            -68.0,
+            32.2
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "81bafb85a53b7b904cfd32701548045123df5ea7b5c77b2f62b8464a78f03013"
+    },
+    {
+      "case": "short-positive-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"short-positive\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/short-positive-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "ff59b94704e7743b88d26ba1d4976668b0e8700f06e392b851fad1ff81505236",
+      "mesh": {
+        "triangles": 1742,
+        "signed_volume_mm3": 33.16911159023673,
+        "bounds_mm": [
+          [
+            -6.5,
+            6.5
+          ],
+          [
+            -6.5,
+            6.5
+          ],
+          [
+            -12.0,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "a9d2419e96eadce290c8869b4ae1fed1794107cc221c4abb46604d746a7e7e2d"
+    },
+    {
+      "case": "unrelieved-root-positive-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"unrelieved-root-positive\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/unrelieved-root-positive-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "7405742fcf24fe38a687290609901675d9f7b4bdf27cc08b3e46a64d8800a9a0",
+      "mesh": {
+        "triangles": 576,
+        "signed_volume_mm3": 12.068019919554457,
+        "bounds_mm": [
+          [
+            -4.35,
+            4.35
+          ],
+          [
+            -4.35,
+            4.35
+          ],
+          [
+            11.7375,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "stl_sha256": "03c52d6deb67fa49945912589b25c7bf840d1002ac0f0e985b3def6962eab885"
+    },
+    {
+      "case": "rotor-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-probe-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-probe\"",
+        "-D",
+        "input_u=10",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-probe-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-probe-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-probe\"",
+        "-D",
+        "input_u=20",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-probe-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-plastic-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-plastic-probe\"",
+        "-D",
+        "input_u=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-plastic-probe-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-plastic-probe-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-plastic-probe\"",
+        "-D",
+        "input_u=10",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-plastic-probe-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-plastic-probe-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "part=\"rotor-plastic-probe\"",
+        "-D",
+        "input_u=20",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T132730499535Z/rotor-plastic-probe-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "mesh": null,
+      "stl_sha256": null
+    }
+  ],
+  "design": {
+    "origin": [
+      75,
+      -85,
+      5
+    ],
+    "shoulder_L_mm": [
+      26.95,
+      27.05
+    ],
+    "centering_cup_pocket_depth_mm": [
+      0.5,
+      0.55
+    ],
+    "metal_capture_span_mm": [
+      26.4,
+      26.55
+    ],
+    "nominal_housing_span_mm": 26,
+    "coaxial_float_mm": [
+      0.4,
+      0.55
+    ],
+    "head_root_max_d_length_mm": [
+      8.7,
+      2.5
+    ],
+    "cover_root_relief_d_from_z_mm": [
+      9.2,
+      11.3
+    ],
+    "cover_full_shaft_guide_length_mm": 3.3,
+    "nominal_host_head_separation_mm": 1.25,
+    "thread_projection_mm": [
+      2.95,
+      4.4
+    ]
+  },
+  "scope": "Local nominal plastic geometry with conservative coaxial axis/root envelope over all accepted axial float. Three rotor poses only. Original fixed host mount retained. Not a full host/route/body sweep or complete tolerance proof.",
+  "unverified": [
+    "Supplier acceptance of terminal shoulder/root contract and head/F acceptance windows",
+    "Metal cup flat seating and actual concentricity",
+    "Printed tolerances, axis tilt, deflection, side screw load, creep and friction",
+    "Continuous whole-system motion, return with air and balls, real assembly"
+  ],
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

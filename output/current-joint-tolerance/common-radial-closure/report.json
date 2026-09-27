@@ -1,0 +1,267 @@
+{
+  "status": "NEW_FINITE_NUT_V_PIN_BOUND_IN_SEATED_CONTACT_BRANCH_COMMON_RADIAL_CERTIFICATE_REMAINS_OPEN",
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/ball-center-coupling/report.json": "8d8e44ef2e9f26b47e37154c530dddb632207d4bf8992b01fb9acca9a5f48c42",
+    "output/current-joint-tolerance/ball-center-coupling/review.py": "78bd0b26c9fb05789eea2b82d62483d13d326d4b068a276ee409bfe15b60bdd1",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/common-radial-closure/review.py": "99c5bdd593a19dbbe1f6c5791e4b07d9bb77a2cdbca7023ce0b0d8acc64914f5",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/gate-ball-joint-review/report.json": "4e47c6a6b8ac09c1a4220517e877c45783be4115e39f0065c8ab2821d6ab8205",
+    "output/current-joint-tolerance/gate-ball-joint-review/review.py": "5e282803842ffb88a5622b48abb18bf09f342ccdbe8b274489752ecf02f1a273",
+    "output/current-joint-tolerance/half-shell-axial-coupling/report.json": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c"
+  },
+  "evidence_lines": [
+    {
+      "path": "cad/cam-study.scad",
+      "line": 20,
+      "text": "cam_pin_start_y = -5.25;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 21,
+      "text": "cam_pin_shoulder_start_y = 1.75;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 22,
+      "text": "cam_pin_shoulder_end_y = 13.75;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 36,
+      "text": "cam_carrier_width = 9;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 164,
+      "text": "            rotate([-90,0,0]) cylinder(h=nut_depth+cam_eps,"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 165,
+      "text": "                d=nut_af/cos(30),$fn=6);"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 195,
+      "text": "            cylinder(h=2.4,d=5.5/cos(30),$fn=6);"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 193,
+      "text": "        -cam_carrier_width/2+0.1,cam_gate_z(rear)])"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 154,
+      "text": "    translate([0,.1,0])cam_follower_nut(s,r,t);"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 20,
+      "text": "ps_v_z=2.4;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 67,
+      "text": "module ps_v_void(){"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 76,
+      "text": "    ps_v_void();"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 27,
+      "text": "ps_nose_y0=ps_seat_y0+.2;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 34,
+      "text": "ps_adjust_retracted=.3;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 38,
+      "text": "ps_jack_y=1.5;"
+    },
+    {
+      "path": "cad/parameters.scad",
+      "line": 42,
+      "text": "nut_af = 5.8;"
+    },
+    {
+      "path": "cad/parameters.scad",
+      "line": 43,
+      "text": "nut_depth = 2.6;"
+    }
+  ],
+  "scope": "Same finite pin, nut pocket and V faces in actual carrier-local coordinates. Nominal rigid CAD and maintained contact branch. Not an actual threaded-fit/metrology/preload certificate or full C/H/K/P elimination.",
+  "new_actual_constraint": {
+    "nut_AF": 5.5,
+    "pocket_AF": 5.8,
+    "nut_axial_length": 2.4,
+    "nut_pocket_material_Y": [
+      -4.5,
+      -1.9
+    ],
+    "nominal_nut_Y": [
+      -4.3,
+      -1.9
+    ],
+    "nut_axis_centre_hex_apothem_mm": 0.15,
+    "nut_axis_centre_disc_upper_mm": 0.173205080757,
+    "meaning": "At the same installed nut mid-plane, its guaranteed R2.75 outer circle must fit the real AF5.8 hex pocket. The pin axis is the same coaxial threaded-axis line in the nominal fastener model. Nut rotation around its own axis is not set to zero."
+  },
+  "joint_variables": {
+    "w": "same pin/carrier-local slope (dx/dY,dz/dY)",
+    "q_i": "n_i dot w, n1=(1,-1)/sqrt2,n2=(1,1)/sqrt2; orthonormal pair",
+    "delta0": "same pin centre minus (20,0) at carrier Y3.125",
+    "deltaN": "same pin centre at installed nut centre Y_N",
+    "identity": "deltaN=delta0-(3.125-Y_N)w; deltaXZ(y*)=delta0+(y*-3.125)w",
+    "cam_intersection_identity": "C(qcam)=T_i+O_i[20+delta_x(y*), y*, delta_z(y*)]. y* and qcam are the SAME intersection with the real cam section; do not replace y* by10.5 under arbitrary C/K pose."
+  },
+  "branch_requirements": [
+    "Nut axis and shoulder axis are coaxial in the nominal fastener model; real thread play/coaxiality is not supplied.",
+    "Follower nut front annulus is seated on its real +Y pocket roof at Y−1.9; shoulder end has at least one contact with its real seat Y1.75. Entire faces need not be assumed fully flush.",
+    "Both finite V planes retain at least one actual pin contact; their contacts may occur at different Y and at finite end edges. Full-length generatrix contact is NOT assumed.",
+    "From the nominal installed branch, contacts remain retained and rigid solids do not interpenetrate. Nut backing out or V unloading leaves this proof domain.",
+    "Current nominal six-sided nut and 32-sided shoulder shapes are used only as outer/inner bounding shapes; no as-purchased tolerances inferred."
+  ],
+  "finite_contact_backsubstitution": {
+    "bootstrap_slope_guard": 0.09,
+    "nut_midY_interval_mm": [
+      -3.384637924635,
+      -3.1
+    ],
+    "nut_disc_axial_projection_upper_mm": 0.246503673614,
+    "nut_half_length_mm": 1.2,
+    "nut_roof_outer_radius_enclosure_upper_mm": 3.456196800698,
+    "nut_roof_inner_rim_radius_lower_mm": 2.458159386666,
+    "roof_material_test": "outer<4mm carrier half-Z; inner>1.7mm M3 passage; M2 cut starts4.8mm from axis, beyond this ring.",
+    "upper_V_section_Y": 4.5,
+    "upper_V_axis_centre_offset_guard_upper_mm": 0.882822493975,
+    "guaranteed_pin_inner_radius_mm": 1.990369453342,
+    "full_shoulder_Y_interval_at_bootstrap_guard_mm": [
+      2.108550797984,
+      13.343142468132
+    ],
+    "V_support_witness_X_interval_mm": [
+      17.693651775928,
+      19.497141438775
+    ],
+    "V_support_witness_absZ_upper_mm": 2.306348224072,
+    "finite_face_margins_mm": {
+      "to_V_apex_x_lower": 0.522078900674,
+      "to_V_face_outer_x_end_lower": 0.074431436477,
+      "to_V_face_Z_edge_lower": 0.093651775928
+    },
+    "proof": "At the upper section limit Y→4.5 from below, inscribed-cylinder support points fall strictly inside the two real diagonal face spans; lower-end cap truncation is allowed. Nut and shoulder finite caps remain covered. Derived slope <.09 prevents a first exit from this finite domain."
+  },
+  "inequalities": {
+    "contact_upper": "n_i.delta0 <= h|q_i| + e_i; e_i=Rmax(sqrt(1+q_i²)-1)<=Rmax*q_i²/2. This follows from an actual contact somewhere in the finite Y1.75..4.5 span; no same-Y contact assumption.",
+    "upper_nonpenetration": "n_i.delta0+h q_i >= -rho, rho=2-r_pin_min, from a real inscribed-cylinder point at the finite upper face limit.",
+    "nut": "||deltaN||<=cN and D=3.125-Y_N>=6.225; SAME delta0,q,D.",
+    "global_slope": "(Dmin-h)||w|| <= cN+sqrt2*rho+(Rmax/2)||w||². On0..guard, monotonic lhs gives its small-root upper bound.",
+    "positive_q_norm": "||q_plus|| <= smallroot(cN); the negative-q components do not consume an independent second nut-centre budget.",
+    "negative_q_norm": "||q_minus|| <= (cN+sqrt2*rho)/(Dmin+h).",
+    "negative_q_dropped_from_positive_projection": "For carrier-local Y10.5, C-h=6 >= Rmax*guard/2=.09. Hence e_i <= (Rmax*guard/2)|q_i| cannot offset the negative linear contribution when q_i<0. Both (1,+/-.625) have nonnegative coefficients in the two V-normal basis directions.",
+    "common_domain_handling": "These are necessary consequences of the SAME nut centre and pin line. Their safe norm outer bounds are not claimed simultaneously attained, and no physical failure is inferred from a loose bound."
+  },
+  "new_numeric": {
+    "Dmin_mm": 6.225,
+    "A_Dmin_minus_h_mm": 4.85,
+    "rho_from_32gon_mm": 0.009630546658,
+    "slope_norm_upper": 0.038831466651,
+    "angle_deg_diagnostic": 2.2237618763932665,
+    "positive_q_norm_upper": 0.035979297026,
+    "negative_q_norm_upper": 0.024582201376,
+    "V_mid_axis_offset_norm_upper_mm": 0.068520799145,
+    "full_shoulder_cross_section_Y_interval_mm": [
+      1.905208892276,
+      13.585754029752
+    ],
+    "nominal_far_cam_face_Y13_reserve_lower_mm": 0.585754029752,
+    "nominal_thread_axis_interval_covering_entire_nut_mm": [
+      3.572395553862,
+      6.254624639192
+    ],
+    "thread_length_mm": 7,
+    "thread_back_end_reserve_lower_mm": 0.745375360808,
+    "axis_offset_norm_at_carrier_Y10_5_upper_mm": 0.354902865696,
+    "axis_offset_norm_at_carrier_Y13_upper_mm": 0.451981532324
+  },
+  "radial_projection_bookkeeping": {
+    "nominal_aligned_cam_mid_Y": 10.5,
+    "cam_slope_abs": 0.625,
+    "positive_dx_plus_or_minus_mdz_upper_mm": 0.372775932805,
+    "negative_magnitude_upper_mm": 0.189991957758,
+    "mixed_abs_upper_mm": 0.372775932805,
+    "remaining_from_old_J_budget_IF_projection_decomposition_proved_mm": 0.230100798219,
+    "guard": "The .372... mixed bound is in carrier-local X/Z at Y10.5 with coefficient(1,±.625). It is NOT automatically the entire finite-pin term in an arbitrarily transformed common cam. Use the exact C/K identity and actual y* before subtracting it from J_common.",
+    "general_y_bound": "For y*>=4.5 within the proven full-cylinder interval: ||deltaXZ(y*)|| <= (y*−1.75)wbar +Rmax*wbar²/2+sqrt2*rho. Use this vector set with the same O_i/C, not an independent phase shift."
+  },
+  "unclosed_actual_inputs": {
+    "thread_axis_radial_play_and_coaxiality": null,
+    "nut_and_pocket_actual_AF_profile": null,
+    "shoulder_actual_radius_form_and_end_faces": null,
+    "V_face_form_and_angle": null,
+    "retained_contact_load_preload_creep": null,
+    "joint_common_cam_intersection_y_star_interval": null,
+    "joint_common_frame_phase_and_registration_residual": null
+  },
+  "mechanical_interpretation": {
+    "current_pin_is_not_geometrically_free": "The real captive nut supplies a lower radial registration section; it must not be omitted and then replaced by an invented long V bearing.",
+    "what_does_not_lock_contact": "The sliding block ear and compensation stops retain the block, but do not by themselves prove a positive V preload under the cam wrench. The single M2 adjuster acts atY1.5 while pin-contact nose startsY1.95; block moment/pose cannot be replaced by a prescribed zero tilt.",
+    "minimal_next_action": "First include this same-nut bound and the finite shoulder slab in the common C/K intersection calculation. This is a tighter nominal constraint, not a reason to change the existing holes merely because an older loose bound failed.",
+    "optional_design_if_retention_or_tolerance_cannot_be_bounded": "A lockable longer M2 adjuster with an exterior jam nut can retain screw position, after local tool/clearance review; it does not certify preload or remove pin tilt. To remove reliance on a threaded nut as a radial datum, replace the carrier pin location with a positively retained metal round-journal/bushing support over a declared finite span; this requires the corresponding longer journal/seat and real host clearance review, not simply shrinking a PETG hole or calling the existing2.75mm V infinitely long."
+  },
+  "current_common_Bx_certified": false,
+  "J_common_proved_upper_mm": null,
+  "actual_feasible_failure_witness": null,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "numerical_method": "Fraction arithmetic, directed1e−12 rounding and conservative square-root bounds. No sampling optimizer; branch guard and finite-domain margins verified analytically.",
+  "sources_stable": true
+}

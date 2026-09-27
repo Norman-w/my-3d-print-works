@@ -1,0 +1,654 @@
+{
+  "status": "local_geometry_candidate_not_print_or_strength_release",
+  "sources_sha256": {
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6"
+  },
+  "results": [
+    {
+      "name": "base",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/base.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 7898,
+        "uniqueVertexCount": 3925,
+        "bounds": {
+          "min": [
+            -77.0,
+            -56.0,
+            84.7
+          ],
+          "max": [
+            91.19364031613785,
+            85.0,
+            235.4156535349121
+          ],
+          "size": [
+            168.19364031613785,
+            141.0,
+            150.71565353491212
+          ]
+        },
+        "surfaceArea": 35661.1745084786,
+        "signedVolume": 76195.23056696409,
+        "volume": 76195.23056696409,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "strict": {
+        "exact_zero_area_triangles": 0,
+        "connected_components_at_1e-6": 1
+      }
+    },
+    {
+      "name": "cap",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/cap.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 6614,
+        "uniqueVertexCount": 3297,
+        "bounds": {
+          "min": [
+            -73.54998459799425,
+            26.424320514570464,
+            117.50119772913047
+          ],
+          "max": [
+            92.5126603178511,
+            76.30328213633881,
+            235.4156535349121
+          ],
+          "size": [
+            166.06264491584534,
+            49.87896162176834,
+            117.91445580578164
+          ]
+        },
+        "surfaceArea": 13210.33667504285,
+        "signedVolume": 18818.351611078244,
+        "volume": 18818.351611078244,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "strict": {
+        "exact_zero_area_triangles": 0,
+        "connected_components_at_1e-6": 1
+      }
+    },
+    {
+      "name": "lower",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/lower.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 666,
+        "uniqueVertexCount": 327,
+        "bounds": {
+          "min": [
+            -77.0,
+            -65.0,
+            78.5
+          ],
+          "max": [
+            -39.0,
+            20.0,
+            84.7
+          ],
+          "size": [
+            38.0,
+            85.0,
+            6.200000000000003
+          ]
+        },
+        "surfaceArea": 6427.0523428391425,
+        "signedVolume": 10740.901150075435,
+        "volume": 10740.901150075435,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "strict": {
+        "exact_zero_area_triangles": 0,
+        "connected_components_at_1e-6": 1
+      }
+    },
+    {
+      "name": "hardware",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/hardware.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 6840,
+        "uniqueVertexCount": 3440,
+        "bounds": {
+          "min": [
+            -76.5,
+            -15.5,
+            74.8
+          ],
+          "max": [
+            80.8228142124684,
+            82.65202515361138,
+            233.41593535130798
+          ],
+          "size": [
+            157.32281421246842,
+            98.15202515361138,
+            158.615935351308
+          ]
+        },
+        "surfaceArea": 4500.151386670489,
+        "signedVolume": 2603.0048113426146,
+        "volume": 2603.0048113426146,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "final-host",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-housing",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-parts",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/final-parts.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3340,
+        "uniqueVertexCount": 2101,
+        "bounds": {
+          "min": [
+            -77.0,
+            -17.0,
+            81.3
+          ],
+          "max": [
+            91.19364031613785,
+            76.82332749934488,
+            235.03238221862813
+          ],
+          "size": [
+            168.19364031613785,
+            93.82332749934488,
+            153.73238221862812
+          ]
+        },
+        "surfaceArea": 3185.559176997542,
+        "signedVolume": -1.6051693307872483e-10,
+        "volume": 1.6051693307872483e-10,
+        "degenerateTriangleCount": 2,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 102,
+        "inconsistentOrientationEdgeCount": 1,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "final-parts-without-contact-skins",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-output-tools",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-output-screw-ray",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-spring-continuous",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-cap-removal",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/final-cap-removal.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 470,
+        "uniqueVertexCount": 352,
+        "bounds": {
+          "min": [
+            -73.46543578975037,
+            31.270325473971575,
+            118.45489305151006
+          ],
+          "max": [
+            91.0092719837772,
+            76.25285885377544,
+            235.03238221862813
+          ],
+          "size": [
+            164.47470777352757,
+            44.98253337980386,
+            116.57748916711807
+          ]
+        },
+        "surfaceArea": 2512.372880678315,
+        "signedVolume": -1.1198153515579179e-10,
+        "volume": 1.1198153515579179e-10,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 43,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "final-lower-removal",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/final-lower-removal.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 8,
+        "uniqueVertexCount": 8,
+        "bounds": {
+          "min": [
+            -67.91273679492322,
+            -56.0,
+            84.7
+          ],
+          "max": [
+            -39.0,
+            17.0,
+            84.7
+          ],
+          "size": [
+            28.91273679492322,
+            73.0,
+            0.0
+          ]
+        },
+        "surfaceArea": 23.108525909059384,
+        "signedVolume": -7.382539024547441e-12,
+        "volume": 7.382539024547441e-12,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "final-service-without-contact-skins",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-tools",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-base-installation",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-positive-control",
+      "returncode": 0,
+      "empty": false,
+      "warnings": [],
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/final-positive-control.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 7898,
+        "uniqueVertexCount": 3925,
+        "bounds": {
+          "min": [
+            -77.0,
+            -56.0,
+            84.7
+          ],
+          "max": [
+            91.19364031613785,
+            85.0,
+            235.4156535349121
+          ],
+          "size": [
+            168.19364031613785,
+            141.0,
+            150.71565353491212
+          ]
+        },
+        "surfaceArea": 35661.17450847857,
+        "signedVolume": 76195.23056696435,
+        "volume": 76195.23056696435,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "final-host-0.5",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    },
+    {
+      "name": "final-host-1",
+      "returncode": 1,
+      "empty": true,
+      "warnings": []
+    }
+  ],
+  "capture_positive_controls_translation_mm": 0.35,
+  "capture_controls": {
+    "x-1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-x-1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 24,
+      "uniqueVertexCount": 16,
+      "bounds": {
+        "min": [
+          -46.050000000000004,
+          -17.0,
+          85.0
+        ],
+        "max": [
+          -46.0,
+          17.0,
+          93.0
+        ],
+        "size": [
+          0.05000000000000426,
+          34.0,
+          8.0
+        ]
+      },
+      "surfaceArea": 323.60000000000036,
+      "signedVolume": 8.000000000006253,
+      "volume": 8.000000000006253,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "x1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-x1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 24,
+      "uniqueVertexCount": 16,
+      "bounds": {
+        "min": [
+          -70.0,
+          -17.0,
+          85.0
+        ],
+        "max": [
+          -69.95,
+          17.0,
+          93.0
+        ],
+        "size": [
+          0.04999999999999716,
+          34.0,
+          8.0
+        ]
+      },
+      "surfaceArea": 323.5999999999999,
+      "signedVolume": 7.999999999996429,
+      "volume": 7.999999999996429,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "y-1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-y-1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 12,
+      "uniqueVertexCount": 8,
+      "bounds": {
+        "min": [
+          -70.0,
+          44.949999999999996,
+          85.0
+        ],
+        "max": [
+          -67.0,
+          45.0,
+          93.0
+        ],
+        "size": [
+          3.0,
+          0.05000000000000426,
+          8.0
+        ]
+      },
+      "surfaceArea": 49.100000000000094,
+      "signedVolume": 1.199999999998255,
+      "volume": 1.199999999998255,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "y1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-y1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 12,
+      "uniqueVertexCount": 8,
+      "bounds": {
+        "min": [
+          -70.0,
+          -52.0,
+          85.0
+        ],
+        "max": [
+          -67.0,
+          -51.949999999999996,
+          93.0
+        ],
+        "size": [
+          3.0,
+          0.05000000000000426,
+          8.0
+        ]
+      },
+      "surfaceArea": 49.10000000000008,
+      "signedVolume": 1.2000000000355535,
+      "volume": 1.2000000000355535,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "z-1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-z-1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 72,
+      "uniqueVertexCount": 36,
+      "bounds": {
+        "min": [
+          -70.0,
+          -52.0,
+          92.95
+        ],
+        "max": [
+          -46.0,
+          45.0,
+          93.0
+        ],
+        "size": [
+          24.0,
+          97.0,
+          0.04999999999999716
+        ]
+      },
+      "surfaceArea": 1815.4399999999998,
+      "signedVolume": 44.909999999984535,
+      "volume": 44.909999999984535,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "z1": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-route-retention/capture-z1.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 24,
+      "uniqueVertexCount": 16,
+      "bounds": {
+        "min": [
+          -70.0,
+          -52.0,
+          85.0
+        ],
+        "max": [
+          -46.0,
+          20.0,
+          85.05
+        ],
+        "size": [
+          24.0,
+          72.0,
+          0.04999999999999716
+        ]
+      },
+      "surfaceArea": 907.8199999999983,
+      "signedVolume": 22.32000000002563,
+      "volume": 22.32000000002563,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    }
+  },
+  "source_frame_C_N": [
+    [
+      14.343222923043001,
+      55.285300025699,
+      145.074446500751
+    ],
+    [
+      0.263804000343,
+      -0.964576305641,
+      0.0
+    ]
+  ],
+  "raw_contact_classification": {
+    "final-parts": {
+      "triangle_count_by_single_plane": {
+        "guide-N--4": 286,
+        "guide-N-0": 544,
+        "global-Z-99.3": 346,
+        "global-Z-84.7": 172,
+        "guide-N-5": 1836,
+        "global-Z-81.3": 156
+      },
+      "max_triangle_vertex_distance_to_its_single_plane_mm": 2.1593393739749445e-11,
+      "worst_triangle": 129,
+      "all_triangles_within_one_known_contact_plane_1e-8mm": true,
+      "meaning": "Every triangle must lie near ONE plane, not one independently chosen plane per vertex. This classifies numeric contact residues; source separation proof is in the document."
+    },
+    "final-cap-removal": {
+      "triangle_count_by_single_plane": {
+        "guide-N-0": 470
+      },
+      "max_triangle_vertex_distance_to_its_single_plane_mm": 2.0243362541805254e-11,
+      "worst_triangle": 27,
+      "all_triangles_within_one_known_contact_plane_1e-8mm": true,
+      "meaning": "Every triangle must lie near ONE plane, not one independently chosen plane per vertex. This classifies numeric contact residues; source separation proof is in the document."
+    },
+    "final-lower-removal": {
+      "triangle_count_by_single_plane": {
+        "global-Z-84.7": 8
+      },
+      "max_triangle_vertex_distance_to_its_single_plane_mm": 0,
+      "worst_triangle": null,
+      "all_triangles_within_one_known_contact_plane_1e-8mm": true,
+      "meaning": "Every triangle must lie near ONE plane, not one independently chosen plane per vertex. This classifies numeric contact residues; source separation proof is in the document."
+    }
+  },
+  "scope": "Local third bend only. Free route and physical installation/strength remain unresolved. Parent separately checks complete service envelopes.",
+  "external_service_partitions": {
+    "cap-service-host": {
+      "empty": true,
+      "log": "output/cable-route-retention/cap-service-host.log"
+    },
+    "lower-service-host": {
+      "empty": true,
+      "log": "output/cable-route-retention/lower-service-host.log"
+    },
+    "cap-service-housing": {
+      "empty": true,
+      "log": "output/cable-route-retention/cap-service-housing.log"
+    },
+    "lower-service-housing": {
+      "empty": true,
+      "log": "output/cable-route-retention/lower-service-housing.log"
+    }
+  }
+}

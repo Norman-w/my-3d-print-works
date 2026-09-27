@@ -1,0 +1,3361 @@
+{
+  "status": "FAIL_OR_STALE",
+  "sources_stable": true,
+  "source_sha256": {
+    "/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py": "06ac6daea97664a42f0088bbc090e4b1016dc24b036c2fad4971199285b00dc7",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/cable_trigger_system.py": "2b9b2abb080523925e62a9d4d9bad7c923ac0d9d57571b59830c05d419eb8f1d",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-output-interface.scad": "f18d5ff33fb35ea679d14b3ebb0319eb4d61c884897e941af1673cb11a276525",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad": "8eed8a574592ac4f47572bd3ba08316c57b8db12a90b9a077d53e0cb72c56750",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad": "627f5d552a5dea20b48c65694b3c2735ddc9bcd20355484315fdfaba4569d869",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c"
+  },
+  "results": [
+    {
+      "name": "input-body",
+      "definitions": {
+        "ct_part": "input-body"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"input-body\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-body.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-body.stl",
+      "sha256": "44d7d896b23b3023e54dc935e9ddf3ad29f674faf407a0fb5e1a300584652c2b",
+      "kind": "printed-part",
+      "passed": true,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-body.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4444,
+        "uniqueVertexCount": 2204,
+        "bounds": {
+          "min": [
+            -28.200000000000003,
+            -94.0,
+            -125.25840533340727
+          ],
+          "max": [
+            129.2462120245875,
+            -49.0,
+            78.46803743153546
+          ],
+          "size": [
+            157.4462120245875,
+            45.0,
+            203.72644276494273
+          ]
+        },
+        "surfaceArea": 60898.63471817024,
+        "signedVolume": 260733.15109007937,
+        "volume": 260733.15109007937,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 2204
+      },
+      "components": 1
+    },
+    {
+      "name": "input-cover",
+      "definitions": {
+        "ct_part": "input-cover"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"input-cover\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-cover.stl",
+      "sha256": "955fbd6d970a37d19b4c721ddd8f0f6dd8429014282ad3303d6cf0ee7cdde3cb",
+      "kind": "printed-part",
+      "passed": true,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-cover.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3038,
+        "uniqueVertexCount": 1513,
+        "bounds": {
+          "min": [
+            -1.1837661840735691,
+            -74.0,
+            -10.071067811865479
+          ],
+          "max": [
+            112.10407640085654,
+            -68.0,
+            79.46803743153546
+          ],
+          "size": [
+            113.2878425849301,
+            6.0,
+            89.53910524340094
+          ]
+        },
+        "surfaceArea": 11631.006317569956,
+        "signedVolume": 24733.35357761787,
+        "volume": 24733.35357761787,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 1513
+      },
+      "components": 1
+    },
+    {
+      "name": "input-lever",
+      "definitions": {
+        "ct_part": "input-lever"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"input-lever\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-lever.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-lever.stl",
+      "sha256": "d3a5b693ba19ba48f434e4be9fe26c626de1c357e68470a1e1e05a28bc48a2f9",
+      "kind": "printed-part",
+      "passed": true,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-lever.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4512,
+        "uniqueVertexCount": 2254,
+        "bounds": {
+          "min": [
+            9.594408408978452,
+            -85.5,
+            -28.991378028648455
+          ],
+          "max": [
+            105.14032773239266,
+            -74.5,
+            68.99173078355852
+          ],
+          "size": [
+            95.54591932341421,
+            11.0,
+            97.98310881220698
+          ]
+        },
+        "surfaceArea": 11597.949553035618,
+        "signedVolume": 26921.4146772934,
+        "volume": 26921.4146772934,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 2254
+      },
+      "components": 1
+    },
+    {
+      "name": "output-beam",
+      "definitions": {
+        "ct_part": "output-beam"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"output-beam\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-beam.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/output-beam.stl",
+      "sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+      "kind": "printed-part",
+      "passed": true,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-beam.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2016,
+        "uniqueVertexCount": 994,
+        "bounds": {
+          "min": [
+            -70.0,
+            -63.0,
+            -156.0
+          ],
+          "max": [
+            87.0,
+            45.0,
+            93.0
+          ],
+          "size": [
+            157.0,
+            108.0,
+            249.0
+          ]
+        },
+        "surfaceArea": 51951.35598210127,
+        "signedVolume": 140196.34183248386,
+        "volume": 140196.34183248386,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 994
+      },
+      "components": 1
+    },
+    {
+      "name": "output-frame",
+      "definitions": {
+        "ct_part": "output-frame"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"output-frame\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/output-frame.stl",
+      "sha256": "c916eea69e6a45bedbd723cbe650bca52e7bf04d7643a9e3de727f96441e55da",
+      "kind": "printed-part",
+      "passed": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-frame.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4014,
+        "uniqueVertexCount": 1987,
+        "bounds": {
+          "min": [
+            -76.0,
+            -4.0,
+            -64.5
+          ],
+          "max": [
+            89.0,
+            54.0,
+            37.0
+          ],
+          "size": [
+            165.0,
+            58.0,
+            101.5
+          ]
+        },
+        "surfaceArea": 22087.924982658074,
+        "signedVolume": 30514.4279263267,
+        "volume": 30514.4279263267,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [
+          122
+        ],
+        "non_ring_vertex_links": [],
+        "vertex_count": 1987
+      },
+      "components": 1
+    },
+    {
+      "name": "output-cap",
+      "definitions": {
+        "ct_part": "output-cap"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"output-cap\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-cap.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/output-cap.stl",
+      "sha256": "4215af0288bb75903117dd0bd61a88240a8095f8c2559e3921600bd3faff6b0e",
+      "kind": "printed-part",
+      "passed": true,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-cap.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 896,
+        "uniqueVertexCount": 444,
+        "bounds": {
+          "min": [
+            -65.5,
+            39.2,
+            10.0
+          ],
+          "max": [
+            -48.0,
+            43.2,
+            32.0
+          ],
+          "size": [
+            17.5,
+            4.0,
+            22.0
+          ]
+        },
+        "surfaceArea": 1107.8239755028007,
+        "signedVolume": 1324.8628496445672,
+        "volume": 1324.8628496445672,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 444
+      },
+      "components": 1
+    },
+    {
+      "name": "input-host-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-host-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-host-0_000.stl",
+      "sha256": "3fe135a7bce9700b44db82a2b7a1f78255b70d2c5255a628aeddda0b69fcc32c",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1584,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.005422592512302e-12,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 2.5978166558020266e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263402,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538946,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.905587213168474e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999993,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                -62.060068804559826
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.28775217188451e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327728,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252833,
+                -59.11543993210843
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.1021325962057207e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414481,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183435,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1241549021339696e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485017,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.875,
+                -58.62189809166419
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 9.631913322483143e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.235221632034957
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006554,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.020996046977948e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349776,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.369138399903825
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.916497388987278e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982296,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.553727878205294,
+                -58.11498516825058
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.429779889598585e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.2764000029823,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 390,
+            "volume_mm3": 5.694524712884785e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.944444444444443
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.000000000000002
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.2619571186645029e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828668,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567209046,
+                1.9305305499925869
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 9.20536789291793e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.78418255572253
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.6092916002494064,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.3954462996815685e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999998352
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.337269475865324e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.932672601683782,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183725,
+                2.1148557254534404
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 7.74483186187936e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.4038843820021385e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.4176571485193303,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 6.528100542774196e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                10.0,
+                15.999999999999996
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.958990338993925e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184378,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.1966803376294308e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.709453018210144,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234536,
+                1.1569079003497684
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3021406829470958e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083426,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424106017,
+                0.9608074791675385
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.0033423744615355e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131453,
+                0.8856916032317041
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 5.313241166482463e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519332,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.37297918977488925,
+                0.8266668908495962
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.8240563139787502e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999993,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994747,
+                1.0514428414850112
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 7.597394935388024e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277466,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.2354257210635593,
+                3.469238302115679
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-host-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-host-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-host-0_500.stl",
+      "sha256": "3fe135a7bce9700b44db82a2b7a1f78255b70d2c5255a628aeddda0b69fcc32c",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1584,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.005422592512302e-12,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 2.5978166558020266e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263402,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538946,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.905587213168474e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999993,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                -62.060068804559826
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.28775217188451e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327728,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252833,
+                -59.11543993210843
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.1021325962057207e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414481,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183435,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1241549021339696e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485017,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.875,
+                -58.62189809166419
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 9.631913322483143e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.235221632034957
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006554,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.020996046977948e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349776,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.369138399903825
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.916497388987278e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982296,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.553727878205294,
+                -58.11498516825058
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.429779889598585e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.2764000029823,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 390,
+            "volume_mm3": 5.694524712884785e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.944444444444443
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.000000000000002
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.2619571186645029e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828668,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567209046,
+                1.9305305499925869
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 9.20536789291793e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.78418255572253
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.6092916002494064,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.3954462996815685e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999998352
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.337269475865324e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.932672601683782,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183725,
+                2.1148557254534404
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 7.74483186187936e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.4038843820021385e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.4176571485193303,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 6.528100542774196e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                10.0,
+                15.999999999999996
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.958990338993925e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184378,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.1966803376294308e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.709453018210144,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234536,
+                1.1569079003497684
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3021406829470958e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083426,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424106017,
+                0.9608074791675385
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.0033423744615355e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131453,
+                0.8856916032317041
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 5.313241166482463e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519332,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.37297918977488925,
+                0.8266668908495962
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.8240563139787502e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999993,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994747,
+                1.0514428414850112
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 7.597394935388024e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277466,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.2354257210635593,
+                3.469238302115679
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-host-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-host-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-host-1_000.stl",
+      "sha256": "3fe135a7bce9700b44db82a2b7a1f78255b70d2c5255a628aeddda0b69fcc32c",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1584,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.005422592512302e-12,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 2.5978166558020266e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263402,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538946,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.905587213168474e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999993,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                -62.060068804559826
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.28775217188451e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327728,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252833,
+                -59.11543993210843
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.1021325962057207e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414481,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183435,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1241549021339696e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485017,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.875,
+                -58.62189809166419
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 9.631913322483143e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.235221632034957
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006554,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.020996046977948e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349776,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.369138399903825
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.916497388987278e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982296,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.553727878205294,
+                -58.11498516825058
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.429779889598585e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.2764000029823,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 390,
+            "volume_mm3": 5.694524712884785e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.944444444444443
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.000000000000002
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.2619571186645029e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828668,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567209046,
+                1.9305305499925869
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 9.20536789291793e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.78418255572253
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.6092916002494064,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.3954462996815685e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999998352
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.337269475865324e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.932672601683782,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183725,
+                2.1148557254534404
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 7.74483186187936e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.4038843820021385e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.4176571485193303,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 6.528100542774196e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                10.0,
+                15.999999999999996
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.958990338993925e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205283,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184378,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.1966803376294308e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.709453018210144,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234536,
+                1.1569079003497684
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3021406829470958e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083426,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424106017,
+                0.9608074791675385
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.0033423744615355e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131453,
+                0.8856916032317041
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 5.313241166482463e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519332,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.37297918977488925,
+                0.8266668908495962
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 1.8240563139787502e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999993,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994747,
+                1.0514428414850112
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 7.597394935388024e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277466,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.2354257210635593,
+                3.469238302115679
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-output-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-output",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-output\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-output-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-output-0_000.stl",
+      "sha256": "f3d1b6eed4d8a9716f2d09e1d973d7331bc3d641e74759545c721a4dfc353f0f",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 12,
+        "components": [
+          {
+            "triangles": 12,
+            "volume_mm3": 319.9999999999998,
+            "planar_error_mm": 3.9999999999999964,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -22.000000000000014,
+                -2.0000000000000027
+              ],
+              [
+                -58.0,
+                -54.0
+              ],
+              [
+                22.000000000000004,
+                26.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-output-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-output",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-output\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-output-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-output-0_500.stl",
+      "sha256": "f3d1b6eed4d8a9716f2d09e1d973d7331bc3d641e74759545c721a4dfc353f0f",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 12,
+        "components": [
+          {
+            "triangles": 12,
+            "volume_mm3": 319.9999999999998,
+            "planar_error_mm": 3.9999999999999964,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -22.000000000000014,
+                -2.0000000000000027
+              ],
+              [
+                -58.0,
+                -54.0
+              ],
+              [
+                22.000000000000004,
+                26.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-output-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-output",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-output\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-output-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-output-1_000.stl",
+      "sha256": "f3d1b6eed4d8a9716f2d09e1d973d7331bc3d641e74759545c721a4dfc353f0f",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 12,
+        "components": [
+          {
+            "triangles": 12,
+            "volume_mm3": 319.9999999999998,
+            "planar_error_mm": 3.9999999999999964,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -22.000000000000014,
+                -2.0000000000000027
+              ],
+              [
+                -58.0,
+                -54.0
+              ],
+              [
+                22.000000000000004,
+                26.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "frame-fixed-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "frame-fixed",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"frame-fixed\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/frame-fixed-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/frame-fixed-0_000.stl",
+      "sha256": "1f47cec1ab297c4a43451951fe216d4c4641c15f9ee789683f8f071d76580e96",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "triangle_count": 20,
+        "components": [
+          {
+            "triangles": 4,
+            "volume_mm3": 8.762435221854048e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -57.0
+              ],
+              [
+                19.0,
+                19.799999999999997
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.130240428499519e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -58.2
+              ],
+              [
+                20.295774647887328,
+                25.0
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.762435221854048e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                57.0,
+                59.0
+              ],
+              [
+                19.0,
+                19.799999999999997
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.9600987499757139e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                53.0,
+                53.8
+              ],
+              [
+                21.869565217391308,
+                25.0
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "frame-fixed-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "frame-fixed",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"frame-fixed\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/frame-fixed-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "frame-fixed-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "frame-fixed",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"frame-fixed\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/frame-fixed-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/frame-fixed-1_000.stl",
+      "sha256": "64a2511d8b44721d957dbd63782079c716a9023825ff58e29372d3498ff16973",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "triangle_count": 26,
+        "components": [
+          {
+            "triangles": 14,
+            "volume_mm3": 3.8030689708534737e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -53.0
+              ],
+              [
+                19.0,
+                25.0
+              ],
+              [
+                -35.0,
+                -35.0
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.295208715949684e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                53.0,
+                59.0
+              ],
+              [
+                19.0,
+                20.703030303030303
+              ],
+              [
+                -35.0,
+                -35.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 0.0,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                54.0,
+                54.0
+              ],
+              [
+                21.0,
+                24.0
+              ],
+              [
+                -35.0,
+                5.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "baseline-frame-fixed-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "baseline-frame-fixed",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"baseline-frame-fixed\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/baseline-frame-fixed-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/baseline-frame-fixed-0_000.stl",
+      "sha256": "1c1aba57b41fc475c28670074fce74890ed1751ffcb6317a0f40f44193eb22ed",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "triangle_count": 26,
+        "components": [
+          {
+            "triangles": 4,
+            "volume_mm3": 8.762435221854048e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -57.0
+              ],
+              [
+                19.0,
+                19.799999999999997
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.3999912340523224e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -53.0
+              ],
+              [
+                20.295774647887328,
+                25.0
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.762435221854048e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                57.0,
+                59.0
+              ],
+              [
+                19.0,
+                19.799999999999997
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.9600987499757139e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                53.0,
+                53.8
+              ],
+              [
+                21.869565217391308,
+                25.0
+              ],
+              [
+                5.0,
+                5.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "baseline-frame-fixed-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "baseline-frame-fixed",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"baseline-frame-fixed\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/baseline-frame-fixed-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "baseline-frame-fixed-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "baseline-frame-fixed",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"baseline-frame-fixed\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/baseline-frame-fixed-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/baseline-frame-fixed-1_000.stl",
+      "sha256": "64a2511d8b44721d957dbd63782079c716a9023825ff58e29372d3498ff16973",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "triangle_count": 26,
+        "components": [
+          {
+            "triangles": 14,
+            "volume_mm3": 3.8030689708534737e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -59.0,
+                -53.0
+              ],
+              [
+                19.0,
+                25.0
+              ],
+              [
+                -35.0,
+                -35.0
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.295208715949684e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                53.0,
+                59.0
+              ],
+              [
+                19.0,
+                20.703030303030303
+              ],
+              [
+                -35.0,
+                -35.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 0.0,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                54.0,
+                54.0
+              ],
+              [
+                21.0,
+                24.0
+              ],
+              [
+                -35.0,
+                5.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "output-bridge-moving-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "output-bridge-moving",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"output-bridge-moving\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-bridge-moving-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "output-bridge-moving-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "output-bridge-moving",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"output-bridge-moving\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-bridge-moving-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "output-bridge-moving-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "output-bridge-moving",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"output-bridge-moving\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/output-bridge-moving-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "input-motion-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-motion",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-motion\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-motion-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-motion-0_000.stl",
+      "sha256": "dea61cbb0d3f123fd673973518673e60b25ecc5c1e3f56dba00ac77db61d4082",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 132,
+        "components": [
+          {
+            "triangles": 132,
+            "volume_mm3": 1620.0959337065021,
+            "planar_error_mm": 11.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                10.0,
+                28.199999999999996
+              ],
+              [
+                -85.5,
+                -74.5
+              ],
+              [
+                -28.991378028648455,
+                -14.472607795381638
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-motion-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-motion",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-motion\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-motion-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-motion-0_500.stl",
+      "sha256": "00df41fda429e92ca9fe7fb8ab96f28a53d41d2bac992abbb1c31e8aeed06d1c",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 156,
+        "components": [
+          {
+            "triangles": 156,
+            "volume_mm3": 1471.33987455488,
+            "planar_error_mm": 10.999999999999998,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                14.825443841513717,
+                28.199999999999996
+              ],
+              [
+                -85.5,
+                -74.5
+              ],
+              [
+                -33.63366657957909,
+                -20.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-motion-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-motion",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-motion\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/input-motion-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/input-motion-1_000.stl",
+      "sha256": "70e4a781a3bf6934e74de480948bfd02370375192f6d277839cc4eb36b37c203",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 148,
+        "components": [
+          {
+            "triangles": 136,
+            "volume_mm3": 825.2950442402192,
+            "planar_error_mm": 7.445531069488326,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                20.754468930511667,
+                28.199999999999996
+              ],
+              [
+                -85.5,
+                -74.5
+              ],
+              [
+                -37.343533605469574,
+                -22.453884492705917
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 2.4102154346413323e-08,
+            "planar_error_mm": 1.162053164224296e-09,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                61.74760685818645,
+                65.26586871678394
+              ],
+              [
+                -85.5,
+                -74.5
+              ],
+              [
+                -3.5612245108965404,
+                -2.0749507133667073
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "spring-added-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "spring-added",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"spring-added\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/spring-added-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "spring-added-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "spring-added",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"spring-added\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/spring-added-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "spring-added-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "spring-added",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"spring-added\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/spring-added-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "spring-continuous-fixed-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "spring-continuous-fixed",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"spring-continuous-fixed\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/spring-continuous-fixed-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "spring-continuous-relative-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "spring-continuous-relative",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"spring-continuous-relative\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/spring-continuous-relative-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 1,
+      "execution_ok": true,
+      "empty": true,
+      "file": null,
+      "sha256": null,
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": true,
+      "classification": {
+        "components": [],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "name": "solid-overlap-control-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "solid-overlap-control",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"solid-overlap-control\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T054324287295Z/solid-overlap-control-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T054324287295Z/solid-overlap-control-0_000.stl",
+      "sha256": "2962697641c14fe5436421e7518e024a02dde9ff8adc1efcb0ba3fc2e7bde349",
+      "kind": "intersection",
+      "expected_solid_overlap": true,
+      "passed": true,
+      "classification": {
+        "triangle_count": 4444,
+        "components": [
+          {
+            "triangles": 4444,
+            "volume_mm3": 260733.15109007954,
+            "planar_error_mm": 37.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -28.200000000000003,
+                129.2462120245875
+              ],
+              [
+                -94.0,
+                -49.0
+              ],
+              [
+                -125.25840533340727,
+                78.46803743153546
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    }
+  ],
+  "pictures": [],
+  "sampled_normalized_poses": [
+    0,
+    0.5,
+    1
+  ],
+  "scope": "Current 38-part feeder CAD plus independent input and output actuator candidates. Finite nominal poses; the two spring-envelope tests are separately continuous.",
+  "not_validated": [
+    "unsampled actuator interference",
+    "printed dimensional variation",
+    "cable housing route and supplier end fitting detail",
+    "complete hardware and tool access",
+    "clamp force and friction",
+    "strength and creep",
+    "assembly and loaded return",
+    "ball delivery and adjustable spin on the physical blower"
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,22 @@
+{
+  "cad/feeder-integrated-candidate.scad": {
+    "sha256": "00e49d9001e309ec089064a0ce69d7679148f1db6f0af47b293a36e2e47faee6",
+    "archived_as": "output/outlet-groove-fix/before/feeder-integrated-candidate.scad"
+  },
+  "output/feeder-integrated-candidate/negative-half.stl": {
+    "sha256": "f8a2aba50cdbd5ce71a9f51bc75b81e8ed0895dfb6150cc6a189ca2ce4bf66c4",
+    "archived_as": "output/outlet-groove-fix/before/negative-half.stl"
+  },
+  "output/feeder-integrated-candidate/positive-half.stl": {
+    "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+    "archived_as": "output/outlet-groove-fix/before/positive-half.stl"
+  },
+  "output/feeder-integrated-candidate/report.json": {
+    "sha256": "18359f4f7e564ddb17cacd709de23fb7af148a15c565b16b73fbf1bface72793",
+    "archived_as": "output/outlet-groove-fix/before/report.json"
+  },
+  "output/print-review/shell-critical-features/report.json": {
+    "sha256": "2077f8329ff5f516bfde367db82d10e694a2c9a34380d104299c499852704b81",
+    "archived_as": "output/outlet-groove-fix/before/critical-features-report.json"
+  }
+}

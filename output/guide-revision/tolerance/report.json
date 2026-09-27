@@ -1,0 +1,1377 @@
+{
+  "status": "BOUNDED_RIGID_POSES_VERIFIED_NOT_GLOBAL_BOUND",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "analysis/feeder_tolerance.py": "8b0789b00daa3725fd2405c12dbc93c90321d4255d37fc13b40aa6960971f2da",
+    "analysis/guide_revision_tolerance.py": "f40a9d25ea96f425826dff923ad3baac488489ea692647afaa9fce316f5e9008"
+  },
+  "sources_stable": true,
+  "revision_parameters": {
+    "revision_x0": 43.8,
+    "revision_x1": 57.8,
+    "revision_datum_y": 4.5,
+    "revision_front_retracted": -5.5,
+    "revision_setting": 0.9,
+    "revision_bias_y": 0.0
+  },
+  "local_searches": [
+    {
+      "stroke_mm": 14.0,
+      "direction": 1,
+      "solver_success": true,
+      "tip_x_offset_mm": 0.9029646365430309,
+      "minimum_margin_mm": -6.705747068735946e-13,
+      "variables": [
+        0.9029646365430309,
+        -0.1898495217910697,
+        -0.14837487647614245,
+        -0.007240815222484905,
+        0.0006838408021452093,
+        0.005752311679415047,
+        -0.15302444172577206,
+        -0.03495389213101548,
+        0.19999999999998444,
+        -0.29095402238822227,
+        0.0099946723041649,
+        -1.2110027235473857e-14,
+        -3.845968172749908e-15
+      ]
+    },
+    {
+      "stroke_mm": 14.0,
+      "direction": -1,
+      "solver_success": true,
+      "tip_x_offset_mm": -0.931973485862454,
+      "minimum_margin_mm": -4.800604358479177e-12,
+      "variables": [
+        -0.931973485862454,
+        0.20029854126853022,
+        0.14539514235346918,
+        0.00567834901154523,
+        -0.001039967629662707,
+        -0.009925941000520758,
+        0.14869700604714078,
+        0.0424492305918019,
+        -0.19999999999933285,
+        0.2887562744750448,
+        -0.009994672304190511,
+        -1.3250894062119307e-14,
+        -1.4092836265578942e-15
+      ]
+    },
+    {
+      "stroke_mm": 17.0,
+      "direction": 1,
+      "solver_success": true,
+      "tip_x_offset_mm": 0.9112128842837428,
+      "minimum_margin_mm": -7.132072710192006e-13,
+      "variables": [
+        0.9112128842837428,
+        -0.23309897658630385,
+        -0.16169475712872558,
+        -0.003457152802687861,
+        0.000813332882320256,
+        0.007836171224091321,
+        -0.15118875358488784,
+        -0.038133397257841005,
+        0.19999999999997484,
+        -0.32093903774439647,
+        0.009994672304211435,
+        -8.511559955059866e-15,
+        -1.2036943972247494e-14
+      ]
+    },
+    {
+      "stroke_mm": 17.0,
+      "direction": -1,
+      "solver_success": true,
+      "tip_x_offset_mm": -0.9237293054039367,
+      "minimum_margin_mm": -9.121592370320286e-13,
+      "variables": [
+        -0.9237293054039367,
+        0.17039211224324408,
+        0.16331186068480485,
+        0.004114984018228749,
+        -0.0006501957260913665,
+        -0.00907798086657053,
+        0.1484572614717346,
+        0.042864480378417696,
+        -0.20000000000001264,
+        0.31874128983130967,
+        -0.009994672304230873,
+        1.816968156690473e-14,
+        -2.2469301960931636e-15
+      ]
+    },
+    {
+      "stroke_mm": 19.0,
+      "direction": 1,
+      "solver_success": true,
+      "tip_x_offset_mm": 0.9063079703956615,
+      "minimum_margin_mm": -5.764555499609969e-13,
+      "variables": [
+        0.9063079703956615,
+        -0.20851957384771902,
+        -0.17591363953145886,
+        -0.003374374882480366,
+        0.00031873854334350967,
+        0.00696964570405662,
+        -0.15393599077058162,
+        -0.03337504287189777,
+        0.20000000000003212,
+        -0.3409290479814969,
+        0.009994672304226427,
+        1.2358321249670478e-14,
+        2.2039800348104966e-16
+      ]
+    },
+    {
+      "stroke_mm": 19.0,
+      "direction": -1,
+      "solver_success": true,
+      "tip_x_offset_mm": -0.9352624745984018,
+      "minimum_margin_mm": -5.19528864373342e-13,
+      "variables": [
+        -0.9352624745984018,
+        0.22383099857672806,
+        0.1999999999999999,
+        -3.955670663104269e-16,
+        1.7760020618729724e-15,
+        -0.011576420192740773,
+        0.17320508075688734,
+        1.0486276619092298e-16,
+        -0.20000000000000803,
+        0.3387313000680676,
+        -0.009994672304232004,
+        -1.2423248638088878e-14,
+        9.59254563969739e-16
+      ]
+    }
+  ],
+  "csg_witnesses": [
+    {
+      "name": "outward",
+      "stroke_mm": 17.0,
+      "variables": [
+        0.906656819862324,
+        -0.23213348170337234,
+        -0.16088628334308194,
+        -0.0034398670386744214,
+        0.0008092662179086547,
+        0.007796990367970865,
+        -0.15043280981696341,
+        -0.0379427302715518,
+        0.19899999999997497,
+        -0.3193343425556745,
+        0.009944698942690377,
+        -8.469002155284566e-15,
+        -1.1976759252386256e-14
+      ],
+      "tip_offset_xyz_mm": [
+        0.906656819862324,
+        -0.23213348170337234,
+        -0.16088628334308194
+      ],
+      "analytic_minimum_margin_mm": 0.00019927722385482127,
+      "pose_csg_verified": true,
+      "probes": [
+        {
+          "triangle_count": 16,
+          "components": [
+            {
+              "triangles": 4,
+              "volume_mm3": 9.547918011776346e-15,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -52.125,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -4.0,
+                  -2.5
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 8.215650382226158e-15,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -52.125,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  2.5,
+                  4.0
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 0.0,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -49.0,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -32.5,
+                  -31.0
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 0.0,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  44.29999999701977,
+                  49.0
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -32.5,
+                  -31.0
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "fixed",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 0,
+          "components": [],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "cam",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 124,
+          "components": [
+            {
+              "triangles": 26,
+              "volume_mm3": 9.495876307497042e-15,
+              "planar_error_mm": 8.519524298522561e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.132926383031666,
+                  44.039055771662284
+                ],
+                [
+                  1.6556044987958873,
+                  1.661343119328532
+                ],
+                [
+                  -1.646107177663856,
+                  -0.5133935183381911
+                ]
+              ]
+            },
+            {
+              "triangles": 16,
+              "volume_mm3": 5.467848396278896e-15,
+              "planar_error_mm": 1.2137594064620707e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.91404691264127,
+                  44.66840028954889
+                ],
+                [
+                  1.6590540152849875,
+                  1.6653011356266905
+                ],
+                [
+                  -1.9737916288122692,
+                  -1.6789770936517063
+                ]
+              ]
+            },
+            {
+              "triangles": 10,
+              "volume_mm3": 1.0408340855860843e-15,
+              "planar_error_mm": 3.3055886063005655e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  44.475231661587785,
+                  45.630832715502365
+                ],
+                [
+                  1.662635542231485,
+                  1.6720374426498994
+                ],
+                [
+                  -2.1927252037418192,
+                  -2.0535268035553242
+                ]
+              ]
+            },
+            {
+              "triangles": 24,
+              "volume_mm3": 3.3550636227563935e-16,
+              "planar_error_mm": 6.531636453613179e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  42.86699653051174,
+                  43.447355017535536
+                ],
+                [
+                  1.6568436280120555,
+                  1.6637372007259568
+                ],
+                [
+                  -0.24466430523644267,
+                  0.7315577045053586
+                ]
+              ]
+            },
+            {
+              "triangles": 20,
+              "volume_mm3": 1.8901980675112284e-15,
+              "planar_error_mm": 3.44831876912295e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.25253977952925,
+                  44.06661258276405
+                ],
+                [
+                  1.6636583178161775,
+                  1.671169110743118
+                ],
+                [
+                  0.7452484552821246,
+                  1.2577809586527455
+                ]
+              ]
+            },
+            {
+              "triangles": 8,
+              "volume_mm3": 8.808925811010226e-15,
+              "planar_error_mm": 3.7985891947757605e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.79747521311555,
+                  44.687054150394786
+                ],
+                [
+                  1.6697792932260416,
+                  1.6769009826369974
+                ],
+                [
+                  1.2759928402171996,
+                  1.4845016027680835
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 1.9059189990122682e-15,
+              "planar_error_mm": 1.8058995343359494e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  44.10303745023575,
+                  44.45214143432557
+                ],
+                [
+                  1.672837448632548,
+                  1.6755594641940241
+                ],
+                [
+                  1.6271722741749064,
+                  1.6395273754566777
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 5.342948306008566e-15,
+              "planar_error_mm": 1.3666079484837693e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  46.21849702494005,
+                  46.38824474010215
+                ],
+                [
+                  1.6785904673570453,
+                  1.6805176121176222
+                ],
+                [
+                  -1.6362613200522986,
+                  -1.2818024650699804
+                ]
+              ]
+            },
+            {
+              "triangles": 8,
+              "volume_mm3": 5.630912403020716e-15,
+              "planar_error_mm": 2.1650570131187078e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  45.962939280620844,
+                  46.457110304101434
+                ],
+                [
+                  1.6859760592075883,
+                  1.6889672939053484
+                ],
+                [
+                  0.910416148252808,
+                  1.327895734117023
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 1.9736100605085693e-15,
+              "planar_error_mm": 2.4215058245041273e-17,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.58151124186448,
+                  43.58476974689924
+                ],
+                [
+                  -1.991421609463126,
+                  -1.9913378097261205
+                ],
+                [
+                  -1.2965599150144338,
+                  -1.278905372512789
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "seat",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 144,
+          "components": [
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000002242,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -6.5,
+                  -4.3
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000003415,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -6.5,
+                  -4.3
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000000573,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  4.3,
+                  6.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.980000000000345,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  4.3,
+                  6.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.98000000000091,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -35.0,
+                  -32.800000000000004
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000021853,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -35.0,
+                  -32.800000000000004
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000000502,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -24.200000000000003,
+                  -22.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.979999999999638,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -24.200000000000003,
+                  -22.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999998302,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -62.5,
+                  -57.99999999999999
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -2.0,
+                  2.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.799999999999848,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  57.99999999999999,
+                  62.5
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -2.0,
+                  2.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999988816,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -62.5,
+                  -57.99999999999999
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -30.5,
+                  -26.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999993577,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  57.99999999999999,
+                  62.5
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -30.5,
+                  -26.5
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": true,
+          "name": "control",
+          "expected_overlap": true
+        }
+      ],
+      "source": {
+        "path": "output/guide-revision/tolerance/outward.scad",
+        "sha256": "17ed888eb9becc7a60b989fae5421ef1ec1abcf89b487669f56efa4d17b412f8"
+      }
+    },
+    {
+      "name": "inward",
+      "stroke_mm": 19.0,
+      "variables": [
+        -0.9305861622254098,
+        0.2225118435838444,
+        0.1989999999999999,
+        -3.9358923097887476e-16,
+        1.7671220515636075e-15,
+        -0.01151853809177707,
+        0.1723390553531029,
+        1.0433845235996837e-16,
+        -0.199000000000008,
+        0.3370376435677273,
+        -0.009944698942710843,
+        -1.2361132394898433e-14,
+        9.544582911498902e-16
+      ],
+      "tip_offset_xyz_mm": [
+        -0.9305861622254098,
+        0.2225118435838444,
+        0.1989999999999999
+      ],
+      "analytic_minimum_margin_mm": 0.0001475343200363355,
+      "pose_csg_verified": true,
+      "probes": [
+        {
+          "triangle_count": 16,
+          "components": [
+            {
+              "triangles": 4,
+              "volume_mm3": 2.220446049250313e-14,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -49.090876741283054,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -4.0,
+                  -2.5
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 4.440892098500626e-16,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -53.375,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  2.5,
+                  4.0
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 0.0,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  -49.0,
+                  -44.29999999701977
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -32.5,
+                  -31.0
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 0.0,
+              "planar_error_mm": 0.0,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  44.29999999701977,
+                  49.0
+                ],
+                [
+                  4.5,
+                  4.5
+                ],
+                [
+                  -32.5,
+                  -31.0
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "fixed",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 0,
+          "components": [],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "cam",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 100,
+          "components": [
+            {
+              "triangles": 8,
+              "volume_mm3": 2.2898349882893854e-16,
+              "planar_error_mm": 5.646187607903314e-17,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  42.67413126909027,
+                  42.892753065461235
+                ],
+                [
+                  1.7601206456675211,
+                  1.7626389605316164
+                ],
+                [
+                  -0.5663668647302127,
+                  -0.13265354742745122
+                ]
+              ]
+            },
+            {
+              "triangles": 10,
+              "volume_mm3": 7.860032069650913e-15,
+              "planar_error_mm": 1.5739183425212931e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.059257535449596,
+                  43.51883733889707
+                ],
+                [
+                  1.7529087511622976,
+                  1.7582026727633073
+                ],
+                [
+                  -1.2278487512256822,
+                  -0.9661468979928862
+                ]
+              ]
+            },
+            {
+              "triangles": 16,
+              "volume_mm3": 4.950467119568813e-16,
+              "planar_error_mm": 2.636747130287544e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.52450494834359,
+                  45.84854128574956
+                ],
+                [
+                  1.7260727806612366,
+                  1.7528434656996859
+                ],
+                [
+                  -1.6487590650226087,
+                  -1.2274161754288209
+                ]
+              ]
+            },
+            {
+              "triangles": 8,
+              "volume_mm3": 1.863093013199091e-15,
+              "planar_error_mm": 5.1775829829629297e-17,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  42.660785833604955,
+                  42.892753065461235
+                ],
+                [
+                  1.7601206456675216,
+                  1.7627926872373176
+                ],
+                [
+                  0.36482677371367583,
+                  0.9643668647301464
+                ]
+              ]
+            },
+            {
+              "triangles": 8,
+              "volume_mm3": 7.112366251504909e-16,
+              "planar_error_mm": 1.7269569165343706e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.05925753544961,
+                  43.51883733889708
+                ],
+                [
+                  1.7529087511622985,
+                  1.7582026727633082
+                ],
+                [
+                  1.386225403183915,
+                  1.634582520377583
+                ]
+              ]
+            },
+            {
+              "triangles": 16,
+              "volume_mm3": 7.038857344210392e-15,
+              "planar_error_mm": 2.9514368052918454e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  43.51382425722485,
+                  45.40088779607069
+                ],
+                [
+                  1.7312293224870565,
+                  1.752966497088367
+                ],
+                [
+                  1.8531732264169845,
+                  2.0612092411242253
+                ]
+              ]
+            },
+            {
+              "triangles": 4,
+              "volume_mm3": 1.3730336312356428e-15,
+              "planar_error_mm": 1.0972387849840306e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  45.66524586595422,
+                  45.85088489135064
+                ],
+                [
+                  1.7260457845569197,
+                  1.7281841693143971
+                ],
+                [
+                  -1.112676606048566,
+                  -0.9888854156479857
+                ]
+              ]
+            },
+            {
+              "triangles": 6,
+              "volume_mm3": 1.1102230246251565e-15,
+              "planar_error_mm": 3.127177323758452e-17,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  46.03373509688362,
+                  46.48320819303365
+                ],
+                [
+                  1.7187620223887594,
+                  1.72393952434801
+                ],
+                [
+                  -0.9121404660392438,
+                  -0.35904070480055883
+                ]
+              ]
+            },
+            {
+              "triangles": 6,
+              "volume_mm3": 2.1510571102112408e-15,
+              "planar_error_mm": 3.8523472226956223e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  45.114958429343076,
+                  46.049691450763774
+                ],
+                [
+                  1.723755722349216,
+                  1.7345229564534048
+                ],
+                [
+                  1.612498340914289,
+                  1.8619392246050521
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 5.910853403956473e-15,
+              "planar_error_mm": 4.1033299204967447e-16,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  45.876648653961865,
+                  46.48320819303365
+                ],
+                [
+                  1.7187620223887599,
+                  1.725749010550779
+                ],
+                [
+                  0.6969086065617848,
+                  1.310140466039165
+                ]
+              ]
+            },
+            {
+              "triangles": 6,
+              "volume_mm3": 2.772955476348926e-15,
+              "planar_error_mm": 5.550430592013115e-17,
+              "planar_contact_only": true,
+              "bounds": [
+                [
+                  45.987147312123255,
+                  46.17632193539248
+                ],
+                [
+                  -1.927945088622326,
+                  -1.925765977144894
+                ],
+                [
+                  -2.4990911620147735,
+                  -0.44761505943480023
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": false,
+          "name": "seat",
+          "expected_overlap": false
+        },
+        {
+          "triangle_count": 144,
+          "components": [
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000002242,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -6.5,
+                  -4.3
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000003415,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -6.5,
+                  -4.3
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000000573,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  4.3,
+                  6.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.980000000000345,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  4.3,
+                  6.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.98000000000091,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -35.0,
+                  -32.800000000000004
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000021853,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -35.0,
+                  -32.800000000000004
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.9800000000000502,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -55.0,
+                  -46.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -24.200000000000003,
+                  -22.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.979999999999638,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  46.0,
+                  55.0
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -24.200000000000003,
+                  -22.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999998302,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -62.5,
+                  -57.99999999999999
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -2.0,
+                  2.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.799999999999848,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  57.99999999999999,
+                  62.5
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -2.0,
+                  2.0
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999988816,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  -62.5,
+                  -57.99999999999999
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -30.5,
+                  -26.5
+                ]
+              ]
+            },
+            {
+              "triangles": 12,
+              "volume_mm3": 1.7999999999993577,
+              "planar_error_mm": 0.10000000000000142,
+              "planar_contact_only": false,
+              "bounds": [
+                [
+                  57.99999999999999,
+                  62.5
+                ],
+                [
+                  -9.05,
+                  -8.95
+                ],
+                [
+                  -30.5,
+                  -26.5
+                ]
+              ]
+            }
+          ],
+          "has_solid_or_unclassified_overlap": true,
+          "name": "control",
+          "expected_overlap": true
+        }
+      ],
+      "source": {
+        "path": "output/guide-revision/tolerance/inward.scad",
+        "sha256": "3d0f46a0c6fe55e9f9f327677afa19413ecf197fea3bdabc8a9dd57c019e32f0"
+      }
+    }
+  ],
+  "worst_play_lower_bound_mm": 0.9305861622254098,
+  "certified_worst_play_upper_bound_mm": null,
+  "largest_possible_remaining_1mm_budget_mm": 0.0694138377745902,
+  "manufacturing_release": false,
+  "physical_acceptance": "OPEN",
+  "limits": [
+    "Only the +X front follower at three interior points of its linear ramp is optimized.",
+    "The whole-box baseline and full-height narrow slab are restrictive feasibility surrogates; they exclude real possible poses.",
+    "A local optimizer maximum and absence of a new >1mm witness never prove the global bound is below 1mm.",
+    "CSG checks every fixed solid and all four followers at each recorded pose; it does not prove a continuous reachable loaded path.",
+    "Printed errors, seam alignment, deformation, friction, wear and spring loads are not included.",
+    "Remaining budget is only an upper limit on room left by an existing pose, not a validated manufacturing allowance.",
+    "Offsets refer to the front +X fingertip X component, not radial-distance change or a three-dimensional norm.",
+    "The optimized follower nut seats at carrier-local Y=-4.3; the other three use the original display placements."
+  ],
+  "source_and_artifact_sha256": {
+    "output/guide-revision/tolerance/outward-fixed.log": "cf7598377ab35de99461ef0c97f7a982b2024293882db0ac5564092d88ca660f",
+    "output/guide-revision/tolerance/inward-seat.log": "6959431c39e05579a993f85d15932c5b36be819ef8cf6c3df1f67bda3e957f0e",
+    "output/guide-revision/tolerance/inward-fixed.log": "2208decfdbaff269f868d2ec9f03c7510bed6cb5f3e17755ca8f8da98760cbbe",
+    "output/guide-revision/tolerance/outward-seat.stl": "ac09ef6789bbdf24a146b39b7de65f1b77dc6cc48e251635a1c1621d492e377b",
+    "output/guide-revision/tolerance/inward-cam.log": "b1b15b23b5f71cdaf13be517864c40403fe36ec27b9ae70216020fa64e8e040c",
+    "output/guide-revision/tolerance/outward-control.stl": "a029cecfaafc5a500d13dfa158048edcfed820def38f41ea1944940bb41fa071",
+    "output/guide-revision/tolerance/outward.scad": "17ed888eb9becc7a60b989fae5421ef1ec1abcf89b487669f56efa4d17b412f8",
+    "output/guide-revision/tolerance/inward-control.log": "947f176459be327af2528808b76157b6d0189f3b9d2cf37a7bd2f4a48b570634",
+    "output/guide-revision/tolerance/inward.scad": "3d0f46a0c6fe55e9f9f327677afa19413ecf197fea3bdabc8a9dd57c019e32f0",
+    "output/guide-revision/tolerance/inward-control.stl": "a029cecfaafc5a500d13dfa158048edcfed820def38f41ea1944940bb41fa071",
+    "output/guide-revision/tolerance/inward-fixed.stl": "ad7dd0280d06e914512aaa9ba69d2160fea83bddc754a35d9cfeb36ea1613989",
+    "output/guide-revision/tolerance/inward-seat.stl": "d964e6b776e99ee2c13366d7090a08458d6fb3a295f2e7d896f31ef378fed8d9",
+    "output/guide-revision/tolerance/outward-fixed.stl": "d168ade252766145db7d2f77c0cb88fea7e112cfdb4cc4fc566529bda58c49bd",
+    "output/guide-revision/tolerance/outward-cam.log": "b1b15b23b5f71cdaf13be517864c40403fe36ec27b9ae70216020fa64e8e040c",
+    "output/guide-revision/tolerance/outward-seat.log": "3c7ae12da89dc7a9e1918972795a9625ad499938f89717f7bdb82a7f61a5833f",
+    "output/guide-revision/tolerance/outward-control.log": "947f176459be327af2528808b76157b6d0189f3b9d2cf37a7bd2f4a48b570634"
+  }
+}

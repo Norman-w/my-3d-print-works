@@ -1,0 +1,117 @@
+{
+  "status": "OFFICIAL_NOMINALS_CONFIRMED_RETURN_FORCE_BOUNDS_OPEN",
+  "generated_at_utc": "2026-09-27T13:52:29.544331+00:00",
+  "scope": "Supplier facts and future formal-component measurement protocol only; not a force test or physical release.",
+  "supplier_model_identity": {
+    "spring": "Lee Spring LEM063CA 03 M",
+    "bowden_kit": "norelem03096-14-1000"
+  },
+  "published_nominal_force_table": [
+    {
+      "u_mm": 0,
+      "nominal_pin_distance_mm": 26.82,
+      "nominal_spring_force_N": 2.975,
+      "measurement": false
+    },
+    {
+      "u_mm": 5,
+      "nominal_pin_distance_mm": 31.82,
+      "nominal_spring_force_N": 4.225,
+      "measurement": false
+    },
+    {
+      "u_mm": 10,
+      "nominal_pin_distance_mm": 36.82,
+      "nominal_spring_force_N": 5.475,
+      "measurement": false
+    },
+    {
+      "u_mm": 15,
+      "nominal_pin_distance_mm": 41.82,
+      "nominal_spring_force_N": 6.725,
+      "measurement": false
+    },
+    {
+      "u_mm": 20,
+      "nominal_pin_distance_mm": 46.82,
+      "nominal_spring_force_N": 7.975,
+      "measurement": false
+    }
+  ],
+  "unknown_bounds": {
+    "eta_return_min": null,
+    "eta_pull_min": null,
+    "cable_startup_drag_N": null,
+    "cable_running_drag_N": null,
+    "spring_F0_lower_N": null,
+    "spring_force_actual_lower_curve": null,
+    "R_actual": null,
+    "D_actual": null,
+    "tau_actual": null
+  },
+  "general_rate_tolerance_publication": {
+    "relative": 0.1,
+    "selected_combined_Fs_bound_derived": false,
+    "reason": "F0 and selected free-length bounds missing even if the generic rate tolerance is applicable."
+  },
+  "closure_options": [
+    "Supplier acceptance for same model/route/loading and directional startup/running curves; exact spring F0/k/free length or force-at-length bounds.",
+    "Formal actual-component matched spring-force and whole-chain return-force measurement per protocol; do not infer eta."
+  ],
+  "actual_measurement_rows": 0,
+  "measurement_performed": false,
+  "physical_release": false,
+  "measurement_schema_file": "measurement-schema.json",
+  "measurement_csv": "paired-return.csv",
+  "source_sha256_at_start": {
+    "output/current-return-budget/README.md": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+    "output/current-return-budget/report.json": "b8525a0c4ffaf3ca629a42e1df7a807a7c7ebb7a3a8c8ea5027285e6222789fe",
+    "output/cable-actuation-v2/20260927T091604751038Z/report.json": "134a8aa6c971210b09a0bb559244c6d808ea5b612e7ec305dbba41f8a44c50f9",
+    "output/feeder-return-spring/selection-contract.json": "2b0f8c2206535ec5685b4087654e41ead9ed3d0d82f12d378a682016ddc822cf",
+    "output/feeder-return-spring/supplier-evidence.json": "3f9e63dcc16524f3ab79c45e3b33f585d886bf5d977a405eb9e6ae32ce4b64e5",
+    "output/feeder-return-spring/lee-extension-catalogue.pdf": "9d2b01aed9f425c43a033bda2a8df3c45e9fd98821e289a7f08be1ce84a66470",
+    "output/current-cable-supplier-closure/report.json": "dbc5ab64f269d11852b9f848f4a257d360822f0791c6b3a0b114bf69afd56033",
+    "output/current-cable-supplier-closure/reviewed-official-evidence.json": "99c24a796b6a99519cbce835628d8d7832e74aec9b19ed69bb6678a72a7a805a",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603"
+  },
+  "source_sha256_at_end": {
+    "output/current-return-budget/README.md": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+    "output/current-return-budget/report.json": "b8525a0c4ffaf3ca629a42e1df7a807a7c7ebb7a3a8c8ea5027285e6222789fe",
+    "output/cable-actuation-v2/20260927T091604751038Z/report.json": "134a8aa6c971210b09a0bb559244c6d808ea5b612e7ec305dbba41f8a44c50f9",
+    "output/feeder-return-spring/selection-contract.json": "2b0f8c2206535ec5685b4087654e41ead9ed3d0d82f12d378a682016ddc822cf",
+    "output/feeder-return-spring/supplier-evidence.json": "3f9e63dcc16524f3ab79c45e3b33f585d886bf5d977a405eb9e6ae32ce4b64e5",
+    "output/feeder-return-spring/lee-extension-catalogue.pdf": "9d2b01aed9f425c43a033bda2a8df3c45e9fd98821e289a7f08be1ce84a66470",
+    "output/current-cable-supplier-closure/report.json": "dbc5ab64f269d11852b9f848f4a257d360822f0791c6b3a0b114bf69afd56033",
+    "output/current-cable-supplier-closure/reviewed-official-evidence.json": "99c24a796b6a99519cbce835628d8d7832e74aec9b19ed69bb6678a72a7a805a",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603"
+  },
+  "source_stable": true,
+  "artifact_sha256": {
+    "build.py": "34a74f560e4d722971d015dc16671875ee5dbf7d74ce803413d5b012986cfaac",
+    "README.md": "d37c643cdfcc2d7468134262f71663b6aa154586f842bc8ddfa6c523fb12442b",
+    "measurement-protocol.md": "22b3cd07b0923325da3645adfda76bbbbccddb719289371b7ad19f09bd57aef0",
+    "measurement-schema.json": "cada2594a0b046e8822f306a0832a184740cb4f2774bbb75d4b43428a9f51d6f",
+    "paired-return.csv": "24830e922e235ff513f423cf94fed543e39c1bd83dbef572f8e787300be8c89d",
+    "reviewed-official-evidence.json": "609ef7e3fc6f7f0856d6ca3f30855225334ab1cd2fb0fd2fded5294d7b5f699c",
+    "evidence/lee-guide-p165.png": "161bf953e4cd499b4e37851db5a4f2cccabccc236437ac1ca94a7f272878a72a",
+    "evidence/lee-selected-p177.png": "d6d2a56cfb042d7f0316766d025761e6ca15158a38ca525944380e7f1768832a"
+  },
+  "checks": {
+    "selected_model_matches": true,
+    "catalogue_nominals_match": true,
+    "known_nominal_forces_preserved": true,
+    "schema_has_no_overall_sample_pass": true,
+    "do_not_populate_measurement_rows": true,
+    "sources_stable": true
+  },
+  "not_performed": [
+    "CAD change/export",
+    "main budget rewrite",
+    "procurement/cart/contact",
+    "print test coupon",
+    "overvoltage or powered test",
+    "mass/gravity model duplication",
+    "invented friction/efficiency",
+    "continuous-domain claim from finite samples"
+  ]
+}

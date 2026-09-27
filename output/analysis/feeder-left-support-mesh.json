@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-left_support.stl",
+  "format": "ascii",
+  "units": "unknown",
+  "triangleCount": 1390,
+  "uniqueVertexCount": 671,
+  "bounds": {
+    "min": [
+      -76.0,
+      -19.0,
+      -50.0
+    ],
+    "max": [
+      -35.5,
+      24.200000000000003,
+      21.0
+    ],
+    "size": [
+      40.5,
+      43.2,
+      71.0
+    ]
+  },
+  "surfaceArea": 14435.946553854874,
+  "signedVolume": 23393.695096065192,
+  "volume": 23393.695096065192,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

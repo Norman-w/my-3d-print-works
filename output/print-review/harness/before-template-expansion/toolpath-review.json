@@ -1,0 +1,268 @@
+{
+  "status": "SUPPORTED_OFFLINE_SLICE_REVIEW_PHYSICAL_OPEN",
+  "checks": {
+    "native_slice_success": true,
+    "no_native_warning": true,
+    "support_paths_exist": true,
+    "known_open_channel_support_detected": true,
+    "no_support_in_four_hole_depths": true,
+    "no_support_in_two_slot_depths": true,
+    "six_opening_contours_represented_at_mid_depth": true
+  },
+  "source_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+  "input_stl_sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9",
+  "gcode_sha256": "b9cd09151d64e7c7837f1760d291299c77872acf1a8ded408ebda360b64cafe8",
+  "project_3mf_sha256": "c55587ed0c72b8210859435edda3be1c5e0ce29b1777c53f8869570c06c2bd7b",
+  "coordinate_mapping": {
+    "source_offset": [
+      31.5,
+      -52.0,
+      -64.0
+    ],
+    "component_transform_3mf": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      2.22044605e-16,
+      1.0,
+      0.0,
+      -1.0,
+      2.22044605e-16,
+      0.0,
+      -1.42108547e-14,
+      -7.10542736e-15
+    ],
+    "build_transform_3mf": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      127.99999,
+      128.0,
+      11.0
+    ],
+    "active_extruder_offset_mm": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "Gcode_xyz_equals_R_times_assembly_plus_shift": {
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.22044605e-16,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        96.49999,
+        62.0,
+        63.00000000000001
+      ]
+    },
+    "inverse": "assembly X=Gcode X-96.49999, Y=Gcode Z-63, Z=62-Gcode Y"
+  },
+  "extruding_path_count": 163523,
+  "support_path_count": 122116,
+  "arc_commands_sampled": 83543,
+  "max_sample_spacing_mm": 0.2,
+  "support_probe_expansion_mm": 0.45,
+  "support_bounds_assembly": [
+    [
+      -27.93020254419426,
+      84.16072295505208
+    ],
+    [
+      -62.80000000000001,
+      -54.19999999999997
+    ],
+    [
+      -159.9407564321932,
+      32.511202873756204
+    ]
+  ],
+  "hole_support_checks": [
+    {
+      "axis_XZ": [
+        -16,
+        -60
+      ],
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    },
+    {
+      "axis_XZ": [
+        -16,
+        3
+      ],
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    },
+    {
+      "axis_XZ": [
+        16,
+        -60
+      ],
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    },
+    {
+      "axis_XZ": [
+        16,
+        3
+      ],
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    }
+  ],
+  "slot_support_checks": [
+    {
+      "center_X": -10.5,
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    },
+    {
+      "center_X": 10.5,
+      "conservative_support_sample_count": 0,
+      "candidate_bounds": null
+    }
+  ],
+  "regions": {
+    "open_strap_channel": {
+      "samples": 318910,
+      "bounds": [
+        [
+          -14.44999,
+          14.366010000000003
+        ],
+        [
+          -61.99999999999999,
+          -54.19999999999997
+        ],
+        [
+          -155.99946469832778,
+          -66.00044082573218
+        ]
+      ],
+      "removal_access": "Open toward -Y between X=-15,+15 flanges; external opening 30 mm. Remove support in pieces, not as one trapped solid."
+    }
+  },
+  "mid_depth_outer_wall_features": [
+    {
+      "kind": "M4_hole",
+      "axis_XZ": [
+        -16,
+        -60
+      ],
+      "outer_wall_samples_near_hole": 85,
+      "hole_contour_centerline_radius_bounds_mm": [
+        2.4488506393043656,
+        2.467326634887813
+      ]
+    },
+    {
+      "kind": "M4_hole",
+      "axis_XZ": [
+        -16,
+        3
+      ],
+      "outer_wall_samples_near_hole": 81,
+      "hole_contour_centerline_radius_bounds_mm": [
+        2.4488186530910627,
+        2.466829528879856
+      ]
+    },
+    {
+      "kind": "M4_hole",
+      "axis_XZ": [
+        16,
+        -60
+      ],
+      "outer_wall_samples_near_hole": 85,
+      "hole_contour_centerline_radius_bounds_mm": [
+        2.4489856006684474,
+        2.4673265900195784
+      ]
+    },
+    {
+      "kind": "M4_hole",
+      "axis_XZ": [
+        16,
+        3
+      ],
+      "outer_wall_samples_near_hole": 83,
+      "hole_contour_centerline_radius_bounds_mm": [
+        2.448985600668457,
+        2.4671732604405254
+      ]
+    },
+    {
+      "kind": "strap_slot",
+      "center_X": -10.5,
+      "outer_wall_samples": 265,
+      "bounds": [
+        [
+          -12.20998999999999,
+          -8.789990000000003
+        ],
+        [
+          -50.99999999999998,
+          -50.99999999999997
+        ],
+        [
+          -153.21,
+          -130.79
+        ]
+      ]
+    },
+    {
+      "kind": "strap_slot",
+      "center_X": 10.5,
+      "outer_wall_samples": 265,
+      "bounds": [
+        [
+          8.79001000000001,
+          12.210009999999997
+        ],
+        [
+          -50.99999999999998,
+          -50.99999999999997
+        ],
+        [
+          -153.21,
+          -130.79
+        ]
+      ]
+    }
+  ],
+  "layer_path_figure": "layer-paths.png",
+  "estimated_total_seconds": 11776.1474609375,
+  "estimated_total_grams": 76.71857452392578,
+  "estimated_model_grams": 57.69264602661133,
+  "warnings": "",
+  "sent_to_printer": false,
+  "physical_support_removal_validated": false,
+  "limits": [
+    "Arc/line samples are conservatively expanded; candidate counts are not actual interference volumes.",
+    "The underside U-channel is open to the bed side. Real PETG separation, residue and surface damage are not proven.",
+    "Model paths around apertures only prove slicer representation; printed diameters, strap insertion and fastener fit remain untested.",
+    "Only this one harness part was sliced; shell and root outlet integration excluded.",
+    "Fixed XZ layer planes favor in-plane arm/beam continuity; Y-directed bolt preload still loads across layers. No strength value inferred."
+  ]
+}

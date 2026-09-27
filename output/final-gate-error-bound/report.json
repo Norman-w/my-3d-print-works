@@ -1,0 +1,803 @@
+{
+  "status": "WHOLE_STROKE_CONDITIONAL_BOUND_WITH_EXPLICIT_OPEN_INPUTS",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445"
+  },
+  "sources_stable": true,
+  "analysis_sha256": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+  "parameter_snapshot": {
+    "cam_pin_d": 4.0,
+    "cam_follower_offset": 20.0,
+    "cam_pin_shoulder_start_y": 1.75,
+    "cam_pin_shoulder_end_y": 13.75,
+    "cam_carrier_width": 9.0,
+    "cam_carrier_axial": 8.0,
+    "cam_carrier_inner_offset": 13.0,
+    "cam_carrier_length": 15.0,
+    "cam_plate_y": 8.0,
+    "cam_plate_thickness": 5.0,
+    "ps_v_apex": 17.17157287525381,
+    "ps_v_z": 2.4,
+    "ps_v_half_angle": 45.0,
+    "ps_seat_y0": 1.75,
+    "ps_seat_y1": 4.5,
+    "ps_block_front": 22.0,
+    "ps_block_back": 23.6,
+    "ps_block_y0": 1.0,
+    "ps_nose_y0": 1.95,
+    "ps_lower_front_setback": 0.7,
+    "ps_block_half_z": 2.2,
+    "ps_lip_x0": 23.400000000000002,
+    "ps_lip_x1": 27.1,
+    "ps_lip_y0": 3.7,
+    "ps_lip_half_z": 2.8,
+    "ps_clear": 0.2,
+    "ps_adjust_advance": 0.5,
+    "ps_adjust_retracted": 0.3,
+    "ps_advance_stop": 0.6,
+    "ps_retract_stop": 0.4,
+    "ps_jack_length": 4.0,
+    "ps_jack_y": 1.5,
+    "ps_nut_x0": 25.0,
+    "ps_nut_x1": 26.6,
+    "revision_datum_z0": 2.5,
+    "revision_datum_z1": 4.1,
+    "revision_datum_y": 4.5,
+    "revision_x0": 43.8,
+    "revision_x1": 57.8,
+    "finger_closed_center_r": 21.0,
+    "finger_open_center_r": 26.0,
+    "cam_stroke": 20.0,
+    "gate_overlap_fraction": 0.2,
+    "slot_half_gap": 0.25,
+    "fixed_front_y": 7.25,
+    "slot_radius": 2.25,
+    "slope": 0.625,
+    "v_mid_y": 3.125,
+    "v_half_span": 1.375,
+    "graph_domain_note": "Each gate graph has slopes between 0 and +/-m; constant continuation outside end caps is an outer envelope."
+  },
+  "cases": [
+    {
+      "name": "looser_review_allocation_NOT_actual_play",
+      "input_envelopes": {
+        "frame_x_play": 0.1,
+        "frame_z_play": 0.2,
+        "frame_y_play": 0.2,
+        "frame_x_manufacturing": 0.01,
+        "frame_z_manufacturing": 0.01,
+        "frame_y_manufacturing": 0.02,
+        "carrier_y_play": 0.1,
+        "carrier_y_manufacturing": 0.05,
+        "carrier_rotation_deg": 1.0,
+        "pin_world_inclination_deg": 0.5,
+        "pin_relative_inclination_deg": 0.1,
+        "v_face_normal_error": 0.1,
+        "v_normal_angle_deg": 0.1,
+        "radius_error": 0.005,
+        "slot_outward_shape_error": 0.02,
+        "fixed_window_center_error": 0.02,
+        "fixed_window_outward_shape_error": 0.02,
+        "loaded_tip_x_deflection": 0.02,
+        "loaded_tip_z_deflection": 0.02
+      },
+      "result": {
+        "x_upper_mm": 1.1854876774932441,
+        "z_upper_mm": 0.8692958119891646,
+        "both_within_1mm_if_all_conditions_hold": false,
+        "terms_x_mm": {
+          "whole_stroke_slot": 0.4154592641732433,
+          "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+          "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+          "cam_z_pose_field_times_slope": 0.13125,
+          "carrier_rotation": 0.05758486698868558,
+          "finite_V_midplane_center": 0.15926504004403733,
+          "pin_axis_extension": 0.07010981552152078,
+          "loaded_tip_deflection": 0.02
+        },
+        "terms_z_mm": {
+          "fixed_window": 0.29500000000000004,
+          "carrier_rotation": 0.3532832767435725,
+          "finite_V_midplane_center": 0.15926504004403733,
+          "pin_axis_extension": 0.04174749520155471,
+          "loaded_tip_deflection": 0.02
+        },
+        "diagnostics": {
+          "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+          "slot_turn_extra": 0.09116616275879769,
+          "finite_V_contact_offset_per_face": 0.0023998301582596007,
+          "tilted_pin_radius_increase": 3.0537935091745624e-06,
+          "V_normal_matrix_perturbation": 0.002468267985694582,
+          "seat_y_lower": 2.466210878574015,
+          "pin_extension_max": 8.033789121425984,
+          "fixed_world_y_sample": 10.5,
+          "remaining_x": -0.18548767749324413,
+          "remaining_z": 0.1307041880108354
+        },
+        "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+      },
+      "face_error_table": [
+        {
+          "V_face_design_error_mm": 0,
+          "x_upper_mm": 1.0424791724626126,
+          "z_upper_mm": 0.7262873069585332,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+            "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+            "cam_z_pose_field_times_slope": 0.13125,
+            "carrier_rotation": 0.05758486698868558,
+            "finite_V_midplane_center": 0.01749375428078761,
+            "pin_axis_extension": 0.06887259625413901,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.3532832767435725,
+            "finite_V_midplane_center": 0.01749375428078761,
+            "pin_axis_extension": 0.040510275934172946,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.607982164337265,
+            "pin_extension_max": 7.892017835662735,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.04247917246261257,
+            "remaining_z": 0.27371269304146684
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.05,
+          "x_upper_mm": 1.1139834249779283,
+          "z_upper_mm": 0.7977915594738489,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+            "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+            "cam_z_pose_field_times_slope": 0.13125,
+            "carrier_rotation": 0.05758486698868558,
+            "finite_V_midplane_center": 0.08837939716241246,
+            "pin_axis_extension": 0.06949120588782991,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.3532832767435725,
+            "finite_V_midplane_center": 0.08837939716241246,
+            "pin_axis_extension": 0.041128885567863836,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.53709652145564,
+            "pin_extension_max": 7.96290347854436,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.11398342497792835,
+            "remaining_z": 0.20220844052615106
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.1,
+          "x_upper_mm": 1.1854876774932441,
+          "z_upper_mm": 0.8692958119891646,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+            "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+            "cam_z_pose_field_times_slope": 0.13125,
+            "carrier_rotation": 0.05758486698868558,
+            "finite_V_midplane_center": 0.15926504004403733,
+            "pin_axis_extension": 0.07010981552152078,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.3532832767435725,
+            "finite_V_midplane_center": 0.15926504004403733,
+            "pin_axis_extension": 0.04174749520155471,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.466210878574015,
+            "pin_extension_max": 8.033789121425984,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.18548767749324413,
+            "remaining_z": 0.1307041880108354
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.15,
+          "x_upper_mm": 1.2569919300085597,
+          "z_upper_mm": 0.9408000645044803,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+            "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+            "cam_z_pose_field_times_slope": 0.13125,
+            "carrier_rotation": 0.05758486698868558,
+            "finite_V_midplane_center": 0.23015068292566213,
+            "pin_axis_extension": 0.07072842515521166,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.3532832767435725,
+            "finite_V_midplane_center": 0.23015068292566213,
+            "pin_axis_extension": 0.042366104835245603,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.39532523569239,
+            "pin_extension_max": 8.10467476430761,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.2569919300085597,
+            "remaining_z": 0.05919993549551972
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.2,
+          "x_upper_mm": 1.3284961825238755,
+          "z_upper_mm": 1.012304317019796,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.1297172405657783,
+            "fixed_window_to_section_pin_z_times_slope": 0.2021014501999788,
+            "cam_z_pose_field_times_slope": 0.13125,
+            "carrier_rotation": 0.05758486698868558,
+            "finite_V_midplane_center": 0.301036325807287,
+            "pin_axis_extension": 0.07134703478890254,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.3532832767435725,
+            "finite_V_midplane_center": 0.301036325807287,
+            "pin_axis_extension": 0.04298471446893647,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.3244395928107657,
+            "pin_extension_max": 8.175560407189234,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.32849618252387547,
+            "remaining_z": -0.012304317019796063
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        }
+      ],
+      "zero_manufacturing_reference_same_pose_requirements": {
+        "x_upper_mm": 0.9324040640559952,
+        "z_upper_mm": 0.6466323793812074,
+        "both_within_1mm_if_all_conditions_hold": true,
+        "terms_x_mm": {
+          "whole_stroke_slot": 0.38620655975902224,
+          "cam_x_pose_field_with_strip_factor": 0.11792476415070755,
+          "fixed_window_to_section_pin_z_times_slope": 0.1739764501999788,
+          "cam_z_pose_field_times_slope": 0.125,
+          "carrier_rotation": 0.05758486698868558,
+          "finite_V_midplane_center": 0.0033981803035342314,
+          "pin_axis_extension": 0.06831324265406673,
+          "loaded_tip_deflection": 0.0
+        },
+        "terms_z_mm": {
+          "fixed_window": 0.25,
+          "carrier_rotation": 0.3532832767435725,
+          "finite_V_midplane_center": 0.0033981803035342314,
+          "pin_axis_extension": 0.03995092233410066,
+          "loaded_tip_deflection": 0.0
+        },
+        "diagnostics": {
+          "straight_slot_only_bound_NOT_whole_stroke": 0.29481191037676885,
+          "slot_turn_extra": 0.09139464938225339,
+          "finite_V_contact_offset_per_face": 0.0023998301582596007,
+          "tilted_pin_radius_increase": 3.0461780640145264e-06,
+          "V_normal_matrix_perturbation": 0.0,
+          "seat_y_lower": 2.6720777383145182,
+          "pin_extension_max": 7.827922261685481,
+          "fixed_world_y_sample": 10.5,
+          "remaining_x": 0.06759593594400481,
+          "remaining_z": 0.35336762061879257
+        },
+        "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+      },
+      "maximum_V_face_error_if_all_other_requirements_hold_mm": null
+    },
+    {
+      "name": "tighter_review_allocation_NOT_proven_achievable",
+      "input_envelopes": {
+        "frame_x_play": 0.05,
+        "frame_z_play": 0.11,
+        "frame_y_play": 0.2,
+        "frame_x_manufacturing": 0.01,
+        "frame_z_manufacturing": 0.01,
+        "frame_y_manufacturing": 0.02,
+        "carrier_y_play": 0.1,
+        "carrier_y_manufacturing": 0.05,
+        "carrier_rotation_deg": 0.75,
+        "pin_world_inclination_deg": 0.25,
+        "pin_relative_inclination_deg": 0.1,
+        "v_face_normal_error": 0.1,
+        "v_normal_angle_deg": 0.1,
+        "radius_error": 0.005,
+        "slot_outward_shape_error": 0.02,
+        "fixed_window_center_error": 0.02,
+        "fixed_window_outward_shape_error": 0.02,
+        "loaded_tip_x_deflection": 0.02,
+        "loaded_tip_z_deflection": 0.02
+      },
+      "result": {
+        "x_upper_mm": 1.0110082560470157,
+        "z_upper_mm": 0.7597250951607607,
+        "both_within_1mm_if_all_conditions_hold": false,
+        "terms_x_mm": {
+          "whole_stroke_slot": 0.4154592641732433,
+          "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+          "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+          "cam_z_pose_field_times_slope": 0.075,
+          "carrier_rotation": 0.04261843468031137,
+          "finite_V_midplane_center": 0.15926504004403733,
+          "pin_axis_extension": 0.03467260230444914,
+          "loaded_tip_deflection": 0.02
+        },
+        "terms_z_mm": {
+          "fixed_window": 0.29500000000000004,
+          "carrier_rotation": 0.2649683429795543,
+          "finite_V_midplane_center": 0.15926504004403733,
+          "pin_axis_extension": 0.020491712137169053,
+          "loaded_tip_deflection": 0.02
+        },
+        "diagnostics": {
+          "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+          "slot_turn_extra": 0.09116616275879769,
+          "finite_V_contact_offset_per_face": 0.0023998301582596007,
+          "tilted_pin_radius_increase": 3.0537935091745624e-06,
+          "V_normal_matrix_perturbation": 0.002468267985694582,
+          "seat_y_lower": 2.553675322197846,
+          "pin_extension_max": 7.946324677802155,
+          "fixed_world_y_sample": 10.5,
+          "remaining_x": -0.011008256047015719,
+          "remaining_z": 0.2402749048392393
+        },
+        "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+      },
+      "face_error_table": [
+        {
+          "V_face_design_error_mm": 0,
+          "x_upper_mm": 0.868618372427679,
+          "z_upper_mm": 0.617335211541424,
+          "both_within_1mm_if_all_conditions_hold": true,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+            "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+            "cam_z_pose_field_times_slope": 0.075,
+            "carrier_rotation": 0.04261843468031137,
+            "finite_V_midplane_center": 0.01749375428078761,
+            "pin_axis_extension": 0.03405400444836215,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.2649683429795543,
+            "finite_V_midplane_center": 0.01749375428078761,
+            "pin_axis_extension": 0.01987311428108206,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.6954466079610957,
+            "pin_extension_max": 7.804553392038905,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": 0.13138162757232097,
+            "remaining_z": 0.382664788458576
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.05,
+          "x_upper_mm": 0.9398133142373475,
+          "z_upper_mm": 0.6885301533510924,
+          "both_within_1mm_if_all_conditions_hold": true,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+            "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+            "cam_z_pose_field_times_slope": 0.075,
+            "carrier_rotation": 0.04261843468031137,
+            "finite_V_midplane_center": 0.08837939716241246,
+            "pin_axis_extension": 0.03436330337640565,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.2649683429795543,
+            "finite_V_midplane_center": 0.08837939716241246,
+            "pin_axis_extension": 0.020182413209125553,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.624560965079471,
+            "pin_extension_max": 7.875439034920529,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": 0.060186685762652514,
+            "remaining_z": 0.31146984664890764
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.1,
+          "x_upper_mm": 1.0110082560470157,
+          "z_upper_mm": 0.7597250951607607,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+            "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+            "cam_z_pose_field_times_slope": 0.075,
+            "carrier_rotation": 0.04261843468031137,
+            "finite_V_midplane_center": 0.15926504004403733,
+            "pin_axis_extension": 0.03467260230444914,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.2649683429795543,
+            "finite_V_midplane_center": 0.15926504004403733,
+            "pin_axis_extension": 0.020491712137169053,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.553675322197846,
+            "pin_extension_max": 7.946324677802155,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.011008256047015719,
+            "remaining_z": 0.2402749048392393
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.15,
+          "x_upper_mm": 1.0822031978566842,
+          "z_upper_mm": 0.830920036970429,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+            "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+            "cam_z_pose_field_times_slope": 0.075,
+            "carrier_rotation": 0.04261843468031137,
+            "finite_V_midplane_center": 0.23015068292566213,
+            "pin_axis_extension": 0.03498190123249264,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.2649683429795543,
+            "finite_V_midplane_center": 0.23015068292566213,
+            "pin_axis_extension": 0.020801011065212545,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.482789679316221,
+            "pin_extension_max": 8.017210320683779,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.08220319785668417,
+            "remaining_z": 0.16907996302957096
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        },
+        {
+          "V_face_design_error_mm": 0.2,
+          "x_upper_mm": 1.1533981396663524,
+          "z_upper_mm": 0.9021149787800974,
+          "both_within_1mm_if_all_conditions_hold": false,
+          "terms_x_mm": {
+            "whole_stroke_slot": 0.4154592641732433,
+            "cam_x_pose_field_with_strip_factor": 0.07075485849042452,
+            "fixed_window_to_section_pin_z_times_slope": 0.19323805635455008,
+            "cam_z_pose_field_times_slope": 0.075,
+            "carrier_rotation": 0.04261843468031137,
+            "finite_V_midplane_center": 0.301036325807287,
+            "pin_axis_extension": 0.035291200160536135,
+            "loaded_tip_deflection": 0.02
+          },
+          "terms_z_mm": {
+            "fixed_window": 0.29500000000000004,
+            "carrier_rotation": 0.2649683429795543,
+            "finite_V_midplane_center": 0.301036325807287,
+            "pin_axis_extension": 0.02111030999325604,
+            "loaded_tip_deflection": 0.02
+          },
+          "diagnostics": {
+            "straight_slot_only_bound_NOT_whole_stroke": 0.3242931014144456,
+            "slot_turn_extra": 0.09116616275879769,
+            "finite_V_contact_offset_per_face": 0.0023998301582596007,
+            "tilted_pin_radius_increase": 3.0537935091745624e-06,
+            "V_normal_matrix_perturbation": 0.002468267985694582,
+            "seat_y_lower": 2.4119040364345965,
+            "pin_extension_max": 8.088095963565404,
+            "fixed_world_y_sample": 10.5,
+            "remaining_x": -0.1533981396663524,
+            "remaining_z": 0.09788502121990261
+          },
+          "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+        }
+      ],
+      "zero_manufacturing_reference_same_pose_requirements": {
+        "x_upper_mm": 0.7588229461458168,
+        "z_upper_mm": 0.5379599660888535,
+        "both_within_1mm_if_all_conditions_hold": true,
+        "terms_x_mm": {
+          "whole_stroke_slot": 0.38620655975902224,
+          "cam_x_pose_field_with_strip_factor": 0.05896238207535377,
+          "fixed_window_to_section_pin_z_times_slope": 0.16511305635455004,
+          "cam_z_pose_field_times_slope": 0.06875,
+          "carrier_rotation": 0.04261843468031137,
+          "finite_V_midplane_center": 0.0033981803035342314,
+          "pin_axis_extension": 0.03377433297304517,
+          "loaded_tip_deflection": 0.0
+        },
+        "terms_z_mm": {
+          "fixed_window": 0.25,
+          "carrier_rotation": 0.2649683429795543,
+          "finite_V_midplane_center": 0.0033981803035342314,
+          "pin_axis_extension": 0.019593442805765075,
+          "loaded_tip_deflection": 0.0
+        },
+        "diagnostics": {
+          "straight_slot_only_bound_NOT_whole_stroke": 0.29481191037676885,
+          "slot_turn_extra": 0.09139464938225339,
+          "finite_V_contact_offset_per_face": 0.0023998301582596007,
+          "tilted_pin_radius_increase": 3.0461780640145264e-06,
+          "V_normal_matrix_perturbation": 0.0,
+          "seat_y_lower": 2.759542181938349,
+          "pin_extension_max": 7.7404578180616515,
+          "fixed_world_y_sample": 10.5,
+          "remaining_x": 0.2411770538541832,
+          "remaining_z": 0.46204003391114645
+        },
+        "bound_kind": "Analytic sufficient bound conditional on listed pose/contact/manufacturing/load envelopes; NOT measured or CAD-certified play."
+      },
+      "maximum_V_face_error_if_all_other_requirements_hold_mm": 0.09226893388265915
+    }
+  ],
+  "identity_check_max_residual": 3.3306690738754696e-16,
+  "actual_frame_contact_review": {
+    "actual_fixed_Y_gap_mm": 0.4,
+    "actual_moving_rail_length_mm": 80.5,
+    "fixed_Y_guide_length_mm": 40,
+    "X_contact_stations_world_z_mm": [
+      -33.35,
+      3.35
+    ],
+    "X_gib_axial_float_mm": [
+      -0.2,
+      0.2
+    ],
+    "X_gib_end_recess_mm": 0.4,
+    "necessary_inequalities": [
+      "116*abs(Rxy)+4*Rxx+40*abs(Ryz) <= 4.4*Rzz",
+      "4+36.7*abs(Rzx) <= (4+g)*Rxx"
+    ],
+    "conditions": [
+      "R maps local to world, det(R)=1, Rxx>0 and Rzz>0.",
+      "Both real rails remain inside both closed Y guides and the two actual X contact bands; this is the normal assembled branch, not an arbitrary disconnected pose.",
+      "For the first inequality, every fixed-Z corner maps back into the finite moving rail; the report gives that back-substitution interval.",
+      "For the second inequality, plane intersections at world Y=22 and both listed Z stations lie inside the actual side-face rectangles, not infinite slabs.",
+      "Contact-domain membership and frame phase still need to be carried into a full assembly interval proof; the matrix bound alone is not that proof."
+    ],
+    "rail_only_roll_example": {
+      "angle_deg": 0.5,
+      "fixed_Z_section_required_Y_height_mm": 4.3492270251733,
+      "available_Y_height_mm": 4.4,
+      "cam_near_plane_Z_shift_at_local_z_minus15_mm": -0.12217149697723509,
+      "explanation": "Rigid rotation about X through (Y22,Z-15) retains X guide planes exactly and fits both Y rail channels. This is a rail-subassembly pose, not a verified whole-mechanism witness."
+    },
+    "rows": [
+      {
+        "parallel_X_gap_mm": 0.1,
+        "rounding": "Outward rational 1e-12 grid; no random pose or optimizer.",
+        "rotation_matrix_abs_upper": {
+          "Rxy": 0.003448612199,
+          "Ryz": 0.010000975377,
+          "Ryx": 0.003476049893,
+          "Rzx": 0.002724795641,
+          "Rzy": 0.01001056786,
+          "Rxz": 0.002759592875
+        },
+        "rotation_matrix_diagonal_lower": {
+          "Rxx": 0.999990246235,
+          "Ryy": 0.999943947213,
+          "Rzz": 0.999946180561
+        },
+        "rotation_angle_upper_deg": 0.6266680762519227,
+        "finite_rail_local_z_interval_mm": [
+          -55.815282931497,
+          5.812591814713
+        ],
+        "finite_rail_material_z_interval_mm": [
+          -64.5,
+          16
+        ],
+        "finite_rail_end_reserve_mm": 8.684717068502998,
+        "cam_field_upper_WITH_CONTACT_DOMAIN_CONDITIONS_mm": {
+          "X": 0.150360715673,
+          "Y": 0.200861157376,
+          "Z_relative_to_actual_origin_u": 0.264340108388
+        },
+        "X_field_domain_world_z_mm": [
+          -33.35,
+          3.35
+        ],
+        "X_field_domain_note": "Only material/contact points between these stations. Points outside require affine extrapolation; this number is not automatically the whole-slot field used by evaluate().",
+        "separate_endpoint_stop_phase_allowance_mm": 0.413987208464,
+        "phase_warning": "The Z field uses actual origin u. A mechanical rest-stop datum adds a separate phase term; it is not automatically zero.",
+        "scope": "Necessary-plane consequence for the normal fully engaged branch only. Does not certify carrier/pin constraints, manufacturing, loads or a whole-mechanism upper bound."
+      },
+      {
+        "parallel_X_gap_mm": 0.05,
+        "rounding": "Outward rational 1e-12 grid; no random pose or optimizer.",
+        "rotation_matrix_abs_upper": {
+          "Rxy": 0.003448514549,
+          "Ryz": 0.010000692191,
+          "Ryx": 0.003462315996,
+          "Rzx": 0.001362397821,
+          "Rzy": 0.010005529186,
+          "Rxz": 0.001397040125
+        },
+        "rotation_matrix_diagonal_lower": {
+          "Rxx": 0.999993078096,
+          "Ryy": 0.999943997693,
+          "Rzz": 0.999949015329
+        },
+        "rotation_angle_upper_deg": 0.6115098942815089,
+        "finite_rail_local_z_interval_mm": [
+          -55.655313199909,
+          5.652763836381
+        ],
+        "finite_rail_material_z_interval_mm": [
+          -64.5,
+          16
+        ],
+        "finite_rail_end_reserve_mm": 8.844686800090997,
+        "cam_field_upper_WITH_CONTACT_DOMAIN_CONDITIONS_mm": {
+          "X": 0.099875821617,
+          "Y": 0.200815796336,
+          "Z_relative_to_actual_origin_u": 0.198395046335
+        },
+        "X_field_domain_world_z_mm": [
+          -33.35,
+          3.35
+        ],
+        "X_field_domain_note": "Only material/contact points between these stations. Points outside require affine extrapolation; this number is not automatically the whole-slot field used by evaluate().",
+        "separate_endpoint_stop_phase_allowance_mm": 0.333323857994,
+        "phase_warning": "The Z field uses actual origin u. A mechanical rest-stop datum adds a separate phase term; it is not automatically zero.",
+        "scope": "Necessary-plane consequence for the normal fully engaged branch only. Does not certify carrier/pin constraints, manufacturing, loads or a whole-mechanism upper bound."
+      },
+      {
+        "parallel_X_gap_mm": 0.02,
+        "rounding": "Outward rational 1e-12 grid; no random pose or optimizer.",
+        "rotation_matrix_abs_upper": {
+          "Rxy": 0.003448486688,
+          "Ryz": 0.010000611395,
+          "Ryx": 0.003454109926,
+          "Rzx": 0.000544959129,
+          "Rzy": 0.010002613084,
+          "Rxz": 0.000579509255
+        },
+        "rotation_matrix_diagonal_lower": {
+          "Rxx": 0.999993886053,
+          "Ryy": 0.999944026881,
+          "Rzz": 0.999949824116
+        },
+        "rotation_angle_upper_deg": 0.6070757555216325,
+        "finite_rail_local_z_interval_mm": [
+          -55.559435676629,
+          5.556926756542
+        ],
+        "finite_rail_material_z_interval_mm": [
+          -64.5,
+          16
+        ],
+        "finite_rail_end_reserve_mm": 8.940564323371,
+        "cam_field_upper_WITH_CONTACT_DOMAIN_CONDITIONS_mm": {
+          "X": 0.069676588961,
+          "Y": 0.200802854432,
+          "Z_relative_to_actual_origin_u": 0.15887467418
+        },
+        "X_field_domain_world_z_mm": [
+          -33.35,
+          3.35
+        ],
+        "X_field_domain_note": "Only material/contact points between these stations. Points outside require affine extrapolation; this number is not automatically the whole-slot field used by evaluate().",
+        "separate_endpoint_stop_phase_allowance_mm": 0.284977589331,
+        "phase_warning": "The Z field uses actual origin u. A mechanical rest-stop datum adds a separate phase term; it is not automatically zero.",
+        "scope": "Necessary-plane consequence for the normal fully engaged branch only. Does not certify carrier/pin constraints, manufacturing, loads or a whole-mechanism upper bound."
+      }
+    ]
+  },
+  "current_CAD_unqualified_upper_bound_mm": null,
+  "current_assembly_budget_passed": false,
+  "actual_measured_inputs": false,
+  "physical_acceptance": false,
+  "conditions": [
+    "Four followers, both mirrors, every u in [0,20]; arbitrary pose variation only within the declared envelopes.",
+    "Frame component bounds apply to every material point throughout both slot contact domains, including phase error; NOT qX at the origin.",
+    "Fixed world Y=10.5 intersects the full pin footprint inside the cam thickness; both outer faces straddle it. This is not an oblique cam-face disk approximation.",
+    "Pin shoulder remains cylindrical across the fixed +Y window face and world-Y sample plane; pin must remain inside the existing fixed window X interval.",
+    "Both V faces remain loaded at cylindrical contacts inside Y1.75..4.5; shoulder axial seating persists; no block hard-stop force bypass.",
+    "Finite-V normal/position errors are referenced to its nominal apex; relative pin inclination and face-normal angle bounds must be verified.",
+    "Carrier rigid rotation is the full axis-angle norm; pin world inclination is relative to fixed Y. These bounds are requirements, not inferred from nominal slit widths.",
+    "Deflection, frictional seating loss, screw loosening and wear must fit the separate load allowance or invalidate the bound."
+  ],
+  "open_geometry_proof": [
+    "Actual frame contact inequalities and finite rail back-substitution are provided; their contact-domain/phase conditions and the V-ear carrier domains are not a completed whole-assembly interval proof.",
+    "Current fixed axial-guide Y play permits roll; X gib adjustment alone cannot enforce all cam-Z/pin-inclination targets.",
+    "No catalog shoulder radius tolerance or physical PETG face/angle/preload data was invented."
+  ],
+  "interpretation": "A bound greater than 1 is failure to certify that input box, NOT proof of a feasible >1 counterexample. A smaller conditional bound is not an as-built pass."
+}

@@ -1,0 +1,71 @@
+{
+  "review_date_local": "2026-09-27",
+  "method": "Read existing local evidence first; inspect its three saved official drawings; limited official web/text and PDF search only for 03096-35,03096-25,03096-14. Nearby products returned by search were not used as specification substitutes.",
+  "pages": [
+    {
+      "id": "official-nipple",
+      "url": "https://www.norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Accessories-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Screw-nipples-locked-with-grub-screw/p/agid.30769",
+      "scope": "03096-35 family; exact 03180507 dimensions retained from saved drawing/table evidence",
+      "observed": "Official text confirms nickel-plated brass and clamping by grub screw. Accessible description does not state wire-specific torque, minimum free tail or retention force.",
+      "web_parser_line_ranges": [
+        "34-56",
+        "58-63"
+      ],
+      "cache_note": "Web tool reported crawled today; no authenticated CAD was obtained."
+    },
+    {
+      "id": "official-ferrule",
+      "url": "https://www.norelem.mx/es/Vista-general-de-productos/Sistema-flexible-de-piezas-est%C3%A1ndar/03000/Accesorios-para-pernos-de-bloqueo-pasadores-de-bloqueo-y-pernos-de-bloqueo-de-bola/Fundas-terminales/Casquillo-terminal-lat%C3%B3n-pasivado-en-azul/p/03096-25-0350",
+      "scope": "exact 03096-25-0350 product",
+      "observed": "Listed D5.5,L11,D1=5,D2=2.5,L1=9,L2=4.5. Figure note identifies a crimp zone. No crimp force/tool/finished geometry or assembled bearing-seat depth is specified in accessible text.",
+      "web_parser_line_ranges": [
+        "33-69",
+        "105-134"
+      ],
+      "cache_note": "Web tool reported crawled today."
+    },
+    {
+      "id": "official-kit",
+      "url": "https://www.norelemusa.com/en-us/Product-Overview/Flexible-standard-component-system/03000/Accessory-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Bowden-cables-for-indexing-plungers-with-remote-actuation/p/agid.32096",
+      "scope": "03096-14 family",
+      "short_quote": "The Bowden cable can be shortened during installation to ensure a perfect fit in the respective application.",
+      "observed": "Manufacturer permits installation shortening and adjustment after routing; minimum housing bend radius65 mm also applies during assembly, and housing is compression-only. Components are listed by category, without verified quantities per kit.",
+      "web_parser_line_ranges": [
+        "48-63",
+        "78-83"
+      ],
+      "cache_note": "Web tool reported crawled yesterday; permission is for the Bowden assembly, not a complete cut/crimp work instruction."
+    }
+  ],
+  "additional_official_nipple_crosschecks": [
+    {
+      "url": "https://www.norelem.ch/de/Produkt%C3%BCbersicht/Flexibles-Normteilesystem/03000/Zubeh%C3%B6r-f%C3%BCr-Arretierbolzen-Sperrriegel-und-Kugelsperrbolzen/Schraubnippel-Klemmung-mit-Gewindestift/p/agid.30769",
+      "result": "Same limited description; retrieved web extraction reported older cached content. No new numeric force/torque field."
+    },
+    {
+      "url": "https://www.norelem.mx/mx/es/Productos/Vista-general-de-productos/Sistema-flexible-de-piezas-est%C3%A1ndar/Piezas-de-presi%C3%B3n-con-resorte-Pernos-de-bloqueo-Topes-Elementos-de-centrado-y-posicionamiento-Fijaciones-Tuercas-correderas-en-ranura/Perno-de-bloqueo/Bosquillas-roscadas-de-apriete-con-tornillo-prisionero.html",
+      "result": "Older official product table confirms exact03180507: D5,M4,D2=1.8,L7,L1=3.5. Exposes a190 kB PDF link, attempted below."
+    }
+  ],
+  "pdf_attempt": {
+    "url": "https://www.norelem.mx/doc/mx/es/did.278516/03096-35_Datasheet_30769_Bosquillas_roscadas_de_apriete_con_tornillo_prisionero--es.pdf",
+    "result": "web fetch404 Not Found",
+    "successfully_read": false
+  },
+  "access_limits": "Normal raw webpage retrieval separately encountered SSL trust setup failure in bundled Python, then system curl with normal certificate validation returned406/timeout. These are recorded, not bypassed. Web tool text was readable. Downloads headings on current pages exposed no usable PDFs in this bounded review; CAD requested login. No claim that all official PDFs, CAD or nonpublic instructions have been read.",
+  "query_scope": [
+    "03096-35-03180507 torque/clamping",
+    "03096-25-0350 end sleeve",
+    "03096-14 installation",
+    "03096-35/25/14 official datasheets",
+    "03096-35 torque/Drehmoment"
+  ],
+  "not_performed": [
+    "contact supplier",
+    "login or account creation",
+    "cart or purchase",
+    "general torque substitution",
+    "other product force-rating substitution",
+    "pixel-based dimension inference"
+  ]
+}

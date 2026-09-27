@@ -1,0 +1,1730 @@
+{
+  "status": "FAIL_OR_STALE",
+  "sources_stable": true,
+  "source_sha256": {
+    "/Users/norman/.codex/skills/openscad-stl-print/scripts/inspect_stl.py": "06ac6daea97664a42f0088bbc090e4b1016dc24b036c2fad4971199285b00dc7",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/cable_trigger_system.py": "aa04531fe2bf7bb2a8b0162f09c406e67d23b55131a2d0ad08e7aab472370f05",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-output-interface.scad": "2f22059f74e07aaf6761c3434ef3a16ec91da016cf3ae00b6d9eee736d8b76cf",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad": "4b6b6b0a0c43b2c80cf4e7972226e1e1e5f5ff1debd5a77f44726fef622af7b3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad": "70ffb26bf87c8df771331dce906fb95b8dd51574192de9eb7610d7ca7e1d0342",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c"
+  },
+  "results": [
+    {
+      "name": "input-host-0_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 0
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T055340003531Z/input-host-0_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T055340003531Z/input-host-0_000.stl",
+      "sha256": "06d70f4b99e11155bcabb449a70a3be1346f4652e8d80bd81fa5c38de5ddc3bb",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1556,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.2476473562508632e-11,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000007
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 8.647816078684312e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263406,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538947,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.146549852952376e-12,
+            "planar_error_mm": 3.939931195440152,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                9.999999999999986,
+                18.0
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                -62.06006880455986
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.2645026856050626e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327694,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252842,
+                -59.115439932108416
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 1.911765884488048e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.23522163203496
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006555,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.5509966324234094e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414472,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183436,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6204734183358364e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485006,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.87500000000001,
+                -58.621898091664164
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.447087872243906e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349765,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.36913839990379
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.314947750916261e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982292,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.55372787820529,
+                -58.114985168250556
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.099027533013057e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205272,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.27640000298231,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 358,
+            "volume_mm3": 8.648939637395658e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.684981684981683
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.0
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.0686184603219198e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.065586485300538e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.417657148519325,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.736220942485903e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.784182555722523
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.60929160024941,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.288837310532462e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999996696
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 2.7054638911117035e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999986,
+                15.99999999999935
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.773904795779549e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828648,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567208832,
+                1.9305305499926186
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6003789507962616e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.55372787820528,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184276,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.037894150987764e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083422,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424105875,
+                0.960807479167535
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6654676729687132e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131467,
+                0.8856916032317059
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.163953695052956e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.70945301821014,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234397,
+                1.1569079003497649
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3045205067157015e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999986,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994519,
+                1.0514428414850094
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.345592012598546e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.93267260168376,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183512,
+                2.1148557254534848
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1500006556227653e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519325,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.3729791897748652,
+                0.8266668908495944
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.9172163856495672e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277462,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.235425721063545,
+                3.469238302115681
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-host-0_500",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 0.5
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=0.5",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T055340003531Z/input-host-0_500.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T055340003531Z/input-host-0_500.stl",
+      "sha256": "06d70f4b99e11155bcabb449a70a3be1346f4652e8d80bd81fa5c38de5ddc3bb",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1556,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.2476473562508632e-11,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000007
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 8.647816078684312e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263406,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538947,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.146549852952376e-12,
+            "planar_error_mm": 3.939931195440152,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                9.999999999999986,
+                18.0
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                -62.06006880455986
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.2645026856050626e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327694,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252842,
+                -59.115439932108416
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 1.911765884488048e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.23522163203496
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006555,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.5509966324234094e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414472,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183436,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6204734183358364e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485006,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.87500000000001,
+                -58.621898091664164
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.447087872243906e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349765,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.36913839990379
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.314947750916261e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982292,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.55372787820529,
+                -58.114985168250556
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.099027533013057e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205272,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.27640000298231,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 358,
+            "volume_mm3": 8.648939637395658e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.684981684981683
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.0
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.0686184603219198e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.065586485300538e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.417657148519325,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.736220942485903e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.784182555722523
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.60929160024941,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.288837310532462e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999996696
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 2.7054638911117035e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999986,
+                15.99999999999935
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.773904795779549e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828648,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567208832,
+                1.9305305499926186
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6003789507962616e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.55372787820528,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184276,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.037894150987764e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083422,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424105875,
+                0.960807479167535
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6654676729687132e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131467,
+                0.8856916032317059
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.163953695052956e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.70945301821014,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234397,
+                1.1569079003497649
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3045205067157015e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999986,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994519,
+                1.0514428414850094
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.345592012598546e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.93267260168376,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183512,
+                2.1148557254534848
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1500006556227653e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519325,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.3729791897748652,
+                0.8266668908495944
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.9172163856495672e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277462,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.235425721063545,
+                3.469238302115681
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "name": "input-host-1_000",
+      "definitions": {
+        "ct_part": "probe",
+        "ct_probe": "input-host",
+        "ct_t": 1
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ct_part=\"probe\"",
+        "-D",
+        "ct_probe=\"input-host\"",
+        "-D",
+        "ct_t=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-system/20260927T055340003531Z/input-host-1_000.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-system.scad"
+      ],
+      "returncode": 0,
+      "execution_ok": true,
+      "empty": false,
+      "file": "output/cable-trigger-system/20260927T055340003531Z/input-host-1_000.stl",
+      "sha256": "06d70f4b99e11155bcabb449a70a3be1346f4652e8d80bd81fa5c38de5ddc3bb",
+      "kind": "intersection",
+      "expected_solid_overlap": false,
+      "passed": false,
+      "classification": {
+        "triangle_count": 1556,
+        "components": [
+          {
+            "triangles": 866,
+            "volume_mm3": 1.2476473562508632e-11,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -24.0,
+                13.75
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                9.000000000000007
+              ]
+            ]
+          },
+          {
+            "triangles": 54,
+            "volume_mm3": 8.647816078684312e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.762895259263406,
+                -15.135193482746473
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.99392308538947,
+                -62.114308396768294
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.146549852952376e-12,
+            "planar_error_mm": 3.939931195440152,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                9.999999999999986,
+                18.0
+              ],
+              [
+                -62.0,
+                -54.0
+              ],
+              [
+                -66.00000000000001,
+                -62.06006880455986
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.2645026856050626e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.863329866327694,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.30089704252842,
+                -59.115439932108416
+              ]
+            ]
+          },
+          {
+            "triangles": 36,
+            "volume_mm3": 1.911765884488048e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.135193482746473,
+                16.23522163203496
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -62.69104056006555,
+                -62.11430839676831
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.5509966324234094e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.928445433414472,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -59.12379332183436,
+                -58.871316656002655
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6204734183358364e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.051442841485006,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.87500000000001,
+                -58.621898091664164
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.447087872243906e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.156907900349765,
+                14.260726479933842
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.709453018210155,
+                -58.36913839990379
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.314947750916261e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.276400002982292,
+                14.409009742330268
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.55372787820529,
+                -58.114985168250556
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.099027533013057e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.553727878205272,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -58.27640000298231,
+                -57.861380216278526
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.267797474952431e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.561609734692128,
+                15.82469888610345
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -57.79314961197964,
+                -56.94879887640338
+              ]
+            ]
+          },
+          {
+            "triangles": 358,
+            "volume_mm3": 8.648939637395658e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.6092916002494,
+                22.684981684981683
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                -66.0,
+                9.0
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 1.0686184603219198e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.84688424460253,
+                13.921271051849605
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.1329790478916286,
+                2.3468594761774595
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 7.065586485300538e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.793233119092731,
+                13.826666890849594
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.417657148519325,
+                2.5610467754637116
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 6.736220942485903e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.760834364987558,
+                13.784182555722523
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.60929160024941,
+                2.7794614342584887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.288837310532462e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.75,
+                13.75856192929357
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                2.80389957881777,
+                2.9999999999996696
+              ]
+            ]
+          },
+          {
+            "triangles": 114,
+            "volume_mm3": 2.7054638911117035e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                9.999999999999986,
+                15.99999999999935
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.861037722821452,
+                9.000000000000004
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.773904795779549e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.020967730828648,
+                14.129193372319273
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.6610249567208832,
+                1.9305305499926186
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6003789507962616e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.55372787820528,
+                14.572615110631798
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.2224330910184276,
+                1.276400002982296
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.037894150987764e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.049108911083422,
+                15.138962277178548
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.6898495424105875,
+                0.960807479167535
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.6654676729687132e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.230454677517237,
+                15.34685947617746
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.5265545253131467,
+                0.8856916032317059
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.163953695052956e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.70945301821014,
+                14.749966975705895
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.0393378374234397,
+                1.1569079003497649
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.3045205067157015e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                14.874999999999986,
+                14.939357342141506
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.8612933804994519,
+                1.0514428414850094
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.345592012598546e-15,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                13.93267260168376,
+                14.015677155216201
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                1.8986177442183512,
+                2.1148557254534848
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 4.1500006556227653e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                15.417657148519325,
+                15.561046775463712
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                0.3729791897748652,
+                0.8266668908495944
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.9172163856495672e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                18.215817444277462,
+                18.268795878598716
+              ],
+              [
+                -54.0,
+                -54.0
+              ],
+              [
+                3.235425721063545,
+                3.469238302115681
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    }
+  ],
+  "pictures": [],
+  "sampled_normalized_poses": [
+    0,
+    0.5,
+    1
+  ],
+  "scope": "Current 38-part feeder CAD plus independent input and output actuator candidates. Finite nominal poses; the two spring-envelope tests are separately continuous.",
+  "not_validated": [
+    "unsampled actuator interference",
+    "printed dimensional variation",
+    "cable housing route and supplier end fitting detail",
+    "complete hardware and tool access",
+    "clamp force and friction",
+    "strength and creep",
+    "assembly and loaded return",
+    "ball delivery and adjustable spin on the physical blower"
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

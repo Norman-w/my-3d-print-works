@@ -1,0 +1,2253 @@
+{
+  "status": "INTEGRATED_NOMINAL_CANDIDATE_PASS",
+  "sources_stable": true,
+  "source_sha256": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "analysis/feeder_integrated_candidate.py": "b47962182ec79940b25093956005aa898603165450dd0c30bedf2464edeb6b16",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/feeder-integrated-candidate.scad": "00e49d9001e309ec089064a0ce69d7679148f1db6f0af47b293a36e2e47faee6",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b"
+  },
+  "frame_sweep": {
+    "method": "initial solid union every nonparallel boundary triangle swept by the 20mm translation segment",
+    "stroke_mm": 20.0,
+    "triangular_prisms": 1132,
+    "frame_sha256": "7f385a42a9a30fb6bb9caeed2ca4575fd1858b58a23bcf2b297478211b3461e2",
+    "sweep_sha256": "7786b2505c4f40273b57c6956fc124fc9996a8340f9fb2ef68826bcf32d02c3b",
+    "scope": "Exact for this exported polyhedral frame and pure translation; not deformation or fingers."
+  },
+  "frame_sweep_input_stable": true,
+  "cases": [
+    {
+      "name": "motion-0",
+      "output_path": "output/feeder-integrated-candidate/motion-0.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 38,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 6.625255899450622e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              58.199999999999996,
+              58.90783410138249
+            ],
+            [
+              19.460829493087555,
+              20.8
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 2.2297441670815488e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              21.0,
+              24.2
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.796163466380676e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              50.5761424567086
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.076738946423575e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -50.5761424567086,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.730349362740526e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-0.2",
+      "output_path": "output/feeder-integrated-candidate/motion-0.2.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0.2
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.992806499463768e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.881784197001252e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-0.4",
+      "output_path": "output/feeder-integrated-candidate/motion-0.4.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0.4
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-0.5",
+      "output_path": "output/feeder-integrated-candidate/motion-0.5.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0.5
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-0.6",
+      "output_path": "output/feeder-integrated-candidate/motion-0.6.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0.6
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-0.8",
+      "output_path": "output/feeder-integrated-candidate/motion-0.8.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 0.8
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.329070518200751e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              2.5,
+              4.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-1",
+      "output_path": "output/feeder-integrated-candidate/motion-1.stl",
+      "definitions": {
+        "ic_probe": "motion",
+        "ic_t": 1
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 34,
+      "components": [
+        {
+          "triangles": 10,
+          "volume_mm3": 5.715428130770306e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              20.685534591194966,
+              24.0
+            ],
+            [
+              -35.0,
+              -35.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              50.57614245670856
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.398081733190338e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -50.57614245670856,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.881784197001252e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              2.5,
+              4.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.2670754162845697e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -2.0207259421636903,
+              2.0207259421636903
+            ],
+            [
+              48.0,
+              48.5
+            ],
+            [
+              36.0,
+              36.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "frame-sweep",
+      "output_path": "output/feeder-integrated-candidate/frame-sweep-overlap.stl",
+      "definitions": {
+        "ic_probe": "frame-sweep"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "new-vs-fixed",
+      "output_path": "output/feeder-integrated-candidate/new-vs-fixed.stl",
+      "definitions": {
+        "ic_probe": "new-vs-fixed"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "new-vs-old-hardware",
+      "output_path": "output/feeder-integrated-candidate/new-vs-old-hardware.stl",
+      "definitions": {
+        "ic_probe": "new-vs-old-hardware"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "harness-vs-outlet",
+      "output_path": "output/feeder-integrated-candidate/harness-vs-outlet.stl",
+      "definitions": {
+        "ic_probe": "harness-vs-outlet"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "extra-hardware-fit",
+      "output_path": "output/feeder-integrated-candidate/extra-hardware-fit.stl",
+      "definitions": {
+        "ic_probe": "extra-hardware-fit"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "triangle_count": 550,
+      "components": [
+        {
+          "triangles": 14,
+          "volume_mm3": 2.367054469099017e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.80114794889497,
+              -41.5151978317572
+            ],
+            [
+              -74.286541433832,
+              -72.0
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 4.43388381565768e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.40404357567302,
+              -41.092738936467114
+            ],
+            [
+              -71.02492005820322,
+              -69.59511709317256
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.001133172148457e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.92647593597636,
+              -38.70365897372851
+            ],
+            [
+              -74.42528347695797,
+              -73.20208152801713
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 5.0100548709686166e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.48113219448282,
+              -38.201363359001775
+            ],
+            [
+              -74.286541433832,
+              -72.43999237667428
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.3567606199925706e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.26954713590629,
+              -40.0
+            ],
+            [
+              -48.75,
+              -47.69353098675597
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 3.7868666535878504e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.80114794889497,
+              -41.5151978317572
+            ],
+            [
+              -48.286541433832,
+              -46.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 1.1574075031717257e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.48113219448282,
+              -38.201363359001775
+            ],
+            [
+              -48.286541433832,
+              -46.43999237667428
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 1.7377765892945263e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.8612874451991,
+              -38.71524289328211
+            ],
+            [
+              -48.04998757880243,
+              -47.14242760995571
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 5.483877241196922e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.40404357567302,
+              -41.092738936467114
+            ],
+            [
+              -45.02492005820322,
+              -43.595117093172554
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 7.786132849574301e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.968884241304345,
+              -40.85
+            ],
+            [
+              -44.60349442818011,
+              -43.404091917451716
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.2058049831130688e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.473694979256834,
+              -40.29520190203378
+            ],
+            [
+              -44.357926095308585,
+              -43.282617566857084
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 9.131237432846717e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.80114794889497,
+              -41.5151978317572
+            ],
+            [
+              -12.286541433832,
+              -10.0
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 7.053385653321698e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.26954713590629,
+              -40.0
+            ],
+            [
+              -12.75,
+              -11.693530986755967
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 9.184319971211607e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.8612874451991,
+              -38.71524289328211
+            ],
+            [
+              -12.049987578802437,
+              -11.142427609955714
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.5979218776228663e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.39259683361283,
+              -38.201363359001775
+            ],
+            [
+              -12.098739484216251,
+              -10.295201902033781
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.36876490644633e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.48113219448282,
+              -38.40252254466395
+            ],
+            [
+              -11.426329163705109,
+              -10.581434243653637
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 3.410466353770403e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.40404357567302,
+              -41.092738936467114
+            ],
+            [
+              -9.024920058203222,
+              -7.59511709317256
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.5092094240998222e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.473694979256834,
+              -40.29520190203378
+            ],
+            [
+              -8.357926095308583,
+              -7.282617566857086
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 8.055535405393499e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.80114794889497,
+              -41.5151978317572
+            ],
+            [
+              13.713458566168,
+              16.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 2.415428967950106e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -41.40404357567302,
+              -41.092738936467114
+            ],
+            [
+              16.97507994179678,
+              18.40488290682744
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.200384815637562e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.968884241304345,
+              -40.85
+            ],
+            [
+              17.396505571819887,
+              18.595908082548284
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.3181096759093975e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -40.473694979256834,
+              -40.29520190203378
+            ],
+            [
+              17.642073904691415,
+              18.717382433142916
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 8.510726845489813e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.947620560996,
+              -38.70365897372851
+            ],
+            [
+              13.459331285593962,
+              14.857572390044286
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 3.573530360512223e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.39259683361283,
+              -38.201363359001775
+            ],
+            [
+              13.901260515783749,
+              15.704798097966219
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.4791987079654234e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              -38.48113219448282,
+              -38.40252254466395
+            ],
+            [
+              14.573670836294891,
+              15.418565756346363
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.4711027535030397e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              38.19885205110503,
+              38.4848021682428
+            ],
+            [
+              -74.286541433832,
+              -72.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 8.405949547540814e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              41.51886780551718,
+              41.798636640998225
+            ],
+            [
+              -74.286541433832,
+              -72.43999237667428
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 5.828167809474039e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              38.19885205110503,
+              38.4848021682428
+            ],
+            [
+              -48.286541433832,
+              -46.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 2.0293662583714678e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              41.51886780551718,
+              41.798636640998225
+            ],
+            [
+              -48.286541433832,
+              -46.43999237667428
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.4842484800123863e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              38.21438074438173,
+              38.40252254466395
+            ],
+            [
+              -45.41856575634636,
+              -43.90126051578375
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.0065732969355423e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              38.19885205110503,
+              38.4848021682428
+            ],
+            [
+              -12.286541433832,
+              -10.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 2.628973427842851e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              41.51886780551718,
+              41.798636640998225
+            ],
+            [
+              -12.286541433832,
+              -10.439992376674285
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.2507182789445181e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              38.19885205110503,
+              38.4848021682428
+            ],
+            [
+              13.713458566168,
+              16.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 3.7582784107037526e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              3.8,
+              3.8
+            ],
+            [
+              41.51886780551718,
+              41.798636640998225
+            ],
+            [
+              13.713458566168,
+              15.560007623325715
+            ]
+          ]
+        },
+        {
+          "triangles": 66,
+          "volume_mm3": 9.947598300641403e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -16.75,
+              -11.25
+            ],
+            [
+              -48.17542648054294,
+              -41.82457351945706
+            ]
+          ]
+        },
+        {
+          "triangles": 48,
+          "volume_mm3": 3.232969447708456e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -16.75,
+              -11.25
+            ],
+            [
+              -48.17542648054294,
+              -41.82457351945706
+            ]
+          ]
+        },
+        {
+          "triangles": 58,
+          "volume_mm3": 7.438494264988549e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -16.75,
+              -11.25
+            ],
+            [
+              12.824573519457058,
+              19.175426480542942
+            ]
+          ]
+        },
+        {
+          "triangles": 70,
+          "volume_mm3": 1.1173284519827575e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -16.75,
+              -11.25
+            ],
+            [
+              12.824573519457058,
+              19.175426480542942
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 4.322930902134203e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -14.0,
+              -13.349438164979347
+            ],
+            [
+              14.3,
+              14.429404794730813
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "seam-tools-before-frame",
+      "output_path": "output/feeder-integrated-candidate/seam-tools-before-frame.stl",
+      "definitions": {
+        "ic_probe": "seam-tools-before-frame"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "seam-nut-feed",
+      "output_path": "output/feeder-integrated-candidate/seam-nut-feed.stl",
+      "definitions": {
+        "ic_probe": "seam-nut-feed"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "mount-nut-feed",
+      "output_path": "output/feeder-integrated-candidate/mount-nut-feed.stl",
+      "definitions": {
+        "ic_probe": "mount-nut-feed"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "finger-path",
+      "output_path": "output/feeder-integrated-candidate/finger-path.stl",
+      "definitions": {
+        "ic_probe": "finger-path"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "old-tools-vs-new",
+      "output_path": "output/feeder-integrated-candidate/old-tools-vs-new.stl",
+      "definitions": {
+        "ic_probe": "old-tools-vs-new"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "new-tools-vs-other",
+      "output_path": "output/feeder-integrated-candidate/new-tools-vs-other.stl",
+      "definitions": {
+        "ic_probe": "new-tools-vs-other"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "band-workspace",
+      "output_path": "output/feeder-integrated-candidate/band-workspace.stl",
+      "definitions": {
+        "ic_probe": "band-workspace"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "frame-lift",
+      "output_path": "output/feeder-integrated-candidate/frame-lift.stl",
+      "definitions": {
+        "ic_probe": "frame-lift"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "body-corridor",
+      "output_path": "output/feeder-integrated-candidate/body-corridor.stl",
+      "definitions": {
+        "ic_probe": "body-corridor"
+      },
+      "expected_overlap": false,
+      "passed": true,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "body-root",
+      "output_path": "output/feeder-integrated-candidate/body-root.stl",
+      "definitions": {
+        "ic_probe": "body-root"
+      },
+      "expected_overlap": true,
+      "passed": true,
+      "triangle_count": 984,
+      "components": [
+        {
+          "triangles": 48,
+          "volume_mm3": 420.56881353627955,
+          "planar_error_mm": 2.526784398039596,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -22.0,
+              -10.0
+            ],
+            [
+              -33.510602632414944,
+              -26.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        },
+        {
+          "triangles": 48,
+          "volume_mm3": 420.5688135362809,
+          "planar_error_mm": 2.526784398039596,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -22.0,
+              -10.0
+            ],
+            [
+              -33.510602632414944,
+              -26.0
+            ],
+            [
+              -3.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 792,
+          "volume_mm3": 2013.4112822682446,
+          "planar_error_mm": 4.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -28.25,
+              28.25
+            ],
+            [
+              -28.25,
+              28.25
+            ],
+            [
+              44.0,
+              48.0
+            ]
+          ]
+        },
+        {
+          "triangles": 48,
+          "volume_mm3": 420.5688135362807,
+          "planar_error_mm": 2.889912807180374,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              10.0,
+              22.0
+            ],
+            [
+              -33.510602632414944,
+              -26.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        },
+        {
+          "triangles": 48,
+          "volume_mm3": 420.56881353628,
+          "planar_error_mm": 2.889912807180374,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              10.0,
+              22.0
+            ],
+            [
+              -33.510602632414944,
+              -26.0
+            ],
+            [
+              -3.0,
+              9.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "name": "wrong-disassembly-order",
+      "output_path": "output/feeder-integrated-candidate/wrong-disassembly-order.stl",
+      "definitions": {
+        "ic_probe": "body-half-remove"
+      },
+      "expected_overlap": true,
+      "passed": true,
+      "triangle_count": 146,
+      "components": [
+        {
+          "triangles": 78,
+          "volume_mm3": 66.94692373692065,
+          "planar_error_mm": 2.778328200846463,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              25.0,
+              28.234172323562177
+            ],
+            [
+              22.28469217535815,
+              30.0
+            ],
+            [
+              40.0,
+              53.0
+            ]
+          ]
+        },
+        {
+          "triangles": 68,
+          "volume_mm3": 66.9469237369223,
+          "planar_error_mm": 2.234172323562177,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              25.0,
+              28.234172323562177
+            ],
+            [
+              -30.0,
+              -22.284692175358146
+            ],
+            [
+              40.0,
+              53.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "name": "seam-tools-harness-obstruction",
+      "output_path": "output/feeder-integrated-candidate/seam-tools-harness-obstruction.stl",
+      "definitions": {
+        "ic_probe": "seam-tools-harness-obstruction"
+      },
+      "expected_overlap": true,
+      "passed": true,
+      "triangle_count": 72,
+      "components": [
+        {
+          "triangles": 36,
+          "volume_mm3": 0.023633916605559108,
+          "planar_error_mm": 0.1434646963541977,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              71.42510868195275,
+              71.8
+            ],
+            [
+              -42.0,
+              -41.8447149316489
+            ],
+            [
+              -46.771803143981494,
+              -45.228196856018506
+            ]
+          ]
+        },
+        {
+          "triangles": 36,
+          "volume_mm3": 0.02363391661988884,
+          "planar_error_mm": 0.14346469635419704,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              71.42510868195275,
+              71.8
+            ],
+            [
+              -42.0,
+              -41.8447149316489
+            ],
+            [
+              -10.77180314398149,
+              -9.22819685601851
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "name": "outlet-tools-harness-obstruction",
+      "output_path": "output/feeder-integrated-candidate/outlet-tools-harness-obstruction.stl",
+      "definitions": {
+        "ic_probe": "outlet-tools-harness-obstruction"
+      },
+      "expected_overlap": true,
+      "passed": true,
+      "triangle_count": 104,
+      "components": [
+        {
+          "triangles": 104,
+          "volume_mm3": 289.7781914562685,
+          "planar_error_mm": 3.062177826491073,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -6.322461351766945,
+              6.322461351766945
+            ],
+            [
+              -52.0,
+              -48.0
+            ],
+            [
+              20.0,
+              28.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    },
+    {
+      "name": "harness-misplacement-control",
+      "output_path": "output/feeder-integrated-candidate/harness-misplacement-control.stl",
+      "definitions": {
+        "ic_probe": "fault-control",
+        "ic_fault": 35
+      },
+      "expected_overlap": true,
+      "passed": true,
+      "triangle_count": 2362,
+      "components": [
+        {
+          "triangles": 1080,
+          "volume_mm3": 2671.118020705242,
+          "planar_error_mm": 14.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -19.87114197204179,
+              -9.478250183721837
+            ],
+            [
+              -27.0,
+              -13.0
+            ],
+            [
+              -126.0,
+              28.0
+            ]
+          ]
+        },
+        {
+          "triangles": 1086,
+          "volume_mm3": 2671.1180207052575,
+          "planar_error_mm": 14.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              9.478250183721837,
+              19.87114197204179
+            ],
+            [
+              -27.0,
+              -13.0
+            ],
+            [
+              -126.0,
+              28.0
+            ]
+          ]
+        },
+        {
+          "triangles": 122,
+          "volume_mm3": 429.1785794589796,
+          "planar_error_mm": 12.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              20.680884319342603,
+              35.5
+            ],
+            [
+              -23.0,
+              -11.0
+            ],
+            [
+              18.0,
+              26.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 4.269716530273843,
+          "planar_error_mm": 0.8921968007228251,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              20.0,
+              20.892196800722825
+            ],
+            [
+              -12.549815067253158,
+              -11.0
+            ],
+            [
+              18.0,
+              26.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.23761970607858807,
+          "planar_error_mm": 0.6292707246019236,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -24.0,
+              -23.107804291541232
+            ],
+            [
+              -19.0,
+              -17.8372679151965
+            ],
+            [
+              26.62566085013033,
+              28.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.23761970607927196,
+          "planar_error_mm": 0.6292707246019221,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              23.107804291541232,
+              24.0
+            ],
+            [
+              -19.0,
+              -17.837267915196502
+            ],
+            [
+              26.625660850130338,
+              28.0
+            ]
+          ]
+        },
+        {
+          "triangles": 48,
+          "volume_mm3": 432.0879798117371,
+          "planar_error_mm": 9.627416997969522,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              22.22081400049975,
+              32.46289378561642
+            ],
+            [
+              -23.0,
+              -13.0
+            ],
+            [
+              -66.0,
+              -54.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true
+    }
+  ],
+  "parts": [
+    {
+      "name": "positive-half",
+      "path": "output/feeder-integrated-candidate/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-integrated-candidate/positive-half.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 12608,
+        "uniqueVertexCount": 6264,
+        "bounds": {
+          "min": [
+            0.0,
+            -48.0,
+            -126.0
+          ],
+          "max": [
+            35.5,
+            45.0,
+            69.0
+          ],
+          "size": [
+            35.5,
+            93.0,
+            195.0
+          ]
+        },
+        "surfaceArea": 69539.22574109919,
+        "signedVolume": 91379.5089481213,
+        "volume": 91379.5089481213,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true
+    },
+    {
+      "name": "negative-half",
+      "path": "output/feeder-integrated-candidate/negative-half.stl",
+      "sha256": "f8a2aba50cdbd5ce71a9f51bc75b81e8ed0895dfb6150cc6a189ca2ce4bf66c4",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-integrated-candidate/negative-half.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 13422,
+        "uniqueVertexCount": 6671,
+        "bounds": {
+          "min": [
+            -35.5,
+            -48.0,
+            -126.0
+          ],
+          "max": [
+            0.0,
+            45.0,
+            69.0
+          ],
+          "size": [
+            35.5,
+            93.0,
+            195.0
+          ]
+        },
+        "surfaceArea": 69650.23175125557,
+        "signedVolume": 91454.81011996855,
+        "volume": 91454.81011996855,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true
+    }
+  ],
+  "pictures": [
+    {
+      "file": "output/feeder-integrated-candidate/assembly.png",
+      "sha256": "2774d3ce58b1ebc7eb9bd0ae4674cb98bdcbf08af1191edf92ba286720a66f0e"
+    },
+    {
+      "file": "output/feeder-integrated-candidate/front.png",
+      "sha256": "8b6f71f6f38e2cb61384af6a3eba30b996dd591e9af8ab8d265d2cca77d7ffa3"
+    },
+    {
+      "file": "output/feeder-integrated-candidate/top.png",
+      "sha256": "25cb95d6cab33c83d3c6d4bf27235d39b115f37c58ec216d24f02db8c0641725"
+    }
+  ],
+  "case_count": 26,
+  "pass_count": 26,
+  "manufacturing_release": false,
+  "limits": [
+    "One combined shell includes current seam locators, harness ears and outlet flange.",
+    "Nominal motion only; total tolerance, actual clamp closure/contact force, airtightness and structural loads are not validated.",
+    "Seam screw access requires frame/harness removal. Fit/tighten outlet tie rods before the harness. Split housing opens only after removing harness/outlet retainer.",
+    "Actual blower, angled Y fitting and hose surface are not modeled; no whole launcher physical acceptance."
+  ]
+}

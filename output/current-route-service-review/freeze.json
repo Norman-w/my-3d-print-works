@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN",
+  "created_utc": "2026-09-27T12:17:41.407902+00:00",
+  "report": {
+    "path": "output/current-route-service-review/report.json",
+    "sha256": "2ea7d35574f2c623f5f4672254fe16481011e092b3da34042a01fa72268076e0"
+  },
+  "readme": {
+    "path": "output/current-route-service-review/README.md",
+    "sha256": "fc2b868142789984f2e2b2c14c39a230b4776d8bac17300c83f1735ff3d1f965"
+  },
+  "local_links_checked": 5,
+  "sources_rechecked": 36,
+  "evidence_artifact_and_log_hashes_checked": 14
+}

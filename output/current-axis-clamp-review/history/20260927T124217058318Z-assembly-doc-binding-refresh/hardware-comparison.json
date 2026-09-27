@@ -1,0 +1,20 @@
+{
+  "status": "PASS_DOC_BINDING_ONLY",
+  "changed_top_level_fields": [
+    "created_utc",
+    "source_sha256"
+  ],
+  "changed_source_sha256": {
+    "docs/cable-trigger-input.md": {
+      "old": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "new": "3cb8474ca777d255091f7d876796fb5f8cbefb41b6ac2c097f64b60da717eb2f"
+    }
+  },
+  "item_types": 24,
+  "installation_sites": 28,
+  "installed_occurrences": 87,
+  "all_nontime_nonbinding_content_exactly_equal": true,
+  "all_current_source_sha256_match": true,
+  "old_hardware_sha256": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+  "new_hardware_sha256": "a4efa41fe17763abe8ccc4bd45fd5ab5d2580c2ee44a07c042dfb9a00cfb466b"
+}

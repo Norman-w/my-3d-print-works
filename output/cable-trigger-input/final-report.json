@@ -1,0 +1,1559 @@
+{
+  "source_sha256": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+  "scope": "Local nominal geometry only; no manufacturing, loaded, or whole-system release",
+  "results": [
+    {
+      "name": "body",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/body.stl",
+        "-D",
+        "ci_part=\"body\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/body.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5602,
+        "uniqueVertexCount": 2781,
+        "bounds": {
+          "min": [
+            -28.200000000000017,
+            -94.0,
+            -125.25840533340727
+          ],
+          "max": [
+            159.2462120245875,
+            -49.0,
+            78.46803743153546
+          ],
+          "size": [
+            187.4462120245875,
+            45.0,
+            203.72644276494273
+          ]
+        },
+        "surfaceArea": 63801.52327983016,
+        "signedVolume": 264810.30067748233,
+        "volume": 264810.30067748233,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "4de7429dbc14e1f1a6a421a82c9bd34727539a9a959ce826af50de835a6e022b",
+      "vertex_component_sizes": [
+        2781
+      ],
+      "role": "print-candidate"
+    },
+    {
+      "name": "lever",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/lever.stl",
+        "-D",
+        "ci_part=\"lever\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/lever.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4682,
+        "uniqueVertexCount": 2339,
+        "bounds": {
+          "min": [
+            39.59440840897845,
+            -85.5,
+            -28.991378028648455
+          ],
+          "max": [
+            135.14032773239268,
+            -74.5,
+            68.99173078355852
+          ],
+          "size": [
+            95.54591932341422,
+            11.0,
+            97.98310881220698
+          ]
+        },
+        "surfaceArea": 11637.66080224277,
+        "signedVolume": 26740.345956526828,
+        "volume": 26740.345956526828,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "8776933cf22f0381a7ac4f481cdee09161cf71d37b77594876e3032430fec247",
+      "vertex_component_sizes": [
+        2339
+      ],
+      "role": "print-candidate"
+    },
+    {
+      "name": "cover",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/cover.stl",
+        "-D",
+        "ci_part=\"cover\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/cover.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2938,
+        "uniqueVertexCount": 1463,
+        "bounds": {
+          "min": [
+            28.81623381592643,
+            -74.0,
+            -10.071067811865479
+          ],
+          "max": [
+            140.28279434183946,
+            -68.0,
+            79.46803743153546
+          ],
+          "size": [
+            111.46656052591302,
+            6.0,
+            89.53910524340094
+          ]
+        },
+        "surfaceArea": 11465.62956361707,
+        "signedVolume": 24290.089582973982,
+        "volume": 24290.089582973982,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+      "vertex_component_sizes": [
+        1463
+      ],
+      "role": "print-candidate"
+    },
+    {
+      "name": "fixed-hardware",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/fixed-hardware.stl",
+        "-D",
+        "ci_part=\"fixed-hardware\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/fixed-hardware.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 16306,
+        "uniqueVertexCount": 8120,
+        "bounds": {
+          "min": [
+            -20.5,
+            -102.2,
+            -64.5
+          ],
+          "max": [
+            165.42127964422977,
+            -34.8,
+            74.96803743153548
+          ],
+          "size": [
+            185.92127964422977,
+            67.4,
+            139.4680374315355
+          ]
+        },
+        "surfaceArea": 10519.526856709566,
+        "signedVolume": 7518.780645954064,
+        "volume": 7518.780645954064,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 38,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "5e566a3a578096a17a32e84a7987e635900732e31e68b8c089b86b9dd921c43d",
+      "vertex_component_sizes": [
+        884,
+        588,
+        588,
+        588,
+        588,
+        588,
+        588,
+        588,
+        444,
+        444,
+        444,
+        300,
+        288,
+        288,
+        288,
+        156,
+        156,
+        156,
+        156
+      ],
+      "role": "hardware-reference"
+    },
+    {
+      "name": "moving-hardware",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/moving-hardware.stl",
+        "-D",
+        "ci_part=\"moving-hardware\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/moving-hardware.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5756,
+        "uniqueVertexCount": 2880,
+        "bounds": {
+          "min": [
+            69.0,
+            -85.5,
+            -1.0000000000000009
+          ],
+          "max": [
+            81.0,
+            -74.5,
+            67.49762055395465
+          ],
+          "size": [
+            12.0,
+            11.0,
+            68.49762055395465
+          ]
+        },
+        "surfaceArea": 896.6770605625354,
+        "signedVolume": 727.5598729398249,
+        "volume": 727.5598729398249,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "1d3a2ad48051552982018d6f73fd4b4d707fca09e86c52af8a29fa4a80bac3ec",
+      "vertex_component_sizes": [
+        2592,
+        288
+      ],
+      "role": "hardware-reference"
+    },
+    {
+      "name": "adjuster",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/adjuster.stl",
+        "-D",
+        "ci_part=\"adjuster\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/adjuster.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 888,
+        "uniqueVertexCount": 444,
+        "bounds": {
+          "min": [
+            135.8111831820431,
+            -84.0,
+            -0.3873066672705505
+          ],
+          "max": [
+            165.24012040965624,
+            -76.0,
+            29.041630560342618
+          ],
+          "size": [
+            29.428937227613147,
+            8.0,
+            29.42893722761317
+          ]
+        },
+        "surfaceArea": 1247.5153410620835,
+        "signedVolume": 711.6595298241778,
+        "volume": 711.6595298241778,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "ba813c263e7e8a1a1c8df9433ab7961ba1fd4253f10b4369d6923c24e26c431b",
+      "vertex_component_sizes": [
+        444
+      ],
+      "role": "hardware-reference"
+    },
+    {
+      "name": "ferrule",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/ferrule.stl",
+        "-D",
+        "ci_part=\"ferrule\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/ferrule.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 864,
+        "uniqueVertexCount": 432,
+        "bounds": {
+          "min": [
+            153.75401775465173,
+            -82.75,
+            -0.5684659018440641
+          ],
+          "max": [
+            165.42127964422977,
+            -77.25,
+            11.098795987733972
+          ],
+          "size": [
+            11.667261889578043,
+            5.5,
+            11.667261889578036
+          ]
+        },
+        "surfaceArea": 380.96994026718477,
+        "signedVolume": 68.17757976445662,
+        "volume": 68.17757976445662,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "artifact_sha256": "c78ec100a6c4867edb045f954c2c2798223a0d8870b347de78121d0a109a73c0",
+      "vertex_component_sizes": [
+        432
+      ],
+      "role": "hardware-reference"
+    },
+    {
+      "name": "cable",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/cable.stl",
+        "-D",
+        "ci_part=\"cable\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/cable.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1450,
+        "uniqueVertexCount": 710,
+        "bounds": {
+          "min": [
+            75.0,
+            -80.75,
+            0.8457476605290353
+          ],
+          "max": [
+            164.0070660818567,
+            -79.25,
+            65.75000000000001
+          ],
+          "size": [
+            89.00706608185669,
+            1.5,
+            64.90425233947099
+          ]
+        },
+        "surfaceArea": 533.3293408532677,
+        "signedVolume": 197.2501416031263,
+        "volume": 197.2501416031263,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 8,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "7e031ee890fb8608af138f48fe6dc392010e6cd6e5ea2a04739d5bc786d19da9",
+      "vertex_component_sizes": [
+        710
+      ],
+      "role": "hardware-reference"
+    },
+    {
+      "name": "motion-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"motion\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1228,
+        "uniqueVertexCount": 716,
+        "bounds": {
+          "min": [
+            67.0,
+            -85.5,
+            -3.0000000000000018
+          ],
+          "max": [
+            83.0,
+            -74.5,
+            13.000000000000002
+          ],
+          "size": [
+            16.0,
+            11.0,
+            16.000000000000004
+          ]
+        },
+        "surfaceArea": 374.05766214746916,
+        "signedVolume": -2.9671376466922084e-11,
+        "volume": 2.9671376466922084e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 53,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "2def5d5cebe8ef60fe18ed2ede99814d836bde4e48ee56a69bc797413e1beb2b",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-3.5": 640,
+          "local Z=7.5": 588
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "motion-5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-5.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"motion\"",
+        "-D",
+        "ci_u=5",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1212,
+        "uniqueVertexCount": 718,
+        "bounds": {
+          "min": [
+            67.0,
+            -85.5,
+            -3.0000000000000018
+          ],
+          "max": [
+            83.0,
+            -74.5,
+            13.000000000000002
+          ],
+          "size": [
+            16.0,
+            11.0,
+            16.000000000000004
+          ]
+        },
+        "surfaceArea": 349.7506174589936,
+        "signedVolume": -1.3983481039758772e-11,
+        "volume": 1.3983481039758772e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 66,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "5dffff7f92fad317654fff8435767a07ba657204d844c038f1121b72da492ab3",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-3.5": 690,
+          "local Z=7.5": 522
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "motion-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-10.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"motion\"",
+        "-D",
+        "ci_u=10",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-10.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1246,
+        "uniqueVertexCount": 751,
+        "bounds": {
+          "min": [
+            67.0,
+            -85.5,
+            -3.0000000000000018
+          ],
+          "max": [
+            83.0,
+            -74.5,
+            13.000000000000002
+          ],
+          "size": [
+            16.0,
+            11.0,
+            16.000000000000004
+          ]
+        },
+        "surfaceArea": 328.794420633863,
+        "signedVolume": 1.0686562745831907e-11,
+        "volume": 1.0686562745831907e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 65,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "bcfde06d553c6bd9a31bec6e8b0ed31f0739248d1a1c1cbb043d9f0f66360341",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-3.5": 694,
+          "local Z=7.5": 552
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "motion-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-15.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"motion\"",
+        "-D",
+        "ci_u=15",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-15.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1230,
+        "uniqueVertexCount": 745,
+        "bounds": {
+          "min": [
+            67.0,
+            -85.5,
+            -3.0000000000000018
+          ],
+          "max": [
+            83.0,
+            -74.5,
+            13.000000000000002
+          ],
+          "size": [
+            16.0,
+            11.0,
+            16.000000000000004
+          ]
+        },
+        "surfaceArea": 320.17910616715665,
+        "signedVolume": -2.2710722191732202e-12,
+        "volume": 2.2710722191732202e-12,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 53,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "8d12e87f1101efb707845497aeacea08c519442c441de9fdefea8d85ee99267a",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-3.5": 628,
+          "local Z=7.5": 602
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "motion-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"motion\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/motion-20.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1276,
+        "uniqueVertexCount": 789,
+        "bounds": {
+          "min": [
+            67.0,
+            -85.5,
+            -3.0000000000000018
+          ],
+          "max": [
+            83.0,
+            -74.5,
+            13.000000000000002
+          ],
+          "size": [
+            16.0,
+            11.0,
+            16.000000000000004
+          ]
+        },
+        "surfaceArea": 304.26516520175556,
+        "signedVolume": -1.1104894781510666e-11,
+        "volume": 1.1104894781510666e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 46,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "bdc9ebdab6d258dce0ecb245e6732334d80925f4ab758c7d73a651bea4258d48",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-3.5": 642,
+          "local Z=7.5": 634
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "hardware-fit-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"hardware-fit\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5206,
+        "uniqueVertexCount": 2956,
+        "bounds": {
+          "min": [
+            -20.5,
+            -94.0,
+            -63.55009103683342
+          ],
+          "max": [
+            153.1723483767243,
+            -68.0,
+            74.5352638785741
+          ],
+          "size": [
+            173.6723483767243,
+            26.0,
+            138.08535491540752
+          ]
+        },
+        "surfaceArea": 916.7042310001001,
+        "signedVolume": -4.809708187281103e-12,
+        "volume": 4.809708187281103e-12,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 133,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "8ff5752d1250e259fb3e42646722ed68df1699f3b331d8eb1b54a0baef8b1d85",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-12": 1922,
+          "local X=-29": 274,
+          "local Z=-9": 254,
+          "local Z=-5.5": 228,
+          "local X=-45": 170,
+          "local X=-37": 190,
+          "local Z=14": 1206,
+          "local Z=9.5": 200,
+          "local Z=-3.5": 360,
+          "local Z=7.5": 402
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "hardware-fit-5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-5.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"hardware-fit\"",
+        "-D",
+        "ci_u=5",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5190,
+        "uniqueVertexCount": 2932,
+        "bounds": {
+          "min": [
+            -20.5,
+            -94.0,
+            -63.55009103683342
+          ],
+          "max": [
+            153.1723483767243,
+            -68.0,
+            74.5352638785741
+          ],
+          "size": [
+            173.6723483767243,
+            26.0,
+            138.08535491540752
+          ]
+        },
+        "surfaceArea": 924.1899841315568,
+        "signedVolume": 1.2698064821847765e-11,
+        "volume": 1.2698064821847765e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 132,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "6ce870467970c547b0bc14565fbe3ff3eab0d6f44988c47ae76b87c6bfcc6a66",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-12": 1922,
+          "local X=-29": 274,
+          "local Z=-9": 254,
+          "local Z=-5.5": 228,
+          "local X=-45": 170,
+          "local X=-37": 190,
+          "local Z=14": 1206,
+          "local Z=9.5": 200,
+          "local Z=-3.5": 372,
+          "local Z=7.5": 374
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "hardware-fit-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-10.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"hardware-fit\"",
+        "-D",
+        "ci_u=10",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-10.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5176,
+        "uniqueVertexCount": 2921,
+        "bounds": {
+          "min": [
+            -20.5,
+            -94.0,
+            -63.55009103683342
+          ],
+          "max": [
+            153.1723483767243,
+            -68.0,
+            74.5352638785741
+          ],
+          "size": [
+            173.6723483767243,
+            26.0,
+            138.08535491540752
+          ]
+        },
+        "surfaceArea": 930.8859542238433,
+        "signedVolume": 3.1342706208192794e-11,
+        "volume": 3.1342706208192794e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 123,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "a277de79476c4fa89faf301173dbb0587ff5eedb238fa79ed74cc7c5387e20d0",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-12": 1922,
+          "local X=-29": 274,
+          "local Z=-9": 254,
+          "local Z=-5.5": 228,
+          "local X=-45": 170,
+          "local X=-37": 190,
+          "local Z=14": 1206,
+          "local Z=9.5": 200,
+          "local Z=-3.5": 374,
+          "local Z=7.5": 358
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "hardware-fit-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-15.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"hardware-fit\"",
+        "-D",
+        "ci_u=15",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-15.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5256,
+        "uniqueVertexCount": 2961,
+        "bounds": {
+          "min": [
+            -20.5,
+            -94.0,
+            -63.55009103683342
+          ],
+          "max": [
+            153.1723483767243,
+            -68.0,
+            74.5352638785741
+          ],
+          "size": [
+            173.6723483767243,
+            26.0,
+            138.08535491540752
+          ]
+        },
+        "surfaceArea": 943.2310462463006,
+        "signedVolume": 2.0115020760158586e-12,
+        "volume": 2.0115020760158586e-12,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 123,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "c45e2d1f6689c468e10cd0828cdff93d69d6a00f9b1c5cab15aca65c12877369",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-12": 1922,
+          "local X=-29": 274,
+          "local Z=-9": 254,
+          "local Z=-5.5": 228,
+          "local X=-45": 170,
+          "local X=-37": 190,
+          "local Z=14": 1206,
+          "local Z=9.5": 200,
+          "local Z=-3.5": 410,
+          "local Z=7.5": 402
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "hardware-fit-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"hardware-fit\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/hardware-fit-20.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 5286,
+        "uniqueVertexCount": 2958,
+        "bounds": {
+          "min": [
+            -20.5,
+            -94.0,
+            -63.55009103683342
+          ],
+          "max": [
+            153.1723483767243,
+            -68.0,
+            74.5352638785741
+          ],
+          "size": [
+            173.6723483767243,
+            26.0,
+            138.08535491540752
+          ]
+        },
+        "surfaceArea": 965.0391128342523,
+        "signedVolume": -1.867950238931826e-11,
+        "volume": 1.867950238931826e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 133,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "b6654bb0acc802fdc97b4f6b48de714506f8113ad672fdffb31ffbe36d8c8c9f",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=-12": 1922,
+          "local X=-29": 274,
+          "local Z=-9": 254,
+          "local Z=-5.5": 228,
+          "local X=-45": 170,
+          "local X=-37": 190,
+          "local Z=14": 1206,
+          "local Z=9.5": 200,
+          "local Z=-3.5": 420,
+          "local Z=7.5": 422
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "cable-fit-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cable-fit-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cable-fit\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "cable-fit-5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cable-fit-5.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cable-fit\"",
+        "-D",
+        "ci_u=5",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "cable-fit-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cable-fit-10.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cable-fit\"",
+        "-D",
+        "ci_u=10",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "cable-fit-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cable-fit-15.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cable-fit\"",
+        "-D",
+        "ci_u=15",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "cable-fit-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cable-fit-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cable-fit\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "terminal-entry-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/terminal-entry-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"terminal-entry\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "terminal-entry-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/terminal-entry-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"terminal-entry\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "printed-fixed-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/printed-fixed-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"printed-fixed\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/printed-fixed-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 692,
+        "uniqueVertexCount": 371,
+        "bounds": {
+          "min": [
+            29.832776679104647,
+            -74.0,
+            -9.071067811865476
+          ],
+          "max": [
+            117.35533905932738,
+            -74.0,
+            78.46803743153546
+          ],
+          "size": [
+            87.52256238022272,
+            0.0,
+            87.53910524340094
+          ]
+        },
+        "surfaceArea": 228.70261477123182,
+        "signedVolume": -2.961112952060141e-11,
+        "volume": 2.961112952060141e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 6,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "d752621a7f6831d927994b335f95e847d1ba198792183e6c7f338197bb27c834",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=8": 692
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "printed-fixed-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/printed-fixed-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"printed-fixed\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/printed-fixed-20.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 692,
+        "uniqueVertexCount": 371,
+        "bounds": {
+          "min": [
+            29.832776679104647,
+            -74.0,
+            -9.071067811865476
+          ],
+          "max": [
+            117.35533905932738,
+            -74.0,
+            78.46803743153546
+          ],
+          "size": [
+            87.52256238022272,
+            0.0,
+            87.53910524340094
+          ]
+        },
+        "surfaceArea": 228.70261477123182,
+        "signedVolume": -2.961112952060141e-11,
+        "volume": 2.961112952060141e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 6,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "d752621a7f6831d927994b335f95e847d1ba198792183e6c7f338197bb27c834",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=8": 692
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "cover-removal-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cover-removal-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cover-removal\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cover-removal-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 674,
+        "uniqueVertexCount": 361,
+        "bounds": {
+          "min": [
+            29.832776679104647,
+            -74.0,
+            -9.071067811865476
+          ],
+          "max": [
+            117.3287019459696,
+            -74.0,
+            78.46803743153546
+          ],
+          "size": [
+            87.49592526686496,
+            0.0,
+            87.53910524340094
+          ]
+        },
+        "surfaceArea": 204.71289726951167,
+        "signedVolume": -3.5561761868585506e-11,
+        "volume": 3.5561761868585506e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 7,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "2680b63305ff1b2813db0d262de9f29946c6319e3427493732a98314bbaaba00",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=8": 674
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "cover-removal-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cover-removal-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"cover-removal\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/cover-removal-20.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 674,
+        "uniqueVertexCount": 361,
+        "bounds": {
+          "min": [
+            29.832776679104647,
+            -74.0,
+            -9.071067811865476
+          ],
+          "max": [
+            117.3287019459696,
+            -74.0,
+            78.46803743153546
+          ],
+          "size": [
+            87.49592526686496,
+            0.0,
+            87.53910524340094
+          ]
+        },
+        "surfaceArea": 204.71289726951167,
+        "signedVolume": -3.5561761868585506e-11,
+        "volume": 3.5561761868585506e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 7,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "2680b63305ff1b2813db0d262de9f29946c6319e3427493732a98314bbaaba00",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local Z=8": 674
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "adjuster-washer-fit-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-washer-fit-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"adjuster-washer-fit\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-washer-fit-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 360,
+        "uniqueVertexCount": 252,
+        "bounds": {
+          "min": [
+            139.34671708797583,
+            -86.0,
+            11.363961030678922
+          ],
+          "max": [
+            153.1723483767243,
+            -74.0,
+            25.310964674975704
+          ],
+          "size": [
+            13.825631288748468,
+            12.0,
+            13.947003644296782
+          ]
+        },
+        "surfaceArea": 112.78820374078312,
+        "signedVolume": -1.1587175663407834e-11,
+        "volume": 1.1587175663407834e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 13,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "3b5819a56a79f41985dbd733dacf3cacd3c94a952cf23b3f03e2a1111ae63fbe",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local X=-45": 170,
+          "local X=-37": 190
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "adjuster-washer-fit-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-washer-fit-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"adjuster-washer-fit\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 0,
+      "empty": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-washer-fit-20.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 360,
+        "uniqueVertexCount": 252,
+        "bounds": {
+          "min": [
+            139.34671708797583,
+            -86.0,
+            11.363961030678922
+          ],
+          "max": [
+            153.1723483767243,
+            -74.0,
+            25.310964674975704
+          ],
+          "size": [
+            13.825631288748468,
+            12.0,
+            13.947003644296782
+          ]
+        },
+        "surfaceArea": 112.78820374078312,
+        "signedVolume": -1.1587175663407834e-11,
+        "volume": 1.1587175663407834e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 13,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "artifact_sha256": "3b5819a56a79f41985dbd733dacf3cacd3c94a952cf23b3f03e2a1111ae63fbe",
+      "contact_diagnostic": {
+        "triangle_planes": {
+          "local X=-45": 170,
+          "local X=-37": 190
+        },
+        "unknown_plane_triangle_count": 0
+      }
+    },
+    {
+      "name": "adjuster-tool-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-tool-0.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"adjuster-tool\"",
+        "-D",
+        "ci_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    },
+    {
+      "name": "adjuster-tool-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-trigger-input/checks-01d2b74807dd/adjuster-tool-20.stl",
+        "-D",
+        "ci_part=\"probe\"",
+        "-D",
+        "ci_probe_kind=\"adjuster-tool\"",
+        "-D",
+        "ci_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-trigger-input.scad"
+      ],
+      "exit": 1,
+      "empty": true
+    }
+  ]
+}

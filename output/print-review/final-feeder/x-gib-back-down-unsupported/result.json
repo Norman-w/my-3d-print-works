@@ -1,0 +1,60 @@
+{
+    "error_string": "Success.",
+    "export_time": 375,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 23,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Custom": 428.9104309082031,
+                "Flush": 29.0,
+                "Gap infill": 26.793949127197266,
+                "Inner wall": 92.8309097290039,
+                "Outer wall": 59.13473892211914,
+                "Top surface": 8.448150634765625,
+                "Travel": 29.216426849365234,
+                "Undefined": 13.872140884399414
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 0.9309161901473999,
+                    "total_used_g": 0.9309161901473999
+                }
+            ],
+            "generate_support_material_time": 1,
+            "id": 1,
+            "infill_time": 8,
+            "layer_filament_change": 0,
+            "main_predication": 187.45523071289063,
+            "make_perimeters_time": 6,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 39.19999694824219,
+                        "height": 5.0,
+                        "width": 12.39999771118164,
+                        "x": 121.80000305175781,
+                        "y": 108.4000015258789,
+                        "z": -3.1086244689504383e-15
+                    },
+                    "id": 5,
+                    "name": "x-gib.stl",
+                    "triangle_count": 60
+                }
+            ],
+            "sliced_time": 106,
+            "sliced_time_with_cache": 66,
+            "total_predication": 658.9907836914063,
+            "triangle_count": 60,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+}

@@ -1,0 +1,3138 @@
+{
+  "status": "ONLY_INLET_REAR_PROCESS_BINDING_CHANGED_DIGITAL_SCOPE",
+  "created_utc": "2026-09-27T11:43:53.506132+00:00",
+  "checks": {
+    "same_unique_56_instance_ids": true,
+    "only_inlet_rear_complete_item_changed": true,
+    "other_55_complete_items_identical": true,
+    "all_56_stl_material_quantity_fields_unchanged": true,
+    "all_item_selected_artifact_and_binding_hashes_current": true,
+    "new_bound_56_selected_42_candidate_pending_zero": true,
+    "plate_ids_cover_instances_exactly_once": true,
+    "plate_quantities_total_56": true,
+    "all_41_preexisting_selected_plates_unchanged": true,
+    "single_added_plate_is_inlet3": true,
+    "new_item_matches_inlet_binding": true,
+    "binding_64_current_identities": true,
+    "binding_64_in_formal_registry": true,
+    "embedded_gcode_equals_selected_external": true,
+    "new_assembly_106_current_identities": true,
+    "old_assembly_index_hash_matches_preserved_snapshot": true,
+    "new_assembly_index_hash_matches_current_index": true,
+    "assembly_bom_44_rows_completely_unchanged": true,
+    "hardware_csv_44_rows_bytes_identical": true,
+    "assembly_installed_occurrences_unchanged": true,
+    "assembly_removals_retained_nuts_composite_accounting_unchanged": true,
+    "print_picklist_only_inlet_process_fields_changed": true,
+    "print_csv_only_inlet_process_fields_changed": true,
+    "work_55_held_56_inventory_56_unchanged": true,
+    "mode_counts_recomputed_from_picklist": true,
+    "only_expected_assembly_dependency_hash_changes": true,
+    "manufacturing_physical_sent_stay_false": true,
+    "every_item_manufacturing_and_physical_stay_false": true,
+    "watched_inputs_stable_during_review": true
+  },
+  "failed_checks": [],
+  "reviewed_input_sha256": {
+    "output/current-manufacturing/history/before-inlet-process-binding-20260927T113531345167Z/output/current-manufacturing/manifest.json": "43bd40d41c3a68cf0bcacf41234a5ee4f08c7f5b943188ae709347718c49e2a5",
+    "output/current-manufacturing/manifest.json": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+    "output/current-manufacturing/inlet-process/manifest.json": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+    "output/current-assembly-package/runs/20260927T104027787103Z/manifest.json": "db9afb3b2ab7786a7d70e8a9ef4b53ae0288ef1b1cdb62aa23688e9aafc6f9e9",
+    "output/current-assembly-package/runs/20260927T113921981888Z/manifest.json": "d9dfc754305b2eb0498049d658518343d5f3de9fbb834cd2a539bb77480c9347",
+    "output/current-assembly-package/runs/20260927T104027787103Z/hardware.csv": "bdf1aa5aa7ae81686261bc8adb04c2e9cb67e540b761e3db9c0661fa2e14ddf0",
+    "output/current-assembly-package/runs/20260927T113921981888Z/hardware.csv": "bdf1aa5aa7ae81686261bc8adb04c2e9cb67e540b761e3db9c0661fa2e14ddf0",
+    "output/current-assembly-package/runs/20260927T104027787103Z/print-picklist.csv": "ad2ed679346001682881b071bbdd09bb94967f86b74a8602b4b36ebe3b0fa7cd",
+    "output/current-assembly-package/runs/20260927T113921981888Z/print-picklist.csv": "a0c632cd97e708da25d5abfc45bab01c5912007c72e426170963ac8ba043a001",
+    "output/current-manufacturing/history/before-inlet-process-binding-20260927T113531345167Z/scripts/build_current_assembly_package.py": "b94a86d8a08a5bfddb8035dc195a48cb87f710b716ddec4d0412ecd3dd2f1a72",
+    "scripts/build_current_assembly_package.py": "c20011365a600b9cb0e475cd6eafaa1789fba304fb8e6baefb0447b22342d5cd"
+  },
+  "manufacturing_index": {
+    "old_counts": {
+      "printed_instances": 56,
+      "material_instances": {
+        "PETG": 55,
+        "Bambu TPU 95A HF": 1
+      },
+      "bound_instances": 55,
+      "candidate_instances": 1,
+      "pending_instances": 1,
+      "needs_reslice_instances": 0,
+      "selected_plates": 41,
+      "candidate_plates": 1
+    },
+    "new_counts": {
+      "printed_instances": 56,
+      "material_instances": {
+        "PETG": 55,
+        "Bambu TPU 95A HF": 1
+      },
+      "bound_instances": 56,
+      "candidate_instances": 0,
+      "pending_instances": 0,
+      "needs_reslice_instances": 0,
+      "selected_plates": 42,
+      "candidate_plates": 0
+    },
+    "changed_items": {
+      "feeder/inlet-rear": {
+        "binding_report": {
+          "old": "output/current-manufacturing/feeder-new/mapping.json",
+          "new": "output/current-manufacturing/inlet-process/manifest.json"
+        },
+        "binding_report_sha256": {
+          "old": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+          "new": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b"
+        },
+        "candidate_3mf": {
+          "old": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf",
+          "new": null
+        },
+        "candidate_3mf_sha256": {
+          "old": "58992f2f1f87e43a030e792da8b566cf6702989b6968a1730fa49198a79ac068",
+          "new": null
+        },
+        "gcode": {
+          "old": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/plate_1.gcode",
+          "new": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode"
+        },
+        "gcode_sha256": {
+          "old": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+          "new": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f"
+        },
+        "pending_review": {
+          "old": true,
+          "new": false
+        },
+        "process_status": {
+          "old": "CURRENT_SLICE_REVIEW_FLAGGED",
+          "new": "BOUNDED_INLET_PROCESS_EVIDENCE_BOUND_PHYSICAL_OPEN"
+        },
+        "reason": {
+          "old": "whole_external_tree: Local M4/M2.5/strap pick corridors are checked, but every connected tree branch under the collar/keys has not been given a complete cut-and-extraction sequence.",
+          "new": "Candidate 3: own key growth, chronological underside paths, full nominal hardware volumes and complete support-path contact classification bound. Physical/process-quality limits retained."
+        },
+        "selected_3mf": {
+          "old": null,
+          "new": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf"
+        },
+        "selected_3mf_sha256": {
+          "old": null,
+          "new": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a"
+        }
+      }
+    },
+    "unchanged_complete_items": [
+      "feeder/beam-grip",
+      "feeder/cable-input-body",
+      "feeder/cable-input-cover",
+      "feeder/cable-input-lever",
+      "feeder/cable-input-terminal-cap",
+      "feeder/cable-output-cap",
+      "feeder/cable-route-base",
+      "feeder/cable-route-cap",
+      "feeder/cable-route-lower",
+      "feeder/capture-left",
+      "feeder/capture-right",
+      "feeder/finger-left-front",
+      "feeder/finger-left-rear",
+      "feeder/finger-right-front",
+      "feeder/finger-right-rear",
+      "feeder/fixed-spacer",
+      "feeder/frame",
+      "feeder/frame-y-gib-left",
+      "feeder/frame-y-gib-right",
+      "feeder/inlet-backplate",
+      "feeder/inlet-front",
+      "feeder/left-support",
+      "feeder/liner",
+      "feeder/moving-spacer",
+      "feeder/negative-half",
+      "feeder/pin-block-left-front",
+      "feeder/pin-block-left-rear",
+      "feeder/pin-block-right-front",
+      "feeder/pin-block-right-rear",
+      "feeder/pipe-clamp-left",
+      "feeder/pipe-clamp-right",
+      "feeder/positive-half",
+      "feeder/right-support",
+      "feeder/x-cover",
+      "feeder/x-gib",
+      "feeder/y-cap-left",
+      "feeder/y-cap-right",
+      "feeder/y-gib-left-front",
+      "feeder/y-gib-left-rear",
+      "feeder/y-gib-right-front",
+      "feeder/y-gib-right-rear",
+      "feeder/y-keeper-left-front",
+      "feeder/y-keeper-left-rear",
+      "feeder/y-keeper-right-front",
+      "feeder/y-keeper-right-rear",
+      "spin/body",
+      "spin/carriage",
+      "spin/cover",
+      "spin/hold-fork",
+      "spin/opposite-guide",
+      "spin/pad",
+      "spin/pad-keeper",
+      "spin/pull-cap",
+      "spin/spring-cage",
+      "spin/spring-seat"
+    ],
+    "added_selected_plates": [
+      {
+        "file": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf",
+        "sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "instance_ids": [
+          "feeder/inlet-rear"
+        ],
+        "quantity": 1,
+        "print_plate_once_for_these_instances": true,
+        "pending_review": false
+      }
+    ],
+    "changed_preexisting_selected_plates": {},
+    "current_item_artifact_checks": [
+      {
+        "instance_id": "feeder/positive-half",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__positive-half.stl",
+        "expected_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+        "actual_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/positive-half",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/positive-half.gcode.3mf",
+        "expected_sha256": "d59595fb928909f9c586d8844a0b252e277bd4c5b8a23b61d4c7b88ca7cf5c21",
+        "actual_sha256": "d59595fb928909f9c586d8844a0b252e277bd4c5b8a23b61d4c7b88ca7cf5c21",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/positive-half",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/positive-half-inlet-down-supported/plate_1.gcode",
+        "expected_sha256": "fa470f7ff4a0aa5d6bc6e6cc0797b3747884399cd5700eb5fc18aa30d41e0154",
+        "actual_sha256": "fa470f7ff4a0aa5d6bc6e6cc0797b3747884399cd5700eb5fc18aa30d41e0154",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/positive-half",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/negative-half",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__negative-half.stl",
+        "expected_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+        "actual_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/negative-half",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/negative-half.gcode.3mf",
+        "expected_sha256": "ee66067b8570c7b751f1013a9d94126126e18a503dda12ee370dc363aeef7476",
+        "actual_sha256": "ee66067b8570c7b751f1013a9d94126126e18a503dda12ee370dc363aeef7476",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/negative-half",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/negative-half-inlet-down-supported/plate_1.gcode",
+        "expected_sha256": "e2be2ede2f39574a2ab4cca5f584e8677038e39d6ab15c1a07f2cf3f43e96de6",
+        "actual_sha256": "e2be2ede2f39574a2ab4cca5f584e8677038e39d6ab15c1a07f2cf3f43e96de6",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/negative-half",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/beam-grip",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl",
+        "expected_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+        "actual_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/beam-grip",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/beam-grip/slice-review.3mf",
+        "expected_sha256": "14ee81952be121f4087b6a042ae372998c85fb437401fa652ad4dd4f9c52ed64",
+        "actual_sha256": "14ee81952be121f4087b6a042ae372998c85fb437401fa652ad4dd4f9c52ed64",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/beam-grip",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/beam-grip/plate_1.gcode",
+        "expected_sha256": "155b3becf9d331ee4f092d7c525634bf6cc311cd625cc926b4648c93de847427",
+        "actual_sha256": "155b3becf9d331ee4f092d7c525634bf6cc311cd625cc926b4648c93de847427",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/beam-grip",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/liner",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__liner.stl",
+        "expected_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+        "actual_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/liner",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/liner.gcode.3mf",
+        "expected_sha256": "57a3a80809fedb33880d642dc31184b7ce306633a85d0835ed16260cdef11ce5",
+        "actual_sha256": "57a3a80809fedb33880d642dc31184b7ce306633a85d0835ed16260cdef11ce5",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/liner",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/liner-shoulder-down-unsupported/plate_1.gcode",
+        "expected_sha256": "3804811b9fedf3c55dd4198b421c2bc6ee2b4adc1b77eb3e5d593d51e553b4df",
+        "actual_sha256": "3804811b9fedf3c55dd4198b421c2bc6ee2b4adc1b77eb3e5d593d51e553b4df",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/liner",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/right-support",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+        "expected_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+        "actual_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/right-support",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/right-support-y-guide-outer-x-down-xy050-z040-supported/slice-review.3mf",
+        "expected_sha256": "42b90b5c49badd4c1293f12f849cac49ef02f4fc026ce0bbff9f57bcf2c8d4de",
+        "actual_sha256": "42b90b5c49badd4c1293f12f849cac49ef02f4fc026ce0bbff9f57bcf2c8d4de",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/right-support",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/right-support-y-guide-outer-x-down-xy050-z040-supported/plate_1.gcode",
+        "expected_sha256": "846b736119ae320e7edeb76aaeeff6e95bfd09bae9b3a273ea64fbf59f577ad6",
+        "actual_sha256": "846b736119ae320e7edeb76aaeeff6e95bfd09bae9b3a273ea64fbf59f577ad6",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/right-support",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/left-support",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+        "expected_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+        "actual_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/left-support",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/left-support-y-guide-outer-x-down-supported/slice-review.3mf",
+        "expected_sha256": "b1e5ab7f4a6a45058acf852f3c5aa987871894401744ab7867d5e7c30b035e8d",
+        "actual_sha256": "b1e5ab7f4a6a45058acf852f3c5aa987871894401744ab7867d5e7c30b035e8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/left-support",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/left-support-y-guide-outer-x-down-supported/plate_1.gcode",
+        "expected_sha256": "6d2d152679a9d7f989c2063df3024addf17961cdddefcf5a23cbdc0a3a3ed7b9",
+        "actual_sha256": "6d2d152679a9d7f989c2063df3024addf17961cdddefcf5a23cbdc0a3a3ed7b9",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/left-support",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-gib",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-gib.stl",
+        "expected_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+        "actual_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-gib",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/x-gib.gcode.3mf",
+        "expected_sha256": "387683a78b95ce8cb980a175d76a159a86766d94f73d38e5caa5be4373e3e29f",
+        "actual_sha256": "387683a78b95ce8cb980a175d76a159a86766d94f73d38e5caa5be4373e3e29f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-gib",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/x-gib-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "226f1efab885e951cb45899533d1ae999d150790dabf642c6c5313817918dde9",
+        "actual_sha256": "226f1efab885e951cb45899533d1ae999d150790dabf642c6c5313817918dde9",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-gib",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-cover",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-cover.stl",
+        "expected_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+        "actual_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-cover",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/x-cover.gcode.3mf",
+        "expected_sha256": "a01c2f9fa2ee529c669fbb42e8d927f73648aa769ab76cda157c28764f3ed2db",
+        "actual_sha256": "a01c2f9fa2ee529c669fbb42e8d927f73648aa769ab76cda157c28764f3ed2db",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-cover",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/x-cover-outside-down-unsupported/plate_1.gcode",
+        "expected_sha256": "a7b5e15f6fee380775efd5f5a2a72b797ff7702888e26614c766fbd0206d7e43",
+        "actual_sha256": "a7b5e15f6fee380775efd5f5a2a72b797ff7702888e26614c766fbd0206d7e43",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/x-cover",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame.stl",
+        "expected_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+        "actual_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/frame/slice-review.3mf",
+        "expected_sha256": "5c7c4ce96368b7c7e131d3b6573a63d5fb79181d3310d3b53ab3160ab54cc0cf",
+        "actual_sha256": "5c7c4ce96368b7c7e131d3b6573a63d5fb79181d3310d3b53ab3160ab54cc0cf",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/frame/plate_1.gcode",
+        "expected_sha256": "79b190c5a21f9d03bb3004f96158a7a58fb25d2c5052f59e312eb65f80b03d09",
+        "actual_sha256": "79b190c5a21f9d03bb3004f96158a7a58fb25d2c5052f59e312eb65f80b03d09",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/fixed-spacer",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__fixed-spacer.stl",
+        "expected_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+        "actual_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/fixed-spacer",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/fixed-spacer.gcode.3mf",
+        "expected_sha256": "c7fb9f0ee932e91f5218677e762c14ef9a7ca4283c02680d47d858801439fea7",
+        "actual_sha256": "c7fb9f0ee932e91f5218677e762c14ef9a7ca4283c02680d47d858801439fea7",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/fixed-spacer",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/fixed-spacer-axis-up-unsupported/plate_1.gcode",
+        "expected_sha256": "dd34b09307372b3d007aad1f71556cd570e00a3990f6ca4cbf93c38e77957ec6",
+        "actual_sha256": "dd34b09307372b3d007aad1f71556cd570e00a3990f6ca4cbf93c38e77957ec6",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/fixed-spacer",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/moving-spacer",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__moving-spacer.stl",
+        "expected_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+        "actual_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/moving-spacer",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/moving-spacer.gcode.3mf",
+        "expected_sha256": "4fd8cf9119dcccbc72cba14af1bf5d1ff3c200c28349b7ae6231953e99d44326",
+        "actual_sha256": "4fd8cf9119dcccbc72cba14af1bf5d1ff3c200c28349b7ae6231953e99d44326",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/moving-spacer",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/moving-spacer-axis-up-unsupported/plate_1.gcode",
+        "expected_sha256": "ce8eb4ef99d444cfb53d9cb04c864e58f43b37ae0b517101aea346b93203dfa3",
+        "actual_sha256": "ce8eb4ef99d444cfb53d9cb04c864e58f43b37ae0b517101aea346b93203dfa3",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/moving-spacer",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-right",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-right.stl",
+        "expected_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+        "actual_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-right",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/capture-1.gcode.3mf",
+        "expected_sha256": "591c59ce5a795b1611a5a9ecbac1e3f25500481b75ad2ffbad0ffaad9ffac194",
+        "actual_sha256": "591c59ce5a795b1611a5a9ecbac1e3f25500481b75ad2ffbad0ffaad9ffac194",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-right",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/capture-1-lower-z-down-supported/plate_1.gcode",
+        "expected_sha256": "a19fcb644f437ffda99db7122a2ffc117ceb2ccb4cfd2711dd53340a44407a51",
+        "actual_sha256": "a19fcb644f437ffda99db7122a2ffc117ceb2ccb4cfd2711dd53340a44407a51",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-right",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-right",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-right.stl",
+        "expected_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+        "actual_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-right",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pipe-clamp-1.gcode.3mf",
+        "expected_sha256": "2ce2508703943e2bbf908f4509003b2f559fd852f8ecd80252bfd779625776b7",
+        "actual_sha256": "2ce2508703943e2bbf908f4509003b2f559fd852f8ecd80252bfd779625776b7",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-right",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pipe-clamp-1-lower-z-down-supported/plate_1.gcode",
+        "expected_sha256": "e02ec37bbdf5b2d855f4cc50206dc07e8980afa0fcf7f7a7d298fbc36d54bf0c",
+        "actual_sha256": "e02ec37bbdf5b2d855f4cc50206dc07e8980afa0fcf7f7a7d298fbc36d54bf0c",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-right",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-right",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "expected_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "actual_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-right",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/slice-review.3mf",
+        "expected_sha256": "197af019afd9dfc732d8c390da358d3cee1217b1a5b02f6198ea447df5f35df1",
+        "actual_sha256": "197af019afd9dfc732d8c390da358d3cee1217b1a5b02f6198ea447df5f35df1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-right",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/plate_1.gcode",
+        "expected_sha256": "46f762be3475da908ad8f006f5d21d0294b88d4421ae7b1b23ccd4b896db24c2",
+        "actual_sha256": "46f762be3475da908ad8f006f5d21d0294b88d4421ae7b1b23ccd4b896db24c2",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-right",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-right",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "expected_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "actual_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-right",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "379d3874c7cbcece324583d712016d175b8b9e1371e7bae512cc1b1637ca7608",
+        "actual_sha256": "379d3874c7cbcece324583d712016d175b8b9e1371e7bae512cc1b1637ca7608",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-right",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "47fa56d7bad57908860041bca6aaa54dd6d63205c212d36e8af76c7a11e90cc1",
+        "actual_sha256": "47fa56d7bad57908860041bca6aaa54dd6d63205c212d36e8af76c7a11e90cc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-right",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-front.stl",
+        "expected_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+        "actual_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/y-gib.gcode.3mf",
+        "expected_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "actual_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/y-gib-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "actual_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "expected_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "actual_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-front",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "actual_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-front",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "actual_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl",
+        "expected_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+        "actual_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/finger.gcode.3mf",
+        "expected_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "actual_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/finger-back-down-supported/plate_1.gcode",
+        "expected_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "actual_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-front.stl",
+        "expected_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+        "actual_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pin-block.gcode.3mf",
+        "expected_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "actual_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pin-block-lip-down-unsupported/plate_1.gcode",
+        "expected_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "actual_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-rear.stl",
+        "expected_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+        "actual_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/y-gib.gcode.3mf",
+        "expected_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "actual_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/y-gib-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "actual_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-right-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "expected_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "actual_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-rear",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "actual_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-rear",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "actual_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-right-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-rear.stl",
+        "expected_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+        "actual_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/finger.gcode.3mf",
+        "expected_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "actual_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/finger-back-down-supported/plate_1.gcode",
+        "expected_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "actual_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-right-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-rear.stl",
+        "expected_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+        "actual_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pin-block.gcode.3mf",
+        "expected_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "actual_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pin-block-lip-down-unsupported/plate_1.gcode",
+        "expected_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "actual_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-right-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-left",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-left.stl",
+        "expected_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+        "actual_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-left",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/capture--1.gcode.3mf",
+        "expected_sha256": "47bb84899acb4c464cd34e13891b29f3205466a61e74cdf5b58a24bee2cc5664",
+        "actual_sha256": "47bb84899acb4c464cd34e13891b29f3205466a61e74cdf5b58a24bee2cc5664",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-left",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/capture--1-lower-z-down-supported/plate_1.gcode",
+        "expected_sha256": "ebc81e1e2eb602b24fd484c2b1e178d395ddfb50a11823064eb035f1a744e63f",
+        "actual_sha256": "ebc81e1e2eb602b24fd484c2b1e178d395ddfb50a11823064eb035f1a744e63f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/capture-left",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-left",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-left.stl",
+        "expected_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+        "actual_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-left",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pipe-clamp--1.gcode.3mf",
+        "expected_sha256": "2cf3e0d2d36c4e16a8140aa3ed4167e91ab1885a0d35257359f03ee7d5b1b7ea",
+        "actual_sha256": "2cf3e0d2d36c4e16a8140aa3ed4167e91ab1885a0d35257359f03ee7d5b1b7ea",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-left",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pipe-clamp--1-lower-z-down-supported/plate_1.gcode",
+        "expected_sha256": "261bdf964c45bd52449c8bdeb9677e57119463cc306acc563607cbe96100d225",
+        "actual_sha256": "261bdf964c45bd52449c8bdeb9677e57119463cc306acc563607cbe96100d225",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pipe-clamp-left",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-left",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "expected_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "actual_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-left",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/slice-review.3mf",
+        "expected_sha256": "197af019afd9dfc732d8c390da358d3cee1217b1a5b02f6198ea447df5f35df1",
+        "actual_sha256": "197af019afd9dfc732d8c390da358d3cee1217b1a5b02f6198ea447df5f35df1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-left",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-cap-lock-boss-down-supported/plate_1.gcode",
+        "expected_sha256": "46f762be3475da908ad8f006f5d21d0294b88d4421ae7b1b23ccd4b896db24c2",
+        "actual_sha256": "46f762be3475da908ad8f006f5d21d0294b88d4421ae7b1b23ccd4b896db24c2",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-cap-left",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-left",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "expected_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "actual_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-left",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "379d3874c7cbcece324583d712016d175b8b9e1371e7bae512cc1b1637ca7608",
+        "actual_sha256": "379d3874c7cbcece324583d712016d175b8b9e1371e7bae512cc1b1637ca7608",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-left",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "47fa56d7bad57908860041bca6aaa54dd6d63205c212d36e8af76c7a11e90cc1",
+        "actual_sha256": "47fa56d7bad57908860041bca6aaa54dd6d63205c212d36e8af76c7a11e90cc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/frame-y-gib-left",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-front.stl",
+        "expected_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+        "actual_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/y-gib.gcode.3mf",
+        "expected_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "actual_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/y-gib-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "actual_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "expected_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "actual_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-front",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "actual_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-front",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "actual_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-front.stl",
+        "expected_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+        "actual_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/finger.gcode.3mf",
+        "expected_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "actual_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/finger-back-down-supported/plate_1.gcode",
+        "expected_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "actual_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-front.stl",
+        "expected_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+        "actual_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-front",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pin-block.gcode.3mf",
+        "expected_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "actual_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-front",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pin-block-lip-down-unsupported/plate_1.gcode",
+        "expected_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "actual_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-rear.stl",
+        "expected_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+        "actual_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/y-gib.gcode.3mf",
+        "expected_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "actual_sha256": "6d50e682a9a76ac7e2014cfdd5257891f0bbb329c16e1c5ae72a0a30eba43d22",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/y-gib-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "actual_sha256": "4642d7599b535bb0ea43a4bc58e4b4c65b4a37b56b56a64360e9a1363f7ac62a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-gib-left-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "expected_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "actual_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-rear",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "actual_sha256": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-rear",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "actual_sha256": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/y-keeper-left-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-rear.stl",
+        "expected_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+        "actual_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/finger.gcode.3mf",
+        "expected_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "actual_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/finger-back-down-supported/plate_1.gcode",
+        "expected_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "actual_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/finger-left-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-rear.stl",
+        "expected_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+        "actual_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-rear",
+        "kind": "selected_3mf",
+        "path": "output/print-review/final-feeder/selected/pin-block.gcode.3mf",
+        "expected_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "actual_sha256": "56aed7efb76a8413af3a85fbd137b84ff27906d7efa44180f37567f1b7305d59",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-rear",
+        "kind": "gcode",
+        "path": "output/print-review/final-feeder/pin-block-lip-down-unsupported/plate_1.gcode",
+        "expected_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "actual_sha256": "287ff9eaabbd83fdac3578712c7a5a0939fe6db7098173d8cd38944bb5bc9331",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/pin-block-left-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-reuse/report.json",
+        "expected_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "actual_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-rear",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "expected_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "actual_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-rear",
+        "kind": "selected_3mf",
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf",
+        "expected_sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "actual_sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-rear",
+        "kind": "gcode",
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode",
+        "expected_sha256": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+        "actual_sha256": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-rear",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/inlet-process/manifest.json",
+        "expected_sha256": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+        "actual_sha256": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-front",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+        "expected_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+        "actual_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-front",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-front-collar-z-down-unsupported/slice-review.3mf",
+        "expected_sha256": "5603756dacb3d8d0509ab7e99cd37464c0c6541f2f573db83485bc9c5bc5d1e4",
+        "actual_sha256": "5603756dacb3d8d0509ab7e99cd37464c0c6541f2f573db83485bc9c5bc5d1e4",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-front",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-front-collar-z-down-unsupported/plate_1.gcode",
+        "expected_sha256": "1bdaca03b075a3ad8ab574e20c9a18cbbf5ded3a1e50093adc226181f1943184",
+        "actual_sha256": "1bdaca03b075a3ad8ab574e20c9a18cbbf5ded3a1e50093adc226181f1943184",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-front",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-backplate",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+        "expected_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+        "actual_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-backplate",
+        "kind": "selected_3mf",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-backplate-back-down-unsupported/slice-review.3mf",
+        "expected_sha256": "5e6afe61b40d581ec13824a8f5ea63efc4fd147a923ba08ff7ae8afd2dc96374",
+        "actual_sha256": "5e6afe61b40d581ec13824a8f5ea63efc4fd147a923ba08ff7ae8afd2dc96374",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-backplate",
+        "kind": "gcode",
+        "path": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-backplate-back-down-unsupported/plate_1.gcode",
+        "expected_sha256": "c31ea11c32caafd7596f56acc8680e1a64b2afc0ffb392ead7276b2c8d0b71e7",
+        "actual_sha256": "c31ea11c32caafd7596f56acc8680e1a64b2afc0ffb392ead7276b2c8d0b71e7",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/inlet-backplate",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/feeder-new/mapping.json",
+        "expected_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "actual_sha256": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-body",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-body.stl",
+        "expected_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+        "actual_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-body",
+        "kind": "selected_3mf",
+        "path": "output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-body/slice-review.3mf",
+        "expected_sha256": "c52ee7e1df3818725096fcd9d14c7e4085e179ef1d20977f25f829dfd4e5e3f2",
+        "actual_sha256": "c52ee7e1df3818725096fcd9d14c7e4085e179ef1d20977f25f829dfd4e5e3f2",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-body",
+        "kind": "gcode",
+        "path": "output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-body/plate_1.gcode",
+        "expected_sha256": "4f55b35f3cec08cbaa16f92ccb59fd7d30423235cdf75aaea47adc9051f65bbb",
+        "actual_sha256": "4f55b35f3cec08cbaa16f92ccb59fd7d30423235cdf75aaea47adc9051f65bbb",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-body",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/input-process/manifest.json",
+        "expected_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "actual_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-lever",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-lever.stl",
+        "expected_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+        "actual_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-lever",
+        "kind": "selected_3mf",
+        "path": "output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/slice-review.3mf",
+        "expected_sha256": "8d81d0cf4e9464ae3d353645565da25c8c104c5cb6d989432edc9bc7757201a1",
+        "actual_sha256": "8d81d0cf4e9464ae3d353645565da25c8c104c5cb6d989432edc9bc7757201a1",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-lever",
+        "kind": "gcode",
+        "path": "output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/plate_1.gcode",
+        "expected_sha256": "3b85f5059eabdf31474f0d68dd0b83f7604e5d8dbcab7c8a366b2315eb69be27",
+        "actual_sha256": "3b85f5059eabdf31474f0d68dd0b83f7604e5d8dbcab7c8a366b2315eb69be27",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-lever",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/input-process/manifest.json",
+        "expected_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "actual_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-terminal-cap",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-terminal-cap.stl",
+        "expected_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+        "actual_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-terminal-cap",
+        "kind": "selected_3mf",
+        "path": "output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-terminal-cap/slice-review.3mf",
+        "expected_sha256": "7dba5825cc4a5419d50392ef8c3603b7e6655b5b8a4983a66aa15568ac759a88",
+        "actual_sha256": "7dba5825cc4a5419d50392ef8c3603b7e6655b5b8a4983a66aa15568ac759a88",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-terminal-cap",
+        "kind": "gcode",
+        "path": "output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-terminal-cap/plate_1.gcode",
+        "expected_sha256": "59abc64f7374c10c87221bb408df9ee40b13ad46aa2bc4af7a602adabb8d498a",
+        "actual_sha256": "59abc64f7374c10c87221bb408df9ee40b13ad46aa2bc4af7a602adabb8d498a",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-terminal-cap",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/input-process/manifest.json",
+        "expected_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "actual_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-cover",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-cover.stl",
+        "expected_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+        "actual_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-cover",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T074227302558Z/cable-input-cover/slice-review.3mf",
+        "expected_sha256": "6aaebbf43cc45fdb667f742fa1343d04d5810a7f9a73dedbd46fd129b3d5126e",
+        "actual_sha256": "6aaebbf43cc45fdb667f742fa1343d04d5810a7f9a73dedbd46fd129b3d5126e",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-cover",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T074227302558Z/cable-input-cover/plate_1.gcode",
+        "expected_sha256": "88aee642878a17dcd7f3e9e1eaea02fe9b5bd5cde59c0e69e2e974acf53b080d",
+        "actual_sha256": "88aee642878a17dcd7f3e9e1eaea02fe9b5bd5cde59c0e69e2e974acf53b080d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-input-cover",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/input-process/manifest.json",
+        "expected_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "actual_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-output-cap",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-cap.stl",
+        "expected_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+        "actual_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-output-cap",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-output-cap/slice-review.3mf",
+        "expected_sha256": "e33d665a342806002b96ac2ee88757e89ad2be46c63d9bf8add8be63aa0e3a5c",
+        "actual_sha256": "e33d665a342806002b96ac2ee88757e89ad2be46c63d9bf8add8be63aa0e3a5c",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-output-cap",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-output-cap/plate_1.gcode",
+        "expected_sha256": "95e3c792771eccc4a09475c980a6d95d0572d6cb00dc872a82f9ec52c2f41e2b",
+        "actual_sha256": "95e3c792771eccc4a09475c980a6d95d0572d6cb00dc872a82f9ec52c2f41e2b",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-output-cap",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-base",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-base.stl",
+        "expected_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+        "actual_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-base",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073651395924Z/cable-route-base/slice-review.3mf",
+        "expected_sha256": "b11a3caa22f817d568f807ed3320d5e51788b83baa8d52c4575ca824250d8570",
+        "actual_sha256": "b11a3caa22f817d568f807ed3320d5e51788b83baa8d52c4575ca824250d8570",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-base",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073651395924Z/cable-route-base/plate_1.gcode",
+        "expected_sha256": "a2f93292f26345aced0052983f00f8679b0617abfd874345ee1ee38c6776426d",
+        "actual_sha256": "a2f93292f26345aced0052983f00f8679b0617abfd874345ee1ee38c6776426d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-base",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-cap",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-cap.stl",
+        "expected_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+        "actual_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-cap",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-route-cap/slice-review.3mf",
+        "expected_sha256": "6583af0c20e4de273014404480e682f569570a7050be171e109d029eed64da56",
+        "actual_sha256": "6583af0c20e4de273014404480e682f569570a7050be171e109d029eed64da56",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-cap",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-route-cap/plate_1.gcode",
+        "expected_sha256": "36719290ca63178f862e25aa1935d66a70542db3c81545435522f9b228ed3637",
+        "actual_sha256": "36719290ca63178f862e25aa1935d66a70542db3c81545435522f9b228ed3637",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-cap",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-lower",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-lower.stl",
+        "expected_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+        "actual_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-lower",
+        "kind": "selected_3mf",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower/slice-review.3mf",
+        "expected_sha256": "8569a36e8ebefb186de9f1d2768a007694db893bad7f4e59e154541fbd356d20",
+        "actual_sha256": "8569a36e8ebefb186de9f1d2768a007694db893bad7f4e59e154541fbd356d20",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-lower",
+        "kind": "gcode",
+        "path": "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower/plate_1.gcode",
+        "expected_sha256": "d3fa15882c8ab1a285d502fa52c14fbf6ddee631d8e17af6014f2ff64a9db077",
+        "actual_sha256": "d3fa15882c8ab1a285d502fa52c14fbf6ddee631d8e17af6014f2ff64a9db077",
+        "matches": true
+      },
+      {
+        "instance_id": "feeder/cable-route-lower",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/cable-other-reuse/report.json",
+        "expected_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "actual_sha256": "9234c09e239c2b42314caca1073fe775ceec52e655e1be12adba370a034dfa2d",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/body",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__body.stl",
+        "expected_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+        "actual_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/body",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/body/spin-slice-review.3mf",
+        "expected_sha256": "48633477feab12635a85cfe9e4b9861d0f242fc2dd675cec3d2e25ab9d5864c5",
+        "actual_sha256": "48633477feab12635a85cfe9e4b9861d0f242fc2dd675cec3d2e25ab9d5864c5",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/body",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/body/plate_1.gcode",
+        "expected_sha256": "6f7e969c71d23cc264c4b3e9cfa8cbec8a526122ed4d092d1e5746eb56f85234",
+        "actual_sha256": "6f7e969c71d23cc264c4b3e9cfa8cbec8a526122ed4d092d1e5746eb56f85234",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/body",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/carriage",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__carriage.stl",
+        "expected_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+        "actual_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/carriage",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/carriage/spin-slice-review.3mf",
+        "expected_sha256": "417ba31bb80f07deb0ab50d367d3ba70dd5077090852149727acd733586610b2",
+        "actual_sha256": "417ba31bb80f07deb0ab50d367d3ba70dd5077090852149727acd733586610b2",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/carriage",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/carriage/plate_1.gcode",
+        "expected_sha256": "94a385d9c1746581d297d6268a7eb3395e3d1ff24b2e316d2fc170489c74d4a9",
+        "actual_sha256": "94a385d9c1746581d297d6268a7eb3395e3d1ff24b2e316d2fc170489c74d4a9",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/carriage",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad.stl",
+        "expected_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+        "actual_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/pad/spin-slice-review.3mf",
+        "expected_sha256": "0df25694f0f3ce734f72fce786fd93280ce090d8c089859a877f1061f6faae9b",
+        "actual_sha256": "0df25694f0f3ce734f72fce786fd93280ce090d8c089859a877f1061f6faae9b",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/pad/plate_1.gcode",
+        "expected_sha256": "2ae947c8a1e9b909e829feca9fafe04e08ffb856d4a8bfa8a46b7abad8392d58",
+        "actual_sha256": "2ae947c8a1e9b909e829feca9fafe04e08ffb856d4a8bfa8a46b7abad8392d58",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad-keeper",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad-keeper.stl",
+        "expected_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+        "actual_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad-keeper",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/pad-keeper/spin-slice-review.3mf",
+        "expected_sha256": "ec5f3c114bf97f983aecc2d6e3d14143c19ad62ebe0a1370ecc453a964029053",
+        "actual_sha256": "ec5f3c114bf97f983aecc2d6e3d14143c19ad62ebe0a1370ecc453a964029053",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad-keeper",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/pad-keeper/plate_1.gcode",
+        "expected_sha256": "55e2ae46900c48d66ccc8ea7b70bf35e92d66e69228cbc37295b56877736f2f7",
+        "actual_sha256": "55e2ae46900c48d66ccc8ea7b70bf35e92d66e69228cbc37295b56877736f2f7",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pad-keeper",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/opposite-guide",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__opposite-guide.stl",
+        "expected_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+        "actual_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/opposite-guide",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/opposite-guide/spin-slice-review.3mf",
+        "expected_sha256": "92e0669b93b31bfefab8aad30e912989149f696ca020d5e00ecf11518f253984",
+        "actual_sha256": "92e0669b93b31bfefab8aad30e912989149f696ca020d5e00ecf11518f253984",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/opposite-guide",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/opposite-guide/plate_1.gcode",
+        "expected_sha256": "7f18750b030a3828b01b0ab0cfa9a4b48e3526a2f5f512df5889a8d538144be7",
+        "actual_sha256": "7f18750b030a3828b01b0ab0cfa9a4b48e3526a2f5f512df5889a8d538144be7",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/opposite-guide",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/cover",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__cover.stl",
+        "expected_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+        "actual_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/cover",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/cover/spin-slice-review.3mf",
+        "expected_sha256": "d9900ee49c6530591e93807da7e736c544397d83ba3a58f186d57d217d53c25f",
+        "actual_sha256": "d9900ee49c6530591e93807da7e736c544397d83ba3a58f186d57d217d53c25f",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/cover",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/cover/plate_1.gcode",
+        "expected_sha256": "505101b038d980a606e848a9ecfcab8fc00f1e439ed919037db95647c0ded5fc",
+        "actual_sha256": "505101b038d980a606e848a9ecfcab8fc00f1e439ed919037db95647c0ded5fc",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/cover",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-cage",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-cage.stl",
+        "expected_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+        "actual_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-cage",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/spring-cage/spin-slice-review.3mf",
+        "expected_sha256": "bb2a137a847f06dd531f69c97c4b10885a15095cd9d7308521d17affea564000",
+        "actual_sha256": "bb2a137a847f06dd531f69c97c4b10885a15095cd9d7308521d17affea564000",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-cage",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/spring-cage/plate_1.gcode",
+        "expected_sha256": "7ca56d7608df2605202a45cdae177afbd74066bd00457fc7f43c3249e18597be",
+        "actual_sha256": "7ca56d7608df2605202a45cdae177afbd74066bd00457fc7f43c3249e18597be",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-cage",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-seat",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-seat.stl",
+        "expected_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+        "actual_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-seat",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/spring-seat/spin-slice-review.3mf",
+        "expected_sha256": "e57f5a1a29423bc82d8042527155fb38040aa95954e9a2692200c1f04c13714e",
+        "actual_sha256": "e57f5a1a29423bc82d8042527155fb38040aa95954e9a2692200c1f04c13714e",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-seat",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/spring-seat/plate_1.gcode",
+        "expected_sha256": "5469dfcecaf530f6df721da8d8e2f8560aa784f64c1378cf5e146150bae37e96",
+        "actual_sha256": "5469dfcecaf530f6df721da8d8e2f8560aa784f64c1378cf5e146150bae37e96",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/spring-seat",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pull-cap",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pull-cap.stl",
+        "expected_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+        "actual_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pull-cap",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/pull-cap/spin-slice-review.3mf",
+        "expected_sha256": "49f3e092c00ad5038f99423d6ec1edebff5b0e4d64cc36ed26717e1361966ceb",
+        "actual_sha256": "49f3e092c00ad5038f99423d6ec1edebff5b0e4d64cc36ed26717e1361966ceb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pull-cap",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/pull-cap/plate_1.gcode",
+        "expected_sha256": "9afa79c09e8504aa7fdf92f057816c70b0c9ed60f2489f0a8055c1a54806d948",
+        "actual_sha256": "9afa79c09e8504aa7fdf92f057816c70b0c9ed60f2489f0a8055c1a54806d948",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/pull-cap",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/hold-fork",
+        "kind": "current_stl",
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__hold-fork.stl",
+        "expected_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+        "actual_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/hold-fork",
+        "kind": "selected_3mf",
+        "path": "output/print-review/spin-head/hold-fork/spin-slice-review.3mf",
+        "expected_sha256": "e0301052c0a4920c00ccd445e735b5262352db55f5f54648ab04008171dcfe64",
+        "actual_sha256": "e0301052c0a4920c00ccd445e735b5262352db55f5f54648ab04008171dcfe64",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/hold-fork",
+        "kind": "gcode",
+        "path": "output/print-review/spin-head/hold-fork/plate_1.gcode",
+        "expected_sha256": "55965ef32b06904d5000c093e34e1c5fd3b091c43f11c5d5c7fda39e06abea7f",
+        "actual_sha256": "55965ef32b06904d5000c093e34e1c5fd3b091c43f11c5d5c7fda39e06abea7f",
+        "matches": true
+      },
+      {
+        "instance_id": "spin/hold-fork",
+        "kind": "binding_report",
+        "path": "output/current-manufacturing/spin-reuse/report.json",
+        "expected_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "actual_sha256": "efd504f198df5a34816c5aadad2e26bc95958ee6694c68c9011c59e933aa9abb",
+        "matches": true
+      }
+    ]
+  },
+  "inlet_binding": {
+    "manifest": "output/current-manufacturing/inlet-process/manifest.json",
+    "sha256": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+    "evidence_count": 64,
+    "identity_checks": [
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/current-review.json",
+        "expected_sha256": "3da9fffc599898782f351ca1fe6246e64e12de90aa538ccee500e4daa35ac92d",
+        "actual_sha256": "3da9fffc599898782f351ca1fe6246e64e12de90aa538ccee500e4daa35ac92d",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/key-bed-start-review.json",
+        "expected_sha256": "dcbfc701923ce2dd418aade58c18511b71ba06f0ac66889ce10ea870d928d911",
+        "actual_sha256": "dcbfc701923ce2dd418aade58c18511b71ba06f0ac66889ce10ea870d928d911",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/underlay-review.json",
+        "expected_sha256": "9e16c536670c0fc4d5adc810bf9b95d2b32adc9827e3e5233e28edea713a2297",
+        "actual_sha256": "9e16c536670c0fc4d5adc810bf9b95d2b32adc9827e3e5233e28edea713a2297",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hardware-volume-review.json",
+        "expected_sha256": "dbf80c06a7c271b933b638831f66669af761c12db04737b4265366f027d84bbe",
+        "actual_sha256": "dbf80c06a7c271b933b638831f66669af761c12db04737b4265366f027d84bbe",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/whole-support-sweep/report.json",
+        "expected_sha256": "3a89215386aaa4897481d1c2fe36427c7fba4f7aef7b624be7ad8cef34cb0f09",
+        "actual_sha256": "3a89215386aaa4897481d1c2fe36427c7fba4f7aef7b624be7ad8cef34cb0f09",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hit-localization.json",
+        "expected_sha256": "fe959e1b83e3b479b0621d5a015b3ef04587f9832f4935f79c5e23bdf3d04169",
+        "actual_sha256": "fe959e1b83e3b479b0621d5a015b3ef04587f9832f4935f79c5e23bdf3d04169",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/initial-compatibility-origin.json",
+        "expected_sha256": "8140b66ca191303efe89ea70baf6a3ce4747f5f24d051250557ac310ddeabb04",
+        "actual_sha256": "8140b66ca191303efe89ea70baf6a3ce4747f5f24d051250557ac310ddeabb04",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/invocation.json",
+        "expected_sha256": "213bfac3951713639246a19bea1ac8cacb4708ceec92ee20cedd8da322efe400",
+        "actual_sha256": "213bfac3951713639246a19bea1ac8cacb4708ceec92ee20cedd8da322efe400",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf",
+        "expected_sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "actual_sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode",
+        "expected_sha256": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+        "actual_sha256": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/machine.json",
+        "expected_sha256": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+        "actual_sha256": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/process.json",
+        "expected_sha256": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+        "actual_sha256": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/filament.json",
+        "expected_sha256": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+        "actual_sha256": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+        "matches": true
+      },
+      {
+        "path": "analysis/exact_mesh.py",
+        "expected_sha256": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+        "actual_sha256": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+        "matches": true
+      },
+      {
+        "path": "analysis/feeder_integration.py",
+        "expected_sha256": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+        "actual_sha256": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-contract-codec.scad",
+        "expected_sha256": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+        "actual_sha256": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-housing-route.scad",
+        "expected_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+        "actual_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-output-interface.scad",
+        "expected_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+        "actual_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-route-retention.scad",
+        "expected_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+        "actual_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-scene-export.scad",
+        "expected_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+        "actual_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-trigger-input.scad",
+        "expected_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+        "actual_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-trigger-system.scad",
+        "expected_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+        "actual_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+        "matches": true
+      },
+      {
+        "path": "cad/cam-study.scad",
+        "expected_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+        "actual_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-body.scad",
+        "expected_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+        "actual_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-cam-guide-revision.scad",
+        "expected_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+        "actual_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-complete-hardware.scad",
+        "expected_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+        "actual_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-frame-y-guide.scad",
+        "expected_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+        "actual_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-guide-revision.scad",
+        "expected_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+        "actual_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-hardware-clearance.scad",
+        "expected_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+        "actual_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-integrated-candidate.scad",
+        "expected_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+        "actual_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-pin-seat-revision.scad",
+        "expected_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+        "actual_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-return-spring.scad",
+        "expected_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+        "actual_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-review-parts.scad",
+        "expected_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+        "actual_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-seam-candidate.scad",
+        "expected_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+        "actual_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-support-harness.scad",
+        "expected_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+        "actual_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-supports.scad",
+        "expected_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+        "actual_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+        "matches": true
+      },
+      {
+        "path": "cad/inlet-retention-final.scad",
+        "expected_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+        "actual_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+        "matches": true
+      },
+      {
+        "path": "cad/launcher-final-assembly.scad",
+        "expected_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+        "actual_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+        "matches": true
+      },
+      {
+        "path": "cad/outlet-retention.scad",
+        "expected_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+        "actual_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+        "matches": true
+      },
+      {
+        "path": "cad/parameters.scad",
+        "expected_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+        "actual_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+        "matches": true
+      },
+      {
+        "path": "cad/review-launcher-baseline33.scad",
+        "expected_sha256": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+        "actual_sha256": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-complete-hardware.scad",
+        "expected_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+        "actual_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-head.scad",
+        "expected_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+        "actual_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-parameters.scad",
+        "expected_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+        "actual_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+        "matches": true
+      },
+      {
+        "path": "docs/cable-assembly-inventory.json",
+        "expected_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+        "actual_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+        "matches": true
+      },
+      {
+        "path": "scripts/export_cable_scene.py",
+        "expected_sha256": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+        "actual_sha256": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+        "matches": true
+      },
+      {
+        "path": "output/current-manufacturing/feeder-new/slice.py",
+        "expected_sha256": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+        "actual_sha256": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+        "matches": true
+      },
+      {
+        "path": "scripts/review_final_feeder_slice.py",
+        "expected_sha256": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea",
+        "actual_sha256": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/slice_back_down.py",
+        "expected_sha256": "8bedb0cbc32d321358b03f5935b1424257a517b570867c9cc8b59c38f0fad513",
+        "actual_sha256": "8bedb0cbc32d321358b03f5935b1424257a517b570867c9cc8b59c38f0fad513",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "expected_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "actual_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "matches": true
+      },
+      {
+        "path": "analysis/cable_input_slice_review.py",
+        "expected_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+        "actual_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+        "matches": true
+      },
+      {
+        "path": "analysis/cable_slice_artifacts.py",
+        "expected_sha256": "5f61332254ff5cee88f4bbaf96dbd07bf870699a5e77c0f8df8d4edd175014f2",
+        "actual_sha256": "5f61332254ff5cee88f4bbaf96dbd07bf870699a5e77c0f8df8d4edd175014f2",
+        "matches": true
+      },
+      {
+        "path": "output/current-manufacturing/feeder-reuse/review.py",
+        "expected_sha256": "1a88106a93d6ba9744736d8b372123a6dacdb2240f3c899f262b906bd1a99ece",
+        "actual_sha256": "1a88106a93d6ba9744736d8b372123a6dacdb2240f3c899f262b906bd1a99ece",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/key-bed-start-review.py",
+        "expected_sha256": "fca6689fc3d4b3546b74cf5b04e0c2f8df319e3d9770138570992b6dc4b37db6",
+        "actual_sha256": "fca6689fc3d4b3546b74cf5b04e0c2f8df319e3d9770138570992b6dc4b37db6",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/underlay-review.py",
+        "expected_sha256": "a7cb82e5e2771f57e36321f44bfbe3c4bfe1d984f61dc50a874d7ee317b05654",
+        "actual_sha256": "a7cb82e5e2771f57e36321f44bfbe3c4bfe1d984f61dc50a874d7ee317b05654",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/review_back_down_hardware.py",
+        "expected_sha256": "3d2532d04862bee1b50543083fcd1adc57a0e32375a28ac868db2de73eac9135",
+        "actual_sha256": "3d2532d04862bee1b50543083fcd1adc57a0e32375a28ac868db2de73eac9135",
+        "matches": true
+      },
+      {
+        "path": "output/current-manufacturing/inlet-support-closure/sweep_review.py",
+        "expected_sha256": "38c32270c180e1705bab79789ab637480fb73f6dabb01e2c74853022d1a39b86",
+        "actual_sha256": "38c32270c180e1705bab79789ab637480fb73f6dabb01e2c74853022d1a39b86",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hit-localization.md",
+        "expected_sha256": "7507b278cc8f4916b0d02d7bc06541bbe26512a76df0b610b1b9ddaf957a6c76",
+        "actual_sha256": "7507b278cc8f4916b0d02d7bc06541bbe26512a76df0b610b1b9ddaf957a6c76",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/review_initial_compatibility.py",
+        "expected_sha256": "e022ca22c3b112c0dd9e5703edee86de5c44288376c2168dfc699d4b09433418",
+        "actual_sha256": "e022ca22c3b112c0dd9e5703edee86de5c44288376c2168dfc699d4b09433418",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/key-bed-start-review.md",
+        "expected_sha256": "404430b5d66db3368856d46cb286d92a5802cc8648863ec432ed95db312151de",
+        "actual_sha256": "404430b5d66db3368856d46cb286d92a5802cc8648863ec432ed95db312151de",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/underlay-review.md",
+        "expected_sha256": "a33a9b76960d246d94b03dd787229f8c9b364e41e0fb3dbe04b537472ba4d557",
+        "actual_sha256": "a33a9b76960d246d94b03dd787229f8c9b364e41e0fb3dbe04b537472ba4d557",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hardware-volume-review.md",
+        "expected_sha256": "bdd1cc8d909b4e1be5d581a33496718c879be565e9f3833ad866dfd5ae3a2311",
+        "actual_sha256": "bdd1cc8d909b4e1be5d581a33496718c879be565e9f3833ad866dfd5ae3a2311",
+        "matches": true
+      },
+      {
+        "path": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/initial-compatibility-origin.md",
+        "expected_sha256": "2beb9dad51f50ca49e0d6774faae4349e54a2fdcb2597c9e17662f4c9bea4197",
+        "actual_sha256": "2beb9dad51f50ca49e0d6774faae4349e54a2fdcb2597c9e17662f4c9bea4197",
+        "matches": true
+      },
+      {
+        "path": "output/current-manufacturing/inlet-process/bind.py",
+        "expected_sha256": "79c4254ae6702504f97c9ddef6b4e8d5c19f07cc0c796fe144577469cd6c012d",
+        "actual_sha256": "79c4254ae6702504f97c9ddef6b4e8d5c19f07cc0c796fe144577469cd6c012d",
+        "matches": true
+      }
+    ],
+    "evidence_extensions": {
+      ".json": 12,
+      ".3mf": 1,
+      ".gcode": 1,
+      ".py": 15,
+      ".scad": 29,
+      ".stl": 1,
+      ".md": 5
+    },
+    "embedded_gcode": {
+      "Metadata/plate_1.gcode": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f"
+    },
+    "limitations_preserved": [
+      "This selection binds digital evidence; it is not manufacturing or physical acceptance.",
+      "Original strict zero-contact failures remain. Commanded-plane boundary contact is not positive clearance; source-curve/printed-step differences are explicitly classified.",
+      "M4 shoulder first paths have only small partial edge backing; anchor has an identified 4.60631 mm straight unsupported segment with pre-existing projection anchors. PETG bridge quality and strength remain unmeasured.",
+      "Supports occupy shaft and nut paths and must be removed before hardware insertion. Detachment force, grip, debris, damage, adhesion and real dimensions remain unverified.",
+      "After bed removal and support separation, nominal removal is opposite growth (-CAD Y); the complete path analysis found no lower obstacle. No force or one-piece physical extraction guarantee.",
+      "Generic PETG and Textured PEI are analysis assumptions; user confirmed PETG and PEI only."
+    ]
+  },
+  "assembly": {
+    "old_counts": {
+      "printed_inventory": 56,
+      "printed_work_installed": 55,
+      "printed_held_installed": 56,
+      "bom_specification_rows": 44,
+      "printed_pending_instances": 1,
+      "mode_extra_fastener_instances": 2,
+      "source_identities_verified": 106
+    },
+    "new_counts": {
+      "printed_inventory": 56,
+      "printed_work_installed": 55,
+      "printed_held_installed": 56,
+      "bom_specification_rows": 44,
+      "printed_pending_instances": 0,
+      "mode_extra_fastener_instances": 2,
+      "source_identities_verified": 106
+    },
+    "bom_same": true,
+    "csv": {
+      "hardware.csv": {
+        "old_file": "output/current-assembly-package/runs/20260927T104027787103Z/hardware.csv",
+        "new_file": "output/current-assembly-package/runs/20260927T113921981888Z/hardware.csv",
+        "old_sha256": "bdf1aa5aa7ae81686261bc8adb04c2e9cb67e540b761e3db9c0661fa2e14ddf0",
+        "new_sha256": "bdf1aa5aa7ae81686261bc8adb04c2e9cb67e540b761e3db9c0661fa2e14ddf0",
+        "old_rows": 44,
+        "new_rows": 44,
+        "same_headers": true,
+        "changed_ids": {},
+        "bytes_identical": true
+      },
+      "print-picklist.csv": {
+        "old_file": "output/current-assembly-package/runs/20260927T104027787103Z/print-picklist.csv",
+        "new_file": "output/current-assembly-package/runs/20260927T113921981888Z/print-picklist.csv",
+        "old_sha256": "ad2ed679346001682881b071bbdd09bb94967f86b74a8602b4b36ebe3b0fa7cd",
+        "new_sha256": "a0c632cd97e708da25d5abfc45bab01c5912007c72e426170963ac8ba043a001",
+        "old_rows": 56,
+        "new_rows": 56,
+        "same_headers": true,
+        "changed_ids": {
+          "feeder/inlet-rear": {
+            "candidate_3mf": {
+              "old": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf",
+              "new": ""
+            },
+            "pending_review": {
+              "old": "True",
+              "new": "False"
+            },
+            "process_status": {
+              "old": "CURRENT_SLICE_REVIEW_FLAGGED",
+              "new": "BOUNDED_INLET_PROCESS_EVIDENCE_BOUND_PHYSICAL_OPEN"
+            },
+            "selected_3mf": {
+              "old": "",
+              "new": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf"
+            }
+          }
+        },
+        "bytes_identical": false
+      }
+    },
+    "picklist_changes": {
+      "feeder/inlet-rear": {
+        "candidate_3mf": {
+          "old": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf",
+          "new": null
+        },
+        "pending_review": {
+          "old": true,
+          "new": false
+        },
+        "process_status": {
+          "old": "CURRENT_SLICE_REVIEW_FLAGGED",
+          "new": "BOUNDED_INLET_PROCESS_EVIDENCE_BOUND_PHYSICAL_OPEN"
+        },
+        "selected_3mf": {
+          "old": null,
+          "new": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf"
+        }
+      }
+    },
+    "dependency_hash_changes": {
+      "output/current-manufacturing/manifest.json": {
+        "old": "43bd40d41c3a68cf0bcacf41234a5ee4f08c7f5b943188ae709347718c49e2a5",
+        "new": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c"
+      },
+      "scripts/build_current_assembly_package.py": {
+        "old": "b94a86d8a08a5bfddb8035dc195a48cb87f710b716ddec4d0412ecd3dd2f1a72",
+        "new": "c20011365a600b9cb0e475cd6eafaa1789fba304fb8e6baefb0447b22342d5cd"
+      }
+    },
+    "dependency_identity_checks": [
+      {
+        "path": "output/current-assembly-package/base-hardware/inventory.json",
+        "expected_sha256": "4595728f3584f84242e5f56cf57828b5b3a4707f6021f09785dcf10258e3f535",
+        "actual_sha256": "4595728f3584f84242e5f56cf57828b5b3a4707f6021f09785dcf10258e3f535",
+        "matches": true
+      },
+      {
+        "path": "output/current-assembly-package/cable-hardware/hardware.json",
+        "expected_sha256": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+        "actual_sha256": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+        "matches": true
+      },
+      {
+        "path": "docs/cable-assembly-inventory.json",
+        "expected_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+        "actual_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+        "matches": true
+      },
+      {
+        "path": "output/current-manufacturing/manifest.json",
+        "expected_sha256": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+        "actual_sha256": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+        "matches": true
+      },
+      {
+        "path": "docs/current-assembly-selections.json",
+        "expected_sha256": "8b7530d688fdf94fc9a5b29b96df588cff4607eed296843938ace5c5940bacb1",
+        "actual_sha256": "8b7530d688fdf94fc9a5b29b96df588cff4607eed296843938ace5c5940bacb1",
+        "matches": true
+      },
+      {
+        "path": "scripts/build_current_assembly_package.py",
+        "expected_sha256": "c20011365a600b9cb0e475cd6eafaa1789fba304fb8e6baefb0447b22342d5cd",
+        "actual_sha256": "c20011365a600b9cb0e475cd6eafaa1789fba304fb8e6baefb0447b22342d5cd",
+        "matches": true
+      },
+      {
+        "path": "cad/cam-study.scad",
+        "expected_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+        "actual_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-body.scad",
+        "expected_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+        "actual_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-cam-guide-revision.scad",
+        "expected_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+        "actual_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-complete-hardware.scad",
+        "expected_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+        "actual_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-frame-y-guide.scad",
+        "expected_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+        "actual_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-guide-revision.scad",
+        "expected_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+        "actual_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-hardware-clearance.scad",
+        "expected_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+        "actual_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-integrated-candidate.scad",
+        "expected_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+        "actual_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-pin-seat-revision.scad",
+        "expected_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+        "actual_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-return-spring.scad",
+        "expected_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+        "actual_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-review-parts.scad",
+        "expected_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+        "actual_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-seam-candidate.scad",
+        "expected_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+        "actual_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-support-harness.scad",
+        "expected_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+        "actual_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+        "matches": true
+      },
+      {
+        "path": "cad/feeder-supports.scad",
+        "expected_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+        "actual_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+        "matches": true
+      },
+      {
+        "path": "cad/inlet-retention-final.scad",
+        "expected_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+        "actual_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+        "matches": true
+      },
+      {
+        "path": "cad/launcher-final-assembly.scad",
+        "expected_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+        "actual_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+        "matches": true
+      },
+      {
+        "path": "cad/outlet-retention.scad",
+        "expected_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+        "actual_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+        "matches": true
+      },
+      {
+        "path": "cad/parameters.scad",
+        "expected_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+        "actual_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-complete-hardware.scad",
+        "expected_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+        "actual_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-head.scad",
+        "expected_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+        "actual_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+        "matches": true
+      },
+      {
+        "path": "cad/spin-parameters.scad",
+        "expected_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+        "actual_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+        "matches": true
+      },
+      {
+        "path": "docs/final-feeder-hardware.md",
+        "expected_sha256": "4076334a1d0d78ee5c56e45a511d0a3f801452a5805b24d031677824b14c3f28",
+        "actual_sha256": "4076334a1d0d78ee5c56e45a511d0a3f801452a5805b24d031677824b14c3f28",
+        "matches": true
+      },
+      {
+        "path": "docs/spin-complete-hardware.md",
+        "expected_sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+        "actual_sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+        "matches": true
+      },
+      {
+        "path": "output/current-assembly-package/base-hardware/review.py",
+        "expected_sha256": "6310b26860d6da53b85f9cc1d19ea1338be11fa96a3434a94637d7a42545ae01",
+        "actual_sha256": "6310b26860d6da53b85f9cc1d19ea1338be11fa96a3434a94637d7a42545ae01",
+        "matches": true
+      },
+      {
+        "path": "output/manufacturing/feeder-hardware-bom.json",
+        "expected_sha256": "6120fc7b87a9eb46e81daac2f2f29026b5e8b449d20c7adb7ec5b63e481f9b6f",
+        "actual_sha256": "6120fc7b87a9eb46e81daac2f2f29026b5e8b449d20c7adb7ec5b63e481f9b6f",
+        "matches": true
+      },
+      {
+        "path": "output/current-assembly-package/cable-hardware/extract.py",
+        "expected_sha256": "9ca1efd8fb0d60a08d52a373c23ed75225ed10239442b48c1ad39c1c0033646d",
+        "actual_sha256": "9ca1efd8fb0d60a08d52a373c23ed75225ed10239442b48c1ad39c1c0033646d",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-trigger-input.scad",
+        "expected_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+        "actual_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-output-interface.scad",
+        "expected_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+        "actual_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-route-retention.scad",
+        "expected_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+        "actual_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-trigger-system.scad",
+        "expected_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+        "actual_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-housing-route.scad",
+        "expected_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+        "actual_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+        "matches": true
+      },
+      {
+        "path": "cad/cable-scene-export.scad",
+        "expected_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+        "actual_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+        "matches": true
+      },
+      {
+        "path": "docs/cable-hardware-evidence.md",
+        "expected_sha256": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+        "actual_sha256": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+        "matches": true
+      },
+      {
+        "path": "docs/cable-washer-retention-review.md",
+        "expected_sha256": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4",
+        "actual_sha256": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4",
+        "matches": true
+      },
+      {
+        "path": "docs/cable-trigger-input.md",
+        "expected_sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+        "actual_sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-14-drawing.png",
+        "expected_sha256": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+        "actual_sha256": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-14-assets.json",
+        "expected_sha256": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+        "actual_sha256": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-25-drawing.png",
+        "expected_sha256": "7d88942d282c2a2665a4c2ce515afb2df5f346a7ee71ffcb9f5b255e53bc3262",
+        "actual_sha256": "7d88942d282c2a2665a4c2ce515afb2df5f346a7ee71ffcb9f5b255e53bc3262",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-25-assets.json",
+        "expected_sha256": "0cb4fdb6c543298892020b8c6df4111e2f3fcd017e052f455ba36566805160f6",
+        "actual_sha256": "0cb4fdb6c543298892020b8c6df4111e2f3fcd017e052f455ba36566805160f6",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-30-drawing.png",
+        "expected_sha256": "039d5119543f7509d3ba447d2f0d7304566c2e07eec762cbf5a97285864c2c9d",
+        "actual_sha256": "039d5119543f7509d3ba447d2f0d7304566c2e07eec762cbf5a97285864c2c9d",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-30-assets.json",
+        "expected_sha256": "f2dbd82a7926d0c244ddb18426458ac742843589e1b299a795955fbd3a4bbcea",
+        "actual_sha256": "f2dbd82a7926d0c244ddb18426458ac742843589e1b299a795955fbd3a4bbcea",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-35-drawing.png",
+        "expected_sha256": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+        "actual_sha256": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+        "matches": true
+      },
+      {
+        "path": "output/cable-hardware-evidence/03096-35-assets.json",
+        "expected_sha256": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+        "actual_sha256": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+        "matches": true
+      },
+      {
+        "path": "output/cable-washer-retention-review/brighton-best-din125-flat-washers.pdf",
+        "expected_sha256": "dda64e44fe80936a9a2768049c9a14f6bddc7488538bffc6f90ea0e02655d581",
+        "actual_sha256": "dda64e44fe80936a9a2768049c9a14f6bddc7488538bffc6f90ea0e02655d581",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__positive-half.stl",
+        "expected_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+        "actual_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__negative-half.stl",
+        "expected_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+        "actual_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl",
+        "expected_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+        "actual_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__liner.stl",
+        "expected_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+        "actual_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+        "expected_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+        "actual_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+        "expected_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+        "actual_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-gib.stl",
+        "expected_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+        "actual_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-cover.stl",
+        "expected_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+        "actual_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame.stl",
+        "expected_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+        "actual_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__fixed-spacer.stl",
+        "expected_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+        "actual_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__moving-spacer.stl",
+        "expected_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+        "actual_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-right.stl",
+        "expected_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+        "actual_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-right.stl",
+        "expected_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+        "actual_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "expected_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "actual_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "expected_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "actual_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-front.stl",
+        "expected_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+        "actual_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "expected_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "actual_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl",
+        "expected_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+        "actual_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-front.stl",
+        "expected_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+        "actual_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-rear.stl",
+        "expected_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+        "actual_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "expected_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "actual_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-rear.stl",
+        "expected_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+        "actual_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-rear.stl",
+        "expected_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+        "actual_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-left.stl",
+        "expected_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+        "actual_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-left.stl",
+        "expected_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+        "actual_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "expected_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "actual_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "expected_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "actual_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-front.stl",
+        "expected_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+        "actual_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "expected_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "actual_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-front.stl",
+        "expected_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+        "actual_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-front.stl",
+        "expected_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+        "actual_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-rear.stl",
+        "expected_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+        "actual_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "expected_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "actual_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-rear.stl",
+        "expected_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+        "actual_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-rear.stl",
+        "expected_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+        "actual_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "expected_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "actual_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+        "expected_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+        "actual_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+        "expected_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+        "actual_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-body.stl",
+        "expected_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+        "actual_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-lever.stl",
+        "expected_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+        "actual_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-terminal-cap.stl",
+        "expected_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+        "actual_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-cover.stl",
+        "expected_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+        "actual_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-cap.stl",
+        "expected_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+        "actual_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-base.stl",
+        "expected_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+        "actual_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-cap.stl",
+        "expected_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+        "actual_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-lower.stl",
+        "expected_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+        "actual_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__body.stl",
+        "expected_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+        "actual_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__carriage.stl",
+        "expected_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+        "actual_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad.stl",
+        "expected_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+        "actual_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad-keeper.stl",
+        "expected_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+        "actual_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__opposite-guide.stl",
+        "expected_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+        "actual_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__cover.stl",
+        "expected_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+        "actual_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-cage.stl",
+        "expected_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+        "actual_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-seat.stl",
+        "expected_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+        "actual_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__pull-cap.stl",
+        "expected_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+        "actual_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+        "matches": true
+      },
+      {
+        "path": "output/cable-scene-export/20260927T091627124663Z/spin__hold-fork.stl",
+        "expected_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+        "actual_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+        "matches": true
+      }
+    ],
+    "builder_source_diff": "--- output/current-manufacturing/history/before-inlet-process-binding-20260927T113531345167Z/scripts/build_current_assembly_package.py\n+++ scripts/build_current_assembly_package.py\n@@ -207,7 +207,9 @@\n             \"note\": \"Primary group is a sorting aid, not proof of installation path or process release.\",\n         })\n     assert sum(p[\"work_installed_quantity\"] for p in picklist) == 55\n-    assert [p[\"instance_id\"] for p in picklist if p[\"pending_review\"]] == [\"feeder/inlet-rear\"]\n+    pending_ids = [p[\"instance_id\"] for p in picklist if p[\"pending_review\"]]\n+    assert set(pending_ids) == {p[\"instance_id\"] for p in manufacturing.values() if p[\"pending_review\"]}\n+    assert len(pending_ids) == data[\"manufacturing\"][\"counts\"][\"pending_instances\"]\n \n     out = ROOT / \"output/current-assembly-package/runs\" / datetime.now(timezone.utc).strftime(\"%Y%m%dT%H%M%S%fZ\")\n     out.mkdir(parents=True)\n@@ -222,7 +224,7 @@\n         \"cable_procurement_options_not_additive\": cable[\"procurement_roots_not_additive_with_members\"],\n         \"printed_picklist\": picklist,\n         \"counts\": {\"printed_inventory\": 56, \"printed_work_installed\": 55, \"printed_held_installed\": 56,\n-                   \"bom_specification_rows\": len(rows), \"printed_pending_instances\": 1,\n+                   \"bom_specification_rows\": len(rows), \"printed_pending_instances\": len(pending_ids),\n                    \"mode_extra_fastener_instances\": 2, \"source_identities_verified\": len(identity)},\n         \"scope\": \"Joined source-enumerated installation quantities and current print identities. Composite cable assemblies count as assembly items, not a claimed physical piece total. No owned-stock audit, supplier grade/torque/kit-content acceptance, collision rerun or purchase.\",\n         \"open_items\": base[\"limitations\"] + cable[\"open_items\"],\n@@ -258,7 +260,8 @@\n             lines.append(f\"| {row['description']} · `{json.dumps(detail,ensure_ascii=False,separators=(',', ':'))}` | {row['required_inventory_quantity']} |\")\n     lines += [\"\", \"输出盖两颗M3×16在本次BOM中明确选择全牙DIN 912 / ISO 4762、2.5 mm内六角，头部名义外形不变；这是新增设计选型，原CAD提取没有画出驱动孔。供货参考为[Accu SSCF-M3-16-A2](https://www.accu.co.uk/metric-cap-head-screws/3822-SSCF-M3-16-A2)，未核库存或采购，实际工具与扭矩仍未验收。\", \"\",\n               \"球头属于那一根钢芯；原厂M4夹丝螺钉属于端头组件，二者不再独立加购。四原M4安装螺母仅保留一次；四M4×60和四新位置垫片替换原短螺钉及旧位置垫片。捕获垫圈虽然与普通M4垫片名义尺寸相同，Type A边型和公差要求单列，不能无依据合并替换。\", \"\",\n-              \"56打印实例含退出保持叉，工作档装55；保持档另加该叉和上述一颗M3×16、一片M3垫片。55实例/41盘绑定与1实例/1盘候选状态不变。\", \"\",\n+              \"56打印实例含退出保持叉，工作档装55；保持档另加该叉和上述一颗M3×16、一片M3垫片。\" +\n+              f\"当前制作索引绑定{data['manufacturing']['counts']['bound_instances']}实例/{data['manufacturing']['counts']['selected_plates']}盘，另有{data['manufacturing']['counts']['candidate_instances']}实例/{data['manufacturing']['counts']['candidate_plates']}盘候选。绑定不等于制造或实物放行。\", \"\",\n               \"[机器清单](manifest.json) · [五金CSV](hardware.csv) · [56件取件表](print-picklist.csv)\", \"\",\n               \"这里只整理当前装配需要量；孔槽工具、首件精度、摩擦、力学和气动验收未因此通过。\"]\n     (out / \"README.md\").write_text(\"\\n\".join(lines) + \"\\n\")\n",
+    "builder_change_scope": "Pending list and count now derive from manufacturing index; generated README uses current bound/candidate counts. BOM enumeration and quantity code unchanged."
+  },
+  "scope": "Read-only comparison and byte/hash verification of existing products; no CAD, slicer, printer or procurement invocation. Original candidate failures are retained by the binding; no physical acceptance inferred.",
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

@@ -1,0 +1,527 @@
+{
+  "status": "BENCH_COAXIAL_PIN_WASHER_AND_STRAIGHT_COTTER_PATHS_CONDITIONAL_PASS",
+  "source_sha256": {
+    "output/cable-scene-export/20260927T091627124663Z/report.json": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9",
+    "output/current-axis-pin-retention/review.py": "8acecba43f5ad7c5e8f6bab0330fb253fb5f82edb0b5a10d09d0fcaff71c5056",
+    "output/current-axis-offset-candidate/host-review/review.py": "ce919894d109b4d4f59ba767d6238900bb145f96f0b36d829c9f2d51ece182c9",
+    "output/current-axis-offset-candidate/route/candidate.scad": "b777ca9914907d8062e26365cdddfc1fdcfabb61a36e9aca33929fdfb6a6ab0c",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "output/current-axis-offset-candidate/route/input-offset.scad": "2923d906ac53e421c2348d3f1eb0a1f449774d8b89130bddfa962bd0c89ef742",
+    "output/current-axis-pin-retention/candidate.scad": "9862682108521262faae881bee9b4488e4f3836a0f44240349e9bda479c95f9f",
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "output/current-axis-offset-candidate/candidate.scad": "4dd0ba7c2a728d4869b0462f86ea02b63b5c74cd41e9cb2a4820e6793ce70ce9",
+    "output/current-axis-centering-washer/candidate.scad": "689d545b0cc9df2ca85e7d7d61d81104e6103eac455580f253e2457b084fb8a1",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-pin-retention/supplier/report.json": "206f1ff82e8d9ba2ac0dff355b8a04dc3521cd6e0ee38784dad7e6cfe7a83223",
+    "output/current-axis-pin-retention/supplier/evidence/ampg-transmission.pdf": "fdc8ef1b69983c4698650e3eadd5a21d9df2266b923e2870aa6227de62e08a97",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/current-axis-pin-retention/runs/20260927T142843998246Z/report.json": "2f3bdfb7a2b45ee18385a4e5c0a39c95135a450ae593f947df75642581091a8e",
+    "output/current-axis-pin-retention/bench-access/review.py": "24692f6e86c59f233d7fe8b9b14344047a5cccb56c81663b0ac5c1b3b73fd3d7",
+    "output/current-axis-pin-retention/bench-access/probes.scad": "b7581c41ccf0b12a11824743165e3b03cc706a9ca17b83e030141e77da0591cd",
+    "output/current-axis-pin-retention/feasibility/continuous-rotation.json": "58c994c41f4b5b1d313f8c9a73030570ce0c9e2e0dadb8e4ff5fb8a13ea7c1f0"
+  },
+  "checks": {
+    "all_ten_path_probes_clear_or_exact_final_contact": true,
+    "closed_crosshole_positive_control_has_solid": true,
+    "analytic_coaxial_radial_and_tail_gaps_positive": true,
+    "sources_stable": true
+  },
+  "native_report": "output/current-axis-pin-retention/runs/20260927T142843998246Z/report.json",
+  "native_report_sha256": "2f3bdfb7a2b45ee18385a4e5c0a39c95135a450ae593f947df75642581091a8e",
+  "candidate": "output/current-axis-pin-retention/candidate.scad",
+  "candidate_sha256": "9862682108521262faae881bee9b4488e4f3836a0f44240349e9bda479c95f9f",
+  "coordinate_basis": "Input local coordinates; explicit ci_origin=[75,-85,5] retained for CAD-to-local mounting geometry.",
+  "bench_state": {
+    "present": [
+      "pin_body",
+      "pin_cover with two M3 cover fasteners/nuts",
+      "ar_rotor(0): lever, POM hex bush, two INTERNAL thrust washers, terminal cap and moving hardware",
+      "other_fixed_metal(): M6 seat hardware and M3 stop/cover hardware, old central axis removed",
+      "internal ci_local_cable(0), terminal preinstalled before cover"
+    ],
+    "absent": [
+      "all four shared long host M4 bolts/host nuts",
+      "main feeder host/beam",
+      "old shoulder axis/cup washer/central axis nut",
+      "external complete housing route; module not yet mounted",
+      "tail washers and cotter during main-pin insertion; cotter during tail-washer insertion"
+    ],
+    "alignment": "Temporarily hold the bush/rotor and fixed apertures coaxial at u0. Head is held against cover Z14 during rear washer/cotter installation; no clamp torque is applied through PETG."
+  },
+  "sequence": [
+    {
+      "id": "B1",
+      "action": "On bench insert captive cover nuts and preassemble lever/POM bush, two internal thrust washers, cable terminal/cap and cable route; close cover with its two M3 fasteners. Four host M4 bolts remain absent."
+    },
+    {
+      "id": "B2",
+      "action": "Main pin enters from +localZ and moves along -Z. Sweep parameter s60 to0; at s0 head underside sits onZ14. No rear washers/cotter are installed yet."
+    },
+    {
+      "id": "B3",
+      "action": "Hold head seated q0; slide first rear washer from -Z until its upper face reachesZ-12. Slide second from -Z until it meets the first. Each t in[1.4,1.8]; preserve matched stop positions."
+    },
+    {
+      "id": "B4",
+      "action": "With q0 maintained, align the transverse cross-hole with localX. Move undeformed cotter straight legs from -X toward+X through the hole. This certificate stops before forming/bending legs."
+    },
+    {
+      "id": "B5",
+      "action": "Only after a separately acceptable cotter eye/formed-leg retention state is established may the module be attached using the four shared M4 bolts. Full host/removal and plier-forming are not certified here."
+    }
+  ],
+  "continuous_sweeps": {
+    "main_pin": {
+      "translation_s_mm": [
+        0,
+        60
+      ],
+      "travel_direction": "from+Z along-Z",
+      "seated_shaft_Z": [
+        -21,
+        14
+      ],
+      "root_Z": [
+        11.5,
+        14
+      ],
+      "head_Z": [
+        14,
+        17
+      ],
+      "envelope": "Union of exact continuous Z sweeps of each conservative cylindrical primitive. Start shaft tailZ39 is beyond all preassembly material in the radial corridor. Root never enters below11.5, head never below14."
+    },
+    "tail_washers": {
+      "two_thicknesses_each_mm": [
+        1.4,
+        1.8
+      ],
+      "all_straight_sweeps_enclosed_annulus_Z": [
+        -76,
+        -12
+      ],
+      "OD_nominal_held_mm": 15,
+      "ID_min_mm": 8.4,
+      "first_final_Z": "[-12-t1,-12]",
+      "second_final_Z": "[-12-t1-t2,-12-t1]",
+      "matched_contact": "For the same t1/t2, second upper face <= first lower face at every insertion time. Do not test all independent thickness extreme positions against each other and call the artificial overlap interference.",
+      "no_cotter_yet": "Installing the cotter before the washers obstructs the intended annular threading route; sequence is mandatory."
+    },
+    "cotter_straight": {
+      "direction": "from-localX toward+localX",
+      "straight_diameter_max_mm": 1.8,
+      "swept_X_budget_mm": [
+        -40,
+        12
+      ],
+      "hole_centre_Z_range_with_q0_mm": [
+        -17.25,
+        -17
+      ],
+      "proof": "E30 and holeD[2,2.5] couple centreZ=14-30-holeD/2. For every holeD, the coaxial minimum round hole admits the rigid straight-leg section. Native minD2 case plus analytic radial containment proves the continuum; do not independently move the cross-hole and leg centre.",
+      "nominal_length_budget": "A nominal16mm rigid segment can move from[-40,-24] to[-4,12], crossing the<=7.95mm main pin. Actual length/eye dimensions and both shorter/longer leg engagement are not certified by this segment proxy.",
+      "physical_straight_diameter_top_Z_max_mm": -16.1,
+      "max_washer_stack_bottom_Z_mm": -15.6
+    }
+  },
+  "analytic_clearances_mm_display": {
+    "shaft_to_POM_min72gon_bore_radial_mm": 0.11731078496141967,
+    "shaft_to_fixed_PETG_min72gon_bore_radial_mm": 0.16726319604051332,
+    "root_to_cover_min72gon_relief_radial_mm": 0.09133473604160613,
+    "washer_min72gon_ID_to_shaft_outer_radial_mm": 0.21721560711960608,
+    "cotter_sweep_to_min72gon_crosshole_radial_mm": 0.09819080493486987,
+    "cotter_sweep_to_max_tail_stack_Z_mm": 0.4991425833530121
+  },
+  "probes": [
+    {
+      "name": "main-pin-insertion-plastic",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-plastic.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-plastic.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-plastic.scad",
+      "source_sha256": "a17e2a5c35d050cdb7b3454cabd3c0f68665f019dc0788a8ba0a25bb4bbc4211",
+      "returncode": 0,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-plastic.log",
+      "log_sha256": "8eeef95ec0d21296a0daeb3311250733c8fe35153a294695fdfc646c8f6591dc",
+      "native_empty": false,
+      "native_error_or_warning": false,
+      "file": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-plastic.stl",
+      "sha256": "32078af53c3c2014d5c6457a0e93de9bfeb6a92410eefee178dad16cb8342d98",
+      "bounds": {
+        "min": [
+          -7.00666879614324,
+          -6.980006306002769,
+          14.0
+        ],
+        "max": [
+          7.00666879614324,
+          6.900221753230577,
+          14.0
+        ],
+        "triangles": 250
+      },
+      "expected_contact_Z_planes_mm": [
+        14
+      ],
+      "classification": "EXACT_END_FACE_CONTACT"
+    },
+    {
+      "name": "main-pin-insertion-rotor",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-rotor.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-rotor.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-rotor.scad",
+      "source_sha256": "47bea6b7033ecee3e4fff23107b9457a92f2145061fb1e1ba6746c6d026ff178",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-rotor.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "main-pin-insertion-fixed-and-wire",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-fixed-and-wire.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-fixed-and-wire.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-fixed-and-wire.scad",
+      "source_sha256": "f14bbe1f5904d4b44fa0cd41d6ad68685501cd16b784a490256672d871b5c9ad",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/main-pin-insertion-fixed-and-wire.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "tail-washer-insertion-plastic",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-plastic.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-plastic.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-plastic.scad",
+      "source_sha256": "590e44e5e1844a721be985c8784e6a8f43cde5eae52918e48611056e5359a274",
+      "returncode": 0,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-plastic.log",
+      "log_sha256": "6e7bb182ae4a61283d6616bdaecc2cc7acc7613437c9fb23a4f42275a83ab7b3",
+      "native_empty": false,
+      "native_error_or_warning": false,
+      "file": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-plastic.stl",
+      "sha256": "49af618b3e52773284835e8a221cb0bbbde58aade97f880219c781bfbd751f76",
+      "bounds": {
+        "min": [
+          -7.5071451387248995,
+          -7.5071451387248995,
+          -12.0
+        ],
+        "max": [
+          7.5071451387248995,
+          7.5071451387248995,
+          -12.0
+        ],
+        "triangles": 364
+      },
+      "expected_contact_Z_planes_mm": [
+        -12
+      ],
+      "classification": "EXACT_END_FACE_CONTACT"
+    },
+    {
+      "name": "tail-washer-insertion-rotor",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-rotor.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-rotor.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-rotor.scad",
+      "source_sha256": "df0df534b17b765f454d9b855976c15ab9bedb1b465c11a9ff6fd766cadbcddc",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-rotor.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "tail-washer-insertion-fixed-and-wire",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-fixed-and-wire.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-fixed-and-wire.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-fixed-and-wire.scad",
+      "source_sha256": "0484a02c2345a7997865c0b09e2cc488ebe784b9123a6a9253b39e31c5479b31",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-fixed-and-wire.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "tail-washer-insertion-seated-pin",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-seated-pin.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-seated-pin.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-seated-pin.scad",
+      "source_sha256": "977ff44e25227dee57d13cda928f7f43afff502de621e8e4e7148ce6b1890ba4",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/tail-washer-insertion-seated-pin.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "cotter-straight-preassembly",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-preassembly.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-preassembly.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-preassembly.scad",
+      "source_sha256": "2fa00fd0855f012f614981355039218585c68e2bdd6811cb7a28a53dc4b49a49",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-preassembly.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "cotter-straight-tail-washers",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-tail-washers.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-tail-washers.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-tail-washers.scad",
+      "source_sha256": "48a9653388b5e3391642df69ade7a15b0224c15cc26e6e0aa434f2a2d4cffb3d",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-tail-washers.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "cotter-straight-min-hole",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-min-hole.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-min-hole.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-min-hole.scad",
+      "source_sha256": "426035b4d17982c694596cf51553e52909399f4bad5e5eeb97bc8c71bc25db04",
+      "returncode": 1,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/cotter-straight-min-hole.log",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "native_empty": true,
+      "native_error_or_warning": false,
+      "classification": "NATIVE_EMPTY"
+    },
+    {
+      "name": "control-cotter-hole-missing",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/control-cotter-hole-missing.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/control-cotter-hole-missing.scad"
+      ],
+      "source": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/control-cotter-hole-missing.scad",
+      "source_sha256": "a1a7e3a45246f4c71d406062703ef3a355d58f47d595f52d7d51814c705ba58d",
+      "returncode": 0,
+      "log": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/control-cotter-hole-missing.log",
+      "log_sha256": "54554f2b6767e899478dd24edc83e5b000445762edefa41dd8e49bac7c0cd53e",
+      "native_empty": false,
+      "native_error_or_warning": false,
+      "file": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/control-cotter-hole-missing.stl",
+      "sha256": "9b73d31788bc12e776d07af9f2155f7d50b9b9c1e4fdd8c6ee40645bed65db5c",
+      "bounds": {
+        "min": [
+          -3.9787869235241966,
+          -0.9008574166469879,
+          -17.90085741664699
+        ],
+        "max": [
+          3.9787869235241966,
+          0.9008574166469879,
+          -16.09914258335301
+        ],
+        "triangles": 316
+      },
+      "raw_geometry": {
+        "triangle_count": 316,
+        "components": [
+          {
+            "triangles": 316,
+            "volume_mm3": 20.11896964003829,
+            "planar_error_mm": 1.244743208274022,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -3.9787869235241966,
+                3.9787869235241966
+              ],
+              [
+                -0.9008574166469879,
+                0.9008574166469879
+              ],
+              [
+                -17.90085741664699,
+                -16.09914258335301
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      },
+      "classification": "POSITIVE_CONTROL_SOLID_INTERSECTION"
+    }
+  ],
+  "conditions_not_supplier_guarantees": [
+    "E=30 and L=35 kept exact; actual tolerances remain missing.",
+    "Head-root is accepted only within D9x2.5; supplier has not confirmed this profile.",
+    "Washer OD15 held nominal; actual OD/flatness/burr tolerances not supplied.",
+    "Coaxial straight insertion without axis tilt, eccentric bores or deformed parts. Physical fit and insertion force are unverified."
+  ],
+  "not_checked": [
+    "Cotter eye/full undeformed assembly sliding into place: supplier eye length tolerance and exact form are incomplete.",
+    "Bending both legs, plier jaw/body and hand access, extracting a bent cotter, or installed retention force.",
+    "A particular purchased plier, full host-mounted service path, real bore tolerances/burrs/roughness and loaded behaviour.",
+    "Whether a nominal16mm cotter gives the desired final free leg lengths after actual eye seating."
+  ],
+  "no_tool_certification": "No plier model is introduced or claimed to be purchased/usable. Straight-segment clearance is not full cotter/plier assembly clearance.",
+  "preserved_initial_diagnostic": {
+    "report": "output/current-axis-pin-retention/bench-access/runs/20260927T143545475476Z/report.json",
+    "classification": "REVIEW_REQUIRED, not accepted",
+    "cause": "The first annulus expression -75.6+63.6 exported upperZ=-11.999999999999993, making a true native overlap with bodyZ=-12. No epsilon allowance or STL deletion was used.",
+    "revision": "Enlarge only the far-away start toZ=-76 and use exact height64, retaining mathematical endpointZ=-12. New native run distinguishes exact endpoint contact. Original probes/script snapshots are retained next to the diagnostic."
+  },
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,215 @@
+{
+  "status": "PUBLIC_SPECIFICATION_GAPS_RECONFIRMED_NO_NEW_MECHANICAL_RATING",
+  "created_at_utc": "2026-09-27T16:32:05.831545+00:00",
+  "scope": "Bounded official-only follow-up for current output screw nipple; no enquiries, procurement, CAD/BOM edits, or physical acceptance.",
+  "exact_candidate": {
+    "manufacturer": "norelem",
+    "order_number": "03096-35-03180507",
+    "material": "nickel-plated brass",
+    "body_d_mm": 5,
+    "body_length_mm": 7,
+    "grub_thread": "M4",
+    "wire_cross_hole_mm": 1.8,
+    "wire_hole_to_end_mm": 3.5,
+    "status": "candidate, not confirmed purchased"
+  },
+  "prior_evidence_audit": {
+    "same_series_dimensions_and_drawing_already_examined": true,
+    "prior_docs_explicitly_left_torque_and_holding_force_unknown": true,
+    "minimum_tail_is_already_open_in_current_assembly": true,
+    "standalone_installation_or_rating_document_previously_archived": false,
+    "full_supplier_document_search_proven_exhaustive": false,
+    "action": "Do not repeat drawing search. This run checks public specification/installation text and identifies current downloadable catalogue PDFs."
+  },
+  "official_observations": [
+    {
+      "id": "03096-35",
+      "url": "https://www.norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Accessories-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Screw-nipples-locked-with-grub-screw/p/agid.30769",
+      "raw_html_file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35.html",
+      "technical_text_file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35-technical-text.txt",
+      "description_mentions_torque": false,
+      "description_has_numeric_force_N": false,
+      "description_has_min_tail_requirement": false,
+      "method_limit": "Keyword booleans are navigation aids; conclusion also uses manual reading. Missing phrase is not proof that supplier has no unpublished requirement."
+    },
+    {
+      "id": "03096-14",
+      "url": "https://www.norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Accessories-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Bowden-cables-for-indexing-plungers-with-remote-actuation/p/agid.32096",
+      "raw_html_file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14.html",
+      "technical_text_file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14-technical-text.txt",
+      "description_mentions_torque": false,
+      "description_has_numeric_force_N": false,
+      "description_has_min_tail_requirement": false,
+      "method_limit": "Keyword booleans are navigation aids; conclusion also uses manual reading. Missing phrase is not proof that supplier has no unpublished requirement."
+    }
+  ],
+  "additional_official_pages_read": [
+    {
+      "url": "https://www.norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Indexing-plungers/Indexing-plungers-stainless-steel-with-plastic-mushroom-grip-and-remote-actuation/Indexing-plunger-stainless-steel-with-remote-operation/p/agid.22540",
+      "observed": "Official remote-plunger description permits the supplied D5 x7 nipple for a custom actuating element; no clamp rating, tightening torque or tail requirement appears in inspected public text.",
+      "saved": "Web read only; not archived HTML."
+    },
+    {
+      "url": "https://norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Accessories-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Wire-cables-with-end-piece/p/agid.30792",
+      "observed": "03096-15 wire is bright stainless steel 1.4401 and lists 03096-35 as accessory. Strand construction/strength/compatible alternate wires not specified in inspected text.",
+      "saved": "Web read only; not archived HTML."
+    }
+  ],
+  "bounded_queries": [
+    "site:norelem.de \"03096-35\" (\"torque\" OR \"Anziehdrehmoment\" OR \"Zugkraft\" OR \"Montage\")",
+    "site:norelem.com \"03096-35-03180507\"",
+    "site:norelem.de \"03096-14\" \"Betriebsanleitung\"",
+    "site:norelem.de \"03096-35\"",
+    "site:norelem.com \"03096-35\" force",
+    "site:norelem.com \"03096-15\" diameter wire",
+    "\"03096-35-03180507\" norelem",
+    "\"03096-35\" \"PDF\"",
+    "site:norelem.de \"03096-10\" \"Anzugsmoment\""
+  ],
+  "download_boundary": {
+    "current_pdf_links_file": "output/current-cable-clamp-evidence/20260927T162741715091Z/official-pdf-links.json",
+    "current_pdf_attempts": {
+      "03096-35": {
+        "url": "https://www.norelem.de/medias/03096-35-Datasheet-30769-Screw-nipples-locked-with-grub-screw-en.pdf?context=bWFzdGVyfHJvb3R8MTk0MTI4fGFwcGxpY2F0aW9uL3BkZnxhRFV4TDJoaU9TODVOakl4TXpVM09EVTBOelV3THpBek1EazJMVE0xWDBSaGRHRnphR1ZsZEY4ek1EYzJPVjlUWTNKbGQxOXVhWEJ3YkdWelgyeHZZMnRsWkY5M2FYUm9YMmR5ZFdKZmMyTnlaWGN0TFdWdUxuQmtaZ3xmN2JkYzA3ZDEyNTZhMDcxNThmZDM0N2RkOTkyN2JhZTg3NWNlMjg0YjM3MTJhZjliOWU3MTdhZDRhNDU5ZjI0",
+        "return_code": 56,
+        "stderr": "curl: (56) The requested URL returned error: 406\n",
+        "file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35-official.pdf"
+      },
+      "03096-14": {
+        "url": "https://www.norelem.de/medias/03096-14-Datasheet-32096-Bowden-cables-for-indexing-plungers-with-remote-actuation-en.pdf?context=bWFzdGVyfHJvb3R8MTcwNTEyfGFwcGxpY2F0aW9uL3BkZnxhRFprTDJneU1TODVOakl4TXpVMU5qSTJOVEkyTHpBek1EazJMVEUwWDBSaGRHRnphR1ZsZEY4ek1qQTVObDlDYjNka1pXNWZZMkZpYkdWelgyWnZjbDlwYm1SbGVHbHVaMTl3YkhWdVoyVnljMTkzYVhSb1gzSmxiVzkwWlY5aFkzUjFZWFJwYjI0dExXVnVMbkJrWmd8MTJkYzA4Njg4ZGNiNTFhNjIxMjdjMWNlM2Y3ZWQ0NGFhOWY0MWNmNTg0MTliNWYwZDRiMmI5ZGM3OGFjNjk5NA",
+        "return_code": 56,
+        "stderr": "curl: (56) The requested URL returned error: 406\n",
+        "file": "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14-official.pdf"
+      }
+    },
+    "web_pdf_fetch_result": "Both current DE PDF URLs inaccessible in web tool; curl HTTP406. Contents were NOT read.",
+    "old_mx_pdf_url": "https://www.norelem.mx/doc/mx/es/did.278516/03096-35_Datasheet_30769_Bosquillas_roscadas_de_apriete_con_tornillo_prisionero--es.pdf",
+    "old_mx_pdf_result": "HTTP404 through official page download link",
+    "no_authentication_attempted": true,
+    "no_inference_from_inaccessible_pdf": true
+  },
+  "requested_parameters": {
+    "maximum_or_rated_clamp_pull_force_N": {
+      "value": null,
+      "status": "not stated in inspected public official description/previous drawing; no complete rating sheet obtained"
+    },
+    "grub_screw_tightening_torque_Nm": {
+      "value": null,
+      "status": "not stated; generic M4 bolt torque is not a valid substitute for a brass body and wire pinch"
+    },
+    "minimum_free_tail_beyond_body_mm": {
+      "value": null,
+      "status": "not stated; geometric maximum5.5 is not a manufacturer minimum or pullout qualification"
+    },
+    "wire_compatibility": {
+      "supported_pairing": "manufacturer 03096-15 wire / 03096-14 cable system, nominal1.5mm bright1.4401",
+      "arbitrary_1p5mm_wire_compatible": null,
+      "strand_lay_and_count": null,
+      "breaking_force_N": null,
+      "scope": "Listed system pairing only, not a force rating or authorization of a generic substitute."
+    }
+  },
+  "current_geometry_can_establish": {
+    "nominal_wire_to_crosshole_radial_clearance_mm": 0.15,
+    "tail_below_nipple_center_max_mm": 8,
+    "tail_beyond_body_max_mm": 5.5,
+    "tail_formula": "8 - 5/2 = 5.5",
+    "tail_dimension_kind": "maximum modeled installation envelope, not crop instruction",
+    "capture_kind": "metal retaining washer/cover provides geometric retention of nipple body; independent of wire anti-slip holding force",
+    "open_screw_exit": "D6 through cover allows unspecified +Y screw protrusion; does not establish actual slot/tool fit or tightening torque",
+    "no_new_CAD_or_collision_checks_this_run": true
+  },
+  "current_geometry_cannot_establish": [
+    "wire slip threshold under the actual screw preload",
+    "repeated-actuation loosening and fatigue life",
+    "minimum acceptable clamped tail or cut preparation",
+    "wet/lubricated wire grip retention",
+    "required operating force from all friction and load conditions"
+  ],
+  "next_action_impact": {
+    "changes_current_design_or_BOM": false,
+    "closes_existing_external_gap": false,
+    "new_evidence_value": "Fresh official HTML identity, paired system confirmation and current PDF download URLs/failure records; no new numeric force/torque/tail specification.",
+    "decision": "Existing hold remains. Before clamp assembly/cropping can be released, obtain exact-part installation/rating evidence specifying wire/torque/minimum tail and compare with actual required force and5.5mm tail space. This run does not contact supplier or substitute an arbitrary force/torque.",
+    "tail_conflict_rule": "If supplier minimum outside-body tail exceeds5.5mm, revise the end connection/space before cutting; do not trim shorter solely to fit."
+  },
+  "local_baselines": [
+    {
+      "source": "docs/cable-hardware-evidence.md",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-hardware-evidence.md",
+      "sha256": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e"
+    },
+    {
+      "source": "docs/current-assembly.md",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/current-assembly.md",
+      "sha256": "637ded937d20898fea4db9054d9d8a7cb11b0e7673fc356d48287d3843c4a9ce"
+    },
+    {
+      "source": "docs/cable-output-interface.md",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-output-interface.md",
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504"
+    },
+    {
+      "source": "docs/cable-washer-retention-review.md",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-washer-retention-review.md",
+      "sha256": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4"
+    },
+    {
+      "source": "cad/cable-output-interface.scad",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-output-interface.scad",
+      "sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566"
+    },
+    {
+      "source": "output/cable-hardware-evidence/03096-35-assets.json",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-35-assets.json",
+      "sha256": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f"
+    },
+    {
+      "source": "output/cable-hardware-evidence/03096-14-assets.json",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-14-assets.json",
+      "sha256": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be"
+    },
+    {
+      "source": "output/cable-hardware-evidence/03096-35-drawing.png",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-35-drawing.png",
+      "sha256": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9"
+    },
+    {
+      "source": "output/cable-hardware-evidence/03096-14-drawing.png",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-14-drawing.png",
+      "sha256": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781"
+    },
+    {
+      "source": "output/cable-tail-clearance/tail-limit-revision.json",
+      "snapshot": "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/tail-limit-revision.json",
+      "sha256": "327c90451b04606eca7c2617b5eba3a2b0621ade4c2b76403bc541e069e02b2e"
+    }
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "procurement_performed": false,
+  "supplier_contacted": false,
+  "evidence_sha256": {
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14-download-links.json": "6d0eef7772e47aa439414982407f16be5e90d495aca1e60d69e3a542367857fa",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14-technical-text.txt": "f61f26adb0ec5f3193e0999904eae3abb1df9f9299ba6c288245d75d43ff4039",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-14.html": "440c40a6ece09f5337594391405e63a3a0b9734af49e91bace9834b9c63df999",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35-download-links.json": "6d0eef7772e47aa439414982407f16be5e90d495aca1e60d69e3a542367857fa",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35-technical-text.txt": "39a0adedbd7b1586c4ec514af2c859254c4298b72162a3b340016ce46ac8ae7c",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/03096-35.html": "eb0183d3007451f3d514401ed07e840e2c8d5b4a6cafae2e356e4e8d910721f5",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/README.md": "c011e3e3139cf40fe5aad34633e1061f11120019a88999e94e5c7b01cf9f4d7d",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/fetch.json": "3983f4306da171a865c6bcf8471d8c81a8efdddce8bc1e3c493309990d93cd8d",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-14-assets.json": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-14-drawing.png": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-35-assets.json": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/03096-35-drawing.png": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-hardware-evidence.md": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-output-interface.md": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/cable-washer-retention-review.md": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/current-assembly.md": "637ded937d20898fea4db9054d9d8a7cb11b0e7673fc356d48287d3843c4a9ce",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/local-baseline/tail-limit-revision.json": "327c90451b04606eca7c2617b5eba3a2b0621ade4c2b76403bc541e069e02b2e",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/official-pdf-links.json": "c5e163a33233d9f1b4abdfbb7f1f9452b3e594de63750ee1a74895ceb3873ebf",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/pdf-fetch.json": "9bc1cb7bac357196d25782add5e38604ce02076f6a094ebdb2272bd802ac2674",
+    "output/current-cable-clamp-evidence/20260927T162741715091Z/verify_evidence.py": "caacf2ebd0c52695ca70b0886fff14d027fe4d31d3daf2078024b75c1734762a"
+  }
+}

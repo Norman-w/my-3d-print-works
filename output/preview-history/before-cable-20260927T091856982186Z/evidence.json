@@ -1,0 +1,575 @@
+{
+  "reports": {
+    "output/cable-scene-export/20260927T071458613482Z/report.json": "4e81d6f79450e58e3518f89b49f96f2280adb03c5da5c48dcf1faaad0224fadd"
+  },
+  "source_sha256": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "2b5d9f8e1513858f353211fc2dcd4eb9f6959bcffb249caf7a4c42bb1850ceb8",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443"
+  },
+  "assets": [
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__positive-half.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__negative-half.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/negative-half.stl",
+      "sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__beam-grip.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/beam-grip.stl",
+      "sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__liner.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__right-support.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/right-support.stl",
+      "sha256": "75cf5aaa1ea8e3692a0ea52358e16acf6424042128e4a49cb708f7ad08025e42"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__left-support.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/left-support.stl",
+      "sha256": "11e58f40b05b6ffe9ac6a202712836b7b1cc79d05e6280be2635af136f3b6239"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__x-gib.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/x-gib.stl",
+      "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__x-cover.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/x-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__frame.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/frame.stl",
+      "sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__fixed-spacer.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/fixed-spacer.stl",
+      "sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__moving-spacer.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/moving-spacer.stl",
+      "sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__capture-right.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/capture-right.stl",
+      "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pipe-clamp-right.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pipe-clamp-right.stl",
+      "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-cap-right.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-cap-right.stl",
+      "sha256": "8301daa0d4412d12e39f53352f15a1a618968dcde6dcdfbe769cc413c441c68d"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__frame-y-gib-right.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/frame-y-gib-right.stl",
+      "sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-gib-right-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-gib-right-front.stl",
+      "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-keeper-right-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-keeper-right-front.stl",
+      "sha256": "6f2b90efc725e136d458a16d8c6d3ab820564f48d682739918a3a4ca4d1d1fe2"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__finger-right-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/finger-right-front.stl",
+      "sha256": "e26f7ea25d2b06c6cec3c6a1d858487de77a3489f0aa3b29e1578428d31d2b2c"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pin-block-right-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pin-block-right-front.stl",
+      "sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-gib-right-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-gib-right-rear.stl",
+      "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-keeper-right-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-keeper-right-rear.stl",
+      "sha256": "34a91a12a22a8c18ea6070dc0eef1dd76197b4d7adc4be50aafcfea0bddd2ce6"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__finger-right-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/finger-right-rear.stl",
+      "sha256": "6b7a92c07c39309466c354cefe25bcd202a215365f0d2d687272f6b6186810b3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pin-block-right-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pin-block-right-rear.stl",
+      "sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__capture-left.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/capture-left.stl",
+      "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pipe-clamp-left.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pipe-clamp-left.stl",
+      "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-cap-left.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-cap-left.stl",
+      "sha256": "63663de2cbf67b8117c62112fb99f7197768f7abc5280368c7a52eee8ce0a944"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__frame-y-gib-left.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/frame-y-gib-left.stl",
+      "sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-gib-left-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-gib-left-front.stl",
+      "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-keeper-left-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-keeper-left-front.stl",
+      "sha256": "fe2d514b89486825c67ba72300a3dde25996cefa1965f1409aa55e3680a3e4e3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__finger-left-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/finger-left-front.stl",
+      "sha256": "776af160e622c8804fe60783c5596b0494d5271af857fd20df3e4a80553088f0"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pin-block-left-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pin-block-left-front.stl",
+      "sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-gib-left-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-gib-left-rear.stl",
+      "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__y-keeper-left-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/y-keeper-left-rear.stl",
+      "sha256": "83528b5df6a3d474d45593db867cd33fea16347a483e160552afdd4b84be9521"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__finger-left-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/finger-left-rear.stl",
+      "sha256": "8c319fcbc142ae006273da6772da6eba2b12c9f157db531adb4e540ac22e0b5c"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pin-block-left-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pin-block-left-rear.stl",
+      "sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__inlet-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/inlet-rear.stl",
+      "sha256": "d6226940041cf800fc57ca65fe3c47ae61f64782c7ecbfe2dccaeb76d459dc5d"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__inlet-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/inlet-front.stl",
+      "sha256": "548542eb8c6d7beee3f6b0a4e089238b7c2d123c4b2e2b8e993d86f27ffe7da2"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__inlet-backplate.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/inlet-backplate.stl",
+      "sha256": "10bc302732313848f629d26f48b2ee6736f341cb1b512d07429dc9d210fcfcfb"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-input-body.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-input-body.stl",
+      "sha256": "4de7429dbc14e1f1a6a421a82c9bd34727539a9a959ce826af50de835a6e022b"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-input-lever.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-input-lever.stl",
+      "sha256": "8776933cf22f0381a7ac4f481cdee09161cf71d37b77594876e3032430fec247"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-input-cover.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-input-cover.stl",
+      "sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-output-cap.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-output-cap.stl",
+      "sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-route-base.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-route-base.stl",
+      "sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-route-cap.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-route-cap.stl",
+      "sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-route-lower.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-route-lower.stl",
+      "sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__body.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/body.stl",
+      "sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__carriage.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/carriage.stl",
+      "sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__pad.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/pad.stl",
+      "sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__pad-keeper.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/pad-keeper.stl",
+      "sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__opposite-guide.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/opposite-guide.stl",
+      "sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__cover.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/cover.stl",
+      "sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__spring-cage.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/spring-cage.stl",
+      "sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__spring-seat.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/spring-seat.stl",
+      "sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__pull-cap.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/pull-cap.stl",
+      "sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hold-fork.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hold-fork.stl",
+      "sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-fixed.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-fixed.stl",
+      "sha256": "bea816ead6099096cfb3110426d708c1c63bc387ea6242f5b5ba8753a301c193"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-right-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-right-front.stl",
+      "sha256": "fec57990f1ea8d1cdaa5e27ab577c4e354c8000c31bb6995ac80f5075b7260d3"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-right-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-right-rear.stl",
+      "sha256": "32e48a61e2c2a619fa609b5c0c69b61e3fd91182ae7a0c2780af69cfbe273986"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-left-front.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-left-front.stl",
+      "sha256": "328762ba20ff5cf30ce225a8c1b771a0f72f6d61b083dd07e4f184032fe34d83"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-left-rear.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-left-rear.stl",
+      "sha256": "363c7af3088bf36c333912de9becc07a6b61a09a4673dda47786ff0cd3562bd9"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hardware-moving-spacer.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hardware-moving-spacer.stl",
+      "sha256": "e41357301b321880783a2adffce56dcc63b6f666d8b9e498b3a8ee77d546c7c6"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-input-hardware-fixed.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-input-hardware-fixed.stl",
+      "sha256": "5e566a3a578096a17a32e84a7987e635900732e31e68b8c089b86b9dd921c43d"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-input-hardware-moving.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-input-hardware-moving.stl",
+      "sha256": "1d3a2ad48051552982018d6f73fd4b4d707fca09e86c52af8a29fa4a80bac3ec"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-output-hardware-fixed.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-output-hardware-fixed.stl",
+      "sha256": "98b7f429082ce985efb7543aeac5a63281c52ed0efb7e353c75b0f25810b63fc"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-output-hardware-moving.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-output-hardware-moving.stl",
+      "sha256": "15497ac35c253cedcfc0bd91eee701f63f2bba1f2ec06ec1f165abc5062a3e4c"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-route-hardware.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-route-hardware.stl",
+      "sha256": "a099925c86d05233062f6004c352038aa70c8b9445eee053f9fca5d964c1f9d8"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__pc-reference.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/pc-reference.stl",
+      "sha256": "ee453a79a7f840405b89a9e7312c3aa67feb90467f86ad640bf303cdeb25f617"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__hose-reference.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/hose-reference.stl",
+      "sha256": "0fd4cb7032fe802c6a96da52e9203638ac76e8d6b70b9fc4b4039d3382254e38"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__liner-reference.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/liner-reference.stl",
+      "sha256": "084ef512f55b6a8ce58ffe22c94814756dd5d8012959a505a3f1307741c278ae"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__spring-reference.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/spring-reference.stl",
+      "sha256": "560a6cb4824a9f60716b6d8f429ca004433b3b09f95b4248a7d43ad00f911cfb"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-housing.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-housing.stl",
+      "sha256": "de4385e7ce80af551411b24757a424e3807c66ea4a65eedae0431cbc7bc3c73b"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-core-route.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-core-route.stl",
+      "sha256": "782ad0e8851f89e209fa756a15646215d115c3c8f1a0be31bd496824db8f6394"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-core-input.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-core-input.stl",
+      "sha256": "7e031ee890fb8608af138f48fe6dc392010e6cd6e5ea2a04739d5bc786d19da9"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/feeder__cable-core-output.stl",
+      "file": "cable-models/20260927T071458613482Z/feeder/cable-core-output.stl",
+      "sha256": "5964d49e115dfb7ea26244b7888d20f6cd09dc33f26c802daee5208ba52bbe49"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-cover.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-cover.stl",
+      "sha256": "c6336dcf8f95a6a20b2d73376c7aad07bb64869a131d6927509f3b996fa7e40f"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-cage.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-cage.stl",
+      "sha256": "00d458af6a66aa9ea76c03fc32f241424ec9b267ce4ac13c7c1b7e24a496647d"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-guide.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-guide.stl",
+      "sha256": "2c8dc678b095a1467e19a4841f616b98266efe1fa55230c2d33b869fac510290"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-clamp.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-clamp.stl",
+      "sha256": "4d818ac7fa5fcd3102ebe08f98a3a462cf75887b5ae79bfd5de20ec5805fcc92"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-latch.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-latch.stl",
+      "sha256": "fc058bf17a083afe7b88de432688cc63b6b8d1f621d49765c0cb1ecf7520f88b"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-preload.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-preload.stl",
+      "sha256": "fa1131cfe1f61aa06af9af2fecec3e5dc5f4683c7ba685d6c2216cf6b958fc49"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-keeper.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-keeper.stl",
+      "sha256": "ba295af3ff54ba7c0fa322a826f79032a16f75ad6aca1eb16807914a0518b013"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-pull.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-pull.stl",
+      "sha256": "8b70dc54db031174d87cbf47c9fb9e4af31607b5dacd1e91a38c6d59cc8a4cf9"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__hardware-hold-removable.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/hardware-hold-removable.stl",
+      "sha256": "3bd920ab5551eace8c599d9057fe14599acfd219d524f15ec1c55e6e05a2bf8b"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/spin__spring-reference.stl",
+      "file": "cable-models/20260927T071458613482Z/spin/spring-reference.stl",
+      "sha256": "0437942e83fa3c306a56d6c5bd69a8bab56089be12e273a1fdf49ec523a8e134"
+    },
+    {
+      "source": "web/feeder-motion.html",
+      "file": "feeder-motion.html",
+      "sha256": "2c273fa5e05ca29a23e4ee2df1d74406e86117b44dec41061aafc8fd9b92747d"
+    },
+    {
+      "source": "web/feeder-motion.mjs",
+      "file": "feeder-motion.mjs",
+      "sha256": "fd0d5ab83b35746a1ad60a8408963b4f5b0ccf858d0736bcf838842a94104a78"
+    },
+    {
+      "source": "web/feeder-motion-kinematics.mjs",
+      "file": "feeder-motion-kinematics.mjs",
+      "sha256": "08fbc63cb631faf8524ec96c0048ec93db2ddcc495bb48e5a895a164c1fc3427"
+    },
+    {
+      "source": "web/feeder-overview.mjs",
+      "file": "feeder-overview.mjs",
+      "sha256": "9bbb0d02d349213f01733168deac20d40a5837ee9d8e9c7456bcefea521bff0e"
+    },
+    {
+      "source": "web/trigger-concept-kinematics.mjs",
+      "file": "trigger-concept-kinematics.mjs",
+      "sha256": "433a222fd2055566348ccbaa93088e9f254face565cb7d0b0dec95993c84fd88"
+    },
+    {
+      "source": "web/trigger-overlay.mjs",
+      "file": "trigger-overlay.mjs",
+      "sha256": "fb062776bb6746f14d6dfb59afaadb63f1b80e6c068fbda2754b15bb35e13d84"
+    },
+    {
+      "source": "web/scene-assets.mjs",
+      "file": "scene-assets.mjs",
+      "sha256": "301793298907b2115466b0bdc312f0d9337a0ece15c70f9d731e49a4b545ef50"
+    },
+    {
+      "source": "web/cable-scene-kinematics.mjs",
+      "file": "cable-scene-kinematics.mjs",
+      "sha256": "c5ced1e4c420fc9839c538e2e06ba20f830c840fe9aa046477cc4fe57f4b7a9a"
+    },
+    {
+      "source": "output/revision-review/models.html",
+      "file": "models.html",
+      "sha256": "74db4c541c92331f2fd608ac04cbe9b49323bba8198fbdee2387e80f405b1dcd"
+    },
+    {
+      "source": "output/revision-review/app.js",
+      "file": "app.js",
+      "sha256": "361ac5508c7c41f160e5a59978d0fe3a5b6f4496cbb592b2783901ddf585cb11"
+    },
+    {
+      "source": "output/revision-review/vendor/three/build/three.module.js",
+      "file": "vendor/three/build/three.module.js",
+      "sha256": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495"
+    },
+    {
+      "source": "output/revision-review/vendor/three/examples/jsm/controls/OrbitControls.js",
+      "file": "vendor/three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064"
+    },
+    {
+      "source": "output/revision-review/vendor/three/examples/jsm/loaders/STLLoader.js",
+      "file": "vendor/three/examples/jsm/loaders/STLLoader.js",
+      "sha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93"
+    },
+    {
+      "source": "output/cable-route-retention/complete-assembly.png",
+      "file": "cable-models/20260927T071458613482Z/assembly.png",
+      "sha256": "436c851120036fb4770be249fe01d1d474c051674a3423b1b6981eb4e83e8417"
+    },
+    {
+      "source": "output/cable-scene-export/20260927T071458613482Z/report.json",
+      "file": "cable-models/20260927T071458613482Z/export-report.json",
+      "sha256": "4e81d6f79450e58e3518f89b49f96f2280adb03c5da5c48dcf1faaad0224fadd"
+    },
+    {
+      "source": "docs/cable-assembly-inventory.json",
+      "file": "cable-assembly-inventory.json",
+      "sha256": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f"
+    },
+    {
+      "source": "generated from current inventory",
+      "file": "motion-manifest.json",
+      "sha256": "5867fef90d386299bb3d554011d0dd98b1e2284d8e62ed37bbe9af40eb956f00"
+    },
+    {
+      "source": "generated from current inventory",
+      "file": "manifest.json",
+      "sha256": "696bf51b8c1685652edcfafdbd27eb2ee5d02745cd5fc8dc9443bd55aaf9c470"
+    },
+    {
+      "source": "generated from current inventory",
+      "file": "revision-status.json",
+      "sha256": "22b42eed9e7f9cdc939160722f3530389f9a6c3ddd759668eed81ed4af8cb4dd"
+    },
+    {
+      "source": "current inventory",
+      "file": "printed-parts.csv",
+      "sha256": "b6e06627fa80815915709b828f24b769b9ed69f6f72e00b3955b2c50a09539f7"
+    },
+    {
+      "source": "generated from current inventory",
+      "file": "index.html",
+      "sha256": "082ffe5864dccd12a7a0308f2f90decb102ba05b717d5e562033c488da8e3981"
+    }
+  ],
+  "printed_instances": 55,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "motion_page": {
+    "manifest": "motion-manifest.json",
+    "snapshot": "current-cable-candidate",
+    "snapshot_id": "20260927T071458613482Z",
+    "physical_acceptance": false
+  }
+}

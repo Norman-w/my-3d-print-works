@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_COUNT_AND_HIERARCHY_CHECKS_PASS",
+  "source_count": 20,
+  "installation_site_count": 28,
+  "item_type_count": 24,
+  "scope": "No manufacturing/purchase/strength acceptance",
+  "hashes": {
+    "extract.py": "9ca1efd8fb0d60a08d52a373c23ed75225ed10239442b48c1ad39c1c0033646d",
+    "hardware.json": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+    "README.md": "ef1b75f00fca4d2097861d7cf366a62872aaef0b252cd9e92d874e8d1462db8f"
+  }
+}

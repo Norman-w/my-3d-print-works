@@ -1,0 +1,30 @@
+{
+  "status": "UNIFIED_SCENE_BROWSER_CHECKS_PASS",
+  "checked_at_utc": "2026-09-27T03:00:15.843884+00:00",
+  "url": "http://192.168.7.187:8877/feeder-motion.html",
+  "checks": {
+    "six_camera_presets_preserve_scene_model_identity_visibility_and_progress": true,
+    "catalogue_assets_loaded": 48,
+    "all_assets_can_be_visible": 48,
+    "hold_fork_lazy_load_and_visibility": true,
+    "layer_hide_show_reuses_nodes": true,
+    "individual_part_search_hide_show_reuses_nodes": true,
+    "transparent_and_cutaway_controls": true,
+    "lubrication_markers_in_same_scene": true,
+    "early_release_preserves_queued_balls": true,
+    "six_native_hardware_groups_follow_correct_motion": true,
+    "all_native_rigid_offsets_return_to_zero": true,
+    "browser_console_errors": []
+  },
+  "hardware_triangles_preserved": 52720,
+  "source_sha256": {
+    "web/feeder-motion.html": "fc903a888cf06987dfb86f145b0d256a7c17407ee19f8b710297c84c3175088a",
+    "web/feeder-motion.mjs": "337b5969e411096464df279ef1f0ec143200f4e127ce603a9d2030add6378e00",
+    "web/scene-assets.mjs": "d51daf4652c54175fc5d3cd310646b8a5d7a5f751fc38a0b9f49f28228c8e5f9",
+    "web/trigger-overlay.mjs": "fb062776bb6746f14d6dfb59afaadb63f1b80e6c068fbda2754b15bb35e13d84",
+    "web/feeder-overview.mjs": "9bbb0d02d349213f01733168deac20d40a5837ee9d8e9c7456bcefea521bff0e",
+    "scripts/build_feeder_motion.py": "50f9e4b28e48b20c3f5a0c98d97f307b820d87ff087cd3466f7147adceb0ffe1",
+    "scripts/build_motion_hardware.py": "f04d28cf4489ca481f0c42d55cfc4bb269443d37c22ce89ed1321e94b64c9f71"
+  },
+  "manufacturing_or_physical_validation": false
+}

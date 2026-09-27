@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "report_sha256": "2f1fa4c7c17a9b45b63bd9329fc565a028ab14d1c2540a00ffb511105beb0fc8",
+  "hash_checks": {
+    "README.md": true,
+    "evidence/mbo-blank-drawing.svg": true,
+    "evidence/mbo-circlip.html": true,
+    "evidence/mbo-d8-published.json": true,
+    "evidence/mbo-groove-drawing.webp": true,
+    "evidence/mbo-product-grid.json": true,
+    "evidence/technifast-catalogue.pdf": true,
+    "evidence/technifast-clevis-p20.png": true
+  },
+  "local_link_checks": {
+    "evidence/technifast-clevis-p20.png": true,
+    "evidence/mbo-product-grid.json": true,
+    "evidence/mbo-d8-published.json": true,
+    "evidence/mbo-groove-drawing.webp": true,
+    "report.json": true
+  },
+  "scope": "Evidence binding and stated conditional scope only"
+}

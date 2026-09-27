@@ -1,0 +1,67 @@
+{
+  "checked_at_utc": "2026-09-27T14:46:02.128033+00:00",
+  "status": "SOURCE_BOUND_CONDITIONAL_REVIEW_WITH_OPEN_RETENTION",
+  "scope": "Identity and local-link consolidation only. No new CAD run, physical assembly, force data, purchase or printing in this verification.",
+  "reports": [
+    {
+      "file": "output/current-axis-pin-retention/runs/20260927T142843998246Z/report.json",
+      "sha256": "2f3bdfb7a2b45ee18385a4e5c0a39c95135a450ae593f947df75642581091a8e",
+      "verified_bindings": 41,
+      "bindings_match": true
+    },
+    {
+      "file": "output/current-axis-pin-retention/bench-access/runs/20260927T143641350770Z/report.json",
+      "sha256": "aefb8c886b010cc92a4abcd7a3970c58b24ee57b24b0ae39b21b2b33be2faa6a",
+      "verified_bindings": 45,
+      "bindings_match": true
+    },
+    {
+      "file": "output/current-axis-pin-retention/feasibility/continuous-rotation.json",
+      "sha256": "58c994c41f4b5b1d313f8c9a73030570ce0c9e2e0dadb8e4ff5fb8a13ea7c1f0",
+      "verified_bindings": 4,
+      "bindings_match": true
+    },
+    {
+      "file": "output/current-joint-tolerance/common-cam-intersection/report.json",
+      "sha256": "eedde951065024f2d53cb7ad5f40b7efa655e678a896338bafe1c6c23f2f0b7d",
+      "verified_bindings": 50,
+      "bindings_match": true
+    },
+    {
+      "file": "output/current-axis-circlip-reference/report.json",
+      "sha256": "2f1fa4c7c17a9b45b63bd9329fc565a028ab14d1c2540a00ffb511105beb0fc8",
+      "verified_bindings": 8,
+      "bindings_match": true
+    },
+    {
+      "file": "output/current-assembly-package/runs/20260927T124252819653Z/manifest.json",
+      "sha256": "61556dc3690f9313f85c70cf5bf9f1e5b4baa9bcc172a6c58c20e680b73e2cc4",
+      "verified_bindings": 108,
+      "bindings_match": true
+    }
+  ],
+  "documents": {
+    "docs/current-status.md": "a19a06b70f0a7757c2e8c3680c3dca801e5e902541a223dadaca1552b6d89198",
+    "docs/current-mechanical-review.md": "93690fd4ece4feddb73f0c2e78398f87e81ba8d9aaca92928ddf71d454a46b7e",
+    "docs/goal-acceptance-audit.md": "4265c3a0ad9a3127d180aeb3f421ab834749fcf7afc9ab267bb65f3b0e24531d",
+    "output/current-axis-pin-retention/README.md": "29a69db4b7cef6ceaf8e0165f6cd05f98dce772964a039bfa59848c6948e8098",
+    "output/current-axis-pin-retention/feasibility/cotter-roll-review.md": "9d858bbf22f3959a69198e7ea6330a0c16ead4a7bf546b1e786c6e80d84cbfc3",
+    "output/current-axis-pin-retention/bench-access/README.md": "20703d1320b1db4eb1d30f8d1af82cd7cf20b86feaf73d4695dfd0604d5c4d42",
+    "output/current-axis-circlip-reference/README.md": "9a964e493b6bb5681e130129cceca9fc42aba6bbd42f92d447ff325a64a7e390",
+    "output/current-axis-circlip-reference/ring/README.md": "43141da4e8faae4ef412aa4c95f4a1b68f4857dfdcb8a8fa1a311c185a2940ad"
+  },
+  "local_links_checked": 106,
+  "cotter_operating_envelope_certified": false,
+  "cotter_actual_collision_proved": false,
+  "old_geometry_reports_scope": "Valid for their stated geometry and added installed-orientation condition; no automatic proof that actual cotter maintains that orientation.",
+  "bench_scope": "Main pin and two rear washers continuous insertion; straight cotter segment only. Full eye, bending, pliers and retention not certified.",
+  "circlip_status": "Manufacturer families and conditional stack reference only. No adopted CAD or fully specified fitting stock SKU.",
+  "common_cam_result": "Finite intersections covered conditionally; common radial tolerance and actual phase still open.",
+  "formal_package_unchanged": true,
+  "candidate_adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "goal_complete": false,
+  "previous_verification": "output/current-mechanical-review/current-engineering-verification.json",
+  "previous_verification_scope": "Historical document hashes preserved unchanged."
+}

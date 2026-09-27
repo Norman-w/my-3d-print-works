@@ -1,0 +1,18 @@
+{
+  "status": "CURRENT_INPUT_PROCESS_BINDING_CHECK_PASS",
+  "manifest": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-manufacturing/input-process/manifest.json",
+  "manifest_sha256": "680328a9b65bd5287d6bb1e611c019719fe3e11b87923e695e209e2f97a387dc",
+  "adapter_script_sha256": "45c2675d18d4b83106aa5f884953d9a066c44338010c72de5cbb07a5730bc2df",
+  "readme_sha256": "6f90a8ada04189d7bcb6bc620e04884ec297fc7bfc5473151fd5f0e6b9ee7a09",
+  "verify_log_sha256": "d9bd9e09799d84fd29f7742300efa72b582ca912a5bf288ae792d02135d085a3",
+  "parts": [
+    "feeder/cable-input-body",
+    "feeder/cable-input-lever",
+    "feeder/cable-input-terminal-cap",
+    "feeder/cable-input-cover"
+  ],
+  "resliced": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

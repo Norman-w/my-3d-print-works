@@ -1,0 +1,371 @@
+{
+  "family": "inlet-rear",
+  "part": "inlet-rear",
+  "orientation": "rear-key-ends-down",
+  "orientation_description": "CAD Y=-53.8 rear-key ends face bed; growth +CAD Y. M2.5 bores/strap slots vertical; unchanged solid and original .2 mm profile.",
+  "supports": "supported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/filament.json",
+    "--orient",
+    "0",
+    "--rotate-x",
+    "90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl"
+  ],
+  "inputs": [
+    {
+      "id": "inlet-rear",
+      "name": "入口后夹与背梁锚固",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-rear",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-rear",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"inlet-rear\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+      "sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+      "bytes": 427696,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1728,
+        "uniqueVertexCount": 852,
+        "bounds": {
+          "min": [
+            -49.0,
+            -53.79999923706055,
+            -156.0
+          ],
+          "max": [
+            49.0,
+            -1.1999998092651367,
+            -101.0
+          ],
+          "size": [
+            98.0,
+            52.59999942779541,
+            55.0
+          ]
+        },
+        "surfaceArea": 16022.41692580787,
+        "signedVolume": 36888.02737588824,
+        "volume": 36888.02737588824,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 852
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/inlet-rear"
+    }
+  ],
+  "input": {
+    "id": "inlet-rear",
+    "name": "入口后夹与背梁锚固",
+    "role": "printed",
+    "group": "feeder",
+    "family": "inlet-rear",
+    "source": "cad/cable-scene-export.scad",
+    "definitions": {
+      "cse_part": "legacy",
+      "cse_t": 0,
+      "cse_legacy": "inlet-rear",
+      "cse_side": 1,
+      "cse_rear": false
+    },
+    "backend": "CGAL",
+    "motion": {
+      "kind": "fixed"
+    },
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "CGAL",
+      "--export-format",
+      "asciistl",
+      "-D",
+      "cse_part=\"legacy\"",
+      "-D",
+      "cse_t=0",
+      "-D",
+      "cse_legacy=\"inlet-rear\"",
+      "-D",
+      "cse_side=1",
+      "-D",
+      "cse_rear=false",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+    ],
+    "returncode": 0,
+    "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.log",
+    "execution_ok": true,
+    "passed": true,
+    "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+    "sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+    "bytes": 427696,
+    "mesh": {
+      "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+      "format": "ascii",
+      "units": "unknown",
+      "triangleCount": 1728,
+      "uniqueVertexCount": 852,
+      "bounds": {
+        "min": [
+          -49.0,
+          -53.79999923706055,
+          -156.0
+        ],
+        "max": [
+          49.0,
+          -1.1999998092651367,
+          -101.0
+        ],
+        "size": [
+          98.0,
+          52.59999942779541,
+          55.0
+        ]
+      },
+      "surfaceArea": 16022.41692580787,
+      "signedVolume": 36888.02737588824,
+      "volume": 36888.02737588824,
+      "degenerateTriangleCount": 0,
+      "boundaryEdgeCount": 0,
+      "nonManifoldEdgeCount": 0,
+      "inconsistentOrientationEdgeCount": 0,
+      "watertightByEdgeTopology": true
+    },
+    "topology": {
+      "format": "ascii",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 852
+    },
+    "components": 1,
+    "boolean_reimport": {
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.log",
+      "execution_ok": true
+    },
+    "instance_id": "feeder/inlet-rear"
+  },
+  "source_sha256_at_start": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-manufacturing/feeder-new/slice.py": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+    "scripts/review_final_feeder_slice.py": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea",
+    "output/current-inlet-process-revision/slice_back_down.py": "8bedb0cbc32d321358b03f5935b1424257a517b570867c9cc8b59c38f0fad513"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "supports": "tree(auto), build plate only"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 658,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 11,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bridge": 195.8253631591797,
+          "Custom": 428.7431945800781,
+          "Flush": 29.0,
+          "Gap infill": 33.858585357666016,
+          "Inner wall": 1186.7628173828125,
+          "Internal solid infill": 442.98858642578125,
+          "Outer wall": 666.7274169921875,
+          "Overhang wall": 333.82470703125,
+          "Sparse infill": 716.1351318359375,
+          "Support": 1713.53076171875,
+          "Support interface": 137.8043212890625,
+          "Top surface": 105.93170166015625,
+          "Travel": 1390.7552490234375,
+          "Undefined": 1375.40185546875
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 38.79783630371094,
+            "total_used_g": 38.79783630371094
+          }
+        ],
+        "generate_support_material_time": 2304,
+        "id": 1,
+        "infill_time": 107,
+        "layer_filament_change": 0,
+        "main_predication": 6896.685546875,
+        "make_perimeters_time": 100,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 55.0,
+              "height": 52.599998474121094,
+              "width": 98.0,
+              "x": 78.99999237060547,
+              "y": 100.5,
+              "z": -1.4210854715202004e-14
+            },
+            "id": 5,
+            "name": "feeder__inlet-rear.stl",
+            "triangle_count": 1728
+          }
+        ],
+        "sliced_time": 3339,
+        "sliced_time_with_cache": 711,
+        "total_predication": 7368.044921875,
+        "triangle_count": 1728,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+    "slice-review.3mf": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a"
+  },
+  "last_temperature_before_first_layer_c": 255.0
+}

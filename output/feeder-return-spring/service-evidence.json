@@ -1,0 +1,26 @@
+{
+  "tool": {
+    "manufacturer": "GEDORE",
+    "part_number": "2133 5,5",
+    "code": 1746731,
+    "hex_AF_mm": 5.5,
+    "head_outer_diameter_mm": 8,
+    "blade_diameter_mm": 5,
+    "blade_length_mm": 125,
+    "internal_head_depth_mm": 25,
+    "catalogue_printed_page": 347,
+    "catalogue_pdf_page": 6,
+    "catalogue_url": "https://us.gedore.com/fileadmin/Kataloge/EN/342-363_11_Screwdrivers_2017_EN.pdf",
+    "current_product_url": "https://www.gedore.com/de-at/produkte/schraubwerkzeuge/schraubenschluessel/steckschluessel-mit-griff/2133-steckschluessel-mit-3k-griff-/2133-5%2C5---1746731",
+    "retrieval": "Official PDF read through web tool; direct local curl failed certificate validation, not bypassed. Product page confirms head depth25 and blade125. No factory STEP or actual tool fit claimed."
+  },
+  "model": {
+    "outer_corridor_diameter_mm": 9,
+    "hex_cavity_depth_mm": 25,
+    "tool_tip_Y_mm": 19.9,
+    "nut_entry_Y_mm": 17.6,
+    "nominal_nut_insertion_mm": 2.3,
+    "full_tool_handle_not_modelled": true
+  },
+  "scope": "Reference tool selection and offline geometry only; no cart or order."
+}

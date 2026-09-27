@@ -1,0 +1,25 @@
+{
+  "source_sha256": {
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json": "e2b26b1e94216c8c1d823b9a327bf746c0aeeb1fa0e61489846cfc15b96b3b53",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/fdm_bbl_3dp_001_common.json": "2ca207f457c1f9b3eb25a1801adb2eaa8ddc5620f5a8945abb51a3fcddab5e47",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/fdm_machine_common.json": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/0.20mm Standard @BBL X1C.json": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_single_0.20.json": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_single_common.json": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_common.json": "d7981c4b92854f251b8697e1bb621c63fe393f263fb8024ab63c401525d543d7",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/Generic PETG.json": "bd00a0a084f9cbfa7287eb1715505847edc4a5c816b82cab2679f6a56edea9b7",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/Generic PETG @base.json": "6f6c6f213537cf75ab87f5eae7454a876ca268208d70f6b241c5396224a95b1a",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/fdm_filament_pet.json": "3ed1b36367fe6df800103a9deaaa036f9d79c7afda3f3a17514dff23aa96c7d8",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548"
+  },
+  "slicing_assumptions": {
+    "layer_height_mm": 0.2,
+    "wall_loops": 4,
+    "infill_percent": 25,
+    "supports": false,
+    "material": "Generic PETG - exact brand unconfirmed",
+    "bed": "Textured PEI for analysis only; user PEI type unconfirmed"
+  },
+  "print_authorized": false,
+  "purpose": "Offline slice audit only"
+}

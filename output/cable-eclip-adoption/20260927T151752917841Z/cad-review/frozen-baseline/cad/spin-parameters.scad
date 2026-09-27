@@ -1,0 +1,69 @@
+// Floating spin head candidate, mm. Source interfaces remain in parameters.scad.
+include <parameters.scad>
+sh_body_od = 58;
+sh_body_length = 75;
+sh_socket_slit = 2.5;
+sh_float_travel = 5.25;
+sh_hold_shift = 5;
+sh_no_contact_budget = 0.5;
+sh_free_intrusion = 3.5;
+sh_soft_backing = 4;
+sh_carrier_thickness = 8;
+sh_carrier_width = 22;
+sh_carrier_z0 = 24;
+sh_carrier_z1 = 62;
+sh_pad_z0 = 26;
+sh_pad_ramp = 6;
+sh_pad_ramp_end_thickness = 0.5;
+sh_pad_total_length = spin_pad_length + 2*sh_pad_ramp;
+sh_pad_total_thickness = spin_pad_thickness + sh_soft_backing;
+sh_pad_face_x = spin_guide_id/2 - sh_free_intrusion;
+sh_carrier_front_x = sh_pad_face_x + sh_pad_total_thickness;
+sh_carrier_back_x = sh_carrier_front_x + sh_carrier_thickness;
+sh_side_clearance = 0.3;
+sh_guide_pin_d = 6;
+sh_guide_pin_length = 35;
+sh_guide_pin_z = [29,57];
+sh_case_back_x = 55;
+sh_cover_thickness = 4;
+sh_spring_axis_z = 43;
+sh_spring_seat_front_x = 49.75;
+sh_preload_travel = 4;
+sh_spring_seat_thickness = 3;
+sh_spring_seat_d = 12.4;
+sh_spring_guide_id = 13;
+sh_spring_guide_od = 19;
+sh_spring_guide_front_x = 39.25;
+sh_spring_envelope_od = 10.5;
+// Design candidate only: Lee Spring LC 016DE 10M, catalog supplied by root.
+// No purchased spring or physical force verification is implied.
+sh_spring_candidate_od = 7.92;
+sh_spring_candidate_free_length = 20.65;
+sh_spring_candidate_wire = 0.41;
+sh_spring_candidate_solid_height = 2.84;
+sh_spring_candidate_rate = 0.14;
+sh_spring_pilot_d = 6;
+sh_clearance_probe_d = 41.5;
+// Removable non-contact latch: pull +X, insert fork from +Z, secure M3.
+sh_pull_z = 57;
+sh_pull_cap_x = sh_carrier_back_x + sh_guide_pin_length;
+sh_pull_cap_length = 6.5;
+sh_pull_cap_d = 12;
+sh_pull_nut_x = 27.25;
+sh_pull_screw_length = 45;
+sh_latch_front_x = sh_case_back_x + sh_cover_thickness;
+sh_latch_thickness = sh_pull_cap_x + sh_hold_shift - sh_latch_front_x;
+sh_latch_slot_d = sh_guide_pin_d + 0.6;
+sh_latch_bolt_z = 69;
+sh_latch_bolt_seat_x = 71;
+sh_latch_nut_x = 55.5;
+sh_latch_screw_length = 16;
+// Opposite guide: complete body shoulder, side-loaded M3 nuts and .5 washer.
+sh_opposite_nut_x = -24.5;
+sh_opposite_nut_depth = 2.7;
+sh_opposite_screw_length = 10;
+sh_opposite_washer_t = 0.5;
+sh_keeper_head_top = 64.75; // DIN7991 D6 head seated in 90-degree D6.5 recess.
+sh_latch_washer_t = 0.5;
+sh_pull_bore_overrun = 0.35;
+sh_eps = 0.02;

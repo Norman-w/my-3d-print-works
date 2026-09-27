@@ -1,0 +1,2089 @@
+{
+  "analysis_kind": "support_candidate_actual_csg_intersection_samples",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "analysis/feeder_supports.py": "3213804b44aa473051e123b0cac1d065c43b0d58806d64cdf6df7aac5c424636"
+  },
+  "scope": "Nominal modeled rigid parts. 41 motion poses, two stop-overtravel positive controls, 21 samples each of three service paths, five screwdriver clearances.",
+  "status": "NOMINAL_CSG_SAMPLES_PASS_PHYSICAL_OPEN",
+  "pass_count": 111,
+  "case_count": 111,
+  "failure_count": 0,
+  "failures": [],
+  "cases": [
+    {
+      "name": "motion-00",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.0
+      },
+      "expected_empty": true,
+      "empty_intersection": false,
+      "nonempty_intersection": true,
+      "zero_thickness_contact_sheet": true,
+      "intersection_volume_mm3": 5.210646728907401e-13,
+      "intersection_bounds_mm": [
+        [
+          53.0,
+          59.0
+        ],
+        [
+          19.000000000000004,
+          25.0
+        ],
+        [
+          5.0,
+          5.0
+        ]
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "counterexample_or_control_stl": "output/analysis/feeder-cases/motion-00.stl",
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-01",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.025
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-02",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.05
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-03",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.075
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-04",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.1
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-05",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.125
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-06",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.15
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-07",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.175
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-08",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.2
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-09",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.225
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-10",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.25
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-11",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.275
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-12",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.3
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-13",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.325
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-14",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.35
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-15",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.375
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-16",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.4
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-17",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.425
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-18",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.45
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-19",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.475
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-20",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-21",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.525
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-22",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.55
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-23",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.575
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-24",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.6
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-25",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.625
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-26",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.65
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-27",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.675
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-28",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.7
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-29",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.725
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-30",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.75
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-31",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.775
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-32",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.8
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-33",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.825
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-34",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.85
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-35",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.875
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-36",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.9
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-37",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.925
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-38",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.95
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-39",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.975
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "motion-40",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 1.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "stop-before-zero",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": -0.025
+      },
+      "expected_empty": false,
+      "empty_intersection": false,
+      "nonempty_intersection": true,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 31.157267533866985,
+      "intersection_bounds_mm": [
+        [
+          -59.0,
+          59.0
+        ],
+        [
+          8.0,
+          25.0
+        ],
+        [
+          -27.698069236967676,
+          5.0
+        ]
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "counterexample_or_control_stl": "output/analysis/feeder-cases/stop-before-zero.stl",
+      "diagnostic": ""
+    },
+    {
+      "name": "stop-beyond-full",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 1.025
+      },
+      "expected_empty": false,
+      "empty_intersection": false,
+      "nonempty_intersection": true,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 31.15726753386889,
+      "intersection_bounds_mm": [
+        [
+          -59.0,
+          59.0
+        ],
+        [
+          8.0,
+          25.0
+        ],
+        [
+          -35.0,
+          -0.8019307630323264
+        ]
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "counterexample_or_control_stl": "output/analysis/feeder-cases/stop-beyond-full.stl",
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-00",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.0
+      },
+      "expected_empty": true,
+      "empty_intersection": false,
+      "nonempty_intersection": true,
+      "zero_thickness_contact_sheet": true,
+      "intersection_volume_mm3": 6.731074031485207e-13,
+      "intersection_bounds_mm": [
+        [
+          -42.97641829867669,
+          43.0
+        ],
+        [
+          1.75,
+          1.75
+        ],
+        [
+          -30.3160819244527,
+          1.816081924452699
+        ]
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "counterexample_or_control_stl": "output/analysis/feeder-cases/remove_pins-00.stl",
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-01",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.05
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-02",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.1
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-03",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.15
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-04",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.2
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-05",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.25
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-06",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.3
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-07",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.35
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-08",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.4
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-09",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.45
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-10",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.5
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-11",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.55
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-12",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.6
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-13",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.65
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-14",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.7
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-15",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.75
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-16",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.8
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-17",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.85
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-18",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.9
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-19",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 0.95
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "remove_pins-20",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "remove_pins",
+        "support_probe_fraction": 1.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-00",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-01",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.05
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-02",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.1
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-03",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.15
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-04",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.2
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-05",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.25
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-06",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.3
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-07",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.35
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-08",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.4
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-09",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.45
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-10",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.5
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-11",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.55
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-12",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.6
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-13",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.65
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-14",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.7
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-15",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.75
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-16",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.8
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-17",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.85
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-18",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.9
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-19",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 0.95
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "lift_frame-20",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "lift_frame",
+        "support_probe_fraction": 1.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-00",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-01",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.05
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-02",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.1
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-03",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.15
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-04",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.2
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-05",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.25
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-06",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.3
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-07",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.35
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-08",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.4
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-09",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.45
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-10",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.5
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-11",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.55
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-12",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.6
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-13",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.65
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-14",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.7
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-15",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.75
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-16",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.8
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-17",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.85
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-18",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.9
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-19",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 0.95
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "extract_fingers-20",
+      "definitions": {
+        "support_part": "probe",
+        "support_fraction": 0.5,
+        "support_probe_kind": "extract_fingers",
+        "support_probe_fraction": 1.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "tool-00",
+      "definitions": {
+        "support_part": "tool_probe",
+        "support_fraction": 0.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "tool-10",
+      "definitions": {
+        "support_part": "tool_probe",
+        "support_fraction": 0.25
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "tool-20",
+      "definitions": {
+        "support_part": "tool_probe",
+        "support_fraction": 0.5
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "tool-30",
+      "definitions": {
+        "support_part": "tool_probe",
+        "support_fraction": 0.75
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    },
+    {
+      "name": "tool-40",
+      "definitions": {
+        "support_part": "tool_probe",
+        "support_fraction": 1.0
+      },
+      "expected_empty": true,
+      "empty_intersection": true,
+      "nonempty_intersection": false,
+      "zero_thickness_contact_sheet": false,
+      "intersection_volume_mm3": 0,
+      "intersection_bounds_mm": null,
+      "passed": true,
+      "exit_code": 1,
+      "counterexample_or_control_stl": null,
+      "diagnostic": ""
+    }
+  ],
+  "limits": [
+    "Finite samples do not prove a continuous collision-free path.",
+    "Thread unwinding is represented as axial extraction; no thread-force simulation.",
+    "Body reference is not the root's finished sealed body or connectors.",
+    "No structural stiffness, return-force, airflow, printing tolerance or wear acceptance.",
+    "Spring dimensions and preload remain unselected; only adjustable M3 interfaces exist."
+  ]
+}

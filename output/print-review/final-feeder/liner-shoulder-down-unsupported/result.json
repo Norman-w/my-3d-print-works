@@ -1,0 +1,60 @@
+{
+    "error_string": "Success.",
+    "export_time": 427,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 20,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Custom": 428.6727600097656,
+                "Flush": 29.0,
+                "Gap infill": 60.357295989990234,
+                "Inner wall": 2097.4638671875,
+                "Outer wall": 2225.731201171875,
+                "Top surface": 15.397354125976563,
+                "Travel": 190.1597900390625,
+                "Undefined": 174.8839111328125
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 20.656492233276367,
+                    "total_used_g": 20.656492233276367
+                }
+            ],
+            "generate_support_material_time": 95,
+            "id": 1,
+            "infill_time": 35,
+            "layer_filament_change": 0,
+            "main_predication": 4560.068359375,
+            "make_perimeters_time": 249,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 65.32814025878906,
+                        "height": 74.0,
+                        "width": 65.32814025878906,
+                        "x": 95.33592224121094,
+                        "y": 95.33592987060547,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "liner.stl",
+                    "triangle_count": 1296
+                }
+            ],
+            "sliced_time": 1725,
+            "sliced_time_with_cache": 1302,
+            "total_predication": 5031.4345703125,
+            "triangle_count": 1296,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+}

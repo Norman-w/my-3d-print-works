@@ -1,0 +1,721 @@
+{
+  "family": "frame-y-gib",
+  "slice_folder": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported",
+  "quantity": 2,
+  "status": "BOUNDED_PATH_CHECKS_PASS_PHYSICAL_OPEN",
+  "checks": {
+    "native_success": true,
+    "native_warning_empty": true,
+    "actual_quantity": true,
+    "actual_gcode_identity": true,
+    "3mf_identity": true,
+    "profile_identity": true,
+    "sources_current": true,
+    "shared_profiles_untouched": true,
+    "actual_X1C_04_PETG": true,
+    "actual_process": true,
+    "support_mode_matches": true,
+    "units_mm": true,
+    "no_scale_or_reflection": true,
+    "intended_face_to_bed": true,
+    "mesh_correspondence": true,
+    "bed_model_brim_support_bounds": true,
+    "no_unrequested_support": true
+  },
+  "warnings": [
+    ""
+  ],
+  "sources_and_artifacts_stable": true,
+  "source_sha256_at_slice": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-manufacturing/feeder-new/slice.py": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+    "scripts/review_final_feeder_slice.py": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea"
+  },
+  "artifacts": {
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/invocation.json": "508432b9ff468460bc97b0be82afefb7b7aa7b0220676f1201609166a73680be",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/slice-review.3mf": "379d3874c7cbcece324583d712016d175b8b9e1371e7bae512cc1b1637ca7608",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/plate_1.gcode": "47fa56d7bad57908860041bca6aaa54dd6d63205c212d36e8af76c7a11e90cc1",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/process.json": "3377a6c27c8ac3db3f4ef0c53d2316eb47676b0d3b1942d2dd01e0d0563cf1e6",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "instances": [
+    {
+      "instance_id": "feeder/frame-y-gib-right",
+      "input": {
+        "id": "frame-y-gib-right",
+        "name": "右公共架Y压条",
+        "role": "printed",
+        "group": "feeder",
+        "family": "frame-y-gib",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "frame-y-gib",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"frame-y-gib\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "bytes": 14099,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 68,
+          "uniqueVertexCount": 36,
+          "bounds": {
+            "min": [
+              53.5,
+              24.099998474121094,
+              -33.5
+            ],
+            "max": [
+              60.5,
+              27.099998474121094,
+              3.5
+            ],
+            "size": [
+              7.0,
+              3.0,
+              37.0
+            ]
+          },
+          "surfaceArea": 616.5999946594238,
+          "signedVolume": 443.79998397827114,
+          "volume": 443.79998397827114,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 36
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/frame-y-gib-right"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__frame-y-gib-right.stl",
+        "archive_member": "3D/Objects/object_1.model",
+        "archive_object_id": "1",
+        "build_id": "2",
+        "source_offset": [
+          57.0,
+          25.599998474121094,
+          -15.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            132.49999
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            128.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            1.5
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            75.49999
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            141.0
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            27.099998474121097
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 68,
+        "actual_3mf_triangles": 68,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 2.939451348993316e-09,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 443.7999839782715,
+        "volume_actual_3mf_mm3": 443.79998400400115,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "work_tooth_-33.5",
+          "lo": [
+            54.3,
+            24.08,
+            -33.4
+          ],
+          "hi": [
+            57.7,
+            24.12,
+            -27.6
+          ],
+          "kind": "datum",
+          "note": "",
+          "pick": false,
+          "instance_id": "feeder/frame-y-gib-right",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        },
+        {
+          "name": "work_tooth_-2.5",
+          "lo": [
+            54.3,
+            24.08,
+            -2.4
+          ],
+          "hi": [
+            57.7,
+            24.12,
+            3.4
+          ],
+          "kind": "datum",
+          "note": "",
+          "pick": false,
+          "instance_id": "feeder/frame-y-gib-right",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        }
+      ]
+    },
+    {
+      "instance_id": "feeder/frame-y-gib-left",
+      "input": {
+        "id": "frame-y-gib-left",
+        "name": "左公共架Y压条",
+        "role": "printed",
+        "group": "feeder",
+        "family": "frame-y-gib",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "frame-y-gib",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"frame-y-gib\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "bytes": 14305,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 68,
+          "uniqueVertexCount": 36,
+          "bounds": {
+            "min": [
+              -60.5,
+              24.099998474121094,
+              -33.5
+            ],
+            "max": [
+              -53.5,
+              27.099998474121094,
+              3.5
+            ],
+            "size": [
+              7.0,
+              3.0,
+              37.0
+            ]
+          },
+          "surfaceArea": 616.5999946594238,
+          "signedVolume": 443.7999839782715,
+          "volume": 443.7999839782715,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 36
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/frame-y-gib-left"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__frame-y-gib-left.stl",
+        "archive_member": "3D/Objects/object_2.model",
+        "archive_object_id": "3",
+        "build_id": "4",
+        "source_offset": [
+          -57.0,
+          25.599998474121094,
+          -15.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            123.50001
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            127.99999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            1.5
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            180.50001
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            1.0,
+            140.99999
+          ],
+          [
+            0.0,
+            -1.0,
+            2.22044605e-16,
+            27.099998474121097
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 68,
+        "actual_3mf_triangles": 68,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 2.939451348993316e-09,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 443.7999839782715,
+        "volume_actual_3mf_mm3": 443.79998400399785,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "work_tooth_-33.5",
+          "lo": [
+            -57.7,
+            24.08,
+            -33.4
+          ],
+          "hi": [
+            -54.3,
+            24.12,
+            -27.6
+          ],
+          "kind": "datum",
+          "note": "",
+          "pick": false,
+          "instance_id": "feeder/frame-y-gib-left",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        },
+        {
+          "name": "work_tooth_-2.5",
+          "lo": [
+            -57.7,
+            24.08,
+            -2.4
+          ],
+          "hi": [
+            -54.3,
+            24.12,
+            3.4
+          ],
+          "kind": "datum",
+          "note": "",
+          "pick": false,
+          "instance_id": "feeder/frame-y-gib-left",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": []
+        }
+      ]
+    }
+  ],
+  "support_path_records": 0,
+  "feature_counts": {
+    "Inner wall": 684,
+    "Outer wall": 264,
+    "Bottom surface": 210,
+    "Internal solid infill": 485,
+    "Sparse infill": 132,
+    "Floating vertical shell": 98,
+    "Gap infill": 38,
+    "Top surface": 262
+  },
+  "extrusion_bounds": [
+    [
+      119.99793613032723,
+      107.49793613032723,
+      0.0
+    ],
+    [
+      136.00206386967275,
+      144.50206386967275,
+      3.0
+    ]
+  ],
+  "bed_violations": [],
+  "first_model_layer_footprint_mm2": 365.55910644485186,
+  "bridge_paths": [],
+  "exact_datum_checks": [],
+  "pending_review": [],
+  "layer_image": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/frame-y-gib-common-back-down-unsupported/layer-path-review.png",
+  "resolved_process": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "filament_settings_id": [
+      "Generic PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.2",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "0",
+    "support_type": "tree(auto)",
+    "support_top_z_distance": "0.2",
+    "support_object_xy_distance": "0.35"
+  },
+  "method": "Actual G-code positive extrusion with .00125 mm maximum arc sagitta, width/2+.002 mm circumscribed footprint and full layer slab; explicit 3MF affine maps. Feature box intersections are conservative. Core checks are finite declared pick paths, not entire-hole dimensional acceptance. Exact X54 face disambiguates only that specific datum.",
+  "limits": [
+    "No physical support separation/grip/debris or dimensional/strength proof.",
+    "Bridge path length is not unsupported span.",
+    "Open channels require clipping tree branches before gibs, nuts, keeper, hose or host installation.",
+    "Textured PEI and Generic PETG remain analysis assumptions."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false,
+  "auditor_sha256": "51253cf850e231d702b3a642cedd1ece1468a3592d3df36e05cbf0031ddceb4b",
+  "auditor_archived_source": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/first-probe-definition/review.py"
+}

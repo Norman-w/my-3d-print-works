@@ -1,0 +1,1 @@
+intersection(){import("/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/runs/20260927T133316103433Z/body-0.stl");import("/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__hardware-fixed.stl");}

@@ -1,0 +1,10 @@
+[
+  {
+    "part": "cable-input-body",
+    "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T074329750806Z/cable-input-body",
+    "warnings": [
+      "It seems object oriented.stl has floating cantilever. Please re-orient the object or enable support generation."
+    ]
+  }
+]

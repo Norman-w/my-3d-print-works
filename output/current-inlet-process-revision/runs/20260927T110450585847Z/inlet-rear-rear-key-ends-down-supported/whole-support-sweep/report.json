@@ -1,0 +1,3552 @@
+{
+  "status": "WHOLE_SUPPORT_DOWNWARD_SWEEP_BLOCKED",
+  "instance_id": "feeder/inlet-rear",
+  "source_stl": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+  "source_stl_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+  "slice_folder": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported",
+  "selected_3mf": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf",
+  "selected_3mf_sha256": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+  "gcode": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode",
+  "gcode_sha256": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+  "cad_to_gcode": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      127.99999
+    ],
+    [
+      0.0,
+      2.22044605e-16,
+      -1.0,
+      -2.5
+    ],
+    [
+      0.0,
+      1.0,
+      2.22044605e-16,
+      53.79999872316287
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "extraction_cad_unit_vector": [
+    0.0,
+    -1.0,
+    -2.22044605e-16
+  ],
+  "support_record_count": 68080,
+  "brim_record_count": 0,
+  "path_records": {
+    "support": 68080,
+    "model": 46183
+  },
+  "height_values": [
+    {
+      "kind": "support",
+      "height": 0.2,
+      "count": 39162
+    },
+    {
+      "kind": "model",
+      "height": 0.2,
+      "count": 13174
+    },
+    {
+      "kind": "support",
+      "height": 0.200001,
+      "count": 20524
+    },
+    {
+      "kind": "model",
+      "height": 0.200001,
+      "count": 22889
+    },
+    {
+      "kind": "model",
+      "height": 0.4,
+      "count": 968
+    },
+    {
+      "kind": "support",
+      "height": 0.199999,
+      "count": 6201
+    },
+    {
+      "kind": "model",
+      "height": 0.199999,
+      "count": 6059
+    },
+    {
+      "kind": "support",
+      "height": 0.199997,
+      "count": 2193
+    },
+    {
+      "kind": "model",
+      "height": 0.199997,
+      "count": 3093
+    }
+  ],
+  "support_slabs": 226,
+  "blocked_slabs": 7,
+  "all_slabs_clear_of_current_STL_and_actual_model": false,
+  "rows": [
+    {
+      "print_top_z": 0.2,
+      "print_bottom_z": 0.0,
+      "support_area_mm2": 3465.4536862307214,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        1240,
+        2173
+      ]
+    },
+    {
+      "print_top_z": 0.4,
+      "print_bottom_z": 0.2,
+      "support_area_mm2": 516.3380578200816,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        2467,
+        3411
+      ]
+    },
+    {
+      "print_top_z": 0.6,
+      "print_bottom_z": 0.39999999999999997,
+      "support_area_mm2": 521.2986979997712,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        3637,
+        4551
+      ]
+    },
+    {
+      "print_top_z": 0.8,
+      "print_bottom_z": 0.6000000000000001,
+      "support_area_mm2": 528.5222293779993,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        4774,
+        5768
+      ]
+    },
+    {
+      "print_top_z": 1.0,
+      "print_bottom_z": 0.8,
+      "support_area_mm2": 543.5555770882924,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        5998,
+        7058
+      ]
+    },
+    {
+      "print_top_z": 1.2,
+      "print_bottom_z": 1.0,
+      "support_area_mm2": 551.0481621162586,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        7286,
+        8422
+      ]
+    },
+    {
+      "print_top_z": 1.4,
+      "print_bottom_z": 1.2,
+      "support_area_mm2": 571.9846140256914,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        8652,
+        9868
+      ]
+    },
+    {
+      "print_top_z": 1.6,
+      "print_bottom_z": 1.4000000000000001,
+      "support_area_mm2": 613.3511875107793,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        10096,
+        11417
+      ]
+    },
+    {
+      "print_top_z": 1.8,
+      "print_bottom_z": 1.6,
+      "support_area_mm2": 630.2577606037405,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        11640,
+        13052
+      ]
+    },
+    {
+      "print_top_z": 2.0,
+      "print_bottom_z": 1.8,
+      "support_area_mm2": 664.1951923636316,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        13280,
+        14656
+      ]
+    },
+    {
+      "print_top_z": 2.2,
+      "print_bottom_z": 2.0,
+      "support_area_mm2": 686.4524865299975,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        14882,
+        16273
+      ]
+    },
+    {
+      "print_top_z": 2.4,
+      "print_bottom_z": 2.1999999999999997,
+      "support_area_mm2": 668.534068350905,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        16499,
+        17809
+      ]
+    },
+    {
+      "print_top_z": 2.6,
+      "print_bottom_z": 2.4,
+      "support_area_mm2": 646.7228485633635,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        18037,
+        19323
+      ]
+    },
+    {
+      "print_top_z": 2.8,
+      "print_bottom_z": 2.5999999999999996,
+      "support_area_mm2": 574.3569350210519,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        19552,
+        20860
+      ]
+    },
+    {
+      "print_top_z": 3.0,
+      "print_bottom_z": 2.8,
+      "support_area_mm2": 552.2093069422042,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        21089,
+        22526
+      ]
+    },
+    {
+      "print_top_z": 3.2,
+      "print_bottom_z": 3.0,
+      "support_area_mm2": 539.816201831928,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        22752,
+        24430
+      ]
+    },
+    {
+      "print_top_z": 3.4,
+      "print_bottom_z": 3.1999999999999997,
+      "support_area_mm2": 522.0445933497338,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        24660,
+        26670
+      ]
+    },
+    {
+      "print_top_z": 3.6,
+      "print_bottom_z": 3.4,
+      "support_area_mm2": 537.7731348650019,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        26897,
+        29352
+      ]
+    },
+    {
+      "print_top_z": 3.8,
+      "print_bottom_z": 3.5999999999999996,
+      "support_area_mm2": 560.1118168775159,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        29579,
+        32395
+      ]
+    },
+    {
+      "print_top_z": 4.0,
+      "print_bottom_z": 3.8,
+      "support_area_mm2": 584.0985922345225,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        32622,
+        35732
+      ]
+    },
+    {
+      "print_top_z": 4.2,
+      "print_bottom_z": 4.0,
+      "support_area_mm2": 603.3203903432919,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        35961,
+        39112
+      ]
+    },
+    {
+      "print_top_z": 4.4,
+      "print_bottom_z": 4.2,
+      "support_area_mm2": 620.2823954614976,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        39341,
+        42693
+      ]
+    },
+    {
+      "print_top_z": 4.6,
+      "print_bottom_z": 4.3999999999999995,
+      "support_area_mm2": 644.5472538100363,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        42921,
+        46826
+      ]
+    },
+    {
+      "print_top_z": 4.8,
+      "print_bottom_z": 4.6,
+      "support_area_mm2": 666.1227519371109,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        47056,
+        51324
+      ]
+    },
+    {
+      "print_top_z": 5.0,
+      "print_bottom_z": 4.8,
+      "support_area_mm2": 698.6499132010854,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        51553,
+        56399
+      ]
+    },
+    {
+      "print_top_z": 5.2,
+      "print_bottom_z": 5.0,
+      "support_area_mm2": 591.436008198767,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        56629,
+        60225
+      ]
+    },
+    {
+      "print_top_z": 5.4,
+      "print_bottom_z": 5.2,
+      "support_area_mm2": 925.3281775613158,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        60449,
+        61241
+      ]
+    },
+    {
+      "print_top_z": 5.6,
+      "print_bottom_z": 5.3999999999999995,
+      "support_area_mm2": 929.0614079939809,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        61466,
+        62279
+      ]
+    },
+    {
+      "print_top_z": 5.8,
+      "print_bottom_z": 5.6,
+      "support_area_mm2": 141.92410253417407,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        62504,
+        62938
+      ]
+    },
+    {
+      "print_top_z": 6.0,
+      "print_bottom_z": 5.8,
+      "support_area_mm2": 144.29156553151776,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        63173,
+        63624
+      ]
+    },
+    {
+      "print_top_z": 6.2,
+      "print_bottom_z": 6.0,
+      "support_area_mm2": 145.2257428611253,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        64969,
+        65431
+      ]
+    },
+    {
+      "print_top_z": 6.4,
+      "print_bottom_z": 6.2,
+      "support_area_mm2": 146.70309193860737,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        66324,
+        66784
+      ]
+    },
+    {
+      "print_top_z": 6.6,
+      "print_bottom_z": 6.3999999999999995,
+      "support_area_mm2": 149.27269417787156,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        67919,
+        68397
+      ]
+    },
+    {
+      "print_top_z": 6.8,
+      "print_bottom_z": 6.6,
+      "support_area_mm2": 151.6091599770868,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        68906,
+        69405
+      ]
+    },
+    {
+      "print_top_z": 7.0,
+      "print_bottom_z": 6.8,
+      "support_area_mm2": 155.04288648886114,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        69911,
+        70431
+      ]
+    },
+    {
+      "print_top_z": 7.2,
+      "print_bottom_z": 7.0,
+      "support_area_mm2": 158.01518930571672,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        70937,
+        71471
+      ]
+    },
+    {
+      "print_top_z": 7.4,
+      "print_bottom_z": 7.2,
+      "support_area_mm2": 159.073802908902,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        71980,
+        72525
+      ]
+    },
+    {
+      "print_top_z": 7.6,
+      "print_bottom_z": 7.3999999999999995,
+      "support_area_mm2": 161.06146087883283,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        73034,
+        73591
+      ]
+    },
+    {
+      "print_top_z": 7.8,
+      "print_bottom_z": 7.6,
+      "support_area_mm2": 163.7444477991524,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        74102,
+        74659
+      ]
+    },
+    {
+      "print_top_z": 8.0,
+      "print_bottom_z": 7.8,
+      "support_area_mm2": 168.62792680830344,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        75171,
+        75764
+      ]
+    },
+    {
+      "print_top_z": 8.2,
+      "print_bottom_z": 7.999999999999999,
+      "support_area_mm2": 172.27219243670993,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        76276,
+        76877
+      ]
+    },
+    {
+      "print_top_z": 8.4,
+      "print_bottom_z": 8.200000000000001,
+      "support_area_mm2": 176.60036704048298,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        77391,
+        78017
+      ]
+    },
+    {
+      "print_top_z": 8.6,
+      "print_bottom_z": 8.399999,
+      "support_area_mm2": 179.6805539080269,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        78529,
+        79168
+      ]
+    },
+    {
+      "print_top_z": 8.8,
+      "print_bottom_z": 8.600000000000001,
+      "support_area_mm2": 184.5205530049694,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        79675,
+        80370
+      ]
+    },
+    {
+      "print_top_z": 9.0,
+      "print_bottom_z": 8.8,
+      "support_area_mm2": 186.14802305843997,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        80884,
+        81575
+      ]
+    },
+    {
+      "print_top_z": 9.2,
+      "print_bottom_z": 9.0,
+      "support_area_mm2": 188.2654892110721,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        82084,
+        82789
+      ]
+    },
+    {
+      "print_top_z": 9.4,
+      "print_bottom_z": 9.200000000000001,
+      "support_area_mm2": 192.93974507568623,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        83302,
+        84026
+      ]
+    },
+    {
+      "print_top_z": 9.6,
+      "print_bottom_z": 9.399999,
+      "support_area_mm2": 194.47895216600762,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        84536,
+        85283
+      ]
+    },
+    {
+      "print_top_z": 9.8,
+      "print_bottom_z": 9.600000000000001,
+      "support_area_mm2": 194.86084453113938,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        85869,
+        86588
+      ]
+    },
+    {
+      "print_top_z": 10.0,
+      "print_bottom_z": 9.8,
+      "support_area_mm2": 195.2441749033456,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        87191,
+        87906
+      ]
+    },
+    {
+      "print_top_z": 10.2,
+      "print_bottom_z": 10.0,
+      "support_area_mm2": 197.4794460555376,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        88510,
+        89250
+      ]
+    },
+    {
+      "print_top_z": 10.4,
+      "print_bottom_z": 10.200000000000001,
+      "support_area_mm2": 199.6092853995035,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        89845,
+        90607
+      ]
+    },
+    {
+      "print_top_z": 10.6,
+      "print_bottom_z": 10.399999,
+      "support_area_mm2": 200.74741229173938,
+      "model_sweep_hit_area_mm2": 3.0947460246835274,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        91199,
+        91976
+      ],
+      "hit_bounds_print_xy": [
+        96.99793613032723,
+        122.79793613032724,
+        159.00206386967275,
+        123.23319828035244
+      ]
+    },
+    {
+      "print_top_z": 10.8,
+      "print_bottom_z": 10.600000000000001,
+      "support_area_mm2": 202.92964989895344,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        92571,
+        93364
+      ]
+    },
+    {
+      "print_top_z": 11.0,
+      "print_bottom_z": 10.8,
+      "support_area_mm2": 203.50058376690993,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        94122,
+        94917
+      ]
+    },
+    {
+      "print_top_z": 11.2,
+      "print_bottom_z": 11.0,
+      "support_area_mm2": 207.33779405489702,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        96079,
+        96918
+      ]
+    },
+    {
+      "print_top_z": 11.4,
+      "print_bottom_z": 11.200000000000001,
+      "support_area_mm2": 210.2030336703549,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        98159,
+        99016
+      ]
+    },
+    {
+      "print_top_z": 11.6,
+      "print_bottom_z": 11.399999,
+      "support_area_mm2": 208.9856362557347,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        100248,
+        101103
+      ]
+    },
+    {
+      "print_top_z": 11.8,
+      "print_bottom_z": 11.600000000000001,
+      "support_area_mm2": 209.0678988438995,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        102367,
+        103224
+      ]
+    },
+    {
+      "print_top_z": 12.0,
+      "print_bottom_z": 11.8,
+      "support_area_mm2": 209.97301472824614,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        104625,
+        105489
+      ]
+    },
+    {
+      "print_top_z": 12.2,
+      "print_bottom_z": 12.0,
+      "support_area_mm2": 213.1466803056181,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        106007,
+        106892
+      ]
+    },
+    {
+      "print_top_z": 12.4,
+      "print_bottom_z": 12.200000000000001,
+      "support_area_mm2": 216.87349739433034,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        107421,
+        108352
+      ]
+    },
+    {
+      "print_top_z": 12.6,
+      "print_bottom_z": 12.399999,
+      "support_area_mm2": 218.95018189744917,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        108653,
+        109623
+      ]
+    },
+    {
+      "print_top_z": 12.8,
+      "print_bottom_z": 12.600000000000001,
+      "support_area_mm2": 218.82951785325588,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        109913,
+        110866
+      ]
+    },
+    {
+      "print_top_z": 13.0,
+      "print_bottom_z": 12.8,
+      "support_area_mm2": 220.9794185667934,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        111155,
+        112121
+      ]
+    },
+    {
+      "print_top_z": 13.2,
+      "print_bottom_z": 13.0,
+      "support_area_mm2": 223.0909071302841,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        112413,
+        113390
+      ]
+    },
+    {
+      "print_top_z": 13.4,
+      "print_bottom_z": 13.200000000000001,
+      "support_area_mm2": 226.79254818699755,
+      "model_sweep_hit_area_mm2": 0.040222310853804386,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        113678,
+        114676
+      ],
+      "hit_bounds_print_xy": [
+        155.33406589613918,
+        118.36293613032724,
+        156.09340029923789,
+        118.46004512151167
+      ]
+    },
+    {
+      "print_top_z": 13.6,
+      "print_bottom_z": 13.399999,
+      "support_area_mm2": 229.13072524907093,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        114977,
+        115983
+      ]
+    },
+    {
+      "print_top_z": 13.8,
+      "print_bottom_z": 13.600000000000001,
+      "support_area_mm2": 231.89250061265346,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        116268,
+        117289
+      ]
+    },
+    {
+      "print_top_z": 14.0,
+      "print_bottom_z": 13.8,
+      "support_area_mm2": 236.7270145585346,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        117573,
+        118629
+      ]
+    },
+    {
+      "print_top_z": 14.2,
+      "print_bottom_z": 14.0,
+      "support_area_mm2": 239.00398249738643,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        118922,
+        119991
+      ]
+    },
+    {
+      "print_top_z": 14.4,
+      "print_bottom_z": 14.200000000000001,
+      "support_area_mm2": 244.02804839346476,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        120284,
+        121422
+      ]
+    },
+    {
+      "print_top_z": 14.6,
+      "print_bottom_z": 14.399999,
+      "support_area_mm2": 248.58828210647494,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        121708,
+        122884
+      ]
+    },
+    {
+      "print_top_z": 14.8,
+      "print_bottom_z": 14.600000000000001,
+      "support_area_mm2": 251.24662761463952,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        123168,
+        124348
+      ]
+    },
+    {
+      "print_top_z": 15.0,
+      "print_bottom_z": 14.8,
+      "support_area_mm2": 258.3052416066408,
+      "model_sweep_hit_area_mm2": 5.299166204875758e-05,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        124636,
+        125857
+      ],
+      "hit_bounds_print_xy": [
+        97.07542143513773,
+        115.65657797588547,
+        97.11281190375247,
+        115.68111266989177
+      ]
+    },
+    {
+      "print_top_z": 15.2,
+      "print_bottom_z": 15.0,
+      "support_area_mm2": 264.8429504217175,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        126145,
+        127432
+      ]
+    },
+    {
+      "print_top_z": 15.4,
+      "print_bottom_z": 15.200000000000001,
+      "support_area_mm2": 270.1261985527522,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        127720,
+        129059
+      ]
+    },
+    {
+      "print_top_z": 15.6,
+      "print_bottom_z": 15.399999,
+      "support_area_mm2": 281.78124893421045,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        129346,
+        130793
+      ]
+    },
+    {
+      "print_top_z": 15.8,
+      "print_bottom_z": 15.600000000000001,
+      "support_area_mm2": 289.8561626153206,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        131081,
+        132598
+      ]
+    },
+    {
+      "print_top_z": 16.0,
+      "print_bottom_z": 15.8,
+      "support_area_mm2": 298.7194525922781,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        132888,
+        134479
+      ]
+    },
+    {
+      "print_top_z": 16.2,
+      "print_bottom_z": 15.999998999999999,
+      "support_area_mm2": 303.63063705201154,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        134771,
+        136413
+      ]
+    },
+    {
+      "print_top_z": 16.4,
+      "print_bottom_z": 16.200001,
+      "support_area_mm2": 309.02742075066607,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        136708,
+        138388
+      ]
+    },
+    {
+      "print_top_z": 16.6,
+      "print_bottom_z": 16.399999,
+      "support_area_mm2": 321.11617039417973,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        138693,
+        140529
+      ]
+    },
+    {
+      "print_top_z": 16.8,
+      "print_bottom_z": 16.600001000000002,
+      "support_area_mm2": 311.0791369095975,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        140818,
+        142718
+      ]
+    },
+    {
+      "print_top_z": 17.0,
+      "print_bottom_z": 16.799999,
+      "support_area_mm2": 354.177671608573,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        143006,
+        144618
+      ]
+    },
+    {
+      "print_top_z": 17.2,
+      "print_bottom_z": 16.999999,
+      "support_area_mm2": 368.78407356350357,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        144914,
+        146536
+      ]
+    },
+    {
+      "print_top_z": 17.4,
+      "print_bottom_z": 17.200001,
+      "support_area_mm2": 302.79517982480724,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        146824,
+        148355
+      ]
+    },
+    {
+      "print_top_z": 17.6,
+      "print_bottom_z": 17.399999,
+      "support_area_mm2": 283.38579744820436,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        148642,
+        150053
+      ]
+    },
+    {
+      "print_top_z": 17.8,
+      "print_bottom_z": 17.600001000000002,
+      "support_area_mm2": 262.7653243229743,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        150431,
+        151725
+      ]
+    },
+    {
+      "print_top_z": 18.0,
+      "print_bottom_z": 17.799999,
+      "support_area_mm2": 249.45811292541885,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        152342,
+        153563
+      ]
+    },
+    {
+      "print_top_z": 18.2,
+      "print_bottom_z": 17.999999,
+      "support_area_mm2": 242.4259019297118,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        154185,
+        155508
+      ]
+    },
+    {
+      "print_top_z": 18.4,
+      "print_bottom_z": 18.200001,
+      "support_area_mm2": 226.63234810600989,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        156029,
+        157216
+      ]
+    },
+    {
+      "print_top_z": 18.6,
+      "print_bottom_z": 18.399999,
+      "support_area_mm2": 215.6744174548668,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        157755,
+        158858
+      ]
+    },
+    {
+      "print_top_z": 18.8,
+      "print_bottom_z": 18.600001000000002,
+      "support_area_mm2": 199.41607412387918,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        159396,
+        160327
+      ]
+    },
+    {
+      "print_top_z": 19.0,
+      "print_bottom_z": 18.799999,
+      "support_area_mm2": 189.6502967493789,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        160847,
+        161685
+      ]
+    },
+    {
+      "print_top_z": 19.2,
+      "print_bottom_z": 18.999999,
+      "support_area_mm2": 179.5222701459315,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        162198,
+        162989
+      ]
+    },
+    {
+      "print_top_z": 19.4,
+      "print_bottom_z": 19.200001,
+      "support_area_mm2": 167.9552728787606,
+      "model_sweep_hit_area_mm2": 0.19792975153279266,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        163490,
+        164237
+      ],
+      "hit_bounds_print_xy": [
+        115.50293161124662,
+        103.20370935472559,
+        115.78604562291932,
+        104.43547121820527
+      ]
+    },
+    {
+      "print_top_z": 19.6,
+      "print_bottom_z": 19.399999,
+      "support_area_mm2": 152.27041766941846,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.08719665999812162,
+      "stl_sweep_hit_length_mm": null,
+      "clear_model": true,
+      "clear_current_stl": false,
+      "support_line_range": [
+        164747,
+        165321
+      ],
+      "hit_bounds_print_xy": [
+        140.5159684382745,
+        109.34630074102601,
+        140.72220952530165,
+        110.02909392527116
+      ]
+    },
+    {
+      "print_top_z": 19.8,
+      "print_bottom_z": 19.600001000000002,
+      "support_area_mm2": 142.75015179717008,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        165823,
+        166386
+      ]
+    },
+    {
+      "print_top_z": 20.0,
+      "print_bottom_z": 19.799999,
+      "support_area_mm2": 136.22304110941,
+      "model_sweep_hit_area_mm2": 0.0313967077130242,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        166870,
+        167379
+      ],
+      "hit_bounds_print_xy": [
+        100.0029462653917,
+        107.10393613032724,
+        101.88666615958445,
+        107.20906208114772
+      ]
+    },
+    {
+      "print_top_z": 20.2,
+      "print_bottom_z": 19.999999,
+      "support_area_mm2": 130.5855499308586,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        167864,
+        168331
+      ]
+    },
+    {
+      "print_top_z": 20.4,
+      "print_bottom_z": 20.200001,
+      "support_area_mm2": 129.280913863693,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        168814,
+        169387
+      ]
+    },
+    {
+      "print_top_z": 20.6,
+      "print_bottom_z": 20.399999,
+      "support_area_mm2": 120.90134907808164,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        169867,
+        170393
+      ]
+    },
+    {
+      "print_top_z": 20.8,
+      "print_bottom_z": 20.600001000000002,
+      "support_area_mm2": 118.36391909372313,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        170882,
+        171381
+      ]
+    },
+    {
+      "print_top_z": 21.0,
+      "print_bottom_z": 20.799999,
+      "support_area_mm2": 117.87910388801103,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        171854,
+        172384
+      ]
+    },
+    {
+      "print_top_z": 21.2,
+      "print_bottom_z": 20.999999,
+      "support_area_mm2": 116.40845730159054,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        172829,
+        173381
+      ]
+    },
+    {
+      "print_top_z": 21.4,
+      "print_bottom_z": 21.200001,
+      "support_area_mm2": 111.39018741706104,
+      "model_sweep_hit_area_mm2": 0.012455815257506945,
+      "model_sweep_hit_length_mm": null,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": false,
+      "clear_current_stl": true,
+      "support_line_range": [
+        173841,
+        174415
+      ],
+      "hit_bounds_print_xy": [
+        111.07393613032724,
+        105.17370571325232,
+        111.11203134436352,
+        105.77522707739817
+      ]
+    },
+    {
+      "print_top_z": 21.6,
+      "print_bottom_z": 21.399999,
+      "support_area_mm2": 106.26003433092902,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        174869,
+        175470
+      ]
+    },
+    {
+      "print_top_z": 21.8,
+      "print_bottom_z": 21.600001000000002,
+      "support_area_mm2": 99.2999620410958,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        175927,
+        176570
+      ]
+    },
+    {
+      "print_top_z": 22.0,
+      "print_bottom_z": 21.799999,
+      "support_area_mm2": 82.19600322635061,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        177032,
+        177659
+      ]
+    },
+    {
+      "print_top_z": 22.2,
+      "print_bottom_z": 21.999999,
+      "support_area_mm2": 50.77099084185268,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        178124,
+        178370
+      ]
+    },
+    {
+      "print_top_z": 22.4,
+      "print_bottom_z": 22.200001,
+      "support_area_mm2": 40.56323697987909,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        178838,
+        179110
+      ]
+    },
+    {
+      "print_top_z": 22.6,
+      "print_bottom_z": 22.399999,
+      "support_area_mm2": 33.487737176440916,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        179658,
+        179734
+      ]
+    },
+    {
+      "print_top_z": 22.8,
+      "print_bottom_z": 22.600001000000002,
+      "support_area_mm2": 33.232580740298154,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        180388,
+        180463
+      ]
+    },
+    {
+      "print_top_z": 23.0,
+      "print_bottom_z": 22.799999,
+      "support_area_mm2": 32.95023429382494,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        181073,
+        181145
+      ]
+    },
+    {
+      "print_top_z": 23.2,
+      "print_bottom_z": 22.999999,
+      "support_area_mm2": 32.6676090506706,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        181743,
+        181815
+      ]
+    },
+    {
+      "print_top_z": 23.4,
+      "print_bottom_z": 23.200001,
+      "support_area_mm2": 32.37649889746979,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        182368,
+        182438
+      ]
+    },
+    {
+      "print_top_z": 23.6,
+      "print_bottom_z": 23.399999,
+      "support_area_mm2": 32.16572837401346,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        183121,
+        183187
+      ]
+    },
+    {
+      "print_top_z": 23.8,
+      "print_bottom_z": 23.600001000000002,
+      "support_area_mm2": 31.895993496236667,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        183926,
+        183995
+      ]
+    },
+    {
+      "print_top_z": 24.0,
+      "print_bottom_z": 23.799999,
+      "support_area_mm2": 31.70036604352181,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        184689,
+        184759
+      ]
+    },
+    {
+      "print_top_z": 24.2,
+      "print_bottom_z": 23.999999,
+      "support_area_mm2": 31.528678690481765,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        185437,
+        185515
+      ]
+    },
+    {
+      "print_top_z": 24.4,
+      "print_bottom_z": 24.200001,
+      "support_area_mm2": 31.489556097997962,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        186162,
+        186237
+      ]
+    },
+    {
+      "print_top_z": 24.6,
+      "print_bottom_z": 24.399999,
+      "support_area_mm2": 31.454330055150756,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        186888,
+        186959
+      ]
+    },
+    {
+      "print_top_z": 24.8,
+      "print_bottom_z": 24.600001000000002,
+      "support_area_mm2": 31.5339186454273,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        187451,
+        187525
+      ]
+    },
+    {
+      "print_top_z": 25.0,
+      "print_bottom_z": 24.799999,
+      "support_area_mm2": 31.618904758221877,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        188018,
+        188092
+      ]
+    },
+    {
+      "print_top_z": 25.2,
+      "print_bottom_z": 24.999999,
+      "support_area_mm2": 31.87668235400834,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        188587,
+        188662
+      ]
+    },
+    {
+      "print_top_z": 25.4,
+      "print_bottom_z": 25.200001,
+      "support_area_mm2": 32.131573184551996,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        189170,
+        189243
+      ]
+    },
+    {
+      "print_top_z": 25.6,
+      "print_bottom_z": 25.399999,
+      "support_area_mm2": 32.54559211966545,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        189764,
+        189841
+      ]
+    },
+    {
+      "print_top_z": 25.8,
+      "print_bottom_z": 25.600001000000002,
+      "support_area_mm2": 33.007392035702836,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        190680,
+        190760
+      ]
+    },
+    {
+      "print_top_z": 26.0,
+      "print_bottom_z": 25.799999,
+      "support_area_mm2": 33.47712822752145,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        191380,
+        191461
+      ]
+    },
+    {
+      "print_top_z": 26.2,
+      "print_bottom_z": 25.999999,
+      "support_area_mm2": 33.98066977565372,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        191927,
+        192008
+      ]
+    },
+    {
+      "print_top_z": 26.4,
+      "print_bottom_z": 26.200001,
+      "support_area_mm2": 34.52358961958901,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        192392,
+        192474
+      ]
+    },
+    {
+      "print_top_z": 26.6,
+      "print_bottom_z": 26.399999,
+      "support_area_mm2": 35.06345224210726,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        192879,
+        192961
+      ]
+    },
+    {
+      "print_top_z": 26.8,
+      "print_bottom_z": 26.600001000000002,
+      "support_area_mm2": 35.61968401534514,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        193383,
+        193466
+      ]
+    },
+    {
+      "print_top_z": 27.0,
+      "print_bottom_z": 26.799999,
+      "support_area_mm2": 36.193837383557636,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        193813,
+        193897
+      ]
+    },
+    {
+      "print_top_z": 27.2,
+      "print_bottom_z": 26.999999,
+      "support_area_mm2": 36.748902198299625,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        194249,
+        194336
+      ]
+    },
+    {
+      "print_top_z": 27.4,
+      "print_bottom_z": 27.200001,
+      "support_area_mm2": 37.368333183644275,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        194693,
+        194780
+      ]
+    },
+    {
+      "print_top_z": 27.6,
+      "print_bottom_z": 27.399999,
+      "support_area_mm2": 37.93591057911975,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        195129,
+        195216
+      ]
+    },
+    {
+      "print_top_z": 27.8,
+      "print_bottom_z": 27.600001000000002,
+      "support_area_mm2": 38.47011082543863,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        195564,
+        195652
+      ]
+    },
+    {
+      "print_top_z": 28.0,
+      "print_bottom_z": 27.799999,
+      "support_area_mm2": 39.072976740956534,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        196028,
+        196117
+      ]
+    },
+    {
+      "print_top_z": 28.2,
+      "print_bottom_z": 27.999999,
+      "support_area_mm2": 39.91210707132654,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        196492,
+        196582
+      ]
+    },
+    {
+      "print_top_z": 28.4,
+      "print_bottom_z": 28.200001,
+      "support_area_mm2": 40.618089720699004,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        196968,
+        197058
+      ]
+    },
+    {
+      "print_top_z": 28.6,
+      "print_bottom_z": 28.399999,
+      "support_area_mm2": 41.28230327527528,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        197443,
+        197536
+      ]
+    },
+    {
+      "print_top_z": 28.8,
+      "print_bottom_z": 28.600001000000002,
+      "support_area_mm2": 43.14945727625626,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        197897,
+        198003
+      ]
+    },
+    {
+      "print_top_z": 29.0,
+      "print_bottom_z": 28.799999,
+      "support_area_mm2": 44.60911070756396,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        198373,
+        198501
+      ]
+    },
+    {
+      "print_top_z": 29.2,
+      "print_bottom_z": 28.999999,
+      "support_area_mm2": 45.0733672243595,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        198891,
+        199023
+      ]
+    },
+    {
+      "print_top_z": 29.4,
+      "print_bottom_z": 29.200001,
+      "support_area_mm2": 45.93144273105101,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        199416,
+        199548
+      ]
+    },
+    {
+      "print_top_z": 29.6,
+      "print_bottom_z": 29.399999,
+      "support_area_mm2": 47.124414714113456,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        199919,
+        200054
+      ]
+    },
+    {
+      "print_top_z": 29.8,
+      "print_bottom_z": 29.600001000000002,
+      "support_area_mm2": 48.33223275273544,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        200384,
+        200534
+      ]
+    },
+    {
+      "print_top_z": 30.0,
+      "print_bottom_z": 29.799999,
+      "support_area_mm2": 50.063881777505486,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        200923,
+        201090
+      ]
+    },
+    {
+      "print_top_z": 30.2,
+      "print_bottom_z": 29.999999,
+      "support_area_mm2": 50.262784267130506,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        201594,
+        201759
+      ]
+    },
+    {
+      "print_top_z": 30.4,
+      "print_bottom_z": 30.200001,
+      "support_area_mm2": 50.881950829067186,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        202207,
+        202372
+      ]
+    },
+    {
+      "print_top_z": 30.6,
+      "print_bottom_z": 30.399999,
+      "support_area_mm2": 51.313358301716754,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        202834,
+        203002
+      ]
+    },
+    {
+      "print_top_z": 30.8,
+      "print_bottom_z": 30.600001000000002,
+      "support_area_mm2": 52.075204184799546,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        203419,
+        203591
+      ]
+    },
+    {
+      "print_top_z": 31.0,
+      "print_bottom_z": 30.799999,
+      "support_area_mm2": 52.40525291394088,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        204138,
+        204312
+      ]
+    },
+    {
+      "print_top_z": 31.2,
+      "print_bottom_z": 30.999999,
+      "support_area_mm2": 53.389249926429855,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        204607,
+        204783
+      ]
+    },
+    {
+      "print_top_z": 31.4,
+      "print_bottom_z": 31.200001,
+      "support_area_mm2": 54.00059511236039,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        205068,
+        205246
+      ]
+    },
+    {
+      "print_top_z": 31.6,
+      "print_bottom_z": 31.399999,
+      "support_area_mm2": 55.02642534891884,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        205520,
+        205700
+      ]
+    },
+    {
+      "print_top_z": 31.8,
+      "print_bottom_z": 31.600001000000002,
+      "support_area_mm2": 55.89806526300008,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        205971,
+        206155
+      ]
+    },
+    {
+      "print_top_z": 32.0,
+      "print_bottom_z": 31.799999,
+      "support_area_mm2": 57.00751836060624,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        206428,
+        206614
+      ]
+    },
+    {
+      "print_top_z": 32.2,
+      "print_bottom_z": 31.999999000000003,
+      "support_area_mm2": 57.948429858636665,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        206884,
+        207077
+      ]
+    },
+    {
+      "print_top_z": 32.4,
+      "print_bottom_z": 32.199999,
+      "support_area_mm2": 59.35814889510485,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        207345,
+        207537
+      ]
+    },
+    {
+      "print_top_z": 32.6,
+      "print_bottom_z": 32.400003,
+      "support_area_mm2": 60.86046517808481,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        207806,
+        208003
+      ]
+    },
+    {
+      "print_top_z": 32.8,
+      "print_bottom_z": 32.599999,
+      "support_area_mm2": 63.65739259933365,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        208272,
+        208488
+      ]
+    },
+    {
+      "print_top_z": 33.0,
+      "print_bottom_z": 32.799999,
+      "support_area_mm2": 65.38918109436894,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        208750,
+        208977
+      ]
+    },
+    {
+      "print_top_z": 33.2,
+      "print_bottom_z": 32.999999,
+      "support_area_mm2": 66.64464834954428,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        209246,
+        209479
+      ]
+    },
+    {
+      "print_top_z": 33.4,
+      "print_bottom_z": 33.199999,
+      "support_area_mm2": 69.38403400907283,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        209735,
+        210013
+      ]
+    },
+    {
+      "print_top_z": 33.6,
+      "print_bottom_z": 33.400003,
+      "support_area_mm2": 70.58623895943576,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        210251,
+        210534
+      ]
+    },
+    {
+      "print_top_z": 33.8,
+      "print_bottom_z": 33.599999,
+      "support_area_mm2": 71.01558000861162,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        210770,
+        211059
+      ]
+    },
+    {
+      "print_top_z": 34.0,
+      "print_bottom_z": 33.799999,
+      "support_area_mm2": 71.86086439952696,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        211297,
+        211592
+      ]
+    },
+    {
+      "print_top_z": 34.2,
+      "print_bottom_z": 33.999999,
+      "support_area_mm2": 72.4491210305026,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        211831,
+        212128
+      ]
+    },
+    {
+      "print_top_z": 34.4,
+      "print_bottom_z": 34.199999,
+      "support_area_mm2": 73.27647127684892,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        212367,
+        212666
+      ]
+    },
+    {
+      "print_top_z": 34.6,
+      "print_bottom_z": 34.400003,
+      "support_area_mm2": 75.00080539998092,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        212904,
+        213212
+      ]
+    },
+    {
+      "print_top_z": 34.8,
+      "print_bottom_z": 34.599999,
+      "support_area_mm2": 76.54298978275008,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        213451,
+        213763
+      ]
+    },
+    {
+      "print_top_z": 35.0,
+      "print_bottom_z": 34.799999,
+      "support_area_mm2": 78.81412018984254,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        213996,
+        214326
+      ]
+    },
+    {
+      "print_top_z": 35.2,
+      "print_bottom_z": 34.999999,
+      "support_area_mm2": 80.69202540045143,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        214558,
+        214890
+      ]
+    },
+    {
+      "print_top_z": 35.4,
+      "print_bottom_z": 35.199999,
+      "support_area_mm2": 82.88464835525826,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        215123,
+        215459
+      ]
+    },
+    {
+      "print_top_z": 35.6,
+      "print_bottom_z": 35.400003,
+      "support_area_mm2": 86.3024096753929,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        215694,
+        216090
+      ]
+    },
+    {
+      "print_top_z": 35.8,
+      "print_bottom_z": 35.599999,
+      "support_area_mm2": 87.62587515465232,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        216328,
+        216731
+      ]
+    },
+    {
+      "print_top_z": 36.0,
+      "print_bottom_z": 35.799999,
+      "support_area_mm2": 89.65317144339632,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        216944,
+        217367
+      ]
+    },
+    {
+      "print_top_z": 36.2,
+      "print_bottom_z": 35.999999,
+      "support_area_mm2": 91.21442882567545,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        217587,
+        218008
+      ]
+    },
+    {
+      "print_top_z": 36.4,
+      "print_bottom_z": 36.199999,
+      "support_area_mm2": 93.94738992707265,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        218229,
+        218667
+      ]
+    },
+    {
+      "print_top_z": 36.6,
+      "print_bottom_z": 36.400003,
+      "support_area_mm2": 95.52477067016595,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        218890,
+        219360
+      ]
+    },
+    {
+      "print_top_z": 36.8,
+      "print_bottom_z": 36.599999,
+      "support_area_mm2": 97.92519069836877,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        219573,
+        220066
+      ]
+    },
+    {
+      "print_top_z": 37.0,
+      "print_bottom_z": 36.799999,
+      "support_area_mm2": 100.31732825334058,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        220288,
+        220803
+      ]
+    },
+    {
+      "print_top_z": 37.2,
+      "print_bottom_z": 36.999999,
+      "support_area_mm2": 102.47953905339698,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        221025,
+        221562
+      ]
+    },
+    {
+      "print_top_z": 37.4,
+      "print_bottom_z": 37.199999,
+      "support_area_mm2": 105.47559710534424,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        221785,
+        222359
+      ]
+    },
+    {
+      "print_top_z": 37.6,
+      "print_bottom_z": 37.400003,
+      "support_area_mm2": 107.06553609982298,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        222581,
+        223150
+      ]
+    },
+    {
+      "print_top_z": 37.8,
+      "print_bottom_z": 37.599999,
+      "support_area_mm2": 110.23508323076157,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        223372,
+        223975
+      ]
+    },
+    {
+      "print_top_z": 38.0,
+      "print_bottom_z": 37.799999,
+      "support_area_mm2": 112.54709833482188,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        224198,
+        224812
+      ]
+    },
+    {
+      "print_top_z": 38.2,
+      "print_bottom_z": 37.999999,
+      "support_area_mm2": 116.20902960201008,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        225035,
+        225681
+      ]
+    },
+    {
+      "print_top_z": 38.4,
+      "print_bottom_z": 38.199999,
+      "support_area_mm2": 121.4973185956179,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        225904,
+        226623
+      ]
+    },
+    {
+      "print_top_z": 38.6,
+      "print_bottom_z": 38.400003,
+      "support_area_mm2": 125.478134685419,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        226850,
+        227589
+      ]
+    },
+    {
+      "print_top_z": 38.8,
+      "print_bottom_z": 38.599999,
+      "support_area_mm2": 129.07864196724736,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        227808,
+        228564
+      ]
+    },
+    {
+      "print_top_z": 39.0,
+      "print_bottom_z": 38.799999,
+      "support_area_mm2": 134.86840931597848,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        228783,
+        229562
+      ]
+    },
+    {
+      "print_top_z": 39.2,
+      "print_bottom_z": 38.999999,
+      "support_area_mm2": 139.4875085142124,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        229781,
+        230607
+      ]
+    },
+    {
+      "print_top_z": 39.4,
+      "print_bottom_z": 39.199999,
+      "support_area_mm2": 144.21437540814395,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        230823,
+        231675
+      ]
+    },
+    {
+      "print_top_z": 39.6,
+      "print_bottom_z": 39.400003,
+      "support_area_mm2": 150.7549379854995,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        231894,
+        232790
+      ]
+    },
+    {
+      "print_top_z": 39.8,
+      "print_bottom_z": 39.599999,
+      "support_area_mm2": 159.18362435727508,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        233010,
+        233983
+      ]
+    },
+    {
+      "print_top_z": 40.0,
+      "print_bottom_z": 39.799999,
+      "support_area_mm2": 166.246942007474,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        234202,
+        235231
+      ]
+    },
+    {
+      "print_top_z": 40.2,
+      "print_bottom_z": 39.999999,
+      "support_area_mm2": 171.99718340798054,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        235448,
+        236505
+      ]
+    },
+    {
+      "print_top_z": 40.4,
+      "print_bottom_z": 40.199999,
+      "support_area_mm2": 176.54281538377148,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        236723,
+        237856
+      ]
+    },
+    {
+      "print_top_z": 40.6,
+      "print_bottom_z": 40.400003,
+      "support_area_mm2": 179.79061939772652,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        238071,
+        239279
+      ]
+    },
+    {
+      "print_top_z": 40.8,
+      "print_bottom_z": 40.599999,
+      "support_area_mm2": 188.27798203324414,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        239497,
+        240872
+      ]
+    },
+    {
+      "print_top_z": 41.0,
+      "print_bottom_z": 40.799999,
+      "support_area_mm2": 199.2592143389623,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        241087,
+        242675
+      ]
+    },
+    {
+      "print_top_z": 41.2,
+      "print_bottom_z": 40.999999,
+      "support_area_mm2": 136.08163972213993,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        242891,
+        243976
+      ]
+    },
+    {
+      "print_top_z": 41.4,
+      "print_bottom_z": 41.199999,
+      "support_area_mm2": 272.9787943374586,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        244182,
+        244588
+      ]
+    },
+    {
+      "print_top_z": 41.6,
+      "print_bottom_z": 41.400003,
+      "support_area_mm2": 277.83992466299253,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        244793,
+        245180
+      ]
+    },
+    {
+      "print_top_z": 41.8,
+      "print_bottom_z": 41.599999,
+      "support_area_mm2": 37.355106771607325,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        245381,
+        245555
+      ]
+    },
+    {
+      "print_top_z": 42.0,
+      "print_bottom_z": 41.799999,
+      "support_area_mm2": 17.00529096137694,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        245769,
+        245851
+      ]
+    },
+    {
+      "print_top_z": 42.2,
+      "print_bottom_z": 41.999999,
+      "support_area_mm2": 17.578695007479965,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        246593,
+        246686
+      ]
+    },
+    {
+      "print_top_z": 42.4,
+      "print_bottom_z": 42.199999,
+      "support_area_mm2": 18.16335138160314,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        247740,
+        247827
+      ]
+    },
+    {
+      "print_top_z": 42.6,
+      "print_bottom_z": 42.400003,
+      "support_area_mm2": 18.80288664220456,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        249252,
+        249338
+      ]
+    },
+    {
+      "print_top_z": 42.8,
+      "print_bottom_z": 42.599999,
+      "support_area_mm2": 19.77081374486967,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        249842,
+        249930
+      ]
+    },
+    {
+      "print_top_z": 43.0,
+      "print_bottom_z": 42.799999,
+      "support_area_mm2": 20.58132480751012,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        250426,
+        250520
+      ]
+    },
+    {
+      "print_top_z": 43.2,
+      "print_bottom_z": 42.999999,
+      "support_area_mm2": 21.77185046315872,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        250926,
+        251023
+      ]
+    },
+    {
+      "print_top_z": 43.4,
+      "print_bottom_z": 43.199999,
+      "support_area_mm2": 23.604297334305095,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        251428,
+        251553
+      ]
+    },
+    {
+      "print_top_z": 43.6,
+      "print_bottom_z": 43.400003,
+      "support_area_mm2": 24.381812097465232,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        251939,
+        252060
+      ]
+    },
+    {
+      "print_top_z": 43.8,
+      "print_bottom_z": 43.599999,
+      "support_area_mm2": 25.931898273672992,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        252450,
+        252594
+      ]
+    },
+    {
+      "print_top_z": 44.0,
+      "print_bottom_z": 43.799999,
+      "support_area_mm2": 26.247478633656378,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        252980,
+        253120
+      ]
+    },
+    {
+      "print_top_z": 44.2,
+      "print_bottom_z": 43.999999,
+      "support_area_mm2": 27.36067773754336,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        253509,
+        253691
+      ]
+    },
+    {
+      "print_top_z": 44.4,
+      "print_bottom_z": 44.199999,
+      "support_area_mm2": 27.343564005061957,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        254078,
+        254272
+      ]
+    },
+    {
+      "print_top_z": 44.6,
+      "print_bottom_z": 44.400003,
+      "support_area_mm2": 27.41016951084288,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        254663,
+        254865
+      ]
+    },
+    {
+      "print_top_z": 44.8,
+      "print_bottom_z": 44.599999,
+      "support_area_mm2": 26.114168349192035,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        255251,
+        255542
+      ]
+    },
+    {
+      "print_top_z": 45.0,
+      "print_bottom_z": 44.799999,
+      "support_area_mm2": 22.589338434818515,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        255931,
+        256004
+      ]
+    },
+    {
+      "print_top_z": 45.2,
+      "print_bottom_z": 44.999999,
+      "support_area_mm2": 22.4933137966961,
+      "model_sweep_hit_area_mm2": 0.0,
+      "model_sweep_hit_length_mm": 0.0,
+      "stl_sweep_hit_area_mm2": 0.0,
+      "stl_sweep_hit_length_mm": 0.0,
+      "clear_model": true,
+      "clear_current_stl": true,
+      "support_line_range": [
+        256382,
+        256466
+      ]
+    }
+  ],
+  "source_and_artifact_hashes_before": {
+    "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+    "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+    "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+    "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/invocation.json": "213bfac3951713639246a19bea1ac8cacb4708ceec92ee20cedd8da322efe400",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529"
+  },
+  "identities_stable": true,
+  "algorithm_sha256": "38c32270c180e1705bab79789ab637480fb73f6dabb01e2c74853022d1a39b86",
+  "parser_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+  "elapsed_seconds": 55.88519477844238,
+  "method": "Every support extrusion is a circumscribed width+0.002 mm footprint and full recorded height slab. For every slab, intersect its XY footprint with both (a) all model bead footprints whose recorded bottom is below its top, and (b) projections of every current STL surface clipped below that top. Empty intersections prove that the entire support prism union can translate continuously in -printZ until below the part, without assuming branch separation, flexibility, or a thin probe. Slab height simplification is conservative: each same-layer footprint uses the maximum top/minimum bottom of its actual records. Surface line/point projections retained.",
+  "limits": [
+    "Nominal bead envelope only, not measured PETG.",
+    "Contact separation/adhesion force, grip, surface damage and debris are not proven.",
+    "Print-bed removal precedes support extraction; no adhesion model.",
+    "Clearance does not establish print strength or physical dimensional acceptance."
+  ],
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

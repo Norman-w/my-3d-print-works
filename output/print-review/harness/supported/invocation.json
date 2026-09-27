@@ -1,0 +1,127 @@
+{
+  "variant": "supported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/harness/supported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/harness/supported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/harness/supported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/harness/supported/filament.json",
+    "--orient",
+    "0",
+    "--rotate-x",
+    "90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "harness-supported-slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/harness/supported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-support-harness/beam-grip.stl"
+  ],
+  "input_stl": "output/feeder-support-harness/beam-grip.stl",
+  "input_stl_sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9",
+  "cad_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+  "profiles_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "expanded_official_machine_templates_sha256": {
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_start_gcode.json": "cc890a986c3f073e4691908d4bd3256222da9afc52fa9520261318bea9757505",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_end_gcode.json": "e90eb249dceb719ff8511b59275793a85ab84e1d5b5d4981e1fe6256fb6ffe54",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template time_lapse_gcode.json": "bd394064ba847dc7a75ab80c61c6a0824ac3d6876438b7c8bafd5646cf51b5c4",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template change_filament_gcode.json": "cdde6fbb5e4f6ec353aeb61e41862dd04743c2bfe21369d31145170aa932d4ae",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template layer_change_gcode.json": "595fa7ed12c23068b658ca4b006d4970bfd217a1503bed36b602cba93b2dc81a"
+  },
+  "official_profile_origin_record": "output/print-review/config/source-identity.json",
+  "assumptions": {
+    "printer": "X1C .4 confirmed",
+    "filament": "Generic PETG; actual brand not specified",
+    "plate": "Textured PEI analysis assumption; user only confirmed PEI",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "orientation": "rotate X +90; original -Y on bed"
+  },
+  "no_print_command": true,
+  "user_profiles_read_or_modified": false,
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "process_exit_code": 0,
+  "input_unchanged": true,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 839,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 8,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bridge": 743.7781982421875,
+          "Custom": 429.2145080566406,
+          "Flush": 29.0,
+          "Gap infill": 84.40959930419922,
+          "Inner wall": 1229.7479248046875,
+          "Internal solid infill": 862.8150634765625,
+          "Outer wall": 561.2907104492188,
+          "Overhang wall": 431.23077392578125,
+          "Sparse infill": 1440.291259765625,
+          "Support": 3405.547119140625,
+          "Support interface": 390.44146728515625,
+          "Top surface": 234.89927673339844,
+          "Travel": 2139.84033203125,
+          "Undefined": 2124.08203125
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 76.96209716796875,
+            "total_used_g": 76.96209716796875
+          }
+        ],
+        "generate_support_material_time": 10394,
+        "id": 1,
+        "infill_time": 88,
+        "layer_filament_change": 0,
+        "main_predication": 11497.23828125,
+        "make_perimeters_time": 54,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 184.0,
+              "height": 22.0,
+              "width": 111.0,
+              "x": 72.49999237060547,
+              "y": 36.0,
+              "z": -7.105427357601002e-15
+            },
+            "id": 5,
+            "name": "beam-grip.stl",
+            "triangle_count": 1524
+          }
+        ],
+        "sliced_time": 12667,
+        "sliced_time_with_cache": 1932,
+        "total_predication": 11968.6640625,
+        "triangle_count": 1524,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "artifact_sha256": {
+    "plate_1.gcode": "fd003995fccdab25e171ae6782bdb04ce1c28feda364630661873c4bdc68e29c",
+    "harness-supported-slice-review.3mf": "2a14314daf79e2c19f070ca6cc55b8f9c59b9741397ab5b0f400a67c3351773a"
+  }
+}

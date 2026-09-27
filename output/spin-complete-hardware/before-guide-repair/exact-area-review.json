@@ -1,0 +1,97 @@
+{
+  "source_report_sha256": "5b4db170435bca87872a8e11720940283e02563a95190e36788d473333ad6bd1",
+  "checker_sha256": "1b02fd72f7d535426a04f868667d87e8bf2b75135b57dfcf63d504621cdd7643",
+  "parts": [
+    {
+      "part": "body",
+      "file": "output/spin-head/spin-body.stl",
+      "sha256": "308516763fce51b4b4c2dfcf058b62536e8bd6f65ba8e64702c21fbeff6af22b",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 3397
+    },
+    {
+      "part": "carriage",
+      "file": "output/spin-head/spin-carriage.stl",
+      "sha256": "fbb263853c443b979f77b809fa8870c52190bc35168bf85be803b6d1f7286e05",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 1508
+    },
+    {
+      "part": "pad",
+      "file": "output/spin-head/spin-pad.stl",
+      "sha256": "89c8ae1e33bccdeb96e7ac6d58f82fb858297b45e973a0a5bb175716763acc70",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 24
+    },
+    {
+      "part": "pad-keeper",
+      "file": "output/spin-head/spin-pad-keeper.stl",
+      "sha256": "83b72c733fae493c6052903d5dc139a5808d00daa81dc52bf91aeacdd39a04f9",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 440
+    },
+    {
+      "part": "opposite-guide",
+      "file": "output/spin-head/spin-opposite-guide.stl",
+      "sha256": "e510dd0f5e8165178d8f3f811367f765f753cf4a5fcc578021b0ffd8bf2a7450",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 322
+    },
+    {
+      "part": "cover",
+      "file": "output/spin-head/spin-cover.stl",
+      "sha256": "f9ee6b239b5e88beb40aa6f1ef4c099d8c6ec52a6ffbbc09aee5d3711e6ad8fc",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 3376
+    },
+    {
+      "part": "spring-cage",
+      "file": "output/spin-head/spin-spring-cage.stl",
+      "sha256": "fff23c6907a5afc439d896833f598ca8ae03de98d646a8574d50459dc6c62cd9",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 1088
+    },
+    {
+      "part": "spring-seat",
+      "file": "output/spin-head/spin-spring-seat.stl",
+      "sha256": "599177c2dadf0a543ca4685c5362595e06120030514bd4c8e613778ce938314b",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 288
+    },
+    {
+      "part": "pull-cap",
+      "file": "output/spin-head/spin-pull-cap.stl",
+      "sha256": "f69fee61263cfbd29e572fdee69799ff42d03f21693b81c0f6825f6ee0048637",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 288
+    },
+    {
+      "part": "hold-fork",
+      "file": "output/spin-head/spin-hold-fork.stl",
+      "sha256": "1d2b9004c3419a398c714f8f50b56647ffced6fe1b20a3ffe3c28e5188b6976d",
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 593
+    }
+  ],
+  "scope": "Exact zero area and per-vertex ring, not complete self-intersection proof"
+}

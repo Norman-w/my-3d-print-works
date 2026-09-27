@@ -1,0 +1,90 @@
+{
+  "status": "FOUR_FLAT_PARTS_BOUNDED_PATH_REVIEW_COMPLETE",
+  "selected_parts": [
+    {
+      "part": "cable-input-cover",
+      "report": "output/print-review/current-cable/20260927T074227302558Z/cable-input-cover/flat-path-review/report.json",
+      "report_sha256": "61d822c3dd28a89578e1bbf09f5e9dd31a8e19124f69b29299982f1f8f693a55",
+      "gcode_sha256": "88aee642878a17dcd7f3e9e1eaea02fe9b5bd5cde59c0e69e2e974acf53b080d",
+      "layers": 60,
+      "layer_step_mm": [
+        0.1
+      ],
+      "status": "BOUNDED_TOOLPATH_REVIEW_NO_NEW_FLAGS",
+      "images": [
+        "output/print-review/current-cable/20260927T074227302558Z/cable-input-cover/flat-path-review/critical-seat.png",
+        "output/print-review/current-cable/20260927T074227302558Z/cable-input-cover/flat-path-review/key-layers.png"
+      ]
+    },
+    {
+      "part": "cable-output-cap",
+      "report": "output/print-review/current-cable/20260927T073454146325Z/cable-output-cap/flat-path-review/report.json",
+      "report_sha256": "de75ead2b0e27da7cd0f6f5dd7040c64b41512acae9dfb4d614756e34c973e60",
+      "gcode_sha256": "95e3c792771eccc4a09475c980a6d95d0572d6cb00dc872a82f9ec52c2f41e2b",
+      "layers": 40,
+      "layer_step_mm": [
+        0.1
+      ],
+      "status": "BOUNDED_TOOLPATH_REVIEW_NO_NEW_FLAGS",
+      "images": [
+        "output/print-review/current-cable/20260927T073454146325Z/cable-output-cap/flat-path-review/critical-seat.png",
+        "output/print-review/current-cable/20260927T073454146325Z/cable-output-cap/flat-path-review/key-layers.png"
+      ]
+    },
+    {
+      "part": "cable-route-cap",
+      "report": "output/print-review/current-cable/20260927T073454146325Z/cable-route-cap/flat-path-review/report.json",
+      "report_sha256": "62531e8660bee0cfc1ae6cfe0947d1f50b432a7ca2dbeab09505658679a0eb59",
+      "gcode_sha256": "36719290ca63178f862e25aa1935d66a70542db3c81545435522f9b228ed3637",
+      "layers": 25,
+      "layer_step_mm": [
+        0.2
+      ],
+      "status": "BOUNDED_TOOLPATH_REVIEW_NO_NEW_FLAGS",
+      "images": [
+        "output/print-review/current-cable/20260927T073454146325Z/cable-route-cap/flat-path-review/key-layers.png"
+      ]
+    },
+    {
+      "part": "cable-route-lower",
+      "report": "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower/flat-path-review/report.json",
+      "report_sha256": "c22e80e3cd3d02202273d9377c108c1bcd0aa0be0806e4689ae3e68de953787c",
+      "gcode_sha256": "d3fa15882c8ab1a285d502fa52c14fbf6ddee631d8e17af6014f2ff64a9db077",
+      "layers": 31,
+      "layer_step_mm": [
+        0.2
+      ],
+      "status": "BOUNDED_TOOLPATH_REVIEW_NO_NEW_FLAGS",
+      "images": [
+        "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower/flat-path-review/critical-seat.png",
+        "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower/flat-path-review/key-layers.png"
+      ]
+    }
+  ],
+  "script": "analysis/cable_flat_slice_review.py",
+  "script_sha256": "72970875bf37f1c728cb48444b5ad5367a307cbf6b3903598cec873b42d5485e",
+  "superseded_counterexample": {
+    "report": "output/print-review/current-cable/20260927T073454146325Z/cable-input-cover/flat-path-review/report.json",
+    "finding": "ci_cover 0.2 mm layer steps moved the 4.5/4.3 mm pocket seats to 4.6/4.4 mm. This consumes nominal axial clearance; it is not a measured inability to assemble.",
+    "corrective_action": "Root sliced only ci_cover again at 0.1 mm. Selected path seats now 4.5/4.3 mm, each delta zero; same CAD and STL."
+  },
+  "evidence_scope": [
+    "Both recorded transforms composed: original CAD to oriented STL; 3MF component/build/source offset plus extruder offset to actual command coordinates.",
+    "All four native mesh_stat repair fields zero. All current source/STL/G-code/3MF identities verified.",
+    "All defined inset through-core and final pocket-opening footprints clear. Four solid-material positive controls detected material.",
+    "co_cap washer bearing Y39.9 lands at print Z3.3. Nominal inner-edge-guarded 3.2..4.7 annulus has 99.90% declared-width footprint coverage on this layer.",
+    "crr_lower nut bearing Z81.3 lands at print Z3.4.",
+    "crr_cap continuous groove opening and full nominal OD5 housing envelope are clear of declared bead slabs over the entire source-derived curved/tangent path.",
+    "No Support or Support interface extrusion paths exist in the four selected G-codes."
+  ],
+  "limitations": [
+    "This does not prove PETG dimensions, load strength, creep, screw torque, flexible-hose seating or printed assembly.",
+    "Native Bridge declarations of 0.4 mm bead height are separately recorded, not confused with 0.1/0.2 mm Z layer steps.",
+    "The groove bound uses the CAD polyline path; it does not constrain the free hose bends or prove the tall guide base strength."
+  ],
+  "cad_modified": false,
+  "slicer_invoked_by_this_review": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

@@ -1,0 +1,19 @@
+{
+  "status": "FROZEN_ISOLATED_MACHINING_CANDIDATE",
+  "artifacts": {
+    "output/current-axis-centering-washer/candidate.scad": "689d545b0cc9df2ca85e7d7d61d81104e6103eac455580f253e2457b084fb8a1",
+    "output/current-axis-centering-washer/README.md": "3d3175ca4d85966cec2eb8c77d503f2a397ac2ebeb0ceb455dc54b1d4d40af74",
+    "output/current-axis-centering-washer/review.py": "6d6bb2d31f221332729da2a60b26823e17dd704d52c2df2c8b6e75d86d8f1280",
+    "output/current-axis-centering-washer/drawing.py": "a768395074795917455ac7edfa1ecdbc204c51064972e258ccf630518fd9584f",
+    "output/current-axis-centering-washer/machining-drawing.png": "abf984f3852db5e394b0b254ced95e8240a551fadb32bbca346cc164f0ce72ac",
+    "output/current-axis-centering-washer/machining-drawing.pdf": "db81ee124cf095d484c5b62c6be6ec33bd6a89532a442ebef2debec2fb0bdeeb",
+    "output/current-axis-centering-washer/latest.json": "525f955356fa755632341d463b0f6e812819ccac73852b725f857ab8349df226",
+    "output/current-axis-centering-washer/runs/20260927T133352450356Z/report.json": "a9b73ff1f90dda2da26bba962041581504ab4d8dcec4cc1a8b030c33353c5435"
+  },
+  "source_identity_rechecked": true,
+  "local_links_checked": 8,
+  "production_CAD_modified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "purchased": false
+}

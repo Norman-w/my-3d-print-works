@@ -1,0 +1,20 @@
+{
+  "status": "FROZEN_ISOLATED_DESIGN",
+  "created_utc": "2026-09-27T13:07:08.163298+00:00",
+  "artifacts": {
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "output/current-axis-retention-review/compute.py": "1e75f2cd93bacc3d281fded4ffa24c984a789140354312d158b23f31de5b7859",
+    "output/current-axis-retention-review/report.json": "fd0d5abaed0072f875932a690ef3909ee6c76af3cf0261b9a24ef741000b9eda",
+    "output/current-axis-retention-review/README.md": "18fd27de2dc37fe8de7afb763293ca8d740b9d2afad644f414a2d9b383abb48f",
+    "output/current-axis-retention-review/pom-hex-bush-drawing.png": "761d8de5990761fe61ea66a30f815ace0b661d50e4507627a36dad8b9d9de4b6",
+    "output/current-axis-retention-review/pom-hex-bush-drawing.pdf": "3c5c3c628a78224b557f859caadd96e20bb30065ca3aeaa26d5b40847231c3ab",
+    "output/current-axis-retention-review/profile-comparison.png": "57a8a8419b2ac98b91bb4fc98b58f55722c457954fe0bf1673d3b97d8775190d",
+    "output/current-axis-retention-review/locking-options.json": "a9686a87305dcaa7e77e3a8c50ed9537601626b4efd52460b2d7dd4458b545d8",
+    "output/current-axis-retention-review/native/20260927T130329179339Z/report.json": "4f8fccc858c1b7c3ceb99507249f8f9cc6ad85df4ff7d1ea1a3a89ca9c1da0e6"
+  },
+  "local_links_checked": 7,
+  "production_CAD_modified": false,
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

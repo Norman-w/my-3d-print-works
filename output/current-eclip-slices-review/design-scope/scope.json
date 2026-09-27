@@ -1,0 +1,198 @@
+{
+  "status": "CURRENT_ECLIP_NEW_ROI_SCOPE",
+  "source": "cad/cable-trigger-input.scad",
+  "source_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+  "export_report": "output/cable-scene-export/20260927T153058669616Z/report.json",
+  "coordinates": "ci local; body/lever grow +localZ; both cover -Z and +Z process candidates supported, exact direction read from actual artifact mapping",
+  "features": [
+    {
+      "part": "body",
+      "name": "free pin through-bore",
+      "source_lines": [
+        276,
+        281
+      ],
+      "center_local_xy": [
+        0,
+        0
+      ],
+      "diameter_mm": 8.3,
+      "material_z_mm": [
+        -12,
+        -4
+      ],
+      "replaced_assumption": "Old spacer-bearing ledge at local -5.5 no longer exists."
+    },
+    {
+      "part": "body",
+      "name": "rear M3 pockets",
+      "source_lines": [
+        279,
+        281
+      ],
+      "centers": [
+        [
+          -30,
+          20
+        ],
+        [
+          74,
+          20
+        ]
+      ],
+      "hole_d_mm": 3.4,
+      "nut_AF_mm": 5.8,
+      "roof_z_mm": -9,
+      "nominal_print_plane_mm": 3,
+      "required_nominal_nut": "SW5.5, local -11.4..-9; full rotated hex needed"
+    },
+    {
+      "part": "body",
+      "name": "mount backplate and upper key underside",
+      "source_lines": [
+        234,
+        248
+      ],
+      "local_z_mm": -9,
+      "print_height_mm": 3,
+      "source_downward_area_mm2": 4415.954362494651,
+      "required_enforcer_cad_bounds": [
+        [
+          -28.2,
+          -97,
+          -68
+        ],
+        [
+          28.2,
+          -93.9,
+          32.2
+        ]
+      ],
+      "coverage": "Covers both fixed CAD backplate and upper-key bottom; other M3 pockets require their own enforcers. No support-removal or load proof."
+    },
+    {
+      "part": "lever",
+      "name": "complete POM hex socket",
+      "source_lines": [
+        309,
+        334
+      ],
+      "printed_AF_mm": 12.4,
+      "angle_deg": 30,
+      "material_z_mm": [
+        -3.5,
+        7.5
+      ],
+      "required_POM_AF_max_mm": 12,
+      "old_round_ROI_valid": false
+    },
+    {
+      "part": "lever",
+      "name": "M3 nut roofs and pull terminal",
+      "source_lines": [
+        324,
+        329
+      ],
+      "M3_centers": [
+        [
+          2,
+          54
+        ],
+        [
+          2,
+          66
+        ]
+      ],
+      "nut_roof_local_z_mm": -0.6,
+      "roof_print_height_mm": 2.9,
+      "split_local_z_mm": 3.1,
+      "ball_center_local": [
+        0,
+        60,
+        2
+      ],
+      "ball_pocket_d_mm": 5.6,
+      "required_ball_d_mm": 5,
+      "wire_d_mm": 1.5,
+      "wire_sample_u_mm": [
+        0,
+        10,
+        20,
+        22
+      ],
+      "wire_scope_mm": 12,
+      "motion": "Frozen fairlead center [-24,0,2], not older isolated -28.8 lip law."
+    },
+    {
+      "part": "cover",
+      "name": "through bore and root relief",
+      "source_lines": [
+        373,
+        381
+      ],
+      "axis_d_mm": 8.3,
+      "root_relief_d_mm": 9.2,
+      "root_relief_z_mm": [
+        11.3,
+        14.3
+      ],
+      "transition_print_height_mm": 2.7,
+      "new_radial_overhang_mm": 0.45,
+      "source_downward_area_mm2": 12.354326534490902,
+      "old_pockets_widen_upward_assumption_valid": false,
+      "alternative_process": "Reversing cover to +localZ removes this root overhang; creates two square-pocket roofs at local9.7 that require separate enforcers and actual support review."
+    },
+    {
+      "part": "cover",
+      "name": "M3 and square registration",
+      "source_lines": [
+        367,
+        369
+      ],
+      "centers": [
+        [
+          -30,
+          20
+        ],
+        [
+          74,
+          20
+        ]
+      ],
+      "through_d_mm": 3.4,
+      "square_side_mm": 8.4,
+      "square_top_local_z_mm": 9.7,
+      "transition_print_height_mm": 4.3
+    },
+    {
+      "part": "all",
+      "name": "internal thrust surfaces",
+      "body_local_z": -4,
+      "lever_local_z": [
+        -3.5,
+        7.5
+      ],
+      "cover_local_z": 8,
+      "washer_OD_ID_t_mm": [
+        16,
+        10,
+        0.25
+      ],
+      "nominal_rotor_float_mm": 0.5,
+      "scope": "Actual source PETG surface and commanded bead footprint only; separate POM and physical flatness/axial-play requirements remain."
+    }
+  ],
+  "parser_reuse": [
+    "extrusion_paths: real line width/height, G0/G1/G2/G3 positive extrusion",
+    "affine: actual artifact-review input_local_to_command inverse",
+    "downward_planar_faces: current frozen STL only; use right-handed flip for cover",
+    "shapely distance and full polygons: no inscribed circle substitute for hex"
+  ],
+  "outside_this_agent_scope": [
+    "body horizontal stop, M6/tool channels and global 4 M4 paths delegated to root",
+    "identity/3MF actual transforms and bed bounds delegated to root artifact reviewer",
+    "strength, removal force, actual dimensions, assembled E-ring and tool envelopes are not proved by these paths"
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

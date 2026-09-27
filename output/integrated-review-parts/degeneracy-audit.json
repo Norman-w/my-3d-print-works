@@ -1,0 +1,509 @@
+{
+  "status": "EXPORTED_MESH_DEFECT_CONFIRMED",
+  "method": "Exact rational cross products of decimal ASCII coordinates; plus one fixed strict coplanar-overlap witness.",
+  "scope": "All listed printed instances checked for exactly zero area. Near-zero area, arbitrary self-intersections and mechanical fitness are not certified.",
+  "script_sha256": "aa1f7cc2913d9650dd2f326483b61ba739c3809e4e5ad4e872d9204657157950",
+  "instance_report_sha256": "ef8554ee4a8422142adec39bea60d5d76afa0500df805e9d999b4f211c399266",
+  "source_sha256": {
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/feeder-integrated-candidate.scad": "00e49d9001e309ec089064a0ce69d7679148f1db6f0af47b293a36e2e47faee6",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "scripts/export_integrated_review.py": "f175fe9a775806264fe1a332949331c666bdcf2d89638f6c48fa7402100533c8"
+  },
+  "parts": [
+    {
+      "id": "positive-half",
+      "file": "output/integrated-review-parts/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "triangle_count": 12608,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "negative-half",
+      "file": "output/integrated-review-parts/negative-half.stl",
+      "sha256": "f8a2aba50cdbd5ce71a9f51bc75b81e8ed0895dfb6150cc6a189ca2ce4bf66c4",
+      "triangle_count": 13422,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "beam-grip",
+      "file": "output/integrated-review-parts/beam-grip.stl",
+      "sha256": "095635e4a0994df2b64ad5b6b64a025e4a0e284296f05a6415de66f2ae305ea9",
+      "triangle_count": 1500,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "liner",
+      "file": "output/integrated-review-parts/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+      "triangle_count": 1296,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "right-support",
+      "file": "output/integrated-review-parts/right-support.stl",
+      "sha256": "9647784b194f13aacf8b5150b2f16ec9909c09e95fc0867cc94bdbc01d03dedc",
+      "triangle_count": 3468,
+      "zero_area_faces": [
+        {
+          "triangle_index_zero_based": 684,
+          "vertices_as_written": [
+            [
+              "58",
+              "-4.679999351501465",
+              "4.199999809265137"
+            ],
+            [
+              "58",
+              "4.699999809265137",
+              "4.199999809265137"
+            ],
+            [
+              "58",
+              "-4.699999809265137",
+              "4.199999809265137"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 693,
+          "vertices_as_written": [
+            [
+              "58",
+              "4.699999809265137",
+              "-4.199999809265137"
+            ],
+            [
+              "58",
+              "-4.679999351501465",
+              "-4.199999809265137"
+            ],
+            [
+              "58",
+              "-4.699999809265137",
+              "-4.199999809265137"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 756,
+          "vertices_as_written": [
+            [
+              "58",
+              "-4.699999809265137",
+              "-24.299999237060547"
+            ],
+            [
+              "58",
+              "-4.679999351501465",
+              "-24.299999237060547"
+            ],
+            [
+              "58",
+              "4.699999809265137",
+              "-24.299999237060547"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 761,
+          "vertices_as_written": [
+            [
+              "58",
+              "4.699999809265137",
+              "-32.70000076293945"
+            ],
+            [
+              "58",
+              "-4.679999351501465",
+              "-32.70000076293945"
+            ],
+            [
+              "58",
+              "-4.699999809265137",
+              "-32.70000076293945"
+            ]
+          ]
+        }
+      ],
+      "zero_area_count": 4,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": {
+        "point_mm": [
+          "58",
+          "-937/200",
+          "106/25"
+        ],
+        "opposite_normals": true,
+        "strictly_inside_both": [
+          {
+            "triangle_index_zero_based": 2,
+            "barycentric_exact": [
+              "14999809265137/9399999618530274",
+              "40000190734863/3300000190734863",
+              "30594499382972754574787963628769/31020000534057543640424072742462"
+            ]
+          },
+          {
+            "triangle_index_zero_based": 2685,
+            "barycentric_exact": [
+              "5000648498535/20000457763672",
+              "13333396911621/33333142598470",
+              "116658369703756312136054039/333339055335577587624390920"
+            ]
+          }
+        ]
+      },
+      "no_defect_found_in_this_check": false
+    },
+    {
+      "id": "left-support",
+      "file": "output/integrated-review-parts/left-support.stl",
+      "sha256": "acba3c53ce779a1ba4c39933878fe6ea44ca4309e8e77d4a412cecbef16ec145",
+      "triangle_count": 2816,
+      "zero_area_faces": [
+        {
+          "triangle_index_zero_based": 649,
+          "vertices_as_written": [
+            [
+              "-58",
+              "-4.679999351501465",
+              "4.199999809265137"
+            ],
+            [
+              "-58",
+              "-4.699999809265137",
+              "4.199999809265137"
+            ],
+            [
+              "-58",
+              "4.699999809265137",
+              "4.199999809265137"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 656,
+          "vertices_as_written": [
+            [
+              "-58",
+              "-4.679999351501465",
+              "-4.199999809265137"
+            ],
+            [
+              "-58",
+              "4.699999809265137",
+              "-4.199999809265137"
+            ],
+            [
+              "-58",
+              "-4.699999809265137",
+              "-4.199999809265137"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 713,
+          "vertices_as_written": [
+            [
+              "-58",
+              "-4.679999351501465",
+              "-24.299999237060547"
+            ],
+            [
+              "-58",
+              "-4.699999809265137",
+              "-24.299999237060547"
+            ],
+            [
+              "-58",
+              "4.699999809265137",
+              "-24.299999237060547"
+            ]
+          ]
+        },
+        {
+          "triangle_index_zero_based": 718,
+          "vertices_as_written": [
+            [
+              "-58",
+              "-4.679999351501465",
+              "-32.70000076293945"
+            ],
+            [
+              "-58",
+              "4.699999809265137",
+              "-32.70000076293945"
+            ],
+            [
+              "-58",
+              "-4.699999809265137",
+              "-32.70000076293945"
+            ]
+          ]
+        }
+      ],
+      "zero_area_count": 4,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": false
+    },
+    {
+      "id": "x-gib",
+      "file": "output/integrated-review-parts/x-gib.stl",
+      "sha256": "e112f5100960ae20df1b2ffe9f0b1469daf87cc339eb37fd691c6c0617939c6e",
+      "triangle_count": 44,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "x-cover",
+      "file": "output/integrated-review-parts/x-cover.stl",
+      "sha256": "1b9b9f9279d25aff9abf66509c6ae0673eedbeb39cd60f6e65ebfe72cd61eed3",
+      "triangle_count": 604,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "frame",
+      "file": "output/integrated-review-parts/frame.stl",
+      "sha256": "15b424fbb7cde47634d89f69af88b1b598c5b9184405411b44ada227020c872d",
+      "triangle_count": 1640,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "capture-right",
+      "file": "output/integrated-review-parts/capture-right.stl",
+      "sha256": "7c7e853c9a3352d26dccda42bdcd32c102655a046a5ac97f0754369384dd6cff",
+      "triangle_count": 2388,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "pipe-clamp-right",
+      "file": "output/integrated-review-parts/pipe-clamp-right.stl",
+      "sha256": "ad4375458cc43fb9781a63941ba0de21cf2ee244892530cd25bf2d55294f4d98",
+      "triangle_count": 2140,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-cap-right",
+      "file": "output/integrated-review-parts/y-cap-right.stl",
+      "sha256": "f77a4eef4ea94f7c2ebb06507b7d40ae82b7839dacdc18809d603e5b04efb2e8",
+      "triangle_count": 276,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-gib-right-front",
+      "file": "output/integrated-review-parts/y-gib-right-front.stl",
+      "sha256": "2de4ba18ffc1257f4a5f3e86060e09cf17d56c2beec3eaebc1c42e279074f61d",
+      "triangle_count": 76,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-keeper-right-front",
+      "file": "output/integrated-review-parts/y-keeper-right-front.stl",
+      "sha256": "321b90f286a14ecafa4fc9143e61369b2ffe6d89dc8ebf11624a30f6212d32a9",
+      "triangle_count": 464,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "finger-right-front",
+      "file": "output/integrated-review-parts/finger-right-front.stl",
+      "sha256": "359be570ebe01383aa0b9c0a37a17dac56c1a3d3a82ecc909a836fa4659a9ae0",
+      "triangle_count": 1728,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-gib-right-rear",
+      "file": "output/integrated-review-parts/y-gib-right-rear.stl",
+      "sha256": "e5f8286e394f461b41c73cfdb4272f40d289d5ee5e5ccdb4390d6bfb92a20d6d",
+      "triangle_count": 76,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-keeper-right-rear",
+      "file": "output/integrated-review-parts/y-keeper-right-rear.stl",
+      "sha256": "3fa2752645ceb8b8aaf5f53531f9bd20d616a02a8c8ac631a5f68d466a60d875",
+      "triangle_count": 464,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "finger-right-rear",
+      "file": "output/integrated-review-parts/finger-right-rear.stl",
+      "sha256": "1c20cfbfb37e2a5a7746a69d0e4f30a2a3158f1f1fd7d77baea94cfba8cab377",
+      "triangle_count": 1728,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "capture-left",
+      "file": "output/integrated-review-parts/capture-left.stl",
+      "sha256": "27210f64d226fc177a4ef96f7c9f73c2a02218b510d81720176822fd4522a31f",
+      "triangle_count": 2436,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "pipe-clamp-left",
+      "file": "output/integrated-review-parts/pipe-clamp-left.stl",
+      "sha256": "439fef635da23b432250b2ef5934c4ce50ce4a35a75ccf3793635c9b4cac00e1",
+      "triangle_count": 2188,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-cap-left",
+      "file": "output/integrated-review-parts/y-cap-left.stl",
+      "sha256": "2c53078f7f15d579d1f84c4b2c82e14510c08bcfddb25d1d1ff918199c40ad49",
+      "triangle_count": 276,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-gib-left-front",
+      "file": "output/integrated-review-parts/y-gib-left-front.stl",
+      "sha256": "53d0bc11dcb8fc3a383fd760dace34387c2b718b79ac3dd58919e3e47a8982ae",
+      "triangle_count": 76,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-keeper-left-front",
+      "file": "output/integrated-review-parts/y-keeper-left-front.stl",
+      "sha256": "4627d13c27ec51fb136c197701f2aa783168b7ea4dadbe89505cf9277eb02659",
+      "triangle_count": 464,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "finger-left-front",
+      "file": "output/integrated-review-parts/finger-left-front.stl",
+      "sha256": "b81fd0bb8be418be9e079f96a5c289cb7cdb48b3654a236cc7d309fc0dda9603",
+      "triangle_count": 1728,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-gib-left-rear",
+      "file": "output/integrated-review-parts/y-gib-left-rear.stl",
+      "sha256": "7068bb607b1e2ba2cb5ca7d6c143160b89575ac57d92c917f279b3802f1dedc9",
+      "triangle_count": 76,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "y-keeper-left-rear",
+      "file": "output/integrated-review-parts/y-keeper-left-rear.stl",
+      "sha256": "336404feda9a35b35ce80018cf12b3f12875d300549869867d5db3b5f1e91f85",
+      "triangle_count": 464,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    },
+    {
+      "id": "finger-left-rear",
+      "file": "output/integrated-review-parts/finger-left-rear.stl",
+      "sha256": "fcc7e0443f74e7f492c7ca2a4d5577e9d7b8b694a50571b40d5f8de78d027d29",
+      "triangle_count": 1728,
+      "zero_area_faces": [],
+      "zero_area_count": 0,
+      "legacy_report_degenerate_count": 0,
+      "known_coplanar_overlap_witness": null,
+      "no_defect_found_in_this_check": true
+    }
+  ],
+  "manufacturing_release": false
+}

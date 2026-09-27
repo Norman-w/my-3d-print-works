@@ -1,0 +1,142 @@
+{
+    "error_string": "Success.",
+    "export_time": 525,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 25,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 122.79634094238281,
+                "Bridge": 169.26226806640625,
+                "Custom": 35.16114044189453,
+                "Gap infill": 130.31919860839844,
+                "Inner wall": 546.173828125,
+                "Internal solid infill": 603.1617431640625,
+                "Outer wall": 812.602783203125,
+                "Overhang wall": 37.492340087890625,
+                "Sparse infill": 206.7749481201172,
+                "Top surface": 164.9599609375,
+                "Travel": 589.571044921875,
+                "Undefined": 574.3195190429688
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 16.892234802246094,
+                    "total_used_g": 16.892234802246094
+                }
+            ],
+            "generate_support_material_time": 25,
+            "id": 1,
+            "infill_time": 541,
+            "layer_filament_change": 0,
+            "main_predication": 3383.0654296875,
+            "make_perimeters_time": 153,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 42.19999694824219,
+                        "height": 30.0,
+                        "width": 31.0,
+                        "x": 147.5,
+                        "y": 120.29997253417969,
+                        "z": 0.0
+                    },
+                    "id": 151,
+                    "name": "fit-slider-seat.stl",
+                    "triangle_count": 2678
+                },
+                {
+                    "bbox": {
+                        "depth": 16.0000057220459,
+                        "height": 33.49229431152344,
+                        "width": 11.999994277954102,
+                        "x": 133.50001525878906,
+                        "y": 146.49998474121094,
+                        "z": 0.0
+                    },
+                    "id": 140,
+                    "name": "fit-finger.stl",
+                    "triangle_count": 2538
+                },
+                {
+                    "bbox": {
+                        "depth": 26.000001907348633,
+                        "height": 16.0,
+                        "width": 49.999996185302734,
+                        "x": 95.5000228881836,
+                        "y": 118.50000762939453,
+                        "z": 0.0
+                    },
+                    "id": 129,
+                    "name": "fit-radial-pair.stl",
+                    "triangle_count": 5568
+                },
+                {
+                    "bbox": {
+                        "depth": 23.0,
+                        "height": 6.449999809265137,
+                        "width": 27.999998092651367,
+                        "x": 111.05551147460938,
+                        "y": 93.50003051757813,
+                        "z": 0.0
+                    },
+                    "id": 173,
+                    "name": "fit-slider-keeper.stl",
+                    "triangle_count": 532
+                },
+                {
+                    "bbox": {
+                        "depth": 10.000000953674316,
+                        "height": 4.0,
+                        "width": 54.000003814697266,
+                        "x": 77.50000762939453,
+                        "y": 146.49996948242188,
+                        "z": 0.0
+                    },
+                    "id": 184,
+                    "name": "fit-locator.stl",
+                    "triangle_count": 5480
+                },
+                {
+                    "bbox": {
+                        "depth": 10.000001907348633,
+                        "height": 4.0,
+                        "width": 31.9999942779541,
+                        "x": 141.0554962158203,
+                        "y": 106.50003814697266,
+                        "z": 0.0
+                    },
+                    "id": 195,
+                    "name": "fit-seal.stl",
+                    "triangle_count": 2126
+                },
+                {
+                    "bbox": {
+                        "depth": 12.99999713897705,
+                        "height": 5.550000190734863,
+                        "width": 18.700000762939453,
+                        "x": 90.35552978515625,
+                        "y": 103.5000228881836,
+                        "z": 0.0
+                    },
+                    "id": 162,
+                    "name": "fit-slider-gib.stl",
+                    "triangle_count": 792
+                }
+            ],
+            "sliced_time": 1756,
+            "sliced_time_with_cache": 984,
+            "total_predication": 3402.9443359375,
+            "triangle_count": 19714,
+            "warning_message": "It seems object fit-slider-seat.stl has floating regions. Please re-orient the object or enable support generation."
+        }
+    ],
+    "sparse_infill_density": 15.0,
+    "wall_loops": 2
+}

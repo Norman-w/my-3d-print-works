@@ -1,0 +1,44 @@
+{
+  "status": "BOUNDED_OFFLINE_SUPPORT_ACCESS_PASS_PHYSICAL_OPEN",
+  "orientation": "inlet down; original +Z up; seam vertical",
+  "parts": [
+    {
+      "part": "positive-half",
+      "status": "BOUNDED_OFFLINE_SUPPORT_ACCESS_PASS_PHYSICAL_OPEN",
+      "checks_passed": 12,
+      "checks_total": 12,
+      "stl_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "gcode_sha256": "fa470f7ff4a0aa5d6bc6e6cc0797b3747884399cd5700eb5fc18aa30d41e0154",
+      "project_3mf_sha256": "57d1e4cf2c6aa5908d8b30840c8a85d51c62d29ea1f80995f4e812f8846dd081",
+      "toolpath_report_sha256": "9a6f9b926ee1d2bffc12192dc411a58e3f2099b21e3f656a9865b47f6d2f7684",
+      "native_warning": "",
+      "estimated_seconds": 18409.486328125,
+      "estimated_grams": 143.31349182128906
+    },
+    {
+      "part": "negative-half",
+      "status": "BOUNDED_OFFLINE_SUPPORT_ACCESS_PASS_PHYSICAL_OPEN",
+      "checks_passed": 12,
+      "checks_total": 12,
+      "stl_sha256": "f8a2aba50cdbd5ce71a9f51bc75b81e8ed0895dfb6150cc6a189ca2ce4bf66c4",
+      "gcode_sha256": "d68e97160b6dc5a5167fa6f5653f0156709b98871434ead47869826fc0afd548",
+      "project_3mf_sha256": "0b158c030e7009423721dc3e63304250b5e73acc91ea9387410113f0b9e159c1",
+      "toolpath_report_sha256": "1dc20092ab58a8b8b4a7dfd4d2edaf02b5394d21e376749844f39e23274007b9",
+      "native_warning": "",
+      "estimated_seconds": 18936.953125,
+      "estimated_grams": 144.2646484375
+    }
+  ],
+  "script_sha256": "7e6ad6b98d125608dcdf1b511a999517121ddc886980bc7dd83292d0e41248c8",
+  "cad_changed": false,
+  "shared_config_changed": false,
+  "no_print_sent": true,
+  "not_proven": [
+    "physical PETG release and debris removal",
+    "195 mm print adhesion and wobble",
+    "printed groove and bore dimensions",
+    "gas tightness and measured airflow",
+    "ear root strength and layer adhesion"
+  ],
+  "scope": "Two frozen half-shells only, each on a separate plate. 12 bounded checks per half; not a whole-machine manufacturing release."
+}

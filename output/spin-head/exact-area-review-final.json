@@ -1,0 +1,109 @@
+{
+  "source_report_sha256": "e1a3fa97c5e72a112626cb62aca16b739d643278233949c4b181b5c3fc656839",
+  "checker_path": "analysis/exact_mesh.py",
+  "checker_sha256": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+  "parts": [
+    {
+      "part": "body",
+      "file": "output/spin-head/spin-body.stl",
+      "sha256": "cfd1ee550bc530be0242b227c42d032d353014fdaf6a85968e95b475f9dde4ba",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 3700
+    },
+    {
+      "part": "carriage",
+      "file": "output/spin-head/spin-carriage.stl",
+      "sha256": "d4b9b9c729270d4eb748fa8d865ea41b2b880400c3b4d1d9becd117e2c08943d",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 1652
+    },
+    {
+      "part": "pad",
+      "file": "output/spin-head/spin-pad.stl",
+      "sha256": "89c8ae1e33bccdeb96e7ac6d58f82fb858297b45e973a0a5bb175716763acc70",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 24
+    },
+    {
+      "part": "pad-keeper",
+      "file": "output/spin-head/spin-pad-keeper.stl",
+      "sha256": "b9d33c4f0db5113d909effc6851ad9cbcb6741c103b0dc9c78ddc422db38df8c",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 440
+    },
+    {
+      "part": "opposite-guide",
+      "file": "output/spin-head/spin-opposite-guide.stl",
+      "sha256": "e510dd0f5e8165178d8f3f811367f765f753cf4a5fcc578021b0ffd8bf2a7450",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 322
+    },
+    {
+      "part": "cover",
+      "file": "output/spin-head/spin-cover.stl",
+      "sha256": "f9ee6b239b5e88beb40aa6f1ef4c099d8c6ec52a6ffbbc09aee5d3711e6ad8fc",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 3376
+    },
+    {
+      "part": "spring-cage",
+      "file": "output/spin-head/spin-spring-cage.stl",
+      "sha256": "fff23c6907a5afc439d896833f598ca8ae03de98d646a8574d50459dc6c62cd9",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 1088
+    },
+    {
+      "part": "spring-seat",
+      "file": "output/spin-head/spin-spring-seat.stl",
+      "sha256": "599177c2dadf0a543ca4685c5362595e06120030514bd4c8e613778ce938314b",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 288
+    },
+    {
+      "part": "pull-cap",
+      "file": "output/spin-head/spin-pull-cap.stl",
+      "sha256": "f69fee61263cfbd29e572fdee69799ff42d03f21693b81c0f6825f6ee0048637",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 288
+    },
+    {
+      "part": "hold-fork",
+      "file": "output/spin-head/spin-hold-fork.stl",
+      "sha256": "1d2b9004c3419a398c714f8f50b56647ffced6fe1b20a3ffe3c28e5188b6976d",
+      "passed": true,
+      "format": "binary",
+      "exact_zero_area_face_indices": [],
+      "non_ring_vertex_links": [],
+      "vertex_count": 593
+    }
+  ],
+  "all_passed": true,
+  "physical_acceptance": false
+}

@@ -1,0 +1,23 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+/result.json
+
+# Preserve engineering source and textual review evidence at their original paths.
+# Generated meshes, slicer packages, media and logs stay local.
+/output/**
+!/output/**/
+!/output/**/*.py
+!/output/**/*.scad
+!/output/**/*.md
+!/output/**/*.json
+!/output/**/*.csv
+/output/**/__pycache__/
+
+# Raw orders, local service state and deployed preview assets are never tracked.
+/output/procurement/
+/output/preview-service/
+/output/revision-review/

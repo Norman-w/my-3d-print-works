@@ -1,0 +1,42 @@
+{
+  "status": "ADOPTED_INPUT_MESH_PARITY_PASS",
+  "rows": [
+    {
+      "part": "body",
+      "candidate_stl": "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/body.stl",
+      "current_stl": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-body.stl",
+      "candidate_sha256": "18cf43d1b90d6402e75621ae8f3f000a42bddca556566a034f585d44f46fe4c9",
+      "current_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+      "byte_identical": false,
+      "exact_vertex_triangle_multiset_equal": true
+    },
+    {
+      "part": "lever",
+      "candidate_stl": "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.stl",
+      "current_stl": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-lever.stl",
+      "candidate_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+      "current_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+      "byte_identical": true,
+      "exact_vertex_triangle_multiset_equal": true
+    },
+    {
+      "part": "terminal-cap",
+      "candidate_stl": "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/terminal-cap.stl",
+      "current_stl": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-terminal-cap.stl",
+      "candidate_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+      "current_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+      "byte_identical": true,
+      "exact_vertex_triangle_multiset_equal": true
+    },
+    {
+      "part": "cover",
+      "candidate_stl": "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/cover.stl",
+      "current_stl": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-cover.stl",
+      "candidate_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+      "current_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+      "byte_identical": true,
+      "exact_vertex_triangle_multiset_equal": true
+    }
+  ],
+  "scope": "Exact decimal-coordinate triangle multiset parity for four mechanical v2 candidate parts and formal current scene exports. No tolerance, friction or support removal proof."
+}

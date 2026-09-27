@@ -1,0 +1,1062 @@
+{
+  "source_sha256": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "parts": [
+    {
+      "id": "positive-half",
+      "name": "positive-half",
+      "role": "printed",
+      "family": "positive-half",
+      "definitions": {
+        "la_part": "positive-half",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/positive-half.stl",
+      "path": "output/launcher-final/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+    },
+    {
+      "id": "negative-half",
+      "name": "negative-half",
+      "role": "printed",
+      "family": "negative-half",
+      "definitions": {
+        "la_part": "negative-half",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/negative-half.stl",
+      "path": "output/launcher-final/negative-half.stl",
+      "sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+    },
+    {
+      "id": "beam-grip",
+      "name": "beam-grip",
+      "role": "printed",
+      "family": "beam-grip",
+      "definitions": {
+        "la_part": "beam-grip",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/beam-grip.stl",
+      "path": "output/launcher-final/beam-grip.stl",
+      "sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9"
+    },
+    {
+      "id": "liner",
+      "name": "liner",
+      "role": "printed",
+      "family": "liner",
+      "definitions": {
+        "la_part": "liner",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/liner.stl",
+      "path": "output/launcher-final/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+    },
+    {
+      "id": "right-support",
+      "name": "right-support",
+      "role": "printed",
+      "family": "right-support",
+      "definitions": {
+        "la_part": "right-support",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/right-support.stl",
+      "path": "output/launcher-final/right-support.stl",
+      "sha256": "3da12da9ed89f7bfe8d538348a0134f03dedfb025e79deb4d84110bf7b1a13ef"
+    },
+    {
+      "id": "left-support",
+      "name": "left-support",
+      "role": "printed",
+      "family": "left-support",
+      "definitions": {
+        "la_part": "left-support",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/left-support.stl",
+      "path": "output/launcher-final/left-support.stl",
+      "sha256": "2f417fd36eddfc21967ba3e23ae8c36cd2aa08c33d9990aa296650a43f4390bc"
+    },
+    {
+      "id": "x-gib",
+      "name": "x-gib",
+      "role": "printed",
+      "family": "x-gib",
+      "definitions": {
+        "la_part": "x-gib",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/x-gib.stl",
+      "path": "output/launcher-final/x-gib.stl",
+      "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3"
+    },
+    {
+      "id": "x-cover",
+      "name": "x-cover",
+      "role": "printed",
+      "family": "x-cover",
+      "definitions": {
+        "la_part": "x-cover",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/x-cover.stl",
+      "path": "output/launcher-final/x-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+    },
+    {
+      "id": "frame",
+      "name": "frame",
+      "role": "printed",
+      "family": "frame",
+      "definitions": {
+        "la_part": "frame",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/frame.stl",
+      "path": "output/launcher-final/frame.stl",
+      "sha256": "adb66bbdd13e8ab3761072d98e67998a3f0b7989bef9cf73165146171b63d147"
+    },
+    {
+      "id": "fixed-spacer",
+      "name": "fixed-spacer",
+      "role": "printed",
+      "family": "fixed-spacer",
+      "definitions": {
+        "la_part": "fixed-spacer",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/fixed-spacer.stl",
+      "path": "output/launcher-final/fixed-spacer.stl",
+      "sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a"
+    },
+    {
+      "id": "moving-spacer",
+      "name": "moving-spacer",
+      "role": "printed",
+      "family": "moving-spacer",
+      "definitions": {
+        "la_part": "moving-spacer",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/moving-spacer.stl",
+      "path": "output/launcher-final/moving-spacer.stl",
+      "sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5"
+    },
+    {
+      "id": "capture-right",
+      "name": "capture-right",
+      "role": "printed",
+      "family": "capture-1",
+      "definitions": {
+        "la_part": "capture",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/capture-right.stl",
+      "path": "output/launcher-final/capture-right.stl",
+      "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d"
+    },
+    {
+      "id": "pipe-clamp-right",
+      "name": "pipe-clamp-right",
+      "role": "printed",
+      "family": "pipe-clamp-1",
+      "definitions": {
+        "la_part": "pipe-clamp",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pipe-clamp-right.stl",
+      "path": "output/launcher-final/pipe-clamp-right.stl",
+      "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e"
+    },
+    {
+      "id": "y-cap-right",
+      "name": "y-cap-right",
+      "role": "printed",
+      "family": "y-cap",
+      "definitions": {
+        "la_part": "y-cap",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-cap-right.stl",
+      "path": "output/launcher-final/y-cap-right.stl",
+      "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9"
+    },
+    {
+      "id": "y-gib-right-front",
+      "name": "y-gib-right-front",
+      "role": "printed",
+      "family": "y-gib",
+      "definitions": {
+        "la_part": "y-gib",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-gib-right-front.stl",
+      "path": "output/launcher-final/y-gib-right-front.stl",
+      "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb"
+    },
+    {
+      "id": "y-keeper-right-front",
+      "name": "y-keeper-right-front",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-right-front.stl",
+      "path": "output/launcher-final/y-keeper-right-front.stl",
+      "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+    },
+    {
+      "id": "finger-right-front",
+      "name": "finger-right-front",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-right-front.stl",
+      "path": "output/launcher-final/finger-right-front.stl",
+      "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+    },
+    {
+      "id": "pin-block-right-front",
+      "name": "pin-block-right-front",
+      "role": "printed",
+      "family": "pin-block",
+      "definitions": {
+        "la_part": "pin-block",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pin-block-right-front.stl",
+      "path": "output/launcher-final/pin-block-right-front.stl",
+      "sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3"
+    },
+    {
+      "id": "y-gib-right-rear",
+      "name": "y-gib-right-rear",
+      "role": "printed",
+      "family": "y-gib",
+      "definitions": {
+        "la_part": "y-gib",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-gib-right-rear.stl",
+      "path": "output/launcher-final/y-gib-right-rear.stl",
+      "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4"
+    },
+    {
+      "id": "y-keeper-right-rear",
+      "name": "y-keeper-right-rear",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-right-rear.stl",
+      "path": "output/launcher-final/y-keeper-right-rear.stl",
+      "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f"
+    },
+    {
+      "id": "finger-right-rear",
+      "name": "finger-right-rear",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-right-rear.stl",
+      "path": "output/launcher-final/finger-right-rear.stl",
+      "sha256": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43"
+    },
+    {
+      "id": "pin-block-right-rear",
+      "name": "pin-block-right-rear",
+      "role": "printed",
+      "family": "pin-block",
+      "definitions": {
+        "la_part": "pin-block",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pin-block-right-rear.stl",
+      "path": "output/launcher-final/pin-block-right-rear.stl",
+      "sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6"
+    },
+    {
+      "id": "capture-left",
+      "name": "capture-left",
+      "role": "printed",
+      "family": "capture--1",
+      "definitions": {
+        "la_part": "capture",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/capture-left.stl",
+      "path": "output/launcher-final/capture-left.stl",
+      "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f"
+    },
+    {
+      "id": "pipe-clamp-left",
+      "name": "pipe-clamp-left",
+      "role": "printed",
+      "family": "pipe-clamp--1",
+      "definitions": {
+        "la_part": "pipe-clamp",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pipe-clamp-left.stl",
+      "path": "output/launcher-final/pipe-clamp-left.stl",
+      "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708"
+    },
+    {
+      "id": "y-cap-left",
+      "name": "y-cap-left",
+      "role": "printed",
+      "family": "y-cap",
+      "definitions": {
+        "la_part": "y-cap",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-cap-left.stl",
+      "path": "output/launcher-final/y-cap-left.stl",
+      "sha256": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16"
+    },
+    {
+      "id": "y-gib-left-front",
+      "name": "y-gib-left-front",
+      "role": "printed",
+      "family": "y-gib",
+      "definitions": {
+        "la_part": "y-gib",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-gib-left-front.stl",
+      "path": "output/launcher-final/y-gib-left-front.stl",
+      "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280"
+    },
+    {
+      "id": "y-keeper-left-front",
+      "name": "y-keeper-left-front",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-left-front.stl",
+      "path": "output/launcher-final/y-keeper-left-front.stl",
+      "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5"
+    },
+    {
+      "id": "finger-left-front",
+      "name": "finger-left-front",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-left-front.stl",
+      "path": "output/launcher-final/finger-left-front.stl",
+      "sha256": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3"
+    },
+    {
+      "id": "pin-block-left-front",
+      "name": "pin-block-left-front",
+      "role": "printed",
+      "family": "pin-block",
+      "definitions": {
+        "la_part": "pin-block",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pin-block-left-front.stl",
+      "path": "output/launcher-final/pin-block-left-front.stl",
+      "sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e"
+    },
+    {
+      "id": "y-gib-left-rear",
+      "name": "y-gib-left-rear",
+      "role": "printed",
+      "family": "y-gib",
+      "definitions": {
+        "la_part": "y-gib",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-gib-left-rear.stl",
+      "path": "output/launcher-final/y-gib-left-rear.stl",
+      "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20"
+    },
+    {
+      "id": "y-keeper-left-rear",
+      "name": "y-keeper-left-rear",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-left-rear.stl",
+      "path": "output/launcher-final/y-keeper-left-rear.stl",
+      "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010"
+    },
+    {
+      "id": "finger-left-rear",
+      "name": "finger-left-rear",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-left-rear.stl",
+      "path": "output/launcher-final/finger-left-rear.stl",
+      "sha256": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d"
+    },
+    {
+      "id": "pin-block-left-rear",
+      "name": "pin-block-left-rear",
+      "role": "printed",
+      "family": "pin-block",
+      "definitions": {
+        "la_part": "pin-block",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/pin-block-left-rear.stl",
+      "path": "output/launcher-final/pin-block-left-rear.stl",
+      "sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+    }
+  ],
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "printed_instances": 33,
+  "unique_geometry_families": 20,
+  "groups": {
+    "positive-half": [
+      {
+        "id": "positive-half",
+        "name": "送料右半壳",
+        "role": "printed",
+        "family": "positive-half",
+        "definitions": {
+          "la_part": "positive-half",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/positive-half.stl",
+        "path": "output/launcher-final/positive-half.stl",
+        "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+      }
+    ],
+    "negative-half": [
+      {
+        "id": "negative-half",
+        "name": "送料左半壳",
+        "role": "printed",
+        "family": "negative-half",
+        "definitions": {
+          "la_part": "negative-half",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/negative-half.stl",
+        "path": "output/launcher-final/negative-half.stl",
+        "sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+      }
+    ],
+    "beam-grip": [
+      {
+        "id": "beam-grip",
+        "name": "背梁握把",
+        "role": "printed",
+        "family": "beam-grip",
+        "definitions": {
+          "la_part": "beam-grip",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/beam-grip.stl",
+        "path": "output/launcher-final/beam-grip.stl",
+        "sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9"
+      }
+    ],
+    "liner": [
+      {
+        "id": "liner",
+        "name": "出口内衬",
+        "role": "printed",
+        "family": "liner",
+        "definitions": {
+          "la_part": "liner",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/liner.stl",
+        "path": "output/launcher-final/liner.stl",
+        "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+      }
+    ],
+    "right-support": [
+      {
+        "id": "right-support",
+        "name": "右导向支座",
+        "role": "printed",
+        "family": "right-support",
+        "definitions": {
+          "la_part": "right-support",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/right-support.stl",
+        "path": "output/launcher-final/right-support.stl",
+        "sha256": "3da12da9ed89f7bfe8d538348a0134f03dedfb025e79deb4d84110bf7b1a13ef"
+      }
+    ],
+    "left-support": [
+      {
+        "id": "left-support",
+        "name": "左导向及弹簧座",
+        "role": "printed",
+        "family": "left-support",
+        "definitions": {
+          "la_part": "left-support",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/left-support.stl",
+        "path": "output/launcher-final/left-support.stl",
+        "sha256": "2f417fd36eddfc21967ba3e23ae8c36cd2aa08c33d9990aa296650a43f4390bc"
+      }
+    ],
+    "x-gib": [
+      {
+        "id": "x-gib",
+        "name": "X调隙压条",
+        "role": "printed",
+        "family": "x-gib",
+        "definitions": {
+          "la_part": "x-gib",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/x-gib.stl",
+        "path": "output/launcher-final/x-gib.stl",
+        "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3"
+      }
+    ],
+    "x-cover": [
+      {
+        "id": "x-cover",
+        "name": "X调节外盖",
+        "role": "printed",
+        "family": "x-cover",
+        "definitions": {
+          "la_part": "x-cover",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/x-cover.stl",
+        "path": "output/launcher-final/x-cover.stl",
+        "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+      }
+    ],
+    "frame": [
+      {
+        "id": "frame",
+        "name": "凸轮架与指环",
+        "role": "printed",
+        "family": "frame",
+        "definitions": {
+          "la_part": "frame",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/frame.stl",
+        "path": "output/launcher-final/frame.stl",
+        "sha256": "adb66bbdd13e8ab3761072d98e67998a3f0b7989bef9cf73165146171b63d147"
+      }
+    ],
+    "fixed-spacer": [
+      {
+        "id": "fixed-spacer",
+        "name": "弹簧固定端间隔套",
+        "role": "printed",
+        "family": "fixed-spacer",
+        "definitions": {
+          "la_part": "fixed-spacer",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/fixed-spacer.stl",
+        "path": "output/launcher-final/fixed-spacer.stl",
+        "sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a"
+      }
+    ],
+    "moving-spacer": [
+      {
+        "id": "moving-spacer",
+        "name": "弹簧运动端间隔套",
+        "role": "printed",
+        "family": "moving-spacer",
+        "definitions": {
+          "la_part": "moving-spacer",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/moving-spacer.stl",
+        "path": "output/launcher-final/moving-spacer.stl",
+        "sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5"
+      }
+    ],
+    "capture-1": [
+      {
+        "id": "capture-right",
+        "name": "右出口捕获座",
+        "role": "printed",
+        "family": "capture-1",
+        "definitions": {
+          "la_part": "capture",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/capture-right.stl",
+        "path": "output/launcher-final/capture-right.stl",
+        "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d"
+      }
+    ],
+    "pipe-clamp-1": [
+      {
+        "id": "pipe-clamp-right",
+        "name": "右PC管夹",
+        "role": "printed",
+        "family": "pipe-clamp-1",
+        "definitions": {
+          "la_part": "pipe-clamp",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pipe-clamp-right.stl",
+        "path": "output/launcher-final/pipe-clamp-right.stl",
+        "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e"
+      }
+    ],
+    "y-cap": [
+      {
+        "id": "y-cap-right",
+        "name": "右公共架导向盖",
+        "role": "printed",
+        "family": "y-cap",
+        "definitions": {
+          "la_part": "y-cap",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-cap-right.stl",
+        "path": "output/launcher-final/y-cap-right.stl",
+        "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9"
+      },
+      {
+        "id": "y-cap-left",
+        "name": "左公共架导向盖",
+        "role": "printed",
+        "family": "y-cap",
+        "definitions": {
+          "la_part": "y-cap",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-cap-left.stl",
+        "path": "output/launcher-final/y-cap-left.stl",
+        "sha256": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16"
+      }
+    ],
+    "y-gib": [
+      {
+        "id": "y-gib-right-front",
+        "name": "右前Y调隙压条",
+        "role": "printed",
+        "family": "y-gib",
+        "definitions": {
+          "la_part": "y-gib",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-gib-right-front.stl",
+        "path": "output/launcher-final/y-gib-right-front.stl",
+        "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb"
+      },
+      {
+        "id": "y-gib-right-rear",
+        "name": "右后Y调隙压条",
+        "role": "printed",
+        "family": "y-gib",
+        "definitions": {
+          "la_part": "y-gib",
+          "la_side": 1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-gib-right-rear.stl",
+        "path": "output/launcher-final/y-gib-right-rear.stl",
+        "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4"
+      },
+      {
+        "id": "y-gib-left-front",
+        "name": "左前Y调隙压条",
+        "role": "printed",
+        "family": "y-gib",
+        "definitions": {
+          "la_part": "y-gib",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-gib-left-front.stl",
+        "path": "output/launcher-final/y-gib-left-front.stl",
+        "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280"
+      },
+      {
+        "id": "y-gib-left-rear",
+        "name": "左后Y调隙压条",
+        "role": "printed",
+        "family": "y-gib",
+        "definitions": {
+          "la_part": "y-gib",
+          "la_side": -1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-gib-left-rear.stl",
+        "path": "output/launcher-final/y-gib-left-rear.stl",
+        "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20"
+      }
+    ],
+    "y-keeper": [
+      {
+        "id": "y-keeper-right-front",
+        "name": "右前Y外盖",
+        "role": "printed",
+        "family": "y-keeper",
+        "definitions": {
+          "la_part": "y-keeper",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-keeper-right-front.stl",
+        "path": "output/launcher-final/y-keeper-right-front.stl",
+        "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+      },
+      {
+        "id": "y-keeper-right-rear",
+        "name": "右后Y外盖",
+        "role": "printed",
+        "family": "y-keeper",
+        "definitions": {
+          "la_part": "y-keeper",
+          "la_side": 1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-keeper-right-rear.stl",
+        "path": "output/launcher-final/y-keeper-right-rear.stl",
+        "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f"
+      },
+      {
+        "id": "y-keeper-left-front",
+        "name": "左前Y外盖",
+        "role": "printed",
+        "family": "y-keeper",
+        "definitions": {
+          "la_part": "y-keeper",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-keeper-left-front.stl",
+        "path": "output/launcher-final/y-keeper-left-front.stl",
+        "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5"
+      },
+      {
+        "id": "y-keeper-left-rear",
+        "name": "左后Y外盖",
+        "role": "printed",
+        "family": "y-keeper",
+        "definitions": {
+          "la_part": "y-keeper",
+          "la_side": -1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/y-keeper-left-rear.stl",
+        "path": "output/launcher-final/y-keeper-left-rear.stl",
+        "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010"
+      }
+    ],
+    "finger": [
+      {
+        "id": "finger-right-front",
+        "name": "右前V定位挡指",
+        "role": "printed",
+        "family": "finger",
+        "definitions": {
+          "la_part": "finger",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/finger-right-front.stl",
+        "path": "output/launcher-final/finger-right-front.stl",
+        "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+      },
+      {
+        "id": "finger-right-rear",
+        "name": "右后V定位挡指",
+        "role": "printed",
+        "family": "finger",
+        "definitions": {
+          "la_part": "finger",
+          "la_side": 1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/finger-right-rear.stl",
+        "path": "output/launcher-final/finger-right-rear.stl",
+        "sha256": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43"
+      },
+      {
+        "id": "finger-left-front",
+        "name": "左前V定位挡指",
+        "role": "printed",
+        "family": "finger",
+        "definitions": {
+          "la_part": "finger",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/finger-left-front.stl",
+        "path": "output/launcher-final/finger-left-front.stl",
+        "sha256": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3"
+      },
+      {
+        "id": "finger-left-rear",
+        "name": "左后V定位挡指",
+        "role": "printed",
+        "family": "finger",
+        "definitions": {
+          "la_part": "finger",
+          "la_side": -1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/finger-left-rear.stl",
+        "path": "output/launcher-final/finger-left-rear.stl",
+        "sha256": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d"
+      }
+    ],
+    "pin-block": [
+      {
+        "id": "pin-block-right-front",
+        "name": "右前肩销压块",
+        "role": "printed",
+        "family": "pin-block",
+        "definitions": {
+          "la_part": "pin-block",
+          "la_side": 1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pin-block-right-front.stl",
+        "path": "output/launcher-final/pin-block-right-front.stl",
+        "sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3"
+      },
+      {
+        "id": "pin-block-right-rear",
+        "name": "右后肩销压块",
+        "role": "printed",
+        "family": "pin-block",
+        "definitions": {
+          "la_part": "pin-block",
+          "la_side": 1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pin-block-right-rear.stl",
+        "path": "output/launcher-final/pin-block-right-rear.stl",
+        "sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6"
+      },
+      {
+        "id": "pin-block-left-front",
+        "name": "左前肩销压块",
+        "role": "printed",
+        "family": "pin-block",
+        "definitions": {
+          "la_part": "pin-block",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pin-block-left-front.stl",
+        "path": "output/launcher-final/pin-block-left-front.stl",
+        "sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e"
+      },
+      {
+        "id": "pin-block-left-rear",
+        "name": "左后肩销压块",
+        "role": "printed",
+        "family": "pin-block",
+        "definitions": {
+          "la_part": "pin-block",
+          "la_side": -1,
+          "la_rear": true,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pin-block-left-rear.stl",
+        "path": "output/launcher-final/pin-block-left-rear.stl",
+        "sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+      }
+    ],
+    "capture--1": [
+      {
+        "id": "capture-left",
+        "name": "左出口捕获座",
+        "role": "printed",
+        "family": "capture--1",
+        "definitions": {
+          "la_part": "capture",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/capture-left.stl",
+        "path": "output/launcher-final/capture-left.stl",
+        "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f"
+      }
+    ],
+    "pipe-clamp--1": [
+      {
+        "id": "pipe-clamp-left",
+        "name": "左PC管夹",
+        "role": "printed",
+        "family": "pipe-clamp--1",
+        "definitions": {
+          "la_part": "pipe-clamp",
+          "la_side": -1,
+          "la_rear": false,
+          "la_t": 0
+        },
+        "file": "output/launcher-final/pipe-clamp-left.stl",
+        "path": "output/launcher-final/pipe-clamp-left.stl",
+        "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708"
+      }
+    ]
+  }
+}

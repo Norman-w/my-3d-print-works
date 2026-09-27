@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://live-katalog.ganternorm.com/pdf/ganter/EN/2342.pdf?dispositiontype=attachment",
+    "file": "output/current-axis-pin-retention/ganter/evidence/gn-2342.pdf",
+    "sha256": "7989c351a8a55b87c77e2733c378b27c7528f99bd2794725a628d40ef69a63c8",
+    "downloaded": true
+  },
+  {
+    "url": "https://live-katalog.ganternorm.com/pdf/ganter/EN/1024.pdf?dispositiontype=attachment",
+    "file": "output/current-axis-pin-retention/ganter/evidence/gn-1024.pdf",
+    "sha256": "ccf8470bc93125a9eb6dc7c362d302c0987dc18c217c919ef64eb03f7a63cf17",
+    "downloaded": true
+  }
+]

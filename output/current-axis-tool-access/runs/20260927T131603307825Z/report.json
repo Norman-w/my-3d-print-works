@@ -1,0 +1,332 @@
+{
+  "status": "LIMITED_BENCH_SERVICE_GEOMETRY_PASS",
+  "source_sha256": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-axis-tool-access/review.py": "971204457607c7d0e36fa75939d15f8ff43cf9456e9a59bd928d1f26395d5b4c",
+    "output/current-axis-tool-access/probes.scad": "5cd89bb5924d9042b865bbf341fe4899bd02458164447447c3a753835d5b2c20",
+    "output/cable-scene-export/20260927T091627124663Z/report.json": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9",
+    "output/current-axis-shoulder-candidate/candidate.scad": "99ba9e0722404fdab660a9407e1afca3473c0cdb646140a6e763b6c552c74ea6",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec",
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "output/current-axis-precision-selection/report.json": "9049ec5c3bc9ec6ddb1d81810ed7b68ae65e05d9789bb37f028c58e1b25be3f6",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be"
+  },
+  "sources_stable": true,
+  "cases": [
+    {
+      "case": "head-bench",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"head-bench\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/head-bench.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    },
+    {
+      "case": "nut-bench",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"nut-bench\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/nut-bench.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    },
+    {
+      "case": "tools-mutual",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"tools-mutual\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/tools-mutual.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    },
+    {
+      "case": "head-drive-fit",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"head-drive-fit\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/head-drive-fit.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    },
+    {
+      "case": "nut-drive-fit",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"nut-drive-fit\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/nut-drive-fit.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    },
+    {
+      "case": "shaft-insertion",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"shaft-insertion\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/shaft-insertion.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 216,
+        "signed_volume_mm3": -6.983302824892235e-14,
+        "bounds_mm": [
+          [
+            -6.58114880280261,
+            6.58114880280261
+          ],
+          [
+            -6.58114880280261,
+            6.606287722077911
+          ],
+          [
+            11.5,
+            11.5
+          ]
+        ],
+        "each_triangle_on_recess_floor_11_5": true
+      },
+      "log_sha256": "4ad5242c347b4077a7275334bd4fdfa33de9afb04c340e3fb7fabb9d16902a1c",
+      "artifact": "output/current-axis-tool-access/runs/20260927T131603307825Z/shaft-insertion.stl",
+      "artifact_sha256": "19561968cbeb36a60e72142c364d56123b54b334f090a4c2c1ea4d58d0855b5f"
+    },
+    {
+      "case": "installed-head-positive",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "at_case=\"installed-head-positive\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/runs/20260927T131603307825Z/installed-head-positive.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-tool-access/probes.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 332,
+        "signed_volume_mm3": 573.6753939000287,
+        "bounds_mm": [
+          [
+            -2.9027627869736277,
+            2.9027627869736277
+          ],
+          [
+            -2.9027627869736277,
+            2.9027627869736277
+          ],
+          [
+            19.0,
+            41.0
+          ]
+        ],
+        "each_triangle_on_recess_floor_11_5": false
+      },
+      "log_sha256": "853f065d5d5790d11893de307e9a12f09d19fa0259cc44aa46afb8eec1e313a5",
+      "artifact": "output/current-axis-tool-access/runs/20260927T131603307825Z/installed-head-positive.stl",
+      "artifact_sha256": "a65a143db2975ef2cfe10c5fa7e3ba0c62e4f0f789c0e079235224aa76c97fa7"
+    }
+  ],
+  "criteria": {
+    "head-bench": true,
+    "nut-bench": true,
+    "tools-mutual": true,
+    "head-drive-fit": true,
+    "nut-drive-fit": true,
+    "shaft-insertion": true,
+    "installed-head-positive": true
+  },
+  "mechanical_contract": {
+    "units": "mm",
+    "basis": "input-local +Z = feeder CAD +Y; -Z = CAD -Y",
+    "pose": "lever u=0, adjuster delta=0, unloaded bench module, mounting bolts absent",
+    "neighbor_union": [
+      "shoulder_plastics()",
+      "ar_rotor(0)",
+      "other_fixed_metal()",
+      "ci_local_cable(0,0)"
+    ],
+    "intentional_omissions": [
+      "target shoulder/washer/nut group checked separately at nominal drive engagement",
+      "four M4x60 not installed on bench",
+      "disconnected flexible housing/free wire parked outside"
+    ],
+    "head_tool": {
+      "supply": "unselected maximum allowed geometric budget",
+      "drive": "SW5 nominal source socket, test key AF4.98",
+      "engagement_mm": 2.5,
+      "shank_circumscribed_OD_max_mm": 5.8,
+      "long_leg_to_elbow_mm": 60,
+      "short_arm_mm_max": 25,
+      "bend_half_envelope_mm_max": 4,
+      "axial_entry_distance_mm": 40,
+      "rotation_deg": 360,
+      "tip_z_range_mm": [
+        14.8,
+        16.25
+      ]
+    },
+    "nut_tool": {
+      "supply": "unselected deep-socket/extension maximum allowed geometric budget",
+      "drive": "SW10, model socket AF10.2",
+      "socket_OD_max_mm": 14,
+      "socket_length_mm": 40,
+      "clear_cavity_depth_mm": 20,
+      "minimum_clear_hex_AF_mm": 10.2,
+      "through_extension_bore_min_mm": 8,
+      "mouth_recess_from_nut_washer_face_mm": 0.5,
+      "minimum_hex_metal_engagement_from_HNN_M6_min_4_mm": 3.5,
+      "axial_entry_distance_mm": 40,
+      "rotation_deg": 360,
+      "handle_radius_mm_max": 70,
+      "handle_thickness_mm_max": 12,
+      "handle_center_distance_behind_mouth_mm": 55,
+      "mouth_z_range_mm": [
+        -15.35,
+        -13.9
+      ]
+    },
+    "shaft_insertion": {
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "approach_from": "+Z",
+      "continuous_translation_mm": 40,
+      "conditions": "coaxially align rotor/bush/thrust stack and cheeks; washer/nut added later from -Z"
+    },
+    "formulae": {
+      "head_hi": "11.5..12.55",
+      "head_top": "hi+[5.8,6.2] = 17.3..18.75",
+      "key_tip": "head_top - 2.5 = 14.8..16.25",
+      "nut_front": "lo - washer_t = -14.85..-13.4",
+      "socket_mouth": "nut_front - .5 = -15.35..-13.9",
+      "socket_tip_clearance_min_mm": 9.1,
+      "tool_to_tool_axial_gap_lower_mm": 28.700000000000003
+    }
+  },
+  "limits": [
+    "No real wrench/socket selected; socket depth/hex tolerance of purchased shoulder not supplied",
+    "No torque, hand grip, nylon lock reuse or underhead/thread-root seating proof",
+    "Bench rigid probes include rest-pose wire only; free flexible cable deliberately disconnected/parked",
+    "Installed positive control is one actual beam-grip obstacle, sufficient to reject the tested frontal access, not all imaginable offset tools",
+    "Does not authorize opening cover/shaft service without removing all four shared host bolts and separately supporting both assemblies",
+    "Nominal concentric print geometry; not manufacturing fit/tilt/deformation acceptance"
+  ],
+  "production_CAD_modified": false,
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

@@ -1,0 +1,115 @@
+{
+  "status": "BOUNDED_COAXIAL_AXIAL_ENVELOPE_REVIEW_PASS_WITH_EXPLICIT_SCOPE",
+  "created_utc": "2026-09-27T12:40:21.235443+00:00",
+  "reviewed_run": "output/current-axis-through-candidate/runs/20260927T123821871099Z",
+  "reviewed_report_sha256": "9147d4fdd9a3f6deebf331634e43b60ca8f47f4ad223bc421fc8b4d8fdf2e2ac",
+  "reviewed_source_sha256": {
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec",
+    "docs/current-assembly-selections.json": "fa6f39b0c4bbdb34e07d2a92f663a2cb57ed9ddc0976c6afbbf7ce6e319e59ca"
+  },
+  "all_sources_and_artifacts_match": true,
+  "method": "Read-only source, report and existing ASCII-STL audit; no CAD/export/test rerun, no production changes.",
+  "envelope_derivation": {
+    "symbols": "L in [26.98,27.02]; q in [-(L-26)/2, +(L-26)/2]; lo=1-L/2+q, hi=1+L/2+q. Front/back thicknesses may independently lie in [.9,1.1].",
+    "lo_bounds": [
+      -13.02,
+      -12
+    ],
+    "hi_bounds": [
+      14,
+      15.02
+    ],
+    "correct_axis_sweep_bounds": {
+      "tube": [
+        -13.02,
+        15.02
+      ],
+      "rear_washer": [
+        -14.12,
+        -12
+      ],
+      "front_washer": [
+        14,
+        16.12
+      ],
+      "bolt_shank": [
+        -20.1,
+        16.12
+      ],
+      "head": [
+        14.9,
+        20.12
+      ],
+      "nut": [
+        -17.32,
+        -12.9
+      ]
+    },
+    "logic": "Each separate solid is covered by its axial interval. The union drops correlations and may overfill, conservatively. Nominal radial registration only.",
+    "nominal_actual_axis": "L27,q0,t1.1 -> tube[-12.5,14.5], rear washer[-13.6,-12.5], front washer[14.5,15.6], head[15.6,19.6], shank[-19.4,15.6], nut[-16.8,-13.6]."
+  },
+  "through_bore_source_check": {
+    "body": "Original ci_local_body minus D8.3 over z[-13,15]; fully passes axis body[-12,-4].",
+    "cover": "Original ci_local_cover minus D8.3 over z[7,15]; fully passes axis cover[8,14].",
+    "old_seats_removed": true,
+    "source_paths_resolve_to_current_production": true
+  },
+  "plastic_contacts": {
+    "triangles": 638,
+    "per_triangle_single_plane_counts": {
+      "-12": 394,
+      "14": 244
+    },
+    "maximum_same_plane_z_error": 0,
+    "no_triangle_connects_the_two_contact_planes": true,
+    "interpretation": "Actual output is entirely defined end-stop surface contact at z=-12 or14. No skin subtraction.",
+    "review_script_gate": "Latest review.py now checks each triangle lies wholly on one specified plane, closing the earlier per-vertex-only classification weakness."
+  },
+  "neighbor_union": {
+    "plastic_probe": [
+      "candidate body",
+      "candidate cover"
+    ],
+    "metal_probe": [
+      "ci_local_fixed_hardware(0) minus centered D16.2,z[-25,25] cylinder",
+      "two thrust washers explicitly re-added"
+    ],
+    "radial_exclusion_check": "The D16.2 subtraction removes old main-axis hardware and OD16 thrust washers. The remaining M3 cheek, M6 adjuster and stop hardware are radially outside that exclusion cylinder.",
+    "rotor_probe": [
+      "ci_local_lever(0)",
+      "ci_local_moving_hardware(0), including bush, ball and terminal fasteners"
+    ],
+    "not_directly_in_union": [
+      "printed terminal cap",
+      "ci_mount_hardware_cad",
+      "ci_local_cable",
+      "all external feeder/spin/host modules"
+    ],
+    "terminal_cap_analytic_check": "Its blank is a radius7 hull of centers [0,54] and [0,66], so minimum radius>=47, unchanged by axial rotation. Entire axis envelope radius<=6. Cuts only remove material. Thus it is separated analytically, but absent from candidate assembly/section rendering."
+  },
+  "rotor_rotation_argument": {
+    "axis_max_radius_in_rotor_z": 4,
+    "rotating_bush_bore_inscribed_radius": 4.096097708485616,
+    "radial_lower_gap": 0.09609770848561627,
+    "rotor_z": [
+      -3.5,
+      7.5
+    ],
+    "outer_hardware_z_separated": true,
+    "scope": "Any angular rotation of the coaxial nominal rotor about local z, not eccentricity, bore offset, tilt, altered axial rotor stack, or free cable."
+  },
+  "positive_control": {
+    "case": "actual_axis(25.9,0,1.1)",
+    "expected_per_end_intrusion_into_print_mm": 0.05,
+    "volume_mm3": 5.891641053998995,
+    "interpretation": "Real short-sleeve outer-washer overlap detected, not force/strength result."
+  },
+  "scope_verdict": "Only isolated nominal-radial coaxial continuous axial envelope and analytic rotor angular invariance. Not complete input rendering, global service/collision, catalogue approval, manufacturing release or physical acceptance.",
+  "production_CAD_modified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "independent_script_sha256": "026872023cefc05b7e9d4303c1a4a1cc0a035c3667eb355bde70afe43dabd55d"
+}

@@ -1,0 +1,175 @@
+{
+  "family": "positive-half",
+  "part": "positive-half",
+  "orientation": "inlet-down",
+  "orientation_description": "Original Z=-126 inlet end down; seam vertical",
+  "supports": "supported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/positive-half-inlet-down-supported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/positive-half-inlet-down-supported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/positive-half-inlet-down-supported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/positive-half-inlet-down-supported/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "shell-slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/positive-half-inlet-down-supported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/positive-half.stl"
+  ],
+  "inputs": [
+    {
+      "id": "positive-half",
+      "name": "送料右半壳",
+      "role": "printed",
+      "family": "positive-half",
+      "definitions": {
+        "la_part": "positive-half",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/positive-half.stl",
+      "path": "output/launcher-final/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+    }
+  ],
+  "input": {
+    "id": "positive-half",
+    "name": "送料右半壳",
+    "role": "printed",
+    "family": "positive-half",
+    "definitions": {
+      "la_part": "positive-half",
+      "la_side": 1,
+      "la_rear": false,
+      "la_t": 0
+    },
+    "file": "output/launcher-final/positive-half.stl",
+    "path": "output/launcher-final/positive-half.stl",
+    "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+  },
+  "source_sha256_at_start": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "supports": "tree(auto), build plate only"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 1315,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 47,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bridge": 157.2656707763672,
+          "Brim": 109.34042358398438,
+          "Custom": 424.3150329589844,
+          "Flush": 29.0,
+          "Gap infill": 1577.857177734375,
+          "Inner wall": 4927.31201171875,
+          "Internal solid infill": 435.6590270996094,
+          "Outer wall": 3200.021240234375,
+          "Overhang wall": 253.48281860351562,
+          "Sparse infill": 351.8483581542969,
+          "Support": 3971.846923828125,
+          "Support interface": 94.46544647216797,
+          "Top surface": 134.79591369628906,
+          "Travel": 2753.225341796875,
+          "Undefined": 2742.308837890625
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 143.31349182128906,
+            "total_used_g": 143.31349182128906
+          }
+        ],
+        "generate_support_material_time": 12179,
+        "id": 1,
+        "infill_time": 571,
+        "layer_filament_change": 0,
+        "main_predication": 17938.119140625,
+        "make_perimeters_time": 1833,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 93.0,
+              "height": 195.0,
+              "width": 35.5,
+              "x": 110.25,
+              "y": 81.5,
+              "z": 0.0
+            },
+            "id": 5,
+            "name": "positive-half.stl",
+            "triangle_count": 12608
+          }
+        ],
+        "sliced_time": 18923,
+        "sliced_time_with_cache": 3879,
+        "total_predication": 18409.486328125,
+        "triangle_count": 12608,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "fa470f7ff4a0aa5d6bc6e6cc0797b3747884399cd5700eb5fc18aa30d41e0154",
+    "shell-slice-review.3mf": "d59595fb928909f9c586d8844a0b252e277bd4c5b8a23b61d4c7b88ca7cf5c21"
+  },
+  "last_temperature_before_first_layer_c": 255.0
+}

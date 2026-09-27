@@ -1,0 +1,38 @@
+{
+  "status": "DIRECT_PULL_V2_ADOPTED_AND_SCENE_VERIFIED_MANUFACTURING_OPEN",
+  "evidence_sha256": {
+    "output/cable-scene-export/20260927T091627124663Z/report.json": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9",
+    "output/cable-scene-export/20260927T091627124663Z/browser-review.json": "cca9cf569ac32b0e3041f751f6db46bcc2bd1bae782bdf4aeb8ebd4ef1c37aa5",
+    "output/cable-scene-export/20260927T091627124663Z/publication.json": "7c147c592265313e1c72cbf073a178f4030ac3e301581c98b68d74b2d02b4699",
+    "output/cable-trigger-system/20260927T091437982269Z/report.json": "619043660a24c83df32ce188c1736d43f4e803c3b7899b6d9e185db9cede3c6a",
+    "output/cable-actuation-v2/20260927T091604751038Z/report.json": "134a8aa6c971210b09a0bb559244c6d808ea5b612e7ec305dbba41f8a44c50f9",
+    "output/cable-direct-adoption/render/20260927T091713271855Z/report.json": "aca5a093124c648dc25b49429dc9e8734937ce5fcf8c1ac6a7d25a7b0357f4e9",
+    "output/cable-direct-adoption/service/20260927T092327953026Z/report.json": "88f747636858b92accb5aa9c6157a62a63463fe421c2f8bf7236fc883ce958d1",
+    "output/cable-direct-adoption/contract-audit.json": "0466db055683e25775289881b713ed8b19a6578c4cf3b2f92edabcea3ddd36b2",
+    "output/cable-direct-adoption/mesh-parity.json": "91bdfaf5c1f9ec4ceecc9b6c787eafed6d45d2ae238b36bce7cee15139f785fe",
+    "output/cable-direct-pull-v2/web-review/inventory-compatibility.json": "064cc37e824c315100004c5ae3069f56ffc23ce10b65e790e28dd7d5d7bfbea7",
+    "output/cable-direct-pull-v3/first-layer-island-review/report.json": "4318e5a1e741bbb4caccbd93da4b4c55de764a5535bbf7dca9244166d383e6aa"
+  },
+  "current_input_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+  "published_snapshot": "20260927T091627124663Z",
+  "printed_instances": 56,
+  "scene_rows": 85,
+  "current_reports_live_source_hashes_verified": true,
+  "historical_candidate_mesh_parity": true,
+  "goal": "我要保证一次过的方案",
+  "goal_complete": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "remaining": [
+    "uniform current manufacturing selection and support-cleaning disposition",
+    "supplier end-seat and clamp details",
+    "physical fit, friction, loaded return, strength and creep",
+    "rated blower performance, dynamic one-ball release and spin"
+  ],
+  "support_disposition": {
+    "strict_pocket_only_contract": "failed and preserved for lever/cap",
+    "alternate_cleanup": "3 exterior first-layer islands have zero full-model projection overlap, no connection to pocket support, but contact the brim; clear with brim after taking model off PEI",
+    "remaining_pocket_support": "nominally fits original openings; physical adhesion, removal force and shoulder surface remain unverified",
+    "uniform_manufacturing_selection": "not released"
+  }
+}

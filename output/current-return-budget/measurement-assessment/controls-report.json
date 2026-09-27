@@ -1,0 +1,19 @@
+{
+  "status": "SYNTHETIC_ASSESSOR_CONTROLS_PASS",
+  "checks": {
+    "positive_arithmetic_only": true,
+    "zero_margin_not_pass": true,
+    "nan": true,
+    "negative_uncertainty": true,
+    "slack_core": true,
+    "wrong_configuration": true,
+    "missing_trace": true,
+    "unbound_identity": true
+  },
+  "scope": "Arithmetic and rejection controls, not tests on the mechanism",
+  "physical_measurement_count": 0,
+  "source_sha256": {
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/measurement-assessment/controls.py": "f1620ee9f9d270333ad7709e0e48ee45b790446fbbb542c26b160f94c6bb6d25",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/measurement-assessment/assess.py": "f98c5fc8d84facdbd43edb10be7f31252e39c577b0ddf1ab71219c5290e8cc32"
+  }
+}

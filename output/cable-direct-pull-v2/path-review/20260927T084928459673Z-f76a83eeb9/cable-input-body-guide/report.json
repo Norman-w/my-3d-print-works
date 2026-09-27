@@ -1,0 +1,568 @@
+{
+  "status": "BOUNDED_GUIDE_BEAD_CONTACT_REVIEW",
+  "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "guide_contract": {
+    "status": "DIAGNOSTIC_V2_NOT_RELEASED",
+    "units": "mm",
+    "basis": "feeder CAD",
+    "origin": [
+      75,
+      -82,
+      5
+    ],
+    "basis_x": [
+      -0.707107,
+      0,
+      0.707107
+    ],
+    "basis_y": [
+      0.707107,
+      0,
+      0.707107
+    ],
+    "basis_z": [
+      0,
+      1,
+      0
+    ],
+    "preserved": "host mounting, axis stack, finger silhouette, two-screw terminal cap, main cover",
+    "delta": 0,
+    "delta_budget": [
+      -2,
+      2
+    ],
+    "nominal_exit": [
+      -29,
+      60,
+      2
+    ],
+    "actual_exit": [
+      -29,
+      60,
+      2
+    ],
+    "fairlead_center": [
+      -24,
+      0,
+      2
+    ],
+    "fairlead_core_R": 60,
+    "fairlead_surface_R": 59.25,
+    "fairlead_extent_deg": 8,
+    "fairlead_facet_step_deg": 0.1,
+    "axial_leadin": 5,
+    "adjuster_thread_x": [
+      -53,
+      -29
+    ],
+    "adjuster_head_x": [
+      -63,
+      -53
+    ],
+    "ferrule_mouth_display_local": [
+      -65.125,
+      60,
+      2
+    ],
+    "ferrule_tip_display_local": [
+      -54.125,
+      60,
+      2
+    ],
+    "housing_stop_local": null,
+    "nut_x_fixed": [
+      [
+        -49.8,
+        -46.6
+      ],
+      [
+        -35.4,
+        -32.2
+      ]
+    ],
+    "washer_x_fixed": [
+      [
+        -46.6,
+        -45
+      ],
+      [
+        -37,
+        -35.4
+      ]
+    ],
+    "thread_exposure": [
+      3.2,
+      3.2
+    ],
+    "u_samples": [
+      [
+        0,
+        5.32907e-14,
+        0,
+        29,
+        60,
+        3.34835e-14
+      ],
+      [
+        10,
+        9.58393,
+        1.44345,
+        39,
+        59.3954,
+        5.99372
+      ],
+      [
+        20,
+        19.3343,
+        4.67065,
+        49,
+        58.0457,
+        11.9188
+      ],
+      [
+        22,
+        21.314,
+        5.45817,
+        51,
+        57.7171,
+        13.0852
+      ]
+    ],
+    "delta_samples": [
+      [
+        -2,
+        [
+          -31,
+          60,
+          2
+        ],
+        7,
+        [
+          5.2,
+          1.2
+        ],
+        31,
+        51,
+        20
+      ],
+      [
+        0,
+        [
+          -29,
+          60,
+          2
+        ],
+        5,
+        [
+          3.2,
+          3.2
+        ],
+        29,
+        49,
+        20
+      ],
+      [
+        2,
+        [
+          -27,
+          60,
+          2
+        ],
+        3,
+        [
+          1.2,
+          5.2
+        ],
+        27,
+        47,
+        20
+      ]
+    ],
+    "cap_bolts": [
+      [
+        2,
+        54
+      ],
+      [
+        2,
+        66
+      ]
+    ],
+    "cap_split_z": 3.1,
+    "cap_screw": "2x M3x8 socket head D5.5 H3",
+    "cap_nut": "2x M3 SW5.5 H2.4; z[-3,-.6]",
+    "setup": "delta is an assembly adjustment only: reseat housing/ferrule, retension at output and lock both nuts before defining zero",
+    "unknown": "actual cable friction/preload/bend endurance, ferrule seating, thread runout, print fit, housing route/service at delta bounds",
+    "selectors": [
+      "body",
+      "lever",
+      "terminal-cap",
+      "cover",
+      "adjuster",
+      "ferrule",
+      "fixed-hardware",
+      "moving-hardware",
+      "cable",
+      "contract",
+      "assembly"
+    ]
+  },
+  "part": "cable-input-body",
+  "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body",
+  "mapping": {
+    "cad_to_oriented": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -65.52310752868652
+      ],
+      [
+        0.0,
+        6.123233995736766e-17,
+        -1.0,
+        -23.395183563232422
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        94.00000000000001
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        22.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        -0.788070529,
+        -0.615584959,
+        0.0,
+        103.89966
+      ],
+      [
+        0.615584959,
+        -0.788070529,
+        0.0,
+        127.33694
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_offset": [
+      0.0,
+      0.0,
+      22.5
+    ],
+    "extruder_offset": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "oriented_to_command": [
+      [
+        -0.788070529,
+        -0.615584959,
+        0.0,
+        103.89966
+      ],
+      [
+        0.615584959,
+        -0.788070529,
+        0.0,
+        125.33694
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "cad_to_command": [
+      [
+        -0.788070529,
+        -3.769370748213023e-17,
+        0.615584959,
+        169.93821312642575
+      ],
+      [
+        0.615584959,
+        -4.825540254211057e-17,
+        0.788070529,
+        103.4389552251296
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        94.00000000000001
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "part_metadata": {
+      "name": "oriented.stl",
+      "matrix": "1 0 0 0 0 1 0 0 0 0 1 22.5 0 0 0 1",
+      "source_file": "oriented.stl",
+      "source_object_id": "0",
+      "source_volume_id": "0",
+      "source_offset_x": "0",
+      "source_offset_y": "0",
+      "source_offset_z": "22.5"
+    },
+    "mesh_stat": {
+      "face_count": "5730",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  },
+  "rows_in_wire_height": 272,
+  "feature_counts": {
+    "Inner wall": 144,
+    "Outer wall": 48,
+    "Internal solid infill": 80
+  },
+  "wire_contact_arc_phi_deg": [
+    0,
+    5.458173608185017
+  ],
+  "wire_polyline_sagitta_bound_mm": 2.283102440436835e-07,
+  "bead_error_bound_mm": 0.0032500000000000003,
+  "minimum_clearance_lower_mm": -0.0017483245971388062,
+  "possible_contact_commands": 4,
+  "closest_commands": [
+    {
+      "line": 333209,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.899999999999984,
+        1.999999999999984
+      ],
+      "print_top": 14.0,
+      "clearance_lower_mm": -0.0017483245971388062
+    },
+    {
+      "line": 333210,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.8999999999999857,
+        1.9999999999999858
+      ],
+      "print_top": 14.0,
+      "clearance_lower_mm": -0.0017483245971388062
+    },
+    {
+      "line": 335678,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.9999999999999836,
+        2.0999999999999837
+      ],
+      "print_top": 14.1,
+      "clearance_lower_mm": -0.0017483245971388062
+    },
+    {
+      "line": 335679,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.9999999999999853,
+        2.0999999999999854
+      ],
+      "print_top": 14.1,
+      "clearance_lower_mm": -0.0017483245971388062
+    },
+    {
+      "line": 328677,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.8000005999999862,
+        1.8999999999999861
+      ],
+      "print_top": 13.9,
+      "clearance_lower_mm": 0.00494823803693778
+    },
+    {
+      "line": 328676,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.8000005999999844,
+        1.8999999999999844
+      ],
+      "print_top": 13.9,
+      "clearance_lower_mm": 0.004948238036938002
+    },
+    {
+      "line": 336007,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        2.100000599999983,
+        2.1999999999999833
+      ],
+      "print_top": 14.2,
+      "clearance_lower_mm": 0.00494831875791546
+    },
+    {
+      "line": 336008,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        2.100000599999985,
+        2.199999999999985
+      ],
+      "print_top": 14.2,
+      "clearance_lower_mm": 0.004948318757915682
+    },
+    {
+      "line": 340733,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        2.1999999999999846,
+        2.2999999999999847
+      ],
+      "print_top": 14.3,
+      "clearance_lower_mm": 0.02541006066280893
+    },
+    {
+      "line": 340734,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        2.1999999999999864,
+        2.2999999999999865
+      ],
+      "print_top": 14.3,
+      "clearance_lower_mm": 0.025410060662809486
+    },
+    {
+      "line": 328470,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.6999999999999864,
+        1.7999999999999865
+      ],
+      "print_top": 13.8,
+      "clearance_lower_mm": 0.025410060662816925
+    },
+    {
+      "line": 328469,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.6999999999999846,
+        1.7999999999999847
+      ],
+      "print_top": 13.8,
+      "clearance_lower_mm": 0.02541006066281748
+    },
+    {
+      "line": 323686,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.6000005999999851,
+        1.699999999999985
+      ],
+      "print_top": 13.7,
+      "clearance_lower_mm": 0.060865321159491725
+    },
+    {
+      "line": 323685,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        1.6000005999999833,
+        1.6999999999999833
+      ],
+      "print_top": 13.7,
+      "clearance_lower_mm": 0.0608653211594925
+    },
+    {
+      "line": 340817,
+      "feature": "Outer wall",
+      "width": 0.42,
+      "local_z_slab": [
+        2.300000599999984,
+        2.3999999999999844
+      ],
+      "print_top": 14.4,
+      "clearance_lower_mm": 0.06086558302125833
+    }
+  ],
+  "interpretation": "The guide is intended to touch the wire. Negative conservative bead clearance is a flagged numerical/material-fit margin, not a newly proven jam or an unsupported span. This checks all emitted layers overlapping the core diameter at localZ2 against a conservative contact arc through u22.",
+  "limits": [
+    "Declared bead width/height is an envelope model, not measured PETG. Wire follows a positive-tension ideal tangent path; no arbitrary-slack guarantee.",
+    "Actual guide radius/friction/wear/preload and full loaded return remain unverified.",
+    "Whole-STL underside and previous-layer overlap are reported separately by body_path_review.py."
+  ],
+  "artifact_sha256": {
+    "invocation.json": "0ddf819ecd7cd1adaa90316f18d8de0c235450b504085c8118f771204c554baf",
+    "plate_1.gcode": "6c60a02159897054ef0f97f5832bc827e1ccc8acaee05a6a0557b6854be6b31d",
+    "slice-review.3mf": "59464ee2479398ed9c0ec7f818d94e2254bec3acf8e7377818618d2bc81989fb"
+  },
+  "script_sha256": "8d891cb7d4bad925e9388fbfe85c3d5bb9d50b2c3e657b7a4c1236791b668f6d",
+  "image": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/path-review/20260927T084928459673Z-f76a83eeb9/cable-input-body-guide/guide-key-layer.png",
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

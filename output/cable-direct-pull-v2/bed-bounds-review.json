@@ -1,0 +1,608 @@
+{
+  "status": "BED_BOUNDS_PASS",
+  "created_utc": "2026-09-27T09:00:08.059456+00:00",
+  "parts": [
+    {
+      "part": "cable-input-body",
+      "status": "ACTUAL_MESH_AND_MODEL_BRIM_BEADS_WITHIN_PRINTABLE_BED",
+      "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+      "machine": {
+        "printable_area": [
+          "0x0",
+          "256x0",
+          "256x256",
+          "0x256"
+        ],
+        "bed_exclude_area": [
+          "0x0",
+          "18x0",
+          "18x28",
+          "0x28"
+        ],
+        "printable_height": 250.0,
+        "resolved_project_matches": true
+      },
+      "actual_3mf": {
+        "build_leaf_instances": 1,
+        "total_vertices": 2845,
+        "world_vertex_bounds_mm": [
+          [
+            46.57646000532206,
+            34.49066390288752,
+            0.0
+          ],
+          [
+            209.39818002937477,
+            221.50538658155568,
+            45.0
+          ]
+        ],
+        "projected_convex_hull_inside_bed": true,
+        "projected_convex_hull_to_exclude_distance_mm": 34.385387930528054,
+        "command_vs_direct_mesh_bbox_max_error_mm": 1.4908588639173104e-06,
+        "instances": [
+          {
+            "file": "3D/Objects/object_1.model",
+            "object_id": "1",
+            "chain": [
+              {
+                "objectid": "2",
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000002-b1ec-4553-aec9-835e5b724bb4",
+                "transform": "-0.788070529 0.615584959 0 -0.615584959 -0.788070529 0 0 0 1 103.89966 127.33694 0",
+                "printable": "1"
+              },
+              {
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}path": "/3D/Objects/object_1.model",
+                "objectid": "1",
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00010000-b206-40ff-9872-83e8017abed1",
+                "transform": "1 0 0 0 1 0 0 0 1 0 0 22.5"
+              }
+            ],
+            "matrix": [
+              [
+                -0.788070529,
+                -0.615584959,
+                0.0,
+                103.89966
+              ],
+              [
+                0.615584959,
+                -0.788070529,
+                0.0,
+                127.33694
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                22.5
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transformed_vertex_bbox_mm": [
+              [
+                46.57646000532206,
+                34.49066390288752,
+                0.0
+              ],
+              [
+                209.39818002937477,
+                221.50538658155568,
+                45.0
+              ]
+            ]
+          }
+        ]
+      },
+      "native_bbox_explanation": {
+        "reported": {
+          "depth": 275.93988037109375,
+          "height": 45.0,
+          "width": 273.13177490234375,
+          "x": -32.666229248046875,
+          "y": -10.633002281188965,
+          "z": 0.0
+        },
+        "transformed_local_mesh_AABB_corner_bounds_mm": [
+          [
+            -32.66622907215894,
+            -10.633002586204242,
+            0.0
+          ],
+          [
+            240.46554907215892,
+            265.3068825862042,
+            45.0
+          ]
+        ],
+        "maximum_difference_to_native_bbox_mm": 4.496299425227335e-06,
+        "classification": "TRANSFORMED_LOCAL_AABB_MATCHES_NATIVE_METADATA",
+        "note": "Actual raw mesh vertices are transformed through every component and build matrix. Separately transforming only the eight corners of the unrotated mesh AABB inflates the bound for nonrectangular parts; equality to reported bbox establishes the metadata explanation, not absence of mesh checks."
+      },
+      "actual_gcode": {
+        "included_feature_counts": {
+          "Brim": 3524,
+          "Outer wall": 46626,
+          "Inner wall": 138873,
+          "Gap infill": 51137,
+          "Bottom surface": 1636,
+          "Internal solid infill": 68170,
+          "Sparse infill": 112255,
+          "Floating vertical shell": 5040,
+          "Bridge": 3588,
+          "Overhang wall": 54,
+          "Top surface": 2416
+        },
+        "separately_excluded_custom_counts": {},
+        "bead_envelope_bounds_mm": [
+          [
+            41.677749999999996,
+            27.591749999999998,
+            0.0
+          ],
+          [
+            214.29025000000001,
+            224.40325,
+            45.0
+          ]
+        ],
+        "minimum_bed_edge_margin_mm": 27.591749999999998,
+        "minimum_excluded_polygon_gap_lower_mm": 28.654372697136473,
+        "per_feature_bounds": {
+          "Brim": [
+            [
+              41.677749999999996,
+              27.591749999999998,
+              0.0
+            ],
+            [
+              214.29025000000001,
+              224.40325,
+              0.1
+            ]
+          ],
+          "Outer wall": [
+            [
+              46.57275,
+              32.48775,
+              0.0
+            ],
+            [
+              209.31625,
+              219.48424999999997,
+              45.0
+            ]
+          ],
+          "Inner wall": [
+            [
+              46.97175,
+              32.885749999999994,
+              0.0
+            ],
+            [
+              208.75125,
+              219.03825,
+              44.9
+            ]
+          ],
+          "Gap infill": [
+            [
+              48.660043,
+              34.4242376,
+              0.0
+            ],
+            [
+              208.86720000000003,
+              218.21441249999998,
+              45.0
+            ]
+          ],
+          "Bottom surface": [
+            [
+              48.565525,
+              34.47222118290272,
+              0.0
+            ],
+            [
+              206.504475,
+              217.259475,
+              0.1
+            ]
+          ],
+          "Internal solid infill": [
+            [
+              48.17655,
+              34.10750109404295,
+              0.1
+            ],
+            [
+              206.83745,
+              217.82645,
+              39.9
+            ]
+          ],
+          "Sparse infill": [
+            [
+              48.19527649376114,
+              34.22475,
+              0.30000000000000004
+            ],
+            [
+              207.02125,
+              217.67525,
+              39.1
+            ]
+          ],
+          "Floating vertical shell": [
+            [
+              48.25602,
+              34.17102,
+              2.6
+            ],
+            [
+              206.94187,
+              217.6078705,
+              39.1
+            ]
+          ],
+          "Bridge": [
+            [
+              48.2312539161791,
+              34.14540438480692,
+              2.4
+            ],
+            [
+              206.8988,
+              217.767515,
+              39.1
+            ]
+          ],
+          "Overhang wall": [
+            [
+              46.81775,
+              120.09975,
+              3.0000001000000003
+            ],
+            [
+              187.89125,
+              209.14925,
+              17.7
+            ]
+          ],
+          "Top surface": [
+            [
+              46.79275,
+              32.70675,
+              3.6
+            ],
+            [
+              208.74425,
+              219.15425,
+              45.0
+            ]
+          ]
+        },
+        "violations": [],
+        "arc_and_buffer_extra_mm": 0.0032500000000000003
+      },
+      "provenance": {
+        "invocation.json": "0ddf819ecd7cd1adaa90316f18d8de0c235450b504085c8118f771204c554baf",
+        "slice-review.3mf": "59464ee2479398ed9c0ec7f818d94e2254bec3acf8e7377818618d2bc81989fb",
+        "plate_1.gcode": "6c60a02159897054ef0f97f5832bc827e1ccc8acaee05a6a0557b6854be6b31d",
+        "machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+        "result.json": "63b4e41758d21ddeb8e13971d149f6eeb41476727eabad7a3300950f8b787e10"
+      },
+      "parser_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+      "script_sha256": "102dab8ff29a895ff65a9b06b7826243b58e29ec1b2f3c03d50e9887c052f33e",
+      "scope": "Actual build mesh and positive-extrusion model/brim/other print-feature envelopes. Machine custom start/end purge and travel sequences are excluded explicitly; not a machine collision or material/printing release.",
+      "manufacturing_release": false,
+      "sent_to_printer": false
+    },
+    {
+      "part": "cable-input-lever",
+      "status": "ACTUAL_MESH_AND_MODEL_BRIM_BEADS_WITHIN_PRINTABLE_BED",
+      "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+      "machine": {
+        "printable_area": [
+          "0x0",
+          "256x0",
+          "256x256",
+          "0x256"
+        ],
+        "bed_exclude_area": [
+          "0x0",
+          "18x0",
+          "18x28",
+          "0x28"
+        ],
+        "printable_height": 250.0,
+        "resolved_project_matches": true
+      },
+      "actual_3mf": {
+        "build_leaf_instances": 1,
+        "total_vertices": 2297,
+        "world_vertex_bounds_mm": [
+          [
+            68.62953718788742,
+            111.04827708915198,
+            0.0
+          ],
+          [
+            187.37045173119606,
+            144.9511688059815,
+            11.0
+          ]
+        ],
+        "projected_convex_hull_inside_bed": true,
+        "projected_convex_hull_to_exclude_distance_mm": 99.1465145095139,
+        "command_vs_direct_mesh_bbox_max_error_mm": 1.2657979624464133e-06,
+        "instances": [
+          {
+            "file": "3D/Objects/object_1.model",
+            "object_id": "1",
+            "chain": [
+              {
+                "objectid": "2",
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00000002-b1ec-4553-aec9-835e5b724bb4",
+                "transform": "0.598705747 0.800969056 0 -0.800969056 0.598705747 0 0 0 1 128.40015 124.46617 0",
+                "printable": "1"
+              },
+              {
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}path": "/3D/Objects/object_1.model",
+                "objectid": "1",
+                "{http://schemas.microsoft.com/3dmanufacturing/production/2015/06}UUID": "00010000-b206-40ff-9872-83e8017abed1",
+                "transform": "1 0 0 0 1 0 0 0 1 0 0 5.5"
+              }
+            ],
+            "matrix": [
+              [
+                0.598705747,
+                -0.800969056,
+                0.0,
+                128.40015
+              ],
+              [
+                0.800969056,
+                0.598705747,
+                0.0,
+                124.46617
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                5.5
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "transformed_vertex_bbox_mm": [
+              [
+                68.62953718788742,
+                111.04827708915198,
+                0.0
+              ],
+              [
+                187.37045173119606,
+                144.9511688059815,
+                11.0
+              ]
+            ]
+          }
+        ]
+      },
+      "native_bbox_explanation": {
+        "reported": {
+          "depth": 123.82882690429688,
+          "height": 11.0,
+          "width": 123.54277801513672,
+          "x": 66.6287612915039,
+          "y": 62.551753997802734,
+          "z": 0.0
+        },
+        "transformed_local_mesh_AABB_corner_bounds_mm": [
+          [
+            66.62875782945432,
+            62.55175590645927,
+            0.0
+          ],
+          [
+            190.17154217054568,
+            186.38058409354073,
+            11.0
+          ]
+        ],
+        "maximum_difference_to_native_bbox_mm": 3.462049591007599e-06,
+        "classification": "TRANSFORMED_LOCAL_AABB_MATCHES_NATIVE_METADATA",
+        "note": "Actual raw mesh vertices are transformed through every component and build matrix. Separately transforming only the eight corners of the unrotated mesh AABB inflates the bound for nonrectangular parts; equality to reported bbox establishes the metadata explanation, not absence of mesh checks."
+      },
+      "actual_gcode": {
+        "included_feature_counts": {
+          "Brim": 1711,
+          "Outer wall": 3196,
+          "Inner wall": 9783,
+          "Gap infill": 4449,
+          "Bottom surface": 410,
+          "Internal solid infill": 7397,
+          "Sparse infill": 9842,
+          "Floating vertical shell": 1490,
+          "Bridge": 677,
+          "Top surface": 372,
+          "Overhang wall": 30
+        },
+        "separately_excluded_custom_counts": {},
+        "bead_envelope_bounds_mm": [
+          [
+            63.735749999999996,
+            104.14975000000001,
+            0.0
+          ],
+          [
+            192.26125000000002,
+            147.84625,
+            11.0
+          ]
+        ],
+        "minimum_bed_edge_margin_mm": 63.735749999999996,
+        "minimum_excluded_polygon_gap_lower_mm": 92.57248133027285,
+        "per_feature_bounds": {
+          "Brim": [
+            [
+              63.735749999999996,
+              104.14975000000001,
+              0.0
+            ],
+            [
+              192.26125000000002,
+              147.84625,
+              0.1
+            ]
+          ],
+          "Outer wall": [
+            [
+              68.62592727157977,
+              109.0407273629961,
+              0.0
+            ],
+            [
+              187.3762796786817,
+              142.93224999999998,
+              11.0
+            ]
+          ],
+          "Inner wall": [
+            [
+              69.02451748247049,
+              109.43881600832184,
+              0.0
+            ],
+            [
+              186.97662613375087,
+              142.49525,
+              10.9
+            ]
+          ],
+          "Gap infill": [
+            [
+              69.4836679,
+              109.49264615,
+              0.0
+            ],
+            [
+              186.54024800000002,
+              142.24270800000002,
+              11.0
+            ]
+          ],
+          "Bottom surface": [
+            [
+              70.62776500000001,
+              111.04076500000001,
+              0.0
+            ],
+            [
+              185.456235,
+              135.482235,
+              0.1
+            ]
+          ],
+          "Internal solid infill": [
+            [
+              70.25037114214757,
+              110.66030436184148,
+              0.1
+            ],
+            [
+              185.930105,
+              136.037105,
+              10.9
+            ]
+          ],
+          "Sparse infill": [
+            [
+              70.25113863182,
+              110.71374999999999,
+              0.30000000000000004
+            ],
+            [
+              185.7608280065494,
+              135.79025000000001,
+              10.0
+            ]
+          ],
+          "Floating vertical shell": [
+            [
+              70.32114634002451,
+              110.73617974162207,
+              1.5999999999999999
+            ],
+            [
+              185.68998,
+              135.79798,
+              10.0
+            ]
+          ],
+          "Bridge": [
+            [
+              70.28415000000001,
+              110.61315,
+              1.4
+            ],
+            [
+              185.72196,
+              135.83556501342733,
+              10.1
+            ]
+          ],
+          "Top surface": [
+            [
+              68.84675,
+              109.26774999999999,
+              2.6
+            ],
+            [
+              187.15224999999998,
+              142.58624999999998,
+              11.0
+            ]
+          ],
+          "Overhang wall": [
+            [
+              165.8109264856136,
+              123.80975,
+              2.9000001
+            ],
+            [
+              183.6320735143864,
+              131.47825,
+              3.0
+            ]
+          ]
+        },
+        "violations": [],
+        "arc_and_buffer_extra_mm": 0.0032500000000000003
+      },
+      "provenance": {
+        "invocation.json": "f44d26d37de618e95bde0882f546f6793ab9fdbc341df2d665d0702cb9f83992",
+        "slice-review.3mf": "3af6e1fb9bffaf77d159d7fed81aa9628babed772386aa16504b9039ff912bef",
+        "plate_1.gcode": "6f5f92bd9ff37613d2df47fdd4ffd613bde93b93ddf08a42c5d20bf55bfe3f5a",
+        "machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+        "result.json": "6b36a206e963d06d28787b1502c2d8a227c0d0f9de451a4797995230ab7b5bc1"
+      },
+      "parser_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+      "script_sha256": "102dab8ff29a895ff65a9b06b7826243b58e29ec1b2f3c03d50e9887c052f33e",
+      "scope": "Actual build mesh and positive-extrusion model/brim/other print-feature envelopes. Machine custom start/end purge and travel sequences are excluded explicitly; not a machine collision or material/printing release.",
+      "manufacturing_release": false,
+      "sent_to_printer": false
+    }
+  ]
+}

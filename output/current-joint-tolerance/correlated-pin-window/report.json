@@ -1,0 +1,213 @@
+{
+  "status": "STRICTLY_TIGHTER_SAME_PIN_WINDOW_COMBINATION_NOT_FULL_BX",
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/ball-center-coupling/report.json": "8d8e44ef2e9f26b47e37154c530dddb632207d4bf8992b01fb9acca9a5f48c42",
+    "output/current-joint-tolerance/ball-center-coupling/review.py": "78bd0b26c9fb05789eea2b82d62483d13d326d4b068a276ee409bfe15b60bdd1",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/common-cam-intersection/report.json": "eedde951065024f2d53cb7ad5f40b7efa655e678a896338bafe1c6c23f2f0b7d",
+    "output/current-joint-tolerance/common-cam-intersection/review.py": "67bdf544883372f6b9ff3a2ee71ff91873700ecdb13c020d6e8c2cb1ba339135",
+    "output/current-joint-tolerance/common-phase-registration/report.json": "2b70f8b8e9627c14060665868dba9b154071ff778821c746e81c2cd2f8a68412",
+    "output/current-joint-tolerance/common-phase-registration/review.py": "08c2e7bdb6ab72d1ee36a8066c99230653cf3f4fe5cb8e613ab2e24226087bb2",
+    "output/current-joint-tolerance/common-radial-closure/report.json": "7715bef97cc64c285a371c5f28411a8ceb3f97b2706b1216b9849c7cbe38ca36",
+    "output/current-joint-tolerance/common-radial-closure/review.py": "99c5bdd593a19dbbe1f6c5791e4b07d9bb77a2cdbca7023ce0b0d8acc64914f5",
+    "output/current-joint-tolerance/correlated-pin-window/review.py": "018ca55e17fc5c1e6b77c53973ed9ee551b0970dea201c23772b09662c07e530",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/gate-ball-joint-review/report.json": "4e47c6a6b8ac09c1a4220517e877c45783be4115e39f0065c8ab2821d6ab8205",
+    "output/current-joint-tolerance/gate-ball-joint-review/review.py": "5e282803842ffb88a5622b48abb18bf09f342ccdbe8b274489752ecf02f1a273",
+    "output/current-joint-tolerance/half-shell-axial-coupling/report.json": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c"
+  },
+  "inherited_identity_scope": {
+    "bridge_report": "output/current-joint-tolerance/common-phase-registration/report.json",
+    "unchanged_inherited_sources": 47,
+    "explicitly_scoped_historical_changes": 3,
+    "meaning": "Uses the prior explicit local-source scope audit; does not restamp stale full-system reports as current. All 52 files bound by that stage still match."
+  },
+  "exact_local_combination": {
+    "symbols": "R maps carrier to its support; Q maps common cam to the same support. yM is the actual carrier coordinate where SAME pin meets actual cam localY10.5 plane; yW is its coordinate at fixed supportY7. Delta=yM-yW>0; delta(y)=delta0+(y-3.125)w.",
+    "b": "b=Qzx+kQzz; k front in[0,.625], rear in[-.625,0], from the SAME two phases. This proof covers both signs without selecting an independent k for each algebraic term.",
+    "same_line": "pM-pW=Delta*R*(wx,1,wz), pW.z=g+zeta",
+    "G": "G=Qxx*(bX-20)+b*(pM.z-g), bX=pM.x-Ttip.x",
+    "decomposition": "G=Qxx*[20(Rxx-1)+yM*Rxy]+b*zeta+b*Delta*Rzy+A dot delta0+B dot w",
+    "A": "A=Qxx*(Rxx,Rxz)",
+    "B": "B=(yM-3.125)*A+b*Delta*(Rzx,Rzz)",
+    "in_common_cam_numerator": "The old exact radial numerator contains -G. This combined bound replaces exactly same_carrier_pin_X_offset + same_window_to_midplane_Z before dividing by Qxx. Other terms are untouched."
+  },
+  "correlated_V_nut_proof": {
+    "basis": "n1=(1,-1)/sqrt2,n2=(1,1)/sqrt2; qi=ni dot w; alpha_i=ni dot A>0; beta_i=ni dot B.",
+    "inherited_same_nut": "deltaN=delta0-(3.125-YN)w, with ONE retained nut/V/pin. Reuse the proved q_plus norm<=wp and q_minus norm<=wn, not two independently fitted pin lines.",
+    "upper": "ni dot delta0<=h|qi|+(Rmax/2)qi². If beta_i-h*alpha_i>=(Rmax/2)*alpha_i*wbar, negative qi cannot increase A.delta0+B.w. Positive projection<=||h*alpha+beta||*wp+(Rmax/2)*alpha_max*wp².",
+    "lower": "ni dot delta0>=-rho-h*qi. Since beta_i-h*alpha_i>=0, negative projection magnitude<=||beta-h*alpha||*wn+rho*sum(alpha_i).",
+    "orthogonality": "For D=(Rzx,Rzz), A.D=-Qxx*Rxy*Rzy, ||A||²=Qxx²(1-Rxy²), ||D||²=1-Rzy². Thus for P=yM-1.75 or yM-4.5: ||P*A+b*Delta*D||²=P²Qxx²(1-Rxy²)+(b*Delta)²(1-Rzy²)-2P*b*Delta*Qxx*Rxy*Rzy.",
+    "enclosure": "Take the norm only after the SAME two-section vectors combine. The monotone outer Pmax²+tmax²+2Pmax*tmax*|Rxy Rzy| remains universal without claiming endpoint poses attainable.",
+    "what_was_not_done": "No independent extreme chosen for delta_x, delta_z, slope, or the two section locations; remaining Q/R/registration correlations are still not fully eliminated."
+  },
+  "rows": {
+    "right": {
+      "actual_cam_carrier_y_interval_mm": [
+        9.521356067534,
+        11.478643932466
+      ],
+      "actual_window_carrier_y_interval_mm": [
+        6.693160429278,
+        7.306839570722
+      ],
+      "same_pin_delta_y_upper_mm": 4.785483503188,
+      "abs_Qzx_plus_kQzz_upper": 0.627724795641,
+      "V_projection_alpha_interval": [
+        0.679515414381,
+        0.733548788488
+      ],
+      "negative_q_drop_lhs_lower_mm": 1.209470828441,
+      "negative_q_drop_rhs_upper_mm": 0.028484775318,
+      "negative_q_drop_margin_lower_mm": 1.180986053123,
+      "combined_positive_coefficient_norm_upper_mm": 10.183155482201,
+      "combined_negative_coefficient_norm_upper_mm": 7.598958615422,
+      "same_pin_positive_projection_upper_mm": 0.367332361863,
+      "same_pin_negative_projection_magnitude_upper_mm": 0.20041878063,
+      "same_pin_abs_projection_upper_mm": 0.367332361863,
+      "independent_norm_reference_for_same_pin_expression_mm": 0.509553475872,
+      "same_expression_improvement_lower_mm": 0.142221114009,
+      "remaining_group_terms_upper_mm": {
+        "carrier_X_diagonal": 0.02132694656,
+        "carrier_Y_to_X": 0.324026975426,
+        "same_window_zeta": 0.162976531844,
+        "carrier_Y_to_Z_between_sections": 0.047932599082
+      },
+      "combined_G_numerator_abs_upper_mm": 0.923595414775,
+      "old_two_term_G_numerator_abs_upper_mm": 1.066700380932,
+      "G_numerator_improvement_lower_mm": 0.143104966157,
+      "J0_after_only_this_valid_substitution_upper_mm": 1.552811694075,
+      "old_J0_upper_mm": 1.695996799402,
+      "same_original_J_budget_mm": 0.602876731024,
+      "phase_gain_unchanged": 0.625350001701,
+      "this_outer_certifies_J_even_at_Lambda_zero": false
+    },
+    "left": {
+      "actual_cam_carrier_y_interval_mm": [
+        9.521356067534,
+        11.478643932466
+      ],
+      "actual_window_carrier_y_interval_mm": [
+        6.693160429278,
+        7.306839570722
+      ],
+      "same_pin_delta_y_upper_mm": 4.785483503188,
+      "abs_Qzx_plus_kQzz_upper": 0.627910299979,
+      "V_projection_alpha_interval": [
+        0.679515414381,
+        0.733548788488
+      ],
+      "negative_q_drop_lhs_lower_mm": 1.208819913899,
+      "negative_q_drop_rhs_upper_mm": 0.028484775318,
+      "negative_q_drop_margin_lower_mm": 1.180335138581,
+      "combined_positive_coefficient_norm_upper_mm": 10.183417773676,
+      "combined_negative_coefficient_norm_upper_mm": 7.599309956714,
+      "same_pin_positive_projection_upper_mm": 0.367341798926,
+      "same_pin_negative_projection_magnitude_upper_mm": 0.200427417372,
+      "same_pin_abs_projection_upper_mm": 0.367341798926,
+      "independent_norm_reference_for_same_pin_expression_mm": 0.50958794765,
+      "same_expression_improvement_lower_mm": 0.142246148724,
+      "remaining_group_terms_upper_mm": {
+        "carrier_X_diagonal": 0.02132694656,
+        "carrier_Y_to_X": 0.324026975426,
+        "same_window_zeta": 0.163024694436,
+        "carrier_Y_to_Z_between_sections": 0.047946764056
+      },
+      "combined_G_numerator_abs_upper_mm": 0.923667179404,
+      "old_two_term_G_numerator_abs_upper_mm": 1.066797360317,
+      "G_numerator_improvement_lower_mm": 0.143130180913,
+      "J0_after_only_this_valid_substitution_upper_mm": 1.655785152498,
+      "old_J0_upper_mm": 1.798995486701,
+      "same_original_J_budget_mm": 0.602876731024,
+      "phase_gain_unchanged": 0.625350001701,
+      "this_outer_certifies_J_even_at_Lambda_zero": false
+    }
+  },
+  "algebra_regressions": [
+    {
+      "case": 0,
+      "cam_secant_slope": -0.625,
+      "exact_combined_G": true,
+      "exact_row_orthogonality": true,
+      "exact_coefficient_norm": true,
+      "not_a_feasible_assembly_pose": true
+    },
+    {
+      "case": 1,
+      "cam_secant_slope": 0.0,
+      "exact_combined_G": true,
+      "exact_row_orthogonality": true,
+      "exact_coefficient_norm": true,
+      "not_a_feasible_assembly_pose": true
+    },
+    {
+      "case": 2,
+      "cam_secant_slope": 0.625,
+      "exact_combined_G": true,
+      "exact_row_orthogonality": true,
+      "exact_coefficient_norm": true,
+      "not_a_feasible_assembly_pose": true
+    }
+  ],
+  "domain_conditions": [
+    "Exactly the inherited nominal rigid, seated nut, coaxial nominal threaded/shoulder axis, retained finite V contacts and finite full-shoulder coverage. Real thread play, shape, preload, load deformation and loss of contact are not assigned zero manufacturing errors.",
+    "The actual cam and fixed-window intersection ranges are inherited, not replaced by yM=10.5 or yW=7 in carrier coordinates. They belong to the same pin line and carrier transform.",
+    "Carrier/body and frame finite-contact normal branches, support/half-shell registration and Xtip20..27 guard are inherited. The radial guard still must be closed by a full same-domain Bx proof.",
+    "Same C/H/S/K/P and common phase for all four fingers. This local bound covers either front/rear k sign, but does not optimize independent favourable phases."
+  ],
+  "scope_of_improvement": {
+    "new_local_bound": true,
+    "same_y_star_or_phase_reproof": false,
+    "full_J_claim": false,
+    "Bx1_claim": false,
+    "actual_failure_witness": null,
+    "warning": "The substituted J outer is smaller but still too large even with zero phase residual. This is failure to certify by this outer bound, not proof of physical failure. Do not add its reduction to another incompatible error-domain budget."
+  },
+  "remaining": "Common Q/R/window/registration/four-pin and phase correlations, loaded contact, actual tolerances and calibrated stop/return data remain open. No further optimization in this stage.",
+  "full_D02_closed": false,
+  "current_common_Bx_certified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "numerical_method": "Exact Fraction algebra; directed1e-12 enclosures and positive guard; rational identity regressions, not sampled extrema.",
+  "all_sources_stable": true
+}

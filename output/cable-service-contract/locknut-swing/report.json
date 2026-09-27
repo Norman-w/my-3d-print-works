@@ -1,0 +1,313 @@
+{
+  "scope": "nominal budget tool continuous +/-15 deg around local X; target locknut intentionally excluded from obstacle set; actual wrench and force not certified",
+  "source_sha256": "8765c6f0625a2b2e58d0c46eedcb19e7bd5f4108374a15fccfbf3f590849c662",
+  "dependencies": {
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-service-contract.scad": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029"
+  },
+  "axial_expansion_each_side": 0.001,
+  "angular_step_deg": 0.5,
+  "nearest_sample_error_deg": 0.25,
+  "maximum_rotation_radius": 45.069390943299865,
+  "yz_dilation_bound": 0.1966521599580374,
+  "reconstruction_guard": 0.001,
+  "offset_radius": 0.19769920701563054,
+  "results": [
+    {
+      "name": "source-parity",
+      "mode": "source-parity",
+      "u": 0,
+      "exit": 0,
+      "empty": false,
+      "error": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-service-contract/locknut-swing/source-parity.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1586,
+        "uniqueVertexCount": 396,
+        "bounds": {
+          "min": [
+            44.523697730859794,
+            -86.0,
+            -64.225753878163
+          ],
+          "max": [
+            82.19427231571495,
+            -74.0,
+            -26.555179293307845
+          ],
+          "size": [
+            37.67057458485516,
+            12.0,
+            37.67057458485516
+          ]
+        },
+        "surfaceArea": 812.3549765802171,
+        "signedVolume": 2.7128036128587496e-07,
+        "volume": 2.7128036128587496e-07,
+        "degenerateTriangleCount": 262,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 662,
+        "inconsistentOrientationEdgeCount": 60,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "source-containment",
+      "mode": "source-containment",
+      "u": 0,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u0",
+      "mode": "collision",
+      "u": 0,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u1",
+      "mode": "collision",
+      "u": 1,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u2",
+      "mode": "collision",
+      "u": 2,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u3",
+      "mode": "collision",
+      "u": 3,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u4",
+      "mode": "collision",
+      "u": 4,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u5",
+      "mode": "collision",
+      "u": 5,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u6",
+      "mode": "collision",
+      "u": 6,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u7",
+      "mode": "collision",
+      "u": 7,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u8",
+      "mode": "collision",
+      "u": 8,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u9",
+      "mode": "collision",
+      "u": 9,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u10",
+      "mode": "collision",
+      "u": 10,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u11",
+      "mode": "collision",
+      "u": 11,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u12",
+      "mode": "collision",
+      "u": 12,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u13",
+      "mode": "collision",
+      "u": 13,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u14",
+      "mode": "collision",
+      "u": 14,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u15",
+      "mode": "collision",
+      "u": 15,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u16",
+      "mode": "collision",
+      "u": 16,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u17",
+      "mode": "collision",
+      "u": 17,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u18",
+      "mode": "collision",
+      "u": 18,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u19",
+      "mode": "collision",
+      "u": 19,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "u20",
+      "mode": "collision",
+      "u": 20,
+      "exit": 1,
+      "empty": true,
+      "error": false
+    },
+    {
+      "name": "control",
+      "mode": "positive-control",
+      "u": 0,
+      "exit": 0,
+      "empty": false,
+      "error": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-service-contract/locknut-swing/control.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 512,
+        "uniqueVertexCount": 258,
+        "bounds": {
+          "min": [
+            46.02983264173244,
+            -82.47861215343453,
+            -62.82813539060784
+          ],
+          "max": [
+            50.90425383635666,
+            -77.52138784656547,
+            -57.95371419598362
+          ],
+          "size": [
+            4.874421194624219,
+            4.957224306869051,
+            4.874421194624219
+          ]
+        },
+        "surfaceArea": 71.27246094137325,
+        "signedVolume": 50.72268010808339,
+        "volume": 50.72268010808339,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "target-engagement",
+      "mode": "target-engagement",
+      "u": 0,
+      "exit": 0,
+      "empty": false,
+      "error": false,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-service-contract/locknut-swing/target-engagement.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 552,
+        "uniqueVertexCount": 282,
+        "bounds": {
+          "min": [
+            74.59311203353377,
+            -82.75,
+            -34.6520214291008
+          ],
+          "max": [
+            79.79567595923669,
+            -77.25,
+            -29.449457503397877
+          ],
+          "size": [
+            5.202563925702918,
+            5.5,
+            5.202563925702922
+          ]
+        },
+        "surfaceArea": 42.54298417332708,
+        "signedVolume": 3.96976351584304,
+        "volume": 3.96976351584304,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "part": "cable-input-lever",
+  "selector": "cdp_lever",
+  "process_only": true,
+  "mechanical_geometry_changed": false,
+  "candidate_source": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad",
+  "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "input_stl": {
+    "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.stl",
+    "sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439"
+  },
+  "inherited_invocation": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-lever/invocation.json",
+  "inherited_invocation_sha256": "f44d26d37de618e95bde0882f546f6793ab9fdbc341df2d665d0702cb9f83992",
+  "inherited_project_sha256": "3af6e1fb9bffaf77d159d7fed81aa9628babed772386aa16504b9039ff912bef",
+  "cad_to_oriented": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      -84.13172798364528
+    ],
+    [
+      0.0,
+      6.123233995736766e-17,
+      -1.0,
+      14.838834764831857
+    ],
+    [
+      0.0,
+      1.0,
+      6.123233995736766e-17,
+      85.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "enforcers": [
+    {
+      "name": "M3_shoulder_enforcer_1",
+      "objectid": "20",
+      "local_bounds": [
+        [
+          -0.9000000000000004,
+          50.65136843870017,
+          -3.5
+        ],
+        [
+          4.9,
+          57.34863156129983,
+          -0.4
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_20.model",
+      "raw_vertices": [
+        [
+          26.771135014959413,
+          -32.993674689401004,
+          -5.499999999999997
+        ],
+        [
+          30.005664722745607,
+          -32.126985066305224,
+          -5.499999999999997
+        ],
+        [
+          30.872354345841387,
+          -28.89245535851903,
+          -5.499999999999998
+        ],
+        [
+          28.50451426115098,
+          -26.524615273828623,
+          -5.499999999999998
+        ],
+        [
+          25.269984553364786,
+          -27.391304896924403,
+          -5.499999999999998
+        ],
+        [
+          24.403294930269006,
+          -30.625834604710597,
+          -5.499999999999997
+        ],
+        [
+          26.771135014959413,
+          -32.993674689401004,
+          -2.3999999999999972
+        ],
+        [
+          30.005664722745607,
+          -32.126985066305224,
+          -2.3999999999999977
+        ],
+        [
+          30.872354345841387,
+          -28.89245535851903,
+          -2.3999999999999977
+        ],
+        [
+          28.50451426115098,
+          -26.524615273828623,
+          -2.3999999999999977
+        ],
+        [
+          25.269984553364786,
+          -27.391304896924403,
+          -2.3999999999999977
+        ],
+        [
+          24.403294930269006,
+          -30.625834604710597,
+          -2.3999999999999977
+        ]
+      ]
+    },
+    {
+      "name": "M3_shoulder_enforcer_2",
+      "objectid": "21",
+      "local_bounds": [
+        [
+          -0.9000000000000004,
+          62.65136843870017,
+          -3.5
+        ],
+        [
+          4.9,
+          69.34863156129983,
+          -0.4
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_21.model",
+      "raw_vertices": [
+        [
+          35.25641638919799,
+          -41.47895606363958,
+          -5.4999999999999964
+        ],
+        [
+          38.49094609698417,
+          -40.612266440543785,
+          -5.4999999999999964
+        ],
+        [
+          39.35763572007996,
+          -37.377736732757604,
+          -5.4999999999999964
+        ],
+        [
+          36.98979563538955,
+          -35.00989664806719,
+          -5.499999999999997
+        ],
+        [
+          33.75526592760336,
+          -35.87658627116298,
+          -5.499999999999997
+        ],
+        [
+          32.88857630450757,
+          -39.111115978949165,
+          -5.4999999999999964
+        ],
+        [
+          35.25641638919799,
+          -41.47895606363958,
+          -2.399999999999997
+        ],
+        [
+          38.49094609698417,
+          -40.612266440543785,
+          -2.399999999999997
+        ],
+        [
+          39.35763572007996,
+          -37.377736732757604,
+          -2.3999999999999972
+        ],
+        [
+          36.98979563538955,
+          -35.00989664806719,
+          -2.3999999999999972
+        ],
+        [
+          33.75526592760336,
+          -35.87658627116298,
+          -2.3999999999999972
+        ],
+        [
+          32.88857630450757,
+          -39.111115978949165,
+          -2.399999999999997
+        ]
+      ]
+    }
+  ],
+  "pocket_contract": {
+    "centres": [
+      [
+        2,
+        54
+      ],
+      [
+        2,
+        66
+      ]
+    ],
+    "half": 3.6,
+    "z": [
+      -3.5,
+      -0.4
+    ],
+    "contact": -0.6,
+    "opening": "hex5.8",
+    "growth": 1
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "0",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/support-input.3mf"
+  ],
+  "input3mf_sha256": "7fec5c064d7f1a9ce3eef21da6a68c13b0d0ed4986335d2af092603ac0746856",
+  "profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "fa3ebf70fa7c7345a2423e6fbfbcb9018392122e958b493351eb4e091d08a84b",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "script_sha256": "75f3ea63ca435529b00b65766081dc3a8b09ff77471aba1b13691f9c7c644be2",
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "returncode": 0,
+  "source_stable": true,
+  "artifacts": {
+    "slice-review.3mf": "8d81d0cf4e9464ae3d353645565da25c8c104c5cb6d989432edc9bc7757201a1",
+    "plate_1.gcode": "3b85f5059eabdf31474f0d68dd0b83f7604e5d8dbcab7c8a366b2315eb69be27"
+  },
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 80,
+    "layer_height": 0.10000000149011612,
+    "plate_index": 0,
+    "prepare_time": 20,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 45.92266082763672,
+          "Bridge": 50.82213592529297,
+          "Brim": 63.300537109375,
+          "Custom": 445.3412170410156,
+          "Flush": 29.0,
+          "Gap infill": 47.64798355102539,
+          "Inner wall": 650.2008666992188,
+          "Internal solid infill": 236.10975646972656,
+          "Outer wall": 277.4950256347656,
+          "Overhang wall": 7.896877288818359,
+          "Sparse infill": 453.72637939453125,
+          "Support": 8.047677993774414,
+          "Support interface": 3.7122108936309814,
+          "Support transition": 2.5609946250915527,
+          "Top surface": 45.73402786254883,
+          "Travel": 329.4039611816406,
+          "Undefined": 314.06402587890625
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 11.261028289794922,
+            "total_used_g": 11.261026382446289
+          }
+        ],
+        "generate_support_material_time": 98,
+        "id": 1,
+        "infill_time": 175,
+        "layer_filament_change": 0,
+        "main_predication": 2193.544921875,
+        "make_perimeters_time": 255,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 123.82882690429688,
+              "height": 11.0,
+              "width": 123.54277801513672,
+              "x": 66.6287612915039,
+              "y": 62.551753997802734,
+              "z": 0.0
+            },
+            "id": 5,
+            "name": "oriented.stl",
+            "triangle_count": 4602
+          }
+        ],
+        "sliced_time": 960,
+        "sliced_time_with_cache": 298,
+        "total_predication": 2681.515625,
+        "triangle_count": 4602,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "upward_compatible_machine": [
+      "Bambu Lab P1S 0.4 nozzle",
+      "Bambu Lab P1P 0.4 nozzle",
+      "Bambu Lab X1 0.4 nozzle",
+      "Bambu Lab X1E 0.4 nozzle",
+      "Bambu Lab A1 0.4 nozzle",
+      "Bambu Lab H2D 0.4 nozzle",
+      "Bambu Lab H2D Pro 0.4 nozzle",
+      "Bambu Lab H2S 0.4 nozzle",
+      "Bambu Lab P2S 0.4 nozzle",
+      "Bambu Lab H2C 0.4 nozzle",
+      "Bambu Lab X2D 0.4 nozzle",
+      "Bambu Lab A2L 0.4 nozzle"
+    ],
+    "wall_loops": 4
+  },
+  "status": "SLICED_REVIEW_REQUIRED"
+}

@@ -1,0 +1,58 @@
+{
+  "status": "SLICE_ARTIFACT_IDENTITY_PASS",
+  "part": "cable-route-lower",
+  "folder": "output/print-review/current-cable/20260927T073454146325Z/cable-route-lower",
+  "checks": {
+    "original_stl_matches_export": true,
+    "oriented_stl_matches_invocation": true,
+    "source_files_still_match": true,
+    "profiles_match_slice_start": true,
+    "artifacts_match_invocation": true,
+    "one_to_one_rigid_reorientation": true,
+    "no_scale_or_reflection": true,
+    "single_model_instance": true,
+    "actual_3mf_triangle_count_preserved": true,
+    "reported_3mf_triangle_count_matches_actual": true,
+    "no_reported_mesh_repairs": true,
+    "actual_3mf_has_no_zero_area_facets": true,
+    "actual_3mf_vertices_match_input_within_0_0001mm": true,
+    "archived_gcode_equals_external_gcode": true,
+    "3mf_units_mm": true,
+    "native_slice_success": true,
+    "native_warnings_empty": true,
+    "resolved_process_matches_intent": true,
+    "resolved_machine_X1C_04": true,
+    "resolved_filament_PETG": true,
+    "first_model_layer_nozzle_255C": true
+  },
+  "warnings": [
+    ""
+  ],
+  "source_triangle_count": 666,
+  "oriented_triangle_count": 666,
+  "actual_3mf_triangle_count": 666,
+  "mesh_stat": {
+    "face_count": "666",
+    "edges_fixed": "0",
+    "degenerate_facets": "0",
+    "facets_removed": "0",
+    "facets_reversed": "0",
+    "backwards_edges": "0"
+  },
+  "bidirectional_vertex_distance_mm": [
+    6.836462903575363e-08,
+    6.836462903575363e-08
+  ],
+  "actual_3mf_min_triangle_area_mm2": 0.020899579867460716,
+  "explicit_numerical_normalization": null,
+  "slice_invocation_sha256": "2486d9f1c72b2433e979eceaabd215f16e3801e9cb2e3342083e44f08a18195b",
+  "artifact_sha256": {
+    "plate_1.gcode": "d3fa15882c8ab1a285d502fa52c14fbf6ddee631d8e17af6014f2ff64a9db077",
+    "slice-review.3mf": "8569a36e8ebefb186de9f1d2768a007694db893bad7f4e59e154541fbd356d20"
+  },
+  "auditor_sha256": "5f61332254ff5cee88f4bbaf96dbd07bf870699a5e77c0f8df8d4edd175014f2",
+  "scope": "Source/profile/rigid transform/actual archived mesh and G-code identity only. No support removal, strength, fit or physical print acceptance.",
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

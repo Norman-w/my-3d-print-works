@@ -1,0 +1,23 @@
+{
+  "status": "OFFLINE_SLICES_GENERATED_REVIEW_REQUIRED",
+  "parts": [
+    {
+      "part": "cable-input-cover",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T160923352541Z/cable-input-cover",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "invocation_sha256": "e75f1c071919c1e8b46cecee62876021023950c7aec86b647d4da11dcfb9bd55",
+      "warnings": [
+        ""
+      ],
+      "error": null
+    }
+  ],
+  "source_stable": true,
+  "export_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T153058669616Z/report.json",
+  "export_report_sha256": "3cb7da521e4160bb83ab8760ee894d2b6da9a39d24045db7d7f090b14a423418",
+  "script_sha256": "f0eaf375784f4ccccd649854d0d290e44b44fbc3e248956f3e0bd00cae7280af",
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "scope": "Current normal geometry rebuilt exactly before native import. Inherited process is diagnostic; actual output mesh, support and features require independent review."
+}

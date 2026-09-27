@@ -1,0 +1,115 @@
+{
+  "results": [
+    {
+      "case": "body",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/body.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/body.scad"
+      ],
+      "returncode": 0,
+      "empty_message": false,
+      "stl_exists": true,
+      "warnings": false
+    },
+    {
+      "case": "added",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/added.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/added.scad"
+      ],
+      "returncode": 0,
+      "empty_message": false,
+      "stl_exists": true,
+      "warnings": false
+    },
+    {
+      "case": "tools",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/tools.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/tools.scad"
+      ],
+      "returncode": 1,
+      "empty_message": true,
+      "stl_exists": false,
+      "warnings": false
+    },
+    {
+      "case": "host-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-0.scad"
+      ],
+      "returncode": 0,
+      "empty_message": false,
+      "stl_exists": true,
+      "warnings": false
+    },
+    {
+      "case": "host-0.5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-0.5.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-0.5.scad"
+      ],
+      "returncode": 0,
+      "empty_message": false,
+      "stl_exists": true,
+      "warnings": false
+    },
+    {
+      "case": "host-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate/host-1.scad"
+      ],
+      "returncode": 0,
+      "empty_message": false,
+      "stl_exists": true,
+      "warnings": false
+    }
+  ],
+  "canonical_source_unchanged": true,
+  "candidate_only": true,
+  "manufacturing_release": false
+}

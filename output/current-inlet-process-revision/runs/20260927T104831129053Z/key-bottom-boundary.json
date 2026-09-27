@@ -1,0 +1,14 @@
+{
+  "status": "EXACT_STL_LAYER_BOUNDARY_HIT_RETAINED",
+  "source_key_floor_CAD_Z": -152.60000610351562,
+  "source_key_floor_print_Z": 3.399993896484375,
+  "support_top_print_Z": 3.4,
+  "max_axial_overlap_mm": 6.103515624911182e-06,
+  "projected_overlap_area_mm2": 0.008086061109751654,
+  "overlap_volume_upper_mm3": 4.9353400327355874e-08,
+  "flat_source_triangle_count": 4,
+  "actual_model_gcode_overlap": false,
+  "source_stl_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+  "current_exit_report_sha256": "d2dd7f5bf7a61cfa9be92fed9e84d345be12c36acfb3ad5a3ce9fd8794b26a52",
+  "interpretation": "Retain strict STL failure: same source coordinate/layer boundary discrepancy as previous candidate, about 6.1e-6 mm (6.1 nm), not 6.1 micrometers. Every remaining support slab is clear of actual model extrusion. No claim about interface separation force or physical removability."
+}

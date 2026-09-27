@@ -1,0 +1,241 @@
+{
+  "status": "JOINT_BY_AND_NEW_SPLIT_GUIDE_STATIC_GATE_SUFFICIENCY_DEFINED_BX_CERTIFICATE_STILL_OPEN",
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/ball-center-coupling/report.json": "8d8e44ef2e9f26b47e37154c530dddb632207d4bf8992b01fb9acca9a5f48c42",
+    "output/current-joint-tolerance/ball-center-coupling/review.py": "78bd0b26c9fb05789eea2b82d62483d13d326d4b068a276ee409bfe15b60bdd1",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/gate-ball-joint-review/review.py": "5e282803842ffb88a5622b48abb18bf09f342ccdbe8b274489752ecf02f1a273",
+    "output/current-joint-tolerance/half-shell-axial-coupling/report.json": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c"
+  },
+  "by_projection": {
+    "same_axis_formula": "tauY=(|Ryx|+sinBetaBound|Rzx|)/Rxx; ownY<=cb+11.6tauY. This uses the SAME rodK_i through its bodybearing, not mounting translation added to its tip.",
+    "half_shell_formula": "At gatezg, beta=(zg+59)/62. SameH gives gatehalf-axis lateralterm with the locator-eliminated supportfunction; realbisector correction is−A tanalpha. Combine signedterms before outerbounding; preserveoneH forbothgates.",
+    "tauY_upper": 0.02842999241,
+    "rows": [
+      {
+        "gate_local_z_mm": 0.0,
+        "seam_half_lateral_term_upper_mm": 0.105071391937,
+        "own_half_tip_Y_projection_upper_mm": 0.591826095279,
+        "bisector_transverse_correction_upper_mm": 0.000129818237,
+        "tip_abs_Y_about_common_axis_upper_mm": 0.697027305453
+      },
+      {
+        "gate_local_z_mm": -28.5,
+        "seam_half_lateral_term_upper_mm": 0.087987375475,
+        "own_half_tip_Y_projection_upper_mm": 0.591826095279,
+        "bisector_transverse_correction_upper_mm": 0.000129818237,
+        "tip_abs_Y_about_common_axis_upper_mm": 0.679943288991
+      }
+    ],
+    "all_tip_By_upper_mm": 0.697027305453,
+    "manufactured_By_certified": false
+  },
+  "common_joint_domain": {
+    "variables": [
+      "one bodyrelativeH",
+      "one commoncamC(u) for allfourpins",
+      "onecarrierK_i pertip",
+      "one actual finitepinaxisP_i percarrier",
+      "finiteV contacts and rod/bodyengagement"
+    ],
+    "radial_definition": "Bx=sup over SAME declaredD02,u∈[0,20],i of abs(s_i*ex·T_i−r_gate(i)(u)), whereT_i=K_i(0); r_front=21+5clamp((u−12)/8), r_rear=26−5clamp(u/8). u isONEregisteredoutputphase, not chosenindependentlyperpin.",
+    "required_constraint_for_functional_rows": "Bx<=1 at allfourfingers and allcommonu. Then nominalr in21..26 implies tipX20..27 and closes that antecedent of the carrier/ball/By/Bz conditional results. It is a sufficient condition to prove, NOT a result of the currentCAD.",
+    "constraints": [
+      "The sameP_i finite D4 section liesinside the actual closedcam track underC and is fullyengaged across the section being used.",
+      "The sameP_i is retained by both finiteV faces ofK_i and the fixedwindow transformedbythe actualsupport/bodypose.",
+      "The sameK_i satisfies itscarrierY/Z lands and real2mmrod bearing. The sameH registersguide, shellholes andtipbodyframes.",
+      "Allnonpenetration and positivemechanicalcapture survivea stalledrearball. Force/preload/loaddeformation conditionsare not supplied by geometry alone."
+    ],
+    "frame_parallel_comparison_not_promoted": true
+  },
+  "exact_radial_residual_contract": {
+    "coordinates": "C(q)=Qc*q+Tc in commonNcoordinates, withcamlocalYsection yq=10.5. Letq=(s(r(v)+20)+eta,10.5,zq), v=zg−zq, |eta|<=S32 if the actualfinitepin section and track prerequisites hold. Track law isconstant-continued outsideendpoints only asanoutergraph.",
+    "pin_carrier_identity": "Pq=T_i+Oi*(v0+delta_i)+lambda_i*ai; v0=(20,3.125,0), Oi isthecarrierorthogonallinearmapincluding itsleft/rightmirror. delta_i isactualV-midplaneaxisoffset; ai isthatSAMEpinaxis unitvector, lambda_i goesfromtheV-midplane pointtoactualcamsection. Finitecoverage mustbeproved.",
+    "exact_error": "s*T_i.x−r(u) = s*Qc_xx*eta + J_signed; J_signed=(Qc_xx−1)*(r(v)+20)+(r(v)−r(u))+s*Qc_xy*10.5+s*Qc_xz*zq+s*Tc_x+20−s*(Oi*v0).x−s*(Oi*delta_i).x−s*lambda_i*ai.x.",
+    "primary_sufficient_certificate": "Define J_common=sup_D02,u,i |J_signed| on the SAMEcoupled poses. ThenBx<=S32+J_common. No independentframe,carrier,V orseam extreme is asserted simultaneously attainable.",
+    "slot_S32_upper_mm": 0.397123268976,
+    "J_common_required_upper_mm": 0.602876731024,
+    "J_common_currently_proved_upper_mm": null,
+    "optional_window_bookkeeping": {
+      "window_half_room32_mm": 0.259630546658,
+      "m_times_W32_upper_mm": 0.162269091662,
+      "remaining_after_legitimate_separation_mm": 0.440607639362,
+      "condition": "Onlyafter proving a decomposition ofJ_signed intoa fixedwindow termboundedbymW32 PLUSa remainingjointresidual maythissmallerbudgetbeused. Existingparallelframe comparisondoesNOTestablishthesplitfor independentlyregistered supports. Do not silently insertmW32 into currentJ."
+    },
+    "ideal_round_metal_reference_only": {
+      "label": "ideal circularD4 reference",
+      "whole_graph_slot_bound_upper_mm": 0.386206559761,
+      "fixed_window_half_room_upper_mm": 0.25,
+      "intrinsic_radial_sum_upper_mm": 0.542456559761,
+      "remaining_Bx1_for_all_other_joint_terms_lower_mm": 0.457543440239
+    },
+    "unproved_minimum_items": [
+      "Commoncam displacement/phase inN underactualtwo-support registration andfinitebands.",
+      "Samefinitepin inclination/engagement and lambda betweenactualV andcamsections.",
+      "RetainedVaxis offset/form, preload underload, and nonrigidradialdeflection. No manufacturing precision assigned."
+    ]
+  },
+  "static_sufficient_geometry": {
+    "design_radii_mm": [
+      20.0,
+      20.5
+    ],
+    "tip_inner_outer_radii_mm": [
+      2.4845,
+      2.5
+    ],
+    "tip_inner_reference": {
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl",
+      "sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+      "exposed_spherical_facets": 736,
+      "minimum_facet_plane_distance_mm": 2.484609224971876,
+      "selected_conservative_reference_radius_mm": 2.4845,
+      "scope": "Current nominal mesh diagnostic. 0.000109 mm padding is numerical/model allowance, not print tolerance; not a full manufactured shape guarantee."
+    },
+    "formulae": [
+      "Hmin=sqrt((Rmin+tmin)^2−(closed+Bx)^2−(Emax+By)^2). Choose the neareropposedtip; E isthisnewsplit-guide bound.",
+      "Hmax=max_R sqrt((R+tmax)^2−(closed−Bx−E(R))^2). Positive derivative certificate placesmaximumatRmax.",
+      "Pmin=sqrt((2Rmin)^2−(2Emax)^2).",
+      "2Hmax+Bzf+Bzr < Lgate < Hmin+Pmin−Hmax−Bzf−Bzr.",
+      "sqrt((closed+Bx)^2+(Emax+By)^2+max(Bzf,Bzr)^2)<Rmin+tmin; opened−Bx>max_R(R+tmax+E(R)).",
+      "R+E(R) strictlydecreaseswithR forfixedAstar,hstar; therefore releaseworstcase isRmin."
+    ],
+    "rows": [
+      {
+        "ball_case": "current_nominal_inner_radius",
+        "Bx_required_upper_mm": 1.0,
+        "Bx_currently_certified": false,
+        "By_proved_conditionally_upper_mm": 0.697027305453,
+        "Bz_front_rear_mm": [
+          0.783392225585,
+          0.783424727413
+        ],
+        "E_max_upper_mm": 1.370701348738,
+        "E_at_Rhi_upper_mm": 0.865646808659,
+        "Hmin_lower_mm": 4.156589763572,
+        "Hmax_upper_mm": 12.76230888002,
+        "Hmax_squared_derivative_half_lower_over_R_domain": 2.683988146278,
+        "touching_ball_pitch_lower_mm": 39.905948319144,
+        "allowed_nominal_spacing_open_interval_mm": [
+          27.091434713038,
+          29.733412249698
+        ],
+        "current_spacing_mm": 28.5,
+        "spacing_sufficient_margins_lower_mm": [
+          1.408565286962,
+          1.233412249698
+        ],
+        "closed_radial_margin_lower_mm": 0.375510813367,
+        "fully_open_radial_margin_lower_mm": 1.129298651262,
+        "release_requires_common_output_u_strictly_greater_mm": 18.193122157981,
+        "conditional_full_stroke_release_reserve_lower_mm": 1.806877842019,
+        "both_gates_guaranteed_blocking_u_interval_mm": [
+          7.399182698613,
+          12.600817301387
+        ],
+        "sufficient_static_geometry_if_all_joint_conditions_hold": true,
+        "interpretation": "PASS of a sufficient conditional outer domain, not proof ofBx or force retention. Loosebounds are safe here because every represented feasible statepasses; no impossible combination isdeclared a realfailure."
+      },
+      {
+        "ball_case": "conditional_inner_radius_plus_point25",
+        "Bx_required_upper_mm": 1.0,
+        "Bx_currently_certified": false,
+        "By_proved_conditionally_upper_mm": 0.697027305453,
+        "Bz_front_rear_mm": [
+          0.783392225585,
+          0.783424727413
+        ],
+        "E_max_upper_mm": 1.622943151079,
+        "E_at_Rhi_upper_mm": 1.117888611,
+        "Hmin_lower_mm": 4.021253204017,
+        "Hmax_upper_mm": 13.132626146107,
+        "Hmax_squared_derivative_half_lower_over_R_domain": 2.945216027629,
+        "touching_ball_pitch_lower_mm": 39.868085257677,
+        "allowed_nominal_spacing_open_interval_mm": [
+          27.832069245212,
+          29.189895362589
+        ],
+        "current_spacing_mm": 28.5,
+        "spacing_sufficient_margins_lower_mm": [
+          0.667930754788,
+          0.689895362589
+        ],
+        "closed_radial_margin_lower_mm": 0.35076560271,
+        "fully_open_radial_margin_lower_mm": 0.877056848921,
+        "release_requires_common_output_u_strictly_greater_mm": 18.596709041727,
+        "conditional_full_stroke_release_reserve_lower_mm": 1.403290958273,
+        "both_gates_guaranteed_blocking_u_interval_mm": [
+          7.438775035664,
+          12.561224964336
+        ],
+        "sufficient_static_geometry_if_all_joint_conditions_hold": true,
+        "interpretation": "PASS of a sufficient conditional outer domain, not proof ofBx or force retention. Loosebounds are safe here because every represented feasible statepasses; no impossible combination isdeclared a realfailure."
+      }
+    ],
+    "same_H_correlation_handling": "The H-derivedBy/Bz/E enclosures may contain unattainable combinations. All such outercombinationsPASS in theBx<=1 rows, which is a valid sufficient guarantee on the smallercommon domain. No failurewitness is claimed, and no sensitivityoutside inheritedX20..27 is used ascertification.",
+    "whole_finger_extension": {
+      "all_four_tip_and_two_ball_axis_projection_upper_mm": -15.78924465555,
+      "carrier_ball_X_clearance_lower_mm": 10.586586688752,
+      "meaning": "For allcovered insertionposes, carriers cannotreachballs andconstantoutwardrodinterior isfartherthanitsroot. A radius2.5 tip/rootenvelope suffices fornoncollision, while2.4845 exposedheadreference isusedfor guaranteedblocking."
+    },
+    "phase_coverage": "Rear movesinwardu0..8 whilefront remainsnominallyclosed to12. Static insertion inequalitiesuseworstradial inwardextent, so bound everyintermediatepose in theBx/By/Bz envelopes, notonlytheendpoint. Frontrelease followsu12..20. This doesnotdescribe impact, ballarrival, or friction."
+  },
+  "release_scope": "The open-gate inequality establishes radial clearance for the bounded parked-ball domain and crossing of the common front gate plane. The inherited E is proved on the stated finite axial domain; this report does not silently extend it to the entire downstream flight or outlet transition.",
+  "current_conclusion": {
+    "new_E_and_By_force_static_failure": false,
+    "static_enough_condition_exists": true,
+    "current_common_Bx_certified": false,
+    "actual_mechanical_failure_witness": null,
+    "reason": "WithBx<=1 and the declarednormalcontact/domainconditions, newE/By/Bz retainpositive staticmargins. Bx and retainedloadedcapture remainunproved, so fullmechanicalsuccess cannotbeclaimed either."
+  },
+  "stop_contract_boundary": {
+    "conditional_functional_release_u_upper_mm": 18.596709041727,
+    "actual_F_or_H_or_lost_motion": null,
+    "warning": "This conditional18.596710 value isnotan asbuiltstopsetting or certifiedcurrentF; do not replaceactualnullinputs. It mayreplacetheoldcoaxialexampleonlywithalltheseconditionsstated."
+  },
+  "full_D02_closed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "all_sources_stable": true
+}

@@ -1,0 +1,7 @@
+{
+  "reason": "CGAL export of two shells has 16 degenerate triangles and 16 nonmanifold edges each after 1e-6mm vertex welding. Their already running whole-set parity was terminated because these inputs are invalid, not because a wait timed out. Original Manifold shells pass edge and vertex-link checks.",
+  "terminated_processes": [
+    28009,
+    27578
+  ]
+}

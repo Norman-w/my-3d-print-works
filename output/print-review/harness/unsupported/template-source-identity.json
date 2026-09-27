@@ -1,0 +1,7 @@
+{
+  "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_start_gcode.json": "cc890a986c3f073e4691908d4bd3256222da9afc52fa9520261318bea9757505",
+  "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_end_gcode.json": "e90eb249dceb719ff8511b59275793a85ab84e1d5b5d4981e1fe6256fb6ffe54",
+  "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template time_lapse_gcode.json": "bd394064ba847dc7a75ab80c61c6a0824ac3d6876438b7c8bafd5646cf51b5c4",
+  "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template change_filament_gcode.json": "cdde6fbb5e4f6ec353aeb61e41862dd04743c2bfe21369d31145170aa932d4ae",
+  "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template layer_change_gcode.json": "595fa7ed12c23068b658ca4b006d4970bfd217a1503bed36b602cba93b2dc81a"
+}

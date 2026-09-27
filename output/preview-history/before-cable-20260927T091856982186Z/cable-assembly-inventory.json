@@ -1,0 +1,3668 @@
+{
+  "schema_version": 1,
+  "snapshot": "current-cable-candidate",
+  "coordinate_system": {
+    "units": "mm",
+    "basis": "CAD coordinates; t=0 assembled vertices; no centering or scene transform applied"
+  },
+  "baseline": {
+    "source": "analysis.launcher_final_assembly.inventory",
+    "printed_instances": 38,
+    "replacement_ids": [
+      "feeder/beam-grip",
+      "feeder/frame"
+    ],
+    "added_printed_instances": 7,
+    "spin_parts_source": "analysis.spin_head_geometry.PARTS"
+  },
+  "counts": {
+    "printed": 55,
+    "purchased": 23,
+    "reference": 6,
+    "feeder_printed": 45,
+    "spin_printed_including_hold": 10,
+    "total_instances": 84
+  },
+  "motion_schema": {
+    "discriminator": "kind",
+    "trigger_input": "stroke",
+    "normalised_parameter": "t",
+    "t_range": [
+      0,
+      1
+    ],
+    "stroke_mm": 20,
+    "base_pose_t": 0,
+    "transform_is_delta_from_exported_vertices": true,
+    "spin_adjustments_independent_of_trigger": true
+  },
+  "scene_contract": {
+    "ci": {
+      "units": "mm",
+      "status": "unreleased-input-candidate",
+      "public_coordinate_basis": "feeder CAD",
+      "origin": [
+        75,
+        -82,
+        5
+      ],
+      "basis_x": [
+        -0.707107,
+        0,
+        0.707107
+      ],
+      "basis_y": [
+        0.707107,
+        0,
+        0.707107
+      ],
+      "basis_z": [
+        0,
+        1,
+        0
+      ],
+      "radius_cable": 60,
+      "radius_finger": 36,
+      "stroke": 20,
+      "angle_full_deg": 19.0986,
+      "finger_rearward_full": 11.779,
+      "wire_d": 1.5,
+      "wire_z": 2,
+      "ball_d_candidate": 5,
+      "wire_tangent_local": [
+        0,
+        60,
+        2
+      ],
+      "adjuster_seat_local": [
+        -45,
+        60,
+        2
+      ],
+      "adjuster_exit_local": [
+        -29,
+        60,
+        2
+      ],
+      "housing_stop_local": null,
+      "housing_stop_reason": "supplier taper length and ferrule nose chamfer are undimensioned",
+      "adjuster_head_x": [
+        -63,
+        -53
+      ],
+      "adjuster_head_sw": 8,
+      "adjuster_inlet_d_depth": [
+        7,
+        8.5
+      ],
+      "adjuster_wire_bore": 3,
+      "adjuster_cone_display_only": 1,
+      "adjuster_taper_depth_interval": [
+        8.5,
+        10
+      ],
+      "ferrule_nose_chamfer": null,
+      "ferrule_part": "03096-25-0350",
+      "ferrule_od_length": [
+        5.5,
+        11
+      ],
+      "ferrule_inlet_d_depth": [
+        5,
+        9
+      ],
+      "ferrule_wire_bore": 2.5,
+      "ferrule_mouth_display_local": [
+        -65.125,
+        60,
+        2
+      ],
+      "ferrule_tip_display_local": [
+        -54.125,
+        60,
+        2
+      ],
+      "housing_end_display_local": [
+        -56.125,
+        60,
+        2
+      ],
+      "adjuster_thread_x": [
+        -53,
+        -29
+      ],
+      "adjuster_overall_x": [
+        -63,
+        -29
+      ],
+      "adjuster_shank_d": 6,
+      "housing_od": 5,
+      "adjuster_nut_part": "07212-106",
+      "adjuster_nut_sw_t": [
+        10,
+        3.2
+      ],
+      "adjuster_nut_x": [
+        [
+          -49.8,
+          -46.6
+        ],
+        [
+          -35.4,
+          -32.2
+        ]
+      ],
+      "adjuster_washer_part": "07300-106",
+      "adjuster_washer_od_id_t": [
+        12,
+        6.4,
+        1.6
+      ],
+      "adjuster_washer_x": [
+        [
+          -46.6,
+          -45
+        ],
+        [
+          -37,
+          -35.4
+        ]
+      ],
+      "adjuster_seat_x": [
+        -45,
+        -37
+      ],
+      "adjuster_exposed_thread_each": 3.2,
+      "adjuster_tool_budget": [
+        "SW10 thin open end, cover removed",
+        3,
+        20,
+        25
+      ],
+      "adjuster_tool_x": [
+        [
+          -49.7,
+          -46.7
+        ],
+        [
+          -35.3,
+          -32.3
+        ]
+      ],
+      "body_axis_z": [
+        -12,
+        -4
+      ],
+      "lever_axis_z": [
+        -3.5,
+        7.5
+      ],
+      "cover_axis_z": [
+        8,
+        14
+      ],
+      "metal_sleeve_z": [
+        -5.5,
+        9.5
+      ],
+      "metal_sleeve_od_id_length": [
+        8,
+        4.3,
+        15
+      ],
+      "replaceable_bush_od_id_length": [
+        12,
+        8.2,
+        11
+      ],
+      "thrust_washer_od_id_t": [
+        16,
+        8.4,
+        0.25
+      ],
+      "total_axial_float": 0.5,
+      "stop_setting": 20,
+      "stop_setting_range": [
+        16,
+        22
+      ],
+      "stop_tip_x": -17.7869,
+      "stop_tip_x_range": [
+        -16.2101,
+        -18.5553
+      ],
+      "stop_axis_local_yz": [
+        -24,
+        2
+      ],
+      "stop_screw": "M3x30; captured nut plus locknut",
+      "mount_holes_cad": [
+        [
+          -16,
+          -94,
+          -60
+        ],
+        [
+          -16,
+          -94,
+          3
+        ],
+        [
+          16,
+          -94,
+          -60
+        ],
+        [
+          16,
+          -94,
+          3
+        ]
+      ],
+      "mount_plate_y": [
+        -94,
+        -86
+      ],
+      "mount_rib_y": [
+        -86,
+        -54
+      ],
+      "mount_rib_lower_z": -65.7,
+      "right_mount_rib_outer_x": 21.7,
+      "upper_mount_key_x": [
+        12.4,
+        19.6
+      ],
+      "mount_bolt": "M4x60; replace old M4x20",
+      "mount_bolt_underhead_y": -94.8,
+      "mount_bolt_tip_y": -34.8,
+      "part_selectors": [
+        "assembly",
+        "body",
+        "lever",
+        "cover",
+        "fixed-hardware",
+        "moving-hardware",
+        "adjuster",
+        "ferrule",
+        "cable",
+        "probe",
+        "contract"
+      ],
+      "wire_arc_rest_angle_deg": 45,
+      "wire_arc_rest_angle_source": "cad/cable-trigger-input.scad:ci_local_cable (a=45-ci_angle(u))"
+    },
+    "co": {
+      "units": "mm",
+      "t_domain": [
+        0,
+        1
+      ],
+      "stroke": 20,
+      "moving_wire_axis_t0": [
+        -58,
+        35.5,
+        15
+      ],
+      "moving_wire_axis_t1": [
+        -58,
+        35.5,
+        35
+      ],
+      "fixed_mount_datum": [
+        -58,
+        35.5,
+        85
+      ],
+      "adjuster_wire_tip": [
+        -58,
+        35.5,
+        77
+      ],
+      "housing_route_entry": [
+        -58,
+        35.5,
+        111
+      ],
+      "housing_entry_status": "verified outer inlet face; ferrule bearing position unresolved",
+      "adjuster_inlet": [
+        7,
+        8.5
+      ],
+      "adjuster_transition_z_bounds": [
+        101,
+        102.5
+      ],
+      "adjuster_transition_status": "cone angle/length unmarked; step is maximum-material reference only",
+      "ferrule_reference_tip": [
+        -58,
+        35.5,
+        102.5
+      ],
+      "ferrule_reference_status": "straight-bore boundary pose, NOT actual bearing seat",
+      "ferrule": [
+        5.5,
+        11,
+        5,
+        9,
+        2.5
+      ],
+      "nipple_material": "nickel-plated brass",
+      "nipple_screw_drive": "slotted; exact slot dimensions and protrusion unresolved",
+      "retaining_washer": [
+        4.3,
+        9,
+        0.8
+      ],
+      "retaining_washer_limit_source": "Brighton-Best 2026 DIN125-A PDS; supplier not ordered",
+      "retaining_washer_limits": [
+        [
+          4.3,
+          4.48
+        ],
+        [
+          8.64,
+          9
+        ],
+        [
+          0.7,
+          0.9
+        ]
+      ],
+      "retaining_washer_seat": [
+        9.8,
+        14.7,
+        38.9,
+        39.9
+      ],
+      "retaining_washer_full_cover_lip_min_nominal": 0.74,
+      "nipple_axial_float_nominal_limits": [
+        0.2,
+        0.4
+      ],
+      "screw_exit": "open +Y Ø6, no fixed external screw length assumed",
+      "cap_assembly_gate": "metal washer provides positive capture; M4 slot/torque and actual purchased tolerances still unverified",
+      "m6_washer_spec": [
+        "norelem 07300-106",
+        6.4,
+        12,
+        1.6
+      ],
+      "m6_nut_spec": [
+        "norelem 07212-106",
+        6,
+        10,
+        3.2
+      ],
+      "m6_stack_z": [
+        80.2,
+        83.4,
+        85,
+        93,
+        94.6,
+        97.8
+      ],
+      "m6_thread_exposure_each": 3.2,
+      "fixed_bridge_includes_old_beam": false,
+      "co_beam_includes_old_beam": true,
+      "co_frame_replaces_old_frame": true,
+      "cap_install_direction": [
+        0,
+        -1,
+        0
+      ],
+      "wire_force_direction": [
+        0,
+        0,
+        1
+      ],
+      "wire_d": 1.5,
+      "wire_tail_below_center": 8,
+      "wire_tail_outside_nipple": 5.5,
+      "wire_tail_status": "nominal installation maximum; supplier minimum/holding force not certified; trim last",
+      "core_withdrawal_from_nipple_nominal": 10.5,
+      "nipple": [
+        5,
+        7,
+        1.8,
+        3.5
+      ],
+      "purchase_status": "candidates only, not confirmed owned"
+    },
+    "cr": {
+      "units": "mm",
+      "role": "purchased-flexible-reference",
+      "status": "nominal-route-not-installation-release",
+      "input_port": [
+        161.974,
+        -80,
+        2.87868
+      ],
+      "output_port": [
+        -58,
+        35.5,
+        111
+      ],
+      "input_outward_tangent": [
+        0.707107,
+        0,
+        -0.707107
+      ],
+      "output_arrival_tangent": [
+        0,
+        0,
+        -1
+      ],
+      "housing_od": 5,
+      "wire_d": 1.5,
+      "minimum_supplier_radius": 65,
+      "arc_radius": 75,
+      "virtual_vertices": [
+        [
+          161.974,
+          -80,
+          2.87868
+        ],
+        [
+          232.685,
+          -80,
+          -67.832
+        ],
+        [
+          232.685,
+          115,
+          -67.832
+        ],
+        [
+          -58,
+          35.5,
+          400
+        ],
+        [
+          -58,
+          35.5,
+          111
+        ]
+      ],
+      "lines": [
+        [
+          [
+            161.974,
+            -80,
+            2.87868
+          ],
+          [
+            179.652,
+            -80,
+            -14.799
+          ],
+          25,
+          25
+        ],
+        [
+          [
+            232.685,
+            -5,
+            -67.832
+          ],
+          [
+            232.685,
+            28.3973,
+            -67.832
+          ],
+          33.3973,
+          33.3973
+        ],
+        [
+          [
+            187.448,
+            102.628,
+            4.97304
+          ],
+          [
+            75.1606,
+            71.9184,
+            185.69
+          ],
+          214.965,
+          214.965
+        ],
+        [
+          [
+            -58,
+            35.5,
+            145.074
+          ],
+          [
+            -58,
+            35.5,
+            111
+          ],
+          34.0744,
+          34.0744
+        ]
+      ],
+      "arcs": [
+        [
+          [
+            179.652,
+            -80,
+            -14.799
+          ],
+          [
+            232.685,
+            -5,
+            -67.832
+          ],
+          [
+            179.652,
+            -5,
+            -14.799
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0.707107,
+            0,
+            -0.707107
+          ],
+          90,
+          75
+        ],
+        [
+          [
+            232.685,
+            28.3973,
+            -67.832
+          ],
+          [
+            187.448,
+            102.628,
+            4.97304
+          ],
+          [
+            193.102,
+            28.3973,
+            -4.12768
+          ],
+          [
+            0.527764,
+            0,
+            -0.849391
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          98.2133,
+          86.6027
+        ],
+        [
+          [
+            75.1606,
+            71.9184,
+            185.69
+          ],
+          [
+            -58,
+            35.5,
+            145.074
+          ],
+          [
+            14.3432,
+            55.2853,
+            145.074
+          ],
+          [
+            0.810899,
+            0.221774,
+            0.541534
+          ],
+          [
+            -0.522351,
+            -0.142859,
+            0.840679
+          ],
+          147.212,
+          254.926
+        ]
+      ],
+      "sample_points": [
+        [
+          161.974,
+          -80,
+          2.87868
+        ],
+        [
+          179.652,
+          -80,
+          -14.799
+        ],
+        [
+          181.503,
+          -79.9543,
+          -16.6498
+        ],
+        [
+          183.351,
+          -79.8173,
+          -18.4984
+        ],
+        [
+          185.195,
+          -79.5891,
+          -20.3424
+        ],
+        [
+          187.033,
+          -79.2701,
+          -22.1798
+        ],
+        [
+          188.861,
+          -78.8606,
+          -24.0081
+        ],
+        [
+          190.678,
+          -78.3611,
+          -25.8252
+        ],
+        [
+          192.482,
+          -77.7722,
+          -27.6288
+        ],
+        [
+          194.27,
+          -77.0946,
+          -29.4169
+        ],
+        [
+          196.04,
+          -76.3292,
+          -31.1871
+        ],
+        [
+          197.79,
+          -75.4769,
+          -32.9373
+        ],
+        [
+          199.518,
+          -74.5388,
+          -34.6655
+        ],
+        [
+          201.222,
+          -73.5159,
+          -36.3695
+        ],
+        [
+          202.9,
+          -72.4096,
+          -38.0471
+        ],
+        [
+          204.549,
+          -71.2211,
+          -39.6965
+        ],
+        [
+          206.168,
+          -69.9519,
+          -41.3155
+        ],
+        [
+          207.755,
+          -68.6036,
+          -42.9022
+        ],
+        [
+          209.307,
+          -67.1778,
+          -44.4547
+        ],
+        [
+          210.824,
+          -65.6763,
+          -45.971
+        ],
+        [
+          212.302,
+          -64.1008,
+          -47.4494
+        ],
+        [
+          213.741,
+          -62.4533,
+          -48.888
+        ],
+        [
+          215.138,
+          -60.7359,
+          -50.285
+        ],
+        [
+          216.492,
+          -58.9505,
+          -51.6388
+        ],
+        [
+          217.801,
+          -57.0994,
+          -52.9477
+        ],
+        [
+          219.063,
+          -55.1848,
+          -54.2102
+        ],
+        [
+          220.277,
+          -53.2091,
+          -55.4246
+        ],
+        [
+          221.442,
+          -51.1746,
+          -56.5896
+        ],
+        [
+          222.556,
+          -49.0839,
+          -57.7036
+        ],
+        [
+          223.618,
+          -46.9395,
+          -58.7653
+        ],
+        [
+          224.626,
+          -44.7439,
+          -59.7735
+        ],
+        [
+          225.58,
+          -42.5,
+          -60.7269
+        ],
+        [
+          226.477,
+          -40.2104,
+          -61.6244
+        ],
+        [
+          227.318,
+          -37.8778,
+          -62.4647
+        ],
+        [
+          228.1,
+          -35.5052,
+          -63.2471
+        ],
+        [
+          228.823,
+          -33.0955,
+          -63.9703
+        ],
+        [
+          229.487,
+          -30.6515,
+          -64.6337
+        ],
+        [
+          230.089,
+          -28.1763,
+          -65.2364
+        ],
+        [
+          230.63,
+          -25.6728,
+          -65.7776
+        ],
+        [
+          231.11,
+          -23.1441,
+          -66.2567
+        ],
+        [
+          231.526,
+          -20.5934,
+          -66.6731
+        ],
+        [
+          231.879,
+          -18.0236,
+          -67.0263
+        ],
+        [
+          232.169,
+          -15.438,
+          -67.3159
+        ],
+        [
+          232.394,
+          -12.8396,
+          -67.5415
+        ],
+        [
+          232.556,
+          -10.2317,
+          -67.7028
+        ],
+        [
+          232.653,
+          -7.61746,
+          -67.7997
+        ],
+        [
+          232.685,
+          -5,
+          -67.832
+        ],
+        [
+          232.685,
+          28.3973,
+          -67.832
+        ],
+        [
+          232.662,
+          30.968,
+          -67.7946
+        ],
+        [
+          232.592,
+          33.5357,
+          -67.6823
+        ],
+        [
+          232.476,
+          36.0974,
+          -67.4954
+        ],
+        [
+          232.313,
+          38.65,
+          -67.234
+        ],
+        [
+          232.105,
+          41.1905,
+          -66.8984
+        ],
+        [
+          231.85,
+          43.7161,
+          -66.489
+        ],
+        [
+          231.55,
+          46.2236,
+          -66.0064
+        ],
+        [
+          231.205,
+          48.7101,
+          -65.451
+        ],
+        [
+          230.816,
+          51.1728,
+          -64.8236
+        ],
+        [
+          230.381,
+          53.6088,
+          -64.1249
+        ],
+        [
+          229.903,
+          56.0151,
+          -63.3556
+        ],
+        [
+          229.382,
+          58.3889,
+          -62.5168
+        ],
+        [
+          228.818,
+          60.7275,
+          -61.6093
+        ],
+        [
+          228.213,
+          63.0281,
+          -60.6342
+        ],
+        [
+          227.565,
+          65.288,
+          -59.5928
+        ],
+        [
+          226.878,
+          67.5046,
+          -58.4862
+        ],
+        [
+          226.151,
+          69.6752,
+          -57.3157
+        ],
+        [
+          225.384,
+          71.7973,
+          -56.0827
+        ],
+        [
+          224.58,
+          73.8684,
+          -54.7886
+        ],
+        [
+          223.739,
+          75.886,
+          -53.435
+        ],
+        [
+          222.862,
+          77.8478,
+          -52.0234
+        ],
+        [
+          221.95,
+          79.7516,
+          -50.5556
+        ],
+        [
+          221.004,
+          81.5949,
+          -49.0332
+        ],
+        [
+          220.026,
+          83.3758,
+          -47.458
+        ],
+        [
+          219.015,
+          85.092,
+          -45.8319
+        ],
+        [
+          217.974,
+          86.7416,
+          -44.1568
+        ],
+        [
+          216.904,
+          88.3227,
+          -42.4346
+        ],
+        [
+          215.806,
+          89.8333,
+          -40.6675
+        ],
+        [
+          214.682,
+          91.2717,
+          -38.8574
+        ],
+        [
+          213.532,
+          92.6363,
+          -37.0064
+        ],
+        [
+          212.357,
+          93.9253,
+          -35.1169
+        ],
+        [
+          211.161,
+          95.1373,
+          -33.1909
+        ],
+        [
+          209.943,
+          96.2709,
+          -31.2307
+        ],
+        [
+          208.705,
+          97.3247,
+          -29.2388
+        ],
+        [
+          207.449,
+          98.2976,
+          -27.2173
+        ],
+        [
+          206.176,
+          99.1883,
+          -25.1686
+        ],
+        [
+          204.888,
+          99.9957,
+          -23.0953
+        ],
+        [
+          203.586,
+          100.719,
+          -20.9996
+        ],
+        [
+          202.271,
+          101.357,
+          -18.8841
+        ],
+        [
+          200.946,
+          101.91,
+          -16.7513
+        ],
+        [
+          199.612,
+          102.376,
+          -14.6036
+        ],
+        [
+          198.27,
+          102.756,
+          -12.4437
+        ],
+        [
+          196.921,
+          103.047,
+          -10.2739
+        ],
+        [
+          195.569,
+          103.252,
+          -8.09696
+        ],
+        [
+          194.213,
+          103.368,
+          -5.91533
+        ],
+        [
+          192.856,
+          103.396,
+          -3.73159
+        ],
+        [
+          191.5,
+          103.336,
+          -1.54833
+        ],
+        [
+          190.145,
+          103.188,
+          0.631909
+        ],
+        [
+          188.794,
+          102.952,
+          2.80655
+        ],
+        [
+          187.448,
+          102.628,
+          4.97304
+        ],
+        [
+          75.1606,
+          71.9184,
+          185.69
+        ],
+        [
+          73.764,
+          71.5364,
+          187.854
+        ],
+        [
+          72.2958,
+          71.1349,
+          189.966
+        ],
+        [
+          70.7577,
+          70.7142,
+          192.025
+        ],
+        [
+          69.1516,
+          70.275,
+          194.027
+        ],
+        [
+          67.4794,
+          69.8176,
+          195.97
+        ],
+        [
+          65.7432,
+          69.3428,
+          197.852
+        ],
+        [
+          63.945,
+          68.851,
+          199.67
+        ],
+        [
+          62.0871,
+          68.3429,
+          201.422
+        ],
+        [
+          60.1716,
+          67.819,
+          203.106
+        ],
+        [
+          58.2008,
+          67.28,
+          204.72
+        ],
+        [
+          56.1772,
+          66.7266,
+          206.263
+        ],
+        [
+          54.1032,
+          66.1593,
+          207.731
+        ],
+        [
+          51.9812,
+          65.579,
+          209.125
+        ],
+        [
+          49.8138,
+          64.9862,
+          210.441
+        ],
+        [
+          47.6037,
+          64.3818,
+          211.678
+        ],
+        [
+          45.3535,
+          63.7664,
+          212.835
+        ],
+        [
+          43.066,
+          63.1407,
+          213.91
+        ],
+        [
+          40.7438,
+          62.5056,
+          214.902
+        ],
+        [
+          38.3898,
+          61.8618,
+          215.81
+        ],
+        [
+          36.0068,
+          61.2101,
+          216.633
+        ],
+        [
+          33.5976,
+          60.5512,
+          217.369
+        ],
+        [
+          31.1653,
+          59.886,
+          218.019
+        ],
+        [
+          28.7127,
+          59.2152,
+          218.58
+        ],
+        [
+          26.2428,
+          58.5397,
+          219.053
+        ],
+        [
+          23.7585,
+          57.8603,
+          219.437
+        ],
+        [
+          21.2629,
+          57.1778,
+          219.731
+        ],
+        [
+          18.7589,
+          56.493,
+          219.935
+        ],
+        [
+          16.2497,
+          55.8067,
+          220.048
+        ],
+        [
+          13.7381,
+          55.1198,
+          220.072
+        ],
+        [
+          11.2272,
+          54.4331,
+          220.005
+        ],
+        [
+          8.72014,
+          53.7474,
+          219.848
+        ],
+        [
+          6.21983,
+          53.0636,
+          219.6
+        ],
+        [
+          3.7293,
+          52.3825,
+          219.263
+        ],
+        [
+          1.25157,
+          51.7048,
+          218.836
+        ],
+        [
+          -1.21038,
+          51.0315,
+          218.321
+        ],
+        [
+          -3.65358,
+          50.3633,
+          217.717
+        ],
+        [
+          -6.07508,
+          49.7011,
+          217.025
+        ],
+        [
+          -8.47198,
+          49.0455,
+          216.247
+        ],
+        [
+          -10.8414,
+          48.3975,
+          215.383
+        ],
+        [
+          -13.1804,
+          47.7578,
+          214.434
+        ],
+        [
+          -15.4863,
+          47.1272,
+          213.402
+        ],
+        [
+          -17.7562,
+          46.5064,
+          212.287
+        ],
+        [
+          -19.9874,
+          45.8962,
+          211.092
+        ],
+        [
+          -22.1772,
+          45.2973,
+          209.816
+        ],
+        [
+          -24.323,
+          44.7104,
+          208.463
+        ],
+        [
+          -26.4222,
+          44.1363,
+          207.033
+        ],
+        [
+          -28.4723,
+          43.5756,
+          205.529
+        ],
+        [
+          -30.4707,
+          43.029,
+          203.951
+        ],
+        [
+          -32.4151,
+          42.4973,
+          202.303
+        ],
+        [
+          -34.3032,
+          41.9809,
+          200.586
+        ],
+        [
+          -36.1326,
+          41.4806,
+          198.802
+        ],
+        [
+          -37.9012,
+          40.9969,
+          196.953
+        ],
+        [
+          -39.6068,
+          40.5304,
+          195.041
+        ],
+        [
+          -41.2474,
+          40.0817,
+          193.07
+        ],
+        [
+          -42.821,
+          39.6513,
+          191.04
+        ],
+        [
+          -44.3256,
+          39.2398,
+          188.955
+        ],
+        [
+          -45.7596,
+          38.8477,
+          186.817
+        ],
+        [
+          -47.1211,
+          38.4753,
+          184.629
+        ],
+        [
+          -48.4085,
+          38.1232,
+          182.393
+        ],
+        [
+          -49.6202,
+          37.7918,
+          180.112
+        ],
+        [
+          -50.7549,
+          37.4815,
+          177.789
+        ],
+        [
+          -51.8111,
+          37.1926,
+          175.427
+        ],
+        [
+          -52.7875,
+          36.9256,
+          173.028
+        ],
+        [
+          -53.683,
+          36.6807,
+          170.595
+        ],
+        [
+          -54.4966,
+          36.4582,
+          168.131
+        ],
+        [
+          -55.2271,
+          36.2584,
+          165.64
+        ],
+        [
+          -55.8738,
+          36.0815,
+          163.124
+        ],
+        [
+          -56.4359,
+          35.9278,
+          160.586
+        ],
+        [
+          -56.9126,
+          35.7974,
+          158.029
+        ],
+        [
+          -57.3034,
+          35.6905,
+          155.457
+        ],
+        [
+          -57.6079,
+          35.6072,
+          152.872
+        ],
+        [
+          -57.8256,
+          35.5477,
+          150.278
+        ],
+        [
+          -57.9564,
+          35.5119,
+          147.678
+        ],
+        [
+          -58,
+          35.5,
+          145.074
+        ],
+        [
+          -58,
+          35.5,
+          111
+        ]
+      ],
+      "maximum_chord_error": 0.0114229,
+      "outside_port_route_length": 746.507,
+      "port_clearance_test_exclusion": 15,
+      "manufactured_housing_cut_length": null,
+      "cut_length_reason": "actual seating and installed layout corrections are unresolved",
+      "purchased_kit_candidate": "03096-14-1000; vendor permits shortening",
+      "core_trim_order": "leave core long until both sheath ends and actuator travel are set",
+      "external_obstacles_verified": false,
+      "physical_route_retained": false,
+      "retention_reason": "end ferrules retained; intermediate route supports not yet designed"
+    },
+    "spring": {
+      "kind": "spring",
+      "input": "stroke",
+      "model": "extension-outline",
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "x": -72,
+      "y": 33.1,
+      "fixed_pin_z": -13.82,
+      "moving_pin_z_t0": 13,
+      "lower_loop_center_z": -12.95,
+      "upper_loop_center_z_t0": 12.13,
+      "coil_start_z": -9.45,
+      "coil_end_z": 8.63,
+      "stroke_mm": 20,
+      "t_range": [
+        0,
+        1
+      ]
+    },
+    "retention": {
+      "status": "local-guide-candidate-not-print-release",
+      "guided_route_arc": 3,
+      "arc_radius": 75,
+      "arc_angle": 147.212,
+      "guide_start": [
+        82.9959,
+        74.0613,
+        173.079
+      ],
+      "guide_end": [
+        -58,
+        35.5,
+        126
+      ],
+      "housing_od": 5,
+      "groove_id": 6.2,
+      "radial_clearance": 0.6,
+      "side_loading_direction": [
+        0.263804,
+        -0.964576,
+        1.74423e-18
+      ],
+      "host_platform": [
+        [
+          -70,
+          -52,
+          85
+        ],
+        [
+          -46,
+          45,
+          93
+        ]
+      ],
+      "clamp_clearance_per_face": 0.3,
+      "clamp_bolt_centres": [
+        [
+          -73,
+          -12
+        ],
+        [
+          -73,
+          12
+        ],
+        [
+          -43,
+          -12
+        ],
+        [
+          -43,
+          12
+        ]
+      ],
+      "clamp_bolt_candidate": "M3x25 socket head + OD7 x 0.5 washer + AF5.5 x 2.4 nut",
+      "cap_bolt_candidate": "M3x16 socket head + OD7 x 0.5 washer + AF5.5 x 2.4 nut",
+      "thread_dimensions": "nominal envelopes; purchase and strength not confirmed",
+      "free_route_supported": false,
+      "minimum_radius_guarantee": "none for free hose or arbitrary installed loads",
+      "print_profile": "X1C / 0.4 mm / PETG; orientation and supports not released"
+    },
+    "cad_motion_checks": {
+      "spring_pin_span_including_pin_d_at_t0": 30.82,
+      "spring_pin_span_including_pin_d_at_t1": 50.82,
+      "gate_radii_t0": [
+        21,
+        26
+      ],
+      "gate_radii_t1": [
+        26,
+        21
+      ],
+      "gate_z": [
+        0,
+        -28.5
+      ]
+    }
+  },
+  "parts": [
+    {
+      "id": "feeder/positive-half",
+      "name": "送料右半壳",
+      "role": "printed",
+      "group": "feeder",
+      "family": "positive-half",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "positive-half",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/negative-half",
+      "name": "送料左半壳",
+      "role": "printed",
+      "group": "feeder",
+      "family": "negative-half",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "negative-half",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/beam-grip",
+      "name": "背梁握把及输出固定桥",
+      "role": "printed",
+      "group": "feeder",
+      "family": "beam-grip",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "beam",
+        "cse_t": 0,
+        "cse_legacy": "beam-grip",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/liner",
+      "name": "出口内衬",
+      "role": "printed",
+      "group": "feeder",
+      "family": "liner",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "liner",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/right-support",
+      "name": "右导向支座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "right-support",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "right-support",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/left-support",
+      "name": "左导向及弹簧座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "left-support",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "left-support",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/x-gib",
+      "name": "X调隙压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "x-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "x-gib",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/x-cover",
+      "name": "X调节外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "x-cover",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "x-cover",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/frame",
+      "name": "拉索输出凸轮架",
+      "role": "printed",
+      "group": "feeder",
+      "family": "frame",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "frame",
+        "cse_t": 0,
+        "cse_legacy": "frame",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "translate",
+        "input": "stroke",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "distance_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "feeder/fixed-spacer",
+      "name": "弹簧固定端间隔套",
+      "role": "printed",
+      "group": "feeder",
+      "family": "fixed-spacer",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "fixed-spacer",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/moving-spacer",
+      "name": "弹簧运动端间隔套",
+      "role": "printed",
+      "group": "feeder",
+      "family": "moving-spacer",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "moving-spacer",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "stroke",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "distance_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "feeder/capture-right",
+      "name": "右出口捕获座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "capture-1",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "capture",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/pipe-clamp-right",
+      "name": "右PC管夹",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pipe-clamp-1",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pipe-clamp",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-cap-right",
+      "name": "右公共架Y调节盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-cap",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/frame-y-gib-right",
+      "name": "右公共架Y压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "frame-y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "frame-y-gib",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-gib-right-front",
+      "name": "右前Y调隙压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-gib",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-keeper-right-front",
+      "name": "右前Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/finger-right-front",
+      "name": "右前V定位挡指",
+      "role": "printed",
+      "group": "feeder",
+      "family": "finger",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "finger",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/pin-block-right-front",
+      "name": "右前肩销压块",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pin-block",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pin-block",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/y-gib-right-rear",
+      "name": "右后Y调隙压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-gib",
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-keeper-right-rear",
+      "name": "右后Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/finger-right-rear",
+      "name": "右后V定位挡指",
+      "role": "printed",
+      "group": "feeder",
+      "family": "finger",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "finger",
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/pin-block-right-rear",
+      "name": "右后肩销压块",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pin-block",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pin-block",
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/capture-left",
+      "name": "左出口捕获座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "capture--1",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "capture",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/pipe-clamp-left",
+      "name": "左PC管夹",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pipe-clamp--1",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pipe-clamp",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-cap-left",
+      "name": "左公共架Y调节盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-cap",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/frame-y-gib-left",
+      "name": "左公共架Y压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "frame-y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "frame-y-gib",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-gib-left-front",
+      "name": "左前Y调隙压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-gib",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-keeper-left-front",
+      "name": "左前Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/finger-left-front",
+      "name": "左前V定位挡指",
+      "role": "printed",
+      "group": "feeder",
+      "family": "finger",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "finger",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/pin-block-left-front",
+      "name": "左前肩销压块",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pin-block",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pin-block",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/y-gib-left-rear",
+      "name": "左后Y调隙压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-gib",
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/y-keeper-left-rear",
+      "name": "左后Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/finger-left-rear",
+      "name": "左后V定位挡指",
+      "role": "printed",
+      "group": "feeder",
+      "family": "finger",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "finger",
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/pin-block-left-rear",
+      "name": "左后肩销压块",
+      "role": "printed",
+      "group": "feeder",
+      "family": "pin-block",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pin-block",
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      }
+    },
+    {
+      "id": "feeder/inlet-rear",
+      "name": "入口后夹与背梁锚固",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-rear",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-rear",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/inlet-front",
+      "name": "入口前夹",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-front",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-front",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/inlet-backplate",
+      "name": "入口后压板",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-backplate",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-backplate",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/cable-input-body",
+      "name": "拉索输入固定座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "input-body",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-body",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/cable-input-lever",
+      "name": "近端勾扣扳机",
+      "role": "printed",
+      "group": "feeder",
+      "family": "input-lever",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-lever",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "trigger-rotate",
+        "input": "stroke",
+        "origin": [
+          75,
+          -82,
+          5
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "radians_per_t": -0.3333333333333333,
+        "stroke_mm": 20,
+        "cable_radius_mm": 60,
+        "t_range": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "feeder/cable-input-cover",
+      "name": "扳机轴外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "input-cover",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-cover",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/cable-output-cap",
+      "name": "输出端头保持盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "output-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "output-cap",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "stroke",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "distance_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "feeder/cable-route-base",
+      "name": "输出弯导向主座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "route-base",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-base",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/cable-route-cap",
+      "name": "输出弯导向盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "route-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-cap",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/cable-route-lower",
+      "name": "输出弯导向U形下托",
+      "role": "printed",
+      "group": "feeder",
+      "family": "route-lower",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-lower",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "spin/body",
+      "name": "旋转头壳体",
+      "role": "printed",
+      "group": "spin",
+      "family": "body",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "body",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/carriage",
+      "name": "摩擦垫浮动载体",
+      "role": "printed",
+      "group": "spin",
+      "family": "carriage",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "carriage",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/pad",
+      "name": "TPU摩擦垫",
+      "role": "printed",
+      "group": "spin",
+      "family": "pad",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "pad",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "material": "TPU95A HF"
+    },
+    {
+      "id": "spin/pad-keeper",
+      "name": "摩擦垫保持片",
+      "role": "printed",
+      "group": "spin",
+      "family": "pad-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "pad-keeper",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/opposite-guide",
+      "name": "对侧导向块",
+      "role": "printed",
+      "group": "spin",
+      "family": "opposite-guide",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "opposite-guide",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/cover",
+      "name": "旋转头外盖",
+      "role": "printed",
+      "group": "spin",
+      "family": "cover",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "cover",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/spring-cage",
+      "name": "压簧笼",
+      "role": "printed",
+      "group": "spin",
+      "family": "spring-cage",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "spring-cage",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/spring-seat",
+      "name": "压簧调节座",
+      "role": "printed",
+      "group": "spin",
+      "family": "spring-seat",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "spring-seat",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_preload_mm",
+        "axis": [
+          -1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/pull-cap",
+      "name": "退让拉帽",
+      "role": "printed",
+      "group": "spin",
+      "family": "pull-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "pull-cap",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "spin/hold-fork",
+      "name": "退让保持叉",
+      "role": "printed",
+      "group": "hold",
+      "family": "hold-fork",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-printed",
+        "cse_t": 0,
+        "cse_legacy": "hold-fork",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "material": "PETG"
+    },
+    {
+      "id": "feeder/hardware-fixed",
+      "name": "原机固定五金（移除旧背梁螺钉）",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "original-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "original-fixed-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/hardware-right-front",
+      "name": "挡指肩销及顶紧五金 right front",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "follower-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "follower-hardware",
+        "cse_t": 0,
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/hardware-right-rear",
+      "name": "挡指肩销及顶紧五金 right rear",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "follower-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "follower-hardware",
+        "cse_t": 0,
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": 1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/hardware-left-front",
+      "name": "挡指肩销及顶紧五金 left front",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "follower-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "follower-hardware",
+        "cse_t": 0,
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": false,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0.6,
+          1
+        ],
+        "initial_radius_mm": 21,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/hardware-left-rear",
+      "name": "挡指肩销及顶紧五金 left rear",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "follower-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "follower-hardware",
+        "cse_t": 0,
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "radial",
+        "input": "stroke",
+        "side": -1,
+        "rear": true,
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "closed_mm": 21,
+        "open_mm": 26,
+        "breakpoints": [
+          0,
+          0.4
+        ],
+        "initial_radius_mm": 26,
+        "t_range": [
+          0,
+          1
+        ],
+        "source_function": "cam_gate_r"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/hardware-moving-spacer",
+      "name": "弹簧运动端五金",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "spring-moving-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spring-moving-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "stroke",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "distance_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-input-hardware-fixed",
+      "name": "扳机轴、端口、止挡和M4×60安装五金",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "input-fixed-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-fixed-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-input-hardware-moving",
+      "name": "旋转POM衬套与芯线端球",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "input-moving-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-moving-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "trigger-rotate",
+        "input": "stroke",
+        "origin": [
+          75,
+          -82,
+          5
+        ],
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "radians_per_t": -0.3333333333333333,
+        "stroke_mm": 20,
+        "cable_radius_mm": 60,
+        "t_range": [
+          0,
+          1
+        ]
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-output-hardware-fixed",
+      "name": "输出调节器、双螺母垫片与端套",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "output-fixed-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "output-fixed-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-output-hardware-moving",
+      "name": "输出夹头、金属保持垫片及耳盖五金",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "output-moving-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "output-moving-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "stroke",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "distance_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-route-hardware",
+      "name": "导向主座及弧盖固定五金",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "route-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/pc-reference",
+      "name": "PC硬管 Ø48/50 参考",
+      "role": "reference",
+      "group": "feeder",
+      "family": "pc-reference",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "pc-reference"
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/hose-reference",
+      "name": "钢丝软管 Ø50/55 名义参考",
+      "role": "reference",
+      "group": "feeder",
+      "family": "hose-reference",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "hose-reference"
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/liner-reference",
+      "name": "入口双侧3mm柔衬名义参考",
+      "role": "reference",
+      "group": "feeder",
+      "family": "liner-reference",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "liner-reference"
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      }
+    },
+    {
+      "id": "feeder/spring-reference",
+      "name": "拉伸回位弹簧候选外形",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "spring-reference",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spring-reference",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "spring",
+        "input": "stroke",
+        "model": "extension-outline",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "x": -72,
+        "y": 33.1,
+        "fixed_pin_z": -13.82,
+        "moving_pin_z_t0": 13,
+        "lower_loop_center_z": -12.95,
+        "upper_loop_center_z_t0": 12.13,
+        "coil_start_z": -9.45,
+        "coil_end_z": 8.63,
+        "stroke_mm": 20,
+        "t_range": [
+          0,
+          1
+        ]
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-housing",
+      "name": "Ø5拉索护套完整候选路线",
+      "role": "purchased",
+      "group": "feeder",
+      "family": "cable-housing",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-housing",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "feeder/cable-core-route",
+      "name": "拉索中段钢芯（与输入段去重）",
+      "role": "reference",
+      "group": "feeder",
+      "family": "cable-core",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "route-wire",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "partition_note": "cr_wire minus ci_cable(0) and co_wire(0); union of existing source references unchanged"
+    },
+    {
+      "id": "feeder/cable-core-input",
+      "name": "扳机切线与包绕钢芯",
+      "role": "reference",
+      "group": "feeder",
+      "family": "cable-core",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "input-wire",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "input-wire",
+        "input": "stroke",
+        "contract": "scene_contract.ci",
+        "stroke_mm": 20,
+        "arc_rest_angle_deg": 45,
+        "arc_end_angle_deg": 90
+      }
+    },
+    {
+      "id": "feeder/cable-core-output",
+      "name": "输出裸芯与8mm最大尾段",
+      "role": "reference",
+      "group": "feeder",
+      "family": "cable-core",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "output-wire",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "output-wire",
+        "input": "stroke",
+        "contract": "scene_contract.co",
+        "stroke_mm": 20
+      }
+    },
+    {
+      "id": "spin/hardware-cover",
+      "name": "旋转头外盖五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-cover",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "cover",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-cage",
+      "name": "旋转头压簧笼五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-cage",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "cage",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-guide",
+      "name": "旋转头对侧导向五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-guide",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "guide",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-clamp",
+      "name": "旋转头管口抱箍五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-clamp",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "clamp",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-latch",
+      "name": "旋转头保持叉常驻螺母",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-latch",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "latch",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-preload",
+      "name": "旋转头压簧调节螺钉及锁紧螺母",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-preload",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "preload",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "setting_note": "preload fixed at 0 mm; mixed screw/nut group is not rigidly animated",
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-keeper",
+      "name": "旋转头摩擦垫保持片五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "keeper",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-pull",
+      "name": "旋转头拉帽五金",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-hardware-pull",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-hardware",
+        "cse_t": 0,
+        "cse_legacy": "pull",
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "translate",
+        "input": "spin_float_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "distance_mm": 1,
+        "parameter_units": "mm",
+        "active_during_trigger": false
+      },
+      "setting_note": null,
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/hardware-hold-removable",
+      "name": "保持叉可拆螺钉及垫片",
+      "role": "purchased",
+      "group": "hold",
+      "family": "spin-hold-hardware",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-latch-removable-hardware",
+        "cse_t": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "fixed"
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    },
+    {
+      "id": "spin/spring-reference",
+      "name": "旋转头压簧候选包络",
+      "role": "purchased",
+      "group": "spin",
+      "family": "spin-spring",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "spin-spring",
+        "cse_t": 0,
+        "cse_float": 0,
+        "cse_preload": 0
+      },
+      "backend": "Manifold",
+      "motion": {
+        "kind": "spring",
+        "model": "compression-outline",
+        "input": "spin_float_mm",
+        "preload_input": "spin_preload_mm",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "start_x": 30.75,
+        "end_x": 49.75,
+        "axis_y": 0,
+        "axis_z": 43,
+        "active_during_trigger": false
+      },
+      "procurement_status": "candidate-not-confirmed-purchased",
+      "instance_kind": "rigid-reference-subassembly"
+    }
+  ],
+  "release": {
+    "manufacturing": false,
+    "physical_assembly": false,
+    "candidate_hardware_is_not_purchase_confirmation": true
+  },
+  "source_sha256": {
+    "cad/cable-scene-export.scad": "2b5d9f8e1513858f353211fc2dcd4eb9f6959bcffb249caf7a4c42bb1850ceb8",
+    "analysis/launcher_final_assembly.py": "4a18da8cad226e0bf5accb8d0ee8aa6d9f97aa5c37be0d19d0504382e64aecc6",
+    "analysis/spin_head_geometry.py": "834ec85d81c9c38d5fc3e990eb3e25d2b7ebd058ac1178c6618b58088cfdd137",
+    "cad/cable-complete-review.scad": "2507eb9505bb2d8b5e6759fdfc21fd4928a0e65550062039b51601fdcfecce83",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-service-contract.scad": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029",
+    "cad/cable-service-review.scad": "a1b19d9dc86357cba26f905252b4b08b91bdc35e16e93c38b631528a3dd7a0d1",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58"
+  }
+}

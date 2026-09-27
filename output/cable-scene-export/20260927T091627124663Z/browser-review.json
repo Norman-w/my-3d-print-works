@@ -1,0 +1,59 @@
+{
+  "status": "CURRENT_BROWSER_SCENE_PASS",
+  "utc": "2026-09-27T09:22:07.703792+00:00",
+  "method": "Chrome through Computer Use. Real button clicks, camera/surface selectors, source-exposed DOM datasets and screenshots; no injected app mutations.",
+  "url": "http://127.0.0.1:8877/feeder-motion.html?view=system",
+  "snapshot_id": "20260927T091627124663Z",
+  "manifest_sha256": "2ea8932a5be706b6d10e2687e2a8f6e33e3ec68aa9284756cb93e955e80f5530",
+  "web_sources": {
+    "web/feeder-motion.html": "23967a634c1c58c55d424aec51887d17c5579b6c2f8a83597a4514c717dd967d",
+    "web/feeder-motion.mjs": "aaeb97dfb4a735f4411843abc19491442025238b8277a989728942dba9cdeaac",
+    "web/feeder-motion-kinematics.mjs": "08fbc63cb631faf8524ec96c0048ec93db2ddcc495bb48e5a895a164c1fc3427",
+    "web/feeder-overview.mjs": "9bbb0d02d349213f01733168deac20d40a5837ee9d8e9c7456bcefea521bff0e",
+    "web/trigger-concept-kinematics.mjs": "433a222fd2055566348ccbaa93088e9f254face565cb7d0b0dec95993c84fd88",
+    "web/trigger-overlay.mjs": "fb062776bb6746f14d6dfb59afaadb63f1b80e6c068fbda2754b15bb35e13d84",
+    "web/scene-assets.mjs": "301793298907b2115466b0bdc312f0d9337a0ece15c70f9d731e49a4b545ef50",
+    "web/cable-scene-kinematics.mjs": "83dd0fbf8278662aef1946435ba37f7484ef06ea6d4657340a569e65c2356539"
+  },
+  "checks": {
+    "all_catalogue_models_loaded": 85,
+    "unique_loaded_instances": 85,
+    "full_output_stroke_mm": 20,
+    "full_trigger_angle_deg": -19.33425192516212,
+    "finger_proximal_travel_mm": 11.91882766321422,
+    "lever_cap_moving_hardware_share_transform": true,
+    "release_output_stroke_mm": 0,
+    "camera_preserves_scene_and_all_instances": true,
+    "cutaway_preserves_instances_and_stroke": true,
+    "return_preserves_scene_and_instances": true,
+    "reset_progress_zero": true,
+    "browser_warn_error_log": [],
+    "old_trigger_overlay": false
+  },
+  "served_LAN_identity": {
+    "motion-manifest.json": {
+      "served_sha256": "2ea8932a5be706b6d10e2687e2a8f6e33e3ec68aa9284756cb93e955e80f5530",
+      "local_sha256": "2ea8932a5be706b6d10e2687e2a8f6e33e3ec68aa9284756cb93e955e80f5530",
+      "equal": true
+    },
+    "feeder-motion.html": {
+      "served_sha256": "23967a634c1c58c55d424aec51887d17c5579b6c2f8a83597a4514c717dd967d",
+      "local_sha256": "23967a634c1c58c55d424aec51887d17c5579b6c2f8a83597a4514c717dd967d",
+      "equal": true
+    },
+    "feeder-motion.mjs": {
+      "served_sha256": "aaeb97dfb4a735f4411843abc19491442025238b8277a989728942dba9cdeaac",
+      "local_sha256": "aaeb97dfb4a735f4411843abc19491442025238b8277a989728942dba9cdeaac",
+      "equal": true
+    },
+    "cable-scene-kinematics.mjs": {
+      "served_sha256": "83dd0fbf8278662aef1946435ba37f7484ef06ea6d4657340a569e65c2356539",
+      "local_sha256": "83dd0fbf8278662aef1946435ba37f7484ef06ea6d4657340a569e65c2356539",
+      "equal": true
+    }
+  },
+  "LAN_scope": "This Mac accessed its LAN address; not second-device acceptance.",
+  "scope": "Runtime load and motion display with current source metadata. No friction, force, collision or physical mechanism acceptance.",
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

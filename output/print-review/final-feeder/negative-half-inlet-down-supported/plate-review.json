@@ -1,0 +1,141 @@
+{
+  "family": "negative-half",
+  "folder": "output/print-review/final-feeder/negative-half-inlet-down-supported",
+  "count": 1,
+  "orientation": "Original Z=-126 inlet end down; repaired groove vertical",
+  "checks": {
+    "native_success_no_warning": true,
+    "correct_3mf_object_count": true,
+    "correct_input_names": true,
+    "no_mesh_repair_by_slicer": true,
+    "official_machine_templates_preserved": true,
+    "setpoint_255": true,
+    "proper_rotation_no_scaling": true,
+    "inside_X1C_build_box": true,
+    "source_identity": true,
+    "shared_presets_unchanged": true
+  },
+  "mapping": [
+    {
+      "source_file": "negative-half.stl",
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "shift": [
+        145.74998,
+        127.5,
+        126.0
+      ],
+      "offset": [
+        -17.75,
+        -1.5,
+        -28.5
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -17.75,
+        -1.5,
+        -28.5
+      ],
+      "build": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        145.74998,
+        129.5,
+        126.0
+      ]
+    }
+  ],
+  "mesh_repair_stats": [
+    {
+      "face_count": "13802",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  ],
+  "first_layer_model_area_mm2": 125.82146243024788,
+  "first_layer_model_components": 1,
+  "model_path_bounds_mm": [
+    [
+      110.46,
+      79.71,
+      0.2
+    ],
+    [
+      145.54002932631664,
+      172.282,
+      195.0
+    ]
+  ],
+  "support_sample_count": 4352707,
+  "feature_command_counts": {
+    "Support": 90947,
+    "Brim": 4464,
+    "Inner wall": 219602,
+    "Outer wall": 144973,
+    "Gap infill": 58961,
+    "Support interface": 3161,
+    "Overhang wall": 1128,
+    "Bridge": 2678,
+    "Internal solid infill": 15937,
+    "Sparse infill": 12273,
+    "Floating vertical shell": 6412,
+    "Top surface": 1809
+  },
+  "max_bridge_command_path_mm": 22.79287998476718,
+  "estimated_time_s": 18931.646484375,
+  "estimated_filament_g": 144.2634735107422,
+  "native_warnings": "",
+  "gcode_sha256": "e2be2ede2f39574a2ab4cca5f584e8677038e39d6ab15c1a07f2cf3f43e96de6",
+  "project_sha256": "ee66067b8570c7b751f1013a9d94126126e18a503dda12ee370dc363aeef7476",
+  "sent_to_printer": false,
+  "limits": [
+    "First-layer area is emitted-bead footprint, not adhesion strength.",
+    "Bridge command length is not unsupported span.",
+    "Bounds/CLI success do not prove physical fit, removal force, shrinkage or PETG finish."
+  ],
+  "support_bounds_in_assembly_mm": [
+    [
+      -55.20480421668259,
+      -60.03233951244984,
+      -125.8
+    ],
+    [
+      24.36787885371581,
+      61.82508343576313,
+      43.80000000000001
+    ]
+  ]
+}

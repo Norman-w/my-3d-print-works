@@ -1,0 +1,179 @@
+[
+  {
+    "part": "body",
+    "exit": 0,
+    "exists": true,
+    "log": "Geometries in cache: 79\nGeometry cache size in bytes: 575552\nCGAL Polyhedrons in cache: 18\nCGAL cache size in bytes: 2818000\nTotal rendering time: 0:00:00.089\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      11\n   Vertices:     2482\n   Facets:       5004\n"
+  },
+  {
+    "part": "lever",
+    "exit": 0,
+    "exists": true,
+    "log": "Geometries in cache: 27\nGeometry cache size in bytes: 716944\nCGAL Polyhedrons in cache: 8\nCGAL cache size in bytes: 1969250\nTotal rendering time: 0:00:00.055\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      2\n   Vertices:     2254\n   Facets:       4512\n"
+  },
+  {
+    "part": "cover",
+    "exit": 0,
+    "exists": true,
+    "log": "Geometries in cache: 24\nGeometry cache size in bytes: 267960\nCGAL Polyhedrons in cache: 9\nCGAL cache size in bytes: 1353750\nTotal rendering time: 0:00:00.052\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      4\n   Vertices:     1513\n   Facets:       3038\n"
+  },
+  {
+    "part": "fixed-hardware",
+    "exit": 0,
+    "exists": true,
+    "log": "Geometries in cache: 109\nGeometry cache size in bytes: 972616\nCGAL Polyhedrons in cache: 37\nCGAL cache size in bytes: 6891000\nTotal rendering time: 0:00:00.193\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -7\n   Vertices:     6948\n   Facets:      13864\n"
+  },
+  {
+    "part": "moving-hardware",
+    "exit": 0,
+    "exists": true,
+    "log": "Geometries in cache: 6\nGeometry cache size in bytes: 504528\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 1512000\nTotal rendering time: 0:00:00.045\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:     2880\n   Facets:       5756\n"
+  },
+  {
+    "probe": "motion-0",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "000760\nCGAL Polyhedrons in cache: 78\nCGAL cache size in bytes: 18867250\nTotal rendering time: 0:00:00.514\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -127\n   Vertices:      934\n   Facets:       1356\n"
+  },
+  {
+    "probe": "motion-5",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "000760\nCGAL Polyhedrons in cache: 78\nCGAL cache size in bytes: 18877000\nTotal rendering time: 0:00:00.518\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -143\n   Vertices:      973\n   Facets:       1370\n"
+  },
+  {
+    "probe": "motion-10",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "000760\nCGAL Polyhedrons in cache: 78\nCGAL cache size in bytes: 18887000\nTotal rendering time: 0:00:00.476\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -153\n   Vertices:     1013\n   Facets:       1410\n"
+  },
+  {
+    "probe": "motion-15",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "000760\nCGAL Polyhedrons in cache: 78\nCGAL cache size in bytes: 18880500\nTotal rendering time: 0:00:00.451\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -142\n   Vertices:      987\n   Facets:       1402\n"
+  },
+  {
+    "probe": "motion-20",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "000760\nCGAL Polyhedrons in cache: 78\nCGAL cache size in bytes: 18879250\nTotal rendering time: 0:00:00.402\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -137\n   Vertices:      982\n   Facets:       1412\n"
+  },
+  {
+    "probe": "hardware-fit-0",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "204824\nCGAL Polyhedrons in cache: 80\nCGAL cache size in bytes: 19910500\nTotal rendering time: 0:00:00.317\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -328\n   Vertices:     3388\n   Facets:       5460\n"
+  },
+  {
+    "probe": "hardware-fit-5",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "218648\nCGAL Polyhedrons in cache: 80\nCGAL cache size in bytes: 19934750\nTotal rendering time: 0:00:00.268\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -317\n   Vertices:     3354\n   Facets:       5436\n"
+  },
+  {
+    "probe": "hardware-fit-10",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "239384\nCGAL Polyhedrons in cache: 80\nCGAL cache size in bytes: 19976250\nTotal rendering time: 0:00:00.266\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -305\n   Vertices:     3321\n   Facets:       5418\n"
+  },
+  {
+    "probe": "hardware-fit-15",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "253208\nCGAL Polyhedrons in cache: 80\nCGAL cache size in bytes: 20001750\nTotal rendering time: 0:00:00.267\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -308\n   Vertices:     3291\n   Facets:       5346\n"
+  },
+  {
+    "probe": "hardware-fit-20",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "273944\nCGAL Polyhedrons in cache: 80\nCGAL cache size in bytes: 20026750\nTotal rendering time: 0:00:00.264\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -305\n   Vertices:     3226\n   Facets:       5228\n"
+  },
+  {
+    "probe": "cable-fit-0",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "s: 1752240\nCGAL Polyhedrons in cache: 39\nCGAL cache size in bytes: 8070750\nTotal rendering time: 0:00:00.110\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:      156\n   Facets:        308\n"
+  },
+  {
+    "probe": "cable-fit-5",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "s: 1766064\nCGAL Polyhedrons in cache: 39\nCGAL cache size in bytes: 8090250\nTotal rendering time: 0:00:00.110\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:      154\n   Facets:        304\n"
+  },
+  {
+    "probe": "cable-fit-10",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "s: 1786800\nCGAL Polyhedrons in cache: 39\nCGAL cache size in bytes: 8122750\nTotal rendering time: 0:00:00.111\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:      152\n   Facets:        300\n"
+  },
+  {
+    "probe": "cable-fit-15",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": "s: 1800624\nCGAL Polyhedrons in cache: 39\nCGAL cache size in bytes: 8125750\nTotal rendering time: 0:00:00.109\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:       76\n   Facets:        148\n"
+  },
+  {
+    "probe": "cable-fit-20",
+    "exit": 1,
+    "empty": true,
+    "exists": false,
+    "log": "Current top level object is empty.\n"
+  },
+  {
+    "probe": "terminal-entry-0",
+    "exit": 1,
+    "empty": true,
+    "exists": false,
+    "log": "Current top level object is empty.\n"
+  },
+  {
+    "probe": "terminal-entry-20",
+    "exit": 1,
+    "empty": true,
+    "exists": false,
+    "log": "Current top level object is empty.\n"
+  },
+  {
+    "probe": "printed-fixed-0",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": ": 831232\nCGAL Polyhedrons in cache: 28\nCGAL cache size in bytes: 4282250\nTotal rendering time: 0:00:00.073\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -27\n   Vertices:      442\n   Facets:        772\n"
+  },
+  {
+    "probe": "printed-fixed-20",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": ": 831232\nCGAL Polyhedrons in cache: 28\nCGAL cache size in bytes: 4282250\nTotal rendering time: 0:00:00.073\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -27\n   Vertices:      442\n   Facets:        772\n"
+  },
+  {
+    "probe": "cover-removal-0",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": ": 2028144\nCGAL Polyhedrons in cache: 42\nCGAL cache size in bytes: 9775750\nTotal rendering time: 0:00:00.128\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -2\n   Vertices:      483\n   Facets:        954\n"
+  },
+  {
+    "probe": "cover-removal-20",
+    "exit": 0,
+    "empty": false,
+    "exists": true,
+    "log": ": 2028144\nCGAL Polyhedrons in cache: 42\nCGAL cache size in bytes: 9771250\nTotal rendering time: 0:00:00.128\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -2\n   Vertices:      483\n   Facets:        954\n"
+  }
+]

@@ -1,0 +1,801 @@
+{
+  "status": "PASS_LIMITED_SELECTION_INTEGRATION",
+  "created_utc": "2026-09-27T12:25:12.610986+00:00",
+  "scope": "Independent read-only old/new assembly-package comparison for input steel-distance-tube selection only. No CAD export, slicing, purchasing or production-file edits.",
+  "old_run": "output/current-assembly-package/runs/20260927T113921981888Z",
+  "new_run": "output/current-assembly-package/runs/20260927T122149439656Z",
+  "checks": {
+    "44_unique_BOM_rows": true,
+    "only_expected_BOM_fields_change": true,
+    "all_BOM_quantities_unchanged": true,
+    "all_BOM_installation_ids_unchanged": true,
+    "old_spacer_nominal_contract_preserved": true,
+    "new_spacer_selection_consistent": true,
+    "301_occurrences_structurally_identical": true,
+    "56_printed_picklist_structurally_identical": true,
+    "printed_CSV_byte_identical": true,
+    "original_output_cap_selection_identical": true,
+    "new_manifest_selections_equal_current_source": true,
+    "stock_and_live_acceptance_remain_false": true,
+    "no_manufacturing_or_physical_release": true,
+    "catalog_tolerance_matches_frozen_supplier_evidence": true,
+    "code_and_code_status_match_supplier_evidence": true,
+    "catalog_material_and_dimensions_match": true,
+    "rules_numerically_satisfied": true,
+    "rejected_part_matches_evidence": true,
+    "quantity_remains_one": true,
+    "all_inherited_open_items_unchanged": true,
+    "removed_baseline_instances_unchanged": true,
+    "retained_shared_nut_instances_unchanged": true,
+    "ignored_duplicate_retained_cable_records_unchanged": true,
+    "nonadditive_cable_children_unchanged": true,
+    "cable_procurement_options_not_additive_unchanged": true,
+    "108_bound_sources_exist_and_match": true,
+    "only_two_supplier_evidence_bindings_added": true,
+    "only_selection_and_generator_common_hashes_changed": true,
+    "all_4_local_README_links_resolve": true,
+    "hardware_CSV_only_one_row_two_columns_changed": true,
+    "counts_only_identity_count_changes": true,
+    "watched_files_stable_during_review": true,
+    "bound_sources_stable_at_end": true
+  },
+  "failed_checks": [],
+  "BOM_changed_fields": {
+    "cable/steel-distance-tube": [
+      "description",
+      "design_selection",
+      "nominal_contracts"
+    ]
+  },
+  "hardware_CSV_changed_rows": [
+    {
+      "row": 38,
+      "spec_id": "cable/steel-distance-tube",
+      "changed_columns": [
+        "description",
+        "nominal_contracts"
+      ]
+    }
+  ],
+  "counts_changed": {
+    "source_identities_verified": {
+      "old": 106,
+      "new": 108
+    }
+  },
+  "unchanged_payload_sha256": {
+    "installed_occurrences_canonical": "c65cf63dc1e5c43496252375963ce1d87262bdc8e316cacbef86fc89c7f18dfb",
+    "printed_picklist_canonical": "efbc0acee40e6c3ebb705ea0475537545a322adced96d304b9f2a79544a95777",
+    "print_picklist_CSV_bytes": "a0c632cd97e708da25d5abfc45bab01c5912007c72e426170963ac8ba043a001",
+    "output_cap_selection_canonical": "daaf36299689088872c81b305b880bb0d6f740457068ce8782adcb6db93975ce"
+  },
+  "source_sha256": {
+    "output/current-assembly-package/runs/20260927T113921981888Z/README.md": "67d15e12c5c99c434e302a55f5c701fde63601b4c5e5cb032adf7c3a18d2957c",
+    "output/current-assembly-package/runs/20260927T113921981888Z/hardware.csv": "bdf1aa5aa7ae81686261bc8adb04c2e9cb67e540b761e3db9c0661fa2e14ddf0",
+    "output/current-assembly-package/runs/20260927T113921981888Z/manifest.json": "d9dfc754305b2eb0498049d658518343d5f3de9fbb834cd2a539bb77480c9347",
+    "output/current-assembly-package/runs/20260927T113921981888Z/print-picklist.csv": "a0c632cd97e708da25d5abfc45bab01c5912007c72e426170963ac8ba043a001",
+    "output/current-assembly-package/runs/20260927T122149439656Z/README.md": "bb150a358f0e89148b4adf0c01f7420f77da54ba84272beb744cce776ce0eed3",
+    "output/current-assembly-package/runs/20260927T122149439656Z/hardware.csv": "9066da23d63a91600b3319f01569fc4b9cb7d7b9b71296809ce059304b2800f4",
+    "output/current-assembly-package/runs/20260927T122149439656Z/manifest.json": "32e91ba619931725dd209c4b580183b20cac6901bdb4691b250081b2f837a85c",
+    "output/current-assembly-package/runs/20260927T122149439656Z/print-picklist.csv": "a0c632cd97e708da25d5abfc45bab01c5912007c72e426170963ac8ba043a001",
+    "docs/current-assembly-selections.json": "fa6f39b0c4bbdb34e07d2a92f663a2cb57ed9ddc0976c6afbbf7ce6e319e59ca",
+    "scripts/build_current_assembly_package.py": "977aaf8bf53f09291708c499e9d90ec7dc7aa0ac867fca59efa726f22546d729",
+    "output/current-axis-supply-review/report.json": "96a404b4133a84f5438ad35855d930de46e580862fd624bc338c09cc44c38305",
+    "output/current-axis-supply-review/README.md": "f7dcbe933be6c1d396a5d3ec114dbc2d1c4344ba56a9c77a6245cda1748695c5"
+  },
+  "108_bindings": [
+    {
+      "path": "output/current-assembly-package/base-hardware/inventory.json",
+      "expected_sha256": "4595728f3584f84242e5f56cf57828b5b3a4707f6021f09785dcf10258e3f535",
+      "actual_sha256": "4595728f3584f84242e5f56cf57828b5b3a4707f6021f09785dcf10258e3f535",
+      "match": true
+    },
+    {
+      "path": "output/current-assembly-package/cable-hardware/hardware.json",
+      "expected_sha256": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+      "actual_sha256": "602ac797b02ec6e1a29d2d0dec9d96f65437c621d23d88f58c6facdcd24310c3",
+      "match": true
+    },
+    {
+      "path": "docs/cable-assembly-inventory.json",
+      "expected_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+      "actual_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+      "match": true
+    },
+    {
+      "path": "output/current-manufacturing/manifest.json",
+      "expected_sha256": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+      "actual_sha256": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+      "match": true
+    },
+    {
+      "path": "docs/current-assembly-selections.json",
+      "expected_sha256": "fa6f39b0c4bbdb34e07d2a92f663a2cb57ed9ddc0976c6afbbf7ce6e319e59ca",
+      "actual_sha256": "fa6f39b0c4bbdb34e07d2a92f663a2cb57ed9ddc0976c6afbbf7ce6e319e59ca",
+      "match": true
+    },
+    {
+      "path": "scripts/build_current_assembly_package.py",
+      "expected_sha256": "977aaf8bf53f09291708c499e9d90ec7dc7aa0ac867fca59efa726f22546d729",
+      "actual_sha256": "977aaf8bf53f09291708c499e9d90ec7dc7aa0ac867fca59efa726f22546d729",
+      "match": true
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "expected_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+      "actual_sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "expected_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+      "actual_sha256": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-cam-guide-revision.scad",
+      "expected_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+      "actual_sha256": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-complete-hardware.scad",
+      "expected_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+      "actual_sha256": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-frame-y-guide.scad",
+      "expected_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+      "actual_sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "expected_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+      "actual_sha256": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-hardware-clearance.scad",
+      "expected_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+      "actual_sha256": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-integrated-candidate.scad",
+      "expected_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+      "actual_sha256": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "expected_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+      "actual_sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-return-spring.scad",
+      "expected_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+      "actual_sha256": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-review-parts.scad",
+      "expected_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+      "actual_sha256": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "expected_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+      "actual_sha256": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-support-harness.scad",
+      "expected_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+      "actual_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+      "match": true
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "expected_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+      "actual_sha256": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+      "match": true
+    },
+    {
+      "path": "cad/inlet-retention-final.scad",
+      "expected_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+      "actual_sha256": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+      "match": true
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "expected_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+      "actual_sha256": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+      "match": true
+    },
+    {
+      "path": "cad/outlet-retention.scad",
+      "expected_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+      "actual_sha256": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+      "match": true
+    },
+    {
+      "path": "cad/parameters.scad",
+      "expected_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+      "actual_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+      "match": true
+    },
+    {
+      "path": "cad/spin-complete-hardware.scad",
+      "expected_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+      "actual_sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+      "match": true
+    },
+    {
+      "path": "cad/spin-head.scad",
+      "expected_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+      "actual_sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+      "match": true
+    },
+    {
+      "path": "cad/spin-parameters.scad",
+      "expected_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+      "actual_sha256": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+      "match": true
+    },
+    {
+      "path": "docs/final-feeder-hardware.md",
+      "expected_sha256": "4076334a1d0d78ee5c56e45a511d0a3f801452a5805b24d031677824b14c3f28",
+      "actual_sha256": "4076334a1d0d78ee5c56e45a511d0a3f801452a5805b24d031677824b14c3f28",
+      "match": true
+    },
+    {
+      "path": "docs/spin-complete-hardware.md",
+      "expected_sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "actual_sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "match": true
+    },
+    {
+      "path": "output/current-assembly-package/base-hardware/review.py",
+      "expected_sha256": "6310b26860d6da53b85f9cc1d19ea1338be11fa96a3434a94637d7a42545ae01",
+      "actual_sha256": "6310b26860d6da53b85f9cc1d19ea1338be11fa96a3434a94637d7a42545ae01",
+      "match": true
+    },
+    {
+      "path": "output/manufacturing/feeder-hardware-bom.json",
+      "expected_sha256": "6120fc7b87a9eb46e81daac2f2f29026b5e8b449d20c7adb7ec5b63e481f9b6f",
+      "actual_sha256": "6120fc7b87a9eb46e81daac2f2f29026b5e8b449d20c7adb7ec5b63e481f9b6f",
+      "match": true
+    },
+    {
+      "path": "output/current-assembly-package/cable-hardware/extract.py",
+      "expected_sha256": "9ca1efd8fb0d60a08d52a373c23ed75225ed10239442b48c1ad39c1c0033646d",
+      "actual_sha256": "9ca1efd8fb0d60a08d52a373c23ed75225ed10239442b48c1ad39c1c0033646d",
+      "match": true
+    },
+    {
+      "path": "cad/cable-trigger-input.scad",
+      "expected_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "actual_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "match": true
+    },
+    {
+      "path": "cad/cable-output-interface.scad",
+      "expected_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+      "actual_sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+      "match": true
+    },
+    {
+      "path": "cad/cable-route-retention.scad",
+      "expected_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+      "actual_sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+      "match": true
+    },
+    {
+      "path": "cad/cable-trigger-system.scad",
+      "expected_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+      "actual_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+      "match": true
+    },
+    {
+      "path": "cad/cable-housing-route.scad",
+      "expected_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "actual_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "match": true
+    },
+    {
+      "path": "cad/cable-scene-export.scad",
+      "expected_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "actual_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "match": true
+    },
+    {
+      "path": "docs/cable-hardware-evidence.md",
+      "expected_sha256": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+      "actual_sha256": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+      "match": true
+    },
+    {
+      "path": "docs/cable-washer-retention-review.md",
+      "expected_sha256": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4",
+      "actual_sha256": "c7c469b8f1488abfb53e289e5d995aec3af66db8edb5d5bf650fff3bb0e3f2d4",
+      "match": true
+    },
+    {
+      "path": "docs/cable-trigger-input.md",
+      "expected_sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "actual_sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-14-drawing.png",
+      "expected_sha256": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+      "actual_sha256": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-14-assets.json",
+      "expected_sha256": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+      "actual_sha256": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-25-drawing.png",
+      "expected_sha256": "7d88942d282c2a2665a4c2ce515afb2df5f346a7ee71ffcb9f5b255e53bc3262",
+      "actual_sha256": "7d88942d282c2a2665a4c2ce515afb2df5f346a7ee71ffcb9f5b255e53bc3262",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-25-assets.json",
+      "expected_sha256": "0cb4fdb6c543298892020b8c6df4111e2f3fcd017e052f455ba36566805160f6",
+      "actual_sha256": "0cb4fdb6c543298892020b8c6df4111e2f3fcd017e052f455ba36566805160f6",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-30-drawing.png",
+      "expected_sha256": "039d5119543f7509d3ba447d2f0d7304566c2e07eec762cbf5a97285864c2c9d",
+      "actual_sha256": "039d5119543f7509d3ba447d2f0d7304566c2e07eec762cbf5a97285864c2c9d",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-30-assets.json",
+      "expected_sha256": "f2dbd82a7926d0c244ddb18426458ac742843589e1b299a795955fbd3a4bbcea",
+      "actual_sha256": "f2dbd82a7926d0c244ddb18426458ac742843589e1b299a795955fbd3a4bbcea",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-35-drawing.png",
+      "expected_sha256": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+      "actual_sha256": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+      "match": true
+    },
+    {
+      "path": "output/cable-hardware-evidence/03096-35-assets.json",
+      "expected_sha256": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+      "actual_sha256": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+      "match": true
+    },
+    {
+      "path": "output/cable-washer-retention-review/brighton-best-din125-flat-washers.pdf",
+      "expected_sha256": "dda64e44fe80936a9a2768049c9a14f6bddc7488538bffc6f90ea0e02655d581",
+      "actual_sha256": "dda64e44fe80936a9a2768049c9a14f6bddc7488538bffc6f90ea0e02655d581",
+      "match": true
+    },
+    {
+      "path": "output/current-axis-supply-review/report.json",
+      "expected_sha256": "96a404b4133a84f5438ad35855d930de46e580862fd624bc338c09cc44c38305",
+      "actual_sha256": "96a404b4133a84f5438ad35855d930de46e580862fd624bc338c09cc44c38305",
+      "match": true
+    },
+    {
+      "path": "output/current-axis-supply-review/README.md",
+      "expected_sha256": "f7dcbe933be6c1d396a5d3ec114dbc2d1c4344ba56a9c77a6245cda1748695c5",
+      "actual_sha256": "f7dcbe933be6c1d396a5d3ec114dbc2d1c4344ba56a9c77a6245cda1748695c5",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__positive-half.stl",
+      "expected_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "actual_sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__negative-half.stl",
+      "expected_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+      "actual_sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl",
+      "expected_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+      "actual_sha256": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__liner.stl",
+      "expected_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+      "actual_sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+      "expected_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+      "actual_sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+      "expected_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+      "actual_sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-gib.stl",
+      "expected_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+      "actual_sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__x-cover.stl",
+      "expected_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+      "actual_sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame.stl",
+      "expected_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+      "actual_sha256": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__fixed-spacer.stl",
+      "expected_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+      "actual_sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__moving-spacer.stl",
+      "expected_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+      "actual_sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-right.stl",
+      "expected_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+      "actual_sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-right.stl",
+      "expected_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+      "actual_sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+      "expected_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+      "actual_sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+      "expected_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+      "actual_sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-front.stl",
+      "expected_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+      "actual_sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+      "expected_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+      "actual_sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl",
+      "expected_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+      "actual_sha256": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-front.stl",
+      "expected_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+      "actual_sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-rear.stl",
+      "expected_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+      "actual_sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+      "expected_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+      "actual_sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-rear.stl",
+      "expected_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+      "actual_sha256": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-rear.stl",
+      "expected_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+      "actual_sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__capture-left.stl",
+      "expected_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+      "actual_sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-left.stl",
+      "expected_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+      "actual_sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+      "expected_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+      "actual_sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+      "expected_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+      "actual_sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-front.stl",
+      "expected_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+      "actual_sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+      "expected_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+      "actual_sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-front.stl",
+      "expected_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+      "actual_sha256": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-front.stl",
+      "expected_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+      "actual_sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-rear.stl",
+      "expected_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+      "actual_sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+      "expected_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+      "actual_sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-rear.stl",
+      "expected_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+      "actual_sha256": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-rear.stl",
+      "expected_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+      "actual_sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+      "expected_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+      "actual_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+      "expected_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+      "actual_sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+      "expected_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+      "actual_sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-body.stl",
+      "expected_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+      "actual_sha256": "8049f1d314faad285dc0c27f50ad011cebc2016e9afb4398540cc8c9d8213306",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-lever.stl",
+      "expected_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+      "actual_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-terminal-cap.stl",
+      "expected_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+      "actual_sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-cover.stl",
+      "expected_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+      "actual_sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-cap.stl",
+      "expected_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+      "actual_sha256": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-base.stl",
+      "expected_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+      "actual_sha256": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-cap.stl",
+      "expected_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+      "actual_sha256": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-lower.stl",
+      "expected_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+      "actual_sha256": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__body.stl",
+      "expected_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+      "actual_sha256": "4532cf5c0c64c15b654f6b81d53fb9af0cf015f901a2c25996766064bb5ebe19",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__carriage.stl",
+      "expected_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+      "actual_sha256": "7d0143014a28d88c8ddfc62ac4a1a98a14697663ee03ea371d69a3eac1334be8",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad.stl",
+      "expected_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+      "actual_sha256": "999df2424fa213b8748dc5d6f612e3190d87d513f8224e9a091d04bd10519466",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__pad-keeper.stl",
+      "expected_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+      "actual_sha256": "d1410db2a2142edbbc69235c8a6b3a3c2687c7bfa33ae28150cc63718c77db8c",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__opposite-guide.stl",
+      "expected_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+      "actual_sha256": "b19dd6474314bef952de4367fb21f16a0072a73f78cbc51c62c56c908d44dc46",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__cover.stl",
+      "expected_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+      "actual_sha256": "ca648e9928ffb71460224704314593f2df2847ab145f1750402b4b384d6b2700",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-cage.stl",
+      "expected_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+      "actual_sha256": "b625b53de5690726502c98c393aadf0a597b17f2efee9c77ef330d84a08beb57",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__spring-seat.stl",
+      "expected_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+      "actual_sha256": "d14e005b12a4ee0f18766c07d014c845e3a0b72bcd23bae8eef7614681a1b8cd",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__pull-cap.stl",
+      "expected_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+      "actual_sha256": "8ddc52121f9f12398409d34834855264645db62a5b1420218d5b01eb3fce7bab",
+      "match": true
+    },
+    {
+      "path": "output/cable-scene-export/20260927T091627124663Z/spin__hold-fork.stl",
+      "expected_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+      "actual_sha256": "49f116e461db57905a68d625931f25a322076b8fa7e4f7864cdaad09c39fd9f1",
+      "match": true
+    }
+  ],
+  "README_links": [
+    {
+      "target": "https://www.accu.co.uk/metric-cap-head-screws/3822-SSCF-M3-16-A2",
+      "kind": "external",
+      "syntax_https": true,
+      "HTTP_refetched": false,
+      "note": "Unchanged output-cap official URL; no new HTTP availability claim."
+    },
+    {
+      "target": "../../../current-axis-supply-review/README.md",
+      "kind": "local",
+      "resolved_path": "output/current-axis-supply-review/README.md",
+      "exists": true
+    },
+    {
+      "target": "manifest.json",
+      "kind": "local",
+      "resolved_path": "output/current-assembly-package/runs/20260927T122149439656Z/manifest.json",
+      "exists": true
+    },
+    {
+      "target": "hardware.csv",
+      "kind": "local",
+      "resolved_path": "output/current-assembly-package/runs/20260927T122149439656Z/hardware.csv",
+      "exists": true
+    },
+    {
+      "target": "print-picklist.csv",
+      "kind": "local",
+      "resolved_path": "output/current-assembly-package/runs/20260927T122149439656Z/print-picklist.csv",
+      "exists": true
+    }
+  ],
+  "supplier_claim_review": {
+    "conclusion": "Selection faithfully adopts the indexed SPMSS dimensional candidate and excludes Accu; it does not claim live SKU confirmation or full axis acceptance.",
+    "dimensional_bounds_mm": {
+      "OD_mm": [
+        7.9,
+        8.0
+      ],
+      "ID_mm": [
+        4.3,
+        4.4
+      ],
+      "length_mm": [
+        14.98,
+        15.02
+      ]
+    },
+    "evidence_location": "Official SPMSS comparison table, current-product first column: OD0/-0.1, ID+0.1/0, L+/-0.02; frozen supplier review preserves exact URL.",
+    "rejected_Accu_max_OD_mm": 8.5,
+    "actual_live_configuration_confirmed": false,
+    "whole_axis_accepted": false,
+    "historical_source_note": "The frozen supplier report intentionally records pre-adoption selections hash. Its own old selection hash is historical; the new package binds the unchanged report bytes and the current selections separately. The package open_items_note explicitly retains this boundary."
+  },
+  "remaining_limits": [
+    "This verifies only assembly-data integration, not supplier stock, actual delivered dimensions, bearing friction, axis load/fit or physical operation.",
+    "External README URL syntax and unchanged identity checked; no new HTTP availability test."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "purchased": false,
+  "production_files_modified": false,
+  "reviewer_correction": "The first review used a mistaken expected physical CSV line 32. Actual unchanged ordering places this item on physical CSV line 38. Rechecked by spec_id and compared every column; only this item description/nominal_contracts differ. This was a reviewer assertion error, not a package change.",
+  "final_identity_check_utc": "2026-09-27T12:25:44.959716+00:00"
+}

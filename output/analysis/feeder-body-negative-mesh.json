@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/candidate-parts/feeder-body-negative.stl",
+  "format": "ascii",
+  "units": "unknown",
+  "triangleCount": 9206,
+  "uniqueVertexCount": 4567,
+  "bounds": {
+    "min": [
+      -35.5,
+      -45.0,
+      -126.0
+    ],
+    "max": [
+      0.0,
+      45.0,
+      69.0
+    ],
+    "size": [
+      35.5,
+      90.0,
+      195.0
+    ]
+  },
+  "surfaceArea": 66048.28338500297,
+  "signedVolume": 85696.39127940603,
+  "volume": 85696.39127940603,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

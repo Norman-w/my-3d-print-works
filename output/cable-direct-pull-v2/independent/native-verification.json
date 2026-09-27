@@ -1,0 +1,30 @@
+{
+  "source": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad",
+  "source_sha256_before": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "source_sha256_after": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "command": [
+    "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+    "--hardwarnings",
+    "-o",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/native-assertions.csg",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/native-assertions.scad"
+  ],
+  "returncode": 0,
+  "parameters_source_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+  "u_grid_mm": [
+    0,
+    22,
+    0.05
+  ],
+  "delta_samples_mm": [
+    -2,
+    0,
+    2
+  ],
+  "angle_and_takeup_assertion_tolerance": 1e-08,
+  "passed": true,
+  "review_script_sha256": "7576cdd5a9f3bcf7278d3af9df52e352d0af35f30c1096a99bb1127b4a796d3b",
+  "wrapper_sha256": "d309ccf69c463568fe545d2a20a6b17d84379acd1c7bec473bdba1955ac37b08",
+  "geometry_exported": false,
+  "scope": "Source functions and parameter declarations only; CSG has no geometry."
+}

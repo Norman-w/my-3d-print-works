@@ -1,0 +1,25 @@
+{
+  "status": "NO_MEASUREMENTS",
+  "configuration_bound": false,
+  "record_count": 0,
+  "header_matches_schema": true,
+  "duplicate_record_ids": [],
+  "results": [],
+  "input_identity": {
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/supplier-bounds/paired-return.csv": "24830e922e235ff513f423cf94fed543e39c1bd83dbef572f8e787300be8c89d",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/measurement-assessment/configuration-template.json": "1a0f6cc07c08f4593917515d801a16992c100ed85df7e529fc0e8c42d16001ec",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/measurement-assessment/assess.py": "f98c5fc8d84facdbd43edb10be7f31252e39c577b0ddf1ab71219c5290e8cc32",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-return-budget/supplier-bounds/measurement-schema.json": "cada2594a0b046e8822f306a0832a184740cb4f2774bbb75d4b43428a9f51d6f"
+  },
+  "overall_return_verified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "unproven": [
+    "Raw trace interpretation and calibration error bounds",
+    "Entire continuous stroke including startup and reversals",
+    "Every intended orientation, ball/air load and installed route",
+    "Cable tautness through actual release, speed, stop impact and single-ball function",
+    "Assembly geometry, strength, loosening and durability"
+  ],
+  "note": "Measured whole-chain resistance already includes participating gravity and friction; do not add modeled gravity or guessed efficiency losses again."
+}

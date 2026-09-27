@@ -1,0 +1,26 @@
+[
+  {
+    "part": "cable-input-lever",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155324076782Z/cable-input-lever",
+    "status": "SLICE_FAILED_OR_STALE",
+    "invocation_sha256": "989e9addd4ac4224e1301c177b358bec59f5bf3635b44d9275c7d262f18f7058",
+    "warnings": [],
+    "error": null
+  },
+  {
+    "part": "cable-input-body",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155324076782Z/cable-input-body",
+    "status": "SLICE_FAILED_OR_STALE",
+    "invocation_sha256": "381a4ed823fe7484513eea3e805783fc0ac3fdf7854a5b296f6b657c2d01ca36",
+    "warnings": [],
+    "error": null
+  },
+  {
+    "part": "cable-input-cover",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155324076782Z/cable-input-cover",
+    "status": "SLICE_FAILED_OR_STALE",
+    "invocation_sha256": "2392d93cc8f20b30c3ffcaec890943a3dc25daa84a19672d66349d9b95bc3f96",
+    "warnings": [],
+    "error": null
+  }
+]

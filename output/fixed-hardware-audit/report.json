@@ -1,0 +1,2793 @@
+{
+  "status": "FAIL_OR_STALE",
+  "source_sha256": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/fixed_hardware_audit.py": "9f09b226eea10b508bbbb56cbddce882842fbc853b96c86da6a80f7f9d971736",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "746449c2ff188244a8c9bcb0029190aa4193a143ba654b321582ba1571e76950",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c"
+  },
+  "sources_stable": true,
+  "baseline_inventory_sha256": "3dc13c3a25f49bf382a327bb96c19d43d1dcbb2bf903ff719b6ffbeef8294f52",
+  "actual_print_stl_sha256": {
+    "output/launcher-final/positive-half.stl": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+    "output/launcher-final/negative-half.stl": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+    "output/launcher-final/beam-grip.stl": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9",
+    "output/launcher-final/liner.stl": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+    "output/launcher-final/right-support.stl": "3da12da9ed89f7bfe8d538348a0134f03dedfb025e79deb4d84110bf7b1a13ef",
+    "output/launcher-final/left-support.stl": "2f417fd36eddfc21967ba3e23ae8c36cd2aa08c33d9990aa296650a43f4390bc",
+    "output/launcher-final/x-gib.stl": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+    "output/launcher-final/x-cover.stl": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+    "output/launcher-final/frame.stl": "adb66bbdd13e8ab3761072d98e67998a3f0b7989bef9cf73165146171b63d147",
+    "output/launcher-final/fixed-spacer.stl": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+    "output/launcher-final/moving-spacer.stl": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+    "output/launcher-final/capture-right.stl": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+    "output/launcher-final/pipe-clamp-right.stl": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+    "output/launcher-final/y-cap-right.stl": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9",
+    "output/launcher-final/y-gib-right-front.stl": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+    "output/launcher-final/y-keeper-right-front.stl": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a",
+    "output/launcher-final/finger-right-front.stl": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9",
+    "output/launcher-final/pin-block-right-front.stl": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+    "output/launcher-final/y-gib-right-rear.stl": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+    "output/launcher-final/y-keeper-right-rear.stl": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f",
+    "output/launcher-final/finger-right-rear.stl": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43",
+    "output/launcher-final/pin-block-right-rear.stl": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+    "output/launcher-final/capture-left.stl": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+    "output/launcher-final/pipe-clamp-left.stl": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+    "output/launcher-final/y-cap-left.stl": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16",
+    "output/launcher-final/y-gib-left-front.stl": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+    "output/launcher-final/y-keeper-left-front.stl": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5",
+    "output/launcher-final/finger-left-front.stl": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3",
+    "output/launcher-final/pin-block-left-front.stl": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+    "output/launcher-final/y-gib-left-rear.stl": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+    "output/launcher-final/y-keeper-left-rear.stl": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010",
+    "output/launcher-final/finger-left-rear.stl": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d",
+    "output/launcher-final/pin-block-left-rear.stl": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+  },
+  "preserved_root_counterexample": {
+    "output/fixed-hardware-audit/original-use-only-baseline.scad": "7dae79414291bb3012633865ebc20084319f4cbbb361374cb5b8e261230b58d2",
+    "output/fixed-hardware-audit/original-use-only-baseline.stl": "024650c43d86c81e85417ddee575b0a581e11de28bda07c31784bf49a4303f1f",
+    "output/fixed-hardware-audit/original-use-only-baseline.json": "53f5007523efda8f52ba31d711582ea43cc501e87ede93bb8036081800578a1e"
+  },
+  "exports": [
+    {
+      "id": "keeper-front",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/keeper-front.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-front.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 1738.2735554444976,
+      "triangle_count": 556,
+      "components": [
+        {
+          "triangles": 556,
+          "volume_mm3": 1738.2735554444976,
+          "planar_error_mm": 4.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              60.0
+            ],
+            [
+              -17.5,
+              -11.049999237060547
+            ],
+            [
+              -14.0,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "6424c0e8c60ac068331dedf8a1f8f9b1df36df42022b58d553518ec2f9f9178c",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 556,
+        "uniqueVertexCount": 274,
+        "bounds": {
+          "min": [
+            43.79999923706055,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            60.0,
+            -11.049999237060547,
+            14.0
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1463.7795477635632,
+        "signedVolume": 1738.2735554444935,
+        "volume": 1738.2735554444935,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "exact_zero_area_faces": [],
+        "non_ring_vertex_links": []
+      },
+      "component_count": 1,
+      "boolean_reimport": {
+        "id": "keeper-front-reimport",
+        "expected": "solid",
+        "passed": true,
+        "file": "output/fixed-hardware-audit/keeper-front-reimport.stl",
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-front-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-front-reimport.scad"
+        ],
+        "named_contact_planes": [],
+        "named_contact_only": false,
+        "warnings": [],
+        "solid_or_unclassified": true,
+        "volume_mm3": 1738.2735554444976,
+        "triangle_count": 556,
+        "components": [
+          {
+            "triangles": 556,
+            "volume_mm3": 1738.2735554444976,
+            "planar_error_mm": 4.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                43.79999923706055,
+                60.0
+              ],
+              [
+                -17.5,
+                -11.049999237060547
+              ],
+              [
+                -14.0,
+                14.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true,
+        "sha256": "6424c0e8c60ac068331dedf8a1f8f9b1df36df42022b58d553518ec2f9f9178c"
+      }
+    },
+    {
+      "id": "keeper-rear",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/keeper-rear.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-rear.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 1749.0661804217752,
+      "triangle_count": 512,
+      "components": [
+        {
+          "triangles": 512,
+          "volume_mm3": 1749.0661804217752,
+          "planar_error_mm": 4.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              60.0
+            ],
+            [
+              -17.5,
+              -11.049999237060547
+            ],
+            [
+              -14.0,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "f57a071d7e45c24cc845313774e3fc0e7be3bbd38d1d7ea9767b638832717378",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 512,
+        "uniqueVertexCount": 252,
+        "bounds": {
+          "min": [
+            43.79999923706055,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            60.0,
+            -11.049999237060547,
+            14.0
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1467.759821708286,
+        "signedVolume": 1749.066180421771,
+        "volume": 1749.066180421771,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "exact_zero_area_faces": [],
+        "non_ring_vertex_links": []
+      },
+      "component_count": 1,
+      "boolean_reimport": {
+        "id": "keeper-rear-reimport",
+        "expected": "solid",
+        "passed": true,
+        "file": "output/fixed-hardware-audit/keeper-rear-reimport.stl",
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-rear-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/keeper-rear-reimport.scad"
+        ],
+        "named_contact_planes": [],
+        "named_contact_only": false,
+        "warnings": [],
+        "solid_or_unclassified": true,
+        "volume_mm3": 1749.0661804217752,
+        "triangle_count": 512,
+        "components": [
+          {
+            "triangles": 512,
+            "volume_mm3": 1749.0661804217752,
+            "planar_error_mm": 4.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                43.79999923706055,
+                60.0
+              ],
+              [
+                -17.5,
+                -11.049999237060547
+              ],
+              [
+                -14.0,
+                14.0
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true,
+        "sha256": "f57a071d7e45c24cc845313774e3fc0e7be3bbd38d1d7ea9767b638832717378"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "front-old-mounted",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/front-old-mounted.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-old-mounted.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-old-mounted.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 4.695064430134932,
+      "triangle_count": 52,
+      "components": [
+        {
+          "triangles": 52,
+          "volume_mm3": 4.695064430134932,
+          "planar_error_mm": 0.7992458343505859,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.864591598510742,
+              -13.5
+            ],
+            [
+              12.5,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "e224fb354bff970af948d4bb542150ef16f3dc290a72027e2a974b48e1493cad"
+    },
+    {
+      "id": "front-new-mounted",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-new-mounted.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-new-mounted.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "front-old-removal",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/front-old-removal.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-old-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-old-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 4.734461107008298,
+      "triangle_count": 52,
+      "components": [
+        {
+          "triangles": 52,
+          "volume_mm3": 4.734461107008298,
+          "planar_error_mm": 0.75,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.864591598510742,
+              -13.5
+            ],
+            [
+              12.5,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "6b3aaadf5ed2c9773d1f061cbcc0bdee1875f8e823bf3aa574f7e5fb1be81601"
+    },
+    {
+      "id": "front-new-removal",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-new-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-new-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "front-driver",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-driver.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-driver.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "front-wrong-screw-removal",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/front-wrong-screw-removal.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-wrong-screw-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-wrong-screw-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 42.59585028331978,
+      "triangle_count": 64,
+      "components": [
+        {
+          "triangles": 64,
+          "volume_mm3": 42.59585028331978,
+          "planar_error_mm": 1.450754165649414,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              47.29999923706055,
+              60.0
+            ],
+            [
+              -16.864591598510742,
+              -13.5
+            ],
+            [
+              12.5,
+              14.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "2164945c50906080f3c9758842122f6d406ba5f354f87b980f336e724c00cc99"
+    },
+    {
+      "id": "front-protected-seats",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-protected-seats.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-protected-seats.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "front-own-hardware",
+      "expected": "empty",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/front-own-hardware.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-own-hardware.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/front-own-hardware.scad"
+      ],
+      "named_contact_planes": [
+        [
+          1,
+          -17.5
+        ]
+      ],
+      "named_contact_only": true,
+      "warnings": [
+        "EXPORT-WARNING: Exported object may not be a valid 2-manifold and may need repair",
+        "WARNING: Object may not be a valid 2-manifold and may need repair!"
+      ],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0.0,
+      "triangle_count": 384,
+      "components": [
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              -3.5,
+              3.5
+            ]
+          ]
+        },
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              6.5,
+              13.5
+            ]
+          ]
+        },
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              -13.5,
+              -6.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "sha256": "c8ecd9ef2063208caefa08bf51e6e86a8765919f0fa6f5bd23a73e11da836efa"
+    },
+    {
+      "id": "rear-old-mounted",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/rear-old-mounted.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-old-mounted.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-old-mounted.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 1.315217011286547,
+      "triangle_count": 44,
+      "components": [
+        {
+          "triangles": 44,
+          "volume_mm3": 1.315217011286547,
+          "planar_error_mm": 0.7992458343505859,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.444257736206055,
+              -13.5
+            ],
+            [
+              -14.0,
+              -13.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "ed7bf3e9bbf96b29fd211317727c5deaeea7d7e51df9e5705f0a1c23c1be1de3"
+    },
+    {
+      "id": "rear-new-mounted",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-new-mounted.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-new-mounted.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "rear-old-removal",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/rear-old-removal.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-old-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-old-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 1.354613688159913,
+      "triangle_count": 44,
+      "components": [
+        {
+          "triangles": 44,
+          "volume_mm3": 1.354613688159913,
+          "planar_error_mm": 0.75,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.444257736206055,
+              -13.5
+            ],
+            [
+              -14.0,
+              -13.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "135c384916e407a0b18be3fdba24b9428536930dc81749d9aca2e731cd4df5bc"
+    },
+    {
+      "id": "rear-new-removal",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-new-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-new-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "rear-driver",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-driver.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-driver.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "rear-wrong-screw-removal",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/rear-wrong-screw-removal.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-wrong-screw-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-wrong-screw-removal.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 27.21739664817606,
+      "triangle_count": 24,
+      "components": [
+        {
+          "triangles": 24,
+          "volume_mm3": 27.21739664817606,
+          "planar_error_mm": 1.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              47.29999923706055,
+              60.0
+            ],
+            [
+              -16.444257736206055,
+              -13.5
+            ],
+            [
+              -14.0,
+              -13.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "133fab2e32f351871506dc22e543e006f71b02480891b073db3c66810cb838e1"
+    },
+    {
+      "id": "rear-protected-seats",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-protected-seats.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-protected-seats.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "rear-own-hardware",
+      "expected": "empty",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/rear-own-hardware.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-own-hardware.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/rear-own-hardware.scad"
+      ],
+      "named_contact_planes": [
+        [
+          1,
+          -17.5
+        ]
+      ],
+      "named_contact_only": true,
+      "warnings": [
+        "EXPORT-WARNING: Exported object may not be a valid 2-manifold and may need repair",
+        "WARNING: Object may not be a valid 2-manifold and may need repair!"
+      ],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0.0,
+      "triangle_count": 384,
+      "components": [
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              -3.5,
+              3.5
+            ]
+          ]
+        },
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              6.5,
+              13.5
+            ]
+          ]
+        },
+        {
+          "triangles": 128,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              47.5,
+              54.5
+            ],
+            [
+              -17.5,
+              -17.5
+            ],
+            [
+              -13.5,
+              -6.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "sha256": "c8ecd9ef2063208caefa08bf51e6e86a8765919f0fa6f5bd23a73e11da836efa"
+    },
+    {
+      "id": "source-minus-reference",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/source-minus-reference.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/source-minus-reference.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "reference-minus-source",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/reference-minus-source.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/reference-minus-source.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "boss-shafts-default-facets",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/boss-shafts-default-facets.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/boss-shafts-default-facets.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/boss-shafts-default-facets.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 4.131306042019077,
+      "triangle_count": 1344,
+      "components": [
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177648791914471,
+          "planar_error_mm": 0.026955902328785964,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -70.86505126953125,
+              -70.58609771728516
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177865582824924,
+          "planar_error_mm": 0.02695780968811851,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -73.41390228271484,
+              -73.13494873046875
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177865582825079,
+          "planar_error_mm": 0.026957809688118534,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -70.86505126953125,
+              -70.58609771728516
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.0815282600596751,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -38.52775573730469,
+              -38.5
+            ],
+            [
+              -72.28545379638672,
+              -71.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151933092002302,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -41.5,
+              -41.47224426269531
+            ],
+            [
+              -72.28545379638672,
+              -71.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.081776487919143,
+          "planar_error_mm": 0.026955902328785978,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -73.41390228271484,
+              -73.13494873046875
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08175920192265178,
+          "planar_error_mm": 0.026952598710223714,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -44.865047454833984,
+              -44.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176136989141602,
+          "planar_error_mm": 0.02695450606955626,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -47.41390609741211,
+              -47.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176136989141643,
+          "planar_error_mm": 0.026954506069556284,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -44.865047454833984,
+              -44.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152826005967155,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -38.52775573730469,
+              -38.5
+            ],
+            [
+              -46.28545379638672,
+              -45.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151933091880266,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -41.5,
+              -41.47224426269531
+            ],
+            [
+              -46.28545379638672,
+              -45.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176553101681831,
+          "planar_error_mm": 0.02695454793276824,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -47.413902282714844,
+              -47.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799606,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -8.865047454833984,
+              -8.586094856262207
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817644906012226,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -11.413905143737793,
+              -11.134950637817383
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176449060122433,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              -8.8650484085083,
+              -8.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152823182420306,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -38.52775573730469,
+              -38.5
+            ],
+            [
+              -10.285453796386719,
+              -9.714545249938965
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151930266805069,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -41.5,
+              -41.47224426269531
+            ],
+            [
+              -10.285453796386719,
+              -9.714545249938965
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799431,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              -11.413904190063477,
+              -11.1349515914917
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176390490599476,
+          "planar_error_mm": 0.026952598710223714,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176449060122552,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              14.58609390258789,
+              14.8650484085083
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176607287476452,
+          "planar_error_mm": 0.026954506069556284,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -39.50446701049805,
+              -39.02130889892578
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152834035113808,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -38.52775573730469,
+              -38.5
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151941119498594,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -41.5,
+              -41.47224426269531
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799608,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              -40.97869110107422,
+              -40.49553298950195
+            ],
+            [
+              14.586094856262207,
+              14.865047454833984
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177648791914278,
+          "planar_error_mm": 0.026955902328785964,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -73.41390228271484,
+              -73.13494873046875
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817786558282525,
+          "planar_error_mm": 0.02695780968811851,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -70.86505126953125,
+              -70.58609771728516
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177648791914538,
+          "planar_error_mm": 0.026955902328785978,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -70.86505126953125,
+              -70.58609771728516
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08177865582825568,
+          "planar_error_mm": 0.026957809688118534,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -73.41390228271484,
+              -73.13494873046875
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.0815282600596751,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              38.5,
+              38.52775573730469
+            ],
+            [
+              -72.28545379638672,
+              -71.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151933092002273,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              41.47224426269531,
+              41.5
+            ],
+            [
+              -72.28545379638672,
+              -71.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817655310168141,
+          "planar_error_mm": 0.026954547932768216,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -47.413902282714844,
+              -47.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176136989141887,
+          "planar_error_mm": 0.02695450606955626,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -44.865047454833984,
+              -44.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08175920192264595,
+          "planar_error_mm": 0.02695259871022373,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -44.865047454833984,
+              -44.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176136989140843,
+          "planar_error_mm": 0.026954506069556284,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -47.41390609741211,
+              -47.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152826005967162,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              38.5,
+              38.52775573730469
+            ],
+            [
+              -46.28545379638672,
+              -45.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151933091880237,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              41.47224426269531,
+              41.5
+            ],
+            [
+              -46.28545379638672,
+              -45.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799497,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -11.413904190063477,
+              -11.1349515914917
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817644906012236,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -8.8650484085083,
+              -8.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799642,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              -8.865047454833984,
+              -8.586094856262207
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817644906012218,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              -11.413905143737793,
+              -11.134950637817383
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152823182420328,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              38.5,
+              38.52775573730469
+            ],
+            [
+              -10.285453796386719,
+              -9.714545249938965
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151930266805148,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              41.47224426269531,
+              41.5
+            ],
+            [
+              -10.285453796386719,
+              -9.714545249938965
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176212168799635,
+          "planar_error_mm": 0.026952260109352505,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              14.586094856262207,
+              14.865047454833984
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176607287476394,
+          "planar_error_mm": 0.02695450606955626,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.08176390490599898,
+          "planar_error_mm": 0.02695259871022373,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              40.49553298950195,
+              40.97869110107422
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.0817644906012261,
+          "planar_error_mm": 0.026954018770745533,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              39.02130889892578,
+              39.50446701049805
+            ],
+            [
+              14.58609390258789,
+              14.8650484085083
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08152834035113819,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              38.5,
+              38.52775573730469
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.08151941119498568,
+          "planar_error_mm": 0.0277557373046875,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -4.399999618530273,
+              3.799999237060547
+            ],
+            [
+              41.47224426269531,
+              41.5
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774938704501724,
+          "planar_error_mm": 0.02695578294600594,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              -46.413902282714844,
+              -46.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774363274812347,
+          "planar_error_mm": 0.024543941949339395,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              -46.41390609741211,
+              -46.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749594941152622,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -15.5,
+              -15.47224235534668
+            ],
+            [
+              -45.28545379638672,
+              -44.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749471552343898,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -12.527756690979004,
+              -12.5
+            ],
+            [
+              -45.28545379638672,
+              -44.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774363274810626,
+          "planar_error_mm": 0.02695420092941548,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              -43.865047454833984,
+              -43.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774259486649002,
+          "planar_error_mm": 0.026953833735302777,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              -43.865047454833984,
+              -43.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774572825988432,
+          "planar_error_mm": 0.02695349513106367,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              14.586094856262207,
+              14.865047454833984
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774698180447238,
+          "planar_error_mm": 0.024545324347223788,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              14.58609390258789,
+              14.8650484085083
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749603557754337,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -15.5,
+              -15.47224235534668
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.00874948016895839,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -12.527756690979004,
+              -12.5
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774764194754998,
+          "planar_error_mm": 0.026953833735302777,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774867985311923,
+          "planar_error_mm": 0.02695420092941548,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -32.87999725341797,
+              -32.0
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.00877493870448545,
+          "planar_error_mm": 0.02695578294600594,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              -46.413902282714844,
+              -46.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.00877436327481057,
+          "planar_error_mm": 0.02695420092941548,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              -46.41390609741211,
+              -46.134952545166016
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749594941153802,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -15.5,
+              -15.47224235534668
+            ],
+            [
+              -45.28545379638672,
+              -44.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749471552343898,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -12.527756690979004,
+              -12.5
+            ],
+            [
+              -45.28545379638672,
+              -44.71454620361328
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774363274807722,
+          "planar_error_mm": 0.024543941949339395,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              -43.865047454833984,
+              -43.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774259486664429,
+          "planar_error_mm": 0.026953833735302777,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              -43.865047454833984,
+              -43.58609390258789
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774572825981191,
+          "planar_error_mm": 0.02695349513106367,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              14.586094856262207,
+              14.865047454833984
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774698180453537,
+          "planar_error_mm": 0.026953713628996928,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              14.58609390258789,
+              14.8650484085083
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.008749603557753158,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -15.5,
+              -15.47224235534668
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 0.00874948016895839,
+          "planar_error_mm": 0.020534515380859375,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -12.527756690979004,
+              -12.5
+            ],
+            [
+              15.714545249938965,
+              16.28545379638672
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774764194755539,
+          "planar_error_mm": 0.026953833735302777,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -14.978691101074219,
+              -14.495532035827637
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 0.008774867985308374,
+          "planar_error_mm": 0.02454559376188093,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              32.0,
+              32.87999725341797
+            ],
+            [
+              -13.50446891784668,
+              -13.021306991577148
+            ],
+            [
+              17.134950637817383,
+              17.413904190063477
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "4697679244b2fd1d337a2225bfa19e6eca1788ea41c488023c88e587d02b8f0e"
+    },
+    {
+      "id": "boss-shafts-explicit72",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/boss-shafts-explicit72.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/boss-shafts-explicit72.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "actual-host-stls-shafts",
+      "expected": "empty",
+      "passed": true,
+      "file": null,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-host-stls-shafts.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-host-stls-shafts.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": false,
+      "volume_mm3": 0,
+      "triangle_count": 0,
+      "components": []
+    },
+    {
+      "id": "actual-33-stls-revised-keepers-driver",
+      "expected": "empty",
+      "passed": false,
+      "file": "output/fixed-hardware-audit/actual-33-stls-revised-keepers-driver.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-33-stls-revised-keepers-driver.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-33-stls-revised-keepers-driver.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 1.4761439883371543,
+      "triangle_count": 104,
+      "components": [
+        {
+          "triangles": 44,
+          "volume_mm3": 0.7372117006073847,
+          "planar_error_mm": 0.9714317321777344,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -53.09175491333008,
+              -48.90824508666992
+            ],
+            [
+              -13.5,
+              -12.528568267822266
+            ],
+            [
+              13.959859848022461,
+              14.5
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0008602935611854712,
+          "planar_error_mm": 0.0422126341618295,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -51.40754699707031,
+              -50.59245300292969
+            ],
+            [
+              -13.5,
+              -13.359617233276367
+            ],
+            [
+              -43.0,
+              -42.95985794067383
+            ]
+          ]
+        },
+        {
+          "triangles": 44,
+          "volume_mm3": 0.7372117006073987,
+          "planar_error_mm": 0.9714317321777344,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              48.90824508666992,
+              53.09175491333008
+            ],
+            [
+              -13.5,
+              -12.528568267822266
+            ],
+            [
+              13.959859848022461,
+              14.5
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 0.0008602935611854434,
+          "planar_error_mm": 0.03828427763315717,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              50.59245300292969,
+              51.40754699707031
+            ],
+            [
+              -13.5,
+              -13.359617233276367
+            ],
+            [
+              -43.0,
+              -42.95985794067383
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "f8d2cc740ca07ddb3b13af46263f01e30e68ce9a2d0ffb4e0b0150b57ac196ea"
+    },
+    {
+      "id": "actual-old-keeper-stls-mounts",
+      "expected": "solid",
+      "passed": true,
+      "file": "output/fixed-hardware-audit/actual-old-keeper-stls-mounts.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-old-keeper-stls-mounts.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fixed-hardware-audit/actual-old-keeper-stls-mounts.scad"
+      ],
+      "named_contact_planes": [],
+      "named_contact_only": false,
+      "warnings": [],
+      "solid_or_unclassified": true,
+      "volume_mm3": 12.020560689239872,
+      "triangle_count": 192,
+      "components": [
+        {
+          "triangles": 52,
+          "volume_mm3": 4.695064430134932,
+          "planar_error_mm": 1.5,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.864591598510742,
+              -13.5
+            ],
+            [
+              12.5,
+              14.0
+            ]
+          ]
+        },
+        {
+          "triangles": 44,
+          "volume_mm3": 1.3152159144850235,
+          "planar_error_mm": 1.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              43.79999923706055,
+              47.0
+            ],
+            [
+              -16.444257736206055,
+              -13.5
+            ],
+            [
+              -42.5,
+              -41.5
+            ]
+          ]
+        },
+        {
+          "triangles": 52,
+          "volume_mm3": 4.69506443013496,
+          "planar_error_mm": 1.5,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -47.0,
+              -43.79999923706055
+            ],
+            [
+              -16.864591598510742,
+              -13.5
+            ],
+            [
+              12.5,
+              14.0
+            ]
+          ]
+        },
+        {
+          "triangles": 44,
+          "volume_mm3": 1.315215914484957,
+          "planar_error_mm": 1.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              -47.0,
+              -43.79999923706055
+            ],
+            [
+              -16.444257736206055,
+              -13.5
+            ],
+            [
+              -42.5,
+              -41.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "sha256": "0d518f1130e6bddb8c60d87e86dd2e76334cfee292fec1f20619a8ae64b41e3a"
+    }
+  ],
+  "faceting_diagnosis": {
+    "default_d3_4_hex_apothem_mm": 1.4722431864335457,
+    "shaft_radius_mm": 1.5,
+    "actual_fn72_hole_apothem_mm": 1.6983819766891581,
+    "physical_hole_change": false
+  },
+  "assembly_order": [
+    "Seat support nuts before installing side supports.",
+    "Fit the four existing M3 support mounting screws and washers.",
+    "Move each revised keeper from -Y onto its fixed bosses, then fit its own screws and jack.",
+    "A 4.2 mm cylindrical driver envelope can approach mount screw heads along ±X.",
+    "For mount screw/washer removal, remove keeper screws and translate keeper at least 20 mm toward -Y first."
+  ],
+  "scope": [
+    "Only the keeper/mount interaction and the facet-entrypoint false positives are closed here.",
+    "Continuous 20 mm straight keeper withdrawal against installed support screws is tested as swept cylinders.",
+    "Driver is a declared 4.2 mm cylindrical envelope, not every commercial handle or socket.",
+    "Old left cap screw interference is repaired by the independent new Y guide, not by this wrapper.",
+    "Final new Y guide integration, as-printed fit, strength, preload and service-tool selection remain separate."
+  ],
+  "physical_acceptance": "OPEN"
+}

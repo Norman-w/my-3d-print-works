@@ -1,0 +1,27 @@
+{
+  "local_links_checked": 70,
+  "missing_links": [],
+  "current_doc_sha256": {
+    "docs/current-mechanical-review.md": "696df2d5eeb7699dd580ca96d30236592127603a13b19a3bbd4206a8ca3a753e",
+    "docs/current-status.md": "f41bfc758d646d5115de42ed48afb53ead5b87a3f9e56347aa2017befcc4b137",
+    "docs/current-assembly.md": "a57e06c1a9c38fbaac59b565b762002fa7d483d3046426dce2d06032e119ef53",
+    "docs/goal-acceptance-audit.md": "c1aec1fd60840d2dc30357f9326ce283b7e7f587fbbdfbee8d65d3e29cfa2f4f"
+  },
+  "bounded_proofs": {
+    "output/current-joint-tolerance/frame-finite-contact": {
+      "matching_source_count": 36,
+      "report_sha256": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712"
+    },
+    "output/current-joint-tolerance/carrier-body-coupling": {
+      "matching_source_count": 32,
+      "report_sha256": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9"
+    },
+    "output/current-route-service-review": {
+      "matching_source_count": 36,
+      "report_sha256": "2ea7d35574f2c623f5f4672254fe16481011e092b3da34042a01fa72268076e0"
+    }
+  },
+  "CAD_modified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

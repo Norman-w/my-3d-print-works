@@ -1,0 +1,357 @@
+{
+  "status": "NO_COUNTEREXAMPLE_IN_DECLARED_TRANSLATION_SUBDOMAIN",
+  "actual_failure_witness_found": false,
+  "all_rotation_domain_searched": false,
+  "full_D02_closed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/ball-center-coupling/report.json": "8d8e44ef2e9f26b47e37154c530dddb632207d4bf8992b01fb9acca9a5f48c42",
+    "output/current-joint-tolerance/ball-center-coupling/review.py": "78bd0b26c9fb05789eea2b82d62483d13d326d4b068a276ee409bfe15b60bdd1",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/common-cam-intersection/report.json": "eedde951065024f2d53cb7ad5f40b7efa655e678a896338bafe1c6c23f2f0b7d",
+    "output/current-joint-tolerance/common-cam-intersection/review.py": "67bdf544883372f6b9ff3a2ee71ff91873700ecdb13c020d6e8c2cb1ba339135",
+    "output/current-joint-tolerance/common-phase-registration/report.json": "2b70f8b8e9627c14060665868dba9b154071ff778821c746e81c2cd2f8a68412",
+    "output/current-joint-tolerance/common-phase-registration/review.py": "08c2e7bdb6ab72d1ee36a8066c99230653cf3f4fe5cb8e613ab2e24226087bb2",
+    "output/current-joint-tolerance/common-radial-closure/report.json": "7715bef97cc64c285a371c5f28411a8ceb3f97b2706b1216b9849c7cbe38ca36",
+    "output/current-joint-tolerance/common-radial-closure/review.py": "99c5bdd593a19dbbe1f6c5791e4b07d9bb77a2cdbca7023ce0b0d8acc64914f5",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/gate-ball-joint-review/report.json": "4e47c6a6b8ac09c1a4220517e877c45783be4115e39f0065c8ab2821d6ab8205",
+    "output/current-joint-tolerance/gate-ball-joint-review/review.py": "5e282803842ffb88a5622b48abb18bf09f342ccdbe8b274489752ecf02f1a273",
+    "output/current-joint-tolerance/half-shell-axial-coupling/report.json": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c",
+    "output/current-joint-tolerance/translation-counterexample-screen/review.py": "1e6c5456d39c50883b8b9f161589cea730924b39c3cfe7f8c8071f3511b7633f"
+  },
+  "historical_source_audit": [
+    {
+      "report": "carrier",
+      "path": "cad/cable-housing-route.scad",
+      "historical_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "current_sha256": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+      "exclusion_reason": "Input endpoint shift and 3 mm route extension; not a source of the feeder rigid contact domain. Cable loads and takeup-to-output loss remain outside this proof."
+    },
+    {
+      "report": "carrier",
+      "path": "cad/cable-scene-export.scad",
+      "historical_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "current_sha256": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+      "exclusion_reason": "Scene selectors/display export changed; none defines the reused physical stop/guide/seam/support dimensions."
+    },
+    {
+      "report": "carrier",
+      "path": "cad/cable-trigger-input.scad",
+      "historical_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "current_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+      "exclusion_reason": "Input axis/position adoption; this report has no trigger-angle, input-stop, input-bearing or force term. It does not revalidate combined assembly or imported historical source identity."
+    },
+    {
+      "report": "ball",
+      "path": "cad/cable-housing-route.scad",
+      "historical_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "current_sha256": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+      "exclusion_reason": "Input endpoint shift and 3 mm route extension; not a source of the feeder rigid contact domain. Cable loads and takeup-to-output loss remain outside this proof."
+    },
+    {
+      "report": "ball",
+      "path": "cad/cable-scene-export.scad",
+      "historical_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "current_sha256": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+      "exclusion_reason": "Scene selectors/display export changed; none defines the reused physical stop/guide/seam/support dimensions."
+    },
+    {
+      "report": "ball",
+      "path": "cad/cable-trigger-input.scad",
+      "historical_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "current_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+      "exclusion_reason": "Input axis/position adoption; this report has no trigger-angle, input-stop, input-bearing or force term. It does not revalidate combined assembly or imported historical source identity."
+    },
+    {
+      "report": "axial",
+      "path": "cad/cable-housing-route.scad",
+      "historical_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "current_sha256": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+      "exclusion_reason": "Input endpoint shift and 3 mm route extension; not a source of the feeder rigid contact domain. Cable loads and takeup-to-output loss remain outside this proof."
+    },
+    {
+      "report": "axial",
+      "path": "cad/cable-scene-export.scad",
+      "historical_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "current_sha256": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+      "exclusion_reason": "Scene selectors/display export changed; none defines the reused physical stop/guide/seam/support dimensions."
+    },
+    {
+      "report": "axial",
+      "path": "cad/cable-trigger-input.scad",
+      "historical_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "current_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+      "exclusion_reason": "Input axis/position adoption; this report has no trigger-angle, input-stop, input-bearing or force term. It does not revalidate combined assembly or imported historical source identity."
+    },
+    {
+      "report": "cam",
+      "path": "cad/cable-housing-route.scad",
+      "historical_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "current_sha256": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+      "exclusion_reason": "Input endpoint shift and 3 mm route extension; not a source of the feeder rigid contact domain. Cable loads and takeup-to-output loss remain outside this proof."
+    },
+    {
+      "report": "cam",
+      "path": "cad/cable-scene-export.scad",
+      "historical_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "current_sha256": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+      "exclusion_reason": "Scene selectors/display export changed; none defines the reused physical stop/guide/seam/support dimensions."
+    },
+    {
+      "report": "cam",
+      "path": "cad/cable-trigger-input.scad",
+      "historical_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "current_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+      "exclusion_reason": "Input axis/position adoption; this report has no trigger-angle, input-stop, input-bearing or force term. It does not revalidate combined assembly or imported historical source identity."
+    },
+    {
+      "report": "joint",
+      "path": "cad/cable-housing-route.scad",
+      "historical_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+      "current_sha256": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+      "exclusion_reason": "Input endpoint shift and 3 mm route extension; not a source of the feeder rigid contact domain. Cable loads and takeup-to-output loss remain outside this proof."
+    },
+    {
+      "report": "joint",
+      "path": "cad/cable-scene-export.scad",
+      "historical_sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "current_sha256": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+      "exclusion_reason": "Scene selectors/display export changed; none defines the reused physical stop/guide/seam/support dimensions."
+    },
+    {
+      "report": "joint",
+      "path": "cad/cable-trigger-input.scad",
+      "historical_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "current_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+      "exclusion_reason": "Input axis/position adoption; this report has no trigger-angle, input-stop, input-bearing or force term. It does not revalidate combined assembly or imported historical source identity."
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "cad/cam-study.scad",
+      "line": 21,
+      "text": "cam_pin_shoulder_start_y = 1.75;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 22,
+      "text": "cam_pin_shoulder_end_y = 13.75;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 25,
+      "text": "cam_plate_y = 8;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 26,
+      "text": "cam_plate_thickness = 5;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 37,
+      "text": "cam_carrier_axial = 8;"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 101,
+      "text": "module cam_y_cylinder(p,y0,length,d) {"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 103,
+      "text": "        cylinder(h=length,d=d,$fn=32);"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 62,
+      "text": "function cam_gate_r(rear,t) = rear"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 36,
+      "text": "support_guide_z0 = -35;"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 37,
+      "text": "support_guide_z1 = 5;"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 26,
+      "text": "support_axial_clearance = 0.2;"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 203,
+      "text": "        for(z=[support_guide_z0-cam_stroke-support_stop_thickness,"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 204,
+      "text": "            support_guide_z1])"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 10,
+      "text": "revision_setting=0.90; // mm advance, [0,1]; not an as-printed tolerance"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 24,
+      "text": "revision_datum_y=4.50;"
+    },
+    {
+      "path": "cad/feeder-frame-y-guide.scad",
+      "line": 12,
+      "text": "yg_face=24.1; // displayed .1 Y gap, not measured; real adjustment 23.8..25"
+    },
+    {
+      "path": "cad/feeder-frame-y-guide.scad",
+      "line": 28,
+      "text": "yg_datum_y=support_rail_y0;"
+    },
+    {
+      "path": "cad/feeder-cam-guide-revision.scad",
+      "line": 10,
+      "text": "cg_setting=.9; // advance [0,1]; parallel display, NOT measured printing error"
+    },
+    {
+      "path": "cad/feeder-cam-guide-revision.scad",
+      "line": 21,
+      "text": "cg_datum_x=support_rail_x0;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 17,
+      "text": "ps_v_half_angle=45;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 19,
+      "text": "ps_v_apex=cam_follower_offset-ps_pin_r/sin(ps_v_half_angle);"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 21,
+      "text": "ps_seat_y0=cam_pin_shoulder_start_y;"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 22,
+      "text": "ps_seat_y1=cam_carrier_width/2;"
+    }
+  ],
+  "method": "Continuous necessary outer constraints and sufficient ball inequalities; exact Fractions with directed 1e-12 square-root/arithmetic bounds. No optimizer and no sampled pose is called feasible.",
+  "subdomain": [
+    "H is a pure YZ translation; split X=0 faces stay seated; two locator features share this H.",
+    "Both supports, common C and four carriers undergo translations only; seated support X datum retained.",
+    "Four pins retain their present nominal direction/roll, shoulder/nut axial seats and two V contacts. Pin tilt or roll is not included.",
+    "Current parallel guide settings cg=.9, revision=.9, yg_face=24.1; finite contact branch retained.",
+    "Every considered pose must satisfy actual mounting, carrier, bore, V, nut, window and closed-slot nonpenetration. Dropping some of those constraints enlarges the screening set, never supplies a feasible counterexample.",
+    "Rigid geometry and inherited static two-ball/finite guide domain; R20..20.5, guide inner radius<=21.5, side hole radius<=2.75 are conditional bounds, not measurements."
+  ],
+  "joint_equations": {
+    "half_tip_support": "h_negative=0,h_positive=t; ||t_YZ||<=c; a_i=h_side.Z+e_i.Z; ||e_i.YZ||<=cb; kappa_i=a_i-s_side in[-.2,.2]. Same s_side for its front/rear fingers.",
+    "four_tip_positions": "T_i=[side_i*(r_i(v_i)+side_i*C_x+eta_i),h_side.Y+e_i.Y,g_i+a_i], |eta_i|<=S; v_i=C_z-a_i; g_front=0,g_rear=-28.5.",
+    "same_cam": "C_x in[0,.1]; C_y-s_side.Y in[0,.1]; k_i.Y-s_side.Y in[-.1,0]; all four slots use the same C.",
+    "zero_and_end": "C0_z=max(s_negative.Z,s_positive.Z); Cend_z=20+min(s_negative.Z,s_positive.Z).",
+    "endpoint_elimination": "Cend_z-a_i=20+min_j(h_j.Z+e_j.Z-kappa_j)-(h_i.Z+e_i.Z)>=20-c-2cb-.2. This does not compare u_N with a nominal release threshold.",
+    "normal_axis": "For theta=0 the same bisector axis is Y=tY/2 with Z datum=tZ/2, hence each tip Y and gate-Z offset <=cb+c/2; ball center is not set to this axis.",
+    "blocking_window": "C_z lies between max(rear a_i)+rear_v and min(front a_i)+front_v; all four actual tips block at the common gate plane.",
+    "monotone_sequence": "v_i increases with the same C_z; rear gate only closes and front only opens. The positive common blocking interval prevents a two-open phase in this subdomain."
+  },
+  "numeric": {
+    "cb_mm": 0.262038183323,
+    "c_mm": 0.152855335258,
+    "whole_slot_S_mm": 0.397123268976,
+    "actual_phase_radial_error_upper_mm": 0.497123268976,
+    "tip_Y_and_Z_about_N_upper_mm": 0.338465850952,
+    "all_four_a_i_spread_upper_mm": 0.676931701904,
+    "actual_phase_at_end_lower_mm": 19.123068298096,
+    "actual_phase_at_start_upper_mm": 0.876931701904,
+    "front_tip_radial_at_hard_end_lower_mm": 24.954794417334,
+    "rear_tip_radial_at_zero_stop_lower_mm": 24.954794417334,
+    "maxR_plus_maxE_plus_outer_tip_upper_mm": 24.622943151079,
+    "front_open_and_rear_initial_open_radial_reserve_lower_mm": 0.331851266255,
+    "all_cycle_actual_tip_radial_interval_mm": [
+      20.502876731024,
+      26.497123268976
+    ],
+    "finite_pin_near_far_face_cover_reserve_lower_mm": [
+      6.25,
+      0.55
+    ],
+    "finite_rod_bore_near_far_reserve_lower_mm": [
+      5.002876731024,
+      1.002876731024
+    ],
+    "Hmin_lower_mm": 6.291208638664,
+    "Hmax_upper_mm": 13.135756849793,
+    "touching_ball_pitch_lower_mm": 39.868085257677,
+    "sufficient_gate_spacing_interval_mm": [
+      26.94844540149,
+      32.346605344644
+    ],
+    "gate_spacing_mm": 28.5,
+    "maximum_nominal_r_guaranteed_blocking_mm": 21.899105338637,
+    "rear_phase_required_for_blocking_mm": 6.561431458181,
+    "front_phase_until_blocking_mm": 13.438568541819,
+    "same_C_all_four_blocking_window_width_lower_mm": 6.200205381734,
+    "same_C_both_closed_plateau_window_width_lower_mm": 3.323068298096,
+    "blocking_window_after_start_before_end_reserves_lower_mm": [
+      5.684499756277,
+      5.684499756277
+    ]
+  },
+  "not_proved": [
+    "Tilted H/support/carrier/frame/pin poses; full coupled phase and J_common remain unclosed.",
+    "Ability to reach the hard stop without friction/jam or cable lost motion; no force or preload result.",
+    "Actual material dimensions, print distortion, ball elasticity, dynamic airflow or real one-shot reliability.",
+    "This is not an actual feasible adverse-pose witness and is not a complete all-assembly proof."
+  ],
+  "all_sources_stable": true
+}

@@ -1,0 +1,13 @@
+{
+  "directory": "output/current-eclip-manufacturing/20260927T161537157301Z",
+  "report": "output/current-eclip-manufacturing/20260927T161537157301Z/report.json",
+  "report_sha256": "a375c2ef28d6ad52622e08294bc1499fc50291fa98991a265e16116af5d00ffe",
+  "status": "CURRENT_ECLIP_DIGITAL_SLICE_INTEGRATION_COMPLETE_PHYSICAL_GATES_OPEN",
+  "manufacturing_manifest": "output/current-eclip-manufacturing/20260927T161537157301Z/manufacturing/manifest.json",
+  "assembly_package": "output/current-assembly-package/runs/20260927T164103218111Z/manifest.json",
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "goal_complete": false,
+  "assembly_refresh_reason": "Stop documentation corrected; printed geometry and all selected plates unchanged.",
+  "followup_stop_report": "output/current-stop-contract/runs/20260927T163722528406Z/report.json"
+}

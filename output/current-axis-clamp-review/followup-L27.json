@@ -1,0 +1,70 @@
+{
+  "status": "FINITE_CONCEPT_ARITHMETIC_ONLY_NOT_ADOPTED",
+  "source_of_new_washer_dimensions": "Parent-agent supplied Accu HPW-M4-V2-A4 facts; not independently retrieved by this subtask",
+  "sleeve_length": [
+    26.98,
+    27,
+    27.02
+  ],
+  "nominal_centered_sleeve_z": [
+    -12.5,
+    14.5
+  ],
+  "housing_outer_span": 26,
+  "total_cartridge_float": [
+    0.98,
+    1.02
+  ],
+  "nominal_front_washer_z": [
+    14.5,
+    15.6
+  ],
+  "nominal_rear_washer_z": [
+    -13.6,
+    -12.5
+  ],
+  "head_under_z": 15.6,
+  "bolt_underhead_length": 35,
+  "bolt_tip_z": -19.4,
+  "nominal_nut_z": [
+    -16.8,
+    -13.6
+  ],
+  "nut_thickness": 3.2,
+  "thread_tip_projection_nominal": 2.6,
+  "thread_tip_projection_bounds": [
+    2.58,
+    3.0199999999999996
+  ],
+  "washer_od_bounds": [
+    11.57,
+    12
+  ],
+  "washer_id_bounds": [
+    4.3,
+    4.48
+  ],
+  "washer_t_bounds": [
+    0.9,
+    1.1
+  ],
+  "conditional_capture": {
+    "through_bore_assumed": 8.3,
+    "centered_radial_lip": 1.6349999999999998,
+    "eccentricity_terms": [
+      0.20000000000000018,
+      0.20000000000000018,
+      0.2400000000000002
+    ],
+    "total_eccentricity": 0.64,
+    "minimum_one_side_lip": 0.9949999999999998,
+    "excludes": "Actual printed bore error, actual screw diameter/thread profile and washer/outer face deformation"
+  },
+  "nominal_internal_lever_endplay_unchanged": 0.5,
+  "limitations": [
+    "No antirotation or axial fixation to housing is provided by the concept; define controlled cartridge float.",
+    "Both washers plus nut/head retain cartridge; do not omit a washer.",
+    "Actual minimum sleeve length must exceed maximum external housing span; flatness and print tolerance must be included.",
+    "No current CAD collision, source identity, manufacturing, strength or screw locking acceptance."
+  ]
+}

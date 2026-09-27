@@ -1,0 +1,2488 @@
+{
+  "gcode_sha256": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+  "rows": [
+    {
+      "top_print_z": 0.2,
+      "support_components": 7,
+      "support_area": 831.2401108505583,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 5,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 0.4,
+      "support_components": 7,
+      "support_area": 86.03714443728504,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 0.6,
+      "support_components": 7,
+      "support_area": 85.95218405948869,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 0.8,
+      "support_components": 7,
+      "support_area": 85.89581868562296,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 1.0,
+      "support_components": 8,
+      "support_area": 87.46038725974748,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 1.2,
+      "support_components": 8,
+      "support_area": 87.21074070451463,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 1.4,
+      "support_components": 8,
+      "support_area": 86.94986502416384,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 1.6,
+      "support_components": 8,
+      "support_area": 86.7178972058843,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 1.8,
+      "support_components": 8,
+      "support_area": 86.5228823243709,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 2.0,
+      "support_components": 9,
+      "support_area": 87.36975549770746,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 2.2,
+      "support_components": 10,
+      "support_area": 87.30987791323355,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 2.4,
+      "support_components": 10,
+      "support_area": 86.79373610331547,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 2.6,
+      "support_components": 10,
+      "support_area": 86.0077987236488,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 2.8,
+      "support_components": 10,
+      "support_area": 90.98804149384321,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 3.0,
+      "support_components": 8,
+      "support_area": 98.0740897440845,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 3.2,
+      "support_components": 8,
+      "support_area": 97.13078421046117,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 3.4,
+      "support_components": 8,
+      "support_area": 77.60237906008416,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 3.6,
+      "support_components": 8,
+      "support_area": 76.94291851129441,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 5,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 3.8,
+      "support_components": 8,
+      "support_area": 76.34843443978046,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 4.0,
+      "support_components": 8,
+      "support_area": 75.8515088129087,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 4.2,
+      "support_components": 8,
+      "support_area": 75.68289240008427,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 4.4,
+      "support_components": 8,
+      "support_area": 75.58606065882842,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 4.6,
+      "support_components": 8,
+      "support_area": 75.47673529566323,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 4.8,
+      "support_components": 8,
+      "support_area": 75.43760453008919,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 5.0,
+      "support_components": 8,
+      "support_area": 75.4884697059521,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 5.2,
+      "support_components": 8,
+      "support_area": 75.59727832878755,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 5.4,
+      "support_components": 8,
+      "support_area": 75.86945803273373,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 5.6,
+      "support_components": 8,
+      "support_area": 76.14145133006865,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 5.8,
+      "support_components": 8,
+      "support_area": 76.44229211280049,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 6.0,
+      "support_components": 8,
+      "support_area": 76.78316151152825,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 6.2,
+      "support_components": 8,
+      "support_area": 77.15031568059194,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 6.4,
+      "support_components": 8,
+      "support_area": 89.8534806859641,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 6.6,
+      "support_components": 8,
+      "support_area": 90.28779897634499,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 6.8,
+      "support_components": 8,
+      "support_area": 90.88209594344153,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 7.0,
+      "support_components": 8,
+      "support_area": 91.73777202242576,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 7.2,
+      "support_components": 8,
+      "support_area": 92.1725222255937,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 7.4,
+      "support_components": 8,
+      "support_area": 92.68442674464445,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 7.6,
+      "support_components": 8,
+      "support_area": 93.39149540869373,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 7.8,
+      "support_components": 8,
+      "support_area": 94.32383173692489,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 8.0,
+      "support_components": 8,
+      "support_area": 95.60427638821736,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 8.2,
+      "support_components": 8,
+      "support_area": 96.41441164797772,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 8.4,
+      "support_components": 8,
+      "support_area": 97.33064264777187,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 8.6,
+      "support_components": 8,
+      "support_area": 98.9080133112135,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 8.8,
+      "support_components": 8,
+      "support_area": 99.89819182948068,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 9.0,
+      "support_components": 8,
+      "support_area": 102.03132011140475,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 4,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 9.2,
+      "support_components": 10,
+      "support_area": 89.95221428884358,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 5,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 9.4,
+      "support_components": 10,
+      "support_area": 90.7401375526151,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 5,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 9.6,
+      "support_components": 11,
+      "support_area": 92.24060989968396,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 6,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 9.8,
+      "support_components": 11,
+      "support_area": 92.50478465474428,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 6,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 10.0,
+      "support_components": 12,
+      "support_area": 93.91813253439338,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 10.2,
+      "support_components": 12,
+      "support_area": 93.64023297636966,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 10.4,
+      "support_components": 12,
+      "support_area": 93.77610428653514,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 10.6,
+      "support_components": 12,
+      "support_area": 93.77776044772497,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 10.8,
+      "support_components": 12,
+      "support_area": 94.0401929154015,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 11.0,
+      "support_components": 13,
+      "support_area": 94.85836366914658,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 11.2,
+      "support_components": 13,
+      "support_area": 94.75759052680087,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 11.4,
+      "support_components": 13,
+      "support_area": 94.46322373952255,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 11.6,
+      "support_components": 13,
+      "support_area": 94.40639528713302,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 11.8,
+      "support_components": 13,
+      "support_area": 94.16244048778447,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 12.0,
+      "support_components": 13,
+      "support_area": 94.7748221898607,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 12.2,
+      "support_components": 14,
+      "support_area": 95.33146557213516,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 12.4,
+      "support_components": 14,
+      "support_area": 95.2221403541019,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 12.6,
+      "support_components": 14,
+      "support_area": 95.37433945023834,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 12.8,
+      "support_components": 14,
+      "support_area": 96.01821286809927,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 13.0,
+      "support_components": 14,
+      "support_area": 96.60363778641842,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 13.2,
+      "support_components": 15,
+      "support_area": 98.85154352558206,
+      "down_collision_area": 0.39869352181128204,
+      "down_collision_bounds": [
+        116.73648224352708,
+        111.20838052073559,
+        138.89232388909937,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 13.4,
+      "support_components": 15,
+      "support_area": 99.37275456763385,
+      "down_collision_area": 1.1696368552866316,
+      "down_collision_bounds": [
+        116.54094456338153,
+        110.89694666976605,
+        139.09395502178515,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 13.6,
+      "support_components": 15,
+      "support_area": 99.90225168472976,
+      "down_collision_area": 2.1247176490132405,
+      "down_collision_bounds": [
+        116.4069692538138,
+        110.5810020539488,
+        139.245373209174,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 13.8,
+      "support_components": 15,
+      "support_area": 103.23863163504771,
+      "down_collision_area": 5.718695424201154,
+      "down_collision_bounds": [
+        116.18293161124662,
+        99.68293161124662,
+        139.3402905970442,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 14.0,
+      "support_components": 15,
+      "support_area": 103.82384238601075,
+      "down_collision_area": 6.713811221900626,
+      "down_collision_bounds": [
+        116.18293161124662,
+        99.68293161124662,
+        139.40587239994105,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 14.2,
+      "support_components": 16,
+      "support_area": 104.62009849093765,
+      "down_collision_area": 7.268650238042802,
+      "down_collision_bounds": [
+        116.18293161124662,
+        99.68293161124662,
+        139.49598612992983,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 14.4,
+      "support_components": 16,
+      "support_area": 104.36980146889151,
+      "down_collision_area": 8.119581783445433,
+      "down_collision_bounds": [
+        116.18293161124662,
+        99.68293161124662,
+        139.55658199118017,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 4
+    },
+    {
+      "top_print_z": 14.6,
+      "support_components": 19,
+      "support_area": 106.4413744505539,
+      "down_collision_area": 9.37734847576035,
+      "down_collision_bounds": [
+        116.30269776906177,
+        99.68293161124662,
+        139.4140177464745,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 14.8,
+      "support_components": 19,
+      "support_area": 104.92843108117412,
+      "down_collision_area": 9.164759851888977,
+      "down_collision_bounds": [
+        116.46793613032725,
+        99.68293161124662,
+        139.36495347929352,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 15.0,
+      "support_components": 20,
+      "support_area": 103.32989462546472,
+      "down_collision_area": 8.911024937477949,
+      "down_collision_bounds": [
+        116.64263311054034,
+        99.68293161124662,
+        139.3157383793393,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 9,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 15.2,
+      "support_components": 20,
+      "support_area": 96.74727936119628,
+      "down_collision_area": 6.114348637217722,
+      "down_collision_bounds": [
+        116.83892323509892,
+        99.68293161124662,
+        139.12005795454934,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 5
+    },
+    {
+      "top_print_z": 15.4,
+      "support_components": 12,
+      "support_area": 85.00210237537506,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 15.6,
+      "support_components": 12,
+      "support_area": 85.0009974430149,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 15.8,
+      "support_components": 12,
+      "support_area": 85.16780348314681,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 16.0,
+      "support_components": 12,
+      "support_area": 85.18152003254596,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 16.2,
+      "support_components": 12,
+      "support_area": 85.35061735760065,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 16.4,
+      "support_components": 12,
+      "support_area": 85.46873446404197,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 16.6,
+      "support_components": 12,
+      "support_area": 85.87069943380925,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 16.8,
+      "support_components": 12,
+      "support_area": 85.9410088473469,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 17.0,
+      "support_components": 12,
+      "support_area": 86.50743779825162,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 17.2,
+      "support_components": 12,
+      "support_area": 87.04833219769682,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 17.4,
+      "support_components": 13,
+      "support_area": 89.4321839294831,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 17.6,
+      "support_components": 13,
+      "support_area": 89.68893859817825,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 17.8,
+      "support_components": 13,
+      "support_area": 89.87182415009734,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 18.0,
+      "support_components": 13,
+      "support_area": 90.2122860664306,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 18.2,
+      "support_components": 13,
+      "support_area": 90.91196395476157,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 18.4,
+      "support_components": 13,
+      "support_area": 91.2820157317471,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 18.6,
+      "support_components": 13,
+      "support_area": 91.6336819427367,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 8,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 18.8,
+      "support_components": 14,
+      "support_area": 92.9898688066241,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 9,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 19.0,
+      "support_components": 14,
+      "support_area": 93.44271490516009,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 9,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 19.2,
+      "support_components": 14,
+      "support_area": 93.60321405318125,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 9,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 19.4,
+      "support_components": 15,
+      "support_area": 94.664562178196,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 19.6,
+      "support_components": 15,
+      "support_area": 94.62592751372,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 19.8,
+      "support_components": 15,
+      "support_area": 94.68584346543742,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 20.0,
+      "support_components": 16,
+      "support_area": 95.80383323834691,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 20.2,
+      "support_components": 16,
+      "support_area": 95.82258203563617,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 20.4,
+      "support_components": 16,
+      "support_area": 95.69013346344684,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 20.6,
+      "support_components": 16,
+      "support_area": 95.80282470470434,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 20.8,
+      "support_components": 16,
+      "support_area": 96.28681669620534,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 21.0,
+      "support_components": 17,
+      "support_area": 97.81807181630272,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 21.2,
+      "support_components": 17,
+      "support_area": 99.08017512399074,
+      "down_collision_area": 0.06732766775721453,
+      "down_collision_bounds": [
+        107.50113642315927,
+        111.36732446785807,
+        108.2561637715119,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 21.4,
+      "support_components": 18,
+      "support_area": 100.24913925806234,
+      "down_collision_area": 0.4558725791373551,
+      "down_collision_bounds": [
+        107.20686595578088,
+        111.0953266755294,
+        148.54483816166575,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 21.6,
+      "support_components": 18,
+      "support_area": 100.76117362570272,
+      "down_collision_area": 1.17248014774434,
+      "down_collision_bounds": [
+        107.02910159089888,
+        110.81963319161035,
+        148.79945050289837,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 21.8,
+      "support_components": 18,
+      "support_area": 101.69605033829079,
+      "down_collision_area": 2.0016423075850884,
+      "down_collision_bounds": [
+        106.89930669821294,
+        110.54653204670606,
+        148.96860512229892,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 22.0,
+      "support_components": 18,
+      "support_area": 102.71128608429296,
+      "down_collision_area": 2.7599849083117194,
+      "down_collision_bounds": [
+        106.81194416673665,
+        110.27559766877168,
+        149.081825536798,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 22.2,
+      "support_components": 18,
+      "support_area": 104.21509611545699,
+      "down_collision_area": 3.489751471018156,
+      "down_collision_bounds": [
+        106.7689435068624,
+        110.00580880533994,
+        149.15531531054575,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 22.4,
+      "support_components": 18,
+      "support_area": 105.44533123752197,
+      "down_collision_area": 4.107112004390819,
+      "down_collision_bounds": [
+        106.71933366268922,
+        109.74110097670331,
+        149.18636103075158,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 22.6,
+      "support_components": 18,
+      "support_area": 106.86449193316304,
+      "down_collision_area": 4.583706609617336,
+      "down_collision_bounds": [
+        106.67138359589642,
+        109.4793096097039,
+        149.2023961795036,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 22.8,
+      "support_components": 18,
+      "support_area": 108.31365046083782,
+      "down_collision_area": 5.1173362783225445,
+      "down_collision_bounds": [
+        106.62082812982159,
+        109.22173205348558,
+        149.2084493090602,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 23.0,
+      "support_components": 18,
+      "support_area": 109.89343243965956,
+      "down_collision_area": 5.574967207769548,
+      "down_collision_bounds": [
+        106.5637532114788,
+        105.49793613032723,
+        149.2258213402125,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 23.2,
+      "support_components": 19,
+      "support_area": 112.3926273911221,
+      "down_collision_area": 6.050419794470791,
+      "down_collision_bounds": [
+        106.53309981842547,
+        105.49793613032723,
+        149.23451739579863,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 23.4,
+      "support_components": 19,
+      "support_area": 113.4000533396848,
+      "down_collision_area": 6.786699828060624,
+      "down_collision_bounds": [
+        106.50417186669848,
+        105.49793613032723,
+        149.24638603501083,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 23.6,
+      "support_components": 20,
+      "support_area": 115.33481188520292,
+      "down_collision_area": 7.194542171276994,
+      "down_collision_bounds": [
+        106.49174837636559,
+        105.49793613032723,
+        149.23305567331536,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 12,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 23.8,
+      "support_components": 20,
+      "support_area": 116.04529717856282,
+      "down_collision_area": 7.839342424241876,
+      "down_collision_bounds": [
+        106.45768866881026,
+        105.49793613032723,
+        149.2267352577529,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 24.0,
+      "support_components": 22,
+      "support_area": 116.9529783377537,
+      "down_collision_area": 7.787717015955453,
+      "down_collision_bounds": [
+        106.47677994158391,
+        105.49793613032723,
+        149.16871284124542,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 24.2,
+      "support_components": 23,
+      "support_area": 117.76310737231584,
+      "down_collision_area": 7.754048063851915,
+      "down_collision_bounds": [
+        106.49106772275464,
+        105.49793613032723,
+        149.06953355529524,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 24.4,
+      "support_components": 24,
+      "support_area": 111.32053132115198,
+      "down_collision_area": 4.048586508607175,
+      "down_collision_bounds": [
+        106.29393613032724,
+        105.49793613032723,
+        149.20806386967277,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 24.6,
+      "support_components": 19,
+      "support_area": 119.1927801266028,
+      "down_collision_area": 12.964866672116496,
+      "down_collision_bounds": [
+        106.42193613032724,
+        105.49793613032723,
+        149.40906386967276,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 24.8,
+      "support_components": 20,
+      "support_area": 121.7025780525924,
+      "down_collision_area": 12.964866672116537,
+      "down_collision_bounds": [
+        106.59093613032724,
+        105.49793613032723,
+        149.57806386967277,
+        111.50206386967277
+      ],
+      "back_nonclear_components": 12,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 25.0,
+      "support_components": 19,
+      "support_area": 110.93277276597364,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 13,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 25.2,
+      "support_components": 21,
+      "support_area": 113.73191977669798,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 14,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 25.4,
+      "support_components": 21,
+      "support_area": 115.07979588325192,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 14,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 25.6,
+      "support_components": 23,
+      "support_area": 117.209242650498,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 25.8,
+      "support_components": 24,
+      "support_area": 119.46432915729912,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 26.0,
+      "support_components": 24,
+      "support_area": 121.36577787714151,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 26.2,
+      "support_components": 24,
+      "support_area": 122.8354077646766,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 26.4,
+      "support_components": 24,
+      "support_area": 125.09361512899157,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 26.6,
+      "support_components": 24,
+      "support_area": 126.99594942355557,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 26.8,
+      "support_components": 25,
+      "support_area": 130.39537075934837,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 27.0,
+      "support_components": 25,
+      "support_area": 132.93719872430754,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 27.2,
+      "support_components": 26,
+      "support_area": 136.63320877600975,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 27.4,
+      "support_components": 27,
+      "support_area": 140.5616624688661,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 16,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 27.6,
+      "support_components": 28,
+      "support_area": 145.0622756848673,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 17,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 27.8,
+      "support_components": 28,
+      "support_area": 148.64511120785357,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 17,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 28.0,
+      "support_components": 28,
+      "support_area": 153.10774538355412,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 17,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 28.2,
+      "support_components": 30,
+      "support_area": 157.84954684913149,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 28.4,
+      "support_components": 32,
+      "support_area": 163.4943004728714,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 28.6,
+      "support_components": 32,
+      "support_area": 167.57863184462224,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 7,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 28.8,
+      "support_components": 35,
+      "support_area": 174.61109601578525,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 9,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 29.0,
+      "support_components": 40,
+      "support_area": 182.20132695327325,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 29.2,
+      "support_components": 40,
+      "support_area": 186.8029206779055,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 29.4,
+      "support_components": 43,
+      "support_area": 194.0845352625892,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 10,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 29.6,
+      "support_components": 46,
+      "support_area": 202.58802605455878,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 11,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 29.8,
+      "support_components": 47,
+      "support_area": 209.3014309898474,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 12,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 30.0,
+      "support_components": 49,
+      "support_area": 216.415546791568,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 13,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 30.2,
+      "support_components": 53,
+      "support_area": 224.23487304839836,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 30.4,
+      "support_components": 57,
+      "support_area": 232.85894025243397,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 15,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 30.6,
+      "support_components": 61,
+      "support_area": 242.60486170408706,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 17,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 30.8,
+      "support_components": 65,
+      "support_area": 254.88167833109657,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 19,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 31.0,
+      "support_components": 67,
+      "support_area": 266.25756925777677,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 19,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 31.2,
+      "support_components": 68,
+      "support_area": 275.45181758729643,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 20,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 31.4,
+      "support_components": 72,
+      "support_area": 283.8293705874063,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 21,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 31.6,
+      "support_components": 72,
+      "support_area": 288.1913281066085,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 21,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 31.8,
+      "support_components": 78,
+      "support_area": 297.82132756299745,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 22,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 32.0,
+      "support_components": 83,
+      "support_area": 309.1330743123614,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 23,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 32.2,
+      "support_components": 92,
+      "support_area": 327.49624654935405,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 24,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 32.4,
+      "support_components": 110,
+      "support_area": 234.09330972642275,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 29,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 32.6,
+      "support_components": 4,
+      "support_area": 459.6766397161893,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 3,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 32.8,
+      "support_components": 5,
+      "support_area": 459.1770749612941,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 3,
+      "fwd_nonclear_components": 1
+    },
+    {
+      "top_print_z": 33.0,
+      "support_components": 2,
+      "support_area": 10.73474196372674,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 0
+    },
+    {
+      "top_print_z": 33.2,
+      "support_components": 2,
+      "support_area": 10.494843467049911,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 33.4,
+      "support_components": 2,
+      "support_area": 10.338897310740347,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 33.6,
+      "support_components": 2,
+      "support_area": 10.157886849351941,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 33.8,
+      "support_components": 2,
+      "support_area": 10.00950459068368,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 34.0,
+      "support_components": 2,
+      "support_area": 9.890324367733399,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 34.2,
+      "support_components": 2,
+      "support_area": 9.763769479307419,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 34.4,
+      "support_components": 2,
+      "support_area": 9.684954806457178,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 34.6,
+      "support_components": 2,
+      "support_area": 9.592325409803662,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 34.8,
+      "support_components": 2,
+      "support_area": 9.482398116922836,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 35.0,
+      "support_components": 2,
+      "support_area": 9.40770436294179,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 35.2,
+      "support_components": 2,
+      "support_area": 9.323410792656794,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 35.4,
+      "support_components": 2,
+      "support_area": 9.252520239305387,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 35.6,
+      "support_components": 2,
+      "support_area": 9.165948890228702,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 35.8,
+      "support_components": 2,
+      "support_area": 9.082637832566146,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 36.0,
+      "support_components": 2,
+      "support_area": 9.009953136275817,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 36.2,
+      "support_components": 2,
+      "support_area": 8.891040607655164,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 36.4,
+      "support_components": 2,
+      "support_area": 8.792120277151675,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 36.6,
+      "support_components": 2,
+      "support_area": 8.709804906654425,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 36.8,
+      "support_components": 2,
+      "support_area": 8.607270204180374,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 37.0,
+      "support_components": 2,
+      "support_area": 8.496592247463253,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 37.2,
+      "support_components": 2,
+      "support_area": 8.390222431090272,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 37.4,
+      "support_components": 2,
+      "support_area": 8.284368468161503,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 37.6,
+      "support_components": 2,
+      "support_area": 8.16505572652502,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 37.8,
+      "support_components": 2,
+      "support_area": 8.034544729003864,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 38.0,
+      "support_components": 2,
+      "support_area": 7.913372019462484,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 38.2,
+      "support_components": 2,
+      "support_area": 7.9016681410921095,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 38.4,
+      "support_components": 2,
+      "support_area": 7.895359324342934,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 38.6,
+      "support_components": 2,
+      "support_area": 7.6495301579439685,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 38.8,
+      "support_components": 2,
+      "support_area": 7.655973526136355,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 39.0,
+      "support_components": 2,
+      "support_area": 7.5509142010994115,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 39.2,
+      "support_components": 2,
+      "support_area": 7.479122980970293,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 39.4,
+      "support_components": 2,
+      "support_area": 7.431083786128745,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 39.6,
+      "support_components": 2,
+      "support_area": 7.407735467488484,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 39.8,
+      "support_components": 2,
+      "support_area": 7.381542421003175,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 40.0,
+      "support_components": 2,
+      "support_area": 7.407071761295074,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 40.2,
+      "support_components": 2,
+      "support_area": 7.449224651357129,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 40.4,
+      "support_components": 2,
+      "support_area": 7.4612358090263395,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 40.6,
+      "support_components": 2,
+      "support_area": 7.527366910810311,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 40.8,
+      "support_components": 2,
+      "support_area": 7.709617710803455,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 41.0,
+      "support_components": 2,
+      "support_area": 7.901191599133803,
+      "down_collision_area": 0.0,
+      "down_collision_bounds": null,
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 41.2,
+      "support_components": 2,
+      "support_area": 8.141440793258267,
+      "down_collision_area": 0.16458463794991407,
+      "down_collision_bounds": [
+        84.26082186382784,
+        141.48293161124664,
+        171.39804040489744,
+        141.61356692392332
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 41.4,
+      "support_components": 2,
+      "support_area": 8.407239878639132,
+      "down_collision_area": 0.5860130234362348,
+      "down_collision_bounds": [
+        84.00628421329486,
+        141.48293161124664,
+        171.65680584014925,
+        141.77964385500033
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 41.6,
+      "support_components": 2,
+      "support_area": 8.716018900019108,
+      "down_collision_area": 1.1239776310270384,
+      "down_collision_bounds": [
+        83.89085254197957,
+        141.48293161124664,
+        171.81323579686773,
+        141.93625656698939
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 41.8,
+      "support_components": 2,
+      "support_area": 9.005738330618787,
+      "down_collision_area": 1.5068247680570654,
+      "down_collision_bounds": [
+        83.78814514081475,
+        141.48293161124664,
+        171.93465122313322,
+        142.08708124977397
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 42.0,
+      "support_components": 2,
+      "support_area": 9.241430748483044,
+      "down_collision_area": 1.8141093025097514,
+      "down_collision_bounds": [
+        83.72149518822388,
+        141.48293161124664,
+        172.01302774447905,
+        142.24672888273201
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 42.2,
+      "support_components": 2,
+      "support_area": 9.601409386926084,
+      "down_collision_area": 2.120651999598226,
+      "down_collision_bounds": [
+        83.63021740884341,
+        141.48293161124664,
+        172.22225268497004,
+        142.40161353495992
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 42.4,
+      "support_components": 2,
+      "support_area": 10.012209171527235,
+      "down_collision_area": 2.437815277347547,
+      "down_collision_bounds": [
+        83.52054841089598,
+        141.48293161124664,
+        172.40889383168687,
+        142.55077752914326
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 42.6,
+      "support_components": 2,
+      "support_area": 10.186252152846546,
+      "down_collision_area": 2.8238902372152745,
+      "down_collision_bounds": [
+        83.38976403746122,
+        141.48293161124664,
+        172.5649904398337,
+        142.71102691608007
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 42.8,
+      "support_components": 2,
+      "support_area": 10.632418806682047,
+      "down_collision_area": 3.358206690711322,
+      "down_collision_bounds": [
+        83.22723859237296,
+        141.48293161124664,
+        172.72323409078606,
+        142.89115363137915
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 43.0,
+      "support_components": 2,
+      "support_area": 10.83159535838995,
+      "down_collision_area": 3.7962578402122107,
+      "down_collision_bounds": [
+        83.11302729241869,
+        141.48293161124664,
+        172.85723034528252,
+        143.0339322965887
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 43.2,
+      "support_components": 2,
+      "support_area": 11.398207398292415,
+      "down_collision_area": 4.30098398415851,
+      "down_collision_bounds": [
+        83.0270841265097,
+        141.48293161124664,
+        172.9585132364261,
+        143.18142897422837
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 43.4,
+      "support_components": 2,
+      "support_area": 11.747173088115783,
+      "down_collision_area": 4.766800261854964,
+      "down_collision_bounds": [
+        82.92535952881464,
+        141.48293161124664,
+        173.0454862738021,
+        143.34704123199916
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 43.6,
+      "support_components": 2,
+      "support_area": 12.12218001223517,
+      "down_collision_area": 5.273321475545335,
+      "down_collision_bounds": [
+        82.82882073211111,
+        141.48293161124664,
+        173.12593161738258,
+        143.47427636216605
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 43.8,
+      "support_components": 2,
+      "support_area": 12.689416524600604,
+      "down_collision_area": 5.762429217179021,
+      "down_collision_bounds": [
+        82.74962299270247,
+        141.48293161124664,
+        173.23653275888373,
+        143.6270903392144
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 44.0,
+      "support_components": 2,
+      "support_area": 13.196482346439502,
+      "down_collision_area": 6.316098023171463,
+      "down_collision_bounds": [
+        82.66316584727109,
+        141.48293161124664,
+        173.33297556764649,
+        143.79069701167276
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 44.2,
+      "support_components": 2,
+      "support_area": 13.941885930868704,
+      "down_collision_area": 6.948936985880579,
+      "down_collision_bounds": [
+        82.58158002148993,
+        141.48293161124664,
+        173.40273396560576,
+        143.92702216588728
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 44.4,
+      "support_components": 2,
+      "support_area": 14.436296988811065,
+      "down_collision_area": 7.378396313650417,
+      "down_collision_bounds": [
+        82.49751433528415,
+        141.48293161124664,
+        173.5043717463263,
+        144.0821118451253
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 44.6,
+      "support_components": 2,
+      "support_area": 15.188126478080989,
+      "down_collision_area": 7.977707159917431,
+      "down_collision_bounds": [
+        82.39045837847966,
+        141.48293161124664,
+        173.61852873928632,
+        144.2281058867642
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 44.8,
+      "support_components": 2,
+      "support_area": 15.970220292939022,
+      "down_collision_area": 8.600658292050252,
+      "down_collision_bounds": [
+        82.26304070733647,
+        141.48293161124664,
+        173.77400145063297,
+        144.3592046516595
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 45.0,
+      "support_components": 2,
+      "support_area": 16.649983562578107,
+      "down_collision_area": 9.110540772231648,
+      "down_collision_bounds": [
+        82.14832497811848,
+        141.48293161124664,
+        173.86714133672785,
+        144.4780613994089
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 45.2,
+      "support_components": 3,
+      "support_area": 19.494176258394404,
+      "down_collision_area": 11.25935238867819,
+      "down_collision_bounds": [
+        82.13427199835738,
+        141.48293161124664,
+        173.91196604923726,
+        144.61438129005305
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 45.4,
+      "support_components": 3,
+      "support_area": 19.953741542395065,
+      "down_collision_area": 11.926654489133783,
+      "down_collision_bounds": [
+        82.06003263659105,
+        141.48293161124664,
+        173.99200843733817,
+        144.71790457122512
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 45.6,
+      "support_components": 3,
+      "support_area": 20.466745885721547,
+      "down_collision_area": 12.577699780278575,
+      "down_collision_bounds": [
+        81.98501413327055,
+        141.48293161124664,
+        174.04046626451603,
+        144.7991447357827
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 45.8,
+      "support_components": 3,
+      "support_area": 21.076618922782913,
+      "down_collision_area": 13.649948704011926,
+      "down_collision_bounds": [
+        81.91753192506597,
+        141.48293161124664,
+        174.1190734522656,
+        144.83288023769035
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 3
+    },
+    {
+      "top_print_z": 46.0,
+      "support_components": 2,
+      "support_area": 19.133974271002888,
+      "down_collision_area": 11.971064367361985,
+      "down_collision_bounds": [
+        81.8329617028868,
+        141.48293161124664,
+        174.1479723936142,
+        144.83852299150894
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 46.2,
+      "support_components": 2,
+      "support_area": 19.728581248870952,
+      "down_collision_area": 12.98024410843819,
+      "down_collision_bounds": [
+        81.73077211731098,
+        141.48293161124664,
+        174.2573520023363,
+        144.85590476398576
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 46.4,
+      "support_components": 2,
+      "support_area": 17.68859781805775,
+      "down_collision_area": 11.332542150216064,
+      "down_collision_bounds": [
+        82.09289137434368,
+        141.48293161124664,
+        173.9090415077241,
+        144.86145881314326
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 46.6,
+      "support_components": 2,
+      "support_area": 16.47744875939903,
+      "down_collision_area": 10.285244226099936,
+      "down_collision_bounds": [
+        82.2192046715599,
+        141.48293161124664,
+        173.74902516561997,
+        144.85329598226838
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 46.8,
+      "support_components": 2,
+      "support_area": 15.568640816343716,
+      "down_collision_area": 9.539507171348946,
+      "down_collision_bounds": [
+        82.54604830119305,
+        141.48293161124664,
+        173.48814919343693,
+        144.85303594754004
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 47.0,
+      "support_components": 2,
+      "support_area": 14.878182623698248,
+      "down_collision_area": 9.208393755459577,
+      "down_collision_bounds": [
+        82.89239160841697,
+        141.48293161124664,
+        173.10788047848493,
+        144.86405311735754
+      ],
+      "back_nonclear_components": 2,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 47.2,
+      "support_components": 2,
+      "support_area": 13.282923004122956,
+      "down_collision_area": 8.362233658230213,
+      "down_collision_bounds": [
+        83.23895413840502,
+        141.48293161124664,
+        172.7610813784305,
+        144.89317530643356
+      ],
+      "back_nonclear_components": 2,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 47.4,
+      "support_components": 2,
+      "support_area": 10.653676663365422,
+      "down_collision_area": 7.9038172862095255,
+      "down_collision_bounds": [
+        83.76346975704661,
+        141.48293161124664,
+        172.26629421785566,
+        144.86556642292572
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 47.6,
+      "support_components": 2,
+      "support_area": 9.421528065061263,
+      "down_collision_area": 7.29636388727258,
+      "down_collision_bounds": [
+        84.11193613032724,
+        141.48293161124664,
+        171.91130200884155,
+        144.8818711960442
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 2
+    },
+    {
+      "top_print_z": 47.8,
+      "support_components": 4,
+      "support_area": 6.798932594372083,
+      "down_collision_area": 5.560690630113644,
+      "down_collision_bounds": [
+        84.45793613032724,
+        141.48293161124664,
+        171.54206386967277,
+        144.85231005654543
+      ],
+      "back_nonclear_components": 0,
+      "fwd_nonclear_components": 4
+    }
+  ],
+  "path_records": {
+    "support": 28199,
+    "model": 85047
+  },
+  "down_bad_projection_bounds": [
+    81.73077211731098,
+    99.68293161124662,
+    174.2573520023363,
+    144.89317530643356
+  ],
+  "elapsed_s": 19.303941249847412,
+  "scope": "diagnostic only; not full rigid connected support extraction proof"
+}
