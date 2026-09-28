@@ -454,9 +454,24 @@ chain_labels = {
     "cabinet-chain/cabinet_chain_rollers": {"name": "03C 滚子", "color": "#E8EDF2", "role": "purchased"},
     "cabinet-chain/cabinet_chain_pins": {"name": "03C 销轴", "color": "#B08D57", "role": "purchased"},
     "cabinet-chain/cabinet_chain_bearings": {"name": "3×6×2 轴承（装配显示/采购件）", "color": "#b9c2ca", "role": "purchased"},
+    "cabinet-chain/cabinet_chain_clutch_trigger_carrier": {
+        "name": "03C 蛇形链条·后侧圆角矩形 M5 磁铁一体拖尾（PETG）",
+        "color": "#d9933d",
+        "role": "printed",
+    },
     "cabinet-chain/cabinet_chain_clutch_trigger_magnet": {
-        "name": "蛇形链条·链节 Z− 触发磁铁（Ø2×1.8 采购件参考）",
+        "name": "蛇形链条·M5×4 触发磁铁（采购件参考）",
         "color": "#5b6670",
+        "role": "purchased",
+    },
+    "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins": {
+        "name": "03C 蛇形链条·11.50 mm 双卡槽穿销×2（现成采购件）",
+        "color": "#b08d57",
+        "role": "purchased",
+    },
+    "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip": {
+        "name": "03C 蛇形链条·双卡槽 U 形固定卡×2（现成采购件）",
+        "color": "#9aa7b6",
         "role": "purchased",
     },
 }
@@ -896,6 +911,32 @@ center_fixed_ids = {
     "cabinet-clutch/center_output_bearings_reference",
     "cabinet-clutch/center_mechanism_plate",
 }
+chain_trigger_component_specs = {
+    "cabinet-chain/cabinet_chain_clutch_trigger_carrier": {
+        "id": "carrier",
+        "role": "printed-carrier",
+        "parent": "chain-segment",
+        "mountRelation": "two-adjacent-03C-pin-bores",
+    },
+    "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins": {
+        "id": "connecting-pins",
+        "role": "purchased-extended-pins",
+        "parent": "carrier+chain-segment",
+        "mountRelation": "paired-pin-bores",
+    },
+    "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip": {
+        "id": "retaining-clips",
+        "role": "purchased-retaining-clips",
+        "parent": "connecting-pins",
+        "mountRelation": "two-groove-capture",
+    },
+    "cabinet-chain/cabinet_chain_clutch_trigger_magnet": {
+        "id": "magnet",
+        "role": "purchased-magnet",
+        "parent": "carrier",
+        "mountRelation": "rear-rounded-tail-through-seat",
+    },
+}
 front_rotary_ids = {
     "cabinet-clutch/14_front_timing_pulley_candidate",
     "cabinet-clutch/15_front_pinion_candidate",
@@ -969,6 +1010,22 @@ for part in payload.get("parts", []):
             "rotationAxis": [0, 1, 0],
             "role": "tensioner-shaft",
         }
+    trigger_spec = chain_trigger_component_specs.get(part_id)
+    if trigger_spec:
+        part["assemblyId"] = "chain-trigger-assembly"
+        part["assemblyRole"] = trigger_spec["role"]
+        part["componentMode"] = "rigid-mounted-component"
+        part["componentId"] = trigger_spec["id"]
+        part["mountRelation"] = {
+            "parent": trigger_spec["parent"],
+            "interface": trigger_spec["mountRelation"],
+            "motion": "shared-rigid-chain-segment-pose",
+        }
+        part["placement"].update({
+            "assemblyId": "chain-trigger-assembly",
+            "assemblyFrameId": "chain-source",
+            "mountRelationRef": "chainTriggerAssembly.mountRelations",
+        })
 
 # Template instances retain the authored center-native STL coordinates and use
 # an explicit world-space delta from R3C3. Keep the absolute `position` as an
@@ -1200,6 +1257,31 @@ for group_id in ordered_group_ids:
                 "皮带、前端同步轮/直齿轮/D轴、直齿排、尾部随动轴承和固定导向件均复用中心格 STL；动画按同一动力相位驱动全部15个站点，选择指只负责触发站定位。",
                 children=[part_node(template_id) for template_id in sorted(template_drawer_ids)],
             ),
+        ]
+    elif group_id == "cabinet-chain":
+        trigger_part_ids = set(chain_trigger_component_specs)
+        trigger_nodes = [
+            part_node(part_id)
+            for part_id in (
+                "cabinet-chain/cabinet_chain_clutch_trigger_carrier",
+                "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins",
+                "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip",
+                "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
+            )
+        ]
+        ordinary_nodes = [
+            part_node(str(part.get("id")))
+            for part in parts_by_group.get(group_id, [])
+            if str(part.get("id")) not in trigger_part_ids
+        ]
+        root["children"] = [
+            call_node(
+                "chain/trigger-assembly",
+                "03C 蛇形链条·触发组件（双长穿销 + 两卡簧 + 一体磁台 + M5磁铁）",
+                "一个刚性运动组件：载架的两孔套在相邻链节两根 STL-Y 加长穿销上；U 形卡扣入穿销卡槽防脱；M5×4 磁铁沿 STL-Z 装入后侧圆角矩形拖尾贯通座，由用户螺丝固定。四个 STL 仍独立可检验，但网页动画共享同一个链节中点姿态，弯道不拆散、不扭结。",
+                children=trigger_nodes,
+            ),
+            *ordinary_nodes,
         ]
     else:
         root["children"] = [

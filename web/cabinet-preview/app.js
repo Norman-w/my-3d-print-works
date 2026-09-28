@@ -6,10 +6,11 @@ import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import {
   attachCabinetChainPlay,
   focusCenterClutch,
+  focusChainTriggerEvent,
   playCenterClutchDemo,
   onPartLoaded,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=cabinet-frame-view-18";
+} from "./js/cabinet-chain-play.js?v=chain-trigger-event-view-19";
 //#endregion
 
 //#region 常量/配置
@@ -53,6 +54,7 @@ const CAMERA_VIEWS = {
   "upper-tensioner": { direction: [-1.35, 0.62, -1.08], up: [0, 1, 0] },
   "lower-tensioner": { direction: [-0.68, 0.58, -1.55], up: [0, 1, 0] },
   "center-clutch": { direction: [0.78, 0.42, -1.20], up: [0, 1, 0] },
+  "chain-trigger-event": { direction: [0.78, 0.42, -1.20], up: [0, 1, 0] },
   "cabinet-frame": { direction: [1.15, 0.82, -1.45], up: [0, 1, 0] },
   "cabinet-partition": { direction: [0, 0, -1], up: [0, 1, 0] },
 };
@@ -110,7 +112,39 @@ const CENTER_CLUTCH_CONTEXT_IDS = new Set([
   "cabinet-chain/cabinet_chain_plates",
   "cabinet-chain/cabinet_chain_rollers",
   "cabinet-chain/cabinet_chain_pins",
+  "cabinet-chain/cabinet_chain_clutch_trigger_carrier",
   "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
+  "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins",
+  "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip",
+]);
+const CHAIN_TRIGGER_EVENT_FOCUS_IDS = new Set([
+  // The shared row plate spans all five stations; it is useful as a
+  // translucent context object, but must not determine the close-up framing.
+  "cabinet-clutch/center_input_rotor",
+  "cabinet-clutch/center_output_rotor",
+  "cabinet-clutch/center_input_shaft_reference",
+  "cabinet-clutch/center_input_sleeve",
+  "cabinet-clutch/center_input_sleeve_magnet_reference",
+  "cabinet-clutch/center_linear_bearings_reference",
+  "cabinet-clutch/center_output_bearings_reference",
+  "cabinet-clutch/center_output_shaft_reference",
+  "cabinet-chain/cabinet_chain_clutch_trigger_carrier",
+  "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
+  "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins",
+  "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip",
+]);
+const CHAIN_TRIGGER_EVENT_FRAME_IDS = new Set([
+  ...CHAIN_TRIGGER_EVENT_FOCUS_IDS,
+]);
+const CHAIN_TRIGGER_EVENT_CONTEXT_IDS = new Set([
+  ...CENTER_CLUTCH_CONTEXT_IDS,
+  "cabinet-clutch/center_mechanism_plate",
+]);
+const CHAIN_TRIGGER_EVENT_CHAIN_CONTEXT_IDS = new Set([
+  "cabinet-chain/cabinet_chain_clutch_trigger_carrier",
+  "cabinet-chain/cabinet_chain_clutch_trigger_magnet",
+  "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins",
+  "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip",
 ]);
 const UPPER_TENSIONER_TAILS = new Set([
   "cabinet_clutch_column_sync_tensioner_rotor",
@@ -1293,6 +1327,15 @@ function isCenterClutchFramePart(part) {
   return CENTER_CLUTCH_FRAME_IDS.has(part?.id);
 }
 
+function isChainTriggerEventPart(part) {
+  return CHAIN_TRIGGER_EVENT_FOCUS_IDS.has(part?.id);
+}
+
+function isChainTriggerEventContext(part) {
+  return CHAIN_TRIGGER_EVENT_CONTEXT_IDS.has(part?.id)
+    || CHAIN_TRIGGER_EVENT_CHAIN_CONTEXT_IDS.has(part?.id);
+}
+
 const VIEW_PROFILES = {
   snake: {
     focus: isSnakePart,
@@ -1314,6 +1357,11 @@ const VIEW_PROFILES = {
     focus: isCenterClutchPart,
     context: isCenterClutchContext,
     frame: isCenterClutchFramePart,
+  },
+  "chain-trigger-event": {
+    focus: isChainTriggerEventPart,
+    context: isChainTriggerEventContext,
+    frame: (part) => CHAIN_TRIGGER_EVENT_FRAME_IDS.has(part?.id),
   },
   "cabinet-frame": {
     focus: isCabinetFramePart,
@@ -1474,6 +1522,7 @@ async function applyViewPreset(name) {
   state.activeView = viewName;
   updateActiveViewButton();
   if (viewName === "center-clutch") focusCenterClutch();
+  if (viewName === "chain-trigger-event") focusChainTriggerEvent();
 
   const listingParts = state.listing?.parts || [];
   const profile = VIEW_PROFILES[viewName];
@@ -1504,7 +1553,9 @@ async function applyViewPreset(name) {
     : focusIds;
   const focusBox = profile ? viewBox(frameIds.size ? frameIds : focusIds) : null;
   frameBox(focusBox || viewBox(), viewName);
-  if (viewName === "center-clutch") placeCenterClutchViewPanel();
+  if (viewName === "center-clutch" || viewName === "chain-trigger-event") {
+    placeCenterClutchViewPanel();
+  }
 }
 //#endregion
 

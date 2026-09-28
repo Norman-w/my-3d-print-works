@@ -53,6 +53,7 @@ use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../ch1_03c_long_gear_shaft.scad>
 include <../ch1_03c_gt2_clutch_pair.scad>
 include <../ch1_03c_params.scad>
+include <../parts/ch1_03c_chain_trigger_params.scad>
 include <../parts/drawer_drive_bearings.scad>
 // Reuse the purchased 03C link geometry for the chain/plate collision witness.
 // This file is library-only here; cabinet_chain.scad remains the sole assembly
@@ -4597,13 +4598,15 @@ SNAKE_CHAIN_RETURN_GUIDE_CENTER_Y_MM = 41.20;
 SNAKE_CHAIN_RETURN_DRIVE_X_TRIM_MM = -4.00;
 SNAKE_CHAIN_SERVICE_PRESS_X_TRIM_MM = 16.00;
 SNAKE_CHAIN_MOTOR_X_OFFSET_MM = -2.00;
-SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182;
-SNAKE_CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
-SNAKE_CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
+SNAKE_CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = CHAIN_TRIGGER_SEGMENT_INDEX;
+SNAKE_CHAIN_TRIGGER_MAGNET_D = CHAIN_TRIGGER_MAGNET_DIAMETER;
+SNAKE_CHAIN_TRIGGER_MAGNET_L = CHAIN_TRIGGER_MAGNET_LENGTH;
 SNAKE_CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM =
-    (h2 - SNAKE_CHAIN_TRIGGER_MAGNET_D) / 2;
-SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.00;
-SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = outer_face + 0.05;
+    CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET;
+SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM =
+    CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE;
+SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM =
+    CHAIN_TRIGGER_CARRIER_AXIAL_START_OFFSET;
 
 // The five long Y-axis spline shafts are radially captured at their lower D
 // stubs by one removable 3 mm carrier whose bottom is coplanar with the
@@ -7224,6 +7227,44 @@ echo(
         SNAKE_CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM),
     str("snakeChainTriggerMagnetAxialStartOffsetMm=",
         SNAKE_CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM),
+    str("snakeChainTriggerMagnetAxis=", CHAIN_TRIGGER_CARRIER_MAGNET_AXIS),
+    str("snakeChainTriggerCarrierPinSpacingMm=", P),
+    str("snakeChainTriggerCarrierPinDiameterMm=", d2),
+    str("snakeChainTriggerCarrierPinHoleDiameterMm=",
+        CHAIN_TRIGGER_CARRIER_PIN_HOLE_DIAMETER),
+    str("snakeChainTriggerCarrierPinLengthMm=",
+        CHAIN_TRIGGER_CARRIER_PIN_LENGTH),
+    str("snakeChainTriggerCarrierPlateThicknessMm=",
+        CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS),
+    str("snakeChainTriggerCarrierMagnetPocketDiameterMm=",
+        CHAIN_TRIGGER_MAGNET_POCKET_DIAMETER),
+    str("snakeChainTriggerCarrierMagnetLengthMm=",
+        CHAIN_TRIGGER_MAGNET_LENGTH),
+    str("snakeChainTriggerCarrierMagnetPocketDepthMm=",
+        CHAIN_TRIGGER_MAGNET_POCKET_DEPTH),
+    str("snakeChainTriggerCarrierMagnetRetentionLipMm=",
+        CHAIN_TRIGGER_MAGNET_RETENTION_LIP),
+    str("snakeChainTriggerCarrierMagnetBackWallMm=",
+        CHAIN_TRIGGER_MAGNET_BACK_WALL),
+    str("snakeChainTriggerCarrierMagnetCenterAlongLinkMm=",
+        CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_ALONG_LINK),
+    str("snakeChainTriggerCarrierMagnetCenterNormalMm=",
+        CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_NORMAL),
+    str("snakeChainTriggerCarrierMagnetAxis=", CHAIN_TRIGGER_CARRIER_MAGNET_AXIS),
+    str("snakeChainTriggerCarrierMagnetCenterReference=",
+        CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_REFERENCE),
+    str("snakeChainTriggerCarrierHardwareMode=",
+        CHAIN_TRIGGER_CARRIER_HARDWARE_MODE),
+    str("snakeChainTriggerCarrierRetainingClipThicknessMm=",
+        CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_THICKNESS),
+    str("snakeChainTriggerCarrierPart=",
+        "cabinet-chain/cabinet_chain_clutch_trigger_carrier"),
+    str("snakeChainTriggerCarrierMagnetPart=",
+        "cabinet-chain/cabinet_chain_clutch_trigger_magnet"),
+    str("snakeChainTriggerCarrierConnectingPinsPart=",
+        CHAIN_TRIGGER_CARRIER_CONNECTING_PINS_PART),
+    str("snakeChainTriggerCarrierRetainingClipPart=",
+        CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_PART),
     "chainMotherSupportReliefMode=axial-window-around-generated-guide-envelope",
     str("chainMotherSupportReliefRadialClearanceMm=",
         CENTER_CLUTCH_CHAIN_RELIEF_RADIAL_CLEARANCE),

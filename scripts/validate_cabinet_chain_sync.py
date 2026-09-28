@@ -23,7 +23,10 @@ REQUIRED_STL_NAMES = (
     "cabinet_chain_sprockets.stl",
     "cabinet_chain_idlers.stl",
     "cabinet_chain_bearings.stl",
+    "cabinet_chain_clutch_trigger_carrier.stl",
     "cabinet_chain_clutch_trigger_magnet.stl",
+    "cabinet_chain_clutch_trigger_connecting_pins.stl",
+    "cabinet_chain_clutch_trigger_retaining_clip.stl",
 )
 EXPECTED_PIN_COUNT = 260
 
@@ -106,6 +109,27 @@ def stl_component_centers(path: Path) -> list[tuple[float, float, float]]:
     ]
 
 
+def stl_bounds(path: Path) -> tuple[float, float, float]:
+    """Return the absolute STL envelope dimensions in file-axis order."""
+
+    data = path.read_bytes()
+    if len(data) < 84:
+        fail(f"链条 STL 太短: {path}")
+    triangle_count = struct.unpack_from("<I", data, 80)[0]
+    if 84 + triangle_count * 50 > len(data):
+        fail(f"链条 STL 三角形数量越界: {path}")
+    mins = [math.inf, math.inf, math.inf]
+    maxs = [-math.inf, -math.inf, -math.inf]
+    for triangle in range(triangle_count):
+        offset = 84 + triangle * 50 + 12
+        for corner in range(3):
+            vertex = struct.unpack_from("<3f", data, offset + corner * 12)
+            for axis, value in enumerate(vertex):
+                mins[axis] = min(mins[axis], value)
+                maxs[axis] = max(maxs[axis], value)
+    return tuple(maximum - minimum for minimum, maximum in zip(mins, maxs))
+
+
 def audit_chain_axis_seating(
     payload: dict,
     stl_dir: Path,
@@ -125,18 +149,30 @@ def audit_chain_axis_seating(
     max_error = 0.0
     component_counts = {}
     for name, expected_per_pin in (("rollers", 2), ("pins", 1)):
-        path = stl_dir / f"cabinet_chain_{name}.stl"
-        centers = stl_component_centers(path)
+        paths = [stl_dir / f"cabinet_chain_{name}.stl"]
+        if name == "pins":
+            # The two trigger positions are intentionally removed from the
+            # ordinary pin STL. Count the existing purchased grooved pair as
+            # the two physical pin islands at those same path positions.
+            paths.append(stl_dir / "cabinet_chain_clutch_trigger_connecting_pins.stl")
+        centers = [center for path in paths for center in stl_component_centers(path)]
         component_counts[name] = len(centers)
         for center in centers:
             nearest_index, nearest_error = min(
                 (
                     (
                         index,
-                        math.sqrt(
-                            (center[0] - float(pin[0])) ** 2
-                            + (center[1] - chain_y) ** 2
-                            + (center[2] - float(pin[1])) ** 2
+                        (
+                            math.hypot(
+                                center[0] - float(pin[0]),
+                                center[2] - float(pin[1]),
+                            )
+                            if name == "pins"
+                            else math.sqrt(
+                                (center[0] - float(pin[0])) ** 2
+                                + (center[1] - chain_y) ** 2
+                                + (center[2] - float(pin[1])) ** 2
+                            )
                         ),
                     )
                     for index, pin in enumerate(pins)
@@ -285,8 +321,14 @@ def main() -> int:
     center = payload.get("centerClutch")
     datum = payload.get("chainTopDatum")
     trigger = payload.get("chainTriggerMagnet")
-    if not isinstance(center, dict) or not isinstance(datum, dict) or not isinstance(trigger, dict):
-        fail("缺少中心离合/蛇链磁铁高度契约")
+    carrier = payload.get("chainTriggerCarrier")
+    if (
+        not isinstance(center, dict)
+        or not isinstance(datum, dict)
+        or not isinstance(trigger, dict)
+        or not isinstance(carrier, dict)
+    ):
+        fail("缺少中心离合/蛇链 M5 双销载架高度契约")
     try:
         shift = float(payload["chainVerticalShiftMm"])
         contract_shift = float(center["snakeChainVerticalShiftMm"])
@@ -301,8 +343,27 @@ def main() -> int:
         trigger_d = float(trigger["diameterMm"])
         trigger_l = float(trigger["lengthMm"])
         trigger_top_clearance = float(trigger["topClearanceMm"])
+        carrier_segment = int(carrier["segmentIndex"])
+        carrier_pin_spacing = float(carrier["pinSpacingMm"])
+        carrier_pin_diameter = float(carrier["pinDiameterMm"])
+        carrier_pin_hole = float(carrier["pinHoleDiameterMm"])
+        carrier_pin_length = float(carrier["pinLengthMm"])
+        carrier_plate_thickness = float(carrier["plateThicknessMm"])
+        carrier_magnet_diameter = float(carrier["magnetDiameterMm"])
+        carrier_magnet_length = float(carrier["magnetLengthMm"])
+        carrier_pocket_diameter = float(carrier["magnetPocketDiameterMm"])
+        carrier_pocket_depth = float(carrier["magnetPocketDepthMm"])
+        carrier_lip = float(carrier["magnetRetentionLipMm"])
+        carrier_back_wall = float(carrier["magnetBackWallMm"])
+        carrier_center_along = float(carrier["magnetCenterAlongLinkMm"])
+        carrier_center_normal = float(carrier["magnetCenterNormalMm"])
+        trigger_axis = str(trigger["axis"])
+        carrier_axis = str(carrier["magnetAxis"])
+        carrier_center_reference = str(carrier["magnetCenterReference"])
+        carrier_hardware_mode = str(carrier["hardwareMode"])
+        carrier_clip_thickness = float(carrier["retainingClipThicknessMm"])
     except (KeyError, TypeError, ValueError) as exc:
-        fail(f"蛇链磁铁高度契约字段无效: {exc}")
+        fail(f"蛇链 M5 双销载架契约字段无效: {exc}")
     if abs(shift - contract_shift) > 0.001:
         fail("链条高度偏移与中心离合契约不一致")
     if datum.get("mode") != "input-sleeve-magnet-bottom":
@@ -317,10 +378,123 @@ def main() -> int:
         fail(f"底部回程导向轮侵入箱底，余量={floor_clearance:.3f} mm")
     if trigger_index < 0 or trigger_index >= len(pins):
         fail(f"触发磁铁节号越界: {trigger_index}")
-    if abs(trigger_d - 2.0) > 0.001 or abs(trigger_l - 1.8) > 0.001:
-        fail("链节触发磁铁必须为 Ø2×1.8 采购件参考")
+    if abs(trigger_d - 5.0) > 0.001 or abs(trigger_l - 4.00) > 0.001:
+        fail("链节触发磁铁必须为 M5×4 采购件参考")
     if abs(trigger_top_clearance) > 0.001:
         fail("链节触发磁铁上沿没有锁定到链节上沿基准")
+    if carrier_segment != trigger_index:
+        fail("M5 载架与磁铁没有使用同一个链节节号")
+    expected_carrier = {
+        "pinSpacingMm": (carrier_pin_spacing, 4.7625),
+        "pinDiameterMm": (carrier_pin_diameter, 1.62),
+        "pinHoleDiameterMm": (carrier_pin_hole, 1.80),
+        "pinLengthMm": (carrier_pin_length, 11.50),
+        "plateThicknessMm": (carrier_plate_thickness, 4.00),
+        "magnetDiameterMm": (carrier_magnet_diameter, 5.00),
+        "magnetLengthMm": (carrier_magnet_length, 4.00),
+        "magnetPocketDiameterMm": (carrier_pocket_diameter, 5.25),
+        "magnetPocketDepthMm": (carrier_pocket_depth, 4.00),
+        "magnetRetentionLipMm": (carrier_lip, 0.00),
+        "magnetBackWallMm": (carrier_back_wall, 0.00),
+        "magnetCenterNormalMm": (carrier_center_normal, 0.00),
+    }
+    for field, (actual, expected) in expected_carrier.items():
+        if abs(actual - expected) > 0.001:
+            fail(f"M5 双销载架字段错误: {field}={actual:.6f}, expected={expected:.6f}")
+    if carrier_center_along <= 0:
+        fail("M5 磁铁必须位于第二销外侧的圆角拖尾内")
+    if carrier.get("mounting") != "two-adjacent-03C-pins-side-hung":
+        fail("M5 载架安装方式不是相邻两根 03C 销轴侧挂")
+    if carrier.get("partId") != "cabinet-chain/cabinet_chain_clutch_trigger_carrier":
+        fail("M5 双销载架 partId 错误")
+    if carrier.get("magnetPartId") != "cabinet-chain/cabinet_chain_clutch_trigger_magnet":
+        fail("M5 磁铁 partId 错误")
+    if trigger_axis != "stl-Z" or carrier_axis != "stl-Z":
+        fail("M5 触发磁铁导出 STL 轴线必须是 STL Z")
+    if carrier_center_reference != "rear-rounded-tail-hole-center":
+        fail("M5 拖尾磁铁座必须以后侧圆角矩形磁铁座为 X 基准")
+    if carrier_hardware_mode != "purchased-03C-extended-pin-pair-plus-two-U-clips":
+        fail("M5 触发件必须使用现成加长双卡槽穿销与两片 U 形卡")
+    if abs(carrier_clip_thickness - 0.60) > 0.001:
+        fail(f"U 形卡厚度错误: {carrier_clip_thickness:.6f}")
+    if carrier.get("connectingPinsPartId") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins"
+    ):
+        fail("现成加长穿销 partId 错误")
+    if carrier.get("retainingClipPartId") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip"
+    ):
+        fail("现成 U 形卡 partId 错误")
+
+    assembly = payload.get("chainTriggerAssembly")
+    if not isinstance(assembly, dict):
+        fail("运动契约缺少 chainTriggerAssembly 刚性组件关系")
+    if assembly.get("id") != "chain-trigger-assembly":
+        fail("chainTriggerAssembly id 错误")
+    if assembly.get("componentMode") != "rigid-mounted":
+        fail("chainTriggerAssembly 必须是 rigid-mounted")
+    path_mount = assembly.get("pathMount") or {}
+    if path_mount.get("type") != "chain-segment" \
+            or int(path_mount.get("segmentIndex", -1)) != trigger_index \
+            or path_mount.get("pinAxis") != "stl-Y" \
+            or path_mount.get("follow") != "segment-midpoint":
+        fail("chainTriggerAssembly 链节挂载基准错误")
+    component_ids = {
+        str(component.get("id"))
+        for component in assembly.get("components", [])
+        if isinstance(component, dict)
+    }
+    if component_ids != {"carrier", "connecting-pins", "retaining-clips", "magnet"}:
+        fail("chainTriggerAssembly 组件集合必须包含载架/穿销/卡簧/磁铁")
+    relations = {
+        (str(relation.get("parent")), str(relation.get("child")), str(relation.get("interface")))
+        for relation in assembly.get("mountRelations", [])
+        if isinstance(relation, dict)
+    }
+    required_relations = {
+        ("chain-segment", "carrier", "two-adjacent-03C-pin-bores"),
+        ("carrier", "connecting-pins", "paired-pin-bores"),
+        ("connecting-pins", "retaining-clips", "two-groove-capture"),
+        ("carrier", "magnet", "rear-rounded-tail-through-seat"),
+    }
+    if not required_relations.issubset(relations):
+        fail("chainTriggerAssembly 缺少完整的父子挂载关系")
+    animation = assembly.get("animation") or {}
+    if animation.get("mode") != "rigid-follow-segment" \
+            or animation.get("allComponentsSharePose") is not True:
+        fail("chainTriggerAssembly 动画必须是单刚性姿态")
+
+    carrier_path = args.stl_dir / "cabinet_chain_clutch_trigger_carrier.stl"
+    magnet_path = args.stl_dir / "cabinet_chain_clutch_trigger_magnet.stl"
+    carrier_bounds = stl_bounds(carrier_path)
+    magnet_bounds = stl_bounds(magnet_path)
+    if carrier_bounds[0] < 16.0 or carrier_bounds[1] < 3.8 or carrier_bounds[2] < 3.8:
+        fail(f"M5 双销载架包络过小，疑似导出错件: bounds={carrier_bounds!r}")
+    if (
+        abs(magnet_bounds[0] - 5.00) > 0.02
+        or abs(magnet_bounds[1] - 5.00) > 0.02
+        or abs(magnet_bounds[2] - 4.00) > 0.02
+    ):
+        fail(
+            "M5 磁铁参考 STL 必须是 X/Y=Ø5、Z=4.00 的轴向: "
+            f"bounds={magnet_bounds!r}"
+        )
+    connecting_pin_bounds = stl_bounds(
+        args.stl_dir / "cabinet_chain_clutch_trigger_connecting_pins.stl"
+    )
+    if abs(connecting_pin_bounds[1] - 11.50) > 0.02:
+        fail(
+            "现成加长穿销 Y 向总长错误: "
+            f"bounds={connecting_pin_bounds!r}"
+        )
+    clip_bounds = stl_bounds(
+        args.stl_dir / "cabinet_chain_clutch_trigger_retaining_clip.stl"
+    )
+    # The exported reference intentionally contains two U clips at the two
+    # grooves. Their combined Y span is the 03C plate stack plus two 0.60 mm
+    # clip sections, not a single 0.60 mm solid.
+    if abs(clip_bounds[1] - 5.20) > 0.02 or abs(clip_bounds[2] - 4.30) > 0.02:
+        fail(f"现成双 U 形卡包络错误: bounds={clip_bounds!r}")
 
     motion_mtime = args.motion.stat().st_mtime_ns
     stale = []
@@ -339,6 +513,7 @@ def main() -> int:
         f"drive={drive_teeth}T idlers={len(idlers)}×{guide_teeth}T "
         f"chainY={float(payload.get('chainY', 0)):.3f} "
         f"verticalShift={shift:.3f} triggerSegment={trigger_index} "
+        f"triggerCarrier=M5x{carrier_magnet_length:.2f}/2pins "
         f"axisSeating=outerRollers:{roller_count}/bushings:{roller_count}/"
         f"pins:{pin_components}/ringComponents:{roller_ring_components} "
         f"maxAxisError={axis_error:.4f}mm"

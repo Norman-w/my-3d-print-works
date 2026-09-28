@@ -159,6 +159,27 @@ REQUIRED = {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
+    "snakeChainTriggerMagnetAxis",
+    "snakeChainTriggerCarrierPinSpacingMm",
+    "snakeChainTriggerCarrierPinDiameterMm",
+    "snakeChainTriggerCarrierPinHoleDiameterMm",
+    "snakeChainTriggerCarrierPinLengthMm",
+    "snakeChainTriggerCarrierPlateThicknessMm",
+    "snakeChainTriggerCarrierMagnetPocketDiameterMm",
+    "snakeChainTriggerCarrierMagnetLengthMm",
+    "snakeChainTriggerCarrierMagnetPocketDepthMm",
+    "snakeChainTriggerCarrierMagnetRetentionLipMm",
+    "snakeChainTriggerCarrierMagnetBackWallMm",
+    "snakeChainTriggerCarrierMagnetCenterAlongLinkMm",
+    "snakeChainTriggerCarrierMagnetCenterNormalMm",
+    "snakeChainTriggerCarrierMagnetAxis",
+    "snakeChainTriggerCarrierMagnetCenterReference",
+    "snakeChainTriggerCarrierHardwareMode",
+    "snakeChainTriggerCarrierRetainingClipThicknessMm",
+    "snakeChainTriggerCarrierPart",
+    "snakeChainTriggerCarrierMagnetPart",
+    "snakeChainTriggerCarrierConnectingPinsPart",
+    "snakeChainTriggerCarrierRetainingClipPart",
     "chainMotherSupportReliefMode",
     "chainMotherSupportReliefRadialClearanceMm",
     "chainMotherSupportReliefAxialClearanceMm",
@@ -1330,20 +1351,20 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(
         contract,
         "snakeChainTriggerMagnetDiameterMm",
-        2.0,
+        5.0,
         "蛇链触发磁铁直径",
     )
     expect(
         contract,
         "snakeChainTriggerMagnetLengthMm",
-        1.8,
+        4.00,
         "蛇链触发磁铁长度",
     )
     expect(
         contract,
         "snakeChainTriggerMagnetNormalOffsetMm",
-        1.15,
-        "蛇链触发磁铁上沿偏移",
+        0.00,
+        "蛇链触发磁铁中心线偏移",
     )
     expect(
         contract,
@@ -1354,11 +1375,101 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(
         contract,
         "snakeChainTriggerMagnetAxialStartOffsetMm",
-        2.44,
+        2.39,
         "蛇链触发磁铁轴向起点",
     )
     if n(contract, "snakeChainTriggerMagnetSegmentIndex") != 182:
         raise RuntimeError("蛇链触发磁铁节号必须落在中心服务直线段 182")
+    expect(
+        contract,
+        "snakeChainTriggerCarrierPinSpacingMm",
+        4.7625,
+        "蛇链触发载架双销节距",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierPinDiameterMm",
+        1.62,
+        "蛇链触发载架长销直径",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierPinHoleDiameterMm",
+        1.80,
+        "蛇链触发载架长销孔径",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierPinLengthMm",
+        11.50,
+        "蛇链触发载架长销长度",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierPlateThicknessMm",
+        4.00,
+        "蛇链触发载架根部厚度（跟随 M5×4 磁铁变薄）",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierMagnetPocketDiameterMm",
+        5.25,
+        "蛇链触发载架 M5 磁铁孔径",
+    )
+    expect(
+        contract,
+        "snakeChainTriggerCarrierMagnetLengthMm",
+        4.00,
+        "蛇链触发载架磁铁长度",
+    )
+    if n(contract, "snakeChainTriggerCarrierMagnetPocketDepthMm") < 4.00:
+        raise RuntimeError("蛇链触发载架磁铁孔深不足")
+    if abs(n(contract, "snakeChainTriggerCarrierMagnetRetentionLipMm")) > 0.001:
+        raise RuntimeError("蛇链触发载架不应保留打印压边，磁铁由用户螺丝固定")
+    if abs(n(contract, "snakeChainTriggerCarrierMagnetBackWallMm")) > 0.001:
+        raise RuntimeError("蛇链触发载架不应保留打印底壁，磁铁座必须贯通")
+    if n(contract, "snakeChainTriggerCarrierMagnetCenterAlongLinkMm") <= 0:
+        raise RuntimeError("蛇链触发磁铁必须位于第二销外侧的圆角拖尾内")
+    expect(
+        contract,
+        "snakeChainTriggerCarrierMagnetCenterNormalMm",
+        0.00,
+        "蛇链触发载架磁铁与 8 字根部共线中心",
+    )
+    if contract.get("snakeChainTriggerMagnetAxis") != "stl-Z":
+        raise RuntimeError("蛇链触发磁铁导出 STL 轴线必须是 STL Z")
+    if contract.get("snakeChainTriggerCarrierMagnetAxis") != "stl-Z":
+        raise RuntimeError("蛇链触发载架磁铁导出 STL 轴线必须是 STL Z")
+    if contract.get("snakeChainTriggerCarrierMagnetCenterReference") != (
+        "rear-rounded-tail-hole-center"
+    ):
+        raise RuntimeError("蛇链触发磁铁 X 基准必须是后侧圆角拖尾的磁铁座中心")
+    if contract.get("snakeChainTriggerCarrierHardwareMode") != (
+        "purchased-03C-extended-pin-pair-plus-two-U-clips"
+    ):
+        raise RuntimeError("蛇链触发件必须使用现成加长双卡槽穿销与两片 U 形卡")
+    expect(
+        contract,
+        "snakeChainTriggerCarrierRetainingClipThicknessMm",
+        0.60,
+        "蛇链触发 U 形卡厚度",
+    )
+    if contract.get("snakeChainTriggerCarrierPart") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_carrier"
+    ):
+        raise RuntimeError("蛇链触发载架 STL 角色错误")
+    if contract.get("snakeChainTriggerCarrierMagnetPart") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_magnet"
+    ):
+        raise RuntimeError("蛇链触发载架磁铁角色错误")
+    if contract.get("snakeChainTriggerCarrierConnectingPinsPart") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins"
+    ):
+        raise RuntimeError("蛇链触发加长穿销角色错误")
+    if contract.get("snakeChainTriggerCarrierRetainingClipPart") != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip"
+    ):
+        raise RuntimeError("蛇链触发 U 形卡角色错误")
 
     if abs(n(contract, "bearingReferenceCenterOffsetMm")) > 0.001:
         raise RuntimeError("输出轴承参考件必须与长方条轴承孔同心")

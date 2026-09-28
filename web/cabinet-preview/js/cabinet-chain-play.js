@@ -11,6 +11,12 @@ const CHAIN_IDS = new Set([
   "cabinet-chain/cabinet_chain_pins",
 ]);
 const CHAIN_TRIGGER_MAGNET_ID = "cabinet-chain/cabinet_chain_clutch_trigger_magnet";
+const CHAIN_TRIGGER_CARRIER_ID = "cabinet-chain/cabinet_chain_clutch_trigger_carrier";
+const CHAIN_TRIGGER_CONNECTING_PINS_ID =
+  "cabinet-chain/cabinet_chain_clutch_trigger_connecting_pins";
+const CHAIN_TRIGGER_RETAINING_CLIP_ID =
+  "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip";
+const CHAIN_TRIGGER_ASSEMBLY_ID = "chain-trigger-assembly";
 const PLATE_TEMPLATE_SEGMENTS = {
   // These are straight, ordinary links in the canonical 5x3 path.  Taking
   // templates from the straight run avoids using corner triangles twice when
@@ -136,6 +142,14 @@ const play = {
   motion: null,
   path: null,
   chain: /** @type {ChainPart[]} */ ([]),
+  // The printed carrier, two purchased long pins, two retaining clips, and
+  // the M5 magnet are four render items but one rigid mechanical component.
+  // Only this pivot is animated; its children keep their exported relative
+  // positions while the pivot follows the selected chain segment.
+  chainTriggerAssembly: /** @type {{spec:any,group:THREE.Group,part:ChainPart,boundIds:Set<string>}|null} */ (null),
+  // The dedicated trigger-event view freezes the chain at the actual station
+  // datum instead of leaving the one authored trigger at its export phase.
+  triggerEventViewRequested: false,
   wheels: /** @type {WheelPivot[]} */ ([]),
   bearingRotaries: /** @type {BearingPivot[]} */ ([]),
   motorShafts: /** @type {MotorShaftPivot[]} */ ([]),
@@ -283,7 +297,17 @@ function validateChainAxisCounts(itemId, counts) {
   const expected = itemId.endsWith("cabinet_chain_rollers") ? 2 : 1;
   const bad = counts
     .map((count, index) => ({ count, index }))
-    .filter(({ count }) => count !== expected);
+    .filter(({ count, index }) => {
+      // The ordinary pin STL omits the two trigger positions; the purchased
+      // grooved pair is bound separately as one rigid trigger assembly.
+      if (itemId.endsWith("cabinet_chain_pins")
+          && (index === Number(play.motion?.chainTriggerCarrier?.segmentIndex)
+            || index === (Number(play.motion?.chainTriggerCarrier?.segmentIndex) + 1)
+              % (play.path?.count || 260))) {
+        return count !== 0;
+      }
+      return count !== expected;
+    });
   if (bad.length) {
     const sample = bad.slice(0, 6)
       .map(({ index, count }) => `${index}:${count}`)
@@ -527,6 +551,20 @@ function validateCenterClutchContract(contract) {
     "snakeChainTriggerMagnetNormalOffsetMm",
     "snakeChainTriggerMagnetTopClearanceMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm",
+    "snakeChainTriggerCarrierPinSpacingMm",
+    "snakeChainTriggerCarrierPinDiameterMm",
+    "snakeChainTriggerCarrierPinHoleDiameterMm",
+    "snakeChainTriggerCarrierPinLengthMm",
+    "snakeChainTriggerCarrierPlateThicknessMm",
+    "snakeChainTriggerCarrierMagnetPocketDiameterMm",
+    "snakeChainTriggerCarrierMagnetLengthMm",
+    "snakeChainTriggerCarrierMagnetPocketDepthMm",
+    "snakeChainTriggerCarrierMagnetRetentionLipMm",
+    "snakeChainTriggerCarrierMagnetBackWallMm",
+    "snakeChainTriggerCarrierMagnetCenterAlongLinkMm",
+    "snakeChainTriggerCarrierMagnetCenterNormalMm",
+    "snakeChainTriggerCarrierPart",
+    "snakeChainTriggerCarrierMagnetPart",
     "inputShaftPart", "inputSleevePart", "inputSleeveMagnetPart",
     "outputShaftStartMm", "outputShaftLengthMm", "outputShaftProfile",
     "outputShaftDStartMm", "outputShaftDLengthMm",
@@ -641,6 +679,16 @@ function validateCenterClutchContract(contract) {
     mechanismPlatePart: "cabinet-clutch/center_mechanism_plate",
     outputShaftPart: "cabinet-clutch/center_output_shaft_reference",
     outputBearingsPart: "cabinet-clutch/center_output_bearings_reference",
+    snakeChainTriggerCarrierPart: CHAIN_TRIGGER_CARRIER_ID,
+    snakeChainTriggerCarrierMagnetPart: CHAIN_TRIGGER_MAGNET_ID,
+    snakeChainTriggerCarrierConnectingPinsPart: CHAIN_TRIGGER_CONNECTING_PINS_ID,
+    snakeChainTriggerCarrierRetainingClipPart: CHAIN_TRIGGER_RETAINING_CLIP_ID,
+    snakeChainTriggerMagnetAxis: "stl-Z",
+    snakeChainTriggerCarrierMagnetAxis: "stl-Z",
+    snakeChainTriggerCarrierMagnetCenterReference:
+      "rear-rounded-tail-hole-center",
+    snakeChainTriggerCarrierHardwareMode:
+      "purchased-03C-extended-pin-pair-plus-two-U-clips",
     bearingNominal: "3x6x2",
     outputBearingSupportPart: "cabinet-clutch/center_mechanism_plate",
     outputShaftProfile: "D-round",
@@ -701,8 +749,16 @@ function validateCenterClutchContract(contract) {
     "snakeChainLinkTopOffsetMm", "snakeChainReferencePathCenterYMm",
     "snakeChainServicePathCenterYMm", "snakeChainReturnGuideCenterYMm",
     "snakeChainTriggerMagnetDiameterMm",
-    "snakeChainTriggerMagnetLengthMm", "snakeChainTriggerMagnetNormalOffsetMm",
+    "snakeChainTriggerMagnetLengthMm",
     "snakeChainTriggerMagnetAxialStartOffsetMm", "outputShaftLengthMm",
+    "snakeChainTriggerCarrierPinSpacingMm", "snakeChainTriggerCarrierPinDiameterMm",
+    "snakeChainTriggerCarrierPinHoleDiameterMm", "snakeChainTriggerCarrierPinLengthMm",
+    "snakeChainTriggerCarrierPlateThicknessMm",
+    "snakeChainTriggerCarrierMagnetPocketDiameterMm",
+    "snakeChainTriggerCarrierMagnetLengthMm",
+    "snakeChainTriggerCarrierMagnetPocketDepthMm",
+    "snakeChainTriggerCarrierMagnetRetentionLipMm",
+    "snakeChainTriggerCarrierMagnetBackWallMm",
     "bearingSeatDiameterMm", "bearingSeatDepthMm",
     "bearingPairSpacingMm", "outputShaftDLengthMm",
     "outputShaftRoundLengthMm", "outputShaftRoundDiameterMm",
@@ -860,13 +916,33 @@ function validateCenterClutchContract(contract) {
       || !close(n("snakeChainServicePressXTrimMm"), 16.00)
       || !close(n("snakeChainMotorXOffsetMm"), -2.00)
       || !close(n("snakeChainLinkTopOffsetMm"), 2.15)
-      || !close(n("snakeChainTriggerMagnetDiameterMm"), 2.0)
-      || !close(n("snakeChainTriggerMagnetLengthMm"), 1.8)
-      || !close(n("snakeChainTriggerMagnetNormalOffsetMm"), 1.15)
+      || !close(n("snakeChainTriggerMagnetDiameterMm"), 5.0)
+      || !close(n("snakeChainTriggerMagnetLengthMm"), 4.00)
+      || !close(n("snakeChainTriggerMagnetNormalOffsetMm"), 0)
       || !close(n("snakeChainTriggerMagnetTopClearanceMm"), 0)
-      || !close(n("snakeChainTriggerMagnetAxialStartOffsetMm"), 2.44)
+      || !close(n("snakeChainTriggerMagnetAxialStartOffsetMm"), 2.39)
+      || !close(n("snakeChainTriggerCarrierPinSpacingMm"), 4.7625)
+      || !close(n("snakeChainTriggerCarrierPinDiameterMm"), 1.62)
+      || !close(n("snakeChainTriggerCarrierPinHoleDiameterMm"), 1.80)
+      || !close(n("snakeChainTriggerCarrierPinLengthMm"), 11.50)
+      || !close(n("snakeChainTriggerCarrierPlateThicknessMm"), 4.00)
+      || !close(n("snakeChainTriggerCarrierMagnetPocketDiameterMm"), 5.25)
+      || !close(n("snakeChainTriggerCarrierMagnetLengthMm"), 4.00)
+      || !close(n("snakeChainTriggerCarrierMagnetPocketDepthMm"), 4.00)
+      || !close(n("snakeChainTriggerCarrierMagnetRetentionLipMm"), 0.00)
+      || !close(n("snakeChainTriggerCarrierMagnetBackWallMm"), 0.00)
+      || !close(n("snakeChainTriggerCarrierMagnetCenterNormalMm"), 0)
       || n("snakeChainTriggerMagnetSegmentIndex") !== 182) {
     throw new Error("蛇链服务层与公轮底部磁铁下沿的高度契约不满足");
+  }
+  if (n("snakeChainTriggerCarrierMagnetCenterAlongLinkMm") <= 0
+      || contract.snakeChainTriggerMagnetAxis !== "stl-Z"
+      || contract.snakeChainTriggerCarrierMagnetAxis !== "stl-Z"
+      || contract.snakeChainTriggerCarrierMagnetCenterReference
+        !== "rear-rounded-tail-hole-center"
+      || contract.snakeChainTriggerCarrierHardwareMode
+        !== "purchased-03C-extended-pin-pair-plus-two-U-clips") {
+    throw new Error("蛇链触发件必须是后侧圆角拖尾、STL-Z 外侧磁铁和双卡槽现成五金装配");
   }
   if (n("frontTimingPulleyDrawerRow") !== n("centerRow") - 1
       || !close(n("frontPinionCenterYMm"), n("drawerRackYMm"))
@@ -2207,7 +2283,12 @@ function initScheme1Motion() {
   play.scheme1.cycleStartOutputTurns = Array.from({ length: stations.length }, () => 0);
   play.scheme1.cycleProgressTurns = 0;
   play.scheme1.ready = true;
-  if (play.centerViewRequested && snapScheme1ToCenter()) {
+  if (play.triggerEventViewRequested && snapScheme1ToCenter()) {
+    const event = alignChainTriggerToCenter();
+    scheme1Status(event
+      ? `触发预览 · 中心格磁铁已对准 · 链条姿态 ${event.tangentAngleDeg.toFixed(0)}° · 沿 ${event.direction}`
+      : "触发预览 · 中心格对准失败");
+  } else if (play.centerViewRequested && snapScheme1ToCenter()) {
     scheme1Status("首件视角 · 三层柜体中心格触发基准已对准 · 开位");
   } else {
     scheme1Status(`选择指待机 · R${stations[start].row + 1}C${stations[start].col + 1}`);
@@ -2237,6 +2318,50 @@ function snapScheme1ToCenter() {
   scheme.cycleProgressTurns = 0;
   play.motorTurns = 0;
   return true;
+}
+
+function alignChainTriggerToCenter() {
+  const scheme = play.scheme1;
+  const motion = play.motion;
+  if (!scheme.ready || !motion || !play.path) return null;
+  const station = scheme.stations.find((candidate) => (
+    Number(candidate.row) === CURRENT_CLUTCH_ROW
+      && Number(candidate.col) === CURRENT_CLUTCH_COL
+  ));
+  const triggerSpec = motion.chainTriggerAssembly;
+  const triggerCarrier = motion.chainTriggerCarrier;
+  const segmentIndex = Number(triggerSpec?.pathMount?.segmentIndex);
+  const sourceSegment = play.path.segs?.[segmentIndex];
+  if (!station || !sourceSegment || !triggerCarrier) return null;
+
+  // The carrier's magnet is authored at a longitudinal offset from the
+  // segment midpoint. Move the midpoint by the inverse offset so the magnet,
+  // not merely the two support pins, lands on the clutch magnet datum.
+  const target = projectPoint(play.path, station.x, motion.chainY, station.z);
+  const magnetAlong = Number(triggerCarrier.magnetCenterAlongLinkMm) || 0;
+  const sourceAnchorS = sourceSegment.s0 + sourceSegment.len / 2;
+  const desiredAnchorS = target.s - magnetAlong;
+  const phaseOffsetMm = wrapPathS(desiredAnchorS - sourceAnchorS);
+  const driveTeeth = Number(motion.driveTeeth) || 12;
+  const pitch = chainPitchMm();
+  play.motorTurns = phaseOffsetMm / (driveTeeth * pitch);
+
+  const tangent = target.tangent || [1, 0, 0];
+  const tangentAngleDeg = Math.atan2(tangent[2], tangent[0]) * 180 / Math.PI;
+  const normalizedAngle = ((tangentAngleDeg % 360) + 360) % 360;
+  const direction = Math.abs(normalizedAngle - 180) < 0.001
+    ? "X−"
+    : Math.abs(normalizedAngle) < 0.001 || Math.abs(normalizedAngle - 360) < 0.001
+      ? "X+"
+      : `切线 ${normalizedAngle.toFixed(1)}°`;
+  const offsetMm = chainOffsetMm();
+  for (const part of play.chain) poseChainPart(part, offsetMm);
+  return {
+    station,
+    phaseOffsetMm,
+    tangentAngleDeg: normalizedAngle,
+    direction,
+  };
 }
 
 function setScheme1Phase(phase) {
@@ -2588,17 +2713,62 @@ async function bindChainMesh(item) {
   replaceMesh(item, group);
 }
 
-async function bindChainTriggerMagnetMesh(item) {
-  if (!play.path || !item.mesh?.isMesh || !playScene()) return;
-  const motion = play.motion;
-  const trigger = motion?.chainTriggerMagnet;
-  const segmentIndex = Number(trigger?.segmentIndex ?? 182);
-  const seg = play.path.segs[segmentIndex];
-  if (!seg) throw new Error(`触发磁铁路径节不存在: ${segmentIndex}`);
+function ensureChainTriggerAssembly() {
+  const spec = play.motion?.chainTriggerAssembly;
+  if (!spec || spec.id !== CHAIN_TRIGGER_ASSEMBLY_ID) {
+    throw new Error("运动契约缺少 chain-trigger-assembly 刚性组件");
+  }
+  const segmentIndex = Number(spec.pathMount?.segmentIndex);
+  const seg = play.path?.segs?.[segmentIndex];
+  if (!seg) throw new Error(`触发组件路径节不存在: ${segmentIndex}`);
+  if (play.chainTriggerAssembly) {
+    if (play.chainTriggerAssembly.spec !== spec) {
+      throw new Error("触发组件重复挂载到不同运动契约");
+    }
+    return play.chainTriggerAssembly;
+  }
 
-  const geometry = item.mesh.geometry;
+  const parent = playScene();
+  const group = new THREE.Group();
+  group.name = `chain-trigger-assembly:${CHAIN_TRIGGER_ASSEMBLY_ID}`;
+  group.userData.assemblyId = CHAIN_TRIGGER_ASSEMBLY_ID;
+  group.userData.mountRelation = spec.mountRelations || [];
+  parent.add(group);
+  const restYaw = Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]);
+  const part = {
+    group,
+    // The trigger carrier spans the two adjacent pin centers.  A half-span
+    // makes the pivot follow the segment midpoint, not the first pin.
+    s: seg.s0 + seg.len / 2,
+    along: 0,
+    side: 0,
+    lift: 0,
+    restYaw,
+    halfSpan: (Number(play.motion?.p) || seg.len) / 2,
+    scaleAlong: false,
+  };
+  play.chain.push(part);
+  play.chainTriggerAssembly = {
+    spec,
+    group,
+    part,
+    boundIds: new Set(),
+  };
+  poseChainPart(part, chainOffsetMm());
+  return play.chainTriggerAssembly;
+}
+
+async function bindChainTriggerAssemblyPartMesh(item) {
+  if (!play.path || !item.mesh?.isMesh || !playScene()) return;
+  const assembly = ensureChainTriggerAssembly();
+  if (assembly.boundIds.has(item.part.id)) return;
+
+  const sourceMesh = item.mesh;
+  const geometry = sourceMesh.geometry;
   geometry.computeBoundingBox();
   const center = geometry.boundingBox.getCenter(new THREE.Vector3());
+  const segmentIndex = Number(assembly.spec.pathMount.segmentIndex);
+  const seg = play.path.segs[segmentIndex];
   const anchor = [
     (seg.a[0] + seg.b[0]) / 2,
     (seg.a[1] + seg.b[1]) / 2,
@@ -2607,32 +2777,49 @@ async function bindChainTriggerMagnetMesh(item) {
   const tangent = normalize(sub(seg.b, seg.a));
   const normal = [-tangent[2], 0, tangent[0]];
   const delta = [center.x - anchor[0], center.y - anchor[1], center.z - anchor[2]];
+  const along = delta[0] * tangent[0] + delta[2] * tangent[2];
   const side = delta[0] * normal[0] + delta[2] * normal[2];
-  const geometryMaterial = item.mesh.material;
-  geometry.translate(-center.x, -center.y, -center.z);
 
-  const pivot = new THREE.Group();
-  pivot.add(new THREE.Mesh(geometry, geometryMaterial));
-  const group = new THREE.Group();
-  group.name = "chain-clutch-trigger-magnet-animated";
-  group.add(pivot);
-  const part = {
-    group: pivot,
-    s: seg.s0 + seg.len / 2,
-    along: 0,
-    side,
-    // The authored chain axial offset is source Y. It is intentionally kept
-    // as lift here: chainRoot maps source +Y to browser/world Z-.
-    lift: delta[1],
-    restYaw: Math.atan2(seg.b[2] - seg.a[2], seg.b[0] - seg.a[0]),
-    halfSpan: 0,
-    pinIndex: segmentIndex,
-    scaleAlong: false,
-  };
-  group.visible = item.mesh.visible;
-  play.chain.push(part);
-  replaceMesh(item, group);
-  poseChainPart(part, chainOffsetMm());
+  // Keep each STL independently inspectable, but express its placement as a
+  // fixed child transform from the one chain-segment pivot.  This is the
+  // important difference from four independent chain parts: at a bend the
+  // carrier, pins, clips, and magnet all receive exactly one yaw and one
+  // segment-midpoint translation.
+  geometry.translate(-center.x, -center.y, -center.z);
+  const holder = new THREE.Group();
+  holder.name = `chain-trigger-component:${item.part.componentId || item.part.id}`;
+  holder.userData.assemblyId = CHAIN_TRIGGER_ASSEMBLY_ID;
+  holder.userData.componentId = item.part.componentId || item.part.id;
+  holder.userData.mountRelation = item.part.mountRelation || null;
+  holder.position.set(along, delta[1], side);
+  const mesh = new THREE.Mesh(geometry, sourceMesh.material);
+  mesh.userData.assemblyId = CHAIN_TRIGGER_ASSEMBLY_ID;
+  mesh.userData.componentId = holder.userData.componentId;
+  holder.add(mesh);
+  assembly.group.add(holder);
+  sourceMesh.parent?.remove(sourceMesh);
+  holder.visible = sourceMesh.visible;
+
+  item.mesh = holder;
+  item.renderObjects = [holder];
+  item.base.copy(holder.position);
+  assembly.boundIds.add(item.part.id);
+  assembly.group.visible = true;
+  assembly.group.updateMatrixWorld(true);
+  item.box = new THREE.Box3().setFromObject(holder);
+  poseChainPart(assembly.part, chainOffsetMm());
+}
+
+async function bindChainTriggerMagnetMesh(item) {
+  return bindChainTriggerAssemblyPartMesh(item);
+}
+
+async function bindChainTriggerCarrierMesh(item) {
+  return bindChainTriggerAssemblyPartMesh(item);
+}
+
+async function bindChainTriggerHardwareMesh(item) {
+  return bindChainTriggerAssemblyPartMesh(item);
 }
 
 function updateHzLabel() {
@@ -2698,9 +2885,27 @@ export function attachCabinetChainPlay(host) {
       const centerClutch = validateCenterClutchContract(motion.centerClutch);
       const datum = motion.chainTopDatum;
       const trigger = motion.chainTriggerMagnet;
+      const triggerAssembly = motion.chainTriggerAssembly;
+      const triggerComponentIds = new Set(
+        (triggerAssembly?.components || []).map((component) => String(component.id)),
+      );
       if (!datum || datum.mode !== "input-sleeve-magnet-bottom"
           || !trigger
+          || !triggerAssembly
+          || triggerAssembly.id !== CHAIN_TRIGGER_ASSEMBLY_ID
+          || triggerAssembly.componentMode !== "rigid-mounted"
+          || triggerAssembly.animation?.mode !== "rigid-follow-segment"
+          || triggerAssembly.animation?.allComponentsSharePose !== true
+          || triggerComponentIds.size !== 4
+          || !triggerComponentIds.has("carrier")
+          || !triggerComponentIds.has("connecting-pins")
+          || !triggerComponentIds.has("retaining-clips")
+          || !triggerComponentIds.has("magnet")
+          || trigger.axis !== "stl-Z"
           || Number(trigger.segmentIndex) !== Number(centerClutch.snakeChainTriggerMagnetSegmentIndex)
+          || Number(triggerAssembly.pathMount?.segmentIndex)
+            !== Number(trigger.segmentIndex)
+          || triggerAssembly.pathMount?.pinAxis !== "stl-Y"
           || Math.abs(Number(motion.chainVerticalShiftMm)
             - Number(centerClutch.snakeChainVerticalShiftMm)) > 0.001
           || Math.abs(
@@ -2729,6 +2934,7 @@ export function attachCabinetChainPlay(host) {
 
 export function focusCenterClutch() {
   play.centerViewRequested = true;
+  play.triggerEventViewRequested = false;
   play.centerDemo.active = false;
   play.centerDemo.elapsed = 0;
   play.centerDemo.engagement = 0;
@@ -2740,6 +2946,34 @@ export function focusCenterClutch() {
   }
   updateHzLabel();
   return snapped;
+}
+
+export function focusChainTriggerEvent() {
+  play.centerViewRequested = false;
+  play.triggerEventViewRequested = true;
+  play.centerDemo.active = false;
+  play.centerDemo.elapsed = 0;
+  play.centerDemo.engagement = 0;
+  play.centerDemo.phase = "idle";
+  play.playing = false;
+  if (!play.ready || !play.scheme1.ready || !play.currentClutch.contract) {
+    scheme1Status("触发预览等待运动契约加载…");
+    return false;
+  }
+  if (!snapScheme1ToCenter()) {
+    scheme1Status("触发预览不可用：缺少中心格站点");
+    return false;
+  }
+  const event = alignChainTriggerToCenter();
+  if (!event) {
+    scheme1Status("触发预览不可用：缺少链条触发组件或路径节");
+    return false;
+  }
+  scheme1Status(
+    `触发预览 · 中心格磁铁已对准 · 链条姿态 ${event.tangentAngleDeg.toFixed(0)}° · 沿 ${event.direction} · 离合开位`,
+  );
+  updateHzLabel();
+  return true;
 }
 
 export function playCenterClutchDemo() {
@@ -2860,6 +3094,23 @@ export async function onPartLoaded(item) {
     item.playBound = true;
     enqueueBind(() => bindChainTriggerMagnetMesh(item).catch((error) => {
       console.error("chain trigger magnet bind failed", id, error);
+      item.playBound = false;
+    }));
+    return;
+  }
+  if (id === CHAIN_TRIGGER_CARRIER_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindChainTriggerCarrierMesh(item).catch((error) => {
+      console.error("chain trigger carrier bind failed", id, error);
+      item.playBound = false;
+    }));
+    return;
+  }
+  if (id === CHAIN_TRIGGER_CONNECTING_PINS_ID
+      || id === CHAIN_TRIGGER_RETAINING_CLIP_ID) {
+    item.playBound = true;
+    enqueueBind(() => bindChainTriggerHardwareMesh(item).catch((error) => {
+      console.error("chain trigger purchased hardware bind failed", id, error);
       item.playBound = false;
     }));
     return;

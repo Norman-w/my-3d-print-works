@@ -58,11 +58,11 @@ CHAIN_HEIGHT_CONTRACT: dict[str, object] = {}
 CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182
 CHAIN_REFERENCE_ROW = 0
 CHAIN_LINK_TOP_OFFSET_MM = 2.15
-CHAIN_TRIGGER_MAGNET_D_MM = 2.0
-CHAIN_TRIGGER_MAGNET_L_MM = 1.8
-CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM = 1.15
+CHAIN_TRIGGER_MAGNET_D_MM = 5.0
+CHAIN_TRIGGER_MAGNET_L_MM = 4.00
+CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM = 0.00
 CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.0
-CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = 2.44
+CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = 2.39
 CHAIN_RETURN_GUIDE_CENTER_Y_MM = 41.20
 SCHEME1_POWER_Y_OFFSET = -5.20
 SCHEME1_OUTPUT_Y_OFFSET = 5.20
@@ -896,6 +896,27 @@ def configure_chain_height(contract: dict | None) -> None:
         "snakeChainTriggerMagnetNormalOffsetMm",
         "snakeChainTriggerMagnetTopClearanceMm",
         "snakeChainTriggerMagnetAxialStartOffsetMm",
+        "snakeChainTriggerMagnetAxis",
+        "snakeChainTriggerCarrierPinSpacingMm",
+        "snakeChainTriggerCarrierPinDiameterMm",
+        "snakeChainTriggerCarrierPinHoleDiameterMm",
+        "snakeChainTriggerCarrierPinLengthMm",
+        "snakeChainTriggerCarrierPlateThicknessMm",
+        "snakeChainTriggerCarrierMagnetPocketDiameterMm",
+        "snakeChainTriggerCarrierMagnetLengthMm",
+        "snakeChainTriggerCarrierMagnetPocketDepthMm",
+        "snakeChainTriggerCarrierMagnetRetentionLipMm",
+        "snakeChainTriggerCarrierMagnetBackWallMm",
+        "snakeChainTriggerCarrierMagnetCenterAlongLinkMm",
+        "snakeChainTriggerCarrierMagnetCenterNormalMm",
+        "snakeChainTriggerCarrierMagnetAxis",
+        "snakeChainTriggerCarrierMagnetCenterReference",
+        "snakeChainTriggerCarrierHardwareMode",
+        "snakeChainTriggerCarrierRetainingClipThicknessMm",
+        "snakeChainTriggerCarrierPart",
+        "snakeChainTriggerCarrierMagnetPart",
+        "snakeChainTriggerCarrierConnectingPinsPart",
+        "snakeChainTriggerCarrierRetainingClipPart",
     )
     missing = [key for key in required if key not in contract]
     if missing:
@@ -946,9 +967,51 @@ def configure_chain_height(contract: dict | None) -> None:
         float(contract["snakeChainTriggerMagnetSegmentIndex"])
     ):
         raise RuntimeError("蛇链触发磁铁节号与 OpenSCAD 契约不一致")
-    if abs(CHAIN_TRIGGER_MAGNET_D_MM - 2.0) > 0.001 \
-            or abs(CHAIN_TRIGGER_MAGNET_L_MM - 1.8) > 0.001:
-        raise RuntimeError("蛇链触发磁铁必须为现有 Ø2×1.8 采购件参考")
+    if abs(CHAIN_TRIGGER_MAGNET_D_MM - 5.0) > 0.001 \
+            or abs(CHAIN_TRIGGER_MAGNET_L_MM - 4.00) > 0.001 \
+            or abs(CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM - 0.00) > 0.001 \
+            or abs(CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM - 2.39) > 0.001:
+        raise RuntimeError("蛇链触发磁铁必须为 M5×4，且按双销载架基准定位")
+    carrier_checks = (
+        ("snakeChainTriggerCarrierPinSpacingMm", 4.7625),
+        ("snakeChainTriggerCarrierPinDiameterMm", 1.62),
+        ("snakeChainTriggerCarrierPinHoleDiameterMm", 1.80),
+        ("snakeChainTriggerCarrierPinLengthMm", 11.50),
+        ("snakeChainTriggerCarrierPlateThicknessMm", 4.00),
+        ("snakeChainTriggerCarrierMagnetPocketDiameterMm", 5.25),
+        ("snakeChainTriggerCarrierMagnetLengthMm", 4.00),
+        ("snakeChainTriggerCarrierMagnetPocketDepthMm", 4.00),
+        ("snakeChainTriggerCarrierMagnetRetentionLipMm", 0.00),
+        ("snakeChainTriggerCarrierMagnetBackWallMm", 0.00),
+        ("snakeChainTriggerCarrierMagnetCenterNormalMm", 0.00),
+    )
+    for key, expected_value in carrier_checks:
+        actual = float(contract[key])
+        if abs(actual - expected_value) > 0.001:
+            raise RuntimeError(
+                f"双销 M5 载架契约字段错误: {key}={actual:.6f}, "
+                f"expected={expected_value:.6f}"
+            )
+    if float(contract["snakeChainTriggerCarrierMagnetCenterAlongLinkMm"]) <= 0:
+        raise RuntimeError("蛇链触发磁铁必须位于第二销外侧的圆角拖尾内")
+    if contract["snakeChainTriggerCarrierPart"] != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_carrier"
+    ) or contract["snakeChainTriggerCarrierMagnetPart"] != (
+        "cabinet-chain/cabinet_chain_clutch_trigger_magnet"
+    ):
+        raise RuntimeError("双销 M5 载架 STL ID 与中心离合契约不一致")
+    if contract["snakeChainTriggerMagnetAxis"] != "stl-Z" \
+            or contract["snakeChainTriggerCarrierMagnetAxis"] != "stl-Z":
+        raise RuntimeError("蛇链触发磁铁导出 STL 必须沿 STL Z 轴")
+    if contract["snakeChainTriggerCarrierMagnetCenterReference"] != (
+        "rear-rounded-tail-hole-center"
+    ):
+        raise RuntimeError("蛇链触发磁铁 X 基准必须是后侧圆角拖尾的磁铁座中心")
+    if contract["snakeChainTriggerCarrierHardwareMode"] != (
+            "purchased-03C-extended-pin-pair-plus-two-U-clips"):
+        raise RuntimeError("蛇链触发件必须使用现成加长双卡槽穿销与两片 U 形卡")
+    if abs(float(contract["snakeChainTriggerCarrierRetainingClipThicknessMm"]) - 0.60) > 0.001:
+        raise RuntimeError("蛇链触发 U 形卡厚度必须为 0.60 mm")
 
 
 def write_motion(
@@ -1001,7 +1064,124 @@ def write_motion(
             "normalOffsetMm": round(CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM, 6),
             "topClearanceMm": round(CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM, 6),
             "axialStartOffsetMm": round(CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM, 6),
-            "axis": "world-Z-",
+            "axis": center_contract["snakeChainTriggerMagnetAxis"],
+        },
+        "chainTriggerCarrier": {
+            "segmentIndex": CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX,
+            "pinSpacingMm": round(float(center_contract["snakeChainTriggerCarrierPinSpacingMm"]), 6),
+            "pinDiameterMm": round(float(center_contract["snakeChainTriggerCarrierPinDiameterMm"]), 6),
+            "pinHoleDiameterMm": round(float(center_contract["snakeChainTriggerCarrierPinHoleDiameterMm"]), 6),
+            "pinLengthMm": round(float(center_contract["snakeChainTriggerCarrierPinLengthMm"]), 6),
+            "plateThicknessMm": round(float(center_contract["snakeChainTriggerCarrierPlateThicknessMm"]), 6),
+            "magnetDiameterMm": round(float(center_contract["snakeChainTriggerMagnetDiameterMm"]), 6),
+            "magnetLengthMm": round(float(center_contract["snakeChainTriggerCarrierMagnetLengthMm"]), 6),
+            "magnetPocketDiameterMm": round(float(center_contract["snakeChainTriggerCarrierMagnetPocketDiameterMm"]), 6),
+            "magnetPocketDepthMm": round(float(center_contract["snakeChainTriggerCarrierMagnetPocketDepthMm"]), 6),
+            "magnetRetentionLipMm": round(float(center_contract["snakeChainTriggerCarrierMagnetRetentionLipMm"]), 6),
+            "magnetBackWallMm": round(float(center_contract["snakeChainTriggerCarrierMagnetBackWallMm"]), 6),
+            "magnetCenterAlongLinkMm": round(float(center_contract["snakeChainTriggerCarrierMagnetCenterAlongLinkMm"]), 6),
+            "magnetCenterNormalMm": round(float(center_contract["snakeChainTriggerCarrierMagnetCenterNormalMm"]), 6),
+            "magnetAxis": center_contract["snakeChainTriggerCarrierMagnetAxis"],
+            "magnetCenterReference": center_contract["snakeChainTriggerCarrierMagnetCenterReference"],
+            "hardwareMode": center_contract["snakeChainTriggerCarrierHardwareMode"],
+            "retainingClipThicknessMm": round(float(center_contract["snakeChainTriggerCarrierRetainingClipThicknessMm"]), 6),
+            "partId": center_contract["snakeChainTriggerCarrierPart"],
+            "magnetPartId": center_contract["snakeChainTriggerCarrierMagnetPart"],
+            "connectingPinsPartId": center_contract["snakeChainTriggerCarrierConnectingPinsPart"],
+            "retainingClipPartId": center_contract["snakeChainTriggerCarrierRetainingClipPart"],
+            "mounting": "two-adjacent-03C-pins-side-hung",
+        },
+        # The trigger is one rigid installed component even though its
+        # printable carrier, purchased pins, retaining clips, and M5 magnet
+        # remain four separately inspectable STL/reference parts.  This
+        # relation is consumed by the browser so a corner of the snake path
+        # cannot make the four parts drift apart.
+        "chainTriggerAssembly": {
+            "schemaVersion": 1,
+            "id": "chain-trigger-assembly",
+            "name": "03C 蛇形链条触发组件",
+            "componentMode": "rigid-mounted",
+            "geometrySpace": "source-adapter",
+            "pathMount": {
+                "type": "chain-segment",
+                "segmentIndex": CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX,
+                "pinCenters": [
+                    CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX,
+                    (CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(pins),
+                ],
+                "pinAxis": "stl-Y",
+                "follow": "segment-midpoint",
+                "phaseOffsetMm": 0.0,
+            },
+            "relativeFrame": {
+                "origin": "mounted-chain-segment-midpoint",
+                "longitudinalAxis": "stl-X/tangent",
+                "normalAxis": "stl-Z/chain-side",
+                "axialAxis": "stl-Y/pin-axis",
+                "motion": "one-rigid-pivot",
+            },
+            "mountRelations": [
+                {
+                    "parent": "chain-segment",
+                    "child": "carrier",
+                    "interface": "two-adjacent-03C-pin-bores",
+                    "description": "打印件磁台的两个孔套在相邻链节的两根加长穿销上，磁台不单独漂浮。",
+                },
+                {
+                    "parent": "carrier",
+                    "child": "connecting-pins",
+                    "interface": "paired-pin-bores",
+                    "description": "两根现成双卡槽长穿销穿过链条与磁台的两孔，销轴向为 STL Y。",
+                },
+                {
+                    "parent": "connecting-pins",
+                    "child": "retaining-clips",
+                    "interface": "two-groove-capture",
+                    "description": "两片现成 U 形卡扣入长穿销卡槽，负责轴向防脱。",
+                },
+                {
+                    "parent": "carrier",
+                    "child": "magnet",
+                    "interface": "rear-rounded-tail-through-seat",
+                    "description": "M5×4 圆柱磁铁装入后侧圆角拖尾贯通座，螺丝由用户固定，磁铁轴为 STL Z。",
+                },
+            ],
+            "components": [
+                {
+                    "id": "carrier",
+                    "partId": center_contract["snakeChainTriggerCarrierPart"],
+                    "role": "printed-carrier",
+                    "parent": "chain-segment",
+                    "mountRelation": "two-adjacent-03C-pin-bores",
+                },
+                {
+                    "id": "connecting-pins",
+                    "partId": center_contract["snakeChainTriggerCarrierConnectingPinsPart"],
+                    "role": "purchased-extended-pins",
+                    "parent": "carrier+chain-segment",
+                    "mountRelation": "paired-pin-bores",
+                },
+                {
+                    "id": "retaining-clips",
+                    "partId": center_contract["snakeChainTriggerCarrierRetainingClipPart"],
+                    "role": "purchased-retaining-clips",
+                    "parent": "connecting-pins",
+                    "mountRelation": "two-groove-capture",
+                },
+                {
+                    "id": "magnet",
+                    "partId": center_contract["snakeChainTriggerCarrierMagnetPart"],
+                    "role": "purchased-magnet",
+                    "parent": "carrier",
+                    "mountRelation": "rear-rounded-tail-through-seat",
+                },
+            ],
+            "animation": {
+                "mode": "rigid-follow-segment",
+                "pivot": "segment-midpoint",
+                "phaseSource": "chainOffsetMm",
+                "allComponentsSharePose": True,
+            },
         },
         "returnPathAudit": {
             key: round(value, 6) for key, value in path_audit.items()

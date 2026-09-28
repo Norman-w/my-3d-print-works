@@ -27,21 +27,20 @@ use <../parts/ch1_03c_bearing_visual.scad>
 use <../parts/motor_pololu_micro_metal_100_1_hp_6v.scad>
 use <../parts/motor_pololu_mount_cover.scad>
 include <../parts/ch1_03c_gt2_clutch_pair_params.scad>
+include <../parts/ch1_03c_chain_trigger_params.scad>
 //#endregion
 
 //#region 常量/配置
 $fa = 8;
 $fs = 0.22;
 CHAIN_Y = MOTOR_MOUNT_CHAIN_Y;
-// One purchased/reference magnet is carried by a straight service link near
-// the center station.  Its upper edge is tied to the open male-sleeve magnet
-// bottom by the generated vertical path shift; its axis protrudes toward the
-// browser/world Z- direction after snake_in_rear() and the legacy adapter.
-CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182;
-CHAIN_TRIGGER_MAGNET_D = GT2_MAGNET_NOMINAL_D;
-CHAIN_TRIGGER_MAGNET_L = GT2_MAGNET_POCKET_H;
-CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET = (h2 - CHAIN_TRIGGER_MAGNET_D) / 2;
-CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET = outer_face + 0.05;
+// One 03C link is augmented by a printed side-car carrier. The shared
+// parameter file is the only source of the M5 magnet and carrier dimensions.
+CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = CHAIN_TRIGGER_SEGMENT_INDEX;
+CHAIN_TRIGGER_MAGNET_D = CHAIN_TRIGGER_MAGNET_DIAMETER;
+CHAIN_TRIGGER_MAGNET_L = CHAIN_TRIGGER_MAGNET_LENGTH;
+CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET =
+    CHAIN_TRIGGER_CARRIER_AXIAL_START_OFFSET;
 //#endregion
 
 //#region 模型/类型
@@ -150,38 +149,141 @@ module plates_on_path(pins) {
         }
 }
 
-module clutch_trigger_magnet_reference() {
-    // place_from_to's local Y axis is the chain axial axis.  rotate(+90 X)
-    // sends the cylinder along local -Y; after place_from_to and
-    // snake_in_rear this becomes source +Y, which the browser chainRoot
-    // maps to world Z-.  The local -Z offset puts the 2 mm magnet on the
-    // upper edge of the 4.3 mm chain link, leaving its top on the datum.
+module trigger_carrier_root() {
+    // One full 03C outer-link footprint with two true pin holes. Its axial
+    // thickness is the net length between the two purchased U-clip grooves;
+    // the two long pins therefore capture this root as one real part.
+    // It is not a second chain link or a separate box.
+    translate([0, CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_END_Y, 0])
+        rotate([90, 0, 0])
+            linear_extrude(
+                height = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS,
+                convexity = 8
+            )
+                plate_profile(CHAIN_TRIGGER_CARRIER_PIN_HOLE_DIAMETER);
+}
+
+module clutch_trigger_carrier_reference() {
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
     p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
     snake_in_rear()
         place_from_to(p0, p1, [0, 0, 1])
+            color("#d9933d")
+                union() {
+                    trigger_carrier_root();
+                    chain_trigger_tail_body();
+                }
+}
+
+module clutch_trigger_magnet_reference() {
+    // The M5 magnet sits in the rear rounded tail. The exported STL cylinder
+    // axis is STL Z after the path-frame transform; the pre-transform SCAD
+    // local axis is only an implementation detail, not the delivered datum.
+    p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
+    p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
+    tail_d = CHAIN_TRIGGER_CARRIER_TAIL_DEPTH;
+    magnet_center_y = CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y;
+    magnet_start_normal =
+        CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL
+            + CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT / 2
+            - CHAIN_TRIGGER_MAGNET_POCKET_DEPTH;
+    snake_in_rear()
+        place_from_to(p0, p1, [0, 0, 1])
             translate([
-                P / 2,
-                -CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET,
-                -CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET
+                CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_ALONG_LINK,
+                magnet_center_y,
+                magnet_start_normal
             ])
-                rotate([90, 0, 0])
-                    color("#5b6670")
-                        cylinder(
-                            d = CHAIN_TRIGGER_MAGNET_D,
-                            h = CHAIN_TRIGGER_MAGNET_L,
-                            $fn = 48
-                        );
+                color("#5b6670")
+                    cylinder(
+                        d = CHAIN_TRIGGER_MAGNET_D,
+                        h = CHAIN_TRIGGER_MAGNET_L,
+                        $fn = 64
+                    );
+}
+
+module clutch_trigger_connecting_pins_reference() {
+    // Existing purchased 03C extended connecting pins: two grooves are
+    // retained by the two separate U clips; +P/2 places the pin centers on
+    // p0 and p1 exactly.
+    p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
+    p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
+    snake_in_rear()
+        place_from_to(p0, p1, [0, 0, 1])
+            translate([P / 2, 0, 0])
+                color("#b08d57")
+                    chain_trigger_extended_connecting_pin_pair();
+}
+
+module clutch_trigger_retaining_clip_reference() {
+    // Existing purchased U-shaped retaining clips in both extended-pin
+    // grooves. They stay separate from the orange printed carrier.
+    p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
+    p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
+    snake_in_rear()
+        place_from_to(p0, p1, [0, 0, 1])
+            translate([P / 2, 0, 0])
+                color("#9aa7b6")
+                    chain_trigger_extended_retaining_clips();
+}
+
+// Local diagnostic assembly for the 03C trigger carrier.  This intentionally
+// reuses the same path/link modules as the full snake assembly; it is only a
+// camera-friendly window around the mounted segment, not a second chain model.
+module clutch_trigger_window_chain() {
+    pins = snake_pins();
+    n = len(pins);
+    first = CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX - 5;
+    last = CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 5;
+
+    // The path points are authored in cabinet XZ.  Apply the same rear-hub
+    // transform as every other chain component before placing this window;
+    // otherwise the chain would be at local Y=0 while the carrier is at the
+    // real rear datum CHAIN_Y.
+    snake_in_rear() {
+        // Keep enough adjacent links visible to prove that the two carrier
+        // bores are on actual neighboring chain pins rather than floating
+        // beside them.
+        for (j = [first:last]) {
+            i = (j + n) % n;
+            place_from_to(pins[i], pins[(i + 1) % n], [0, 0, 1]) {
+                if (i % 2 == 0)
+                    color("#68717d") outer_plates();
+                else
+                    color("#7b8490") inner_plates();
+            }
+        }
+
+        // Rollers are point features at the pin centers.  The two trigger
+        // pins below replace only the ordinary pin solids; their rollers
+        // remain real chain hardware and are therefore visible through the
+        // carrier holes.
+        for (j = [first:last]) {
+            i = (j + n) % n;
+            place_at_path_pin(pins, i)
+                color("#d7dde3") roller_solid();
+        }
+
+        for (j = [first:last]) {
+            i = (j + n) % n;
+            if (i != CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX
+                && i != (CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % n)
+                place_at_path_pin(pins, i)
+                    color("#a9793d") pin_solid();
+        }
+    }
 }
 
 module pins_on_path(pins) {
-    // Every real 03C pin stays in the path. The trigger magnet is an
-    // independent Ø2×1.8 reference and does not replace a link or a pin.
+    // Trigger pin positions are supplied by the separate purchased elongated
+    // pin STL below; omit them here to avoid duplicate fake pins in assembly.
     n = len(pins);
     axis = [0, 0, 1];
     for (i = [0:n - 1])
-        place_from_to(pins[i], pins[(i + 1) % n], axis)
-            pin_solid();
+        if (i != CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX
+            && i != (CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % n)
+            place_from_to(pins[i], pins[(i + 1) % n], axis)
+                pin_solid();
 }
 
 module bay_center_dots() {
@@ -225,8 +327,21 @@ if (CHAIN_PART == "mesh_check") {
         rollers_on_path(snake_pins());
     color("#B08D57") snake_in_rear()
         pins_on_path(snake_pins());
+    clutch_trigger_connecting_pins_reference();
+    clutch_trigger_retaining_clip_reference();
     color("#5b9fd6") place_geared(snake_drive_c())
         ch1_03c_sprocket(SPROCKET_TEETH);
+}
+
+if (CHAIN_PART == "trigger_assembly") {
+    // Direct, local view of the installed carrier.  The chain is the same
+    // path used by the full assembly; all four trigger components follow the
+    // same segment frame and are shown in their actual mounted relationship.
+    clutch_trigger_window_chain();
+    clutch_trigger_carrier_reference();
+    clutch_trigger_connecting_pins_reference();
+    clutch_trigger_retaining_clip_reference();
+    clutch_trigger_magnet_reference();
 }
 
 if (CHAIN_PART == "assembly") {
@@ -270,8 +385,17 @@ emit_chain("idler_axles") {
     if (CHAIN_PART == "assembly") rear_idler_axles();
     else rear_idler_axles();
 }
+emit_chain("clutch_trigger_carrier") {
+    clutch_trigger_carrier_reference();
+}
 emit_chain("clutch_trigger_magnet") {
     clutch_trigger_magnet_reference();
+}
+emit_chain("clutch_trigger_connecting_pins") {
+    clutch_trigger_connecting_pins_reference();
+}
+emit_chain("clutch_trigger_retaining_clip") {
+    clutch_trigger_retaining_clip_reference();
 }
 emit_chain("motor") {
     if (CHAIN_PART == "assembly")
@@ -325,11 +449,12 @@ emit_chain("motor_spring_hardware") {
 // 每孔向上套入 Ø5、柱段高 12 mm 的实体导向柱；硬弹簧套在导向柱外，M3 大蘑菇头螺钉从上向下拧入柱顶盲孔，
 // 这组采购件单独作为 motor_spring_hardware 显示，不与柜体或固定套合并。
 // 链条不再叠加旧的高亮接头、加长离合座或 681 随动件；
-// 每个真实 03C 链节保持原节距，独立触发磁铁只作为链节上的采购件参考。
+// 触发件改为一套双销侧挂载架：真实 03C 链节保持原节距，打印载架只承接
+// M5 磁铁，触发位置使用两根加长钢销，载架本体不是链条承力替代件。
 // 电机本体固定，独立 D 输出轴与动力轮 1:1 转动。
 //#endregion
 
 //#region 方法/工具
-// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"idler_axles"' / '"clutch_trigger_magnet"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"'
+// 导出: -D CHAIN_PART='"plates"' / '"rollers"' / '"pins"' / '"sprockets"' / '"idlers"' / '"bearings"' / '"idler_axles"' / '"clutch_trigger_carrier"' / '"clutch_trigger_magnet"' / '"motor"' / '"motor_shaft"' / '"motor_cover"' / '"motor_spring_hardware"'
 // 检查视图: -D CHAIN_PART='"power_check"'。
 //#endregion
