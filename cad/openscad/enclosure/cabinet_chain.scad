@@ -154,7 +154,12 @@ module trigger_carrier_root() {
     // thickness is the net length between the two purchased U-clip grooves;
     // the two long pins therefore capture this root as one real part.
     // It is not a second chain link or a separate box.
-    translate([0, CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_END_Y, 0])
+    translate([
+        0,
+        CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_END_Y
+            - CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN,
+        0
+    ])
         rotate([90, 0, 0])
             linear_extrude(
                 height = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS,
@@ -182,7 +187,9 @@ module clutch_trigger_magnet_reference() {
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
     p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
     tail_d = CHAIN_TRIGGER_CARRIER_TAIL_DEPTH;
-    magnet_center_y = CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y;
+    magnet_center_y =
+        CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y
+            - CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN;
     magnet_start_normal =
         CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL
             + CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT / 2

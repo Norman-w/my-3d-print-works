@@ -1401,14 +1401,14 @@ def validate_contract(contract: dict[str, object]) -> None:
     expect(
         contract,
         "snakeChainTriggerCarrierPinLengthMm",
-        11.50,
+        17.50,
         "蛇链触发载架长销长度",
     )
     expect(
         contract,
         "snakeChainTriggerCarrierPlateThicknessMm",
-        4.00,
-        "蛇链触发载架根部厚度（跟随 M5×4 磁铁变薄）",
+        10.00,
+        "蛇链触发载架轴向厚度（两 U 卡内侧净距）",
     )
     expect(
         contract,

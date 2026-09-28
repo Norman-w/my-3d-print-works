@@ -159,7 +159,7 @@ names = {
         "explosion": [0, 0, 0],
     },
     "cabinet_chain_clutch_trigger_connecting_pins": {
-        "name": "03C 蛇形链条·11.50 mm 双卡槽穿销×2（现成采购件）",
+        "name": "03C 蛇形链条·17.50 mm 双卡槽穿销×2（现成采购件）",
         "role": "purchased",
         "color": "#b08d57",
         "explosion": [0, 0, 0],

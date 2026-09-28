@@ -388,8 +388,8 @@ def main() -> int:
         "pinSpacingMm": (carrier_pin_spacing, 4.7625),
         "pinDiameterMm": (carrier_pin_diameter, 1.62),
         "pinHoleDiameterMm": (carrier_pin_hole, 1.80),
-        "pinLengthMm": (carrier_pin_length, 11.50),
-        "plateThicknessMm": (carrier_plate_thickness, 4.00),
+        "pinLengthMm": (carrier_pin_length, 17.50),
+        "plateThicknessMm": (carrier_plate_thickness, 10.00),
         "magnetDiameterMm": (carrier_magnet_diameter, 5.00),
         "magnetLengthMm": (carrier_magnet_length, 4.00),
         "magnetPocketDiameterMm": (carrier_pocket_diameter, 5.25),
@@ -468,7 +468,7 @@ def main() -> int:
     magnet_path = args.stl_dir / "cabinet_chain_clutch_trigger_magnet.stl"
     carrier_bounds = stl_bounds(carrier_path)
     magnet_bounds = stl_bounds(magnet_path)
-    if carrier_bounds[0] < 16.0 or carrier_bounds[1] < 3.8 or carrier_bounds[2] < 3.8:
+    if carrier_bounds[0] < 16.0 or carrier_bounds[1] < 9.8 or carrier_bounds[2] < 3.8:
         fail(f"M5 双销载架包络过小，疑似导出错件: bounds={carrier_bounds!r}")
     if (
         abs(magnet_bounds[0] - 5.00) > 0.02
@@ -482,7 +482,7 @@ def main() -> int:
     connecting_pin_bounds = stl_bounds(
         args.stl_dir / "cabinet_chain_clutch_trigger_connecting_pins.stl"
     )
-    if abs(connecting_pin_bounds[1] - 11.50) > 0.02:
+    if abs(connecting_pin_bounds[1] - 17.50) > 0.02:
         fail(
             "现成加长穿销 Y 向总长错误: "
             f"bounds={connecting_pin_bounds!r}"
@@ -491,9 +491,9 @@ def main() -> int:
         args.stl_dir / "cabinet_chain_clutch_trigger_retaining_clip.stl"
     )
     # The exported reference intentionally contains two U clips at the two
-    # grooves. Their combined Y span is the 03C plate stack plus two 0.60 mm
-    # clip sections, not a single 0.60 mm solid.
-    if abs(clip_bounds[1] - 5.20) > 0.02 or abs(clip_bounds[2] - 4.30) > 0.02:
+    # grooves. Their combined Y span is the 10.00 mm captured carrier depth
+    # plus two 0.60 mm clip sections, not a single 0.60 mm solid.
+    if abs(clip_bounds[1] - 11.20) > 0.02 or abs(clip_bounds[2] - 4.30) > 0.02:
         fail(f"现成双 U 形卡包络错误: bounds={clip_bounds!r}")
 
     motion_mtime = args.motion.stat().st_mtime_ns

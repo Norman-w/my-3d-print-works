@@ -39,12 +39,13 @@ CHAIN_TRIGGER_CARRIER_PIN_CLEARANCE = 0.18;
 CHAIN_TRIGGER_CARRIER_PIN_HOLE_DIAMETER =
     d2 + CHAIN_TRIGGER_CARRIER_PIN_CLEARANCE;
 // 真实配件：第一道卡槽保留原连接节位置，第二道卡槽在后面承托侧挂件。
-// 侧挂打印件沿穿销轴的净厚度跟随 4 mm 磁铁同步变薄，不再把 10 mm
-// 的旧试验净距做成一整块厚墙；长销只按这个净厚度加长。
+// 黄色打印磁台沿穿销轴（STL-Y）冻结为 10 mm；根部的实际厚度不再拿磁铁
+// 长度代替，而是由两片 U 形卡的内侧净距反推。两卡之间的名义净距为 10 mm，
+// 卡片厚度为 0.60 mm，因此两道卡槽中心距必须是 10.60 mm。
 CHAIN_TRIGGER_EXTENDED_PIN_BASE_LENGTH = CONNECTING_PIN_LENGTH;
 CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y =
     CHAIN_TRIGGER_EXTENDED_PIN_BASE_LENGTH - CONNECTING_PIN_GROOVE_FROM_TIP;
-CHAIN_TRIGGER_EXTENDED_NET_PLATFORM_CLEAR = CHAIN_TRIGGER_MAGNET_LENGTH;
+CHAIN_TRIGGER_EXTENDED_NET_PLATFORM_CLEAR = 10.00;
 CHAIN_TRIGGER_EXTENDED_SECOND_CLIP_Y =
     CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y
         + CHAIN_TRIGGER_EXTENDED_NET_PLATFORM_CLEAR
@@ -53,8 +54,12 @@ CHAIN_TRIGGER_EXTENDED_PIN_LENGTH =
     CHAIN_TRIGGER_EXTENDED_SECOND_CLIP_Y + CONNECTING_PIN_GROOVE_FROM_TIP;
 CHAIN_TRIGGER_CARRIER_PIN_LENGTH = CHAIN_TRIGGER_EXTENDED_PIN_LENGTH;
 CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_THICKNESS = RETAINING_CLIP_T;
-// 8 字根部的轴向厚度直接占满两道 U 卡之间的净留长。
-// 这样两根长销穿过根部后，根部两端分别被两道卡槽限制，不能沿销轴窜动。
+// 8 字根部的轴向厚度由两道 U 卡的内侧净距计算，并完整占满该净距。
+// 这样两根长销穿过根部后，根部两端分别贴住两道卡的内侧，不能沿销轴窜动。
+// 整个“双销 + 载架 + 双 U 卡”刚性组件沿 STL-Y 向链条外板收进 3.40 mm，
+// 让链条出板后只保留约 0.3 mm 的卡子装配间隙，不再露出长段光杆。
+// SCAD 路径局部轴向与最终 STL-Y 方向相反，因此各模块使用该值做局部 Y 减法。
+CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN = 3.40;
 CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_START_Y =
     CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y
         + CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_THICKNESS / 2;
@@ -81,10 +86,13 @@ CHAIN_TRIGGER_CARRIER_TAIL_WALL = 0.80;
 CHAIN_TRIGGER_CARRIER_TAIL_LENGTH = 11.00;
 CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT = CHAIN_TRIGGER_MAGNET_LENGTH;
 CHAIN_TRIGGER_CARRIER_TAIL_RADIUS = 1.20;
-// 轴向是两根加长穿销的 STL-Y。矩形座必须和“8”字根部共用两道 U 卡
-// 之间的净留长；磁铁的 STL-Z 长度不能再错误地拿来决定这个 Y 厚度。
+// 轴向是两根加长穿销的 STL-Y。矩形座沿该轴向同样为 10 mm，并和“8”字根部
+// 共用由两道 U 卡内侧定义的捕获厚度；磁铁的 STL-Z 长度不能决定这个 Y 厚度。
 CHAIN_TRIGGER_CARRIER_TAIL_DEPTH = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS;
-CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X = 0.80;
+// 收紧拖尾根部与两根销轴所在“8”字根部的实体搭接。原 0.80 mm
+// 只是在边缘擦到，预览中会像拖尾脱离销轴而下坠；增加 0.80 mm
+// 后，在第二销轴附近形成连续承力过渡，同时保留足够的拖尾长度。
+CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X = 1.60;
 CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X =
     P - CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X;
 CHAIN_TRIGGER_CARRIER_TAIL_X_MIN =
@@ -140,30 +148,31 @@ module chain_trigger_extended_pin_groove_cut(x, groove_y) {
 }
 
 module chain_trigger_extended_pin_one(x) {
-    difference() {
-        union() {
-            translate([x, 0, 0])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        d = CONNECTING_PIN_SHAFT_D,
-                        h = CHAIN_TRIGGER_EXTENDED_PIN_LENGTH
-                    );
-            translate([x, 0, 0])
-                rotate([-90, 0, 0])
-                    cylinder(
-                        d = CONNECTING_PIN_HEAD_D,
-                        h = CONNECTING_PIN_HEAD_H
-                    );
+    translate([0, -CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN, 0])
+        difference() {
+            union() {
+                translate([x, 0, 0])
+                    rotate([-90, 0, 0])
+                        cylinder(
+                            d = CONNECTING_PIN_SHAFT_D,
+                            h = CHAIN_TRIGGER_EXTENDED_PIN_LENGTH
+                        );
+                translate([x, 0, 0])
+                    rotate([-90, 0, 0])
+                        cylinder(
+                            d = CONNECTING_PIN_HEAD_D,
+                            h = CONNECTING_PIN_HEAD_H
+                        );
+            }
+            chain_trigger_extended_pin_groove_cut(
+                x,
+                CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y
+            );
+            chain_trigger_extended_pin_groove_cut(
+                x,
+                CHAIN_TRIGGER_EXTENDED_SECOND_CLIP_Y
+            );
         }
-        chain_trigger_extended_pin_groove_cut(
-            x,
-            CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y
-        );
-        chain_trigger_extended_pin_groove_cut(
-            x,
-            CHAIN_TRIGGER_EXTENDED_SECOND_CLIP_Y
-        );
-    }
 }
 
 module chain_trigger_extended_connecting_pin_pair() {
@@ -173,7 +182,11 @@ module chain_trigger_extended_connecting_pin_pair() {
 }
 
 module chain_trigger_extended_retaining_clip_at(y) {
-    translate([0, y, 0])
+    translate([
+        0,
+        y - CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN,
+        0
+    ])
         rotate([90, 0, 0])
             linear_extrude(
                 height = RETAINING_CLIP_T,
@@ -209,7 +222,9 @@ module chain_trigger_rounded_right_rect_2d(x_min, x_max, h, r) {
 }
 
 module chain_trigger_tail_body() {
-    tail_center_y = CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y;
+    tail_center_y =
+        CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y
+            - CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN;
     tail_face_y =
         tail_center_y + CHAIN_TRIGGER_CARRIER_TAIL_DEPTH / 2;
     tail_top_normal =
