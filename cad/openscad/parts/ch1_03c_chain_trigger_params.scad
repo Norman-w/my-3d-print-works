@@ -56,10 +56,10 @@ CHAIN_TRIGGER_CARRIER_PIN_LENGTH = CHAIN_TRIGGER_EXTENDED_PIN_LENGTH;
 CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_THICKNESS = RETAINING_CLIP_T;
 // 8 字根部的轴向厚度由两道 U 卡的内侧净距计算，并完整占满该净距。
 // 这样两根长销穿过根部后，根部两端分别贴住两道卡的内侧，不能沿销轴窜动。
-// 整个“双销 + 载架 + 双 U 卡”刚性组件沿 STL-Y 向链条外板收进 3.40 mm，
-// 让链条出板后只保留约 0.3 mm 的卡子装配间隙，不再露出长段光杆。
+// 整个“双销 + 载架 + 双 U 卡”刚性组件沿 STL-Y 向链条外板收进 3.50 mm，
+// 让链条出板后只保留约 0.2 mm 的卡子装配间隙，不再露出长段光杆。
 // SCAD 路径局部轴向与最终 STL-Y 方向相反，因此各模块使用该值做局部 Y 减法。
-CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN = 3.40;
+CHAIN_TRIGGER_CARRIER_AXIAL_SHIFT_TOWARD_CHAIN = 3.50;
 CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_START_Y =
     CHAIN_TRIGGER_EXTENDED_FIRST_CLIP_Y
         + CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_THICKNESS / 2;
