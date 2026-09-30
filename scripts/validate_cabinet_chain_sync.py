@@ -401,8 +401,8 @@ def main() -> int:
     for field, (actual, expected) in expected_carrier.items():
         if abs(actual - expected) > 0.001:
             fail(f"M5 双销载架字段错误: {field}={actual:.6f}, expected={expected:.6f}")
-    if carrier_center_along <= 0:
-        fail("M5 磁铁必须位于第二销外侧的圆角拖尾内")
+    if abs(carrier_center_along) < 0.001:
+        fail("M5 磁铁不能落在链节中点，必须位于带方向的圆角拖尾内")
     if carrier.get("mounting") != "two-adjacent-03C-pins-side-hung":
         fail("M5 载架安装方式不是相邻两根 03C 销轴侧挂")
     if carrier.get("partId") != "cabinet-chain/cabinet_chain_clutch_trigger_carrier":

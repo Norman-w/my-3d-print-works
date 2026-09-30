@@ -72,6 +72,11 @@ CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_CENTER_Y =
 CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS =
     CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_END_Y
         - CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_START_Y;
+// The carrier root is a printed side-car; the purchased steel 03C chain still
+// carries the tensile load.  A shallow lower-lobe relief lets that special
+// root pass the fixed male sleeve while the magnet is approaching.  It stays
+// outside both Ø1.80 pin bores and does not touch the tail overlap.
+CHAIN_TRIGGER_ROOT_SLEEVE_RELIEF_HEIGHT = 0.35;
 CHAIN_TRIGGER_CARRIER_HARDWARE_MODE =
     "purchased-03C-extended-pin-pair-plus-two-U-clips";
 CHAIN_TRIGGER_CARRIER_CONNECTING_PINS_PART =
@@ -80,8 +85,9 @@ CHAIN_TRIGGER_CARRIER_RETAINING_CLIP_PART =
     "cabinet-chain/cabinet_chain_clutch_trigger_retaining_clip";
 
 // 磁铁矩形座按用户给的 SketchUp 参考布置：双孔“8”字根部在链节侧，
-// 矩形磁台从第二个（+X 侧）销孔向外伸出；与根部连接的一端保持平齐，
-// 外侧末端做圆角。不能把矩形座放到第一个销孔的 -X 侧。
+// 但在实际触发节 182 上，链条切线是 local +X / world X−，所以拖尾必须
+// 放在运动后侧，也就是 local −X / world X+；否则接近公轮时会把载台本体
+// 推进离合套筒。这个方向是参数，不靠网页里另写一个镜像变换。
 CHAIN_TRIGGER_CARRIER_TAIL_WALL = 0.80;
 CHAIN_TRIGGER_CARRIER_TAIL_LENGTH = 11.00;
 CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT = CHAIN_TRIGGER_MAGNET_LENGTH;
@@ -92,13 +98,24 @@ CHAIN_TRIGGER_CARRIER_TAIL_DEPTH = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS;
 // 收紧拖尾根部与两根销轴所在“8”字根部的实体搭接。原 0.80 mm
 // 只是在边缘擦到，预览中会像拖尾脱离销轴而下坠；增加 0.80 mm
 // 后，在第二销轴附近形成连续承力过渡，同时保留足够的拖尾长度。
+CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION = -1; // local X− = world X+ at segment 182
+CHAIN_TRIGGER_CARRIER_TAIL_PIN_X =
+    CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION > 0 ? P : 0;
 CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X = 1.60;
 CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X =
-    P - CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X;
+    CHAIN_TRIGGER_CARRIER_TAIL_PIN_X
+        - CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION
+            * CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X;
+CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X =
+    CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X
+        + CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION
+            * CHAIN_TRIGGER_CARRIER_TAIL_LENGTH;
 CHAIN_TRIGGER_CARRIER_TAIL_X_MIN =
-    CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X;
+    min(CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X,
+        CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X);
 CHAIN_TRIGGER_CARRIER_TAIL_X_MAX =
-    CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X + CHAIN_TRIGGER_CARRIER_TAIL_LENGTH;
+    max(CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X,
+        CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X);
 // 8 字形根部的水平中心线就是 local normal=0；圆角矩形和 M5 贯通座
 // 必须共用这条中心线，不能再用“磁铁上沿”反推拖尾位置。
 CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL = 0.00;
@@ -106,13 +123,22 @@ CHAIN_TRIGGER_CARRIER_TAIL_TOP_NORMAL =
     CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL
         + CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT / 2;
 CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_ALONG_LINK =
-    CHAIN_TRIGGER_CARRIER_TAIL_X_MAX
-        - CHAIN_TRIGGER_CARRIER_TAIL_WALL
-        - CHAIN_TRIGGER_MAGNET_POCKET_DIAMETER / 2;
+    CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X
+        - CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION
+            * (CHAIN_TRIGGER_CARRIER_TAIL_WALL
+                + CHAIN_TRIGGER_MAGNET_POCKET_DIAMETER / 2);
 CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_NORMAL =
     CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL;
 
-// 载架放在链条的 -Y 外侧；磁铁的工作面朝同一外侧，沿链条轴向布置。
+// 链条源坐标经过 chain-source 的 Rx(-90) 后，source +Y 映射为世界 Z−。
+// 中心公轮磁铁位于链条的世界 Z−侧，所以触发载架必须挂在 STL/source +Y
+// 侧；此前挂在 -Y 侧时，网页里虽然“没有网格交集”，但磁台实际朝离合器
+// 的反方向，造成图中链条与离合器看似重叠、磁铁却不在同一工作层。
+CHAIN_TRIGGER_CARRIER_AXIAL_MOUNT_SIDE = "stl-Y+";
+// 由中心输入磁铁世界 axisZ=-82.2208 与当前未翻转载架磁铁 source Y=66.78
+// 推导：目标 source Y=82.2208，镜像平面=(66.78+82.2208)/2=74.5004。
+// 该平面是装配基准，不是可视化平移量；四个触发件必须整体镜像。
+CHAIN_TRIGGER_CARRIER_AXIAL_MIRROR_PLANE_Y = 74.5004;
 CHAIN_TRIGGER_CARRIER_AXIAL_START_OFFSET =
     outer_face + CHAIN_TRIGGER_MAGNET_RETENTION_LIP;
 
@@ -205,9 +231,9 @@ module chain_trigger_extended_retaining_clips() {
     );
 }
 
-// 这里的 local +X 是按用户参考图定义的“8”字根部之后：左端平齐搭接，
-// 只有外侧右端做圆角。轮廓随后沿 local Y 挤出；磁铁孔从拖尾外侧
-// normal+ 面开设，经过路径变换后导出 STL 的磁铁轴为 STL-Z。
+// 轮廓随后沿 local Y 挤出；磁铁孔从拖尾外侧 normal+ 面开设，经过路径
+// 变换后导出 STL 的磁铁轴为 STL-Z。外侧末端按方向参数做唯一圆角，
+// 连接根部保持直边并与“8”字形实体连续相交。
 module chain_trigger_rounded_right_rect_2d(x_min, x_max, h, r) {
     union() {
         translate([x_min, -h / 2])
@@ -219,6 +245,24 @@ module chain_trigger_rounded_right_rect_2d(x_min, x_max, h, r) {
                 circle(r = r, $fn = 32);
         }
     }
+}
+
+module chain_trigger_rounded_left_rect_2d(x_min, x_max, h, r) {
+    translate([x_min + r, -h / 2])
+        square([x_max - x_min - r, h]);
+    hull() {
+        translate([x_min + r, -h / 2 + r])
+            circle(r = r, $fn = 32);
+        translate([x_min + r, h / 2 - r])
+            circle(r = r, $fn = 32);
+    }
+}
+
+module chain_trigger_rounded_tail_2d(x_min, x_max, h, r) {
+    if (CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION > 0)
+        chain_trigger_rounded_right_rect_2d(x_min, x_max, h, r);
+    else
+        chain_trigger_rounded_left_rect_2d(x_min, x_max, h, r);
 }
 
 module chain_trigger_tail_body() {
@@ -241,19 +285,19 @@ module chain_trigger_tail_body() {
                     height = CHAIN_TRIGGER_CARRIER_TAIL_DEPTH,
                     convexity = 8
                 )
-                    chain_trigger_rounded_right_rect_2d(
+                    chain_trigger_rounded_tail_2d(
                         CHAIN_TRIGGER_CARRIER_TAIL_X_MIN,
                         CHAIN_TRIGGER_CARRIER_TAIL_X_MAX,
                         CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT,
                         CHAIN_TRIGGER_CARRIER_TAIL_RADIUS
                     );
 
-        // The rectangular tail starts just before the second (+X) pin so it
-        // overlaps the 8-shaped root as one printed part. That overlap must
-        // not fill the second pin bore: the same long pin passes through the
-        // carrier and the chain link at this location.
+        // The rectangular tail starts just before the selected trailing pin so
+        // it overlaps the 8-shaped root as one printed part. That overlap must
+        // not fill that pin bore: the same long pin passes through the carrier
+        // and the chain link at this location.
         translate([
-            P,
+            CHAIN_TRIGGER_CARRIER_TAIL_PIN_X,
             tail_center_y - CHAIN_TRIGGER_CARRIER_TAIL_DEPTH / 2 - eps,
             0
         ])
@@ -290,14 +334,21 @@ assert(CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_START_Y
 assert(CHAIN_TRIGGER_CARRIER_ROOT_AXIAL_END_Y
         < CHAIN_TRIGGER_EXTENDED_SECOND_CLIP_Y);
 assert(CHAIN_TRIGGER_EXTENDED_PIN_LENGTH > CONNECTING_PIN_LENGTH);
-assert(CHAIN_TRIGGER_CARRIER_TAIL_X_MIN > 0);
-assert(CHAIN_TRIGGER_CARRIER_TAIL_X_MIN < P);
-assert(CHAIN_TRIGGER_CARRIER_TAIL_X_MAX > P);
-assert(CHAIN_TRIGGER_CARRIER_TAIL_X_MAX - P
-        >= CHAIN_TRIGGER_CARRIER_TAIL_ROOT_OVERLAP_X);
+assert(CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION == 1
+        || CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION == -1);
+assert(CHAIN_TRIGGER_CARRIER_TAIL_X_MAX
+        - CHAIN_TRIGGER_CARRIER_TAIL_X_MIN
+        - CHAIN_TRIGGER_CARRIER_TAIL_LENGTH < 0.001);
+assert(CHAIN_TRIGGER_CARRIER_TAIL_DIRECTION > 0
+        ? CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X < P
+            && CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X > P
+        : CHAIN_TRIGGER_CARRIER_TAIL_ROOT_X > 0
+            && CHAIN_TRIGGER_CARRIER_TAIL_OUTER_X < 0);
 assert(CHAIN_TRIGGER_CARRIER_TAIL_RADIUS < CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT / 2);
 assert(abs(CHAIN_TRIGGER_CARRIER_TAIL_DEPTH
         - CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS) < 0.001);
 assert(CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT
         >= CHAIN_TRIGGER_MAGNET_POCKET_DEPTH
         + CHAIN_TRIGGER_MAGNET_BACK_WALL - 0.001);
+assert(CHAIN_TRIGGER_CARRIER_AXIAL_MOUNT_SIDE == "stl-Y+");
+assert(CHAIN_TRIGGER_CARRIER_AXIAL_MIRROR_PLANE_Y > 0);

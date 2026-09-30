@@ -935,14 +935,14 @@ function validateCenterClutchContract(contract) {
       || n("snakeChainTriggerMagnetSegmentIndex") !== 182) {
     throw new Error("蛇链服务层与公轮底部磁铁下沿的高度契约不满足");
   }
-  if (n("snakeChainTriggerCarrierMagnetCenterAlongLinkMm") <= 0
+  if (Math.abs(n("snakeChainTriggerCarrierMagnetCenterAlongLinkMm")) < 0.001
       || contract.snakeChainTriggerMagnetAxis !== "stl-Z"
       || contract.snakeChainTriggerCarrierMagnetAxis !== "stl-Z"
       || contract.snakeChainTriggerCarrierMagnetCenterReference
         !== "rear-rounded-tail-hole-center"
       || contract.snakeChainTriggerCarrierHardwareMode
         !== "purchased-03C-extended-pin-pair-plus-two-U-clips") {
-    throw new Error("蛇链触发件必须是后侧圆角拖尾、STL-Z 外侧磁铁和双卡槽现成五金装配");
+    throw new Error("蛇链触发件必须是带方向的后侧圆角拖尾、STL-Z 外侧磁铁和双卡槽现成五金装配");
   }
   if (n("frontTimingPulleyDrawerRow") !== n("centerRow") - 1
       || !close(n("frontPinionCenterYMm"), n("drawerRackYMm"))
@@ -2334,11 +2334,24 @@ function alignChainTriggerToCenter() {
   const sourceSegment = play.path.segs?.[segmentIndex];
   if (!station || !sourceSegment || !triggerCarrier) return null;
 
+  // The chain's active service run is the fixed-height magnetic trigger datum,
+  // not the selected drawer row.  Using station.z here moved the trigger to a
+  // different chain layer (the old image-1穿模 came from exactly that mix-up).
+  const referencePathY = Number(
+    motion.chainTopDatum?.referencePathShiftedCenterYMm,
+  );
+  if (!Number.isFinite(referencePathY)) return null;
   // The carrier's magnet is authored at a longitudinal offset from the
   // segment midpoint. Move the midpoint by the inverse offset so the magnet,
   // not merely the two support pins, lands on the clutch magnet datum.
-  const target = projectPoint(play.path, station.x, motion.chainY, station.z);
-  const magnetAlong = Number(triggerCarrier.magnetCenterAlongLinkMm) || 0;
+  const target = projectPoint(play.path, station.x, motion.chainY, referencePathY);
+  // The contract value is the signed distance from the first pin to the
+  // magnet along the authored segment direction.  Convert it to the signed
+  // offset from the segment midpoint before solving the chain phase.  This is
+  // essential for the trailing-side carrier: its magnet is on local X− and a
+  // positive-only distance would put the whole carrier into the clutch sleeve.
+  const magnetAlongFromFirstPin = Number(triggerCarrier.magnetCenterAlongLinkMm) || 0;
+  const magnetAlong = magnetAlongFromFirstPin - sourceSegment.len / 2;
   const sourceAnchorS = sourceSegment.s0 + sourceSegment.len / 2;
   const desiredAnchorS = target.s - magnetAlong;
   const phaseOffsetMm = wrapPathS(desiredAnchorS - sourceAnchorS);
@@ -2774,24 +2787,24 @@ async function bindChainTriggerAssemblyPartMesh(item) {
     (seg.a[1] + seg.b[1]) / 2,
     (seg.a[2] + seg.b[2]) / 2,
   ];
-  const tangent = normalize(sub(seg.b, seg.a));
-  const normal = [-tangent[2], 0, tangent[0]];
-  const delta = [center.x - anchor[0], center.y - anchor[1], center.z - anchor[2]];
-  const along = delta[0] * tangent[0] + delta[2] * tangent[2];
-  const side = delta[0] * normal[0] + delta[2] * normal[2];
-
-  // Keep each STL independently inspectable, but express its placement as a
-  // fixed child transform from the one chain-segment pivot.  This is the
-  // important difference from four independent chain parts: at a bend the
-  // carrier, pins, clips, and magnet all receive exactly one yaw and one
-  // segment-midpoint translation.
-  geometry.translate(-center.x, -center.y, -center.z);
+  // Each exported trigger STL already contains its authored source-frame
+  // coordinates: its pin bores are on the two source-chain pin centers and
+  // its magnet is on the trailing side of that same link.  Keep that complete
+  // rigid offset relative to the segment midpoint.  The previous code
+  // centered the mesh and then projected its bounding-box center onto the
+  // tangent/normal; for the X− segment this inverted the longitudinal sign
+  // and moved the carrier about 7.25 mm through the clutch envelope.
+  //
+  // The source adapter is the parent frame, so subtracting the authored
+  // midpoint here is the only transform needed.  The shared segment pivot
+  // then supplies one translation and one yaw to all four components.
+  geometry.translate(-anchor[0], -anchor[1], -anchor[2]);
   const holder = new THREE.Group();
   holder.name = `chain-trigger-component:${item.part.componentId || item.part.id}`;
   holder.userData.assemblyId = CHAIN_TRIGGER_ASSEMBLY_ID;
   holder.userData.componentId = item.part.componentId || item.part.id;
   holder.userData.mountRelation = item.part.mountRelation || null;
-  holder.position.set(along, delta[1], side);
+  holder.position.set(0, 0, 0);
   const mesh = new THREE.Mesh(geometry, sourceMesh.material);
   mesh.userData.assemblyId = CHAIN_TRIGGER_ASSEMBLY_ID;
   mesh.userData.componentId = holder.userData.componentId;

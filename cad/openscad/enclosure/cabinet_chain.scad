@@ -83,6 +83,18 @@ module place_power_motor_cover(c) {
         children();
 }
 
+// The source STL is already authored in the chain-source frame.  Reflect the
+// complete trigger assembly about one source-Y plane so its two pin bores,
+// purchased long pins, U clips, carrier and M5 magnet all move together to
+// source +Y (world Z−), the side facing the center clutch input magnet.
+// This is a rigid mounting correction, not an independent magnet offset.
+module chain_trigger_axial_mount_to_clutch() {
+    translate([0, CHAIN_TRIGGER_CARRIER_AXIAL_MIRROR_PLANE_Y, 0])
+        mirror([0, 1, 0])
+            translate([0, -CHAIN_TRIGGER_CARRIER_AXIAL_MIRROR_PLANE_Y, 0])
+                children();
+}
+
 module rear_blunt_idlers() {
     for (c = blunt_centers())
         place_geared(c) ch1_03c_bearing_blunt_idler(BLUNT_TEETH);
@@ -161,23 +173,40 @@ module trigger_carrier_root() {
         0
     ])
         rotate([90, 0, 0])
-            linear_extrude(
-                height = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS,
-                convexity = 8
-            )
-                plate_profile(CHAIN_TRIGGER_CARRIER_PIN_HOLE_DIAMETER);
+            difference() {
+                linear_extrude(
+                    height = CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS,
+                    convexity = 8
+                )
+                    plate_profile(CHAIN_TRIGGER_CARRIER_PIN_HOLE_DIAMETER);
+                // In the source plate profile this is the lower outer lobe.
+                // After the browser/source adapter it is the sleeve-facing
+                // upper edge.  It is a continuous parametric shave, not a
+                // floating patch, and remains clear of both pin bores.
+                translate([
+                    -h2,
+                    -h2 / 2 - eps,
+                    -eps
+                ])
+                    cube([
+                        P + 2 * h2,
+                        CHAIN_TRIGGER_ROOT_SLEEVE_RELIEF_HEIGHT + eps,
+                        CHAIN_TRIGGER_CARRIER_PLATE_THICKNESS + 2 * eps
+                    ]);
+            }
 }
 
 module clutch_trigger_carrier_reference() {
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
     p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            color("#d9933d")
-                union() {
-                    trigger_carrier_root();
-                    chain_trigger_tail_body();
-                }
+    chain_trigger_axial_mount_to_clutch()
+        snake_in_rear()
+            place_from_to(p0, p1, [0, 0, 1])
+                color("#d9933d")
+                    union() {
+                        trigger_carrier_root();
+                        chain_trigger_tail_body();
+                    }
 }
 
 module clutch_trigger_magnet_reference() {
@@ -194,19 +223,20 @@ module clutch_trigger_magnet_reference() {
         CHAIN_TRIGGER_CARRIER_TAIL_CENTER_NORMAL
             + CHAIN_TRIGGER_CARRIER_TAIL_HEIGHT / 2
             - CHAIN_TRIGGER_MAGNET_POCKET_DEPTH;
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([
-                CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_ALONG_LINK,
-                magnet_center_y,
-                magnet_start_normal
-            ])
-                color("#5b6670")
-                    cylinder(
-                        d = CHAIN_TRIGGER_MAGNET_D,
-                        h = CHAIN_TRIGGER_MAGNET_L,
-                        $fn = 64
-                    );
+    chain_trigger_axial_mount_to_clutch()
+        snake_in_rear()
+            place_from_to(p0, p1, [0, 0, 1])
+                translate([
+                    CHAIN_TRIGGER_CARRIER_MAGNET_CENTER_ALONG_LINK,
+                    magnet_center_y,
+                    magnet_start_normal
+                ])
+                    color("#5b6670")
+                        cylinder(
+                            d = CHAIN_TRIGGER_MAGNET_D,
+                            h = CHAIN_TRIGGER_MAGNET_L,
+                            $fn = 64
+                        );
 }
 
 module clutch_trigger_connecting_pins_reference() {
@@ -215,11 +245,12 @@ module clutch_trigger_connecting_pins_reference() {
     // p0 and p1 exactly.
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
     p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([P / 2, 0, 0])
-                color("#b08d57")
-                    chain_trigger_extended_connecting_pin_pair();
+    chain_trigger_axial_mount_to_clutch()
+        snake_in_rear()
+            place_from_to(p0, p1, [0, 0, 1])
+                translate([P / 2, 0, 0])
+                    color("#b08d57")
+                        chain_trigger_extended_connecting_pin_pair();
 }
 
 module clutch_trigger_retaining_clip_reference() {
@@ -227,11 +258,12 @@ module clutch_trigger_retaining_clip_reference() {
     // grooves. They stay separate from the orange printed carrier.
     p0 = snake_pins()[CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX];
     p1 = snake_pins()[(CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX + 1) % len(snake_pins())];
-    snake_in_rear()
-        place_from_to(p0, p1, [0, 0, 1])
-            translate([P / 2, 0, 0])
-                color("#9aa7b6")
-                    chain_trigger_extended_retaining_clips();
+    chain_trigger_axial_mount_to_clutch()
+        snake_in_rear()
+            place_from_to(p0, p1, [0, 0, 1])
+                translate([P / 2, 0, 0])
+                    color("#9aa7b6")
+                        chain_trigger_extended_retaining_clips();
 }
 
 // Local diagnostic assembly for the 03C trigger carrier.  This intentionally
@@ -351,6 +383,10 @@ if (CHAIN_PART == "trigger_assembly") {
     clutch_trigger_magnet_reference();
 }
 
+// Focused source diagnostics for the trigger/sleeve clearance sweep. These
+// selectors reuse the installed path transform and do not create additional
+// production parts; they only let the clearance witness identify which
+// portion of the one carrier reaches the fixed sleeve envelope.
 if (CHAIN_PART == "assembly") {
     %cabinet_shell();
     %drawer_ghosts();

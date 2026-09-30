@@ -1428,8 +1428,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("蛇链触发载架不应保留打印压边，磁铁由用户螺丝固定")
     if abs(n(contract, "snakeChainTriggerCarrierMagnetBackWallMm")) > 0.001:
         raise RuntimeError("蛇链触发载架不应保留打印底壁，磁铁座必须贯通")
-    if n(contract, "snakeChainTriggerCarrierMagnetCenterAlongLinkMm") <= 0:
-        raise RuntimeError("蛇链触发磁铁必须位于第二销外侧的圆角拖尾内")
+    if abs(n(contract, "snakeChainTriggerCarrierMagnetCenterAlongLinkMm")) < 0.001:
+        raise RuntimeError("蛇链触发磁铁不能落在链节中点，必须位于带方向的圆角拖尾内")
     expect(
         contract,
         "snakeChainTriggerCarrierMagnetCenterNormalMm",

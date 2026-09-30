@@ -992,8 +992,8 @@ def configure_chain_height(contract: dict | None) -> None:
                 f"双销 M5 载架契约字段错误: {key}={actual:.6f}, "
                 f"expected={expected_value:.6f}"
             )
-    if float(contract["snakeChainTriggerCarrierMagnetCenterAlongLinkMm"]) <= 0:
-        raise RuntimeError("蛇链触发磁铁必须位于第二销外侧的圆角拖尾内")
+    if abs(float(contract["snakeChainTriggerCarrierMagnetCenterAlongLinkMm"])) < 0.001:
+        raise RuntimeError("蛇链触发磁铁不能落在链节中点，必须位于带方向的圆角拖尾内")
     if contract["snakeChainTriggerCarrierPart"] != (
         "cabinet-chain/cabinet_chain_clutch_trigger_carrier"
     ) or contract["snakeChainTriggerCarrierMagnetPart"] != (
