@@ -21,3 +21,4 @@ __pycache__/
 /output/procurement/
 /output/preview-service/
 /output/revision-review/
+/output/optical-home-candidate/slices/**/*.json

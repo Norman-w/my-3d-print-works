@@ -10,6 +10,7 @@
 - [拉索固定与动作核验](docs/cable-trigger-integration.md)
 - [当前完整装配与裁管、穿线、调零顺序](docs/current-assembly.md)
 - [当前制作索引](docs/current-manufacturing.md)、[机械行程与回位复核](docs/current-mechanical-review.md)
+- [往复电机与槽型光电归位候选](docs/optical-home-candidate.md)（电机座和双向传动尚未设计，未接入上述拉索版总装）
 - [工程状态与实际边界](docs/current-status.md)
 - [送料基线历史装配说明](docs/final-assembly.md)
 - [旋转头五金与装入路径](docs/spin-complete-hardware.md)
