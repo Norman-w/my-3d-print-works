@@ -6,22 +6,69 @@ from __future__ import annotations
 
 import math
 import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 # ===== 分区：常量/配置 =====
-P = 4.7625
-WALL = 3.2
-SERVICE_W = 44.0
-W = 250.0
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+CABINET_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/enclosure/cabinet_params.scad"
+CHAIN_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/ch1_03c_params.scad"
+CHAIN_TRIGGER_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/parts/ch1_03c_chain_trigger_params.scad"
+MOTOR_MOUNT_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/enclosure/cabinet_motor_mount_params.scad"
+
+
+def _scad_number(path: Path, name: str) -> float:
+    """Read a literal numeric SCAD parameter instead of duplicating geometry truth."""
+    source = path.read_text(encoding="utf-8")
+    match = re.search(
+        rf"^\s*{re.escape(name)}\s*=\s*([0-9]+(?:\.[0-9]+)?)\s*;",
+        source,
+        re.MULTILINE,
+    )
+    if not match:
+        raise RuntimeError(f"找不到 SCAD 参数 {name}: {path}")
+    return float(match.group(1))
+
+
+def _scad_int(path: Path, name: str) -> int:
+    return int(round(_scad_number(path, name)))
+
+
+def _chain_mount_y() -> float:
+    """Resolve the derived chain plane from the motor-mount SCAD source."""
+    source = MOTOR_MOUNT_PARAMS_PATH.read_text(encoding="utf-8")
+    match = re.search(
+        r"^\s*MOTOR_MOUNT_CHAIN_Y\s*=\s*PARTITION_BACK_Y\s*\+\s*"
+        r"([0-9]+(?:\.[0-9]+)?)\s*;",
+        source,
+        re.MULTILINE,
+    )
+    if not match:
+        raise RuntimeError(f"找不到 MOTOR_MOUNT_CHAIN_Y 派生式: {MOTOR_MOUNT_PARAMS_PATH}")
+    return (
+        _scad_number(CABINET_PARAMS_PATH, "FRONT_NET")
+        + _scad_number(CABINET_PARAMS_PATH, "PARTITION_T")
+        + float(match.group(1))
+    )
+
+
+# OpenSCAD is the mechanical source of truth. Keep the solver's derived
+# values here, but do not let an old Python copy silently survive a cabinet
+# resize or a chain SKU change.
+P = _scad_number(CHAIN_PARAMS_PATH, "P")
+WALL = _scad_number(CABINET_PARAMS_PATH, "WALL")
+SERVICE_W = _scad_number(CABINET_PARAMS_PATH, "SERVICE_W")
+W = _scad_number(CABINET_PARAMS_PATH, "W")
 GRID_W = W - 2 * WALL - SERVICE_W
-N_COL = 5
-N_ROW = 3
-SERVICE_LAYERS = 1
-DESIGN_BAY_H = 55.30
-DIV_T = 2.4
-SHELF_T = 2.4
+N_COL = _scad_int(CABINET_PARAMS_PATH, "N_COL")
+N_ROW = _scad_int(CABINET_PARAMS_PATH, "N_ROW")
+SERVICE_LAYERS = _scad_int(CABINET_PARAMS_PATH, "SERVICE_LAYERS")
+DESIGN_BAY_H = _scad_number(CABINET_PARAMS_PATH, "DESIGN_BAY_H")
+DIV_T = _scad_number(CABINET_PARAMS_PATH, "GRID_T")
+SHELF_T = DIV_T
+CHAIN_Y = _chain_mount_y()
 SPROCKET_TEETH = 12
 BLUNT_TEETH = 8  # 所有绿色导向轮统一使用的小轮
 WALL_CLEAR = 0.40
@@ -37,7 +84,6 @@ TEN_TRAVEL = 10.0
 TENSIONER_HOME_RISE_MM = 6.0
 PITCH_TOL = 0.02
 CLOSE_TOL = 0.05
-EXPECTED_PIN_COUNT = 260
 POWER_SERVICE_MIN_CLEARANCE = 0.40
 PATH_TANGENCY_MIN_DOT = 0.999
 CHAIN_PATH_ENVELOPE_RADIUS_MM = 3.00
@@ -49,17 +95,27 @@ RETURN_PATH_SELF_CLEARANCE_MIN_MM = (
 # 方案 1 选择离合的网页/SCAD 共用装配参数（单位 mm）。输入轮与输出轮
 # 同轴，狗牙面默认开 2.6 mm；输出狗牙向输入侧移动 2.5 mm 后只剩 0.1 mm
 # 端面间隙，作为“已啮合”展示状态。
-CHAIN_Y = 75.0
 CHAIN_VERTICAL_SHIFT = 0.0
 CHAIN_HEIGHT_CONTRACT: dict[str, object] = {}
 # Segment 182 is on the horizontal service run at the clutch magnet datum,
 # near the center column.  The former 143 was on the middle drawer row and
 # could never trigger the center clutch at its lower installation height.
-CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = 182
+CHAIN_TRIGGER_MAGNET_SEGMENT_INDEX = _scad_int(
+    CHAIN_TRIGGER_PARAMS_PATH,
+    "CHAIN_TRIGGER_SEGMENT_INDEX",
+)
+SOURCE_CHAIN_TRIGGER_MAGNET_D_MM = _scad_number(
+    CHAIN_TRIGGER_PARAMS_PATH,
+    "CHAIN_TRIGGER_MAGNET_DIAMETER",
+)
+SOURCE_CHAIN_TRIGGER_MAGNET_L_MM = _scad_number(
+    CHAIN_TRIGGER_PARAMS_PATH,
+    "CHAIN_TRIGGER_MAGNET_LENGTH",
+)
 CHAIN_REFERENCE_ROW = 0
 CHAIN_LINK_TOP_OFFSET_MM = 2.15
-CHAIN_TRIGGER_MAGNET_D_MM = 5.0
-CHAIN_TRIGGER_MAGNET_L_MM = 4.00
+CHAIN_TRIGGER_MAGNET_D_MM = SOURCE_CHAIN_TRIGGER_MAGNET_D_MM
+CHAIN_TRIGGER_MAGNET_L_MM = SOURCE_CHAIN_TRIGGER_MAGNET_L_MM
 CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM = 0.00
 CHAIN_TRIGGER_MAGNET_TOP_CLEARANCE_MM = 0.0
 CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM = 2.39
@@ -83,9 +139,9 @@ SERVICE_H = SERVICE_LAYERS * ROW_PITCH
 GRID_ORIGIN_X = WALL + SERVICE_W
 GRID_ORIGIN_Z = WALL + SERVICE_H
 
-assert abs(GRID_W - 199.6) < 1e-6
-assert abs(BAY_W - 38.0) < 1e-6
-assert abs(COL_PITCH - 40.4) < 1e-6
+assert GRID_W > 0, "抽屉净宽必须为正"
+assert BAY_W > 0, "单格净宽必须为正"
+assert COL_PITCH > BAY_W, "列节距必须包含分隔板厚度"
 
 # ===== 分区：模型/类型 =====
 Vec = tuple[float, float]
@@ -967,8 +1023,8 @@ def configure_chain_height(contract: dict | None) -> None:
         float(contract["snakeChainTriggerMagnetSegmentIndex"])
     ):
         raise RuntimeError("蛇链触发磁铁节号与 OpenSCAD 契约不一致")
-    if abs(CHAIN_TRIGGER_MAGNET_D_MM - 5.0) > 0.001 \
-            or abs(CHAIN_TRIGGER_MAGNET_L_MM - 4.00) > 0.001 \
+    if abs(CHAIN_TRIGGER_MAGNET_D_MM - SOURCE_CHAIN_TRIGGER_MAGNET_D_MM) > 0.001 \
+            or abs(CHAIN_TRIGGER_MAGNET_L_MM - SOURCE_CHAIN_TRIGGER_MAGNET_L_MM) > 0.001 \
             or abs(CHAIN_TRIGGER_MAGNET_NORMAL_OFFSET_MM - 0.00) > 0.001 \
             or abs(CHAIN_TRIGGER_MAGNET_AXIAL_START_OFFSET_MM - 2.39) > 0.001:
         raise RuntimeError("蛇链触发磁铁必须为 M5×4，且按双销载架基准定位")
@@ -1025,6 +1081,17 @@ def write_motion(
     path_audit = path_audit or {}
     payload = {
         "p": P,
+        "cabinetGrid": {
+            "source": "cad/openscad/enclosure/cabinet_params.scad",
+            "widthMm": W,
+            "serviceBayWidthMm": SERVICE_W,
+            "wallMm": WALL,
+            "columns": N_COL,
+            "rows": N_ROW,
+            "serviceLayers": SERVICE_LAYERS,
+            "designBayHeightMm": DESIGN_BAY_H,
+        },
+        "pinCount": len(pins),
         "driveTeeth": SPROCKET_TEETH,
         "guideTeeth": BLUNT_TEETH,
         "driveReturnXTrimMm": DRIVE_RETURN_X_TRIM,
@@ -1256,10 +1323,6 @@ def main() -> int:
     )
     if n % 2:
         raise SystemExit("pin count must be even")
-    if n != EXPECTED_PIN_COUNT:
-        raise SystemExit(
-            f"250 mm / 44 mm / 错向修正回程方案应有 {EXPECTED_PIN_COUNT} 个销，实际为 {n}"
-        )
     if min(chords) < P - PITCH_TOL or max(chords) > P + PITCH_TOL:
         raise SystemExit("pin spacing is not true pitch")
     if abs(chords[-1] - P) > CLOSE_TOL:

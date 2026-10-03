@@ -13,6 +13,7 @@ from array import array
 import json
 import math
 from pathlib import Path
+import re
 import struct
 
 
@@ -28,7 +29,40 @@ REQUIRED_STL_NAMES = (
     "cabinet_chain_clutch_trigger_connecting_pins.stl",
     "cabinet_chain_clutch_trigger_retaining_clip.stl",
 )
-EXPECTED_PIN_COUNT = 260
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+CABINET_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/enclosure/cabinet_params.scad"
+CHAIN_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/ch1_03c_params.scad"
+CHAIN_TRIGGER_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/parts/ch1_03c_chain_trigger_params.scad"
+MOTOR_MOUNT_PARAMS_PATH = PROJECT_ROOT / "cad/openscad/enclosure/cabinet_motor_mount_params.scad"
+
+
+def scad_number(path: Path, name: str) -> float:
+    source = path.read_text(encoding="utf-8")
+    match = re.search(
+        rf"^\s*{re.escape(name)}\s*=\s*([0-9]+(?:\.[0-9]+)?)\s*;",
+        source,
+        re.MULTILINE,
+    )
+    if not match:
+        fail(f"找不到 SCAD 参数 {name}: {path}")
+    return float(match.group(1))
+
+
+def source_chain_y() -> float:
+    source = MOTOR_MOUNT_PARAMS_PATH.read_text(encoding="utf-8")
+    match = re.search(
+        r"^\s*MOTOR_MOUNT_CHAIN_Y\s*=\s*PARTITION_BACK_Y\s*\+\s*"
+        r"([0-9]+(?:\.[0-9]+)?)\s*;",
+        source,
+        re.MULTILINE,
+    )
+    if not match:
+        fail(f"找不到 MOTOR_MOUNT_CHAIN_Y 派生式: {MOTOR_MOUNT_PARAMS_PATH}")
+    return (
+        scad_number(CABINET_PARAMS_PATH, "FRONT_NET")
+        + scad_number(CABINET_PARAMS_PATH, "PARTITION_T")
+        + float(match.group(1))
+    )
 
 
 def fail(message: str) -> None:
@@ -227,6 +261,41 @@ def main() -> int:
     if not isinstance(wheels, list) or not wheels:
         fail("没有导出轮位")
 
+    cabinet_grid = payload.get("cabinetGrid")
+    if not isinstance(cabinet_grid, dict):
+        fail("运动契约缺少 cabinetGrid；禁止回退到 Python 硬编码柜体尺寸")
+    expected_grid = {
+        "widthMm": scad_number(CABINET_PARAMS_PATH, "W"),
+        "serviceBayWidthMm": scad_number(CABINET_PARAMS_PATH, "SERVICE_W"),
+        "wallMm": scad_number(CABINET_PARAMS_PATH, "WALL"),
+        "columns": int(round(scad_number(CABINET_PARAMS_PATH, "N_COL"))),
+        "rows": int(round(scad_number(CABINET_PARAMS_PATH, "N_ROW"))),
+        "serviceLayers": int(round(scad_number(CABINET_PARAMS_PATH, "SERVICE_LAYERS"))),
+        "designBayHeightMm": scad_number(CABINET_PARAMS_PATH, "DESIGN_BAY_H"),
+    }
+    for key, expected in expected_grid.items():
+        actual = cabinet_grid.get(key)
+        if actual is None:
+            fail(f"运动契约 cabinetGrid 缺少字段: {key}")
+        if isinstance(expected, float):
+            try:
+                actual_number = float(actual)
+            except (TypeError, ValueError):
+                fail(f"cabinetGrid.{key} 不是有效数字: {actual!r}")
+            if abs(actual_number - expected) > 0.001:
+                fail(f"cabinetGrid.{key} 与 OpenSCAD 不一致: {actual!r} != {expected}")
+        else:
+            try:
+                actual_integer = int(actual)
+            except (TypeError, ValueError):
+                fail(f"cabinetGrid.{key} 不是有效整数: {actual!r}")
+            if actual_integer != expected:
+                fail(f"cabinetGrid.{key} 与 OpenSCAD 不一致: {actual!r} != {expected}")
+    if int(cabinet_grid["columns"]) * int(cabinet_grid["rows"]) != 15:
+        fail("当前机械契约必须保持 5×3/15 个抽屉站点")
+    if int(payload.get("pinCount", -1)) != len(pins):
+        fail("pinCount 与 pins 数组数量不一致")
+
     pitch = float(payload.get("p", 0))
     if pitch <= 0:
         fail(f"节距无效: {pitch}")
@@ -249,19 +318,19 @@ def main() -> int:
     guide_teeth = int(payload.get("guideTeeth", 0))
     sprockets = [wheel for wheel in wheels if wheel.get("kind") == "sprocket"]
     idlers = [wheel for wheel in wheels if wheel.get("kind") == "idler"]
-    if len(pins) != EXPECTED_PIN_COUNT:
-        fail(f"当前 250 mm / 44 mm / 错向修正 5×3 蛇链应有 {EXPECTED_PIN_COUNT} 个销，实际为 {len(pins)}")
-    if abs(float(payload.get("chainY", 0)) - 75.0) > 0.01:
-        fail(f"后仓链条层位应为 chainY=75.000，实际为 {payload.get('chainY')!r}")
-    if abs(pitch - 4.7625) > 0.001:
-        fail(f"03C 链条节距应为 4.7625 mm，实际为 {pitch:.6f} mm")
+    if abs(float(payload.get("chainY", 0)) - source_chain_y()) > 0.01:
+        fail(
+            "后仓链条层位与电机安装参数不一致: "
+            f"actual={payload.get('chainY')!r} source={source_chain_y():.3f}"
+        )
+    source_pitch = scad_number(CHAIN_PARAMS_PATH, "P")
+    if abs(pitch - source_pitch) > 0.001:
+        fail(f"03C 链条节距与 OpenSCAD 不一致: actual={pitch:.6f} source={source_pitch:.6f}")
     if len(sprockets) != 1:
         fail(f"主动轮数量应为 1，实际为 {len(sprockets)}")
     if sprockets[0].get("teeth") != drive_teeth:
         fail("主动轮齿数与运动契约不一致")
-    if len(idlers) != 9 or any(wheel.get("teeth") != guide_teeth for wheel in idlers):
-        if len(idlers) != 9:
-            fail(f"当前 5×3 蛇链含下压服务轮应有 9 个导向轮，实际为 {len(idlers)}")
+    if not idlers or any(wheel.get("teeth") != guide_teeth for wheel in idlers):
         fail("导向轮齿数与运动契约不一致")
 
     audit = payload.get("returnPathAudit")
@@ -378,22 +447,24 @@ def main() -> int:
         fail(f"底部回程导向轮侵入箱底，余量={floor_clearance:.3f} mm")
     if trigger_index < 0 or trigger_index >= len(pins):
         fail(f"触发磁铁节号越界: {trigger_index}")
-    if abs(trigger_d - 5.0) > 0.001 or abs(trigger_l - 4.00) > 0.001:
-        fail("链节触发磁铁必须为 M5×4 采购件参考")
+    source_trigger_d = scad_number(CHAIN_TRIGGER_PARAMS_PATH, "CHAIN_TRIGGER_MAGNET_DIAMETER")
+    source_trigger_l = scad_number(CHAIN_TRIGGER_PARAMS_PATH, "CHAIN_TRIGGER_MAGNET_LENGTH")
+    if abs(trigger_d - source_trigger_d) > 0.001 or abs(trigger_l - source_trigger_l) > 0.001:
+        fail("链节触发磁铁尺寸必须与 OpenSCAD 触发件参数一致")
     if abs(trigger_top_clearance) > 0.001:
         fail("链节触发磁铁上沿没有锁定到链节上沿基准")
     if carrier_segment != trigger_index:
         fail("M5 载架与磁铁没有使用同一个链节节号")
     expected_carrier = {
-        "pinSpacingMm": (carrier_pin_spacing, 4.7625),
-        "pinDiameterMm": (carrier_pin_diameter, 1.62),
+        "pinSpacingMm": (carrier_pin_spacing, scad_number(CHAIN_PARAMS_PATH, "P")),
+        "pinDiameterMm": (carrier_pin_diameter, scad_number(CHAIN_PARAMS_PATH, "d2")),
         "pinHoleDiameterMm": (carrier_pin_hole, 1.80),
         "pinLengthMm": (carrier_pin_length, 17.50),
         "plateThicknessMm": (carrier_plate_thickness, 10.00),
-        "magnetDiameterMm": (carrier_magnet_diameter, 5.00),
-        "magnetLengthMm": (carrier_magnet_length, 4.00),
-        "magnetPocketDiameterMm": (carrier_pocket_diameter, 5.25),
-        "magnetPocketDepthMm": (carrier_pocket_depth, 4.00),
+        "magnetDiameterMm": (carrier_magnet_diameter, source_trigger_d),
+        "magnetLengthMm": (carrier_magnet_length, source_trigger_l),
+        "magnetPocketDiameterMm": (carrier_pocket_diameter, scad_number(CHAIN_TRIGGER_PARAMS_PATH, "CHAIN_TRIGGER_MAGNET_POCKET_DIAMETER")),
+        "magnetPocketDepthMm": (carrier_pocket_depth, source_trigger_l),
         "magnetRetentionLipMm": (carrier_lip, 0.00),
         "magnetBackWallMm": (carrier_back_wall, 0.00),
         "magnetCenterNormalMm": (carrier_center_normal, 0.00),

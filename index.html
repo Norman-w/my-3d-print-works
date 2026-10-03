@@ -1146,17 +1146,18 @@
         <div>
           <p class="eyebrow">REAL MECHATRONIC 3D / 物理链路演示</p>
           <h1 id="hero-title">选格机构与全柜传动</h1>
-          <p class="hero-lead">选择头只定位；固定动力总线经离合器接通目标丝杆。</p>
+          <p class="hero-lead">选择头只定位；固定动力总线经离合器接通目标抽屉执行件。</p>
+          <p class="tag infer">边界声明：本页是候选运动学/控制规划仿真；当前机械真值在 OpenSCAD + 导出契约，ESP32 固件尚未实现。</p>
           <div class="stat-line" aria-label="本页默认参数">
             <div><b>2</b><span>电机上限</span></div>
-            <div><b>3 × 4</b><span>示例列 × 层</span></div>
-            <div><b>60–70 mm</b><span>后置机构区</span></div>
+            <div><b>5 × 3</b><span>当前列 × 层</span></div>
+            <div><b>44 mm</b><span>X− 服务区</span></div>
           </div>
         </div>
         <aside class="hero-aside">
           <span class="recommend-chip">推荐起点 · 固定动力总线 + 机械选择器</span>
-          <p><strong>动力端：</strong>M-B 固定在柜体后部，通过 HTD3M 同步带/分层取力齿轮让 12 个输入端转动；被选格的端面爪式离合器才把扭矩传给该格 T8×4 丝杆。</p>
-          <p><strong>选择端：</strong>M-A 固定，只带动蛇形释放指、普通渐变凸轮或傅里叶二维槽滑块；释放指只翻开目标本地锁爪，不承受抽屉推拉扭矩，也不拖动电机和动力线。</p>
+          <p><strong>动力端：</strong>M-B 固定在柜体后部，通过 HTD3M 同步带/分层取力齿轮服务当前 15 个站点；只有目标永磁离合确认后，才允许把扭矩传给目标抽屉执行件。</p>
+          <p><strong>选择端：</strong>M-A 固定，只负责蛇形选站、凸轮选站或二维槽选站；磁力触发件不承受抽屉推拉扭矩，电机和动力线也不随选择头移动。</p>
           <span class="tag fact">事实</span>
           <span class="tag calc">计算</span>
           <span class="tag infer">推测 / 待验证</span>
@@ -1211,13 +1212,13 @@
               </div>
               <span class="mini-chip">M-A / M-B</span>
             </div>
-            <p>M-A 固定在柜体上，只驱动闭合同步带和轻量释放指沿固定蛇形导轨走弧长；M-B 固定在后部，驱动共用动力总线。每格端面爪离合器由本地锁爪保持断开，释放指只翻开目标锁爪，压缩弹簧完成爪套啮合，随后该格固定 T8×4 丝杆推动抽屉。</p>
+            <p>M-A 固定在柜体上，只驱动闭合同步带和轻量触发件沿固定蛇形导轨走弧长；M-B 固定在后部，驱动共用动力总线。目标站点停稳后由永磁接口接合离合，随后才允许目标抽屉固定执行件运动。</p>
             <ol class="sequence">
               <li><b>01</b><span><strong>A 选格：</strong>释放指沿直线段和圆角 U 形回转移动，弧长坐标对应目标抽屉。</span></li>
-              <li><b>02</b><span><strong>离合接通：</strong>释放指只翻开目标锁爪；目标压缩弹簧使爪套啮合，旁格继续被锁住。</span></li>
+              <li><b>02</b><span><strong>离合接通：</strong>链条触发磁铁经过目标点并与公轮磁铁共轴；旁格不能被误接，必须得到 CLUTCH_ENGAGED 确认。</span></li>
               <li><b>03</b><span><strong>动力启动：</strong>先确认 CLUTCH_ENGAGED，再启动固定 M-B 共用动力总线。</span></li>
               <li><b>04</b><span><strong>丝杆推拉：</strong>目标格固定丝杆旋转，抽屉上的防转螺母座沿深度移动。</span></li>
-              <li><b>05</b><span><strong>停止释放：</strong>B_IN 后先停总线，释放指反向经过复位坡面并重新扣住离合套，LOCKED 承载。</span></li>
+              <li><b>05</b><span><strong>停止释放：</strong>到达开/闭限位后先停总线，先释放离合再允许选择轴返回；最终由实体止挡承载。</span></li>
             </ol>
           </article>
           <article class="decision candidate">
@@ -1228,13 +1229,13 @@
               </div>
               <span class="mini-chip">M-A</span>
             </div>
-            <p>固定 M-A 旋转预先设计的凸轮槽或渐变半径环，滚轮随凸轮到达目标中心；目标处设置停留段和轴向升程，推动对应端面爪式离合器。固定 M-B 只在离合器确认后驱动动力总线。</p>
+            <p>固定 M-A 旋转预先设计的凸轮槽或渐变半径环，滚轮随凸轮到达目标中心；目标处设置停留段，给永磁离合提供稳定的接合位置。固定 M-B 只在离合器确认后驱动动力总线。</p>
             <ol class="sequence">
               <li><b>01</b><span><strong>角度定位：</strong>编码器角度 θ 对应一格目标，不能只依赖步数。</span></li>
               <li><b>02</b><span><strong>停留锁止：</strong>凸轮的 dwell 段保持滚轮在中心，允许离合套啮合。</span></li>
               <li><b>03</b><span><strong>动力启动：</strong>CLUTCH_ENGAGED 后 M-B 才让所有输入齿轮转动。</span></li>
               <li><b>04</b><span><strong>丝杆推拉：</strong>目标抽屉固定丝杆正反转对应推出/拉回。</span></li>
-              <li><b>05</b><span><strong>反向释放：</strong>停止总线后反向回到释放段，弹簧使离合器脱开。</span></li>
+              <li><b>05</b><span><strong>反向释放：</strong>停止总线后移动到释放位置，先确认离合脱开，再允许选择轴返回。</span></li>
             </ol>
           </article>
         </div>
@@ -1246,7 +1247,7 @@
             <p class="eyebrow">02 / 三种选择机构对照</p>
             <h2 id="selector-comparison-title">同一套动力总线，三种不同的选格运动学。</h2>
           </div>
-          <p>三块动画共用 3 × 4 抽屉、固定 M-B、12 个输入齿轮、每格端面爪式离合器和 T8×4 丝杆；差别只在固定 M-A 如何把选择头送到目标中心。</p>
+          <p>三块动画共用当前 5 × 3/15 站抽屉布局、固定 M-B、共用动力总线和永磁离合；差别只在固定 M-A 如何把选择头送到目标中心。动画仍是候选运动学，不是 ESP32 固件。</p>
         </div>
 
         <div class="selector-grid">
@@ -1269,7 +1270,7 @@
               <button id="snakeSelectorToggle" class="control-button primary" type="button">启动</button>
               <button id="snakeSelectorReset" class="control-button selector-reset" type="button">复位</button>
             </div>
-            <p id="snakeSelectorStatusLine" class="selector-status-line" aria-live="polite">HOME · 拨叉停在弧长零点，动力总线未启动。</p>
+            <p id="snakeSelectorStatusLine" class="selector-status-line" aria-live="polite">HOME · 触发头停在弧长零点，动力总线未启动。</p>
             <p class="selector-equation"><code>s(t)=∫v(t)dt</code>；目标为路径弧长 <code>sᵢ</code>。HTD3M-9 同步带 20T 主动轮时，<code>n = 60v/(20×3 mm)</code>；<code>v=120 mm/s ⇒ n=120 rpm</code>。</p>
           </article>
 
@@ -1321,21 +1322,21 @@
         </div>
 
         <div class="selector-specs" aria-labelledby="selector-specs-title">
-          <h3 id="selector-specs-title">三种动画共用的物理元件与初始参数</h3>
-          <p>带“候选/假设”的数值用于仿真边界，不等于已采购型号；步进电机 holding torque 不能直接当成高速运行扭矩，最终必须用扭矩-转速曲线和实物负载校准。</p>
+          <h3 id="selector-specs-title">三种动画共用的控制候选与当前边界</h3>
+          <p>当前柜体机械真值是 <strong>5 列 × 3 层 = 15 个抽屉站点</strong>。本页的执行器、驱动器和电源仍是候选，不能当成已经选定或已经实现的硬件；实际 ESP32 固件和电气装配尚未进入本仓库。</p>
           <div class="table-wrap">
             <table>
               <caption class="sr-only">固定动力总线、选择机构和抽屉执行件的初始参数</caption>
               <thead><tr><th>元件</th><th>候选参数</th><th>物理作用 / 数学约束</th><th>必须验证</th></tr></thead>
               <tbody>
-                <tr><td>M-A 选择电机</td><td>42 mm NEMA 17，1.8°，1.5 A/相，holding 0.45–0.55 N·m；24 V；TMC2209</td><td>蛇形方案驱动 HTD3M-9 同步带；凸轮方案驱动转轴。输出角度/弧长不允许开环长期漂移。</td><td>启动扭矩、反向背隙、凸轮压力角、导轮卡滞</td></tr>
-                <tr><td>M-B 动力电机</td><td>42 mm NEMA 17，1.8°，1.5 A/相；20T/20T 同步带直驱候选；固定在柜体后部</td><td>先用可见的 1:1 带轮和两级正交齿轮总线，减速比不藏在计算里；总线扭矩含齿轮效率、12 路空载阻力与加速项。</td><td>12 路同时空转电流、选中负载、堵转电流、热</td></tr>
-                <tr><td>控制器/驱动</td><td>ESP32-WROOM-32E，3.0–3.6 V；2 × TMC2209，5–29 V、STEP/DIR、≤2 A RMS 级</td><td>产生 A/B 两路脉冲；硬件 EN 在限位、离合未确认或急停时禁止驱动。</td><td>GPIO 电平、共地、EMI、急停响应时间</td></tr>
-                <tr><td>共用动力总线</td><td>HTD3M-9 同步带或分层轴；4 层 × 3 列取力；轴承支撑</td><td>输入端全部转动，输出端由离合器选择；不让选择拨叉承受扭矩。</td><td>同步误差、带张力、每个取力齿轮阻力、维护拆装</td></tr>
-                <tr><td>每格执行件</td><td>TR8×4 丝杆，4 mm lead；POM 防转螺母座；固定后支撑轴承</td><td><code>v=lead·n/60</code>；<code>F=2πητ/lead</code>。抽屉由螺母座直线移动，不把电机放在抽屉上。</td><td>破阻力、偏载、螺母磨损、丝杆临界转速</td></tr>
-                <tr><td>选择离合器</td><td>每格 1 个端面爪式 dog clutch；6–8 齿；轴向行程 2.5–3 mm；本地锁爪与压缩弹簧</td><td>释放指只翻开目标锁爪；弹簧施加啮合力，齿面传扭。啮合前总线停转或低速同步，必须有 CLUTCH_ENGAGED。</td><td>对中、公差、啮合冲击、双格误接、齿面寿命</td></tr>
-                <tr><td>反馈与安全</td><td>A_HOME、编码器/index、B_IN、B_OUT、CLUTCH_ENGAGED、LOCKED；保险丝、急停、手动释放</td><td>选择、啮合、推拉、闭锁是不同状态；缺一不可把下一状态当已完成。</td><td>断电释放、卡滞、旁格误带、夹手边界</td></tr>
-                <tr><td>电源与结构</td><td>24 V / 5 A 候选电源；金属销/轴承；打印件只做壳体、导向和非承力轮廓</td><td>传扭齿、丝杆支撑、止挡和离合齿不应依赖普通 FDM 层间强度。</td><td>实测峰值电流、温升、材料耐磨、50 次以上随机循环</td></tr>
+                <tr><td>M-A 选格轴</td><td>闭环执行器待定；优先比较带编码器金属齿轮减速电机，步进方案仅作备选</td><td>蛇形方案驱动 HTD3M-9 同步带；凸轮方案驱动转轴。位置必须由编码器 + HOME/index 确认，不能长期开环。</td><td>启动/反向扭矩、背隙、速度稳定性、导轮卡滞</td></tr>
+                <tr><td>M-B 抽屉动力轴</td><td>闭环执行器待定；固定在柜体后部，具体电压/减速比随实物型号冻结</td><td>15 个输入端由共用动力总线传递旋转，目标端由离合选择；总线扭矩必须包含全部空载阻力与加速项。</td><td>15 站空载电流、选中负载、堵转电流、温升</td></tr>
+                <tr><td>控制器/驱动</td><td>ESP32 DevKit 首件；驱动器按电机类型选择：直流闭环用双向 H 桥，步进才用 TMC2209</td><td>硬件 EN/驱动禁止线在限位、离合未确认、故障或急停时禁止动力输出。</td><td>GPIO 电平、编码器计数、共地、EMI、急停响应</td></tr>
+                <tr><td>共用动力总线</td><td>HTD3M-9 同步带或分层轴；5×3 共 15 个站点；轴承支撑</td><td>输入端可以同时转动，只有目标离合把动力传到抽屉；选择机构不承担抽屉扭矩。</td><td>同步误差、带张力、15 个取力端阻力、维护拆装</td></tr>
+                <tr><td>每格执行件</td><td>传动形式待冻结；当前网页不得把 TR8×4 或其他旧候选当成机械真值</td><td>抽屉由固定在柜体上的执行件驱动，电机不随抽屉移动；最终必须用实物编码器和开/闭限位闭环。</td><td>破阻力、偏载、磨损、行程和夹手边界</td></tr>
+                <tr><td>选择离合器</td><td>每站 1 套永磁接合/释放机构；合位/开位由实体止挡定义</td><td>蛇链触发磁铁只负责机械触发；动力轴启动前必须确认目标离合已经接合，返回前必须先释放。</td><td>同轴度、误接、磁力余量、齿面寿命、断电状态</td></tr>
+                <tr><td>反馈与安全</td><td>CHAIN_HOME、编码器/index、DRAWER_IN、DRAWER_OUT、CLUTCH_ENGAGED、LOCKED；保险丝、急停、手动释放</td><td>选站、接合、推拉、闭锁是不同状态；缺少任一确认都不能进入下一状态。</td><td>断电释放、卡滞、旁格误带、夹手边界</td></tr>
+                <tr><td>电源与结构</td><td>电机电压/电流待实物选型；逻辑侧 3.3 V；独立电机电源、降压、保险丝和急停</td><td>传扭齿、轴承、止挡和离合齿不应依赖普通 FDM 层间强度；打印件只承担已定义的结构/导向功能。</td><td>峰值电流、温升、EMI、材料耐磨、随机循环</td></tr>
               </tbody>
             </table>
           </div>
@@ -1362,12 +1363,12 @@
               <select id="targetDrawer" aria-label="选择目标格位"></select>
             </div>
             <div class="field">
-              <label for="columnCount">列数 <output id="columnCountOutput" for="columnCount">3 列</output></label>
-              <input id="columnCount" type="range" min="2" max="4" step="1" value="3">
+              <label for="columnCount">列数 <output id="columnCountOutput" for="columnCount">5 列</output></label>
+              <input id="columnCount" type="range" min="2" max="5" step="1" value="5">
             </div>
             <div class="field">
-              <label for="layerCount">层数 <output id="layerCountOutput" for="layerCount">4 层</output></label>
-              <input id="layerCount" type="range" min="2" max="6" step="1" value="4">
+              <label for="layerCount">层数 <output id="layerCountOutput" for="layerCount">3 层</output></label>
+              <input id="layerCount" type="range" min="2" max="4" step="1" value="3">
             </div>
             <div class="field">
               <label for="load">目标载荷 <output id="loadOutput" for="load">1.0 kg</output></label>
@@ -1405,7 +1406,7 @@
           <div class="stage">
             <div id="motion3d" class="motion-3d" role="img" aria-labelledby="motion3dTitle motion3dDesc">
               <span id="motion3dTitle" class="sr-only">智能抽屉柜真实元件级三维选格与推拉仿真</span>
-              <span id="motion3dDesc" class="sr-only">参数化刚体三维场景：NEMA 17 电机、20T/20T 同步带、18T/20T 与 20T/12T 正交齿轮级、共用动力轴、端面爪离合器、固定 TR8×4 丝杆和随抽屉移动的防转螺母座按状态联动。</span>
+              <span id="motion3dDesc" class="sr-only">参数化候选三维场景：两个固定闭环执行器、同步带/动力总线、15 个站点、永磁离合和抽屉执行件按状态联动；电机型号与最终传动仍待冻结。</span>
               <div class="scene-legend" aria-hidden="true"><span><i class="legend-dot blue"></i>选择轨迹/导向</span><span><i class="legend-dot orange"></i>固定动力总线</span><span><i class="legend-dot green"></i>目标离合/抽屉</span></div>
               <div class="physical-hud" aria-live="polite">
                 <span><b id="hudMotorA">M-A · 0 rpm</b><small>选择电机</small></span>
@@ -1439,7 +1440,7 @@
             <div>
               <p class="eyebrow">02B / 机电联合仿真</p>
           <h3 id="coupled-simulation-title">选择与共用动力总线要同时通过机械和电气门槛。</h3>
-              <p class="sim-model-note">当前联合仿真对应“固定 M-A 选择器 + 固定 M-B 动力总线 + 每格端面爪离合器”的实机构型候选；三种选择轮廓的差别在上方动画中展开，不把数学拟合冒充成已加工零件。</p>
+              <p class="sim-model-note">当前联合仿真对应“固定 M-A 选择器 + 固定 M-B 动力总线 + 15 站永磁离合”的机构候选；三种选择轮廓的差别在上方动画中展开，不把数学拟合冒充成已加工零件或已完成固件。</p>
             </div>
             <span id="simVerdict" class="sim-verdict">等待计算</span>
           </div>
@@ -1515,21 +1516,21 @@
           <div class="mechanism-chain" aria-label="具体传动链和控制闭环">
             <article class="chain-step">
               <span class="sim-eyebrow">A / 选格轴</span>
-              <h4>固定 NEMA 17 + 三种选择器</h4>
-              <p>42 mm NEMA 17 由 TMC2209 的 STEP/DIR 驱动，固定在柜体上。它可以驱动 HTD3M 同步带、普通旋转凸轮或傅里叶二维槽凸轮；选择头由双侧导轮/浮动滚轮约束，位置用弧长或编码器角度确认。</p>
+              <h4>固定闭环执行器 + 三种选择器</h4>
+              <p>M-A 的电机和驱动器尚未冻结；它可以驱动 HTD3M 同步带、普通旋转凸轮或傅里叶二维槽凸轮。选择头由双侧导轮/浮动滚轮约束，位置必须由编码器和 HOME/index 确认。</p>
             </article>
             <article class="chain-step">
               <span class="sim-eyebrow">B / 推拉轴</span>
-              <h4>固定 NEMA 17 + 共用动力总线</h4>
-              <p>M-B 固定在柜体后部，通过同步带/分层取力齿轮使 12 个输入端旋转；目标端面爪式离合器确认接通后，目标格固定的 T8×4 丝杆才把旋转变成抽屉螺母座的直线运动。</p>
+              <h4>固定闭环执行器 + 共用动力总线</h4>
+              <p>M-B 固定在柜体后部，通过同步带/分层取力齿轮服务当前 5×3 的 15 个站点；目标离合器确认接通后，才允许目标抽屉的固定传动件运动。</p>
             </article>
             <article class="chain-step">
               <span class="sim-eyebrow">C / 控制闭环</span>
               <h4>ESP32 + 离合反馈 + 机械承载</h4>
-              <p>ESP32-WROOM-32E 产生两路 STEP/DIR；A_HOME/编码器确认选择位置，CLUTCH_ENGAGED 确认目标离合器，B_IN/B_OUT 确认丝杆行程，LOCKED 确认闭锁。到位后由止挡/锁块承载，电机卸力。</p>
+              <p>ESP32 固件尚未实现。目标控制链应由 A_HOME/编码器确认选站、CLUTCH_ENGAGED 确认接合、B_IN/B_OUT 确认抽屉行程、LOCKED 确认闭锁；到位后由止挡/锁块承载，电机卸力。</p>
             </article>
           </div>
-          <p class="mechanism-logic"><strong>开合逻辑：</strong>HOME → 选择器沿蛇形/凸轮/傅里叶轨迹到目标 → A_TARGET 或编码器角度确认 → 释放指翻开目标锁爪、压缩弹簧啮合端面爪 → CLUTCH_ENGAGED 确认 → 固定 M-B 启动共用动力总线 → 目标 T8×4 丝杆推出/拉回 → B_IN/B_OUT 确认 → 停止总线、复位坡面压回爪套并重新锁止 → LOCKED 承载。任一到位信号缺失，硬件 EN 拉高、停止脉冲并回退/重新回零。</p>
+          <p class="mechanism-logic"><strong>开合逻辑：</strong>HOME → 选择器沿蛇形/凸轮/傅里叶轨迹到目标 → 编码器/index 确认 → 链条停止并由永磁接口触发目标离合 → CLUTCH_ENGAGED 确认 → 固定 M-B 启动共用动力总线 → 目标抽屉执行件推出/拉回 → B_IN/B_OUT 确认 → 停止总线 → 释放离合 → LOCKED/安全位置确认 → 返回。任一到位信号缺失，硬件 EN 禁止动力输出、停止脉冲并进入故障恢复。</p>
         </section>
       </section>
 
@@ -1547,9 +1548,9 @@
             <h3 style="margin-top: 14px;">推荐的机械分工</h3>
             <div class="architecture-note">
               <div class="note-line"><b>选格</b><span>M-A 固定在柜体上：蛇形方案驱动 HTD3M 同步带，普通凸轮驱动 CAD 轮廓，傅里叶方案驱动二维槽/拘束滚轮；目标格位由弧长、编码器角度或槽内站位确认。</span></div>
-              <div class="note-line"><b>推拉</b><span>M-B 固定在后部，通过共用动力总线驱动 12 个输入端；目标离合器接通后，目标格固定 T8×4 丝杆带动抽屉防转螺母座。</span></div>
-              <div class="note-line"><b>捕获</b><span>单个释放指只翻开目标锁爪；目标压缩弹簧施加轴向啮合力，每格端面爪式离合器传递扭矩，旁格保持锁住，不用每格电磁铁。</span></div>
-              <div class="note-line"><b>闭锁</b><span>B_IN 到位后先停动力总线，凸轮/释放坡道退出离合套；抽屉最后 3–5 mm 进入过中心楔块/硬止挡，载荷不落在丝杆或电机上。</span></div>
+              <div class="note-line"><b>推拉</b><span>M-B 固定在后部，通过共用动力总线服务 15 个输入端；目标离合器接通并反馈确认后，目标格固定执行件带动抽屉。</span></div>
+              <div class="note-line"><b>捕获</b><span>链条触发磁铁只作用于当前目标的公轮磁铁；离合采用永磁接合/释放，旁格保持断开，不用每格电磁铁。</span></div>
+              <div class="note-line"><b>闭锁</b><span>开/闭到位后先停动力总线并释放离合；抽屉最终由实体止挡承载，不能让电机持续顶住。</span></div>
               <div class="note-line"><b>三者差别</b><span>蛇形是标准件路径；普通渐变环是人工设计的 CAD 凸轮；傅里叶二维槽是由数学目标点拟合出的闭合槽。三者共用同一套固定动力总线和离合器。</span></div>
             </div>
           </div>
@@ -1566,7 +1567,7 @@
               <div><h3>二维索引滑架</h3><p>M-A 只负责沿网格走位；弧长定位、过中心锁止和可调导向让列数/层数扩展不依赖软件“猜位置”。</p></div>
             </article>
             <article class="anatomy-item">
-              <svg viewBox="0 0 96 76" role="img" aria-label="浮动选择头与端面爪离合示意">
+              <svg viewBox="0 0 96 76" role="img" aria-label="浮动选择头与永磁离合候选示意">
                 <path d="M14 28h33v20H14z" fill="#222c38" stroke="#33404c"/>
                 <path d="M47 35h17v7H47" fill="none" stroke="#ffad66" stroke-width="6" stroke-linecap="round"/>
                 <path d="M64 27v24" stroke="#f3f6f8" stroke-width="5" stroke-linecap="round"/>
@@ -1574,7 +1575,7 @@
                 <path d="M79 38h12" stroke="#ffad66" stroke-width="2"/>
                 <path d="M86 34l5 4-5 4" fill="none" stroke="#ffad66" stroke-width="2"/>
               </svg>
-              <div><h3>释放指 + 本地锁爪</h3><p>双侧滚轮/导向件把选择头约束在轨迹上；到目标中心后，释放指翻开本地锁爪，压缩弹簧让端面爪啮合；停止动力总线后，复位坡面重新扣住爪套。</p></div>
+              <div><h3>触发头 + 永磁离合</h3><p>双侧滚轮/导向件把选择头约束在轨迹上；到目标中心并停稳后，链条磁铁与公轮磁铁共轴触发接合；动力总线停止后先释放，再允许返回。</p></div>
             </article>
             <article class="anatomy-item">
               <svg viewBox="0 0 96 76" role="img" aria-label="过中心闭锁和手动释放示意">
@@ -1603,20 +1604,20 @@
           <article class="data-panel">
             <h3>随控件变化的包络</h3>
             <div class="calc-readout">
-              <div><b id="volumeReadout">14.6 L</b><span>3 × 4 格位总毛容积</span></div>
-              <div><b id="envelopeReadout">488 × 226 mm</b><span>柜体内宽 × 内高</span></div>
+              <div><b id="volumeReadout">—</b><span>当前网格总毛容积</span></div>
+              <div><b id="envelopeReadout">—</b><span>当前网格内宽 × 内高</span></div>
               <div><b id="travelReadout">7 格</b><span>二维索引跨度</span></div>
               <div><b id="forceReadout">9.5 N</b><span>横向设计驱动力</span></div>
             </div>
-            <p class="formula"><code>F ≈ μ·m·g + F_breakaway + F_align</code><br><code>τ_screw ≈ F·lead / (2π·η) × SF</code><br><code>τ_bus ≈ τ_screw·(16/12)/(η₁·η₂·η_bus) + 11·τ_idle + τ_accel</code><br><span>当前假设：μ=0.25，额外阻力=7 N，TR8×4 的 4 mm lead、η=0.40、SF=3；M-B 还要承担 11 个未选取力端的空载阻力，必须单独实测。</span></p>
+            <p class="formula"><code>F ≈ μ·m·g + F_breakaway + F_align</code><br><code>τ_target ≈ F·lead / (2π·η) × SF</code><br><code>τ_bus ≈ τ_target/η_bus + (N−1)·τ_idle + τ_accel</code><br><span>这里的 lead、效率和空载阻力只是可替换候选参数；N 默认取当前 15 个站点，不能把旧丝杆、减速比或 12 路总线写成最终规格。</span></p>
           </article>
           <article class="data-panel">
             <h3>当前假设，不是最终规格</h3>
             <ul class="assumption-list">
-              <li><strong>容积</strong><span><em>假设：</em>单抽屉内 150 × 180 × 45 mm；3 × 4 格位约 14.6 L 毛容积，隔板和分格会减少有效容积。</span></li>
-              <li><strong>结构</strong><span><em>假设：</em>列距约 158 mm、层距 53 mm；后置机构 55–70 mm；整柜深度约 250–290 mm，取决于横向行程和维修盖。</span></li>
+              <li><strong>容积</strong><span><em>假设：</em>单抽屉尺寸由当前 SCAD 参数生成；5 × 3 格位为当前机械布局，隔板和分格会减少有效容积。</span></li>
+              <li><strong>结构</strong><span><em>真值：</em>箱体参数来自 OpenSCAD；X− 服务区 44 mm，底部保留 1 层服务空间，不能用这张示意页的旧尺寸反推箱体。</span></li>
               <li><strong>载荷</strong><span><em>假设：</em>单格 1 kg；阻容/小螺丝/接插件的重心尽量靠近前后中线，避免偏载把打印滑轨楔住。</span></li>
-              <li><strong>驱动</strong><span><em>候选：</em>2 × 固定 42 mm NEMA 17，1.8°、0.45–0.55 N·m holding 级；M-A 负责三种选择器，M-B 以 20T/20T 同步带直驱可见动力总线，实际运行扭矩须看转速曲线。</span></li>
+              <li><strong>驱动</strong><span><em>候选：</em>2 × 固定闭环执行器；优先评估带编码器金属齿轮减速电机，若改用步进才配 TMC2209；实际运行扭矩须看转速曲线。</span></li>
               <li><strong>公差</strong><span><em>起点：</em>运动配合单侧至少 0.3 mm，再用同一打印机做三档间隙 coupon；长导轨不做整面贴合。</span></li>
             </ul>
           </article>
@@ -1643,7 +1644,7 @@
               <tr><td>加工/打印</td><td class="good">同步带、惰轮、导向轮容易采购和替换。</td><td>需要定制轮廓，但几何验证相对直观。</td><td class="warn">数学表达最灵活，实际槽面/滚轮和边界保护最难。</td></tr>
               <tr><td>网格扩展</td><td class="good">沿行数扩展，主要增加带长、张紧和回转半径。</td><td class="warn">凸轮盘尺寸、压力角和循环时间增长。</td><td class="warn">目标点增加会提高谐波/槽加工精度要求。</td></tr>
               <tr><td>反馈要求</td><td>A_HOME + 弧长/编码器 + CLUTCH_ENGAGED。</td><td>绝对角度/index + dwell 传感 + CLUTCH_ENGAGED。</td><td>相位 index + 槽站位/编码器 + CLUTCH_ENGAGED。</td></tr>
-              <tr><td>首台风险</td><td class="good">中：标准件多，但导轨张紧和反向冲击要实测。</td><td class="warn">中高：凸轮压力角、轴向升程和离合冲击耦合。</td><td class="bad">高：先做 2 × 2 或 3 × 4 小盘，确认无自交和滚轮脱槽。</td></tr>
+              <tr><td>首台风险</td><td class="good">中：标准件多，但导轨张紧和反向冲击要实测。</td><td class="warn">中高：凸轮压力角、轴向升程和离合冲击耦合。</td><td class="bad">高：先做 2 × 2 小盘，确认无自交和滚轮脱槽。</td></tr>
             </tbody>
           </table>
         </div>
@@ -1673,11 +1674,11 @@
             <h3 style="margin-top: 14px;">不要先打印整柜，先打印一个“会失败的角落”。</h3>
             <ol class="prototype-list">
               <li><strong>01</strong><span>打印 1 个 150 × 180 × 45 mm 抽屉、两种导轨截面、三档单侧间隙（0.3 / 0.45 / 0.6 mm）。</span></li>
-              <li><strong>02</strong><span>打印 1 个 2 × 2 网格角落、二维索引滑架和端面爪离合器，配 3 组对中入口与一个固定释放坡道。</span></li>
-              <li><strong>03</strong><span>用 2 台现成 NEMA 17 + 插拔式驱动模块，在 2 × 2 假柜上随机选择 4 个格位，反复完整开合。</span></li>
+              <li><strong>02</strong><span>打印 1 个 2 × 2 网格角落、二维索引滑架和永磁离合接口，配 3 组对中入口与实体开/合止挡。</span></li>
+              <li><strong>03</strong><span>用 2 台待选闭环执行器 + 插拔式驱动模块，在 2 × 2 假柜上随机选择 4 个格位，反复完整开合；通过后再迁移到当前 5×3。</span></li>
               <li><strong>04</strong><span>加入 0.5 mm 高度偏差、1 kg 载荷、手指/软物阻挡，记录是否停机、反退、释放和手动恢复。</span></li>
             </ol>
-            <p class="prototype-gate"><strong>进入整柜的门槛：</strong>同一批打印件至少 50 次随机选格闭环，无旁格误带、无离合套残留、无需要手推才能闭合的循环；再决定 3 × 4、4 × 6 和材料。</p>
+            <p class="prototype-gate"><strong>进入整柜的门槛：</strong>同一批打印件至少 50 次随机选格闭环，无旁格误带、无离合套残留、无需要手推才能闭合的循环；通过后再回迁当前 5 × 3，并冻结材料和承载件。</p>
           </article>
         </div>
       </section>
@@ -1688,7 +1689,7 @@
             <p class="eyebrow">07 / 采购边界</p>
             <h2 id="bom-title">结构可以打印，运动和安全不能假装是打印件。</h2>
           </div>
-          <p>以下是固定动力总线首台样机的最小外购集合；三种选择机构共用 M-A/M-B、控制器、离合器和丝杆，只替换选择器本体。</p>
+          <p>以下是固定动力总线首台样机的候选边界，不是已确认采购 BOM；三种选择机构共用 M-A/M-B、控制器和离合器，只替换选择器本体。</p>
         </div>
         <div class="table-wrap">
           <table>
@@ -1696,11 +1697,11 @@
               <thead><tr><th>类别</th><th>固定动力总线首台样机</th><th>说明</th></tr></thead>
             <tbody>
               <tr><td>可打印结构</td><td>柜体、抽屉盒、隔板、蛇形导轨/同步带托架、凸轮盘或二维槽盘、选择头、离合器导向、过中心楔块、维修盖</td><td>齿面、离合爪、丝杆支撑和止挡做成可换模块，不要和整柜一体打印。</td></tr>
-              <tr><td>电机与传动</td><td>2 × 固定 NEMA 17；M-A + 蛇形同步带/凸轮轴；M-B + 20T/20T 同步带 + 12 路两级正交齿轮总线；12 个 TR8×4 丝杆/螺母</td><td>没有电机随选择头移动；所有动力端齿轮同时转，只有目标格的 dog clutch 把动力接到抽屉侧，最终要验证总线扭矩、张力和旁格空载阻力。</td></tr>
-              <tr><td>驱动与控制</td><td>2 × A4988 或 TMC2209 插拔式模块；1 × ESP32-DevKit 原型板，后续再换 ESP32-WROOM-32E 控制板</td><td>A4988/TMC2209 裸 IC 有 QFN/散热焊盘，不把“可嘉立创打样”误写成“徒手易焊”；首台先用模块。</td></tr>
-              <tr><td>限位与安全</td><td>A_HOME、编码器/index、B_IN、B_OUT、每格/选中 CLUTCH_ENGAGED、LOCKED；保险丝、急停、手动释放</td><td>选择位置、离合接通和丝杆行程是三个不同闭环；夹手检测不只依赖软件超时。</td></tr>
-              <tr><td>紧固与耐磨</td><td>6–8 齿金属 dog clutch、弹簧复位套筒、M3/M4 螺钉、轴承、同步带、弹簧钢丝/小拉簧、PTFE 耐磨片</td><td>第一版可打印非承力导向试件；耐久版的离合爪、销、丝杆支撑和止挡建议金属化。</td></tr>
-              <tr><td>供电</td><td>1 × 12/24 V 安规 DC 电源；3.3 V 稳压/USB 供电给 ESP32</td><td>电机电压、电流与驱动模块必须按实际型号确认；页面不把电源额定值当成已定案。</td></tr>
+              <tr><td>电机与传动</td><td>2 × 固定闭环执行器（型号待定）；M-A + 蛇形同步带/凸轮轴；M-B + 共用动力总线服务 15 个站点</td><td>没有电机随选择头移动；只有目标格离合传递动力，最终验证总线扭矩、张力和旁格空载阻力。</td></tr>
+              <tr><td>驱动与控制</td><td>1 × ESP32-DevKit 首件；两路电机驱动器按执行器选型，直流闭环优先采用带保护的双向 H 桥</td><td>TMC2209 只适用于步进电机；驱动器、编码器接口、硬件 EN 和故障输出必须一起确认。</td></tr>
+              <tr><td>限位与安全</td><td>CHAIN_HOME、编码器/index、DRAWER_IN、DRAWER_OUT、CLUTCH_ENGAGED、LOCKED；保险丝、急停、手动释放</td><td>选择位置、离合接通和抽屉行程是三个不同闭环；夹手检测不只依赖软件超时。</td></tr>
+              <tr><td>紧固与耐磨</td><td>永磁离合接口、实体开/合止挡、M3/M4 螺钉、轴承、同步带、PTFE 耐磨片</td><td>第一版可打印非承力导向试件；轴、轴承座、止挡和实际承载面必须按当前 OpenSCAD 总装复核。</td></tr>
+              <tr><td>供电</td><td>电机电源待实物选型；独立降压提供 3.3 V/USB 逻辑电源；电机侧保险丝和急停</td><td>电机电压、电流、降压余量与驱动模块必须按实际型号确认；页面不把候选值当成已定案。</td></tr>
               <tr><td>明确不采用</td><td>每层电机、电磁铁、电磁阀、每层独立驱动板</td><td>它们会破坏“正常抽屉柜”的体积、成本和维修路径。</td></tr>
             </tbody>
           </table>
@@ -1718,7 +1719,7 @@
         <div class="source-grid">
           <a href="https://patents.google.com/patent/US5467333A/en" target="_blank" rel="noopener noreferrer">US5467333A · Tray and disc driving mechanism<span>光驱托盘的 rack、pinion、cam slot 与正反向加载路径参考</span></a>
           <a href="https://patents.google.com/patent/US6813772B2/en" target="_blank" rel="noopener noreferrer">US6813772B2 · Optical disk drive<span>凸轮在特定位置才与托盘齿轮啮合，用于避免机构干涉的参考</span></a>
-          <a href="https://electrocraft.com/products/stepper/TPE17/" target="_blank" rel="noopener noreferrer">ElectroCraft TPE17 NEMA 17<span>原厂页给出 1.8°、四线双极和最高约 55 N·cm holding torque 级别</span></a>
+          <a href="https://electrocraft.com/products/stepper/TPE17/" target="_blank" rel="noopener noreferrer">ElectroCraft TPE17 NEMA 17 · 历史步进参考<span>仅用于对比步进控制边界，不是当前采购候选；当前优先评估带编码器金属齿轮减速电机</span></a>
           <a href="https://www.analog.com/en/products/tmc2209.html" target="_blank" rel="noopener noreferrer">Analog Devices TMC2209<span>5–29 V、STEP/DIR、最高 2 A RMS、StallGuard4；同时注明 QFN 封装</span></a>
           <a href="https://www.allegromicro.com/~/media/Files/Datasheets/A4988-Datasheet.pdf" target="_blank" rel="noopener noreferrer">Allegro A4988 datasheet<span>最高 35 V、±2 A、STEP/DIR 与 1/16 微步；裸 IC 是 28-pin QFN</span></a>
           <a href="https://www.ti.com/product/DRV8871" target="_blank" rel="noopener noreferrer">Texas Instruments DRV8871<span>若改用带编码器直流减速电机，可评估带电流检测和保护的 H 桥路径</span></a>
@@ -1729,7 +1730,7 @@
         </div>
       </section>
 
-      <footer class="footer">本页是规划和运动状态证明，不是最终 CAD、PCB、固件或生产安全认证。下一次确认：列数 × 层数、外形尺寸、单屉载荷/重心、目标速度、打印机喷嘴与材料、是否需要联网控制。</footer>
+  <footer class="footer">本页是规划和运动状态证明，不是最终 CAD、PCB、ESP32 固件或生产安全认证。当前机械站位按 5×3/15 个抽屉；下一次确认：闭环电机型号、驱动器、单屉载荷/重心、目标速度、前面板屏幕包络和是否需要联网控制。</footer>
     </div>
   </main>
 
@@ -1741,8 +1742,8 @@
       var root = document;
       var state = {
         architecture: "dual",
-        columns: 3,
-        layers: 4,
+        columns: 5,
+        layers: 3,
         targetIndex: 7,
         load: 1,
         demoSpeed: 1,
@@ -1772,15 +1773,15 @@
         {
           short: "HOME",
           title: "HOME · 闭锁",
-          dual: "目标格位在柜体内；闭锁承受侧向载荷。固定 M-B 停止，蛇形滑架回到 HOME，所有本地锁爪保持离合套断开。",
-          single: "目标格位在柜体内；旋转凸轮回到安全段，固定动力总线停止，所有输出丝杆卸力。",
+          dual: "目标格位在柜体内；实体止挡承受载荷。固定 M-B 停止，蛇形选择轴回到 HOME，所有离合保持释放。",
+          single: "目标格位在柜体内；旋转凸轮回到安全段，固定动力总线停止，所有输出执行件卸力。",
           motor: "STATE 0",
           open: 0
         },
         {
           short: "SELECT",
           title: "SELECT · 选格",
-          dual: "固定 M-A 驱动 HTD3M 同步带，轻量释放指沿直线段和圆角 U-turn 走弧长；A_TARGET 确认到格后，释放指对准目标锁爪。",
+          dual: "固定 M-A 驱动 HTD3M 同步带，触发头沿直线段和圆角 U-turn 走弧长；编码器/index 确认到站后，触发头对准目标磁铁。",
           single: "固定 M-A 旋转普通凸轮或渐变环；编码器角度对应目标 dwell 段，滚轮停稳后才能允许轴向离合动作。",
           motor: "A · 2D INDEX",
           open: 0
@@ -1788,40 +1789,40 @@
         {
           short: "CAPTURE",
           title: "CAPTURE · 捕获",
-          dual: "单个释放指翻开目标锁爪，压缩弹簧推动滑动爪套啮合；旁格锁爪仍保持断开，CLUTCH_ENGAGED 只允许一个目标为 ON。",
-          single: "凸轮 dwell 后的轴向升程推动目标端面爪套；凸轮滚轮和离合器到位开关共同确认，不能靠“碰到”判断。",
-          motor: "B · DOG IN",
+          dual: "链条触发磁铁与目标公轮磁铁共轴后触发永磁接合；旁格保持释放，CLUTCH_ENGAGED 只允许一个目标为 ON。",
+          single: "凸轮 dwell 只提供稳定接合位置；目标永磁离合和位置反馈共同确认，不能靠“碰到”判断。",
+          motor: "B · CLUTCH IN",
           open: 0
         },
         {
           short: "PUSH",
           title: "PUSH · 推出",
-          dual: "固定 M-B 启动共用动力总线；所有输入端转动，但只有目标离合器把扭矩传给该格 T8×4 丝杆，B_OUT 确认行程。",
-          single: "固定 M-B 启动共用动力总线；凸轮不承担抽屉推拉扭矩，目标丝杆正转推出，B_OUT 确认行程。",
+          dual: "固定 M-B 启动共用动力总线；所有输入端转动，但只有目标离合器把扭矩传给该格固定执行件，B_OUT 确认行程。",
+          single: "固定 M-B 启动共用动力总线；凸轮不承担抽屉推拉扭矩，目标固定执行件推出，B_OUT 确认行程。",
           motor: "B · OUT",
           open: 108
         },
         {
           short: "PULL",
           title: "PULL · 拉回",
-          dual: "M-B 反转共用动力总线；目标丝杆反转把抽屉拉回硬止挡，B_IN 确认到位，证明不是只会推出。",
-          single: "M-B 反转共用动力总线；目标丝杆反转把抽屉拉回硬止挡，凸轮保持在目标停留段。",
+          dual: "M-B 反转共用动力总线；目标固定执行件把抽屉拉回硬止挡，B_IN 确认到位，证明不是只会推出。",
+          single: "M-B 反转共用动力总线；目标固定执行件把抽屉拉回硬止挡，凸轮保持在目标停留段。",
           motor: "B · IN",
           open: 43
         },
         {
           short: "RELEASE",
           title: "RELEASE · 脱离",
-          dual: "B_IN 后先停 M-B，释放指反向经过锁爪的复位坡面，把爪套压回并重新扣住；CLUTCH_ENGAGED 断开后才允许回 HOME。",
-          single: "M-B 停止后凸轮进入释放段，轴向升程回落，目标离合套弹簧复位；编码器确认安全段。",
+          dual: "B_IN 后先停 M-B，移动到释放位置并确认 CLUTCH_ENGAGED 断开，才允许选择轴回 HOME。",
+          single: "M-B 停止后凸轮进入释放段，目标永磁离合脱开；编码器确认安全段后才允许返回。",
           motor: "CAM · RELEASE",
           open: 3
         },
         {
           short: "LOCK",
           title: "LOCK · 锁定",
-          dual: "抽屉进入过中心楔块/硬止挡，LOCKED 有效；M-A、M-B 都可卸力，控制器才允许下一次选格或手动取物。",
-          single: "抽屉由过中心楔块闭锁，凸轮回到安全段；断电时通过 service lever 释放离合和闭锁。",
+          dual: "抽屉进入实体止挡，LOCKED 有效；M-A、M-B 都可卸力，控制器才允许下一次选格或手动取物。",
+          single: "抽屉由实体止挡闭锁，凸轮回到安全段；断电时通过 service lever 释放离合和闭锁。",
           motor: "SAFE · IDLE",
           open: 0
         }
@@ -3207,7 +3208,7 @@
           push('<rect x="' + boxX + '" y="' + driveY + '" width="' + boxWidth + '" height="' + boxHeight + '" rx="11" fill="#30251c" stroke="#ffad66"/>');
           push('<text x="' + (boxX + 14) + '" y="' + (driveY + 25) + '" fill="#ffad66" font-size="' + labelFont + '">M-B / DRIVE</text>');
           push('<text x="' + (boxX + 14) + '" y="' + (driveY + 52) + '" fill="#f3f6f8" font-size="' + (compact ? "17" : "16") + '">捕获 · 推出 · 拉回</text>');
-          push('<text x="' + (boxX + 14) + '" y="' + (driveY + 80) + '" fill="#788590" font-size="' + labelFont + '">one shared dog / rail</text>');
+          push('<text x="' + (boxX + 14) + '" y="' + (driveY + 80) + '" fill="#788590" font-size="' + labelFont + '">one shared clutch / rail</text>');
         } else {
           push('<rect x="' + boxX + '" y="' + boxY + '" width="' + boxWidth + '" height="' + (compact ? "116" : "132") + '" rx="11" fill="#30251c" stroke="#ffad66"/>');
           push('<text x="' + (boxX + 14) + '" y="' + (boxY + 25) + '" fill="#ffad66" font-size="' + labelFont + '">M-A / CAM SELECTOR</text>');
@@ -5264,7 +5265,7 @@
         dimensions.openTravel = 1.36;
         /* Keep a real service bay behind the drawer rear faces: M-A, selector belt and
          * the clutch-release linkage are all inside it rather than floating outside. */
-        /* A 42 mm NEMA 17 body is now scaled from the same 0.028 world-mm factor as the belts and gears. */
+        /* Candidate-only actuator envelope; it is not a frozen NEMA 17 model or purchase specification. */
         dimensions.backZ = -4.45;
         dimensions.frontZ = 1.45;
         dimensions.cabinetDepth = dimensions.frontZ - dimensions.backZ;
@@ -5408,20 +5409,20 @@
         /* The 1:1 M-B belt is also 20T HTD3M at both ends. */
         var powerPulleyRadius = threeGearPitchRadius(20, 3);
         /* M-B is bolted into the lower-right service bay, wholly inside the cabinet envelope. */
-        var nema17HalfSide = 42 * 0.028 / 2;
-        var nema17BodyLength = 40 * 0.028;
+        var candidateActuatorHalfSide = 42 * 0.028 / 2;
+        var candidateActuatorBodyLength = 40 * 0.028;
         var motorBY = -dimensions.gridHeight / 2 + 0.82;
         /* 36T HTD3M loop: for two equal 20T pulleys, set the centre distance from the real integer-pitch belt length. */
         var powerBeltTeeth = 36;
         var powerBeltCentreDistance = (powerBeltTeeth * threeTimingToothPitch() - Math.PI * 2 * powerPulleyRadius) / 2;
         var motorBX = busX - powerBeltCentreDistance;
         var motorB = threeMotorAssembly(powerEntry, {
-          x: motorBX, y: motorBY, z: busZ, axis: "y", bodyRadius: nema17HalfSide, bodyLength: nema17BodyLength,
+          x: motorBX, y: motorBY, z: busZ, axis: "y", bodyRadius: candidateActuatorHalfSide, bodyLength: candidateActuatorBodyLength,
           pulleyRadius: powerPulleyRadius, pulleyDepth: 0.11, bodyMaterial: threeMaterial(0x536271, 0x15232d, 0.48, 0.52),
           steelMaterial: steel, driveMaterial: steel.clone(), pulleyOffset: 0.35, style: "stepper"
         });
         var motorBMount = threeBox(powerEntry, 1.38, 0.10, 1.38, blue.clone());
-        motorBMount.position.set(motorBX, motorBY - nema17BodyLength - 0.23, busZ);
+        motorBMount.position.set(motorBX, motorBY - candidateActuatorBodyLength - 0.23, busZ);
         /* The vertical NEMA motor is held at its front flange, not simply drawn on a floor plate.
          * The open frame leaves the shaft/pulley passage visible; rear-side posts close the load path to the base. */
         var motorBFaceY = motorBY - 0.10;
@@ -5633,7 +5634,7 @@
         selectorAssembly.add(motorASupport);
         var motorA = threeMotorAssembly(selectorAssembly, {
           /* Place the motor body behind the selector belt; its output pulley lies exactly in the belt plane. */
-          x: indexPath.drivePoint.x, y: indexPath.drivePoint.y, z: dimensions.selectorZ - 0.35, axis: "z", bodyRadius: nema17HalfSide, bodyLength: nema17BodyLength,
+          x: indexPath.drivePoint.x, y: indexPath.drivePoint.y, z: dimensions.selectorZ - 0.35, axis: "z", bodyRadius: candidateActuatorHalfSide, bodyLength: candidateActuatorBodyLength,
           pulleyRadius: indexPath.pulleyRadius, pulleyDepth: 0.10, bodyMaterial: threeMaterial(0x9aa9b4, 0x1b2b35, 0.28, 0.82),
           steelMaterial: steel, driveMaterial: steel.clone(), pulleyOffset: 0.35, style: "stepper"
         });

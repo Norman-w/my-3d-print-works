@@ -2334,17 +2334,29 @@ function alignChainTriggerToCenter() {
   const sourceSegment = play.path.segs?.[segmentIndex];
   if (!station || !sourceSegment || !triggerCarrier) return null;
 
-  // The chain's active service run is the fixed-height magnetic trigger datum,
-  // not the selected drawer row.  Using station.z here moved the trigger to a
-  // different chain layer (the old image-1穿模 came from exactly that mix-up).
-  const referencePathY = Number(
+  // The trigger line is the shifted reference run whose link top is the
+  // bottom of the input-sleeve magnet.  The lower service/return run is only
+  // the chain's floor-side return path; stopping there leaves the carrier
+  // nowhere near the clutch.  Keep the datum equation explicit:
+  // referencePathShiftedCenterYMm + linkTopOffsetMm
+  //   === inputSleeveMagnetOpenBottomYMm.
+  const triggerPathZ = Number(
     motion.chainTopDatum?.referencePathShiftedCenterYMm,
   );
-  if (!Number.isFinite(referencePathY)) return null;
+  const linkTopOffset = Number(motion.chainTopDatum?.linkTopOffsetMm);
+  const inputMagnetBottom = Number(
+    motion.chainTopDatum?.inputSleeveMagnetOpenBottomYMm,
+  );
+  if (!Number.isFinite(triggerPathZ)
+      || !Number.isFinite(linkTopOffset)
+      || !Number.isFinite(inputMagnetBottom)
+      || Math.abs(triggerPathZ + linkTopOffset - inputMagnetBottom) > 0.001) {
+    return null;
+  }
   // The carrier's magnet is authored at a longitudinal offset from the
   // segment midpoint. Move the midpoint by the inverse offset so the magnet,
   // not merely the two support pins, lands on the clutch magnet datum.
-  const target = projectPoint(play.path, station.x, motion.chainY, referencePathY);
+  const target = projectPoint(play.path, station.x, motion.chainY, triggerPathZ);
   // The contract value is the signed distance from the first pin to the
   // magnet along the authored segment direction.  Convert it to the signed
   // offset from the segment midpoint before solving the chain phase.  This is

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""旧方案 1 蛇形 FreeCAD 预览；不作为中心 R3C3 机械真值。"""
+"""旧方案 1 蛇形 FreeCAD 预览；不作为当前机械或控制真值。
+
+本模块保留给历史演示/对比使用。当前 5×3/15 站、永磁离合和蛇链几何
+必须从 OpenSCAD、导出契约和 `cabinet_chain_motion.json` 读取；不要从这里
+导出生产装配、采购尺寸或 ESP32 控制参数。
+"""
 
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations

@@ -10,7 +10,7 @@ import {
   playCenterClutchDemo,
   onPartLoaded,
   tickPlay,
-} from "./js/cabinet-chain-play.js?v=chain-trigger-event-view-20";
+} from "./js/cabinet-chain-play.js?v=chain-trigger-event-view-21";
 //#endregion
 
 //#region 常量/配置

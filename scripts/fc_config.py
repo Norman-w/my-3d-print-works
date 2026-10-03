@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""SmartPartsDrawer FreeCAD 流水线配置与 CLI。"""
+"""SmartPartsDrawer 早期 FreeCAD 示意流水线配置与 CLI。
+
+本模块只服务历史可视化支线。当前 5×3/15 站 OpenSCAD 装配和未来 ESP32
+控制层不从这里读取电机、站位或抽屉尺寸；请先查看 docs/control/。
+"""
 
 # ===== 分区：导入/依赖 =====
 from __future__ import annotations
