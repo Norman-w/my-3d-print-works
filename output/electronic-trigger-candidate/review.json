@@ -1,0 +1,587 @@
+{
+  "status": "TRIGGER_CANDIDATE_GEOMETRY_PASS_UNRELEASED",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electronic_trigger_candidate.py": "7bec73e702ab44591af2a2d1723f82b341b090309c6f8ea0f9791af5fe41b02d"
+  },
+  "parts": {
+    "beam": {
+      "empty": false,
+      "volume_mm3": 92701.92599283066,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          -24.0,
+          -63.0,
+          -156.0
+        ],
+        "max": [
+          87.0,
+          -41.0,
+          28.0
+        ],
+        "size": [
+          111.0,
+          22.0,
+          184.0
+        ]
+      },
+      "triangle_count": 3972,
+      "sha256": "06c7c1a1d26133e5259c6621dce45a625bfbe5ca8efe04411ac5021c1d1496ac",
+      "file": "output/electronic-trigger-candidate/beam.stl"
+    },
+    "lever": {
+      "empty": false,
+      "volume_mm3": 1641.5130621138314,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          46.0,
+          -54.8,
+          -38.0
+        ],
+        "max": [
+          62.7,
+          -47.199999999999996,
+          4.0
+        ],
+        "size": [
+          16.700000000000003,
+          7.600000000000001,
+          42.0
+        ]
+      },
+      "triangle_count": 1274,
+      "sha256": "b68fa615ba09926a1eb6160c03fd93c0b02def6720502ffeef4ac0b582e964d8",
+      "file": "output/electronic-trigger-candidate/lever.stl"
+    },
+    "mount": {
+      "empty": false,
+      "volume_mm3": 5976.1702921694905,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          39.0,
+          -59.0,
+          -39.0
+        ],
+        "max": [
+          70.0,
+          -45.0,
+          7.0
+        ],
+        "size": [
+          31.0,
+          14.0,
+          46.0
+        ]
+      },
+      "triangle_count": 1860,
+      "sha256": "683e261976accaf81b7b1014c49b58fc4a4b052d2fcd488d39ec5713a0771bd8",
+      "file": "output/electronic-trigger-candidate/mount.stl"
+    }
+  },
+  "probe_count": 79,
+  "calibration_clearance_shift_samples_mm": [
+    -1.4,
+    1.4
+  ],
+  "spring_catalog_contract": {
+    "catalog_part": "MISUMI WR4-15",
+    "catalog_url": "https://jp.misumi-ec.com/vona2/detail/110100184630/",
+    "rest_installed_length_mm": 12.0,
+    "pulled_installed_length_mm": 8.741,
+    "free_length_range_mm": [
+      13.5,
+      16.5
+    ],
+    "minimum_rest_preload_n": 0.405,
+    "maximum_pulled_force_n": 2.561,
+    "worst_deflection_mm": 7.759,
+    "nominal_catalog_max_deflection_mm": 9.0,
+    "catalog_max_load_n": 2.6,
+    "checks": {
+      "spring_od_fits_pockets": true,
+      "short_spring_has_preload_at_rest": true,
+      "long_spring_stays_within_nominal_catalog_stroke": true,
+      "high_rate_long_spring_stays_below_catalog_load": true,
+      "both_seats_compress_on_pull": true
+    },
+    "passed": true,
+    "physical_spring_and_friction_tested": false
+  },
+  "print_fit_contract": {
+    "lower_paddle_nominal_back_clearance_mm": 0.5,
+    "pivot_cheek_span_mm": 6.0,
+    "metal_sleeve_nominal_length_mm": 6.0,
+    "metal_sleeve_candidate": "HIROSUGI CB-306-5E",
+    "metal_sleeve_catalog_url": "https://jp.misumi-ec.com/vona2/detail/221006204265/",
+    "minimum_sleeve_to_lever_axial_play_before_print_mm": 0.7,
+    "minimum_sleeve_to_bore_diametral_clearance_before_print_mm": 0.15,
+    "checks": {
+      "lower_paddle_has_at_least_0_4mm_nominal_back_clearance": true,
+      "pivot_cheek_span_matches_metal_sleeve": true,
+      "short_spacer_leaves_lever_axial_play": true,
+      "large_spacer_enters_nominal_lever_bore": true,
+      "relief_is_local_to_front_skin": true
+    },
+    "passed": true,
+    "printed_clearance_measured": false
+  },
+  "switch_calibration_contract": {
+    "switch": "OMRON D2F-01FL30-D3",
+    "catalog_url": "https://components.omron.com/sites/default/files/datasheet_pdf/B036-E1.pdf",
+    "hard_stop_nominal_angle_deg": -8,
+    "target_click_angle_deg": -7.0,
+    "postclick_nose_motion_mm": 0.213,
+    "catalog_min_overtravel_mm": 0.5,
+    "drawn_reference_rest_gap_mm": 1.512,
+    "catalog_max_movement_differential_mm": 0.5,
+    "drawn_reference_full_overtravel_mm": 0.213,
+    "drawn_reference_click_error_mm": 0.0,
+    "catalog_op_tolerance_mm": 1.0,
+    "nominal_required_switch_shift_range_mm": [
+      -1.0,
+      1.0
+    ],
+    "available_negative_switch_shift_mm": 1.688,
+    "available_positive_switch_shift_mm": 2.212,
+    "minimum_case_to_pivot_cheek_gap_over_calibration_range_mm": 2.712,
+    "minimum_nose_to_case_gap_at_stop_over_sampled_shifts_mm": 0.987,
+    "minimum_rest_spring_torque_nmm": 9.315,
+    "maximum_switch_torque_nmm": 3.75,
+    "requires_adjustment_to_real_click_before_use": true,
+    "real_switch_adjusted_and_overtravel_measured": false,
+    "checks": {
+      "click_angle_precedes_finger_stop": true,
+      "postclick_motion_below_catalog_min_overtravel": true,
+      "rest_separation_exceeds_catalog_max_differential": true,
+      "drawn_position_is_nominally_calibrated": true,
+      "catalog_case_and_mount_axis_dimensions_match": true,
+      "catalog_roller_l30_characteristics_match": true,
+      "catalog_d3_solder_tabs_fit_case_width": true,
+      "catalog_op_range_reachable_by_slots": true,
+      "catalog_op_range_covered_by_clearance_probes": true,
+      "calibration_range_clears_pivot_cheek": true,
+      "worst_sampled_case_clears_nose_at_stop_with_0_4mm_drawing_allowance": true,
+      "return_spring_rest_torque_exceeds_switch_max_torque": true
+    },
+    "passed": true
+  },
+  "probes": {
+    "lever-mount-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-beam-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-mount-a-2.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-2.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-beam-a-2.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-mount-a-4.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-4.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-beam-a-4.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-mount-a-6.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-6.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-beam-a-6.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-mount-a-8.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-8.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-beam-a-8.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-beam-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-fixed-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-other-fixed-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-other-fixed-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-moving-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-4.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-8.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-moving-a+0.00-t0.25": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.25": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a+0.00-t0.25": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-4.00-t0.25": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-8.00-t0.25": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-moving-a+0.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a+0.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-4.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-8.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-moving-a+0.00-t0.75": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.75": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a+0.00-t0.75": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-4.00-t0.75": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-8.00-t0.75": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "mount-moving-a+0.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a+0.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-4.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-moving-a-8.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-4.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-8.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a+0.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-4.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-8.00-t0.50": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a+0.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-4.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-original-hardware-a-8.00-t1.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-mount-a+0.50-t0.00": {
+      "empty": false,
+      "volume_mm3": 2.770189955513672,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          45.79974660676734,
+          -54.8,
+          -34.33782474638267
+        ],
+        "max": [
+          46.0,
+          -47.199999999999996,
+          -31.551554595434173
+        ],
+        "size": [
+          0.20025339323265712,
+          7.600000000000001,
+          2.7862701509485
+        ]
+      },
+      "triangle_count": 24,
+      "sha256": "28ff183401771eee855e527353a32e8b6635c9eba979f9b72d34fe718615ef65",
+      "file": "output/electronic-trigger-candidate/probe-lever-mount-a+0.50-t0.00.stl"
+    },
+    "lever-mount-a-9.00-t0.00": {
+      "empty": false,
+      "volume_mm3": 3.7197524062959673,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          59.35,
+          -54.8,
+          -35.59453895626244
+        ],
+        "max": [
+          59.680319492962965,
+          -47.199999999999996,
+          -28.0
+        ],
+        "size": [
+          0.33031949296296403,
+          7.600000000000001,
+          7.59453895626244
+        ]
+      },
+      "triangle_count": 228,
+      "sha256": "8d91ed33cf75dce26e91c450c53409327d83a99624711b684cfdfdf895f17bc5",
+      "file": "output/electronic-trigger-candidate/probe-lever-mount-a-9.00-t0.00.stl"
+    },
+    "lever-switch-actuation-target-a+0.00-t0.00": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-actuation-target-a-8.00-t0.00": {
+      "empty": false,
+      "volume_mm3": 0.09942849115646525,
+      "watertight": true,
+      "bounds": {
+        "min": [
+          53.276222624852295,
+          -52.45,
+          2.05
+        ],
+        "max": [
+          53.488,
+          -51.55,
+          2.9390344089690554
+        ],
+        "size": [
+          0.21177737514770456,
+          0.9000000000000057,
+          0.8890344089690556
+        ]
+      },
+      "triangle_count": 260,
+      "sha256": "134f7e8e9dd030db691e38ba2f994a5347e4ed17468e365b8d27978d8dcd0f89",
+      "file": "output/electronic-trigger-candidate/probe-lever-switch-actuation-target-a-8.00-t0.00.stl"
+    },
+    "lever-switch-body-a+0.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-4.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-8.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-beam-a+0.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-other-fixed-a+0.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-fixed-a+0.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.25-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.50-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.75-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t1.00-sx-1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a+0.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-4.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "lever-switch-body-a-8.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-beam-a+0.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-other-fixed-a+0.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-fixed-a+0.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.25-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.50-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t0.75-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    },
+    "switch-terminals-moving-a+0.00-t1.00-sx+1.40": {
+      "empty": true,
+      "volume_mm3": 0
+    }
+  },
+  "failures": [],
+  "scope": "Nominal signal-trigger mount, lever, switch-body/terminal proxies and hard-stop path on current fixed grip",
+  "switch_roller_lever_exact_3d_verified": false,
+  "omron_terminal_and_wire_envelope_verified": false,
+  "spring_supplier_and_force_verified": false,
+  "pivot_spacer_and_fastener_fit_verified": false,
+  "motor_interface_reviewed": false,
+  "current_inventory_promoted": true,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

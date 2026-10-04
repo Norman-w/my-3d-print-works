@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- region: 导入/依赖 -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>往复电机版 · 已选电子扳机结构</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three/build/three.module.js",
+      "three/addons/": "./vendor/three/examples/jsm/"
+    }
+  }
+  </script>
+  <!-- endregion -->
+  <style>
+    :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dde8; }
+    .app { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; height: 100%; }
+    aside { border-right: 1px solid #243044; padding: 14px; overflow: hidden; background: #121722; display: flex; flex-direction: column; }
+    h1 { margin: 0 0 8px; font-size: 16px; }
+    .meta, .hint { color: #8b98ab; font-size: 12px; line-height: 1.5; }
+    .modes, .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    button, input, select { accent-color: #5b9fd6; }
+    button { background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+    button.on { background: #2563eb; border-color: #3b82f6; }
+    input[type="search"], select { width: 100%; background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; }
+    .filters { display: grid; gap: 8px; margin: 8px 0; }
+    #parts { flex: 1; overflow: auto; padding-right: 4px; }
+    .group { margin: 10px 0 14px; }
+    .group h2 { margin: 0 0 6px; font-size: 12px; color: #93c5fd; display: flex; justify-content: space-between; gap: 8px; }
+    label.part { display: grid; grid-template-columns: 18px 10px 1fr auto; gap: 8px; align-items: center; margin: 5px 0; font-size: 13px; }
+    label.part .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    label.part .status { color: #8b98ab; font-size: 11px; }
+    #c { width: 100%; height: 100%; display: block; }
+    .candidate { border: 1px solid #496179; border-radius: 10px; padding: 10px; margin: 10px 0; background: #172232; }
+    .candidate strong { display: block; margin-bottom: 6px; color: #f9bf83; font-size: 13px; }
+    .candidate .row { margin: 4px 0 8px; }
+    .candidate input[type="range"] { width: 100%; }
+    #scene-note { color: #a8bbcf; font-size: 12px; line-height: 1.5; }
+    .file-card { position: fixed; inset: 0; display: none; place-items: center; background: #0b0d12; z-index: 20; padding: 24px; }
+    body.file .file-card { display: grid; }
+    body.file .app { display: none; }
+    code { display: block; margin-top: 10px; padding: 10px; background: #1c2433; border-radius: 8px; color: #e0c07a; }
+  </style>
+</head>
+<body>
+  <!-- region: 模型/类型 -->
+  <!-- /api/parts: { title, units, groups, parts[{id,name,file,group,role,color,opacity,visible,explosion,bytes}] } -->
+  <!-- endregion -->
+
+  <!-- region: 视图层 -->
+  <div class="file-card">
+    <div>
+      <h1>请用本地 HTTP 打开</h1>
+      <p class="hint">直接打开 HTML 会绕过预览目录，STL 相对路径也无法稳定加载。</p>
+      <code>python3 scripts/preview_lan.py</code>
+    </div>
+  </div>
+  <div class="app">
+    <aside>
+      <h1 id="title">往复电机版 · 已定义结构</h1><a href="feeder-motion.html?view=system" style="color:#98d9ef;padding:8px 0">历史拉索动作参考</a>
+      <div class="meta" id="meta">加载零件清单…</div>
+      <div class="candidate">
+        <strong>同场景查看电子扳机</strong>
+        <div class="row">
+          <button type="button" id="view-assembly">已定义结构全览</button>
+          <button type="button" id="toggle-trigger" aria-pressed="false">加载扳机动态场景</button>
+          <button type="button" id="focus-trigger" disabled>聚焦扳机</button>
+        </div>
+        <label class="meta" for="trigger-range">勾扣进度 <output id="trigger-out">0° · 松开</output></label>
+        <input id="trigger-range" type="range" min="0" max="100" value="0" disabled />
+        <div id="scene-note" aria-live="polite">已选电子扳机替换原背梁；动态场景演示向握把勾扣和信号开关位置。电机及传动尚未建成。</div>
+      </div>
+      <div class="modes">
+        <button type="button" id="mode-simple" class="on">简单预览</button>
+        <button type="button" id="mode-explode">爆炸视图</button>
+      </div>
+      <div class="row">
+        <button type="button" id="fit">适配视角</button>
+        <button type="button" id="assemble">合并</button>
+        <button type="button" id="explode">展开</button>
+      </div>
+      <label class="meta">爆炸程度 <output id="explode-out">0</output>%</label>
+      <input id="explode-range" type="range" min="0" max="100" value="0" />
+      <div class="filters">
+        <input id="part-search" type="search" placeholder="搜索零件名 / 分组 / 文件" />
+        <select id="group-filter" aria-label="按分组筛选">
+          <option value="">全部分组</option>
+        </select>
+        <select id="role-filter" aria-label="按角色筛选">
+          <option value="">全部角色</option>
+          <option value="printed">printed</option>
+          <option value="purchased">purchased</option>
+          <option value="diagnostic">diagnostic</option>
+        </select>
+      </div>
+      <div class="row">
+        <button type="button" id="load-filtered">加载筛选结果</button>
+        <button type="button" id="hide-filtered">隐藏筛选结果</button>
+      </div>
+      <div id="parts"></div>
+      <p class="hint">左键旋转 · 滚轮缩放 · 右键平移。<a href="/">返回当前方案</a> · <a href="electronic-trigger-candidate.html">扳机校准与边界</a>。49 件已定义结构包含替换背梁和独立扳机杠杆；电机座与双向传动仍待实物接口尺寸，不能据此打印整机。</p>
+    </aside>
+    <canvas id="c"></canvas>
+  </div>
+  <script type="module" src="./electric-models-app.mjs"></script>
+  <!-- endregion -->
+</body>
+</html>

@@ -1,0 +1,601 @@
+{
+  "status": "TRIGGER_M2_ACCESS_NOMINAL_ONLY",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/electronic-trigger-fastener-access-screen.scad": "980c32f97c6599d062f2536f4f253362fdcd2fe15f9e39518dc2514b2ea3b963",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electronic_trigger_fastener_access.py": "aac9044d526e01d4afa43a6ea97512a98aaaf7ee161148d2546f03794c973b51"
+  },
+  "predecessor_sha256": {
+    "output/electronic-trigger-candidate/review.json": "9ba8ff701036cdfe16bd186cca6f6d205a091602908ab69ff6d1e512222d0a3b",
+    "output/electric-trigger-integration/review.json": "1d8c856ac7ea40ec01d635d2eab1af2490721fb687b57996650a4d158a5c1bff"
+  },
+  "switch": "OMRON D2F-01FL30-D3 catalog proxy",
+  "fastener_candidate": {
+    "M2_under_head_length_mm": 14,
+    "screw_reference": "Accu SSCF-M2-14-A2, ISO 4762 socket head",
+    "screw_reference_url": "https://www.accu.co.uk/metric-cap-head-screws/3796-SSCF-M2-14-A2",
+    "plate_thickness_mm": 4,
+    "switch_to_plate_nominal_gap_mm": 0,
+    "switch_case_through_thickness_mm": 5.8,
+    "switch_case_catalog_tolerance_mm": 0.15,
+    "switch_catalog_url": "https://components.omron.com/eu-en/sites/components.omron.com.eu/files/datasheet_pdf/B036-E1.pdf",
+    "full_nut_proxy_thickness_mm": 1.6,
+    "nominal_stack_with_one_rear_washer_mm": 12.3,
+    "shank_projection_past_nut_nominal_mm": 1.7,
+    "shank_projection_past_nut_case_max_only_mm": 1.55,
+    "rear_washer_proxy_thickness_mm": 0.9,
+    "head_proxy_diameter_mm": 3.8,
+    "head_proxy_height_mm": 2.0,
+    "rear_washer_proxy_diameter_mm": 7.0,
+    "rear_washer_proxy_inner_diameter_mm": 2.2,
+    "rear_washer_catalog_min_od_mm": 6.64,
+    "rear_washer_reference": "Accu HPW-M2-V2-A4, DIN 9021 wide washer",
+    "rear_washer_reference_url": "https://www.accu.co.uk/metric-flat-washers/406769-HPW-M2-V2-A4",
+    "nut_proxy_af_mm": 4,
+    "nut_tool_proxy_diameter_mm": 6,
+    "driver_shaft_proxy_diameter_mm": 4,
+    "real_screw_nut_and_tool_sizes_verified": false
+  },
+  "switch_slot_fit": {
+    "printed_slot_width_nominal_mm": 2.8,
+    "catalog_switch_hole_pitch_tolerance_mm": 0.15,
+    "screw_shank_proxy_diameter_mm": 2,
+    "radial_allowance_after_half_pitch_error_before_print_mm": 0.325,
+    "wide_washer_supported_area_at_catalog_min_od_mm2": {
+      "switch_shift_-1.4_mm": 21.72,
+      "switch_shift_+0_mm": 17.97,
+      "switch_shift_+1.4_mm": 20.26
+    },
+    "real_printed_slot_and_clamping_verified": false
+  },
+  "tested_switch_shifts_mm": [
+    -1.4,
+    0,
+    1.4
+  ],
+  "tested_trigger_angles_deg": [
+    0,
+    -8
+  ],
+  "tested_feeder_fractions": [
+    0,
+    0.5,
+    1
+  ],
+  "empty_probe_count": 102,
+  "positive_control_count": 2,
+  "probes": {
+    "shaft-mount-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-switch-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-beam-s-1.4-a+0-t0": {
+      "volume_mm3": 0.0,
+      "bounds_mm": {
+        "min": [
+          40.588,
+          -59.0,
+          -7.25
+        ],
+        "max": [
+          47.119088913245534,
+          -59.0,
+          6.25
+        ],
+        "size": [
+          6.531088913245533,
+          0.0,
+          13.5
+        ]
+      },
+      "occupied": false
+    },
+    "head-other-fixed-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-beam-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-other-fixed-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-terminals-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-beam-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-other-fixed-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-beam-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-other-fixed-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-terminals-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-mount-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-switch-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-beam-s+0-a+0-t0": {
+      "volume_mm3": 0.0,
+      "bounds_mm": {
+        "min": [
+          41.988,
+          -59.0,
+          -7.25
+        ],
+        "max": [
+          48.86874039201174,
+          -59.0,
+          6.25
+        ],
+        "size": [
+          6.880740392011738,
+          0.0,
+          13.5
+        ]
+      },
+      "occupied": false
+    },
+    "head-other-fixed-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-beam-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-other-fixed-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-terminals-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-beam-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-other-fixed-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-beam-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-other-fixed-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-terminals-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-mount-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-switch-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-beam-s+1.4-a+0-t0": {
+      "volume_mm3": 0.0,
+      "bounds_mm": {
+        "min": [
+          43.84689862039473,
+          -59.0,
+          -7.25
+        ],
+        "max": [
+          50.388,
+          -59.0,
+          6.25
+        ],
+        "size": [
+          6.541101379605266,
+          0.0,
+          13.5
+        ]
+      },
+      "occupied": false
+    },
+    "head-other-fixed-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-beam-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-other-fixed-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-terminals-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-beam-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-other-fixed-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-beam-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-other-fixed-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-terminals-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s-1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s-1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s-1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s-1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s-1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s+0-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s+0-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s+0-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s+0-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s+0-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-lever-s+1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-lever-s+1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-lever-s+1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-lever-s+1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-lever-s+1.4-a-8-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s-1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s-1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s-1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s-1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s-1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s-1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s-1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s-1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s-1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+0-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+0-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+0-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+0-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+0-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+0-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+0-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+0-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+0-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+1.4-a+0-t0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+1.4-a+0-t0.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-moving-s+1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-moving-s+1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "driver-moving-s+1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-tool-moving-s+1.4-a+0-t1": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "head-self-control-s+0-a+0-t0": {
+      "volume_mm3": 45.235157,
+      "bounds_mm": {
+        "min": [
+          43.588,
+          -61.9,
+          -5.65
+        ],
+        "max": [
+          47.388,
+          -59.9,
+          4.6499999999999995
+        ],
+        "size": [
+          3.799999999999997,
+          2.0,
+          10.3
+        ]
+      },
+      "occupied": true
+    },
+    "washer-self-control-s+0-a+0-t0": {
+      "volume_mm3": 61.490893,
+      "bounds_mm": {
+        "min": [
+          41.988,
+          -59.9,
+          -7.25
+        ],
+        "max": [
+          48.988,
+          -59.0,
+          6.25
+        ],
+        "size": [
+          7.0,
+          0.8999999999999986,
+          13.5
+        ]
+      },
+      "occupied": true
+    }
+  },
+  "image_sha256": "93a5b48e974999b547453ced2978255f1efbb49059e4c23c0061baf37c7828be",
+  "selected_beam_unchanged": true,
+  "actual_switch_hole_and_terminal_fit_verified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

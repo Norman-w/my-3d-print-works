@@ -1,5 +1,7 @@
 # 统一拉索候选实例与导出契约
 
+> 历史方案。拉索器件现已退出当前选件；现行入口为[电动版清单](electric-assembly-inventory.json)和[当前状态](current-status.md)。下文“当前”仅指这份旧拉索快照形成时的状态。
+
 当前采用固定导向直拉 v2，权威按实例清单为 [cable-assembly-inventory.json](cable-assembly-inventory.json)。原包绕版本清单及报告保留，不能把旧角度、55件数量或切片配置用于本版。
 
 ## 数量与身份

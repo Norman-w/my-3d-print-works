@@ -1,0 +1,700 @@
+{
+  "status": "REJECTED_MOTOR_BLOCKS_SWITCH_ADJUSTMENT",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-end-switch-cap-candidate.scad": "b641f9efeeb6f0e9a7c8dcbeddc09a97969d84227abb2307d786734b77df5d51",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electric-feeder-trigger-assembly.scad": "43867d498a0924e3b3996b6dd14c1cf557dace000c2e91f36ec20ee873e86263",
+    "cad/electric-full-stroke-switch-screen.scad": "e1d78fc67a09e0ea327e49c6046130e0d4d8ee22cd5fd485fb6167c64d01feb3",
+    "cad/electric-home-switch-screen.scad": "50a56df95d74a44807001d560ae729b66a879b3904046de0eadd6f6c371a2d5f",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electric_end_switch_cap_candidate.py": "a555a706e1838100872c94c9db4eeadae98c6d18ee03b0a0a8475926d996012c"
+  },
+  "home_switch_review_sha256": "6928cc5f4a63092bcf653be7c3f56b60b64f78b09007ff327adf6ff34f7dc1d1",
+  "full_switch_review_sha256": "bb1a5f03529ce9c8c53654f19f95366a115fa95db2e61d70277115c1f03802e6",
+  "motor_envelope_review_sha256": "33c03431a47571ae33d43e82a97302d38007133afd9568f37c381a5fb3bc70b0",
+  "catalogue_switch_url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-d2f.pdf",
+  "geometry": {
+    "replaced_selected_part": "right Y guide cap only",
+    "switch_case_x_at_nominal_mm": [
+      68,
+      80.8
+    ],
+    "switch_y_at_nominal_mm": [
+      42,
+      47.8
+    ],
+    "home_switch_mount_holes_x_mm": [
+      71.15,
+      77.65
+    ],
+    "home_switch_mount_holes_z_mm": 1.95,
+    "full_switch_mount_holes_z_mm": -31.95,
+    "switch_z_adjustment_each_way_mm": 0.8,
+    "nominal_motor_envelope_radial_gap_to_switch_box_mm": {
+      "axis_85_63": 1.2696,
+      "axis_85_70": 8.0938
+    },
+    "examined_motor_axis_xy_mm": [
+      85,
+      70
+    ],
+    "adjustment_tool_blocked_by_motor_envelope": [
+      "switch-tool-motor-t0.00-s+0.00-y63",
+      "switch-tool-motor-t0.00-s+0.00-y70"
+    ],
+    "motor_envelope_is_seller_proxy": true,
+    "old_guide_screw_axes_and_hard_stops_unchanged": true,
+    "M2_nut_footprint_only_not_purchased": true
+  },
+  "part_meshes": {
+    "cap": {
+      "occupied": true,
+      "volume_mm3": 7678.18275563157,
+      "bounds": {
+        "min": [
+          51.5,
+          24.2,
+          -37.0
+        ],
+        "max": [
+          81.0,
+          42.0,
+          7.0
+        ],
+        "size": [
+          29.5,
+          17.8,
+          44.0
+        ]
+      },
+      "stl_sha256": "2d705b86a309ea6397035662fbbefc9daf325a1664b8437a5933a2011682dd61",
+      "file": "output/electric-end-switch-cap-candidate/cap.stl"
+    },
+    "home-tab": {
+      "occupied": true,
+      "volume_mm3": 500.1599999999996,
+      "bounds": {
+        "min": [
+          54.0,
+          23.5,
+          5.8
+        ],
+        "max": [
+          70.8,
+          46.5,
+          9.0
+        ],
+        "size": [
+          16.799999999999997,
+          23.0,
+          3.2
+        ]
+      },
+      "stl_sha256": "54080343dc1c6547643e460dde8306faa3f860eb956fa6af515f57bfec7d624d",
+      "file": "output/electric-end-switch-cap-candidate/home-tab.stl"
+    },
+    "full-tab": {
+      "occupied": true,
+      "volume_mm3": 500.1599999999929,
+      "bounds": {
+        "min": [
+          54.0,
+          23.5,
+          -59.0
+        ],
+        "max": [
+          70.8,
+          46.5,
+          -55.8
+        ],
+        "size": [
+          16.799999999999997,
+          23.0,
+          3.200000000000003
+        ]
+      },
+      "stl_sha256": "f3f93ccf160f7e35090bf4969ae97413a07211c6ee734bb22a0502effaee92c4",
+      "file": "output/electric-end-switch-cap-candidate/full-tab.stl"
+    }
+  },
+  "pose_travel_mm": [
+    0,
+    1.0,
+    5.0,
+    10.0,
+    15.0,
+    20
+  ],
+  "probe_count": 104,
+  "probes": {
+    "cap-other-fixed-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-other-fixed-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-other-fixed-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-other-fixed-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-other-fixed-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-other-fixed-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-moving-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-hardware-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-service-tools-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-cap-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-selected-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-hardware-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-fixed-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-other-moving-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-hardware-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.05-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.25-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.50-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.75-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t1.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-cap-t0.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t0.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t1.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-cap-t1.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "switch-selected-t0.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t0.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t1.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-selected-t1.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t1.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t1.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t0.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t1.00-s-0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-cap-t1.00-s+0.80-y70": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "tab-root-control-t0.00-s+0.00-y70": {
+      "occupied": true,
+      "volume_mm3": 48.000000000001876,
+      "bounds": {
+        "min": [
+          54.0,
+          23.5,
+          -59.0
+        ],
+        "max": [
+          59.0,
+          25.0,
+          9.0
+        ],
+        "size": [
+          5.0,
+          1.5,
+          68.0
+        ]
+      },
+      "stl_sha256": "90fc0a53fecd9cf505018db957a2ca60234930a05953683b195910487e8cfd5c"
+    },
+    "tab-root-control-t1.00-s+0.00-y70": {
+      "occupied": true,
+      "volume_mm3": 47.99999999999767,
+      "bounds": {
+        "min": [
+          54.0,
+          23.5,
+          -39.0
+        ],
+        "max": [
+          59.0,
+          25.0,
+          29.0
+        ],
+        "size": [
+          5.0,
+          1.5,
+          68.0
+        ]
+      },
+      "stl_sha256": "a4be695e51886a950a49ef61d826f22dae3ae50b74cb5606a32b7e3b5a9c575b"
+    },
+    "mount-slot-control-t0.00-s+0.00-y70": {
+      "occupied": false,
+      "volume_mm3": 0,
+      "contact_faces_only": true
+    },
+    "cap-self-control-t0.00-s+0.00-y70": {
+      "occupied": true,
+      "volume_mm3": 7678.182755631594,
+      "bounds": {
+        "min": [
+          51.5,
+          24.2,
+          -37.0
+        ],
+        "max": [
+          81.0,
+          42.0,
+          7.0
+        ],
+        "size": [
+          29.5,
+          17.8,
+          44.0
+        ]
+      },
+      "stl_sha256": "e7213cb32f3fd1877100597953b93a384fc9b5472438877ed60a3403d898c512"
+    },
+    "cap-motor-envelope-t0.00-s+0.00-y63": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "cap-motor-envelope-t1.00-s+0.00-y63": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t0.00-s+0.00-y63": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-motor-envelope-t1.00-s+0.00-y63": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "switch-tool-motor-t0.00-s+0.00-y63": {
+      "occupied": true,
+      "volume_mm3": 810.2631367915284,
+      "bounds": {
+        "min": [
+          70.5,
+          49.528882442585704,
+          -33.95
+        ],
+        "max": [
+          79.65,
+          76.47111755741429,
+          3.95
+        ],
+        "size": [
+          9.150000000000006,
+          26.942235114828584,
+          37.900000000000006
+        ]
+      },
+      "stl_sha256": "173be98b9dcef1d5dff921870b1f2bc198b06aae1a74436560a65ffd5ab2c2c3"
+    },
+    "switch-tool-motor-t0.00-s+0.00-y70": {
+      "occupied": true,
+      "volume_mm3": 810.2631367916006,
+      "bounds": {
+        "min": [
+          70.5,
+          56.528882442585704,
+          -33.95
+        ],
+        "max": [
+          79.65,
+          83.47111755741429,
+          3.95
+        ],
+        "size": [
+          9.150000000000006,
+          26.942235114828584,
+          37.900000000000006
+        ]
+      },
+      "stl_sha256": "960b0b0f6d16cca6bda083e65bdbe38cdbd31451e856e9b999aaa4b144b60887"
+    }
+  },
+  "images": {
+    "at-home.png": {
+      "file": "output/electric-end-switch-cap-candidate/at-home.png",
+      "sha256": "eb673a22222c0d92689baac82797c8621ce066be2f7a096b45b8cce91cfe385a",
+      "pixels": [
+        1400,
+        1000
+      ],
+      "feeder_travel_mm": 0
+    },
+    "at-full.png": {
+      "file": "output/electric-end-switch-cap-candidate/at-full.png",
+      "sha256": "760f187489ec5ed5112bccf6f2e81b75d36143afcecc5171685768f08efdd1fc",
+      "pixels": [
+        1400,
+        1000
+      ],
+      "feeder_travel_mm": 20
+    }
+  },
+  "service_access_pass": false,
+  "actual_M2_fasteners_and_nut_installation_verified": false,
+  "tab_stiffness_and_switch_click_measured": false,
+  "motor_wire_and_mount_clearance_verified": false,
+  "promoted_to_selected_parts": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

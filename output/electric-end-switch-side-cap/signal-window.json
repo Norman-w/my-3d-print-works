@@ -1,0 +1,107 @@
+{
+  "status": "ILLUSTRATIVE_ENDPOINT_PULSE_SCREEN_REAL_TIMING_UNKNOWN",
+  "source_sha256": {
+    "analysis/endpoint_signal_window.py": "b6fab012014e7086c5c8bed204bdfbcfff60286afe1493560c590ac0c30c6cd1",
+    "output/electric-home-switch-screen/review.json": "6928cc5f4a63092bcf653be7c3f56b60b64f78b09007ff327adf6ff34f7dc1d1",
+    "output/electric-full-stroke-switch-screen/review.json": "bb1a5f03529ce9c8c53654f19f95366a115fa95db2e61d70277115c1f03802e6",
+    "output/electric-end-switch-side-cap/review.json": "f22829cdcf908694fed4508b2b1dc1ec2df0c9134c79820d7c2252dc5f359148"
+  },
+  "catalogue": {
+    "part": "Omron D2F-01F-D3 pin plunger",
+    "url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-d2f.pdf",
+    "movement_differential_max_mm": 0.12,
+    "overtravel_min_mm": 0.25
+  },
+  "geometry": {
+    "feeder_stroke_mm": 20.0,
+    "calibrate_each_physical_switch_past_its_own_OP_at_stop_mm": [
+      0.1,
+      0.2
+    ],
+    "upper_and_lower_end_switches_share_this_screen": true
+  },
+  "illustration_only": {
+    "hypothetical_complete_cycles_per_second": 2.0,
+    "hypothetical_half_cycle_traverse_ms": 250.0,
+    "constant_speed_mm_per_second": 80.0,
+    "sinusoidal_displacement": "u(t)=10*(1-cos(4*pi*t)) mm",
+    "seller_cycle_rate_or_selected_motor_profile_verified": false,
+    "cases": [
+      {
+        "press_past_actual_OP_at_stop_mm": 0.1,
+        "assumed_movement_differential_mm": 0.0,
+        "switch_actuates_before_stop_mm": 0.1,
+        "switch_releases_after_departing_stop_mm": 0.1,
+        "constant_speed_illustration": {
+          "arrival_to_stop_ms": 1.25,
+          "stop_to_release_ms": 1.25,
+          "total_pressed_window_ms": 2.5
+        },
+        "sinusoidal_illustration": {
+          "arrival_to_stop_ms": 11.263,
+          "stop_to_release_ms": 11.263,
+          "total_pressed_window_ms": 22.527
+        }
+      },
+      {
+        "press_past_actual_OP_at_stop_mm": 0.1,
+        "assumed_movement_differential_mm": 0.12,
+        "switch_actuates_before_stop_mm": 0.1,
+        "switch_releases_after_departing_stop_mm": 0.22,
+        "constant_speed_illustration": {
+          "arrival_to_stop_ms": 1.25,
+          "stop_to_release_ms": 2.75,
+          "total_pressed_window_ms": 4.0
+        },
+        "sinusoidal_illustration": {
+          "arrival_to_stop_ms": 11.263,
+          "stop_to_release_ms": 16.723,
+          "total_pressed_window_ms": 27.986
+        }
+      },
+      {
+        "press_past_actual_OP_at_stop_mm": 0.2,
+        "assumed_movement_differential_mm": 0.0,
+        "switch_actuates_before_stop_mm": 0.2,
+        "switch_releases_after_departing_stop_mm": 0.2,
+        "constant_speed_illustration": {
+          "arrival_to_stop_ms": 2.5,
+          "stop_to_release_ms": 2.5,
+          "total_pressed_window_ms": 5.0
+        },
+        "sinusoidal_illustration": {
+          "arrival_to_stop_ms": 15.942,
+          "stop_to_release_ms": 15.942,
+          "total_pressed_window_ms": 31.884
+        }
+      },
+      {
+        "press_past_actual_OP_at_stop_mm": 0.2,
+        "assumed_movement_differential_mm": 0.12,
+        "switch_actuates_before_stop_mm": 0.2,
+        "switch_releases_after_departing_stop_mm": 0.32,
+        "constant_speed_illustration": {
+          "arrival_to_stop_ms": 2.5,
+          "stop_to_release_ms": 4.0,
+          "total_pressed_window_ms": 6.5
+        },
+        "sinusoidal_illustration": {
+          "arrival_to_stop_ms": 15.942,
+          "stop_to_release_ms": 20.186,
+          "total_pressed_window_ms": 36.128
+        }
+      }
+    ]
+  },
+  "five_ms_stable_debounce_safe_from_this_evidence": false,
+  "home_switch_closed_alone_proves_hard_stop": false,
+  "full_switch_closed_alone_proves_full_travel": false,
+  "endpoint_event_capture_and_noise_rejection_finalized": false,
+  "measured_waveforms_required": [
+    "Both raw switch signals against independently measured carriage position",
+    "Minimum active interval through start, steady run, low battery and loaded ball path",
+    "Contact bounce and electrical noise at motor start/stop",
+    "Drive-off to true motor standstill and any motion after the zero event"
+  ],
+  "manufacturing_release": false
+}

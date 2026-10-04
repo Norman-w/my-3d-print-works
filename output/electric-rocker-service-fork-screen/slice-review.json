@@ -1,0 +1,216 @@
+{
+  "status": "SERVICE_FORK_SLICED_UNRELEASED",
+  "geometry_review_sha256": "3a539826455ef0dae8fc124e2e6b50d51ab2fc34a35070d823ed91efdb29c080",
+  "source_sha256": {
+    "scripts/slice_electric_rocker_service_fork.py": "588d8d6c58dceb0692668a330515e00da4dbd355237ab9f2f7c496ba43cf57c5",
+    "output/print-review/config/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/print-review/config/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+    "output/print-review/config/process.json": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20"
+  },
+  "orientations": {
+    "base-x-plus-90-tree": {
+      "status": "SLICED_UNRELEASED",
+      "part": "base",
+      "source_stl_sha256": "3c98772699ea4be088c2c800e8d36b72110c826ff278e70e0fffde14f14d8724",
+      "rotation_x_deg": 90,
+      "support": "tree, build plate only",
+      "machine": "Bambu Lab X1 Carbon, 0.4 mm nozzle, Textured PEI Plate",
+      "material_profile": "Generic PETG",
+      "layer_height_mm": 0.2,
+      "wall_loops": 4,
+      "infill": "25%",
+      "brim_mm": 5,
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 185,
+      "header_layers": 185,
+      "filament_g": 10.763501167297363,
+      "estimated_time_s": 3266.9404296875,
+      "native_triangle_count": 2998,
+      "gcode_sha256": "23bc68d5c316b77143290aa18908729221243d1a2f852bdf15df25c87923ac07",
+      "slice_3mf_sha256": "d4f48f94cf5b206a92830dea179d6fdd920f8c542f02df45a596fc85ec4bba19",
+      "preview_sha256": "bee36c42cc0ad9143196391fb4df64db43b30ba3eb3bfcf3a81858e59bba22c4",
+      "critical_feature_machine_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            150.8,
+            154.2
+          ],
+          [
+            25.9,
+            33.1
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            134.8,
+            138.2
+          ],
+          [
+            25.9,
+            33.1
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            149.1514,
+            155.8486
+          ],
+          [
+            30.2,
+            33.1
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            133.1514,
+            139.8486
+          ],
+          [
+            30.2,
+            33.1
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            110.3,
+            116.7
+          ],
+          [
+            22.9,
+            26.1
+          ]
+        ]
+      },
+      "critical_pockets_open_upward_after_3mf_rotation": {
+        "nut_lower": true,
+        "nut_upper": true
+      },
+      "support_extrusion_segments_crossing_critical_feature_with_0p25mm_margin": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      }
+    },
+    "rear-x-minus-90-tree": {
+      "status": "SLICED_UNRELEASED",
+      "part": "rear",
+      "source_stl_sha256": "4284963271b5885e491b6d46365ef1e83636a9bea16b1de6792831cd65a2876f",
+      "rotation_x_deg": -90,
+      "support": "tree, build plate only",
+      "machine": "Bambu Lab X1 Carbon, 0.4 mm nozzle, Textured PEI Plate",
+      "material_profile": "Generic PETG",
+      "layer_height_mm": 0.2,
+      "wall_loops": 4,
+      "infill": "25%",
+      "brim_mm": 5,
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 45,
+      "header_layers": 45,
+      "filament_g": 6.067607402801514,
+      "estimated_time_s": 1423.3857421875,
+      "native_triangle_count": 1588,
+      "gcode_sha256": "f8d6bad5cd35bbff1795b2b4814bd401756c2f75088e632fdfaccda944b25264",
+      "slice_3mf_sha256": "d914510fc5d4d5242994fc88cee0f2bf48495d56d2ad0b4a92649994bae9cc78",
+      "preview_sha256": "b88ae19fecb364d8ba6f26a2c8bedfcaabcaa29d5ccc9b748b692ab507eea5b5",
+      "critical_feature_machine_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            101.8,
+            105.2
+          ],
+          [
+            -0.1,
+            8.1
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            117.8,
+            121.2
+          ],
+          [
+            -0.1,
+            8.1
+          ]
+        ],
+        "key_pocket": [
+          [
+            124.95,
+            135.55
+          ],
+          [
+            109.2,
+            113.8
+          ],
+          [
+            3.7,
+            8.1
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            139.3,
+            145.7
+          ],
+          [
+            2.9,
+            7.1
+          ]
+        ]
+      },
+      "critical_pockets_open_upward_after_3mf_rotation": {
+        "key_pocket": true
+      },
+      "support_extrusion_segments_crossing_critical_feature_with_0p25mm_margin": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "key_pocket": 0,
+        "pivot_bore": 0
+      }
+    }
+  },
+  "printer_sent": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

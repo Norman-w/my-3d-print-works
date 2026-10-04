@@ -1,5 +1,7 @@
 # 拉线扳机在完整场景中的固定与动作
 
+> 历史拉索方案，仅供追溯；当前方案已改为往复电机，参见[当前状态](current-status.md)。以下“当前”均指本旧版报告生成时。
+
 当前采用固定导向直拉v2及HCDG8-30/NETW7轴设计；执行状态、源与原生图见[采用记录](../output/cable-eclip-adoption/README.md)。[采用前版本](../output/cable-eclip-adoption/20260927T151752917841Z/pre-adoption-docs/cable-trigger-integration.md)的85项场景、L15轴及切片只作为历史保留。
 
 输入座由原背梁四个M4孔固定。四M4×60替换旧短栓，原螺母保留一次；连续支撑肋承接护套和手指反力。新转轴外移3 mm，但四安装孔的全球坐标不变。拆卸时这四颗也是背梁主固定，须同时承托输入模块和背梁。

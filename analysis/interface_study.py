@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Nominal outlet packaging, captured-liner stops and mesh review; not release."""
+"""Nominal outlet collar, captured-liner stops and mesh review; not release."""
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import hashlib
@@ -69,20 +69,22 @@ def main():
     for key,value in [('body_spigot_bore',d['liner_id']),('body_outlet_stop',2)]:
         m=re.search(rf'^\s*{key}\s*=\s*([\d.]+)\s*;',body,re.M)
         assert m and float(m.group(1))==value, f'Changed source contract: {key}'
-    jobs=[('liner-body',False),('liner-tube',False),('boot-body-tube',False),
+    jobs=[('liner-body',False),('liner-tube',False),('collar-body-tube',False),
           ('tube-assembly-sweep',False),('ballway',False),
           ('liner-upstream-stop',True),('liner-downstream-stop',True),
-          ('boot-offset-control',True)]
+          ('collar-offset-control',True)]
     with ThreadPoolExecutor(max_workers=3) as pool:
         checks=list(pool.map(probe,[(part,expected,d) for part,expected in jobs]))
     meshes=[]
-    for part in ['liner','boot-envelope']:
+    for part,role in [('liner','captured tube liner'),
+                      ('collar-positive','printable collar positive half'),
+                      ('collar-negative','printable collar negative half')]:
         path,_=run(part)
         p=subprocess.run(['python3',str(INSPECT),str(path),'--require-watertight','--json'],
                          text=True,capture_output=True)
         if p.returncode: raise RuntimeError(p.stdout+p.stderr)
         raw=json.loads(p.stdout)
-        meshes.append({'part':part,'path':str(path.relative_to(ROOT)),
+        meshes.append({'part':part,'role':role,'path':str(path.relative_to(ROOT)),
                        'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
                        'inspection':raw,'component_count':len(classify(path)['components'])})
     renders=[]
@@ -96,17 +98,20 @@ def main():
                         'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
     stable=before==hashes()
     passed=stable and all(r['passed'] for r in checks) and all(m['component_count']==1 for m in meshes)
-    report={'status':'NOMINAL_INTERFACE_PACKAGING_ONLY' if passed else 'FAIL_OR_STALE',
+    report={'status':'NOMINAL_INTERFACE_COLLAR_CANDIDATE_ONLY' if passed else 'FAIL_OR_STALE',
         'units':'mm','source_sha256':before,'sources_stable':stable,'dimensions':d,
         'calculated':{
             'effective_tube_engagement':d['socket_end']-d['tube_start'],
             'liner_nominal_wall':(d['liner_od']-d['liner_id'])/2,
             'liner_polygon_face_wall':(d['liner_od']-d['liner_id'])/2*math.cos(math.pi/d['polygon_fn']),
-            'liner_after_band_reserve':d['liner_end']-d['band_z'][1]-d['band_width']/2,
-            'liner_shoulder_capture_radial_overlap_with_tube':(d['shoulder_od']-d['tube_id'])/2},
+            'liner_after_collar_bolt_reserve':d['liner_end']-d['collar_bolt_z'],
+            'liner_shoulder_capture_radial_overlap_with_tube':(d['shoulder_od']-d['tube_id'])/2,
+            'collar_module_radial_clearance':(d['collar_inner_socket_d']-d['socket_od'])/2,
+            'collar_tube_radial_clearance':(d['collar_inner_tube_d']-d['tube_od'])/2,
+            'collar_bolt_count':d['collar_bolt_count']},
         'checks':checks,'meshes':meshes,'renders':renders,
-        'scope':'Nominal rigid geometry. Liner stops work only while the hard tube remains seated. Tube retention is NOT established. Boot is an uncompressed reference envelope, not selected elastomer geometry. 41.5 mm coaxial probe is not all eccentric ball trajectories.',
-        'omitted':['clamp screw housings and tool access','elastomer installation deformation and squeeze','real tube material/tolerance','support bracket and anchor','thin liner/tube strength','air resistance and ball dynamics'],
+        'scope':'Nominal rigid geometry. Liner stops work only while the hard tube remains seated. The collar is a two-half printable candidate with one shared M3 pair; adhesive/sealant is non-structural. Tube retention, clamp torque and load transfer are NOT established. The 41.5 mm coaxial probe is not all eccentric ball trajectories.',
+        'omitted':['exact supplier screw/head/nut selection and torque','sealant installation deformation and squeeze','real tube material/tolerance','support bracket and anchor','thin liner/tube strength','air resistance and ball dynamics'],
         'manufacturing_release':False,'physical_acceptance':'OPEN'}
     (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(report['status'], f'{sum(r["passed"] for r in checks)}/{len(checks)} checks')

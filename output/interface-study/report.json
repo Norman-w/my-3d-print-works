@@ -1,12 +1,12 @@
 {
-  "status": "NOMINAL_INTERFACE_PACKAGING_ONLY",
+  "status": "NOMINAL_INTERFACE_COLLAR_CANDIDATE_ONLY",
   "units": "mm",
   "source_sha256": {
     "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
     "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
     "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
-    "cad/interface-study.scad": "4000c70ff0b23ce69133cf01d2281456f4b9de366eaadf467e0feafc883e841a",
-    "analysis/interface_study.py": "7931031cf39a812c2e208286724e4de8c2af036423f817bb20f79e499a59c085",
+    "cad/interface-study.scad": "5290776f5648dc282a1cf52d4d40fe5cb6b1baa2f3a3e963cd91c8e3aa83b821",
+    "analysis/interface_study.py": "d9521d065e8bc08a21aaa81c63d0fc034300d9bccd5dfa4cf6302ac3ce9161a9",
     "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de"
   },
   "sources_stable": true,
@@ -26,22 +26,34 @@
     "liner_end": 99,
     "shoulder_od": 50,
     "shoulder_t": 1.5,
-    "band_z": [
-      59,
-      90
+    "collar_start": 50,
+    "collar_end": 103,
+    "collar_transition": [
+      69,
+      73
     ],
-    "band_width": 9,
-    "boot_start": 50,
-    "boot_end": 103,
-    "boot_transition_end": 73,
-    "boot_wall_envelope": 2
+    "collar_inner_socket_d": 57,
+    "collar_inner_tube_d": 50.5,
+    "collar_wall": 3,
+    "collar_split_gap": 0.4,
+    "collar_bolt_count": 2,
+    "collar_bolt_z": 76.5,
+    "collar_bolt_x": [
+      -34,
+      34
+    ],
+    "collar_clearance_hole_d": 3.4,
+    "collar_nut_af": 5.8
   },
   "calculated": {
     "effective_tube_engagement": 23.5,
     "liner_nominal_wall": 1.1000000000000014,
     "liner_polygon_face_wall": 1.0997382297879015,
-    "liner_after_band_reserve": 4.5,
-    "liner_shoulder_capture_radial_overlap_with_tube": 1.0
+    "liner_after_collar_bolt_reserve": 22.5,
+    "liner_shoulder_capture_radial_overlap_with_tube": 1.0,
+    "collar_module_radial_clearance": 0.25,
+    "collar_tube_radial_clearance": 0.25,
+    "collar_bolt_count": 2
   },
   "checks": [
     {
@@ -603,54 +615,12 @@
       "has_solid_or_unclassified_overlap": false
     },
     {
-      "name": "boot-body-tube",
+      "name": "collar-body-tube",
       "expected_overlap": false,
       "passed": true,
-      "triangle_count": 296,
-      "components": [
-        {
-          "triangles": 148,
-          "volume_mm3": 2.1174173525650986e-12,
-          "planar_error_mm": 7.563582061001271,
-          "planar_contact_only": false,
-          "bounds": [
-            [
-              -25.0,
-              1.0904846841334
-            ],
-            [
-              -25.0,
-              0.0
-            ],
-            [
-              73.02000000000001,
-              103.0
-            ]
-          ]
-        },
-        {
-          "triangles": 148,
-          "volume_mm3": 9.237055564881302e-13,
-          "planar_error_mm": 8.510405299496025,
-          "planar_contact_only": false,
-          "bounds": [
-            [
-              -1.0904846841334,
-              25.0
-            ],
-            [
-              0.0,
-              25.0
-            ],
-            [
-              73.02000000000001,
-              103.0
-            ]
-          ]
-        }
-      ],
-      "has_solid_or_unclassified_overlap": false,
-      "verified_tube_polygon_boundary_contact_only": true
+      "components": [],
+      "triangle_count": 0,
+      "has_solid_or_unclassified_overlap": false
     },
     {
       "name": "tube-assembly-sweep",
@@ -1148,24 +1118,24 @@
       "has_solid_or_unclassified_overlap": true
     },
     {
-      "name": "boot-offset-control",
+      "name": "collar-offset-control",
       "expected_overlap": true,
       "passed": true,
-      "triangle_count": 1430,
+      "triangle_count": 844,
       "components": [
         {
-          "triangles": 642,
-          "volume_mm3": 191.9855103416203,
-          "planar_error_mm": 42.2594556666364,
+          "triangles": 160,
+          "volume_mm3": 130.76138097001152,
+          "planar_error_mm": 5.527318271345049,
           "planar_contact_only": false,
           "bounds": [
             [
-              -28.25,
-              -3.4852648800941046
+              -28.241267811418297,
+              -11.720964666553334
             ],
             [
-              -28.002860654402994,
-              28.002860654402994
+              -25.69349404888014,
+              -0.20000000000000284
             ],
             [
               50.0,
@@ -1174,18 +1144,18 @@
           ]
         },
         {
-          "triangles": 20,
-          "volume_mm3": 0.2972224127392527,
-          "planar_error_mm": 0.021773374970393087,
+          "triangles": 160,
+          "volume_mm3": 130.76138097001274,
+          "planar_error_mm": 5.970263986053684,
           "planar_contact_only": false,
           "bounds": [
             [
-              -3.4517080408572416,
-              -1.8631011486865994
+              -28.241267811418297,
+              -11.720964666553334
             ],
             [
-              -28.168655247114412,
-              -28.012222398304196
+              0.2,
+              25.69349404888014
             ],
             [
               50.0,
@@ -1194,122 +1164,42 @@
           ]
         },
         {
-          "triangles": 10,
-          "volume_mm3": 0.011046736778471166,
-          "planar_error_mm": 0.0043629770069118995,
+          "triangles": 262,
+          "volume_mm3": 195.01085305923976,
+          "planar_error_mm": 12.646521413751156,
           "planar_contact_only": false,
           "bounds": [
             [
-              -0.19980964431638878,
-              0.06664550260615597
+              -24.99563598447557,
+              -10.241615814543167
             ],
             [
-              -28.25,
-              -28.241276122526934
+              -22.80018800699664,
+              -0.20000000000000284
             ],
             [
-              50.0,
-              69.0
-            ]
-          ]
-        },
-        {
-          "triangles": 18,
-          "volume_mm3": 0.29722241273898276,
-          "planar_error_mm": 0.05640325477178275,
-          "planar_contact_only": false,
-          "bounds": [
-            [
-              -3.4517080408572416,
-              -1.2679832786226035
-            ],
-            [
-              28.012222398304196,
-              28.19463865446311
-            ],
-            [
-              50.0,
-              69.0
-            ]
-          ]
-        },
-        {
-          "triangles": 12,
-          "volume_mm3": 0.011046736778465712,
-          "planar_error_mm": 0.013474558247417358,
-          "planar_contact_only": false,
-          "bounds": [
-            [
-              -0.19980964431638878,
-              0.06664550260615597
-            ],
-            [
-              28.23215821888492,
-              28.25
-            ],
-            [
-              50.0,
-              69.0
-            ]
-          ]
-        },
-        {
-          "triangles": 720,
-          "volume_mm3": 300.76443910717546,
-          "planar_error_mm": 25.43939899990527,
-          "planar_contact_only": false,
-          "bounds": [
-            [
-              -25.0,
-              0.1
-            ],
-            [
-              -25.0,
-              25.0
-            ],
-            [
-              72.77138461538462,
+              72.58492307692308,
               103.0
             ]
           ]
         },
         {
-          "triangles": 4,
-          "volume_mm3": 4.9873299934333204e-17,
-          "planar_error_mm": 0.0,
-          "planar_contact_only": true,
+          "triangles": 262,
+          "volume_mm3": 195.01085305924727,
+          "planar_error_mm": 12.89505704022876,
+          "planar_contact_only": false,
           "bounds": [
             [
-              -0.005085201852724838,
-              0.2
+              -24.99563598447557,
+              -10.241615814543167
             ],
             [
-              -28.243023153079974,
-              -28.229546875564683
+              0.2,
+              22.80018800699664
             ],
             [
-              69.0,
-              69.0
-            ]
-          ]
-        },
-        {
-          "triangles": 4,
-          "volume_mm3": 1.0070069778045365e-14,
-          "planar_error_mm": 0.0,
-          "planar_contact_only": true,
-          "bounds": [
-            [
-              0.012603352095836762,
-              0.2
-            ],
-            [
-              28.229859250792877,
-              28.241267811418297
-            ],
-            [
-              69.0,
-              69.0
+              72.58492307692308,
+              103.0
             ]
           ]
         }
@@ -1320,6 +1210,7 @@
   "meshes": [
     {
       "part": "liner",
+      "role": "captured tube liner",
       "path": "output/interface-study/liner.stl",
       "sha256": "d60d8ee38aa56e57e86fbbdf383fc45c59fc33a3659919a944cc4b149dd2f6af",
       "inspection": {
@@ -1357,35 +1248,75 @@
       "component_count": 1
     },
     {
-      "part": "boot-envelope",
-      "path": "output/interface-study/boot-envelope.stl",
-      "sha256": "2209074f3694c0546b6050a866e8fa8cce54f53a65bb452328b6f99b4315e004",
+      "part": "collar-positive",
+      "role": "printable collar positive half",
+      "path": "output/interface-study/collar-positive.stl",
+      "sha256": "df7e2a04c8efbbaec6112cad4deb97d83447b66c9d94a4acfed9302495eb0f54",
       "inspection": {
-        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/interface-study/boot-envelope.stl",
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/interface-study/collar-positive.stl",
         "format": "ascii",
         "units": "unknown",
-        "triangleCount": 2594,
-        "uniqueVertexCount": 1297,
+        "triangleCount": 3682,
+        "uniqueVertexCount": 1839,
         "bounds": {
           "min": [
-            -30.25,
-            -30.25,
+            -41.0,
+            0.2,
             50.0
           ],
           "max": [
-            30.25,
-            30.25,
+            41.0,
+            31.5,
             103.0
           ],
           "size": [
-            60.5,
-            60.5,
+            82.0,
+            31.3,
             53.0
           ]
         },
-        "surfaceArea": 19267.470486282808,
-        "signedVolume": 18168.53983202066,
-        "volume": 18168.53983202066,
+        "surfaceArea": 11368.486411537033,
+        "signedVolume": 15534.864900632905,
+        "volume": 15534.864900632905,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "component_count": 1
+    },
+    {
+      "part": "collar-negative",
+      "role": "printable collar negative half",
+      "path": "output/interface-study/collar-negative.stl",
+      "sha256": "255981d7a26690f0a5ad7752a64926a35bff04caa86177eb0005b28bf3acee04",
+      "inspection": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/interface-study/collar-negative.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2578,
+        "uniqueVertexCount": 1287,
+        "bounds": {
+          "min": [
+            -41.0,
+            -31.5,
+            50.0
+          ],
+          "max": [
+            41.0,
+            -0.20000000000000018,
+            103.0
+          ],
+          "size": [
+            82.0,
+            31.3,
+            53.0
+          ]
+        },
+        "surfaceArea": 11378.24567252221,
+        "signedVolume": 15522.65972547857,
+        "volume": 15522.65972547857,
         "degenerateTriangleCount": 0,
         "boundaryEdgeCount": 0,
         "nonManifoldEdgeCount": 0,
@@ -1398,21 +1329,21 @@
   "renders": [
     {
       "path": "output/interface-study/section-isometric.png",
-      "sha256": "a3cf7a9ee64aab105244a8932b5161be7dcf89fd208600917d0deae356d4ee6b"
+      "sha256": "968151a9864c96fbb4df376b72b5ebdc2051e76fc17aeb8be02ee89bf75c02e3"
     },
     {
       "path": "output/interface-study/section-front.png",
-      "sha256": "82a467c04817a1ef449d77b152f6164648e97758aa159b5fbb785875ebbca271"
+      "sha256": "1ac5bcc64cf74ccf57a4bb5c94d7ab360b5daebcce9983a78e315563e8392ff7"
     },
     {
       "path": "output/interface-study/assembly-top.png",
-      "sha256": "9d0ca197659a68b4ce564b2f85a9e07e4570ea6eb4bdb0be534031867ab7aa41"
+      "sha256": "fe44b39c74f03a90bbbb7737c1cbdab1ad122b625347cfc7f7b4e75ddf5d7de6"
     }
   ],
-  "scope": "Nominal rigid geometry. Liner stops work only while the hard tube remains seated. Tube retention is NOT established. Boot is an uncompressed reference envelope, not selected elastomer geometry. 41.5 mm coaxial probe is not all eccentric ball trajectories.",
+  "scope": "Nominal rigid geometry. Liner stops work only while the hard tube remains seated. The collar is a two-half printable candidate with one shared M3 pair; adhesive/sealant is non-structural. Tube retention, clamp torque and load transfer are NOT established. The 41.5 mm coaxial probe is not all eccentric ball trajectories.",
   "omitted": [
-    "clamp screw housings and tool access",
-    "elastomer installation deformation and squeeze",
+    "exact supplier screw/head/nut selection and torque",
+    "sealant installation deformation and squeeze",
     "real tube material/tolerance",
     "support bracket and anchor",
     "thin liner/tube strength",

@@ -21,4 +21,14 @@ __pycache__/
 /output/procurement/
 /output/preview-service/
 /output/revision-review/
+/output/preview-history/
+/output/electric-feeder/publication.json
 /output/optical-home-candidate/slices/**/*.json
+
+# Per-orientation slicer metadata is reproducible cache, not review evidence.
+# Keep the curated top-level review and slice-review JSON files above these paths.
+/output/**/slices/**/*.json
+/output/**/slice-*/**/*.json
+/output/**/orientation-screen/**/*.json
+/output/**/slice-screen/**/*.json
+/output/**/explore/

@@ -1,0 +1,62 @@
+{
+  "status": "WIRE_RELIEF_SLICED_UNRELEASED",
+  "geometry_review_sha256": "4194568aa1eebedaccb9e5b7888e49a9bdcaa9736717da110c1e9a1c869c5e6a",
+  "source_sha256": {
+    "scripts/slice_electronic_trigger_wire_relief.py": "3793421fd69f11f78ca25d15f1537e51e7f7a7d71f07118a7a1da8cb599289ca",
+    "output/print-review/config/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/print-review/config/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+    "output/print-review/config/process.json": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20"
+  },
+  "source_stl_sha256": "06c7c1a1d26133e5259c6621dce45a625bfbe5ca8efe04411ac5021c1d1496ac",
+  "rotation_x_deg": -90,
+  "machine": "Bambu Lab X1 Carbon, 0.4 mm nozzle, Textured PEI Plate",
+  "material_profile": "Generic PETG",
+  "process": "0.2 mm; 4 walls; 25% infill; 5 mm brim; tree support from bed only",
+  "cli_return_code": 0,
+  "native_return_code": 0,
+  "native_warnings": [],
+  "archive_integrity_pass": true,
+  "gcode_layers": 110,
+  "filament_g": 84.30998229980469,
+  "estimated_time_s": 13432.0029296875,
+  "tie_hole_machine_boxes_mm": {
+    "tie_left": [
+      [
+        137.5,
+        140.5
+      ],
+      [
+        177.0,
+        180.0
+      ],
+      [
+        13.9,
+        18.1
+      ]
+    ],
+    "tie_right": [
+      [
+        143.5,
+        146.5
+      ],
+      [
+        177.0,
+        180.0
+      ],
+      [
+        13.9,
+        18.1
+      ]
+    ]
+  },
+  "support_extrusion_segments_crossing_tie_holes_with_0p25mm_margin": {
+    "tie_left": 0,
+    "tie_right": 0
+  },
+  "slice_3mf_sha256": "93d26b9e0daacc9fbc91aae074976ab638984224762570e38c01d3405d929685",
+  "preview_sha256": "ab4a89628e341dcc8e90f998a33ffdae57ff4434a6f726f59205e5429babf591",
+  "promoted_to_selected_beam": true,
+  "printer_sent": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,11 @@
+# 摇臂可拆叉座：合壳螺钉旁的根部腹板候选
+
+**状态：独立名义几何候选，已做离线切片对照；未替换当前叉座、未试印、未放行。** [渐变腹板 CAD](../cad/electric-rocker-root-gusset-screen.scad)从[低梁加宽候选](electric-rocker-service-fork-reinforcement-screen.md)继续，在下侧 M3 合壳螺钉旁增加一段渐变腹板。它沿原基座根部 `Y=37.5…46 mm`、外侧 `X=8…14 mm` 延伸，下缘最低到 `Z=−22 mm`；面对模型中 `X=7 mm` 的壳体外表面，新增腹板留 1 mm 名义间隙。原两颗合壳螺钉的贯通通道仍从腹板中扣除。后叉耳拆装界面、摇臂轴和电机活动端接口均未改动。[局部叠加图](../output/electric-rocker-root-gusset-screen/root-web-context.png)的橙色为新增实体，蓝色为此前的加宽基座。
+
+[几何报告](../output/electric-rocker-root-gusset-screen/review.json)导出的候选基座及仅新增的腹板均为单连通、封闭 STL；[候选基座](../output/electric-rocker-root-gusset-screen/base-root-web-screen.stl)体积约 8308.13 mm³，比加宽版多约 169.82 mm³。新增材料对固定件、原五金、电机图片过包络、后叉耳和锚点孔道无正体积相交；对送料架 0–20 mm 的 21 个离散位置也无正体积相交。另沿 +X 每 0.5 mm 取 0–20 mm 共 41 个位置，检查**仅新增材料**与固定件的插入净空。再将新增材料作半径 0.8 mm 的多面体膨胀，对上述 41 个插入位置及送料 21 个位置重查，均无正体积相交；半径 1.2 mm 对壳体的故意相交正对照确实出现碰撞。连同原有静态和正对照，共 **131 项探针，无错误**。多面体膨胀是模型间隙筛查，不等于实印件至少有 0.8 mm 实际余量。这项插入检查也不是整只基座的完整装配路径，且没有纳入实际螺钉、工具和线束的连续运动包络。
+
+[根部截面报告](../output/electric-rocker-root-gusset-screen/root-web-section.json)（[可复算脚本](../analysis/service_fork_root_web_section.py)、[依赖版本](../analysis/service_fork_section_requirements.txt)）直接剖切两版封闭 STL：在 `Y=39.5 mm`，合壳孔下侧材料区由 **18.671 增至 60.824 mm²**，约为此前的 3.26 倍；整个截面由 187.041 增至 229.194 mm²。直梁中段 `Y=45.5 mm` 的总截面未减小。根部截面仍被螺钉孔分成三块，截面面积增加并不等于应力、疲劳寿命或实际承载能力得到证明。
+
+[X1C/PETG 离线朝向报告](../output/electric-rocker-root-gusset-screen/orientation-screen.json)（[可复算脚本](../scripts/screen_electric_rocker_root_gusset_orientation.py)）以 0.4 mm 喷嘴、纹理 PEI、0.2 mm 层高、4 壁、25% 填充和仅从热床生成的树状支撑，筛了 X 轴 0–90° 的 20 个朝向。每档都得到原生切片及 3MF。初版扫描曾把 `G1 E.8` 这类**没有 XY 位移的原地补料**误算成孔内支撑；修正为只计正向挤出且有实际 XY 路径后，40°、55°、90° 等多档的合壳孔与叉座连接孔名义核心区均为 **0 条支撑线**，其中 40°、55° 的关键孔外围投影盒也为 0 条。[55° 盘面图](../output/electric-rocker-root-gusset-screen/slice-screen/orientation-screen/base-x-plus-55-tree/plate-preview.png)和[55° 离线 3MF](../output/electric-rocker-root-gusset-screen/slice-screen/orientation-screen/base-x-plus-55-tree/slice-review.3mf)可复核；这仍不是推荐打印文件。扫描没有证明挤出线宽之外的全部孔边余量、实际孔径、支撑清理或 PETG 层间强度，因此没有选定最终朝向。直接把 55° 的自动支撑关闭时，BambuStudio 的[原生切片结果](../output/electric-rocker-root-gusset-screen/slice-screen/base-x-plus-55-no-support/result.json)会报浮空区域；仍应保留其他部位所需支撑。
+
+下一步须把实购 BY141-3 的带载推拉力与停机冲击、壳体两颗 M3 的承压和合缝预紧、PETG 层间强度纳入受力校核，最后核对实装可达性、孔径和打印配合。当前没有这些证据，不能把这件候选加入 49 件取件表或发送打印。

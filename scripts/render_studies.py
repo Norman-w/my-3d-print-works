@@ -126,7 +126,7 @@ td,th{text-align:left;padding:8px 14px;border-bottom:1px solid #dce3e8}table{bor
 <p><a href="../../docs/first-build-decision.md">首次完整制作的判断与下一步实配证据</a></p>
 <h2>出口连接剖面研究</h2>
 <p>外套、箍和带肩内衬的装配空间；密封压缩、抗拔、薄壁强度和独立支架仍未确定。研究中的内衬肩使有效插深从25减至23.5 mm，未更改基线壳体或打印清单。</p>
-<figure><img src="../interface-study/section-isometric.png" alt="出口连接剖面：硬管、带肩内衬、弹性套及箍带包络"><figcaption>橙色为内衬；绿色为未压缩密封套包络。没有实物验收结论。</figcaption></figure>
+<figure><img src="../interface-study/section-isometric.png" alt="出口连接剖面：硬管、带肩内衬及一体化阶梯分体箍"><figcaption>橙色为内衬；绿色为一体化阶梯分体箍，深灰为一对参考 M3 螺钉。没有实物验收结论。</figcaption></figure>
 <p><a href="../../docs/interface-study.md">装配顺序、尺寸与检查边界</a></p>
 <p>名义不相交、网格闭合、误差预算和实物试球是不同检查；任何一项通过都不能替代其余项。</p>
 <p><a href="../../docs/design-review.md">工程评审记录</a> ·

@@ -1,0 +1,675 @@
+{
+  "schema_version": 1,
+  "snapshot": "electric-drive-selected-unreleased",
+  "basis": "Original 38-instance feeder with trigger beam replacement and one new lever, plus independent 10-instance spin head",
+  "feeder_stroke_mm": 20,
+  "motor_nominal_stroke_mm": 30,
+  "drive_ratio_required": "20/30 = 2/3, positive in both directions",
+  "counts": {
+    "feeder_printed_with_optical_replacements_and_trigger_lever": 39,
+    "spin_printed_including_optional_hold_fork": 10,
+    "selected_printed_instances": 49,
+    "normal_installed_printed_instances": 48,
+    "removed_bowden_printed_instances": 8
+  },
+  "printed_parts": [
+    {
+      "id": "feeder/positive-half",
+      "name": "送料右半壳",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "positive-half",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/negative-half",
+      "name": "送料左半壳",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "negative-half",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/beam-grip",
+      "name": "背梁握把",
+      "role": "printed",
+      "source": "cad/electric-feeder-trigger-assembly.scad",
+      "definitions": {
+        "it_part": "beam"
+      },
+      "selection": "replace original fixed beam with integral signal-trigger beam and two cable-tie strain-relief holes"
+    },
+    {
+      "id": "feeder/liner",
+      "name": "出口内衬",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "liner",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/right-support",
+      "name": "右导向支座",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "right-support",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/left-support",
+      "name": "左导向及弹簧座",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "left-support",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/x-gib",
+      "name": "X调隙压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "x-gib",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/x-cover",
+      "name": "X调节外盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "x-cover",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/frame",
+      "name": "凸轮架与指环",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "frame",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original cam carriage, guides and both hard-stop shoulders; remove manual finger loop"
+    },
+    {
+      "id": "feeder/fixed-spacer",
+      "name": "弹簧固定端间隔套",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "fixed-spacer",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/moving-spacer",
+      "name": "弹簧运动端间隔套",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "optical-moving-spacer"
+      },
+      "selection": "replace original moving spring spacer with optical flag spacer"
+    },
+    {
+      "id": "feeder/capture-right",
+      "name": "右出口捕获座",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "capture",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pipe-clamp-right",
+      "name": "右PC管夹",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pipe-clamp",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-cap-right",
+      "name": "右公共架Y调节盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-cap",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/frame-y-gib-right",
+      "name": "右公共架Y压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "frame-y-gib",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-gib-right-front",
+      "name": "右前Y调隙压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-gib",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-keeper-right-front",
+      "name": "右前Y外盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-keeper",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/finger-right-front",
+      "name": "右前V定位挡指",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "finger",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pin-block-right-front",
+      "name": "右前肩销压块",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pin-block",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-gib-right-rear",
+      "name": "右后Y调隙压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-gib",
+        "ed_side": 1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-keeper-right-rear",
+      "name": "右后Y外盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-keeper",
+        "ed_side": 1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/finger-right-rear",
+      "name": "右后V定位挡指",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "finger",
+        "ed_side": 1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pin-block-right-rear",
+      "name": "右后肩销压块",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pin-block",
+        "ed_side": 1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/capture-left",
+      "name": "左出口捕获座",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "capture",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pipe-clamp-left",
+      "name": "左PC管夹",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pipe-clamp",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-cap-left",
+      "name": "左公共架Y调节盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "optical-left-cap"
+      },
+      "selection": "replace original left Y cap with optical sensor cap"
+    },
+    {
+      "id": "feeder/frame-y-gib-left",
+      "name": "左公共架Y压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "frame-y-gib",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-gib-left-front",
+      "name": "左前Y调隙压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-gib",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-keeper-left-front",
+      "name": "左前Y外盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-keeper",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/finger-left-front",
+      "name": "左前V定位挡指",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "finger",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pin-block-left-front",
+      "name": "左前肩销压块",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pin-block",
+        "ed_side": -1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-gib-left-rear",
+      "name": "左后Y调隙压条",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-gib",
+        "ed_side": -1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/y-keeper-left-rear",
+      "name": "左后Y外盖",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "y-keeper",
+        "ed_side": -1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/finger-left-rear",
+      "name": "左后V定位挡指",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "finger",
+        "ed_side": -1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/pin-block-left-rear",
+      "name": "左后肩销压块",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "pin-block",
+        "ed_side": -1,
+        "ed_rear": true
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/inlet-rear",
+      "name": "入口后夹与背梁锚固",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "inlet-rear",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/inlet-front",
+      "name": "入口前夹",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "inlet-front",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/inlet-backplate",
+      "name": "入口后压板",
+      "role": "printed",
+      "source": "cad/electric-feeder-assembly.scad",
+      "definitions": {
+        "ed_part": "baseline",
+        "ed_legacy_part": "inlet-backplate",
+        "ed_side": 1,
+        "ed_rear": false
+      },
+      "selection": "retain original non-Bowden geometry"
+    },
+    {
+      "id": "feeder/trigger-lever",
+      "name": "电子信号扳机杠杆",
+      "role": "printed",
+      "source": "cad/electric-feeder-trigger-assembly.scad",
+      "definitions": {
+        "it_part": "lever"
+      },
+      "selection": "independent pull-to-grip lever on fixed-beam M3 pivot"
+    },
+    {
+      "id": "spin/body",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "body"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/carriage",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "carriage"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/pad",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "pad"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/pad-keeper",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "pad-keeper"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/opposite-guide",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "opposite-guide"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/cover",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "cover"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/spring-cage",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "spring-cage"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/spring-seat",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "spring-seat"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/pull-cap",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "pull-cap"
+      },
+      "installed_in_normal_mode": true
+    },
+    {
+      "id": "spin/hold-fork",
+      "role": "printed",
+      "source": "cad/spin-head.scad",
+      "definitions": {
+        "part": "hold-fork"
+      },
+      "installed_in_normal_mode": false
+    }
+  ],
+  "external_components": [
+    {
+      "id": "motor/BY141-3",
+      "item_id": "988456349136",
+      "sku_id": "5952763100025",
+      "status": "selected, not dimensionally modeled",
+      "visible_listing": {
+        "voltage_v": 3.7,
+        "nominal_stroke_mm": 30,
+        "rated_current_a": 0.36,
+        "rated_power_w": 1.33
+      },
+      "dimensioned_mount_and_rod_end": false
+    },
+    {
+      "id": "sensor/EE-SX675-WR-1M",
+      "status": "optical geometry candidate",
+      "source": "cad/feeder-optical-home.scad"
+    },
+    {
+      "id": "switch/D2F-01FL30-D3",
+      "status": "catalogue-sized trigger switch; not physically calibrated",
+      "source": "cad/electronic-trigger-candidate.scad"
+    },
+    {
+      "id": "spring/WR4-15",
+      "status": "catalogue-sized trigger return spring; not physically fitted"
+    },
+    {
+      "id": "spacer/CB-306-5E",
+      "status": "catalogue-sized M3 pivot spacer; not physically fitted"
+    }
+  ],
+  "excluded_previous_cable_ids": [
+    "feeder/cable-input-body",
+    "feeder/cable-input-lever",
+    "feeder/cable-input-terminal-cap",
+    "feeder/cable-input-cover",
+    "feeder/cable-output-cap",
+    "feeder/cable-route-base",
+    "feeder/cable-route-cap",
+    "feeder/cable-route-lower",
+    "feeder/cable-input-hardware-fixed",
+    "feeder/cable-input-hardware-moving",
+    "feeder/cable-output-hardware-fixed",
+    "feeder/cable-output-hardware-moving",
+    "feeder/cable-route-hardware",
+    "feeder/cable-housing",
+    "feeder/cable-core-route",
+    "feeder/cable-core-input",
+    "feeder/cable-core-output",
+    "feeder/cable-input-eclip-space"
+  ],
+  "beam_geometry": "et_beam() replaces sh_beam() with two signal-wire tie holes; independent et_lever() added",
+  "frame_geometry": "original feeder_carriage() core, rails and both X=±59 hard-stop shoulders; finger loop removed; not co_frame()",
+  "motor_mount_designed": false,
+  "positive_two_way_coupling_designed": false,
+  "electronic_trigger_selected": true,
+  "electronic_trigger_physically_verified": false,
+  "control_and_braking_validated": false,
+  "assembly_complete": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "source_sha256": {
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electric-feeder-trigger-assembly.scad": "43867d498a0924e3b3996b6dd14c1cf557dace000c2e91f36ec20ee873e86263",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "docs/cable-assembly-inventory.json": "e72f1161c3303f061c88ce1e7ac29d14c26ef4359e51bec4fd6b69f515d4bede",
+    "scripts/build_electric_inventory.py": "081692556b7e390d90f6963b70c13dca3f0a40bf3e66a9efab8446ac8483811b"
+  }
+}

@@ -1,0 +1,2216 @@
+{
+  "status": "ROOT_WEB_ORIENTATION_SCREEN_ONLY_UNRELEASED",
+  "source_sha256": {
+    "scripts/screen_electric_rocker_root_gusset_orientation.py": "59e7b5c053117b1f81226523acc93d77a17c82b4b5cf164a70ef5e9127a0110a",
+    "scripts/screen_service_fork_base_orientation.py": "1c18bcc9cb73f693c9d16f1b407632529bd659819d935fc8c6383afa9e4e98e6",
+    "scripts/slice_electric_rocker_service_fork.py": "588d8d6c58dceb0692668a330515e00da4dbd355237ab9f2f7c496ba43cf57c5",
+    "output/electric-rocker-root-gusset-screen/review.json": "6ac76dba3270bd33463c04a6515c27cf93dcaa5f20c4975110b75da3feabf18b",
+    "output/electric-rocker-root-gusset-screen/root-web-section.json": "eab7ece88e1a001d9d3d4dae5b56d4d818aee8f10971f647a7c093dfdb14521b",
+    "output/electric-rocker-root-gusset-screen/base-root-web-screen.stl": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+    "output/print-review/config/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/print-review/config/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+    "output/print-review/config/process.json": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20"
+  },
+  "machine": "Bambu Lab X1 Carbon; 0.4 mm nozzle; Textured PEI",
+  "material_profile": "Generic PETG",
+  "process": "0.2 mm layers; 4 walls; 25% infill; 5 mm brim; tree support from bed only",
+  "shell_void_scan": "Support segment centerlines sampled every <=0.15 mm in nominal shell M3 through-hole and counterbore cores; extrusion width, print error and support removal unverified",
+  "orientations": {
+    "x0": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 0,
+      "source_y_beam_axis_build_z_component": 0.0,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 320,
+      "filament_g": 10.77798843383789,
+      "estimated_time_s": 4065.01416015625,
+      "support_time_s": 366.7703857421875,
+      "support_interface_time_s": 29.348220825195312,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            135.4,
+            142.6
+          ],
+          [
+            6.3,
+            9.7
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            135.4,
+            142.6
+          ],
+          [
+            22.3,
+            25.7
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            139.7,
+            142.6
+          ],
+          [
+            4.6514,
+            11.3486
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            139.7,
+            142.6
+          ],
+          [
+            20.6514,
+            27.3486
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            132.4,
+            135.6
+          ],
+          [
+            43.8,
+            50.2
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 23,
+        "bolt_upper": 0,
+        "nut_lower": 49,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 22,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "acd3823711a45d07904be80906133c8c7d726f0cbef9b137a0503174ef730a41",
+      "preview_sha256": "83a29f9c0c074b4f49aa9c4e874163997babcd6eb09d295a904e8a7053e9b65e",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x30": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 30,
+      "source_y_beam_axis_build_z_component": 0.5,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 336,
+      "filament_g": 10.955690383911133,
+      "estimated_time_s": 4236.65771484375,
+      "support_time_s": 529.0191650390625,
+      "support_interface_time_s": 1.1185415983200073,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            141.3742,
+            149.3096
+          ],
+          [
+            16.406,
+            22.9504
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.3742,
+            141.3096
+          ],
+          [
+            30.2624,
+            36.8069
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            144.2738,
+            150.1339
+          ],
+          [
+            17.1282,
+            24.3782
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            136.2738,
+            142.1339
+          ],
+          [
+            30.9846,
+            38.2346
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            118.5262,
+            124.4974
+          ],
+          [
+            47.3819,
+            54.5245
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 15,
+        "bolt_upper": 0,
+        "nut_lower": 106,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 15,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "d9f75152cf9a63aa63caa7c9db98ed02497809a8eeb60fc650a0f6264545880a",
+      "preview_sha256": "9ba1fc90607cf5cc0a1b7fe31243cd6715b72da2efe601d11cb9abd97f981b82",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x35": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 35,
+      "source_y_beam_axis_build_z_component": 0.573576,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 330,
+      "filament_g": 10.170117378234863,
+      "estimated_time_s": 4147.04541015625,
+      "support_time_s": 460.1943054199219,
+      "support_interface_time_s": 1.118288278579712,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            141.7726,
+            149.6206
+          ],
+          [
+            17.722,
+            24.6368
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.5954,
+            140.4434
+          ],
+          [
+            30.8284,
+            37.7433
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            144.3493,
+            150.5663
+          ],
+          [
+            18.8379,
+            25.9873
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            135.1721,
+            141.389
+          ],
+          [
+            31.9443,
+            39.0938
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            116.0853,
+            122.3775
+          ],
+          [
+            46.7195,
+            53.7975
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "49bdd4248fb0458e736d4b0855ff79386d25c2cd8503932d3e7cdab08c81714b",
+      "preview_sha256": "dc7a09e7633962a7c23def8600393ac4026016933ef603324e5a8237cefdd2ca",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x40": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 40,
+      "source_y_beam_axis_build_z_component": 0.642788,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 321,
+      "filament_g": 10.0266695022583,
+      "estimated_time_s": 4148.61767578125,
+      "support_time_s": 415.4759521484375,
+      "support_interface_time_s": 2.404839038848877,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            142.0849,
+            149.7859
+          ],
+          [
+            18.9031,
+            26.1358
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            131.8003,
+            139.5013
+          ],
+          [
+            31.1598,
+            38.3925
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            144.3191,
+            150.8456
+          ],
+          [
+            20.4042,
+            27.3987
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0345,
+            140.561
+          ],
+          [
+            32.6609,
+            39.6554
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            113.7538,
+            120.319
+          ],
+          [
+            45.7014,
+            52.661
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "d37768e908e93bc507ec2279cfb3d57c2748ec8d619c3df484a04443e0c438dc",
+      "preview_sha256": "e688167c5ed59bf4c2a51bd512dc765177066c9387f688af5a0c345ca873e4a8",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x42": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 42,
+      "source_y_beam_axis_build_z_component": 0.669131,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 317,
+      "filament_g": 9.90200424194336,
+      "estimated_time_s": 4015.220458984375,
+      "support_time_s": 278.3774108886719,
+      "support_interface_time_s": 1.4497082233428955,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            142.4387,
+            150.0644
+          ],
+          [
+            19.3358,
+            26.6802
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            131.7326,
+            139.3583
+          ],
+          [
+            31.2261,
+            38.5705
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            144.5311,
+            151.1675
+          ],
+          [
+            20.9879,
+            27.9054
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            133.825,
+            140.4615
+          ],
+          [
+            32.8782,
+            39.7957
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            113.1095,
+            119.77
+          ],
+          [
+            45.1963,
+            52.0937
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "1857950fb4f9e8709c6f342a7091dc6cf6ac8384170a991ed70e8957524c7bb2",
+      "preview_sha256": "309258d1e2eaa5697c10dab5bc955f7de135ffaa6d625aa3b7ad6a5ff1394a9b",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x45": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 45,
+      "source_y_beam_axis_build_z_component": 0.707107,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 310,
+      "filament_g": 9.757771492004395,
+      "estimated_time_s": 3959.4716796875,
+      "support_time_s": 241.0609588623047,
+      "support_interface_time_s": 2.6803743839263916,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            143.3442,
+            150.8395
+          ],
+          [
+            19.9404,
+            27.4357
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.0305,
+            139.5258
+          ],
+          [
+            31.2541,
+            38.7495
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            145.219,
+            152.0053
+          ],
+          [
+            21.8152,
+            28.6015
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            133.9053,
+            140.6916
+          ],
+          [
+            33.1289,
+            39.9152
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            112.5851,
+            119.3733
+          ],
+          [
+            44.3356,
+            51.1238
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "ca8307d6b3442dcf2d8b162213d412d8f32931de5d7561ae6c561a8bf2c6d242",
+      "preview_sha256": "b8a8266c5b041951b2de9239d096c9f3cc424610979fee19ffb64ca5eb662eb7",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x48": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 48,
+      "source_y_beam_axis_build_z_component": 0.743145,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 302,
+      "filament_g": 9.72774600982666,
+      "estimated_time_s": 4010.49365234375,
+      "support_time_s": 312.7746276855469,
+      "support_interface_time_s": 1.922127604484558,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            144.2076,
+            151.5521
+          ],
+          [
+            20.4904,
+            28.1161
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.3173,
+            139.6618
+          ],
+          [
+            31.1965,
+            38.8222
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            145.8597,
+            152.7773
+          ],
+          [
+            22.5828,
+            29.2192
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            133.9694,
+            140.8869
+          ],
+          [
+            33.2889,
+            39.9253
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            112.1029,
+            119.0002
+          ],
+          [
+            43.3534,
+            50.0139
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "bdefeb6f1e2f0e01c44bebbd168f866171d82f6b46637f5ed1ed1aa6dcd10065",
+      "preview_sha256": "9df57bcb352eee268483972497964da540e85caab7364b072a4574eac8a893a1",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x50": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 50,
+      "source_y_beam_axis_build_z_component": 0.766044,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 297,
+      "filament_g": 9.723372459411621,
+      "estimated_time_s": 3959.284423828125,
+      "support_time_s": 211.41964721679688,
+      "support_interface_time_s": 3.552602529525757,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            144.7587,
+            151.9914
+          ],
+          [
+            20.8259,
+            28.5269
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.502,
+            139.7347
+          ],
+          [
+            31.1105,
+            38.8115
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            146.2598,
+            153.2543
+          ],
+          [
+            23.0602,
+            29.5867
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0031,
+            140.9976
+          ],
+          [
+            33.3448,
+            39.8713
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.8056,
+            118.7652
+          ],
+          [
+            42.6323,
+            49.1975
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "ec770fc82ff4c29e70ee6617e1f6df9f542859e5120a011de2da86f7243a0b8e",
+      "preview_sha256": "3ba1f82edaabba802b20896bdd963c4b19a9d61ecaa3fd18018cdd791a1bab65",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x51": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 51,
+      "source_y_beam_axis_build_z_component": 0.777146,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 294,
+      "filament_g": 9.723660469055176,
+      "estimated_time_s": 3940.656005859375,
+      "support_time_s": 203.9478759765625,
+      "support_interface_time_s": 2.3956029415130615,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            145.0267,
+            152.2001
+          ],
+          [
+            20.9842,
+            28.7194
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.5923,
+            139.7657
+          ],
+          [
+            31.0533,
+            38.7885
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            146.4515,
+            153.4813
+          ],
+          [
+            23.2884,
+            29.7569
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0172,
+            141.047
+          ],
+          [
+            33.3576,
+            39.826
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.6643,
+            118.6519
+          ],
+          [
+            42.2523,
+            48.7668
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "85b602d72f6e5e847fe690e611fdcbfb4359d99feefcd1ad3dceaca42911cde3",
+      "preview_sha256": "a9a1858aef7d7d33822eada70bbc73b8196c96543ab51376ec6519ae0b9af4bf",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x52": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 52,
+      "source_y_beam_axis_build_z_component": 0.788011,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 291,
+      "filament_g": 9.638812065124512,
+      "estimated_time_s": 3947.0390625,
+      "support_time_s": 290.9511413574219,
+      "support_interface_time_s": 2.2735023498535156,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            145.2894,
+            152.4014
+          ],
+          [
+            21.1361,
+            28.903
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.6812,
+            139.7932
+          ],
+          [
+            30.9867,
+            38.7536
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            146.6376,
+            153.7005
+          ],
+          [
+            23.5096,
+            29.918
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0294,
+            141.0924
+          ],
+          [
+            33.3601,
+            39.7686
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.528,
+            118.5414
+          ],
+          [
+            41.8594,
+            48.3212
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "e1742119dad1a7385c175564495f8508f0f6587554567bfd2f44504868df4ea5",
+      "preview_sha256": "b0add744449b175403c58914246ac2258e7798f59660d36fc71a1ab637cebb49",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x53": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 53,
+      "source_y_beam_axis_build_z_component": 0.798636,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 288,
+      "filament_g": 9.600873947143555,
+      "estimated_time_s": 3922.24658203125,
+      "support_time_s": 284.96185302734375,
+      "support_interface_time_s": 3.381169557571411,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            145.5469,
+            152.5953
+          ],
+          [
+            21.2816,
+            29.0779
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.7687,
+            139.8171
+          ],
+          [
+            30.9106,
+            38.7069
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            146.818,
+            153.912
+          ],
+          [
+            23.7235,
+            30.0701
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0399,
+            141.1338
+          ],
+          [
+            33.3526,
+            39.6991
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.3967,
+            118.4338
+          ],
+          [
+            41.4537,
+            47.861
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "12fe9de78c25e15fd72f2a988e83d3a9e53a17aa1ecda196e968977f259268ef",
+      "preview_sha256": "e3849115c63c26e09d2ec870b2fe89b2c0a07494f358b65bd0b054f65060d74d",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x54": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 54,
+      "source_y_beam_axis_build_z_component": 0.809017,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 284,
+      "filament_g": 9.624241828918457,
+      "estimated_time_s": 3904.601318359375,
+      "support_time_s": 281.86346435546875,
+      "support_interface_time_s": 3.2393972873687744,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            145.799,
+            152.7817
+          ],
+          [
+            21.4205,
+            29.2439
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.8547,
+            139.8375
+          ],
+          [
+            30.8251,
+            38.6485
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            146.9927,
+            154.1155
+          ],
+          [
+            23.9303,
+            30.213
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0484,
+            141.1712
+          ],
+          [
+            33.3348,
+            39.6175
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.2705,
+            118.3291
+          ],
+          [
+            41.0354,
+            47.3861
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "acdf5c4de821160ffa276a20140750078e7ac53c03fabe0fed963b0181125da6",
+      "preview_sha256": "cf5ab1f7547397313c6d14d5c2bc3305af622a8bb8d7c2cecdb18f1161ff59ef",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x55": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 55,
+      "source_y_beam_axis_build_z_component": 0.819152,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 281,
+      "filament_g": 9.572257041931152,
+      "estimated_time_s": 3885.879638671875,
+      "support_time_s": 278.4440612792969,
+      "support_interface_time_s": 2.241577386856079,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            146.0457,
+            152.9606
+          ],
+          [
+            21.553,
+            29.401
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            132.9393,
+            139.8542
+          ],
+          [
+            30.7302,
+            38.5782
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.1616,
+            154.3111
+          ],
+          [
+            24.1297,
+            30.3466
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0552,
+            141.2046
+          ],
+          [
+            33.3069,
+            39.5239
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.1493,
+            118.2274
+          ],
+          [
+            40.6046,
+            46.8968
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "4b6a7b923abe4dacffee53f72f626f7611ca07059e447eb07485f9c961a885d9",
+      "preview_sha256": "a5d07c1e7e38a258aaff12f3e73a035aeb4516a0bf4f2001758d35ced68ab16b",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x56": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 56,
+      "source_y_beam_axis_build_z_component": 0.829038,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 278,
+      "filament_g": 9.588665962219238,
+      "estimated_time_s": 3874.763427734375,
+      "support_time_s": 273.12762451171875,
+      "support_interface_time_s": 2.3523221015930176,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            146.2869,
+            153.1319
+          ],
+          [
+            21.6788,
+            29.5492
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.0223,
+            139.8673
+          ],
+          [
+            30.6259,
+            38.4963
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.3247,
+            154.4986
+          ],
+          [
+            24.3218,
+            30.4711
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0601,
+            141.234
+          ],
+          [
+            33.2689,
+            39.4182
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            111.0333,
+            118.1286
+          ],
+          [
+            40.1615,
+            46.3932
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "a195255e2073c5ad3b32efb4ac92ac960d1e5701d54f32413f94621394a7df9d",
+      "preview_sha256": "1f550abc95487bb640f0f979ee16569eed4b3e9aab612343efeff6ec81c42ed4",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x57": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 57,
+      "source_y_beam_axis_build_z_component": 0.838671,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 274,
+      "filament_g": 9.59913444519043,
+      "estimated_time_s": 3854.539794921875,
+      "support_time_s": 269.211669921875,
+      "support_interface_time_s": 2.2035069465637207,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            146.5226,
+            153.2955
+          ],
+          [
+            21.7981,
+            29.6883
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.1038,
+            139.8767
+          ],
+          [
+            30.5123,
+            38.4025
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.4819,
+            154.6781
+          ],
+          [
+            24.5065,
+            30.5862
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0631,
+            141.2594
+          ],
+          [
+            33.2207,
+            39.3004
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            110.9225,
+            118.0328
+          ],
+          [
+            39.7061,
+            45.8755
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "222484e2bb9169f464728892abf3d5a35d01a7f7327f77663db0fb8f4c7d8243",
+      "preview_sha256": "e2d3d9434c21170e6f11a82eadf9021ec3251aa47fb5324ba5991422c681f7bc",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x58": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 58,
+      "source_y_beam_axis_build_z_component": 0.848048,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 270,
+      "filament_g": 9.587906837463379,
+      "estimated_time_s": 3846.82861328125,
+      "support_time_s": 260.7489929199219,
+      "support_interface_time_s": 7.162666320800781,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            146.7526,
+            153.4514
+          ],
+          [
+            21.9107,
+            29.8184
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.1838,
+            139.8826
+          ],
+          [
+            30.3895,
+            38.2971
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.6331,
+            154.8495
+          ],
+          [
+            24.6837,
+            30.6921
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0643,
+            141.2807
+          ],
+          [
+            33.1624,
+            39.1708
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            110.8169,
+            117.9401
+          ],
+          [
+            39.2386,
+            45.3438
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "ac3b725d8bc22cd07c00f3e8e91ef16c47720ef78cf75e3b1a4c023b8fbdec7f",
+      "preview_sha256": "80df3edcdc8cdeca21116e0716a666d10947ceee7e5ed001629ff59ed51c7e4d",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x59": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 59,
+      "source_y_beam_axis_build_z_component": 0.857167,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 267,
+      "filament_g": 9.549756050109863,
+      "estimated_time_s": 3811.995361328125,
+      "support_time_s": 254.77413940429688,
+      "support_interface_time_s": 8.740885734558105,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            146.9769,
+            153.5995
+          ],
+          [
+            22.0167,
+            29.9394
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.2622,
+            139.8848
+          ],
+          [
+            30.2573,
+            38.18
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.7784,
+            155.0127
+          ],
+          [
+            24.8534,
+            30.7885
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0637,
+            141.298
+          ],
+          [
+            33.094,
+            39.0292
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            110.7165,
+            117.8505
+          ],
+          [
+            38.7591,
+            44.7983
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "9fb4890ac6667f0054134f583d9686275275a83277b523ecf47c732dc8d42acb",
+      "preview_sha256": "461b01af27df04d288cb8ab8394ebedeb7d7c352e75fe7651ab88ed9dd14d89f",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x60": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 60,
+      "source_y_beam_axis_build_z_component": 0.866025,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 263,
+      "filament_g": 13.2899751663208,
+      "estimated_time_s": 4325.01806640625,
+      "support_time_s": 862.336669921875,
+      "support_interface_time_s": 7.339986801147461,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            147.1954,
+            153.7399
+          ],
+          [
+            22.116,
+            30.0513
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            133.339,
+            139.8834
+          ],
+          [
+            30.116,
+            38.0513
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            147.9176,
+            155.1676
+          ],
+          [
+            25.0155,
+            30.8757
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            134.0612,
+            141.3112
+          ],
+          [
+            33.0155,
+            38.8757
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            110.6213,
+            117.7639
+          ],
+          [
+            38.2679,
+            44.2392
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 6,
+        "bolt_upper": 11,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 46
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "4275c0faa0731a891dbf39541a53bef215fc01ddab10d6c25f4b29c4e49ed3e0",
+      "preview_sha256": "5fc28aaedf3c1e060c874b86754951a3c57aaab3076ae4e3610e7900f208fcd5",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x75": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 75,
+      "source_y_beam_axis_build_z_component": 0.965926,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 203,
+      "filament_g": 12.508594512939453,
+      "estimated_time_s": 3991.793701171875,
+      "support_time_s": 766.9303588867188,
+      "support_interface_time_s": 46.623348236083984,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            149.7384,
+            154.886
+          ],
+          [
+            23.7099,
+            31.5446
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            134.2836,
+            139.4312
+          ],
+          [
+            27.851,
+            35.6857
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            149.2589,
+            156.4785
+          ],
+          [
+            27.4367,
+            31.9713
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            133.8041,
+            141.0237
+          ],
+          [
+            31.5778,
+            36.1124
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            109.8419,
+            116.8521
+          ],
+          [
+            30.5178,
+            35.2652
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 3,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 21
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "72977dd52782de5bc192059db5d1d985c1264973ad4e7fcfc53fc33e6ab99ac4",
+      "preview_sha256": "d98d07f9dbd4c9e6ee972335c211b998681c14187c6ecb5f7ba8505954187108",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    },
+    "x90": {
+      "status": "OFFLINE_SLICE_ONLY",
+      "rotation_x_deg": 90,
+      "source_y_beam_axis_build_z_component": 1.0,
+      "source_stl_sha256": "c59d445a643bcdf4d2f979d7334da649af2e998ce41f3d61ed6f1796e0ef7f79",
+      "cli_return_code": 0,
+      "native_return_code": 0,
+      "native_warnings": [],
+      "archive_integrity_pass": true,
+      "gcode_layers": 185,
+      "filament_g": 11.357638359069824,
+      "estimated_time_s": 3401.45068359375,
+      "support_time_s": 605.2312622070312,
+      "support_interface_time_s": 43.4106330871582,
+      "critical_feature_projected_boxes_mm": {
+        "bolt_lower": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            150.3,
+            153.7
+          ],
+          [
+            25.9,
+            33.1
+          ]
+        ],
+        "bolt_upper": [
+          [
+            128.55,
+            131.95
+          ],
+          [
+            134.3,
+            137.7
+          ],
+          [
+            25.9,
+            33.1
+          ]
+        ],
+        "nut_lower": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            148.6514,
+            155.3486
+          ],
+          [
+            30.2,
+            33.1
+          ]
+        ],
+        "nut_upper": [
+          [
+            126.9014,
+            133.5986
+          ],
+          [
+            132.6514,
+            139.3486
+          ],
+          [
+            30.2,
+            33.1
+          ]
+        ],
+        "pivot_bore": [
+          [
+            123.5653,
+            129.9653
+          ],
+          [
+            109.8,
+            116.2
+          ],
+          [
+            22.9,
+            26.1
+          ]
+        ]
+      },
+      "support_extrusion_segments_in_critical_feature_boxes": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "sampled_support_extrusion_segments_in_void_cores": {
+        "bolt_lower": 0,
+        "bolt_upper": 0,
+        "nut_lower": 0,
+        "nut_upper": 0,
+        "pivot_bore": 0
+      },
+      "slice_3mf_sha256": "f4cdfd32d6007334c2b814c0bc61e2978242c3eda908ecf2a18894b47a2cb0cb",
+      "preview_sha256": "037a0e8c5eae8612a127a4c085a03375c36858456332307afcc85aadd4dc9dea",
+      "shell_anchor_support_segments_in_void_cores": {
+        "lower_through_core": 0,
+        "lower_counterbore_core": 0,
+        "upper_through_core": 0,
+        "upper_counterbore_core": 0
+      }
+    }
+  },
+  "no_support_x55": {
+    "status": "NO_SUPPORT_FLOATING_REGIONS_WARNING_UNRELEASED",
+    "rotation_x_deg": 55,
+    "support_enabled": false,
+    "cli_return_code": 0,
+    "native_return_code": 0,
+    "native_warnings": [
+      "It seems object base-root-web-screen.stl has floating regions. Please re-orient the object or enable support generation."
+    ],
+    "native_result_file": "output/electric-rocker-root-gusset-screen/slice-screen/base-x-plus-55-no-support/result.json",
+    "native_result_sha256": "40736db13cc96da8c31d40a5fa981c69d1a6fc2c8cf14fed8127fa74efeacbc4",
+    "manufacturing_release": false
+  },
+  "best_orientation_selected": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

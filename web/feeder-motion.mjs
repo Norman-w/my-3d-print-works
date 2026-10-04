@@ -263,11 +263,11 @@ async function init(){
   state.layers.hand=false;$('layer-hand').checked=false;$('layer-hand').disabled=true;
   $('hand-label').textContent='手部 · 未建模';$('layer-hand').title='当前没有手部尺寸模型';
   $('trigger-label').textContent='拉索附件与护套';
-  $('model-note').textContent='当前拉线方案：扳机、滑架、护套固定与导向处于同一装配。球仓、风机和三通为位置参考，实际配合及发球效果尚待验证。';
+  $('model-note').textContent='历史拉索方案：这里的扳机、钢芯和护套均已退出当前往复电机方案；本场景仅用于查阅原拉索机构，不是当前装配。';
   label('固定护套座 · 输入',()=>feederWorld(...localInputToCad(state.contracts.ci.adjuster_seat_local,state.contracts.ci)),()=>state.layers.feeder&&state.layers.trigger&&['system','trigger'].includes(state.view));
   label('向虎口勾扣',()=>feederWorld(...triggerPose(cyclePose(state.p).u,state.contracts).fingerPoint),()=>state.layers.feeder&&state.layers.trigger&&['system','trigger'].includes(state.view));
   label('输出端 · 拉动20 mm',()=>{const a=state.contracts.co.moving_wire_axis_t0;return feederWorld(a[0],a[1],a[2]+cyclePose(state.p).u);},()=>state.layers.feeder&&state.layers.trigger&&['system','feeder','trigger'].includes(state.view));
-  $('source-note').textContent=`${state.catalogue.length}项资源来自当前导出清单；旋转、滑移与弹簧端点按随清单保存的CAD契约演示。输入、输出钢丝按同一契约连续重绘为参考层；其余详细STL保留。保持叉旁置，不与工作档叠装。`;
+  $('source-note').textContent=`${state.catalogue.length}项资源来自历史拉索导出清单；旋转、滑移与弹簧端点按当时CAD契约演示。钢芯仅作旧方案参考，不能进入当前往复电机版。保持叉旁置，不与工作档叠装。`;
  }else {$('source-note').textContent='当前是保留的旧版模型资源；五金按运动分组并保留原三角面。旧拉索叠加仅作历史示意。保持叉旁置，不与工作档叠装。';state.snapshotKnown=true;}
  canvas.dataset.snapshot=manifest.snapshot;applyVisibility();resetCamera();
  for(const row of state.catalogue)state.partVisible.set(row.id,defaultPartVisible(row));

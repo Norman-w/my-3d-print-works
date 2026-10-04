@@ -1,24 +1,25 @@
 # 乒乓球机械点射与可调旋转改装
 
-> 当前拉索版已统一实例清单、完整三维场景及56实例/42板制作索引；数字审查的范围与缺口各有记录，实物功能尚未验收。当前文件用于设计审查，不能据此承诺一次制作必过。详见[当前状态](docs/current-status.md)。
+> 当前方向改为信号扳机 + BY141-3 往复电机 + 槽型光电归位。旧拉索件已退出当前选件；电机座与双向传动尚未完成，当前结构不能作为完整电动版打印包。详见[当前状态](docs/current-status.md)。
 
-当前拉索候选为**46件送料及拉线机构 + 10件旋转头**，共56个打印实例。它从38件送料基线替换背梁和滑架，再增加输入扳机四件（含端球捕获盖）、输出盖一件、护套导向三件；原有V挡指、导向、回位弹簧及管口连接保留。完整场景另含五金组和参考件，共86项；86不是采购数量。
+当前已定义的无拉索结构为**39件送料 + 10件旋转头**：送料左Y导向盖与运动弹簧间隔套由光电版各替换一件，固定背梁由一体式电子扳机支座替换，另增独立勾扣杠杆；旋转头保持叉是非工作档附件。滑架保留原凸轮和导轨并去掉手扣指环；拉索输入/输出/护套导向及专用五金不再采用。49件只是现阶段的结构实例，尚未计入待设计的电机座和双向传动件。[电动版清单](docs/electric-assembly-inventory.json)明确列出当前与排除项。
 
 - [局域网模型与爆炸图](http://192.168.7.187:8877/)
-- [完整三维动作场景](http://192.168.7.187:8877/feeder-motion.html?view=system)
-- [当前实例、替换关系与运动分组](docs/cable-assembly-inventory.md)
-- [拉索固定与动作核验](docs/cable-trigger-integration.md)
-- [当前完整装配与裁管、穿线、调零顺序](docs/current-assembly.md)
-- [当前制作索引](docs/current-manufacturing.md)、[机械行程与回位复核](docs/current-mechanical-review.md)
-- [往复电机与槽型光电归位候选](docs/optical-home-candidate.md)（电机座和双向传动尚未设计，未接入上述拉索版总装）
+- [同场景查看已选电子扳机与整机](http://192.168.7.187:8877/models.html?trigger=1)（扳机结构已选；电路、实物开关及电机未验收）
+- [电动版当前装配边界](docs/current-assembly.md)、[电动版制作状态](docs/current-manufacturing.md)
+- [电子扳机 CAD、装配审查与开放项](docs/electronic-trigger.md)（已选入 49 件结构，未放行打印）
+- [往复电机必要负载与缺失的实物接口](docs/electric-drive-feasibility.md)
+- [电动版实例与旧件排除清单](docs/electric-assembly-inventory.json)
+- [往复电机与槽型光电原候选证据](docs/optical-home-candidate.md)
 - [工程状态与实际边界](docs/current-status.md)
-- [送料基线历史装配说明](docs/final-assembly.md)
+- [历史拉索总装与动作场景](http://192.168.7.187:8877/feeder-motion.html?view=system)（该网页尚未改为电动版，不作为当前总装）
+- [历史拉索选件](docs/cable-assembly-inventory.md)、[历史拉索装配说明](docs/history/current-assembly-cable-2026-09-30.md)
 - [旋转头五金与装入路径](docs/spin-complete-hardware.md)
 - [柔性摩擦垫材料](docs/spin-material-selection.md)、[密封工序](docs/final-sealing-process.md)、[当前润滑工序](docs/current-lubrication.md)
 
-当前按实例导出入口为 `cad/cable-scene-export.scad`，局部拉索总装为 `cad/cable-complete-review.scad`；它们调用原生机械源码，没有用STL替代CAD。当前快照见[56打印件与86场景项导出报告](output/cable-scene-export/20260927T153058669616Z/report.json)。输入转轴已采用HCDG8-30及配套NETW7卡簧，轴套采用POM-C六角套。旧 `output/launcher-final/` 报告仍是33件历史快照；整个 `output/` 还包含失败件和诊断体，不能整体当作打印清单。
+当前无拉索装配入口为 [electric-feeder-assembly.scad](cad/electric-feeder-assembly.scad)，其[65项几何报告](output/electric-feeder/review.json)只审查送料和光电替换件，电机未实装建模。原 `cad/cable-scene-export.scad`、HCDG8-30扳机轴系及[56件/86场景项导出报告](output/cable-scene-export/20260927T153058669616Z/report.json)均属于拉索历史版本。整个 `output/` 还包含失败件和诊断体，不能整体当作打印清单。
 
-55个刚性打印实例设计使用PETG，摩擦垫1件使用Bambu TPU 95A HF；轴套和金属件另列，不混入打印数。目标工艺为X1C/0.4 mm，用户确认PEI但未确认表面种类。[当前制作索引](output/current-eclip-manufacturing/README.md)为56实例绑定42盘，三个新版输入件已重切，数字索引无待重切实例；制作与实物性能仍未放行。材料、夹持、总公差和实际发球尚未经首机验证；用户不接受先耗材打印试片，这不是继续数字设计的前置条件。
+现阶段已定义结构中，47件刚性实例按PETG候选、旋转头摩擦垫1件按Bambu TPU 95A HF候选；待设计的电机座和传动件不在这48件内。目标工艺为X1C/0.4 mm/PEI。旧拉索版42盘切片不能直接用于本版；材料、夹持、总公差及实际发球尚未经首机验证，用户不接受把耗材试片当作继续数字设计的前置条件。
 
 ## 已确认接口
 
@@ -33,10 +34,16 @@ Git保存源码、文档和文本工程审查记录；STL、3MF、G-code、媒�
 以下命令用于已配置OpenSCAD、Python依赖及本机检查工具的原工作目录：
 
 ```sh
-python3 scripts/export_cable_scene.py
+python3 scripts/build_electric_inventory.py
+python3 scripts/review_electric_feeder.py
+python3 scripts/review_electronic_trigger_candidate.py
+python3 analysis/electronic_trigger_release_margin.py
+python3 scripts/slice_electronic_trigger_candidate.py
+python3 scripts/publish_electric_preview.py
 python3 scripts/preview_lan.py status
+python3 scripts/verify_launcher_lan.py
 ```
 
-旋转头、切片及边界分析分别由对应报告记录实际调用和文件哈希。局域网服务绑定0.0.0.0:8877，当前登录会话由launchd维持；注销或重启后执行 `python3 scripts/preview_lan.py start`。只服务专用预览目录，不包含采购订单或本机配对信息。
+旋转头、切片及边界分析分别由对应报告记录实际调用和文件哈希。局域网服务绑定0.0.0.0:8877，当前登录会话由launchd维持；注销或重启后执行 `python3 scripts/preview_lan.py start`。首页和零件预览已切到无拉索的 49 件现阶段结构；原动作网页保留为历史拉索场景。电机尚未安装建模，网页也不能显示已安装的往复电机。
 
 旧README保存在 `docs/history/README-before-final-integration.md`，历史子报告保留原始失败和旧身份，不把它们改写为当前通过记录。
