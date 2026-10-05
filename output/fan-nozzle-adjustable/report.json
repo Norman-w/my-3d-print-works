@@ -7,7 +7,7 @@
       "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip42p5.stl",
       "manifold": true,
       "watertight": true,
-      "facets": 20884,
+      "facets": 22466,
       "bbox_mm": [
         86.0,
         86.0,
@@ -30,10 +30,10 @@
       "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core38.stl",
       "manifold": true,
       "watertight": true,
-      "facets": 5036,
+      "facets": 6006,
       "bbox_mm": [
-        43.2,
-        43.2,
+        43.4,
+        43.4,
         102.0
       ]
     },
@@ -41,10 +41,10 @@
       "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core40.stl",
       "manifold": true,
       "watertight": true,
-      "facets": 4458,
+      "facets": 5428,
       "bbox_mm": [
-        43.2,
-        43.2,
+        43.4,
+        43.4,
         102.0
       ]
     },
@@ -52,10 +52,10 @@
       "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core34.stl",
       "manifold": true,
       "watertight": true,
-      "facets": 5036,
+      "facets": 6006,
       "bbox_mm": [
-        43.2,
-        43.2,
+        43.4,
+        43.4,
         102.0
       ]
     },
@@ -63,10 +63,10 @@
       "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core36.stl",
       "manifold": true,
       "watertight": true,
-      "facets": 5036,
+      "facets": 6006,
       "bbox_mm": [
-        43.2,
-        43.2,
+        43.4,
+        43.4,
         102.0
       ]
     },
@@ -119,8 +119,8 @@
       85.0
     ],
     "tip_core_od": 42.0,
-    "tip_core_flange_od": 43.2,
-    "tip_core_flange_l": 2.0,
+    "tip_core_flange_od": 42.0,
+    "tip_core_flange_l": 0.0,
     "tip_core_l": 102.0,
     "tip_core_inlet_id": 40.0,
     "tip_core_mount_l": 24.0,
@@ -133,14 +133,15 @@
       38.0,
       40.0
     ],
-    "tip_core_seat_id": 43.5,
-    "tip_core_thread_z0": 104.0,
-    "tip_core_thread_l": 12.0,
+    "tip_core_seat_id": 43.8,
+    "tip_core_thread_lead_l": 4.0,
+    "tip_core_thread_z0": 106.0,
+    "tip_core_thread_l": 16.0,
     "tip_core_thread_pitch": 4.0,
-    "tip_core_thread_height": 0.5,
-    "tip_core_thread_groove_id": 43.6,
-    "tip_core_thread_clearance": 0.3,
-    "tip_core_thread_turns": 3.0,
+    "tip_core_thread_height": 0.7,
+    "tip_core_thread_groove_id": 43.8,
+    "tip_core_thread_clearance": 0.2,
+    "tip_core_thread_turns": 4.0,
     "sleeve_id": 50.8,
     "sleeve_od": 57.6,
     "sleeve_z0": 94.0,
@@ -210,13 +211,13 @@
       "40.0": 1.0
     },
     "tip_core_outer_guide_radial_clearance": 0.25,
-    "tip_core_flange_radial_clearance": 0.14999999999999858,
-    "tip_core_thread_major_od": 43.0,
-    "tip_core_thread_groove_id": 43.6,
-    "tip_core_thread_radial_clearance": 0.3,
-    "tip_core_thread_engagement_l": 12.0,
-    "tip_core_thread_turns": 3.0,
-    "tip_core_thread_outer_wall_mm": 1.6999999999999993,
+    "tip_core_lead_bore_radial_clearance": 0.8999999999999986,
+    "tip_core_thread_major_od": 43.4,
+    "tip_core_thread_groove_id": 43.8,
+    "tip_core_thread_radial_clearance": 0.2,
+    "tip_core_thread_engagement_l": 16.0,
+    "tip_core_thread_turns": 4.0,
+    "tip_core_thread_outer_wall_mm": 1.6000000000000014,
     "tip_core_flow_profile": {
       "inlet_straight_id": 40.0,
       "inlet_straight_l": 24.0,

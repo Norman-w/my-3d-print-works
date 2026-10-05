@@ -1,6 +1,21 @@
 {
   "schemaVersion": 1,
   "title": "风机风嘴—亚克力管—Y口交互装配预览",
+  "variantCatalog": {
+    "defaultId": "fan76-tube",
+    "variants": [
+      {
+        "id": "fan76-tube",
+        "label": "Ø76 风机 · 透明管外套",
+        "manifest": "./manifest.json"
+      },
+      {
+        "id": "fan41-direct",
+        "label": "Ø41 风机 · Y口直插",
+        "manifest": "./manifest-fan41-direct.json"
+      }
+    ]
+  },
   "ui": {
     "persistPanelState": true,
     "showSearch": true,
@@ -100,11 +115,11 @@
       "renderMode": "xray",
       "renderOrder": 70,
       "color": "#22c55e",
-      "opacity": 0.88,
+      "opacity": 1.0,
       "instances": [
         {
           "id": "tip-core40-one",
-          "name": "Ø40 长程风嘴芯（102 mm，3圈旋入螺纹 + 出口双槽驱动位 + 内部直段/收缩段）",
+          "name": "Ø40 长程风嘴芯（102 mm，4圈轴向梯形牙型旋入螺纹 + 出口双槽驱动位 + 内部直段/收缩段）",
           "parentFrameId": "nozzle-slide",
           "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
           "explosion": [0, 0, -32]
@@ -126,7 +141,7 @@
       "renderMode": "xray",
       "renderOrder": 70,
       "color": "#f59e0b",
-      "opacity": 0.9,
+      "opacity": 1.0,
       "instances": [
         {
           "id": "tip-core38-one",
@@ -153,7 +168,7 @@
       "renderMode": "xray",
       "renderOrder": 70,
       "color": "#ec4899",
-      "opacity": 0.9,
+      "opacity": 1.0,
       "instances": [
         {
           "id": "tip-core36-one",
@@ -180,7 +195,7 @@
       "renderMode": "xray",
       "renderOrder": 70,
       "color": "#a855f7",
-      "opacity": 0.9,
+      "opacity": 1.0,
       "instances": [
         {
           "id": "tip-core34-one",

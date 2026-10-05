@@ -113,37 +113,46 @@ fn_y_tee_port_lip_d = 60.0;
 // 芯子是“外径恒定的导向筒 + 内部收缩锥”的 cartridge：
 //   - 外径恒定，负责在主体内孔中同轴导向，避免外部锥面造成晃动；
 //   - 风道入口先保持一段 Ø40 直径，再逐渐收缩到目标末端口径；
-//   - 入口外肩靠主体台阶定位，入口后用粗牙内外螺纹旋入锁紧；
+//   - 入口导入段帮助同轴，随后用粗牙内外螺纹旋入保持位置；
 //   - 螺纹只锁风嘴芯，外套管的 M3 夹紧位仍是另一条独立接口。
 fn_tip_core_od = 42.0;
 fn_tip_core_l = 102.0;
 fn_tip_core_z0 = fn_spigot_z0 - 2.0;
-fn_tip_core_flange_od = 43.2;
-fn_tip_core_flange_l = 2.0;
+// 芯子全长保持 Ø42 导向外径；取消原先大于导向孔的后端法兰，
+// 避免从 Y/硬管侧装入时被 Ø42.5 导向孔卡住。
+fn_tip_core_flange_od = fn_tip_core_od;
+fn_tip_core_flange_l = 0.0;
 fn_tip_core_inlet_id = 40.0;
 fn_tip_core_mount_l = 24.0;
 fn_tip_core_taper_l = 70.0;
 fn_tip_core_exit_l = 8.0;
 fn_tip_core_ids = [34.0, 36.0, 38.0, 40.0];
 
-// 风嘴芯采用适合 FDM 的粗牙旋入式锁紧，不再使用 C 形卡环。
-// 芯子从主体出口/硬管侧插入，先让入口外肩进入座位，再旋转推进；
-// 3 个导程提供可感知的轴向锁紧，同时给 PETG 留出可打印间隙。
-fn_tip_core_thread_z0 = fn_spigot_z0;
-fn_tip_core_thread_l = 12.0;
+// 风嘴芯采用适合 FDM 的粗牙旋入式安装，不增加额外防松结构。
+// 芯子从主体出口/硬管侧插入：全长 Ø42 导向外径先通过导向孔，
+// 前 4 mm 无螺纹后进入牙区；4 个导程提供稳定的轴向保持。
+fn_tip_core_thread_lead_l = 4.0;
+fn_tip_core_thread_z0 =
+    fn_tip_core_z0 + fn_tip_core_flange_l + fn_tip_core_thread_lead_l;
+fn_tip_core_thread_l = 16.0;
 fn_tip_core_thread_pitch = 4.0;
-fn_tip_core_thread_height = 0.50;
-fn_tip_core_thread_groove_id = 43.60;
+fn_tip_core_thread_height = 0.70;
+fn_tip_core_thread_groove_id = 43.80;
+// 先定轴向牙型，再用同相位螺旋生成公牙/母沟。
+// 根宽约 72% 牙距、平顶约 28% 牙距，避免尖针状或薄片状牙型。
+fn_tip_core_thread_root_width_fraction = 0.72;
+fn_tip_core_thread_crest_width_fraction = 0.28;
+fn_tip_core_thread_female_axial_clearance = 0.18;
 fn_tip_core_thread_clearance =
     (fn_tip_core_thread_groove_id - (fn_tip_core_od + 2 * fn_tip_core_thread_height)) / 2;
 fn_tip_core_thread_turns = fn_tip_core_thread_l / fn_tip_core_thread_pitch;
-fn_tip_core_thread_slices_per_turn = 32;
+fn_tip_core_thread_slices_per_turn = 64;
 
-// 芯子入口外肩对应的主体内台阶：芯子总长 102 mm，外肩占前 2 mm，
-// 后面的 Ø42 外导向段到达主体出口 z=204 mm。
+// 主体入口保留 2 mm 的 Ø43.8 导入段，供 Ø42 芯子平顺进入牙区；
+// 这不是承挡法兰，芯子总长 102 mm，Ø42 外导向段到达主体出口 z=204 mm。
 fn_tip_core_seat_z0 = fn_tip_core_z0;
-fn_tip_core_seat_l = fn_tip_core_flange_l;
-fn_tip_core_seat_id = 43.5;
+fn_tip_core_seat_l = 2.0;
+fn_tip_core_seat_id = 43.8;
 
 // 套在硬管外侧的滑动夹套；0.40 mm 径向名义间隙。
 fn_sleeve_radial_clearance = 0.40;
@@ -215,20 +224,28 @@ assert(fn_y_tee_main_up_l > fn_y_tee_branch_start_z);
 assert(fn_y_tee_branch_l > 0);
 assert(fn_y_tee_branch_angle > 20 && fn_y_tee_branch_angle < 70);
 assert(fn_tip_core_od < fn_tip_id_default);
-assert(fn_tip_core_flange_od > fn_tip_core_od);
+assert(fn_tip_core_flange_od == fn_tip_core_od);
 assert(fn_tip_core_flange_od < fn_tip_core_seat_id);
-assert(fn_tip_core_flange_l > 0 && fn_tip_core_flange_l < fn_tip_core_l);
+assert(fn_tip_core_flange_l == 0);
+assert(fn_tip_core_seat_l > 0 && fn_tip_core_seat_l < fn_tip_core_l);
 assert(fn_tip_core_inlet_id < fn_tip_core_od);
 assert(fn_tip_core_mount_l > fn_tip_core_flange_l);
 assert(fn_tip_core_mount_l + fn_tip_core_taper_l + fn_tip_core_exit_l == fn_tip_core_l);
-assert(fn_tip_core_thread_z0 == fn_spigot_z0);
-assert(fn_tip_core_thread_l > 0 && fn_tip_core_thread_l < fn_tip_core_l - fn_tip_core_flange_l);
+assert(fn_tip_core_thread_z0 ==
+    fn_tip_core_z0 + fn_tip_core_flange_l + fn_tip_core_thread_lead_l);
+assert(fn_tip_core_thread_lead_l > 0);
+assert(fn_tip_core_thread_l > 0 &&
+    fn_tip_core_thread_l < fn_tip_core_l - fn_tip_core_flange_l - fn_tip_core_thread_lead_l);
 assert(fn_tip_core_thread_pitch >= 3.0 && fn_tip_core_thread_pitch <= 5.0);
-assert(fn_tip_core_thread_turns >= 2.0 && fn_tip_core_thread_turns <= 4.0);
+assert(fn_tip_core_thread_turns >= 3.0 && fn_tip_core_thread_turns <= 5.0);
 assert(fn_tip_core_thread_height >= 0.35 && fn_tip_core_thread_height <= 0.80);
+assert(fn_tip_core_thread_root_width_fraction > fn_tip_core_thread_crest_width_fraction);
+assert(fn_tip_core_thread_crest_width_fraction > 0);
+assert(fn_tip_core_thread_female_axial_clearance >= 0.10);
 assert(fn_tip_core_thread_groove_id > fn_tip_core_od + 2 * fn_tip_core_thread_height);
 assert((fn_tip_outer_d - fn_tip_core_thread_groove_id) / 2 >= 1.50);
-assert(fn_tip_core_thread_clearance >= 0.20 && fn_tip_core_thread_clearance <= 0.45);
+// OpenSCAD 浮点计算可能把名义 0.20 mm 表示为 0.199999…，下限留数值容差。
+assert(fn_tip_core_thread_clearance >= 0.19 && fn_tip_core_thread_clearance <= 0.45);
 assert(fn_tip_core_thread_z0 + fn_tip_core_thread_l <= fn_tip_core_z0 + fn_tip_core_l);
 assert(fn_tip_core_seat_z0 == fn_tip_core_z0);
 assert(fn_tip_core_seat_z0 + fn_tip_core_seat_l == fn_spigot_z0);

@@ -23,6 +23,7 @@
 //   "m3-clamp-hardware" 输出交互预览用的 M3 参考五金
 
 include <fan-nozzle-parameters.scad>
+include <thread-profile.scad>
 
 part = "nozzle";
 show_hardware = false;
@@ -70,42 +71,34 @@ module fn_spigot_witness_grooves() {
             );
 }
 
-module fn_helical_thread_ridge(z0, length, base_r, height, pitch) {
-    // 三角牙型的连续螺旋凸棱：用于芯子的外螺纹，也用于主体的内螺纹刀具。
-    // 凸棱根部压入基体 0.02 mm，避免只在切平面上接触而留下非流形边。
-    translate([0, 0, z0])
-        linear_extrude(
-            height=length,
-            twist=360 * length / pitch,
-            slices=ceil(length / pitch * fn_tip_core_thread_slices_per_turn),
-            convexity=10
-        )
-            polygon(points=[
-                [base_r - fn_eps, -pitch * 0.32],
-                [base_r + height, 0],
-                [base_r - fn_eps, pitch * 0.32]
-            ]);
-}
-
 module fn_tip_core_thread_cut() {
-    // 主体内孔基准为 Ø42.5；螺纹槽最高到 Ø43.6，仍保留约 1.7 mm 外壁。
-    fn_helical_thread_ridge(
+    // 先按公牙轴向牙型生成母沟，再增加轴向配合余量；
+    // 与芯子的螺旋相位完全一致，避免只得到环槽或扁片。
+    tp_helical_thread(
         fn_tip_core_thread_z0,
         fn_tip_core_thread_l,
         fn_tip_id / 2,
         fn_tip_core_thread_groove_id / 2 - fn_tip_id / 2,
-        fn_tip_core_thread_pitch
+        fn_tip_core_thread_pitch,
+        fn_tip_core_thread_root_width_fraction,
+        fn_tip_core_thread_crest_width_fraction,
+        fn_tip_core_thread_female_axial_clearance,
+        fn_tip_core_thread_slices_per_turn
     );
 }
 
 module fn_tip_core_thread_ridge() {
-    // 芯子外圆基准为 Ø42；外螺纹大径约 Ø43.0。
-    fn_helical_thread_ridge(
+    // 真实轴向平顶梯形公牙：根宽、斜牙侧、平顶，不是薄的径向切向片。
+    tp_helical_thread(
         fn_tip_core_thread_z0,
         fn_tip_core_thread_l,
         fn_tip_core_od / 2,
         fn_tip_core_thread_height,
-        fn_tip_core_thread_pitch
+        fn_tip_core_thread_pitch,
+        fn_tip_core_thread_root_width_fraction,
+        fn_tip_core_thread_crest_width_fraction,
+        0,
+        fn_tip_core_thread_slices_per_turn
     );
 }
 
@@ -309,7 +302,7 @@ module fn_inner_profile() {
                 $fn=fn_fn
             );
 
-        // 风机出口面后方的连续收缩段；最后 2 mm 留出芯子入口外肩的座位。
+        // 风机出口面后方的连续收缩段；最后 2 mm 作为芯子入口导入段。
         translate([0, 0, fn_cone_z0-fn_eps])
             cylinder(
                 h=fn_tip_core_seat_z0-fn_cone_z0+2*fn_eps,
@@ -405,23 +398,14 @@ module fn_clamp_fastener_cuts() {
 }
 
 module fn_tip_core(core_id=fn_tip_core_id) {
-    // 可拆换风嘴芯：外径恒定 42 mm，入口有 43.2 mm 外肩，
+    // 可拆换风嘴芯：全长外径恒定 42 mm，取消无法通过导向孔的外肩，
     // 内部为 Ø40 直段 -> 收缩锥 -> 目标细口径直段。
-    // 入口外肩顶在主体内台阶上；入口后靠外螺纹旋入主体内螺纹锁紧。
+    // 芯子从主体出口/硬管侧插入，依靠外螺纹旋入主体内螺纹保持位置。
+    // 不增加额外螺丝、卡扣或防松环，螺纹胶由实际装配时按需处理。
     difference() {
         union() {
             translate([0, 0, fn_tip_core_z0])
-                cylinder(
-                    h=fn_tip_core_flange_l,
-                    d=fn_tip_core_flange_od,
-                    $fn=fn_fn
-                );
-            translate([0, 0, fn_tip_core_z0 + fn_tip_core_flange_l])
-                cylinder(
-                    h=fn_tip_core_l - fn_tip_core_flange_l,
-                    d=fn_tip_core_od,
-                    $fn=fn_fn
-                );
+                cylinder(h=fn_tip_core_l, d=fn_tip_core_od, $fn=fn_fn);
             fn_tip_core_thread_ridge();
         }
 
@@ -435,7 +419,7 @@ module fn_tip_core(core_id=fn_tip_core_id) {
                     $fn=fn_fn
                 );
         } else {
-            // 入口外肩之后保持一段不变的粗内径，承担导流和安装长度。
+            // 入口导入段之后保持一段不变的粗内径，承担导流和安装长度。
             translate([0, 0, fn_tip_core_z0-fn_eps])
                 cylinder(
                     h=fn_tip_core_mount_l+fn_eps,
@@ -622,7 +606,7 @@ module fn_section() {
 }
 
 module fn_core_fit_section() {
-    // 仅用于确认入口外肩、恒定外径导向、内部收缩锥和旋入式螺纹；不作为打印件导出。
+    // 仅用于确认恒定外径导向、内部收缩锥和旋入式螺纹；不作为打印件导出。
     intersection() {
         union() {
             color([0.18, 0.50, 0.78, 1.0]) fn_nozzle();
@@ -635,7 +619,7 @@ module fn_core_fit_section() {
 
 module fn_core_thread_detail() {
     // 螺纹局部爆炸审查图：主体保留一半剖面，另一个 Ø40 芯沿 +X 拉出，
-    // 让内螺纹槽、芯子外螺纹和入口外肩的锁紧关系同时可见。
+    // 让内螺纹槽、芯子外螺纹和入口导入段的配合关系同时可见。
     intersection() {
         union() {
             intersection() {

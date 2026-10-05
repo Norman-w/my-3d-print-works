@@ -40,8 +40,8 @@ P = {
     "spigot_l": 100.0,
     "spigot_overlap_marks": [25.0, 45.0, 65.0, 85.0],
     "tip_core_od": 42.0,
-    "tip_core_flange_od": 43.2,
-    "tip_core_flange_l": 2.0,
+    "tip_core_flange_od": 42.0,
+    "tip_core_flange_l": 0.0,
     "tip_core_l": 102.0,
     "tip_core_inlet_id": 40.0,
     "tip_core_mount_l": 24.0,
@@ -49,14 +49,15 @@ P = {
     "tip_core_exit_l": 8.0,
     "tip_core_z0": 102.0,
     "tip_core_ids": [34.0, 36.0, 38.0, 40.0],
-    "tip_core_seat_id": 43.5,
-    "tip_core_thread_z0": 104.0,
-    "tip_core_thread_l": 12.0,
+    "tip_core_seat_id": 43.8,
+    "tip_core_thread_lead_l": 4.0,
+    "tip_core_thread_z0": 106.0,
+    "tip_core_thread_l": 16.0,
     "tip_core_thread_pitch": 4.0,
-    "tip_core_thread_height": 0.50,
-    "tip_core_thread_groove_id": 43.60,
-    "tip_core_thread_clearance": 0.30,
-    "tip_core_thread_turns": 3.0,
+    "tip_core_thread_height": 0.70,
+    "tip_core_thread_groove_id": 43.80,
+    "tip_core_thread_clearance": 0.20,
+    "tip_core_thread_turns": 4.0,
     "sleeve_id": 50.8,
     "sleeve_od": 57.6,
     "sleeve_z0": 94.0,
@@ -204,8 +205,8 @@ def main() -> int:
         "tip_core_wall_mm": core_walls,
         "tip_core_outer_guide_radial_clearance":
             (P["tip_id"] - P["tip_core_od"]) / 2,
-        "tip_core_flange_radial_clearance":
-            (P["tip_core_seat_id"] - P["tip_core_flange_od"]) / 2,
+        "tip_core_lead_bore_radial_clearance":
+            (P["tip_core_seat_id"] - P["tip_core_od"]) / 2,
         "tip_core_thread_major_od":
             P["tip_core_od"] + 2 * P["tip_core_thread_height"],
         "tip_core_thread_groove_id": P["tip_core_thread_groove_id"],
@@ -268,10 +269,16 @@ def main() -> int:
     assert fan_collar_transition_min_gap >= -1e-6
     assert all(wall >= 0.75 for wall in core_walls.values())
     assert P["tip_core_mount_l"] + P["tip_core_taper_l"] + P["tip_core_exit_l"] == P["tip_core_l"]
-    assert P["tip_core_flange_od"] < P["tip_core_seat_id"]
-    assert P["tip_core_thread_z0"] == P["tip_core_z0"] + P["tip_core_flange_l"]
-    assert P["tip_core_thread_l"] < P["tip_core_l"] - P["tip_core_flange_l"]
-    assert 2.0 <= P["tip_core_thread_turns"] <= 4.0
+    assert P["tip_core_flange_od"] == P["tip_core_od"]
+    assert P["tip_core_flange_l"] == 0
+    assert P["tip_core_seat_id"] > P["tip_core_od"]
+    assert P["tip_core_thread_z0"] == (
+        P["tip_core_z0"] + P["tip_core_flange_l"] + P["tip_core_thread_lead_l"]
+    )
+    assert P["tip_core_thread_l"] < (
+        P["tip_core_l"] - P["tip_core_flange_l"] - P["tip_core_thread_lead_l"]
+    )
+    assert 3.0 <= P["tip_core_thread_turns"] <= 5.0
     assert 3.0 <= P["tip_core_thread_pitch"] <= 5.0
     assert P["tip_core_thread_groove_id"] > (
         P["tip_core_od"] + 2 * P["tip_core_thread_height"]
@@ -294,7 +301,7 @@ def main() -> int:
                 "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip42p5.stl",
                 "manifold": True,
                 "watertight": True,
-                "facets": 20884,
+                "facets": 22466,
                 "bbox_mm": [86.0, 86.0, 204.0],
             },
             "tip45": {
@@ -309,29 +316,29 @@ def main() -> int:
                 "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core38.stl",
                 "manifold": True,
                 "watertight": True,
-                "facets": 5036,
-                "bbox_mm": [43.2, 43.2, 102.0],
+                "facets": 6006,
+                "bbox_mm": [43.4, 43.4, 102.0],
             },
             "tip_core40": {
                 "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core40.stl",
                 "manifold": True,
                 "watertight": True,
-                "facets": 4458,
-                "bbox_mm": [43.2, 43.2, 102.0],
+                "facets": 5428,
+                "bbox_mm": [43.4, 43.4, 102.0],
             },
             "tip_core34": {
                 "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core34.stl",
                 "manifold": True,
                 "watertight": True,
-                "facets": 5036,
-                "bbox_mm": [43.2, 43.2, 102.0],
+                "facets": 6006,
+                "bbox_mm": [43.4, 43.4, 102.0],
             },
             "tip_core36": {
                 "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core36.stl",
                 "manifold": True,
                 "watertight": True,
-                "facets": 5036,
-                "bbox_mm": [43.2, 43.2, 102.0],
+                "facets": 6006,
+                "bbox_mm": [43.4, 43.4, 102.0],
             },
             "y_tee_preview_reference": {
                 "stl": "output/fan-nozzle-preview/models/y-tee-preview.stl",
