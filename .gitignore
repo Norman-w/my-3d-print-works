@@ -31,3 +31,6 @@ output/
 node_modules/
 *.log
 *.pid
+
+# ===== 拓竹临时切片诊断 =====
+result.json
