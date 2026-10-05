@@ -196,7 +196,11 @@ REQUIRED = {
     "chainIdlerThreadPilotDepthMm", "chainIdlerBossOuterDiameterMm",
     "chainIdlerBossRootDiameterMm", "chainIdlerBossRootFlareThicknessMm",
     "chainIdlerBossRootOverlapMm",
+    "chainIdlerBossPadSizeMm", "chainIdlerBossPadMarginMm",
+    "chainIdlerBossPadCornerRadiusMm",
     "chainIdlerBossRearZMm", "chainIdlerBossAxialClearanceMm",
+    "chainIdlerFastenerAvoidanceMode", "chainIdlerFastenerAvoidanceShiftYMm",
+    "chainIdlerFastenerAvoidanceClearanceMm",
     "chainIdlerBossMountMode", "chainIdlerBossScrewEntry",
     "chainIdlerMountPart", "chainIdlerAxlePart",
     "chainMotherSupportEmbossMode",
@@ -233,6 +237,8 @@ REQUIRED = {
     "bearingSeatDepthMm", "bearingBackShoulderMm",
     "bearingReferenceCenterOffsetMm", "bearingCenterOffsetMm",
     "bearingPairSpacingMm", "outputBearingBarWidthMm",
+    "outputBearingShaftPassageDiameterMm",
+    "outputBearingShaftPassageRadialClearanceMm",
     "outputBearingBarYLengthMm", "outputBearingBarY0OffsetMm",
     "outputBearingBarZLengthMm", "outputBearingBarZMarginMm",
     "outputBearingBarZMinMm", "outputBearingBarZMaxMm",
@@ -241,7 +247,8 @@ REQUIRED = {
     "inputSleeveMagnetCount", "totalModeledMagnetCount",
     "rotaryBearingArrangement", "linearBearingArrangement", "plateWidthMm",
     "plateThicknessMm", "platePartitionGapMm", "plateFastenerCount",
-    "plateM3ClearanceMm", "partitionSelfTapPilotDiameterMm",
+    "plateM3ClearanceMm", "plateFastenerIdlerAvoidanceMode",
+    "plateFastenerIdlerAvoidanceShiftYMm", "partitionSelfTapPilotDiameterMm",
     "partitionSelfTapPilotDepthMm", "partitionSelfTapBottomWallMm",
     "partitionBossPerCellCount", "partitionBossCount",
     "partitionBossCenterOffsetXMm", "partitionBossCenterOffsetYMm",
@@ -798,6 +805,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         "inputSleeveMagnetPart": "cabinet-clutch/center_input_sleeve_magnet_reference",
         "bearingNominal": "3x6x2",
         "outputShaftProfile": "D-round",
+        "chainIdlerFastenerAvoidanceMode": "upper-edge-hole-shift-away-from-idler",
+        "plateFastenerIdlerAvoidanceMode": "upper-edge-hole-shift-away-from-idler",
         "rotaryBearingArrangement": "output-two-3x6x2-in-one-integral-bar-input-free",
         "linearBearingArrangement": "single-coaxial-with-integrated-seat",
         "plateSupport": "partition-boss-locators-plus-four-self-tapping-screws",
@@ -1164,6 +1173,8 @@ def validate_contract(contract: dict[str, object]) -> None:
         "bearingSeatDiameterMm": 6.10, "bearingSeatDepthMm": 2.60,
         "bearingBackShoulderMm": 0.60, "bearingReferenceCenterOffsetMm": 0.00,
         "bearingCenterOffsetMm": 1.40, "bearingPairSpacingMm": 4.40,
+        "outputBearingShaftPassageDiameterMm": 3.40,
+        "outputBearingShaftPassageRadialClearanceMm": 0.20,
         "outputBearingBarWidthMm": 14.00,
         "outputBearingBarYLengthMm": 6.40,
         "outputBearingBarY0OffsetMm": 0.40,
@@ -1175,6 +1186,7 @@ def validate_contract(contract: dict[str, object]) -> None:
         "totalModeledMagnetCount": 3.0, "plateWidthMm": 34.00,
         "plateThicknessMm": 3.20, "platePartitionGapMm": 0.00,
         "plateFastenerCount": 4.0, "plateM3ClearanceMm": 3.40,
+        "plateFastenerIdlerAvoidanceShiftYMm": 10.00,
         "partitionSelfTapPilotDiameterMm": 2.40,
         "partitionSelfTapPilotDepthMm": 2.20,
         "partitionSelfTapBottomWallMm": 0.50,
@@ -1483,6 +1495,16 @@ def validate_contract(contract: dict[str, object]) -> None:
         raise RuntimeError("输出轴承长方条没有接到机构板")
     if n(contract, "outputBearingBarMotherClearanceMm") <= 0:
         raise RuntimeError("母轮与输出轴承固定条没有防摩擦间隙")
+    if n(contract, "outputBearingShaftPassageDiameterMm") <= n(contract, "shaftDiameterMm"):
+        raise RuntimeError("上下输出轴承中间必须有贯通圆轴的打印孔")
+    if n(contract, "outputBearingShaftPassageDiameterMm") >= n(contract, "bearingSeatDiameterMm"):
+        raise RuntimeError("输出圆轴贯通孔不能扩大到轴承座孔")
+    expect(
+        contract,
+        "outputBearingShaftPassageRadialClearanceMm",
+        0.20,
+        "输出圆轴贯通孔径向间隙",
+    )
 
     bar_y0 = n(contract, "outputBearingBarY0OffsetMm")
     bar_y1 = bar_y0 + n(contract, "outputBearingBarYLengthMm")
@@ -1493,7 +1515,13 @@ def validate_contract(contract: dict[str, object]) -> None:
     if abs(upper_center - (bar_y1 - 1.0)) > 0.001:
         raise RuntimeError("上输出轴承没有落在长方条上端孔内")
     if bar_y1 - n(contract, "bearingSeatDepthMm") - (bar_y0 + n(contract, "bearingSeatDepthMm")) < 1.0 - 0.001:
-        raise RuntimeError("上下输出轴承孔之间没有保留中间实体隔墙")
+        raise RuntimeError("上下输出轴承孔之间的轴向肩距不足")
+
+    expect(contract, "chainIdlerBossPadSizeMm", 12.50, "绿色导向轮 Boss 一体承力台尺寸")
+    expect(contract, "chainIdlerBossPadMarginMm", 0.75, "绿色导向轮 Boss 承力台边缘余量")
+    expect(contract, "chainIdlerBossPadCornerRadiusMm", 1.50, "绿色导向轮 Boss 承力台圆角")
+    expect(contract, "chainIdlerFastenerAvoidanceShiftYMm", 10.00, "导向轮邻近固定孔避让位移")
+    expect(contract, "chainIdlerFastenerAvoidanceClearanceMm", 0.60, "导向轮邻近固定孔避让净空")
 
     d_start = n(contract, "outputShaftDStartMm")
     d_end = d_start + n(contract, "outputShaftDLengthMm")

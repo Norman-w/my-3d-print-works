@@ -47,6 +47,13 @@ CENTER_CLUTCH_BEARING_PAIR_SPACING = CENTER_CLUTCH_BEARING_BLOCK_Y
     - CENTER_CLUTCH_BEARING_W;
 CENTER_CLUTCH_BEARING_BLOCK_Z_MARGIN = 1.00;
 CENTER_CLUTCH_BEARING_BLOCK_Z_OVERLAP = 0.20;
+// The two purchased 3×6×2 bearings share one Ø3 round journal.  The
+// bearing pockets are deliberately blind from each end, but the web between
+// them must not be solid: this smaller coaxial passage is the actual shaft
+// clearance through the web.
+CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_RADIAL_CLEARANCE = 0.20;
+CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_D = GT2_D_AXIS_D
+    + 2 * CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_RADIAL_CLEARANCE;
 
 // The rear chain layer crosses the output bearing bars in the axial (world Z)
 // direction.  Open a local window only through that chain layer; the bearing
@@ -116,6 +123,8 @@ CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_FLARE_T = 1.50;
 // host are one printable solid even at the row-1 idler near the support bar.
 CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OVERLAP = 0.25;
 CENTER_CLUTCH_CHAIN_IDLER_BOSS_AXIAL_CLEARANCE = 0.45;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_MARGIN = 0.75;
+CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_CORNER_RADIUS = 1.50;
 CENTER_CLUTCH_CHAIN_IDLER_BOSS_MOUNT_MODE =
     "partition-or-row-strip-integral-blind-pilot";
 CENTER_CLUTCH_CHAIN_IDLER_BOSS_SCREW_ENTRY = "-Z";
@@ -133,6 +142,10 @@ CENTER_CLUTCH_PLATE_W = 34.00;
 CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET = 12.00;
 CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET = 4.00;
 CENTER_CLUTCH_M3_CLEAR_D = 3.40;
+CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_SHIFT_Y = 10.00;
+CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_CLEARANCE = 0.60;
+CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_MODE =
+    "upper-edge-hole-shift-away-from-idler";
 CENTER_CLUTCH_PLATE_FASTENER_COUNT = 4;
 CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D = 2.40;
 CENTER_CLUTCH_PARTITION_BOSS_PER_CELL_COUNT = 4;
@@ -402,6 +415,42 @@ function center_clutch_chain_emboss_brush_half_z() =
 function center_clutch_chain_idler_wheel_poses() = [
     for (i = [1:len(WHEEL_POSES) - 1]) WHEEL_POSES[i]
 ];
+
+// Three generated 8T idlers sit immediately beyond the upper edge of a
+// continuous row strip.  Their load roots need a local board pad, and the
+// nearest upper corner fastener must move away from that root.  This is
+// derived from the actual WHEEL_POSES and the actual four-hole datum; it is
+// not a hard-coded per-row exception.
+function center_clutch_chain_idler_boss_pad_size() =
+    CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD
+        + 2 * CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_MARGIN;
+
+function center_clutch_chain_idler_nearest_fastener_distance(x, y) =
+    min([
+        for (wheel = center_clutch_chain_idler_wheel_poses())
+            norm([wheel[0] - x, wheel[1] - y])
+    ]);
+
+function center_clutch_chain_idler_near_fastener(x, y) =
+    center_clutch_chain_idler_nearest_fastener_distance(x, y)
+        <= CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OD / 2
+            + CENTER_CLUTCH_M3_CLEAR_D / 2
+            + CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_CLEARANCE;
+
+function center_clutch_station_fastener_y(x, y0, h, sx, sy) =
+    let(
+        nominal_y = y0 + (sy < 0
+            ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
+            : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+        should_avoid_idler = sy > 0
+            && center_clutch_chain_idler_near_fastener(
+                x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
+                nominal_y
+            )
+    )
+        nominal_y - (should_avoid_idler
+            ? CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_SHIFT_Y
+            : 0);
 
 function center_clutch_chain_idler_boss_rear_z() =
     SNAKE_CHAIN_CENTER_Z
@@ -945,6 +994,17 @@ module center_clutch_output_bearing_bar_y(col, row) {
             CENTER_CLUTCH_BEARING_SEAT_D,
             CENTER_CLUTCH_BEARING_SEAT_DEPTH + EPS
         );
+        // The two blind bearing pockets still leave a strong bearing shoulder,
+        // but the Ø3 journal must pass through the middle web.  Without this
+        // coaxial cutter the printed bar turns the two bearing seats into two
+        // isolated cups with a solid plug between them.
+        cylinder_y(
+            x,
+            y0 - EPS,
+            center_clutch_axis_z(),
+            CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_D,
+            CENTER_CLUTCH_BEARING_BLOCK_Y + 2 * EPS
+        );
     }
 }
 
@@ -956,9 +1016,7 @@ module center_clutch_station_fastener_holes(x, y0, h) {
     for (sx = [-1, 1], sy = [-1, 1])
         translate([
             x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-            y0 + (sy < 0
-                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+            center_clutch_station_fastener_y(x, y0, h, sx, sy),
             CENTER_CLUTCH_PLATE_REAR_Z - EPS
         ])
             cylinder(
@@ -1024,6 +1082,13 @@ module center_clutch_mechanism_row_plate(row) {
                     // blocking the M3 screw path.
                     for (wheel = center_clutch_chain_idler_wheel_poses())
                         if (center_clutch_chain_idler_row_host(wheel) == row)
+                            center_clutch_chain_idler_row_mount_pad(
+                                wheel[0],
+                                wheel[1],
+                                CENTER_CLUTCH_PLATE_REAR_Z
+                            );
+                    for (wheel = center_clutch_chain_idler_wheel_poses())
+                        if (center_clutch_chain_idler_row_host(wheel) == row)
                             center_clutch_chain_idler_mount_boss(
                                 wheel[0],
                                 wheel[1],
@@ -1050,7 +1115,30 @@ module center_clutch_mechanism_row_plates() {
         center_clutch_mechanism_row_plate(row);
 }
 
-// 一体化的导向轮轴承座。根部用 11 mm 圆角/锥形承力台，后端缩到 Ø8
+// 行板边缘的导向轮先获得一块与行板融合的圆角承力台，再从承力台上
+// 长出 Boss。这样根部不悬空，也不会把“补强”伪装成第二个打印件。
+module center_clutch_chain_idler_row_mount_pad(x, y, host_rear_z) {
+    size = center_clutch_chain_idler_boss_pad_size();
+    radius = min(
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_CORNER_RADIUS,
+        size / 2 - 0.20
+    );
+    hull() {
+        for (sx = [-1, 1], sy = [-1, 1])
+            translate([
+                x + sx * (size / 2 - radius),
+                y + sy * (size / 2 - radius),
+                host_rear_z - EPS
+            ])
+                cylinder(
+                    r = radius,
+                    h = CENTER_CLUTCH_PLATE_T + 2 * EPS,
+                    $fn = 32
+                );
+    }
+}
+
+// 一体化的导向轮轴承座。根部用 11 mm 锥形承力台，后端缩到 Ø8
 // 轴承轴座，避免“细腿+大头”悬空结构；盲孔从 -Z 后仓侧开口，孔底不
 // 穿入隔板或离合行板。这个模块只在两个真实承载板里被引用，不产生第二
 // 套独立 STL。
@@ -1149,9 +1237,7 @@ module center_clutch_partition_mount_bosses(col, row) {
     for (sx = [-1, 1], sy = [-1, 1])
         translate([
             x + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-            y0 + (sy < 0
-                ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
+            center_clutch_station_fastener_y(x, y0, h, sx, sy),
             WORLD_PARTITION_BACK_Z - CENTER_CLUTCH_PARTITION_BOSS_HEIGHT
         ])
             difference() {
@@ -1440,6 +1526,10 @@ assert(CENTER_CLUTCH_BEARING_BLOCK_Y0_OFFSET > 0,
 assert(CENTER_CLUTCH_BEARING_BLOCK_Z_MARGIN > 0
         && CENTER_CLUTCH_BEARING_BLOCK_Z_OVERLAP > 0,
     "output bearing bar must have a radial margin and plate overlap");
+assert(CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_D > GT2_D_AXIS_D
+        && CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_D
+            < CENTER_CLUTCH_BEARING_SEAT_D,
+    "output bearing bar must have a coaxial shaft passage smaller than the bearing seat");
 assert(CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET == 0,
     "output bearing references must be coaxial with the pockets");
 assert(abs(
@@ -1595,4 +1685,17 @@ assert(center_clutch_row_plate_left_clearance() >= 1.0 - EPS
     "continuous row carrier must stay inside the rear drawer grid with side clearance");
 assert(center_clutch_row_plate_length() < X1C_BUILD_X - 2 * X1C_FRAME_EDGE_MARGIN,
     "continuous row carrier must fit the reserved X1C print envelope");
+assert(CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_CORNER_RADIUS > 0
+        && CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_CORNER_RADIUS
+            < center_clutch_chain_idler_boss_pad_size() / 2,
+    "row idler Boss pad must have a printable rounded corner");
+for (wheel = center_clutch_chain_idler_wheel_poses())
+    if (center_clutch_chain_idler_row_host(wheel) >= 0)
+        assert(
+            wheel[0] - center_clutch_chain_idler_boss_pad_size() / 2
+                >= center_clutch_row_plate_x0() - EPS
+            && wheel[0] + center_clutch_chain_idler_boss_pad_size() / 2
+                <= center_clutch_row_plate_x1() + EPS,
+            "row idler Boss pad must remain within the continuous row plate X envelope"
+        );
 //#endregion

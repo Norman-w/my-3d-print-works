@@ -6203,10 +6203,11 @@ module selected_center_clutch_chain_idler_partition_boss_collision_part() {
 }
 
 module center_clutch_row_plate_fastener_hole_volume() {
-    // Use the plate's actual four-corner hole geometry, with a small inset
-    // from the two faces so a deliberate 0.20 mm support overlap at the rear
-    // face cannot create a false positive.  Any remaining solid here means a
-    // green Boss or another support was added after the hole subtraction.
+    // Check the complete screw corridor, not only the 3.2 mm plate.  A row
+    // idler Boss starts behind the plate, so a plate-only witness would miss
+    // a Boss that blocks the screw head before the screw reaches the plate.
+    // The upper hole is shifted by the same generated avoidance function used
+    // by both the row plate and the partition Bosses.
     for (row = [0:N_ROW - 1]) {
         y0 = center_clutch_plate_y0(row);
         h = center_clutch_plate_h(row);
@@ -6215,14 +6216,21 @@ module center_clutch_row_plate_fastener_hole_volume() {
                 translate([
                     center_clutch_axis_x(col)
                         + sx * CENTER_CLUTCH_PLATE_MOUNT_X_OFFSET,
-                    y0 + (sy < 0
-                        ? CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET
-                        : h - CENTER_CLUTCH_PLATE_MOUNT_Y_OFFSET),
-                    CENTER_CLUTCH_PLATE_REAR_Z + 0.10
+                    center_clutch_station_fastener_y(
+                        center_clutch_axis_x(col),
+                        y0,
+                        h,
+                        sx,
+                        sy
+                    ),
+                    center_clutch_chain_idler_boss_rear_z() + 0.10
                 ])
                     cylinder(
                         d = CENTER_CLUTCH_M3_CLEAR_D,
-                        h = CENTER_CLUTCH_PLATE_T - 0.20,
+                        h = CENTER_CLUTCH_PLATE_REAR_Z
+                            + CENTER_CLUTCH_PLATE_T
+                            - center_clutch_chain_idler_boss_rear_z()
+                            - 0.20,
                         $fn = 40
                     );
     }
@@ -7302,9 +7310,21 @@ echo(
         CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_FLARE_T),
     str("chainIdlerBossRootOverlapMm=",
         CENTER_CLUTCH_CHAIN_IDLER_BOSS_ROOT_OVERLAP),
+    str("chainIdlerBossPadSizeMm=",
+        center_clutch_chain_idler_boss_pad_size()),
+    str("chainIdlerBossPadMarginMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_MARGIN),
+    str("chainIdlerBossPadCornerRadiusMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_BOSS_PAD_CORNER_RADIUS),
     str("chainIdlerBossRearZMm=", center_clutch_chain_idler_boss_rear_z()),
     str("chainIdlerBossAxialClearanceMm=",
         CENTER_CLUTCH_CHAIN_IDLER_BOSS_AXIAL_CLEARANCE),
+    str("chainIdlerFastenerAvoidanceMode=",
+        CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_MODE),
+    str("chainIdlerFastenerAvoidanceShiftYMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_SHIFT_Y),
+    str("chainIdlerFastenerAvoidanceClearanceMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_CLEARANCE),
     str("chainIdlerBossMountMode=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_MOUNT_MODE),
     str("chainIdlerBossScrewEntry=", CENTER_CLUTCH_CHAIN_IDLER_BOSS_SCREW_ENTRY),
     "chainIdlerMountPart=cabinet-clutch/cabinet_clutch_partition+center_mechanism_plate",
@@ -7381,6 +7401,10 @@ echo(
         CENTER_CLUTCH_BEARING_REFERENCE_CENTER_OFFSET),
     str("bearingCenterOffsetMm=", CENTER_CLUTCH_BEARING_CENTER_OFFSET),
     str("bearingPairSpacingMm=", CENTER_CLUTCH_BEARING_PAIR_SPACING),
+    str("outputBearingShaftPassageDiameterMm=",
+        CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_D),
+    str("outputBearingShaftPassageRadialClearanceMm=",
+        CENTER_CLUTCH_OUTPUT_SHAFT_PASSAGE_RADIAL_CLEARANCE),
     str("outputBearingBarWidthMm=", CENTER_CLUTCH_BEARING_BLOCK_X),
     str("outputBearingBarYLengthMm=", CENTER_CLUTCH_BEARING_BLOCK_Y),
     str("outputBearingBarY0OffsetMm=",
@@ -7408,6 +7432,10 @@ echo(
     str("platePartitionGapMm=", CENTER_CLUTCH_PLATE_PARTITION_GAP),
     str("plateFastenerCount=", CENTER_CLUTCH_PLATE_FASTENER_COUNT),
     str("plateM3ClearanceMm=", CENTER_CLUTCH_M3_CLEAR_D),
+    str("plateFastenerIdlerAvoidanceMode=",
+        CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_MODE),
+    str("plateFastenerIdlerAvoidanceShiftYMm=",
+        CENTER_CLUTCH_CHAIN_IDLER_FASTENER_AVOIDANCE_SHIFT_Y),
     str("partitionSelfTapPilotDiameterMm=",
         CENTER_CLUTCH_PARTITION_SELF_TAP_PILOT_D),
     str("partitionSelfTapPilotDepthMm=",

@@ -1252,10 +1252,20 @@ def validate_contract(contract: Contract) -> None:
         fail("绿色导向轮 Boss 必须融合到隔板或离合连续行板")
     if contract.get("chainIdlerBossScrewEntry") != "-Z":
         fail("绿色导向轮盲导孔必须从后仓 -Z 侧装入")
+    if contract.get("chainIdlerFastenerAvoidanceMode") != "upper-edge-hole-shift-away-from-idler":
+        fail("绿色导向轮邻近的行板固定孔必须使用参数化避让")
     if contract.get("chainIdlerMountPart") != "cabinet-clutch/cabinet_clutch_partition+center_mechanism_plate":
         fail("绿色导向轮盲孔座没有绑定正式隔板/离合行板零件")
     if contract.get("chainIdlerAxlePart") != "cabinet-chain/cabinet_chain_idler_axles":
         fail("绿色导向轮轴参考件输出路径错误")
+    if contract.get("plateFastenerIdlerAvoidanceMode") != "upper-edge-hole-shift-away-from-idler":
+        fail("离合行板固定孔没有声明导向轮避让模式")
+    expect_close(
+        number(contract, "plateFastenerIdlerAvoidanceShiftYMm"),
+        10.0,
+        "离合行板固定孔导向轮避让位移",
+        0.001,
+    )
     for key, expected, label in (
         ("chainIdlerBearingIdMm", 3.0, "绿色导向轮轴承内径"),
         ("chainIdlerBearingOdMm", 6.0, "绿色导向轮轴承外径"),
@@ -1267,7 +1277,12 @@ def validate_contract(contract: Contract) -> None:
         ("chainIdlerBossRootDiameterMm", 11.0, "绿色导向轮 Boss 根部外径"),
         ("chainIdlerBossRootFlareThicknessMm", 1.5, "绿色导向轮 Boss 根部展开厚度"),
         ("chainIdlerBossRootOverlapMm", 0.25, "绿色导向轮 Boss 根部板内融合量"),
+        ("chainIdlerBossPadSizeMm", 12.5, "绿色导向轮 Boss 一体承力台尺寸"),
+        ("chainIdlerBossPadMarginMm", 0.75, "绿色导向轮 Boss 承力台边缘余量"),
+        ("chainIdlerBossPadCornerRadiusMm", 1.5, "绿色导向轮 Boss 承力台圆角"),
         ("chainIdlerBossAxialClearanceMm", 0.45, "绿色导向轮 Boss 轴向净空"),
+        ("chainIdlerFastenerAvoidanceShiftYMm", 10.0, "导向轮邻近固定孔避让位移"),
+        ("chainIdlerFastenerAvoidanceClearanceMm", 0.6, "导向轮邻近固定孔避让净空"),
     ):
         expect_close(number(contract, key), expected, label, 0.001)
     expect_at_least(
@@ -1295,8 +1310,20 @@ def validate_contract(contract: Contract) -> None:
         fail("下输出轴承没有落在长方条下端孔内")
     if not close(upper_center, bar_y1 - 1.0, 0.001):
         fail("上输出轴承没有落在长方条上端孔内")
+    expect_close(
+        number(contract, "outputBearingShaftPassageDiameterMm"),
+        number(contract, "shaftDiameterMm") + 0.40,
+        "上下输出轴承中间的贯通圆轴孔",
+        0.001,
+    )
+    expect_close(
+        number(contract, "outputBearingShaftPassageRadialClearanceMm"),
+        0.20,
+        "上下输出轴承中间贯通孔径向间隙",
+        0.001,
+    )
     if bar_y1 - number(contract, "bearingSeatDepthMm") - (bar_y0 + number(contract, "bearingSeatDepthMm")) < 1.0 - 0.001:
-        fail("上下输出轴承孔之间没有保留中间实体隔墙")
+        fail("上下输出轴承孔之间的轴向肩距不足")
 
     d_start = number(contract, "outputShaftDStartMm")
     d_end = d_start + number(contract, "outputShaftDLengthMm")
