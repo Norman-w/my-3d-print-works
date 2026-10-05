@@ -1,0 +1,265 @@
+{
+  "status": "contract-pass",
+  "scope": "declared dimensions and print envelope only",
+  "stl_verification": {
+    "tool": "OpenSCAD 2026.04.26 CGAL",
+    "tip42p5": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip42p5.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 20884,
+      "bbox_mm": [
+        86.0,
+        86.0,
+        204.0
+      ]
+    },
+    "tip45": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip45.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 17606,
+      "bbox_mm": [
+        86.0,
+        86.0,
+        204.0
+      ]
+    },
+    "section_and_assembly": "CGAL manifold export passed in hardwarnings mode; these are review views, not print parts",
+    "tip_core38": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core38.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 5036,
+      "bbox_mm": [
+        43.2,
+        43.2,
+        102.0
+      ]
+    },
+    "tip_core40": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core40.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 4458,
+      "bbox_mm": [
+        43.2,
+        43.2,
+        102.0
+      ]
+    },
+    "tip_core34": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core34.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 5036,
+      "bbox_mm": [
+        43.2,
+        43.2,
+        102.0
+      ]
+    },
+    "tip_core36": {
+      "stl": "output/fan-nozzle-adjustable/fan-nozzle-tip-core36.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 5036,
+      "bbox_mm": [
+        43.2,
+        43.2,
+        102.0
+      ]
+    },
+    "y_tee_preview_reference": {
+      "stl": "output/fan-nozzle-preview/models/y-tee-preview.stl",
+      "manifold": true,
+      "watertight": true,
+      "facets": 3246,
+      "bbox_mm": [
+        104.953,
+        60.0,
+        127.953
+      ],
+      "scope": "sample-oriented reference envelope; not a measured replacement part"
+    }
+  },
+  "not_verified": [
+    "actual fan lug datum and rotational direction",
+    "actual Y-tee insertion stop and throat geometry",
+    "actual Y-tee branch angle, socket lip dimensions, and wall thickness",
+    "printed thread fit, start engagement, torque, and repeated service life",
+    "fan flow, pressure, noise, ball capture, and physical fit"
+  ],
+  "parameters": {
+    "fan_outlet_od": 76.0,
+    "fan_outlet_id": 71.0,
+    "fan_socket_id": 76.6,
+    "fan_collar_od": 86.0,
+    "fan_collar_z": 30.0,
+    "fan_face_z": 24.0,
+    "fan_lug_axial": 8.0,
+    "fan_lug_tangential": 7.5,
+    "fan_lug_radial": 2.0,
+    "fan_lug_from_face": 3.0,
+    "fan_lock_turn_deg": 18.0,
+    "tip_id": 42.5,
+    "cone_z0": 24.0,
+    "cone_z1": 104.0,
+    "cone_outer_d0": 82.0,
+    "tip_outer_d": 47.0,
+    "fan_collar_transition_l": 14.0,
+    "tube_id": 48.0,
+    "tube_od": 50.0,
+    "spigot_od": 47.0,
+    "spigot_l": 100.0,
+    "spigot_overlap_marks": [
+      25.0,
+      45.0,
+      65.0,
+      85.0
+    ],
+    "tip_core_od": 42.0,
+    "tip_core_flange_od": 43.2,
+    "tip_core_flange_l": 2.0,
+    "tip_core_l": 102.0,
+    "tip_core_inlet_id": 40.0,
+    "tip_core_mount_l": 24.0,
+    "tip_core_taper_l": 70.0,
+    "tip_core_exit_l": 8.0,
+    "tip_core_z0": 102.0,
+    "tip_core_ids": [
+      34.0,
+      36.0,
+      38.0,
+      40.0
+    ],
+    "tip_core_seat_id": 43.5,
+    "tip_core_thread_z0": 104.0,
+    "tip_core_thread_l": 12.0,
+    "tip_core_thread_pitch": 4.0,
+    "tip_core_thread_height": 0.5,
+    "tip_core_thread_groove_id": 43.6,
+    "tip_core_thread_clearance": 0.3,
+    "tip_core_thread_turns": 3.0,
+    "sleeve_id": 50.8,
+    "sleeve_od": 57.6,
+    "sleeve_z0": 94.0,
+    "sleeve_l": 104.0,
+    "sleeve_transition_l": 20.0,
+    "sleeve_inspection_window_l": 8.0,
+    "clamp_z": 190.0,
+    "preview_nominal_overlap": 65.0,
+    "preview_tube_l": 130.0,
+    "y_branch_offset": 28.0,
+    "y_branch_angle_deg": 45.0,
+    "y_insertion_assumption": 25.0,
+    "sample_pose_rotation_y_deg": -90.0
+  },
+  "checks": {
+    "fan_socket_radial_clearance": 0.29999999999999716,
+    "fan_lug_window_tangential": 8.3,
+    "fan_lug_window_exceeds_measured": true,
+    "fan_lug_axial_envelope": [
+      13.0,
+      21.0
+    ],
+    "bayonet_turn_deg": 18.0,
+    "inner_cone_half_angle_deg": 10.1,
+    "outer_cone_half_angle_deg": 12.339,
+    "throat_wall_mm": 2.25,
+    "tube_sleeve_radial_clearance": 0.3999999999999986,
+    "sleeve_transition_support": {
+      "start_z": 74.0,
+      "end_z": 94.0,
+      "length_mm": 20.0,
+      "start_d_mm": 60.125,
+      "end_d_mm": 57.6,
+      "full_circumference_load_path": true,
+      "external_step_at_sleeve_root": false
+    },
+    "fan_collar_transition_support": {
+      "start_z": 30.0,
+      "end_z": 44.0,
+      "length_mm": 14.0,
+      "start_d_mm": 86.0,
+      "end_d_mm": 73.25,
+      "full_circumference_load_path": true,
+      "external_step_at_collar_root": false,
+      "preserves_bayonet_envelope_through_z": 30.0,
+      "minimum_gap_to_original_cone_mm": 0.0
+    },
+    "spigot_radial_clearance": 0.5,
+    "spigot_overlap_marks": [
+      25.0,
+      45.0,
+      65.0,
+      85.0
+    ],
+    "spigot_overlap_mark_zs": {
+      "25.0": 179.0,
+      "45.0": 159.0,
+      "65.0": 139.0,
+      "85.0": 119.0
+    },
+    "adjustment_travel_mm": 60.0,
+    "clamp_captures_all_overlap_marks": true,
+    "tip_core_wall_mm": {
+      "34.0": 4.0,
+      "36.0": 3.0,
+      "38.0": 2.0,
+      "40.0": 1.0
+    },
+    "tip_core_outer_guide_radial_clearance": 0.25,
+    "tip_core_flange_radial_clearance": 0.14999999999999858,
+    "tip_core_thread_major_od": 43.0,
+    "tip_core_thread_groove_id": 43.6,
+    "tip_core_thread_radial_clearance": 0.3,
+    "tip_core_thread_engagement_l": 12.0,
+    "tip_core_thread_turns": 3.0,
+    "tip_core_thread_outer_wall_mm": 1.6999999999999993,
+    "tip_core_flow_profile": {
+      "inlet_straight_id": 40.0,
+      "inlet_straight_l": 24.0,
+      "taper_l": 70.0,
+      "outlet_straight_l": 8.0
+    },
+    "total_print_length": 204.0,
+    "clamp_xy_envelope_estimate": [
+      65.6,
+      57.6
+    ],
+    "x1c_height_margin_at_256": 52.0,
+    "tube_length_examples": {
+      "close_test_free_distance_20": 90.0,
+      "nominal_first_cut_free_distance_60": 120.0,
+      "long_first_cut_free_distance_80": 130.0
+    },
+    "preview_branch_distance_range_mm": [
+      73.0,
+      133.0
+    ],
+    "preview_reference_pose": {
+      "main_axis": "world -X (horizontal)",
+      "branch_direction": "world -X/+Z (upward toward the nozzle side)",
+      "rotation_y_deg": -90.0
+    },
+    "preview_nominal_branch_distance_mm": 93.0,
+    "tube_first_cut_recommendation": 130.0,
+    "tube_formula": "L_tube = L_nozzle_overlap + D_free + L_Y_insertion",
+    "valid_tip_variants": [
+      42.5,
+      40.0,
+      38.0,
+      36.0,
+      34.0,
+      45.0
+    ],
+    "tip_core_stl_parts": [
+      "output/fan-nozzle-adjustable/fan-nozzle-tip-core34.stl",
+      "output/fan-nozzle-adjustable/fan-nozzle-tip-core36.stl",
+      "output/fan-nozzle-adjustable/fan-nozzle-tip-core40.stl",
+      "output/fan-nozzle-adjustable/fan-nozzle-tip-core38.stl"
+    ],
+    "invalid_tip_variant_reason": "48 mm equals the existing tube ID and leaves no wall for a spigot with OD below 48 mm"
+  }
+}
