@@ -17,6 +17,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+from prepare_fan_tee_v5_print import binary_mesh
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "web/fan-nozzle"
@@ -107,7 +108,7 @@ def check_snapshot(folder, scad, echo_name, openscad, stage):
     return params, exported
 
 
-def build_variant(variant_id, stage, openscad, reference_y, reference41):
+def build_variant(variant_id, stage, openscad, reference_y, reference41, tee_contract):
     directory, scad, echo_name, label, expected_travel = VARIANTS[variant_id]
     folder = ROOT / "output" / directory
     p, exported = check_snapshot(folder, scad, echo_name, openscad, stage)
@@ -131,10 +132,10 @@ def build_variant(variant_id, stage, openscad, reference_y, reference41):
     parts[0]["source"]["selector"] = f'part="{body_id}"'
     for core in parts[1:]:
         core["exclusiveGroup"] = "nozzle"
-    parts.append(part(stage, "fan-nozzle-bayonet-adjustable.scad", reference_y, "tee",
-                      "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意", z=body_end,
-                      role="purchased", group="reference", color="#edbe32", opacity=0.25,
-                      selector='part="y-tee-preview"; fn_y_tee_socket_id=50.2', explosion=[0, 0, 24]))
+    parts.append(part(stage, "y-tee-preview-reference.scad", reference_y, "tee",
+                      "Y 三通 · 三端加厚承口 · 上方进球口向风机侧后倾（外形参考）", z=body_end,
+                      role="purchased", group="reference", color="#a2cddd", opacity=0.43,
+                      selector='part="reference"', explosion=[0, 0, 24]))
     fan_model = folder / "review/review-fan-envelope.stl" if big else reference41
     if big:
         expected = next(row["sha256"] for row in exported["files"] if row["part_id"] == "review-fan-envelope")
@@ -148,7 +149,7 @@ def build_variant(variant_id, stage, openscad, reference_y, reference41):
     frames = [
         {"id": "world", "label": "世界坐标", "parentFrameId": None, "kind": "fixed", "localTransform": transform()},
         {"id": "assembly", "label": "固定风机 / 主体 / Y三通（主管横向、分支向上）", "parentFrameId": "world",
-         "kind": "fixed", "localTransform": transform(rotation=[0, -math.pi / 2, 0])},
+         "kind": "fixed", "localTransform": transform(rotation=[math.radians(a) for a in tee_contract["display_rotation_deg"]])},
         {"id": "core-screw", "label": "气嘴螺旋调节（轴向移动 + 同步旋转）", "parentFrameId": "assembly",
          "kind": "prismatic", "axis": [0, 0, 1], "range": [0, travel], "defaultValue": 0,
          "localTransform": transform(seated)},
@@ -161,12 +162,14 @@ def build_variant(variant_id, stage, openscad, reference_y, reference41):
     return {
         "schemaVersion": 1, "variantId": variant_id, "title": f"{label} · Y口直插 · {travel} mm 行程",
         "release": release, "ui": {"persistPanelState": True, "showSearch": True, "showGroups": True},
+        "teeReference": tee_contract,
         "instructions": [
             "拖动旋转，滚轮缩放；Tab 保留视角、爆炸比例、透明度及面板布局，各方案记住自己的气嘴和行程。",
             f"直接加载本次原始打印 STL：{label}，15 / 20 / 25 / 30 mm 四种出口。蓝色主体直插三通，不再使用中间透明管或外套夹紧件。",
             f"P{p['pitch']} 螺距不变，通过增加母丝圈数得到 {travel} mm 机构行程（{travel/p['pitch']:g} 圈）；只转动/移动绿色气嘴，主体与三通保持固定。",
             "气嘴从 Y 侧旋入；默认主体半透明以展示内芯。隐藏主体可看真实梯形螺纹；没有示意螺旋片或额外锁紧件。",
-            "黄色 Y 为参考外形，仅承口 Ø50.2 为实测；止挡深度、分支交汇位置及通球安全范围仍待实物确认。机构全行程不等于三通内全程均可安全通球。",
+            "灰蓝色 Y 按商品首图重建三端加厚承口；上方进球支口向风机侧后倾，球进入交汇处后与出风同向。风机接直通主管，另一端出球。",
+            "Y 承口 Ø50.2 按用户实测；总长 128 / 外径 56.38 按商家规格图（未实测）。止挡深度、交汇位置及通球安全范围仍待实物确认；机构全行程不等于安全通球行程。",
         ],
         "assembly": {"coordinateSystem": {"units": "mm", "handedness": "right", "up": "z"},
                      "rootFrameId": "world", "frames": frames},
@@ -217,13 +220,22 @@ def main():
         stage = Path(temporary)
         shutil.copytree(WEB, stage, dirs_exist_ok=True)
         (stage / "source").mkdir(exist_ok=True)
-        for name in ["fan-nozzle-bayonet-adjustable.scad", "fan-nozzle-parameters.scad", "thread-profile.scad", "fan41-preview-reference.scad"]:
+        for name in ["y-tee-preview-reference.scad", "fan41-preview-reference.scad"]:
             shutil.copy2(ROOT / "cad" / name, stage / "source" / name)
         y_mesh, fan41 = stage / "y-reference.stl", stage / "fan41-reference.stl"
-        run_scad(args.openscad, ROOT / "cad/fan-nozzle-bayonet-adjustable.scad", y_mesh,
-                 ['part="y-tee-preview"', "fn_y_tee_socket_id=50.2"])
+        tee_source = ROOT / "cad/y-tee-preview-reference.scad"
+        run_scad(args.openscad, tee_source, y_mesh, ['part="reference"'])
+        binary_mesh(y_mesh)  # Reject collapsed faces / open or non-manifold seams BEFORE publishing.
+        tee_echo = stage / "y-reference.echo"
+        run_scad(args.openscad, tee_source, tee_echo, ['part="contract"'])
+        match = re.search(r"ECHO: y_reference_contract = (\[.*\])", tee_echo.read_text())
+        if not match:
+            raise ValueError("Missing Y reference port contract")
+        tee_contract = dict(json.loads(match.group(1)))
+        tee_contract["source_sha256"] = sha(tee_source)
+        tee_echo.unlink()
         run_scad(args.openscad, ROOT / "cad/fan41-preview-reference.scad", fan41)
-        manifests = {key: build_variant(key, stage, args.openscad, y_mesh, fan41) for key in VARIANTS}
+        manifests = {key: build_variant(key, stage, args.openscad, y_mesh, fan41, tee_contract) for key in VARIANTS}
         y_mesh.unlink()
         fan41.unlink()
         manifests["fan76-direct"]["variantCatalog"] = {

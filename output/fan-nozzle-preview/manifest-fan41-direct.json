@@ -29,12 +29,75 @@
     "showSearch": true,
     "showGroups": true
   },
+  "teeReference": {
+    "revision": "y-tee-photo-v2-20261007",
+    "units": "mm",
+    "source_item_id": "695023134217",
+    "print_target": false,
+    "source_sku_id": "4929691240158",
+    "vendor_nominal_socket_id": 49.8,
+    "vendor_nominal_od": 56.38,
+    "vendor_nominal_length": 128,
+    "measured_socket_id": 50.2,
+    "illustrative_bore_id": 48,
+    "illustrative_body_od": 53.2,
+    "illustrative_socket_od": 55.2,
+    "illustrative_lip_od": 56.38,
+    "illustrative_socket_depth": 25,
+    "illustrative_lip_length": 5,
+    "illustrative_main_length": 128,
+    "illustrative_junction_z": 65,
+    "illustrative_branch_length": 70,
+    "illustrative_branch_angle_deg": 135,
+    "airflow_local": [
+      0,
+      0,
+      1
+    ],
+    "fan_port": [
+      0,
+      0,
+      -25
+    ],
+    "fan_outward": [
+      0,
+      0,
+      -1
+    ],
+    "outlet_port": [
+      0,
+      0,
+      103
+    ],
+    "outlet_outward": [
+      0,
+      0,
+      1
+    ],
+    "ball_port": [
+      49.4975,
+      0,
+      15.5025
+    ],
+    "ball_outward": [
+      0.707107,
+      0,
+      -0.707107
+    ],
+    "display_rotation_deg": [
+      0,
+      -90,
+      0
+    ],
+    "source_sha256": "1f4da0bf81a2d9feb70d27f025d364110fd72b57f16c59dab1f81bcdf0600adf"
+  },
   "instructions": [
     "拖动旋转，滚轮缩放；Tab 保留视角、爆炸比例、透明度及面板布局，各方案记住自己的气嘴和行程。",
     "直接加载本次原始打印 STL：Ø41 · v5，15 / 20 / 25 / 30 mm 四种出口。蓝色主体直插三通，不再使用中间透明管或外套夹紧件。",
     "P4 螺距不变，通过增加母丝圈数得到 40 mm 机构行程（10 圈）；只转动/移动绿色气嘴，主体与三通保持固定。",
     "气嘴从 Y 侧旋入；默认主体半透明以展示内芯。隐藏主体可看真实梯形螺纹；没有示意螺旋片或额外锁紧件。",
-    "黄色 Y 为参考外形，仅承口 Ø50.2 为实测；止挡深度、分支交汇位置及通球安全范围仍待实物确认。机构全行程不等于三通内全程均可安全通球。"
+    "灰蓝色 Y 按商品首图重建三端加厚承口；上方进球支口向风机侧后倾，球进入交汇处后与出风同向。风机接直通主管，另一端出球。",
+    "Y 承口 Ø50.2 按用户实测；总长 128 / 外径 56.38 按商家规格图（未实测）。止挡深度、交汇位置及通球安全范围仍待实物确认；机构全行程不等于安全通球行程。"
   ],
   "assembly": {
     "coordinateSystem": {
@@ -74,9 +137,9 @@
             0
           ],
           "rotation": [
-            0,
+            0.0,
             -1.5707963267948966,
-            0
+            0.0
           ]
         }
       },
@@ -346,25 +409,25 @@
     },
     {
       "id": "tee",
-      "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
-      "file": "models/y-reference-086760b9bc72.stl",
-      "sha256": "086760b9bc726b9b453e6b60f141e90538cd146c10e19ccc55559c2e9bf1fa34",
+      "name": "Y 三通 · 三端加厚承口 · 上方进球口向风机侧后倾（外形参考）",
+      "file": "models/y-reference-fc74e9f73437.stl",
+      "sha256": "fc74e9f73437e2dccf88178f789b779fca3e4d8d94ea27de5511fc2aae2b796e",
       "source": {
         "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"y-tee-preview\"; fn_y_tee_socket_id=50.2"
+        "file": "source/y-tee-preview-reference.scad",
+        "selector": "part=\"reference\""
       },
       "geometrySpace": "local",
       "role": "purchased",
       "groupId": "reference",
       "renderMode": "solid",
-      "color": "#edbe32",
-      "opacity": 0.25,
+      "color": "#a2cddd",
+      "opacity": 0.43,
       "renderOrder": 30,
       "instances": [
         {
           "id": "tee",
-          "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
+          "name": "Y 三通 · 三端加厚承口 · 上方进球口向风机侧后倾（外形参考）",
           "parentFrameId": "assembly",
           "localTransform": {
             "position": [
