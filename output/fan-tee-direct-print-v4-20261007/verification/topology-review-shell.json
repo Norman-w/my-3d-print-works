@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/shell.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 13130,
+  "uniqueVertexCount": 6565,
+  "bounds": {
+    "min": [
+      -25.0,
+      -25.0,
+      -18.5
+    ],
+    "max": [
+      25.0,
+      25.0,
+      80.0
+    ],
+    "size": [
+      50.0,
+      50.0,
+      98.5
+    ]
+  },
+  "surfaceArea": 29727.331613251285,
+  "signedVolume": 53113.42270199462,
+  "volume": 53113.42270199462,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

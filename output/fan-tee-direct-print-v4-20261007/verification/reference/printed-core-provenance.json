@@ -1,0 +1,8 @@
+{
+  "historical_source_path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v2-20261006/stl/fan-tee-direct-core36.stl",
+  "source_path_is_runtime_dependency": false,
+  "file": "verification/reference/printed-core36.stl",
+  "sha256": "a314bc26aa005eee0289fc6c962b997e3ddfcbc9bb17b6f58ad03561c441f94f",
+  "role": "compatibility witness only; NOT a print target",
+  "physical_identity_note": "Historical exported core36; physical part identity and fit still require confirmation"
+}

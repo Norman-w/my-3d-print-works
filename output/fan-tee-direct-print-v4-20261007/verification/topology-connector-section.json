@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/connector-section.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 6766,
+  "uniqueVertexCount": 3385,
+  "bounds": {
+    "min": [
+      -25.0,
+      -0.0,
+      -18.5
+    ],
+    "max": [
+      25.0,
+      25.0,
+      80.0
+    ],
+    "size": [
+      50.0,
+      25.0,
+      98.5
+    ]
+  },
+  "surfaceArea": 15700.272206178108,
+  "signedVolume": 26634.815145524437,
+  "volume": 26634.815145524437,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

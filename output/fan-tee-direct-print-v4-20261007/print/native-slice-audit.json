@@ -1,0 +1,121 @@
+{
+  "status": "DIGITAL_NATIVE_SLICE_AND_LUG_CONTACT_PASS",
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/print/slice/fan-tee-v4-native-actual.gcode.3mf",
+  "package_sha256": "90365c10dbe27dedbf13a1e6c5fd345df17118f35df33ce0848f25ba6bf2c8f2",
+  "checks": {
+    "one_mesh": true,
+    "no_embedded_support_objects": true,
+    "x1c_04": true,
+    "petg": true,
+    "native_startup_preserved": true,
+    "native_end_preserved": true,
+    "preparation_commands_present": true,
+    "ordinary_and_interface_support_exist": true,
+    "no_support_above_project_lug_zone": true,
+    "one_geometry_instance": true,
+    "geometry_slice_settings_match": true,
+    "actual_stl_identity": true,
+    "both_lug_contacts": true,
+    "native_x1c_model_id": true
+  },
+  "geometry_package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/print/slice/fan-tee-v4-native-project.3mf",
+  "geometry_package_sha256": "cf036d2cbf9fa29232ae1fb62519255a96c2dd8481a2e5e29338e6d007208881",
+  "mesh_objects": [
+    {
+      "member": "3D/Objects/object_1.model",
+      "id": "1",
+      "triangles": 13962
+    }
+  ],
+  "part_subtypes": [
+    "normal_part"
+  ],
+  "layers": 492,
+  "startup_markers": {
+    "homing_command": true,
+    "bed_level_command": true,
+    "bed_heat_wait": true,
+    "nozzle_heat_wait": true,
+    "ams_selection": true
+  },
+  "startup_commands_do_not_prove_execution_or_checkbox_state": true,
+  "support_counts": {
+    "Support": 3994,
+    "Support interface": 121
+  },
+  "all_support_bounds_mm": [
+    [
+      107.666,
+      148.328
+    ],
+    [
+      114.175,
+      137.757
+    ],
+    [
+      0.2,
+      8.6
+    ]
+  ],
+  "support_interface_bounds_mm": [
+    [
+      108.57,
+      147.41
+    ],
+    [
+      116.512,
+      135.488
+    ],
+    [
+      7.4,
+      7.8
+    ]
+  ],
+  "support_interface_layer_z_mm": [
+    7.4,
+    7.6,
+    7.8
+  ],
+  "project_lug_support_ceiling_print_z_mm": 12.0,
+  "support_segments_above_ceiling": 0,
+  "support_contact_geometry_review_still_required": false,
+  "contact_review": {
+    "stl": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/stl/fan-tee-v4-connector-clean.stl",
+    "stl_sha256": "8e23df3bf1258a7530491d7658a65458e752d650c9e0001289423e68c8c64fa2",
+    "all_triangles_match_stl_at_0_001_mm": true,
+    "upright_unit_scale": true,
+    "contacts": [
+      {
+        "lug_side_x": -1,
+        "interface_endpoints_below_lug": 14,
+        "vertical_gap_to_round_lug_mm": [
+          0.20733920560471297,
+          0.40385144273023243
+        ],
+        "contact_screen_pass": true
+      },
+      {
+        "lug_side_x": 1,
+        "interface_endpoints_below_lug": 16,
+        "vertical_gap_to_round_lug_mm": [
+          0.20731430458156552,
+          0.4757238955867251
+        ],
+        "contact_screen_pass": true
+      }
+    ],
+    "both_lugs_supported": true,
+    "digital_contact_screen_not_physical_support_acceptance": true
+  },
+  "slice_info_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<config>\n  <header>\n    <header_item key=\"X-BBL-Client-Type\" value=\"slicer\"/>\n    <header_item key=\"X-BBL-Client-Version\" value=\"02.08.02.61\"/>\n  </header>\n  <plate>\n    <metadata key=\"index\" value=\"1\"/>\n    <metadata key=\"extruder_type\" value=\"0\"/>\n    <metadata key=\"nozzle_volume_type\" value=\"0\"/>\n    <metadata key=\"printer_model_id\" value=\"BL-P001\"/>\n    <metadata key=\"nozzle_diameters\" value=\"0.4\"/>\n    <metadata key=\"timelapse_type\" value=\"0\"/>\n    <metadata key=\"prediction\" value=\"7232\"/>\n    <metadata key=\"weight\" value=\"60.54\"/>\n    <metadata key=\"pause_count\" value=\"0\"/>\n    <metadata key=\"first_layer_time\" value=\"79.858978\"/>\n    <metadata key=\"outside\" value=\"false\"/>\n    <metadata key=\"support_used\" value=\"true\"/>\n    <metadata key=\"label_object_enabled\" value=\"false\"/>\n    <metadata key=\"support_material_on_wipe_tower\" value=\"false\"/>\n    <metadata key=\"enable_filament_dynamic_map\" value=\"false\"/>\n    <metadata key=\"has_filament_switcher\" value=\"false\"/>\n    <metadata key=\"filament_maps\" value=\"1\"/>\n    <metadata key=\"limit_filament_maps\" value=\"0\"/>\n    <object identify_id=\"130\" name=\"fan-tee-v4-connector-clean.stl\" skipped=\"false\" />\n    <filament id=\"1\" tray_info_idx=\"GFG99\" type=\"PETG\" color=\"#00AE42\" used_m=\"19.82\" used_g=\"60.54\" group_id=\"0\" nozzle_diameter=\"0.40\" volume_type=\"Standard\" used_for_object=\"true\" used_for_support=\"true\" total_load_time=\"29.00\" total_unload_time=\"0.00\"/>\n    <nozzle id=\"0\" extruder_id=\"1\" nozzle_diameter=\"0.4\" volume_type=\"Standard\"/>\n    <layer_filament_lists>\n      <layer_filament_list filament_list=\"0\" layer_ranges=\"0 491\" />\n    </layer_filament_lists>\n  </plate>\n</config>\n",
+  "support_settings": {
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_threshold_angle": "45",
+    "support_on_build_plate_only": "1",
+    "support_remove_small_overhang": "0",
+    "support_top_z_distance": "0.2"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false
+}

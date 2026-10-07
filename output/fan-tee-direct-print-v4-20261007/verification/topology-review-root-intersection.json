@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/lug-root-intersection.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 824,
+  "uniqueVertexCount": 416,
+  "bounds": {
+    "min": [
+      -22.299999237060547,
+      -3.0,
+      -10.5
+    ],
+    "max": [
+      22.299999237060547,
+      3.0,
+      -4.5
+    ],
+    "size": [
+      44.599998474121094,
+      6.0,
+      6.0
+    ]
+  },
+  "surfaceArea": 162.4969606040159,
+  "signedVolume": 70.93429523938478,
+  "volume": 70.93429523938478,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

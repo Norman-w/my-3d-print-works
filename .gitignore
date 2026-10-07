@@ -32,3 +32,19 @@ __pycache__/
 /output/**/orientation-screen/**/*.json
 /output/**/slice-screen/**/*.json
 /output/**/explore/
+
+# Frozen v4 first-article delivery: keep only the final clean model, native
+# print packages, reviewed images and compatibility witnesses as binaries.
+!/output/fan-tee-direct-print-v4-20261007/stl/fan-tee-v4-connector-clean.stl
+!/output/fan-tee-direct-print-v4-20261007/print/slice/fan-tee-v4-native-project.3mf
+!/output/fan-tee-direct-print-v4-20261007/print/slice/fan-tee-v4-native-actual.gcode.3mf
+!/output/fan-tee-direct-print-v4-20261007/render/*.png
+!/output/fan-tee-direct-print-v4-20261007/verification/reference/*.stl
+
+# CLI preflight is not the dispatched native package. Logs, raw G-code and
+# helper meshes remain covered by the generated-output rule above.
+/output/fan-tee-direct-print-v4-20261007/print/bambu-cli-data/
+/output/fan-tee-direct-print-v4-20261007/print/slice/*.json
+/output/fan-tee-direct-print-v4-20261007/print/slice-audit.json
+/output/fan-tee-direct-print-v4-20261007/print/slice-command.json
+/output/fan-tee-direct-print-v4-20261007/print/slice-result.json

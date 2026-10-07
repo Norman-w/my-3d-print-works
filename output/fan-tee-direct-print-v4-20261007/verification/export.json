@@ -1,0 +1,281 @@
+{
+  "status": "EXPORTED_NOT_SLICED",
+  "units": "mm by source convention",
+  "source_sha256": {
+    "fan-tee-direct-v4.scad": "6c13350c6cff41d568b83190759c92a7f5752c5287e2d38a8808d1ed0c300718",
+    "fan-tee-v4-parameters.scad": "7f931e808dbfb436a74e86e6d837b47da17c6d7c2a1702fe736936cf7285b211",
+    "fan-tee-v4-thread.scad": "702f3f2df87cc042bd38e926f185c4ad8cd70bc330b361196469f53ad2f8ae89"
+  },
+  "openscad_version": "OpenSCAD version 2026.04.26",
+  "files": [
+    {
+      "selector": "connector",
+      "file": "stl/fan-tee-v4-connector-clean.stl",
+      "sha256": "8e23df3bf1258a7530491d7658a65458e752d650c9e0001289423e68c8c64fa2",
+      "print_target": true,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/stl/fan-tee-v4-connector-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 13962,
+        "uniqueVertexCount": 6981,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            80.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            98.5
+          ]
+        },
+        "surfaceArea": 29851.23617045064,
+        "signedVolume": 53302.42653084742,
+        "volume": 53302.42653084742,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "reference-core36",
+      "file": "verification/reference/baseline-anchored-core36.stl",
+      "sha256": "27f6e2a7bd64acec5644cbda85b536ac3a950c86d831d1407457193283996316",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/verification/reference/baseline-anchored-core36.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 14572,
+        "uniqueVertexCount": 7286,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            45.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            45.0
+          ]
+        },
+        "surfaceArea": 11789.750764403303,
+        "signedVolume": 8120.928625131012,
+        "volume": 8120.928625131012,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "review-shell",
+      "file": "review/shell.stl",
+      "sha256": "36af2833093958db895265086fc311bc79ab37e32cc3c3319de149d6972c0bb0",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/shell.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 13130,
+        "uniqueVertexCount": 6565,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            80.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            98.5
+          ]
+        },
+        "surfaceArea": 29727.331613251285,
+        "signedVolume": 53113.42270199462,
+        "volume": 53113.42270199462,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "review-lugs",
+      "file": "review/lugs.stl",
+      "sha256": "437cd903be1df7c44c42e32f80b55d558393d2f773f8a68ae7bdc51975fe91f6",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/lugs.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 760,
+        "uniqueVertexCount": 384,
+        "bounds": {
+          "min": [
+            -22.299999237060547,
+            -3.0,
+            -10.5
+          ],
+          "max": [
+            22.299999237060547,
+            3.0,
+            -4.5
+          ],
+          "size": [
+            44.599998474121094,
+            6.0,
+            6.0
+          ]
+        },
+        "surfaceArea": 286.4015177953074,
+        "signedVolume": 259.9381161977965,
+        "volume": 259.9381161977965,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "review-root-intersection",
+      "file": "review/lug-root-intersection.stl",
+      "sha256": "4d93e7f039326f4dc50fe70e0bfd1816b2928528a8f717bd41b7fbbbb51a7593",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/lug-root-intersection.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 824,
+        "uniqueVertexCount": 416,
+        "bounds": {
+          "min": [
+            -22.299999237060547,
+            -3.0,
+            -10.5
+          ],
+          "max": [
+            22.299999237060547,
+            3.0,
+            -4.5
+          ],
+          "size": [
+            44.599998474121094,
+            6.0,
+            6.0
+          ]
+        },
+        "surfaceArea": 162.4969606040159,
+        "signedVolume": 70.93429523938478,
+        "volume": 70.93429523938478,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "review-female-groove",
+      "file": "review/female-groove.stl",
+      "sha256": "0a796a33c8f86ba70e5c4ec3f20f7c053d01d3b71f9de34a27e2a51d790d4d82",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/female-groove.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 5340,
+        "uniqueVertexCount": 2672,
+        "bounds": {
+          "min": [
+            -21.149999618530273,
+            -21.149999618530273,
+            38.0
+          ],
+          "max": [
+            21.149999618530273,
+            21.149999618530273,
+            54.0
+          ],
+          "size": [
+            42.29999923706055,
+            42.29999923706055,
+            16.0
+          ]
+        },
+        "surfaceArea": 4478.394344300164,
+        "signedVolume": 1483.3752188069077,
+        "volume": 1483.3752188069077,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "connector-section",
+      "file": "review/connector-section.stl",
+      "sha256": "e0b48360b83389ccbcfc33191b8175320eb12bcd68704b334857ae09174eedc7",
+      "print_target": false,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-direct-print-v4-20261007/review/connector-section.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 6766,
+        "uniqueVertexCount": 3385,
+        "bounds": {
+          "min": [
+            -25.0,
+            -0.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            80.0
+          ],
+          "size": [
+            50.0,
+            25.0,
+            98.5
+          ]
+        },
+        "surfaceArea": 15700.272206178108,
+        "signedVolume": 26634.815145524437,
+        "volume": 26634.815145524437,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    }
+  ],
+  "embedded_support_geometry": false,
+  "physical_fit_verified": false,
+  "sliced": false
+}
