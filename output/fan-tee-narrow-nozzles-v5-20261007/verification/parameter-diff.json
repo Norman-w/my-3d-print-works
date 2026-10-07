@@ -1,0 +1,179 @@
+{
+  "current_pitch": 4,
+  "pitch_increase_forbidden": true,
+  "unchanged_interface_and_thread_envelope_keys": [
+    "fan_back_z",
+    "fan_od",
+    "fan_radial_clearance",
+    "socket_id",
+    "socket_od",
+    "body_od",
+    "fan_face_extra",
+    "air_transition_end",
+    "lug_d",
+    "lug_radial_h",
+    "lug_embed",
+    "lug_z",
+    "tee_od",
+    "tee_id",
+    "tip_l",
+    "tip_radial_chamfer",
+    "pitch",
+    "thread_h",
+    "male_major",
+    "female_minor",
+    "female_major",
+    "radial_clearance",
+    "axial_clearance"
+  ],
+  "changed_common_parameters": {
+    "tee_z0": {
+      "v4": 55,
+      "v5": 103
+    },
+    "tee_z1": {
+      "v4": 80,
+      "v5": 128
+    },
+    "core_inlet_id": {
+      "v4": 38,
+      "v5": 36
+    },
+    "core_l": {
+      "v4": 45,
+      "v5": 106
+    },
+    "crest_w": {
+      "v4": 1.12,
+      "v5": 0.8
+    },
+    "female_tip_web": {
+      "v4": 0.787009,
+      "v5": 0.774019
+    },
+    "male_z1": {
+      "v4": 20,
+      "v5": 28
+    },
+    "female_z1": {
+      "v4": 54,
+      "v5": 102
+    },
+    "entry_cone_z0": {
+      "v4": 52,
+      "v5": 100
+    },
+    "male_profile": {
+      "v4": [
+        [
+          19.8,
+          -1.44
+        ],
+        [
+          20.9,
+          -0.56
+        ],
+        [
+          20.9,
+          0.56
+        ],
+        [
+          19.8,
+          1.44
+        ]
+      ],
+      "v5": [
+        [
+          19.8,
+          -1.53217
+        ],
+        [
+          19.95,
+          -1.53217
+        ],
+        [
+          20.9,
+          -0.4
+        ],
+        [
+          20.9,
+          0.4
+        ],
+        [
+          19.95,
+          1.53217
+        ],
+        [
+          19.8,
+          1.53217
+        ]
+      ]
+    },
+    "female_profile": {
+      "v4": [
+        [
+          20.05,
+          -1.64
+        ],
+        [
+          21.15,
+          -0.76
+        ],
+        [
+          21.15,
+          0.76
+        ],
+        [
+          20.05,
+          2.07093
+        ]
+      ],
+      "v5": [
+        [
+          20.05,
+          -1.73217
+        ],
+        [
+          20.2,
+          -1.73217
+        ],
+        [
+          21.15,
+          -0.6
+        ],
+        [
+          21.15,
+          0.6
+        ],
+        [
+          20.2,
+          1.73217
+        ],
+        [
+          20.05,
+          1.73217
+        ]
+      ]
+    }
+  },
+  "tee_insert_length_v4_v5_mm": [
+    25,
+    25
+  ],
+  "mother_thread_cut_length_v4_v5_mm": [
+    16,
+    64
+  ],
+  "actual_mesh_interface_difference": [
+    {
+      "region": "fan_interface_below_thread",
+      "added_mm3": 0.0,
+      "removed_mm3": 0.0
+    },
+    {
+      "region": "tee_interface_translated_48mm",
+      "added_mm3": 0.0,
+      "removed_mm3": 0.0
+    }
+  ]
+}

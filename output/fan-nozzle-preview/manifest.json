@@ -1,28 +1,47 @@
 {
   "schemaVersion": 1,
-  "title": "风机风嘴—亚克力管—Y口交互装配预览",
-  "variantCatalog": {
-    "defaultId": "fan76-tube",
-    "variants": [
-      {
-        "id": "fan76-tube",
-        "label": "Ø76 风机 · 透明管外套",
-        "manifest": "./manifest.json"
-      },
-      {
-        "id": "fan41-direct",
-        "label": "Ø41 风机 · Y口直插",
-        "manifest": "./manifest-fan41-direct.json"
-      }
-    ]
+  "variantId": "fan76-direct",
+  "title": "Ø76 · v1 · Y口直插 · 80 mm 行程",
+  "release": {
+    "id": "fan76-direct-v1-20261007",
+    "label": "Ø76 · v1",
+    "package": "output/fan76-direct-longtravel-v1-20261007",
+    "sources": {
+      "fan76-direct-v1.scad": "6c47c347a872f63b275ebff2e9f6718c071d25b75e7745aa5ee2b996fdc4c5b0",
+      "fan76-direct-v1-parameters.scad": "d11c4478c98ea104d56b19913ff9cd60bac740fbcd1fa583c832a632b9077125",
+      "fan76-direct-v1-thread.scad": "ee5c6db2ffb951b2407c1326fc7b0673356cd9e1cb32b04dfe3404bbbfaa9213"
+    },
+    "pitchMm": 4,
+    "travelMm": 80,
+    "outletIdsMm": [
+      15,
+      20,
+      25,
+      30
+    ],
+    "bodyLengthMm": 222,
+    "coreLengthMm": 160,
+    "nativeAudit": "DIGITAL_FIVE_PART_SLICE_PASS",
+    "physicalFitVerified": false
   },
   "ui": {
     "persistPanelState": true,
     "showSearch": true,
     "showGroups": true
   },
+  "instructions": [
+    "拖动旋转，滚轮缩放；Tab 保留视角、爆炸比例、透明度及面板布局，各方案记住自己的气嘴和行程。",
+    "直接加载本次原始打印 STL：Ø76 · v1，15 / 20 / 25 / 30 mm 四种出口。蓝色主体直插三通，不再使用中间透明管或外套夹紧件。",
+    "P4 螺距不变，通过增加母丝圈数得到 80 mm 机构行程（20 圈）；只转动/移动绿色气嘴，主体与三通保持固定。",
+    "气嘴从 Y 侧旋入；默认主体半透明以展示内芯。隐藏主体可看真实梯形螺纹；没有示意螺旋片或额外锁紧件。",
+    "黄色 Y 为参考外形，仅承口 Ø50.2 为实测；止挡深度、分支交汇位置及通球安全范围仍待实物确认。机构全行程不等于三通内全程均可安全通球。"
+  ],
   "assembly": {
-    "coordinateSystem": { "units": "mm", "handedness": "right", "up": "z" },
+    "coordinateSystem": {
+      "units": "mm",
+      "handedness": "right",
+      "up": "z"
+    },
     "rootFrameId": "world",
     "frames": [
       {
@@ -30,384 +49,506 @@
         "label": "世界坐标",
         "parentFrameId": null,
         "kind": "fixed",
-        "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] }
-      },
-      {
-        "id": "sample-pose",
-        "label": "实物参考姿态（主管横向、斜支管向上）",
-        "parentFrameId": "world",
-        "kind": "fixed",
         "localTransform": {
-          "position": [0, 0, 0],
-          "rotation": [0, -1.5707963267948966, 0]
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         }
       },
       {
-        "id": "tube-fixed",
-        "label": "固定的亚克力管（Y侧）",
-        "parentFrameId": "sample-pose",
+        "id": "assembly",
+        "label": "固定风机 / 主体 / Y三通（主管横向、分支向上）",
+        "parentFrameId": "world",
         "kind": "fixed",
-        "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] }
+        "localTransform": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            -1.5707963267948966,
+            0
+          ]
+        }
       },
       {
-        "id": "y-reference",
-        "label": "固定的 Y/斜三通（黄色参考；主管横向、支管向上）",
-        "parentFrameId": "sample-pose",
-        "kind": "fixed",
-        "localTransform": { "position": [0, 0, 269], "rotation": [0, 0, 0] }
-      },
-      {
-        "id": "nozzle-slide",
-        "label": "长程风机 + 打印风嘴轴向滑动",
-        "parentFrameId": "sample-pose",
+        "id": "core-screw",
+        "label": "气嘴螺旋调节（轴向移动 + 同步旋转）",
+        "parentFrameId": "assembly",
         "kind": "prismatic",
-        "axis": [0, 0, 1],
-        "range": [-40, 20],
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "range": [
+          0,
+          80
+        ],
         "defaultValue": 0,
-        "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] }
+        "localTransform": {
+          "position": [
+            0,
+            0,
+            70
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
       }
     ]
   },
   "groups": [
-    { "id": "printed", "label": "打印件" },
-    { "id": "purchased", "label": "风机 / 管子 / 五金" },
-    { "id": "reference", "label": "参考包络" },
-    { "id": "optional", "label": "可选风嘴芯" }
+    {
+      "id": "printed",
+      "label": "主连接件"
+    },
+    {
+      "id": "optional",
+      "label": "互换气嘴"
+    },
+    {
+      "id": "reference",
+      "label": "非打印参考"
+    }
   ],
   "parts": [
     {
-      "id": "nozzle-body",
-      "name": "打印风嘴主体（长程版，默认内径 Ø42.5）",
+      "id": "body",
+      "name": "Ø76 · v1 主体 · Ø50 直插段 · P4 母丝",
+      "file": "models/fan76-direct-v1-body-clean-a319b4d1e06b.stl",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
       "source": {
         "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"nozzle\""
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"body\""
       },
-      "file": "models/fan-nozzle-tip42p5.stl",
       "geometrySpace": "local",
       "role": "printed",
       "groupId": "printed",
       "renderMode": "solid",
-      "renderOrder": 20,
-      "color": "#2563eb",
-      "instances": [
-        {
-          "id": "nozzle-body-one",
-          "name": "长程风嘴主体",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, -18]
-        }
-      ]
-    },
-    {
-      "id": "tip-core40",
-      "name": "可拆换长程风嘴芯（Ø40，当前装配）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tip-core40\""
-      },
-      "file": "models/fan-nozzle-tip-core40.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "printed",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#22c55e",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "tip-core40-one",
-          "name": "Ø40 长程风嘴芯（102 mm，4圈轴向梯形牙型旋入螺纹 + 出口双槽驱动位 + 内部直段/收缩段）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, -32]
-        }
-      ]
-    },
-    {
-      "id": "tip-core38",
-      "name": "可选长程风嘴芯（Ø38）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tip-core38\""
-      },
-      "file": "models/fan-nozzle-tip-core38.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#f59e0b",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "tip-core38-one",
-          "name": "Ø38 长程风嘴芯（默认隐藏，避免与 Ø40 重叠）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, -32]
-        }
-      ]
-    },
-    {
-      "id": "tip-core36",
-      "name": "可选长程风嘴芯（Ø36）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tip-core36\""
-      },
-      "file": "models/fan-nozzle-tip-core36.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#ec4899",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "tip-core36-one",
-          "name": "Ø36 长程风嘴芯（默认隐藏）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, -32]
-        }
-      ]
-    },
-    {
-      "id": "tip-core34",
-      "name": "可选长程风嘴芯（Ø34）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tip-core34\""
-      },
-      "file": "models/fan-nozzle-tip-core34.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#a855f7",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "tip-core34-one",
-          "name": "Ø34 长程风嘴芯（默认隐藏）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, -32]
-        }
-      ]
-    },
-    {
-      "id": "nozzle-body45",
-      "name": "可选完整风嘴主体（Ø45）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tip45\""
-      },
-      "file": "models/fan-nozzle-tip45.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 25,
-      "color": "#ef4444",
-      "opacity": 0.7,
-      "instances": [
-        {
-          "id": "nozzle-body45-one",
-          "name": "完整 Ø45 风嘴主体（默认隐藏）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, -18]
-        }
-      ]
-    },
-    {
-      "id": "acrylic-tube",
-      "name": "亚克力管（外径 Ø50 / 内径 Ø48，长度130）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"tube-preview\""
-      },
-      "file": "models/tube-preview.stl",
-      "geometrySpace": "local",
-      "role": "purchased",
-      "groupId": "purchased",
-      "renderMode": "xray",
-      "renderOrder": 80,
-      "color": "#22c7e8",
+      "color": "#3976dd",
       "opacity": 0.38,
-      "instances": [
-        {
-          "id": "acrylic-tube-one",
-          "name": "固定管：管端顶到 Y 承口内肩，名义 65 mm 重叠",
-          "parentFrameId": "tube-fixed",
-          "localTransform": { "position": [0, 0, 139], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, 28]
-        }
-      ]
-    },
-    {
-      "id": "fan-body",
-      "name": "风机出风口参考包络（Ø76 / Ø71）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"fan-body-envelope\""
-      },
-      "file": "models/fan-body-envelope.stl",
-      "geometrySpace": "local",
-      "role": "purchased",
-      "groupId": "purchased",
-      "renderMode": "xray",
       "renderOrder": 10,
-      "color": "#9ca3af",
-      "opacity": 0.6,
       "instances": [
         {
-          "id": "fan-body-one",
-          "name": "风机本体参考包络",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, -38]
+          "id": "body",
+          "name": "Ø76 · v1 主体 · Ø50 直插段 · P4 母丝",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            0
+          ]
         }
       ]
     },
     {
-      "id": "fan-tabs",
-      "name": "风机两侧锁扣参考（对置）",
+      "id": "core15",
+      "name": "气嘴 Ø15 mm · 160 mm 长",
+      "file": "models/fan76-direct-v1-core15-clean-282eb92da7b8.stl",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"core15\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core15",
+          "name": "气嘴 Ø15 mm · 160 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core20",
+      "name": "气嘴 Ø20 mm · 160 mm 长",
+      "file": "models/fan76-direct-v1-core20-clean-307dd1496ca9.stl",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"core20\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core20",
+          "name": "气嘴 Ø20 mm · 160 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core25",
+      "name": "气嘴 Ø25 mm · 160 mm 长",
+      "file": "models/fan76-direct-v1-core25-clean-ef40f508c592.stl",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"core25\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core25",
+          "name": "气嘴 Ø25 mm · 160 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core30",
+      "name": "气嘴 Ø30 mm · 160 mm 长",
+      "file": "models/fan76-direct-v1-core30-clean-b39b46ba5ca3.stl",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"core30\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core30",
+          "name": "气嘴 Ø30 mm · 160 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "tee",
+      "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
+      "file": "models/y-reference-086760b9bc72.stl",
+      "sha256": "086760b9bc726b9b453e6b60f141e90538cd146c10e19ccc55559c2e9bf1fa34",
       "source": {
         "kind": "scad",
         "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"fan-tabs-envelope\""
+        "selector": "part=\"y-tee-preview\"; fn_y_tee_socket_id=50.2"
       },
-      "file": "models/fan-tabs-envelope.stl",
       "geometrySpace": "local",
       "role": "purchased",
-      "groupId": "purchased",
-      "renderMode": "solid",
-      "renderOrder": 30,
-      "color": "#f97316",
-      "opacity": 1,
-      "instances": [
-        {
-          "id": "fan-tabs-one",
-          "name": "风机锁扣（打印件卡槽对应）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, -38]
-        }
-      ]
-    },
-    {
-      "id": "m3-hardware",
-      "name": "M3夹紧螺丝与螺母参考（仅锁管套）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"m3-clamp-hardware\""
-      },
-      "file": "models/m3-clamp-hardware.stl",
-      "geometrySpace": "local",
-      "role": "purchased",
-      "groupId": "purchased",
-      "renderMode": "solid",
-      "renderOrder": 40,
-      "color": "#374151",
-      "opacity": 1,
-      "instances": [
-        {
-          "id": "m3-hardware-one",
-          "name": "M3横向锁紧件（不参与风嘴芯固定）",
-          "parentFrameId": "nozzle-slide",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [20, 0, 0]
-        }
-      ]
-    },
-    {
-      "id": "y-tee-reference",
-      "name": "Y/斜三通参考包络（主管承口按 Ø50/Ø48）",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"y-tee-preview\""
-      },
-      "file": "models/y-tee-preview.stl",
-      "geometrySpace": "local",
-      "role": "diagnostic",
       "groupId": "reference",
-      "renderMode": "xray",
-      "renderOrder": 15,
-      "color": "#eab308",
-      "opacity": 0.72,
+      "renderMode": "solid",
+      "color": "#edbe32",
+      "opacity": 0.25,
+      "renderOrder": 30,
       "instances": [
         {
-          "id": "y-tee-reference-one",
-          "name": "Y/斜三通（黄色参考；主管横向、支管向上；承口内肩止挡为示意）",
-          "parentFrameId": "y-reference",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, 35]
+          "id": "tee",
+          "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              222
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "Ø76 风机出口及双凸耳参考",
+      "file": "models/review-fan-envelope-d56fcfe64ddc.stl",
+      "sha256": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan76-direct-v1.scad",
+        "selector": "part=\"review-fan-envelope\""
+      },
+      "geometrySpace": "local",
+      "role": "purchased",
+      "groupId": "reference",
+      "renderMode": "solid",
+      "color": "#b3bdcb",
+      "opacity": 0.38,
+      "renderOrder": 30,
+      "instances": [
+        {
+          "id": "fan",
+          "name": "Ø76 风机出口及双凸耳参考",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            -28
+          ]
         }
       ]
     }
   ],
+  "motionAdapterModule": "./project-motion.mjs",
+  "screwMotion": {
+    "frameId": "core-screw",
+    "pitchMm": 4,
+    "travelMm": 80,
+    "baseAngleRad": 6.283185307179586,
+    "tipProtrusionAtZeroMm": 8
+  },
+  "nozzleOptions": [
+    {
+      "diameterMm": 15,
+      "instanceId": "core15"
+    },
+    {
+      "diameterMm": 20,
+      "instanceId": "core20"
+    },
+    {
+      "diameterMm": 25,
+      "instanceId": "core25"
+    },
+    {
+      "diameterMm": 30,
+      "instanceId": "core30"
+    }
+  ],
+  "defaultNozzleId": "core20",
   "stages": [
-    { "id": "overlap65", "label": "65 mm 重叠（名义位置）", "values": { "nozzle-slide": 0 } },
-    { "id": "overlap25", "label": "25 mm 重叠（风嘴离 Y 口最远）", "values": { "nozzle-slide": -40 } },
-    { "id": "overlap45", "label": "45 mm 重叠", "values": { "nozzle-slide": -20 } },
-    { "id": "overlap85", "label": "85 mm 重叠（风嘴离 Y 口最近）", "values": { "nozzle-slide": 20 } }
+    {
+      "id": "retracted",
+      "label": "缩回 · 0 mm / 0 圈",
+      "values": {
+        "core-screw": 0
+      }
+    },
+    {
+      "id": "middle",
+      "label": "中间 · 40 mm / 10 圈",
+      "values": {
+        "core-screw": 40.0
+      }
+    },
+    {
+      "id": "extended",
+      "label": "伸出 · 80 mm / 20 圈",
+      "values": {
+        "core-screw": 80
+      }
+    }
   ],
   "playback": {
-    "sequence": ["overlap25", "overlap45", "overlap65", "overlap85", "overlap65"],
-    "secondsPerTransition": 1.2,
+    "sequence": [
+      "retracted",
+      "middle",
+      "extended",
+      "middle"
+    ],
+    "secondsPerTransition": 8,
     "loop": true
   },
   "views": [
-    { "id": "isometric", "label": "等轴总装", "direction": [1, -1, 0.75] },
     {
-      "id": "interface",
-      "label": "管子接口细节",
-      "direction": [1, -0.75, 0.45],
-      "focusInstanceIds": ["nozzle-body-one", "tip-core40-one", "acrylic-tube-one", "m3-hardware-one", "y-tee-reference-one"]
+      "id": "assembly",
+      "label": "等轴总装",
+      "direction": [
+        0.65,
+        -1,
+        0.65
+      ]
     },
     {
-      "id": "fan-bayonet",
-      "label": "风机卡扣细节",
-      "direction": [1, -1, 0.35],
-      "focusInstanceIds": ["nozzle-body-one", "fan-body-one", "fan-tabs-one"]
+      "id": "side",
+      "label": "轴向侧视",
+      "direction": [
+        0,
+        -1,
+        0.15
+      ]
     },
     {
-      "id": "y-tee",
-      "label": "Y三通连接",
-      "direction": [1, -1, 0.65],
-      "focusInstanceIds": ["acrylic-tube-one", "y-tee-reference-one", "nozzle-body-one"]
+      "id": "fan",
+      "label": "风机卡口",
+      "direction": [
+        1,
+        -0.5,
+        0.35
+      ],
+      "focusInstanceIds": [
+        "fan",
+        "body"
+      ]
     },
     {
-      "id": "core-thread",
-      "label": "风嘴芯螺纹锁紧关系",
-      "direction": [1, -1, 0.28],
-      "focusInstanceIds": ["nozzle-body-one", "tip-core40-one"]
-    },
-    {
-      "id": "tube-clamp",
-      "label": "外套管止滑与 M3 夹紧",
-      "direction": [1, -0.7, 0.42],
-      "focusInstanceIds": ["nozzle-body-one", "acrylic-tube-one", "m3-hardware-one"]
-    },
-    { "id": "side", "label": "轴向侧视", "direction": [1, 0, 0.15] }
-  ]
+      "id": "tee",
+      "label": "三通接口",
+      "direction": [
+        0.5,
+        -1,
+        0.6
+      ],
+      "focusInstanceIds": [
+        "tee"
+      ]
+    }
+  ],
+  "variantCatalog": {
+    "defaultId": "fan76-direct",
+    "variants": [
+      {
+        "id": "fan76-direct",
+        "label": "Ø76 · Y口直插 / 80 mm",
+        "manifest": "./manifest.json"
+      },
+      {
+        "id": "fan41-direct",
+        "label": "Ø41 · Y口直插 / 40 mm",
+        "manifest": "./manifest-fan41-direct.json"
+      }
+    ]
+  }
 }

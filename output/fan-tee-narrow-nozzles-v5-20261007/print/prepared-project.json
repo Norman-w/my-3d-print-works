@@ -1,0 +1,245 @@
+{
+  "status": "PREPARED_GEOMETRY_ONLY_NATIVE_SLICE_REQUIRED",
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/print/fan-tee-v5-prepared.3mf",
+  "sha256": "47e08e4a96e3d3d3b48dc51f02321d9f376e17e37813fb9967f38102c2217119",
+  "plate_count": 1,
+  "part_count": 5,
+  "parts": [
+    {
+      "role": "connector",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-mother-clean.stl",
+      "sha256": "2a8a33c011f30dfc8170734d3089661e8a0146ac925e47c1e088141b083db50e",
+      "triangles": 38456,
+      "bounds_mm": [
+        [
+          -25.0,
+          25.0
+        ],
+        [
+          -25.0,
+          25.0
+        ],
+        [
+          -18.5,
+          128.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        54.75
+      ],
+      "center_xy_mm": [
+        64.0,
+        144.0
+      ],
+      "bed_translation_z_mm": 18.5,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          32.0,
+          96.0
+        ],
+        [
+          112.0,
+          176.0
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle15",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle15-clean.stl",
+      "sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "triangles": 16756,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          106.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        53.0
+      ],
+      "center_xy_mm": [
+        128.0,
+        64.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          100.10000038146973,
+          155.89999961853027
+        ],
+        [
+          36.10000038146973,
+          91.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle20",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle20-clean.stl",
+      "sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "triangles": 16756,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          106.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        53.0
+      ],
+      "center_xy_mm": [
+        192.0,
+        64.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          164.10000038146973,
+          219.89999961853027
+        ],
+        [
+          36.10000038146973,
+          91.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle25",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle25-clean.stl",
+      "sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "triangles": 16756,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          106.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        53.0
+      ],
+      "center_xy_mm": [
+        128.0,
+        144.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          100.10000038146973,
+          155.89999961853027
+        ],
+        [
+          116.10000038146973,
+          171.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle30",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle30-clean.stl",
+      "sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "triangles": 16756,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          106.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        53.0
+      ],
+      "center_xy_mm": [
+        192.0,
+        144.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          164.10000038146973,
+          219.89999961853027
+        ],
+        [
+          116.10000038146973,
+          171.89999961853027
+        ]
+      ],
+      "quantity": 1
+    }
+  ],
+  "no_embedded_supports": true,
+  "printer_contacted": false,
+  "bed": "X1C 256x256 Textured PEI",
+  "material": "PETG; AMS mapping not yet confirmed",
+  "native_sliced_package": null,
+  "physical_acceptance": false
+}

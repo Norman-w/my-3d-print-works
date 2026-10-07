@@ -1,0 +1,63 @@
+{
+  "mother": {
+    "angle_datum": "degrees above horizontal build plate; +Z up",
+    "thread_min_deg": 49.98452961786659,
+    "thread_triangle_count": 8490,
+    "all_nonbed_down_min_deg": 1.8749318273055335,
+    "below_45_nonbed_count": 108,
+    "below_45_outside_lugs": 0,
+    "low_angle_centroid_bounds_mm": [
+      [
+        -21.087867101033527,
+        -2.073559323946635,
+        -10.497859001159668
+      ],
+      [
+        21.087867101033527,
+        2.073559323946635,
+        -9.666053771972656
+      ]
+    ],
+    "actual_slice_checked": false
+  },
+  "nozzle15": {
+    "angle_datum": "degrees above horizontal build plate; +Z up",
+    "thread_min_deg": 49.99692971853766,
+    "thread_triangle_count": 3732,
+    "all_nonbed_down_min_deg": 49.99692971853766,
+    "below_45_nonbed_count": 0,
+    "below_45_outside_lugs": 0,
+    "low_angle_centroid_bounds_mm": null,
+    "actual_slice_checked": false
+  },
+  "nozzle20": {
+    "angle_datum": "degrees above horizontal build plate; +Z up",
+    "thread_min_deg": 49.99692971853766,
+    "thread_triangle_count": 3732,
+    "all_nonbed_down_min_deg": 49.99692971853766,
+    "below_45_nonbed_count": 0,
+    "below_45_outside_lugs": 0,
+    "low_angle_centroid_bounds_mm": null,
+    "actual_slice_checked": false
+  },
+  "nozzle25": {
+    "angle_datum": "degrees above horizontal build plate; +Z up",
+    "thread_min_deg": 49.99692971853766,
+    "thread_triangle_count": 3732,
+    "all_nonbed_down_min_deg": 49.99692971853766,
+    "below_45_nonbed_count": 0,
+    "below_45_outside_lugs": 0,
+    "low_angle_centroid_bounds_mm": null,
+    "actual_slice_checked": false
+  },
+  "nozzle30": {
+    "angle_datum": "degrees above horizontal build plate; +Z up",
+    "thread_min_deg": 49.99692971853766,
+    "thread_triangle_count": 3732,
+    "all_nonbed_down_min_deg": 49.99692971853766,
+    "below_45_nonbed_count": 0,
+    "below_45_outside_lugs": 0,
+    "low_angle_centroid_bounds_mm": null,
+    "actual_slice_checked": false
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "pass": true,
+  "checks": {
+    "pitch_exactly_4": true,
+    "effective_travel_exactly_80": true,
+    "twenty_adjustment_turns": true,
+    "at_least_three_complete_turns_both_ends": true,
+    "full_depth_major_diameter_gauge_free": true,
+    "guide_bore_above_male_major": true,
+    "sources_match_snapshot": true,
+    "five_clean_print_stls": true,
+    "no_horizontal_fan_face_shoulder_z24": true,
+    "fan_od76_clears_at_face_plus_0_5": true,
+    "only_slot_roof_has_nonbed_faces_below_45deg": true
+  },
+  "engagement_endpoints": [
+    {
+      "core_z": 70,
+      "complete_turn_count": 4,
+      "turns": [
+        {
+          "local_centerline_z": [
+            8,
+            12
+          ],
+          "world_full_profile_z": [
+            76.46783,
+            83.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            12,
+            16
+          ],
+          "world_full_profile_z": [
+            80.46783,
+            87.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            16,
+            20
+          ],
+          "world_full_profile_z": [
+            84.46783,
+            91.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            20,
+            24
+          ],
+          "world_full_profile_z": [
+            88.46783,
+            95.53217
+          ],
+          "complete": true
+        }
+      ]
+    },
+    {
+      "core_z": 150,
+      "complete_turn_count": 4,
+      "turns": [
+        {
+          "local_centerline_z": [
+            8,
+            12
+          ],
+          "world_full_profile_z": [
+            156.46783,
+            163.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            12,
+            16
+          ],
+          "world_full_profile_z": [
+            160.46783,
+            167.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            16,
+            20
+          ],
+          "world_full_profile_z": [
+            164.46783,
+            171.53217
+          ],
+          "complete": true
+        },
+        {
+          "local_centerline_z": [
+            20,
+            24
+          ],
+          "world_full_profile_z": [
+            168.46783,
+            175.53217
+          ],
+          "complete": true
+        }
+      ]
+    }
+  ],
+  "guide_major_gauge_intersection_mm3": 0.0,
+  "sampled_guide_spigot_diameters": [
+    {
+      "z": 184.01,
+      "min_inner_diameter_mm": 43.99999230803846,
+      "max_outer_diameter_mm": 54.00000180958614
+    },
+    {
+      "z": 190,
+      "min_inner_diameter_mm": 43.99686615950514,
+      "max_outer_diameter_mm": 54.00000180958614
+    },
+    {
+      "z": 197.01,
+      "min_inner_diameter_mm": 43.99469422121964,
+      "max_outer_diameter_mm": 50.00000164116806
+    },
+    {
+      "z": 210,
+      "min_inner_diameter_mm": 43.99490828310272,
+      "max_outer_diameter_mm": 50.00000164116806
+    },
+    {
+      "z": 220,
+      "min_inner_diameter_mm": 43.9988239491471,
+      "max_outer_diameter_mm": 50.00000164116806
+    },
+    {
+      "z": 221.19,
+      "min_inner_diameter_mm": 43.99950708817188,
+      "max_outer_diameter_mm": 50.00000164116806
+    },
+    {
+      "z": 221.6,
+      "min_inner_diameter_mm": 43.999753155318196,
+      "max_outer_diameter_mm": 49.64999969493248
+    }
+  ],
+  "fan_datum_transition_sections": [
+    {
+      "z": 23.999,
+      "min_inscribed_section_id_mm": 76.59998114940652
+    },
+    {
+      "z": 24.001,
+      "min_inscribed_section_id_mm": 76.59990525354651
+    },
+    {
+      "z": 24.25,
+      "min_inscribed_section_id_mm": 76.57995940792559
+    },
+    {
+      "z": 24.5,
+      "min_inscribed_section_id_mm": 76.56601840904348
+    },
+    {
+      "z": 25,
+      "min_inscribed_section_id_mm": 76.54127569370638
+    },
+    {
+      "z": 30,
+      "min_inscribed_section_id_mm": 74.85778833995816
+    }
+  ],
+  "horizontal_fan_face_shoulder_z24_area_mm2": 0.0,
+  "nonbed_nonslot_area_below_45deg_mm2": 0.0,
+  "geometric_wall_budget_mm": {
+    "spigot_nominal": 3,
+    "spigot_short_chamfer_tip": 2.65,
+    "body_at_deepest_groove": 5.850000000000001,
+    "core_radial_wall": 2,
+    "core_tip_grip_flats_minimum": 1.5,
+    "mother_tooth_tip_web": 0.774019
+  },
+  "profile": {
+    "style": "outward ridge / finite flat trapezoid with independent buried root",
+    "exposed_height": 0.9,
+    "flat_crest_axial_width": 0.8,
+    "buried_root_width": 3.06434,
+    "exposed_flank_to_horizontal_deg": 50,
+    "root_embed": 0.2,
+    "root_shoulder_buried": 0.05,
+    "male_core_od": 40,
+    "male_major": 41.8,
+    "female_minor": 40.6,
+    "female_major": 42.3,
+    "groove_radial_clearance": 0.25,
+    "groove_axial_clearance_per_flank": 0.2,
+    "approx_radial_growth_per_0_2mm_layer": 0.16781992623545605
+  },
+  "adjustment_use": {
+    "core_inlet_z_mm": [
+      70,
+      150
+    ],
+    "tip_z_mm": [
+      230,
+      310
+    ],
+    "tip_past_body_outlet_mm": [
+      8,
+      88
+    ],
+    "tip_past_assumed_Y_mouth_mm": [
+      33,
+      113
+    ],
+    "effective_range_is_not_extra_engagement": true,
+    "grip": "Last 8mm carries opposed external flats; exposed at minimum. Adjust with Y detached unless actual Y tool-access is measured.",
+    "limits": "No captive stop or locking ring. Measure tip protrusion 8..88mm; 4mm per turn. Do not continue beyond this qualified window.",
+    "bypass": "No seal/crossbar. Clearance annulus remains, so outlet ID is not a calibrated sole flow area.",
+    "Y_ball_clearance": "UNKNOWN: actual stop depth, branch intersection and swept ball envelope must be measured before operating."
+  }
+}

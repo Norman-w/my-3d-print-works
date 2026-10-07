@@ -48,3 +48,26 @@ __pycache__/
 /output/fan-tee-direct-print-v4-20261007/print/slice-audit.json
 /output/fan-tee-direct-print-v4-20261007/print/slice-command.json
 /output/fan-tee-direct-print-v4-20261007/print/slice-result.json
+
+# Current fan delivery packages: exact clean meshes + audited native print files.
+!/output/fan-tee-narrow-nozzles-v5-20261007/stl/*-clean.stl
+!/output/fan76-direct-longtravel-v1-20261007/stl/*-clean.stl
+!/output/fan-tee-narrow-nozzles-v5-20261007/print/slice/fan-tee-v5-native-project.3mf
+!/output/fan-tee-narrow-nozzles-v5-20261007/print/slice/fan-tee-v5-native-actual.gcode.3mf
+!/output/fan76-direct-longtravel-v1-20261007/print/slice/fan76-direct-v1-native-project.3mf
+!/output/fan76-direct-longtravel-v1-20261007/print/slice/fan76-direct-v1-native-actual.gcode.3mf
+!/output/fan76-direct-longtravel-v1-20261007/review/review-fan-envelope.stl
+!/output/fan-tee-narrow-nozzles-v5-20261007/render/*.png
+!/output/fan76-direct-longtravel-v1-20261007/render/*.png
+!/output/fan-tee-narrow-nozzles-v5-20261007/verification/SHA256SUMS.txt
+!/output/fan76-direct-longtravel-v1-20261007/verification/SHA256SUMS.txt
+# Rebuilds, duplicate extracted presets and machine caches are not deliverables.
+/output/fan-tee-narrow-nozzles-v5-20261007/verification/rebuild/
+/output/fan76-direct-longtravel-v1-20261007/verification/rebuild/
+/output/**/verification/matplotlib/
+/output/fan-tee-narrow-nozzles-v5-20261007/print/bambu-cli-data/
+/output/fan76-direct-longtravel-v1-20261007/print/bambu-cli-data/
+/output/fan-tee-narrow-nozzles-v5-20261007/print/config/project-settings.json
+/output/fan76-direct-longtravel-v1-20261007/print/config/project-settings.json
+/output/fan-tee-narrow-nozzles-v5-20261007/print/slice/*.json
+/output/fan76-direct-longtravel-v1-20261007/print/slice/*.json

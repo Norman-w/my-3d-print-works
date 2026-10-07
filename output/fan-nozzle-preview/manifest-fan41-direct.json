@@ -1,22 +1,47 @@
 {
   "schemaVersion": 1,
   "variantId": "fan41-direct",
-  "title": "风机接口方案：Ø41 风机 · Ø50 Y口直插",
-  "description": "Ø41 风机卡口直接接入 Ø50 Y 三通的独立候选方案",
-  "instructions": [
-    "拖动模型：等轴旋转；滚轮：缩放。",
-    "此方案将连接件直接插入 Y 三通承口，不使用透明管外套。",
-    "黄色半透明件复用原方案已处理好的完整 Y/斜三通参考 STL，主管承口与连接件的 Ø49.2 直插段对齐；蓝色件是打印连接件，绿色件是可替换出风口芯。风嘴芯从 Y 三通侧装入：全长 Ø40 导向外径先通过 Ø42.4 入口，再经过 4 mm 光滑导入段进入 Ø40.6 螺纹基孔；不设置会卡住的外法兰。",
-    "风机卡口采用内壁对置 Ø6 圆饼凸起；风机内径当前仍是待实测的 Ø35 候选值。",
-    "出风口芯提供 Ø34 / Ø36 / Ø38 三种内径，先定义轴向梯形牙型、再按 4 mm 螺距生成同相位公牙/母沟；不增加额外防松结构，选择不同芯子查看对应气道。"
-  ],
+  "title": "Ø41 · v5 · Y口直插 · 40 mm 行程",
+  "release": {
+    "id": "fan-tee-v5-20261007",
+    "label": "Ø41 · v5",
+    "package": "output/fan-tee-narrow-nozzles-v5-20261007",
+    "sources": {
+      "fan-tee-narrow-v5.scad": "0b773527ddf180e7a240f23178d6e76c7ca8ea13634fbc728e4067d181bba91b",
+      "fan-tee-v5-parameters.scad": "c743e2f48058a66475738469c065e2ccf74c64b8a583badb5fb05e879d5cccbb",
+      "fan-tee-v5-thread.scad": "87395d9bf1586756734403e92a85b4d7ae655f33dcd9a15c4ea393cfa7d3ca33"
+    },
+    "pitchMm": 4,
+    "travelMm": 40,
+    "outletIdsMm": [
+      15,
+      20,
+      25,
+      30
+    ],
+    "bodyLengthMm": 146.5,
+    "coreLengthMm": 106,
+    "nativeAudit": "DIGITAL_FIVE_PART_SLICE_PASS",
+    "physicalFitVerified": false
+  },
   "ui": {
     "persistPanelState": true,
     "showSearch": true,
     "showGroups": true
   },
+  "instructions": [
+    "拖动旋转，滚轮缩放；Tab 保留视角、爆炸比例、透明度及面板布局，各方案记住自己的气嘴和行程。",
+    "直接加载本次原始打印 STL：Ø41 · v5，15 / 20 / 25 / 30 mm 四种出口。蓝色主体直插三通，不再使用中间透明管或外套夹紧件。",
+    "P4 螺距不变，通过增加母丝圈数得到 40 mm 机构行程（10 圈）；只转动/移动绿色气嘴，主体与三通保持固定。",
+    "气嘴从 Y 侧旋入；默认主体半透明以展示内芯。隐藏主体可看真实梯形螺纹；没有示意螺旋片或额外锁紧件。",
+    "黄色 Y 为参考外形，仅承口 Ø50.2 为实测；止挡深度、分支交汇位置及通球安全范围仍待实物确认。机构全行程不等于三通内全程均可安全通球。"
+  ],
   "assembly": {
-    "coordinateSystem": { "units": "mm", "handedness": "right", "up": "z" },
+    "coordinateSystem": {
+      "units": "mm",
+      "handedness": "right",
+      "up": "z"
+    },
     "rootFrameId": "world",
     "frames": [
       {
@@ -24,212 +49,491 @@
         "label": "世界坐标",
         "parentFrameId": null,
         "kind": "fixed",
-        "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] }
+        "localTransform": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
       },
       {
-        "id": "direct-assembly",
-        "label": "Ø41风机—Y三通直插装配",
+        "id": "assembly",
+        "label": "固定风机 / 主体 / Y三通（主管横向、分支向上）",
         "parentFrameId": "world",
         "kind": "fixed",
-        "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] }
+        "localTransform": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            -1.5707963267948966,
+            0
+          ]
+        }
+      },
+      {
+        "id": "core-screw",
+        "label": "气嘴螺旋调节（轴向移动 + 同步旋转）",
+        "parentFrameId": "assembly",
+        "kind": "prismatic",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "range": [
+          0,
+          40
+        ],
+        "defaultValue": 0,
+        "localTransform": {
+          "position": [
+            0,
+            0,
+            34
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
       }
     ]
   },
   "groups": [
-    { "id": "printed", "label": "打印件" },
-    { "id": "purchased", "label": "风机接口参考" },
-    { "id": "reference", "label": "Y三通参考" },
-    { "id": "optional", "label": "可替换出风口芯" }
+    {
+      "id": "printed",
+      "label": "主连接件"
+    },
+    {
+      "id": "optional",
+      "label": "互换气嘴"
+    },
+    {
+      "id": "reference",
+      "label": "非打印参考"
+    }
   ],
   "parts": [
     {
-      "id": "direct-connector",
-      "name": "Ø41风机—Ø50 Y口直插连接件",
+      "id": "body",
+      "name": "Ø41 · v5 主体 · Ø50 直插段 · P4 母丝",
+      "file": "models/fan-tee-v5-mother-clean-2a8a33c011f3.stl",
+      "sha256": "2a8a33c011f30dfc8170734d3089661e8a0146ac925e47c1e088141b083db50e",
       "source": {
         "kind": "scad",
-        "file": "source/fan-tee-direct-bayonet.scad",
-        "selector": "part=\"connector\""
+        "file": "source/fan-tee-narrow-v5.scad",
+        "selector": "part=\"mother\""
       },
-      "file": "models/fan-tee-direct-connector.stl",
       "geometrySpace": "local",
       "role": "printed",
       "groupId": "printed",
       "renderMode": "solid",
-      "renderOrder": 20,
-      "color": "#2563eb",
-      "instances": [
-        {
-          "id": "direct-connector-one",
-          "name": "主连接件（风机卡口 + Ø49.2 插入段 + 内螺纹）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, 0]
-        }
-      ]
-    },
-    {
-      "id": "direct-core34",
-      "name": "可替换出风口芯 Ø34",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-tee-direct-bayonet.scad",
-        "selector": "part=\"core34\""
-      },
-      "file": "models/fan-tee-direct-core34.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#a855f7",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "direct-core34-one",
-          "name": "Ø34 芯（默认隐藏）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 48], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, 16]
-        }
-      ]
-    },
-    {
-      "id": "direct-core36",
-      "name": "可替换出风口芯 Ø36",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-tee-direct-bayonet.scad",
-        "selector": "part=\"core36\""
-      },
-      "file": "models/fan-tee-direct-core36.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#22c55e",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "direct-core36-one",
-          "name": "Ø36 芯（当前装配）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 48], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, 16]
-        }
-      ]
-    },
-    {
-      "id": "direct-core38",
-      "name": "可替换出风口芯 Ø38",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-tee-direct-bayonet.scad",
-        "selector": "part=\"core38\""
-      },
-      "file": "models/fan-tee-direct-core38.stl",
-      "geometrySpace": "local",
-      "role": "printed",
-      "groupId": "optional",
-      "renderMode": "xray",
-      "renderOrder": 70,
-      "color": "#f59e0b",
-      "opacity": 1.0,
-      "instances": [
-        {
-          "id": "direct-core38-one",
-          "name": "Ø38 芯（默认隐藏）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 48], "rotation": [0, 0, 0] },
-          "visible": false,
-          "explosion": [0, 0, 16]
-        }
-      ]
-    },
-    {
-      "id": "direct-fan-reference",
-      "name": "Ø41 风机出风口参考",
-      "source": {
-        "kind": "scad",
-        "file": "source/fan-tee-direct-bayonet.scad",
-        "selector": "part=\"fan-reference\""
-      },
-      "file": "models/fan-tee-direct-fan-reference.stl",
-      "geometrySpace": "local",
-      "role": "purchased",
-      "groupId": "purchased",
-      "renderMode": "xray",
+      "color": "#3976dd",
+      "opacity": 0.38,
       "renderOrder": 10,
-      "color": "#9ca3af",
-      "opacity": 0.62,
       "instances": [
         {
-          "id": "direct-fan-reference-one",
-          "name": "Ø41 出风口（L形槽为风机实物，当前只显示外圆参考）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 0], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, -18]
+          "id": "body",
+          "name": "Ø41 · v5 主体 · Ø50 直插段 · P4 母丝",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            0
+          ]
         }
       ]
     },
     {
-      "id": "direct-tee-reference",
-      "name": "完整 Y/斜三通参考（主管横向、支管向上）",
+      "id": "core15",
+      "name": "气嘴 Ø15 mm · 106 mm 长",
+      "file": "models/fan-tee-v5-nozzle15-clean-b159553a7e1b.stl",
+      "sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan-tee-narrow-v5.scad",
+        "selector": "part=\"nozzle15\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core15",
+          "name": "气嘴 Ø15 mm · 106 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core20",
+      "name": "气嘴 Ø20 mm · 106 mm 长",
+      "file": "models/fan-tee-v5-nozzle20-clean-a06deceaae50.stl",
+      "sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan-tee-narrow-v5.scad",
+        "selector": "part=\"nozzle20\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core20",
+          "name": "气嘴 Ø20 mm · 106 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core25",
+      "name": "气嘴 Ø25 mm · 106 mm 长",
+      "file": "models/fan-tee-v5-nozzle25-clean-045099483f50.stl",
+      "sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan-tee-narrow-v5.scad",
+        "selector": "part=\"nozzle25\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core25",
+          "name": "气嘴 Ø25 mm · 106 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "core30",
+      "name": "气嘴 Ø30 mm · 106 mm 长",
+      "file": "models/fan-tee-v5-nozzle30-clean-cf0fc6720405.stl",
+      "sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan-tee-narrow-v5.scad",
+        "selector": "part=\"nozzle30\""
+      },
+      "geometrySpace": "local",
+      "role": "printed",
+      "groupId": "optional",
+      "renderMode": "solid",
+      "color": "#31ce72",
+      "opacity": 1,
+      "renderOrder": 10,
+      "instances": [
+        {
+          "id": "core30",
+          "name": "气嘴 Ø30 mm · 106 mm 长",
+          "parentFrameId": "core-screw",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": false,
+          "explosion": [
+            0,
+            0,
+            36
+          ]
+        }
+      ],
+      "exclusiveGroup": "nozzle"
+    },
+    {
+      "id": "tee",
+      "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
+      "file": "models/y-reference-086760b9bc72.stl",
+      "sha256": "086760b9bc726b9b453e6b60f141e90538cd146c10e19ccc55559c2e9bf1fa34",
       "source": {
         "kind": "scad",
         "file": "source/fan-nozzle-bayonet-adjustable.scad",
-        "selector": "part=\"y-tee-preview\""
+        "selector": "part=\"y-tee-preview\"; fn_y_tee_socket_id=50.2"
       },
-      "file": "models/y-tee-preview.stl",
       "geometrySpace": "local",
-      "role": "diagnostic",
+      "role": "purchased",
       "groupId": "reference",
-      "renderMode": "xray",
-      "renderOrder": 15,
-      "color": "#eab308",
-      "opacity": 0.38,
+      "renderMode": "solid",
+      "color": "#edbe32",
+      "opacity": 0.25,
+      "renderOrder": 30,
       "instances": [
         {
-          "id": "direct-tee-reference-one",
-          "name": "完整 Y/斜三通（主管承口与直插段对齐；实际止挡深度仍需测量）",
-          "parentFrameId": "direct-assembly",
-          "localTransform": { "position": [0, 0, 80], "rotation": [0, 0, 0] },
-          "explosion": [0, 0, 18]
+          "id": "tee",
+          "name": "Y 三通参考 · 承口实测约 Ø50.2 · 其余外形/止挡为示意",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              128
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fan",
+      "name": "Ø41 出口外表面示意（非真实壁厚/内径/L槽）",
+      "file": "models/fan41-reference-65e735d3cb43.stl",
+      "sha256": "65e735d3cb439ccfbf22f62523b4b0c53dda8b16c037823af2a0b309bda3a7da",
+      "source": {
+        "kind": "scad",
+        "file": "source/fan41-preview-reference.scad",
+        "selector": "display-only outlet skin"
+      },
+      "geometrySpace": "local",
+      "role": "purchased",
+      "groupId": "reference",
+      "renderMode": "solid",
+      "color": "#b3bdcb",
+      "opacity": 0.38,
+      "renderOrder": 30,
+      "instances": [
+        {
+          "id": "fan",
+          "name": "Ø41 出口外表面示意（非真实壁厚/内径/L槽）",
+          "parentFrameId": "assembly",
+          "localTransform": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "visible": true,
+          "explosion": [
+            0,
+            0,
+            -28
+          ]
         }
       ]
     }
   ],
+  "motionAdapterModule": "./project-motion.mjs",
+  "screwMotion": {
+    "frameId": "core-screw",
+    "pitchMm": 4,
+    "travelMm": 40,
+    "baseAngleRad": 0.0,
+    "tipProtrusionAtZeroMm": 12
+  },
+  "nozzleOptions": [
+    {
+      "diameterMm": 15,
+      "instanceId": "core15"
+    },
+    {
+      "diameterMm": 20,
+      "instanceId": "core20"
+    },
+    {
+      "diameterMm": 25,
+      "instanceId": "core25"
+    },
+    {
+      "diameterMm": 30,
+      "instanceId": "core30"
+    }
+  ],
+  "defaultNozzleId": "core20",
+  "stages": [
+    {
+      "id": "retracted",
+      "label": "缩回 · 0 mm / 0 圈",
+      "values": {
+        "core-screw": 0
+      }
+    },
+    {
+      "id": "middle",
+      "label": "中间 · 20 mm / 5 圈",
+      "values": {
+        "core-screw": 20.0
+      }
+    },
+    {
+      "id": "extended",
+      "label": "伸出 · 40 mm / 10 圈",
+      "values": {
+        "core-screw": 40
+      }
+    }
+  ],
+  "playback": {
+    "sequence": [
+      "retracted",
+      "middle",
+      "extended",
+      "middle"
+    ],
+    "secondsPerTransition": 8,
+    "loop": true
+  },
   "views": [
     {
-      "id": "isometric",
+      "id": "assembly",
       "label": "等轴总装",
-      "direction": [1, -1, 0.75],
-      "focusInstanceIds": ["direct-connector-one", "direct-core36-one", "direct-fan-reference-one", "direct-tee-reference-one"]
-    },
-    {
-      "id": "fan-bayonet",
-      "label": "风机卡口",
-      "direction": [1, -1, 0.35],
-      "focusInstanceIds": ["direct-connector-one", "direct-fan-reference-one"]
-    },
-    {
-      "id": "tee-insertion",
-      "label": "三通直插段",
-      "direction": [1, -1, 0.65],
-      "focusInstanceIds": ["direct-connector-one", "direct-tee-reference-one"]
-    },
-    {
-      "id": "core-thread",
-      "label": "出风口芯螺纹",
-      "direction": [1, -1, 0.28],
-      "focusInstanceIds": ["direct-connector-one", "direct-core36-one"]
+      "direction": [
+        0.65,
+        -1,
+        0.65
+      ]
     },
     {
       "id": "side",
       "label": "轴向侧视",
-      "direction": [1, 0, 0.15],
-      "focusInstanceIds": ["direct-connector-one", "direct-core36-one"]
+      "direction": [
+        0,
+        -1,
+        0.15
+      ]
+    },
+    {
+      "id": "fan",
+      "label": "风机卡口",
+      "direction": [
+        1,
+        -0.5,
+        0.35
+      ],
+      "focusInstanceIds": [
+        "fan",
+        "body"
+      ]
+    },
+    {
+      "id": "tee",
+      "label": "三通接口",
+      "direction": [
+        0.5,
+        -1,
+        0.6
+      ],
+      "focusInstanceIds": [
+        "tee"
+      ]
     }
   ]
 }

@@ -1,0 +1,486 @@
+{
+  "status": "EXPORTED_GEOMETRY_NOT_SLICE_APPROVAL",
+  "source_sha256": {
+    "fan-tee-narrow-v5.scad": "0b773527ddf180e7a240f23178d6e76c7ca8ea13634fbc728e4067d181bba91b",
+    "fan-tee-v5-parameters.scad": "c743e2f48058a66475738469c065e2ccf74c64b8a583badb5fb05e879d5cccbb",
+    "fan-tee-v5-thread.scad": "87395d9bf1586756734403e92a85b4d7ae655f33dcd9a15c4ea393cfa7d3ca33"
+  },
+  "files": [
+    {
+      "part_id": "mother",
+      "file": "stl/fan-tee-v5-mother-clean.stl",
+      "sha256": "2a8a33c011f30dfc8170734d3089661e8a0146ac925e47c1e088141b083db50e",
+      "print_target": true,
+      "quantity": 1,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-mother-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 38456,
+        "uniqueVertexCount": 19228,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            128.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            146.5
+          ]
+        },
+        "surfaceArea": 44565.13671027824,
+        "signedVolume": 82549.20561322468,
+        "volume": 82549.20561322468,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "nozzle15",
+      "file": "stl/fan-tee-v5-nozzle15-clean.stl",
+      "sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "print_target": true,
+      "quantity": 1,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle15-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 16756,
+        "uniqueVertexCount": 8378,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            106.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            106.0
+          ]
+        },
+        "surfaceArea": 21415.699369312213,
+        "signedVolume": 21509.396915423084,
+        "volume": 21509.396915423084,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "nozzle20",
+      "file": "stl/fan-tee-v5-nozzle20-clean.stl",
+      "sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "print_target": true,
+      "quantity": 1,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle20-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 16756,
+        "uniqueVertexCount": 8378,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            106.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            106.0
+          ]
+        },
+        "surfaceArea": 22563.380190540178,
+        "signedVolume": 22702.98884059232,
+        "volume": 22702.98884059232,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "nozzle25",
+      "file": "stl/fan-tee-v5-nozzle25-clean.stl",
+      "sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "print_target": true,
+      "quantity": 1,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle25-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 16756,
+        "uniqueVertexCount": 8378,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            106.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            106.0
+          ]
+        },
+        "surfaceArea": 23722.51267561963,
+        "signedVolume": 23896.58123226607,
+        "volume": 23896.58123226607,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "nozzle30",
+      "file": "stl/fan-tee-v5-nozzle30-clean.stl",
+      "sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "print_target": true,
+      "quantity": 1,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle30-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 16756,
+        "uniqueVertexCount": 8378,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            106.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            106.0
+          ]
+        },
+        "surfaceArea": 24900.231667346565,
+        "signedVolume": 25090.173009048904,
+        "volume": 25090.173009048904,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "review-lugs",
+      "file": "review/review-lugs.stl",
+      "sha256": "437cd903be1df7c44c42e32f80b55d558393d2f773f8a68ae7bdc51975fe91f6",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/review-lugs.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 760,
+        "uniqueVertexCount": 384,
+        "bounds": {
+          "min": [
+            -22.299999237060547,
+            -3.0,
+            -10.5
+          ],
+          "max": [
+            22.299999237060547,
+            3.0,
+            -4.5
+          ],
+          "size": [
+            44.599998474121094,
+            6.0,
+            6.0
+          ]
+        },
+        "surfaceArea": 286.4015177953074,
+        "signedVolume": 259.9381161977965,
+        "volume": 259.9381161977965,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "review-shell",
+      "file": "review/review-shell.stl",
+      "sha256": "3faf00251314b404147062118609a43a1eb2abf5e032d95ac99408e0ee38058f",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/review-shell.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 37624,
+        "uniqueVertexCount": 18812,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            128.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            146.5
+          ]
+        },
+        "surfaceArea": 44441.232153078745,
+        "signedVolume": 82360.20178437192,
+        "volume": 82360.20178437192,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "review-lug-roots",
+      "file": "review/review-lug-roots.stl",
+      "sha256": "4d93e7f039326f4dc50fe70e0bfd1816b2928528a8f717bd41b7fbbbb51a7593",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/review-lug-roots.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 824,
+        "uniqueVertexCount": 416,
+        "bounds": {
+          "min": [
+            -22.299999237060547,
+            -3.0,
+            -10.5
+          ],
+          "max": [
+            22.299999237060547,
+            3.0,
+            -4.5
+          ],
+          "size": [
+            44.599998474121094,
+            6.0,
+            6.0
+          ]
+        },
+        "surfaceArea": 162.4969606040159,
+        "signedVolume": 70.93429523938478,
+        "volume": 70.93429523938478,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "review-male-ridge",
+      "file": "review/review-male-ridge.stl",
+      "sha256": "b9c3a70db4c660feabffc9d8acf5ada25e6345a97ea50a4f0eec49b0adae6285",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/review-male-ridge.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 11180,
+        "uniqueVertexCount": 5592,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            4.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            28.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            24.0
+          ]
+        },
+        "surfaceArea": 5444.195893421177,
+        "signedVolume": 1680.110391985658,
+        "volume": 1680.110391985658,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "review-female-groove",
+      "file": "review/review-female-groove.stl",
+      "sha256": "d00ac1ec10f3e21a4c986e354cbc3d3643503d2597ba8363f3b0e298f5ccec18",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/review-female-groove.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 25788,
+        "uniqueVertexCount": 12896,
+        "bounds": {
+          "min": [
+            -21.149999618530273,
+            -21.149999618530273,
+            38.0
+          ],
+          "max": [
+            21.149999618530273,
+            21.149999618530273,
+            102.0
+          ],
+          "size": [
+            42.29999923706055,
+            42.29999923706055,
+            64.0
+          ]
+        },
+        "surfaceArea": 16460.076543590643,
+        "signedVolume": 5636.92856314231,
+        "volume": 5636.92856314231,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "mother-section",
+      "file": "review/mother-section.stl",
+      "sha256": "4d78a660a15296ebe2d7531ec90d01314fc1efe32171425ec4ab45f0727cd2fd",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/mother-section.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 19132,
+        "uniqueVertexCount": 9568,
+        "bounds": {
+          "min": [
+            -25.0,
+            -0.0,
+            -18.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            128.0
+          ],
+          "size": [
+            50.0,
+            25.0,
+            146.5
+          ]
+        },
+        "surfaceArea": 23469.061525481924,
+        "signedVolume": 41258.6901193549,
+        "volume": 41258.6901193549,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "part_id": "core-section",
+      "file": "review/core-section.stl",
+      "sha256": "377a0c36d2f5fcc35cd5b2bd9623c7b2aca294580c682fa312c1c7d6b986dbc2",
+      "print_target": false,
+      "quantity": 0,
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/review/core-section.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 8440,
+        "uniqueVertexCount": 4222,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            0.0,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            106.0
+          ],
+          "size": [
+            41.79999923706055,
+            20.899999618530273,
+            106.0
+          ]
+        },
+        "surfaceArea": 11151.088482544745,
+        "signedVolume": 10754.698450065398,
+        "volume": 10754.698450065398,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    }
+  ],
+  "embedded_supports": false,
+  "skill_commit_requested": "77f77fd",
+  "skill_files_read_sha256": {
+    "SKILL.md": "8796b824a9046be17a465d70a0cf7dee5ce9734990945ad6099408c0d0c78f93",
+    "references/helical-thread-workflow.md": "7df227ce8373309e223b40ca6da863861b6a00e7f3c1e896c579af58135c8359",
+    "references/printability-checklist.md": "40b85a043ac963f0729badc1bfb818981df94460f5cb368fc22c3626c4d34107",
+    "references/socket-bayonet-fit.md": "ef82bb81bdb5f9fe3f86bad1c01b5eec4737d71d9ce543e65a83bf2fec7bf7b1"
+  }
+}

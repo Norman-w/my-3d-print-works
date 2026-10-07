@@ -1,0 +1,28 @@
+{
+  "schema": "fan-nozzle-print-status/v1",
+  "recorded_at": "2026-10-07T10:39:07+08:00",
+  "project": "fan-tee-v5-native-project",
+  "scope": "one mother and four nozzles with outlet IDs 15,20,25,30 mm",
+  "native_geometry_project": "slice/fan-tee-v5-native-project.3mf",
+  "native_project_sha256": "6bd7c5500b7679442c2be213a573dbb998e38d54f00e72c85f03c9913b46d665",
+  "sliced_package": "slice/fan-tee-v5-native-actual.gcode.3mf",
+  "sliced_package_sha256": "901188324ce854e21aec3891c7ffb227cf6b1e4f2531a385e9f1342072e45775",
+  "digital_native_slice_audit": "PASS",
+  "estimate_seconds": 19783,
+  "estimate_grams": 204.85,
+  "requested_material": "grey PETG",
+  "current_plate_clear_confirmed": false,
+  "current_ams_mapping_confirmed": false,
+  "sent_to_printer": false,
+  "transfer_complete": false,
+  "machine_preparation_observed": false,
+  "printing_observed": false,
+  "print_complete_observed": false,
+  "physical_acceptance": false,
+  "status": "NATIVE_SLICE_READY_AWAITING_CURRENT_PLATE_CLEARANCE_AND_DISPATCH_CHECKS",
+  "observed_previous_job": {
+    "name": "fan-tee-v4-native-project",
+    "state": "100 percent, 492/492 layers, completed",
+    "does_not_prove_plate_cleared_or_new_job_started": true
+  }
+}

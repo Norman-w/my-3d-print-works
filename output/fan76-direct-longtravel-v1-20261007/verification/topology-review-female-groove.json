@@ -1,0 +1,35 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-female-groove.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 47292,
+  "uniqueVertexCount": 23648,
+  "bounds": {
+    "min": [
+      -21.149999618530273,
+      -21.149999618530273,
+      66.0
+    ],
+    "max": [
+      21.149999618530273,
+      21.149999618530273,
+      186.0
+    ],
+    "size": [
+      42.29999923706055,
+      42.29999923706055,
+      120.0
+    ]
+  },
+  "surfaceArea": 30708.50085084309,
+  "signedVolume": 10569.247272601904,
+  "volume": 10569.247272601904,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true,
+  "export_returncode": 0,
+  "inspect_returncode": 0,
+  "file": "review/review-female-groove.stl"
+}

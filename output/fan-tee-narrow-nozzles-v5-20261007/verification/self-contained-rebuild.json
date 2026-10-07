@@ -1,0 +1,50 @@
+{
+  "status": "PASS_BYTE_IDENTICAL_SOURCE_ONLY_REBUILD",
+  "source_closure": [
+    "fan-tee-narrow-v5.scad",
+    "fan-tee-v5-parameters.scad",
+    "fan-tee-v5-thread.scad"
+  ],
+  "old_version_runtime_dependencies": [],
+  "skill_library_runtime_dependency_for_scad": false,
+  "stl_rebuilds": [
+    {
+      "part": "mother",
+      "original_sha256": "2a8a33c011f30dfc8170734d3089661e8a0146ac925e47c1e088141b083db50e",
+      "isolated_sha256": "2a8a33c011f30dfc8170734d3089661e8a0146ac925e47c1e088141b083db50e",
+      "identical_bytes": true
+    },
+    {
+      "part": "nozzle15",
+      "original_sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "isolated_sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "identical_bytes": true
+    },
+    {
+      "part": "nozzle20",
+      "original_sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "isolated_sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "identical_bytes": true
+    },
+    {
+      "part": "nozzle25",
+      "original_sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "isolated_sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "identical_bytes": true
+    },
+    {
+      "part": "nozzle30",
+      "original_sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "isolated_sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "identical_bytes": true
+    }
+  ],
+  "python_tools_require": [
+    "Python3",
+    "numpy",
+    "trimesh",
+    "manifold3d",
+    "matplotlib",
+    "OpenSCAD Manifold"
+  ]
+}

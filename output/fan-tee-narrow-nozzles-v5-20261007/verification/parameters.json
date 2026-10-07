@@ -1,0 +1,116 @@
+{
+  "fan_back_z": -18.5,
+  "fan_od": 41,
+  "socket_id": 42.2,
+  "socket_od": 48,
+  "body_od": 50,
+  "fan_face_extra": 3,
+  "air_transition_end": 27,
+  "fan_radial_clearance": 0.6,
+  "lug_d": 6,
+  "lug_radial_h": 3.4,
+  "lug_embed": 1.2,
+  "lug_z": -7.5,
+  "tee_od": 50,
+  "tee_id": 44,
+  "tee_wall": 3,
+  "tee_z0": 103,
+  "tee_z1": 128,
+  "tee_l": 25,
+  "tip_l": 0.8,
+  "tip_radial_chamfer": 0.35,
+  "core_od": 40,
+  "core_wall": 2,
+  "core_inlet_id": 36,
+  "core_mount_l": 46,
+  "core_taper_l": 44,
+  "core_exit_l": 16,
+  "core_l": 106,
+  "outlet_ids": [
+    15,
+    20,
+    25,
+    30
+  ],
+  "pitch": 4,
+  "thread_h": 0.9,
+  "crest_w": 0.8,
+  "flank_angle_horizontal": 50,
+  "root_embed": 0.2,
+  "shoulder_burial": 0.05,
+  "profile_half": 1.53217,
+  "root_half_at_surface": 1.47258,
+  "male_major": 41.8,
+  "female_minor": 40.6,
+  "female_major": 42.3,
+  "radial_clearance": 0.25,
+  "axial_clearance": 0.2,
+  "female_tip_web": 0.774019,
+  "male_z0": 4,
+  "male_z1": 28,
+  "runout_l": 1.5,
+  "runout_bury": 0.06,
+  "female_z0": 38,
+  "female_z1": 102,
+  "entry_cone_z0": 100,
+  "phase": 0,
+  "core_seated_z": 34,
+  "core_extended_z": 74,
+  "work_travel": 40,
+  "exit_protrusion_min": 12,
+  "exit_protrusion_max": 52,
+  "fn": 192,
+  "steps_per_turn": 128,
+  "male_profile": [
+    [
+      19.8,
+      -1.53217
+    ],
+    [
+      19.95,
+      -1.53217
+    ],
+    [
+      20.9,
+      -0.4
+    ],
+    [
+      20.9,
+      0.4
+    ],
+    [
+      19.95,
+      1.53217
+    ],
+    [
+      19.8,
+      1.53217
+    ]
+  ],
+  "female_profile": [
+    [
+      20.05,
+      -1.73217
+    ],
+    [
+      20.2,
+      -1.73217
+    ],
+    [
+      21.15,
+      -0.6
+    ],
+    [
+      21.15,
+      0.6
+    ],
+    [
+      20.2,
+      1.73217
+    ],
+    [
+      20.05,
+      1.73217
+    ]
+  ]
+}

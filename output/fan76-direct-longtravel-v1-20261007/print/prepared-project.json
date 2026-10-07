@@ -1,0 +1,245 @@
+{
+  "status": "PREPARED_GEOMETRY_ONLY_NATIVE_SLICE_REQUIRED",
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/print/fan76-direct-v1-prepared.3mf",
+  "sha256": "e293a965145be2a0173019185de1beeee982a67d603d8b9b6ab0f2fbf100c84e",
+  "plate_count": 1,
+  "part_count": 5,
+  "parts": [
+    {
+      "role": "connector",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-body-clean.stl",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "triangles": 100152,
+      "bounds_mm": [
+        [
+          -43.0,
+          43.0
+        ],
+        [
+          -43.0,
+          43.0
+        ],
+        [
+          0.0,
+          222.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        111.0
+      ],
+      "center_xy_mm": [
+        76.0,
+        150.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          26.0,
+          126.0
+        ],
+        [
+          100.0,
+          200.0
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle15",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core15-clean.stl",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "triangles": 52296,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          160.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        80.0
+      ],
+      "center_xy_mm": [
+        156.0,
+        60.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          128.10000038146973,
+          183.89999961853027
+        ],
+        [
+          32.10000038146973,
+          87.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle20",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core20-clean.stl",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "triangles": 52296,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          160.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        80.0
+      ],
+      "center_xy_mm": [
+        216.0,
+        60.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          188.10000038146973,
+          243.89999961853027
+        ],
+        [
+          32.10000038146973,
+          87.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle25",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core25-clean.stl",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "triangles": 52296,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          160.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        80.0
+      ],
+      "center_xy_mm": [
+        156.0,
+        150.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          128.10000038146973,
+          183.89999961853027
+        ],
+        [
+          122.10000038146973,
+          177.89999961853027
+        ]
+      ],
+      "quantity": 1
+    },
+    {
+      "role": "nozzle30",
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core30-clean.stl",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "triangles": 52296,
+      "bounds_mm": [
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          -20.899999618530273,
+          20.899999618530273
+        ],
+        [
+          0.0,
+          160.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        80.0
+      ],
+      "center_xy_mm": [
+        216.0,
+        150.0
+      ],
+      "bed_translation_z_mm": -0.0,
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "xy_envelope_with_7mm_margin": [
+        [
+          188.10000038146973,
+          243.89999961853027
+        ],
+        [
+          122.10000038146973,
+          177.89999961853027
+        ]
+      ],
+      "quantity": 1
+    }
+  ],
+  "no_embedded_supports": true,
+  "printer_contacted": false,
+  "bed": "X1C 256x256 Textured PEI",
+  "material": "PETG; AMS mapping not yet confirmed",
+  "native_sliced_package": null,
+  "physical_acceptance": false
+}
