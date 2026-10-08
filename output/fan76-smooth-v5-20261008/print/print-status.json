@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-08T13:33:06+08:00",
+  "recorded_at": "2026-10-08T13:34:04+08:00",
   "release": "fan76-smooth-v5-20261008",
   "status": "PRINTING_FIRST_LAYER_IN_PROGRESS",
   "scope": "One external shell only; reuse the existing Ø41 v5 nozzles",
@@ -28,7 +28,7 @@
   },
   "blockers": [
     "HMS reports a dirty LiDAR lens; automatic first-layer inspection evidence is unavailable. Manual live-camera observation remains available.",
-    "The first layer is in progress and has not completed; print completion and physical fit are not yet verified.",
+    "Printing is in progress; print completion and physical fit are not yet verified.",
     "Remaining filament quantity was not independently read from the spool."
   ],
   "application_process_observed_running": true,
@@ -40,7 +40,8 @@
   "auto_bed_leveling_observed": true,
   "dynamic_flow_calibration_observed": true,
   "first_layer_started_observed": true,
-  "first_layer_completed_observed": false,
+  "first_layer_completed_observed": true,
+  "last_device_progress_observed": "3%, layer 2/1240, printing",
   "print_complete_observed": false,
   "physical_acceptance": false
 }
