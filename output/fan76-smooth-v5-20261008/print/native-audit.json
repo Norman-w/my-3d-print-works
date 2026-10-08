@@ -1,0 +1,176 @@
+{
+  "status": "SLICE_REVIEW_REQUIRED",
+  "expected_part_count": 1,
+  "mother_thread_screen_z_mm": [
+    152,
+    188
+  ],
+  "checks": {
+    "exact_source_meshes": true,
+    "exact_sliced_object_count": true,
+    "native_geometry_slice_settings_match": true,
+    "x1c_04": false,
+    "petg": true,
+    "startup_preserved": true,
+    "end_preserved": true,
+    "prep_commands_exist": true,
+    "linear_extrusion_paths": true,
+    "tree_support_enabled": true,
+    "both_bayonet_roofs_have_contacts": true,
+    "support_only_in_bayonet_collar": true,
+    "thread_root_and_crest_survive_native_slicing": true,
+    "current_v5_body_only": true,
+    "native_height_margin_at_least_2mm": true,
+    "agreed_four_wall_0_2mm_profile": true,
+    "tree_on_build_plate_only": true
+  },
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice/fan76-smooth-v5-body-only-cli-candidate.3mf",
+  "package_sha256": "414c11724190504ffcfcc6414159b1d457ac348e9414de7b7bb8b6a41d518635",
+  "native_project": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice/fan76-smooth-v5-body-only-cli-candidate.3mf",
+  "project_sha256": "414c11724190504ffcfcc6414159b1d457ac348e9414de7b7bb8b6a41d518635",
+  "parts": [
+    {
+      "role": "connector",
+      "source": "fan76-smooth-v5-body-clean.stl",
+      "sha256": "e0be6b465aebef9dff9f6886d6a49f9420e24ea8416c321caef14fc1e02a42fc",
+      "triangles": 180364,
+      "all_triangles_match_at_0_001_mm": true,
+      "mesh_tolerance_mm": 0.0001,
+      "maximum_vertex_component_error_mm": 3.83823241634218e-06,
+      "upright_unscaled_on_bed": true,
+      "transform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        128.0,
+        128.0,
+        124.0
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        124.0
+      ],
+      "xy_with_brim_mm": [
+        [
+          78.5,
+          177.5
+        ],
+        [
+          78.5,
+          177.5
+        ]
+      ]
+    }
+  ],
+  "layers": 1240,
+  "plate_info": {
+    "index": "1",
+    "extruder_type": "0",
+    "nozzle_volume_type": "0",
+    "printer_model_id": "",
+    "nozzle_diameters": "0.4",
+    "timelapse_type": "0",
+    "prediction": "19219",
+    "weight": "159.91",
+    "pause_count": "0",
+    "first_layer_time": "0.000000",
+    "outside": "false",
+    "support_used": "true",
+    "label_object_enabled": "false",
+    "support_material_on_wipe_tower": "false",
+    "enable_filament_dynamic_map": "false",
+    "has_filament_switcher": "false",
+    "filament_maps": "1",
+    "limit_filament_maps": "0"
+  },
+  "support_counts": {
+    "Support": 24370,
+    "Support interface": 142
+  },
+  "support_z_range_mm": [
+    0.2,
+    21.4
+  ],
+  "support_outside_bayonet_collar": 0,
+  "bayonet_roof_contacts": [
+    {
+      "side_y": 1,
+      "roof_z_mm": 21.5,
+      "contact_endpoints": 469,
+      "feature_counts": {
+        "Support": 390,
+        "Support interface": 79
+      },
+      "gap_to_cad_roof_mm": [
+        0.09999999999999432,
+        0.5
+      ],
+      "first_deposited_roof_z_mm": 21.8,
+      "support_top_z_mm": 21.400000000000006,
+      "deposited_surface_gap_mm": 0.19999999999999574,
+      "angular_span_degrees": [
+        84.60225122351962,
+        113.42364959845746
+      ],
+      "pass": true
+    },
+    {
+      "side_y": -1,
+      "roof_z_mm": 21.5,
+      "contact_endpoints": 497,
+      "feature_counts": {
+        "Support": 418,
+        "Support interface": 79
+      },
+      "gap_to_cad_roof_mm": [
+        0.09999999999999432,
+        0.5
+      ],
+      "first_deposited_roof_z_mm": 21.8,
+      "support_top_z_mm": 21.400000000000006,
+      "deposited_surface_gap_mm": 0.19999999999999574,
+      "angular_span_degrees": [
+        84.60225122351962,
+        113.4236495984575
+      ],
+      "pass": true
+    }
+  ],
+  "thread_wall_screen": {
+    "parts": [
+      {
+        "role": "connector",
+        "sampled_layers": 181,
+        "smallest_radial_root_crest_contrast_mm": 0.857927590051144,
+        "smallest_wall_segment_count_per_layer": 134,
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "scope": "Native outer-wall centerline radial excursion over fully developed thread layers; not bead fusion, load or physical-fit proof."
+  },
+  "gcode_to_bed_xy_offset_mm": [
+    0.0,
+    2.0
+  ],
+  "preparation_markers": {
+    "home": true,
+    "level": true,
+    "bed_wait": true,
+    "nozzle_wait": true,
+    "ams": true
+  },
+  "commands_do_not_prove_machine_execution": true,
+  "physical_acceptance": false,
+  "scope": "Digital source/slice and collar-support screen; removal access and actual print/fit still require observation.",
+  "native_printable_height_mm": 250.0,
+  "model_height_mm": 248,
+  "no_new_cores_to_print": true
+}

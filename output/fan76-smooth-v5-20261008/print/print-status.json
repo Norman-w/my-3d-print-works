@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-08T12:30:28+08:00",
+  "release": "fan76-smooth-v5-20261008",
+  "status": "NOT_SENT_PENDING_NATIVE_UI_REVIEW_AND_PLATE_CONFIRMATION",
+  "scope": "One external shell only; reuse the existing Ø41 v5 nozzles",
+  "stl": "stl/fan76-smooth-v5-body-clean.stl",
+  "stl_sha256": "e0be6b465aebef9dff9f6886d6a49f9420e24ea8416c321caef14fc1e02a42fc",
+  "prepared_project": "print/fan76-smooth-v5-body-only-prepared.3mf",
+  "prepared_project_sha256": "1f7dd51e2db66daa924eea88842033c61cd72ac3b3fc3ad3607fe8c7f9588273",
+  "planned_printer": "Bambu Lab X1 Carbon 0.4 nozzle",
+  "planned_material": "Gray PETG; live AMS mapping and remaining filament not confirmed",
+  "quantity": 1,
+  "plate_clearance_confirmed": false,
+  "native_gui_release_verified": false,
+  "cli_checks": {
+    "source_mesh_and_placement": true,
+    "bayonet_support_contacts": true,
+    "no_support_on_female_thread": true,
+    "startup_and_end_preserved": true,
+    "native_plate_printer_model_id": false
+  },
+  "blockers": [
+    "Bambu desktop window reads time out after the open-project action; no new loaded-project state is verified.",
+    "CLI slice_info printer_model_id is empty. Candidate is not a released dispatch package.",
+    "Current plate-clearance and gray-PETG question is awaiting the user."
+  ],
+  "application_process_observed_running": true,
+  "account_language_and_connection_settings_changed": false,
+  "send_action_attempted": false,
+  "transfer_complete": false,
+  "machine_preparation_observed": false,
+  "first_layer_observed": false,
+  "print_complete_observed": false,
+  "physical_acceptance": false
+}

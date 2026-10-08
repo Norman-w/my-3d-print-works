@@ -1,0 +1,55 @@
+{
+  "case": "v3-w4",
+  "revision": 3,
+  "wall_loops": 4,
+  "input_stl": "output/fan76-smooth-v3-20261008/stl/fan76-smooth-v3-body-clean.stl",
+  "input_sha256": "c231f583c3c5e225649f69b30b4a22025e08aacb7aa90cd5a23ddacc2518a3a8",
+  "seconds_estimate": 20829.109375,
+  "grams_estimate": 192.01637268066406,
+  "warning": "",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/var/folders/nj/0ldgyptn7tb182kz7h6bbs_00000gn/T/fan76-v3-w4-cli-vr7g_g68",
+    "--debug",
+    "2",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v4-20261008/analysis-slices/v3-w4/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v4-20261008/analysis-slices/v3-w4/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v4-20261008/analysis-slices/v3-w4/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "analysis-only-not-for-print.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v4-20261008/analysis-slices/v3-w4",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v3-20261008/stl/fan76-smooth-v3-body-clean.stl"
+  ],
+  "slicer_binary_sha256": "1a79017b9f86fb6db92987f4a4c4a4834ac540cf36703d49c7c91ed1959c2026",
+  "native_template_sha256": "30701c8f49ec2cb419432a15334aa579f759840763ef95aa16e86b87607fa812",
+  "configs": {
+    "machine": {
+      "schema_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110",
+      "effective_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110"
+    },
+    "process": {
+      "schema_sha256": "ebaec50ee6aff03439c68bf14a9a2b95392e6311fbad84b43c237ce9059615f6",
+      "effective_sha256": "79098d6481b0e8ac62c5ebdd94c87e1aa5ff27f96a12dcec1b2d3e7d2a3f9d5d"
+    },
+    "filament": {
+      "schema_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d",
+      "effective_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d"
+    }
+  },
+  "package_sha256": "ca0b706515e37380125f00af4399026576deebd4161f83e4d8417af2bb2a67d5",
+  "dispatch_authorized": false,
+  "preset_verified": true,
+  "support_contact_reviewed": false,
+  "startup_unchanged": true,
+  "printer_contacted": false
+}

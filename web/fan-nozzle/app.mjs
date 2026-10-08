@@ -1,5 +1,6 @@
 import { AssemblyScene } from "./assembly-scene.mjs";
 import { installFloatingPanels } from "./floating-panels.mjs";
+import { motionStateForManifest } from "./variant-state.mjs";
 
 const $ = (selector) => document.querySelector(selector);
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum);
@@ -136,6 +137,7 @@ async function main() {
         stage: stageSelect.value || undefined,
         travel: runtime?.motionValues[activeManifest?.screwMotion?.frameId],
         nozzle: $("#nozzle").value || undefined,
+        motionStateVersion: activeManifest?.ui?.motionStateVersion,
       };
     }
     saveState();
@@ -289,6 +291,7 @@ async function main() {
   };
 
   const configureControls = (manifest) => {
+    const saved = motionStateForManifest(manifest, variantState[activeVariantId]);
     groupSelect.replaceChildren(new Option("全部分组", ""));
     for (const group of runtime.index.groups.values()) {
       groupSelect.append(new Option(group.label, group.id));
@@ -311,14 +314,13 @@ async function main() {
     $("#stage-controls").hidden = !runtime.index.stages.size;
     $("#play").hidden = !manifest.playback;
     if (runtime.index.stages.size) {
-      const savedStage = variantState[activeVariantId]?.stage;
+      const savedStage = saved.stage;
       const stageId = runtime.index.stages.has(savedStage)
         ? savedStage : runtime.index.stages.keys().next().value;
       stageSelect.value = stageId;
       runtime.setStage(stageId);
     }
 
-    const saved = variantState[activeVariantId] || {};
     const screw = manifest.screwMotion;
     $("#travel").max = String(screw.travelMm);
     if (Number.isFinite(saved.travel) && saved.travel >= 0 && saved.travel <= screw.travelMm) {
@@ -417,7 +419,7 @@ async function main() {
     }
     $("#title").textContent = manifest.title || "装配预览";
     const release = manifest.release;
-    $("#release").textContent = `${release.id} · P${release.pitchMm} · 行程 ${release.travelMm} mm · 原始 STL`;
+    $("#release").textContent = `${release.id} · P${release.pitchMm} · 行程 ${release.travelMm} mm · ${release.validationLabel || "原始 STL"}`;
     $("#release").dataset.revision = release.id;
     renderInstructions(manifest);
     next.onAxisView = (direction) => { activeDirection = direction; };

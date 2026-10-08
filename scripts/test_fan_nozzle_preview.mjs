@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { validateManifest } from "../web/fan-nozzle/manifest-core.mjs";
 import { positionsFromStl, splitConnectedIslands } from "../web/fan-nozzle/connected-islands.mjs";
 import { rotationForTravel, createMotionAdapter } from "../web/fan-nozzle/project-motion.mjs";
+import { motionStateForManifest } from "../web/fan-nozzle/variant-state.mjs";
 import * as THREE from "../web/fan-nozzle/vendor/three.module.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -77,13 +78,49 @@ assert.throws(()=>checkClosedMesh(new Float32Array([0,0,0,1,0,0,2,0,0])),/Zero-a
 assert.throws(()=>checkClosedMesh(new Float32Array([0,0,0,1,0,0,0,1,0])),/Open\/non-manifold/);
 
 let checks = 0;
-for (const [filename, travel, variant] of [["manifest.json",80,"fan76-direct"], ["manifest-fan41-direct.json",40,"fan41-direct"]]) {
+for (const [filename, travel, variant] of [["manifest.json",20,"fan76-direct"], ["manifest-fan41-direct.json",40,"fan41-direct"]]) {
   const manifest = await read(resolve(preview, filename));
   const index = validateManifest(manifest);
   assert.equal(manifest.variantId, variant);
   assert.equal(manifest.release.travelMm, travel);
   assert.equal(manifest.release.pitchMm, 4);
   assert.deepEqual(manifest.release.outletIdsMm, [15,20,25,30]);
+  if (variant === "fan76-direct") {
+    assert.equal(manifest.release.id, "fan76-smooth-v5-20261008");
+    assert.equal(manifest.release.nativeAudit, "OFFLINE_ESTIMATE_ONLY");
+    assert.equal(manifest.release.bodyLengthMm, 248);
+    assert.equal(manifest.release.coreLengthMm, 106);
+    assert.match(manifest.release.validationLabel, /离线试切估算.*未放行打印/);
+    const estimates = await read(resolve(root, manifest.release.package, "verification/slice-comparison.json"));
+    const chosen = estimates.cases.find(c=>c.case === "v5-w4");
+    assert.equal(manifest.release.offlineEstimate.wallLoops, 4);
+    assert.equal(manifest.release.offlineEstimate.dispatchAuthorized, false);
+    assert.equal(manifest.release.offlineEstimate.seconds, chosen.seconds_estimate);
+    assert.equal(manifest.release.offlineEstimate.grams, chosen.grams_estimate);
+    assert.equal(manifest.release.offlineEstimate.reportSha256,
+      hash(await readFile(resolve(root, manifest.release.package, "verification/slice-comparison.json"))));
+    assert.equal(chosen.input_sha256, manifest.parts.find(p=>p.id === "body").sha256);
+    assert.equal(manifest.ui.motionStateVersion, manifest.release.id);
+    assert.equal(manifest.screwMotion.tipProtrusionAtZeroMm, 4);
+    assert.equal(manifest.stages[0].values["core-screw"], 0);
+    const legacy = { stage: "middle", travel: 16, nozzle: "core15" };
+    const migrated = motionStateForManifest(manifest, legacy);
+    assert.equal(migrated.stage, undefined);
+    assert.equal(migrated.travel, undefined);
+    assert.equal(migrated.nozzle, "core15");
+    assert.deepEqual(legacy, { stage: "middle", travel: 16, nozzle: "core15" });
+    const remembered = { stage: "extended", travel: 20, nozzle: "core15", motionStateVersion: manifest.release.id };
+    assert.deepEqual(motionStateForManifest(manifest, remembered), remembered);
+    assert.equal(motionStateForManifest(manifest, { ...remembered, motionStateVersion: "older-release" }).travel, undefined);
+    for (const diameter of [15,20,25,30]) {
+      const core = manifest.parts.find(p=>p.id===`core${diameter}`);
+      assert.equal(core.sha256, hash(await readFile(resolve(root,
+        `output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle${diameter}-clean.stl`))));
+    }
+  } else {
+    const existing = { stage: "middle", travel: 20, nozzle: "core25" };
+    assert.deepEqual(motionStateForManifest(manifest, existing), existing, "Ø41 saved state must not reset");
+  }
   assert.equal(index.parts.size, 7);
   assert.equal([...index.frames.values()].filter(f => f.kind !== "fixed").length, 1);
   const screw = manifest.screwMotion;
@@ -149,7 +186,7 @@ for (const [filename, travel, variant] of [["manifest.json",80,"fan76-direct"], 
   if (endpoint) assert.deepEqual(await (await fetch(new URL(filename,endpoint))).json(),manifest);
   console.log(`PASS ${variant}: P4 / ${travel} mm; exact print meshes; Y upstream/upward inlet, 3 open sockets, terminal beads, no root flange`);
 }
-for (const name of ["app.mjs","assembly-scene.mjs","project-motion.mjs","index.html","styles.css","vendor/three.module.js"]) {
+for (const name of ["app.mjs","assembly-scene.mjs","project-motion.mjs","variant-state.mjs","index.html","styles.css","vendor/three.module.js"]) {
   const source = await readFile(resolve(root,"web/fan-nozzle",name));
   assert.deepEqual(source,await readFile(resolve(preview,name)));
   if (endpoint) assert.equal(hash(source),hash(Buffer.from(await (await fetch(new URL(name,endpoint))).arrayBuffer())));

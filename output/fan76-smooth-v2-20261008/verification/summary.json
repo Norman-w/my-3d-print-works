@@ -1,0 +1,131 @@
+{
+  "status": "PASS_DIGITAL_GEOMETRY_NOT_SLICED",
+  "source_sha256": {
+    "fan76-smooth-v2.scad": "6d4b7f0b99120c9eb9baa66e150012c1dda877779a34d2bd8e0088a3169a9bcc",
+    "fan-tee-v5-parameters.scad": "c743e2f48058a66475738469c065e2ccf74c64b8a583badb5fb05e879d5cccbb",
+    "fan-tee-v5-thread.scad": "87395d9bf1586756734403e92a85b4d7ae655f33dcd9a15c4ea393cfa7d3ca33",
+    "fan-tee-narrow-v5.scad": "0b773527ddf180e7a240f23178d6e76c7ca8ea13634fbc728e4067d181bba91b"
+  },
+  "file_sha256": {
+    "body": "51875af2aa3c8a6d5b998951cf9e36c60cf4a1fe02f1c37e1956977902b930cc",
+    "review-fan-envelope": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c",
+    "review-female-groove": "81086bd63ccdfa9826fb131529a34478751e79d0e6ca8ae3858028ec5b805fc9",
+    "core15": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+    "core20": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+    "core25": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+    "core30": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6"
+  },
+  "motion": [
+    {
+      "part": "core15",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 636,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 102,
+          "intersection_mm3": 486.8761243861269
+        },
+        {
+          "z": 118.0,
+          "intersection_mm3": 486.87581022604945
+        },
+        {
+          "z": 134,
+          "intersection_mm3": 477.5738847483021
+        }
+      ]
+    },
+    {
+      "part": "core20",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 636,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 102,
+          "intersection_mm3": 486.8761243861269
+        },
+        {
+          "z": 118.0,
+          "intersection_mm3": 486.87581022604945
+        },
+        {
+          "z": 134,
+          "intersection_mm3": 477.5738847483021
+        }
+      ]
+    },
+    {
+      "part": "core25",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 636,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 102,
+          "intersection_mm3": 486.8761243861269
+        },
+        {
+          "z": 118.0,
+          "intersection_mm3": 486.87581022604945
+        },
+        {
+          "z": 134,
+          "intersection_mm3": 477.5738847483021
+        }
+      ]
+    },
+    {
+      "part": "core30",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 636,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 102,
+          "intersection_mm3": 486.8761243861269
+        },
+        {
+          "z": 118.0,
+          "intersection_mm3": 486.87581022604945
+        },
+        {
+          "z": 134,
+          "intersection_mm3": 477.5738847483021
+        }
+      ]
+    }
+  ],
+  "bayonet_pass": true,
+  "shape": {
+    "old_body_mm": 222,
+    "new_body_mm": 184,
+    "shorter_mm": 38,
+    "old_fan_face_to_y_mouth_mm": 173,
+    "new_fan_face_to_y_mouth_mm": 135,
+    "old_peak_reducer_wall_angle_to_axis_deg": 30.094241476445003,
+    "new_peak_reducer_wall_angle_to_axis_deg": 22.5366,
+    "smooth_function": "S(t)=10t^3-15t^4+6t^5; S'(0)=S'(1)=S''(0)=S''(1)=0",
+    "C2_at_reducer_endpoints": true,
+    "radial_wall_min_outside_bayonet_mm": 3,
+    "female_major_wall_mm": 3.8500000000000014,
+    "full_complete_turns_at_limits": [
+      4,
+      4
+    ],
+    "v5_core_inlet_lip_retained_mm": 2,
+    "limitations": "Core inlet lip and its original straight/conical junctions are retained by requirement. Not every adjusted assembly is a continuous smooth flow wall. No CFD or measured pressure/flow result."
+  },
+  "elapsed_seconds": 18.056402374990284,
+  "sliced": false,
+  "physical_fit_verified": false,
+  "flow_performance_verified": false,
+  "flow_guide_status": "AWAITING_USER_CHOICE",
+  "limitations": [
+    "Finite mesh samples plus analytic phase/radius relations, not manufacturing tolerance proof.",
+    "Nominal socket ID76 requested by user: zero designed clearance, PETG shrinkage fit test required.",
+    "Y junction dimensions are reference-only; mechanical travel is not a ball-safe travel guarantee.",
+    "Clean model has no supports; bayonet roof support and thread no-support must be checked in slicer."
+  ]
+}

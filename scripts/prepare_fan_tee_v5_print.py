@@ -74,7 +74,8 @@ def metadata(parent, key, value):
 
 
 def build(stls: dict[str, Path], out: Path, template: Path, *, layout=LAYOUT,
-          package_stem="fan-tee-v5", plate_name="v5 - connector and 15-20-25-30 mm") -> dict:
+          package_stem="fan-tee-v5", plate_name="v5 - connector and 15-20-25-30 mm",
+          expected_parts=5, height_margin_mm=5) -> dict:
     with ZipFile(template) as archive:
         settings = json.loads(archive.read("Metadata/project_settings.config"))
         content_types = archive.read("[Content_Types].xml")
@@ -84,14 +85,17 @@ def build(stls: dict[str, Path], out: Path, template: Path, *, layout=LAYOUT,
     assert settings["support_type"] == "tree(auto)"
     assert settings["enable_arc_fitting"] == "0", "Audit parses straight extrusion moves"
     assert float(settings["brim_width"]) <= 6, "Recheck layout for wider brims"
+    assert expected_parts >= 1 and height_margin_mm >= 2
+    height_limit = float(settings["printable_height"])
+    assert math.isfinite(height_limit) and height_limit > height_margin_mm
     assert not set('<>:/\\|?*"') & set(plate_name+package_stem), "Bambu plate/file name contains reserved characters"
     out.mkdir(parents=True, exist_ok=True)
     root = ET.Element(f"{{{CORE}}}model", unit="millimeter", requiredextensions="p",
                       attrib={"xmlns:BambuStudio": "http://schemas.bambulab.com/package/2021"})
     for name, value in [("Application", "BambuStudio-02.08.02.61"),
                         ("BambuStudio:3mfVersion", "1"),
-                        ("Title", package_stem+"-five-parts-prepared"),
-                        ("Description", "Five clean solids. Native slicing and audit still required.")]:
+                        ("Title", package_stem+("-five-parts-prepared" if expected_parts == 5 else "-prepared")),
+                        ("Description", f"{expected_parts} clean solids. Native slicing and audit still required.")]:
         ET.SubElement(root, f"{{{CORE}}}metadata", name=name).text = value
     resources = ET.SubElement(root, f"{{{CORE}}}resources")
     assembly = ET.SubElement(root, f"{{{CORE}}}build", {f"{{{PROD}}}UUID": str(uuid.uuid4())})
@@ -105,13 +109,13 @@ def build(stls: dict[str, Path], out: Path, template: Path, *, layout=LAYOUT,
     # equivalent ns0:Relationship document is rejected by the native importer.
     rels = ET.Element("Relationships", xmlns=REL)
     entries, records = {}, []
-    assert len(layout) == 5 and {role for role, _ in layout} == set(stls)
+    assert len(layout) == len(stls) == expected_parts and {role for role, _ in layout} == set(stls)
     for n, (role, center) in enumerate(layout, 1):
         path = stls[role].resolve()
         vertices, faces, box = binary_mesh(path)
         offset = [(lo+hi)/2 for lo, hi in box]
         height = box[2][1] - box[2][0]
-        assert 0 < height < 245
+        assert 0 < height <= height_limit-height_margin_mm, "Model exceeds native preset height allowance"
         leaf, container = 2*n-1, 2*n
         member = f"3D/Objects/object_{n}.model"
         model = ET.Element(f"{{{CORE}}}model", unit="millimeter")
@@ -180,7 +184,8 @@ def build(stls: dict[str, Path], out: Path, template: Path, *, layout=LAYOUT,
     dump(out / "config/native-baseline.json", baseline)
     dump(out / "config/project-settings.json", settings)
     report = {"status": "PREPARED_GEOMETRY_ONLY_NATIVE_SLICE_REQUIRED", "package": str(destination),
-              "sha256": sha(destination), "plate_count": 1, "part_count": 5, "parts": records,
+              "sha256": sha(destination), "plate_count": 1, "part_count": expected_parts, "parts": records,
+              "native_printable_height_mm": height_limit, "required_height_margin_mm": height_margin_mm,
               "no_embedded_supports": True, "printer_contacted": False,
               "bed": "X1C 256x256 Textured PEI", "material": "PETG; AMS mapping not yet confirmed",
               "native_sliced_package": None, "physical_acceptance": False}

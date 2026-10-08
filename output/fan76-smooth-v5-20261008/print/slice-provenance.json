@@ -1,0 +1,83 @@
+{
+  "status": "CLI_CANDIDATE_NEEDS_AUDIT_AND_GUI_REVIEW",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/var/folders/nj/0ldgyptn7tb182kz7h6bbs_00000gn/T/fan76-v5-native-cli-rw4vz4by",
+    "--debug",
+    "2",
+    "--orient",
+    "0",
+    "--arrange",
+    "0",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "fan76-smooth-v5-body-only-cli-candidate.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/fan76-smooth-v5-body-only-prepared.3mf"
+  ],
+  "slicer_sha256": "1a79017b9f86fb6db92987f4a4c4a4834ac540cf36703d49c7c91ed1959c2026",
+  "input_sha256": "1f7dd51e2db66daa924eea88842033c61cd72ac3b3fc3ad3607fe8c7f9588273",
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice/fan76-smooth-v5-body-only-cli-candidate.3mf",
+  "sha256": "414c11724190504ffcfcc6414159b1d457ac348e9414de7b7bb8b6a41d518635",
+  "plates": [
+    {
+      "feature_type_times": {
+        "Bridge": 5.25842809677124,
+        "Brim": 69.79047393798828,
+        "Custom": 418.9501647949219,
+        "Flush": 29.0,
+        "Gap infill": 1514.5555419921875,
+        "Inner wall": 9251.1005859375,
+        "Internal solid infill": 37.348793029785156,
+        "Outer wall": 4706.11328125,
+        "Overhang wall": 16.30620002746582,
+        "Sparse infill": 1457.7666015625,
+        "Support": 270.471435546875,
+        "Support interface": 4.046786785125732,
+        "Top surface": 28.894733428955078,
+        "Travel": 1373.171630859375,
+        "Undefined": 1367.6204833984375
+      },
+      "filament_change_times": 0,
+      "filaments": [
+        {
+          "filament_id": "GFG99",
+          "id": 1,
+          "main_used_g": 159.91268920898438,
+          "total_used_g": 159.91268920898438
+        }
+      ],
+      "generate_support_material_time": 948,
+      "id": 1,
+      "infill_time": 298,
+      "layer_filament_change": 0,
+      "main_predication": 18748.53125,
+      "make_perimeters_time": 2108,
+      "obj_cached_cnt": 0,
+      "objects": [
+        {
+          "bbox": {
+            "depth": 86.0,
+            "height": 248.0,
+            "width": 86.0,
+            "x": 85.0,
+            "y": 85.0,
+            "z": 0.0
+          },
+          "id": 5,
+          "name": "fan76-smooth-v5-body-clean.stl",
+          "triangle_count": 180364
+        }
+      ],
+      "sliced_time": 7730,
+      "sliced_time_with_cache": 4250,
+      "total_predication": 19219.900390625,
+      "triangle_count": 180364,
+      "warning_message": ""
+    }
+  ],
+  "printer_contacted": false
+}

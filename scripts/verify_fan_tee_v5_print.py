@@ -121,7 +121,9 @@ def mesh_equivalence(vertices, faces, original_vertices, original_faces, toleran
     Native float32 re-centering can shift a coordinate by a few micrometres
     across a rounding boundary. Fixed-decimal signatures then incorrectly
     reject unchanged triangles. This uses an actual bounded distance, not
-    a looser rounding bin, and rejects merged/ambiguous vertices.
+    a looser rounding bin. Dense CAD tessellation can put two distinct source
+    vertices within tolerance: require a unique nearest match, a bijection,
+    and the complete wound-face multiset, not merely one vertex in the bin.
     """
     if len(vertices) != len(original_vertices) or len(faces) != len(original_faces):
         return False, None
@@ -138,7 +140,9 @@ def mesh_equivalence(vertices, faces, original_vertices, original_faces, toleran
                 distance = max(abs(point[a]-original_vertices[i][a]) for a in range(3))
                 if distance <= tolerance:
                     matches.append((i, distance))
-        if len(matches) != 1 or matches[0][0] in used:
+        matches.sort(key=lambda match: match[1])
+        if (not matches or matches[0][0] in used
+                or (len(matches) > 1 and matches[0][1] == matches[1][1])):
             return False, None
         i, distance = matches[0]
         mapping.append(i)
@@ -161,8 +165,9 @@ def is_upright(transform):
             and abs(transform[0]*transform[4]-transform[1]*transform[3]-1) < 1e-8)
 
 
-def geometry(project, layout):
+def geometry(project, layout, *, expected_parts=5):
     expected = {Path(p["file"]).name: p for p in layout["parts"]}
+    assert len(expected) == len(layout["parts"]) == layout["part_count"] == expected_parts
     records = []
     with ZipFile(project) as archive:
         root = ET.fromstring(archive.read("3D/3dmodel.model"))
@@ -170,9 +175,9 @@ def geometry(project, layout):
         model_settings = ET.fromstring(archive.read("Metadata/model_settings.config"))
         objects = {o.get("id"): o for o in root.iter(CORE+"object")}
         configs = {o.get("id"): o for o in model_settings.findall("object")}
-        assert len(list(root.iter(CORE+"item"))) == len(expected) == 5
-        assert len(list(model_settings.iter("model_instance"))) == 5
-        assert len(list(model_settings.iter("part"))) == 5
+        assert len(list(root.iter(CORE+"item"))) == len(expected)
+        assert len(list(model_settings.iter("model_instance"))) == expected_parts
+        assert len(list(model_settings.iter("part"))) == expected_parts
         for item in root.iter(CORE+"item"):
             config = configs[item.get("objectid")]
             part = config.find("part")

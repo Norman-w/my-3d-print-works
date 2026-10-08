@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/review/review-fan-envelope.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 1624,
+  "uniqueVertexCount": 812,
+  "bounds": {
+    "min": [
+      -38.0,
+      -40.0,
+      0.0
+    ],
+    "max": [
+      38.0,
+      40.0,
+      24.0
+    ],
+    "size": [
+      76.0,
+      80.0,
+      24.0
+    ]
+  },
+  "surfaceArea": 12369.08492402544,
+  "signedVolume": 14099.768518106222,
+  "volume": 14099.768518106222,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

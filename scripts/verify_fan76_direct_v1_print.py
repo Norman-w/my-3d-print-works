@@ -21,10 +21,10 @@ from verify_fan_tee_v5_print import (
 )
 
 
-def audit(package, project, layout_path):
+def audit(package, project, layout_path, *, expected_parts=5, mother_z_interval=(76, 176)):
     layout = json.loads(layout_path.read_text())
     baseline = json.loads((layout_path.parent / 'config/native-baseline.json').read_text())
-    records = geometry(project, layout)
+    records = geometry(project, layout, expected_parts=expected_parts)
     with ZipFile(package) as archive:
         settings = json.loads(archive.read('Metadata/project_settings.config'))
         gcode_files = [n for n in archive.namelist() if n.endswith('.gcode')]
@@ -38,7 +38,7 @@ def audit(package, project, layout_path):
         project_settings = json.loads(archive.read('Metadata/project_settings.config'))
     segments, counts = support_paths(gcode)
     xy_offset = nozzle_xy_offset(settings)
-    wall_screen = thread_wall_screen(gcode, records, (76, 176), xy_offset)
+    wall_screen = thread_wall_screen(gcode, records, mother_z_interval, xy_offset)
     body = next(r for r in records if r['role'] == 'connector')
     tf, offset = body['transform'], body['source_offset']
 
@@ -62,8 +62,8 @@ def audit(package, project, layout_path):
                 angle = math.degrees(math.atan2(p[1]*side, p[0]*side)) % 360
                 if 38.3 <= math.hypot(*p[:2]) <= 41.1 and 83.7 <= angle <= 114.3:
                     roof_layers[side].append(segment['z'])
-    # Tooth contact is excluded separately by Z: female thread starts Z66,
-    # cores are separate objects. Inspect both support feature labels.
+    # Tooth contact is excluded separately by Z. This roof audit only applies
+    # to shells preserving the original Z21.5 bayonet collar geometry.
     contacts = []
     for side in (1, -1):
         near_roof = []
@@ -98,8 +98,8 @@ def audit(package, project, layout_path):
         'ams': r'^\s*M620(?:\s|$)',
     }.items()}
     checks = {
-        'five_exact_source_meshes': len(records) == 5 and all(r['all_triangles_match_at_0_001_mm'] for r in records),
-        'five_sliced_objects': len(sliced_objects) == 5
+        'exact_source_meshes': len(records) == expected_parts and all(r['all_triangles_match_at_0_001_mm'] for r in records),
+        'exact_sliced_object_count': len(sliced_objects) == expected_parts
             and all(o.get('skipped', 'false') == 'false' for o in sliced_objects)
             and Counter(o.get('name') for o in sliced_objects) == Counter(r['source'] for r in records),
         'native_geometry_slice_settings_match': project_settings == settings,
@@ -116,7 +116,8 @@ def audit(package, project, layout_path):
         'thread_root_and_crest_survive_native_slicing': wall_screen['pass'],
     }
     return {
-        'status': 'DIGITAL_FIVE_PART_SLICE_PASS' if all(checks.values()) else 'SLICE_REVIEW_REQUIRED',
+        'status': ('DIGITAL_FIVE_PART_SLICE_PASS' if expected_parts == 5 else 'DIGITAL_SINGLE_BODY_SLICE_PASS') if all(checks.values()) else 'SLICE_REVIEW_REQUIRED',
+        'expected_part_count': expected_parts, 'mother_thread_screen_z_mm': mother_z_interval,
         'checks': checks, 'package': str(package), 'package_sha256': sha(package),
         'native_project': str(project), 'project_sha256': sha(project), 'parts': records,
         'layers': gcode.count('; Z_HEIGHT:'), 'plate_info': plate,

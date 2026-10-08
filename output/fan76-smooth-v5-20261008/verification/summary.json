@@ -1,0 +1,226 @@
+{
+  "status": "PASS_DIGITAL_GEOMETRY_NOT_SLICED",
+  "source_sha256": {
+    "fan76-smooth-v5.scad": "cbad2d1dd948fd0fff40f438a355dcd2a34dbf39b88ee5a9560564f961697c7e",
+    "fan-tee-v5-parameters.scad": "c743e2f48058a66475738469c065e2ccf74c64b8a583badb5fb05e879d5cccbb",
+    "fan-tee-v5-thread.scad": "87395d9bf1586756734403e92a85b4d7ae655f33dcd9a15c4ea393cfa7d3ca33",
+    "fan-tee-narrow-v5.scad": "0b773527ddf180e7a240f23178d6e76c7ca8ea13634fbc728e4067d181bba91b"
+  },
+  "file_sha256": {
+    "body": "e0be6b465aebef9dff9f6886d6a49f9420e24ea8416c321caef14fc1e02a42fc",
+    "review-fan-envelope": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c",
+    "review-female-groove": "b11ce1577dc15a527b68e975bcad67698c38d78c8952615f60dc8f67cecb9fe0",
+    "core15": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+    "core20": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+    "core25": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+    "core30": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6"
+  },
+  "motion": [
+    {
+      "part": "core15",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 604,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 146,
+          "intersection_mm3": 486.8757082608654
+        },
+        {
+          "z": 156.0,
+          "intersection_mm3": 486.875707671438
+        },
+        {
+          "z": 166,
+          "intersection_mm3": 477.5738843781367
+        }
+      ]
+    },
+    {
+      "part": "core20",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 604,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 146,
+          "intersection_mm3": 486.8757082608654
+        },
+        {
+          "z": 156.0,
+          "intersection_mm3": 486.875707671438
+        },
+        {
+          "z": 166,
+          "intersection_mm3": 477.5738843781367
+        }
+      ]
+    },
+    {
+      "part": "core25",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 604,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 146,
+          "intersection_mm3": 486.8757082608654
+        },
+        {
+          "z": 156.0,
+          "intersection_mm3": 486.875707671438
+        },
+        {
+          "z": 166,
+          "intersection_mm3": 477.5738843781367
+        }
+      ]
+    },
+    {
+      "part": "core30",
+      "pass": true,
+      "max_correct_intersection_mm3": 0.0,
+      "sampled_pose_count": 604,
+      "wrong_phase_counterexamples": [
+        {
+          "z": 146,
+          "intersection_mm3": 486.8757082608654
+        },
+        {
+          "z": 156.0,
+          "intersection_mm3": 486.875707671438
+        },
+        {
+          "z": 166,
+          "intersection_mm3": 477.5738843781367
+        }
+      ]
+    }
+  ],
+  "bayonet_pass": true,
+  "shape": {
+    "previous_release": "fan76-smooth-v4-20261008",
+    "old_body_mm": 244,
+    "new_body_mm": 248,
+    "shorter_mm": -4,
+    "old_fan_face_to_y_mouth_mm": 195,
+    "new_fan_face_to_y_mouth_mm": 199,
+    "old_peak_reducer_wall_angle_to_axis_deg": 12.7888,
+    "new_peak_reducer_wall_angle_to_axis_deg": 11.1293,
+    "smooth_function": "C3 twice-integrated eased curvature / constant slope / mirrored ramp",
+    "C2_at_reducer_endpoints": true,
+    "radial_wall_min_outside_bayonet_mm": 2,
+    "contraction_length_mm": 124,
+    "female_length_mm": 44,
+    "pitch_mm": 4,
+    "working_turns": 5.0,
+    "female_major_wall_mm": 2.400000000000002,
+    "full_complete_turns_at_limits": [
+      4,
+      4
+    ],
+    "v5_core_inlet_lip_retained_mm": 2,
+    "limitations": "Core inlet lip and its original straight/conical junctions are retained by requirement. Not every adjusted assembly is a continuous smooth flow wall. No CFD or measured pressure/flow result.",
+    "old_tip_protrusion_mm": [
+      4,
+      24
+    ],
+    "new_tip_protrusion_mm": [
+      4,
+      24
+    ],
+    "default_tip_from_body_end_mm": 4,
+    "tip_from_illustrative_y_mouth_mm": [
+      29,
+      49
+    ],
+    "y_mouth_depth_is_reference_not_measured": true,
+    "design_checks": {
+      "body_height_matches_release": true,
+      "height_within_design_budget": true,
+      "pitch_unchanged": true,
+      "complete_turns_both_limits": true,
+      "spigot_od_50": true,
+      "socket_id_76": true,
+      "gentler_than_previous_contraction": true,
+      "contraction_length_matches_release": true,
+      "female_thread_44_and_travel_20": true,
+      "default_is_retracted": true,
+      "tip_endpoints_4_24": true,
+      "tip_calculated_from_unchanged_core": true,
+      "thread_profile_unchanged": true,
+      "thin_wall_final_stl": true,
+      "fan_socket_geometry_preserved": true,
+      "body_solid_volume_reduced": true,
+      "independent_curve_audit": true,
+      "curve_audit_matches_samples": true,
+      "thin_wall_2_thread_root_2_4": true,
+      "slicer_height_margin_2": true
+    },
+    "thin_wall_audit": {
+      "pass": true,
+      "checks": {
+        "actual_radial_wall_matches_contract": true,
+        "nominal_bore_wall_matches_contract": true,
+        "monotone_reducer_inner": true,
+        "monotone_reducer_outer": true,
+        "paired_thread_root_wall_2_4": true,
+        "spigot_wall_still_3": true
+      },
+      "sampled_radial_wall_min_mm": 1.9999978925834547,
+      "required_radial_wall_mm": 2,
+      "witness_count": 7088,
+      "method": "8 final-mesh section planes, both radial sides, 0.5mm axial spacing; excludes bayonet below Z26.",
+      "scope": "Radial thickness, not surface-normal thickness or strength acceptance."
+    },
+    "fan_socket_symmetric_difference_mm3": 0.0,
+    "old_solid_volume_mm3": 149743.71330011697,
+    "new_solid_volume_mm3": 143953.26047464952,
+    "solid_volume_reduction_percent": 3.8669087989438355,
+    "volume_is_not_sliced_filament_or_time": true,
+    "curve_audit": {
+      "pass": true,
+      "checks": {
+        "source_samples_match_independent_equations": true,
+        "C3_joins": true,
+        "inner_angle_reduced": true,
+        "outer_angle_reduced": true,
+        "inner_slope_change_reduced": true,
+        "outer_slope_change_reduced": true
+      },
+      "cases": [
+        {
+          "revision": 4,
+          "scad_samples_max_error_mm": 4.998579604631459e-05,
+          "inner_max_angle_deg": 12.788769075702552,
+          "outer_max_angle_deg": 16.23447290486676,
+          "inner_max_abs_radius_second_derivative_per_mm": 0.008106723867816967,
+          "outer_max_abs_radius_second_derivative_per_mm": 0.011618853717060063,
+          "source_samples_sha256": "1ce914a6cccdca5368f2c41f83b9ce88b9d5e9f6a18f19585910e52e600f62c8"
+        },
+        {
+          "revision": 5,
+          "scad_samples_max_error_mm": 4.999121915005844e-05,
+          "inner_max_angle_deg": 11.129293119722213,
+          "outer_max_angle_deg": 15.004353679175821,
+          "inner_max_abs_radius_second_derivative_per_mm": 0.006807030979417483,
+          "outer_max_abs_radius_second_derivative_per_mm": 0.0114676481189262,
+          "source_samples_sha256": "25bc02a1469ac433c9f2e08269f26c93dfe65155b59c51b57485a01aa7f80481"
+        }
+      ],
+      "limitation": "Independent equations checked against evaluated SCAD samples; no CFD, strength or manufacturing acceptance."
+    },
+    "pass": true
+  },
+  "elapsed_seconds": 29.741591416997835,
+  "sliced": false,
+  "physical_fit_verified": false,
+  "flow_performance_verified": false,
+  "flow_guide_status": "AWAITING_USER_CHOICE",
+  "limitations": [
+    "Finite mesh samples plus analytic phase/radius relations, not manufacturing tolerance proof.",
+    "Nominal socket ID76 requested by user: zero designed clearance, PETG shrinkage fit test required.",
+    "Y junction dimensions are reference-only; mechanical travel is not a ball-safe travel guarantee.",
+    "Clean model has no supports; bayonet roof support and thread no-support must be checked in slicer."
+  ]
+}

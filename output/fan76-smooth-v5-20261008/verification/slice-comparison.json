@@ -1,0 +1,135 @@
+{
+  "status": "OFFLINE_COMPARISON_ONLY_NOT_FOR_PRINT",
+  "cases": [
+    {
+      "case": "v4-w4",
+      "revision": 4,
+      "wall_loops": 4,
+      "input_stl": "output/fan76-smooth-v4-20261008/stl/fan76-smooth-v4-body-clean.stl",
+      "input_sha256": "b51c27b80e320f677b101c4bc2951b24138a52857b5e79d329a1a16b04538448",
+      "seconds_estimate": 19064.623046875,
+      "grams_estimate": 165.75343322753906,
+      "warning": "",
+      "command": [
+        "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+        "--datadir",
+        "/var/folders/nj/0ldgyptn7tb182kz7h6bbs_00000gn/T/fan76-v4-w4-cli-s8ys1ucu",
+        "--debug",
+        "2",
+        "--load-settings",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v4-w4/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v4-w4/process.json",
+        "--load-filaments",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v4-w4/filament.json",
+        "--orient",
+        "0",
+        "--arrange",
+        "1",
+        "--ensure-on-bed",
+        "--slice",
+        "0",
+        "--export-3mf",
+        "analysis-only-not-for-print.3mf",
+        "--outputdir",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v4-w4",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v4-20261008/stl/fan76-smooth-v4-body-clean.stl"
+      ],
+      "slicer_binary_sha256": "1a79017b9f86fb6db92987f4a4c4a4834ac540cf36703d49c7c91ed1959c2026",
+      "native_template_sha256": "30701c8f49ec2cb419432a15334aa579f759840763ef95aa16e86b87607fa812",
+      "configs": {
+        "machine": {
+          "schema_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110",
+          "effective_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110"
+        },
+        "process": {
+          "schema_sha256": "ebaec50ee6aff03439c68bf14a9a2b95392e6311fbad84b43c237ce9059615f6",
+          "effective_sha256": "79098d6481b0e8ac62c5ebdd94c87e1aa5ff27f96a12dcec1b2d3e7d2a3f9d5d"
+        },
+        "filament": {
+          "schema_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d",
+          "effective_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d"
+        }
+      },
+      "package_sha256": "8672e77a87f0fb3fad5a07f0fcd435a6b359556db6f8fd68a48d15a2f9af6547",
+      "dispatch_authorized": false,
+      "preset_verified": true,
+      "support_contact_reviewed": false,
+      "startup_unchanged": true,
+      "end_code_unchanged": true,
+      "printable_height_mm": 250.0,
+      "model_height_mm": 244,
+      "height_margin_mm": 6.0,
+      "printer_contacted": false,
+      "time_reduction_percent_vs_v4_w4": 0.0,
+      "material_reduction_percent_vs_v4_w4": 0.0
+    },
+    {
+      "case": "v5-w4",
+      "revision": 5,
+      "wall_loops": 4,
+      "input_stl": "output/fan76-smooth-v5-20261008/stl/fan76-smooth-v5-body-clean.stl",
+      "input_sha256": "e0be6b465aebef9dff9f6886d6a49f9420e24ea8416c321caef14fc1e02a42fc",
+      "seconds_estimate": 19258.671875,
+      "grams_estimate": 159.7815704345703,
+      "warning": "",
+      "command": [
+        "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+        "--datadir",
+        "/var/folders/nj/0ldgyptn7tb182kz7h6bbs_00000gn/T/fan76-v5-w4-cli-72ujpxof",
+        "--debug",
+        "2",
+        "--load-settings",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v5-w4/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v5-w4/process.json",
+        "--load-filaments",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v5-w4/filament.json",
+        "--orient",
+        "0",
+        "--arrange",
+        "1",
+        "--ensure-on-bed",
+        "--slice",
+        "0",
+        "--export-3mf",
+        "analysis-only-not-for-print.3mf",
+        "--outputdir",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/analysis-slices/v5-w4",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/stl/fan76-smooth-v5-body-clean.stl"
+      ],
+      "slicer_binary_sha256": "1a79017b9f86fb6db92987f4a4c4a4834ac540cf36703d49c7c91ed1959c2026",
+      "native_template_sha256": "30701c8f49ec2cb419432a15334aa579f759840763ef95aa16e86b87607fa812",
+      "configs": {
+        "machine": {
+          "schema_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110",
+          "effective_sha256": "86d9c0f6a46bed317eb0f4b6f405092458912aededb0c74d297543fcc95e4110"
+        },
+        "process": {
+          "schema_sha256": "ebaec50ee6aff03439c68bf14a9a2b95392e6311fbad84b43c237ce9059615f6",
+          "effective_sha256": "79098d6481b0e8ac62c5ebdd94c87e1aa5ff27f96a12dcec1b2d3e7d2a3f9d5d"
+        },
+        "filament": {
+          "schema_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d",
+          "effective_sha256": "18b2658604e4375afa48d4059d5ebe3986e1b04ad47fe1f0df6de819568f8f3d"
+        }
+      },
+      "package_sha256": "b5f22a0d9598ec3e756c575b8adbc8591ff8dc96bf481c922ef5ff231ab0af00",
+      "dispatch_authorized": false,
+      "preset_verified": true,
+      "support_contact_reviewed": false,
+      "startup_unchanged": true,
+      "end_code_unchanged": true,
+      "printable_height_mm": 250.0,
+      "model_height_mm": 248,
+      "height_margin_mm": 2.0,
+      "printer_contacted": false,
+      "time_reduction_percent_vs_v4_w4": -1.0178477048713885,
+      "material_reduction_percent_vs_v4_w4": 3.6028591846847813
+    }
+  ],
+  "baseline_case": "v4-w4",
+  "selected_case": "v5-w4",
+  "limitations": [
+    "Same native preset snapshot, 0.2mm layer, PETG, tree-auto, 25% infill; one shell per plate.",
+    "Slicer estimates, not elapsed printer time. Model solid volume is not sliced material.",
+    "No native GUI release audit, support-contact acceptance, fit/strength/airflow test or dispatch."
+  ],
+  "printer_contacted": false
+}

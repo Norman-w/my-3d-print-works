@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v2-20261008/stl/fan76-smooth-v2-body-clean.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 155480,
+  "uniqueVertexCount": 77740,
+  "bounds": {
+    "min": [
+      -43.0,
+      -43.0,
+      0.0
+    ],
+    "max": [
+      43.0,
+      43.0,
+      184.0
+    ],
+    "size": [
+      86.0,
+      86.0,
+      184.0
+    ]
+  },
+  "surfaceArea": 71944.93506168087,
+  "signedVolume": 152189.6377024696,
+  "volume": 152189.6377024696,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

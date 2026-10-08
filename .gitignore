@@ -71,3 +71,32 @@ __pycache__/
 /output/fan76-direct-longtravel-v1-20261007/print/config/project-settings.json
 /output/fan-tee-narrow-nozzles-v5-20261007/print/slice/*.json
 /output/fan76-direct-longtravel-v1-20261007/print/slice/*.json
+
+# Ø76 v2 geometry-review delivery; no old G-code is promoted to this shell.
+!/output/fan76-smooth-v2-20261008/stl/*-clean.stl
+!/output/fan76-smooth-v2-20261008/review/review-fan-envelope.stl
+!/output/fan76-smooth-v2-20261008/render/*.png
+
+# Ø76 v3 longer contraction / shallow default tip; clean geometry only.
+!/output/fan76-smooth-v3-20261008/stl/*-clean.stl
+!/output/fan76-smooth-v3-20261008/review/review-fan-envelope.stl
+!/output/fan76-smooth-v3-20261008/render/*.png
+
+# Ø76 v4 thin-wall review: retain final meshes, images and curated estimates;
+# offline comparison G-code, extracted presets and slicer logs are not releases.
+!/output/fan76-smooth-v4-20261008/stl/*-clean.stl
+!/output/fan76-smooth-v4-20261008/review/review-fan-envelope.stl
+!/output/fan76-smooth-v4-20261008/render/*.png
+/output/fan76-smooth-v4-20261008/analysis-slices/
+
+# Ø76 v5 C3 contraction / 2mm non-mating wall; same evidence-only slice boundary.
+!/output/fan76-smooth-v5-20261008/stl/*-clean.stl
+!/output/fan76-smooth-v5-20261008/review/review-fan-envelope.stl
+!/output/fan76-smooth-v5-20261008/render/*.png
+/output/fan76-smooth-v5-20261008/analysis-slices/
+
+# Keep the reviewed single-shell preparation and audit, not transient settings,
+# diagnostics, CLI result caches or any candidate G-code awaiting GUI release.
+/output/fan76-smooth-v5-20261008/print/config/project-settings.json
+/output/fan76-smooth-v5-20261008/print/slice/*.json
+!/output/fan76-smooth-v5-20261008/print/fan76-smooth-v5-body-only-prepared.3mf

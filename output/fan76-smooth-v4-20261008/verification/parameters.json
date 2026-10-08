@@ -1,0 +1,114 @@
+{
+  "units": "mm",
+  "body_height": 244,
+  "body_od": 86,
+  "tube_od": 50,
+  "spigot_od": 50,
+  "spigot_id": 44,
+  "spigot_z0": 219,
+  "spigot_length": 25,
+  "socket_id": 76,
+  "socket_polygon_circumdiameter": 76.0102,
+  "fan_od": 76,
+  "fan_id": 71,
+  "face_z": 24,
+  "blend_z0": 26,
+  "blend_z1": 146,
+  "blend_length": 120,
+  "blend_polynomial": "integrated cubic slope ramp / constant slope / mirrored ramp",
+  "curve_ramp_fraction": 0.35,
+  "thin_wall_radial_nominal": 2.4,
+  "thread_shell_od": 47.1,
+  "guide_od": 48.8,
+  "peak_inner_wall_angle_to_axis_deg": 12.7888,
+  "female_z0": 146,
+  "female_z1": 190,
+  "female_length": 44,
+  "female_cut_z0": 142,
+  "female_cut_z1": 194,
+  "entry_z0": 188,
+  "guide_z0": 192,
+  "straight_handoff_z": 188,
+  "core_min_z": 142,
+  "core_max_z": 162,
+  "travel": 20,
+  "pitch": 4,
+  "core_height": 106,
+  "male_z0": 4,
+  "male_z1": 28,
+  "complete_turns_min": 4,
+  "complete_turns_max": 4,
+  "male_major": 41.8,
+  "female_minor": 40.6,
+  "female_major": 42.3,
+  "male_profile": [
+    [
+      19.8,
+      -1.53217
+    ],
+    [
+      19.95,
+      -1.53217
+    ],
+    [
+      20.9,
+      -0.4
+    ],
+    [
+      20.9,
+      0.4
+    ],
+    [
+      19.95,
+      1.53217
+    ],
+    [
+      19.8,
+      1.53217
+    ]
+  ],
+  "female_profile": [
+    [
+      20.05,
+      -1.73217
+    ],
+    [
+      20.2,
+      -1.73217
+    ],
+    [
+      21.15,
+      -0.6
+    ],
+    [
+      21.15,
+      0.6
+    ],
+    [
+      20.2,
+      1.73217
+    ],
+    [
+      20.05,
+      1.73217
+    ]
+  ],
+  "outlet_ids": [
+    15,
+    20,
+    25,
+    30
+  ],
+  "protrusion_min": 4,
+  "protrusion_max": 24,
+  "default_travel": 0,
+  "protrusion_datum": "body spigot end, NOT Y mouth",
+  "core_source_release": "fan-tee-narrow-nozzles-v5-20261007",
+  "slot_floor_z": 12.5,
+  "slot_roof_z": 21.5,
+  "slot_outer_r": 40.8,
+  "lock_deg": 18,
+  "flow_guide_status": "AWAITING_USER_CHOICE",
+  "fn": 192,
+  "steps_per_turn": 128
+}

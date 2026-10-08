@@ -12,6 +12,36 @@ from verify_fan_tee_v5_print import geometry, is_upright, mesh_equivalence, nozz
 
 
 class PrintPackageTests(unittest.TestCase):
+    def test_dense_vertices_require_nearest_bijection_not_looser_tolerance(self):
+        source = [(0., 0., 0.), (.00004, 0., 0.), (0., 1., 0.), (0., 0., 1.)]
+        native = [(.000001, 0., 0.), (.000039, 0., 0.), (0., 1., 0.), (0., 0., 1.)]
+        faces = [(0, 2, 1), (0, 1, 3), (0, 3, 2), (1, 2, 3)]
+        self.assertTrue(mesh_equivalence(native, faces, source, faces)[0])
+        native[1] = native[0]
+        self.assertFalse(mesh_equivalence(native, faces, source, faces)[0])
+        native[0] = (.00002, 0., 0.)
+        self.assertFalse(mesh_equivalence(native, faces, source, faces)[0])
+
+    def test_single_body_height_and_count_are_explicit(self):
+        def tetra(height):
+            points = [(0., 0., 0.), (4., 0., 0.), (0., 4., 0.), (0., 0., height)]
+            faces = [(0, 2, 1), (0, 1, 3), (0, 3, 2), (1, 2, 3)]
+            return bytes(80)+struct.pack('<I', 4)+b''.join(
+                struct.pack('<12fH', 0, 0, 0, *(x for i in f for x in points[i]), 0) for f in faces)
+        with tempfile.TemporaryDirectory(prefix='single-shell-test-') as d:
+            work = Path(d)
+            stl = work / 'connector.stl'
+            stl.write_bytes(tetra(248))
+            kwargs = dict(layout=[('connector', (128., 128.))], expected_parts=1, height_margin_mm=2)
+            report = build({'connector': stl}, work/'output', TEMPLATE, **kwargs)
+            self.assertEqual(report['part_count'], 1)
+            self.assertEqual(len(geometry(Path(report['package']), report, expected_parts=1)), 1)
+            with self.assertRaises(AssertionError):
+                geometry(Path(report['package']), report)
+            stl.write_bytes(tetra(248.1))
+            with self.assertRaises(AssertionError):
+                build({'connector': stl}, work/'too-tall', TEMPLATE, **kwargs)
+
     def test_native_float32_recentering_crosses_rounding_boundary(self):
         original = [(0., 0., 10.0375001), (1., 0., 0.), (0., 1., 0.)]
         native = [(0., 0., 10.037499), (1., 0., 0.), (0., 1., 0.)]
