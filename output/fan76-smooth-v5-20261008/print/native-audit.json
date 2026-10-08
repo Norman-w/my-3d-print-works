@@ -1,5 +1,5 @@
 {
-  "status": "SLICE_REVIEW_REQUIRED",
+  "status": "DIGITAL_SINGLE_BODY_SLICE_PASS",
   "expected_part_count": 1,
   "mother_thread_screen_z_mm": [
     152,
@@ -9,7 +9,7 @@
     "exact_source_meshes": true,
     "exact_sliced_object_count": true,
     "native_geometry_slice_settings_match": true,
-    "x1c_04": false,
+    "x1c_04": true,
     "petg": true,
     "startup_preserved": true,
     "end_preserved": true,
@@ -24,10 +24,10 @@
     "agreed_four_wall_0_2mm_profile": true,
     "tree_on_build_plate_only": true
   },
-  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice/fan76-smooth-v5-body-only-cli-candidate.3mf",
-  "package_sha256": "414c11724190504ffcfcc6414159b1d457ac348e9414de7b7bb8b6a41d518635",
-  "native_project": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/slice/fan76-smooth-v5-body-only-cli-candidate.3mf",
-  "project_sha256": "414c11724190504ffcfcc6414159b1d457ac348e9414de7b7bb8b6a41d518635",
+  "package": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/fan76-smooth-v5-body-only-native-actual.gcode.3mf",
+  "package_sha256": "8a578a690bc3d579690b53b8e21b450af4834ae32d5ba31b8002ed48e82a26de",
+  "native_project": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v5-20261008/print/fan76-smooth-v5-body-only-native-project.3mf",
+  "project_sha256": "94d051a774053891daccadb0771a0117e8a620d5bc17823daeebd43f9df50803",
   "parts": [
     {
       "role": "connector",
@@ -74,13 +74,13 @@
     "index": "1",
     "extruder_type": "0",
     "nozzle_volume_type": "0",
-    "printer_model_id": "",
+    "printer_model_id": "BL-P001",
     "nozzle_diameters": "0.4",
     "timelapse_type": "0",
     "prediction": "19219",
     "weight": "159.91",
     "pause_count": "0",
-    "first_layer_time": "0.000000",
+    "first_layer_time": "210.155975",
     "outside": "false",
     "support_used": "true",
     "label_object_enabled": "false",
