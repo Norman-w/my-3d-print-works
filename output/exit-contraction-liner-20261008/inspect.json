@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/exit-contraction-liner-20261008/exit-contraction-liner.stl",
+  "format": "ascii",
+  "units": "unknown",
+  "triangleCount": 2304,
+  "uniqueVertexCount": 1152,
+  "bounds": {
+    "min": [
+      -25.0,
+      -25.0,
+      0.0
+    ],
+    "max": [
+      25.0,
+      25.0,
+      42.0
+    ],
+    "size": [
+      50.0,
+      50.0,
+      42.0
+    ]
+  },
+  "surfaceArea": 12382.086771598097,
+  "signedVolume": 6188.244216386439,
+  "volume": 6188.244216386439,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}
