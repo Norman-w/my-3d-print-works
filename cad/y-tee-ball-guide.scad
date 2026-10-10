@@ -3,9 +3,10 @@
 // 这个角度还没按实物重测。
 // 进球段外径 50，从端口起内径就是 42，插入送料模块出口。
 // 风机承口内径 50。球走的弯和出球段内径都是 42。50 收到 42 的台阶只在风机口里，球不经过。
-// 弯道中心线半径 36，转 45°，局部断面保持内径 42，球是圆的，可以顺着弯过去。
+// 弯道中心线半径 100，转 45°，弧长大于球径。局部断面保持内径 42。
+// 球在弯里同时只转二十多度，进直管时方向已经摆正，不会一头进直管、球身还在斜段里撞壁。
 // 外壳：风机承口外径 56 用一段曲率收到出球管外径 47。支管保持外径 50，不再把交汇处撑粗。
-// 打印时出球口贴热床。口端外侧加一圈 2.4 mm 厚的稳定圈，打完后沿根部刻线切掉。球路内径不变。
+// 打印时出球口贴热床。稳定圈和管壁之间留缝，只在贴床一侧用四处窄连接，打完掰掉。球路内径不变。
 
 // ===== 分区：导入/依赖 =====
 
@@ -20,22 +21,24 @@ yt_fan_wall = 3;
 yt_exit_wall = 2.5;
 yt_fan_depth = y_stub_engagement;
 yt_air_step = 3;
-yt_rho = 36;
-yt_z0 = 100;                 // 出球直段切点。抬高后，45° 支管不会并进风机口
+yt_rho = 100;
+yt_z0 = 114;                 // 出球直段切点。和大半径弯一起抬高，球才不探进风机口
 yt_turn = 45;
 yt_branch_angle = 135;
-yt_branch_l = 85;            // 末端至少 25 mm 是露出的圆柱，用来插入送料口
-yt_exit_l = 120;
+yt_branch_l = 64;            // 末端至少 25 mm 是露出的圆柱，用来插入送料口
+yt_exit_l = 106;             // 切点上移后缩短直段，出球口高度不变
 yt_mouth_chamfer = 0.6;
 yt_arc_steps = 12;
 yt_shoulder_len = 22;        // 风机承口外径收到出球管，两端斜率归零
 yt_bed_ring_width = 18;      // 出球口贴床面，向外加宽的稳定圈
 yt_bed_ring_t = 2.4;         // 多层圈，不是单层裙边
 yt_bed_ring_proud = 0.4;     // 略高出出球端面，避免和端面共面碎成非流形
-yt_bed_ring_bite = 0.8;      // 咬进出球管外壁，避免和管壁只相切
+yt_bed_ring_gap = 1.6;       // 圈和管壁之间的缝，方便下手拆
+yt_bed_ring_tab_n = 4;       // 只留这几处和主体相连
+yt_bed_ring_tab_w = 6;       // 每处连接的周向宽度
+yt_bed_ring_tab_t = 0.4;     // 缝里只留两层 0.2 mm，打完能掰掉
+yt_bed_ring_tab_bite = 0.45; // 搭进管壁和圈体，避免只相切
 yt_bed_ring_chamfer = 0.8;   // 背向热床的外缘倒角
-yt_bed_ring_score_w = 1.0;   // 根部刻线，打完沿这里切开
-yt_bed_ring_score_d = 0.5;
 yt_fn = 64;
 yt_eps = 0.08;
 yt_used_part = is_undef(yt_part) ? "tee" : yt_part;
@@ -108,10 +111,48 @@ module yt_main_shell() {
         polygon(yt_main_profile());
 }
 
+module yt_bed_ring_tab() {
+    r_wall = yt_exit_od / 2;
+    r0 = r_wall - yt_bed_ring_tab_bite;
+    ri = r_wall + yt_bed_ring_gap;
+    r1 = ri + yt_bed_ring_tab_bite;
+    half = yt_bed_ring_tab_w / 2;
+    over = 0.15;
+    root = 0.3;
+    span = root + yt_bed_ring_tab_t + over;
+    difference() {
+        intersection() {
+            difference() {
+                translate([0, 0, -root])
+                    cylinder(h=span, r=r1, $fn=yt_fn);
+                translate([0, 0, -root - yt_eps])
+                    cylinder(h=span + 2 * yt_eps, r=r0, $fn=yt_fn);
+            }
+            translate([0, 0, -root - yt_eps])
+                linear_extrude(span + 2 * yt_eps)
+                    polygon([[0, -0.2], [r1 + 1, -half], [r1 + 1, half], [0, 0.2]]);
+        }
+        translate([0, 0, -root - yt_eps])
+            difference() {
+                cylinder(h=root + yt_eps, r=ri - 0.05, $fn=yt_fn);
+                translate([0, 0, -yt_eps])
+                    cylinder(h=root + 3 * yt_eps, r=r_wall + 0.05, $fn=yt_fn);
+            }
+        translate([0, 0, yt_bed_ring_tab_t])
+            difference() {
+                cylinder(h=over + yt_eps, r=ri - 0.05, $fn=yt_fn);
+                translate([0, 0, -yt_eps])
+                    cylinder(h=over + 3 * yt_eps, r=r_wall + 0.05, $fn=yt_fn);
+            }
+        translate([0, 0, yt_bed_ring_tab_t])
+            cylinder(h=over + yt_eps, r=r_wall - 0.05, $fn=yt_fn);
+    }
+}
+
 module yt_bed_ring() {
     z1 = yt_z0 + yt_exit_l;
     ro = yt_exit_od / 2 + yt_bed_ring_width;
-    ri = yt_exit_od / 2 - yt_bed_ring_bite;
+    ri = yt_exit_od / 2 + yt_bed_ring_gap;
     face = yt_bed_ring_t + yt_bed_ring_proud;
     translate([0, 0, z1 - yt_bed_ring_t])
         rotate_extrude(convexity=2, $fn=yt_fn)
@@ -122,18 +163,10 @@ module yt_bed_ring() {
                 [ro, face],
                 [ri, face]
             ]);
-}
-
-module yt_bed_ring_score() {
-    z1 = yt_z0 + yt_exit_l;
-    translate([0, 0, z1 - yt_bed_ring_t - yt_eps])
-        difference() {
-            cylinder(h=yt_bed_ring_score_d + yt_eps,
-                d=yt_exit_od + 2 * yt_bed_ring_score_w, $fn=yt_fn);
-            translate([0, 0, -yt_eps])
-                cylinder(h=yt_bed_ring_score_d + 3 * yt_eps,
-                    d=yt_exit_od - 0.6, $fn=yt_fn);
-        }
+    translate([0, 0, z1 + yt_bed_ring_proud - yt_bed_ring_tab_t])
+        for (i = [0:yt_bed_ring_tab_n - 1])
+            rotate([0, 0, i * 360 / yt_bed_ring_tab_n])
+                yt_bed_ring_tab();
 }
 
 module yt_outer() {
@@ -165,7 +198,6 @@ module yt_tee() {
     difference() {
         yt_outer();
         yt_bore();
-        yt_bed_ring_score();
     }
 }
 
@@ -185,12 +217,22 @@ assert(yt_ball_id == 42, "球道路径内径应为 42");
 assert(yt_fan_id == 50, "风机口内径应为 50");
 assert(yt_ball_id > ball_max_d, "42 mm 轨道必须大于球径包络");
 assert(yt_rho > yt_ball_id / 2, "弯道半径必须大于气道半径，断面才不会自交");
-assert(yt_on_arc(-yt_turn).z > yt_air_step, "进球弯道应在风机台阶之后");
+assert(yt_rho * yt_turn * PI / 180 > ball_max_d * 1.5,
+    "弯道弧长至少要有球径的 1.5 倍，球才不会横跨整个拐弯");
+assert(ball_max_d / yt_rho * 180 / PI < 30, "球在弯道里同时转过的角度应小于 30 度");
+assert(yt_on_arc(-yt_turn).z - ball_max_d / 2 > yt_air_step,
+    "球在弯道入口应完全离开风机收口");
+assert(yt_branch_mouth().z - (yt_ball_od / 2) * sin(yt_turn) >= yt_fan_z0,
+    "进球口不能低于风机端面，否则整件超高");
 assert(yt_branch_l > y_stub_engagement, "进球直段要留出插入长度");
 assert(yt_exit_wall >= 2, "出球段壁厚至少 2 mm");
-assert(yt_exit_od / 2 - yt_bed_ring_bite - yt_ball_id / 2 >= 1.5,
-    "稳定圈咬进管壁后，出球段剩余壁厚至少 1.5 mm");
-assert(yt_bed_ring_t > yt_bed_ring_score_d + 1.2, "刻线不能把稳定圈切穿");
+assert(yt_exit_od / 2 - yt_bed_ring_tab_bite - yt_ball_id / 2 >= 1.5,
+    "稳定圈连接搭进管壁后，出球段剩余壁厚至少 1.5 mm");
+assert(yt_bed_ring_tab_n == 4, "稳定圈只留四处连接");
+assert(yt_bed_ring_tab_w <= 8, "每处连接不要太宽");
+assert(yt_bed_ring_tab_t == 0.4, "缝里的连接只留两层");
+assert(yt_bed_ring_gap >= 1.2, "稳定圈和管壁之间要留得下刀");
+assert(yt_bed_ring_t > yt_bed_ring_tab_t + 0.8, "连接上方要留出敞开的缝");
 assert(yt_bed_ring_width >= 12, "稳定圈径向宽度至少 12 mm");
 assert(yt_branch_mouth().x > yt_exit_od / 2 + yt_ball_od / 2 + 2,
     "进球端口要伸出出球管，才插得进送料口");
@@ -205,6 +247,7 @@ for (t = [0:5:yt_branch_l]) {
 echo(yt_fan_od=yt_fan_od);
 echo(yt_exit_od=yt_exit_od);
 echo(yt_branch_join=yt_on_arc(-yt_turn));
+echo(yt_arc_len=yt_rho * yt_turn * PI / 180);
 echo(yt_muzzle_z=yt_z0 + yt_exit_l);
 
 // ===== 分区：方法/工具 =====
