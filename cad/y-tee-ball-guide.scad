@@ -6,7 +6,7 @@
 // 弯道中心线半径 100，转 45°，弧长大于球径。局部断面保持内径 42。
 // 球在弯里同时只转二十多度，进直管时方向已经摆正，不会一头进直管、球身还在斜段里撞壁。
 // 外壳：风机承口外径 56 用一段曲率收到出球管外径 47。支管保持外径 50，不再把交汇处撑粗。
-// 打印时出球口贴热床。稳定圈和管壁之间留缝，只在贴床一侧用四处窄连接，打完掰掉。球路内径不变。
+// 打印时出球口贴热床。稳定圈和管壁之间留缝，只在贴床一侧用八处两层窄连接，打完掰掉。球路内径不变。
 
 // ===== 分区：导入/依赖 =====
 
@@ -34,7 +34,7 @@ yt_bed_ring_width = 18;      // 出球口贴床面，向外加宽的稳定圈
 yt_bed_ring_t = 2.4;         // 多层圈，不是单层裙边
 yt_bed_ring_proud = 0.4;     // 略高出出球端面，避免和端面共面碎成非流形
 yt_bed_ring_gap = 1.6;       // 圈和管壁之间的缝，方便下手拆
-yt_bed_ring_tab_n = 4;       // 只留这几处和主体相连
+yt_bed_ring_tab_n = 8;       // 两层很薄，多留几处才撑得住整件
 yt_bed_ring_tab_w = 6;       // 每处连接的周向宽度
 yt_bed_ring_tab_t = 0.4;     // 缝里只留两层 0.2 mm，打完能掰掉
 yt_bed_ring_tab_bite = 0.45; // 搭进管壁和圈体，避免只相切
@@ -228,7 +228,9 @@ assert(yt_branch_l > y_stub_engagement, "进球直段要留出插入长度");
 assert(yt_exit_wall >= 2, "出球段壁厚至少 2 mm");
 assert(yt_exit_od / 2 - yt_bed_ring_tab_bite - yt_ball_id / 2 >= 1.5,
     "稳定圈连接搭进管壁后，出球段剩余壁厚至少 1.5 mm");
-assert(yt_bed_ring_tab_n == 4, "稳定圈只留四处连接");
+assert(yt_bed_ring_tab_n == 8, "稳定圈留八处连接");
+assert(yt_bed_ring_tab_n * yt_bed_ring_tab_w < PI * yt_exit_od * 0.5,
+    "连接加起来不能把缝封上");
 assert(yt_bed_ring_tab_w <= 8, "每处连接不要太宽");
 assert(yt_bed_ring_tab_t == 0.4, "缝里的连接只留两层");
 assert(yt_bed_ring_gap >= 1.2, "稳定圈和管壁之间要留得下刀");

@@ -2,8 +2,8 @@
   "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/y-tee-ball-guide-20261009/y-tee-ball-guide.stl",
   "format": "ascii",
   "units": "unknown",
-  "triangleCount": 8898,
-  "uniqueVertexCount": 4439,
+  "triangleCount": 9534,
+  "uniqueVertexCount": 4749,
   "bounds": {
     "min": [
       -41.5,
@@ -21,9 +21,9 @@
       245.55
     ]
   },
-  "surfaceArea": 99070.54373058768,
-  "signedVolume": 148474.09746007665,
-  "volume": 148474.09746007665,
+  "surfaceArea": 99160.98462840033,
+  "signedVolume": 148494.6621263258,
+  "volume": 148494.6621263258,
   "degenerateTriangleCount": 0,
   "boundaryEdgeCount": 0,
   "nonManifoldEdgeCount": 0,
