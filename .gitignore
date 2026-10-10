@@ -100,3 +100,14 @@ __pycache__/
 /output/fan76-smooth-v5-20261008/print/config/project-settings.json
 /output/fan76-smooth-v5-20261008/print/slice/*.json
 !/output/fan76-smooth-v5-20261008/print/fan76-smooth-v5-body-only-prepared.3mf
+
+# Local gallery index. The json exception would otherwise track preview state
+# while the meshes themselves stay ignored.
+/output/3d-preview/
+
+# Copied slicer presets and CLI slice results are session cache.
+# Files already tracked, including frozen v4 presets and native-baseline.json, stay tracked.
+/output/**/print/config/filament.json
+/output/**/print/config/machine.json
+/output/**/print/config/process.json
+/output/**/print/slice/result.json
