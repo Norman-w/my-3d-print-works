@@ -4,6 +4,7 @@
 // 进球段外径 50，从端口起内径就是 42，插入送料模块出口。
 // 弧线管是一整圈实心壁，内径 42。后风从风机孔一直通到出球段。
 // 交汇处只留中间一条贴着弧线外壁的挡条，挡住球。这条以外的风路全部敞开。
+// 挡条上的加固：椭圆短直径等于弧线宽，长直径是四倍。长轴从弯道圆心穿过边线再向外探出两倍弧线宽，绕着弧线放到出球直管切点。穿出外壳的部分切掉。
 // 弯道中心线半径 100，转 45°，弧长大于球径。局部断面保持内径 42。
 // 球在弯里同时只转二十多度，进直管时方向已经摆正，不会一头进直管、球身还在斜段里撞壁。
 // 外壳：风机承口外径 56 用一段曲率收到出球管外径 47。支管保持外径 50，不再把交汇处撑粗。
@@ -23,9 +24,17 @@ yt_exit_wall = 2.5;
 yt_fan_depth = y_stub_engagement;
 yt_air_step = 3;
 yt_air_rib_w = 6;            // 交汇处只留这一条。两侧和后面的风路不再收口
+yt_rib_ell_minor = yt_air_rib_w;          // 短直径 = 现在这条弧线的宽度
+yt_rib_ell_major = 4 * yt_air_rib_w;       // 长直径 = 弧线宽度的四倍
+yt_rib_ell_extra = 8;                       // 弧长外围再延长的角度，两端都加
+yt_rib_ell_steps = 24;
 yt_rho = 100;
 yt_z0 = 114;                 // 出球直段切点。和大半径弯一起抬高，球才不探进风机口
 yt_turn = 45;
+yt_rib_ell_a0 = -yt_turn - 4;              // 弧线上靠近进球的那头
+yt_rib_ell_a1 = 0;                         // 出球端放到直管切点，穿出的部分再用外壳切掉
+yt_rib_ell_inlet = yt_rho * yt_rib_ell_extra * PI / 180; // 进球方向再延长的长度
+yt_rib_inlet_steps = 6;
 yt_branch_angle = 135;
 yt_branch_l = 64;            // 末端至少 25 mm 是露出的圆柱，用来插入送料口
 yt_exit_l = 106;             // 切点上移后缩短直段，出球口高度不变
@@ -133,6 +142,125 @@ module yt_air_rib_keep() {
         }
 }
 
+// 椭圆中心在弧线外壁上。局部 x 从弯道圆心指向边线。长半径默认两倍弧线宽，快顶出管子时收到外壳内侧。
+function yt_rib_ell_tip_at(a, t) =
+    let(ox = -cos(a), oz = sin(a))
+        yt_on_arc(a) + [ox, 0, oz] * (yt_ball_id / 2 + t);
+
+function yt_rib_ell_inside(a, t) =
+    let(p = yt_rib_ell_tip_at(a, t))
+        sqrt(p.x * p.x + p.y * p.y) + 0.5 < yt_outer_r(p.z);
+
+function yt_rib_ell_fit(a, lo, hi, n) =
+    n <= 0 ? lo :
+    let(mid = (lo + hi) / 2)
+        yt_rib_ell_inside(a, mid)
+            ? yt_rib_ell_fit(a, mid, hi, n - 1)
+            : yt_rib_ell_fit(a, lo, mid, n - 1);
+
+function yt_rib_ell_out(a) =
+    let(full = yt_rib_ell_major / 2)
+        yt_rib_ell_inside(a, full) ? full : yt_rib_ell_fit(a, 0.3, full, 8);
+
+module yt_rib_ell_section(a) {
+    p = yt_on_arc(a);
+    ox = -cos(a);
+    oz = sin(a);
+    tx = sin(a);
+    tz = cos(a);
+    c = p + [ox, 0, oz] * (yt_ball_id / 2);
+    reach = yt_rib_ell_major / 2;
+    n = 24;
+    multmatrix([
+        [ox, 0, tx, c.x],
+        [0, 1, 0, c.y],
+        [oz, 0, tz, c.z],
+        [0, 0, 0, 1]
+    ])
+        linear_extrude(0.45, center=true)
+            polygon([
+                for (i = [0:n - 1]) [
+                    reach * cos(360 * i / n),
+                    yt_rib_ell_minor / 2 * sin(360 * i / n)
+                ]
+            ]);
+}
+
+function yt_rib_inlet_dir() =
+    [-sin(yt_rib_ell_a0), 0, -cos(yt_rib_ell_a0)];
+
+function yt_rib_inlet_u() =
+    [-cos(yt_rib_ell_a0), 0, sin(yt_rib_ell_a0)];
+
+function yt_rib_inlet_center(s) =
+    yt_on_arc(yt_rib_ell_a0) + yt_rib_inlet_dir() * s + yt_rib_inlet_u() * (yt_ball_id / 2);
+
+function yt_rib_pt_inside(p) =
+    sqrt(p.x * p.x + p.y * p.y) + 0.5 < yt_outer_r(p.z);
+
+function yt_rib_inlet_tip(s, t) =
+    yt_rib_inlet_center(s) + yt_rib_inlet_u() * t;
+
+function yt_rib_inlet_fit(s, lo, hi, n) =
+    n <= 0 ? lo :
+    let(mid = (lo + hi) / 2)
+        yt_rib_pt_inside(yt_rib_inlet_tip(s, mid))
+            ? yt_rib_inlet_fit(s, mid, hi, n - 1)
+            : yt_rib_inlet_fit(s, lo, mid, n - 1);
+
+function yt_rib_inlet_out(s) =
+    let(full = yt_rib_ell_major / 2)
+        yt_rib_pt_inside(yt_rib_inlet_tip(s, full)) ? full
+            : yt_rib_inlet_fit(s, 0.3, full, 8);
+
+module yt_rib_inlet_section(s) {
+    c = yt_rib_inlet_center(s);
+    u = yt_rib_inlet_u();
+    d = yt_rib_inlet_dir();
+    reach = yt_rib_inlet_out(s);
+    n = 24;
+    multmatrix([
+        [u.x, 0, d.x, c.x],
+        [u.y, 1, d.y, c.y],
+        [u.z, 0, d.z, c.z],
+        [0, 0, 0, 1]
+    ])
+        linear_extrude(0.45, center=true)
+            polygon([
+                for (i = [0:n - 1]) [
+                    reach * cos(360 * i / n),
+                    yt_rib_ell_minor / 2 * sin(360 * i / n)
+                ]
+            ]);
+}
+
+module yt_rib_rein_raw() {
+    for (i = [0:yt_rib_ell_steps - 1])
+        hull() {
+            yt_rib_ell_section(yt_rib_ell_a0 + (yt_rib_ell_a1 - yt_rib_ell_a0) * i / yt_rib_ell_steps);
+            yt_rib_ell_section(yt_rib_ell_a0 + (yt_rib_ell_a1 - yt_rib_ell_a0) * (i + 1) / yt_rib_ell_steps);
+        }
+    for (i = [0:yt_rib_inlet_steps - 1])
+        hull() {
+            yt_rib_inlet_section(yt_rib_ell_inlet * i / yt_rib_inlet_steps);
+            yt_rib_inlet_section(yt_rib_ell_inlet * (i + 1) / yt_rib_inlet_steps);
+        }
+}
+
+module yt_tube_envelope() {
+    yt_main_shell();
+    yt_taper_pipe(yt_arc_points(), yt_ball_od / 2, yt_exit_od / 2);
+    yt_branch_place()
+        cylinder(h=yt_branch_l, d=yt_ball_od, $fn=yt_fn);
+}
+
+module yt_rib_rein() {
+    intersection() {
+        yt_rib_rein_raw();
+        yt_tube_envelope();
+    }
+}
+
 // ===== 分区：公开 API =====
 
 module yt_main_shell() {
@@ -203,6 +331,7 @@ module yt_outer() {
     yt_taper_pipe(yt_arc_points(), yt_ball_od / 2, yt_exit_od / 2);
     yt_branch_place()
         cylinder(h=yt_branch_l, d=yt_ball_od, $fn=yt_fn);
+    yt_rib_rein();
     yt_bed_ring();
 }
 
@@ -211,6 +340,7 @@ module yt_rear_air() {
         translate([0, 0, yt_air_step - yt_eps])
             cylinder(h=yt_z0 - yt_air_step + 2 * yt_eps, d=yt_ball_id, $fn=yt_fn);
         yt_air_rib_keep();
+        yt_rib_rein();
     }
 }
 
@@ -257,6 +387,14 @@ assert(yt_rho * yt_turn * PI / 180 > ball_max_d * 1.5,
     "弯道弧长至少要有球径的 1.5 倍，球才不会横跨整个拐弯");
 assert(ball_max_d / yt_rho * 180 / PI < 30, "球在弯道里同时转过的角度应小于 30 度");
 assert(yt_air_rib_w >= 4 && yt_air_rib_w <= 8, "交汇处只留中间一条，不要收成风口");
+assert(yt_rib_ell_minor == yt_air_rib_w, "椭圆短直径就是弧线宽度");
+assert(yt_rib_ell_major == 4 * yt_air_rib_w, "椭圆长直径是弧线宽度的四倍");
+assert(yt_rib_ell_major / 2 == 2 * yt_air_rib_w, "过边线的距离是弧线宽度的两倍");
+assert(yt_rib_ell_a1 == 0, "出球端放到直管切点，多出去的由外壳切掉");
+assert(yt_rib_ell_out(-40) > yt_rib_ell_major / 2 - 0.05,
+    "交汇处长轴保持两倍弧线宽");
+assert(yt_rib_pt_inside(yt_rib_inlet_tip(yt_rib_ell_inlet, yt_rib_inlet_out(yt_rib_ell_inlet))),
+    "进球端延长不要顶出管子");
 assert(yt_on_arc(-yt_turn).z - ball_max_d / 2 > yt_air_step,
     "球在弯道入口应完全离开风机收口");
 assert(yt_branch_mouth().z - (yt_ball_od / 2) * sin(yt_turn) >= yt_fan_z0,
