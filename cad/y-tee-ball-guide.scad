@@ -2,7 +2,8 @@
 // 原点在风机承口止挡中心。+Z 出球。进球支管在 +X，向外朝风机侧，与参考件同为 135°。
 // 这个角度还没按实物重测。
 // 进球段外径 50，从端口起内径就是 42，插入送料模块出口。
-// 风机承口内径 50。球走的弯和出球段内径都是 42。50 收到 42 的台阶只在风机口里，球不经过。
+// 弧线管是一整圈实心壁，内径 42。后风从风机孔一直通到出球段。
+// 交汇处只留中间一条贴着弧线外壁的挡条，挡住球。这条以外的风路全部敞开。
 // 弯道中心线半径 100，转 45°，弧长大于球径。局部断面保持内径 42。
 // 球在弯里同时只转二十多度，进直管时方向已经摆正，不会一头进直管、球身还在斜段里撞壁。
 // 外壳：风机承口外径 56 用一段曲率收到出球管外径 47。支管保持外径 50，不再把交汇处撑粗。
@@ -21,6 +22,7 @@ yt_fan_wall = 3;
 yt_exit_wall = 2.5;
 yt_fan_depth = y_stub_engagement;
 yt_air_step = 3;
+yt_air_rib_w = 6;            // 交汇处只留这一条。两侧和后面的风路不再收口
 yt_rho = 100;
 yt_z0 = 114;                 // 出球直段切点。和大半径弯一起抬高，球才不探进风机口
 yt_turn = 45;
@@ -104,6 +106,33 @@ module yt_branch_place() {
             children();
 }
 
+module yt_air_rib_block(a) {
+    p = yt_on_arc(a);
+    ox = -cos(a);
+    oz = sin(a);
+    tx = sin(a);
+    tz = cos(a);
+    r_in = yt_ball_id / 2 - 0.8;
+    r_out = yt_ball_id / 2 + yt_exit_wall;
+    mid = (r_in + r_out) / 2;
+    c = p + [ox, 0, oz] * mid;
+    multmatrix([
+        [ox, 0, tx, c.x],
+        [0, 1, 0, c.y],
+        [oz, 0, tz, c.z],
+        [0, 0, 0, 1]
+    ])
+        cube([r_out - r_in, yt_air_rib_w, 0.5], center=true);
+}
+
+module yt_air_rib_keep() {
+    for (i = [0:yt_arc_steps - 1])
+        hull() {
+            yt_air_rib_block(-yt_turn - 4 + (yt_turn + 4) * i / yt_arc_steps);
+            yt_air_rib_block(-yt_turn - 4 + (yt_turn + 4) * (i + 1) / yt_arc_steps);
+        }
+}
+
 // ===== 分区：公开 API =====
 
 module yt_main_shell() {
@@ -177,13 +206,20 @@ module yt_outer() {
     yt_bed_ring();
 }
 
+module yt_rear_air() {
+    difference() {
+        translate([0, 0, yt_air_step - yt_eps])
+            cylinder(h=yt_z0 - yt_air_step + 2 * yt_eps, d=yt_ball_id, $fn=yt_fn);
+        yt_air_rib_keep();
+    }
+}
+
 module yt_bore() {
     translate([0, 0, yt_fan_z0 - yt_eps])
         cylinder(h=yt_fan_depth + yt_eps, d=yt_fan_id, $fn=yt_fn);
     translate([0, 0, -yt_eps])
         cylinder(h=yt_air_step + 2 * yt_eps, d1=yt_fan_id, d2=yt_ball_id, $fn=yt_fn);
-    translate([0, 0, yt_air_step - yt_eps])
-        cylinder(h=yt_z0 - yt_air_step + yt_eps, d=yt_ball_id, $fn=yt_fn);
+    yt_rear_air();
     yt_pipe(concat(yt_arc_points(), [[0, 0, yt_z0 + yt_exit_l]]), yt_ball_id / 2);
     yt_branch_place()
         translate([0, 0, -yt_eps])
@@ -220,6 +256,7 @@ assert(yt_rho > yt_ball_id / 2, "弯道半径必须大于气道半径，断面�
 assert(yt_rho * yt_turn * PI / 180 > ball_max_d * 1.5,
     "弯道弧长至少要有球径的 1.5 倍，球才不会横跨整个拐弯");
 assert(ball_max_d / yt_rho * 180 / PI < 30, "球在弯道里同时转过的角度应小于 30 度");
+assert(yt_air_rib_w >= 4 && yt_air_rib_w <= 8, "交汇处只留中间一条，不要收成风口");
 assert(yt_on_arc(-yt_turn).z - ball_max_d / 2 > yt_air_step,
     "球在弯道入口应完全离开风机收口");
 assert(yt_branch_mouth().z - (yt_ball_od / 2) * sin(yt_turn) >= yt_fan_z0,
@@ -250,6 +287,7 @@ echo(yt_fan_od=yt_fan_od);
 echo(yt_exit_od=yt_exit_od);
 echo(yt_branch_join=yt_on_arc(-yt_turn));
 echo(yt_arc_len=yt_rho * yt_turn * PI / 180);
+echo(yt_air_rib_w=yt_air_rib_w);
 echo(yt_muzzle_z=yt_z0 + yt_exit_l);
 
 // ===== 分区：方法/工具 =====
