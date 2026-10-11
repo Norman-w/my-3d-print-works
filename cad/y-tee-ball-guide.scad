@@ -8,7 +8,7 @@
 // 弯道中心线半径 100，转 45°，弧长大于球径。局部断面保持内径 42。
 // 球在弯里同时只转二十多度，进直管时方向已经摆正，不会一头进直管、球身还在斜段里撞壁。
 // 外壳：风机承口外径 56 用一段曲率收到出球管外径 47。支管保持外径 50，不再把交汇处撑粗。
-// 打印时出球口贴热床。稳定圈和管壁之间留缝，只在贴床一侧用八处两层窄连接，打完掰掉。球路内径不变。
+// 打印时出球口贴热床，管壁从第一层就开始。外圈只留三层，和管壁之间留缝，八处两层窄连接，打完掰掉。球路内径不变。
 
 // ===== 分区：导入/依赖 =====
 
@@ -42,14 +42,13 @@ yt_mouth_chamfer = 0.6;
 yt_arc_steps = 12;
 yt_shoulder_len = 22;        // 风机承口外径收到出球管，两端斜率归零
 yt_bed_ring_width = 18;      // 出球口贴床面，向外加宽的稳定圈
-yt_bed_ring_t = 2.4;         // 多层圈，不是单层裙边
-yt_bed_ring_proud = 0.4;     // 略高出出球端面，避免和端面共面碎成非流形
+yt_bed_ring_t = 0.6;         // 外圈只打三层 0.2 mm
+yt_bed_ring_proud = 0;       // 不得高出管口，否则管壁悬空
 yt_bed_ring_gap = 1.6;       // 圈和管壁之间的缝，方便下手拆
-yt_bed_ring_tab_n = 8;       // 两层很薄，多留几处才撑得住整件
+yt_bed_ring_tab_n = 8;       // 两层很薄，多留几处才撑得住
 yt_bed_ring_tab_w = 6;       // 每处连接的周向宽度
 yt_bed_ring_tab_t = 0.4;     // 缝里只留两层 0.2 mm，打完能掰掉
 yt_bed_ring_tab_bite = 0.45; // 搭进管壁和圈体，避免只相切
-yt_bed_ring_chamfer = 0.8;   // 背向热床的外缘倒角
 yt_fn = 64;
 yt_eps = 0.08;
 yt_used_part = is_undef(yt_part) ? "tee" : yt_part;
@@ -274,7 +273,7 @@ module yt_bed_ring_tab() {
     ri = r_wall + yt_bed_ring_gap;
     r1 = ri + yt_bed_ring_tab_bite;
     half = yt_bed_ring_tab_w / 2;
-    over = 0.15;
+    over = 0;                // 不得探出管口，否则管壁贴不到热床
     root = 0.3;
     span = root + yt_bed_ring_tab_t + over;
     difference() {
@@ -295,14 +294,16 @@ module yt_bed_ring_tab() {
                 translate([0, 0, -yt_eps])
                     cylinder(h=root + 3 * yt_eps, r=r_wall + 0.05, $fn=yt_fn);
             }
-        translate([0, 0, yt_bed_ring_tab_t])
-            difference() {
-                cylinder(h=over + yt_eps, r=ri - 0.05, $fn=yt_fn);
-                translate([0, 0, -yt_eps])
-                    cylinder(h=over + 3 * yt_eps, r=r_wall + 0.05, $fn=yt_fn);
-            }
-        translate([0, 0, yt_bed_ring_tab_t])
-            cylinder(h=over + yt_eps, r=r_wall - 0.05, $fn=yt_fn);
+        if (over > 0) {
+            translate([0, 0, yt_bed_ring_tab_t])
+                difference() {
+                    cylinder(h=over + yt_eps, r=ri - 0.05, $fn=yt_fn);
+                    translate([0, 0, -yt_eps])
+                        cylinder(h=over + 3 * yt_eps, r=r_wall + 0.05, $fn=yt_fn);
+                }
+            translate([0, 0, yt_bed_ring_tab_t])
+                cylinder(h=over + yt_eps, r=r_wall - 0.05, $fn=yt_fn);
+        }
     }
 }
 
@@ -310,17 +311,15 @@ module yt_bed_ring() {
     z1 = yt_z0 + yt_exit_l;
     ro = yt_exit_od / 2 + yt_bed_ring_width;
     ri = yt_exit_od / 2 + yt_bed_ring_gap;
-    face = yt_bed_ring_t + yt_bed_ring_proud;
     translate([0, 0, z1 - yt_bed_ring_t])
         rotate_extrude(convexity=2, $fn=yt_fn)
             polygon([
                 [ri, 0],
-                [ro - yt_bed_ring_chamfer, 0],
-                [ro, yt_bed_ring_chamfer],
-                [ro, face],
-                [ri, face]
+                [ro, 0],
+                [ro, yt_bed_ring_t],
+                [ri, yt_bed_ring_t]
             ]);
-    translate([0, 0, z1 + yt_bed_ring_proud - yt_bed_ring_tab_t])
+    translate([0, 0, z1 + yt_bed_ring_proud - yt_bed_ring_tab_t - yt_eps])
         for (i = [0:yt_bed_ring_tab_n - 1])
             rotate([0, 0, i * 360 / yt_bed_ring_tab_n])
                 yt_bed_ring_tab();
@@ -408,8 +407,9 @@ assert(yt_bed_ring_tab_n * yt_bed_ring_tab_w < PI * yt_exit_od * 0.5,
     "连接加起来不能把缝封上");
 assert(yt_bed_ring_tab_w <= 8, "每处连接不要太宽");
 assert(yt_bed_ring_tab_t == 0.4, "缝里的连接只留两层");
+assert(yt_bed_ring_t == 0.6, "外圈只留三层");
+assert(yt_bed_ring_proud == 0, "外圈不能把出球管口垫离热床");
 assert(yt_bed_ring_gap >= 1.2, "稳定圈和管壁之间要留得下刀");
-assert(yt_bed_ring_t > yt_bed_ring_tab_t + 0.8, "连接上方要留出敞开的缝");
 assert(yt_bed_ring_width >= 12, "稳定圈径向宽度至少 12 mm");
 assert(yt_branch_mouth().x > yt_exit_od / 2 + yt_ball_od / 2 + 2,
     "进球端口要伸出出球管，才插得进送料口");
