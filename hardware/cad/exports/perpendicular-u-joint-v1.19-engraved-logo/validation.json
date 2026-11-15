@@ -1,0 +1,22 @@
+{
+  "engraving_depth_mm": 0.6,
+  "removed_volume_mm3": 31.764189002670065,
+  "removed_bounds_mm": [
+    -20.00837,
+    -17.45585,
+    30.4,
+    20.05297,
+    -13.54376,
+    31.0
+  ],
+  "bounds_mm": [
+    -27.9,
+    -38.5,
+    -23.5,
+    27.9,
+    38.5,
+    31.0
+  ],
+  "single_solid": true,
+  "sha256": "e5f54b937fdecda5719a16b1bd27b2ff65f4152e0eac3997508af70d784674f4"
+}
