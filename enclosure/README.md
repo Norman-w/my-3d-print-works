@@ -71,6 +71,8 @@ QUALITY_MODE=quick ./scripts/export-stl.sh
 
 产物位于 `enclosure/stl/lightboard/`，包含四层 STL、两张拼板 STL、两张 `arranged-model` 3MF，以及供网页 3D 预览使用的 manifest。局域网页面：`/?tab=print`。
 
+另外生成独立的 **TPU95A 拍柄把套**：内外轮廓直接由真实 M7-LB1 手柄截面做 2D 偏置，壁厚 1.8mm、单侧名义间隙 0.65mm；从拍柄尾端滑入，完整覆盖前后手柄外贴直到拍柄/拍头接合线，尾端为圆滑过渡的无开孔 TPU 封头。把套只负责握持与减振，不替代 M7-LB1 的结构承力。把套 STL 按手柄轴竖立打印，另有单件 `arranged-model` 3MF；首次打印仍需用实物检查插入余量和手感。
+
 旧 `paddle_shell_*`、`paddle_blade_*`、`paddle_handle_*` 以及 `paddle_m6_*` 文件名已废止，
 导出脚本会主动删除它们，避免误打印旧结构。
 

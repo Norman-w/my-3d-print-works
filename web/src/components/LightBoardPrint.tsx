@@ -51,7 +51,7 @@ export default function LightBoardPrint() {
       >
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 9, flexWrap: 'wrap' }}>
           <strong style={{ color: '#dbeafe' }}>{manifest?.modelVersion ?? 'M7-LB1'} 光板版</strong>
-          <span style={{ color: '#94a3b8', fontSize: 12 }}>SCAD → STL → 3MF · 拍面/肩颈实心 · 拍柄下段内腔</span>
+          <span style={{ color: '#94a3b8', fontSize: 12 }}>SCAD → STL → 3MF · 拍面/肩颈实心 · 拍柄下段内腔 · TPU95A 把套</span>
           {error && <span style={{ color: '#fca5a5', fontSize: 12 }}>导出清单未加载：{error}</span>}
         </div>
 

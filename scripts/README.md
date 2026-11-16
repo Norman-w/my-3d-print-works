@@ -12,9 +12,9 @@
   优先使用 `/Applications/OpenSCAD.app` (Manifold 后端, ~400x 快于 CGAL)，  
   回退到 `openscad` (brew 安装的 CGAL 版本)。
 - `export-lightboard-stl.sh`
-  导出 `M7-LB1` 光板版的四层 STL、刚体拼板、arranged-model 3MF 和网页预览 manifest。
+  导出 `M7-LB1` 光板版的四层 STL、按真实手柄截面偏置生成的 TPU95A 独立拍柄把套、刚体拼板、arranged-model 3MF 和网页预览 manifest。
 - `build_3mf_package.py`
-  将拼板 manifest 中的独立 STL 与刚体位姿写入真实 3MF，不做隐式缩放。
+  将拼板 manifest 中的独立 STL 与刚体位姿写入真实 3MF，不做隐式缩放；也支持 `--single-source` 生成单件 arranged-model 3MF。
 
 - `run-analyze.sh`  
   运行分析流程，生成截图与尺寸检查结果。

@@ -22,6 +22,14 @@ LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
 LIGHTBOARD_CORE_SUPPORTS = true;
 // 红框肩颈加强区：从拍柄/拍面接合面向拍柄下方保留连续实体。
 LIGHTBOARD_SOLID_NECK_LENGTH = 30;
+// M7-LB1 独立 TPU 95A 把套：从拍柄尾端套入，肩颈处由外形变宽自然止挡。
+// 把套内外均以真实 bezier_handle_solid 做球面偏置，避免用“圆角矩形”近似拍柄而不贴合。
+LIGHTBOARD_GRIP_WALL = 1.8;
+LIGHTBOARD_GRIP_CLEARANCE = 0.65; // TPU 套在 PETG-CF 外壳上的单侧装配间隙
+LIGHTBOARD_GRIP_OFFSET_FN = 16;
+LIGHTBOARD_GRIP_ENTRY_EXTRA = 0.35; // 尾端入口的轻微放松，不形成突兀的加厚珠
+LIGHTBOARD_GRIP_BUTT_CAP_T = 4.0; // 尾端圆角封头的轴向包络
+LIGHTBOARD_GRIP_BUTT_ROUND_R = 1.7; // 封头与侧壁的圆滑过渡半径
 
 // 由 scripts/bezier_to_openscad.py 生成（USE_BEZIER_PROFILES=true 时必须）
 include <generated/bezier_geometry.scad>
@@ -34,6 +42,11 @@ include <stl/interference/main_board_cuts.scad>
 // half_z_at 退回拍面半厚，充电 PCB 基台/夹持会被切坏。
 actual_butt_y = USE_BEZIER_PROFILES ? BEZIER_Y0 : handle_butt_y;
 handle_butt_cut_y = actual_butt_y - handle_extend_y;
+
+LIGHTBOARD_GRIP_BOTTOM_Y = USE_BEZIER_PROFILES ? BEZIER_Y0 + 0.45 : handle_butt_y;
+// 完整包住真实手柄，偏置截面继续跨过原先的 2mm loft gap 到拍柄/拍头接合线；
+// 拍面扩宽段仍由拍体本身承担。
+LIGHTBOARD_GRIP_TOP_Y = USE_BEZIER_PROFILES ? BEZIER_JOIN_Y : shoulder_bottom_y;
 
 $fn = 80;
 eps = 0.02;
@@ -1766,6 +1779,148 @@ module lightboard_stage_handle_cavity() {
     }
 }
 
+// ═══ M7-LB1 独立 TPU 95A 拍柄把套 ═══
+//
+// 机械契约：
+// - 基准：沿用拍柄 XY 外轮廓，Z 为拍柄厚度方向，单位 mm。
+// - 装入方向：从拍柄尾端（Y-）向肩颈（Y+）滑入；尾端为圆角封闭 TPU 后盖，肩颈端开口止挡。
+// - 承力路径：把套只提供握持、防滑和减振；拍面、肩颈和手柄芯仍由 M7-LB1
+//   结构件承力。肩颈外形变宽作为前向止挡，尾端 TPU 后盖包住拍柄后端且不留接口孔。
+// - 打印目标：TPU 95A，独立件竖立打印，打印件底面为拍柄肩颈端，避免长内腔
+//   横向打印时生成大面积悬空；最终切片仍需按实际打印机检查。
+module lightboard_grip_host() {
+    // 只保留把套覆盖的真实手柄外形；offset 后再切平肩颈端。
+    intersection() {
+        if (USE_BEZIER_PROFILES) {
+            bezier_handle_solid();
+        } else {
+            intersection() {
+                paddle_outer();
+                translate([0, (LIGHTBOARD_GRIP_BOTTOM_Y + LIGHTBOARD_GRIP_TOP_Y) / 2, 0])
+                    cube([
+                        BIG,
+                        LIGHTBOARD_GRIP_TOP_Y - LIGHTBOARD_GRIP_BOTTOM_Y,
+                        BIG
+                    ], center = true);
+            }
+        }
+        translate([0, (LIGHTBOARD_GRIP_BOTTOM_Y + LIGHTBOARD_GRIP_TOP_Y) / 2, 0])
+            cube([
+                BIG,
+                LIGHTBOARD_GRIP_TOP_Y - LIGHTBOARD_GRIP_BOTTOM_Y,
+                BIG
+            ], center = true);
+    }
+}
+
+module lightboard_grip_offset(radial) {
+    // 逐截面 2D offset 直接继承真实手柄的非对称 Z 截面、腰部收窄和尾端曲线，
+    // 比 3D minkowski 更快，也不会把尾端/肩颈圆成一只盒子。
+    if (USE_BEZIER_PROFILES) {
+        bezier_handle_offset(radial);
+    } else {
+        minkowski() {
+            lightboard_grip_host();
+            sphere(r = radial, $fn = LIGHTBOARD_GRIP_OFFSET_FN);
+        }
+    }
+}
+
+module lightboard_grip_entry_void() {
+    intersection() {
+        lightboard_grip_offset(LIGHTBOARD_GRIP_CLEARANCE + LIGHTBOARD_GRIP_ENTRY_EXTRA);
+        translate([0, LIGHTBOARD_GRIP_BOTTOM_Y + 1.2, 0])
+            cube([
+                BIG,
+                2.4,
+                BIG
+            ], center = true);
+    }
+}
+
+module lightboard_grip_butt_cap() {
+    // 尾端封口：用球面 Minkowski 封头把尾面与侧壁圆滑过渡，不打任何接口孔。
+    if (USE_BEZIER_PROFILES) {
+        bezier_handle_butt_cap_rounded(
+            LIGHTBOARD_GRIP_CLEARANCE + LIGHTBOARD_GRIP_WALL,
+            LIGHTBOARD_GRIP_BOTTOM_Y,
+            LIGHTBOARD_GRIP_BUTT_CAP_T,
+            LIGHTBOARD_GRIP_BUTT_ROUND_R
+        );
+    } else {
+        intersection() {
+            lightboard_grip_offset(LIGHTBOARD_GRIP_CLEARANCE + LIGHTBOARD_GRIP_WALL);
+            translate([0, LIGHTBOARD_GRIP_BOTTOM_Y - LIGHTBOARD_GRIP_BUTT_CAP_T / 2 + 0.05, 0])
+                cube([
+                    BIG,
+                    LIGHTBOARD_GRIP_BUTT_CAP_T + 0.1,
+                    BIG
+                ], center = true);
+        }
+    }
+}
+
+module lightboard_grip_sleeve() {
+    // 外形是精确偏置，内腔只放大 0.65mm；尾端圆角封口，前端一直到接合线。
+    difference() {
+        union() {
+            intersection() {
+                lightboard_grip_offset(LIGHTBOARD_GRIP_CLEARANCE + LIGHTBOARD_GRIP_WALL);
+                translate([0, (LIGHTBOARD_GRIP_BOTTOM_Y + LIGHTBOARD_GRIP_TOP_Y) / 2, 0])
+                    cube([
+                        BIG,
+                        LIGHTBOARD_GRIP_TOP_Y - LIGHTBOARD_GRIP_BOTTOM_Y,
+                        BIG
+                    ], center = true);
+            }
+            lightboard_grip_butt_cap();
+        }
+        union() {
+            lightboard_grip_offset(LIGHTBOARD_GRIP_CLEARANCE);
+            // 入口导入段只增加 0.35mm，配合 TPU 弹性，不做突兀的加厚珠。
+            lightboard_grip_entry_void();
+        }
+    }
+}
+
+module lightboard_grip_inner_cavity() {
+    intersection() {
+        lightboard_grip_offset(LIGHTBOARD_GRIP_CLEARANCE);
+        translate([0, (LIGHTBOARD_GRIP_BOTTOM_Y + LIGHTBOARD_GRIP_TOP_Y) / 2, 0])
+            cube([
+                BIG,
+                LIGHTBOARD_GRIP_TOP_Y - LIGHTBOARD_GRIP_BOTTOM_Y,
+                BIG
+            ], center = true);
+    }
+}
+
+module lightboard_grip_interference_check() {
+    // 非制造检查：只检查被把套包覆的前后手柄外贴；拍面肩部实体板不属于把套包络。
+    intersection() {
+        difference() {
+            union() {
+                lightboard_handle_skin_front();
+                lightboard_handle_skin_back();
+            }
+            lightboard_grip_inner_cavity();
+        }
+        translate([0, (LIGHTBOARD_GRIP_BOTTOM_Y + LIGHTBOARD_GRIP_TOP_Y) / 2, 0])
+            cube([
+                BIG,
+                LIGHTBOARD_GRIP_TOP_Y - LIGHTBOARD_GRIP_BOTTOM_Y,
+                BIG
+            ], center = true);
+    }
+}
+
+module lightboard_grip_sleeve_print() {
+    // 将拍柄轴 Y 旋到打印机 Z，肩颈端落在热床；+0.2mm 避免数值共面。
+    translate([0, 0, -LIGHTBOARD_GRIP_BOTTOM_Y + 0.2])
+        rotate([90, 0, 0])
+            lightboard_grip_sleeve();
+}
+
 // Non-manufacturing inspection scenes used by docs/mechanical-handoff.
 module protected_battery_preview() {
     color([0.15, 0.65, 0.28])
@@ -1931,6 +2086,14 @@ if (HALF == "m6_core_front") {
     lightboard_stage_solid_blade();
 } else if (HALF == "lightboard_stage_handle_cavity") {
     lightboard_stage_handle_cavity();
+} else if (HALF == "lightboard_grip_sleeve") {
+    lightboard_grip_sleeve();
+} else if (HALF == "lightboard_grip_inner_cavity") {
+    lightboard_grip_inner_cavity();
+} else if (HALF == "lightboard_grip_interference_check") {
+    lightboard_grip_interference_check();
+} else if (HALF == "lightboard_grip_sleeve_print") {
+    lightboard_grip_sleeve_print();
 } else if (HALF == "m6_fasteners") {
     m6_fasteners();
 } else if (HALF == "m6_fasteners_front") {

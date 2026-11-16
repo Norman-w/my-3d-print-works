@@ -557,6 +557,7 @@ def write_scad(
         "",
         f"BEZIER_BLADE_CORE_T = {fmt_num(blade_core_t)};",
         f"BEZIER_JOIN_Y = {fmt_num(join_y)};",
+        f"BEZIER_HANDLE_BOTTOM_Y = {fmt_num(handle_slices[0][0])};",
         f"BEZIER_BLADE_POLY = {fmt_poly(blade_poly)};",
         f"BEZIER_HANDLE_PLANFORM = {fmt_poly(handle_planform)};",
         "",
@@ -601,6 +602,66 @@ def write_scad(
     lines.extend(
         [
             "    }",
+            "}",
+            "",
+            "// Exact 2D offset loft used by the TPU handle sleeve; it preserves the real asymmetric XZ ring.",
+            "module bezier_handle_offset(radial) {",
+            "    union() {",
+        ]
+    )
+    for i in range(len(handle_slices) - 1):
+        y0, poly0 = handle_slices[i]
+        y1, _ = handle_slices[i + 1]
+        dh = y1 - y0
+        ym = (y0 + y1) / 2
+        lines.append(f"        // slice {i}")
+        lines.append(f"        translate([0, {fmt_num(ym)}, 0])")
+        lines.append('            rotate([90, 0, 0])')
+        lines.append(f"                linear_extrude(height = {fmt_num(dh)} + 0.02, center = true)")
+        lines.append("                    offset(delta = radial)")
+        lines.append(f"                        polygon(points = {fmt_poly(poly0)});")
+    # The source handle loft stops JOIN_GAP_MM before the paddle join so the
+    # structural solids do not overlap. The grip sleeve is an outer skin, so
+    # bridge that final gap with the last handle ring and let the sleeve end
+    # at the actual paddle/handle join line.
+    last_y, last_poly = handle_slices[-1]
+    if join_y > last_y:
+        bridge_depth = join_y - last_y
+        bridge_center = last_y + bridge_depth / 2
+        lines.extend(
+            [
+                "        // forward bridge to the paddle/handle join",
+                f"        translate([0, {fmt_num(bridge_center)}, 0])",
+                "            rotate([90, 0, 0])",
+                f"                linear_extrude(height = {fmt_num(bridge_depth)} + 0.02, center = true)",
+                "                    offset(delta = radial)",
+                f"                        polygon(points = {fmt_poly(last_poly)});",
+            ]
+        )
+    lines.extend(
+        [
+            "    }",
+            "}",
+            "",
+            "module bezier_handle_butt_cap(radial, y0, depth) {",
+            "    translate([0, y0 - depth / 2, 0])",
+            "        rotate([90, 0, 0])",
+            "            linear_extrude(height = depth, center = true)",
+            "                offset(delta = radial)",
+            f"                    polygon(points = {fmt_poly(handle_slices[0][1])});",
+            "}",
+            "",
+            "module bezier_handle_butt_cap_rounded(radial, y_center, depth, round_radius) {",
+            "    // A spherical Minkowski cap rounds the tail perimeter and the",
+            "    // transition from the sleeve side wall into the closed butt face.",
+            "    translate([0, y_center, 0])",
+            "        rotate([90, 0, 0])",
+            "            minkowski() {",
+            "                linear_extrude(height = max(depth - 2 * round_radius, 0.2), center = true)",
+            "                    offset(delta = radial - round_radius)",
+            f"                        polygon(points = {fmt_poly(handle_slices[0][1])});",
+            "                sphere(r = round_radius, $fn = 24);",
+            "            }",
             "}",
             "",
             "module bezier_paddle_outer() {",

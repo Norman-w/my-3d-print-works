@@ -4,7 +4,7 @@ export interface ProcessComponent {
   label: string;
   path: string;
   color: string;
-  kind: 'skin' | 'core' | 'monolithic' | 'assembly' | 'inspection' | 'interference' | 'fastener' | 'plug';
+  kind: 'skin' | 'core' | 'monolithic' | 'assembly' | 'inspection' | 'interference' | 'fastener' | 'plug' | 'grip';
   opacity: number;
 }
 

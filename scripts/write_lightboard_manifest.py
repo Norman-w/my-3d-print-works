@@ -17,6 +17,7 @@ PARTS = [
     ("stage_planform", "整拍轮廓", "preview/stage_planform.stl", "#38bdf8", "inspection"),
     ("stage_solid_blade", "拍面实心承力区", "preview/stage_solid_blade.stl", "#f59e0b", "inspection"),
     ("stage_handle_cavity", "拍柄下段贝塞尔内腔", "preview/stage_handle_cavity.stl", "#22d3ee", "interference"),
+    ("grip_sleeve", "TPU95A 独立拍柄把套", "preview/grip_sleeve.stl", "#14b8a6", "grip"),
     ("skin_front", "第1层·拍柄正面外贴", "paddle_m7_lb1_layer1_handle_skin_front.stl", "#3b82f6", "skin"),
     ("core_front", "第2层·拍面实心主承力板", "paddle_m7_lb1_layer2_core_front.stl", "#ef4444", "core"),
     ("core_back", "第3层·拍面实心主承力板", "paddle_m7_lb1_layer3_core_back.stl", "#991b1b", "core"),
@@ -79,6 +80,12 @@ def main() -> int:
             "paddle_m7_lb1_print_plate_layers_3_4",
             "沿用原 M7 摆放和支撑检查；装配接口保持原尺寸。",
         ),
+        (
+            "grip_sleeve",
+            "TPU95A 拍柄把套 · 单件竖立",
+            "paddle_m7_lb1_grip_sleeve_tpu95a",
+            "完整手柄套入件；按真实手柄截面偏置覆盖到拍柄/拍头接合线，尾端为无开孔的圆角 TPU 封头。",
+        ),
     ):
         stl = STL / "print" / f"{filename}.stl"
         three_mf = STL / "print" / f"{filename}.3mf"
@@ -104,8 +111,8 @@ def main() -> int:
             {
                 "id": "assembled",
                 "label": "四层装配",
-                "description": "沿用原 M7 的装配位置和紧固件；拍面与红框肩颈段保持实心，拍柄下段保留内腔。",
-                "components": present("assembly"),
+                "description": "沿用原 M7 的装配位置和紧固件；拍面与红框肩颈段保持实心，完整手柄外部套入 TPU95A 把套，尾端为无开孔圆角封头。",
+                "components": present("assembly", "grip_sleeve"),
                 "overlays": overlays,
                 "camera": "full_paddle",
             },
@@ -124,6 +131,13 @@ def main() -> int:
                 "camera": "full_handle",
             },
             {
+                "id": "grip",
+                "label": "TPU95A 把套",
+                "description": "完整软胶套从尾端滑入，真实手柄截面偏置贴合并覆盖前后手柄外贴直到拍柄/拍头接合线；尾端为无开孔圆角封头，不承担拍柄结构载荷。",
+                "components": present("grip_sleeve"),
+                "camera": "full_handle",
+            },
+            {
                 "id": "four_layers",
                 "label": "四层打印件",
                 "description": "第1/4层为拍柄外贴，第2/3层贯通拍面和拍柄。",
@@ -134,7 +148,7 @@ def main() -> int:
         ],
         "processTypes": [
             {"id": "print", "label": "四层打印", "components": present("skin_front", "core_front", "core_back", "skin_back")},
-            {"id": "assembly", "label": "装配", "components": present("assembly"), "overlays": overlays},
+            {"id": "assembly", "label": "装配", "components": present("assembly", "grip_sleeve"), "overlays": overlays},
         ],
         "cameraPresets": [
             {"id": "full_paddle", "label": "整拍", "target": [0, -50, 0], "position": [170, -270, 150]},

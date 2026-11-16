@@ -143,21 +143,44 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stl-root", type=Path, required=True)
     parser.add_argument("--metadata", type=Path, required=True)
-    parser.add_argument("--plate", choices=("layers_1_2", "layers_3_4"), required=True)
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--plate", choices=("layers_1_2", "layers_3_4"))
+    selection.add_argument(
+        "--single-source",
+        help="相对 --stl-root 的单件 STL 路径；用于生成一个对象的 arranged-model 3MF",
+    )
+    parser.add_argument("--label", help="单件 3MF 的显示名称")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    report = json.loads(args.metadata.read_text(encoding="utf-8"))
-    needle = f"paddle_m7_lb1_print_plate_{args.plate}.stl"
-    matches = [
-        plate for plate in report.get("plates", [])
-        if Path(str(plate.get("path", ""))).name == needle
-    ]
-    if len(matches) != 1:
-        raise ValueError(f"未找到唯一打印拼板: {needle}")
-    model = model_xml(matches[0], args.stl_root)
+    if args.plate:
+        report = json.loads(args.metadata.read_text(encoding="utf-8"))
+        needle = f"paddle_m7_lb1_print_plate_{args.plate}.stl"
+        matches = [
+            plate for plate in report.get("plates", [])
+            if Path(str(plate.get("path", ""))).name == needle
+        ]
+        if len(matches) != 1:
+            raise ValueError(f"未找到唯一打印拼板: {needle}")
+        selected = matches[0]
+    else:
+        source = Path(args.single_source)
+        if source.is_absolute() or ".." in source.parts:
+            raise ValueError("--single-source 必须是 --stl-root 内的相对路径")
+        if not (args.stl_root / source).is_file():
+            raise ValueError(f"单件 STL 不存在: {args.stl_root / source}")
+        selected = {
+            "label": args.label or source.name,
+            "assemblyGeometryUnchanged": True,
+            "parts": [{
+                "source": str(source),
+                "rotationMatrix": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+                "translationAfterRotation": [0.0, 0.0, 0.0],
+            }],
+        }
+    model = model_xml(selected, args.stl_root)
     package_3mf(args.output, model)
-    print(f"✓ {args.output}  arranged-model  objects={len(matches[0]['parts'])}")
+    print(f"✓ {args.output}  arranged-model  objects={len(selected['parts'])}")
     return 0
 
 

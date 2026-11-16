@@ -3,7 +3,7 @@
   "modelVersion": "M7-LB1",
   "baseModel": "M7.C5",
   "variantLabel": "光板版",
-  "generatedAt": "2026-11-16T02:55:06.467754+00:00",
+  "generatedAt": "2026-11-16T08:58:42.272903+00:00",
   "coordinateSystem": {
     "x": "拍宽",
     "y": "拍长",
@@ -33,6 +33,14 @@
       "color": "#22d3ee",
       "kind": "interference",
       "opacity": 0.62
+    },
+    {
+      "id": "grip_sleeve",
+      "label": "TPU95A 独立拍柄把套",
+      "path": "/stl/lightboard/preview/grip_sleeve.stl?v=720887d2940a7584",
+      "color": "#14b8a6",
+      "kind": "grip",
+      "opacity": 1.0
     },
     {
       "id": "skin_front",
@@ -144,24 +152,32 @@
       "id": "layers_1_2",
       "label": "拼板 A · 第1+2层",
       "path": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_1_2.stl?v=71d5ecf7da1a2f7f",
-      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_1_2.3mf?v=00c54906abc31f09",
+      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_1_2.3mf?v=cb73a82e68573372",
       "description": "沿用原 M7 两件拼板流程；拍面实体不含电子挖空。"
     },
     {
       "id": "layers_3_4",
       "label": "拼板 B · 第3+4层",
       "path": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_3_4.stl?v=387e0fbb4c821424",
-      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_3_4.3mf?v=8ea3a98ca2893c82",
+      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_3_4.3mf?v=723a0d80a68b06fa",
       "description": "沿用原 M7 摆放和支撑检查；装配接口保持原尺寸。"
+    },
+    {
+      "id": "grip_sleeve",
+      "label": "TPU95A 拍柄把套 · 单件竖立",
+      "path": "/stl/lightboard/print/paddle_m7_lb1_grip_sleeve_tpu95a.stl?v=833335d5a20e6aae",
+      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_grip_sleeve_tpu95a.3mf?v=1c350698d4322f4d",
+      "description": "完整手柄套入件；按真实手柄截面偏置覆盖到拍柄/拍头接合线，尾端为无开孔的圆角 TPU 封头。"
     }
   ],
   "processSteps": [
     {
       "id": "assembled",
       "label": "四层装配",
-      "description": "沿用原 M7 的装配位置和紧固件；拍面与红框肩颈段保持实心，拍柄下段保留内腔。",
+      "description": "沿用原 M7 的装配位置和紧固件；拍面与红框肩颈段保持实心，完整手柄外部套入 TPU95A 把套，尾端为无开孔圆角封头。",
       "components": [
-        "assembly"
+        "assembly",
+        "grip_sleeve"
       ],
       "overlays": [
         "fasteners_front",
@@ -187,6 +203,15 @@
       "description": "只在肩颈实体加强段之后保留参考图所示的收窄贝塞尔手柄内腔。",
       "components": [
         "stage_handle_cavity"
+      ],
+      "camera": "full_handle"
+    },
+    {
+      "id": "grip",
+      "label": "TPU95A 把套",
+      "description": "完整软胶套从尾端滑入，真实手柄截面偏置贴合并覆盖前后手柄外贴直到拍柄/拍头接合线；尾端为无开孔圆角封头，不承担拍柄结构载荷。",
+      "components": [
+        "grip_sleeve"
       ],
       "camera": "full_handle"
     },
@@ -225,7 +250,8 @@
       "id": "assembly",
       "label": "装配",
       "components": [
-        "assembly"
+        "assembly",
+        "grip_sleeve"
       ],
       "overlays": [
         "fasteners_front",

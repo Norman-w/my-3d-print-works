@@ -113,6 +113,8 @@ export_part m6_silicone_plugs "$OUT/preview/silicone_plugs.stl"
 export_part m6_stage_planform "$OUT/preview/stage_planform.stl"
 export_part lightboard_stage_solid_blade "$OUT/preview/stage_solid_blade.stl"
 export_part lightboard_stage_handle_cavity "$OUT/preview/stage_handle_cavity.stl"
+export_part lightboard_grip_sleeve "$OUT/preview/grip_sleeve.stl"
+export_part lightboard_grip_sleeve_print "$OUT/print/paddle_m7_lb1_grip_sleeve_tpu95a.stl"
 
 echo "→ 基于 M7-LB1 四层生成两张刚体打印拼板 …"
 "${PYTHON_CMD[@]}" "$ROOT/scripts/build_print_plates.py" \
@@ -131,6 +133,12 @@ echo "→ 为两张拼板生成 arranged-model 3MF …"
   --metadata "$OUT/print/print_plates.json" \
   --plate layers_3_4 \
   --output "$OUT/print/paddle_m7_lb1_print_plate_layers_3_4.3mf"
+"${PYTHON_CMD[@]}" "$ROOT/scripts/build_3mf_package.py" \
+  --stl-root "$OUT" \
+  --metadata "$OUT/print/print_plates.json" \
+  --single-source "print/paddle_m7_lb1_grip_sleeve_tpu95a.stl" \
+  --label "M7-LB1 TPU95A 拍柄把套" \
+  --output "$OUT/print/paddle_m7_lb1_grip_sleeve_tpu95a.3mf"
 
 echo "→ 写入 M7-LB1 光板工艺 manifest …"
 "${PYTHON_CMD[@]}" "$ROOT/scripts/write_lightboard_manifest.py"
