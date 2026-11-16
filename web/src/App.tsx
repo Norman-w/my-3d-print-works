@@ -8,6 +8,7 @@ import { useWebSocket } from './hooks/useWebSocket';
 import PaddleShapePreview from './components/PaddleShapePreview';
 import StlProcessPreview from './components/StlProcessPreview';
 import PcbOrderPackages from './components/PcbOrderPackages';
+import LightBoardPrint from './components/LightBoardPrint';
 import {
   DEFAULT_DEVICE_HOST,
   DEFAULT_DEVICE_MDNS,
@@ -18,11 +19,11 @@ import { reconnectDeviceWs } from './lib/deviceWsSingleton';
 //#endregion
 
 //#region 模型/类型
-type Tab = 'live' | 'shape' | 'process' | 'pcb' | 'sessions' | 'calibrate';
+type Tab = 'live' | 'shape' | 'process' | 'pcb' | 'sessions' | 'calibrate' | 'print';
 //#endregion
 
 //#region 常量/配置
-const TABS: Tab[] = ['live', 'shape', 'process', 'pcb', 'sessions', 'calibrate'];
+const TABS: Tab[] = ['live', 'shape', 'process', 'pcb', 'sessions', 'calibrate', 'print'];
 //#endregion
 
 //#region 私有成员
@@ -109,7 +110,9 @@ export default function App() {
                     ? 'PCB 下单'
                   : t === 'sessions'
                     ? 'Sessions'
-                    : 'Calibrate'}
+                    : t === 'calibrate'
+                      ? 'Calibrate'
+                      : '光板打印'}
             </button>
           ))}
         </div>
@@ -229,6 +232,7 @@ export default function App() {
         {tab === 'pcb' && <PcbOrderPackages />}
         {tab === 'sessions' && <SessionBrowser />}
         {tab === 'calibrate' && <CalibrationWizard />}
+        {tab === 'print' && <LightBoardPrint />}
       </main>
     </div>
   );

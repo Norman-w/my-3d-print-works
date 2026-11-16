@@ -61,6 +61,16 @@ QUALITY_MODE=quick ./scripts/export-stl.sh
 ./scripts/.venv-stl/bin/python scripts/validate_m7_geometry.py
 ```
 
+## M7-LB1 光板版
+
+`M7-LB1` 是基于当前 **M7.C5** 的光板机械变体，不升级为 M8：沿用原四层打印、两张刚体拼板、螺丝位置和装配流程；拍面与红框肩颈加强段保持实体，肩颈下方才开始贝塞尔手柄内腔。唯一入口：
+
+```bash
+./scripts/export-lightboard-stl.sh
+```
+
+产物位于 `enclosure/stl/lightboard/`，包含四层 STL、两张拼板 STL、两张 `arranged-model` 3MF，以及供网页 3D 预览使用的 manifest。局域网页面：`/?tab=print`。
+
 旧 `paddle_shell_*`、`paddle_blade_*`、`paddle_handle_*` 以及 `paddle_m6_*` 文件名已废止，
 导出脚本会主动删除它们，避免误打印旧结构。
 

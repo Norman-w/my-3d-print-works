@@ -18,6 +18,10 @@ USE_IMPORTED_OUTER = false;
 HALF = "front";
 TIP_LENGTH = 25;  // handle_back_tip 切片长度 (mm), 可由 -D 覆盖
 LOFT_SLICES = USE_BEZIER_PROFILES ? 64 : 150;
+// 光板版调试开关；正式输出保持原 M7 侧边承力柱闭环。
+LIGHTBOARD_CORE_SUPPORTS = true;
+// 红框肩颈加强区：从拍柄/拍面接合面向拍柄下方保留连续实体。
+LIGHTBOARD_SOLID_NECK_LENGTH = 30;
 
 // 由 scripts/bezier_to_openscad.py 生成（USE_BEZIER_PROFILES=true 时必须）
 include <generated/bezier_geometry.scad>
@@ -1579,6 +1583,189 @@ module m6_exploded() {
     translate([0, 0, -12]) m6_handle_skin_back();
 }
 
+// ═══ M7-LB1 光板变体：拍面实心、拍柄保留贝塞尔内腔 ═══
+//
+// 该变体沿用 M7.C5 的四层厚度、分型面、螺丝位置和两张刚体拼板。
+// 与电子版的唯一几何差异是：拍面不切 PCB/PZT/器件腔，只在拍柄内保留
+// 贝塞尔 loft 腔体；这样光板可以按同一装配流程制作，但不会误带电子让位。
+module lightboard_handle_cavity() {
+    cavity_head_end_y = shoulder_bottom_y - LIGHTBOARD_SOLID_NECK_LENGTH;
+    intersection() {
+        if (USE_BEZIER_PROFILES) {
+            bezier_handle_cavity();
+        } else {
+            // 与 handle_cavity() 的旧椭圆 fallback 相同，但不加入电池和线束腔。
+            steps = 80;
+            y0 = handle_butt_y + wall_t;
+            y1 = shoulder_top_y + 5;
+            dh = (y1 - y0) / steps;
+            for (i = [0:steps-1]) {
+                ym = y0 + (i + 0.5) * dh;
+                outer_hx = paddle_hx(ym);
+                outer_hz = half_z_at(ym);
+                inner_hx = outer_hx - wall_t - handle_cavity_inset;
+                inner_hz = outer_hz - wall_t - handle_cavity_inset;
+                if (inner_hx > 0.5 && inner_hz > 0.5) {
+                    translate([0, ym, 0])
+                        rotate([90, 0, 0])
+                            linear_extrude(height = dh + eps, center = true)
+                                rounded_rect(inner_hx * 2, inner_hz * 2,
+                                    max(1.5, handle_corner_r - 1));
+                }
+            }
+        }
+        // 裁掉腔体的头侧部分，让红框肩颈区变成连续实体。
+        translate([-BIG, -BIG, -BIG])
+            cube([BIG * 2, cavity_head_end_y + BIG, BIG * 2]);
+    }
+}
+
+function lightboard_core_screw_positions() = [
+    for (p = m6_all_handle_screw_positions())
+        if (p[1] < shoulder_bottom_y - 10 - 0.1) p
+];
+
+module lightboard_core_screw_supports(front = true) {
+    intersection() {
+        m6_core_blank(front);
+        m6_core_screw_support_group(
+            front,
+            lightboard_core_screw_positions(),
+            m6_handle_boss_d
+        );
+    }
+}
+
+module lightboard_core_front() {
+    difference() {
+        union() {
+            difference() {
+                m6_core_blank(true);
+                lightboard_handle_cavity();
+            }
+            // 侧边阵列和三点贯穿仍沿用 M7 装配闭环；拍面没有电子腔，
+            // 因而不再补 PCB 穿透柱，也不切 PCB/PZT/器件让位。
+            if (LIGHTBOARD_CORE_SUPPORTS)
+                lightboard_core_screw_supports(true);
+        }
+        m6_side_front_screw_channels();
+        m6_handle_through_boss_clearance();
+        m6_handle_through_screw_channels();
+        m6_blade_front_screw_channels();
+    }
+}
+
+module lightboard_core_back() {
+    difference() {
+        union() {
+            difference() {
+                m6_core_blank(false);
+                lightboard_handle_cavity();
+            }
+            if (LIGHTBOARD_CORE_SUPPORTS)
+                lightboard_core_screw_supports(false);
+        }
+        m6_side_back_screw_channels();
+        m6_handle_through_boss_clearance();
+        m6_handle_through_screw_channels();
+        m6_blade_back_screw_channels();
+    }
+}
+
+module lightboard_handle_skin_front(overlap = 0) {
+    difference() {
+        intersection() {
+            union() {
+                difference() {
+                    bezier_handle_half(true);
+                    lightboard_handle_cavity();
+                }
+                m6_handle_screw_bosses(true);
+                m6_handle_through_boss_columns(true);
+            }
+            m6_full_planform_prism();
+            translate([-BIG, -BIG, m6_core_half_t - overlap])
+                cube([BIG * 2, BIG * 2, BIG]);
+        }
+        m6_side_front_screw_channels();
+        m6_handle_through_screw_channels();
+    }
+}
+
+module lightboard_handle_skin_back(overlap = 0) {
+    difference() {
+        intersection() {
+            union() {
+                difference() {
+                    bezier_handle_half(false);
+                    lightboard_handle_cavity();
+                }
+                m6_handle_screw_bosses(false);
+                m6_handle_through_boss_columns(false);
+            }
+            m6_full_planform_prism();
+            translate([-BIG, -BIG, -BIG])
+                cube([BIG * 2, BIG * 2, BIG - m6_core_half_t + overlap]);
+        }
+        m6_side_back_screw_channels();
+        m6_handle_through_screw_channels();
+    }
+}
+
+module lightboard_monolithic_front() {
+    difference() {
+        union() {
+            lightboard_core_front();
+            lightboard_handle_skin_front(m6_union_overlap);
+        }
+        m6_side_front_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_front_screw_channels();
+    }
+}
+
+module lightboard_monolithic_back() {
+    difference() {
+        union() {
+            lightboard_core_back();
+            lightboard_handle_skin_back(m6_union_overlap);
+        }
+        m6_side_back_screw_channels();
+        m6_handle_through_screw_channels();
+        m6_blade_back_screw_channels();
+    }
+}
+
+module lightboard_assembly() {
+    color([0.12, 0.45, 0.90, 0.80]) lightboard_handle_skin_front();
+    color([0.85, 0.20, 0.18]) lightboard_core_front();
+    color([0.45, 0.08, 0.06]) lightboard_core_back();
+    color([0.08, 0.25, 0.55, 0.80]) lightboard_handle_skin_back();
+}
+
+module lightboard_exploded() {
+    translate([0, 0, 12]) lightboard_handle_skin_front();
+    translate([0, 0, 4]) lightboard_core_front();
+    translate([0, 0, -4]) lightboard_core_back();
+    translate([0, 0, -12]) lightboard_handle_skin_back();
+}
+
+module lightboard_stage_solid_blade() {
+    // 只显示拍头的实心承力区，避免把拍柄腔误读为拍面腔。
+    intersection() {
+        m6_core_blank(true);
+        translate([-BIG, shoulder_bottom_y - 5, -BIG])
+            cube([BIG * 2, BIG * 2, BIG]);
+    }
+}
+
+module lightboard_stage_handle_cavity() {
+    intersection() {
+        lightboard_handle_cavity();
+        m6_full_planform_prism();
+    }
+}
+
 // Non-manufacturing inspection scenes used by docs/mechanical-handoff.
 module protected_battery_preview() {
     color([0.15, 0.65, 0.28])
@@ -1724,6 +1911,26 @@ if (HALF == "m6_core_front") {
     m6_assembly();
 } else if (HALF == "m6_exploded") {
     m6_exploded();
+} else if (HALF == "lightboard_core_front") {
+    lightboard_core_front();
+} else if (HALF == "lightboard_core_back") {
+    lightboard_core_back();
+} else if (HALF == "lightboard_skin_front") {
+    lightboard_handle_skin_front();
+} else if (HALF == "lightboard_skin_back") {
+    lightboard_handle_skin_back();
+} else if (HALF == "lightboard_monolithic_front") {
+    lightboard_monolithic_front();
+} else if (HALF == "lightboard_monolithic_back") {
+    lightboard_monolithic_back();
+} else if (HALF == "lightboard_assembly") {
+    lightboard_assembly();
+} else if (HALF == "lightboard_exploded") {
+    lightboard_exploded();
+} else if (HALF == "lightboard_stage_solid_blade") {
+    lightboard_stage_solid_blade();
+} else if (HALF == "lightboard_stage_handle_cavity") {
+    lightboard_stage_handle_cavity();
 } else if (HALF == "m6_fasteners") {
     m6_fasteners();
 } else if (HALF == "m6_fasteners_front") {

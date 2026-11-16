@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "modelVersion": "M7-LB1",
+  "baseModel": "M7.C5",
+  "variantLabel": "光板版",
+  "generatedAt": "2026-11-16T02:55:06.467754+00:00",
+  "coordinateSystem": {
+    "x": "拍宽",
+    "y": "拍长",
+    "z": "层叠/厚度"
+  },
+  "components": [
+    {
+      "id": "stage_planform",
+      "label": "整拍轮廓",
+      "path": "/stl/lightboard/preview/stage_planform.stl?v=62abba7e03ed1070",
+      "color": "#38bdf8",
+      "kind": "inspection",
+      "opacity": 1.0
+    },
+    {
+      "id": "stage_solid_blade",
+      "label": "拍面实心承力区",
+      "path": "/stl/lightboard/preview/stage_solid_blade.stl?v=331997ebc702390b",
+      "color": "#f59e0b",
+      "kind": "inspection",
+      "opacity": 1.0
+    },
+    {
+      "id": "stage_handle_cavity",
+      "label": "拍柄下段贝塞尔内腔",
+      "path": "/stl/lightboard/preview/stage_handle_cavity.stl?v=804a9f25f2c82a7b",
+      "color": "#22d3ee",
+      "kind": "interference",
+      "opacity": 0.62
+    },
+    {
+      "id": "skin_front",
+      "label": "第1层·拍柄正面外贴",
+      "path": "/stl/lightboard/paddle_m7_lb1_layer1_handle_skin_front.stl?v=bd723af9bf71d190",
+      "color": "#3b82f6",
+      "kind": "skin",
+      "opacity": 1.0
+    },
+    {
+      "id": "core_front",
+      "label": "第2层·拍面实心主承力板",
+      "path": "/stl/lightboard/paddle_m7_lb1_layer2_core_front.stl?v=8411608f31265c1c",
+      "color": "#ef4444",
+      "kind": "core",
+      "opacity": 1.0
+    },
+    {
+      "id": "core_back",
+      "label": "第3层·拍面实心主承力板",
+      "path": "/stl/lightboard/paddle_m7_lb1_layer3_core_back.stl?v=3e558d0250b2963c",
+      "color": "#991b1b",
+      "kind": "core",
+      "opacity": 1.0
+    },
+    {
+      "id": "skin_back",
+      "label": "第4层·拍柄背面外贴",
+      "path": "/stl/lightboard/paddle_m7_lb1_layer4_handle_skin_back.stl?v=e7bffd8f153379cd",
+      "color": "#1d4ed8",
+      "kind": "skin",
+      "opacity": 1.0
+    },
+    {
+      "id": "monolithic_front",
+      "label": "正面无缝合体",
+      "path": "/stl/lightboard/paddle_m7_lb1_monolithic_front.stl?v=2da70a6d8a481093",
+      "color": "#f59e0b",
+      "kind": "monolithic",
+      "opacity": 1.0
+    },
+    {
+      "id": "monolithic_back",
+      "label": "背面无缝合体",
+      "path": "/stl/lightboard/paddle_m7_lb1_monolithic_back.stl?v=03f5bea82a493a28",
+      "color": "#d97706",
+      "kind": "monolithic",
+      "opacity": 1.0
+    },
+    {
+      "id": "assembly",
+      "label": "M7-LB1 四层装配",
+      "path": "/stl/lightboard/paddle_m7_lb1_assembly.stl?v=476087afa5017fbf",
+      "color": "#94a3b8",
+      "kind": "assembly",
+      "opacity": 1.0
+    },
+    {
+      "id": "exploded",
+      "label": "M7-LB1 四层爆炸图",
+      "path": "/stl/lightboard/paddle_m7_lb1_exploded.stl?v=8296e0b0721bcbac",
+      "color": "#cbd5e1",
+      "kind": "assembly",
+      "opacity": 1.0
+    },
+    {
+      "id": "fasteners_front",
+      "label": "拍柄侧边第2层→第1层螺丝",
+      "path": "/stl/lightboard/preview/fasteners_front.stl?v=80cf6a8db86848a7",
+      "color": "#e5e7eb",
+      "kind": "fastener",
+      "opacity": 1.0
+    },
+    {
+      "id": "fasteners_back",
+      "label": "拍柄侧边第3层→第4层螺丝",
+      "path": "/stl/lightboard/preview/fasteners_back.stl?v=8f5e7aef3598c242",
+      "color": "#aeb8c6",
+      "kind": "fastener",
+      "opacity": 1.0
+    },
+    {
+      "id": "fasteners_through",
+      "label": "拍柄三点第1层→第4层贯穿螺丝",
+      "path": "/stl/lightboard/preview/fasteners_through.stl?v=52847f3c97b96838",
+      "color": "#d1fae5",
+      "kind": "fastener",
+      "opacity": 1.0
+    },
+    {
+      "id": "fasteners_blade",
+      "label": "拍面第2层→第3层螺丝",
+      "path": "/stl/lightboard/preview/fasteners_blade.stl?v=af3643d895d0f748",
+      "color": "#f8fafc",
+      "kind": "fastener",
+      "opacity": 1.0
+    },
+    {
+      "id": "silicone_plugs",
+      "label": "拍柄三点M2硅胶盖",
+      "path": "/stl/lightboard/preview/silicone_plugs.stl?v=4a24f11b515f20e5",
+      "color": "#111827",
+      "kind": "plug",
+      "opacity": 1.0
+    }
+  ],
+  "printPlates": [
+    {
+      "id": "layers_1_2",
+      "label": "拼板 A · 第1+2层",
+      "path": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_1_2.stl?v=71d5ecf7da1a2f7f",
+      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_1_2.3mf?v=00c54906abc31f09",
+      "description": "沿用原 M7 两件拼板流程；拍面实体不含电子挖空。"
+    },
+    {
+      "id": "layers_3_4",
+      "label": "拼板 B · 第3+4层",
+      "path": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_3_4.stl?v=387e0fbb4c821424",
+      "threeMfPath": "/stl/lightboard/print/paddle_m7_lb1_print_plate_layers_3_4.3mf?v=8ea3a98ca2893c82",
+      "description": "沿用原 M7 摆放和支撑检查；装配接口保持原尺寸。"
+    }
+  ],
+  "processSteps": [
+    {
+      "id": "assembled",
+      "label": "四层装配",
+      "description": "沿用原 M7 的装配位置和紧固件；拍面与红框肩颈段保持实心，拍柄下段保留内腔。",
+      "components": [
+        "assembly"
+      ],
+      "overlays": [
+        "fasteners_front",
+        "fasteners_back",
+        "fasteners_through",
+        "fasteners_blade",
+        "silicone_plugs"
+      ],
+      "camera": "full_paddle"
+    },
+    {
+      "id": "solid_blade",
+      "label": "拍面实心",
+      "description": "拍头区域不切 PCB、PZT 或器件腔。",
+      "components": [
+        "stage_solid_blade"
+      ],
+      "camera": "full_paddle"
+    },
+    {
+      "id": "handle_cavity",
+      "label": "拍柄内腔",
+      "description": "只在肩颈实体加强段之后保留参考图所示的收窄贝塞尔手柄内腔。",
+      "components": [
+        "stage_handle_cavity"
+      ],
+      "camera": "full_handle"
+    },
+    {
+      "id": "four_layers",
+      "label": "四层打印件",
+      "description": "第1/4层为拍柄外贴，第2/3层贯通拍面和拍柄。",
+      "components": [
+        "skin_front",
+        "core_front",
+        "core_back",
+        "skin_back"
+      ],
+      "overlays": [
+        "fasteners_front",
+        "fasteners_back",
+        "fasteners_through",
+        "fasteners_blade",
+        "silicone_plugs"
+      ],
+      "camera": "exploded_layers"
+    }
+  ],
+  "processTypes": [
+    {
+      "id": "print",
+      "label": "四层打印",
+      "components": [
+        "skin_front",
+        "core_front",
+        "core_back",
+        "skin_back"
+      ]
+    },
+    {
+      "id": "assembly",
+      "label": "装配",
+      "components": [
+        "assembly"
+      ],
+      "overlays": [
+        "fasteners_front",
+        "fasteners_back",
+        "fasteners_through",
+        "fasteners_blade",
+        "silicone_plugs"
+      ]
+    }
+  ],
+  "cameraPresets": [
+    {
+      "id": "full_paddle",
+      "label": "整拍",
+      "target": [
+        0,
+        -50,
+        0
+      ],
+      "position": [
+        170,
+        -270,
+        150
+      ]
+    },
+    {
+      "id": "full_handle",
+      "label": "拍柄",
+      "target": [
+        0,
+        -122,
+        0
+      ],
+      "position": [
+        70,
+        -235,
+        65
+      ]
+    },
+    {
+      "id": "exploded_layers",
+      "label": "四层爆炸",
+      "target": [
+        0,
+        -70,
+        0
+      ],
+      "position": [
+        180,
+        -260,
+        120
+      ]
+    }
+  ]
+}

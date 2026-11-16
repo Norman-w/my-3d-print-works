@@ -11,6 +11,10 @@
   用 OpenSCAD 导出 4 个打印件与 2 个组装件 STL。  
   优先使用 `/Applications/OpenSCAD.app` (Manifold 后端, ~400x 快于 CGAL)，  
   回退到 `openscad` (brew 安装的 CGAL 版本)。
+- `export-lightboard-stl.sh`
+  导出 `M7-LB1` 光板版的四层 STL、刚体拼板、arranged-model 3MF 和网页预览 manifest。
+- `build_3mf_package.py`
+  将拼板 manifest 中的独立 STL 与刚体位姿写入真实 3MF，不做隐式缩放。
 
 - `run-analyze.sh`  
   运行分析流程，生成截图与尺寸检查结果。
@@ -29,6 +33,9 @@ python3 scripts/bezier_to_openscad.py
 
 # 2) 导出 STL
 ./scripts/export-stl.sh
+
+# M7-LB1 光板版：拍面实心、拍柄内腔
+./scripts/export-lightboard-stl.sh
 
 # 3) 分析截图与尺寸
 ./scripts/run-analyze.sh
