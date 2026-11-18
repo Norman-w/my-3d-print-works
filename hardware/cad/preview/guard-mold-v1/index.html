@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>围挡卡 · 夹具浇注模分块与拆模</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    {"imports": {
+      "three": "./vendor/three.module.js",
+      "three/addons/controls/OrbitControls.js": "./vendor/OrbitControls.js",
+      "three/addons/loaders/STLLoader.js": "./vendor/STLLoader.js"
+    }}
+  </script>
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main id="canvas-panel" class="canvas-panel">
+    <canvas id="viewport" aria-label="三维装配视图"></canvas>
+
+    <aside id="tree-panel" class="floating-panel tree-panel" data-panel-label="装配树" aria-labelledby="title">
+      <div class="panel-heading" data-drag-handle tabindex="0" aria-label="拖动装配树面板；方向键也可移动">
+        <h1 id="title">装配预览</h1>
+        <button class="collapse-button" type="button" data-collapse aria-controls="tree-panel-content" aria-expanded="true" aria-label="折叠装配树面板">−</button>
+      </div>
+      <div id="tree-panel-content" class="panel-content">
+        <p id="status" role="status">正在读取 manifest…</p><p class="demold-note" title="下卡臂端部0.6mm倒角需要柔性PU弹性让位；动画不模拟胶体变形。">⚠ 小倒扣需 PU 弹性让位 · 待试灌</p>
+        <section aria-labelledby="tree-heading" class="tree-section">
+          <h2 id="tree-heading">装配树</h2>
+          <div id="filters" class="filters">
+            <input id="search" type="search" placeholder="搜索实例、零件或 STL" aria-label="搜索装配树">
+            <input id="group-filter" type="hidden" value="">
+          </div>
+          <div id="group-actions" class="row">
+            <button id="toggle-group" type="button">隐藏</button>
+          </div>
+          <p class="selection-hint">悬停看名称 · 点选组件 · Ctrl+H 隐藏 · Alt+↑ 上一级</p>
+          <div id="tree" class="tree" aria-live="polite"></div>
+        </section>
+        <section id="inspector" aria-labelledby="inspector-heading" hidden>
+          <h2 id="inspector-heading">当前选择</h2>
+          <nav id="selection-path" aria-label="装配层级路径"></nav>
+          <strong id="selected-name"></strong>
+          <p id="selected-source" class="source"></p>
+          <div class="row">
+            <button id="focus-selected" type="button">聚焦</button>
+            <button id="toggle-selected" type="button" aria-keyshortcuts="Control+h">隐藏</button>
+            <button id="select-parent" type="button" aria-keyshortcuts="Alt+ArrowUp">上一级</button>
+          </div>
+          <label for="selected-opacity">所选不透明度 <output id="selected-opacity-value">100%</output></label>
+          <input id="selected-opacity" type="range" min="0" max="100" value="100">
+        </section>
+      </div>
+    </aside>
+
+    <aside id="view-panel" class="floating-panel view-panel" data-panel-label="视角" aria-labelledby="view-panel-heading">
+      <div class="panel-heading" data-drag-handle tabindex="0" aria-label="拖动视角面板；方向键也可移动">
+        <h2 id="view-panel-heading">拆模与视角</h2>
+        <button class="collapse-button" type="button" data-collapse aria-controls="view-panel-content" aria-expanded="true" aria-label="折叠视角面板">−</button>
+      </div>
+      <div id="view-panel-content" class="panel-content">
+        <section aria-labelledby="axis-heading">
+          <h3 id="axis-heading">标准轴向</h3>
+          <div id="axis-views" class="button-grid" aria-label="六个标准轴向视图"></div>
+        </section>
+        <section aria-labelledby="saved-heading">
+          <h3 id="saved-heading">预设视角</h3>
+          <div id="views" class="button-grid"></div>
+        </section>
+        <section aria-labelledby="display-heading">
+          <h3 id="display-heading">分块显示</h3><div id="mold-modes" class="button-grid"></div>
+          <label for="explode">拆模进度 <output id="explode-value">0%</output></label>
+          <input id="explode" type="range" min="0" max="100" value="0">
+          <label for="global-opacity">全局不透明度 <output id="global-opacity-value">100%</output></label>
+          <input id="global-opacity" type="range" min="0" max="100" value="100">
+        </section>
+        <section id="stage-controls" aria-labelledby="stage-heading">
+          <h3 id="stage-heading">运动阶段</h3>
+          <div id="stage" class="stage-buttons" aria-label="拆模阶段"></div><div class="row">
+            <button id="play" type="button">▶ 拆模演示</button><button id="reset" type="button">↺ 合模</button>
+          </div>
+        </section>
+        <details><summary>ⓘ 夹紧、浇注与脱模边界</summary>
+        <p>外模X向合紧；顶盖Z向压紧；Y向压住端部芯。使用现成夹具，不含夹具模型。</p>
+        <p>顶盖上+Y侧大孔为浇口，四个小孔为排气。阴刻文字由盖底凸字复刻。</p>
+        <p>黄色芯先下降1mm，再沿+X抽出，避开圆孔下口倒角。</p>
+        <p>下卡臂外端0.6mm倒角仍需要弹性PU轻微让位脱模，动画不模拟胶体变形。不能用于硬树脂直接强脱。</p>
+        <p>本版为设计预览：零收缩补偿、名义贴合；选胶后需确认收缩、固化放热、脱模剂及打印密封。未做实物试灌。</p></details>
+      </div>
+    </aside>
+    <div class="bottom-note">X 上梁 · Y 下脚 · Z 向上　|　六块硬模＋弹性PU　|　拖动旋转 / 滚轮缩放</div>
+  </main>
+</body>
+</html>

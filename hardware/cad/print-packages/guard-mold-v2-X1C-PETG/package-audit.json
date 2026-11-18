@@ -1,0 +1,282 @@
+{
+  "package": "guard-mold-v2-7parts-X1C-PETG.gcode.3mf",
+  "geometry_project": "guard-mold-v2-7parts-X1C-PETG.3mf",
+  "geometry_project_sha256": "bd71f3afda49b980c68a325d2829f44409429b14d68aaf53e749ab6e8ed08701",
+  "sha256": "061c14a1e5cbe578374f4b825aec7a56ef7fba23187d19870353fd05e06e85f4",
+  "plate_count": 1,
+  "object_count": 7,
+  "objects": [
+    {
+      "name": "01-left-shell-cavity-up.stl",
+      "min_mm": [
+        12.0,
+        40.0,
+        0.0
+      ],
+      "max_mm": [
+        75.7000008,
+        142.0,
+        42.0
+      ],
+      "support_blocker_count": 3,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "02-right-shell-cavity-up.stl",
+      "min_mm": [
+        87.7,
+        40.0,
+        0.0
+      ],
+      "max_mm": [
+        151.4000008,
+        142.0,
+        42.0
+      ],
+      "support_blocker_count": 4,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "03-lid-pins-up.stl",
+      "min_mm": [
+        163.4,
+        40.0,
+        -7.34862837e-10
+      ],
+      "max_mm": [
+        247.4,
+        142.0,
+        19.399999619265138
+      ],
+      "support_blocker_count": 1,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "04-green-core-shoulder-down.stl",
+      "min_mm": [
+        12.0,
+        160.0,
+        0.0
+      ],
+      "max_mm": [
+        86.0,
+        223.7000008,
+        106.5
+      ],
+      "support_blocker_count": 2,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "05-pink-core-shoulder-down.stl",
+      "min_mm": [
+        103.0,
+        160.0,
+        0.0
+      ],
+      "max_mm": [
+        177.0,
+        194.2000008,
+        34.0
+      ],
+      "support_blocker_count": 2,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "06-yellow-core-flat.stl",
+      "min_mm": [
+        103.0,
+        209.0,
+        0.0
+      ],
+      "max_mm": [
+        197.0,
+        230.0,
+        23.6000004
+      ],
+      "support_blocker_count": 0,
+      "mesh_repairs": 0
+    },
+    {
+      "name": "07-pull-pin-head-down.stl",
+      "min_mm": [
+        216.00000043,
+        170.00000038000002,
+        0.0
+      ],
+      "max_mm": [
+        222.80000157,
+        188.79999962,
+        27.5
+      ],
+      "support_blocker_count": 0,
+      "mesh_repairs": 0
+    }
+  ],
+  "prediction_seconds": 39282,
+  "weight_g": 306.53,
+  "support_estimated_g_from_extrusions": 1.8327562719583406,
+  "extruding_xy_bounds_mm": [
+    9.336,
+    35.336,
+    250.064,
+    230.664
+  ],
+  "support_extrusions": {
+    "01-left-shell-cavity-up.stl": {
+      "Support": {
+        "moves": 45,
+        "filament_mm": 39.00402999999999,
+        "min": [
+          12.565,
+          36.25,
+          0.2
+        ],
+        "max": [
+          19.835,
+          141.75,
+          0.2
+        ]
+      },
+      "Support interface": {
+        "moves": 509,
+        "filament_mm": 44.48458999999999,
+        "min": [
+          14.334,
+          38.019,
+          0.4
+        ],
+        "max": [
+          18.066,
+          139.981,
+          0.8
+        ]
+      }
+    },
+    "02-right-shell-cavity-up.stl": {
+      "Support": {
+        "moves": 45,
+        "filament_mm": 39.00402999999999,
+        "min": [
+          143.565,
+          36.25,
+          0.2
+        ],
+        "max": [
+          150.835,
+          141.75,
+          0.2
+        ]
+      },
+      "Support interface": {
+        "moves": 509,
+        "filament_mm": 44.48458999999999,
+        "min": [
+          145.334,
+          38.019,
+          0.4
+        ],
+        "max": [
+          149.066,
+          139.981,
+          0.8
+        ]
+      }
+    },
+    "03-lid-pins-up.stl": {
+      "Support": {
+        "moves": 106,
+        "filament_mm": 78.19701,
+        "min": [
+          174.765,
+          36.25,
+          0.2
+        ],
+        "max": [
+          236.035,
+          141.75,
+          0.2
+        ]
+      },
+      "Support interface": {
+        "moves": 1018,
+        "filament_mm": 88.96918000000012,
+        "min": [
+          176.534,
+          38.019,
+          0.4
+        ],
+        "max": [
+          234.266,
+          139.981,
+          0.8
+        ]
+      }
+    },
+    "04-green-core-shoulder-down.stl": {
+      "Support": {
+        "moves": 392,
+        "filament_mm": 73.16517000000015,
+        "min": [
+          10.25,
+          157.25,
+          0.2
+        ],
+        "max": [
+          87.75,
+          223.45,
+          0.2
+        ]
+      },
+      "Support interface": {
+        "moves": 940,
+        "filament_mm": 83.16249000000015,
+        "min": [
+          12.019,
+          159.019,
+          0.4
+        ],
+        "max": [
+          85.981,
+          221.681,
+          0.8
+        ]
+      }
+    },
+    "05-pink-core-shoulder-down.stl": {
+      "Support": {
+        "moves": 413,
+        "filament_mm": 51.11242000000006,
+        "min": [
+          101.25,
+          156.25,
+          0.2
+        ],
+        "max": [
+          178.75,
+          193.95,
+          0.2
+        ]
+      },
+      "Support interface": {
+        "moves": 660,
+        "filament_mm": 58.39406000000001,
+        "min": [
+          103.019,
+          158.019,
+          0.4
+        ],
+        "max": [
+          176.981,
+          192.181,
+          0.8
+        ]
+      }
+    },
+    "06-yellow-core-flat.stl": {},
+    "07-pull-pin-head-down.stl": {}
+  },
+  "protected_region_support_hits": [],
+  "source_print_rotation_verified": true,
+  "gcode_md5_verified": true,
+  "printer_sent": false
+}

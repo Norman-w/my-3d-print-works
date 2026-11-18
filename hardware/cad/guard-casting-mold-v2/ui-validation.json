@@ -1,0 +1,29 @@
+{
+  "base": "http://192.168.7.187:8786/",
+  "checks": [
+    "flat controls; no dropdowns",
+    "six mold solids, one pull pin and one casting reference",
+    "nine ordered locator and mold stages",
+    "closed: casting stays fixed",
+    "pin-lifted: casting stays fixed",
+    "pin-out: casting stays fixed",
+    "lid-off: casting stays fixed",
+    "lower-out: casting stays fixed",
+    "back-out: casting stays fixed",
+    "shells-off: casting stays fixed",
+    "upper-lowered: casting stays fixed",
+    "released: casting stays fixed",
+    "upper core lowers before +X extraction",
+    "casting-only visibility",
+    "three core inserts can be isolated",
+    "transparent shells preserve opaque internal cores",
+    "slider follows ordered core-first sequence",
+    "animated extraction updates real frame positions",
+    "band paths shown only on assembled mold",
+    "band paths removed before demolding",
+    "pull pin clears bore before moving aside",
+    "pink locator inspection exposes actual guide pair",
+    "no browser runtime exceptions"
+  ],
+  "errors": []
+}
