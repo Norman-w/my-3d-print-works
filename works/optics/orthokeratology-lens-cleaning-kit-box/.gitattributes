@@ -1,0 +1,12 @@
+# Generated geometry is shipped for download, not line-by-line code review.
+*.stl binary
+*.png binary
+*.scad text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf

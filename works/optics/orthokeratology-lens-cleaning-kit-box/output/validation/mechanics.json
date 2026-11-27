@@ -1,0 +1,375 @@
+{
+  "revision": "H",
+  "units": "mm",
+  "meshes": {
+    "print_in_place_open": {
+      "bounds": [
+        [
+          0.0,
+          -2.96713807301785e-07,
+          2.4276582166748994e-07
+        ],
+        [
+          134.8000030517578,
+          202.81236267089844,
+          111.19961547851562
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        202.81236296761224,
+        111.1996152357498
+      ],
+      "volume": 143228.8867364855,
+      "watertight": true,
+      "components": 2,
+      "faces": 17162,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 0,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "closed_preview": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          134.8000030517578,
+          121.80000305175781,
+          54.0
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        121.80000305175781,
+        54.0
+      ],
+      "volume": 143228.93014814632,
+      "watertight": true,
+      "components": 3,
+      "faces": 16890,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 2,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "base": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          134.8000030517578,
+          121.80000305175781,
+          30.200000762939453
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        121.80000305175781,
+        30.200000762939453
+      ],
+      "volume": 70284.02760948792,
+      "watertight": true,
+      "components": 1,
+      "faces": 5102,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 2,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "lid": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          12.700000762939453
+        ],
+        [
+          134.8000030517578,
+          121.80000305175781,
+          54.0
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        121.80000305175781,
+        41.29999923706055
+      ],
+      "volume": 72944.90253855211,
+      "watertight": true,
+      "components": 1,
+      "faces": 12060,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 0,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "open90": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          134.8000030517578,
+          144.60000610351562,
+          144.60000610351562
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        144.60000610351562,
+        144.60000610351562
+      ],
+      "volume": 143228.96683348904,
+      "watertight": true,
+      "components": 2,
+      "faces": 17162,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 2,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "section": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          134.8000030517578,
+          61.400001525878906,
+          54.0
+        ]
+      ],
+      "size": [
+        134.8000030517578,
+        61.400001525878906,
+        54.0
+      ],
+      "volume": 71723.92003398697,
+      "watertight": true,
+      "components": 3,
+      "faces": 10966,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 7,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    },
+    "hinge_coupon": {
+      "bounds": [
+        [
+          18.0,
+          75.38465118408203,
+          2.4276582166748994e-07
+        ],
+        [
+          42.0,
+          136.05441284179688,
+          25.604337692260742
+        ]
+      ],
+      "size": [
+        24.0,
+        60.669761657714844,
+        25.60433744949492
+      ],
+      "volume": 10246.10254292561,
+      "watertight": true,
+      "components": 2,
+      "faces": 1416,
+      "repeated_vertex_faces": 0,
+      "zero_area_faces": 0,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0,
+      "winding_consistent": true
+    }
+  },
+  "printability": {
+    "steep_downward_area_mm2": {
+      "open90": 9395.93481900074,
+      "print_in_place_open": 537.8068969525424
+    },
+    "threshold_deg_from_vertical": 50,
+    "excluded_bed_height": 0.3,
+    "pusher_extension": 2.5,
+    "catch_side_arm_length": 6.1,
+    "finger_root_bridge": 3,
+    "spring_free_length": 21.799999999999997,
+    "pin_bridge_length": 6.7,
+    "actual_slicing_and_support_removal": "pending"
+  },
+  "rectangular_clearance": {
+    "nominal": [
+      130,
+      100,
+      50
+    ],
+    "guaranteed_clear": [
+      130,
+      100,
+      50
+    ],
+    "nominal_cavity_intrusion_mm3": 0.0,
+    "base_intrusion_mm3": 0.0,
+    "lid_intrusion_mm3": 0.0
+  },
+  "closed_overlap_mm3": 0.0,
+  "mouth_grip": {
+    "center": [
+      67.4,
+      0,
+      27.0
+    ],
+    "max_depth": 4,
+    "local_backing_y": 5.2,
+    "finger_space_intrusion_mm3": 0.0
+  },
+  "lid_engraving": {
+    "lines": [
+      "ORTHO-K",
+      "LENS CARE KIT",
+      "Candy"
+    ],
+    "depth": 0.4,
+    "remaining_roof": 1.6,
+    "removed_volume_mm3": 200.75888690667463,
+    "cut_bounds": [
+      [
+        35.56674999892712,
+        36.369319999217986,
+        53.6
+      ],
+      [
+        99.67335000038148,
+        79.816400000453,
+        54.01
+      ]
+    ]
+  },
+  "thin_shell": {
+    "ordinary_wall": 2.4,
+    "floor_and_roof": 2.0,
+    "side_rim_groove": "absent",
+    "front_local_housing_depth": 11.4,
+    "rear_local_pad_depth": 10.399999999999991
+  },
+  "rigid_sweep": {
+    "range_deg": [
+      0,
+      100
+    ],
+    "angle_step_deg": 2,
+    "samples": 51,
+    "max_overlap_mm3": 0.0,
+    "failed_angles": []
+  },
+  "concealed_release": {
+    "membrane_thickness": 0.8,
+    "stroke_checks": [
+      {
+        "stroke_mm": 0,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 0.5,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 1,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 1.5,
+        "catch_frame_overlap_mm3": 0.0
+      }
+    ],
+    "pusher_root_max_y": 0.7999992370605469,
+    "physical_elasticity_test": "pending"
+  },
+  "unflexed_latch_contacts": [
+    {
+      "angle": 0,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 1,
+      "overlap_mm3": 4.186693126904028
+    },
+    {
+      "angle": 2,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 3,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 4,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 5,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 10,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 20,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 45,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 90,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 100,
+      "overlap_mm3": 0.0
+    }
+  ],
+  "seal": {
+    "type": "none",
+    "gasket_required": false,
+    "watertight_requirement": false
+  },
+  "hinge": {
+    "radial_gap": 0.35,
+    "axial_gap": 0.35,
+    "pin_bridge_length": 6.7,
+    "bore_bias": 0.15,
+    "minimum_radial_gap": 0.2,
+    "closed_lift_max": 0.2,
+    "physical_release_test": "pending",
+    "pivot": [
+      0.0,
+      117.6,
+      27.0
+    ]
+  },
+  "material_comparison": {
+    "rev_f_solid_mm3": 293555.0741143928,
+    "rev_h_solid_mm3": 143228.8867364855,
+    "solid_reduction_percent": 51.20885334086511,
+    "sliced_filament_mass": "not_measured"
+  }
+}

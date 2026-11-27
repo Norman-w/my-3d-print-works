@@ -1,0 +1,305 @@
+{
+  "revision": "F",
+  "units": "mm",
+  "meshes": {
+    "print_in_place_open": {
+      "bounds": [
+        [
+          0.0,
+          -2.96713807301785e-07,
+          -1.6184391427032097e-07
+        ],
+        [
+          141.1999969482422,
+          208.3278045654297,
+          113.95732879638672
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        208.3278048621435,
+        113.95732895823063
+      ],
+      "volume": 293555.0741143928,
+      "watertight": true,
+      "components": 2,
+      "faces": 10080
+    },
+    "closed_preview": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          141.1999969482422,
+          125.19999694824219,
+          55.0
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        125.19999694824219,
+        55.0
+      ],
+      "volume": 293555.0948317041,
+      "watertight": true,
+      "components": 5,
+      "faces": 9836
+    },
+    "base": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          141.1999969482422,
+          125.19999694824219,
+          30.700000762939453
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        125.19999694824219,
+        30.700000762939453
+      ],
+      "volume": 142209.00441533353,
+      "watertight": true,
+      "components": 1,
+      "faces": 5550
+    },
+    "lid": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          13.200000762939453
+        ],
+        [
+          141.1999969482422,
+          125.19999694824219,
+          55.0
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        125.19999694824219,
+        41.79999923706055
+      ],
+      "volume": 151346.0904163997,
+      "watertight": true,
+      "components": 1,
+      "faces": 4530
+    },
+    "open90": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          141.1999969482422,
+          148.5,
+          148.5
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        148.5,
+        148.5
+      ],
+      "volume": 293555.1330637191,
+      "watertight": true,
+      "components": 2,
+      "faces": 10080
+    },
+    "section": {
+      "bounds": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          141.1999969482422,
+          61.599998474121094,
+          55.0
+        ]
+      ],
+      "size": [
+        141.1999969482422,
+        61.599998474121094,
+        55.0
+      ],
+      "volume": 133586.01058034817,
+      "watertight": true,
+      "components": 3,
+      "faces": 6402
+    },
+    "hinge_coupon": {
+      "bounds": [
+        [
+          18.0,
+          77.788818359375,
+          -1.6184391427032097e-07
+        ],
+        [
+          42.0,
+          139.16567993164062,
+          28.220632553100586
+        ]
+      ],
+      "size": [
+        24.0,
+        61.376861572265625,
+        28.2206327149445
+      ],
+      "volume": 17361.220286368625,
+      "watertight": true,
+      "components": 2,
+      "faces": 1400
+    }
+  },
+  "printability": {
+    "steep_downward_area_mm2": {
+      "open90": 9705.51014203036,
+      "print_in_place_open": 252.70099168166246
+    },
+    "threshold_deg_from_vertical": 50,
+    "excluded_bed_height": 0.3,
+    "pusher_extension": 2.5,
+    "catch_side_arm_length": 6.1,
+    "finger_root_bridge": 3,
+    "spring_free_length": 22.3,
+    "pin_bridge_length": 6.7,
+    "actual_slicing_and_support_removal": "pending"
+  },
+  "rectangular_clearance": {
+    "nominal": [
+      130,
+      100,
+      50
+    ],
+    "guaranteed_clear": [
+      130,
+      100,
+      50
+    ],
+    "nominal_cavity_intrusion_mm3": 0.0,
+    "base_intrusion_mm3": 0.0,
+    "lid_intrusion_mm3": 0.0
+  },
+  "closed_overlap_mm3": 0.0,
+  "mouth_grip": {
+    "center": [
+      70.6,
+      0,
+      27.5
+    ],
+    "max_depth": 4,
+    "clearance_to_front_groove": 3.5,
+    "finger_space_intrusion_mm3": 0.0
+  },
+  "rigid_sweep": {
+    "range_deg": [
+      0,
+      100
+    ],
+    "angle_step_deg": 2,
+    "samples": 51,
+    "max_overlap_mm3": 0.0,
+    "failed_angles": []
+  },
+  "concealed_release": {
+    "membrane_thickness": 0.8,
+    "stroke_checks": [
+      {
+        "stroke_mm": 0,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 0.5,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 1,
+        "catch_frame_overlap_mm3": 0.0
+      },
+      {
+        "stroke_mm": 1.5,
+        "catch_frame_overlap_mm3": 0.0
+      }
+    ],
+    "pusher_root_max_y": 0.7999992370605469,
+    "physical_elasticity_test": "pending"
+  },
+  "unflexed_latch_contacts": [
+    {
+      "angle": 0,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 1,
+      "overlap_mm3": 3.64368362445177
+    },
+    {
+      "angle": 2,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 3,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 4,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 5,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 10,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 20,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 45,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 90,
+      "overlap_mm3": 0.0
+    },
+    {
+      "angle": 100,
+      "overlap_mm3": 0.0
+    }
+  ],
+  "seal": {
+    "cord_diameter": 2,
+    "groove_width": 2.6,
+    "groove_depth": 1.45,
+    "hard_stop_squeeze_percent": 27.5,
+    "squeeze_with_015mm_play_percent": 20,
+    "squeeze_at_rear_with_020mm_lift_percent": 17.5,
+    "section_fill_percent": 83.33137012174518,
+    "physical_test": "pending"
+  },
+  "hinge": {
+    "radial_gap": 0.35,
+    "axial_gap": 0.35,
+    "pin_bridge_length": 6.7,
+    "bore_bias": 0.15,
+    "minimum_radial_gap": 0.2,
+    "closed_lift_max": 0.2,
+    "physical_release_test": "pending"
+  }
+}

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="角膜塑形镜清洁套装盒的 OpenSCAD、STL 与拓竹 X1C 局域网打印面板" />
+    <title>OK Lens Box · X1C 工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">OK</div>
+      <div>
+        <p class="eyebrow">OPENSCAD / X1C WORKBENCH</p>
+        <h1>角膜塑形镜清洁套装盒</h1>
+      </div>
+      <div class="header-status" id="serverStatus" role="status" aria-live="polite">正在连接本地服务…</div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro-card">
+        <div>
+          <p class="eyebrow accent-text">PARAMETRIC CASE / REV H</p>
+          <h2>薄壁轻量版 · 隐藏锁扣与转轴</h2>
+          <p class="intro-copy">
+            矩形净内腔 <strong id="innerDimensions">130 × 100 × 50 mm</strong>。顶盖浅凹刻 ORTHO-K / LENS CARE KIT，署名 Candy，刻深 0.4 mm、文字下剩余板厚 1.6 mm。普通壁厚 2.4 mm、顶底原厚 2.0 mm；保留隐藏锁扣、转轴、倒角和 V 形打印姿态。不按水密盒设计。
+          </p>
+        </div>
+        <div class="metric-strip" aria-label="模型关键尺寸">
+          <div class="metric"><span>净内腔长</span><strong id="innerLength">130 mm</strong></div>
+          <div class="metric"><span>净内腔宽</span><strong id="innerWidth">100 mm</strong></div>
+          <div class="metric"><span>闭合净高</span><strong id="innerHeight">50 mm</strong></div>
+          <div class="metric"><span>闭合外形</span><strong>134.8 × 121.8 × 54</strong></div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="control-column" aria-label="模型控制与下载">
+          <section class="panel panel-dark">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">MODEL VIEW</p>
+                <h2>模型状态</h2>
+              </div>
+              <span class="live-dot" aria-label="本地预览已启用"></span>
+            </div>
+            <label class="field-label" for="modelSelect">查看模式</label>
+            <select id="modelSelect" class="field-control">
+              <option value="animation" selected>开合动画 · 0–100° 实际转轴</option>
+              <option value="closed">闭合外观 · 50 mm 净内高</option>
+              <option value="print">V 形 · 两半各倾斜 45°（局部支撑待切片）</option>
+              <option value="open90">打开 90° · 实际铰链轴旋转</option>
+              <option value="section">闭合剖面 · 薄壁与局部加强</option>
+              <option value="base">底座 · 内部推杆、卡齿与减料区</option>
+              <option value="lid">盒盖 · 查看内部弹片与轴遮盖</option>
+              <option value="coupon">铰链试片 · 先验证活动间隙</option>
+            </select>
+            <p class="helper" id="modelHint">主 STL 两半各倾斜 45°，减少长悬伸；轴附近仍需切片检查局部支撑，轴孔内禁止支撑。</p>
+            <div class="button-row">
+              <button class="button button-primary" id="downloadButton" type="button">下载 V 形主 STL</button>
+              <button class="button button-quiet" id="openSlicerButton" type="button">用 Bambu Studio 打开</button>
+            </div>
+            <div class="mesh-stats" id="meshStats" aria-live="polite">加载模型数据…</div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">PRINT NOTES</p>
+                <h2>首件建议</h2>
+              </div>
+            </div>
+            <ul class="note-list">
+              <li>未填充 PETG；0.20 mm 层高，4–5 道墙。先打印铰链试片。</li>
+              <li>两半各倾斜 45°，开口夹角 90°，以倒角窄边贴板；需加 brim 稳定。2.5 mm 推杆、约 6 mm 侧支承替代旧长悬伸；轴附近和内腔局部支撑仍待切片检查，禁止填进轴孔。</li>
+              <li>轴径 3.6 mm，孔径 4.3 mm，轴向间隙 0.35 mm。主文件内两个活动实体须一起保留，不能拆开自动摆盘。</li>
+              <li>普通壁厚 2.4 mm、顶底各 2.0 mm；没有密封槽，不需要硅胶条，不用于盛水。使用范围为 0–100°，不要强掰到 180°。</li>
+              <li>前壁下半部左右两处薄壁按压区驱动盒内锁钩，按入约 1.5 mm 后扣住开口中央指槽抬盖。外侧没有裸露弹片。</li>
+              <li>0.8 mm 连续薄壁按压区没有外露按钮缝；弹性、回弹、疲劳及减薄后的壳体刚度均需先做实物验证。</li>
+              <li>这是清洁套装外壳原型，不替代原厂镜片护理盒或无菌容器。</li>
+            </ul>
+          </section>
+        </aside>
+
+        <section class="viewer-panel panel" aria-label="交互式三维预览">
+          <div class="viewer-toolbar">
+            <div>
+              <p class="eyebrow">INTERACTIVE STL</p>
+              <h2 id="viewerTitle">开合动画 · 实际转轴</h2>
+            </div>
+            <button class="button button-quiet" id="resetViewButton" type="button">重置视角</button>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="viewport" tabindex="0" aria-label="STL 三维预览，可拖动旋转、滚轮缩放"></canvas>
+            <div class="canvas-overlay" id="canvasMessage" role="status" aria-live="polite">正在加载 STL…</div>
+          </div>
+          <div class="motion-controls" id="motionControls" aria-label="开合动画控制">
+            <div class="motion-heading">
+              <label for="openingAngle">开盖角度</label>
+              <output id="angleValue" for="openingAngle" aria-live="off">0.0°</output>
+            </div>
+            <input id="openingAngle" type="range" min="0" max="100" step="0.1" value="0" aria-describedby="motionNote" disabled />
+            <div class="button-row">
+              <button class="button button-primary" id="playMotionButton" type="button" aria-pressed="false" disabled>播放开合</button>
+              <button class="button button-quiet" id="closeLidButton" type="button" disabled>闭合 0°</button>
+              <button class="button button-quiet" id="openLidButton" type="button" disabled>打开 100°</button>
+            </div>
+            <p class="helper" id="motionNote">点击播放后往返开合；拖动滑杆暂停并检查任意角度。蓝色为底座，浅色为盒盖。仅演示刚性运动，不模拟弹片解锁。</p>
+          </div>
+          <div class="viewer-footer">
+            <span>拖动旋转</span>
+            <span>滚轮缩放</span>
+            <span>键盘方向键也可旋转</span>
+          </div>
+        </section>
+      </section>
+
+      <section class="lan-grid">
+        <section class="panel lan-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow accent-text">LAN BRIDGE</p>
+              <h2>连接局域网中的 X1C</h2>
+            </div>
+            <span class="status-pill" id="printerState">未测试</span>
+          </div>
+          <p class="section-copy">
+            凭据只在本地请求内存中使用，不写入网页。先测试端口/登录，再发送已经切好的打印任务。
+          </p>
+          <form id="printerForm" class="printer-form">
+            <div class="form-grid">
+              <div>
+                <label class="field-label" for="printerIp">打印机 IP</label>
+                <input class="field-control" id="printerIp" name="ip" inputmode="decimal" autocomplete="off" placeholder="192.168.1.100" />
+              </div>
+              <div>
+                <label class="field-label" for="printerSerial">序列号</label>
+                <input class="field-control" id="printerSerial" name="serial" autocomplete="off" placeholder="01X…" />
+              </div>
+              <div class="form-wide">
+                <label class="field-label" for="accessCode">LAN Access Code</label>
+                <input class="field-control" id="accessCode" name="access_code" type="password" inputmode="numeric" autocomplete="off" placeholder="打印机屏幕上的局域网码" />
+                <p class="helper">X1C 需先开启 LAN Only / Developer Mode。</p>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="button button-secondary" id="testPrinterButton" type="submit">测试连接</button>
+              <span class="inline-result" id="printerResult" role="status" aria-live="polite"></span>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel print-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">SEND JOB</p>
+              <h2>发送到拓竹</h2>
+            </div>
+            <span class="status-pill status-muted">需 .gcode.3mf</span>
+          </div>
+          <p class="section-copy">
+            STL 本身不能直接打印。请用 X1C 配置在 Bambu Studio/OrcaSlicer 切片并导出单盘 `.gcode.3mf`，再拖到这里发送。
+          </p>
+          <label class="drop-zone" for="jobFile">
+            <span class="drop-title">选择已切片文件</span>
+            <span class="drop-subtitle" id="jobFileName">未选择文件</span>
+            <input id="jobFile" type="file" accept=".gcode.3mf,.3mf" />
+          </label>
+          <div class="job-options">
+            <label class="checkbox-label"><input id="useAms" type="checkbox" /> 使用 AMS</label>
+            <label class="slot-control" for="amsSlot">槽位 <select id="amsSlot" class="small-select"><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
+          </div>
+          <button class="button button-primary button-wide" id="sendPrintButton" type="button" disabled>上传并发送打印</button>
+          <div class="job-result" id="jobResult" role="status" aria-live="polite"></div>
+        </section>
+      </section>
+
+      <section class="disclaimer-bar">
+        <strong>验收边界：</strong>页面健康检查、OpenSCAD 导出和 STL 流形通过，只说明 CAD/软件路径可用；薄壁刚度、铰链寿命、卡扣手感和首层质量仍需 X1C 首件实物验证。此版已取消水密结构。
+      </section>
+    </main>
+
+    <script src="/motion.js?v=revh-candy-1" defer></script>
+    <script src="/app.js?v=revh-candy-1" defer></script>
+  </body>
+</html>
