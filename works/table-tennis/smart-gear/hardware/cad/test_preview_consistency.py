@@ -1,0 +1,382 @@
+#!/usr/bin/env python3
+"""Keep the dependency-free intent preview aligned with the SCAD source."""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+
+HERE = Path(__file__).resolve().parent
+SCAD = HERE / "net_stand.scad"
+PREVIEW = HERE / "preview.py"
+PREVIEW_INDEX = HERE / "preview" / "index.html"
+PREVIEW_APP = HERE / "preview" / "app.js"
+
+# These are the direct, first-article geometry values that the lightweight
+# preview must mirror. Derived coordinates are intentionally checked by the
+# OpenSCAD validator; this test prevents the two visual entry points from
+# silently diverging on the design boundary itself.
+PARAMETER_MAP = {
+    "TABLE_WIDTH": "table_width",
+    "TABLE_THICKNESS": "table_thickness",
+    "NET_POST_OUTBOARD_EXTENSION": "net_post_outboard_extension",
+    "POST_OFFSET": "post_offset",
+    "POST_WIDTH": "post_body_width",
+    "POST_INTERFACE_TRANSITION_HEIGHT_Z": "post_interface_transition_height_z",
+    "POST_INTERFACE_TRANSITION_EXTRA_X": "post_interface_transition_extra_x",
+    "POST_INTERFACE_TRANSITION_EXTRA_Y": "post_interface_transition_extra_y",
+    "CLAMP_OUTER_EXTENSION": "clamp_outer_extension",
+    "CLAMP_REACH_INBOARD": "clamp_reach_inboard",
+    "CLAMP_TONGUE_EXTRA_LENGTH_X": "clamp_tongue_extra_length_x",
+    "CLAMP_PAD_T": "clamp_pad_t",
+    "CLAMP_CLEARANCE": "clamp_clearance",
+    "CLAMP_SLIDE_SPLIT_X_ABS": "clamp_slide_split_x",
+    "CLAMP_SLIDE_SHOE_DEEPENING_X": "clamp_slide_shoe_deepening_x",
+    "CLAMP_SLIDE_RECEIVER_LENGTH_X": "clamp_slide_receiver_length_x",
+    "CLAMP_SLIDE_TONGUE_ATTACH_X": "clamp_slide_tongue_attach_x",
+    "CLAMP_SLIDE_RAIL_HEAD_WIDTH_Y": "clamp_slide_rail_head_width_y",
+    "CLAMP_SLIDE_RAIL_NECK_WIDTH_Y": "clamp_slide_rail_neck_width_y",
+    "CLAMP_SLIDE_RAIL_HEAD_HEIGHT_Z": "clamp_slide_rail_head_height_z",
+    "CLAMP_SLIDE_RAIL_NECK_HEIGHT_Z": "clamp_slide_rail_neck_height_z",
+    "CLAMP_SLIDE_SHOE_DROP_Z": "clamp_slide_shoe_drop_z",
+    "CLAMP_SLIDE_RAIL_CENTER_Z": "clamp_slide_rail_center_z",
+    "CLAMP_SLIDE_CLEARANCE": "clamp_slide_clearance",
+    "CLAMP_SLIDE_POST_SEAT_CLEARANCE_X": "clamp_slide_post_seat_clearance_x",
+    "CLAMP_SLIDE_POST_FOOT_ROOT_OVERLAP_Z": "clamp_slide_post_foot_root_overlap_z",
+    "CLAMP_SLIDE_POST_FOOT_TRANSITION_SECTION_COUNT": "clamp_slide_post_foot_transition_section_count",
+    "CLAMP_SLIDE_POST_FOOT_TRANSITION_SLICE_Z": "clamp_slide_post_foot_transition_slice_z",
+    "CLAMP_SLIDE_POST_FOOT_POST_FUSION_INSET": "clamp_slide_post_foot_post_fusion_inset",
+    "CLAMP_SLIDE_POST_FOOT_ANKLE_INBOARD_EXTENSION_X": "clamp_slide_post_foot_ankle_inboard_extension_x",
+    "CLAMP_SLIDE_POST_FOOT_CROSS_TIE_LENGTH_X": "clamp_slide_post_foot_cross_tie_length_x",
+    "CLAMP_SLIDE_POST_FOOT_CROSS_TIE_BOTTOM_HALF_Y": "clamp_slide_post_foot_cross_tie_bottom_half_y",
+    "CLAMP_SLIDE_POST_FOOT_CROSS_TIE_TOP_HALF_Y": "clamp_slide_post_foot_cross_tie_top_half_y",
+    "CLAMP_SLIDE_POST_FOOT_SHOE_BURIED_OVERLAP_Z": "clamp_slide_post_foot_shoe_buried_overlap_z",
+    "CLAMP_SCREW_INSET": "clamp_screw_inset",
+    "CLAMP_KNOB_D": "clamp_knob_d",
+    "CLAMP_KNOB_GRIP_ROOT_D": "clamp_knob_grip_root_d",
+    "CLAMP_KNOB_GRIP_TOOTH_COUNT": "clamp_knob_grip_tooth_count",
+    "CLAMP_KNOB_GRIP_TOOTH_D": "clamp_knob_grip_tooth_d",
+    "CLAMP_KNOB_H": "clamp_knob_h",
+    "CLAMP_SCREW_TO_KNOB_TOP_BASE": "clamp_screw_to_knob_top_base",
+    "CLAMP_SCREW_EXTRA_LENGTH_Z": "clamp_screw_extra_length_z",
+    "CLAMP_NUT_AF": "clamp_nut_af",
+    "CLAMP_NUT_H": "clamp_nut_h",
+    "CLAMP_NUT_CLEARANCE": "clamp_nut_clearance",
+    "CLAMP_KNOB_NUT_GAP": "clamp_knob_nut_gap",
+    "CLAMP_LOWER_ARM_CLEARANCE": "clamp_lower_arm_clearance",
+    "CLAMP_REINFORCEMENT_INBOARD_OFFSET_X": "clamp_reinforcement_inboard_offset_x",
+    "CLAMP_REINFORCEMENT_NEAR_TABLE_THICKNESS_Z": "clamp_reinforcement_near_table_thickness_z",
+    "CLAMP_REINFORCEMENT_DEPTH_Y": "clamp_reinforcement_depth_y",
+    "CLAMP_SOLID_BRIDGE_CLEARANCE_X": "clamp_solid_bridge_clearance_x",
+    "CLAMP_PRESSURE_PAD_WIDTH": "clamp_pressure_pad_width",
+    "CLAMP_PRESSURE_PAD_T": "clamp_pressure_pad_t",
+    "M6_SENSOR_HEAD_LENGTH_X": "m6_sensor_head_length_x",
+    "M6_SENSOR_HEAD_WIDTH_Y": "m6_sensor_head_width_y",
+    "M6_SENSOR_HEAD_HEIGHT_Z": "m6_sensor_head_height_z",
+    "M6_SENSOR_HEAD_HEX_AF": "m6_sensor_head_hex_af",
+    "M6_SENSOR_CENTER_PITCH": "m6_sensor_center_pitch",
+    "M6_SENSOR_BODY_LENGTH": "m6_sensor_body_length",
+    "M6_SENSOR_MOUNT_STEM_LENGTH": "m6_sensor_mount_stem_length",
+    "M6_RAIL_T": "m6_rail_t",
+    "M6_RAIL_WIDTH_Y": "m6_rail_width_y",
+    "M6_RAIL_TAB_T": "m6_rail_tab_t",
+    "M6_RAIL_TAB_WIDTH_Y": "m6_rail_tab_width_y",
+    "M6_SENSOR_LANE_OFFSET_Y": "m6_sensor_lane_offset_y",
+    "M6_YAW_STAGE_T": "m6_yaw_stage_t",
+    "M6_YAW_STAGE_RADIUS": "m6_yaw_stage_radius",
+    "M6_YAW_SLOT_RADIUS": "m6_yaw_slot_radius",
+    "M6_PITCH_YOKE_T": "m6_pitch_yoke_t",
+    "M6_PITCH_YOKE_WIDTH_Y": "m6_pitch_yoke_width_y",
+    "M6_PITCH_FRAME_T": "m6_pitch_frame_t",
+    "M6_PITCH_FRAME_OUTER_WIDTH_Y": "m6_pitch_frame_outer_width_y",
+    "M6_PITCH_FRAME_WINDOW_WIDTH_Y": "m6_pitch_frame_window_width_y",
+    "M6_PITCH_FRAME_OUTER_HEIGHT_Z": "m6_pitch_frame_outer_height_z",
+    "M6_PITCH_FRAME_WINDOW_HEIGHT_Z": "m6_pitch_frame_window_height_z",
+    "M6_ROLL_PLATE_D": "m6_roll_plate_d",
+    "M6_ROLL_PIVOT_D": "m6_roll_pivot_d",
+    "M6_SENSOR_ROLL_DEG": "m6_sensor_roll_deg",
+    "M6_DETECTOR_BODY_DEPTH_Y": "m6_detector_body_depth_y",
+    "M6_DETECTOR_BODY_CENTER_Y": "m6_detector_body_center_y",
+    "M6_DETECTOR_BODY_LENGTH_X": "m6_detector_body_length_x",
+    "M6_DETECTOR_BODY_MARGIN_Z": "m6_detector_body_margin_z",
+    "M6_DETECTOR_BODY_FRONT_MARGIN_X": "m6_detector_body_front_margin_x",
+    "M6_DETECTOR_SHELL_WALL": "m6_detector_shell_wall",
+    "M6_DETECTOR_SHELL_CLEARANCE": "m6_detector_shell_clearance",
+    "M6_DETECTOR_SHELL_BOTTOM_LIP_Z": "m6_detector_shell_bottom_lip_z",
+    "M6_DETECTOR_SHELL_TOP_LIP_Z": "m6_detector_shell_top_lip_z",
+    "M6_DETECTOR_SHELL_SPLIT_OVERLAP_X": "m6_detector_shell_split_overlap_x",
+    "M6_DETECTOR_SHELL_CORNER_RADIUS": "m6_detector_shell_corner_radius",
+    "M6_DETECTOR_FRONT_CAP_LENGTH_X": "m6_detector_front_cap_length_x",
+    "M6_DETECTOR_FRONT_CAP_REDUCTION": "m6_detector_front_cap_reduction",
+    "M6_DETECTOR_BODY_GROOVE_WIDTH_X": "m6_detector_body_groove_width_x",
+    "M6_DETECTOR_BODY_GROOVE_DEPTH_Y": "m6_detector_body_groove_depth_y",
+    "M6_DETECTOR_BODY_GROOVE_MARGIN_Z": "m6_detector_body_groove_margin_z",
+    "M6_DETECTOR_SHELL_TONGUE_DEPTH_Y": "m6_detector_shell_tongue_depth_y",
+    "M6_DETECTOR_SHELL_TONGUE_CLEARANCE": "m6_detector_shell_tongue_clearance",
+    "M6_DETECTOR_OPTICAL_BORE_D": "m6_detector_optical_bore_d",
+    "M6_DETECTOR_THREAD_CLEARANCE_D": "m6_detector_thread_clearance_d",
+    "M6_DETECTOR_HEX_POCKET_DEPTH_X": "m6_detector_hex_pocket_depth_x",
+    "M6_DETECTOR_HEX_POCKET_FLOOR": "m6_detector_hex_pocket_floor",
+    "M6_DETECTOR_SHELL_SCREW_PILOT_D": "m6_detector_shell_screw_pilot_d",
+    "M6_DETECTOR_SHELL_SCREW_HEAD_D": "m6_detector_shell_screw_head_d",
+    "M6_DETECTOR_SHELL_SCREW_HEAD_DEPTH": "m6_detector_shell_screw_head_depth",
+    "M6_DETECTOR_SHELL_SCREW_MARGIN_Z": "m6_detector_shell_screw_margin_z",
+    "M6_DETECTOR_BOTTOM_COVER_T": "m6_detector_bottom_cover_t",
+    "M6_BOTTOM_COVER_SCREW_DEPTH": "m6_bottom_cover_screw_depth",
+    "M6_DETECTOR_BOTTOM_COVER_SCREW_D": "m6_detector_bottom_cover_screw_d",
+    "M6_DETECTOR_BOTTOM_COVER_SCREW_HEAD_D": "m6_detector_bottom_cover_screw_head_d",
+    "M6_DETECTOR_BOTTOM_COVER_SCREW_HEAD_DEPTH": "m6_detector_bottom_cover_screw_head_depth",
+    "M6_DETECTOR_BOTTOM_COVER_SCREW_INSET_X": "m6_detector_bottom_cover_screw_inset_x",
+    "M6_DETECTOR_CABLE_EXIT_D": "m6_detector_cable_exit_d",
+    "M6_DETECTOR_CABLE_EXIT_SLEEVE_CLEARANCE": "m6_detector_cable_exit_sleeve_clearance",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_LENGTH_X": "m6_detector_shell_support_platform_length_x",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_OVERLAP_X": "m6_detector_shell_support_platform_overlap_x",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_WIDTH_Y": "m6_detector_shell_support_platform_width_y",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THICKNESS_Z": "m6_detector_shell_support_platform_thickness_z",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_RADIUS": "m6_detector_shell_support_platform_radius",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_OFFSET_X": "m6_detector_shell_support_platform_thread_offset_x",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_DEPTH_Z": "m6_detector_shell_support_platform_thread_depth_z",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_ROOT_WIDTH": "m6_detector_shell_support_platform_thread_root_width",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_TIP_WIDTH": "m6_detector_shell_support_platform_thread_tip_width",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_SEGMENTS_PER_TURN": "m6_detector_shell_support_platform_thread_segments_per_turn",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_TANGENT_WIDTH": "m6_detector_shell_support_platform_thread_tangent_width",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_HEIGHT_Z": "m6_detector_shell_support_platform_gusset_height_z",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_WIDTH_Y": "m6_detector_shell_support_platform_gusset_width_y",
+    "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_ROOT_X": "m6_detector_shell_support_platform_gusset_root_x",
+    "M6_BALLHEAD_BODY_DEPTH_Y": "m6_ballhead_body_depth_y",
+    "M6_BALLHEAD_BODY_CORNER_RADIUS": "m6_ballhead_body_corner_radius",
+    "M6_BALLHEAD_BALL_SOCKET_D": "m6_ballhead_ball_socket_d",
+    "M6_BALLHEAD_SIDE_PLATE_D": "m6_ballhead_side_plate_d",
+    "M6_BALLHEAD_SIDE_PLATE_T_X": "m6_ballhead_side_plate_t_x",
+    "M6_BALLHEAD_LOCK_KNOB_D": "m6_ballhead_lock_knob_d",
+    "M6_BALLHEAD_LOCK_KNOB_T_Y": "m6_ballhead_lock_knob_t_y",
+    "M6_BALLHEAD_LOCK_KNOB_RIDGE_COUNT": "m6_ballhead_lock_knob_ridge_count",
+    "M6_BALLHEAD_SENSOR_THREAD_CORE_D": "m6_ballhead_sensor_thread_core_d",
+    "M6_BALLHEAD_SENSOR_THREAD_PITCH": "m6_ballhead_sensor_thread_pitch",
+    "M6_BALLHEAD_NET_THREAD_CORE_D": "m6_ballhead_net_thread_core_d",
+    "M6_BALLHEAD_NET_THREAD_PITCH": "m6_ballhead_net_thread_pitch",
+    "M6_BALLHEAD_TOP_NUT_AF": "m6_ballhead_top_nut_af",
+    "M6_BALLHEAD_TOP_NUT_H": "m6_ballhead_top_nut_h",
+    "M6_BALLHEAD_BOTTOM_NUT_AF": "m6_ballhead_bottom_nut_af",
+    "M6_BALLHEAD_BOTTOM_NUT_H": "m6_ballhead_bottom_nut_h",
+    "M6_BALLHEAD_NUT_CLEARANCE": "m6_ballhead_nut_clearance",
+    "M6_DETECTOR_DETECTOR_BALLHEAD_GAP_X": "m6_detector_detector_ballhead_gap_x",
+    "M6_DETECTOR_SENSOR_HEAD_Y_OFFSET": "m6_detector_sensor_head_y_offset",
+    "M6_DETECTOR_DIRECT_MOUNT_ARM_WIDTH_Y": "m6_detector_direct_mount_arm_width_y",
+    "M6_DETECTOR_DIRECT_MOUNT_ARM_T_Z": "m6_detector_direct_mount_arm_t_z",
+    "M6_DETECTOR_DIRECT_MOUNT_WEB_WIDTH_Y": "m6_detector_direct_mount_web_width_y",
+    "M6_DETECTOR_DIRECT_MOUNT_WEB_T_X": "m6_detector_direct_mount_web_t_x",
+    "M6_DETECTOR_DIRECT_MOUNT_POST_OVERLAP_X": "m6_detector_direct_mount_post_overlap_x",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_OUTER_D": "m6_detector_direct_mount_socket_outer_d",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_CLEARANCE_D": "m6_detector_direct_mount_socket_clearance_d",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_TAP_D": "m6_detector_direct_mount_socket_tap_d",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_BASE_OVERLAP_Z": "m6_detector_direct_mount_socket_base_overlap_z",
+    "M6_DETECTOR_DIRECT_MOUNT_NUT_LOADING_CLEARANCE_Z": "m6_detector_direct_mount_nut_loading_clearance_z",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_BOTTOM_CLEARANCE_Z": "m6_detector_direct_mount_socket_bottom_clearance_z",
+    "M6_DETECTOR_DIRECT_MOUNT_SOCKET_TOP_CLEARANCE_Z": "m6_detector_direct_mount_socket_top_clearance_z",
+    "M6_DETECTOR_DIRECT_MOUNT_THREAD_DEPTH_EXTRA_Z": "m6_detector_direct_mount_thread_depth_extra_z",
+    "POST_JOINT_ABOVE_NET_CLEARANCE_Z": "post_joint_above_net_clearance_z",
+    "POST_JOINT_GAP": "post_joint_gap",
+    "PREVIEW_FIT_DISPLAY_GAP": "preview_fit_display_gap",
+}
+
+BROWSER_PARAMETER_MAP = {
+    "netPassageWidthY": "NET_PASSAGE_WIDTH_Y",
+    "sensorPitch": "M6_SENSOR_CENTER_PITCH",
+    "sensorRollDeg": "M6_SENSOR_ROLL_DEG",
+    "bodyCenterY": "M6_DETECTOR_BODY_CENTER_Y",
+    "bodyDepthY": "M6_DETECTOR_BODY_DEPTH_Y",
+    "headHexAF": "M6_SENSOR_HEAD_HEX_AF",
+    "hexPocketDepthX": "M6_DETECTOR_HEX_POCKET_DEPTH_X",
+    "cableExitD": "M6_DETECTOR_CABLE_EXIT_D",
+    "shellSupportBossLengthX": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_LENGTH_X",
+    "shellSupportBossOverlapX": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_OVERLAP_X",
+    "shellSupportBossDepthY": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_WIDTH_Y",
+    "shellSupportBossHeightZ": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THICKNESS_Z",
+    "shellSupportBossRadius": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_RADIUS",
+    "shellSupportGussetXOverlap": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_ROOT_X",
+    "shellSupportGussetRootWidthY": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_WIDTH_Y",
+    "shellSupportGussetWallWidthY": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_WIDTH_Y",
+    "shellSupportGussetHeightZ": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_GUSSET_HEIGHT_Z",
+    "shellSupportHoleDepthX": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_DEPTH_Z",
+    "shellSupportStudEngagementX": "M6_DETECTOR_SHELL_SUPPORT_PLATFORM_THREAD_DEPTH_Z",
+    "ballheadBallD": "M6_BALLHEAD_BALL_D",
+    "ballheadHousingD": "M6_BALLHEAD_HOUSING_D",
+    "ballheadHousingLength": "M6_BALLHEAD_HOUSING_LENGTH_X",
+    "ballheadBodyDepthY": "M6_BALLHEAD_BODY_DEPTH_Y",
+    "ballheadBodyCornerRadius": "M6_BALLHEAD_BODY_CORNER_RADIUS",
+    "ballheadBallSocketD": "M6_BALLHEAD_BALL_SOCKET_D",
+    "ballheadSidePlateD": "M6_BALLHEAD_SIDE_PLATE_D",
+    "ballheadSidePlateTX": "M6_BALLHEAD_SIDE_PLATE_T_X",
+    "ballheadLockKnobD": "M6_BALLHEAD_LOCK_KNOB_D",
+    "ballheadLockKnobTY": "M6_BALLHEAD_LOCK_KNOB_T_Y",
+    "ballheadLockKnobRidgeCount": "M6_BALLHEAD_LOCK_KNOB_RIDGE_COUNT",
+    "ballheadBaseD": "M6_BALLHEAD_BASE_D",
+    "ballheadBaseT": "M6_BALLHEAD_BASE_T",
+    "ballheadSensorStudD": "M6_BALLHEAD_SENSOR_STUD_D",
+    "ballheadSensorThreadCoreD": "M6_BALLHEAD_SENSOR_THREAD_CORE_D",
+    "ballheadSensorThreadPitch": "M6_BALLHEAD_SENSOR_THREAD_PITCH",
+    "ballheadNetStudD": "M6_BALLHEAD_NET_STUD_D",
+    "ballheadNetThreadCoreD": "M6_BALLHEAD_NET_THREAD_CORE_D",
+    "ballheadNetThreadPitch": "M6_BALLHEAD_NET_THREAD_PITCH",
+    "ballheadTopNutAF": "M6_BALLHEAD_TOP_NUT_AF",
+    "ballheadTopNutH": "M6_BALLHEAD_TOP_NUT_H",
+    "ballheadBottomNutAF": "M6_BALLHEAD_BOTTOM_NUT_AF",
+    "ballheadBottomNutH": "M6_BALLHEAD_BOTTOM_NUT_H",
+    "ballheadNutClearance": "M6_BALLHEAD_NUT_CLEARANCE",
+    "ballheadTiltDeg": "M6_BALLHEAD_TILT_RANGE_DEG",
+    "ballheadRotationDeg": "M6_BALLHEAD_ROTATION_RANGE_DEG",
+    "directMountArmWidthY": "M6_DETECTOR_DIRECT_MOUNT_ARM_WIDTH_Y",
+    "directMountArmThicknessZ": "M6_DETECTOR_DIRECT_MOUNT_ARM_T_Z",
+    "directMountWebWidthY": "M6_DETECTOR_DIRECT_MOUNT_WEB_WIDTH_Y",
+    "directMountWebThicknessX": "M6_DETECTOR_DIRECT_MOUNT_WEB_T_X",
+    "directMountPostOverlapX": "M6_DETECTOR_DIRECT_MOUNT_POST_OVERLAP_X",
+    "directMountSocketOuterD": "M6_DETECTOR_DIRECT_MOUNT_SOCKET_OUTER_D",
+    "directMountSocketClearanceD": "M6_DETECTOR_DIRECT_MOUNT_SOCKET_CLEARANCE_D",
+    "directMountSocketTapD": "M6_DETECTOR_DIRECT_MOUNT_SOCKET_TAP_D",
+    "directMountSocketBaseOverlapZ": "M6_DETECTOR_DIRECT_MOUNT_SOCKET_BASE_OVERLAP_Z",
+    "directMountNutLoadingClearanceZ": "M6_DETECTOR_DIRECT_MOUNT_NUT_LOADING_CLEARANCE_Z",
+    "directMountThreadDepthExtraZ": "M6_DETECTOR_DIRECT_MOUNT_THREAD_DEPTH_EXTRA_Z",
+}
+
+
+def direct_assignments(path: Path) -> dict[str, float]:
+    values: dict[str, float] = {}
+    pattern = re.compile(
+        r"^\s*([A-Za-z_]\w*)\s*=\s*([-+]?\d+(?:\.\d*)?(?:[eE][-+]?\d+)?)"
+    )
+    for line in path.read_text(encoding="utf-8").splitlines():
+        match = pattern.match(line)
+        if match:
+            values[match.group(1)] = float(match.group(2))
+    return values
+
+
+def main() -> None:
+    scad_values = direct_assignments(SCAD)
+    preview_values = direct_assignments(PREVIEW)
+    missing_scad = sorted(set(PARAMETER_MAP.values()) - set(scad_values))
+    missing_preview = sorted(set(PARAMETER_MAP) - set(preview_values))
+    if missing_scad or missing_preview:
+        raise AssertionError(
+            f"preview parameter coverage missing: scad={missing_scad}, "
+            f"preview={missing_preview}"
+        )
+
+    mismatches = []
+    for preview_name, scad_name in PARAMETER_MAP.items():
+        if preview_values[preview_name] != scad_values[scad_name]:
+            mismatches.append(
+                f"{preview_name}={preview_values[preview_name]} "
+                f"!= {scad_name}={scad_values[scad_name]}"
+            )
+    if mismatches:
+        raise AssertionError("preview/SCAD parameter mismatch: " + "; ".join(mismatches))
+
+    # The browser preview retains a few historical STG branches for old
+    # manifests, but its visible current entry point must describe the M6
+    # optical array.  This prevents a stale label from silently advertising
+    # the superseded purchase/geometry path.
+    index_text = PREVIEW_INDEX.read_text(encoding="utf-8")
+    app_text = PREVIEW_APP.read_text(encoding="utf-8")
+    browser_mismatches = []
+    for browser_name, preview_name in BROWSER_PARAMETER_MAP.items():
+        match = re.search(
+            rf"\b{re.escape(browser_name)}:\s*([-+]?\d+(?:\.\d*)?)",
+            app_text,
+        )
+        if match is None:
+            browser_mismatches.append(f"{browser_name}=missing")
+            continue
+        actual = float(match.group(1))
+        expected = preview_values[preview_name]
+        if actual != expected:
+            browser_mismatches.append(
+                f"{browser_name}={actual} != {preview_name}={expected}"
+            )
+    if browser_mismatches:
+        raise AssertionError(
+            "browser preview/current M6 geometry mismatch: "
+            + "; ".join(browser_mismatches)
+        )
+    required_derived_geometry = (
+        "const m6RaiseZ = Math.max(",
+        "M6_PREVIEW_NET_TOP_Z + M6_PREVIEW_SHELL_CLEARANCE_Z",
+        "postTopErrorZ",
+        "installedBallheadBaseBottomZ",
+    )
+    missing_derived_geometry = [
+        text for text in required_derived_geometry if text not in app_text
+    ]
+    if missing_derived_geometry:
+        raise AssertionError(
+            f"browser preview derived M6 datum logic missing: {missing_derived_geometry}"
+        )
+    required_current_copy = (
+        "M6 直角十路光电阵列",
+        "显示网布、M6 光电器件、线路板、PVDF 和标准件",
+        "按步骤检查网架、M6 阵列和擦网传感器",
+        "M6 45° L 型主体、x 向分体壳与竖直球头",
+        "绿色 C 方案整体底座从 x+ 水平推入灰色腔体",
+        "y=0 分为操作者侧/对手侧两半",
+        "9 个横向 M5 连接点",
+        "M6 球头下端 M8 直接进入固定网柱顶面中心孔",
+        "没有双 T 槽、独立滑轨或旧式共面落座",
+        "取消旧版横向承托臂",
+        "已移除旧版横向承托臂、独立滑轨和旧版独立上段外件/连接器",
+    )
+    missing_copy = [text for text in required_current_copy if text not in index_text + app_text]
+    if missing_copy:
+        raise AssertionError(f"browser preview current M6 copy missing: {missing_copy}")
+    required_slide_logic = (
+        'if (part.includes("clamp_body_segment")) return "clamp_fixed";',
+        'if (part.includes("clamp_body_half_")) return "clamp_split";',
+        'if (entry.part === "clamp_body_half_user") explosion = [0, -86, 0];',
+        'if (entry.part === "clamp_body_half_opponent") explosion = [0, 86, 0];',
+        'case "clamp_fixed": return [0, 0, 0];',
+        "固定夹体 / 立柱基台",
+        "固定灰色主体 / C 方案推入接口",
+    )
+    missing_slide_logic = [text for text in required_slide_logic if text not in app_text]
+    if missing_slide_logic:
+        raise AssertionError(f"browser preview fixed-seat slide logic missing: {missing_slide_logic}")
+    stale_visible_copy = (
+        "固定灰色主体 / 立柱共面落座",
+        "固定网柱从黄灰交界 z=16 mm 共面起步",
+        "这些候选对象不属于正式 41 件 manifest",
+        "STG-120ML 两段光栅怎么装",
+        "显示网布、STG 光纤头、传感器和标准件",
+        "按步骤检查网架、STG-120ML 和擦网传感器",
+        "STG-120ML 光纤头、两段检测窗口和已确认的标准件",
+    )
+    stale_hits = [text for text in stale_visible_copy if text in index_text + app_text]
+    if stale_hits:
+        raise AssertionError(f"browser preview still exposes stale current copy: {stale_hits}")
+
+    # The preview must load only the current formal manifest. Retired SKP
+    # candidate/fit meshes used to be loaded from a parallel v0.2 directory;
+    # keeping those paths around made coplanar faces shimmer and let obsolete
+    # geometry reappear in later reviews.
+    retired_preview_refs = (
+        "showSkpCandidate",
+        "showSkpFit",
+        "fitSkp",
+        "focusSkpCandidate",
+        "skp_candidate",
+        "post-skp-leg-foot-c-v0.2",
+        "split-c-scheme-v11",
+    )
+    stale_preview_refs = [text for text in retired_preview_refs if text in app_text + index_text]
+    if stale_preview_refs:
+        raise AssertionError(f"retired preview geometry still referenced: {stale_preview_refs}")
+    if 'id="show-skp-candidate"' in index_text or 'id="show-skp-fit"' in index_text:
+        raise AssertionError("retired SKP preview controls are still present in HTML")
+    if "split-c-scheme-v12" not in app_text:
+        raise AssertionError("current preview cache key is missing")
+
+    print(f"PREVIEW_CONSISTENCY_OK ({len(PARAMETER_MAP)} direct parameters + current M6 copy)")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,224 @@
+#!/usr/bin/env python3
+"""Regression tests for the net-stand print-platter manifest and layout."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+from build_print_platter import DEFAULT_OUTPUT, load_binary_stl
+
+
+def _overlap_gap(left: dict[str, object], right: dict[str, object]) -> float:
+    left_lo, left_hi = left["placed_bounds"]
+    right_lo, right_hi = right["placed_bounds"]
+    x_gap = max(float(right_lo[0]) - float(left_hi[0]), float(left_lo[0]) - float(right_hi[0]))
+    y_gap = max(float(right_lo[1]) - float(left_hi[1]), float(left_lo[1]) - float(right_hi[1]))
+    # Rectangles can be diagonally separated: the row boundary may provide
+    # the required clearance even if the adjacent row's X gap is smaller.
+    if x_gap > 0 or y_gap > 0:
+        return max(x_gap, y_gap)
+    return 0.0
+
+
+def _assert_source_file(manifest_path: Path, entry: dict[str, object]) -> None:
+    source_path = entry.get("source_path")
+    if not source_path:
+        raise AssertionError(f"拼盘条目缺少 source_path: {entry.get('file')}")
+    resolved = (manifest_path.parent / str(source_path)).resolve()
+    if not resolved.is_file():
+        raise AssertionError(f"拼盘条目的源 STL 不存在: {resolved}")
+
+
+def validate_manifest(path: Path, source_manifest_path: Path | None = None) -> None:
+    if not path.is_file():
+        raise AssertionError(f"拼盘 manifest 不存在: {path}")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != "0.1":
+        raise AssertionError("拼盘 manifest schema 版本错误")
+    bed = data.get("print_bed")
+    if not isinstance(bed, dict):
+        raise AssertionError("缺少 print_bed")
+    width = float(bed["width_mm"])
+    depth = float(bed["depth_mm"])
+    height = float(bed["height_mm"])
+    margin = float(bed["edge_margin_mm"])
+    gap = float(bed["part_gap_mm"])
+    if min(width, depth, height, margin, gap) <= 0:
+        raise AssertionError("打印床参数必须为正数")
+
+    source_manifest = source_manifest_path or path.parent.parent / "manifest.json"
+    if not source_manifest.is_file():
+        raise AssertionError(f"源打印件 manifest 不存在: {source_manifest}")
+    declared_source_manifest = data.get("source_manifest")
+    if not isinstance(declared_source_manifest, str) or not declared_source_manifest:
+        raise AssertionError("拼盘 manifest 缺少 source_manifest 相对路径")
+    declared_source_path = (path.parent / declared_source_manifest).resolve()
+    if declared_source_path != source_manifest.resolve():
+        raise AssertionError(
+            "拼盘 manifest 的 source_manifest 路径与实际输入不一致: "
+            f"{declared_source_path} != {source_manifest.resolve()}"
+        )
+    source = json.loads(source_manifest.read_text(encoding="utf-8"))
+    expected_files = {str(item["file"]) for item in source["parts"]}
+    entries = data.get("parts")
+    if not isinstance(entries, list) or {str(item["file"]) for item in entries} != expected_files:
+        raise AssertionError("拼盘 parts 与源打印清单不一致")
+    components = data.get("assembly_components")
+    if not isinstance(components, list) or not components:
+        raise AssertionError("拼盘 manifest 缺少装配物料清单")
+
+    plates = data.get("plates")
+    if not isinstance(plates, list) or not plates:
+        raise AssertionError("至少应生成一张拼盘")
+    placed_files: set[str] = set()
+    for plate in plates:
+        plate_group = plate.get("material_group")
+        if not isinstance(plate_group, str) or not plate_group:
+            raise AssertionError(f"{plate['id']} 缺少材料组")
+        plate_file = path.parent / str(plate["file"])
+        plate_path = path.parent / str(plate.get("path", ""))
+        if not plate_path.is_file():
+            raise AssertionError(f"拼盘 manifest 的 path 不存在: {plate_path}")
+        if plate_path.resolve() != plate_file.resolve():
+            raise AssertionError(
+                f"{plate['id']} 的 file/path 指向不同文件: "
+                f"{plate_file} != {plate_path}"
+            )
+        mesh = load_binary_stl(plate_file)
+        size = tuple(mesh.bounds[1][axis] - mesh.bounds[0][axis] for axis in range(3))
+        if size[0] > width + 1e-3 or size[1] > depth + 1e-3 or size[2] > height + 1e-3:
+            raise AssertionError(f"{plate_file.name} 超出打印床: {size}")
+        parts = plate.get("parts")
+        if not isinstance(parts, list) or not parts:
+            raise AssertionError(f"{plate['id']} 没有排版零件")
+        for item in parts:
+            filename = str(item["file"])
+            if item.get("material_group") != plate_group:
+                raise AssertionError(
+                    f"{plate['id']} 混入不同材料组: {filename} -> {item.get('material_group')}"
+                )
+            if not item.get("name_zh"):
+                raise AssertionError(f"拼盘条目缺少中文名称: {filename}")
+            _assert_source_file(path, item)
+            if filename in placed_files:
+                raise AssertionError(f"零件重复排版: {filename}")
+            placed_files.add(filename)
+            item_margin = float(item.get("edge_margin_mm", margin))
+            if item_margin <= 0 or item_margin > margin:
+                raise AssertionError(f"{filename} 的专用边缘余量无效: {item_margin}")
+            lo, hi = item["placed_bounds"]
+            if (
+                float(lo[0]) < item_margin - 1e-3
+                or float(lo[1]) < item_margin - 1e-3
+                or float(hi[0]) > width - item_margin + 1e-3
+                or float(hi[1]) > depth - item_margin + 1e-3
+                or float(lo[2]) < -1e-3
+                or float(hi[2]) > height + 1e-3
+            ):
+                raise AssertionError(f"{filename} 超出安全排版区域: {item['placed_bounds']}")
+        for index, left in enumerate(parts):
+            for right in parts[index + 1:]:
+                if _overlap_gap(left, right) < gap - 1e-3:
+                    raise AssertionError(
+                        f"{plate['id']} 零件间隔不足: {left['file']} / {right['file']}"
+                    )
+
+    oversized = data.get("oversized")
+    oversized_files = {str(item["file"]) for item in oversized}
+    if placed_files & oversized_files:
+        raise AssertionError("同一零件同时 placed 和 oversized")
+    if placed_files | oversized_files != expected_files:
+        raise AssertionError("不是所有源零件都得到 placed/oversized 结论")
+    for item in oversized:
+        if not item.get("material_group"):
+            raise AssertionError(f"超尺寸条目缺少材料组: {item.get('file')}")
+        if not item.get("name_zh"):
+            raise AssertionError(f"超尺寸条目缺少中文名称: {item.get('file')}")
+        _assert_source_file(path, item)
+        if item.get("status") != "oversized":
+            raise AssertionError(f"超尺寸条目缺少 oversized 状态: {item}")
+
+
+def validate_default(path: Path, source_manifest_path: Path | None = None) -> None:
+    validate_manifest(path, source_manifest_path)
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data["print_bed"]["width_mm"] != 256.0 or data["print_bed"]["depth_mm"] != 256.0:
+        raise AssertionError("默认拼盘必须是 256 × 256 mm")
+    # The long lower upright occupies its own diagonal plate. The 30 mm upper
+    # segment can share a normal PETG plate; the two large x-z C-clamp profiles
+    # share two plates after rotating their outer y faces onto the bed.
+    if len(data["plates"]) != 7 or sum(p["part_count"] for p in data["plates"]) != 41:
+        raise AssertionError("默认拼盘的板数/已排版数量发生变化（当前应为 7/41）")
+    groups = [plate.get("material_group") for plate in data["plates"]]
+    if groups != ["PETG", "PETG", "PETG", "PETG", "PETG", "PETG", "TPU/柔性"]:
+        raise AssertionError(f"默认拼盘材料组发生变化: {groups}")
+    oversized = {item["file"] for item in data["oversized"]}
+    if oversized:
+        raise AssertionError(f"默认拼盘仍有超尺寸零件: {oversized}")
+    post_entries = [
+        entry
+        for plate in data["plates"]
+        for entry in plate.get("parts", [])
+        if entry.get("part") == "post_clamp_carrier_lower"
+    ]
+    if len(post_entries) != 2 or any(
+        entry.get("orientation_label") != "diagonal-rx0-ry51-rz45"
+        or entry.get("rotation_euler_deg") != [0.0, 51.0, 45.0]
+        or entry.get("edge_margin_mm") != 1.5
+        for entry in post_entries
+    ):
+        raise AssertionError("斜立柱下段必须在默认 256 mm 拼盘中使用已验证三轴斜放姿态和专用边缘余量")
+    upper_entries = [
+        entry
+        for plate in data["plates"]
+        for entry in plate.get("parts", [])
+        if entry.get("part") == "post_clamp_carrier_upper"
+    ]
+    if len(upper_entries) != 2 or any(
+        entry.get("orientation_label") != "upper-split-face-down"
+        or entry.get("rotation_euler_deg") != [0.0, 0.0, 0.0]
+        or entry.get("edge_margin_mm") != 5.0
+        for entry in upper_entries
+    ):
+        raise AssertionError("斜立柱上段必须平放并使用普通 5 mm 边缘余量")
+    split_entries = [
+        entry
+        for plate in data["plates"]
+        for entry in plate.get("parts", [])
+        if entry.get("part") in {"clamp_body_half_user", "clamp_body_half_opponent"}
+    ]
+    if len(split_entries) != 4:
+        raise AssertionError("两侧 C 夹应各有操作者侧/对手侧半体")
+    for entry in split_entries:
+        expected = (
+            "y-minus-face-down-rx90"
+            if entry.get("part") == "clamp_body_half_user"
+            else "y-plus-face-down-rx-90"
+        )
+        if entry.get("orientation_label") != expected:
+            raise AssertionError(
+                f"{entry.get('file')} 必须把对应 y 外侧大平面贴床，实际为 {entry.get('orientation_label')}"
+            )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--manifest", type=Path, default=DEFAULT_OUTPUT / "manifest.json")
+    parser.add_argument("--source-manifest", type=Path, help="源打印件清单路径（输出目录不在默认 exports 时使用）")
+    parser.add_argument("--default", action="store_true", help="额外检查默认 256 mm 清单")
+    args = parser.parse_args()
+    manifest_path = args.manifest.resolve()
+    source_manifest_path = args.source_manifest.resolve() if args.source_manifest else None
+    validate_manifest(manifest_path, source_manifest_path)
+    if args.default:
+        validate_default(manifest_path, source_manifest_path)
+    print(
+        f"PRINT_PLATTER_TEST_OK ({len(json.loads(manifest_path.read_text(encoding='utf-8'))['plates'])} plates)"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

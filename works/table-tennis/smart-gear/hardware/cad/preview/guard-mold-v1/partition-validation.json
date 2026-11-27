@@ -1,0 +1,9 @@
+{
+  "stock_unassigned_excluding_ports_mm3": 0.00042358346228343435,
+  "cavity_added_outside_product_excluding_ports_mm3": 0.0004235835464652041,
+  "product_volume_missing_from_cavity_mm3": 0.0005506923009630107,
+  "ports_volume_mm3": 852.4328179922359,
+  "closed_casting_cavity_volume_mm3": 81877.27569952232,
+  "product_volume_mm3": 81877.27582663108,
+  "process_compensation": "none; nominal geometry"
+}

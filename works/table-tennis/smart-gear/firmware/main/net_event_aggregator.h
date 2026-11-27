@@ -1,0 +1,86 @@
+#pragma once
+
+#include <cstdint>
+#include <deque>
+#include <optional>
+#include <string>
+
+#include "beam_capture.h"
+#include "net_event.h"
+#include "net_sensor_config.h"
+#include "piezo_capture.h"
+
+namespace smartgear {
+
+struct NetEventAggregatorConfig {
+    std::uint64_t touch_association_before_us = config::kTouchAssociationBeforeUs;
+    std::uint64_t touch_association_after_us = config::kTouchAssociationAfterUs;
+    std::uint64_t touch_only_timeout_us = config::kTouchOnlyTimeoutUs;
+    std::uint64_t touch_completion_grace_us = config::kTouchCompletionGraceUs;
+};
+
+class NetEventAggregator {
+  public:
+    explicit NetEventAggregator(NetEventAggregatorConfig config = {});
+
+    void set_calibration(std::string calibration_id, bool valid);
+    // 启动自检/安装校准完成后注入每路光栅健康状态；valid 表示本次自检
+    // 数据完整，healthy_mask 再表达各通道是否通过。未配置时不替代旧业务行为。
+    void set_beam_health(std::uint16_t healthy_mask, bool valid);
+    void set_piezo_baseline(bool valid);
+    // The GPIO ISR queue dropped an edge; the next event must be fail-closed.
+    void mark_input_overflow();
+    void on_beam(const BeamObservation& observation);
+    void on_touch(const PiezoObservation& observation);
+    void poll(std::uint64_t timestamp_us);
+
+    bool pop_event(NetEvent& event);
+    std::size_t pending_output_count() const { return output_.size(); }
+
+  private:
+    bool touch_matches_beam(const PiezoObservation& touch,
+                            const BeamObservation& beam) const;
+    NetEvent build_event(const std::optional<BeamObservation>& beam,
+                         const std::optional<PiezoObservation>& touch,
+                         NetState state,
+                         std::string extra_quality_flag = {});
+    void emit_pending_beam(NetState state,
+                           std::string extra_quality_flag = {});
+    void emit_pending_touch(NetState state,
+                            std::string extra_quality_flag = {});
+    void clear_beam_pending();
+    void clear_touch_pending();
+    void clear_pending();
+    void clear_health_change_if_idle();
+    bool observe_input_timestamp(std::uint64_t timestamp_us,
+                                 bool beam_stream);
+
+    NetEventAggregatorConfig config_;
+    std::string calibration_id_ = "uncalibrated";
+    bool calibration_valid_ = false;
+    bool beam_health_configured_ = false;
+    bool beam_health_valid_ = false;
+    std::uint16_t beam_healthy_mask_ = 0;
+    bool piezo_baseline_configured_ = false;
+    bool piezo_baseline_valid_ = false;
+    bool input_overflow_ = false;
+    // Beam and PVDF observations complete asynchronously. Keep a boundary per
+    // sensor stream: a single global boundary would reject a valid PVDF hit
+    // that occurred before a beam observation but was delivered afterward.
+    std::uint64_t last_beam_input_timestamp_us_ = 0;
+    std::uint64_t last_touch_input_timestamp_us_ = 0;
+    bool has_beam_input_timestamp_ = false;
+    bool has_touch_input_timestamp_ = false;
+    // Health is polled asynchronously from the board layer. If it changes
+    // while either candidate is waiting for its association boundary, the
+    // candidate must not be reinterpreted with the new snapshot.
+    bool health_changed_while_pending_ = false;
+    std::optional<BeamObservation> pending_beam_;
+    std::optional<PiezoObservation> pending_touch_;
+    std::uint64_t pending_beam_deadline_us_ = 0;
+    std::uint64_t pending_touch_deadline_us_ = 0;
+    std::uint32_t event_sequence_ = 0;
+    std::deque<NetEvent> output_;
+};
+
+}  // namespace smartgear

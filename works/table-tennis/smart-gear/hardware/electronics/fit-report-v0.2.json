@@ -1,0 +1,1973 @@
+{
+  "schema_version": "0.2",
+  "generated_at": "2026-10-02T01:39:00.941286+00:00",
+  "status": "PASS",
+  "mechanical_fit": {
+    "cavity_mm": {
+      "x": [
+        777.5,
+        894.3
+      ],
+      "y": [
+        -20.0,
+        20.0
+      ],
+      "top_z": 0.5,
+      "length_x": 116.79999999999995
+    },
+    "main_board": {
+      "local_bounds": {
+        "min": [
+          0.0,
+          -32.0,
+          0.0
+        ],
+        "max": [
+          86.0,
+          -0.0,
+          5.84
+        ],
+        "size": [
+          86.0,
+          32.0,
+          5.84
+        ]
+      },
+      "world_bounds": {
+        "min": [
+          792.9,
+          -16.0,
+          -36.4912
+        ],
+        "max": [
+          878.9,
+          16.0,
+          -30.6512
+        ],
+        "size": [
+          86.0,
+          32.0,
+          5.84
+        ]
+      },
+      "translation": [
+        792.9,
+        16.0,
+        -36.4912
+      ],
+      "margins_to_cavity": {
+        "x_min": 15.4,
+        "x_max": 15.4,
+        "y_min": 4.0,
+        "y_max": 4.0,
+        "z_min": 38.5088,
+        "z_max": 31.1512
+      },
+      "floor_clearance": 18.9597,
+      "status": "PASS"
+    },
+    "emitter_board": {
+      "local_bounds": {
+        "min": [
+          0.0,
+          -32.0,
+          0.0
+        ],
+        "max": [
+          68.0,
+          -0.0,
+          5.84
+        ],
+        "size": [
+          68.0,
+          32.0,
+          5.84
+        ]
+      },
+      "world_bounds": {
+        "min": [
+          801.9,
+          -16.0,
+          -35.8912
+        ],
+        "max": [
+          869.9,
+          16.0,
+          -30.0512
+        ],
+        "size": [
+          68.0,
+          32.0,
+          5.84
+        ]
+      },
+      "translation": [
+        801.9,
+        16.0,
+        -35.8912
+      ],
+      "margins_to_cavity": {
+        "x_min": 24.4,
+        "x_max": 24.4,
+        "y_min": 4.0,
+        "y_max": 4.0,
+        "z_min": 39.1088,
+        "z_max": 30.5512
+      },
+      "floor_clearance": 21.0332,
+      "status": "PASS"
+    },
+    "ui_board": {
+      "local_bounds": {
+        "min": [
+          0.0,
+          -28.0,
+          -2.51
+        ],
+        "max": [
+          58.0,
+          -0.0,
+          5.84
+        ],
+        "size": [
+          58.0,
+          28.0,
+          8.35
+        ]
+      },
+      "world_bounds": {
+        "min": [
+          806.9,
+          16.69,
+          -40.0
+        ],
+        "max": [
+          864.9,
+          25.04,
+          -12.0
+        ],
+        "size": [
+          58.0,
+          8.35,
+          28.0
+        ]
+      },
+      "side_datum": {
+        "board_x_min": 806.9,
+        "board_plane_y": 19.2,
+        "board_z_min": -40.0,
+        "y_reflection": true
+      },
+      "margins_to_side_window": {
+        "x_min": 29.4,
+        "x_max": 29.4,
+        "inner_wall": 1.49,
+        "outer_faceplate_gap": 0.56,
+        "z_min": 3.0,
+        "z_max": 3.0
+      },
+      "status": "PASS"
+    },
+    "internal_battery": {
+      "quantity": 2,
+      "size_mm": [
+        65.0,
+        30.0,
+        7.0
+      ],
+      "world_bounds": {
+        "min": [
+          803.4,
+          -15.0,
+          -60.4912
+        ],
+        "max": [
+          868.4,
+          15.0,
+          -53.4912
+        ],
+        "size": [
+          65.0,
+          30.0,
+          7.0
+        ]
+      },
+      "margins_to_cavity": {
+        "x_min": 25.9,
+        "x_max": 25.9,
+        "y_min": 5.0,
+        "y_max": 5.0,
+        "z_min": 14.5088,
+        "z_max": 53.9912,
+        "floor": 2.0
+      },
+      "rail_side_clearance": 2.5,
+      "status": "PASS"
+    },
+    "mother_board_end_brackets": {
+      "board_outline_source": "esp32-control-v0.1.kicad_pcb Edge.Cuts",
+      "capture_profile": "two opposing printed x-end [ / ] C-brackets",
+      "clearance_xy_mm": 0.35,
+      "clearance_z_mm": 0.25,
+      "edge_overlap_mm": 0.3,
+      "web_root_overlap_mm": 4.0,
+      "wall_overlap_mm": 0.5,
+      "status": "PASS"
+    },
+    "m6_receiver_carrier": {
+      "local_bounds": {
+        "min": [
+          0.0,
+          -32.0,
+          0.0
+        ],
+        "max": [
+          80.0,
+          -0.0,
+          5.84
+        ],
+        "size": [
+          80.0,
+          32.0,
+          5.84
+        ]
+      },
+      "world_bounds": {
+        "min": [
+          774.16,
+          -4.9,
+          212.5
+        ],
+        "max": [
+          780.0,
+          27.1,
+          292.5
+        ],
+        "size": [
+          5.84,
+          32.0,
+          80.0
+        ]
+      },
+      "translation_and_rotation": {
+        "translate": [
+          780.0,
+          27.1,
+          212.5
+        ],
+        "rotation_deg_y": -90
+      },
+      "margins_to_m6_inner_shell": {
+        "x_min": 26.76,
+        "x_max": 3.6,
+        "y_min": 23.7,
+        "y_max": 1.5,
+        "z_min": 71.1,
+        "z_max": 68.6,
+        "optical_body_clearance": 2.91
+      },
+      "declared_conservative_body_clearance": 2.35,
+      "status": "PASS"
+    },
+    "all_pass": true
+  },
+  "charge_path": {
+    "status": "PASS",
+    "external_port": "J_USB_PANEL",
+    "path": [
+      "J_USB_PANEL VBUS",
+      "J_MOTHER 13",
+      "J7 13",
+      "F1 PTC",
+      "IP5305 VIN"
+    ],
+    "return": [
+      "J_USB_PANEL GND",
+      "J_MOTHER 14",
+      "J7 14",
+      "mother ground plane"
+    ],
+    "data_pads": "NC",
+    "second_external_port": "absent",
+    "shell_port_count": 1
+  },
+  "cross_board_harness": {
+    "status": "PASS",
+    "harnesses": [
+      {
+        "name": "mother J4 -> receiver J_HOST",
+        "pins": {
+          "1": {
+            "source": "3v3",
+            "target": "3v3"
+          },
+          "2": {
+            "source": "gnd",
+            "target": "gnd"
+          },
+          "3": {
+            "source": "carrier_sck",
+            "target": "carrier_sck"
+          },
+          "4": {
+            "source": "carrier_mosi",
+            "target": "carrier_mosi"
+          },
+          "5": {
+            "source": "carrier_miso",
+            "target": "carrier_miso"
+          },
+          "6": {
+            "source": "carrier_cs_n",
+            "target": "carrier_cs_n"
+          },
+          "7": {
+            "source": "carrier_irq_n",
+            "target": "carrier_irq_n"
+          },
+          "8": {
+            "source": "carrier_reset_n",
+            "target": "carrier_reset_n"
+          }
+        }
+      },
+      {
+        "name": "mother J8 -> receiver J_PWR",
+        "pins": {
+          "1": {
+            "source": "sensor_fused",
+            "target": "sensor_v"
+          },
+          "2": {
+            "source": "sensor_gnd",
+            "target": "sensor_gnd"
+          }
+        }
+      },
+      {
+        "name": "mother J7 -> UI J_MOTHER",
+        "pins": {
+          "1": {
+            "source": "3v3",
+            "target": "3v3"
+          },
+          "2": {
+            "source": "gnd",
+            "target": "gnd"
+          },
+          "3": {
+            "source": "ui_sda",
+            "target": "ui_sda"
+          },
+          "4": {
+            "source": "ui_scl",
+            "target": "ui_scl"
+          },
+          "5": {
+            "source": "ui_btn_start",
+            "target": "ui_btn_start"
+          },
+          "6": {
+            "source": "ui_btn_mode",
+            "target": "ui_btn_mode"
+          },
+          "7": {
+            "source": "ui_buzzer",
+            "target": "ui_buzzer"
+          },
+          "8": {
+            "source": "ui_spk_bclk",
+            "target": "ui_spk_bclk"
+          },
+          "9": {
+            "source": "ui_spk_ws",
+            "target": "ui_spk_ws"
+          },
+          "10": {
+            "source": "ui_spk_dout",
+            "target": "ui_spk_dout"
+          },
+          "11": {
+            "source": "ui_led_status",
+            "target": "ui_led_status"
+          },
+          "12": {
+            "source": "ui_led_battery",
+            "target": "ui_led_battery"
+          },
+          "13": {
+            "source": "usb_vbus",
+            "target": "usb_vbus"
+          },
+          "14": {
+            "source": "gnd",
+            "target": "gnd"
+          }
+        }
+      }
+    ],
+    "sensor_return_isolation_boundary": "PASS: sensor_gnd/0V_SENSOR is separate from MCU gnd",
+    "optical_channel_contract": "PASS: ten receiver 3-wire and ten emitter 2-wire channels are checked by board-local contracts"
+  },
+  "ui_interface": {
+    "status": "PASS",
+    "pcb_to_faceplate_centers": {
+      "SW_START": {
+        "pcb_center_mm": [
+          10.0,
+          8.0
+        ],
+        "faceplate_center_mm": [
+          10.0,
+          8.0
+        ],
+        "max_error_mm": 0.0,
+        "status": "PASS"
+      },
+      "SW_MODE": {
+        "pcb_center_mm": [
+          10.0,
+          20.0
+        ],
+        "faceplate_center_mm": [
+          10.0,
+          20.0
+        ],
+        "max_error_mm": 0.0,
+        "status": "PASS"
+      },
+      "D_STATUS": {
+        "pcb_center_mm": [
+          29.0,
+          3.0
+        ],
+        "faceplate_center_mm": [
+          29.0,
+          3.0
+        ],
+        "max_error_mm": 0.0,
+        "status": "PASS"
+      },
+      "D_BAT": {
+        "pcb_center_mm": [
+          32.0,
+          25.0
+        ],
+        "faceplate_center_mm": [
+          32.0,
+          25.0
+        ],
+        "max_error_mm": 0.0,
+        "status": "PASS"
+      },
+      "J_USB_PANEL": {
+        "pcb_center_mm": [
+          47.2,
+          24.75
+        ],
+        "faceplate_center_mm": [
+          47.2,
+          24.75
+        ],
+        "max_error_mm": 0.0,
+        "status": "PASS"
+      }
+    },
+    "mounting_holes": {
+      "actual_local_mm": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          3.5,
+          24.5
+        ],
+        [
+          54.5,
+          3.5
+        ],
+        [
+          54.5,
+          24.5
+        ]
+      ],
+      "expected_local_mm": [
+        [
+          3.5,
+          3.5
+        ],
+        [
+          3.5,
+          24.5
+        ],
+        [
+          54.5,
+          3.5
+        ],
+        [
+          54.5,
+          24.5
+        ]
+      ],
+      "status": "PASS"
+    },
+    "panel_mount": {
+      "integrated_panel_mount": true,
+      "capture_overlap_mm": 0.4,
+      "hole_count": 8,
+      "hole_centers_local_mm": [
+        [
+          10.0,
+          -4.6
+        ],
+        [
+          48.0,
+          -4.6
+        ],
+        [
+          10.0,
+          32.6
+        ],
+        [
+          48.0,
+          32.6
+        ],
+        [
+          -4.6,
+          8.0
+        ],
+        [
+          -4.6,
+          20.0
+        ],
+        [
+          62.6,
+          8.0
+        ],
+        [
+          62.6,
+          20.0
+        ]
+      ],
+      "outer_border_mm": 7.0,
+      "inner_border_mm": 1.6,
+      "window_clearance_mm": 0.2,
+      "thickness_mm": 2.5,
+      "hole_d_mm": 2.3,
+      "screw": "2 mm mushroom-head self-tapping screw, cavity-side entry",
+      "pilot_d_mm": 1.6,
+      "boss_d_mm": 0.0,
+      "boss_height_mm": 0.0,
+      "boss_height_rule": "not used; direct C-clamp wall pilot",
+      "pilot_depth_mm": 8.3,
+      "blind_floor_mm": 0.7,
+      "edge_land_mm": 1.25,
+      "direct_wall_pilot": true,
+      "mount_back_y_mm": 17.5,
+      "mount_front_y_mm": 20.0,
+      "capture_back_y_mm": 20.0,
+      "capture_front_y_mm": 26.0,
+      "panel_hidden_relief_cutouts": false,
+      "status": "PASS"
+    },
+    "faceplate": {
+      "board_size_mm": [
+        58.0,
+        28.0
+      ],
+      "screen_opening_mm": [
+        27.4,
+        16.4
+      ],
+      "button_pocket_d_mm": 4.9,
+      "button_plunger_d_mm": 1.6,
+      "led_bore_d_mm": 2.2,
+      "speaker_opening_d_mm": 12.0,
+      "usb_opening_mm": [
+        9.44,
+        3.66
+      ],
+      "usb_kicad_mod_profile_mm": {
+        "width": 8.94,
+        "height": 3.16,
+        "radius": 1.58,
+        "source": "Connector_USB.pretty/USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.kicad_mod F.Fab"
+      },
+      "usb_bowl_outer_mm": [
+        10.54,
+        4.76
+      ],
+      "usb_bowl_floor_local_z_mm": 5.27,
+      "usb_bowl_bottom_t_mm": 0.6,
+      "usb_bowl_support_floor_local_z_mm": 4.67,
+      "usb_bowl_depth_local_mm": 4.53,
+      "usb_shell_center_mm": [
+        47.2,
+        23.02
+      ],
+      "board_to_faceplate_gap_mm": 0.56,
+      "opening_clearances_mm": {
+        "screen_to_faceplate_edge_mm": 8.0,
+        "usb_to_screen_mm": 0.78,
+        "buttons_to_screen_mm": 2.2
+      },
+      "status": "PASS"
+    },
+    "insert_panel": {
+      "panel_border_mm": 2.4,
+      "panel_thickness_mm": 3.4,
+      "window_border_mm": 3.0,
+      "insertion_clearance_per_side_mm": 0.6,
+      "installation_direction": "cavity y- -> wall y+",
+      "inner_y_mm": 25.6,
+      "outer_y_mm": 29.0,
+      "outer_wall_flush_error_mm": 0.0,
+      "frame_mount_back_y_mm": 17.5,
+      "frame_mount_front_y_mm": 20.0,
+      "frame_capture_back_y_mm": 20.0,
+      "frame_capture_front_y_mm": 26.0,
+      "wall_pilot_end_y_mm": 28.3,
+      "mushroom_head_surface": "cavity y- panel-mount side",
+      "outer_face_screw_openings": false,
+      "status": "PASS"
+    },
+    "usb_c": {
+      "orientation_deg": 0.0,
+      "mating_axis": "PCB normal -> y+ panel",
+      "model": "USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step (component-filtered KiCad export, rotated +90° for y+)",
+      "status": "PASS",
+      "physical_vendor_step": "OPEN until the purchased receptacle dimensions/SKU are frozen"
+    }
+  },
+  "boards": [
+    {
+      "path": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.kicad_pcb",
+      "size_mm": [
+        86.05,
+        32.05
+      ],
+      "copper_layer_count": 2,
+      "footprints": 38,
+      "models": 26,
+      "nets": 46,
+      "tracks": 2,
+      "unconnected": 56,
+      "references": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "D1",
+        "D2",
+        "F1",
+        "F2",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7",
+        "J8",
+        "L1",
+        "L2",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "SW1",
+        "TP1",
+        "TP2",
+        "TP3",
+        "TP4",
+        "TP5",
+        "TP6",
+        "TP7",
+        "U1",
+        "U2",
+        "U3"
+      ],
+      "connector_pad_counts": {
+        "J2": 4,
+        "J3": 4,
+        "J5": 6,
+        "SW1": 2,
+        "J4": 10,
+        "J8": 4,
+        "J6": 4,
+        "J7": 16
+      },
+      "model_files": {
+        "stl": "hardware/electronics/3d/v0.2/esp32-control-v0.1.stl",
+        "step": "hardware/electronics/3d/v0.2/esp32-control-v0.1.step",
+        "stl_bytes": 5000308,
+        "step_bytes": 4465458,
+        "stl_bounds": {
+          "min": [
+            0.0,
+            -32.0,
+            0.0
+          ],
+          "max": [
+            86.0,
+            -0.0,
+            5.84
+          ],
+          "size": [
+            86.0,
+            32.0,
+            5.84
+          ]
+        }
+      },
+      "mx125_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J2": {
+            "value": "MX1.25_PROTECTED_1S_BAT",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J3": {
+            "value": "MX1.25_SENSOR_10-30V_IN",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J4": {
+            "value": "MX1.25_M6_CARRIER_HOST",
+            "signal_pad_count": 8,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM08B-GHS-TB_1x08-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J5": {
+            "value": "MX1.25_PVDF_ADC_AUX",
+            "signal_pad_count": 4,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM04B-GHS-TB_1x04-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J6": {
+            "value": "MX1.25_PVDF_CMP_AUX_DNP",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J7": {
+            "value": "MX1.25_UI_PANEL_LOCK_14P_CHARGE",
+            "signal_pad_count": 14,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM14B-GHS-TB_1x14-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J8": {
+            "value": "MX1.25_M6_SENSOR_RAIL_LINK",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          }
+        }
+      },
+      "schematic_connector_contract": {
+        "status": "PASS",
+        "schematic": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.kicad_sch",
+        "references": {
+          "J2": "BATTERY MX1.25 LOCK 2P",
+          "J3": "M6 SENSOR 10-30V MX1.25 2P",
+          "J4": "M6 CARRIER HOST MX1.25 LOCK 8P",
+          "J5": "PVDF ADC AUX MX1.25",
+          "J6": "PVDF COMPARATOR AUX MX1.25 2P DNP",
+          "J7": "UI PANEL MX1.25 LOCK 14P / CHARGE VBUS",
+          "J8": "M6 SENSOR RAIL MX1.25 2P"
+        }
+      },
+      "connector_net_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J2": {
+            "1": "bat_p",
+            "2": "gnd"
+          },
+          "J3": {
+            "1": "sensor_ext",
+            "2": "sensor_gnd"
+          },
+          "J4": {
+            "1": "3v3",
+            "2": "gnd",
+            "3": "carrier_sck",
+            "4": "carrier_mosi",
+            "5": "carrier_miso",
+            "6": "carrier_cs_n",
+            "7": "carrier_irq_n",
+            "8": "carrier_reset_n"
+          },
+          "J5": {
+            "1": "pvdf_adc_l",
+            "2": "gnd",
+            "3": "pvdf_adc_r",
+            "4": "gnd"
+          },
+          "J6": {
+            "1": "pvdf_cmp_aux_l",
+            "2": "pvdf_cmp_aux_r"
+          },
+          "J7": {
+            "1": "3v3",
+            "2": "gnd",
+            "3": "ui_sda",
+            "4": "ui_scl",
+            "5": "ui_btn_start",
+            "6": "ui_btn_mode",
+            "7": "ui_buzzer",
+            "8": "ui_spk_bclk",
+            "9": "ui_spk_ws",
+            "10": "ui_spk_dout",
+            "11": "ui_led_status",
+            "12": "ui_led_battery",
+            "13": "usb_vbus",
+            "14": "gnd"
+          },
+          "J8": {
+            "1": "sensor_fused",
+            "2": "sensor_gnd"
+          }
+        }
+      },
+      "esp32_orientation": {
+        "status": "PASS",
+        "antenna_direction": "board -X",
+        "footprint_rotation_deg": 90.0,
+        "model_rotation_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "checked_local_pads": {
+          "1": [
+            -8.75,
+            -5.26
+          ],
+          "14": [
+            -8.75,
+            11.25
+          ],
+          "15": [
+            -6.985,
+            12.5
+          ],
+          "26": [
+            6.985,
+            12.5
+          ],
+          "27": [
+            8.75,
+            11.25
+          ],
+          "40": [
+            8.75,
+            -5.26
+          ]
+        },
+        "keepout": "native KiCad ESP32-S3-WROOM-1 antenna zone at board -X"
+      }
+    },
+    {
+      "path": "hardware/electronics/daughter-boards-v0.2/m6-receiver-carrier-v0.2.kicad_pcb",
+      "size_mm": [
+        80.05,
+        32.05
+      ],
+      "copper_layer_count": 2,
+      "footprints": 27,
+      "models": 23,
+      "nets": 41,
+      "tracks": 0,
+      "unconnected": 48,
+      "references": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "J_HOST",
+        "J_PWR",
+        "J_RX00",
+        "J_RX01",
+        "J_RX02",
+        "J_RX03",
+        "J_RX04",
+        "J_RX05",
+        "J_RX06",
+        "J_RX07",
+        "J_RX08",
+        "J_RX09",
+        "U_MCU",
+        "U_OP00",
+        "U_OP01",
+        "U_OP02",
+        "U_OP03",
+        "U_OP04",
+        "U_OP05",
+        "U_OP06",
+        "U_OP07",
+        "U_OP08",
+        "U_OP09"
+      ],
+      "connector_pad_counts": {
+        "J_RX02": 5,
+        "J_RX00": 5,
+        "J_RX05": 5,
+        "J_RX09": 5,
+        "J_HOST": 10,
+        "J_RX01": 5,
+        "J_RX07": 5,
+        "J_PWR": 4,
+        "J_RX03": 5,
+        "J_RX08": 5,
+        "J_RX04": 5,
+        "J_RX06": 5
+      },
+      "model_files": {
+        "stl": "hardware/electronics/3d/v0.2/m6-receiver-carrier-v0.2.stl",
+        "step": "hardware/electronics/3d/v0.2/m6-receiver-carrier-v0.2.step",
+        "stl_bytes": 2463224,
+        "step_bytes": 1378310,
+        "stl_bounds": {
+          "min": [
+            0.0,
+            -32.0,
+            0.0
+          ],
+          "max": [
+            80.0,
+            -0.0,
+            5.84
+          ],
+          "size": [
+            80.0,
+            32.0,
+            5.84
+          ]
+        }
+      },
+      "mx125_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_HOST": {
+            "value": "MX1.25_MOTHER_HOST_LOCK_8P",
+            "signal_pad_count": 8,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM08B-GHS-TB_1x08-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_PWR": {
+            "value": "MX1.25_SENSOR_RAIL_LOCK_2P",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX00": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX01": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX02": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX03": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX04": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX05": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX06": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX07": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX08": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_RX09": {
+            "value": "MX1.25_LOCK_3P_RX",
+            "signal_pad_count": 3,
+            "pitch_mm": [
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal.step"
+            ]
+          }
+        }
+      },
+      "schematic_connector_contract": {
+        "status": "PASS",
+        "schematic": "hardware/electronics/daughter-boards-v0.2/m6-receiver-carrier-v0.2.kicad_sch",
+        "references": {
+          "J_HOST": "MOTHER HOST MX1.25 LOCK 8P",
+          "J_PWR": "SENSOR RAIL MX1.25 2P",
+          "J_RX00": "RX00 M6 V/G/S MX1.25",
+          "J_RX01": "RX01 M6 V/G/S MX1.25",
+          "J_RX02": "RX02 M6 V/G/S MX1.25",
+          "J_RX03": "RX03 M6 V/G/S MX1.25",
+          "J_RX04": "RX04 M6 V/G/S MX1.25",
+          "J_RX05": "RX05 M6 V/G/S MX1.25",
+          "J_RX06": "RX06 M6 V/G/S MX1.25",
+          "J_RX07": "RX07 M6 V/G/S MX1.25",
+          "J_RX08": "RX08 M6 V/G/S MX1.25",
+          "J_RX09": "RX09 M6 V/G/S MX1.25"
+        }
+      },
+      "connector_net_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_HOST": {
+            "1": "3v3",
+            "2": "gnd",
+            "3": "carrier_sck",
+            "4": "carrier_mosi",
+            "5": "carrier_miso",
+            "6": "carrier_cs_n",
+            "7": "carrier_irq_n",
+            "8": "carrier_reset_n"
+          },
+          "J_PWR": {
+            "1": "sensor_v",
+            "2": "sensor_gnd"
+          },
+          "J_RX00": {
+            "1": "rx00_v",
+            "2": "rx00_gnd",
+            "3": "rx00_sig"
+          },
+          "J_RX01": {
+            "1": "rx01_v",
+            "2": "rx01_gnd",
+            "3": "rx01_sig"
+          },
+          "J_RX02": {
+            "1": "rx02_v",
+            "2": "rx02_gnd",
+            "3": "rx02_sig"
+          },
+          "J_RX03": {
+            "1": "rx03_v",
+            "2": "rx03_gnd",
+            "3": "rx03_sig"
+          },
+          "J_RX04": {
+            "1": "rx04_v",
+            "2": "rx04_gnd",
+            "3": "rx04_sig"
+          },
+          "J_RX05": {
+            "1": "rx05_v",
+            "2": "rx05_gnd",
+            "3": "rx05_sig"
+          },
+          "J_RX06": {
+            "1": "rx06_v",
+            "2": "rx06_gnd",
+            "3": "rx06_sig"
+          },
+          "J_RX07": {
+            "1": "rx07_v",
+            "2": "rx07_gnd",
+            "3": "rx07_sig"
+          },
+          "J_RX08": {
+            "1": "rx08_v",
+            "2": "rx08_gnd",
+            "3": "rx08_sig"
+          },
+          "J_RX09": {
+            "1": "rx09_v",
+            "2": "rx09_gnd",
+            "3": "rx09_sig"
+          }
+        }
+      }
+    },
+    {
+      "path": "hardware/electronics/daughter-boards-v0.2/emitter-power-v0.2.kicad_pcb",
+      "size_mm": [
+        68.05,
+        32.05
+      ],
+      "copper_layer_count": 2,
+      "footprints": 11,
+      "models": 7,
+      "nets": 30,
+      "tracks": 0,
+      "unconnected": 6,
+      "references": [
+        "D_TVS",
+        "F_TX",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "J_BAT",
+        "J_EXT",
+        "J_TX_A",
+        "J_TX_B",
+        "U_BOOST"
+      ],
+      "connector_pad_counts": {
+        "J_TX_B": 12,
+        "J_EXT": 4,
+        "J_TX_A": 12,
+        "J_BAT": 4
+      },
+      "model_files": {
+        "stl": "hardware/electronics/3d/v0.2/emitter-power-v0.2.stl",
+        "step": "hardware/electronics/3d/v0.2/emitter-power-v0.2.step",
+        "stl_bytes": 1542304,
+        "step_bytes": 1251867,
+        "stl_bounds": {
+          "min": [
+            0.0,
+            -32.0,
+            0.0
+          ],
+          "max": [
+            68.0,
+            -0.0,
+            5.84
+          ],
+          "size": [
+            68.0,
+            32.0,
+            5.84
+          ]
+        }
+      },
+      "mx125_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_BAT": {
+            "value": "MX1.25_PROTECTED_1S_LOCK_2P",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_EXT": {
+            "value": "MX1.25_EXT_TX_10-30V_2P_CURRENT_GATE",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_TX_A": {
+            "value": "MX1.25_TX_A_10P",
+            "signal_pad_count": 10,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM10B-GHS-TB_1x10-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_TX_B": {
+            "value": "MX1.25_TX_B_10P",
+            "signal_pad_count": 10,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM10B-GHS-TB_1x10-1MP_P1.25mm_Horizontal.step"
+            ]
+          }
+        }
+      },
+      "schematic_connector_contract": {
+        "status": "PASS",
+        "schematic": "hardware/electronics/daughter-boards-v0.2/emitter-power-v0.2.kicad_sch",
+        "references": {
+          "J_BAT": "BATTERY MX1.25 LOCK 2P",
+          "J_EXT": "EXT TX 10-30V MX1.25 2P / CURRENT GATE",
+          "J_TX_A": "TX00..TX04 2-WIRE MX1.25 10P",
+          "J_TX_B": "TX05..TX09 2-WIRE MX1.25 10P"
+        }
+      },
+      "connector_net_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_BAT": {
+            "1": "bat_p",
+            "2": "bat_gnd"
+          },
+          "J_EXT": {
+            "1": "ext_tx_in",
+            "2": "ext_tx_gnd"
+          },
+          "J_TX_A": {
+            "1": "tx00_v",
+            "2": "tx00_gnd",
+            "3": "tx01_v",
+            "4": "tx01_gnd",
+            "5": "tx02_v",
+            "6": "tx02_gnd",
+            "7": "tx03_v",
+            "8": "tx03_gnd",
+            "9": "tx04_v",
+            "10": "tx04_gnd"
+          },
+          "J_TX_B": {
+            "1": "tx05_v",
+            "2": "tx05_gnd",
+            "3": "tx06_v",
+            "4": "tx06_gnd",
+            "5": "tx07_v",
+            "6": "tx07_gnd",
+            "7": "tx08_v",
+            "8": "tx08_gnd",
+            "9": "tx09_v",
+            "10": "tx09_gnd"
+          }
+        }
+      }
+    },
+    {
+      "path": "hardware/electronics/daughter-boards-v0.2/ui-panel-v0.2.kicad_pcb",
+      "size_mm": [
+        58.05,
+        28.05
+      ],
+      "copper_layer_count": 2,
+      "footprints": 15,
+      "models": 11,
+      "nets": 16,
+      "tracks": 0,
+      "unconnected": 32,
+      "references": [
+        "D_BAT",
+        "D_STATUS",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "J_BUZ",
+        "J_MOTHER",
+        "J_OLED",
+        "J_SPK",
+        "J_USB_PANEL",
+        "R_CC1",
+        "R_CC2",
+        "SW_MODE",
+        "SW_START"
+      ],
+      "connector_pad_counts": {
+        "J_OLED": 6,
+        "J_BUZ": 4,
+        "SW_START": 2,
+        "SW_MODE": 2,
+        "J_SPK": 7,
+        "J_MOTHER": 16,
+        "J_USB_PANEL": 22
+      },
+      "model_files": {
+        "stl": "hardware/electronics/3d/v0.2/ui-panel-v0.2.stl",
+        "step": "hardware/electronics/3d/v0.2/ui-panel-v0.2.step",
+        "stl_bytes": 3106856,
+        "step_bytes": 3303077,
+        "stl_bounds": {
+          "min": [
+            0.0,
+            -28.0,
+            -2.51
+          ],
+          "max": [
+            58.0,
+            -0.0,
+            5.84
+          ],
+          "size": [
+            58.0,
+            28.0,
+            8.35
+          ]
+        }
+      },
+      "mx125_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_BUZ": {
+            "value": "MX1.25_BUZZER_LOCK_2P",
+            "signal_pad_count": 2,
+            "pitch_mm": [
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM02B-GHS-TB_1x02-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_MOTHER": {
+            "value": "MX1.25_MOTHER_UI_LOCK_14P_CHARGE",
+            "signal_pad_count": 14,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM14B-GHS-TB_1x14-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_OLED": {
+            "value": "MX1.25_I2C_OLED_FPC_4P",
+            "signal_pad_count": 4,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM04B-GHS-TB_1x04-1MP_P1.25mm_Horizontal.step"
+            ]
+          },
+          "J_SPK": {
+            "value": "MX1.25_I2S_SPEAKER_LOCK_5P",
+            "signal_pad_count": 5,
+            "pitch_mm": [
+              1.25,
+              1.25,
+              1.25,
+              1.25
+            ],
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_GH_SM05B-GHS-TB_1x05-1MP_P1.25mm_Horizontal.step"
+            ]
+          }
+        }
+      },
+      "schematic_connector_contract": {
+        "status": "PASS",
+        "schematic": "hardware/electronics/daughter-boards-v0.2/ui-panel-v0.2.kicad_sch",
+        "references": {
+          "J_BUZ": "BUZZER MX1.25 LOCK 2P",
+          "J_MOTHER": "MOTHER UI MX1.25 LOCK 14P / CHARGE VBUS",
+          "J_OLED": "OLED I2C FPC CABLE MX1.25 4P",
+          "J_SPK": "I2S SPEAKER MX1.25 LOCK 5P"
+        }
+      },
+      "connector_net_contract": {
+        "status": "PASS",
+        "connectors": {
+          "J_BUZ": {
+            "1": "ui_buzzer",
+            "2": "gnd"
+          },
+          "J_MOTHER": {
+            "1": "3v3",
+            "2": "gnd",
+            "3": "ui_sda",
+            "4": "ui_scl",
+            "5": "ui_btn_start",
+            "6": "ui_btn_mode",
+            "7": "ui_buzzer",
+            "8": "ui_spk_bclk",
+            "9": "ui_spk_ws",
+            "10": "ui_spk_dout",
+            "11": "ui_led_status",
+            "12": "ui_led_battery",
+            "13": "usb_vbus",
+            "14": "gnd"
+          },
+          "J_OLED": {
+            "1": "3v3",
+            "2": "gnd",
+            "3": "ui_sda",
+            "4": "ui_scl"
+          },
+          "J_SPK": {
+            "1": "ui_spk_bclk",
+            "2": "ui_spk_ws",
+            "3": "ui_spk_dout",
+            "4": "3v3",
+            "5": "gnd"
+          }
+        }
+      },
+      "ui_direct_part_contract": {
+        "status": "PASS",
+        "parts": {
+          "SW_START": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_TS-1088-xR020.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              10.0,
+              8.0
+            ],
+            "pad_nets": {
+              "1": [
+                "ui_btn_start"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          },
+          "SW_MODE": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_TS-1088-xR020.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              10.0,
+              20.0
+            ],
+            "pad_nets": {
+              "1": [
+                "ui_btn_mode"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          },
+          "D_STATUS": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_0603_1608Metric.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              29.0,
+              3.0
+            ],
+            "pad_nets": {
+              "1": [
+                "ui_led_status"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          },
+          "D_BAT": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_0603_1608Metric.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              32.0,
+              25.0
+            ],
+            "pad_nets": {
+              "1": [
+                "ui_led_battery"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          },
+          "J_USB_PANEL": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              47.2,
+              24.75
+            ],
+            "pad_nets": {
+              "A1": [
+                "gnd"
+              ],
+              "A12": [
+                "gnd"
+              ],
+              "A4": [
+                "usb_vbus"
+              ],
+              "A5": [
+                "cc1"
+              ],
+              "A9": [
+                "usb_vbus"
+              ],
+              "B1": [
+                "gnd"
+              ],
+              "B12": [
+                "gnd"
+              ],
+              "B4": [
+                "usb_vbus"
+              ],
+              "B5": [
+                "cc2"
+              ],
+              "B9": [
+                "usb_vbus"
+              ],
+              "SH": [
+                "gnd"
+              ]
+            }
+          },
+          "R_CC1": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              37.0,
+              3.0
+            ],
+            "pad_nets": {
+              "1": [
+                "cc1"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          },
+          "R_CC2": {
+            "models": [
+              "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+            ],
+            "model_source": "kicad_board_export",
+            "center_mm": [
+              41.0,
+              3.0
+            ],
+            "pad_nets": {
+              "1": [
+                "cc2"
+              ],
+              "2": [
+                "gnd"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "native_kicad": {
+    "native_schematic": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.kicad_sch",
+    "native_schematics": [
+      {
+        "path": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.kicad_sch",
+        "pdf_export": "PASS",
+        "erc_violations": 201,
+        "erc_errors": 112,
+        "erc_warnings": 89
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/m6-receiver-carrier-v0.2.kicad_sch",
+        "pdf_export": "PASS",
+        "erc_violations": 156,
+        "erc_errors": 96,
+        "erc_warnings": 60
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/emitter-power-v0.2.kicad_sch",
+        "pdf_export": "PASS",
+        "erc_violations": 66,
+        "erc_errors": 43,
+        "erc_warnings": 23
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/ui-panel-v0.2.kicad_sch",
+        "pdf_export": "PASS",
+        "erc_violations": 96,
+        "erc_errors": 66,
+        "erc_warnings": 30
+      }
+    ],
+    "native_pcb_count": 4,
+    "native_project_count": 4,
+    "legacy_schematic_kept": true,
+    "legacy_connector_contract": {
+      "status": "PASS",
+      "schematic": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.sch",
+      "references": [
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "J6",
+        "J7",
+        "J8"
+      ]
+    },
+    "atopile_ato_files": [
+      "hardware/electronics/atopile/pingpang_smartgear.ato"
+    ],
+    "atopile_present": true,
+    "atopile_entry": "hardware/electronics/atopile/pingpang_smartgear.ato",
+    "atopile_validation": "PASS",
+    "atopile_build": "PASS",
+    "atopile_output": "[09:37:56] WARNING  Couldn't install plugin: Exception(\"KiCAD config path not   \n                    found. Couldn't install plugin!\")                           \n           WARNING  Couldn't enable plugin api: FileNotFoundError('Could not    \n                    find config path for kicad_common.json')                    \nhardware/electronics/atopile/pingpang_smartgear.ato: ok",
+    "kicad_pdf_export": "PASS",
+    "erc_violations": 201,
+    "erc_errors": 112,
+    "erc_warnings": 89,
+    "erc_release": "OPEN: schematic still has unconnected/placeholder nets"
+  },
+  "pcb_drc": {
+    "method": "KiCad pcb drc --severity-all --refill-zones",
+    "boards": [
+      {
+        "path": "hardware/electronics/esp32-control-v0.1/esp32-control-v0.1.kicad_pcb",
+        "violations": 0,
+        "severity_counts": {},
+        "errors": 0,
+        "warnings": 0,
+        "warning_types": [],
+        "unexpected_warning_types": [],
+        "unconnected": 56,
+        "status": "PASS"
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/m6-receiver-carrier-v0.2.kicad_pcb",
+        "violations": 1,
+        "severity_counts": {
+          "warning": 1
+        },
+        "errors": 0,
+        "warnings": 1,
+        "warning_types": [
+          "isolated_copper"
+        ],
+        "unexpected_warning_types": [],
+        "unconnected": 38,
+        "status": "PASS_WITH_EXPECTED_WARNINGS"
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/emitter-power-v0.2.kicad_pcb",
+        "violations": 2,
+        "severity_counts": {
+          "warning": 2
+        },
+        "errors": 0,
+        "warnings": 2,
+        "warning_types": [
+          "isolated_copper"
+        ],
+        "unexpected_warning_types": [],
+        "unconnected": 6,
+        "status": "PASS_WITH_EXPECTED_WARNINGS"
+      },
+      {
+        "path": "hardware/electronics/daughter-boards-v0.2/ui-panel-v0.2.kicad_pcb",
+        "violations": 0,
+        "severity_counts": {},
+        "errors": 0,
+        "warnings": 0,
+        "warning_types": [],
+        "unexpected_warning_types": [],
+        "unconnected": 18,
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS",
+    "release": "OPEN until all unconnected items are routed and expected zone warnings are reviewed"
+  },
+  "print_package": {
+    "manifest": "hardware/cad/exports/desktop-clamp-one-side-x1c-v0.7-split-c-scheme/manifest.json",
+    "printable_stl_count": 39,
+    "closed_count": 39,
+    "positive_volume_count": 39,
+    "status": "PASS"
+  },
+  "interference": {
+    "method": "OpenSCAD boolean intersection; empty STL is pass",
+    "aabb_is_conservative": true,
+    "probes": [
+      {
+        "part": "clamp_electronics_interference_check",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "intersection_mesh": "empty",
+        "status": "PASS"
+      },
+      {
+        "part": "clamp_electronics_interference_check",
+        "definitions": [
+          "SIDE=-1"
+        ],
+        "intersection_mesh": "empty",
+        "status": "PASS"
+      },
+      {
+        "part": "m6_receiver_carrier_interference_check",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "intersection_mesh": "empty",
+        "status": "PASS"
+      },
+      {
+        "part": "m6_receiver_carrier_interference_check",
+        "definitions": [
+          "SIDE=-1"
+        ],
+        "intersection_mesh": "empty",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  },
+  "openscad_views": {
+    "views": [
+      {
+        "part": "clamp_electronics_full_cutaway",
+        "definitions": [],
+        "bytes": 8181189,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_shell_cutaway",
+        "definitions": [],
+        "bytes": 79561,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_exploded",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "bytes": 8073232,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_emitter_exploded",
+        "definitions": [
+          "SIDE=-1"
+        ],
+        "bytes": 1487438,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_system_exploded",
+        "definitions": [],
+        "bytes": 34921471,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_m6_integration_preview",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "bytes": 23468831,
+        "manifold_reported": true
+      },
+      {
+        "part": "clamp_electronics_m6_integration_preview",
+        "definitions": [
+          "SIDE=-1"
+        ],
+        "bytes": 23765222,
+        "manifold_reported": true
+      },
+      {
+        "part": "m6_detector_mount",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "bytes": 14074465,
+        "manifold_reported": true
+      },
+      {
+        "part": "m6_detector_exploded",
+        "definitions": [
+          "SIDE=1"
+        ],
+        "bytes": 12600821,
+        "manifold_reported": true
+      }
+    ],
+    "status": "PASS"
+  },
+  "release_boundary": {
+    "mechanical_package": "PASS",
+    "electrical_fabrication": "OPEN",
+    "reason": "PCB connectivity still contains unconnected items and first-article placeholders",
+    "lid_interface": "flush/no-visible-gap fit target, not IP waterproof certification"
+  }
+}

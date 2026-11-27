@@ -1,0 +1,47 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+build/
+
+# Generated data and local calibration artifacts
+data/raw/
+data/recordings/
+data/exports/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.bag
+
+# CAD exports and local slicer output
+hardware/cad/exports/
+hardware/cad/rendered/
+hardware/cad/preview/assembly/models/
+hardware/prints/
+/result.json
+
+# Electronics generated models, reports, and KiCad local session state
+hardware/electronics/3d/v0.2/
+hardware/electronics/output/
+*.kicad_prl
+*.kicad_pro.lck
+*.kicad_pcb.lck
+
+# ESP-IDF generated project configuration
+firmware/sdkconfig
+firmware/sdkconfig.old
+
+# Alternate local CMake sanitizer build
+firmware/host-tests/build-sanitize/

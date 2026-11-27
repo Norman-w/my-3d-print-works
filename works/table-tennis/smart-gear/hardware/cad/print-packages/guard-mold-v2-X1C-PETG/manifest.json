@@ -1,0 +1,518 @@
+{
+  "mold_revision": "v2",
+  "quantity": 7,
+  "plate_count": 1,
+  "printer": "X1 Carbon 0.4mm",
+  "filament": "Generic PETG black",
+  "wall_loops": 4,
+  "infill": "20% gyroid",
+  "layer_height_mm": 0.2,
+  "supports": "automatic tree, model bases allowed, 0.24mm top gap",
+  "brim_width_mm": 3,
+  "objects": [
+    {
+      "id": "left",
+      "name": "01-left-shell-cavity-up",
+      "source_sha256": "c0d064d6adfaf258082f687edf013d48b029719bcc8c0aeed7cb24740ac20bea",
+      "rotation_xyz_deg": [
+        0,
+        -90,
+        0
+      ],
+      "normalized_translation_mm": [
+        30.200000762939457,
+        51.0,
+        42.0
+      ],
+      "size_mm": [
+        63.70000076293945,
+        102.0,
+        42.0
+      ],
+      "bed_min_xy_mm": [
+        12,
+        40
+      ],
+      "posed_stl": "01-left-shell-cavity-up.stl",
+      "scale": 1,
+      "object_id": "2",
+      "support_blockers": [
+        {
+          "label": "rear blind locator socket",
+          "source_min_mm": [
+            -32.7,
+            -52.0,
+            4.3
+          ],
+          "source_max_mm": [
+            -25.3,
+            -44.4,
+            11.7
+          ],
+          "normalized_min_mm": [
+            18.500000762939457,
+            -1.0,
+            9.299999999999997
+          ],
+          "normalized_max_mm": [
+            25.900000762939456,
+            6.600000000000001,
+            16.7
+          ],
+          "part_id": 1001
+        },
+        {
+          "label": "front blind locator socket",
+          "source_min_mm": [
+            -32.7,
+            44.4,
+            -21.7
+          ],
+          "source_max_mm": [
+            -25.3,
+            52.0,
+            -14.3
+          ],
+          "normalized_min_mm": [
+            44.50000076293946,
+            95.4,
+            9.299999999999997
+          ],
+          "normalized_max_mm": [
+            51.900000762939456,
+            103.0,
+            16.7
+          ],
+          "part_id": 1002
+        },
+        {
+          "label": "lid blind locator socket",
+          "source_min_mm": [
+            -37.7,
+            -43.7,
+            23.6
+          ],
+          "source_max_mm": [
+            -30.3,
+            -36.3,
+            31.2
+          ],
+          "normalized_min_mm": [
+            -0.9999992370605462,
+            7.299999999999997,
+            4.299999999999997
+          ],
+          "normalized_max_mm": [
+            6.600000762939452,
+            14.700000000000003,
+            11.700000000000003
+          ],
+          "part_id": 1003
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "name": "02-right-shell-cavity-up",
+      "source_sha256": "e317d1f353429035d506e2940acb5219b7237c90e50cde87a3845e806b4b35fa",
+      "rotation_xyz_deg": [
+        0,
+        90,
+        0
+      ],
+      "normalized_translation_mm": [
+        33.5,
+        51.0,
+        42.0
+      ],
+      "size_mm": [
+        63.70000076293945,
+        102.0,
+        42.0
+      ],
+      "bed_min_xy_mm": [
+        87.7,
+        40
+      ],
+      "posed_stl": "02-right-shell-cavity-up.stl",
+      "scale": 1,
+      "object_id": "4",
+      "support_blockers": [
+        {
+          "label": "rear blind locator socket",
+          "source_min_mm": [
+            25.3,
+            -52.0,
+            15.3
+          ],
+          "source_max_mm": [
+            32.7,
+            -44.4,
+            22.7
+          ],
+          "normalized_min_mm": [
+            48.800000000000004,
+            -1.0,
+            9.299999999999997
+          ],
+          "normalized_max_mm": [
+            56.2,
+            6.600000000000001,
+            16.7
+          ],
+          "part_id": 1004
+        },
+        {
+          "label": "front blind locator socket",
+          "source_min_mm": [
+            25.3,
+            44.4,
+            14.3
+          ],
+          "source_max_mm": [
+            32.7,
+            52.0,
+            21.7
+          ],
+          "normalized_min_mm": [
+            47.800000000000004,
+            95.4,
+            9.299999999999997
+          ],
+          "normalized_max_mm": [
+            55.2,
+            103.0,
+            16.7
+          ],
+          "part_id": 1005
+        },
+        {
+          "label": "lid blind locator socket",
+          "source_min_mm": [
+            30.3,
+            32.3,
+            23.6
+          ],
+          "source_max_mm": [
+            37.7,
+            39.7,
+            31.2
+          ],
+          "normalized_min_mm": [
+            57.10000000000001,
+            83.3,
+            4.299999999999997
+          ],
+          "normalized_max_mm": [
+            64.7,
+            90.7,
+            11.700000000000003
+          ],
+          "part_id": 1006
+        },
+        {
+          "label": "pull-pin alignment bore",
+          "source_min_mm": [
+            30.3,
+            -3.7,
+            17.4
+          ],
+          "source_max_mm": [
+            37.7,
+            3.7,
+            31.2
+          ],
+          "normalized_min_mm": [
+            50.900000000000006,
+            47.3,
+            4.299999999999997
+          ],
+          "normalized_max_mm": [
+            64.7,
+            54.7,
+            11.700000000000003
+          ],
+          "part_id": 1007
+        }
+      ]
+    },
+    {
+      "id": "lid",
+      "name": "03-lid-pins-up",
+      "source_sha256": "b3e48bb6b5ec692b8eb0212e89a806840cd1d1d27a0ca51b20991e4f4dfd03b5",
+      "rotation_xyz_deg": [
+        180,
+        0,
+        0
+      ],
+      "normalized_translation_mm": [
+        42.0,
+        51.00000000000001,
+        43.00000000000001
+      ],
+      "size_mm": [
+        84.0,
+        102.0,
+        19.399999618530288
+      ],
+      "bed_min_xy_mm": [
+        163.4,
+        40
+      ],
+      "posed_stl": "03-lid-pins-up.stl",
+      "scale": 1,
+      "object_id": "6",
+      "support_blockers": [
+        {
+          "label": "lettering and upright core pins",
+          "source_min_mm": [
+            -43,
+            -52,
+            22.5
+          ],
+          "source_max_mm": [
+            43,
+            52,
+            31.5
+          ],
+          "normalized_min_mm": [
+            -1.0,
+            -1.0,
+            11.5
+          ],
+          "normalized_max_mm": [
+            85.0,
+            103.0,
+            20.500000000000014
+          ],
+          "part_id": 1008
+        }
+      ]
+    },
+    {
+      "id": "lower",
+      "name": "04-green-core-shoulder-down",
+      "source_sha256": "f086ae6ff2aaaaa758d547af43c1271ed78821877a07ea2d2e512581aeb2d291",
+      "rotation_xyz_deg": [
+        -90,
+        0,
+        0
+      ],
+      "normalized_translation_mm": [
+        37.0,
+        33.5,
+        55.5
+      ],
+      "size_mm": [
+        74.0,
+        63.70000076293945,
+        106.5
+      ],
+      "bed_min_xy_mm": [
+        12,
+        160
+      ],
+      "posed_stl": "04-green-core-shoulder-down.stl",
+      "scale": 1,
+      "object_id": "8",
+      "support_blockers": [
+        {
+          "label": "upright integral guide pin",
+          "source_min_mm": [
+            -32.7,
+            44.4,
+            -21.7
+          ],
+          "source_max_mm": [
+            -25.3,
+            51.3,
+            -14.3
+          ],
+          "normalized_min_mm": [
+            4.299999999999997,
+            11.800000000000004,
+            4.200000000000003
+          ],
+          "normalized_max_mm": [
+            11.7,
+            19.200000000000003,
+            11.100000000000001
+          ],
+          "part_id": 1009
+        },
+        {
+          "label": "upright integral guide pin",
+          "source_min_mm": [
+            25.3,
+            44.4,
+            14.3
+          ],
+          "source_max_mm": [
+            32.7,
+            51.3,
+            21.7
+          ],
+          "normalized_min_mm": [
+            62.3,
+            47.800000000000004,
+            4.200000000000003
+          ],
+          "normalized_max_mm": [
+            69.7,
+            55.2,
+            11.100000000000001
+          ],
+          "part_id": 1010
+        }
+      ]
+    },
+    {
+      "id": "back",
+      "name": "05-pink-core-shoulder-down",
+      "source_sha256": "1cd213698071f1d0b55ba3e21246d60251bf4cdd88a1abd95de44f475fa15a32",
+      "rotation_xyz_deg": [
+        90,
+        0,
+        0
+      ],
+      "normalized_translation_mm": [
+        37.0,
+        30.200000762939457,
+        55.5
+      ],
+      "size_mm": [
+        74.0,
+        34.20000076293945,
+        34.0
+      ],
+      "bed_min_xy_mm": [
+        103,
+        160
+      ],
+      "posed_stl": "05-pink-core-shoulder-down.stl",
+      "scale": 1,
+      "object_id": "10",
+      "support_blockers": [
+        {
+          "label": "upright integral guide pin",
+          "source_min_mm": [
+            -32.7,
+            -51.3,
+            4.3
+          ],
+          "source_max_mm": [
+            -25.3,
+            -44.4,
+            11.7
+          ],
+          "normalized_min_mm": [
+            4.299999999999997,
+            18.500000762939454,
+            4.200000000000003
+          ],
+          "normalized_max_mm": [
+            11.7,
+            25.900000762939456,
+            11.100000000000001
+          ],
+          "part_id": 1011
+        },
+        {
+          "label": "upright integral guide pin",
+          "source_min_mm": [
+            25.3,
+            -51.3,
+            15.3
+          ],
+          "source_max_mm": [
+            32.7,
+            -44.4,
+            22.7
+          ],
+          "normalized_min_mm": [
+            62.3,
+            7.500000762939454,
+            4.200000000000003
+          ],
+          "normalized_max_mm": [
+            69.7,
+            14.900000762939452,
+            11.100000000000001
+          ],
+          "part_id": 1012
+        }
+      ]
+    },
+    {
+      "id": "upper",
+      "name": "06-yellow-core-flat",
+      "source_sha256": "d218cef69e97ef6e70c514aecd4ea61b6c5633f49a1d9658171c358ceb079cf1",
+      "rotation_xyz_deg": [
+        0,
+        0,
+        0
+      ],
+      "normalized_translation_mm": [
+        42.0,
+        10.5,
+        -0.0
+      ],
+      "size_mm": [
+        94.0,
+        21.0,
+        23.6
+      ],
+      "bed_min_xy_mm": [
+        103,
+        209
+      ],
+      "posed_stl": "06-yellow-core-flat.stl",
+      "scale": 1,
+      "object_id": "12",
+      "support_blockers": []
+    },
+    {
+      "id": "pin",
+      "name": "07-pull-pin-head-down",
+      "source_sha256": "1d2556b5c860ed1575e6f9a430a8d576ae4b5c926bb881d458c652aa7104bf09",
+      "rotation_xyz_deg": [
+        180,
+        0,
+        0
+      ],
+      "normalized_translation_mm": [
+        -30.600000381469727,
+        9.399999618530279,
+        46.5
+      ],
+      "size_mm": [
+        6.80000114440918,
+        18.79999923706055,
+        27.5
+      ],
+      "bed_min_xy_mm": [
+        216,
+        170
+      ],
+      "posed_stl": "07-pull-pin-head-down.stl",
+      "scale": 1,
+      "object_id": "14",
+      "support_blockers": []
+    }
+  ],
+  "editable_3mf": "guard-mold-v2-7parts-X1C-PETG.3mf",
+  "sliced_3mf": "guard-mold-v2-7parts-X1C-PETG.gcode.3mf",
+  "printer_sent": false,
+  "printer_started": false,
+  "release_format": "Native Bambu Studio Save Project As + Export sliced plate after CLI layout",
+  "native_gui_open_verified": true,
+  "native_gui_sliced_verified": true,
+  "native_gui_ready_button": "打印单盘",
+  "native_gui_observed_estimate": "10h55m / 306.53g",
+  "supports_actual": "Only external band-groove pockets: Z0.2..0.8mm; 1.83g; no support hits in protected sockets/pins/lettering",
+  "support_blocker_reference": "https://github.com/bambulab/BambuStudio/blob/master/src/libslic3r/Model.cpp",
+  "release_sha256": {
+    "guard-mold-v2-7parts-X1C-PETG.3mf": "bd71f3afda49b980c68a325d2829f44409429b14d68aaf53e749ab6e8ed08701",
+    "guard-mold-v2-7parts-X1C-PETG.gcode.3mf": "061c14a1e5cbe578374f4b825aec7a56ef7fba23187d19870353fd05e06e85f4"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "part": "left",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/left.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 1000 | 唯一顶点: 500\n包围盒尺寸: [42.0, 102.0, 63.70000076293945]\n表面积: 25239.915957\n体积绝对值: 143201.846646\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "right",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/right.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 1140 | 唯一顶点: 568\n包围盒尺寸: [42.0, 102.0, 63.70000076293945]\n表面积: 25336.334426\n体积绝对值: 142984.060373\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "lid",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/lid.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 6008 | 唯一顶点: 2994\n包围盒尺寸: [84.0, 102.0, 19.399999618530273]\n表面积: 23513.562053\n体积绝对值: 107375.922649\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "upper",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/upper.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 588 | 唯一顶点: 296\n包围盒尺寸: [94.0, 21.0, 23.6]\n表面积: 9329.906910\n体积绝对值: 45426.058745\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "lower",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/lower.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 968 | 唯一顶点: 486\n包围盒尺寸: [74.0, 106.5, 63.70000076293945]\n表面积: 25566.118064\n体积绝对值: 123081.278940\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "back",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/back.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 814 | 唯一顶点: 409\n包围盒尺寸: [74.0, 34.0, 34.20000076293945]\n表面积: 10112.577872\n体积绝对值: 42616.182208\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "pin",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/pin.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 356 | 唯一顶点: 180\n包围盒尺寸: [6.80000114440918, 18.799999237060547, 27.5]\n表面积: 765.217079\n体积绝对值: 878.039680\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  },
+  {
+    "part": "product",
+    "exit_code": 0,
+    "inspection": "文件: /Users/norman/CodexProjects/Pingpang-SmartGear/hardware/cad/exports/guard-casting-mold-v2/product.stl\n格式: ascii | 单位: 未知（STL 不携带单位）\n三角形: 6734 | 唯一顶点: 3367\n包围盒尺寸: [55.79999923706055, 77.0, 54.5]\n表面积: 21726.156355\n体积绝对值: 81877.275827\n拓扑: watertight=True 退化面=0 边界边=0 非流形边=0 方向不一致边=0"
+  }
+]

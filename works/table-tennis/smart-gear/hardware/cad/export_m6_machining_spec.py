@@ -1,0 +1,593 @@
+#!/usr/bin/env python3
+"""Export the current M6 first-article/CNC handoff.
+
+The OpenSCAD ``parameter_probe`` is the numerical source of truth. The active
+detector body is a printable PETG rectangle that can later be reproduced in
+CNC; the rear cover carries the 1/4-20 interface for the purchased vertical
+13 mm ballhead. The fixed net post is printed as a lower carrier and a top
+30 mm segment: the lower segment starts on the z=16 mm C-clamp seat and ends
+at z=230.5 mm; the upper segment ends at z=260.5 mm and is joined with four
+M3x40 screws. The net fabric/clip zone remains z=16..168.5 mm. The selected
+ballhead's downward M8×1.25 stud enters the centre blind tapped seat in the
+replaceable upper post segment, while its upward 1/4-20 stud enters the
+downward-facing printed female thread in the rear-cover platform; no separate
+adapter or 90-degree connector is part of the current handoff.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+import tempfile
+from pathlib import Path
+
+from validate_net_stand import SOURCE, probe_parameters
+from validate_scad import find_openscad
+
+
+HERE = Path(__file__).resolve().parent
+DEFAULT_OUTPUT = HERE / "exports" / "desktop-clamp-one-side-x1c-v0.4-top-load" / "m6-machining-spec.json"
+SCHEMA_VERSION = "m6-machining-spec-v1.9-20-mm-pitch-split-post-no-harness-solids"
+
+
+def _r(value: float) -> float | int:
+    rounded = round(float(value), 4)
+    if math.isclose(rounded, round(rounded), abs_tol=1e-9):
+        return int(round(rounded))
+    return rounded
+
+
+def _assembled_x(parameters: dict[str, float], value: float) -> float | int:
+    """Return a raw detector x coordinate in the installed post-centred frame."""
+
+    return _r(value + parameters["m6_detector_mount_x_offset"])
+
+
+def _assembled_z(parameters: dict[str, float], value: float) -> float | int:
+    """Return a raw detector z coordinate in the installed raised frame."""
+
+    return _r(value + parameters["m6_detector_mount_raise_z"])
+
+
+def _channel_schedule(parameters: dict[str, float]) -> list[dict[str, object]]:
+    count = int(parameters["m6_sensor_count"])
+    net_height = parameters["net_height"]
+    first_height = parameters["m6_sensor_first_height"]
+    pitch = parameters["m6_sensor_center_pitch"]
+    body_bottom = parameters["m6_detector_body_bottom_z"]
+    return [
+        {
+            "channel_index": index,
+            "height_from_table_mm": _r(first_height + index * pitch),
+            "sensor_center_z_global_mm": _assembled_z(
+                parameters, net_height + first_height + index * pitch
+            ),
+            "sensor_center_z_raw_global_mm": _r(
+                net_height + first_height + index * pitch
+            ),
+            "sensor_center_z_local_to_body_mm": _r(
+                net_height + first_height + index * pitch - body_bottom
+            ),
+            "optical_axis_y_mm": _r(
+                parameters["m6_detector_sensor_head_center_y"]
+            ),
+            "thread_axis_x_global_mm": _assembled_x(
+                parameters, parameters["m6_detector_detector_thread_axis_x"]
+            ),
+            "insertion": "右侧从外侧 x+、左侧从外侧 x- 装入；灰色六角卡入各自外侧浅窝，M6 中空外丝/光学筒穿过主体并指向球台中心；尾线方向只作为底盖过线开口的装配标注，SCAD 不生成尾线或线束实体；螺纹末端中心孔分别朝 x-/x+",
+        }
+        for index in range(count)
+    ]
+
+
+def build_spec(openscad: str, probe_directory: Path) -> dict[str, object]:
+    parameters = probe_parameters(openscad, probe_directory)
+    count = int(parameters["m6_sensor_count"])
+
+    body_size = [
+        _r(parameters["m6_detector_body_length_x"]),
+        _r(parameters["m6_detector_body_depth_y"]),
+        _r(parameters["m6_detector_body_height_z"]),
+    ]
+    body_min = [
+        _assembled_x(parameters, parameters["m6_detector_body_min_x"]),
+        _r(parameters["m6_detector_body_min_y"]),
+        _r(parameters["m6_detector_body_bottom_z"]),
+    ]
+    body_envelope_size = body_size[:]
+    body_envelope_min = body_min[:]
+    shell_min_x = min(
+        parameters["m6_detector_shell_min_x"],
+        parameters["m6_detector_shell_support_platform_min_x"],
+    )
+    shell_max_x = max(
+        parameters["m6_detector_shell_max_x"],
+        parameters["m6_detector_shell_support_platform_max_x"],
+    )
+    shell_size = [
+        _r(shell_max_x - shell_min_x),
+        _r(
+            max(
+                parameters["m6_detector_shell_max_y"],
+                parameters["m6_detector_shell_support_platform_max_y"],
+            )
+            - min(
+                parameters["m6_detector_shell_min_y"],
+                parameters["m6_detector_shell_support_platform_min_y"],
+            )
+        ),
+        _r(parameters["m6_detector_shell_height_z"]),
+    ]
+    body_depth_limit = (
+        parameters["m6_detector_fit_thread_length_x"]
+        + parameters["m6_detector_fit_capture_depth_x"]
+        - parameters["m6_sensor_lock_nut_h"]
+        - parameters["m6_detector_fit_thread_tip_allowance_x"]
+    )
+
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "source": "hardware/cad/net_stand.scad",
+        "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
+        "units": "mm",
+        "status": "当前 PETG 首样/CNC 复用输入；真实传感器、球头和网夹实测前不得视为最终放行图",
+        "material": "PETG first article body and covers; future 6061-T6 CNC body option; purchased metal ballhead",
+        "fixed_net_post_contract": {
+            "seat_z_global_mm": _r(parameters["clamp_slide_seat_z"]),
+            "top_z_global_mm": _r(parameters["net_post_top_z"]),
+            "height_mm": _r(parameters["active_post_total_height"]),
+            "split_from_top_z_mm": _r(parameters["post_split_from_top_z"]),
+            "split_z_global_mm": _r(parameters["post_split_z"]),
+            "lower_segment_z_global_mm": _r(parameters["post_lower_segment_z"]),
+            "lower_segment_height_mm": _r(parameters["post_lower_segment_height"]),
+            "upper_segment_z_global_mm": _r(parameters["post_upper_segment_z"]),
+            "upper_segment_height_mm": _r(parameters["post_upper_segment_height"]),
+            "joint_key_clearance_mm": _r(parameters["post_split_key_clearance"]),
+            "upper_screw_clearance_d_mm": _r(parameters["post_split_screw_clearance_d"]),
+            "lower_pilot_d_mm": _r(parameters["post_split_pilot_d"]),
+            "lower_pilot_depth_mm": _r(parameters["post_split_pilot_depth_z"]),
+            "joint_screw_spec": "4×普通盘头或低矮圆头 M3×40 自攻钉；上段 Ø3.4 mm 通孔进入下段 Ø2.4 mm×10 mm 导向盲孔，不用沉头或台阶肩螺钉",
+            "net_top_z_global_mm": _r(parameters["net_panel_top_z"]),
+            "net_zone_height_mm": _r(parameters["net_height"]),
+            "starts_on_c_clamp_seat": True,
+            "enters_c_clamp": False,
+            "m6_direct_mount_enabled": bool(
+                parameters["m6_detector_direct_mount_enabled"]
+            ),
+            "m6_support_status": "球头下端 M8×1.25 直接进入固定网柱上段中心攻丝座；实物攻丝/金属嵌件与承力仍需验证",
+        },
+        "quantity": {
+            "detector_bodies": 2,
+            "printed_front_covers": 2,
+            "printed_rear_covers": 2,
+            "printed_bottom_covers": 2,
+            "printed_net_clamp_rods": 2,
+            "purchased_ballheads": 2,
+            "integrated_lower_stand_ballhead_seats": 2,
+            "independent_m6_supports_pending": 0,
+        },
+        "part_schedule": [
+            {
+                "part": "m6_machining_detector_body",
+                "name_zh": "十路 45° L 型 PETG 长方条主体（后续可换 CNC）",
+                "material": "PETG first article; future 6061-T6 CNC-compatible option",
+                "blank_mm": body_size,
+                "per_side": 1,
+                "total": 2,
+                "preview_is_printable": True,
+                "process": "FDM PETG 首样打印；后续可按同一 10×56×216 mm 包络改为 6061-T6 CNC。十个通道中心按 20 mm 节距布置；每路有沿 x 的中空 M6 光学/外丝筒让位孔、x 向浅六角座和底盖过线开口的定位基准；主体不带 T 尾座、M8 孔或主体内线缆槽，SCAD 不生成线束实体；安装时检测器/球头总成整体沿 x 移到网架立柱中心",
+                "fit_before_release": "先用一只真实 M6 直角对射头验证灰色六角外形、M6 中空外丝中心光学孔、过线开口的方向与余量、六角窝、有效外丝、至少一枚原配螺帽和光轴高度",
+            },
+        ],
+        "printed_cover_schedule": [
+            {
+                "part": "m6_detector_shell_front",
+                "name_zh": "激光方向前盖（PETG）",
+                "per_side": 1,
+                "total": 2,
+                "notes": "从主体上方套入；前端用浅球弧表达光学侧外形；沉头螺钉固定。",
+            },
+            {
+                "part": "m6_detector_shell_rear",
+                "name_zh": "后盖（PETG，外伸承台/下向 1/4-20 内丝）",
+                "per_side": 1,
+                "total": 2,
+                "notes": "覆盖 x+ 线缆端；后盖 x+ 背面向外伸出 52×38×16 mm 承台，底面 y=0 处开向下的 1/4-20 PETG 打印内丝，根部与后壳搭接 3 mm，z+ 天空侧两端各有一条三角加强筋回接后墙；供商品球头固定上端连接；左侧发射端按 x 镜像；首样不把薄壳当作唯一弯矩承力件。",
+            },
+            {
+                "part": "m6_detector_bottom_cover",
+                "name_zh": "底盖（PETG）",
+                "per_side": 1,
+                "total": 2,
+                "notes": "与下方截面同宽；两枚沉头螺钉固定；中央开放 Ø12 mm 过线孔仅作为安装开口，不包含线缆实体或独立压紧环，也不宣称密封。",
+            },
+        ],
+        "sensor_contract": {
+            "sku_id": "6122579349941",
+            "item_id": "1071628886139",
+            "thread": "M6x0.75",
+            "count_per_detector": count,
+            "channel_pitch_mm": _r(parameters["m6_sensor_center_pitch"]),
+            "height_schedule_mm": [
+                _r(
+                    parameters["m6_sensor_first_height"]
+                    + index * parameters["m6_sensor_center_pitch"]
+                )
+                for index in range(count)
+            ],
+            "body_blank_mm": body_size,
+            "body_global_min_mm": body_min,
+            "body_envelope_mm": body_envelope_size,
+            "body_envelope_global_min_mm": body_envelope_min,
+            "installed_body_global_min_mm": [
+                body_min[0],
+                body_min[1],
+                _assembled_z(parameters, parameters["m6_detector_body_bottom_z"]),
+            ],
+            "body_center_y_global_mm": _r(parameters["m6_detector_body_center_y"]),
+            "mount_raise_z_mm": _r(parameters["m6_detector_mount_raise_z"]),
+            "sensor_roll_deg": _r(parameters["m6_sensor_roll_deg"]),
+            "body_depth_limit_from_stem_and_one_nut_mm": _r(body_depth_limit),
+            "body_depth_margin_mm": _r(
+                body_depth_limit - parameters["m6_detector_body_length_x"]
+            ),
+            "horizontal_thread_section_length_mm": _r(
+                parameters["m6_sensor_mount_stem_length"]
+            ),
+            "horizontal_overall_package_length_mm": _r(
+                parameters["m6_sensor_overall_end_x"]
+                - parameters["m6_sensor_axis_x"]
+            ),
+            "cable_model_in_cad": False,
+            "cable_exit_datum_local_axis": "z-",
+            "cable_exit_datum_roll_deg_about_x": _r(parameters["m6_sensor_roll_deg"]),
+            "cable_exit_guard_length_datum_mm": _r(parameters["m6_sensor_cable_guard_length"]),
+            "cable_exit_datum_d_mm": _r(parameters["m6_sensor_cable_d"]),
+            "cable_opening_only": True,
+            "sensor_optical_bore_d_mm": _r(parameters["m6_sensor_optical_bore_d"]),
+            "optical_aperture_location": "M6 中空外丝筒的末端中心孔；灰色六角处不再画独立黑色光学面",
+            "optical_bore_d_mm": _r(parameters["m6_detector_optical_bore_d"]),
+            "thread_clearance_d_mm": _r(
+                parameters["m6_detector_thread_clearance_d"]
+            ),
+            "hex_pocket_af_mm": _r(parameters["m6_detector_hex_pocket_af"]),
+            "hex_pocket_depth_local_axis_mm": _r(
+                parameters["m6_detector_hex_pocket_depth_x"]
+            ),
+            "hex_pocket_floor_mm": _r(
+                parameters["m6_detector_hex_pocket_floor"]
+            ),
+            "insertion_axis": "right x+ / left x- outward entry; outer gray hex captured by shallow pocket; hollow threaded optical barrel and one nut pass toward the smooth opposite body face",
+            "optical_axis": "x",
+            "orientation": "L 型灰色六角/实体头部在外侧，M6 中空外丝末端中心孔为出光/受光端并水平朝球台中心；尾线只保留 z-、绕 x 轴 -45° 的过线开口方向基准，不生成三维线束",
+            "lane_layout": "单列竖直安装，所有光学中心 y=0；主体为 x=10 mm 厚、y=56 mm 宽并居中 y=0；原始通道高度为 +10、+30…+190 mm，安装总成上抬 20 mm 后为 +30、+50…+210 mm，不采用旧的左右交错双列",
+            "installed_height_schedule_mm": [
+                _r(
+                    parameters["m6_detector_mount_raise_z"]
+                    + parameters["m6_sensor_first_height"]
+                    + index * parameters["m6_sensor_center_pitch"]
+                )
+                for index in range(count)
+            ],
+            "sensor_nut_count_per_channel": 1,
+            "sensor_nut_position": "主体平滑的另一侧表面；不嵌入主体；不使用打印固定螺丝",
+            "thread_visible_after_body_mm": _r(
+                parameters["m6_detector_thread_visible_length"]
+            ),
+            "channel_schedule": _channel_schedule(parameters),
+        },
+        "shell_contract": {
+            "outer_envelope_mm": shell_size,
+            "outer_min_global_mm": [
+                _assembled_x(parameters, shell_min_x),
+                _r(parameters["m6_detector_shell_min_y"]),
+                _assembled_z(parameters, parameters["m6_detector_shell_bottom_z"]),
+            ],
+            "wall_mm": _r(parameters["m6_detector_shell_wall"]),
+            "body_clearance_mm": _r(parameters["m6_detector_shell_clearance"]),
+            "split_axis": "x",
+            "split_x_global_mm": _assembled_x(
+                parameters, parameters["m6_detector_shell_split_x"]
+            ),
+            "top_view_profile": "z+ 俯视：x- 光学端为正圆弧，x+ 线缆端仅后部圆角、x- 接驳边为直角；中间仅为前后盖分型边界，不建连线",
+            "front_cap_length_x_mm": _r(
+                parameters["m6_detector_front_cap_length_x"]
+            ),
+            "rear_corner_radius_mm": _r(
+                parameters["m6_detector_shell_corner_radius"]
+            ),
+            "front_max_x_global_mm": _assembled_x(
+                parameters, parameters["m6_detector_shell_front_max_x"]
+            ),
+            "rear_min_x_global_mm": _assembled_x(
+                parameters, parameters["m6_detector_shell_rear_min_x"]
+            ),
+            "parting_clearance_x_mm": _r(
+                2 * parameters["m6_detector_shell_split_clearance_x"]
+            ),
+            "shared_edge_grooves": {
+                "width_x_mm": _r(parameters["m6_detector_body_groove_width_x"]),
+                "depth_y_mm": _r(parameters["m6_detector_body_groove_depth_y"]),
+                "margin_z_mm": _r(parameters["m6_detector_body_groove_margin_z"]),
+                "tongue_clearance_mm": _r(parameters["m6_detector_shell_tongue_clearance"]),
+                "ownership": "前盖占 x- 半、后盖占 x+ 半；两盖共享 y± 两条连续竖槽",
+            },
+            "assembly_sequence": [
+                "主体与十路器件先固定在光学基准位置",
+                "前盖从 z+ 套入主体，前盖舌片进入 y± 边槽的 x- 半并以 x- 沉头螺钉固定",
+                "后盖从 z+ 套入主体，后盖舌片进入同一 y± 边槽的 x+ 半并以 x+ 沉头螺钉固定",
+                "底盖从 z- 贴合并以两枚沉头螺钉固定，统一线缆套管从 Ø12 mm 孔穿出",
+            ],
+            "top_entry": "前盖位于 x- 光学端并做正球弧、后盖位于 x+ 线缆端且只在自身后部做圆角，和前盖接驳的 x- 边保持直角；后盖 x+ 背面向外伸出承台，底面向下开 1/4-20 打印内丝，z+ 天空侧双三角加强筋回接后墙，主体位于两盖中间，前后盖均从主体 z+ 套入；底盖从 z- 贴合，左侧发射端按 x 镜像；固定网柱下段从黄灰交界 z=16 mm 延伸到分型面 z=230.5 mm，上段延伸到 z=260.5 mm，四枚 M3×40（普通盘头或低矮圆头）自攻钉从上段 Ø3.4 mm 通孔拧入下段 Ø2.4×10 mm 导向盲孔，不用沉头或台阶肩螺钉；网布/圆柱功能区仍只到 z=168.5 mm，底端不进入 C 形座；M6 球头上端 1/4-20 外牙朝 z+ 进入后盖承台内丝，下端 M8×1.25 朝 z- 进入固定网柱上段中心攻丝座，取消横向适配臂，最终尺寸待真实器件首样复核",
+            "support_platform": {
+                "material": "PETG 首样；未来可换金属嵌件或 CNC 后盖",
+                "min_global_mm": [
+                    _assembled_x(parameters, parameters["m6_detector_shell_support_platform_min_x"]),
+                    _r(parameters["m6_detector_shell_support_platform_min_y"]),
+                    _assembled_z(parameters, parameters["m6_detector_shell_support_platform_bottom_z"]),
+                ],
+                "max_global_mm": [
+                    _assembled_x(parameters, parameters["m6_detector_shell_support_platform_max_x"]),
+                    _r(parameters["m6_detector_shell_support_platform_max_y"]),
+                    _assembled_z(parameters, parameters["m6_detector_shell_support_platform_top_z"]),
+                ],
+                "length_x_mm": _r(parameters["m6_detector_shell_support_platform_length_x"]),
+                "root_overlap_x_mm": _r(parameters["m6_detector_shell_support_platform_overlap_x"]),
+                "width_y_mm": _r(parameters["m6_detector_shell_support_platform_width_y"]),
+                "thickness_z_mm": _r(parameters["m6_detector_shell_support_platform_thickness_z"]),
+                "center_y_global_mm": _r(parameters["m6_detector_shell_support_platform_center_y"]),
+                "thread_axis": "z- from the platform underside; blind printed 1/4-20 female thread",
+                "thread_core_d_mm": _r(parameters["m6_detector_shell_support_platform_thread_core_d"]),
+                "thread_major_d_mm": _r(parameters["m6_detector_shell_support_platform_thread_major_d"]),
+                "thread_pitch_mm": _r(parameters["m6_detector_shell_support_platform_thread_pitch"]),
+                "thread_depth_z_mm": _r(parameters["m6_detector_shell_support_platform_thread_depth_z"]),
+                "thread_entry_z_global_mm": _assembled_z(parameters, parameters["m6_detector_shell_support_platform_thread_entry_z"]),
+                "thread_top_z_global_mm": _assembled_z(parameters, parameters["m6_detector_shell_support_platform_thread_top_z"]),
+                "thread_center_global_mm": [
+                    _assembled_x(parameters, parameters["m6_detector_shell_support_platform_thread_center_x"]),
+                    _r(parameters["m6_detector_shell_support_platform_thread_center_y"]),
+                    _assembled_z(parameters, parameters["m6_detector_shell_support_platform_thread_center_z"]),
+                ],
+                "gusset_height_z_mm": _r(parameters["m6_detector_shell_support_platform_gusset_height_z"]),
+                "gusset_width_y_mm": _r(parameters["m6_detector_shell_support_platform_gusset_width_y"]),
+                "gusset_top_z_global_mm": _assembled_z(parameters, parameters["m6_detector_shell_support_gusset_top_z"]),
+            },
+        },
+        "support_contract": {
+            "type": "purchased 13 mm ballhead/gimbal",
+            "posture": "vertical purchased ballhead under the M6 rear-cover platform; its upward 1/4-20 stud enters the downward-facing printed female thread and its downward M8×1.25 stud enters the split fixed net post's upper segment",
+            "platform_thread_axis": "z- from the rear-cover platform underside",
+            "platform_thread_core_d_mm": _r(parameters["m6_detector_shell_support_platform_thread_core_d"]),
+            "platform_thread_major_d_mm": _r(parameters["m6_detector_shell_support_platform_thread_major_d"]),
+            "platform_thread_pitch_mm": _r(parameters["m6_detector_shell_support_platform_thread_pitch"]),
+            "platform_thread_depth_z_mm": _r(parameters["m6_detector_shell_support_platform_thread_depth_z"]),
+            "platform_thread_entry_z_global_mm": _assembled_z(
+                parameters, parameters["m6_detector_shell_support_platform_thread_entry_z"]
+            ),
+            "platform_thread_top_z_global_mm": _assembled_z(
+                parameters, parameters["m6_detector_shell_support_platform_thread_top_z"]
+            ),
+            "ballhead_center_x_global_mm": _r(
+                parameters["m6_detector_assembly_ballhead_center_x"]
+            ),
+            "ballhead_center_y_global_mm": _r(parameters["m6_detector_ballhead_center_y"]),
+            "ballhead_center_z_global_mm": _r(
+                parameters["m6_detector_assembly_ballhead_center_z"]
+            ),
+            "mount_raise_z_mm": _r(parameters["m6_detector_mount_raise_z"]),
+            "net_interface": "球头下端 M8×1.25 外牙朝 z-，直接进入固定网柱上段中心盲孔；固定网柱下段 z=16…230.5 mm、上段 z=230.5…260.5 mm，四枚 M3×40（普通盘头或低矮圆头）连接，网布/圆柱功能区到 z=168.5 mm",
+            "load_path": "主体/后盖外伸承台 -> 下向 1/4-20 打印内丝 -> 采购球头上端外牙 -> 球头下端 M8×1.25 -> 上段中心攻丝座 -> 连续固定网柱；打印件只提供攻丝底孔，实物螺纹/嵌件和承力仍需验证",
+            "direct_mount": {
+                "enabled": bool(parameters["m6_detector_direct_mount_enabled"]),
+                "material": "same PETG upper-post material; optional metal M8×1.25 insert",
+                "interface_orientation": "vertical M8×1.25 stud enters the upper-post centre blind tap from z-; no adapter arm or bridge",
+                "assembly_x_offset_mm": _r(parameters["m6_detector_mount_x_offset"]),
+                "assembly_z_raise_mm": _r(parameters["m6_detector_mount_raise_z"]),
+                "assembled_ballhead_center_x_global_mm": _r(
+                    parameters["m6_detector_assembly_ballhead_center_x"]
+                ),
+                "assembled_optical_axis_x_global_mm": _r(
+                    parameters["m6_detector_assembly_optical_axis_x"]
+                ),
+                "socket_center_x_global_mm": _r(
+                    parameters["m6_detector_direct_mount_socket_center_x"]
+                ),
+                "arm_min_x_global_mm": _r(parameters["m6_detector_direct_mount_arm_min_x"]),
+                "arm_max_x_global_mm": _r(parameters["m6_detector_direct_mount_arm_max_x"]),
+                "arm_width_y_mm": _r(parameters["m6_detector_direct_mount_arm_width_y"]),
+                "arm_thickness_z_mm": _r(parameters["m6_detector_direct_mount_arm_t_z"]),
+                "web_min_x_global_mm": _r(parameters["m6_detector_direct_mount_web_min_x"]),
+                "web_max_x_global_mm": _r(parameters["m6_detector_direct_mount_web_max_x"]),
+                "web_width_y_mm": _r(parameters["m6_detector_direct_mount_web_width_y"]),
+                "web_thickness_x_mm": _r(parameters["m6_detector_direct_mount_web_t_x"]),
+                "web_min_z_global_mm": _r(parameters["m6_detector_direct_mount_web_min_z"]),
+                "web_max_z_global_mm": _r(parameters["m6_detector_direct_mount_web_max_z"]),
+                "socket_bottom_z_global_mm": _r(parameters["m6_detector_direct_mount_socket_bottom_z"]),
+                "socket_top_z_global_mm": _r(parameters["m6_detector_direct_mount_socket_top_z"]),
+                "socket_height_z_mm": _r(parameters["m6_detector_direct_mount_socket_height_z"]),
+                "socket_outer_d_mm": _r(parameters["m6_detector_direct_mount_socket_outer_d"]),
+                "socket_clearance_d_mm": _r(parameters["m6_detector_direct_mount_socket_clearance_d"]),
+                "socket_tap_d_mm": _r(parameters["m6_detector_direct_mount_socket_tap_d"]),
+                "blind_tap_drill_d_mm": _r(parameters["m6_detector_direct_mount_thread_tap_d"]),
+                "blind_tap_drill_depth_z_mm": _r(parameters["m6_detector_direct_mount_thread_depth_z"]),
+                "blind_tap_drill_bottom_z_global_mm": _r(parameters["m6_detector_direct_mount_thread_bottom_z"]),
+                "blind_tap_drill_top_z_global_mm": _r(parameters["m6_detector_direct_mount_thread_top_z"]),
+                "blind_tap_thread": "M8×1.25；打印后手工攻丝或 CNC 直接加工",
+                "socket_base_overlap_z_mm": _r(
+                    parameters["m6_detector_direct_mount_socket_base_overlap_z"]
+                ),
+                "nut_loading_clearance_z_mm": _r(
+                    parameters["m6_detector_direct_mount_nut_loading_clearance_z"]
+                ),
+                "captured_nut_pocket_af_mm": 0,
+                "captured_nut_pocket_depth_z_mm": 0,
+                "captured_nut_pocket_bottom_z_global_mm": _r(
+                    parameters["m6_detector_direct_mount_nut_pocket_bottom_z"]
+                ),
+                "captured_nut_pocket_center_z_global_mm": _r(parameters["m6_detector_direct_mount_nut_pocket_center_z"]),
+                "nut_loading_depth_z_mm": _r(
+                    parameters["m6_detector_direct_mount_nut_loading_depth_z"]
+                ),
+                "ballhead_interface_bottom_z_global_mm": _r(
+                    parameters["m6_detector_assembly_ballhead_net_interface_bottom_z"]
+                ),
+                "lower_post_top_z_global_mm": _r(parameters["m6_detector_direct_mount_lower_post_top_z"]),
+                "print_status": "已集成到 post_clamp_carrier_upper；上段中心 Ø6.8 mm 攻丝底孔，打印后攻 M8×1.25 或安装金属嵌件；不另设适配桥/连接器",
+            },
+        },
+        "net_retention_contract": {
+            "fixture_bottom_z_global_mm": _r(
+                parameters["net_fixture_bottom_z"]
+            ),
+            "post_top_z_global_mm": _r(
+                parameters["net_post_top_z"]
+            ),
+            "net_top_z_global_mm": _r(parameters["net_panel_top_z"]),
+            "channel_opening": "右侧外侧 x+、左侧镜像后外侧 x-；保持历史门洞轴线和 15.2 mm 横向宽度，侧开接收腔允许 Ø10 圆柱插杆连同网布边套沿 x 推入",
+            "channel_depth_x_mm": _r(parameters["net_clamp_channel_depth_x"]),
+            "clip_receiver_depth_x_mm": _r(parameters["net_clamp_channel_depth_x"]),
+            "rod_d_mm": _r(parameters["net_clamp_rod_d"]),
+            "rod_axis_x_mm": _r(parameters["net_clamp_rod_axis_x"]),
+            "rod_axis_y_mm": _r(parameters["net_clamp_rod_axis_y"]),
+            "rod_sleeve_outer_d_mm": _r(parameters["net_clamp_rod_sleeve_outer_d"]),
+            "channel_void_x_span_mm": [
+                _r(parameters["net_clamp_channel_void_min_x"]),
+                _r(parameters["net_clamp_channel_void_max_x"]),
+            ],
+            "channel_back_wall_t_x_mm": _r(
+                parameters["net_clamp_channel_back_wall_t_x"]
+            ),
+            "channel_width_y_mm": _r(parameters["net_clamp_channel_width_y"]),
+            "net_passage_width_y_mm": _r(parameters["net_passage_width_y"]),
+            "net_passage_clearance_each_side_y_mm": _r(
+                parameters["net_passage_side_clearance_y"]
+            ),
+            "net_passage_x_span_mm": [
+                _r(parameters["net_passage_min_x"]),
+                _r(parameters["net_passage_max_x"]),
+            ],
+            "net_passage_z_span_mm": [
+                _r(parameters["net_passage_bottom_z"]),
+                _r(parameters["net_passage_top_z"]),
+            ],
+            "channel_z_span_mm": [
+                _r(parameters["net_clamp_channel_bottom_z"]),
+                _r(parameters["net_clamp_channel_top_z"]),
+            ],
+            "passive_keeper": {
+                "enabled": False,
+                "role": "不设置独立 keeper；上段立柱安装后封住圆柱插杆入口",
+                "z_span_mm": [],
+                "x_span_mm": [],
+                "y_span_mm": [],
+            },
+            "printed_part": "net_clamp_rod",
+            "material": "PETG",
+            "assembly": "网布侧边空心布套先套到 Ø10 mm 圆柱插杆，再沿原门洞轴线从 x 侧推入下段侧开接收腔；门洞横向宽度保持历史 15.2 mm，立柱上段与下段的四枚 M3×40 连接不属于网端插杆；安装上段后封住插入口，拆卸时先拆上段再反向抽出圆柱和网布",
+        },
+        "ballhead_contract": {
+            "ball_d_mm": _r(parameters["m6_ballhead_ball_d"]),
+            "housing_d_mm": _r(parameters["m6_ballhead_housing_d"]),
+            "housing_length_mm": _r(parameters["m6_ballhead_housing_length_x"]),
+            "base_d_mm": _r(parameters["m6_ballhead_base_d"]),
+            "base_t_mm": _r(parameters["m6_ballhead_base_t"]),
+            "sensor_stud_d_mm": _r(parameters["m6_ballhead_sensor_stud_d"]),
+            "sensor_stud_length_mm": _r(
+                parameters["m6_ballhead_sensor_stud_length"]
+            ),
+            "sensor_stud_role": "商品固定上端 1/4-20 外牙；沿 z+ 进入后盖承台下向打印内丝",
+            "sensor_stud_thread_core_d_mm": _r(parameters["m6_ballhead_sensor_thread_core_d"]),
+            "sensor_stud_thread_pitch_mm": _r(parameters["m6_ballhead_sensor_thread_pitch"]),
+            "net_stud_d_mm": _r(parameters["m6_ballhead_net_stud_d"]),
+            "net_stud_length_mm": _r(parameters["m6_ballhead_net_stud_length"]),
+            "net_stud_role": "当前选定下端 M8×1.25 外牙；z- 直接进入固定网柱上段中心 M8×1.25 攻丝座",
+            "net_stud_thread_core_d_mm": _r(parameters["m6_ballhead_net_thread_core_d"]),
+            "net_stud_thread_pitch_mm": _r(parameters["m6_ballhead_net_thread_pitch"]),
+            "posture": "球头主体竖直；商品固定上端 1/4-20 外牙沿 z+ 进入后盖外伸承台的下向打印内丝；下方 M8×1.25 竖直接口朝 z- 进入固定网柱上段中心攻丝座，固定网柱分为 z=16…230.5 mm 下段和 z=230.5…260.5 mm 上段，四枚 M3×40（普通盘头或低矮圆头）连接，网布/圆柱功能区到 z=168.5 mm；取消横向承托臂和侧向上返竖向耳；最终承力以首样实测为准",
+            "rotation_range_deg": _r(parameters["m6_ballhead_rotation_range_deg"]),
+            "opening_range_deg": _r(parameters["m6_ballhead_tilt_range_deg"]),
+            "selected_variant": "13mm球【M8外牙】（当前模型默认）",
+            "alternative_variants": [
+                "13mm球【1/4内牙】",
+                "13mm球【1/4外牙】",
+                "13mm球【3/8外牙】",
+                "13mm球【M6外牙】",
+                "13mm球【M8外牙】",
+                "13mm球【M10外牙】",
+            ],
+            "status": "商品外形和螺纹版本仍需到货实测；不进入打印或铝件 STL",
+        },
+        "fastener_schedule": [
+            {
+                "id": "sensor_lock_nut",
+                "name_zh": "M6 传感器原配锁紧螺帽",
+                "per_side": count,
+                "total": 2 * count,
+                "spec": "M6x0.75 supplier nut; exactly one nut is shown directly outside the 10 mm body",
+                "status": "verify real nut thickness and hex across flats",
+            },
+            {
+                "id": "cover_to_body",
+                "name_zh": "前后盖到 PETG/CNC 主体沉头螺丝",
+                "per_side": 4,
+                "total": 8,
+                "spec": "M3/M4 class screw; hole/head dimensions remain first-article hardware choice",
+                "status": "choose after cover material and tap drill review",
+            },
+            {
+                "id": "bottom_cover_to_body",
+                "name_zh": "底盖沉头螺丝",
+                "per_side": 2,
+                "total": 4,
+                "spec": "M3/M4 class screw; two x positions",
+                "status": "verify cable sleeve and screw-head clearance",
+            },
+            {
+                "id": "detector_to_ballhead",
+                "name_zh": "后盖外伸承台到采购球头",
+                "per_side": 1,
+                "total": 2,
+                "spec": "selected 13 mm ballhead; fixed upper 1/4-20 external stud enters the rear-cover platform's downward printed female thread; lower M8×1.25 external stud enters the fixed net post upper-segment centre tap",
+                "status": "verify delivered thread side, effective engagement and anti-rotation",
+            },
+        ],
+        "release_checks": [
+            "收到真实 M6 对射器件后复核 M6x0.75 有效外丝长度、头部六角 AF、六角轴向厚度、光学中心和原配螺帽厚度",
+            "确认固定网柱下段从黄灰交界 z=16 mm 到分型面 z=230.5 mm，上段到 z=260.5 mm；四枚 M3×40（普通盘头或低矮圆头）从上段 Ø3.4 mm 通孔进入下段 Ø2.4×10 mm 导向盲孔，网布/圆柱功能区仍是 z=16..168.5 mm，底端与 C 形座共面且不下插；M6 球头下端 M8×1.25 进入固定网柱上段中心攻丝座，实物攻丝/嵌件和承力完成后再核对其高度",
+            "确认网布先沿 x 穿过 PETG 立柱主体 y 向 3 mm 过道，端部止在立柱外表面，再把空心边套套到 Ø10 圆柱插杆并沿原门洞轴线从 x 侧推入下段侧开接收腔；上段安装后封住入口，不设置穿钉、keeper 或独立卡夹；记录插入力、防脱行程和拆下上段后的抽出力",
+            "用一只真实器件先验证 10 mm 主体厚度、x 轴 -45° 斜向浅六角窝、一枚外螺帽和线缆弯曲半径",
+            "确认左右件只做 x 镜像：左侧发射光轴朝 x+、后盖在 x- 背面，右侧接收光轴朝 x-、后盖在 x+ 背面；两侧承台均位于各自后端面的 y=0，底部内丝朝 z-，天空侧加强筋与后墙连续",
+            "确认前盖 x-、后盖 x+ 从 z+ 套入；两盖舌片分别落入 y± 连续边槽的 x 前/后半，沉头螺钉不会进入光学孔或线缆孔",
+            "确认灰色桌下夹体保留桌面夹持开口和压块/螺杆区域，外侧下部为 y 全深 40 mm 到 8 mm 的实心渐变斜底；M8 夹紧丝杆相对原包络加长 12 mm，仍由台底压块承接",
+            "球头按竖直姿态安装；到货后核对 13 mm 球、旋钮净空、90°开口、360°旋转和螺纹选项",
+            "真实网夹安装面、球网外伸和孔距实测后，核对固定网柱下段 z=16..230.5 mm、上段 z=230.5..260.5 mm 的承托路径以及 z=16..168.5 mm 的网布/圆柱功能区；核对球头 z- M8×1.25 接口的有效啮合和承力路径，不把 PETG 薄壳作为唯一弯矩承力件",
+            "前盖必须先从 z+ 拆/装，后盖随后从 z+ 拆/装，底盖最后从 z- 拆/装；爆炸图保持三个盖件完整，不使用剖切",
+            "从最低/中间/最高通道复核发射端与接收端的偏航、俯仰、滚转微调范围和锁紧后保持性",
+            "机加工件不进入 PETG 打印清单；底盖线缆孔是开放孔，不作防水承诺",
+        ],
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--openscad", default=None)
+    args = parser.parse_args()
+    openscad = args.openscad or find_openscad()
+    with tempfile.TemporaryDirectory(prefix="m6-machining-probe-") as directory:
+        spec = build_spec(openscad, Path(directory))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
+        json.dumps(spec, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        "M6_MACHINING_SPEC_OK "
+        f"(output={args.output}, source_sha256={spec['source_sha256']})"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
