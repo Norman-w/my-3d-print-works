@@ -5,7 +5,7 @@ __pycache__/
 *.log
 *.tmp
 tmp/
-work/
+/work/
 
 # Local printer jobs and machine-specific credentials.
 *.gcode
