@@ -1,9 +1,0 @@
-{
-  "cavity_components": 1,
-  "cavity_added_outside_product_excluding_ports_mm3": 0.00048752885170191487,
-  "product_volume_missing_from_cavity_mm3": 0.0005274702483830015,
-  "product_volume_mm3": 81877.27582663108,
-  "external_locator_and_band_voids_mm3": 3380.3561921294313,
-  "locator_voids_connected_to_casting": false,
-  "process_compensation": "none; nominal geometry; physical seal untested"
-}

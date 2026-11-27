@@ -1,4 +1,0 @@
-{
-  "reason": "First wrapper used library via use without including parameters.scad, so inherited global $fn=72 was omitted. Facet counts differed; imported mesh Boolean emitted non-manifold warning. Rejected, not used as repair evidence.",
-  "corrective_action": "Include snapshot/cad/parameters.scad before use; export actual matching resolution and retain strict warning rejection."
-}

@@ -1,3 +1,0 @@
-{
-  "reason": "CGAL imported old-minus-new mesh difference emits non-manifold result warning despite matching source resolution. This exact imported-mesh Boolean is rejected as an acceptance check. The raw result is retained. Subsequent nominal mesh checks explicitly use the Manifold backend together with full planar STL-face comparisons; do not call that an exact-set proof."
-}

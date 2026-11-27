@@ -1,4 +1,0 @@
-# CAD interchange files are generated/third-party assets; keep their exact bytes
-# and avoid treating embedded STEP comments as source-code whitespace errors.
-*.step binary
-*.stp binary

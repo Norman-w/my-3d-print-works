@@ -1,4 +1,0 @@
-interface:
-  display_name: "SmartPaddle 焊接装配包"
-  short_description: "Learn legacy style and create printable PCB solder maps"
-  default_prompt: "Use $generate-solder-assembly-package to learn the legacy SmartPaddle visual style and create a printable soldering package for the current PCB."

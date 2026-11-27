@@ -1,6 +1,0 @@
-{
-  "status": "POCKET_CLASSIFICATION_WITHDRAWN_PENDING_ALL_PATH_REVIEW",
-  "reason": "The first version selected support within 4 mm of pocket centre and omitted farther lever bed residues. View of cleanup.png exposed this. Full-support reverse-sweep and backplate underlay checks cover all support and remain mathematically unchanged; the claim all lever support lay in shallow pockets is withdrawn.",
-  "next_version": "All lever/cover support is assigned to nearest pocket before exterior-island classification. Body backplate is a separate support region.",
-  "not_a_slice_or_CAD_change": true
-}

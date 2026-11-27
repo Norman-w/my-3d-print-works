@@ -1,8 +1,0 @@
-{
-  "sha256": "a314bc26aa005eee0289fc6c962b997e3ddfcbc9bb17b6f58ad03561c441f94f",
-  "local_helix_anchor_z": 5.44,
-  "phase_at_seated_z_deg": 129.6,
-  "old_length_mm": 45,
-  "print_target": false,
-  "purpose": "Thread-only legacy test; short length is not full v5 functional compatibility"
-}

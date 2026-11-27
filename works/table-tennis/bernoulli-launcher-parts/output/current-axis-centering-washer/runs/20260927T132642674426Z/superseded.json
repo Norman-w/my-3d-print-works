@@ -1,5 +1,0 @@
-{
-  "status": "SUPERSEDED_BUDGET_REFERENCE_CORRECTION",
-  "reason": "Tilt lever arm must start at first guaranteed full g6 section, .05 mm shoulderward of seating face; use 2.60 rather than 2.55 mm. Prior numerical bound remained positive but omitted this .05 arm.",
-  "native_geometry_source_unchanged": true
-}
