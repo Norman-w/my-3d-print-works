@@ -41,7 +41,9 @@ lower_lead_length = 1.20;      // -Z 端入口导入长度
 lower_wall = 4.20;
 
 // ---------- 主体过渡 ----------
-transition_length = 6.0;
+transition_length = 10.0;      // 拉长缩径段，降低薄肩处的应力集中
+transition_ring_radius = 2.40; // 上段根部连续圆弧加强环
+transition_ring_offset = 1.20; // 圆弧中心相对上段外半径向外偏移
 
 function female_minor_d(male_root_d) = male_root_d + 2 * radial_clearance;
 function female_major_d(male_major_d) = male_major_d + 2 * radial_clearance;
@@ -145,6 +147,11 @@ module outer_body() {
         cylinder(d = lower_outer_d, h = lower_section_height);
         translate([0, 0, transition_z0])
             cylinder(d1 = lower_outer_d, d2 = top_outer_d, h = transition_length);
+        // 圆弧加强环跨过缩径段与上段圆柱的连接根部，避免尖锐薄肩。
+        translate([0, 0, transition_z1 - 0.50])
+            rotate_extrude(convexity = 10)
+                translate([top_outer_d / 2 + transition_ring_offset, 0, 0])
+                    circle(r = transition_ring_radius, $fn = 48);
         translate([0, 0, transition_z1])
             cylinder(d = top_outer_d, h = top_thread_length + top_lead_length);
     }
