@@ -1,0 +1,19 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+tmp/
+work/
+
+# Local printer jobs and machine-specific credentials.
+*.gcode
+*.gcode.3mf
+bambu.local*.json
+!bambu.local.example.json
+
+# Editor and OS state.
+.idea/
+.vscode/
+*.swp
