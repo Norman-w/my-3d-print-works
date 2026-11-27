@@ -1,0 +1,1990 @@
+#!/usr/bin/env python3
+"""检查中心 R3C3 离合的 OpenSCAD 几何扫掠与采购件接口。
+
+这是导出/解析层的几何门槛，不等同于打印配合、磁铁极性、低速负载或
+20 次实体循环验收。
+"""
+
+# ===== 分区：导入/依赖 =====
+from __future__ import annotations
+
+import argparse
+import json
+import struct
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+# ===== 分区：常量/配置 =====
+MOVING_PARTS = (
+    "center_input_rotor",
+    "center_input_shaft",
+    "center_input_sleeve",
+    "center_input_sleeve_magnet",
+)
+FIXED_PARTS = (
+    "center_output_rotor",
+    "center_output_bearing_bar",
+    "center_linear_bearings",
+    "center_mechanism_plate",
+    "center_output_shaft",
+    "center_output_bearings",
+    "vertical_spline_bearing_support",
+    "vertical_spline_bearing_upper_support",
+    "vertical_spline_bearings",
+    "front_gear",
+    "front_pulley",
+    "front_timing_bearing_support",
+    "front_timing_bearing",
+    "front_d_axis",
+    "drawer_body",
+)
+PRINTED_PARTS = {
+    "center_input_rotor",
+    "center_output_rotor",
+    "center_output_bearing_bar",
+    "center_mechanism_plate",
+    "center_input_sleeve",
+    "vertical_spline_bearing_support",
+    "vertical_spline_bearing_upper_support",
+    "front_gear",
+    "front_pulley",
+    "front_timing_bearing_support",
+    "drawer_body",
+}
+TOLERANCE_MM = 0.02
+CLEARANCE_FLOOR_MM = 0.45
+INTERSECTION_VOLUME_TOLERANCE_MM3 = 0.01
+X1C_BUILD_VOLUME_MM = (256.0, 256.0, 256.0)
+MERGE_STL_SCRIPT = Path(__file__).resolve().with_name("merge_binary_stl.py")
+
+# ===== 分区：模型/类型 =====
+Contract = dict[str, object]
+Bounds = dict[str, list[float]]
+
+# ===== 分区：私有成员 =====
+def fail(message: str) -> None:
+    raise RuntimeError(message)
+
+
+def number(contract: Contract, key: str) -> float:
+    value = contract.get(key)
+    if not isinstance(value, (int, float)):
+        fail(f"契约数值字段无效: {key}={value!r}")
+    return float(value)
+
+
+def close(actual: float, expected: float, tolerance: float = TOLERANCE_MM) -> bool:
+    return abs(actual - expected) <= tolerance
+
+
+def expect_close(
+    actual: float,
+    expected: float,
+    label: str,
+    tolerance: float = TOLERANCE_MM,
+) -> None:
+    if not close(actual, expected, tolerance):
+        fail(f"{label}: 实际={actual:.4f} mm, 期望={expected:.4f} mm")
+
+
+def expect_at_least(actual: float, expected: float, label: str) -> None:
+    if actual < expected - TOLERANCE_MM:
+        fail(f"{label}: 实际={actual:.4f} mm, 需要至少={expected:.4f} mm")
+
+
+def expect_between(actual: float, minimum: float, maximum: float, label: str) -> None:
+    if actual < minimum - TOLERANCE_MM or actual > maximum + TOLERANCE_MM:
+        fail(
+            f"{label}: 实际={actual:.4f}, 允许范围={minimum:.4f}..{maximum:.4f}"
+        )
+
+
+def open_scad_command(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+    part: str,
+    engaged: bool,
+    travel_mm: float | None = None,
+    selected_row: int = 1,
+    selected_column: int = 2,
+) -> list[str]:
+    travel = travel_mm if travel_mm is not None else (3.0 if engaged else 0.0)
+    return [
+        str(openscad),
+        "--backend", "Manifold", "--export-format", "binstl",
+        "-D", "QUALITY=2", "-D", f'CLUTCH_PART="{part}"',
+        "-D", f"ENGAGED={'true' if engaged else 'false'}",
+        "-D", f"CENTER_CLUTCH_TRAVEL_MM={travel:.6f}",
+        "-D", f"SELECTED_COLUMN={selected_column}",
+        "-D", f"SELECTED_ROW={selected_row}",
+        "-o", str(output), str(scad),
+    ]
+
+
+def run_export(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+    part: str,
+    engaged: bool,
+    travel_mm: float | None = None,
+    selected_row: int = 1,
+    selected_column: int = 2,
+) -> None:
+    completed = subprocess.run(
+        open_scad_command(
+            openscad,
+            scad,
+            output,
+            part,
+            engaged,
+            travel_mm,
+            selected_row,
+            selected_column,
+        ),
+        cwd=scad.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0 or not output.is_file() or output.stat().st_size == 0:
+        detail = (completed.stderr or completed.stdout)[-3000:]
+        fail(
+            f"OpenSCAD 导出失败: {part} engaged={engaged} travel={travel_mm}\n{detail}"
+        )
+
+
+def inspect(inspect_py: Path, stl: Path) -> dict[str, object]:
+    completed = subprocess.run(
+        ["python3", str(inspect_py), str(stl), "--json"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0:
+        fail(f"STL 检查失败: {stl.name}\n{completed.stdout}\n{completed.stderr}")
+    try:
+        return json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        fail(f"STL 检查不是 JSON: {stl}: {exc}")
+
+
+def merge_binary_stls(output: Path, inputs: list[Path]) -> None:
+    completed = subprocess.run(
+        [sys.executable, str(MERGE_STL_SCRIPT), str(output), *(str(path) for path in inputs)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if completed.returncode != 0 or not output.is_file() or output.stat().st_size < 84:
+        detail = (completed.stderr or completed.stdout)[-3000:]
+        fail(f"多壳 STL 合并失败: {output}\n{detail}")
+
+
+def stl_component_y_spans(stl: Path) -> list[float]:
+    """Return Y spans of binary-STL connected components for one-source checks."""
+    data = stl.read_bytes()
+    if len(data) < 84:
+        fail(f"STL 太短，无法检查连接岛: {stl}")
+    triangle_count = struct.unpack_from("<I", data, 80)[0]
+    triangles: list[list[tuple[float, float, float]]] = []
+    offset = 84
+    for _ in range(triangle_count):
+        if offset + 50 > len(data):
+            fail(f"STL 三角形数据截断: {stl}")
+        offset += 12
+        triangle: list[tuple[float, float, float]] = []
+        for _ in range(3):
+            triangle.append(struct.unpack_from("<3f", data, offset))
+            offset += 12
+        offset += 2
+        triangles.append(triangle)
+    edge_owner: dict[tuple[tuple[float, float, float], tuple[float, float, float]], int] = {}
+    adjacent = [set() for _ in triangles]
+    for index, triangle in enumerate(triangles):
+        rounded = [tuple(round(value, 3) for value in vertex) for vertex in triangle]
+        for first, second in ((0, 1), (1, 2), (2, 0)):
+            edge = tuple(sorted((rounded[first], rounded[second])))
+            previous = edge_owner.get(edge)
+            if previous is None:
+                edge_owner[edge] = index
+            else:
+                adjacent[index].add(previous)
+                adjacent[previous].add(index)
+    seen: set[int] = set()
+    spans: list[float] = []
+    for start in range(len(triangles)):
+        if start in seen:
+            continue
+        stack = [start]
+        seen.add(start)
+        points: list[tuple[float, float, float]] = []
+        while stack:
+            index = stack.pop()
+            points.extend(triangles[index])
+            for neighbour in adjacent[index]:
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    stack.append(neighbour)
+        spans.append(max(point[1] for point in points) - min(point[1] for point in points))
+    return sorted(spans, reverse=True)
+
+
+def run_center_mechanism_plate_export(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+    inspect_py: Path,
+    temp_dir: Path,
+) -> dict[str, object]:
+    row_stls: list[Path] = []
+    for row in range(3):
+        row_stl = temp_dir / f"center_mechanism_row_{row}.stl"
+        run_export(
+            openscad,
+            scad,
+            row_stl,
+            "center_mechanism_row_plate_debug",
+            False,
+            0.0,
+            selected_row=row,
+        )
+        row_report = inspect(inspect_py, row_stl)
+        assert_watertight(row_report, row_stl.name)
+        row_stls.append(row_stl)
+    merge_binary_stls(output, row_stls)
+    report = inspect(inspect_py, output)
+    assert_watertight(report, output.name)
+    return report
+
+
+def bounds(report: dict[str, object]) -> Bounds:
+    raw = report.get("bounds")
+    if not isinstance(raw, dict):
+        fail("STL 检查缺少 bounds")
+    minimum = raw.get("min")
+    maximum = raw.get("max")
+    if not isinstance(minimum, list) or not isinstance(maximum, list):
+        fail("STL bounds 格式无效")
+    if len(minimum) != 3 or len(maximum) != 3:
+        fail("STL bounds 必须有 XYZ 三个分量")
+    return {
+        "min": [float(value) for value in minimum],
+        "max": [float(value) for value in maximum],
+    }
+
+
+def assert_watertight(report: dict[str, object], label: str) -> None:
+    if report.get("watertightByEdgeTopology") is not True:
+        fail(f"{label} 不是闭合流形")
+
+
+def run_intersection_export(
+    openscad: Path,
+    scad: Path,
+    output: Path,
+    inspect_py: Path,
+    part: str,
+    engaged: bool,
+    travel_mm: float | None = None,
+) -> bool:
+    completed = subprocess.run(
+        open_scad_command(openscad, scad, output, part, engaged, travel_mm),
+        cwd=scad.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    combined = completed.stdout + completed.stderr
+    if completed.returncode != 0 and "Current top level object is empty" not in combined:
+        fail(f"交集见证导出失败: {part} travel={travel_mm}\n{combined[-3000:]}")
+    if not output.is_file() or output.stat().st_size < 84:
+        return False
+    raw = output.read_bytes()
+    triangles = struct.unpack_from("<I", raw, 80)[0]
+    if triangles == 0:
+        return False
+    report = inspect(inspect_py, output)
+    volume = report.get("volume")
+    if not isinstance(volume, (int, float)):
+        fail(f"交集见证缺少体积: {part} travel={travel_mm}")
+    return abs(float(volume)) > INTERSECTION_VOLUME_TOLERANCE_MM3
+
+
+def validate_contract(contract: Contract) -> None:
+    if contract.get("axis") != "+Y" or contract.get("role") != "input/output":
+        fail("中心离合不是 +Y input/output 契约")
+    if contract.get("verticalLayoutMode") != "drawer-bottom-drive-layer-lower-pulley":
+        fail("中心离合没有使用抽屉底部主动轮+下层同步轮布局")
+    if contract.get("rearClutchCarrierMode") != "row-strip":
+        fail("后仓离合必须使用按层连续横向承载板")
+    for key, expected, label in (
+        ("cabinetWidthMm", 250.0, "箱体总宽"),
+        ("serviceWidthMm", 44.0, "X- 服务区宽度"),
+        ("gridWidthMm", 199.6, "五列抽屉区净宽"),
+        ("drawerBayWidthMm", 38.0, "抽屉格净宽"),
+        ("drawerColumnPitchMm", 40.4, "抽屉列节距"),
+        ("rearClutchRowPlateLengthMm", 195.6, "连续离合行板长度"),
+        ("rearClutchRowPlateX0Mm", 49.2, "连续离合行板 X- 起点"),
+        ("rearClutchRowPlateX1Mm", 244.8, "连续离合行板 X+ 终点"),
+        ("rearClutchRowPlateLeftClearanceMm", 2.0, "连续离合行板左侧净空"),
+        ("rearClutchRowPlateRightClearanceMm", 2.0, "连续离合行板右侧净空"),
+        ("snakeChainReturnDriveXTrimMm", -4.00, "蛇链上方回程轮 X 相位偏移"),
+        ("snakeChainServicePressXTrimMm", 16.00, "蛇链下方回程轮 X 相位偏移"),
+        ("snakeChainMotorXOffsetMm", -2.00, "蛇链电机轮 X 偏移"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_close(number(contract, "rearClutchRowPlateCount"), 3.0, "连续离合行板数量", 0.001)
+    expect_close(number(contract, "rearClutchRowPlateStationCount"), 5.0, "每条连续行板站点数量", 0.001)
+    expect_close(number(contract, "centerClutchDriveLayerOffsetMm"), 0.0, "中心驱动层偏置", 0.001)
+    expect_close(number(contract, "centerClutchVerticalLiftMm"), 0.0, "兼容垂直偏置", 0.001)
+    if contract.get("actuation") != "permanent-magnet":
+        fail("中心离合不是纯永磁动作契约")
+    if contract.get("engageOnlyWhenStopped") is not True:
+        fail("中心离合没有停稳接合门槛")
+    if contract.get("releaseBeforeReturn") is not True:
+        fail("中心离合没有释放后返回门槛")
+    if contract.get("inputSideAdditionalMechanism") != "none":
+        fail("公轮端仍声明存在其他机构")
+    if contract.get("linearBearingMovesWithInput") is not False:
+        fail("固定长方条 LM3UU 不能随公轮移动")
+    if contract.get("inputShaftProfile") != "D-round-D":
+        fail("公轮轴截面必须是 D-round-D")
+    if contract.get("linearBearingModel") != "LM3UU-cutaway-reference":
+        fail("直线轴承采购参考不是 LM3UU")
+    if contract.get("linearBearingBlockMount") != "mechanism-plate-integral-press-fit":
+        fail("直线轴承座必须与机构板一体成型并采用压入固定")
+    if contract.get("linearBearingArrangement") != "single-coaxial-with-integrated-seat":
+        fail("直线轴承必须是固定座内的公轮同轴单枚配置")
+    if contract.get("rotaryBearingArrangement") != "output-two-3x6x2-in-one-integral-bar-input-free":
+        fail("当前公轮端不应残留输入旋转轴承组")
+    if contract.get("drawerGuideBearing") != "681-1x3x1-X-axis-C-slot":
+        fail("抽屉导向轴承必须改为 X 轴 C 槽结构")
+    if contract.get("drawerGuideRail") != "partition-integral-inward-C-lips":
+        fail("抽屉导向轨必须是依托立板、唇边向格内伸出的 C 槽")
+    if contract.get("drawerGuideRailSupport") != "existing-divider-or-side-panel-vertical-member":
+        fail("抽屉导向 C 槽必须直接依托现有立板/侧板")
+    if contract.get("drawerGuideFlangeDirection") != "toward-drawer-center":
+        fail("抽屉侧凸缘必须朝本格内侧伸出")
+    if contract.get("drawerGuideBearingArrangement") != "tail-moving-plus-front-lower-fixed":
+        fail("抽屉导向轴承布置不是尾部随动+前端下方承托")
+    if contract.get("drawerGuideBearingAxis") != "+X/-X":
+        fail("抽屉导向轴承轴向必须是 X")
+    if contract.get("drawerGuideLoadPath") != "Y-support-Z-travel":
+        fail("抽屉导向载荷路径必须是 Y 承力、Z 运动")
+    if contract.get("drawerBodyPart") != "cabinet-clutch/20_drawer_body_candidate":
+        fail("真实抽屉壳体必须使用唯一 20_drawer_body_candidate 源件")
+    expect_close(
+        number(contract, "drawerBodyOuterWidthMm"),
+        number(contract, "drawerBayWidthMm")
+        - 2 * number(contract, "drawerGuideDrawerEdgeInsetMm"),
+        "真实抽屉壳体外宽",
+    )
+    expect_close(
+        number(contract, "drawerBodyOuterHeightMm"),
+        number(contract, "drawerBayHeightMm")
+        - 2 * number(contract, "drawerGuideDrawerEdgeInsetMm"),
+        "真实抽屉壳体外高",
+    )
+    expect_close(
+        number(contract, "drawerBodyDepthMm"),
+        number(contract, "drawerBodyFrontZMm")
+        - number(contract, "drawerBodyRearZMm"),
+        "真实抽屉壳体 Z 深度",
+    )
+    expect_close(number(contract, "drawerBodyRearZMm"), -59.6, "真实抽屉壳体后端 Z")
+    expect_close(number(contract, "drawerBodyFrontZMm"), -0.2, "真实抽屉壳体前端 Z")
+    for key, label in (
+        ("drawerBodyWallMm", "真实抽屉壳体侧壁厚度"),
+        ("drawerBodyFloorMm", "真实抽屉壳体底板厚度"),
+        ("drawerBodyFrontWallMm", "真实抽屉壳体前壁厚度"),
+        ("drawerBodyRearWallMm", "真实抽屉壳体后壁厚度"),
+        ("drawerBodyGuideReliefClearanceMm", "真实抽屉 C 槽让位余量"),
+        ("drawerBodyDriveClearanceMm", "真实抽屉齿排/主动轮让位余量"),
+    ):
+        if number(contract, key) <= 0:
+            fail(f"{label}必须为正")
+    if number(contract, "drawerBodyOuterWidthMm") <= 2 * number(contract, "drawerBodyWallMm"):
+        fail("真实抽屉壳体侧壁占满外宽，无法形成内腔")
+    if number(contract, "drawerBodyOuterHeightMm") <= number(contract, "drawerBodyFloorMm"):
+        fail("真实抽屉壳体底板占满外高，无法形成内腔")
+    if number(contract, "drawerBodyDepthMm") <= number(contract, "drawerBodyRearWallMm") + number(contract, "drawerBodyFrontWallMm"):
+        fail("真实抽屉壳体前后壁占满 Z 深度，无法形成内腔")
+    if contract.get("outputShaftProfile") != "D-round":
+        fail("输出轴截面必须是短 D-round")
+    if contract.get("outputBearingSupportPart") != "cabinet-clutch/center_mechanism_plate":
+        fail("输出轴承固定条必须与离合机构板一体")
+    if contract.get("verticalSplineBearingNominal") != "3x6x2":
+        fail("抽屉电机花键轴固定轴承必须是 3x6x2")
+    if contract.get("verticalSplineBearingSupport") != "removable-floor-carrier-plus-roof-boss-mounted-upper-carrier":
+        fail("花键轴承必须是下方 Boss 板 + 屋顶 Boss 套板 + 下方蘑菇头 M3")
+    if contract.get("verticalSplineBearingCarrierBossMount") != "top-washer-or-wide-head-M3-over-5.2-hole":
+        fail("花键轴承承载板必须由垫片或大头 M3 螺丝压在 5.2 mm 通孔上")
+    if contract.get("verticalSplineBearingSupportPart") != "cabinet-clutch/vertical_spline_bearing_support":
+        fail("花键轴承固定条输出件路径错误")
+    if contract.get("verticalSplineBearingUpperSupportPart") != "cabinet-clutch/vertical_spline_bearing_upper_support":
+        fail("上方花键轴承支撑必须是独立可拆承载板")
+    if contract.get("verticalSplineBearingsPart") != "cabinet-clutch/vertical_spline_bearings_reference":
+        fail("花键轴承采购件输出路径错误")
+    expect_close(number(contract, "verticalSplineBearingCount"), 5.0, "花键轴列数", 0.001)
+    expect_close(number(contract, "verticalSplineBearingUpperCount"), 5.0, "上方花键轴承数量", 0.001)
+    expect_close(number(contract, "verticalSplineBearingTotalCount"), 10.0, "上下花键轴承总数", 0.001)
+    expect_close(
+        number(contract, "verticalSplineBearingTotalCount"),
+        number(contract, "verticalSplineBearingCount")
+        + number(contract, "verticalSplineBearingUpperCount"),
+        "上下花键轴承数量合计",
+        0.001,
+    )
+    if contract.get("plateSupport") != "partition-boss-locators-plus-four-self-tapping-screws":
+        fail("离合机构板必须使用隔板圆 Boss 定位和自攻螺丝固定")
+    if contract.get("partitionMountType") != "skp-mm-d-receiver-plus-open-d-ring-cover-full-d-screw-face":
+        fail("前后仓隔板必须使用 SKP 毫米 D 泪滴耳接收件+全外轮廓开放 D 环外套")
+    if contract.get("partitionMountScrewEntry") != "-X,+X,+Y,-Y":
+        fail("前后仓隔板螺丝轴线必须覆盖 x+/x-/y-/y+ 四条边")
+    if contract.get("partitionMountScrewAxes") != "-X,+X,+Y,-Y":
+        fail("前后仓隔板挂接件方向契约必须覆盖 -X,+X,+Y,-Y")
+    if contract.get("partitionMountInstallDirection") != "+Z":
+        fail("前后仓隔板装入方向必须是从后向前的 +Z")
+    if contract.get("partitionReferenceReceiverCapDirection") != "-Z":
+        fail("箱体接收件圆头必须朝 -Z")
+    if contract.get("partitionReferenceReceiverProfile") != "D-r3-straight9-through-hole2p4":
+        fail("箱体接收件必须是 SKP 的 R3/直段9/通孔2.4 D 泪滴耳")
+    if contract.get("partitionMountSleeveEntryProfile") != "full-width-d-mouth-no-narrow-neck":
+        fail("隔板外套入口必须按 D 泪滴耳全宽开放，不能有窄 C 收口")
+    if contract.get("partitionMountSleeveCrossSectionProfile") != "skp-open-d-ring-around-d-door-full-d-screw-face":
+        fail("隔板外套必须是 SKP 开放 D 环包住 D 泪滴耳并保留完整外 D 螺丝面")
+    if contract.get("partitionMountSleeveMouthProfile") != "complete-d-profile-entry":
+        fail("隔板外套入口必须是完整 D 泪滴轮廓")
+    if contract.get("partitionMountSleeveSupportType") != "integral-skp-cover-to-partition-with-dual-root-ribs":
+        fail("隔板开放 D 环外套必须用双根部肋与隔板一体连接")
+    if contract.get("partitionMountInsertionReliefType") != "open-edge-slot-full-width-entry":
+        fail("隔板挂接导入让位必须是全宽开放槽，而不是收口 C 槽")
+    if contract.get("partitionServiceWindowType") != "compact-x-minus-service-column-plus-compact-y-minus-service-row":
+        fail("隔板必须按 Three.js 左手坐标保留连续但收窄的 x- / y- 服务通道")
+    if contract.get("partitionMountLoadPath") != "cabinet-wall-receiver-to-partition-sleeve":
+        fail("前后仓隔板承力路径必须落在箱体墙接收件与隔板套筒")
+    if contract.get("partitionMountPanelRole") != "locating-sleeve-and-clamped-independent-panel":
+        fail("前后仓隔板挂接件角色错误")
+    expect_close(number(contract, "partitionMountCount"), 8.0, "隔板四边各两套壁法向挂接点数量", 0.001)
+    expect_close(number(contract, "partitionMountPerSideCount"), 2.0, "隔板每边挂接点数量", 0.001)
+    for key, expected, label in (
+        ("partitionReferenceReceiverLengthMm", 12.0, "SKP 箱体泪滴耳总长"),
+        ("partitionReferenceReceiverHeightMm", 6.0, "SKP 箱体泪滴耳总高"),
+        ("partitionReferenceReceiverThicknessMm", 3.0, "SKP 箱体泪滴耳厚度"),
+        ("partitionReferenceReceiverRadiusMm", 3.0, "SKP 箱体泪滴耳圆头半径"),
+        ("partitionReferenceReceiverStraightMm", 9.0, "SKP 箱体泪滴耳直段"),
+        ("partitionReferenceReceiverHoleDiameterMm", 2.4, "SKP 箱体泪滴耳通孔"),
+        ("partitionReferenceCoverLengthMm", 14.0, "SKP 隔板泪滴外套总长"),
+        ("partitionReferenceCoverHeightMm", 10.0, "SKP 隔板泪滴外套总高"),
+        ("partitionReferenceCoverRadiusMm", 5.0, "SKP 隔板泪滴外套外圆头半径"),
+        ("partitionReferenceCoverInnerRadiusMm", 3.0, "SKP 隔板泪滴外套内圆头半径"),
+        ("partitionReferenceCoverStraightMm", 9.0, "SKP 隔板泪滴外套直段"),
+        ("partitionReferenceCoverBaseDepthMm", 3.0, "SKP 隔板泪滴外套 U 环深"),
+        ("partitionReferenceCoverStepDepthMm", 2.0, "SKP 隔板泪滴外套 D 台阶深"),
+        ("partitionReferenceCoverTotalDepthMm", 5.0, "SKP 隔板泪滴外套总深"),
+        ("partitionReferenceCoverHoleDiameterMm", 3.0, "SKP 隔板泪滴外套螺丝孔"),
+        ("partitionReferenceRoundSleeveOuterDiameterMm", 5.0, "SKP 独立圆套外径"),
+        ("partitionReferenceRoundSleeveInnerDiameterMm", 3.0, "SKP 独立圆套内径"),
+        ("partitionReferenceRoundSleeveLengthMm", 7.0, "SKP 独立圆套总长"),
+        ("partitionReferenceRoundSleeveCollarDepthMm", 2.0, "SKP 独立圆套台阶深"),
+        ("partitionMountSleeveMouthWidthMm", 10.0, "隔板完整D入口宽"),
+        ("partitionMountSleeveSupportArmWidthMm", 2.0, "隔板开放D环外套承力臂宽"),
+        ("partitionMountSleeveSupportArmLengthMm", 7.0, "隔板开放D环外套承力臂长"),
+        ("partitionMountSleeveSupportPlateOverlapMm", 3.0, "隔板开放D环外套与板厚重叠"),
+        ("partitionMountSleeveSupportRootOverlapMm", 2.0, "隔板开放D环外套与根部重叠"),
+        ("partitionMountSleeveSupportRibWidthMm", 2.0, "隔板开放D环外套根部肋宽"),
+        ("partitionMountSleeveSupportRibTangentClearanceMm", 0.2, "隔板开放D环外套根部肋切向净空"),
+        ("partitionMountSleeveWallMm", 2.0, "隔板套筒壁厚"),
+        ("partitionMountSleeveLengthMm", 5.0, "隔板套筒轴向长度"),
+        ("partitionFramePlateClearanceMm", 0.3, "隔板外框内净装配间隙"),
+        ("partitionFramePlateX0Mm", 3.5, "隔板内净 X 起点"),
+        ("partitionFramePlateY0Mm", 3.5, "隔板内净 Y 起点"),
+        ("partitionFramePlateWidthMm", 243.0, "隔板内净宽"),
+        ("partitionFramePlateHeightMm", 227.8, "隔板内净高"),
+        ("partitionMountEdgeMarginMm", 36.0, "隔板四边挂接件边距"),
+        ("partitionMountXSideLowYMm", 76.2, "隔板 x+ 边 y- 挂接件 Y 坐标"),
+        ("partitionMountXSideHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标"),
+        ("partitionMountXPlusLowYMm", 76.2, "隔板 x+ 边 y- 挂接件 Y 坐标"),
+        ("partitionMountXPlusHighYMm", 195.3, "隔板 x+ 边高位挂接件 Y 坐标"),
+        ("partitionMountXMinusLowYMm", 18.0, "隔板 x- 边低位挂接件 Y 坐标"),
+        ("partitionMountXMinusHighYMm", 195.3, "隔板 x- 边高位挂接件 Y 坐标"),
+        ("partitionMountYSideLowXMm", 39.5, "隔板 y 边低位挂接件 X 坐标"),
+        ("partitionMountYSideHighXMm", 210.5, "隔板 y 边高位挂接件 X 坐标"),
+        ("partitionReferenceCoverScrewFaceRadiusMm", 5.0, "隔板完整外D螺丝面圆头半径"),
+        ("partitionReferenceCoverScrewFaceStraightMm", 9.0, "隔板完整外D螺丝面直段"),
+        ("partitionMountInsertionReliefWidthMm", 10.2, "隔板挂接导入槽宽"),
+        ("partitionMountInsertionReliefDepthMm", 3.1, "隔板挂接导入槽深"),
+        ("partitionMountInsertionReliefEndClearanceMm", 0.1, "隔板挂接导入槽止端余量"),
+        ("partitionServiceWindowX0Mm", 2.5, "隔板服务窗 X 起点"),
+        ("partitionServiceWindowX1Mm", 15.5, "隔板服务窗 X 终点"),
+        ("partitionServiceWindowY0Mm", 2.5, "隔板服务窗 Y 起点"),
+        ("partitionServiceWindowY1Mm", 15.5, "隔板服务窗 Y 终点"),
+        ("partitionServiceWindowWidthMm", 13.0, "隔板服务窗宽"),
+        ("partitionServiceWindowHeightMm", 13.0, "隔板服务窗高"),
+        ("partitionServiceWindowCornerRadiusMm", 0.0, "隔板服务窗圆角"),
+        ("partitionServiceCutOvertravelMm", 1.0, "隔板服务口过切量"),
+        ("partitionServiceXMinusOpenX0Mm", 2.5, "隔板 x- 服务口 X 起点"),
+        ("partitionServiceXMinusOpenX1Mm", 15.5, "隔板 x- 服务口 X 终点"),
+        ("partitionServiceXMinusOpenY0Mm", 2.5, "隔板 x- 服务口 Y 起点"),
+        ("partitionServiceXMinusOpenY1Mm", 232.3, "隔板 x- 服务口 Y 终点"),
+        ("partitionServiceXMinusOpenWidthMm", 13.0, "隔板 x- 服务口宽"),
+        ("partitionServiceXMinusOpenHeightMm", 229.8, "隔板 x- 服务口高"),
+        ("partitionServiceYMinusOpenX0Mm", 2.5, "隔板 y- 服务口 X 起点"),
+        ("partitionServiceYMinusOpenX1Mm", 247.5, "隔板 y- 服务口 X 终点"),
+        ("partitionServiceYMinusOpenY0Mm", 2.5, "隔板 y- 服务口 Y 起点"),
+        ("partitionServiceYMinusOpenY1Mm", 15.5, "隔板 y- 服务口 Y 终点"),
+        ("partitionServiceYMinusOpenWidthMm", 245.0, "隔板 y- 服务口宽"),
+        ("partitionServiceYMinusOpenHeightMm", 13.0, "隔板 y- 服务口高"),
+        ("partitionServiceXMinusOpenCornerRadiusMm", 0.0, "隔板 x- 服务口圆角"),
+        ("partitionServiceYMinusOpenCornerRadiusMm", 0.0, "隔板 y- 服务口圆角"),
+        ("partitionServiceMountPierHalfWidthMm", 8.0, "隔板安装耳承力墩半宽"),
+        ("partitionServiceRemainingGridWebXMm", 31.7, "隔板 x- 服务口后剩余承力网格宽"),
+        ("partitionServiceRemainingGridWebYMm", 45.4, "隔板 y- 服务口后剩余承力网格高"),
+        ("partitionSleeveFrontOverlapMm", 0.0, "隔板套 z+ 实体重叠"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_close(
+        number(contract, "partitionMountCenterZMm")
+        + number(contract, "partitionReferenceCoverStraightMm")
+        - number(contract, "partitionBeltPassagePlateZMm")
+        - number(contract, "partitionBeltPassagePlateThicknessMm"),
+        number(contract, "partitionSleeveFrontOverlapMm"),
+        "隔板开放D环外套平面/隔板前表面实体重叠",
+        0.001,
+    )
+    expect_close(number(contract, "platePartitionGapMm"), 0.0, "机构板/隔板贴合间隙", 0.001)
+    expect_close(number(contract, "partitionBossPerCellCount"), 4.0, "每格四角 Boss 数量", 0.001)
+    expect_close(
+        number(contract, "partitionBossCount"),
+        number(contract, "partitionBossPerCellCount") * 15.0,
+        "15 格隔板定位 Boss 总数",
+        0.001,
+    )
+    expect_close(number(contract, "plateFastenerCount"), 4.0, "机构板自攻螺丝数量", 0.001)
+    expect_close(
+        number(contract, "partitionBossHeightDeficitMm"),
+        0.50,
+        "隔板定位 Boss 高度差",
+        0.001,
+    )
+    expect_close(number(contract, "partitionBossCenterOffsetXMm"), 12.0, "每格 Boss X 角距", 0.001)
+    expect_close(number(contract, "partitionBossCenterOffsetYMm"), 4.0, "每格 Boss Y 角距", 0.001)
+    expect_close(
+        number(contract, "partitionSelfTapPilotDepthMm")
+        + number(contract, "partitionSelfTapBottomWallMm"),
+        number(contract, "partitionBossHeightMm"),
+        "Boss 内自攻螺丝导孔底厚",
+        0.001,
+    )
+    if contract.get("frontTimingBearingSupport") != "integral-shelf-stepped-seat":
+        fail("前端 3x6x2 轴承座必须是层板一体阶梯座")
+    if contract.get("frontTimingBearingFit") != "press-fit-3x6x2-bottom-captive":
+        fail("前端 3x6x2 轴承必须从上方压入并由底部承托")
+    if contract.get("drawerFrontPinionBearing") != "integral-shelf-stepped-3x6x2":
+        fail("前端主动轮不能残留上方 MR63 固定座")
+
+    for key, expected in {
+        "openGapMm": 0.60, "dogInsertionMm": 2.40, "strokeMm": 3.00,
+        "pocketDepthMm": 3.25, "bottomClearanceMm": 0.85,
+        "magnetNonContactClearanceMm": 0.40, "femaleMagnetProjectionMm": 0.45,
+        "linearBearingNominalIdMm": 3.00, "linearBearingNominalOdMm": 7.00,
+        "linearBearingNominalLengthMm": 10.00, "linearBearingSeatDiameterMm": 7.20,
+        "linearBearingSeatRadialClearanceMm": 0.10,
+        "linearBearingBlockWidthMm": 18.00, "linearBearingBlockYLengthMm": 10.00,
+        "linearBearingBlockZLengthMm": 20.5208,
+        "linearBearingBlockZMarginMm": 1.00,
+        "linearBearingBlockMountHoleDiameterMm": 0.00,
+        "linearBearingBlockMountHoleCount": 0.00,
+        "linearBearingBlockMountXOffsetMm": 0.00,
+        "linearBearingBlockMountYOffsetMm": 0.00,
+        "linearBearingCenterYOffsetMm": -5.40,
+        "linearBearingInputRotorClearanceMm": 0.40,
+        "inputShaftUpperDStartMm": -0.40,
+        "inputShaftUpperDLengthMm": 3.60,
+        "inputShaftRoundStartMm": -17.00,
+        "inputShaftRoundLengthMm": 16.80,
+        "inputShaftLowerDStartMm": -16.80,
+        "inputShaftLowerDLengthMm": 3.60,
+        "inputSleeveTopOffsetMm": -13.40,
+        "inputShaftRoundDiameterMm": 3.00,
+        "inputSleeveMagnetNominalDiameterMm": 5.00,
+        "inputSleeveMagnetNominalLengthMm": 5.00,
+        "inputSleeveMagnetPocketDiameterMm": 5.20,
+        "inputSleeveMagnetPocketDepthMm": 5.20,
+        "outputShaftStartMm": -3.40,
+        "outputShaftLengthMm": 11.00,
+        "outputShaftDStartMm": -3.40,
+        "outputShaftDLengthMm": 3.60,
+        "outputShaftRoundStartMm": -0.20,
+        "outputShaftRoundLengthMm": 7.80,
+        "outputShaftRoundDiameterMm": 3.00,
+        "outputShaftTopProtrusionMm": 0.80,
+        "outputShaftMotherSocketOverlapMm": 3.00,
+        "drawerShelfThicknessMm": 2.40,
+        "centerFrontDriveLiftMm": 2.85,
+        "frontRackAboveShelfGapMm": 0.05,
+        "frontTimingBearingReinforcementDiscDiameterMm": 8.00,
+        "frontTimingBearingReinforcementDiscThicknessMm": 1.00,
+        "frontTimingBearingWidthMm": 2.00,
+        "frontTimingBearingIdMm": 3.00,
+        "frontTimingBearingOdMm": 6.00,
+        "frontTimingBearingSeatDiameterMm": 6.10,
+        "frontTimingBearingSeatDepthMm": 2.00,
+        "frontTimingBearingRetainerThicknessMm": 0.40,
+        "frontTimingBearingRetainerBoreDiameterMm": 3.40,
+        "drawerGuideRailClearanceMm": 0.30,
+        "drawerGuidePartitionThicknessMm": 2.40,
+        "drawerGuideRailAttachOverlapMm": 0.05,
+        "drawerGuideSlotHeightMm": 3.60,
+        "drawerGuideRailDepthMm": 4.50,
+        "drawerGuideFlangeThicknessMm": 2.40,
+        "drawerGuideFlangeProjectionMm": 3.00,
+        "drawerGuideFlangeClearanceMm": 0.30,
+        "drawerGuideDrawerEdgeInsetMm": 1.00,
+        "drawerGuideFlangeEndClearanceMm": 0.50,
+        "drawerGuideFrontSupportClearanceMm": 0.00,
+        "outputBearingBarWidthMm": 14.00,
+        "outputBearingBarYLengthMm": 6.40,
+        "outputBearingBarY0OffsetMm": 0.40,
+        "outputBearingBarZLengthMm": 20.2208,
+        "outputBearingBarZMarginMm": 1.00,
+        "outputBearingBarMotherClearanceMm": 0.40,
+        "outputBearingBarPlateOverlapMm": 0.20,
+        "verticalSplineBearingCount": 5.0,
+        "verticalSplineBearingIdMm": 3.0,
+        "verticalSplineBearingOdMm": 6.0,
+        "verticalSplineBearingWidthMm": 2.0,
+        "verticalSplineBearingSeatDiameterMm": 6.10,
+        "verticalSplineBearingSeatDepthMm": 2.0,
+        "verticalSplineBearingSeatShoulderMm": 0.20,
+        "verticalSplineBearingCarrierBossCount": 8.0,
+        "verticalSplineBearingCarrierPlateThicknessMm": 3.0,
+        "verticalSplineBearingFloorBossOdMm": 5.0,
+        "verticalSplineBearingFloorBossBaseOdMm": 5.0,
+        "verticalSplineBearingFloorBossBaseHeightMm": 3.0,
+        "verticalSplineBearingFloorBossPilotDiameterMm": 2.4,
+        "verticalSplineBearingFloorBossPilotDepthMm": 3.0,
+        "verticalSplineBearingCarrierBossClearDiameterMm": 5.2,
+        "verticalSplineBearingCarrierBossCounterboreDiameterMm": 0.0,
+        "verticalSplineBearingCarrierBossCounterboreDepthMm": 0.0,
+        "verticalSplineBearingTowerBodyXWidthMm": 12.0,
+        "verticalSplineBearingTowerBodyZDepthMm": 12.0,
+        "verticalSplineBearingTowerColumnDiameterMm": 12.0,
+        "verticalSplineBearingTowerBoreDiameterMm": 3.6,
+        "verticalSplineBearingTowerRootFlareHeightMm": 5.5,
+        "verticalSplineBearingTowerRootXWidthMm": 20.0,
+        "verticalSplineBearingTowerRootZDepthMm": 20.0,
+        "verticalSplineBearingTowerCapC5XWidthMm": 20.0,
+        "verticalSplineBearingTowerCapZDepthMm": 14.0,
+        "verticalSplineBearingTowerCapC5ZDepthMm": 18.0,
+        "verticalSplineBearingC5RailWidthMm": 4.5,
+        "verticalSplineBearingC5RailZDepthMm": 16.4,
+        "verticalSplineBearingC5RailCenterOffsetXMm": 8.0,
+        "verticalSplineBearingC5RailBottomCenterOffsetXMm": 10.5,
+        "verticalSplineBearingC5RailRootWidthMm": 6.4,
+        "verticalSplineBearingC5RailRootZDepthMm": 18.4,
+        "verticalSplineBearingC5RailCornerRadiusMm": 1.2,
+        "verticalSplineBearingC5RailClearanceMm": 0.75,
+        "verticalSplineBearingC5RailBottomClearanceMm": 2.3,
+        "verticalSplineBearingLowerDStubLengthMm": 12.0,
+        "verticalSplineBearingUpperDStubLengthMm": 11.7,
+    }.items():
+        expect_close(number(contract, key), expected, f"冻结参数 {key}", 0.001)
+    if number(contract, "centerCol") != 2 or number(contract, "centerRow") != 1:
+        fail("当前几何必须锁定三层柜体中心格")
+    expect_close(
+        number(contract, "frontPinionCenterYMm"),
+        number(contract, "drawerRackYMm"),
+        "前端主动轮/抽屉底部齿排高度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "drawerRackLowerYMm"),
+        number(contract, "drawerShelfTopYMm")
+        + number(contract, "frontRackAboveShelfGapMm"),
+        "直齿排下沿/层板上沿间隙",
+        0.001,
+    )
+    expect_close(number(contract, "drawerRackPitchMm"), 3.0, "直线齿排圆周齿距", 0.001)
+    expect_close(number(contract, "drawerRackGearTeeth"), 16.0, "前端直齿主动轮齿数", 0.001)
+    expect_close(number(contract, "frontTimingPulleyTeeth"), 12.0, "前端 2GT 同步轮齿数", 0.001)
+    expect_close(number(contract, "frontTimingBeltPitchMm"), 2.0, "前端 2GT 同步轮齿距", 0.001)
+    expect_close(
+        number(contract, "drawerRackTravelMmPerShaftTurn"),
+        number(contract, "drawerRackGearTeeth") * number(contract, "drawerRackPitchMm"),
+        "直线齿排每同轴轴转一圈行程",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBeltAdvanceMmPerShaftTurn"),
+        number(contract, "frontTimingPulleyTeeth") * number(contract, "frontTimingBeltPitchMm"),
+        "前端 2GT 每同轴轴转一圈推进量",
+        0.001,
+    )
+    expect_close(
+        number(contract, "drawerRackTravelMmPerShaftTurn")
+        / number(contract, "frontTimingBeltAdvanceMmPerShaftTurn"),
+        2.0,
+        "同轴直齿排/2GT 传动比",
+        0.001,
+    )
+    if number(contract, "drawerRackLowerYMm") <= number(contract, "drawerShelfTopYMm"):
+        fail("直齿排仍沉入完整层板")
+    expect_close(
+        number(contract, "frontTimingBearingUpperFaceYMm"),
+        number(contract, "drawerShelfTopYMm"),
+        "层间轴承上沿/层板上沿齐平",
+        0.001,
+    )
+    if number(contract, "frontTimingPulleyDrawerRow") != number(contract, "centerRow") - 1:
+        fail("前端同步轮没有落在中心抽屉的下一层格口")
+    expect_close(
+        number(contract, "frontPinionLowerFaceYMm"),
+        number(contract, "frontPinionCenterYMm")
+        - number(contract, "frontPinionThicknessMm") / 2.0,
+        "前端主动轮下沿",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingPulleyCenterYMm"),
+        number(contract, "frontTimingBeltYMm"),
+        "前端同步轮/皮带中心",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBearingUpperFaceYMm"),
+        number(contract, "frontTimingBearingCenterYMm")
+        + number(contract, "frontTimingBearingWidthMm") / 2.0,
+        "层间轴承上沿",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBearingLowerFaceYMm"),
+        number(contract, "frontTimingBearingCenterYMm")
+        - number(contract, "frontTimingBearingWidthMm") / 2.0,
+        "层间轴承下沿",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBearingUpperFaceYMm")
+        + number(contract, "frontTimingBearingGearClearanceMm"),
+        number(contract, "frontPinionLowerFaceYMm"),
+        "主动轮/层间轴承间隙",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingPulleyTopYMm")
+        + number(contract, "frontTimingBearingPulleyClearanceMm"),
+        number(contract, "frontTimingBearingLowerFaceYMm"),
+        "同步轮/层间轴承间隙",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingPulleyTopYMm")
+        + number(contract, "frontTimingPulleyToPinionGapMm"),
+        number(contract, "frontPinionLowerFaceYMm"),
+        "前端同步轮/主动轮总层间距",
+        0.001,
+    )
+    if number(contract, "frontTimingBearingWidthMm") >= number(contract, "drawerShelfThicknessMm"):
+        fail("3x6x2 轴承必须在层板内留下底部承托肩")
+    expect_close(
+        number(contract, "frontTimingBearingSeatDepthMm"),
+        number(contract, "frontTimingBearingWidthMm"),
+        "层板轴承座深度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBearingRetainerThicknessMm")
+        + number(contract, "frontTimingBearingWidthMm"),
+        number(contract, "drawerShelfThicknessMm"),
+        "层板轴承底部承托肩厚度",
+        0.001,
+    )
+    if not (
+        number(contract, "frontTimingBearingRetainerBoreDiameterMm")
+        > number(contract, "frontTimingBearingIdMm")
+        and number(contract, "frontTimingBearingRetainerBoreDiameterMm")
+        < number(contract, "frontTimingBearingOdMm")
+    ):
+        fail("层板轴承底部承托孔没有同时放过 D 轴并保留外圈承托")
+    expect_close(
+        number(contract, "frontTimingBearingBossBottomYMm")
+        + number(contract, "frontTimingBearingRetainerThicknessMm"),
+        number(contract, "frontTimingBearingLowerFaceYMm")
+        - number(contract, "frontTimingBearingReinforcementDiscThicknessMm"),
+        "层板一体轴承座底部",
+        0.001,
+    )
+    expect_close(
+        number(contract, "frontTimingBearingBossBottomYMm")
+        + number(contract, "frontTimingBearingRetainerThicknessMm")
+        + number(contract, "frontTimingBearingReinforcementDiscThicknessMm"),
+        number(contract, "frontTimingBearingLowerFaceYMm"),
+        "层板一体轴承座底部含加固圆盘",
+        0.001,
+    )
+    if number(contract, "frontTimingBearingShelfLowerFaceYMm") <= number(contract, "frontTimingBearingBossBottomYMm"):
+        fail("层板一体轴承座没有连续落到下方承托肩")
+    if number(contract, "frontTimingBearingSeatDiameterMm") <= number(contract, "frontTimingBearingOdMm"):
+        fail("层间同步轮轴承座孔没有保留压入余量")
+    if number(contract, "frontTimingBearingIdMm") != number(contract, "shaftDiameterMm"):
+        fail("层间同步轮轴承内径与 D 轴不匹配")
+    if contract.get("frontDshaftProfile") != "D":
+        fail("前端主动轮到同步轮之间必须使用 D 轴")
+    if number(contract, "frontDshaftLengthMm") <= number(contract, "frontTimingBearingWidthMm"):
+        fail("前端 D 轴没有跨过层间轴承")
+    if number(contract, "frontTimingBeltYMm") >= number(contract, "frontPinionCenterYMm"):
+        fail("前端 2GT 皮带没有位于主动轮下方")
+    expect_close(
+        number(contract, "verticalSplineBearingCarrierPlateTopYMm")
+        - number(contract, "verticalSplineBearingCarrierPlateBottomYMm"),
+        number(contract, "verticalSplineBearingCarrierPlateThicknessMm"),
+        "花键轴承可拆承载板 Y 厚度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingFloorBossTopYMm"),
+        number(contract, "verticalSplineBearingCarrierPlateTopYMm"),
+        "圆柱 Boss 顶面/3 mm 承载板上表面齐平",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingCarrierPlateBottomYMm"),
+        3.2,
+        "花键轴承承载板底面/箱体底板顶面",
+        0.001,
+    )
+    if contract.get("verticalSplineBearingCarrierBossMount") != "top-washer-or-wide-head-M3-over-5.2-hole":
+        fail("承载板必须使用垫片或大头 M3 螺丝压在 5.2 mm 通孔上")
+    if number(contract, "verticalSplineBearingCarrierBossCounterboreDiameterMm") != 0 or number(contract, "verticalSplineBearingCarrierBossCounterboreDepthMm") != 0:
+        fail("承载板底部不得保留定位窝")
+    if number(contract, "verticalSplineBearingFloorBossPilotBottomYMm") < 3.2 - 0.001:
+        fail("圆柱 Boss 自攻导孔不能穿透箱体底板")
+    if number(contract, "verticalSplineBearingCarrierBossClearDiameterMm") <= number(contract, "verticalSplineBearingFloorBossOdMm"):
+        fail("承载板 5.2 mm 通孔没有清出 Ø5 mm Boss")
+    expect_close(
+        number(contract, "verticalSplineBearingCenterYMm"),
+        number(contract, "verticalSplineBearingSeatBottomYMm")
+        + number(contract, "verticalSplineBearingWidthMm") / 2.0,
+        "花键轴承座中心",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperSeatBottomYMm"),
+        number(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm"),
+        "上方轴承座/可拆上承载板底面",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperSeatTopYMm"),
+        number(contract, "verticalSplineBearingUpperSeatBottomYMm")
+        + number(contract, "verticalSplineBearingSeatDepthMm"),
+        "上方轴承座深度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperCenterYMm"),
+        number(contract, "verticalSplineBearingUpperSeatBottomYMm")
+        + number(contract, "verticalSplineBearingWidthMm") / 2.0,
+        "上方轴承中心",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperBearingTopYMm"),
+        number(contract, "verticalSplineBearingUpperCenterYMm")
+        + number(contract, "verticalSplineBearingWidthMm") / 2.0,
+        "上方轴承上沿",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperCarrierPlateThicknessMm"),
+        number(contract, "verticalSplineBearingSeatDepthMm")
+        + number(contract, "verticalSplineBearingSeatShoulderMm"),
+        "可拆上承载板厚度",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperCarrierClearanceMm"),
+        number(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm")
+        - number(contract, "verticalSplineBearingUpperPulleyTopYMm"),
+        "可拆上承载板/上方2GT轮净空",
+        0.001,
+    )
+    if number(contract, "verticalSplineBearingUpperCarrierClearanceMm") < 0.45:
+        fail("可拆上承载板与上方 2GT 轮净空不足")
+    if number(contract, "verticalSplineBearingUpperDStubEndYMm") < (
+        number(contract, "verticalSplineBearingUpperBearingTopYMm") - 0.15
+    ):
+        fail("花键齿上端 D 轴没有穿过上方轴承")
+    expect_close(
+        number(contract, "verticalSplineBearingUpperBossCount"),
+        number(contract, "verticalSplineBearingCarrierBossCount"),
+        "上下承载板 Boss 数量",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperBossOdMm"),
+        5.0,
+        "上方屋顶 Boss 外径",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperCarrierBossClearDiameterMm"),
+        5.2,
+        "上方承载板 Boss 通孔",
+        0.001,
+    )
+    if contract.get("verticalSplineBearingUpperBossMount") != "bottom-mushroom-head-M3-into-roof-boss-over-5.2-hole":
+        fail("上方承载板必须由下方蘑菇头 M3 自攻螺丝固定")
+    expect_close(
+        number(contract, "verticalSplineBearingUpperBossTopYMm"),
+        number(contract, "verticalSplineBearingUpperCarrierPlateTopYMm"),
+        "上方屋顶 Boss 顶面/承载板顶面",
+        0.001,
+    )
+    expect_close(
+        number(contract, "verticalSplineBearingUpperBossBottomYMm"),
+        number(contract, "verticalSplineBearingUpperCarrierPlateBottomYMm"),
+        "上方屋顶 Boss 底面/承载板底面",
+        0.001,
+    )
+    if number(contract, "verticalSplineBearingUpperBossPilotDepthMm") >= number(contract, "verticalSplineBearingUpperBossHeightMm"):
+        fail("上方屋顶 Boss 自攻导孔必须保留盲底")
+    if number(contract, "verticalSplineBearingUpperBossPilotTopYMm") >= number(contract, "verticalSplineBearingUpperBossTopYMm"):
+        fail("上方屋顶 Boss 自攻导孔不得穿透顶框")
+    if number(contract, "verticalSplineBearingCapBottomYMm") <= number(contract, "verticalSplineBearingChainTopYMm") + 0.45:
+        fail("花键轴承座下沿进入蛇链回程包络")
+    if number(contract, "verticalSplineBearingCapTopYMm") >= number(contract, "verticalSplineBearingLowerPulleyBottomYMm") - 0.45:
+        fail("花键轴承座上沿进入下方 2GT 轮包络")
+    for key, label in (
+        ("verticalSplineBearingReturnGuideClearanceMm", "8T 蛇链导向轮"),
+        ("verticalSplineBearingLowerPulleyClearanceMm", "下方 2GT 轮"),
+        ("verticalSplineBearingReturnDriveClearanceMm", "12T 蛇链回程主动轮"),
+    ):
+        if number(contract, key) < 0.45:
+            fail(f"花键轴承支架与{label}净空不足")
+    if contract.get("verticalSplineBearingC5RailProfile") != "rounded-trapezoid-xy-with-rounded-xz-section":
+        fail("C5 电机侧支撑必须是 XY 圆角梯形、XZ 圆角矩形截面")
+    if number(contract, "verticalSplineBearingC5RailBottomClearanceMm") < 0.45:
+        fail("C5 支撑根部与电机包络净空不足")
+    if number(contract, "verticalSplineBearingC5RailRootWidthMm") <= number(contract, "verticalSplineBearingC5RailWidthMm"):
+        fail("C5 支撑根部必须比上段更宽")
+    if number(contract, "verticalSplineBearingC5RailRootZDepthMm") <= number(contract, "verticalSplineBearingC5RailZDepthMm"):
+        fail("C5 支撑根部必须比上段更深")
+    expect_close(
+        number(contract, "verticalSplineBearingBarZLengthMm"),
+        number(contract, "verticalSplineBearingBarZMaxMm")
+        - number(contract, "verticalSplineBearingBarZMinMm"),
+        "花键轴承座兼容 Z 包络",
+        0.001,
+    )
+    if not (
+        number(contract, "drawerGuideSlotHeightMm")
+        > number(contract, "drawerGuideBearingSeatDiameterMm")
+        and number(contract, "drawerGuideFlangeThicknessMm")
+        < number(contract, "drawerGuideSlotHeightMm")
+        and number(contract, "drawerGuidePartitionThicknessMm") > 0
+        and number(contract, "drawerGuideRailAttachOverlapMm") > 0
+        and number(contract, "drawerGuideRailAttachOverlapMm")
+            < number(contract, "drawerGuidePartitionThicknessMm")
+        and number(contract, "drawerGuideRailDepthMm")
+        > number(contract, "drawerGuideDrawerEdgeInsetMm")
+            + number(contract, "drawerGuideFlangeProjectionMm")
+            + number(contract, "drawerGuideRailClearanceMm")
+        and number(contract, "drawerGuideFlangeEndClearanceMm")
+            >= number(contract, "drawerGuideRailClearanceMm")
+        and number(contract, "drawerGuideFrontSupportClearanceMm") == 0
+    ):
+        fail("左右 C 形导向槽没有给 681 轴承和抽屉侧向凸缘留出空间")
+    expected_guide_end_clearance = (
+        number(contract, "drawerGuideRailDepthMm")
+        - number(contract, "drawerGuideDrawerEdgeInsetMm")
+        - number(contract, "drawerGuideFlangeProjectionMm")
+    )
+    expect_close(
+        number(contract, "drawerGuideFlangeEndClearanceMm"),
+        expected_guide_end_clearance,
+        "内向 C 形导向唇端部净空推导",
+        0.001,
+    )
+    if abs(number(contract, "strokeMm") - number(contract, "openGapMm")
+           - number(contract, "dogInsertionMm")) > 0.001:
+        fail("stroke != openGap + dogInsertion")
+    if abs(number(contract, "pocketDepthMm") - number(contract, "dogInsertionMm")
+           - number(contract, "bottomClearanceMm")) > 0.001:
+        fail("pocketDepth != insertion + bottomClearance")
+    if abs(number(contract, "bottomClearanceMm")
+           - number(contract, "femaleMagnetProjectionMm")
+           - number(contract, "magnetNonContactClearanceMm")) > 0.001:
+        fail("磁铁非接触余量推导不一致")
+
+    if number(contract, "linearBearingBlockZLengthMm") <= number(contract, "linearBearingBlockZMarginMm"):
+        fail("长方条轴承座没有从机构板延伸到公轮轴线")
+    if number(contract, "linearBearingBlockWidthMm") <= number(contract, "linearBearingSeatDiameterMm") + 2.0:
+        fail("长方条轴承孔周围壁厚不足")
+    if abs(number(contract, "linearBearingBlockYLengthMm")
+           - number(contract, "linearBearingNominalLengthMm")) > 0.001:
+        fail("一体式 LM3UU 座 Y 向厚度必须等于轴承本体厚度")
+    bearing_top = (number(contract, "linearBearingCenterYOffsetMm")
+                   + number(contract, "linearBearingNominalLengthMm") / 2)
+    if abs(bearing_top + number(contract, "linearBearingInputRotorClearanceMm")) > 0.001:
+        fail("LM3UU/一体座上沿与公轮下沿间隙推导不一致")
+    if not 0.30 - 0.001 <= number(contract, "linearBearingInputRotorClearanceMm") <= 0.60 + 0.001:
+        fail("LM3UU/公轮上沿间隙必须保持 0.30-0.60 mm")
+    if any(number(contract, key) != 0 for key in (
+        "linearBearingBlockMountHoleCount",
+        "linearBearingBlockMountHoleDiameterMm",
+        "linearBearingBlockMountXOffsetMm",
+        "linearBearingBlockMountYOffsetMm",
+    )):
+        fail("一体式 LM3UU 轴承座不得有座体 M3 固定孔")
+
+    bearing_center = number(contract, "linearBearingCenterYOffsetMm")
+    bearing_half = number(contract, "linearBearingNominalLengthMm") / 2
+    round_start = number(contract, "inputShaftRoundStartMm")
+    round_end = round_start + number(contract, "inputShaftRoundLengthMm")
+    if round_start > bearing_center - bearing_half + 0.001:
+        fail("圆滑动段开位没有穿过 LM3UU")
+    if round_end + number(contract, "strokeMm") < bearing_center + bearing_half - 0.001:
+        fail("圆滑动段合位没有穿过 LM3UU")
+    upper_start = number(contract, "inputShaftUpperDStartMm")
+    upper_end = upper_start + number(contract, "inputShaftUpperDLengthMm")
+    lower_start = number(contract, "inputShaftLowerDStartMm")
+    lower_end = lower_start + number(contract, "inputShaftLowerDLengthMm")
+    if upper_end < 3.0 - 0.001:
+        fail("上 D 段没有进入公轮盲孔深度")
+    if round_end < upper_start - 0.001 or lower_start > round_end + 0.001 or lower_end < round_start - 0.001:
+        fail("D-round-D 三段没有形成连续过渡")
+
+    if number(contract, "inputSleeveDSocketDepthMm") > number(contract, "inputSleeveUpperDHeightMm"):
+        fail("圆套上方 D 插孔超过上方 D 段")
+    if number(contract, "inputSleeveDSocketDepthMm") > number(contract, "inputShaftLowerDLengthMm"):
+        fail("下 D 轴段不足以插入圆套")
+    bearing_y0 = number(contract, "linearBearingCenterYOffsetMm") - number(contract, "linearBearingBlockYLengthMm") / 2
+    sleeve_open_top = number(contract, "inputSleeveTopOffsetMm")
+    sleeve_engaged_top = sleeve_open_top + number(contract, "strokeMm")
+    expect_close(sleeve_engaged_top, bearing_y0, "合位圆套上沿/一体轴承座下沿接触", 0.001)
+    expect_close(bearing_y0 - sleeve_open_top, number(contract, "strokeMm"), "开位圆套/一体轴承座间隙", 0.001)
+    sleeve_wall = (number(contract, "inputSleeveLowerRoundOuterDiameterMm")
+                   - number(contract, "inputSleeveMagnetPocketDiameterMm")) / 2
+    expect_at_least(sleeve_wall, 1.40, "M5 磁铁圆套单侧壁厚")
+    expect_at_least(number(contract, "inputSleeveMagnetBottomClearanceMm"), 1.0, "M5 磁铁底部实体厚度")
+
+    if number(contract, "bearingSeatDiameterMm") <= 6.0 or number(contract, "bearingSeatDepthMm") < number(contract, "bearingBackShoulderMm") + 2.0:
+        fail("输出 3x6x2 轴承座尺寸不足")
+    if abs(number(contract, "bearingReferenceCenterOffsetMm")) > 0.001:
+        fail("输出轴承参考件必须与长方条轴承孔同心")
+    if number(contract, "outputBearingBarWidthMm") <= number(contract, "bearingSeatDiameterMm") + 2.0:
+        fail("输出轴承长方条孔周围壁厚不足")
+    if number(contract, "outputBearingBarYLengthMm") < 2 * number(contract, "bearingSeatDepthMm") - 2.0 + 1.0:
+        fail("输出轴承长方条无法容纳上下两个轴承孔")
+    if number(contract, "outputBearingBarZLengthMm") <= number(contract, "outputBearingBarZMarginMm"):
+        fail("输出轴承长方条没有接到机构板")
+    if number(contract, "outputBearingBarMotherClearanceMm") <= 0:
+        fail("母轮与输出轴承固定条没有防摩擦间隙")
+    if contract.get("chainMotherSupportReliefMode") != "axial-window-around-generated-guide-envelope":
+        fail("母轮轴承固定条没有锁定链条轴向窗口让位模式")
+    if contract.get("chainMotherSupportCollisionPart") != "cabinet-clutch/center_clutch_chain_bearing_collision":
+        fail("母轮轴承固定条没有绑定链条交集见证")
+    if contract.get("chainMotherSupportEmbossMode") != "relief-volume-inflated-nomad-brush":
+        fail("母轮轴承固定条没有使用基于让位体积的软泥笔刷式加强")
+    if contract.get("chainMotherSupportEmbossForcePoint") != "relief-centroid":
+        fail("母轮软泥加强没有使用让位体积中心作为作用点")
+    if contract.get("chainMotherSupportEmbossForceDirection") != "relief-to-opposite-host-face":
+        fail("母轮软泥加强没有使用让位体积到主体对侧面的作用方向")
+    expect_between(
+        number(contract, "chainMotherSupportEmbossForceMagnitudeScale"),
+        0.50,
+        1.50,
+        "母轮软泥加强作用力大小比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushRadiusScale"),
+        0.50,
+        1.20,
+        "母轮软泥加强刷头半径比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushAxialScale"),
+        0.50,
+        1.20,
+        "母轮软泥加强刷头轴向比例",
+    )
+    expect_between(
+        number(contract, "chainMotherSupportEmbossBrushFalloff"),
+        0.50,
+        3.00,
+        "母轮软泥加强刷头衰减",
+    )
+    if contract.get("chainMotherSupportEmbossPart") != "cabinet-clutch/center_mechanism_plate":
+        fail("母轮对侧加强没有融合到正式离合主板零件")
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossDepthMm"),
+        3.0,
+        "母轮对侧偏置加强深度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootWidthMm"),
+        4.0,
+        "母轮对侧加强根部宽度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootMinimumWidthMm"),
+        4.0,
+        "母轮对侧加强根部最小宽度",
+    )
+    if number(contract, "chainMotherSupportEmbossRootWidthMm") \
+            < number(contract, "chainMotherSupportEmbossRootMinimumWidthMm") - TOLERANCE_MM:
+        fail("母轮对侧加强的实际根部宽度小于参数化最小宽度")
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossOuterWidthMm"),
+        3.0,
+        "母轮对侧加强外侧宽度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootRadiusMm"),
+        0.8,
+        "母轮对侧加强根部圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossOuterRadiusMm"),
+        1.0,
+        "母轮对侧加强外侧圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootOverlapMm"),
+        0.5,
+        "母轮对侧加强根部融合量",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossZMarginMm"),
+        0.8,
+        "母轮对侧加强 Z 向过渡余量",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootSupportMarginMm"),
+        0.3,
+        "母轮对侧加强根部承力肩宽",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRadialBulgeMm"),
+        0.05,
+        "母轮对侧加强放射曲线凸度",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossEdgeRadiusMm"),
+        0.30,
+        "母轮对侧加强三维接触面圆角",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootFilletRadiusMm"),
+        0.50,
+        "母轮对侧加强根部三维圆滑过渡半径",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportEmbossRootFlareMm"),
+        0.25,
+        "母轮对侧加强根部放射过渡宽度",
+    )
+    if number(contract, "chainMotherSupportEmbossRootFilletRadiusMm") \
+            > number(contract, "chainMotherSupportEmbossRootOverlapMm"):
+        fail("母轮对侧加强根部圆滑过渡不能超出根部融合量")
+    if number(contract, "chainMotherSupportEmbossRootFilletSteps") < 6:
+        fail("母轮对侧加强根部圆滑过渡采样不足")
+    if number(contract, "chainMotherSupportEmbossProfileSteps") < 16:
+        fail("母轮对侧加强曲线采样不足")
+    if number(contract, "chainMotherSupportEmbossCapSteps") < 8:
+        fail("母轮对侧加强端部圆弧采样不足")
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefRadialClearanceMm"),
+        0.45,
+        "链条/8T导向轮径向让位净空",
+    )
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefAxialClearanceMm"),
+        0.40,
+        "链条轴向窗口净空",
+    )
+    relief_z0 = number(contract, "chainMotherSupportReliefZMinMm")
+    relief_z1 = number(contract, "chainMotherSupportReliefZMaxMm")
+    if relief_z1 <= relief_z0:
+        fail("链条轴向让位窗口 Z 范围无效")
+    if relief_z0 <= number(contract, "outputBearingBarZMinMm") + 0.01:
+        fail("链条让位窗口侵入输出轴承后端支撑区")
+    if relief_z1 >= number(contract, "outputBearingBarZMaxMm") - 0.01:
+        fail("链条让位窗口没有保留到机构板的前端承载区")
+    expect_at_least(
+        number(contract, "chainMotherSupportReliefBearingWebMm"),
+        0.45,
+        "链条窗口与母轮轴承外缘之间的承载 web",
+    )
+
+    # The green chain guides are fixed idlers, not additional 12T drive
+    # sprockets. Their axle-seat contract is deliberately separate from the
+    # mother-wheel bearing-bar relief above.
+    expect_close(number(contract, "chainIdlerCount"), 9.0, "绿色 8T 导向轮数量", 0.001)
+    expect_close(
+        number(contract, "chainIdlerPartitionMountCount"),
+        6.0,
+        "隔板一体绿色导向轮盲孔座数量",
+        0.001,
+    )
+    expect_close(
+        number(contract, "chainIdlerRowMountCount"),
+        3.0,
+        "离合连续行板一体绿色导向轮盲孔座数量",
+        0.001,
+    )
+    if contract.get("chainIdlerPowerWheelExcluded") is not True:
+        fail("蓝色 12T 主动轮不能复用绿色导向轮盲孔座")
+    if contract.get("chainIdlerBearingNominal") != "3x6x2":
+        fail("绿色导向轮必须使用 3x6x2 轴承")
+    if contract.get("chainIdlerAxleAxis") != "+Z":
+        fail("绿色导向轮固定轴必须沿世界 +Z 进入后仓")
+    if contract.get("chainIdlerAxleProfile") != "M3-shoulder-screw-smooth-3mm-round":
+        fail("绿色导向轮必须使用 Ø3 光杆肩螺钉，不得用全牙 M3 穿轴承")
+    if contract.get("chainIdlerBossMountMode") != "partition-or-row-strip-integral-blind-pilot":
+        fail("绿色导向轮 Boss 必须融合到隔板或离合连续行板")
+    if contract.get("chainIdlerBossScrewEntry") != "-Z":
+        fail("绿色导向轮盲导孔必须从后仓 -Z 侧装入")
+    if contract.get("chainIdlerFastenerAvoidanceMode") != "upper-edge-hole-shift-away-from-idler":
+        fail("绿色导向轮邻近的行板固定孔必须使用参数化避让")
+    if contract.get("chainIdlerMountPart") != "cabinet-clutch/cabinet_clutch_partition+center_mechanism_plate":
+        fail("绿色导向轮盲孔座没有绑定正式隔板/离合行板零件")
+    if contract.get("chainIdlerAxlePart") != "cabinet-chain/cabinet_chain_idler_axles":
+        fail("绿色导向轮轴参考件输出路径错误")
+    if contract.get("plateFastenerIdlerAvoidanceMode") != "upper-edge-hole-shift-away-from-idler":
+        fail("离合行板固定孔没有声明导向轮避让模式")
+    expect_close(
+        number(contract, "plateFastenerIdlerAvoidanceShiftYMm"),
+        10.0,
+        "离合行板固定孔导向轮避让位移",
+        0.001,
+    )
+    for key, expected, label in (
+        ("chainIdlerBearingIdMm", 3.0, "绿色导向轮轴承内径"),
+        ("chainIdlerBearingOdMm", 6.0, "绿色导向轮轴承外径"),
+        ("chainIdlerBearingWidthMm", 2.0, "绿色导向轮轴承宽度"),
+        ("chainIdlerAxleSmoothDiameterMm", 3.0, "绿色导向轮肩轴光杆直径"),
+        ("chainIdlerThreadPilotDiameterMm", 2.4, "绿色导向轮 M3 盲导孔直径"),
+        ("chainIdlerThreadPilotDepthMm", 4.2, "绿色导向轮 M3 盲导孔深度"),
+        ("chainIdlerBossOuterDiameterMm", 8.0, "绿色导向轮 Boss 外径"),
+        ("chainIdlerBossRootDiameterMm", 11.0, "绿色导向轮 Boss 根部外径"),
+        ("chainIdlerBossRootFlareThicknessMm", 1.5, "绿色导向轮 Boss 根部展开厚度"),
+        ("chainIdlerBossRootOverlapMm", 0.25, "绿色导向轮 Boss 根部板内融合量"),
+        ("chainIdlerBossPadSizeMm", 12.5, "绿色导向轮 Boss 一体承力台尺寸"),
+        ("chainIdlerBossPadMarginMm", 0.75, "绿色导向轮 Boss 承力台边缘余量"),
+        ("chainIdlerBossPadCornerRadiusMm", 1.5, "绿色导向轮 Boss 承力台圆角"),
+        ("chainIdlerBossAxialClearanceMm", 0.45, "绿色导向轮 Boss 轴向净空"),
+        ("chainIdlerFastenerAvoidanceShiftYMm", 10.0, "导向轮邻近固定孔避让位移"),
+        ("chainIdlerFastenerAvoidanceClearanceMm", 0.6, "导向轮邻近固定孔避让净空"),
+    ):
+        expect_close(number(contract, key), expected, label, 0.001)
+    expect_at_least(
+        number(contract, "chainIdlerAxleSmoothLengthMm"),
+        8.0,
+        "绿色导向轮肩轴光杆长度",
+    )
+    expect_at_least(
+        number(contract, "chainIdlerThreadLengthMm"),
+        number(contract, "chainIdlerThreadPilotDepthMm") - 0.2,
+        "绿色导向轮螺纹啮合长度",
+    )
+    expect_close(
+        number(contract, "chainIdlerBossRearZMm"),
+        number(contract, "chainMotherSupportReliefZMaxMm"),
+        "绿色导向轮 Boss 后端/链条前侧让位边界",
+        0.001,
+    )
+
+    bar_y0 = number(contract, "outputBearingBarY0OffsetMm")
+    bar_y1 = bar_y0 + number(contract, "outputBearingBarYLengthMm")
+    lower_center = number(contract, "bearingCenterOffsetMm")
+    upper_center = lower_center + number(contract, "bearingPairSpacingMm")
+    if not close(lower_center, bar_y0 + 1.0, 0.001):
+        fail("下输出轴承没有落在长方条下端孔内")
+    if not close(upper_center, bar_y1 - 1.0, 0.001):
+        fail("上输出轴承没有落在长方条上端孔内")
+    expect_close(
+        number(contract, "outputBearingShaftPassageDiameterMm"),
+        number(contract, "shaftDiameterMm") + 0.40,
+        "上下输出轴承中间的贯通圆轴孔",
+        0.001,
+    )
+    expect_close(
+        number(contract, "outputBearingShaftPassageRadialClearanceMm"),
+        0.20,
+        "上下输出轴承中间贯通孔径向间隙",
+        0.001,
+    )
+    if bar_y1 - number(contract, "bearingSeatDepthMm") - (bar_y0 + number(contract, "bearingSeatDepthMm")) < 1.0 - 0.001:
+        fail("上下输出轴承孔之间的轴向肩距不足")
+
+    d_start = number(contract, "outputShaftDStartMm")
+    d_end = d_start + number(contract, "outputShaftDLengthMm")
+    output_round_start = number(contract, "outputShaftRoundStartMm")
+    output_round_end = output_round_start + number(contract, "outputShaftRoundLengthMm")
+    if d_start > -3.0 + 0.001 or d_end < 0.0 - 0.001:
+        fail("输出 D 轴没有完整进入母轮 3 mm 盲孔")
+    if output_round_start > d_end + 0.001 or output_round_end < d_start - 0.001:
+        fail("输出 D 轴到圆轴没有形成短过渡")
+    if output_round_start > lower_center - 1.0 + 0.001 or output_round_end < upper_center + 1.0 - 0.001:
+        fail("输出圆轴没有穿过上下两枚 3x6x2 轴承")
+    expect_close(
+        min(d_end, 0.0) - max(d_start, -3.0),
+        number(contract, "outputShaftMotherSocketOverlapMm"),
+        "输出 D 轴/母轮盲孔重叠",
+        0.001,
+    )
+    expect_close(
+        output_round_end - bar_y1,
+        number(contract, "outputShaftTopProtrusionMm"),
+        "输出圆轴上端露出",
+        0.001,
+    )
+    expect_close(
+        output_round_end - number(contract, "outputShaftStartMm"),
+        number(contract, "outputShaftLengthMm"),
+        "输出轴总长度",
+        0.001,
+    )
+
+    center_distance = number(contract, "gearCenterDistanceMm")
+    expect_close(
+        center_distance,
+        number(contract, "longPitchRadiusMm")
+        + number(contract, "inputPitchRadiusMm")
+        + number(contract, "gearMeshClearanceMm"),
+        "长花键/公轮中心距",
+        0.001,
+    )
+    for key in ("beltEnvelopeRadiusMm", "beltGuideRadiusMm", "motherOuterRadiusMm"):
+        expect_at_least(
+            center_distance - number(contract, "longTipRadiusMm") - number(contract, key),
+            CLEARANCE_FLOOR_MM,
+            f"{key} 到长花键径向净空",
+        )
+    if number(contract, "plateBeltPassageHalfWidthMm") <= number(contract, "beltEnvelopeRadiusMm") or number(contract, "plateBeltPassageAxialWidthMm") <= 6.0:
+        fail("机构板皮带贯穿槽尺寸不足")
+    if number(contract, "plateBeltPassageSlotCount") != 2:
+        fail("机构板必须只为中心皮带保留左右两个穿板槽")
+    if number(contract, "plateBeltPassageSlotCenterOffsetMm") <= 0:
+        fail("机构板皮带槽中心偏移无效")
+    if number(contract, "plateBeltPassageSlotWidthMm") <= 0:
+        fail("机构板皮带槽宽度无效")
+    expect_close(
+        number(contract, "plateBeltPassageSlotCenterOffsetMm")
+        + number(contract, "plateBeltPassageSlotWidthMm") / 2,
+        number(contract, "plateBeltPassageHalfWidthMm"),
+        "机构板皮带槽外包络",
+        0.001,
+    )
+    if contract.get("partitionBeltPassageType") != "per-drawer-cell-2GT-straight-run-windows":
+        fail("前后仓隔板必须使用逐抽屉格统一 2GT 直线段窗口")
+    if number(contract, "partitionBeltPassageWindowCount") != 15:
+        fail("前后仓隔板必须有 5×3 共 15 个抽屉格皮带窗口")
+    if number(contract, "partitionBeltPassage2GTWindowCount") != 15:
+        fail("前后仓隔板的 15 个窗口必须全部使用 2GT 包络")
+    expect_close(
+        number(contract, "partitionBeltPassageCenterXMm"),
+        number(contract, "axisXMm"),
+        "前后仓隔板皮带窗口中心 X",
+        0.001,
+    )
+    expect_close(
+        number(contract, "partitionBeltPassageCenterYMm"),
+        number(contract, "frontTimingBeltYMm"),
+        "前后仓隔板皮带窗口中心 Y",
+        0.001,
+    )
+    expect_close(
+        number(contract, "partitionBeltPassageRelativeXMm"),
+        0.0,
+        "前后仓隔板皮带窗口相对 X",
+        0.001,
+    )
+    if abs(number(contract, "partitionBeltPassageRelativeYMm")) >= number(contract, "drawerBayHeightMm") / 2:
+        fail("前后仓隔板皮带窗口相对 Y 超出抽屉格")
+    partition_z = number(contract, "partitionBeltPassagePlateZMm")
+    belt_z0 = min(number(contract, "axisZMm"), number(contract, "frontTimingPulleyZMm"))
+    belt_z1 = max(number(contract, "axisZMm"), number(contract, "frontTimingPulleyZMm"))
+    if not belt_z0 < partition_z < belt_z1:
+        fail("前后仓隔板皮带窗口没有穿过中心皮带直线段")
+    if number(contract, "partitionBeltPassageHalfWidthMm") <= number(contract, "beltEnvelopeRadiusMm"):
+        fail("前后仓隔板皮带窗口没有包住真实皮带包络")
+    if number(contract, "partitionBeltPassageAxialWidthMm") <= 6.0:
+        fail("前后仓隔板皮带窗口没有覆盖 6 mm 皮带宽度")
+
+
+def validate_sweep(contract: Contract, reports: dict[tuple[str, bool], dict[str, object]]) -> None:
+    stroke = number(contract, "strokeMm")
+    for part in MOVING_PARTS:
+        opened = bounds(reports[(part, False)])
+        engaged = bounds(reports[(part, True)])
+        for axis, index in (("X", 0), ("Z", 2)):
+            expect_close(engaged["min"][index], opened["min"][index], f"{part} {axis} 最小值漂移")
+            expect_close(engaged["max"][index], opened["max"][index], f"{part} {axis} 最大值漂移")
+        expect_close(engaged["min"][1] - opened["min"][1], stroke, f"{part} Y 最小值行程")
+        expect_close(engaged["max"][1] - opened["max"][1], stroke, f"{part} Y 最大值行程")
+
+    axis_x = number(contract, "axisXMm")
+    axis_z = number(contract, "axisZMm")
+    row_plate = bounds(reports[("center_mechanism_plate", False)])
+    expect_close(row_plate["min"][0], number(contract, "rearClutchRowPlateX0Mm"), "连续离合行板 X- 起点", 0.001)
+    expect_close(row_plate["max"][0], number(contract, "rearClutchRowPlateX1Mm"), "连续离合行板 X+ 终点", 0.001)
+    expect_close(row_plate["max"][0] - row_plate["min"][0], number(contract, "rearClutchRowPlateLengthMm"), "连续离合行板 X 长度", 0.001)
+    bearing = bounds(reports[("center_linear_bearings", False)])
+    expect_close(bearing["min"][0], axis_x - 3.5, "LM3UU X 下限")
+    expect_close(bearing["max"][0], axis_x + 3.5, "LM3UU X 上限")
+    expect_close(bearing["min"][2], axis_z - 3.5, "LM3UU Z 下限")
+    expect_close(bearing["max"][2], axis_z + 3.5, "LM3UU Z 上限")
+    expected_center_y = number(contract, "linearBearingCenterYMm")
+    expect_close(bearing["min"][1], expected_center_y - 5.0, "LM3UU Y 下限")
+    expect_close(bearing["max"][1], expected_center_y + 5.0, "LM3UU Y 上限")
+
+    plate = bounds(reports[("center_mechanism_plate", False)])
+    expected_seat_z_min = axis_z - number(contract, "linearBearingNominalOdMm") / 2 - number(contract, "linearBearingBlockZMarginMm")
+    expect_close(plate["min"][2], expected_seat_z_min, "一体轴承座 Z 后端包络")
+    if plate["max"][2] <= plate["min"][2]:
+        fail("机构板一体轴承座没有形成实体 Z 支撑")
+
+    sleeve = bounds(reports[("center_input_sleeve", False)])
+    magnet = bounds(reports[("center_input_sleeve_magnet", False)])
+    for axis in (0, 2):
+        if magnet["min"][axis] < sleeve["min"][axis] - TOLERANCE_MM or magnet["max"][axis] > sleeve["max"][axis] + TOLERANCE_MM:
+            fail(f"M5 磁铁在 {axis} 轴方向超出圆套")
+    if magnet["min"][1] < sleeve["min"][1] - TOLERANCE_MM or magnet["max"][1] > sleeve["max"][1] + TOLERANCE_MM:
+        fail("M5 磁铁没有留在圆套盲槽内")
+
+
+def validate_intermediate_sweep(
+    openscad: Path,
+    scad: Path,
+    inspect_py: Path,
+    temp_dir: Path,
+    contract: Contract,
+) -> None:
+    stroke = number(contract, "strokeMm")
+    for travel in (stroke * 0.25, stroke * 0.50, stroke * 0.75):
+        for part in MOVING_PARTS:
+            stl = temp_dir / f"{part}_{travel:.3f}.stl"
+            run_export(openscad, scad, stl, part, False, travel)
+            report = inspect(inspect_py, stl)
+            if part in PRINTED_PARTS:
+                assert_watertight(report, stl.name)
+            opened_stl = temp_dir / f"{part}_open_reference.stl"
+            if not opened_stl.exists():
+                run_export(openscad, scad, opened_stl, part, False, 0.0)
+            opened = bounds(inspect(inspect_py, opened_stl))
+            current = bounds(report)
+            expect_close(current["min"][1] - opened["min"][1], travel, f"{part} 中间行程最小值")
+            expect_close(current["max"][1] - opened["max"][1], travel, f"{part} 中间行程最大值")
+
+
+def validate_interference(contract: Contract, reports: dict[tuple[str, bool], dict[str, object]]) -> dict[str, float]:
+    open_gap = number(contract, "openGapMm")
+    insertion = number(contract, "dogInsertionMm")
+    stroke = number(contract, "strokeMm")
+    bottom = number(contract, "bottomClearanceMm")
+    lower_start = number(contract, "inputShaftLowerDStartMm")
+    lower_end = lower_start + number(contract, "inputShaftLowerDLengthMm")
+    socket_min = number(contract, "inputSleeveTopOffsetMm") - number(contract, "inputSleeveDSocketDepthMm")
+    socket_max = number(contract, "inputSleeveTopOffsetMm")
+    socket_overlap = min(lower_end, socket_max) - max(lower_start, socket_min)
+    expect_at_least(socket_overlap, number(contract, "inputSleeveDSocketDepthMm") - 0.20, "下 D 轴插入圆套有效深度")
+    if number(contract, "inputSleeveMagnetBottomClearanceMm") < 1.0:
+        fail("M5 磁铁底部没有实体保留")
+
+    input_rotor = bounds(reports[("center_input_rotor", False)])
+    linear_bearing = bounds(reports[("center_linear_bearings", False)])
+    input_bearing_clearance = input_rotor["min"][1] - linear_bearing["max"][1]
+    expect_close(
+        input_bearing_clearance,
+        number(contract, "linearBearingInputRotorClearanceMm"),
+        "公轮下沿/LM3UU上沿间隙",
+        0.001,
+    )
+
+    output = bounds(reports[("center_output_rotor", False)])
+    bar = bounds(reports[("center_output_bearing_bar", False)])
+    shaft = bounds(reports[("center_output_shaft", False)])
+    bearings = bounds(reports[("center_output_bearings", False)])
+    expect_close((output["min"][0] + output["max"][0]) / 2, number(contract, "axisXMm"), "输出母轮轴心 X")
+    expect_close((bar["min"][0] + bar["max"][0]) / 2, number(contract, "axisXMm"), "输出轴承固定条轴心 X")
+    expect_close(bar["min"][1], number(contract, "outputBaseYMm") + number(contract, "outputBearingBarY0OffsetMm"), "输出固定条下沿")
+    expect_close(bar["max"][1], number(contract, "outputBaseYMm") + number(contract, "outputBearingBarY0OffsetMm") + number(contract, "outputBearingBarYLengthMm"), "输出固定条上沿")
+    expect_close(bar["min"][2], number(contract, "outputBearingBarZMinMm"), "输出固定条 Z 后端")
+    expect_close(bar["max"][2], number(contract, "outputBearingBarZMaxMm"), "输出固定条 Z 前端")
+    expect_close(bar["max"][2] - bar["min"][2], number(contract, "outputBearingBarZLengthMm"), "输出固定条 Z 长度")
+    expect_close(output["max"][1], number(contract, "outputBaseYMm"), "母轮上沿")
+    expect_at_least(bar["min"][1] - output["max"][1], number(contract, "outputBearingBarMotherClearanceMm"), "母轮/固定条轴向间隙")
+    expect_close(shaft["min"][1], number(contract, "outputBaseYMm") + number(contract, "outputShaftStartMm"), "输出轴下端")
+    expect_close(shaft["max"][1], number(contract, "outputBaseYMm") + number(contract, "outputShaftRoundStartMm") + number(contract, "outputShaftRoundLengthMm"), "输出轴上端")
+    expect_close(bearings["min"][1], number(contract, "outputBaseYMm") + number(contract, "bearingCenterOffsetMm") - 1.0, "下输出轴承下沿")
+    expect_close(bearings["max"][1], number(contract, "outputBaseYMm") + number(contract, "bearingCenterOffsetMm") + number(contract, "bearingPairSpacingMm") + 1.0, "上输出轴承上沿")
+
+    front_gear = bounds(reports[("front_gear", False)])
+    front_pulley = bounds(reports[("front_pulley", False)])
+    front_support = bounds(reports[("front_timing_bearing_support", False)])
+    front_bearing = bounds(reports[("front_timing_bearing", False)])
+    front_d_axis = bounds(reports[("front_d_axis", False)])
+    axis_x = number(contract, "axisXMm")
+    axis_z = number(contract, "frontTimingPulleyZMm")
+    expect_close((front_gear["min"][0] + front_gear["max"][0]) / 2, axis_x, "前端主动轮轴心 X")
+    expect_close((front_gear["min"][2] + front_gear["max"][2]) / 2, axis_z, "前端主动轮轴心 Z")
+    expect_close(front_gear["min"][1], number(contract, "frontPinionLowerFaceYMm"), "前端主动轮下沿包络")
+    expect_close(front_gear["max"][1], number(contract, "frontPinionCenterYMm") + number(contract, "frontPinionThicknessMm") / 2, "前端主动轮上沿包络")
+    expect_close(front_pulley["min"][1], number(contract, "frontTimingPulleyBottomYMm"), "下层同步轮下沿包络")
+    expect_close(front_pulley["max"][1], number(contract, "frontTimingPulleyTopYMm"), "下层同步轮上沿包络")
+    expect_close(front_support["min"][1], number(contract, "frontTimingBearingBossBottomYMm"), "层板一体轴承座下沿包络")
+    expect_close(
+        front_support["max"][1],
+        number(contract, "frontTimingBearingLowerFaceYMm")
+        + number(contract, "frontTimingBearingBossFusionOverlapMm"),
+        "层板一体轴承座上沿包络",
+    )
+    expect_close(front_bearing["min"][1], number(contract, "frontTimingBearingLowerFaceYMm"), "层间轴承下沿包络")
+    expect_close(front_bearing["max"][1], number(contract, "frontTimingBearingUpperFaceYMm"), "层间轴承上沿包络")
+    expect_close(front_d_axis["min"][1], number(contract, "frontDshaftStartYMm"), "前端 D 轴下端")
+    expect_close(front_d_axis["max"][1], number(contract, "frontDshaftEndYMm"), "前端 D 轴上端")
+    if not (front_d_axis["min"][0] <= axis_x <= front_d_axis["max"][0]):
+        fail("前端 D 轴 X 包络没有覆盖契约轴心")
+    expect_close((front_d_axis["min"][2] + front_d_axis["max"][2]) / 2, axis_z, "前端 D 轴轴心 Z")
+
+    drawer_body = bounds(reports[("drawer_body", False)])
+    body_center_x = (
+        number(contract, "drawerStationTemplateOriginXMm")
+        + number(contract, "centerCol")
+        * number(contract, "drawerStationColumnPitchMm")
+    )
+    body_center_y = (
+        number(contract, "drawerStationTemplateOriginYMm")
+        + number(contract, "centerRow")
+        * number(contract, "drawerStationRowPitchMm")
+    )
+    expect_close(
+        drawer_body["min"][0],
+        body_center_x - number(contract, "drawerBodyOuterWidthMm") / 2,
+        "真实抽屉壳体 X- 起点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][0],
+        body_center_x + number(contract, "drawerBodyOuterWidthMm") / 2,
+        "真实抽屉壳体 X+ 终点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["min"][1],
+        body_center_y - number(contract, "drawerBodyOuterHeightMm") / 2,
+        "真实抽屉壳体 Y- 起点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][1],
+        body_center_y + number(contract, "drawerBodyOuterHeightMm") / 2,
+        "真实抽屉壳体 Y+ 终点",
+        0.01,
+    )
+    expect_close(
+        drawer_body["min"][2],
+        number(contract, "drawerBodyRearZMm"),
+        "真实抽屉壳体 Z- 后端",
+        0.01,
+    )
+    expect_close(
+        drawer_body["max"][2],
+        number(contract, "drawerBodyFrontZMm"),
+        "真实抽屉壳体 Z+ 前端",
+        0.01,
+    )
+    assert_watertight(reports[("drawer_body", False)], "真实抽屉壳体")
+
+    spline_support = bounds(reports[("vertical_spline_bearing_support", False)])
+    for axis, key, label in (
+        (0, "verticalSplineBearingCarrierPlateX0Mm", "可拆花键轴承承载板 X- 起点"),
+        (1, "verticalSplineBearingCarrierPlateBottomYMm", "可拆花键轴承承载板 Y- 起点"),
+        (2, "verticalSplineBearingCarrierPlateZ0Mm", "可拆花键轴承承载板 Z- 起点"),
+    ):
+        expect_close(spline_support["min"][axis], number(contract, key), label, 0.01)
+    for axis, key, label in (
+        (0, "verticalSplineBearingCarrierPlateX1Mm", "可拆花键轴承承载板 X+ 终点"),
+        (1, "verticalSplineBearingCapTopYMm", "轴承塔 Y+ 终点"),
+        (2, "verticalSplineBearingCarrierPlateZ1Mm", "可拆花键轴承承载板 Z+ 终点"),
+    ):
+        expect_close(spline_support["max"][axis], number(contract, key), label, 0.01)
+    expect_close(
+        spline_support["max"][1] - spline_support["min"][1],
+        number(contract, "verticalSplineBearingCapTopYMm")
+        - number(contract, "verticalSplineBearingCarrierPlateBottomYMm"),
+        "可拆花键轴承承载板/轴承塔总 Y 高度",
+        0.01,
+    )
+    upper_support = bounds(reports[("vertical_spline_bearing_upper_support", False)])
+    for axis, key, label in (
+        (0, "verticalSplineBearingUpperCarrierPlateX0Mm", "上方可拆花键轴承承载板 X- 起点"),
+        (1, "verticalSplineBearingUpperCarrierPlateBottomYMm", "上方可拆花键轴承承载板 Y- 起点"),
+        (2, "verticalSplineBearingUpperCarrierPlateZ0Mm", "上方可拆花键轴承承载板 Z- 起点"),
+    ):
+        expect_close(upper_support["min"][axis], number(contract, key), label, 0.01)
+    for axis, key, label in (
+        (0, "verticalSplineBearingUpperCarrierPlateX1Mm", "上方可拆花键轴承承载板 X+ 终点"),
+        (1, "verticalSplineBearingUpperCarrierPlateTopYMm", "上方可拆花键轴承承载板 Y+ 终点"),
+        (2, "verticalSplineBearingUpperCarrierPlateZ1Mm", "上方可拆花键轴承承载板 Z+ 终点"),
+    ):
+        expect_close(upper_support["max"][axis], number(contract, key), label, 0.01)
+    expect_close(
+        upper_support["max"][1] - upper_support["min"][1],
+        number(contract, "verticalSplineBearingUpperCarrierPlateThicknessMm"),
+        "上方可拆花键轴承承载板 Y 厚度",
+        0.01,
+    )
+    return {
+        "openGap": open_gap,
+        "insertion": insertion,
+        "stroke": stroke,
+        "bottomClearance": bottom,
+        "sleeveSocketOverlap": socket_overlap,
+        "engagedSleeveSeatContact": abs(
+            (number(contract, "linearBearingCenterYOffsetMm")
+             - number(contract, "linearBearingBlockYLengthMm") / 2)
+            - (number(contract, "inputSleeveTopOffsetMm") + stroke)
+        ),
+        "inputBearingRotorClearance": input_bearing_clearance,
+    }
+
+
+# ===== 分区：公开 API =====
+def main() -> int:
+    parser = argparse.ArgumentParser(description="检查中心 R3C3 离合开合几何扫掠")
+    parser.add_argument("--openscad", required=True, type=Path)
+    parser.add_argument("--scad", required=True, type=Path)
+    parser.add_argument("--contract", required=True, type=Path)
+    parser.add_argument("--inspect", required=True, type=Path)
+    args = parser.parse_args()
+    openscad = args.openscad.resolve()
+    scad = args.scad.resolve()
+    inspect_py = args.inspect.resolve()
+    payload = json.loads(args.contract.resolve().read_text(encoding="utf-8"))
+    contract = payload.get("centerClutch")
+    if not isinstance(contract, dict):
+        fail("contract JSON 缺少 centerClutch")
+    validate_contract(contract)
+
+    with tempfile.TemporaryDirectory(prefix="smartpartsdrawer-center-clutch-") as temp:
+        temp_dir = Path(temp)
+        reports: dict[tuple[str, bool], dict[str, object]] = {}
+        for part in MOVING_PARTS:
+            for engaged in (False, True):
+                stl = temp_dir / f"{part}_{'engaged' if engaged else 'open'}.stl"
+                run_export(openscad, scad, stl, part, engaged)
+                report = inspect(inspect_py, stl)
+                if part in PRINTED_PARTS:
+                    assert_watertight(report, stl.name)
+                reports[(part, engaged)] = report
+        for part in FIXED_PARTS:
+            stl = temp_dir / f"{part}_open.stl"
+            if part == "center_mechanism_plate":
+                report = run_center_mechanism_plate_export(
+                    openscad,
+                    scad,
+                    stl,
+                    inspect_py,
+                    temp_dir,
+                )
+            else:
+                run_export(openscad, scad, stl, part, False)
+                report = inspect(inspect_py, stl)
+                if part in PRINTED_PARTS:
+                    assert_watertight(report, stl.name)
+            reports[(part, False)] = report
+
+        # The tensioner remains one canonical STL, but its intentional fixed C
+        # and moving T/shoe solids must remain two connected islands so the
+        # browser can mount them on different frames without duplicating a
+        # source model.  The larger Y envelope is the fixed capture island.
+        tensioner_stl = temp_dir / "column_sync_tensioner_integral.stl"
+        run_export(openscad, scad, tensioner_stl, "column_sync_tensioner_integral", False)
+        tensioner_report = inspect(inspect_py, tensioner_stl)
+        assert_watertight(tensioner_report, tensioner_stl.name)
+        tensioner_spans = stl_component_y_spans(tensioner_stl)
+        if len(tensioner_spans) != 2 or tensioner_spans[0] <= tensioner_spans[1]:
+            fail(
+                "张紧总成 STL 必须保持两个连接岛且固定 C 的 Y 包络更大: "
+                f"spans={tensioner_spans}"
+            )
+
+        cabinet_stl = temp_dir / "cabinet.stl"
+        run_export(openscad, scad, cabinet_stl, "cabinet", False)
+        cabinet_report = inspect(inspect_py, cabinet_stl)
+        assert_watertight(cabinet_report, cabinet_stl.name)
+        cabinet_bounds = bounds(cabinet_report)
+        cabinet_size = [
+            cabinet_bounds["max"][axis] - cabinet_bounds["min"][axis]
+            for axis in range(3)
+        ]
+        expect_close(
+            cabinet_size[0],
+            number(contract, "cabinetWidthMm"),
+            "箱体 STL X 总宽",
+            0.01,
+        )
+        for axis, size in enumerate(cabinet_size):
+            if size > X1C_BUILD_VOLUME_MM[axis] + TOLERANCE_MM:
+                fail(
+                    "箱体 STL 超出 X1C 设计包络: "
+                    f"axis={axis}, actual={size:.4f} mm, "
+                    f"limit={X1C_BUILD_VOLUME_MM[axis]:.4f} mm"
+                )
+
+        for travel, label in ((0.0, "open"), (1.5, "mid"), (3.0, "engaged")):
+            witness = temp_dir / f"center_clutch_pair_collision_{label}.stl"
+            if run_intersection_export(openscad, scad, witness, inspect_py, "center_clutch_pair_collision", False, travel):
+                fail(f"公母离合轮 {label} 位存在实体交集")
+        belt_witness = temp_dir / "center_plate_belt_collision.stl"
+        if run_intersection_export(openscad, scad, belt_witness, inspect_py, "center_plate_belt_collision", False, 0.0):
+            fail("机构板与中心 2GT 皮带存在实体交集")
+        partition_belt_witness = temp_dir / "center_partition_belt_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_belt_witness,
+            inspect_py,
+            "center_partition_belt_collision",
+            False,
+            0.0,
+        ):
+            fail("箱体后背基准板与中心 R3C3 真实皮带存在实体交集")
+        chain_bearing_witness = temp_dir / "center_clutch_chain_bearing_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            chain_bearing_witness,
+            inspect_py,
+            "center_clutch_chain_bearing_collision",
+            False,
+            0.0,
+        ):
+            fail("03C 链条/8T 导向轮与 15 站母轮轴承固定条存在实体交集")
+        partition_mount_witness = temp_dir / "partition_mount_mechanism_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_mount_witness,
+            inspect_py,
+            "partition_mount_mechanism_collision",
+            False,
+            0.0,
+        ):
+            fail("前后仓隔板壁法向挂接件/套筒进入抽屉、离合、花键或同步带包络")
+        partition_mount_insertion_witness = temp_dir / "partition_mount_insertion_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            partition_mount_insertion_witness,
+            inspect_py,
+            "partition_mount_insertion_collision",
+            False,
+            0.0,
+        ):
+            fail("前后仓隔板 +Z 推入导入槽仍与箱体 D 泪滴耳接收件发生实体干涉")
+        idler_mount_witness = temp_dir / "center_clutch_chain_idler_mount_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_mount_witness,
+            inspect_py,
+            "center_clutch_chain_idler_mount_collision",
+            False,
+            0.0,
+        ):
+            fail("绿色 8T 导向轮一体盲孔 Boss 进入链条/轮体包络，存在实体干涉")
+        idler_partition_boss_witness = temp_dir / "center_clutch_chain_idler_partition_boss_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_partition_boss_witness,
+            inspect_py,
+            "center_clutch_chain_idler_partition_boss_collision",
+            False,
+            0.0,
+        ):
+            fail("隔板上的绿色 8T 导向轮 Boss 与相邻 15 格定位 Boss 发生实体干涉")
+        idler_row_fastener_witness = temp_dir / "center_clutch_chain_idler_row_fastener_block.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            idler_row_fastener_witness,
+            inspect_py,
+            "center_clutch_chain_idler_row_fastener_block",
+            False,
+            0.0,
+        ):
+            fail("连续离合行板上的绿色 8T 导向轮 Boss 堵住了四角 M3 固定孔")
+        guide_witness = temp_dir / "drawer_guide_flange_rail_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            guide_witness,
+            inspect_py,
+            "drawer_guide_flange_rail_collision",
+            False,
+            0.0,
+        ):
+            fail("抽屉侧向凸缘进入立板一体 C 槽唇边，存在实体干涉")
+        rack_shelf_witness = temp_dir / "drawer_front_drive_shelf_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            rack_shelf_witness,
+            inspect_py,
+            "drawer_front_drive_shelf_collision",
+            False,
+            0.0,
+        ):
+            fail("中心直齿排/主动轮与层板或一体轴承座存在实体干涉")
+        drawer_body_witness = temp_dir / "drawer_body_hardware_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            drawer_body_witness,
+            inspect_py,
+            "drawer_body_hardware_collision",
+            False,
+            0.0,
+        ):
+            fail("真实抽屉壳体与齿排/主动轮/C形导轨/681轴承存在实体干涉")
+        spline_chain_witness = temp_dir / "vertical_spline_support_chain_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_chain_witness,
+            inspect_py,
+            "vertical_spline_support_chain_collision",
+            False,
+            0.0,
+        ):
+            fail("抽屉电机花键轴可拆承载板/轴承塔与蛇链/回程主动轮存在实体干涉")
+        spline_drive_witness = temp_dir / "vertical_spline_support_drive_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_drive_witness,
+            inspect_py,
+            "vertical_spline_support_drive_collision",
+            False,
+            0.0,
+        ):
+            fail("抽屉电机花键轴承载板/轴承塔与花键轴/2GT轮/电机存在实体干涉")
+        spline_upper_carrier_witness = temp_dir / "vertical_spline_upper_carrier_drive_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_upper_carrier_witness,
+            inspect_py,
+            "vertical_spline_upper_carrier_drive_collision",
+            False,
+            0.0,
+        ):
+            fail("上方 Boss 套装承载板与花键轴/上方 2GT 轮存在实体干涉")
+        spline_window_witness = temp_dir / "vertical_spline_support_partition_window_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            spline_window_witness,
+            inspect_py,
+            "vertical_spline_support_partition_window_collision",
+            False,
+            0.0,
+        ):
+            fail("可拆花键轴承承载板/轴承塔进入前后仓隔板皮带孔")
+        tensioner_slide_witness = temp_dir / "column_sync_tensioner_slide_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_slide_witness,
+            inspect_py,
+            "column_sync_tensioner_slide_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮 X 向一体捕获滑台与上下 220T 同步皮带存在实体交集")
+        tensioner_shoe_rail_witness = temp_dir / "column_sync_tensioner_shoe_rail_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_shoe_rail_witness,
+            inspect_py,
+            "column_sync_tensioner_shoe_rail_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮一体滑台/调节凸台在名义位或 +X 满行程进入固定 C 导轨")
+        tensioner_capture_witness = temp_dir / "column_sync_tensioner_capture_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_capture_witness,
+            inspect_py,
+            "column_sync_tensioner_capture_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮固定 C 与移动 T/一体滑台在全行程发生实体干涉")
+        tensioner_tool_witness = temp_dir / "column_sync_tensioner_fastener_tool_collision.stl"
+        if run_intersection_export(
+            openscad,
+            scad,
+            tensioner_tool_witness,
+            inspect_py,
+            "column_sync_tensioner_fastener_tool_collision",
+            False,
+            0.0,
+        ):
+            fail("张紧轮 +X 调节螺丝头/工具包络进入箱体框架")
+
+        validate_intermediate_sweep(openscad, scad, inspect_py, temp_dir, contract)
+        validate_sweep(contract, reports)
+        metrics = validate_interference(contract, reports)
+
+    print(
+        "中心离合几何扫掠通过: "
+        f"gap={metrics['openGap']:.2f}mm, insertion={metrics['insertion']:.2f}mm, "
+        f"stroke={metrics['stroke']:.2f}mm, bottom={metrics['bottomClearance']:.2f}mm, "
+        f"input_clearance={metrics['inputBearingRotorClearance']:.2f}mm, "
+        f"LM3UU=Ø{number(contract, 'linearBearingNominalIdMm'):.0f}×"
+        f"Ø{number(contract, 'linearBearingNominalOdMm'):.0f}×"
+        f"{number(contract, 'linearBearingNominalLengthMm'):.0f}mm, "
+        f"M5×5 sleeve magnet, socket_overlap={metrics['sleeveSocketOverlap']:.2f}mm"
+    )
+    print(
+        "已检查：公轮轴 X/Z 不漂移、一体式实心 LM3UU 轴承座、D→圆→D 过渡、"
+        "圆套盲槽、输出双轴承一体长方条、D-round 短轴、前端下层同步轮/层间轴承/D 轴包络、"
+        "机构板双槽、隔板 5×3 逐格统一 2GT 皮带窗口、隔板四边各两套全外 D 环外套/导入槽、"
+        "左下 x-/y- 双向设备服务口、"
+        "15 格四角 Boss 定位/自攻导孔、"
+        "C 槽凸缘/内向唇边交集、5 根抽屉电机花键轴 3×6×2 可拆承载板/轴承塔、"
+        "9 个绿色 8T 导向轮的隔板/连续离合行板一体盲孔 Boss 与轮体空交集、"
+        "绿色导向 Boss/15 格隔板定位 Boss 空交集、绿色导向 Boss/行板四角 M3 孔空交集、"
+        "下方承载板与蛇链/回程主动轮/花键轴/2GT 轮/皮带孔三项实体交集见证、"
+        "上方 Boss 套装承载板与上方花键轴/2GT 轮实体交集见证、"
+        "张紧轮 X 向一体捕获滑台/上下 220T 皮带空交集、名义位与满行程滑台/C 导轨空交集、"
+        "固定 C 与移动 T/滑台三点全行程空交集、"
+        "+X 调节螺丝头工具空间见证、"
+        "中心离合实体碰撞见证"
+    )
+    print("未验收：实物打印配合、LM3UU/磁铁装配、磁极、低速负载和 20 次循环")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, RuntimeError, json.JSONDecodeError) as exc:
+        print(f"错误: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc

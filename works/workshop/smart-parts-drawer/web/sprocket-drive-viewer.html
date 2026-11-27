@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- region: 导入/依赖 -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CH1 03C 链传动 · 1x 电机可调转速顺时针</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <!-- endregion -->
+  <style>
+    :root { color-scheme: dark; font-family: "PingFang SC", "Hiragino Sans GB", ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dde8; }
+    .app { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; height: 100%; }
+    aside { border-right: 1px solid #243044; padding: 14px; background: #121722; }
+    h1 { margin: 0 0 8px; font-size: 16px; }
+    .meta, .hint { color: #8b98ab; font-size: 12px; line-height: 1.5; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    button { background: #1c2433; color: #e8eef8; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+    button.primary { background: #d9ff62; color: #162011; border: 0; font-weight: 600; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .stage { position: relative; min-height: 0; background: #0b0d12; }
+    #c { width: 100%; height: 100%; display: none; }
+    .stage.is-ready #c { display: block; }
+    .loading {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      background: #0b0d12; z-index: 4;
+    }
+    .stage.is-ready .loading { display: none; }
+    .loading-card { width: min(420px, calc(100% - 40px)); text-align: center; }
+    .spinner {
+      width: 36px; height: 36px; margin: 0 auto 14px; border-radius: 50%;
+      border: 3px solid #243044; border-top-color: #d9ff62; animation: spin .8s linear infinite;
+    }
+    .loading.is-error .spinner { display: none; }
+    .loading-title { margin: 0 0 8px; font-size: 16px; }
+    #loading-step { margin: 0 0 14px; color: #8b98ab; font-size: 13px; line-height: 1.5; word-break: break-all; }
+    .bar { height: 6px; border-radius: 999px; background: #1c2433; overflow: hidden; }
+    #loading-bar { display: block; height: 100%; width: 0; background: #d9ff62; transition: width .15s linear; }
+    .hz { font-variant-numeric: tabular-nums; color: #d9ff62; }
+    .speed { margin: 10px 0 8px; }
+    #hz-range { width: 100%; }
+    .hz-marks { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: #8b98ab; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 900px) { .app { grid-template-columns: 1fr; } aside { border-right: 0; border-bottom: 1px solid #243044; } }
+  </style>
+</head>
+<body>
+  <!-- region: 常量/配置 -->
+  <!-- 路径与转速在 js/sprocket-drive-anim.js：0.1–10 Hz 档位、顺时针、中心距 200 mm -->
+  <!-- endregion -->
+
+  <!-- region: 模型/类型 -->
+  <!-- 1x 电机 12T @ 1 Hz 顺时针；2x 24T 同向 0.5 Hz；链条沿 102 销轴路径滑动 -->
+  <!-- endregion -->
+
+  <!-- region: 私有成员 -->
+  <!-- 场景状态在 sprocket-drive-anim.js 的 state -->
+  <!-- endregion -->
+
+  <!-- region: 公开 API -->
+  <!-- 入口：initScene() + loadDrive()；按钮 play/pause/fit/top-view -->
+  <!-- endregion -->
+
+  <!-- region: 视图层 -->
+  <div class="app">
+    <aside>
+      <h1>CH1 03C 链传动</h1>
+      <p class="meta" id="meta">小轮装在电机上，顺时针正转；转速用滑杆切换。</p>
+      <p class="hint hz" id="hz-out">1 Hz · 2x 0.5 Hz · 顺时针</p>
+      <div class="speed">
+        <label class="hint" for="hz-range">1x 电机转速</label>
+        <input id="hz-range" type="range" min="0" max="5" step="1" value="2" disabled />
+        <div class="hz-marks" aria-hidden="true">
+          <span>0.1</span><span>0.5</span><span>1</span><span>2</span><span>5</span><span>10</span>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" id="play" class="primary" disabled>运行</button>
+        <button type="button" id="pause" disabled>暂停</button>
+      </div>
+      <div class="row">
+        <button type="button" id="fit" disabled>等轴视角</button>
+        <button type="button" id="top-view" disabled>顶视看顺时针</button>
+      </div>
+      <p class="hint" id="status">正在准备动画…</p>
+      <p class="hint">1x 小轮是电机侧。链条是外购 03C 包络，不是打印件。左键旋转，滚轮缩放。</p>
+    </aside>
+    <div class="stage" id="stage">
+      <div id="loading" class="loading" role="status" aria-live="polite">
+        <div class="loading-card">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="loading-title">正在准备传动</p>
+          <p id="loading-step">正在准备动画…</p>
+          <div class="bar"><span id="loading-bar"></span></div>
+        </div>
+      </div>
+      <canvas id="c"></canvas>
+    </div>
+  </div>
+  <script type="module" src="./js/sprocket-drive-anim.js"></script>
+  <!-- endregion -->
+</body>
+</html>

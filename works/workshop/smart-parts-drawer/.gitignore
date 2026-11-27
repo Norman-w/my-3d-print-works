@@ -1,0 +1,36 @@
+# ===== 分区：常量/配置 =====
+.env
+.env.*
+!.env.example
+
+# ===== 分区：编译产物 =====
+build/
+dist/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# ===== 分区：模型备份 =====
+*.FCBak
+*.FCStd1
+*.FCStd2
+
+# ===== 分区：生成网格 =====
+web/assets/stl/
+web/assets/previews/
+output/
+
+# ===== 分区：本地技能链接 =====
+.cursor/
+.claude/
+
+# ===== 分区：工具缓存 =====
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+*.log
+*.pid
+
+# ===== 拓竹临时切片诊断 =====
+result.json

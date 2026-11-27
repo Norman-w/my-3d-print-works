@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "status": "architecture-only",
+  "description": "SmartPartsDrawer 控制拓扑契约；不代表已选电机、驱动器或已完成固件。",
+  "mechanicalTruthSource": "cad/openscad/enclosure/cabinet_params.scad",
+  "stationGrid": {
+    "columns": 5,
+    "rows": 3,
+    "drawerStationCount": 15,
+    "serviceLayers": 1,
+    "serviceBaySide": "X-",
+    "serviceBayWidthMm": 44.0
+  },
+  "coordinateConvention": {
+    "cad": {
+      "X": "箱体宽度",
+      "Y": "箱体深度",
+      "Z": "箱体高度"
+    },
+    "web": {
+      "X": "箱体宽度",
+      "Y": "世界竖直高度",
+      "Z": "箱体深度"
+    },
+    "note": "网页不得自行补偿柜体尺寸、站位或轴向；这些值由导出适配器提供。"
+  },
+  "controller": {
+    "platform": "ESP32",
+    "prototypeBoard": "ESP32-DevKit",
+    "firmwarePresent": false,
+    "motorSupplyVoltageV": null,
+    "logicSupplyVoltageV": 3.3,
+    "separateMotorSupply": true,
+    "networkControl": "optional-local-LAN"
+  },
+  "axes": {
+    "selector": {
+      "role": "蛇形链选站",
+      "actuator": "pending-closed-loop-actuator",
+      "feedback": ["CHAIN_HOME", "selector-encoder-or-index"],
+      "mustStopBeforeClutch": true
+    },
+    "drawerDrive": {
+      "role": "共用动力总线/抽屉推拉",
+      "actuator": "pending-closed-loop-actuator",
+      "feedback": ["drawer-encoder", "DRAWER_IN", "DRAWER_OUT", "DRIVER_FAULT"]
+    }
+  },
+  "clutch": {
+    "actuation": "permanent-magnet-mechanical",
+    "feedback": ["CLUTCH_ENGAGED"],
+    "engageOnlyWhenSelectorStopped": true,
+    "releaseBeforeReturn": true,
+    "drawerStationCount": 15
+  },
+  "safety": {
+    "hardwareEmergencyStop": true,
+    "motorPowerCutByEmergencyStop": true,
+    "hardwareDriverEnableInterlock": true,
+    "watchdogRequired": true,
+    "manualReleaseRequired": true,
+    "softwareTimeoutIsNotTheOnlyGuard": true
+  },
+  "states": [
+    "BOOT",
+    "SELF_TEST",
+    "HOME_SELECTOR",
+    "IDLE",
+    "SELECT_STATION",
+    "VERIFY_CLUTCH",
+    "OPEN_DRAWER",
+    "CLOSE_DRAWER",
+    "RELEASE_CLUTCH",
+    "RETURN_SAFE",
+    "FAULT"
+  ],
+  "frontPanel": {
+    "screen": "pending-module-envelope",
+    "screenMount": "removable-front-bezel-with-bosses",
+    "statusIndicators": ["POWER", "READY", "BUSY", "FAULT", "NETWORK"],
+    "emergencyStop": "front-reachable-lower-service-rail",
+    "electronicsTray": "removable-bottom-service-layer",
+    "doNotPlace": [
+      "蛇形链回程运动包络",
+      "抽屉前端直齿排和主动轮运动包络",
+      "箱体主承力边缘"
+    ]
+  }
+}
