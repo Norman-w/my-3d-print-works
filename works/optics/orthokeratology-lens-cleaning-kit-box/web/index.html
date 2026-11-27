@@ -1,13 +1,21 @@
 <!doctype html>
 <html lang="zh-CN">
   <head>
+    <!-- region: 导入/依赖 -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="角膜塑形镜清洁套装盒的 OpenSCAD、STL 与拓竹 X1C 局域网打印面板" />
     <title>OK Lens Box · X1C 工作台</title>
     <link rel="stylesheet" href="/styles.css" />
+    <script src="/motion.js?v=revh-candy-1" defer></script>
+    <script src="/app.js?v=revh-candy-1" defer></script>
+    <!-- endregion -->
   </head>
   <body>
+    <!-- region: 模型/类型 -->
+    <!-- 数据模型：{ model: ModelInfo, mode: ViewMode, angle: number } -->
+    <!-- endregion -->
+    <!-- region: 视图层 -->
     <header class="topbar">
       <div class="brand-mark" aria-hidden="true">OK</div>
       <div>
@@ -24,6 +32,7 @@
           <h2>薄壁轻量版 · 隐藏锁扣与转轴</h2>
           <p class="intro-copy">
             矩形净内腔 <strong id="innerDimensions">130 × 100 × 50 mm</strong>。顶盖浅凹刻 ORTHO-K / LENS CARE KIT，署名 Candy，刻深 0.4 mm、文字下剩余板厚 1.6 mm。普通壁厚 2.4 mm、顶底原厚 2.0 mm；保留隐藏锁扣、转轴、倒角和 V 形打印姿态。不按水密盒设计。
+            三维传动动画请在 FreeCAD 里看：运行 <code>./scripts/show_freecad_animation.sh</code>。
           </p>
         </div>
         <div class="metric-strip" aria-label="模型关键尺寸">
@@ -179,8 +188,6 @@
         <strong>验收边界：</strong>页面健康检查、OpenSCAD 导出和 STL 流形通过，只说明 CAD/软件路径可用；薄壁刚度、铰链寿命、卡扣手感和首层质量仍需 X1C 首件实物验证。此版已取消水密结构。
       </section>
     </main>
-
-    <script src="/motion.js?v=revh-candy-1" defer></script>
-    <script src="/app.js?v=revh-candy-1" defer></script>
+    <!-- endregion -->
   </body>
 </html>

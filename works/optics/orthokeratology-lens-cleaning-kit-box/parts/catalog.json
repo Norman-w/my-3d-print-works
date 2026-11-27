@@ -1,0 +1,85 @@
+{
+  "revision": "cots-drive-step",
+  "units": "mm",
+  "notes": "Common purchased parts only. No printed shell. Envelopes from public N20 / ISO 4762 / module-0.5 data, exported as STEP from FreeCAD. Not a vendor CAD copy.",
+  "materials": {
+    "steel": {
+      "young_modulus_mpa": 200000,
+      "yield_mpa": 640,
+      "density_kg_m3": 7800
+    }
+  },
+  "parts": [
+    {
+      "id": "motor_n20",
+      "kind": "dc_motor",
+      "title": "GA12-N20 减速直流电机",
+      "material": "steel",
+      "voltage_v": 6.0,
+      "no_load_rpm": 100,
+      "stall_torque_nm": 0.05,
+      "resistance_ohm": 8.0,
+      "body_diameter_mm": 12.0,
+      "gearbox_mm": [15.0, 12.0, 10.0],
+      "motor_length_mm": 15.0,
+      "shaft_diameter_mm": 3.0,
+      "shaft_length_mm": 8.0,
+      "origin_mm": [0.0, 0.0, -12.0],
+      "shaft_axis": [1.0, 0.0, 0.0]
+    },
+    {
+      "id": "pinion_m05_z8",
+      "kind": "spur_gear",
+      "title": "模数 0.5 八齿小齿轮",
+      "material": "steel",
+      "module_mm": 0.5,
+      "teeth": 8,
+      "width_mm": 3.0,
+      "bore_mm": 3.0,
+      "origin_mm": [0.0, 0.0, -12.0],
+      "axis": [1.0, 0.0, 0.0],
+      "meshes_with": "spur_m05_z40"
+    },
+    {
+      "id": "spur_m05_z40",
+      "kind": "spur_gear",
+      "title": "模数 0.5 四十齿大齿轮",
+      "material": "steel",
+      "module_mm": 0.5,
+      "teeth": 40,
+      "width_mm": 3.0,
+      "bore_mm": 6.0,
+      "origin_mm": [0.0, 0.0, 0.0],
+      "axis": [1.0, 0.0, 0.0],
+      "meshes_with": "pinion_m05_z8"
+    },
+    {
+      "id": "screw_m2x8_a",
+      "kind": "metric_screw",
+      "title": "ISO 4762 M2×8 内六角",
+      "material": "steel",
+      "designation": "M2x8",
+      "thread_major_mm": 2.0,
+      "length_mm": 8.0,
+      "head_diameter_mm": 3.8,
+      "head_height_mm": 2.0,
+      "engagement_mm": 4.0,
+      "origin_mm": [0.5, 4.5, -12.0],
+      "axis": [-1.0, 0.0, 0.0]
+    },
+    {
+      "id": "screw_m2x8_b",
+      "kind": "metric_screw",
+      "title": "ISO 4762 M2×8 内六角",
+      "material": "steel",
+      "designation": "M2x8",
+      "thread_major_mm": 2.0,
+      "length_mm": 8.0,
+      "head_diameter_mm": 3.8,
+      "head_height_mm": 2.0,
+      "engagement_mm": 4.0,
+      "origin_mm": [0.5, -4.5, -12.0],
+      "axis": [-1.0, 0.0, 0.0]
+    }
+  ]
+}

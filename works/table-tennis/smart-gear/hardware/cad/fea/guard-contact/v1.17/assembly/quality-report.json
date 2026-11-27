@@ -1,0 +1,22 @@
+{
+  "nodes": 64132,
+  "elements": 285386,
+  "negative_or_zero_jacobians": 0,
+  "mean_ratio_min": 0.003335085891356049,
+  "mean_ratio_quantiles": [
+    0.1224475630663048,
+    0.3343085541867059,
+    0.5467165138711552,
+    0.8200885569259067
+  ],
+  "elements_below_001": 6,
+  "elements_below_01": 201,
+  "min_quality_centroid_mm": [
+    -18.012780999044285,
+    38.29205218028121,
+    -22.966132514067066
+  ],
+  "volume_mm3": 78234.90340472311,
+  "small_absolute_volume_is_not_alone_a_failure": true,
+  "convergence_study_required": true
+}

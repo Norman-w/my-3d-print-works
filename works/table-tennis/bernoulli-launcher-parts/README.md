@@ -48,3 +48,10 @@ python3 scripts/verify_launcher_lan.py
 旋转头、切片及边界分析分别由对应报告记录实际调用和文件哈希。局域网服务绑定0.0.0.0:8877，当前登录会话由launchd维持；注销或重启后执行 `python3 scripts/preview_lan.py start`。首页和零件预览已切到无拉索的 49 件现阶段结构；原动作网页保留为历史拉索场景。电机尚未安装建模，网页也不能显示已安装的往复电机。
 
 旧README保存在 `docs/history/README-before-final-integration.md`，历史子报告保留原始失败和旧身份，不把它们改写为当前通过记录。
+
+## 作品集维护入口
+
+本项目的可公开 3D 打印工程文件已收录到个人作品集：
+[my-3d-print-works / 乒乓球机械点射与可调旋转改装](https://github.com/Norman-w/my-3d-print-works/tree/main/works/table-tennis/bernoulli-launcher-parts)
+
+后续作品集版本的模型、打印文件、预览图和说明以该绝对链接为维护入口；本仓库保留原始历史和迁移前上下文。

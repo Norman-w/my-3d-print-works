@@ -91,3 +91,10 @@ python3 serve.py --host 0.0.0.0 --port 8766
 忽略 Python / Node 环境与缓存、编辑器状态、日志和备份、临时验证产物、切片任务（`*.gcode` / `*.gcode.3mf`）和本机凭据。`bambu.local.example.json` 与 `.env.example` 仅允许放脱敏示例；真实配置及其 `bambu.local*.json` 变体不提交。忽略规则不会删除本地文件，也不能保护已被 Git 跟踪的秘密。
 
 提交前用 `git status --short` 审查变更，`git ls-files -ci --exclude-standard` 应无输出（没有误跟踪的忽略文件）；可用 `git check-ignore -v 路径` 定位具体规则。不要用强制添加或隐藏已跟踪文件变更的方式保持表面干净。
+
+## 作品集维护入口
+
+本项目的可公开 3D 打印工程文件已收录到个人作品集：
+[my-3d-print-works / 角膜塑形镜清洁套装盒](https://github.com/Norman-w/my-3d-print-works/tree/main/works/optics/orthokeratology-lens-cleaning-kit-box)
+
+后续作品集版本的模型、打印文件、预览图和说明以该绝对链接为维护入口；本仓库保留原始历史和迁移前上下文。

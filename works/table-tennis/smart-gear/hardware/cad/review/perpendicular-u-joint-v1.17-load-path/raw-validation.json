@@ -1,0 +1,13 @@
+{
+  "raw_status": "Error.NoError",
+  "raw_components": 1,
+  "raw_old_volume_mm3": 75931.27966220661,
+  "raw_new_volume_mm3": 78495.68920565212,
+  "raw_added_mm3": 2564.4098033052,
+  "raw_removed_mm3": 0.00025985968230044984,
+  "roof_difference_mm3": 5.566996601476054e-07,
+  "bottom_band_difference_mm3": 3.989921321330682e-05,
+  "upper_entry_intrusion_mm3": 3.4987242358725204e-13,
+  "lower_cavity_intrusion_mm3": 0.0009399414081404892,
+  "screw_bore_intrusion_mm3": 0.0
+}

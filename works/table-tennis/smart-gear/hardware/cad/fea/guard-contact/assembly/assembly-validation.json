@@ -1,0 +1,68 @@
+{
+  "both_contact_pairs_active_under_load": true,
+  "upper_and_lower_torques_opposite": true,
+  "roof_xy_not_clamped": true,
+  "solver_job_finished": true,
+  "converged_steps": 6,
+  "maximum_torque_balance_relative_loaded": 0.0020741641092260252,
+  "maximum_stabilizer_torque_fraction_loaded": 0.011519897895979318,
+  "frames": [
+    {
+      "angle_deg": 0.5,
+      "kg_at_200mm": 1.1046184376213605e-11,
+      "foot_torque_Nm": 2.166521280259903e-11,
+      "upper_torque_Nm": 0.0,
+      "upper_contacts": 0,
+      "lower_contacts": 0,
+      "stabilizer_torque_fraction": 0.0
+    },
+    {
+      "angle_deg": 1.4,
+      "kg_at_200mm": 2.0037773686356955e-06,
+      "foot_torque_Nm": 0.0009601021210067699,
+      "upper_torque_Nm": 0.0,
+      "upper_contacts": 0,
+      "lower_contacts": 2,
+      "stabilizer_torque_fraction": 1.0040933860892893
+    },
+    {
+      "angle_deg": 2.2,
+      "kg_at_200mm": 1.1427527576316856e-07,
+      "foot_torque_Nm": 0.02099990014789549,
+      "upper_torque_Nm": 0.0,
+      "upper_contacts": 0,
+      "lower_contacts": 4,
+      "stabilizer_torque_fraction": 1.0000106729805873
+    },
+    {
+      "angle_deg": 2.6,
+      "kg_at_200mm": 1.2869186377748645,
+      "foot_torque_Nm": 2.553488053481687,
+      "upper_torque_Nm": -2.52142268,
+      "upper_contacts": 16,
+      "lower_contacts": 24,
+      "stabilizer_torque_fraction": 0.011519897895979318
+    },
+    {
+      "angle_deg": 3.0,
+      "kg_at_200mm": 4.905705385280105,
+      "foot_torque_Nm": 9.656835340305761,
+      "upper_torque_Nm": -9.640855280000002,
+      "upper_contacts": 62,
+      "lower_contacts": 38,
+      "stabilizer_torque_fraction": 0.003637651027113944
+    },
+    {
+      "angle_deg": 3.4,
+      "kg_at_200mm": 8.979508369744915,
+      "foot_torque_Nm": 17.65247455846916,
+      "upper_torque_Nm": -17.648393279999997,
+      "upper_contacts": 81,
+      "lower_contacts": 248,
+      "stabilizer_torque_fraction": 0.0023053656020050445
+    }
+  ],
+  "numerical_model_is_not_a_calibrated_printed_part": true,
+  "physical_fracture_load_validated": false,
+  "mesh_sensitivity_not_repeated_for_two_pair_boundary": true
+}

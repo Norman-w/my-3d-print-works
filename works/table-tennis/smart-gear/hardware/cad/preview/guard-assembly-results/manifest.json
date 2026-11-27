@@ -1,0 +1,1024 @@
+{
+  "solver": "CalculiX 2.23",
+  "units": "mm N MPa",
+  "version": "1.16",
+  "node_count": 38004,
+  "triangle_count": 76008,
+  "positions": "positions.bin",
+  "triangles": "triangles.bin",
+  "frame_layout": [
+    "von_mises_MPa",
+    "positive_sigma_zz_MPa",
+    "ux_mm",
+    "uy_mm",
+    "uz_mm"
+  ],
+  "mesh_report": {
+    "source_sha256": "f1e800d0ae6d1bcbdab268c6833a0c583af7b59601b123c74044385a51e89df5",
+    "analysis_simplification_tolerance_mm": 0.05,
+    "original_volume_mm3": 75662.04184724085,
+    "simplified_volume_mm3": 75667.38833945832,
+    "nodes": 77722,
+    "tetrahedra": 352601,
+    "volume_mm3": 75670.54075233053,
+    "minimum_element_volume_mm3": 3.48465975122485e-11,
+    "solver_run": false
+  },
+  "assumptions": {
+    "model_type": "upper_and_lower_contact",
+    "contact_facets": 20149,
+    "upper_contact_facets": 503,
+    "fixed_nodes": 8,
+    "clip_nodes": 77722,
+    "clip_tetrahedra": 352601,
+    "foot_nodes": [
+      77723,
+      77724,
+      77725,
+      77726,
+      77727,
+      77728,
+      77729,
+      77730
+    ],
+    "foot_initial_xyz": [
+      [
+        -10.0,
+        -55.0,
+        -20.0
+      ],
+      [
+        10.0,
+        -55.0,
+        -20.0
+      ],
+      [
+        10.0,
+        55.0,
+        -20.0
+      ],
+      [
+        -10.0,
+        55.0,
+        -20.0
+      ],
+      [
+        -10.0,
+        -55.0,
+        0.0
+      ],
+      [
+        10.0,
+        -55.0,
+        0.0
+      ],
+      [
+        10.0,
+        55.0,
+        0.0
+      ],
+      [
+        -10.0,
+        55.0,
+        0.0
+      ]
+    ],
+    "upper_nodes": [
+      77731,
+      77732,
+      77733,
+      77734,
+      77735,
+      77736,
+      77737,
+      77738
+    ],
+    "upper_initial_xyz": [
+      [
+        -56.0,
+        -10.0,
+        0.0
+      ],
+      [
+        56.0,
+        -10.0,
+        0.0
+      ],
+      [
+        56.0,
+        10.0,
+        0.0
+      ],
+      [
+        -56.0,
+        10.0,
+        0.0
+      ],
+      [
+        -56.0,
+        -10.0,
+        20.0
+      ],
+      [
+        56.0,
+        -10.0,
+        20.0
+      ],
+      [
+        56.0,
+        10.0,
+        20.0
+      ],
+      [
+        -56.0,
+        10.0,
+        20.0
+      ]
+    ],
+    "vertical_locators": [
+      70567,
+      21138,
+      4276
+    ],
+    "stabilizer_springs": [
+      {
+        "node": 70567,
+        "axis": 1,
+        "k_N_per_mm": 1.0
+      },
+      {
+        "node": 70567,
+        "axis": 2,
+        "k_N_per_mm": 1.0
+      },
+      {
+        "node": 21138,
+        "axis": 2,
+        "k_N_per_mm": 1.0
+      }
+    ],
+    "angles_deg": [
+      0.5,
+      1.4,
+      2.2,
+      2.6,
+      3.0,
+      3.4
+    ],
+    "E_MPa": 1500,
+    "nu": 0.38,
+    "contact_penalty_MPa_per_mm": 75000,
+    "friction": 0,
+    "roof_clamped": false,
+    "out_of_plane_locator_assumption": true,
+    "free_gap_force_reference_N": 0.01,
+    "not_physical_fracture_simulation": true
+  },
+  "frames": [
+    {
+      "time": 1.0,
+      "angle_deg": 0.5,
+      "contact_sample_count": 0,
+      "upper_positive_pressure_samples": 0,
+      "lower_positive_pressure_samples": 0,
+      "max_penetration_mm": 0,
+      "max_contact_pressure_MPa": 0,
+      "torque_Nm": 2.166521280259903e-11,
+      "driver_torque_Nm": 2.166521280259903e-11,
+      "signed_torque_Nm": 2.166521280259903e-11,
+      "equivalent_kg_at_200mm": 1.1046184376213605e-11,
+      "support_torque_Nm": 0.0,
+      "stabilizer_torque_Nm": 0.0,
+      "stabilizer_torque_fraction": 0.0,
+      "upper_reactions_N": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          -0.000115158,
+          3.54746e-05,
+          -5.34476e-05
+        ],
+        [
+          0.000132224,
+          -5.52784e-05,
+          -5.34475e-05
+        ],
+        [
+          0.000115158,
+          -3.54746e-05,
+          -5.34475e-05
+        ],
+        [
+          -0.000132224,
+          5.52784e-05,
+          -5.34476e-05
+        ],
+        [
+          -0.000115158,
+          3.54747e-05,
+          5.34475e-05
+        ],
+        [
+          0.000132224,
+          -5.52784e-05,
+          5.34476e-05
+        ],
+        [
+          0.000115158,
+          -3.54747e-05,
+          5.34475e-05
+        ],
+        [
+          -0.000132224,
+          5.52784e-05,
+          5.34476e-05
+        ]
+      ],
+      "torque_balance_relative": 2.1665212802599032e-05,
+      "net_force_N": [
+        0.0,
+        0.0,
+        2.0328790734103208e-20
+      ],
+      "max_vm_body_MPa": 0.0,
+      "p99_vm_body_MPa": 0.0,
+      "max_vm_all_MPa": 0.0,
+      "global_hotspot_xyz_mm": [
+        -17.899999618530273,
+        -38.5,
+        -23.5
+      ],
+      "max_layer_tension_body_MPa": 0.0,
+      "hotspot_xyz_mm": [
+        -17.899999618530273,
+        -38.5,
+        -23.5
+      ],
+      "max_displacement_mm": 0.0,
+      "file": "frame-00.bin"
+    },
+    {
+      "time": 2.0,
+      "angle_deg": 1.4,
+      "contact_sample_count": 2,
+      "upper_positive_pressure_samples": 0,
+      "lower_positive_pressure_samples": 2,
+      "max_penetration_mm": 4.676928e-06,
+      "max_contact_pressure_MPa": 0.3507696,
+      "torque_Nm": 3.9300686664262485e-06,
+      "driver_torque_Nm": 0.0009601021210067699,
+      "signed_torque_Nm": 0.0009601021210067699,
+      "equivalent_kg_at_200mm": 2.0037773686356955e-06,
+      "support_torque_Nm": 0.0,
+      "stabilizer_torque_Nm": -0.0009640321896731962,
+      "stabilizer_torque_fraction": 1.0040933860892893,
+      "upper_reactions_N": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          0.00344142,
+          0.000416456,
+          0.00198915
+        ],
+        [
+          0.0099438,
+          0.000430335,
+          0.00198915
+        ],
+        [
+          -0.0019283,
+          -0.000403252,
+          0.00198915
+        ],
+        [
+          -0.00170512,
+          -0.000358438,
+          0.00198915
+        ],
+        [
+          0.00457286,
+          0.00042633,
+          -0.00198915
+        ],
+        [
+          -0.00427125,
+          0.000306283,
+          -0.00198915
+        ],
+        [
+          -0.00453605,
+          -0.000426009,
+          -0.00198915
+        ],
+        [
+          0.00447164,
+          -0.000304534,
+          -0.00198915
+        ]
+      ],
+      "torque_balance_relative": 0.0040933860892892835,
+      "net_force_N": [
+        -4.207441686721047e-12,
+        -2.9000036737291974e-08,
+        4.000000715636415e-08
+      ],
+      "max_vm_body_MPa": 0.0033341308745458687,
+      "p99_vm_body_MPa": 0.0010033043639704586,
+      "max_vm_all_MPa": 0.0033341308745458687,
+      "global_hotspot_xyz_mm": [
+        10.699999809265137,
+        -33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_layer_tension_body_MPa": 0.00247362,
+      "hotspot_xyz_mm": [
+        10.699999809265137,
+        -33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_displacement_mm": 0.029186146921026165,
+      "file": "frame-01.bin"
+    },
+    {
+      "time": 3.0,
+      "angle_deg": 2.2,
+      "contact_sample_count": 4,
+      "upper_positive_pressure_samples": 0,
+      "lower_positive_pressure_samples": 4,
+      "max_penetration_mm": 7.953364e-05,
+      "max_contact_pressure_MPa": 5.965023,
+      "torque_Nm": 2.241315266125754e-07,
+      "driver_torque_Nm": 0.02099990014789549,
+      "signed_torque_Nm": 0.02099990014789549,
+      "equivalent_kg_at_200mm": 1.1427527576316856e-07,
+      "support_torque_Nm": 0.0,
+      "stabilizer_torque_Nm": -0.021000124279422102,
+      "stabilizer_torque_fraction": 1.0000106729805873,
+      "upper_reactions_N": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          -0.0231109,
+          -0.000412525,
+          0.000640985
+        ],
+        [
+          0.247794,
+          0.00612403,
+          0.000640985
+        ],
+        [
+          0.0437259,
+          0.000916345,
+          0.000640985
+        ],
+        [
+          -0.134439,
+          -0.00335372,
+          0.000640985
+        ],
+        [
+          0.000874134,
+          0.000173656,
+          -0.000640985
+        ],
+        [
+          0.077656,
+          0.00196596,
+          -0.000640985
+        ],
+        [
+          0.0128684,
+          0.000162204,
+          -0.000640985
+        ],
+        [
+          -0.00208202,
+          -0.000118971,
+          -0.000640985
+        ]
+      ],
+      "torque_balance_relative": 1.0672980587245164e-05,
+      "net_force_N": [
+        5.140069979092665e-07,
+        -2.0999829309503726e-08,
+        -4.999996306462133e-07
+      ],
+      "max_vm_body_MPa": 0.08004450042095335,
+      "p99_vm_body_MPa": 0.021520670492098576,
+      "max_vm_all_MPa": 0.08004450042095335,
+      "global_hotspot_xyz_mm": [
+        10.699999809265137,
+        -33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_layer_tension_body_MPa": 0.0521661,
+      "hotspot_xyz_mm": [
+        10.699999809265137,
+        -33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_displacement_mm": 0.625208671541329,
+      "file": "frame-02.bin"
+    },
+    {
+      "time": 4.0,
+      "angle_deg": 2.6,
+      "contact_sample_count": 40,
+      "upper_positive_pressure_samples": 16,
+      "lower_positive_pressure_samples": 24,
+      "max_penetration_mm": 0.002755284,
+      "max_contact_pressure_MPa": 206.6463,
+      "torque_Nm": 2.524072131826975,
+      "driver_torque_Nm": 2.553488053481687,
+      "signed_torque_Nm": 2.553488053481687,
+      "equivalent_kg_at_200mm": 1.2869186377748645,
+      "support_torque_Nm": -2.52142268,
+      "stabilizer_torque_Nm": -0.029415921654712008,
+      "stabilizer_torque_fraction": 0.011519897895979318,
+      "upper_reactions_N": [
+        [
+          -7.25461e-19,
+          -0.391344,
+          2.99714e-18
+        ],
+        [
+          -2.02544e-18,
+          -1.09504,
+          8.35908e-18
+        ],
+        [
+          2.00972e-18,
+          0.406891,
+          6.38997e-18
+        ],
+        [
+          5.61231e-18,
+          1.1365,
+          1.78014e-17
+        ],
+        [
+          -1.46062e-17,
+          -12.1036,
+          9.35762e-17
+        ],
+        [
+          -4.08462e-17,
+          -33.9229,
+          2.6208e-16
+        ],
+        [
+          5.74385e-17,
+          12.0997,
+          3.70433e-17
+        ],
+        [
+          1.60722e-16,
+          33.8725,
+          1.02558e-16
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          -0.695197,
+          -0.0269248,
+          -0.000597424
+        ],
+        [
+          7.72335,
+          0.296698,
+          -0.000597423
+        ],
+        [
+          1.40724,
+          0.0542788,
+          -0.000597423
+        ],
+        [
+          -3.80959,
+          -0.146347,
+          -0.000597424
+        ],
+        [
+          -4.45599,
+          -0.1714,
+          0.000597422
+        ],
+        [
+          20.8359,
+          0.800433,
+          0.000597424
+        ],
+        [
+          3.79548,
+          0.146026,
+          0.000597424
+        ],
+        [
+          -24.4642,
+          -0.939818,
+          0.000597423
+        ]
+      ],
+      "torque_balance_relative": 0.0010375814460389416,
+      "net_force_N": [
+        -1.0000027455547844e-05,
+        4.199998531340121e-05,
+        7.990003488665353e-07
+      ],
+      "max_vm_body_MPa": 9.463770869748485,
+      "p99_vm_body_MPa": 3.455604650572262,
+      "max_vm_all_MPa": 9.463770869748485,
+      "global_hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_layer_tension_body_MPa": 4.04993,
+      "hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_displacement_mm": 0.9338633759201886,
+      "file": "frame-03.bin"
+    },
+    {
+      "time": 5.0,
+      "angle_deg": 3.0,
+      "contact_sample_count": 100,
+      "upper_positive_pressure_samples": 62,
+      "lower_positive_pressure_samples": 38,
+      "max_penetration_mm": 0.004866909,
+      "max_contact_pressure_MPa": 365.0182,
+      "torque_Nm": 9.621707143311427,
+      "driver_torque_Nm": 9.656835340305761,
+      "signed_torque_Nm": 9.656835340305761,
+      "equivalent_kg_at_200mm": 4.905705385280105,
+      "support_torque_Nm": -9.640855280000002,
+      "stabilizer_torque_Nm": -0.035128196994333484,
+      "stabilizer_torque_fraction": 0.003637651027113944,
+      "upper_reactions_N": [
+        [
+          -2.70758e-18,
+          -2.34451,
+          1.30794e-17
+        ],
+        [
+          -7.45128e-18,
+          -6.46824,
+          3.56629e-17
+        ],
+        [
+          2.89774e-18,
+          2.21379,
+          -1.47699e-17
+        ],
+        [
+          7.99777e-18,
+          6.11149,
+          -4.09275e-17
+        ],
+        [
+          -2.42242e-17,
+          -46.4158,
+          2.11381e-16
+        ],
+        [
+          -6.51407e-17,
+          -128.421,
+          5.77344e-16
+        ],
+        [
+          8.0604e-18,
+          46.5975,
+          -1.3618e-16
+        ],
+        [
+          1.99685e-17,
+          128.729,
+          -3.82357e-16
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          -2.39446,
+          -0.108454,
+          0.000293106
+        ],
+        [
+          28.1432,
+          1.2778,
+          0.000293106
+        ],
+        [
+          5.10634,
+          0.2316,
+          0.000293107
+        ],
+        [
+          -13.1697,
+          -0.59786,
+          0.000293106
+        ],
+        [
+          -17.1672,
+          -0.779282,
+          -0.000293106
+        ],
+        [
+          79.5117,
+          3.61043,
+          -0.000293106
+        ],
+        [
+          14.4404,
+          0.655457,
+          -0.000293106
+        ],
+        [
+          -94.0088,
+          -4.26874,
+          -0.000293107
+        ]
+      ],
+      "torque_balance_relative": 0.0019828583603008626,
+      "net_force_N": [
+        7.099998694892751e-05,
+        -0.00010900005184721895,
+        2.335652174021655e-13
+      ],
+      "max_vm_body_MPa": 37.46703762056456,
+      "p99_vm_body_MPa": 13.01769509314373,
+      "max_vm_all_MPa": 37.46703762056456,
+      "global_hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_layer_tension_body_MPa": 15.2302,
+      "hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_displacement_mm": 1.281062830486278,
+      "file": "frame-04.bin"
+    },
+    {
+      "time": 6.0,
+      "angle_deg": 3.4,
+      "contact_sample_count": 329,
+      "upper_positive_pressure_samples": 81,
+      "lower_positive_pressure_samples": 248,
+      "max_penetration_mm": 0.008888322,
+      "max_contact_pressure_MPa": 666.6241,
+      "torque_Nm": 17.611779150831794,
+      "driver_torque_Nm": 17.65247455846916,
+      "signed_torque_Nm": 17.65247455846916,
+      "equivalent_kg_at_200mm": 8.979508369744915,
+      "support_torque_Nm": -17.648393279999997,
+      "stabilizer_torque_Nm": -0.040695407637363984,
+      "stabilizer_torque_fraction": 0.0023053656020050445,
+      "upper_reactions_N": [
+        [
+          1.1727e-17,
+          -4.06463,
+          -2.12044e-17
+        ],
+        [
+          3.24395e-17,
+          -11.2285,
+          -5.98114e-17
+        ],
+        [
+          2.97719e-18,
+          3.63785,
+          -3.01483e-17
+        ],
+        [
+          8.01258e-18,
+          9.99056,
+          -8.19752e-17
+        ],
+        [
+          5.88385e-17,
+          -86.1707,
+          -1.68084e-16
+        ],
+        [
+          1.65055e-16,
+          -237.13,
+          -4.91973e-16
+        ],
+        [
+          -1.04623e-16,
+          87.146,
+          -1.34902e-17
+        ],
+        [
+          -2.88538e-16,
+          237.82,
+          -2.68292e-17
+        ]
+      ],
+      "foot_reactions_N": [
+        [
+          -3.04761,
+          -0.160284,
+          -0.00165683
+        ],
+        [
+          50.0221,
+          2.62152,
+          -0.00165683
+        ],
+        [
+          8.9789,
+          0.47113,
+          -0.00165683
+        ],
+        [
+          -16.832,
+          -0.882098,
+          -0.00165683
+        ],
+        [
+          -33.9162,
+          -1.77804,
+          0.00165683
+        ],
+        [
+          147.788,
+          7.74523,
+          0.00165683
+        ],
+        [
+          26.6966,
+          1.39968,
+          0.00165683
+        ],
+        [
+          -179.111,
+          -9.38681,
+          0.00165683
+        ]
+      ],
+      "torque_balance_relative": 0.0020741641092260252,
+      "net_force_N": [
+        4.5987495497112896e-05,
+        0.0003799993987211314,
+        5.0000007822883836e-05
+      ],
+      "max_vm_body_MPa": 77.07969324958422,
+      "p99_vm_body_MPa": 23.438265125714423,
+      "max_vm_all_MPa": 77.07969324958422,
+      "global_hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_layer_tension_body_MPa": 27.7683,
+      "hotspot_xyz_mm": [
+        -10.699999809265137,
+        33.29999923706055,
+        0.20000000298023224
+      ],
+      "max_displacement_mm": 1.6512152899550956,
+      "file": "frame-05.bin"
+    }
+  ],
+  "material_reference": "https://prusament.com/wp-content/uploads/2022/10/PETG_Prusament_TDS_2021_10_EN.pdf",
+  "user_material": {
+    "brand": "\u5f69\u683c",
+    "colour": "black",
+    "series": "not_confirmed",
+    "mechanical_parameters_calibrated": false,
+    "official_product_reference": "https://www.cgtoner.com/productinfo/338535.html",
+    "note": "Official Basic product page lists printing settings, not measured directional strength; Prusament values remain reference only."
+  },
+  "reference_layer_strength_range_MPa": [
+    14,
+    22
+  ],
+  "reference_xy_yield_range_MPa": [
+    45,
+    49
+  ],
+  "strength_is_reference_not_measured_for_this_filament": true,
+  "solid_body_not_explicit_30_percent_infill": true,
+  "mesh_quality": {
+    "nodes": 77722,
+    "elements": 352601,
+    "negative_or_zero_jacobians": 0,
+    "mean_ratio_min": 0.005471070401478856,
+    "mean_ratio_quantiles": [
+      0.07730964441642112,
+      0.3293202233814427,
+      0.5354852910471161,
+      0.7931611530131087
+    ],
+    "elements_below_001": 10,
+    "elements_below_01": 454,
+    "min_quality_centroid_mm": [
+      10.955846145018437,
+      11.973266626579445,
+      -21.17744192913237
+    ],
+    "volume_mm3": 75670.54075233052,
+    "small_absolute_volume_is_not_alone_a_failure": true,
+    "convergence_study_required": true
+  },
+  "solver_job_finished": true,
+  "all_requested_steps_exported": true,
+  "fracture_crack_growth_simulated": false,
+  "frd_sha256": "a75a15bf097fa145fcd8fb6ec8280f932a81dd744d6a43af2bc31d5ea79aedae",
+  "assembly_validation": {
+    "both_contact_pairs_active_under_load": true,
+    "upper_and_lower_torques_opposite": true,
+    "roof_xy_not_clamped": true,
+    "solver_job_finished": true,
+    "converged_steps": 6,
+    "maximum_torque_balance_relative_loaded": 0.0020741641092260252,
+    "maximum_stabilizer_torque_fraction_loaded": 0.011519897895979318,
+    "frames": [
+      {
+        "angle_deg": 0.5,
+        "kg_at_200mm": 1.1046184376213605e-11,
+        "foot_torque_Nm": 2.166521280259903e-11,
+        "upper_torque_Nm": 0.0,
+        "upper_contacts": 0,
+        "lower_contacts": 0,
+        "stabilizer_torque_fraction": 0.0
+      },
+      {
+        "angle_deg": 1.4,
+        "kg_at_200mm": 2.0037773686356955e-06,
+        "foot_torque_Nm": 0.0009601021210067699,
+        "upper_torque_Nm": 0.0,
+        "upper_contacts": 0,
+        "lower_contacts": 2,
+        "stabilizer_torque_fraction": 1.0040933860892893
+      },
+      {
+        "angle_deg": 2.2,
+        "kg_at_200mm": 1.1427527576316856e-07,
+        "foot_torque_Nm": 0.02099990014789549,
+        "upper_torque_Nm": 0.0,
+        "upper_contacts": 0,
+        "lower_contacts": 4,
+        "stabilizer_torque_fraction": 1.0000106729805873
+      },
+      {
+        "angle_deg": 2.6,
+        "kg_at_200mm": 1.2869186377748645,
+        "foot_torque_Nm": 2.553488053481687,
+        "upper_torque_Nm": -2.52142268,
+        "upper_contacts": 16,
+        "lower_contacts": 24,
+        "stabilizer_torque_fraction": 0.011519897895979318
+      },
+      {
+        "angle_deg": 3.0,
+        "kg_at_200mm": 4.905705385280105,
+        "foot_torque_Nm": 9.656835340305761,
+        "upper_torque_Nm": -9.640855280000002,
+        "upper_contacts": 62,
+        "lower_contacts": 38,
+        "stabilizer_torque_fraction": 0.003637651027113944
+      },
+      {
+        "angle_deg": 3.4,
+        "kg_at_200mm": 8.979508369744915,
+        "foot_torque_Nm": 17.65247455846916,
+        "upper_torque_Nm": -17.648393279999997,
+        "upper_contacts": 81,
+        "lower_contacts": 248,
+        "stabilizer_torque_fraction": 0.0023053656020050445
+      }
+    ],
+    "numerical_model_is_not_a_calibrated_printed_part": true,
+    "physical_fracture_load_validated": false,
+    "mesh_sensitivity_not_repeated_for_two_pair_boundary": true
+  }
+}

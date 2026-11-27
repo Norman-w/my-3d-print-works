@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <!-- region: 导入/依赖 -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="电机、齿轮与螺钉的 FreeCAD 标准件传动仿真动画" />
+    <title>传动仿真 · 电机齿轮螺钉</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/drive.css" />
+    <script src="/drive.js?v=2" defer></script>
+    <!-- endregion -->
+  </head>
+  <body>
+    <!-- region: 模型/类型 -->
+    <!-- 数据模型：{ drive: { gear_ratio, output_shaft_nm, output_no_load_rpm }, parts: PartReport[] } -->
+    <!-- endregion -->
+
+    <!-- region: 视图层 -->
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">OK</div>
+      <div>
+        <p class="eyebrow">FREECAD / COMMON PARTS</p>
+        <h1>传动仿真动画</h1>
+      </div>
+      <a class="header-status" href="/">返回壳体工作台</a>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro-card">
+        <div>
+          <p class="eyebrow accent-text">NO SHELL · MOTOR / GEAR / SCREW</p>
+          <h2>看齿轮怎么转，不用打开 FreeCAD</h2>
+          <p class="intro-copy">
+            小齿轮跟电机一起转，大齿轮按 <strong>5:1</strong> 反向慢转。这是标准件物理逻辑：堵转 0.05 N·m 经过啮合效率 0.85 后，输出约 <strong>0.213 N·m / 20 rpm</strong>。没有壳体。
+          </p>
+        </div>
+        <div class="metric-strip" aria-label="仿真关键结果">
+          <div class="metric"><span>齿比</span><strong id="metricRatio">5 : 1</strong></div>
+          <div class="metric"><span>输出力矩</span><strong id="metricTorque">0.213 N·m</strong></div>
+          <div class="metric"><span>输出空载</span><strong id="metricRpm">20 rpm</strong></div>
+          <div class="metric"><span>螺钉抗剪</span><strong id="metricScrews">通过</strong></div>
+        </div>
+      </section>
+
+      <section class="panel drive-stage">
+        <div class="viewer-toolbar">
+          <div>
+            <p class="eyebrow">LIVE KINEMATICS</p>
+            <h2>电机 → 小齿轮 → 大齿轮</h2>
+          </div>
+          <span class="status-pill" id="simState">正在连接…</span>
+        </div>
+        <div class="drive-canvas-wrap">
+          <canvas id="driveCanvas" width="1100" height="640" aria-label="齿轮啮合动画"></canvas>
+        </div>
+        <div class="motion-controls">
+          <div class="motion-heading">
+            <label for="playbackRate">播放速度</label>
+            <output id="rateValue" for="playbackRate">0.10× 实速</output>
+          </div>
+          <input id="playbackRate" type="range" min="0.02" max="0.4" step="0.01" value="0.1" />
+          <div class="button-row">
+            <button class="button button-primary" id="playButton" type="button" aria-pressed="true">暂停</button>
+            <button class="button button-quiet" id="resetButton" type="button">转角归零</button>
+          </div>
+          <p class="helper" id="motionNote">实速 100 rpm 太快看不清齿，默认放慢到 0.10 倍。外啮合所以大齿轮反向转。</p>
+        </div>
+      </section>
+    </main>
+    <!-- endregion -->
+  </body>
+</html>

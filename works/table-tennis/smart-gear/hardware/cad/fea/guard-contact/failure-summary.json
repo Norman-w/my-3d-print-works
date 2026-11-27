@@ -1,0 +1,43 @@
+{
+  "material_brand": "\u5f69\u683c",
+  "material_parameters_are_other_brand_reference": true,
+  "actual_fracture_load_determined": false,
+  "interpretation": "First attainment of a reference stress criterion in an idealized solid elastic FE model, not physical breakage.",
+  "methods": "Piecewise interpolation of converged contact equilibria; no extrapolation past available results",
+  "cases": {
+    "base": {
+      "layer_criterion_kg_at_200mm": {
+        "14": 4.338383985395366,
+        "18": 5.5954995349060725,
+        "22": 7.010835486890477
+      },
+      "von_mises_yield_criterion_kg_at_200mm": {
+        "45": 6.365427252276116,
+        "47": 6.596283864081499,
+        "49": 6.827140475886882
+      },
+      "first_reference_criterion_range_kg": [
+        4.338383985395366,
+        6.827140475886882
+      ],
+      "finished": true
+    },
+    "refined": {
+      "layer_criterion_kg_at_200mm": {
+        "14": 4.21793346985489,
+        "18": 5.513715227925047,
+        "22": 7.449864164937175
+      },
+      "von_mises_yield_criterion_kg_at_200mm": {
+        "45": 6.18473266565663,
+        "47": 6.428207616156132,
+        "49": 6.671682566655634
+      },
+      "first_reference_criterion_range_kg": [
+        4.21793346985489,
+        6.671682566655634
+      ],
+      "finished": true
+    }
+  }
+}

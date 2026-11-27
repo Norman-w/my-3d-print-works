@@ -1,0 +1,159 @@
+{
+  "comparison": "same load / same material and contact assumptions; interpolate real solved surface nodal fields",
+  "mesh_convergence_established_for_comparison": false,
+  "physical_fracture_load_validated": false,
+  "rows": [
+    {
+      "old": {
+        "kg_at_200mm": 3,
+        "torque_Nm": 5.88399,
+        "angle_deg": 2.7893542208206794,
+        "max_vm_surface_body_MPa": 22.720111846923828,
+        "max_layer_tension_surface_body_MPa": 9.342508316040039,
+        "max_displacement_surface_mm": 1.0979267358779907,
+        "peak_xyz_mm": [
+          -10.699999809265137,
+          33.29999923706055,
+          0.20000000298023224
+        ],
+        "interpolated_between_solved_loads_kg": [
+          1.2869186377748645,
+          4.905705385280105
+        ]
+      },
+      "new": {
+        "kg_at_200mm": 3,
+        "torque_Nm": 5.88399,
+        "angle_deg": 2.7848275688669784,
+        "max_vm_surface_body_MPa": 18.330551147460938,
+        "max_layer_tension_surface_body_MPa": 2.773101806640625,
+        "max_displacement_surface_mm": 1.181368350982666,
+        "peak_xyz_mm": [
+          27.205474853515625,
+          -11.100000381469727,
+          19.770462036132812
+        ],
+        "interpolated_between_solved_loads_kg": [
+          1.2929563873634613,
+          4.987304850855093
+        ]
+      },
+      "vm_reduction_percent": 19.32015444746682,
+      "layer_tension_reduction_percent": 70.31737395534859
+    },
+    {
+      "old": {
+        "kg_at_200mm": 4.9,
+        "torque_Nm": 9.610517000000002,
+        "angle_deg": 2.9993693593264052,
+        "max_vm_surface_body_MPa": 37.42288589477539,
+        "max_layer_tension_surface_body_MPa": 15.212573051452637,
+        "max_displacement_surface_mm": 1.2805137634277344,
+        "peak_xyz_mm": [
+          -10.699999809265137,
+          33.29999923706055,
+          0.20000000298023224
+        ],
+        "interpolated_between_solved_loads_kg": [
+          1.2869186377748645,
+          4.905705385280105
+        ]
+      },
+      "new": {
+        "kg_at_200mm": 4.9,
+        "torque_Nm": 9.610517000000002,
+        "angle_deg": 2.9905471991375085,
+        "max_vm_surface_body_MPa": 25.727855682373047,
+        "max_layer_tension_surface_body_MPa": 4.51924467086792,
+        "max_displacement_surface_mm": 1.4149718284606934,
+        "peak_xyz_mm": [
+          27.205474853515625,
+          -11.100000381469727,
+          19.770462036132812
+        ],
+        "interpolated_between_solved_loads_kg": [
+          1.2929563873634613,
+          4.987304850855093
+        ]
+      },
+      "vm_reduction_percent": 31.251011066559908,
+      "layer_tension_reduction_percent": 70.29270028427979
+    },
+    {
+      "old": {
+        "kg_at_200mm": 6,
+        "torque_Nm": 11.76798,
+        "angle_deg": 3.107446984441115,
+        "max_vm_surface_body_MPa": 48.107688903808594,
+        "max_layer_tension_surface_body_MPa": 18.595197677612305,
+        "max_displacement_surface_mm": 1.38041090965271,
+        "peak_xyz_mm": [
+          -10.699999809265137,
+          33.29999923706055,
+          0.20000000298023224
+        ],
+        "interpolated_between_solved_loads_kg": [
+          4.905705385280105,
+          8.979508369744915
+        ]
+      },
+      "new": {
+        "kg_at_200mm": 6,
+        "torque_Nm": 11.76798,
+        "angle_deg": 3.098795192786804,
+        "max_vm_surface_body_MPa": 28.216272354125977,
+        "max_layer_tension_surface_body_MPa": 5.497605323791504,
+        "max_displacement_surface_mm": 1.5396350622177124,
+        "peak_xyz_mm": [
+          27.205474853515625,
+          -11.100000381469727,
+          19.770462036132812
+        ],
+        "interpolated_between_solved_loads_kg": [
+          4.987304850855093,
+          9.08748471013332
+        ]
+      },
+      "vm_reduction_percent": 41.34768683121639,
+      "layer_tension_reduction_percent": 70.43534885133086
+    },
+    {
+      "old": {
+        "kg_at_200mm": 8,
+        "torque_Nm": 15.69064,
+        "angle_deg": 3.3038236877453127,
+        "max_vm_surface_body_MPa": 67.5551986694336,
+        "max_layer_tension_surface_body_MPa": 24.74527359008789,
+        "max_displacement_surface_mm": 1.5621486902236938,
+        "peak_xyz_mm": [
+          -10.699999809265137,
+          33.29999923706055,
+          0.20000000298023224
+        ],
+        "interpolated_between_solved_loads_kg": [
+          4.905705385280105,
+          8.979508369744915
+        ]
+      },
+      "new": {
+        "kg_at_200mm": 8,
+        "torque_Nm": 15.69064,
+        "angle_deg": 3.2939085847492793,
+        "max_vm_surface_body_MPa": 32.45942687988281,
+        "max_layer_tension_surface_body_MPa": 7.271337509155273,
+        "max_displacement_surface_mm": 1.764711618423462,
+        "peak_xyz_mm": [
+          27.205474853515625,
+          -11.100000381469727,
+          19.770462036132812
+        ],
+        "interpolated_between_solved_loads_kg": [
+          4.987304850855093,
+          9.08748471013332
+        ]
+      },
+      "vm_reduction_percent": 51.95125242882368,
+      "layer_tension_reduction_percent": 70.61524705846081
+    }
+  ]
+}

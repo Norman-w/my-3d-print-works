@@ -1,0 +1,12 @@
+# Reproducible local solver/mesh runtime; scripts and JSON evidence stay visible.
+__pycache__/
+*.npz
+*.inp
+*.frd
+*.dat
+*.cvg
+*.sta
+*.12d
+*.log
+spooles.out
+_skipped.*

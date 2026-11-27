@@ -1,0 +1,11 @@
+{
+  "source_sha256": "f1e800d0ae6d1bcbdab268c6833a0c583af7b59601b123c74044385a51e89df5",
+  "analysis_simplification_tolerance_mm": 0.05,
+  "original_volume_mm3": 75662.04184724085,
+  "simplified_volume_mm3": 75667.38833945832,
+  "nodes": 77722,
+  "tetrahedra": 352601,
+  "volume_mm3": 75670.54075233053,
+  "minimum_element_volume_mm3": 3.48465975122485e-11,
+  "solver_run": false
+}
