@@ -1,0 +1,8 @@
+.claude/
+stl/*.stl
+web/node_modules/
+web/__pycache__/
+*.swp
+*.swo
+*~
+.DS_Store
