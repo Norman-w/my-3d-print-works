@@ -43,6 +43,7 @@ lower_wall = 4.20;
 // ---------- 主体过渡 ----------
 transition_length = 10.0;       // 拉长缩径段，降低薄肩处的应力集中
 transition_profile_steps = 64;  // 连续外轮廓的离散精度
+transition_curve_power = 2.5;    // 大于 1：让过渡段更长时间保持厚肩
 
 function female_minor_d(male_root_d) = male_root_d + 2 * radial_clearance;
 function female_major_d(male_major_d) = male_major_d + 2 * radial_clearance;
@@ -71,12 +72,14 @@ assert(top_pitch > 0 && lower_pitch > 0, "螺距必须大于 0");
 assert(top_thread_turns >= 1 && lower_thread_turns >= 1, "螺纹道数必须大于 0");
 assert(top_wall > 1.5 && lower_wall > 1.5, "打印壁厚过小");
 assert(transition_profile_steps >= 8, "过渡曲线采样点过少");
+assert(transition_curve_power > 1, "过渡曲线幂次必须大于 1");
 
 // 0 和 1 处导数都为 0，使曲线分别与下段、上段圆柱相切。
 function smooth_transition(t) = (1 - cos(180 * t)) / 2;
+function transition_shape(t) = pow(smooth_transition(t), transition_curve_power);
 function transition_radius(t) =
     lower_outer_d / 2
-        + (top_outer_d / 2 - lower_outer_d / 2) * smooth_transition(t);
+        + (top_outer_d / 2 - lower_outer_d / 2) * transition_shape(t);
 
 // profile 中的点为 [半径, 相对螺旋中心的 z 偏移]。
 // 这是一个截顶三角形：两侧为斜面，顶端保留有限宽度以适配 FDM。

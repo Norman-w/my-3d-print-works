@@ -2,8 +2,8 @@
   "path": "/Users/norman/CodexProjects/my-3d-print-works/works/bathroom/sink-drain-adapter/output/3d-print/sink_drain_adapter_v0.1.stl",
   "format": "ascii",
   "units": "unknown",
-  "triangleCount": 45446,
-  "uniqueVertexCount": 22723,
+  "triangleCount": 45638,
+  "uniqueVertexCount": 22819,
   "bounds": {
     "min": [
       -30.049999997019768,
@@ -21,9 +21,9 @@
       70.29999999701977
     ]
   },
-  "surfaceArea": 25711.41583447084,
-  "signedVolume": 43292.97735807167,
-  "volume": 43292.97735807167,
+  "surfaceArea": 25898.82470216592,
+  "signedVolume": 45491.67926805868,
+  "volume": 45491.67926805868,
   "degenerateTriangleCount": 0,
   "boundaryEdgeCount": 0,
   "nonManifoldEdgeCount": 0,
