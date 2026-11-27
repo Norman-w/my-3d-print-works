@@ -67,6 +67,19 @@ total_height = top_thread_z1 + top_lead_length;
 lower_outer_d = lower_female_major_d + 2 * lower_wall;
 top_outer_d = top_female_major_d + 2 * top_wall;
 
+// ---------- 外侧手拧握持纹 ----------
+grip_lobe_count = 12;              // 12 瓣圆润梅花轮廓
+grip_profile_steps_per_lobe = 24;  // 每瓣的圆周离散精度
+grip_overlap = 0.40;               // 握持纹向主体内的实体重叠
+grip_valley_wall = 0.20;           // 谷底仍保留的最小外壳厚度
+grip_lobe_depth = 2.40;             // 从谷底到峰顶的径向高度
+grip_z0 = lower_lead_length + 2.0;
+grip_z1 = lower_section_height - 3.0;
+grip_length = grip_z1 - grip_z0;
+grip_profile_steps = grip_lobe_count * grip_profile_steps_per_lobe;
+grip_valley_radius = lower_outer_d / 2 - grip_overlap;
+grip_inner_radius = grip_valley_radius - grip_valley_wall;
+
 assert(top_male_major_d > top_male_root_d, "上段外丝大径必须大于根径");
 assert(lower_male_major_d > lower_male_root_d, "下段外丝大径必须大于根径");
 assert(top_pitch > 0 && lower_pitch > 0, "螺距必须大于 0");
@@ -75,12 +88,26 @@ assert(top_wall > 1.5 && lower_wall > 1.5, "打印壁厚过小");
 assert(transition_profile_steps >= 8, "过渡曲线采样点过少");
 assert(outer_transition_extension >= 0, "外轮廓过渡延伸量不能为负");
 assert(outer_transition_z1 < total_height, "外轮廓过渡不能越过零件顶部");
+assert(grip_lobe_count >= 6, "握持瓣数过少");
+assert(grip_profile_steps_per_lobe >= 8, "握持纹圆周采样点过少");
+assert(grip_lobe_depth > 0 && grip_length > 0, "握持纹尺寸必须为正");
 
 // 0 和 1 处导数都为 0，使曲线分别与下段、上段圆柱相切。
 function smooth_transition(t) = (1 - cos(180 * t)) / 2;
 function transition_radius(t) =
     lower_outer_d / 2
         + (top_outer_d / 2 - lower_outer_d / 2) * smooth_transition(t);
+
+function grip_lobe_wave(angle) = max(0, cos(grip_lobe_count * angle));
+function grip_radius(angle) =
+    grip_valley_radius
+        + grip_lobe_depth * grip_lobe_wave(angle) * grip_lobe_wave(angle);
+function grip_points() = [
+    for (i = [0 : grip_profile_steps - 1])
+        let(angle = 360 * i / grip_profile_steps)
+            [grip_radius(angle) * cos(angle),
+             grip_radius(angle) * sin(angle)]
+];
 
 // profile 中的点为 [半径, 相对螺旋中心的 z 偏移]。
 // 这是一个截顶三角形：两侧为斜面，顶端保留有限宽度以适配 FDM。
@@ -152,27 +179,43 @@ module internal_thread_cut(male_major_d, male_root_d, pitch, turns, z0, hand = 1
     );
 }
 
+module hand_grip() {
+    translate([0, 0, grip_z0])
+        linear_extrude(height = grip_length, convexity = 10)
+            difference() {
+                polygon(points = grip_points());
+                circle(r = grip_inner_radius, $fn = grip_profile_steps);
+            }
+}
+
 module outer_body() {
-    // 直接旋转连续的 r-z 外轮廓；这里没有额外贴上的环形加强件。
-    rotate_extrude(convexity = 10)
-        polygon(points = concat(
-            [
-                [0, 0],
-                [lower_outer_d / 2, 0],
-                [lower_outer_d / 2, transition_z0]
-            ],
-            [
-                for (i = [1 : transition_profile_steps - 1])
-                    let(t = i / transition_profile_steps)
-                        [transition_radius(t),
-                         transition_z0 + (outer_transition_z1 - transition_z0) * t]
-            ],
-            [
-                [top_outer_d / 2, outer_transition_z1],
-                [top_outer_d / 2, total_height],
-                [0, total_height]
-            ]
-        ));
+    // 强制把握持纹和连续外轮廓熔成单一 CGAL 实体，避免切片器把重叠面当成重复走线。
+    render(convexity = 10)
+        union() {
+            // 直接旋转连续的 r-z 外轮廓；这里没有额外贴上的环形加强件。
+            rotate_extrude(convexity = 10)
+                polygon(points = concat(
+                    [
+                        [0, 0],
+                        [lower_outer_d / 2, 0],
+                        [lower_outer_d / 2, transition_z0]
+                    ],
+                    [
+                        for (i = [1 : transition_profile_steps - 1])
+                            let(t = i / transition_profile_steps)
+                                [transition_radius(t),
+                                 transition_z0 + (outer_transition_z1 - transition_z0) * t]
+                    ],
+                    [
+                        [top_outer_d / 2, outer_transition_z1],
+                        [top_outer_d / 2, total_height],
+                        [0, total_height]
+                    ]
+                ));
+
+            // 下段外侧的梅花握持纹，环形薄层与主体实体重叠，不进入通水孔。
+            hand_grip();
+        }
 }
 
 module inner_void() {

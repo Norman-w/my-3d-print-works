@@ -1,8 +1,10 @@
 # 洗手盆下水管转接件
 
+![洗手盆下水管转接件缩略图](output/previews/sink_drain_adapter_v0.1_isometric_axes.png)
+
 ## 当前状态
 
-`digital-verified`：SCAD、正式 STL、剖切预览和 STL 拓扑检查已完成；尚未实物试配。
+`digital-verified`：SCAD、正式 STL、剖切预览、STL 拓扑检查和 X1C 3MF 已完成；尚未实物试配。
 
 ## 设计解释
 
@@ -14,6 +16,7 @@
 - 下段节距：暂按 `1.50 mm`，默认 `16` 道，长度 `24.0 mm`；下段总长度未由实物确定，保留为参数。
 - 两段都是近似三角截面，顶端保留有限宽度 `0.18 mm`，避免 FDM 数学尖端变成不可打印的零厚度刀刃。
 - 内部通水过渡保持 `10.0 mm`；外部轮廓把连续曲线向上段延伸 `10.0 mm`，总外轮廓过渡约 `20.0 mm`，用于消除上段根部薄楔；不额外贴环，总高约 `70.3 mm`。
+- 下段外侧增加 `12` 瓣圆润梅花握持纹，峰值外径约 `64.1 mm`，握持带避开两端；只改变外部握持面，不进入内螺纹和通水孔。
 - 默认右旋；母牙按每侧 `0.25 mm` 径向间隙、每侧 `0.16 mm` 轴向间隙派生。
 
 这里把“低洼处 35 / 50 mm”解释为对方外丝的根径。若这两个尺寸实际指的是转接件内牙沟底径，需要改参数定义，不能直接拿当前首版打印。
@@ -22,6 +25,7 @@
 
 - 源模型：[`src/sink_drain_adapter.scad`](src/sink_drain_adapter.scad)
 - 打印文件：`output/3d-print/`
+- X1C 打印项目：[`output/3d-print/sink_drain_adapter_v0.1.3mf`](output/3d-print/sink_drain_adapter_v0.1.3mf)
 - 预览图：`output/previews/`（含带 XYZ 轴的等轴图和剖切图）
 - 验证报告：`output/validation/sink_drain_adapter_v0.1.stl.json`
 - 导出脚本：[`scripts/build.sh`](scripts/build.sh)
