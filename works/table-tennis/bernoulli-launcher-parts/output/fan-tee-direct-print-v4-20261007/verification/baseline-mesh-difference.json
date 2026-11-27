@@ -1,0 +1,45 @@
+{
+  "old_sha256": "af8a296763431adf8793777e5b17198a3757d02d1f3731cba68d9922c717b7c3",
+  "new_sha256": "8e23df3bf1258a7530491d7658a65458e752d650c9e0001289423e68c8c64fa2",
+  "old_file_is_runtime_dependency": false,
+  "slabs": [
+    {
+      "region": "lugs",
+      "z_range_mm": [
+        -11,
+        -3
+      ],
+      "added_mm3": 70.4497480570505,
+      "removed_mm3": 13.941460741631742
+    },
+    {
+      "region": "unchanged_inlet",
+      "z_range_mm": [
+        -3,
+        38
+      ],
+      "added_mm3": -2.898830941688857e-05,
+      "removed_mm3": 2.579405003011459e-05
+    },
+    {
+      "region": "thread_roof",
+      "z_range_mm": [
+        38,
+        51
+      ],
+      "added_mm3": 2.7497950540559236e-06,
+      "removed_mm3": 59.14530931432261
+    },
+    {
+      "region": "thread_entry_and_tee",
+      "z_range_mm": [
+        51,
+        81
+      ],
+      "added_mm3": 760.4316907678734,
+      "removed_mm3": 657.4639433781259
+    }
+  ],
+  "added_volume_mm3": 830.8815827149575,
+  "removed_volume_mm3": 730.5508160578736
+}

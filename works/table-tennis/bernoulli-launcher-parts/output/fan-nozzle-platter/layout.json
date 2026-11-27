@@ -1,0 +1,74 @@
+{
+  "printer": "Bambu Lab X1C",
+  "bed_mm": [256, 256],
+  "units": "mm",
+  "plate_3mf": "fan-nozzle-all-variants.3mf",
+  "arrangement": "Bambu Studio CLI --arrange 1 --orient 0",
+  "objects": [
+    {
+      "file": "fan-nozzle-tip42p5.stl",
+      "variant": "完整主体，内径 Ø42.5，带风嘴芯内螺纹",
+      "center_xy_mm": [122.58842, 146.37672],
+      "z_range_mm": [0, 204]
+    },
+    {
+      "file": "fan-nozzle-tip45.stl",
+      "variant": "完整主体，内径 Ø45",
+      "center_xy_mm": [122.58842, 58.4228],
+      "z_range_mm": [0, 204]
+    },
+    {
+      "file": "fan-nozzle-tip-core34.stl",
+      "variant": "可替换螺纹芯，内径 Ø34",
+      "center_xy_mm": [56.02303, 167.76526],
+      "z_range_mm": [0, 102]
+    },
+    {
+      "file": "fan-nozzle-tip-core36.stl",
+      "variant": "可替换螺纹芯，内径 Ø36",
+      "center_xy_mm": [56.02303, 122.58842],
+      "z_range_mm": [0, 102]
+    },
+    {
+      "file": "fan-nozzle-tip-core38.stl",
+      "variant": "可替换螺纹芯，内径 Ø38",
+      "center_xy_mm": [56.02303, 77.41158],
+      "z_range_mm": [0, 102]
+    },
+    {
+      "file": "fan-nozzle-tip-core40.stl",
+      "variant": "可替换螺纹芯，内径 Ø40",
+      "center_xy_mm": [56.02303, 32.23474],
+      "z_range_mm": [0, 102]
+    }
+  ],
+  "overall_bounds_mm": {
+    "x": [34.43459, 165.5654],
+    "y": [10.6463, 189.3537],
+    "z": [0, 204]
+  },
+  "bed_margins_mm": {
+    "x_min": 34.43459,
+    "x_max": 90.4346,
+    "y_min": 10.6463,
+    "y_max": 66.6463,
+    "z_headroom": 52
+  },
+  "object_count": 6,
+  "independent_objects": true,
+  "nominal_auto_arrange_gap_mm": 2,
+  "sliced": false,
+  "print_sent": false,
+  "secondary_plate": {
+    "plate_3mf": "fan-nozzle-core-variants.3mf",
+    "object_count": 4,
+    "objects": [
+      { "file": "fan-nozzle-tip-core34.stl", "center_xy_mm": [122.58842, 122.58842], "z_range_mm": [0, 102] },
+      { "file": "fan-nozzle-tip-core36.stl", "center_xy_mm": [122.58842, 77.41158], "z_range_mm": [0, 102] },
+      { "file": "fan-nozzle-tip-core38.stl", "center_xy_mm": [77.41158, 122.58842], "z_range_mm": [0, 102] },
+      { "file": "fan-nozzle-tip-core40.stl", "center_xy_mm": [77.41157, 77.41158], "z_range_mm": [0, 102] }
+    ],
+    "overall_bounds_mm": { "x": [55.82313, 144.17686], "y": [55.82314, 144.17686], "z": [0, 102] },
+    "bed_margins_mm": { "x_min": 55.82313, "x_max": 111.82314, "y_min": 55.82314, "y_max": 111.82314, "z_headroom": 154 }
+  }
+}

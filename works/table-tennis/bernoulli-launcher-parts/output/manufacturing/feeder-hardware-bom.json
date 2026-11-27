@@ -1,0 +1,566 @@
+{
+  "status": "SOURCE_QUANTITIES_CROSS_CHECKED_STANDARD_INLET_SELECTION",
+  "date": "2026-09-26",
+  "scope": "Current38-print feeder only; excludes10-part spin head and user existing blower/Y/PC/hose. Quantities are net assembly quantities, not orders or spare allowances.",
+  "printed_instances": 38,
+  "method": "Read instantiated hardware modules and their loop multiplicities; compare independent location sums with old33+frame-Y delta+inlet delta. This is not a mesh-connected-component fastener count.",
+  "source_sha256": {
+    "cad/launcher-final-assembly.scad": "5ce5a457496d8e1856cbdf6ec72c303c91d58364c0f091447be44b484cd0c926",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-hardware-clearance.scad": "746449c2ff188244a8c9bcb0029190aa4193a143ba654b321582ba1571e76950",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "analysis/launcher_final_assembly.py": "4a18da8cad226e0bf5accb8d0ee8aa6d9f97aa5c37be0d19d0504382e64aecc6"
+  },
+  "items": [
+    {
+      "id": "M3x12",
+      "specification": "M3×12 圆柱头内六角，头Ø5.5×3，钥匙2.5",
+      "quantity": 20,
+      "unit": "piece",
+      "installation_allocation": {
+        "主壳合缝": 8,
+        "左右支座固定": 4,
+        "四个载体Y外盖，每盖2": 8
+      },
+      "source_modules": [
+        "fh_seam_bolts",
+        "feeder_mount_hardware",
+        "revision_hardware_local"
+      ],
+      "baseline33_quantity": 24,
+      "frame_y_delta": -4,
+      "inlet_delta": 0,
+      "standard_or_catalog": "ISO 4762 / DIN 912 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M3x16",
+      "specification": "M3×16 圆柱头内六角，头Ø5.5×3，钥匙2.5",
+      "quantity": 12,
+      "unit": "piece",
+      "installation_allocation": {
+        "载体Y调隙顶丝": 4,
+        "公共架X调隙顶丝": 2,
+        "X外盖固定": 2,
+        "新增公共架Y调隙顶丝": 4
+      },
+      "source_modules": [
+        "revision_hardware_local",
+        "cg_new_hardware",
+        "yg_station_hardware_local"
+      ],
+      "baseline33_quantity": 8,
+      "frame_y_delta": 4,
+      "inlet_delta": 0,
+      "standard_or_catalog": "ISO 4762 / DIN 912 尺寸型；顶丝功能仍用带头螺钉，不换尖端紧定螺钉",
+      "ordered": false
+    },
+    {
+      "id": "M3x20",
+      "specification": "M3×20 圆柱头内六角，头Ø5.5×3，钥匙2.5",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "新增公共架Y导向盖固定，每侧2": 4
+      },
+      "source_modules": [
+        "yg_station_hardware_local(jack=false)"
+      ],
+      "baseline33_quantity": 0,
+      "frame_y_delta": 4,
+      "inlet_delta": 0,
+      "standard_or_catalog": "ISO 4762 / DIN 912 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M3-nut",
+      "specification": "M3 六角螺母，AF5.5×2.4",
+      "quantity": 52,
+      "unit": "piece",
+      "installation_allocation": {
+        "合壳": 8,
+        "支座固定": 4,
+        "四肩销": 4,
+        "四载体Y调节座，每座4": 16,
+        "X调节及外盖": 6,
+        "回位弹簧两端": 2,
+        "公共架Y盖安装4＋调节内外锁母8": 12
+      },
+      "source_modules": [
+        "fh_seam_nuts",
+        "fh_mount_nuts",
+        "ps_original_pins",
+        "revision_hardware_local",
+        "cg_new_hardware",
+        "rs_endpoint_hardware",
+        "yg_hardware"
+      ],
+      "baseline33_quantity": 44,
+      "frame_y_delta": 8,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 934 尺寸型；回位端也用完整2.4厚，非旧薄螺母方案",
+      "ordered": false
+    },
+    {
+      "id": "M3-washer",
+      "specification": "M3 平垫，ID3.2/OD7×0.5",
+      "quantity": 30,
+      "unit": "piece",
+      "installation_allocation": {
+        "支座固定": 4,
+        "四载体Y调节座，每座3": 12,
+        "X调节及外盖": 4,
+        "回位弹簧肩面承载": 2,
+        "公共架Y盖安装4＋调节锁母4": 8
+      },
+      "source_modules": [
+        "feeder_mount_hardware",
+        "revision_hardware_local",
+        "cg_new_hardware",
+        "rs_endpoint_hardware",
+        "yg_hardware"
+      ],
+      "baseline33_quantity": 26,
+      "frame_y_delta": 4,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 125 A 名义尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "follower-shoulder",
+      "specification": "norelem 07534-04X12；D4肩长12/M3尾长7；头Ø7×3；内六角2",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "四个凸轮随动销": 4
+      },
+      "source_modules": [
+        "ps_original_pins → cam_pin"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "norelem 07534-04X12，similar to ISO 7379",
+      "ordered": false
+    },
+    {
+      "id": "M2x4",
+      "specification": "M2×4 平端紧定螺钉，内六角0.9",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "四个肩销V定位压块": 4
+      },
+      "source_modules": [
+        "ps_added_hardware → ps_jack_local"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 913 / ISO 4026 尺寸型，必须平端",
+      "ordered": false
+    },
+    {
+      "id": "M2-nut",
+      "specification": "M2 六角螺母 AF4×1.6",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "四个肩销V定位压块": 4
+      },
+      "source_modules": [
+        "ps_added_hardware → ps_nut_local"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 934 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "seam-pin",
+      "specification": "Ø3×6 平头定位销",
+      "quantity": 2,
+      "unit": "piece",
+      "installation_allocation": {
+        "主壳分缝定位": 2
+      },
+      "source_modules": [
+        "seam_pins"
+      ],
+      "baseline33_quantity": 2,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "尺寸限定；不可换弹簧销或尖头销",
+      "ordered": false
+    },
+    {
+      "id": "M4x20",
+      "specification": "M4×20 圆柱头内六角，头Ø7×4，钥匙3",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "背梁与主壳连接": 4
+      },
+      "source_modules": [
+        "sh_bolts"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "ISO 4762 / DIN 912 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M4x30",
+      "specification": "M4×30 圆柱头内六角，头Ø7×4，钥匙3",
+      "quantity": 6,
+      "unit": "piece",
+      "installation_allocation": {
+        "出口捕获座": 2,
+        "出口PC管夹": 2,
+        "入口分体夹圈": 2
+      },
+      "source_modules": [
+        "or_split_hardware",
+        "ir_clamp_hardware"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 2,
+      "standard_or_catalog": "ISO 4762 / DIN 912 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M4-rod100",
+      "specification": "M4×100 全牙杆",
+      "quantity": 2,
+      "unit": "piece",
+      "installation_allocation": {
+        "出口上下夹座连接，Y±45": 2
+      },
+      "source_modules": [
+        "or_rod_hardware"
+      ],
+      "baseline33_quantity": 2,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "M4粗牙全长螺纹，不能换100长带头螺钉",
+      "ordered": false
+    },
+    {
+      "id": "M4-nut",
+      "specification": "M4 六角螺母 AF7×3.2",
+      "quantity": 18,
+      "unit": "piece",
+      "installation_allocation": {
+        "背梁": 4,
+        "出口长杆，每杆4": 8,
+        "出口两道分体座": 4,
+        "入口夹圈": 2
+      },
+      "source_modules": [
+        "sh_nuts",
+        "or_rod_hardware",
+        "or_split_hardware",
+        "ir_m4_nuts"
+      ],
+      "baseline33_quantity": 16,
+      "frame_y_delta": 0,
+      "inlet_delta": 2,
+      "standard_or_catalog": "DIN 934 尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M4-washer9",
+      "specification": "M4 平垫，ID4.3/OD9×0.8",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "背梁四螺钉头侧": 4
+      },
+      "source_modules": [
+        "sh_bolts"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 125 A 名义尺寸型",
+      "ordered": false
+    },
+    {
+      "id": "M4-washer12",
+      "specification": "M4 大外径薄垫，ID4.3/OD12×0.8",
+      "quantity": 14,
+      "unit": "piece",
+      "installation_allocation": {
+        "出口长杆": 8,
+        "出口横向M4头侧": 4,
+        "入口M4头侧": 2
+      },
+      "source_modules": [
+        "or_rod_hardware",
+        "or_split_hardware",
+        "ir_clamp_hardware"
+      ],
+      "baseline33_quantity": 12,
+      "frame_y_delta": 0,
+      "inlet_delta": 2,
+      "standard_or_catalog": "按明确尺寸选件；未锁制造商，不将它自动标为DIN 9021",
+      "ordered": false
+    },
+    {
+      "id": "M4-washer8",
+      "specification": "M4 小外径平垫，ID4.3/OD8×0.5",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "回位弹簧两个钩，每钩两片": 4
+      },
+      "source_modules": [
+        "rs_endpoint_hardware → rs_washer"
+      ],
+      "baseline33_quantity": 4,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "DIN 433 / ISO 7092；已有目录候选Accu HRDW-M4-A2",
+      "ordered": false
+    },
+    {
+      "id": "return-shoulder-fixed",
+      "specification": "MISUMI HDMSB4-16-F9-M3",
+      "quantity": 1,
+      "unit": "piece",
+      "installation_allocation": {
+        "回位弹簧固定端": 1
+      },
+      "source_modules": [
+        "rs_endpoint_hardware(true) → rs_pin"
+      ],
+      "baseline33_quantity": 1,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "D4，肩长16，M3尾长9",
+      "ordered": false
+    },
+    {
+      "id": "return-shoulder-moving",
+      "specification": "MISUMI HDMSB4-10-F9-M3",
+      "quantity": 1,
+      "unit": "piece",
+      "installation_allocation": {
+        "回位弹簧移动端": 1
+      },
+      "source_modules": [
+        "rs_endpoint_hardware(false) → rs_pin"
+      ],
+      "baseline33_quantity": 1,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "D4，肩长10，M3尾长9",
+      "ordered": false
+    },
+    {
+      "id": "return-spring",
+      "specification": "Lee Spring LEM063CA 03 M 拉伸弹簧",
+      "quantity": 1,
+      "unit": "piece",
+      "installation_allocation": {
+        "回位弹簧": 1
+      },
+      "source_modules": [
+        "rs_spring"
+      ],
+      "baseline33_quantity": 1,
+      "frame_y_delta": 0,
+      "inlet_delta": 0,
+      "standard_or_catalog": "厂家目录初选；自由长25.6，OD7，线径.63，初拉力1.67N，k=.25N/mm，不能代替真实回位验收",
+      "ordered": false
+    },
+    {
+      "id": "M2_5x20",
+      "specification": "M2.5×20 全牙圆柱头内六角，头Ø4.5×2.5，钥匙2",
+      "quantity": 2,
+      "unit": "piece",
+      "installation_allocation": {
+        "入口锚板/背梁/后压板": 2
+      },
+      "source_modules": [
+        "ir_anchor_hardware"
+      ],
+      "baseline33_quantity": 0,
+      "frame_y_delta": 0,
+      "inlet_delta": 2,
+      "standard_or_catalog": "Bossard BN 610，1422898，A2；ISO 4762 / DIN 912，P=.45",
+      "ordered": false
+    },
+    {
+      "id": "M2_5-nut",
+      "specification": "M2.5 六角螺母 AF5，厚度最大2",
+      "quantity": 2,
+      "unit": "piece",
+      "installation_allocation": {
+        "入口前锚板前侧": 2
+      },
+      "source_modules": [
+        "ir_anchor_hardware"
+      ],
+      "baseline33_quantity": 0,
+      "frame_y_delta": 0,
+      "inlet_delta": 2,
+      "standard_or_catalog": "Bossard BN 628，1241427，A2；DIN 934；不以近似ISO 4032任意替换",
+      "ordered": false
+    },
+    {
+      "id": "M2_5-washer",
+      "specification": "M2.5 平垫，ID2.7/OD6×0.5（名义）",
+      "quantity": 4,
+      "unit": "piece",
+      "installation_allocation": {
+        "入口两个穿栓各头侧及螺母侧": 4
+      },
+      "source_modules": [
+        "ir_anchor_hardware"
+      ],
+      "baseline33_quantity": 0,
+      "frame_y_delta": 0,
+      "inlet_delta": 4,
+      "standard_or_catalog": "Bossard BN 715，1777491；DIN 125 A，钢140HV镀锌蓝白；目录名义厚度，非完整公差承诺",
+      "ordered": false
+    }
+  ],
+  "line_items": 22,
+  "hardware_units_total": 195,
+  "crosschecks": {
+    "all_location_sums_equal_quantities": true,
+    "all_baseline_plus_deltas_equal_quantities": true,
+    "old_caps_excluded": "la_fixed_hardware calls cg_old_hardware(false), then yg_hardware once; no double-count of cap nuts/washers",
+    "spring_full_nut": "rs_nut_h=2.4; rs_thread_length=9; two old thin-nut trials are not added",
+    "follower_hardware": "la_moving_hardware calls ps_original_pins and ps_added_hardware once; no revision_followers duplicate",
+    "hc_delta": "hc_keepers only subtract local plastic; original four M3 mounting screw/washer counts unchanged"
+  },
+  "manufacturer_references": [
+    {
+      "id": "B610",
+      "manufacturer": "Bossard",
+      "url": "https://bossard.partcommunity.com/3d-cad-models/?info=bossard%2F01%2F01_100%2F01_100_100%2F01_100_100_10%2Fbn_610_612_31101%2Fbn_610.prj",
+      "article": "1422898",
+      "observed": "M2.5×20 A2; P.45; dk max4.5; k max2.5; AF2; full-form thread length19.1; underhead incomplete length max.9",
+      "kind": "manufacturer branded CAD catalogue"
+    },
+    {
+      "id": "B628",
+      "manufacturer": "Bossard",
+      "url": "https://tvsat.com.pl/PDF/B/bn_628_bossard.pdf",
+      "article": "1241427",
+      "observed": "DIN934, A2, M2.5, AF5, m max2, e min5.45",
+      "kind": "original manufacturer datasheet, distributor-hosted, dated2021-01-17"
+    },
+    {
+      "id": "B715",
+      "manufacturer": "Bossard",
+      "url": "https://media.distrelec.com/Web/Downloads/_t/ds/BN_715_eng_tds.pdf",
+      "article": "1777491",
+      "observed": "DIN125A / approx ISO7089; steel140HV zinc plated blue; M2.5 ID2.7 OD6 thickness.5",
+      "kind": "original manufacturer datasheet, distributor-hosted, dated2018-03-12"
+    },
+    {
+      "id": "B715-official",
+      "manufacturer": "Bossard",
+      "url": "https://www.bossard.com/in-en/eshop/washers-flat-without-chamfer/flat-washers-without-chamfer/p/715/",
+      "observed": "Official BN715 family and material/standard; manufacturer page links its CAD catalogue",
+      "kind": "manufacturer product page"
+    }
+  ],
+  "inlet_nominal_fit": {
+    "bolt_head_model": [
+      5,
+      3
+    ],
+    "catalog_head_max": [
+      4.5,
+      2.5
+    ],
+    "nut_AF_h_model_and_catalog": [
+      5,
+      2
+    ],
+    "washer_ID_OD_t_nominal": [
+      2.7,
+      6,
+      0.5
+    ],
+    "nominal_stack_mm": 18,
+    "nominal_thread_projection_mm": 2,
+    "conclusion": "Standard/catalog identity selected and nominal envelope compatible. Washer thickness.5 is nominal; no catalog full thickness/length tolerance sweep was substituted for the frozen nominal CAD report. No CAD or report source was changed."
+  },
+  "tools": [
+    {
+      "size": "2.0 mm straight hex",
+      "use": "入口M2.5螺钉；四根norelem随动肩销按原规格也为2.0",
+      "envelope": "入口已审查Ø2.5、长44.4直杆通路；AF2外接圆2.310。柄和弯头留在通道之外。"
+    },
+    {
+      "size": "2.5 mm straight hex",
+      "use": "全部M3圆柱头；尤其四颗支座安装螺钉",
+      "envelope": "hc支座入口最靠组件45mm须在Ø3.0内；AF2.5外接圆2.887。宽Ø4.2批头在固定凸台处已证实相撞。"
+    },
+    {
+      "size": "3.0 mm straight hex",
+      "use": "M4圆柱头",
+      "envelope": "入口按Ø4直杆/55长接近包络检查；其余沿各子总成已核路径。"
+    },
+    {
+      "size": "0.9 mm hex",
+      "use": "M2×4平端紧定螺钉",
+      "envelope": "不是1.0mm钥匙"
+    },
+    {
+      "size": "5 mm open wrench, inlet",
+      "use": "入口M2.5螺母",
+      "envelope": "候选头宽10、厚2.2、开口5.2，沿−Z；实际工具型号及完整摆角未锁。"
+    },
+    {
+      "size": "5.5 mm spanner / deep socket",
+      "use": "M3锁母/回位端螺母",
+      "envelope": "回位深套筒参考GEDORE2133 5,5，须空腔容突出螺纹；普通实心杆不等效。"
+    },
+    {
+      "size": "7 mm wrench / socket",
+      "use": "M4螺母",
+      "envelope": "出口下侧工具需在装背梁之前使用。"
+    }
+  ],
+  "other_materials": [
+    {
+      "name": "入口可换柔衬",
+      "quantity": 2,
+      "status": "3mm为当前名义模型；材料、硬度、实际管轮廓、夹压力、抗拔/气密OPEN"
+    },
+    {
+      "name": "软管卸载织带",
+      "quantity": null,
+      "specification": "20mm宽、约1.5mm厚；改穿入口锚板两个新侧槽，原槽被端键占用",
+      "status": "长度/带扣与实际负载未锁"
+    },
+    {
+      "name": "密封材料",
+      "quantity": null,
+      "specification": "SCS2700 LM、Scotch70，按既有密封工序",
+      "status": "不计入机械抗拔件；用量按实际封缝/缠绕"
+    }
+  ],
+  "physical_acceptance": false,
+  "purchased": false,
+  "cad_modified": false
+}

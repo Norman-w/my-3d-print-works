@@ -1,0 +1,67 @@
+{
+    "error_string": "Success.",
+    "export_time": 625,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 15,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 27.437110900878906,
+                "Bridge": 169.02867126464844,
+                "Custom": 428.8885498046875,
+                "Flush": 29.0,
+                "Gap infill": 61.17844772338867,
+                "Inner wall": 1198.8426513671875,
+                "Internal solid infill": 436.447998046875,
+                "Outer wall": 705.6162109375,
+                "Overhang wall": 187.9644317626953,
+                "Sparse infill": 667.780029296875,
+                "Support": 1561.734130859375,
+                "Support interface": 93.02909851074219,
+                "Top surface": 132.3462677001953,
+                "Travel": 1524.4832763671875,
+                "Undefined": 1509.0565185546875
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 38.21537399291992,
+                    "total_used_g": 38.21537780761719
+                }
+            ],
+            "generate_support_material_time": 1838,
+            "id": 1,
+            "infill_time": 170,
+            "layer_filament_change": 0,
+            "main_predication": 6738.32568359375,
+            "make_perimeters_time": 239,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 55.0,
+                        "height": 52.599998474121094,
+                        "width": 98.0,
+                        "x": 78.99999237060547,
+                        "y": 100.5,
+                        "z": -7.105427357601002e-15
+                    },
+                    "id": 5,
+                    "name": "feeder__inlet-rear.stl",
+                    "triangle_count": 1728
+                }
+            ],
+            "sliced_time": 2979,
+            "sliced_time_with_cache": 613,
+            "total_predication": 7209.7568359375,
+            "triangle_count": 1728,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+}

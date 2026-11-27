@@ -1,0 +1,16 @@
+{
+  "status": "SCOPED_DOC_SYNC_COMPLETE",
+  "before": {
+    "backup": "output/current-route-service-review/history/before-current-assembly-sync-20260927T122023598297Z/docs/current-assembly.md",
+    "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058"
+  },
+  "after": {
+    "file": "docs/current-assembly.md",
+    "sha256": "b00b1d6cd75dbfb8994c199067d6558aff1de7898fc744442fe35b5f90694f81"
+  },
+  "scope": "Replace only existing route lower removal paragraph with cap/lower prerequisites and verified continuous paths; preserve rotation-head sentence and other sections. No CAD/BOM/old evidence edits.",
+  "local_links_checked": 16,
+  "all_local_links_exist": true,
+  "final_route_report_sha256": "2ea7d35574f2c623f5f4672254fe16481011e092b3da34042a01fa72268076e0",
+  "diff": "output/current-route-service-review/current-assembly-sync.diff"
+}

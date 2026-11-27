@@ -1,0 +1,26 @@
+{
+  "source": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/candidate.scad",
+  "source_sha256_before": "491ded77149a2147f010092f7f715f59ef50a2dd714abb56677d596fb6544c9d",
+  "include_parameters_sha256_before": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+  "reference": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/body.stl",
+  "reference_sha256_before": "cbb5e34df230744c11de77599e96c3a28f446c0b67bc9918b0fd4f2de506d8e2",
+  "backend": "CGAL",
+  "selector": "cil_body()",
+  "geometry_modified": false,
+  "command": [
+    "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+    "--hardwarnings",
+    "--backend",
+    "CGAL",
+    "--export-format",
+    "asciistl",
+    "-o",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/body-cgal-diagnostic/20260927T082459243582Z/body-cgal.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/body-cgal-diagnostic/20260927T082459243582Z/body.scad"
+  ],
+  "returncode": 0,
+  "source_sha256_after": "491ded77149a2147f010092f7f715f59ef50a2dd714abb56677d596fb6544c9d",
+  "reference_sha256_after": "cbb5e34df230744c11de77599e96c3a28f446c0b67bc9918b0fd4f2de506d8e2",
+  "source_unchanged": true,
+  "reference_unchanged": true
+}

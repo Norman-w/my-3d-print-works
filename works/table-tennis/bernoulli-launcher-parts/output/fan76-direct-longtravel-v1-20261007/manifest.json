@@ -1,0 +1,1060 @@
+{
+  "schema_version": "fan76-direct-cad-v1",
+  "generated_utc": "2026-10-07T02:37:14.794217+00:00",
+  "units": "mm",
+  "openscad_version": "OpenSCAD version 2026.04.26",
+  "status": "DIGITAL_GEOMETRY_PASS_PHYSICAL_AND_SLICE_PENDING",
+  "embedded_supports": false,
+  "source_sha256": {
+    "fan76-direct-v1.scad": "6c47c347a872f63b275ebff2e9f6718c071d25b75e7745aa5ee2b996fdc4c5b0",
+    "fan76-direct-v1-parameters.scad": "d11c4478c98ea104d56b19913ff9cd60bac740fbcd1fa583c832a632b9077125",
+    "fan76-direct-v1-thread.scad": "ee5c6db2ffb951b2407c1326fc7b0673356cd9e1cb32b04dfe3404bbbfaa9213"
+  },
+  "skill_files_sha256": {
+    "SKILL.md": "8796b824a9046be17a465d70a0cf7dee5ce9734990945ad6099408c0d0c78f93",
+    "references/helical-thread-workflow.md": "7df227ce8373309e223b40ca6da863861b6a00e7f3c1e896c579af58135c8359",
+    "references/printability-checklist.md": "40b85a043ac963f0729badc1bfb818981df94460f5cb368fc22c3626c4d34107",
+    "references/socket-bayonet-fit.md": "ef82bb81bdb5f9fe3f86bad1c01b5eec4737d71d9ce543e65a83bf2fec7bf7b1",
+    "references/versioned-print-package.md": "d1757beb97f07c6b6fd2db14bed50bf256d58719ea226801fb020fce43719cf5",
+    "references/mechanical-design-patterns.md": "2fc68151b639c41e3891b3dce8cfbfd249af3150754d8c079aed40130e317606",
+    "examples/helical-thread-profile.scad": "00b0836ea51581d60973ce9dded13f92eb25522beb58231a9714ad2761d511a6"
+  },
+  "files": [
+    {
+      "part_id": "body",
+      "file": "stl/fan76-direct-v1-body-clean.stl",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "source_module": "f76_body",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-body-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 100152,
+        "uniqueVertexCount": 50076,
+        "bounds": {
+          "min": [
+            -43.0,
+            -43.0,
+            0.0
+          ],
+          "max": [
+            43.0,
+            43.0,
+            222.0
+          ],
+          "size": [
+            86.0,
+            86.0,
+            222.0
+          ]
+        },
+        "surfaceArea": 82605.14608848425,
+        "signedVolume": 216547.0955326623,
+        "volume": 216547.0955326623,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-body-clean.stl"
+      }
+    },
+    {
+      "part_id": "core15",
+      "file": "stl/fan76-direct-v1-core15-clean.stl",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core15-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 35143.1572819258,
+        "signedVolume": 35135.85487927308,
+        "volume": 35135.85487927308,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core15-clean.stl"
+      }
+    },
+    {
+      "part_id": "core20",
+      "file": "stl/fan76-direct-v1-core20-clean.stl",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core20-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 36080.239814248795,
+        "signedVolume": 36136.91858264803,
+        "volume": 36136.91858264803,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core20-clean.stl"
+      }
+    },
+    {
+      "part_id": "core25",
+      "file": "stl/fan76-direct-v1-core25-clean.stl",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core25-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 37031.07017616209,
+        "signedVolume": 37138.397676175606,
+        "volume": 37138.397676175606,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core25-clean.stl"
+      }
+    },
+    {
+      "part_id": "core30",
+      "file": "stl/fan76-direct-v1-core30-clean.stl",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core30-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 38005.58596005232,
+        "signedVolume": 38140.1915401383,
+        "volume": 38140.1915401383,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core30-clean.stl"
+      }
+    },
+    {
+      "part_id": "review-fan-envelope",
+      "file": "review/review-fan-envelope.stl",
+      "sha256": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c",
+      "source_module": "review-fan-envelope",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-fan-envelope.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 1624,
+        "uniqueVertexCount": 812,
+        "bounds": {
+          "min": [
+            -38.0,
+            -40.0,
+            0.0
+          ],
+          "max": [
+            38.0,
+            40.0,
+            24.0
+          ],
+          "size": [
+            76.0,
+            80.0,
+            24.0
+          ]
+        },
+        "surfaceArea": 12369.08492402544,
+        "signedVolume": 14099.768518106222,
+        "volume": 14099.768518106222,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-fan-envelope.stl"
+      }
+    },
+    {
+      "part_id": "review-male-ridge",
+      "file": "review/review-male-ridge.stl",
+      "sha256": "a71012c8defe634fa402f372466460d584e0feb48a251b03082d8caca414d4cc",
+      "source_module": "review-male-ridge",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-male-ridge.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 11428,
+        "uniqueVertexCount": 5716,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            4.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            28.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            24.0
+          ]
+        },
+        "surfaceArea": 5424.210197071419,
+        "signedVolume": 1656.5930433307037,
+        "volume": 1656.5930433307037,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-male-ridge.stl"
+      }
+    },
+    {
+      "part_id": "review-female-groove",
+      "file": "review/review-female-groove.stl",
+      "sha256": "b725600f7a606a241a86b3ef4e256b46044446169a7a200686220797f961ad03",
+      "source_module": "review-female-groove",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-female-groove.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 47292,
+        "uniqueVertexCount": 23648,
+        "bounds": {
+          "min": [
+            -21.149999618530273,
+            -21.149999618530273,
+            66.0
+          ],
+          "max": [
+            21.149999618530273,
+            21.149999618530273,
+            186.0
+          ],
+          "size": [
+            42.29999923706055,
+            42.29999923706055,
+            120.0
+          ]
+        },
+        "surfaceArea": 30708.50085084309,
+        "signedVolume": 10569.247272601904,
+        "volume": 10569.247272601904,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-female-groove.stl"
+      }
+    }
+  ],
+  "mechanical_contract": {
+    "units": "mm",
+    "body_height": 222,
+    "body_od": 86,
+    "tube_od": 54,
+    "spigot_od": 50,
+    "spigot_id": 44,
+    "spigot_z0": 197,
+    "spigot_length": 25,
+    "core_height": 160,
+    "core_mount_l": 108,
+    "core_taper_l": 40,
+    "core_exit_l": 12,
+    "outlet_ids": [
+      15,
+      20,
+      25,
+      30
+    ],
+    "pitch": 4,
+    "travel": 80,
+    "adjust_turns": 20,
+    "core_min_z": 70,
+    "core_max_z": 150,
+    "straight_handoff_z": 180,
+    "female_z0": 70,
+    "female_z1": 182,
+    "female_cut_z0": 66,
+    "female_cut_z1": 186,
+    "guide_z0": 184,
+    "male_z0": 4,
+    "male_z1": 28,
+    "male_full_z0": 6,
+    "male_full_z1": 26,
+    "complete_turns_min": 4,
+    "complete_turns_max": 4,
+    "male_major": 41.8,
+    "female_minor": 40.6,
+    "female_major": 42.3,
+    "thread_height": 0.9,
+    "crest_width": 0.8,
+    "flank_deg": 50,
+    "root_embed": 0.2,
+    "shoulder_burial": 0.05,
+    "radial_clearance": 0.25,
+    "axial_clearance": 0.2,
+    "profile_half": 1.53217,
+    "female_min_web": 0.774019,
+    "male_profile": [
+      [
+        19.8,
+        -1.53217
+      ],
+      [
+        19.95,
+        -1.53217
+      ],
+      [
+        20.9,
+        -0.4
+      ],
+      [
+        20.9,
+        0.4
+      ],
+      [
+        19.95,
+        1.53217
+      ],
+      [
+        19.8,
+        1.53217
+      ]
+    ],
+    "female_profile": [
+      [
+        20.05,
+        -1.73217
+      ],
+      [
+        20.2,
+        -1.73217
+      ],
+      [
+        21.15,
+        -0.6
+      ],
+      [
+        21.15,
+        0.6
+      ],
+      [
+        20.2,
+        1.73217
+      ],
+      [
+        20.05,
+        1.73217
+      ]
+    ],
+    "protrusion_min": 8,
+    "protrusion_max": 88,
+    "socket_id": 76.6,
+    "fan_od": 76,
+    "fan_id": 71,
+    "face_z": 24,
+    "lug_z0": 13,
+    "lug_z1": 21,
+    "lock_deg": 18,
+    "slot_roof_z": 21.5,
+    "slot_floor_z": 12.5,
+    "slot_outer_r": 41.1,
+    "slot_half_angle": 6.29008,
+    "fn": 192,
+    "steps_per_turn": 128
+  },
+  "printer_target": {
+    "model": "X1C",
+    "bed_mm": [
+      256,
+      256
+    ],
+    "max_z_mm": 256,
+    "preferred_part_height_max": 245
+  },
+  "sliced": false,
+  "three_mf": null,
+  "physical_fit_verified": false,
+  "verification": {
+    "mesh-and-overhang": {
+      "file": "verification/mesh-and-overhang.json",
+      "sha256": "02dba27808b528eaed3a1c09ccfc9db36c04f7e42a421bd6e6161b4d957a81d9",
+      "pass": true
+    },
+    "wholepath-summary": {
+      "file": "verification/wholepath-summary.json",
+      "sha256": "a85f4be39f50577d9060ac6f2748612f460fd220598abb4d459e62e4618dcb7a",
+      "pass": true
+    },
+    "bayonet-path": {
+      "file": "verification/bayonet-path.json",
+      "sha256": "ed25fc1d2996b0769c9af8545896ac62447eb26dba966d4909f2b62428052a1a",
+      "pass": true
+    },
+    "mechanical-contract": {
+      "file": "verification/mechanical-contract.json",
+      "sha256": "e2fa4a680fdd31035f713795ddcf2d8b109097e100b7f55a93807b092d3a7580",
+      "pass": true
+    },
+    "render-provenance": {
+      "file": "verification/render-provenance.json",
+      "sha256": "df4c6625385abc474619aa155d37f8db85851808074a84e2a7eba4cf4ce778d7",
+      "pass": true
+    },
+    "visual-review": {
+      "file": "verification/visual-review.json",
+      "sha256": "8165202f18fd6d8bdb66631d4b8cc48b0113c80d152c2490960103f597e0c7b8",
+      "pass": true
+    }
+  },
+  "current_evidence_bindings": {
+    "mesh_report_bound_to_current_stl": true,
+    "motion_report_bound_to_current_stl": true,
+    "render_bound_to_current_stl": true,
+    "visual_review_bound_to_current_images": true
+  },
+  "digital_geometry_pass": true,
+  "Y_ball_path_verified": false,
+  "cad_worker_scope": "source, clean STL and digital evidence only; no print directory writes",
+  "script_sha256": {
+    "export_fan76_direct_v1.py": "1622a3044bae80aa3e2bf5dc8ae05cbb2dc557a4b444a887c5e5b2426f08bf3c",
+    "render_fan76_direct_v1.py": "66a3c0221c02484e7e8bfb0145a061ed0e04f2a2bd01f203c8ccd06f61067363",
+    "verify_fan76_direct_v1_geometry.py": "e9524364e16efa5c81ae2f6bd59c357f02c936f837bf17bcde2fb84154348c74"
+  },
+  "mesh_summary": [
+    {
+      "part_id": "body",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "bbox_min": [
+        -43.0,
+        -43.0,
+        0.0
+      ],
+      "bbox_max": [
+        43.0,
+        43.0,
+        222.0
+      ],
+      "size_mm": [
+        86.0,
+        86.0,
+        222.0
+      ],
+      "volume_mm3": 216547.0955326256,
+      "surface_area_mm2": 82605.14608848211,
+      "faces": 100152,
+      "watertight": true,
+      "winding_consistent": true,
+      "one_connected_solid": true,
+      "connected_solids": 1,
+      "manifold_status": "Error.NoError",
+      "bounds_match_contract": true,
+      "fits_256_bed_and_245_preferred_height": true,
+      "normals": {
+        "part_id": "body",
+        "orientation": "+Z upright; z=0 on bed",
+        "angle_convention": "Degrees to horizontal; 0 is underside, 90 is vertical",
+        "thread_and_runout": {
+          "faces": 16092,
+          "area_mm2": 5269.385294533393,
+          "min_angle_to_horizontal_deg": 49.98238038662725,
+          "min_angle_faces_area_gt_1e_6_deg": 49.98238038662725,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "all_nonbed_downward": {
+          "faces": 33902,
+          "area_mm2": 14458.59649189654,
+          "min_angle_to_horizontal_deg": 0.0,
+          "min_angle_faces_area_gt_1e_6_deg": 0.0,
+          "area_below_49_8_deg_mm2": 501.2506287483612,
+          "area_below_45_deg_mm2": 118.7866626842951,
+          "area_below_10_deg_mm2": 118.7866626842951
+        },
+        "thread_geometry_candidate_pass": true,
+        "below_threshold_nonthread_regions": [
+          {
+            "region": "fan entry chamfer",
+            "faces": 360,
+            "area_mm2": 382.463966064066,
+            "min_angle_to_horizontal_deg": 45.59444349532588,
+            "min_angle_faces_area_gt_1e_6_deg": 45.59444349532588,
+            "area_below_49_8_deg_mm2": 382.463966064066,
+            "area_below_45_deg_mm2": 0.0,
+            "area_below_10_deg_mm2": 0.0,
+            "bounds_min": [
+              -39.47550964355469,
+              -39.25313186645508,
+              0.0
+            ],
+            "bounds_max": [
+              39.47550964355469,
+              39.25313186645508,
+              1.2000000476837158
+            ]
+          },
+          {
+            "region": "bayonet roof",
+            "faces": 170,
+            "area_mm2": 118.7866626842951,
+            "min_angle_to_horizontal_deg": 0.0,
+            "min_angle_faces_area_gt_1e_6_deg": 0.0,
+            "area_below_49_8_deg_mm2": 118.7866626842951,
+            "area_below_45_deg_mm2": 118.7866626842951,
+            "area_below_10_deg_mm2": 118.7866626842951,
+            "bounds_min": [
+              -16.906753540039062,
+              -41.09996032714844,
+              21.5
+            ],
+            "bounds_max": [
+              16.906753540039062,
+              41.09996032714844,
+              21.5
+            ]
+          }
+        ],
+        "slicer_validation": "PENDING; no support contact/G-code is present"
+      },
+      "pass": true
+    },
+    {
+      "part_id": "core15",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "bbox_min": [
+        -20.899999618530273,
+        -20.899999618530273,
+        0.0
+      ],
+      "bbox_max": [
+        20.899999618530273,
+        20.899999618530273,
+        160.0
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        160.0
+      ],
+      "volume_mm3": 35135.85487927301,
+      "surface_area_mm2": 35143.15728192526,
+      "faces": 52296,
+      "watertight": true,
+      "winding_consistent": true,
+      "one_connected_solid": true,
+      "connected_solids": 1,
+      "manifold_status": "Error.NoError",
+      "bounds_match_contract": true,
+      "fits_256_bed_and_245_preferred_height": true,
+      "normals": {
+        "part_id": "core15",
+        "orientation": "+Z upright; z=0 on bed",
+        "angle_convention": "Degrees to horizontal; 0 is underside, 90 is vertical",
+        "thread_and_runout": {
+          "faces": 3824,
+          "area_mm2": 1105.1379635569128,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "all_nonbed_downward": {
+          "faces": 21872,
+          "area_mm2": 4438.139914535513,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "thread_geometry_candidate_pass": true,
+        "below_threshold_nonthread_regions": [],
+        "slicer_validation": "PENDING; no support contact/G-code is present"
+      },
+      "pass": true
+    },
+    {
+      "part_id": "core20",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "bbox_min": [
+        -20.899999618530273,
+        -20.899999618530273,
+        0.0
+      ],
+      "bbox_max": [
+        20.899999618530273,
+        20.899999618530273,
+        160.0
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        160.0
+      ],
+      "volume_mm3": 36136.91858264906,
+      "surface_area_mm2": 36080.23981424811,
+      "faces": 52296,
+      "watertight": true,
+      "winding_consistent": true,
+      "one_connected_solid": true,
+      "connected_solids": 1,
+      "manifold_status": "Error.NoError",
+      "bounds_match_contract": true,
+      "fits_256_bed_and_245_preferred_height": true,
+      "normals": {
+        "part_id": "core20",
+        "orientation": "+Z upright; z=0 on bed",
+        "angle_convention": "Degrees to horizontal; 0 is underside, 90 is vertical",
+        "thread_and_runout": {
+          "faces": 3824,
+          "area_mm2": 1105.1379635569128,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "all_nonbed_downward": {
+          "faces": 21872,
+          "area_mm2": 4706.559986215823,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "thread_geometry_candidate_pass": true,
+        "below_threshold_nonthread_regions": [],
+        "slicer_validation": "PENDING; no support contact/G-code is present"
+      },
+      "pass": true
+    },
+    {
+      "part_id": "core25",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "bbox_min": [
+        -20.899999618530273,
+        -20.899999618530273,
+        0.0
+      ],
+      "bbox_max": [
+        20.899999618530273,
+        20.899999618530273,
+        160.0
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        160.0
+      ],
+      "volume_mm3": 37138.39767617563,
+      "surface_area_mm2": 37031.07017616181,
+      "faces": 52296,
+      "watertight": true,
+      "winding_consistent": true,
+      "one_connected_solid": true,
+      "connected_solids": 1,
+      "manifold_status": "Error.NoError",
+      "bounds_match_contract": true,
+      "fits_256_bed_and_245_preferred_height": true,
+      "normals": {
+        "part_id": "core25",
+        "orientation": "+Z upright; z=0 on bed",
+        "angle_convention": "Degrees to horizontal; 0 is underside, 90 is vertical",
+        "thread_and_runout": {
+          "faces": 3824,
+          "area_mm2": 1105.1379635569128,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "all_nonbed_downward": {
+          "faces": 21872,
+          "area_mm2": 4980.812641212251,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "thread_geometry_candidate_pass": true,
+        "below_threshold_nonthread_regions": [],
+        "slicer_validation": "PENDING; no support contact/G-code is present"
+      },
+      "pass": true
+    },
+    {
+      "part_id": "core30",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "bbox_min": [
+        -20.899999618530273,
+        -20.899999618530273,
+        0.0
+      ],
+      "bbox_max": [
+        20.899999618530273,
+        20.899999618530273,
+        160.0
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        160.0
+      ],
+      "volume_mm3": 38140.191540138185,
+      "surface_area_mm2": 38005.58596005227,
+      "faces": 52296,
+      "watertight": true,
+      "winding_consistent": true,
+      "one_connected_solid": true,
+      "connected_solids": 1,
+      "manifold_status": "Error.NoError",
+      "bounds_match_contract": true,
+      "fits_256_bed_and_245_preferred_height": true,
+      "normals": {
+        "part_id": "core30",
+        "orientation": "+Z upright; z=0 on bed",
+        "angle_convention": "Degrees to horizontal; 0 is underside, 90 is vertical",
+        "thread_and_runout": {
+          "faces": 3824,
+          "area_mm2": 1105.1379635569128,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "all_nonbed_downward": {
+          "faces": 21872,
+          "area_mm2": 5265.808064133225,
+          "min_angle_to_horizontal_deg": 49.950557459983536,
+          "min_angle_faces_area_gt_1e_6_deg": 49.950557459983536,
+          "area_below_49_8_deg_mm2": 0.0,
+          "area_below_45_deg_mm2": 0.0,
+          "area_below_10_deg_mm2": 0.0
+        },
+        "thread_geometry_candidate_pass": true,
+        "below_threshold_nonthread_regions": [],
+        "slicer_validation": "PENDING; no support contact/G-code is present"
+      },
+      "pass": true
+    }
+  ],
+  "cad_deliverables": [
+    {
+      "file": "source/fan76-direct-v1-parameters.scad",
+      "sha256": "d11c4478c98ea104d56b19913ff9cd60bac740fbcd1fa583c832a632b9077125"
+    },
+    {
+      "file": "source/fan76-direct-v1-thread.scad",
+      "sha256": "ee5c6db2ffb951b2407c1326fc7b0673356cd9e1cb32b04dfe3404bbbfaa9213"
+    },
+    {
+      "file": "source/fan76-direct-v1.scad",
+      "sha256": "6c47c347a872f63b275ebff2e9f6718c071d25b75e7745aa5ee2b996fdc4c5b0"
+    },
+    {
+      "file": "stl/fan76-direct-v1-body-clean.stl",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5"
+    },
+    {
+      "file": "stl/fan76-direct-v1-core15-clean.stl",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68"
+    },
+    {
+      "file": "stl/fan76-direct-v1-core20-clean.stl",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd"
+    },
+    {
+      "file": "stl/fan76-direct-v1-core25-clean.stl",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333"
+    },
+    {
+      "file": "stl/fan76-direct-v1-core30-clean.stl",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae"
+    },
+    {
+      "file": "review/mesh-view-body.scad",
+      "sha256": "9c7c2a5b2ad28f26a5607e6d4e962f25bb50b9ddcb467eb5e105548ba0b6170b"
+    },
+    {
+      "file": "review/mesh-view-core15.scad",
+      "sha256": "582d18fbd2e25e01b1a095e25e5af64a3f24994a58eda97bf59f86b69983b370"
+    },
+    {
+      "file": "review/mesh-view-core20.scad",
+      "sha256": "579c10d7beb7c1bd59e4c84a4c5c2ff243a3c850f590c190b5aedfb297508e89"
+    },
+    {
+      "file": "review/mesh-view-core25.scad",
+      "sha256": "0f0bb1a6944aef52648e18ac05438d1d3a01c131c19e1ae4648eafe02542f0c6"
+    },
+    {
+      "file": "review/mesh-view-core30.scad",
+      "sha256": "6d90f8930b43e3d3e52eec42afa7cf95b9cc5aa6c0fe2c7f32071d656d353dc3"
+    },
+    {
+      "file": "review/review-fan-envelope.stl",
+      "sha256": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c"
+    },
+    {
+      "file": "review/review-female-groove.stl",
+      "sha256": "b725600f7a606a241a86b3ef4e256b46044446169a7a200686220797f961ad03"
+    },
+    {
+      "file": "review/review-male-ridge.stl",
+      "sha256": "a71012c8defe634fa402f372466460d584e0feb48a251b03082d8caca414d4cc"
+    },
+    {
+      "file": "render/all-four-minmax-sections.png",
+      "sha256": "bdfa80277b49344aa9bf9779920c5e3a3311929809acaa6372e1c1d7cd31c516"
+    },
+    {
+      "file": "render/assembly-minmax-section.png",
+      "sha256": "80c06a96fe684e80c130d5e6dbb2eb011f7d92bdf81ac764b5def351d022cbf2"
+    },
+    {
+      "file": "render/body-front.png",
+      "sha256": "edefdc4076028e997839f26c03e3fb8906c5bda4caf5dc6e4e8e83489bee4402"
+    },
+    {
+      "file": "render/body-iso.png",
+      "sha256": "af189e3ad11f5298da9fc8a0fc1847a0a05597917bf23e04574217e8c38cfc03"
+    },
+    {
+      "file": "render/body-top.png",
+      "sha256": "0dfe8c91b22fa2a57ca136e6c795cd7136e9ee48a9f90fbfe4da85068a7a750b"
+    },
+    {
+      "file": "render/core15-front.png",
+      "sha256": "b85a0e2d102521361cbe26fe4137b63114945fab90fa725c5bcef2d290f3c808"
+    },
+    {
+      "file": "render/core15-iso.png",
+      "sha256": "09bd1e5102d26eb47d02b64da0638f2aab7d9bd1a3e72d519c30f159e666a226"
+    },
+    {
+      "file": "render/core15-top.png",
+      "sha256": "c4e519aee4cb6e586f45eca1e431fb6170bb28926a6336b6cf5f9b1f12917e0a"
+    },
+    {
+      "file": "render/core20-front.png",
+      "sha256": "f75c5c57eb0f70066597c90b63827d2225b97ab43654d51f76e48688b90954ca"
+    },
+    {
+      "file": "render/core20-iso.png",
+      "sha256": "e90405725effb32d6ddcb25035f10971fde036905e95a730fc8e29ae0e2580d3"
+    },
+    {
+      "file": "render/core20-top.png",
+      "sha256": "87386786aa148d36a765de0d18d57f3a1ee258c67c27dcabfe6a3016c4fc5654"
+    },
+    {
+      "file": "render/core25-front.png",
+      "sha256": "0539329095e403b287726718965e3d0484ff91959181001d315667d6c98f1e4a"
+    },
+    {
+      "file": "render/core25-iso.png",
+      "sha256": "7e178b1f400a0e0dfb0c48cfecebe4d9ee72cbe1a42d9feb032a94c494f95f68"
+    },
+    {
+      "file": "render/core25-top.png",
+      "sha256": "e23aad58235d90122aec5c1a803cf21778530dae6db8055ce90fe398c53d8ace"
+    },
+    {
+      "file": "render/core30-front.png",
+      "sha256": "d09115455dd772b80f5f97bcdb37be654fd666b1dc89273c24c7a975cd7a1887"
+    },
+    {
+      "file": "render/core30-iso.png",
+      "sha256": "fd5cdd4c977cd8b8d2cbf243fb2dec250b425d83a08a6e579c423ab28eb95e1c"
+    },
+    {
+      "file": "render/core30-top.png",
+      "sha256": "f9fa266d42a0d030b659c5cbc03fff30f1164c65fd42701f6c23819eded0f139"
+    },
+    {
+      "file": "render/fan76-bayonet-sections.png",
+      "sha256": "b4e70fd81fe8b2c86bc22fd8611241adb8d6e08c7d11bf12229be45a7b2f21f4"
+    },
+    {
+      "file": "render/final-stl-three-views.png",
+      "sha256": "0f30cf70b14a6960814399cb86964c74b348f46bbdb4db6a023d9340e93bb490"
+    },
+    {
+      "file": "render/thread-profile-and-mesh-section.png",
+      "sha256": "6bf149b6def9488ca84c057ed55e652cfe3e768ec86ef57de80346b69e299dd9"
+    }
+  ],
+  "readme_sha256": "46d696e00d047709d9cfe6d09cbfe88ee3a4af099569bbf5d33e668d9c1ec7ba"
+}

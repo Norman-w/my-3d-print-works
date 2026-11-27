@@ -1,0 +1,73 @@
+{
+  "status": "OUTWARD_SLACK_LOCAL_REGION_REENTERS_LEVER_VOLUME",
+  "source_sha256": {
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "probe": {
+    "polar_radius_mm": 62,
+    "polar_angle_deg": 80,
+    "local_z_mm": 2,
+    "sphere_diameter_mm": 1.5
+  },
+  "results": [
+    {
+      "name": "pulled-lever",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/pulled-lever.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/pulled-lever.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "stl_exists": false,
+      "wrapper_sha256": "9996270718c3966741be28778ec3103c8e4f41d10764c495150e49100efd3101",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "no_warnings_or_errors": true
+    },
+    {
+      "name": "rest-lever",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/rest-lever.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/rest-lever.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "stl_exists": true,
+      "wrapper_sha256": "c6e14366778021e40e5cfcc2d345deaf7fa3ae0c68187a9f0a986d49bbdbe5ed",
+      "log_sha256": "a1c0f39f53edee594fd92903479b141efdf0c77294c6f19b5bceff5d6f4ff71c",
+      "no_warnings_or_errors": true,
+      "stl_sha256": "95be2fc00ee66d4956a438bb96391f1a1827f2a5c7b6c7970dc027763f787945",
+      "intersection_volume_mm3": 1.761546492324765
+    },
+    {
+      "name": "fixed-body-cover",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=CGAL",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/fixed-body-cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-slack-review/fixed-body-cover.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "stl_exists": false,
+      "wrapper_sha256": "1e1708e50dc282220f10a5eda4d3d0ccc59ce1214112387846d68ddb1f792193",
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "no_warnings_or_errors": true
+    }
+  ],
+  "limits": [
+    "A local material-occupancy counterexample, not a complete flexible cable trajectory or a proof of actual jamming.",
+    "The nominal taut line is R60; the displaced probe is R62. No claim that full return proceeds with this probe stationary.",
+    "Tests current fixed body/cover and lever only, not blower or hand."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "source_stable": true
+}

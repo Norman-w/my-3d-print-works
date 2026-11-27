@@ -1,0 +1,22 @@
+{
+  "docs/current-status.md": {
+    "backup": "output/current-mechanical-review/20260927T101423126115Z/before-doc-update/current-status.md",
+    "sha256": "b58a99b57d5244a9772bf5136783803270d9e5ee167fe2eedeec66f598e334c2"
+  },
+  "docs/goal-acceptance-audit.md": {
+    "backup": "output/current-mechanical-review/20260927T101423126115Z/before-doc-update/goal-acceptance-audit.md",
+    "sha256": "e8c453985e22814fadf22d72350269d6e16106ac1a4ff67cf66165194ad93ebd"
+  },
+  "docs/cable-trigger-input.md": {
+    "backup": "output/current-mechanical-review/20260927T101423126115Z/before-doc-update/cable-trigger-input.md",
+    "sha256": "fc692ddab43808a36d3728079e9d4ca81d3788fde8f652186924a543223584df"
+  },
+  "docs/cable-trigger-integration.md": {
+    "backup": "output/current-mechanical-review/20260927T101423126115Z/before-doc-update/cable-trigger-integration.md",
+    "sha256": "9a1cfaf02237e62593ac4444856bfc8fcecc780a48a295cafe9824ef6c126e4d"
+  },
+  "docs/cable-output-interface.md": {
+    "backup": "output/current-mechanical-review/20260927T101423126115Z/before-doc-update/cable-output-interface.md",
+    "sha256": "826e0b7c67cc0fcb889dc8e154038472d1a03eda7eb794340a4ea0959f32a417"
+  }
+}

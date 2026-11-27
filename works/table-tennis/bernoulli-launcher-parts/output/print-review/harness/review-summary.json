@@ -1,0 +1,35 @@
+{
+  "status": "SUPPORTED_OFFLINE_SLICE_REVIEW_PHYSICAL_OPEN",
+  "cad_geometry_changed": false,
+  "source_sha256": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+  "input_stl_sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9",
+  "checks": {
+    "native_slice_success": true,
+    "no_native_warning": true,
+    "initial_temperature_command_matches_filament": true,
+    "five_machine_template_fields_resolved": true,
+    "support_paths_exist": true,
+    "known_open_channel_support_detected": true,
+    "no_support_in_four_hole_depths": true,
+    "no_support_in_two_slot_depths": true,
+    "six_opening_contours_represented_at_mid_depth": true
+  },
+  "gcode_sha256": "fd003995fccdab25e171ae6782bdb04ce1c28feda364630661873c4bdc68e29c",
+  "project_3mf_sha256": "2a14314daf79e2c19f070ca6cc55b8f9c59b9741397ab5b0f400a67c3351773a",
+  "analysis_file_sha256": {
+    "slice_harness.py": "687bbfb895c7a8d94bc8c608be427c3be29dbf4c538b50328e60c07d92e73560",
+    "review_paths.py": "b6dd1914ee8cfd5ea152ebb637037485c87584c8f70e56cbe1813b43d351770d",
+    "toolpath-review.json": "6ae5a62b7afe10cde120f29c37733243ad06ff9f43d36645b993b37d7982e9c4",
+    "profile-origin-source-identity.json": "66ed34566e4e48e24d7f4c559f1ed1a565922b1a3d7b5adea11dc56613980ccc"
+  },
+  "template_expansion_failure_archive": "before-template-expansion/",
+  "local_fix": "Five official X1C templates expanded into harness-owned machine copies; shared config untouched by this task.",
+  "initial_attempt": {
+    "sandbox_process_exit_code": -6,
+    "native_result_missing": true,
+    "later_same_command_completed": true,
+    "cause_not_diagnosed": true
+  },
+  "sent_to_printer": false,
+  "print_ready": false
+}

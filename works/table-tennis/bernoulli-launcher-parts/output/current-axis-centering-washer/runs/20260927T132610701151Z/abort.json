@@ -1,0 +1,7 @@
+{
+  "status": "REVIEW_SCRIPT_ERROR_NOT_CAD_FAILURE",
+  "error": "KeyError: watertight; STL inspector field is watertightByEdgeTopology",
+  "review_script_sha256": "8277df300b1f53d0f3101a9ca2617d2c3eb77ee22b25239e831c9b6ad0506fc8",
+  "candidate_sha256": "667679dc2fad812716c944cc8c6d5733a32f474d779e8883ecadcd704b1a460c",
+  "native_artifacts_preserved": true
+}

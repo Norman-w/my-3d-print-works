@@ -1,0 +1,67 @@
+{
+  "status": "FOUR_NATIVE_PROCESS_CANDIDATES_REVIEWED_NONE_ADOPTED",
+  "candidate_results": [
+    {
+      "candidate": 1,
+      "folder": "output/current-inlet-process-revision/runs/20260927T104831129053Z",
+      "disposition": "REJECTED_FIRST_KEY_PATH_UNBACKED",
+      "artifacts": {
+        "output/current-inlet-process-revision/runs/20260927T104831129053Z/invocation.json": "c14bd3122aed7b6c7e1de5965101ab6b6c55ce52c4b5b733a91f198570437870",
+        "output/current-inlet-process-revision/runs/20260927T104831129053Z/slice-review.3mf": "c47b481058d27ede5055c8d5383654daa860e792b8798ce1a0074efdc6d71e36",
+        "output/current-inlet-process-revision/runs/20260927T104831129053Z/plate_1.gcode": "fd6400493c511d247158a8005b9500bbaf68b72b694a3696161dcff4cd32aff7",
+        "output/current-inlet-process-revision/runs/20260927T104831129053Z/regional-review.json": "9b149cb3a709c3ccb01a0124a4f4edc4da835af8cf14df101217668fe47f8cb1",
+        "output/current-inlet-process-revision/runs/20260927T104831129053Z/key-growth-review.json": "a7657604ffc253fdef165d25a307c4e101334f58ca2b19ff07bb6e0676803aab"
+      }
+    },
+    {
+      "candidate": 2,
+      "folder": "output/current-inlet-process-revision/runs/20260927T110029857048Z",
+      "disposition": "REJECTED_FIRST_KEY_PATH_UNBACKED",
+      "artifacts": {
+        "output/current-inlet-process-revision/runs/20260927T110029857048Z/invocation.json": "1710afc03c4096130274a08bd9cb5627846477b86ba1455c88bc1b6ee0358abb",
+        "output/current-inlet-process-revision/runs/20260927T110029857048Z/slice-review.3mf": "06c9bcecf9dbe73553eb981ef06752b32a9d9951e090ed2a9f66eb2d2bd0a155",
+        "output/current-inlet-process-revision/runs/20260927T110029857048Z/plate_1.gcode": "beada467839565c4f2993ea03dd9e1557da3a4369f356a071c9a50c75bab5c80",
+        "output/current-inlet-process-revision/runs/20260927T110029857048Z/regional-review.json": "45f5ba33aea3646b3262a652917c017d4febdf5c7faaa5b20172cbf8f4aa668e",
+        "output/current-inlet-process-revision/runs/20260927T110029857048Z/key-growth-review.json": "2f91ec863c047fc91662f01d920c84ebb3fdf46e3ffbe65ee56807abe8e2bce6"
+      }
+    },
+    {
+      "candidate": 3,
+      "folder": "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported",
+      "disposition": "REVIEW_START_POINT_NOT_ADOPTED",
+      "artifacts": {
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/invocation.json": "213bfac3951713639246a19bea1ac8cacb4708ceec92ee20cedd8da322efe400",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/slice-review.3mf": "2836213d987c4412d599f847b6e60cdd50670cc762c5132880f8618726c1b85a",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/plate_1.gcode": "5a8b265be99ff1381c34d7c28f8d091e21c4c1d5dd3645150df79f07344e5f8f",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/current-review.json": "3da9fffc599898782f351ca1fe6246e64e12de90aa538ccee500e4daa35ac92d",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/key-bed-start-review.json": "dcbfc701923ce2dd418aade58c18511b71ba06f0ac66889ce10ea870d928d911",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/whole-support-sweep/report.json": "3a89215386aaa4897481d1c2fe36427c7fba4f7aef7b624be7ad8cef34cb0f09",
+        "output/current-inlet-process-revision/runs/20260927T110450585847Z/inlet-rear-rear-key-ends-down-supported/hit-localization.json": "fe959e1b83e3b479b0621d5a015b3ef04587f9832f4935f79c5e23bdf3d04169"
+      }
+    },
+    {
+      "candidate": 4,
+      "folder": "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported",
+      "disposition": "NOT_ADOPTED_XY_INCREASE_DID_NOT_IMPROVE_INITIAL_COMPATIBILITY",
+      "artifacts": {
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/invocation.json": "a27195b32ab0fab99e7efb4fe7d8b2acfe9ae3aae4e722435394de894bfcf017",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/slice-review.3mf": "e2ba96cba73b2691ba9350731554a4421ba79864480b45bc7b5e67f8e2e25f18",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/plate_1.gcode": "a06690c2c5885e530d51c74313f4e8d695a48e50b453da5c32d4af6b045a758f",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/current-review.json": "c7edd0187bd98955bb63ec47610cb6315aabf6e288204159a0eaace7dedd6b21",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/underlay-review.json": "21dca5d17b3e1894207cc41afa3cccb57b69ad187aed1c8b352018183bb6890a",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/whole-support-sweep/report.json": "82b1dae4d002f63a427351b17886c802e5cf02fc2ce3b56bce73b50079aa06e0",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/hit-localization.json": "9e3b8d5afd48b0c59716c2e3806f3d8f64ddc0b252f12878fea0cfbe5d4084a7",
+        "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported/underlay-review.md": "c5b59dd09029377eed7b31b2debe2ebdfda49e69d34fa3140525fd239784b134"
+      }
+    }
+  ],
+  "next_digital_scope": "Candidate 3 own underside/shoulder emitted paths and initial source-surface/support-envelope compatibility; no further blind global XY increase. Do not reuse candidate 4 line numbers as candidate 3 evidence.",
+  "formal_manufacturing_manifest": {
+    "path": "output/current-manufacturing/manifest.json",
+    "sha256": "43bd40d41c3a68cf0bcacf41234a5ee4f08c7f5b943188ae709347718c49e2a5"
+  },
+  "mechanical_cad_changed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

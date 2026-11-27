@@ -1,0 +1,77 @@
+{
+  "previous_release": "fan76-smooth-v3-20261008",
+  "old_body_mm": 234,
+  "new_body_mm": 244,
+  "shorter_mm": -10,
+  "old_fan_face_to_y_mouth_mm": 185,
+  "new_fan_face_to_y_mouth_mm": 195,
+  "old_peak_reducer_wall_angle_to_axis_deg": 16.7934,
+  "new_peak_reducer_wall_angle_to_axis_deg": 12.7888,
+  "smooth_function": "integrated cubic slope ramp / constant slope / mirrored ramp",
+  "C2_at_reducer_endpoints": true,
+  "radial_wall_min_outside_bayonet_mm": 2.4,
+  "contraction_length_mm": 120,
+  "female_length_mm": 44,
+  "pitch_mm": 4,
+  "working_turns": 5.0,
+  "female_major_wall_mm": 2.400000000000002,
+  "full_complete_turns_at_limits": [
+    4,
+    4
+  ],
+  "v5_core_inlet_lip_retained_mm": 2,
+  "limitations": "Core inlet lip and its original straight/conical junctions are retained by requirement. Not every adjusted assembly is a continuous smooth flow wall. No CFD or measured pressure/flow result.",
+  "old_tip_protrusion_mm": [
+    4,
+    24
+  ],
+  "new_tip_protrusion_mm": [
+    4,
+    24
+  ],
+  "default_tip_from_body_end_mm": 4,
+  "tip_from_illustrative_y_mouth_mm": [
+    29,
+    49
+  ],
+  "y_mouth_depth_is_reference_not_measured": true,
+  "design_checks": {
+    "body_height_matches_release": true,
+    "height_within_245_mm_design_budget": true,
+    "pitch_unchanged": true,
+    "complete_turns_both_limits": true,
+    "spigot_od_50": true,
+    "socket_id_76": true,
+    "gentler_than_previous_contraction": true,
+    "contraction_length_matches_release": true,
+    "female_thread_44_and_travel_20": true,
+    "default_is_retracted": true,
+    "tip_endpoints_4_24": true,
+    "tip_calculated_from_unchanged_core": true,
+    "thread_profile_unchanged": true,
+    "thin_wall_final_stl": true,
+    "fan_socket_geometry_preserved": true,
+    "body_solid_volume_reduced": true
+  },
+  "thin_wall_audit": {
+    "pass": true,
+    "checks": {
+      "actual_radial_wall_at_least_2_39_mm": true,
+      "nominal_bore_wall_at_least_2_4_mm": true,
+      "monotone_reducer_inner": true,
+      "monotone_reducer_outer": true,
+      "paired_thread_root_wall_2_4": true,
+      "spigot_wall_still_3": true
+    },
+    "sampled_radial_wall_min_mm": 2.3999990258318036,
+    "witness_count": 6960,
+    "method": "8 final-mesh section planes, both radial sides, 0.5mm axial spacing; excludes bayonet below Z26.",
+    "scope": "Radial thickness, not surface-normal thickness or strength acceptance."
+  },
+  "fan_socket_symmetric_difference_mm3": 0.0,
+  "old_solid_volume_mm3": 188052.55571315615,
+  "new_solid_volume_mm3": 149743.71330011697,
+  "solid_volume_reduction_percent": 20.37134899217915,
+  "volume_is_not_sliced_filament_or_time": true,
+  "pass": true
+}

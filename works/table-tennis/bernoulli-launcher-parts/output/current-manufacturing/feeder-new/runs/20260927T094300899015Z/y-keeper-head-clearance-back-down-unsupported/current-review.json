@@ -1,0 +1,5963 @@
+{
+  "family": "y-keeper",
+  "slice_folder": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported",
+  "quantity": 4,
+  "status": "BOUNDED_PATH_CHECKS_PASS_PHYSICAL_OPEN",
+  "checks": {
+    "native_success": true,
+    "native_warning_empty": true,
+    "actual_quantity": true,
+    "actual_gcode_identity": true,
+    "3mf_identity": true,
+    "profile_identity": true,
+    "sources_current": true,
+    "shared_profiles_untouched": true,
+    "actual_X1C_04_PETG": true,
+    "actual_process": true,
+    "support_mode_matches": true,
+    "units_mm": true,
+    "no_scale_or_reflection": true,
+    "intended_face_to_bed": true,
+    "mesh_correspondence": true,
+    "bed_model_brim_support_bounds": true,
+    "no_unrequested_support": true
+  },
+  "warnings": [
+    ""
+  ],
+  "sources_and_artifacts_stable": true,
+  "source_sha256_at_slice": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-manufacturing/feeder-new/slice.py": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+    "scripts/review_final_feeder_slice.py": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea"
+  },
+  "artifacts": {
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/invocation.json": "1982b90152748f963276a5b086445578bb375141873d94b7f9f6632f238a72ab",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/slice-review.3mf": "f74a19d1b107d43c10205ac69a7e10ccc1a254a032ad4597825a2a40ecc65f50",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/plate_1.gcode": "ff6d00c3a199a5b34d4b3f87267eaf71de706f6bd17f506e21bb779ee6891102",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/process.json": "3377a6c27c8ac3db3f4ef0c53d2316eb47676b0d3b1942d2dd01e0d0563cf1e6",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "instances": [
+    {
+      "instance_id": "feeder/y-keeper-right-front",
+      "input": {
+        "id": "y-keeper-right-front",
+        "name": "右前Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "bytes": 131218,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 556,
+          "uniqueVertexCount": 274,
+          "bounds": {
+            "min": [
+              43.79999923706055,
+              -17.5,
+              -14.0
+            ],
+            "max": [
+              60.0,
+              -11.049999237060547,
+              14.0
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1463.7795477635632,
+          "signedVolume": 1738.2735554444935,
+          "volume": 1738.2735554444935,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 274
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-right-front"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-keeper-right-front.stl",
+        "archive_member": "3D/Objects/object_1.model",
+        "archive_object_id": "1",
+        "build_id": "2",
+        "source_offset": [
+          51.89999961853027,
+          -14.274999618530273,
+          0.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            1.90734863e-06
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            8.8817842e-16
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            142.99999
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            142.99999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            3.22500038
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            91.09999228881836
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            140.99999
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            17.499999998530274
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 556,
+        "actual_3mf_triangles": 556,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.9119355274238782e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 1738.273555444497,
+        "volume_actual_3mf_mm3": 1738.273554716775,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "M3_core_-10",
+          "lo": [
+            50.35,
+            -19,
+            -10.65
+          ],
+          "hi": [
+            51.65,
+            -9,
+            -9.35
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_0",
+          "lo": [
+            50.35,
+            -19,
+            -0.65
+          ],
+          "hi": [
+            51.65,
+            -9,
+            0.65
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_10",
+          "lo": [
+            50.35,
+            -19,
+            9.35
+          ],
+          "hi": [
+            51.65,
+            -9,
+            10.65
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    },
+    {
+      "instance_id": "feeder/y-keeper-right-rear",
+      "input": {
+        "id": "y-keeper-right-rear",
+        "name": "右后Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": 1,
+          "cse_rear": true
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=true",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "bytes": 120718,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 512,
+          "uniqueVertexCount": 252,
+          "bounds": {
+            "min": [
+              43.79999923706055,
+              -17.5,
+              -42.5
+            ],
+            "max": [
+              60.0,
+              -11.049999237060547,
+              -14.5
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1467.7598331966283,
+          "signedVolume": 1749.066206253657,
+          "volume": 1749.066206253657,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 252
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-right-rear"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-keeper-right-rear.stl",
+        "archive_member": "3D/Objects/object_2.model",
+        "archive_object_id": "3",
+        "build_id": "4",
+        "source_offset": [
+          51.89999961853027,
+          -14.274999618530273,
+          -28.5
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            1.90734863e-06
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            124.80002
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            142.99999
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            3.22500038
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            72.90002228881836
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            112.49999
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            17.49999999853028
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 512,
+        "actual_3mf_triangles": 512,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.911474731367803e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 1749.0662062536574,
+        "volume_actual_3mf_mm3": 1749.0662052334264,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "M3_core_-10",
+          "lo": [
+            50.35,
+            -19,
+            -39.15
+          ],
+          "hi": [
+            51.65,
+            -9,
+            -37.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_0",
+          "lo": [
+            50.35,
+            -19,
+            -29.15
+          ],
+          "hi": [
+            51.65,
+            -9,
+            -27.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_10",
+          "lo": [
+            50.35,
+            -19,
+            -19.15
+          ],
+          "hi": [
+            51.65,
+            -9,
+            -17.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-right-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    },
+    {
+      "instance_id": "feeder/y-keeper-left-front",
+      "input": {
+        "id": "y-keeper-left-front",
+        "name": "左前Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "bytes": 132807,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 556,
+          "uniqueVertexCount": 274,
+          "bounds": {
+            "min": [
+              -60.0,
+              -17.5,
+              -14.0
+            ],
+            "max": [
+              -43.79999923706055,
+              -11.049999237060547,
+              14.0
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1463.7795477635632,
+          "signedVolume": 1738.2735554444944,
+          "volume": 1738.2735554444944,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 274
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-left-front"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-keeper-left-front.stl",
+        "archive_member": "3D/Objects/object_3.model",
+        "archive_object_id": "5",
+        "build_id": "6",
+        "source_offset": [
+          -51.89999961853027,
+          -14.274999618530273,
+          0.0
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -1.90734863e-06
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            8.8817842e-16
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            142.99998
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            113.00001
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            3.22500038
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            194.89997771118163
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            111.00001
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            17.499999998530274
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 556,
+        "actual_3mf_triangles": 556,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.9119355274238782e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 1738.273555444498,
+        "volume_actual_3mf_mm3": 1738.2735547167722,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "M3_core_-10",
+          "lo": [
+            -51.65,
+            -19,
+            -10.65
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            -9.35
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_0",
+          "lo": [
+            -51.65,
+            -19,
+            -0.65
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            0.65
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_10",
+          "lo": [
+            -51.65,
+            -19,
+            9.35
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            10.65
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-front",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    },
+    {
+      "instance_id": "feeder/y-keeper-left-rear",
+      "input": {
+        "id": "y-keeper-left-rear",
+        "name": "左后Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": -1,
+          "cse_rear": true
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=true",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "bytes": 122246,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 512,
+          "uniqueVertexCount": 252,
+          "bounds": {
+            "min": [
+              -60.0,
+              -17.5,
+              -42.5
+            ],
+            "max": [
+              -43.79999923706055,
+              -11.049999237060547,
+              -14.5
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1467.7598331966283,
+          "signedVolume": 1749.066206253658,
+          "volume": 1749.066206253658,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 252
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-left-rear"
+      },
+      "actual_mapping": {
+        "source_file": "feeder__y-keeper-left-rear.stl",
+        "archive_member": "3D/Objects/object_4.model",
+        "archive_object_id": "7",
+        "build_id": "8",
+        "source_offset": [
+          -51.89999961853027,
+          -14.274999618530273,
+          -28.5
+        ],
+        "component_matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -1.90734863e-06
+          ],
+          [
+            0.0,
+            2.22044605e-16,
+            -1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "build_matrix": [
+          [
+            6.123234e-17,
+            1.0,
+            0.0,
+            118.90001
+          ],
+          [
+            -1.0,
+            6.123234e-17,
+            0.0,
+            118.90002
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            3.22500038
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "extruder_offset_from_gcode": [
+          0.0,
+          2.0,
+          0.0
+        ],
+        "current_cad_to_gcode_command": [
+          [
+            6.123234e-17,
+            2.22044605e-16,
+            -1.0,
+            90.40001000000001
+          ],
+          [
+            -1.0,
+            1.35963107485257e-32,
+            -6.123234e-17,
+            65.00002228881836
+          ],
+          [
+            0.0,
+            1.0,
+            2.22044605e-16,
+            17.49999999853028
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "current_cad_to_archived_source": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "normal_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 512,
+        "actual_3mf_triangles": 512,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.911474731367803e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 1749.0662062536583,
+        "volume_actual_3mf_mm3": 1749.0662052334349,
+        "manufacturing_release": false,
+        "physical_acceptance": false
+      },
+      "no_reported_repairs": true,
+      "source_identity": true,
+      "identity_pass": true,
+      "features": [
+        {
+          "name": "M3_core_-10",
+          "lo": [
+            -51.65,
+            -19,
+            -39.15
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            -37.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_0",
+          "lo": [
+            -51.65,
+            -19,
+            -29.15
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            -27.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        },
+        {
+          "name": "M3_core_10",
+          "lo": [
+            -51.65,
+            -19,
+            -19.15
+          ],
+          "hi": [
+            -50.35,
+            -9,
+            -17.85
+          ],
+          "kind": "functional_void",
+          "note": "Vertical core; nut pocket opens upward, inspect mouth before hardware.",
+          "pick": true,
+          "instance_id": "feeder/y-keeper-left-rear",
+          "support_commands": 0,
+          "model_commands": 0,
+          "support_lines": [],
+          "model_lines": [],
+          "nominal_mesh_triangle_hits": 0,
+          "nominal_pick_center_inside_solid": false,
+          "nominal_pick_clear": true
+        }
+      ]
+    }
+  ],
+  "support_path_records": 0,
+  "feature_counts": {
+    "Inner wall": 15296,
+    "Outer wall": 1944,
+    "Gap infill": 1203,
+    "Bottom surface": 720,
+    "Internal solid infill": 4662,
+    "Sparse infill": 2675,
+    "Floating vertical shell": 2923,
+    "Top surface": 759,
+    "Bridge": 756
+  },
+  "extrusion_bounds": [
+    [
+      104.89793613032724,
+      96.99793613032723,
+      0.0
+    ],
+    [
+      151.10206386967275,
+      155.00206386967275,
+      6.4
+    ]
+  ],
+  "bed_violations": [],
+  "first_model_layer_footprint_mm2": 1626.7991288624046,
+  "bridge_paths": [
+    {
+      "line": 39083,
+      "layer": 3.2,
+      "path_length_mm": 1.0062131980847708,
+      "endpoint_chord_mm": 1.0062131980847708
+    },
+    {
+      "line": 39084,
+      "layer": 3.2,
+      "path_length_mm": 0.637999999999991,
+      "endpoint_chord_mm": 0.637999999999991
+    },
+    {
+      "line": 39085,
+      "layer": 3.2,
+      "path_length_mm": 1.6221029560419278,
+      "endpoint_chord_mm": 1.6221029560419278
+    },
+    {
+      "line": 39086,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39087,
+      "layer": 3.2,
+      "path_length_mm": 2.5257854223983496,
+      "endpoint_chord_mm": 2.5257854223983496
+    },
+    {
+      "line": 39088,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39089,
+      "layer": 3.2,
+      "path_length_mm": 3.4294678887547416,
+      "endpoint_chord_mm": 3.4294678887547416
+    },
+    {
+      "line": 39090,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39091,
+      "layer": 3.2,
+      "path_length_mm": 4.333150355111153,
+      "endpoint_chord_mm": 4.333150355111153
+    },
+    {
+      "line": 39092,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39093,
+      "layer": 3.2,
+      "path_length_mm": 5.2368328214675754,
+      "endpoint_chord_mm": 5.2368328214675754
+    },
+    {
+      "line": 39094,
+      "layer": 3.2,
+      "path_length_mm": 0.6089999999999804,
+      "endpoint_chord_mm": 0.6089999999999804
+    },
+    {
+      "line": 39095,
+      "layer": 3.2,
+      "path_length_mm": 0.0702353187506033,
+      "endpoint_chord_mm": 0.0702353187506033
+    },
+    {
+      "line": 39096,
+      "layer": 3.2,
+      "path_length_mm": 6.051419833394469,
+      "endpoint_chord_mm": 6.051419833394469
+    },
+    {
+      "line": 39097,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39098,
+      "layer": 3.2,
+      "path_length_mm": 5.400174534216464,
+      "endpoint_chord_mm": 5.400174534216464
+    },
+    {
+      "line": 39099,
+      "layer": 3.2,
+      "path_length_mm": 0.10976793703080923,
+      "endpoint_chord_mm": 0.10976793703080923
+    },
+    {
+      "line": 39100,
+      "layer": 3.2,
+      "path_length_mm": 0.6300579338441789,
+      "endpoint_chord_mm": 0.6300579338441789
+    },
+    {
+      "line": 39101,
+      "layer": 3.2,
+      "path_length_mm": 5.267945519839781,
+      "endpoint_chord_mm": 5.267945519839781
+    },
+    {
+      "line": 39102,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39103,
+      "layer": 3.2,
+      "path_length_mm": 5.3344135572713025,
+      "endpoint_chord_mm": 5.3344135572713025
+    },
+    {
+      "line": 39104,
+      "layer": 3.2,
+      "path_length_mm": 0.14577379737113008,
+      "endpoint_chord_mm": 0.14577379737113008
+    },
+    {
+      "line": 39105,
+      "layer": 3.2,
+      "path_length_mm": 0.3843761178845456,
+      "endpoint_chord_mm": 0.3843761178845456
+    },
+    {
+      "line": 39106,
+      "layer": 3.2,
+      "path_length_mm": 5.512604466130319,
+      "endpoint_chord_mm": 5.512604466130319
+    },
+    {
+      "line": 39107,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39108,
+      "layer": 3.2,
+      "path_length_mm": 5.766455843930482,
+      "endpoint_chord_mm": 5.766455843930482
+    },
+    {
+      "line": 39109,
+      "layer": 3.2,
+      "path_length_mm": 0.47288264929049206,
+      "endpoint_chord_mm": 0.4728826492904921
+    },
+    {
+      "line": 39110,
+      "layer": 3.2,
+      "path_length_mm": 6.080411252538744,
+      "endpoint_chord_mm": 6.080411252538744
+    },
+    {
+      "line": 39111,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39112,
+      "layer": 3.2,
+      "path_length_mm": 6.484169183480632,
+      "endpoint_chord_mm": 6.484169183480632
+    },
+    {
+      "line": 39113,
+      "layer": 3.2,
+      "path_length_mm": 0.45478739801765705,
+      "endpoint_chord_mm": 0.451855065258769
+    },
+    {
+      "line": 39114,
+      "layer": 3.2,
+      "path_length_mm": 6.932474882752904,
+      "endpoint_chord_mm": 6.932474882752904
+    },
+    {
+      "line": 39115,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39116,
+      "layer": 3.2,
+      "path_length_mm": 7.428863843145858,
+      "endpoint_chord_mm": 7.428863843145858
+    },
+    {
+      "line": 39117,
+      "layer": 3.2,
+      "path_length_mm": 0.470396641144478,
+      "endpoint_chord_mm": 0.470396641144478
+    },
+    {
+      "line": 39118,
+      "layer": 3.2,
+      "path_length_mm": 8.011519830843582,
+      "endpoint_chord_mm": 8.011519830843582
+    },
+    {
+      "line": 39119,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39120,
+      "layer": 3.2,
+      "path_length_mm": 8.652158574598587,
+      "endpoint_chord_mm": 8.652158574598587
+    },
+    {
+      "line": 39121,
+      "layer": 3.2,
+      "path_length_mm": 0.4324592466348586,
+      "endpoint_chord_mm": 0.4324592466348586
+    },
+    {
+      "line": 39122,
+      "layer": 3.2,
+      "path_length_mm": 0.09044888059009144,
+      "endpoint_chord_mm": 0.09044888059009144
+    },
+    {
+      "line": 39123,
+      "layer": 3.2,
+      "path_length_mm": 9.364922210034626,
+      "endpoint_chord_mm": 9.364922210034624
+    },
+    {
+      "line": 39124,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39125,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791823
+    },
+    {
+      "line": 39126,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39127,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39128,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39129,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39130,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39131,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791823
+    },
+    {
+      "line": 39132,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39133,
+      "layer": 3.2,
+      "path_length_mm": 3.575839062374024,
+      "endpoint_chord_mm": 3.575839062374024
+    },
+    {
+      "line": 39134,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39135,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791823
+    },
+    {
+      "line": 39136,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39137,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791823
+    },
+    {
+      "line": 39138,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39139,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39140,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39141,
+      "layer": 3.2,
+      "path_length_mm": 4.089905622382995,
+      "endpoint_chord_mm": 4.089905622382995
+    },
+    {
+      "line": 39142,
+      "layer": 3.2,
+      "path_length_mm": 0.467240837256337,
+      "endpoint_chord_mm": 0.467240837256337
+    },
+    {
+      "line": 39143,
+      "layer": 3.2,
+      "path_length_mm": 4.663369275534588,
+      "endpoint_chord_mm": 4.663369275534588
+    },
+    {
+      "line": 39144,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39145,
+      "layer": 3.2,
+      "path_length_mm": 5.236125762431611,
+      "endpoint_chord_mm": 5.23612576243161
+    },
+    {
+      "line": 39146,
+      "layer": 3.2,
+      "path_length_mm": 0.4677403125667116,
+      "endpoint_chord_mm": 0.4677403125667116
+    },
+    {
+      "line": 39147,
+      "layer": 3.2,
+      "path_length_mm": 5.8081751006663005,
+      "endpoint_chord_mm": 5.8081751006663005
+    },
+    {
+      "line": 39148,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39149,
+      "layer": 3.2,
+      "path_length_mm": 6.380931593427405,
+      "endpoint_chord_mm": 6.380931593427405
+    },
+    {
+      "line": 39150,
+      "layer": 3.2,
+      "path_length_mm": 0.4677403125667045,
+      "endpoint_chord_mm": 0.4677403125667045
+    },
+    {
+      "line": 39151,
+      "layer": 3.2,
+      "path_length_mm": 6.953688086188511,
+      "endpoint_chord_mm": 6.953688086188511
+    },
+    {
+      "line": 39152,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39153,
+      "layer": 3.2,
+      "path_length_mm": 7.526444578949616,
+      "endpoint_chord_mm": 7.526444578949616
+    },
+    {
+      "line": 39154,
+      "layer": 3.2,
+      "path_length_mm": 0.467240837256337,
+      "endpoint_chord_mm": 0.467240837256337
+    },
+    {
+      "line": 39155,
+      "layer": 3.2,
+      "path_length_mm": 8.099908209356448,
+      "endpoint_chord_mm": 8.099908209356448
+    },
+    {
+      "line": 39156,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39157,
+      "layer": 3.2,
+      "path_length_mm": 8.67266470007921,
+      "endpoint_chord_mm": 8.67266470007921
+    },
+    {
+      "line": 39158,
+      "layer": 3.2,
+      "path_length_mm": 0.4677403125667045,
+      "endpoint_chord_mm": 0.4677403125667045
+    },
+    {
+      "line": 39159,
+      "layer": 3.2,
+      "path_length_mm": 9.244714057232931,
+      "endpoint_chord_mm": 9.244714057232931
+    },
+    {
+      "line": 39160,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39161,
+      "layer": 3.2,
+      "path_length_mm": 9.817470549994006,
+      "endpoint_chord_mm": 9.817470549994006
+    },
+    {
+      "line": 39162,
+      "layer": 3.2,
+      "path_length_mm": 0.31405891167105837,
+      "endpoint_chord_mm": 0.31405891167105837
+    },
+    {
+      "line": 39163,
+      "layer": 3.2,
+      "path_length_mm": 0.5739146277975403,
+      "endpoint_chord_mm": 0.5739146277975403
+    },
+    {
+      "line": 39164,
+      "layer": 3.2,
+      "path_length_mm": 2.2146584386762704,
+      "endpoint_chord_mm": 2.2146584386762704
+    },
+    {
+      "line": 39165,
+      "layer": 3.2,
+      "path_length_mm": 0.7481776068083776,
+      "endpoint_chord_mm": 0.7434951243955884
+    },
+    {
+      "line": 39166,
+      "layer": 3.2,
+      "path_length_mm": 0.0683593446428629,
+      "endpoint_chord_mm": 0.0683593446428629
+    },
+    {
+      "line": 39167,
+      "layer": 3.2,
+      "path_length_mm": 3.2265283200368597,
+      "endpoint_chord_mm": 3.22652832003686
+    },
+    {
+      "line": 39168,
+      "layer": 3.2,
+      "path_length_mm": 1.7445644155490467,
+      "endpoint_chord_mm": 1.7445644155490467
+    },
+    {
+      "line": 39169,
+      "layer": 3.2,
+      "path_length_mm": 4.471743284223705,
+      "endpoint_chord_mm": 4.471743284223705
+    },
+    {
+      "line": 39170,
+      "layer": 3.2,
+      "path_length_mm": 0.5529352745997334,
+      "endpoint_chord_mm": 0.5496271463455914
+    },
+    {
+      "line": 39171,
+      "layer": 3.2,
+      "path_length_mm": 6.385174234114515,
+      "endpoint_chord_mm": 6.385174234114515
+    },
+    {
+      "line": 39172,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39173,
+      "layer": 3.2,
+      "path_length_mm": 5.703523297050684,
+      "endpoint_chord_mm": 5.703523297050684
+    },
+    {
+      "line": 39174,
+      "layer": 3.2,
+      "path_length_mm": 0.4724118965479158,
+      "endpoint_chord_mm": 0.4724118965479158
+    },
+    {
+      "line": 39175,
+      "layer": 3.2,
+      "path_length_mm": 5.113796241541101,
+      "endpoint_chord_mm": 5.113796241541101
+    },
+    {
+      "line": 39176,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39177,
+      "layer": 3.2,
+      "path_length_mm": 4.58629458277594,
+      "endpoint_chord_mm": 4.58629458277594
+    },
+    {
+      "line": 39178,
+      "layer": 3.2,
+      "path_length_mm": 0.4529602631578261,
+      "endpoint_chord_mm": 0.4529602631578261
+    },
+    {
+      "line": 39179,
+      "layer": 3.2,
+      "path_length_mm": 4.102633544444334,
+      "endpoint_chord_mm": 4.102633544444333
+    },
+    {
+      "line": 39180,
+      "layer": 3.2,
+      "path_length_mm": 0.637999999999991,
+      "endpoint_chord_mm": 0.637999999999991
+    },
+    {
+      "line": 39181,
+      "layer": 3.2,
+      "path_length_mm": 3.6960472129019157,
+      "endpoint_chord_mm": 3.6960472129019157
+    },
+    {
+      "line": 39182,
+      "layer": 3.2,
+      "path_length_mm": 0.4656712172662369,
+      "endpoint_chord_mm": 0.46279585132107803
+    },
+    {
+      "line": 39183,
+      "layer": 3.2,
+      "path_length_mm": 3.3474435021371023,
+      "endpoint_chord_mm": 3.3474435021371023
+    },
+    {
+      "line": 39184,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39185,
+      "layer": 3.2,
+      "path_length_mm": 3.051872867601131,
+      "endpoint_chord_mm": 3.051872867601131
+    },
+    {
+      "line": 39186,
+      "layer": 3.2,
+      "path_length_mm": 0.5121532973631969,
+      "endpoint_chord_mm": 0.5121532973631969
+    },
+    {
+      "line": 39187,
+      "layer": 3.2,
+      "path_length_mm": 2.8411550468075384,
+      "endpoint_chord_mm": 2.8411550468075384
+    },
+    {
+      "line": 39188,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39189,
+      "layer": 3.2,
+      "path_length_mm": 2.7407458838790513,
+      "endpoint_chord_mm": 2.7407458838790513
+    },
+    {
+      "line": 39190,
+      "layer": 3.2,
+      "path_length_mm": 0.18995262567281757,
+      "endpoint_chord_mm": 0.18995262567281754
+    },
+    {
+      "line": 39191,
+      "layer": 3.2,
+      "path_length_mm": 0.4804039966528118,
+      "endpoint_chord_mm": 0.48040399665281186
+    },
+    {
+      "line": 39192,
+      "layer": 3.2,
+      "path_length_mm": 2.781051060300748,
+      "endpoint_chord_mm": 2.781051060300748
+    },
+    {
+      "line": 39193,
+      "layer": 3.2,
+      "path_length_mm": 0.6380000000000052,
+      "endpoint_chord_mm": 0.6380000000000052
+    },
+    {
+      "line": 39194,
+      "layer": 3.2,
+      "path_length_mm": 3.090056633785206,
+      "endpoint_chord_mm": 3.090056633785206
+    },
+    {
+      "line": 39195,
+      "layer": 3.2,
+      "path_length_mm": 0.9962941332759132,
+      "endpoint_chord_mm": 0.9962941332759132
+    },
+    {
+      "line": 39196,
+      "layer": 3.2,
+      "path_length_mm": 0.22900000000001342,
+      "endpoint_chord_mm": 0.22900000000001342
+    },
+    {
+      "line": 39197,
+      "layer": 3.2,
+      "path_length_mm": 3.4294678887547416,
+      "endpoint_chord_mm": 3.4294678887547416
+    },
+    {
+      "line": 39198,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39199,
+      "layer": 3.2,
+      "path_length_mm": 2.5257854223983496,
+      "endpoint_chord_mm": 2.5257854223983496
+    },
+    {
+      "line": 39200,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39201,
+      "layer": 3.2,
+      "path_length_mm": 1.6221029560419378,
+      "endpoint_chord_mm": 1.6221029560419378
+    },
+    {
+      "line": 39202,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39203,
+      "layer": 3.2,
+      "path_length_mm": 1.0055058428472585,
+      "endpoint_chord_mm": 1.0055058428472585
+    },
+    {
+      "line": 39247,
+      "layer": 3.2,
+      "path_length_mm": 0.2870853531617224,
+      "endpoint_chord_mm": 0.2870853531617224
+    },
+    {
+      "line": 39248,
+      "layer": 3.2,
+      "path_length_mm": 0.47200105932083514,
+      "endpoint_chord_mm": 0.47200105932083514
+    },
+    {
+      "line": 39249,
+      "layer": 3.2,
+      "path_length_mm": 0.588312841947203,
+      "endpoint_chord_mm": 0.588312841947203
+    },
+    {
+      "line": 39250,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39251,
+      "layer": 3.2,
+      "path_length_mm": 1.1780398974567858,
+      "endpoint_chord_mm": 1.1780398974567858
+    },
+    {
+      "line": 39252,
+      "layer": 3.2,
+      "path_length_mm": 0.5069250437687941,
+      "endpoint_chord_mm": 0.5069250437687941
+    },
+    {
+      "line": 39253,
+      "layer": 3.2,
+      "path_length_mm": 1.8596908345206167,
+      "endpoint_chord_mm": 1.8596908345206167
+    },
+    {
+      "line": 39254,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39255,
+      "layer": 3.2,
+      "path_length_mm": 2.625487573766057,
+      "endpoint_chord_mm": 2.625487573766057
+    },
+    {
+      "line": 39256,
+      "layer": 3.2,
+      "path_length_mm": 0.633865088821876,
+      "endpoint_chord_mm": 0.6300642824347469
+    },
+    {
+      "line": 39257,
+      "layer": 3.2,
+      "path_length_mm": 3.51573491605951,
+      "endpoint_chord_mm": 3.51573491605951
+    },
+    {
+      "line": 39258,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39259,
+      "layer": 3.2,
+      "path_length_mm": 5.151980007725187,
+      "endpoint_chord_mm": 5.151980007725187
+    },
+    {
+      "line": 39271,
+      "layer": 3.2,
+      "path_length_mm": 1.3159259097684721,
+      "endpoint_chord_mm": 1.3159259097684723
+    },
+    {
+      "line": 39272,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39273,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075951
+    },
+    {
+      "line": 39274,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39275,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39276,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39277,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39278,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39280,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075951
+    },
+    {
+      "line": 39281,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39282,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075951
+    },
+    {
+      "line": 39283,
+      "layer": 3.2,
+      "path_length_mm": 0.6380000000000052,
+      "endpoint_chord_mm": 0.6380000000000052
+    },
+    {
+      "line": 39284,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075951
+    },
+    {
+      "line": 39285,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39286,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075951
+    },
+    {
+      "line": 39287,
+      "layer": 3.2,
+      "path_length_mm": 0.44599999999999795,
+      "endpoint_chord_mm": 0.44599999999999795
+    },
+    {
+      "line": 39288,
+      "layer": 3.2,
+      "path_length_mm": 0.1411559421349422,
+      "endpoint_chord_mm": 0.1411559421349422
+    },
+    {
+      "line": 39289,
+      "layer": 3.2,
+      "path_length_mm": 1.2020815280171329,
+      "endpoint_chord_mm": 1.2020815280171329
+    },
+    {
+      "line": 39290,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39291,
+      "layer": 3.2,
+      "path_length_mm": 1.774838020778228,
+      "endpoint_chord_mm": 1.774838020778228
+    },
+    {
+      "line": 39292,
+      "layer": 3.2,
+      "path_length_mm": 0.4677403125667045,
+      "endpoint_chord_mm": 0.4677403125667045
+    },
+    {
+      "line": 39293,
+      "layer": 3.2,
+      "path_length_mm": 2.347594513539333,
+      "endpoint_chord_mm": 2.347594513539333
+    },
+    {
+      "line": 39294,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39295,
+      "layer": 3.2,
+      "path_length_mm": 2.9210581986670516,
+      "endpoint_chord_mm": 2.9210581986670516
+    },
+    {
+      "line": 39296,
+      "layer": 3.2,
+      "path_length_mm": 0.4677403125667045,
+      "endpoint_chord_mm": 0.4677403125667045
+    },
+    {
+      "line": 39297,
+      "layer": 3.2,
+      "path_length_mm": 3.493107499061543,
+      "endpoint_chord_mm": 3.493107499061543
+    },
+    {
+      "line": 39298,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39299,
+      "layer": 3.2,
+      "path_length_mm": 4.065863991822648,
+      "endpoint_chord_mm": 4.065863991822648
+    },
+    {
+      "line": 39300,
+      "layer": 3.2,
+      "path_length_mm": 0.4538479921735936,
+      "endpoint_chord_mm": 0.4538479921735936
+    },
+    {
+      "line": 39301,
+      "layer": 3.2,
+      "path_length_mm": 0.056080299571239486,
+      "endpoint_chord_mm": 0.056080299571239486
+    },
+    {
+      "line": 39302,
+      "layer": 3.2,
+      "path_length_mm": 4.580637728526461,
+      "endpoint_chord_mm": 4.580637728526461
+    },
+    {
+      "line": 39303,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999958,
+      "endpoint_chord_mm": 0.6389999999999958
+    },
+    {
+      "line": 39304,
+      "layer": 3.2,
+      "path_length_mm": 4.426488450227781,
+      "endpoint_chord_mm": 4.426488450227781
+    },
+    {
+      "line": 39305,
+      "layer": 3.2,
+      "path_length_mm": 0.45114299285259246,
+      "endpoint_chord_mm": 0.45114299285259246
+    },
+    {
+      "line": 39306,
+      "layer": 3.2,
+      "path_length_mm": 4.881158161748084,
+      "endpoint_chord_mm": 4.881158161748084
+    },
+    {
+      "line": 39307,
+      "layer": 3.2,
+      "path_length_mm": 0.63900000000001,
+      "endpoint_chord_mm": 0.63900000000001
+    },
+    {
+      "line": 39308,
+      "layer": 3.2,
+      "path_length_mm": 5.944646751489956,
+      "endpoint_chord_mm": 5.944646751489956
+    },
+    {
+      "line": 39309,
+      "layer": 3.2,
+      "path_length_mm": 0.4499788883936627,
+      "endpoint_chord_mm": 0.4499788883936627
+    },
+    {
+      "line": 39310,
+      "layer": 3.2,
+      "path_length_mm": 0.3660300534109285,
+      "endpoint_chord_mm": 0.3660300534109285
+    },
+    {
+      "line": 39311,
+      "layer": 3.2,
+      "path_length_mm": 6.929646455628164,
+      "endpoint_chord_mm": 6.929646455628164
+    },
+    {
+      "line": 39312,
+      "layer": 3.2,
+      "path_length_mm": 0.47400000000000375,
+      "endpoint_chord_mm": 0.47400000000000375
+    },
+    {
+      "line": 39313,
+      "layer": 3.2,
+      "path_length_mm": 0.16499999999999204,
+      "endpoint_chord_mm": 0.16499999999999204
+    },
+    {
+      "line": 39314,
+      "layer": 3.2,
+      "path_length_mm": 7.269057710597719,
+      "endpoint_chord_mm": 7.269057710597719
+    },
+    {
+      "line": 39315,
+      "layer": 3.2,
+      "path_length_mm": 0.12589678312012598,
+      "endpoint_chord_mm": 0.12589678312012598
+    },
+    {
+      "line": 39316,
+      "layer": 3.2,
+      "path_length_mm": 0.8131820214441586,
+      "endpoint_chord_mm": 0.8131820214441586
+    },
+    {
+      "line": 39317,
+      "layer": 3.2,
+      "path_length_mm": 0.14849242404916654,
+      "endpoint_chord_mm": 0.14849242404916654
+    },
+    {
+      "line": 39318,
+      "layer": 3.2,
+      "path_length_mm": 0.3577988261579606,
+      "endpoint_chord_mm": 0.3577988261579606
+    },
+    {
+      "line": 39319,
+      "layer": 3.2,
+      "path_length_mm": 2.5526554800834464,
+      "endpoint_chord_mm": 2.5526554800834464
+    },
+    {
+      "line": 39320,
+      "layer": 3.2,
+      "path_length_mm": 0.7136413665140298,
+      "endpoint_chord_mm": 0.7136413665140298
+    },
+    {
+      "line": 39321,
+      "layer": 3.2,
+      "path_length_mm": 4.468207806268641,
+      "endpoint_chord_mm": 4.468207806268641
+    },
+    {
+      "line": 39332,
+      "layer": 3.2,
+      "path_length_mm": 2.110006635060654,
+      "endpoint_chord_mm": 2.110006635060654
+    },
+    {
+      "line": 39333,
+      "layer": 3.2,
+      "path_length_mm": 0.6389999999999816,
+      "endpoint_chord_mm": 0.6389999999999816
+    },
+    {
+      "line": 39334,
+      "layer": 3.2,
+      "path_length_mm": 0.9913637072235504,
+      "endpoint_chord_mm": 0.9913637072235504
+    },
+    {
+      "line": 39697,
+      "layer": 3.2,
+      "path_length_mm": 0.336582827844796,
+      "endpoint_chord_mm": 0.336582827844796
+    },
+    {
+      "line": 39698,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39699,
+      "layer": 3.2,
+      "path_length_mm": 0.7212489168102857,
+      "endpoint_chord_mm": 0.7212489168102857
+    },
+    {
+      "line": 39700,
+      "layer": 3.2,
+      "path_length_mm": 0.11588356225108694,
+      "endpoint_chord_mm": 0.11588356225108692
+    },
+    {
+      "line": 39701,
+      "layer": 3.2,
+      "path_length_mm": 0.39290202341039576,
+      "endpoint_chord_mm": 0.39290202341039576
+    },
+    {
+      "line": 39702,
+      "layer": 3.2,
+      "path_length_mm": 1.3972429996246172,
+      "endpoint_chord_mm": 1.3972429996246172
+    },
+    {
+      "line": 39703,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39704,
+      "layer": 3.2,
+      "path_length_mm": 2.156675682618978,
+      "endpoint_chord_mm": 2.156675682618978
+    },
+    {
+      "line": 39705,
+      "layer": 3.2,
+      "path_length_mm": 0.42607511074927357,
+      "endpoint_chord_mm": 0.42607511074927357
+    },
+    {
+      "line": 39706,
+      "layer": 3.2,
+      "path_length_mm": 0.20199257412092592,
+      "endpoint_chord_mm": 0.20199257412092592
+    },
+    {
+      "line": 39707,
+      "layer": 3.2,
+      "path_length_mm": 3.0405591591021626,
+      "endpoint_chord_mm": 3.0405591591021626
+    },
+    {
+      "line": 39708,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39709,
+      "layer": 3.2,
+      "path_length_mm": 4.607507786211557,
+      "endpoint_chord_mm": 4.607507786211557
+    },
+    {
+      "line": 39721,
+      "layer": 3.2,
+      "path_length_mm": 1.0231837567123532,
+      "endpoint_chord_mm": 1.0231837567123532
+    },
+    {
+      "line": 39722,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39723,
+      "layer": 3.2,
+      "path_length_mm": 1.651801440851784,
+      "endpoint_chord_mm": 1.651801440851784
+    },
+    {
+      "line": 39724,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39725,
+      "layer": 3.2,
+      "path_length_mm": 2.5667976157071646,
+      "endpoint_chord_mm": 2.5667976157071646
+    },
+    {
+      "line": 39726,
+      "layer": 3.2,
+      "path_length_mm": 0.1519999999999868,
+      "endpoint_chord_mm": 0.1519999999999868
+    },
+    {
+      "line": 39727,
+      "layer": 3.2,
+      "path_length_mm": 0.5387188506076288,
+      "endpoint_chord_mm": 0.5387188506076288
+    },
+    {
+      "line": 39728,
+      "layer": 3.2,
+      "path_length_mm": 2.7216540926429205,
+      "endpoint_chord_mm": 2.721654092642921
+    },
+    {
+      "line": 39729,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39730,
+      "layer": 3.2,
+      "path_length_mm": 2.8036784765732343,
+      "endpoint_chord_mm": 2.8036784765732343
+    },
+    {
+      "line": 39731,
+      "layer": 3.2,
+      "path_length_mm": 0.5241679120281898,
+      "endpoint_chord_mm": 0.5241679120281898
+    },
+    {
+      "line": 39732,
+      "layer": 3.2,
+      "path_length_mm": 3.006618033605207,
+      "endpoint_chord_mm": 3.006618033605207
+    },
+    {
+      "line": 39733,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39734,
+      "layer": 3.2,
+      "path_length_mm": 3.2838038918303307,
+      "endpoint_chord_mm": 3.2838038918303307
+    },
+    {
+      "line": 39735,
+      "layer": 3.2,
+      "path_length_mm": 0.3945883931389787,
+      "endpoint_chord_mm": 0.3945883931389787
+    },
+    {
+      "line": 39736,
+      "layer": 3.2,
+      "path_length_mm": 0.08028075734570264,
+      "endpoint_chord_mm": 0.08028075734570264
+    },
+    {
+      "line": 39737,
+      "layer": 3.2,
+      "path_length_mm": 3.6189725061127667,
+      "endpoint_chord_mm": 3.6189725061127667
+    },
+    {
+      "line": 39738,
+      "layer": 3.2,
+      "path_length_mm": 0.6459999999999866,
+      "endpoint_chord_mm": 0.6459999999999866
+    },
+    {
+      "line": 39739,
+      "layer": 3.2,
+      "path_length_mm": 4.030508652763313,
+      "endpoint_chord_mm": 4.030508652763313
+    },
+    {
+      "line": 39740,
+      "layer": 3.2,
+      "path_length_mm": 0.460595414461627,
+      "endpoint_chord_mm": 0.45778706840625694
+    },
+    {
+      "line": 39741,
+      "layer": 3.2,
+      "path_length_mm": 4.504270196158311,
+      "endpoint_chord_mm": 4.504270196158311
+    },
+    {
+      "line": 39742,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39743,
+      "layer": 3.2,
+      "path_length_mm": 5.024700787111603,
+      "endpoint_chord_mm": 5.024700787111603
+    },
+    {
+      "line": 39744,
+      "layer": 3.2,
+      "path_length_mm": 0.47823529773532497,
+      "endpoint_chord_mm": 0.47823529773532497
+    },
+    {
+      "line": 39745,
+      "layer": 3.2,
+      "path_length_mm": 5.908584263594787,
+      "endpoint_chord_mm": 5.908584263594787
+    },
+    {
+      "line": 39757,
+      "layer": 3.2,
+      "path_length_mm": 3.102077529656537,
+      "endpoint_chord_mm": 3.102077529656537
+    },
+    {
+      "line": 39758,
+      "layer": 3.2,
+      "path_length_mm": 1.767884894443062,
+      "endpoint_chord_mm": 1.767884894443062
+    },
+    {
+      "line": 39759,
+      "layer": 3.2,
+      "path_length_mm": 4.177586863250114,
+      "endpoint_chord_mm": 4.177586863250114
+    },
+    {
+      "line": 39801,
+      "layer": 3.2,
+      "path_length_mm": 0.5176021638285523,
+      "endpoint_chord_mm": 0.5176021638285524
+    },
+    {
+      "line": 39802,
+      "layer": 3.2,
+      "path_length_mm": 0.4787065907212863,
+      "endpoint_chord_mm": 0.4787065907212863
+    },
+    {
+      "line": 39803,
+      "layer": 3.2,
+      "path_length_mm": 0.8273149339882517,
+      "endpoint_chord_mm": 0.8273149339882517
+    },
+    {
+      "line": 39804,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39805,
+      "layer": 3.2,
+      "path_length_mm": 1.4566399692442895,
+      "endpoint_chord_mm": 1.4566399692442895
+    },
+    {
+      "line": 39806,
+      "layer": 3.2,
+      "path_length_mm": 0.5184756503443569,
+      "endpoint_chord_mm": 0.5184756503443568
+    },
+    {
+      "line": 39807,
+      "layer": 3.2,
+      "path_length_mm": 2.158089896181358,
+      "endpoint_chord_mm": 2.158089896181358
+    },
+    {
+      "line": 39808,
+      "layer": 3.2,
+      "path_length_mm": 0.4619999999999891,
+      "endpoint_chord_mm": 0.4619999999999891
+    },
+    {
+      "line": 39809,
+      "layer": 3.2,
+      "path_length_mm": 0.18500000000000227,
+      "endpoint_chord_mm": 0.18500000000000227
+    },
+    {
+      "line": 39810,
+      "layer": 3.2,
+      "path_length_mm": 2.728017961817703,
+      "endpoint_chord_mm": 2.728017961817703
+    },
+    {
+      "line": 39811,
+      "layer": 3.2,
+      "path_length_mm": 0.10049875621120517,
+      "endpoint_chord_mm": 0.10049875621120517
+    },
+    {
+      "line": 39812,
+      "layer": 3.2,
+      "path_length_mm": 0.5989131823561776,
+      "endpoint_chord_mm": 0.5989131823561776
+    },
+    {
+      "line": 39813,
+      "layer": 3.2,
+      "path_length_mm": 2.797314426373974,
+      "endpoint_chord_mm": 2.797314426373974
+    },
+    {
+      "line": 39814,
+      "layer": 3.2,
+      "path_length_mm": 0.646000000000015,
+      "endpoint_chord_mm": 0.646000000000015
+    },
+    {
+      "line": 39815,
+      "layer": 3.2,
+      "path_length_mm": 7.576649193409976,
+      "endpoint_chord_mm": 7.576649193409976
+    },
+    {
+      "line": 39816,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39817,
+      "layer": 3.2,
+      "path_length_mm": 6.996821635571404,
+      "endpoint_chord_mm": 6.996821635571404
+    },
+    {
+      "line": 39818,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39819,
+      "layer": 3.2,
+      "path_length_mm": 6.416286932486741,
+      "endpoint_chord_mm": 6.416286932486741
+    },
+    {
+      "line": 39820,
+      "layer": 3.2,
+      "path_length_mm": 0.10890821823905202,
+      "endpoint_chord_mm": 0.10890821823905202
+    },
+    {
+      "line": 39821,
+      "layer": 3.2,
+      "path_length_mm": 0.13567977004696002,
+      "endpoint_chord_mm": 0.13567977004696
+    },
+    {
+      "line": 39822,
+      "layer": 3.2,
+      "path_length_mm": 0.3217716581677229,
+      "endpoint_chord_mm": 0.3217716581677229
+    },
+    {
+      "line": 39823,
+      "layer": 3.2,
+      "path_length_mm": 5.7940329650425415,
+      "endpoint_chord_mm": 5.7940329650425415
+    },
+    {
+      "line": 39824,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39825,
+      "layer": 3.2,
+      "path_length_mm": 5.256631811340772,
+      "endpoint_chord_mm": 5.256631811340772
+    },
+    {
+      "line": 39826,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989519,
+      "endpoint_chord_mm": 0.4735704804989519
+    },
+    {
+      "line": 39827,
+      "layer": 3.2,
+      "path_length_mm": 4.6768042507678285,
+      "endpoint_chord_mm": 4.6768042507678285
+    },
+    {
+      "line": 39828,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39829,
+      "layer": 3.2,
+      "path_length_mm": 4.0962696444448135,
+      "endpoint_chord_mm": 4.0962696444448135
+    },
+    {
+      "line": 39830,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39831,
+      "layer": 3.2,
+      "path_length_mm": 3.5164420939352783,
+      "endpoint_chord_mm": 3.5164420939352783
+    },
+    {
+      "line": 39832,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39833,
+      "layer": 3.2,
+      "path_length_mm": 2.935907355486536,
+      "endpoint_chord_mm": 2.935907355486536
+    },
+    {
+      "line": 39834,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39835,
+      "layer": 3.2,
+      "path_length_mm": 2.3560797949135717,
+      "endpoint_chord_mm": 2.3560797949135717
+    },
+    {
+      "line": 39836,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39837,
+      "layer": 3.2,
+      "path_length_mm": 1.7762522343406077,
+      "endpoint_chord_mm": 1.7762522343406077
+    },
+    {
+      "line": 39838,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39839,
+      "layer": 3.2,
+      "path_length_mm": 1.1964246737676436,
+      "endpoint_chord_mm": 1.1964246737676436
+    },
+    {
+      "line": 39840,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39841,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39842,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39843,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075851,
+      "endpoint_chord_mm": 1.0295474734075851
+    },
+    {
+      "line": 39844,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39845,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39846,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39847,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39848,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39849,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075851,
+      "endpoint_chord_mm": 1.0295474734075851
+    },
+    {
+      "line": 39850,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39851,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39852,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39853,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39854,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39855,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 39856,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39857,
+      "layer": 3.2,
+      "path_length_mm": 6.297492993247396,
+      "endpoint_chord_mm": 6.297492993247396
+    },
+    {
+      "line": 39858,
+      "layer": 3.2,
+      "path_length_mm": 0.3939216706420752,
+      "endpoint_chord_mm": 0.3914537009660284
+    },
+    {
+      "line": 39859,
+      "layer": 3.2,
+      "path_length_mm": 0.15781318069158276,
+      "endpoint_chord_mm": 0.15781318069158276
+    },
+    {
+      "line": 39860,
+      "layer": 3.2,
+      "path_length_mm": 4.6202357082728955,
+      "endpoint_chord_mm": 4.6202357082728955
+    },
+    {
+      "line": 39861,
+      "layer": 3.2,
+      "path_length_mm": 1.7678848944430725,
+      "endpoint_chord_mm": 1.7678848944430725
+    },
+    {
+      "line": 39862,
+      "layer": 3.2,
+      "path_length_mm": 3.3389582207628834,
+      "endpoint_chord_mm": 3.3389582207628834
+    },
+    {
+      "line": 39863,
+      "layer": 3.2,
+      "path_length_mm": 0.48338907724525826,
+      "endpoint_chord_mm": 0.48338907724525826
+    },
+    {
+      "line": 39864,
+      "layer": 3.2,
+      "path_length_mm": 0.3207771812333144,
+      "endpoint_chord_mm": 0.3207771812333144
+    },
+    {
+      "line": 39865,
+      "layer": 3.2,
+      "path_length_mm": 1.7083699833466965,
+      "endpoint_chord_mm": 1.7083699833466965
+    },
+    {
+      "line": 39866,
+      "layer": 3.2,
+      "path_length_mm": 0.15643848631329965,
+      "endpoint_chord_mm": 0.15643848631329965
+    },
+    {
+      "line": 39867,
+      "layer": 3.2,
+      "path_length_mm": 0.21011663427723534,
+      "endpoint_chord_mm": 0.21011663427723534
+    },
+    {
+      "line": 39868,
+      "layer": 3.2,
+      "path_length_mm": 0.2787131141514709,
+      "endpoint_chord_mm": 0.2787131141514709
+    },
+    {
+      "line": 39869,
+      "layer": 3.2,
+      "path_length_mm": 9.444118169527544,
+      "endpoint_chord_mm": 9.444118169527545
+    },
+    {
+      "line": 39870,
+      "layer": 3.2,
+      "path_length_mm": 0.2949999999999875,
+      "endpoint_chord_mm": 0.2949999999999875
+    },
+    {
+      "line": 39871,
+      "layer": 3.2,
+      "path_length_mm": 0.35200000000000387,
+      "endpoint_chord_mm": 0.35200000000000387
+    },
+    {
+      "line": 39872,
+      "layer": 3.2,
+      "path_length_mm": 9.280069396292246,
+      "endpoint_chord_mm": 9.280069396292246
+    },
+    {
+      "line": 39873,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39874,
+      "layer": 3.2,
+      "path_length_mm": 8.700241835719263,
+      "endpoint_chord_mm": 8.700241835719263
+    },
+    {
+      "line": 39875,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39876,
+      "layer": 3.2,
+      "path_length_mm": 8.120414275146299,
+      "endpoint_chord_mm": 8.120414275146299
+    },
+    {
+      "line": 39877,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39878,
+      "layer": 3.2,
+      "path_length_mm": 7.540586714573334,
+      "endpoint_chord_mm": 7.540586714573334
+    },
+    {
+      "line": 39879,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39880,
+      "layer": 3.2,
+      "path_length_mm": 6.96075915400037,
+      "endpoint_chord_mm": 6.96075915400037
+    },
+    {
+      "line": 39881,
+      "layer": 3.2,
+      "path_length_mm": 0.4730708192226535,
+      "endpoint_chord_mm": 0.4730708192226535
+    },
+    {
+      "line": 39882,
+      "layer": 3.2,
+      "path_length_mm": 6.38022452582979,
+      "endpoint_chord_mm": 6.38022452582979
+    },
+    {
+      "line": 39883,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39884,
+      "layer": 3.2,
+      "path_length_mm": 5.799689819292062,
+      "endpoint_chord_mm": 5.799689819292062
+    },
+    {
+      "line": 39885,
+      "layer": 3.2,
+      "path_length_mm": 0.4735704804989377,
+      "endpoint_chord_mm": 0.4735704804989377
+    },
+    {
+      "line": 39886,
+      "layer": 3.2,
+      "path_length_mm": 5.219862258719097,
+      "endpoint_chord_mm": 5.219862258719097
+    },
+    {
+      "line": 39887,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39888,
+      "layer": 3.2,
+      "path_length_mm": 4.640034698146133,
+      "endpoint_chord_mm": 4.640034698146133
+    },
+    {
+      "line": 39889,
+      "layer": 3.2,
+      "path_length_mm": 0.47357048049896233,
+      "endpoint_chord_mm": 0.47357048049896233
+    },
+    {
+      "line": 39890,
+      "layer": 3.2,
+      "path_length_mm": 4.060207137573149,
+      "endpoint_chord_mm": 4.060207137573149
+    },
+    {
+      "line": 39891,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39892,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791925,
+      "endpoint_chord_mm": 3.5751318856791925
+    },
+    {
+      "line": 39893,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39894,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39895,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39896,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39897,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39898,
+      "layer": 3.2,
+      "path_length_mm": 3.575839062374044,
+      "endpoint_chord_mm": 3.575839062374044
+    },
+    {
+      "line": 39899,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39900,
+      "layer": 3.2,
+      "path_length_mm": 3.575839062374024,
+      "endpoint_chord_mm": 3.575839062374024
+    },
+    {
+      "line": 39901,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39902,
+      "layer": 3.2,
+      "path_length_mm": 3.575839062374024,
+      "endpoint_chord_mm": 3.575839062374024
+    },
+    {
+      "line": 39903,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39904,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791925,
+      "endpoint_chord_mm": 3.5751318856791925
+    },
+    {
+      "line": 39905,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39906,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 39907,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39908,
+      "layer": 3.2,
+      "path_length_mm": 9.229157708046813,
+      "endpoint_chord_mm": 9.229157708046813
+    },
+    {
+      "line": 39909,
+      "layer": 3.2,
+      "path_length_mm": 0.5184756503443297,
+      "endpoint_chord_mm": 0.5184756503443296
+    },
+    {
+      "line": 39910,
+      "layer": 3.2,
+      "path_length_mm": 8.527707781109765,
+      "endpoint_chord_mm": 8.527707781109765
+    },
+    {
+      "line": 39911,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39912,
+      "layer": 3.2,
+      "path_length_mm": 7.8983827458537075,
+      "endpoint_chord_mm": 7.8983827458537075
+    },
+    {
+      "line": 39913,
+      "layer": 3.2,
+      "path_length_mm": 0.3547647107591074,
+      "endpoint_chord_mm": 0.3547647107591074
+    },
+    {
+      "line": 39914,
+      "layer": 3.2,
+      "path_length_mm": 0.11856221995222799,
+      "endpoint_chord_mm": 0.11856221995222799
+    },
+    {
+      "line": 39915,
+      "layer": 3.2,
+      "path_length_mm": 7.3270404666549815,
+      "endpoint_chord_mm": 7.3270404666549815
+    },
+    {
+      "line": 39916,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39917,
+      "layer": 3.2,
+      "path_length_mm": 6.823580438450188,
+      "endpoint_chord_mm": 6.823580438450188
+    },
+    {
+      "line": 39918,
+      "layer": 3.2,
+      "path_length_mm": 0.10652699188467085,
+      "endpoint_chord_mm": 0.10652699188467085
+    },
+    {
+      "line": 39919,
+      "layer": 3.2,
+      "path_length_mm": 0.35313595115761465,
+      "endpoint_chord_mm": 0.35313595115761465
+    },
+    {
+      "line": 39920,
+      "layer": 3.2,
+      "path_length_mm": 6.390831088364024,
+      "endpoint_chord_mm": 6.390831088364024
+    },
+    {
+      "line": 39921,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39922,
+      "layer": 3.2,
+      "path_length_mm": 6.004750785836134,
+      "endpoint_chord_mm": 6.004750785836134
+    },
+    {
+      "line": 39923,
+      "layer": 3.2,
+      "path_length_mm": 0.47782528187614454,
+      "endpoint_chord_mm": 0.47782528187614454
+    },
+    {
+      "line": 39924,
+      "layer": 3.2,
+      "path_length_mm": 5.685138520739836,
+      "endpoint_chord_mm": 5.685138520739836
+    },
+    {
+      "line": 39925,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39926,
+      "layer": 3.2,
+      "path_length_mm": 5.456035923635406,
+      "endpoint_chord_mm": 5.456035923635406
+    },
+    {
+      "line": 39927,
+      "layer": 3.2,
+      "path_length_mm": 0.5563259047564495,
+      "endpoint_chord_mm": 0.5544628030806198
+    },
+    {
+      "line": 39928,
+      "layer": 3.2,
+      "path_length_mm": 5.3117861402733455,
+      "endpoint_chord_mm": 5.3117861402733455
+    },
+    {
+      "line": 39929,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39930,
+      "layer": 3.2,
+      "path_length_mm": 5.296229791087248,
+      "endpoint_chord_mm": 5.296229791087248
+    },
+    {
+      "line": 39931,
+      "layer": 3.2,
+      "path_length_mm": 0.8267198201982853,
+      "endpoint_chord_mm": 0.821533322513439
+    },
+    {
+      "line": 39932,
+      "layer": 3.2,
+      "path_length_mm": 5.521089747504558,
+      "endpoint_chord_mm": 5.521089747504558
+    },
+    {
+      "line": 39933,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39934,
+      "layer": 3.2,
+      "path_length_mm": 6.225368101566346,
+      "endpoint_chord_mm": 6.225368101566346
+    },
+    {
+      "line": 39935,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39936,
+      "layer": 3.2,
+      "path_length_mm": 5.310371926710966,
+      "endpoint_chord_mm": 5.310371926710966
+    },
+    {
+      "line": 39937,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39938,
+      "layer": 3.2,
+      "path_length_mm": 4.395375751855585,
+      "endpoint_chord_mm": 4.395375751855585
+    },
+    {
+      "line": 39939,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39940,
+      "layer": 3.2,
+      "path_length_mm": 3.480379577000185,
+      "endpoint_chord_mm": 3.480379577000185
+    },
+    {
+      "line": 39941,
+      "layer": 3.2,
+      "path_length_mm": 0.6470000000000198,
+      "endpoint_chord_mm": 0.6470000000000198
+    },
+    {
+      "line": 39942,
+      "layer": 3.2,
+      "path_length_mm": 2.5653834021447843,
+      "endpoint_chord_mm": 2.5653834021447843
+    },
+    {
+      "line": 39943,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39944,
+      "layer": 3.2,
+      "path_length_mm": 1.6503872272894042,
+      "endpoint_chord_mm": 1.6503872272894042
+    },
+    {
+      "line": 39945,
+      "layer": 3.2,
+      "path_length_mm": 0.6469999999999914,
+      "endpoint_chord_mm": 0.6469999999999914
+    },
+    {
+      "line": 39946,
+      "layer": 3.2,
+      "path_length_mm": 1.0224764055957463,
+      "endpoint_chord_mm": 1.0224764055957463
+    },
+    {
+      "line": 40313,
+      "layer": 3.2,
+      "path_length_mm": 0.22344574285494073,
+      "endpoint_chord_mm": 0.22344574285494073
+    },
+    {
+      "line": 40314,
+      "layer": 3.2,
+      "path_length_mm": 0.6439999999999912,
+      "endpoint_chord_mm": 0.6439999999999912
+    },
+    {
+      "line": 40315,
+      "layer": 3.2,
+      "path_length_mm": 0.6052834046956808,
+      "endpoint_chord_mm": 0.6052834046956808
+    },
+    {
+      "line": 40316,
+      "layer": 3.2,
+      "path_length_mm": 0.4759999999999907,
+      "endpoint_chord_mm": 0.4759999999999907
+    },
+    {
+      "line": 40317,
+      "layer": 3.2,
+      "path_length_mm": 1.199253100892373,
+      "endpoint_chord_mm": 1.199253100892373
+    },
+    {
+      "line": 40318,
+      "layer": 3.2,
+      "path_length_mm": 0.644999999999996,
+      "endpoint_chord_mm": 0.644999999999996
+    },
+    {
+      "line": 40319,
+      "layer": 3.2,
+      "path_length_mm": 1.8915107718434898,
+      "endpoint_chord_mm": 1.8915107718434898
+    },
+    {
+      "line": 40320,
+      "layer": 3.2,
+      "path_length_mm": 0.562467593680926,
+      "endpoint_chord_mm": 0.5589606426216578
+    },
+    {
+      "line": 40321,
+      "layer": 3.2,
+      "path_length_mm": 2.670035205760411,
+      "endpoint_chord_mm": 2.670035205760411
+    },
+    {
+      "line": 40322,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40323,
+      "layer": 3.2,
+      "path_length_mm": 3.579374526366312,
+      "endpoint_chord_mm": 3.579374526366312
+    },
+    {
+      "line": 40324,
+      "layer": 3.2,
+      "path_length_mm": 0.8388894768694217,
+      "endpoint_chord_mm": 0.8360938942487105
+    },
+    {
+      "line": 40325,
+      "layer": 3.2,
+      "path_length_mm": 5.022579516543273,
+      "endpoint_chord_mm": 5.022579516543273
+    },
+    {
+      "line": 40336,
+      "layer": 3.2,
+      "path_length_mm": 4.66266211514411,
+      "endpoint_chord_mm": 4.66266211514411
+    },
+    {
+      "line": 40337,
+      "layer": 3.2,
+      "path_length_mm": 1.7598227183441078,
+      "endpoint_chord_mm": 1.7598227183441078
+    },
+    {
+      "line": 40338,
+      "layer": 3.2,
+      "path_length_mm": 3.1551104576543674,
+      "endpoint_chord_mm": 3.1551104576543674
+    },
+    {
+      "line": 40339,
+      "layer": 3.2,
+      "path_length_mm": 0.3667710457492472,
+      "endpoint_chord_mm": 0.3667710457492472
+    },
+    {
+      "line": 40340,
+      "layer": 3.2,
+      "path_length_mm": 0.4732631403352714,
+      "endpoint_chord_mm": 0.4732631403352714
+    },
+    {
+      "line": 40341,
+      "layer": 3.2,
+      "path_length_mm": 2.1552614690565983,
+      "endpoint_chord_mm": 2.1552614690565983
+    },
+    {
+      "line": 40342,
+      "layer": 3.2,
+      "path_length_mm": 0.4493840228579619,
+      "endpoint_chord_mm": 0.4493840228579619
+    },
+    {
+      "line": 40343,
+      "layer": 3.2,
+      "path_length_mm": 0.3512719744015857,
+      "endpoint_chord_mm": 0.3512719744015857
+    },
+    {
+      "line": 40344,
+      "layer": 3.2,
+      "path_length_mm": 9.772215715998092,
+      "endpoint_chord_mm": 9.772215715998092
+    },
+    {
+      "line": 40345,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40346,
+      "layer": 3.2,
+      "path_length_mm": 9.194509502958827,
+      "endpoint_chord_mm": 9.194509502958828
+    },
+    {
+      "line": 40347,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953770584,
+      "endpoint_chord_mm": 0.47133851953770584
+    },
+    {
+      "line": 40348,
+      "layer": 3.2,
+      "path_length_mm": 8.616803235539264,
+      "endpoint_chord_mm": 8.616803235539264
+    },
+    {
+      "line": 40349,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40350,
+      "layer": 3.2,
+      "path_length_mm": 8.038389888528668,
+      "endpoint_chord_mm": 8.038389888528668
+    },
+    {
+      "line": 40351,
+      "layer": 3.2,
+      "path_length_mm": 0.4713385195376935,
+      "endpoint_chord_mm": 0.4713385195376935
+    },
+    {
+      "line": 40352,
+      "layer": 3.2,
+      "path_length_mm": 7.460683681808268,
+      "endpoint_chord_mm": 7.460683681808268
+    },
+    {
+      "line": 40353,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40354,
+      "layer": 3.2,
+      "path_length_mm": 6.88297740806985,
+      "endpoint_chord_mm": 6.88297740806985
+    },
+    {
+      "line": 40355,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953772005,
+      "endpoint_chord_mm": 0.47133851953772005
+    },
+    {
+      "line": 40356,
+      "layer": 3.2,
+      "path_length_mm": 6.305978274621635,
+      "endpoint_chord_mm": 6.305978274621635
+    },
+    {
+      "line": 40357,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40358,
+      "layer": 3.2,
+      "path_length_mm": 5.727564927611031,
+      "endpoint_chord_mm": 5.727564927611032
+    },
+    {
+      "line": 40359,
+      "layer": 3.2,
+      "path_length_mm": 0.4722044048926272,
+      "endpoint_chord_mm": 0.4722044048926272
+    },
+    {
+      "line": 40360,
+      "layer": 3.2,
+      "path_length_mm": 5.149858735926648,
+      "endpoint_chord_mm": 5.149858735926648
+    },
+    {
+      "line": 40361,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40362,
+      "layer": 3.2,
+      "path_length_mm": 4.572152447152222,
+      "endpoint_chord_mm": 4.572152447152222
+    },
+    {
+      "line": 40363,
+      "layer": 3.2,
+      "path_length_mm": 0.47170541654722004,
+      "endpoint_chord_mm": 0.47170541654722004
+    },
+    {
+      "line": 40364,
+      "layer": 3.2,
+      "path_length_mm": 3.993739100141618,
+      "endpoint_chord_mm": 3.993739100141618
+    },
+    {
+      "line": 40365,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40366,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 40367,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40368,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791925,
+      "endpoint_chord_mm": 3.5751318856791925
+    },
+    {
+      "line": 40369,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40370,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 40371,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40372,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 40373,
+      "layer": 3.2,
+      "path_length_mm": 0.643999999999977,
+      "endpoint_chord_mm": 0.643999999999977
+    },
+    {
+      "line": 40374,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791925,
+      "endpoint_chord_mm": 3.5751318856791925
+    },
+    {
+      "line": 40375,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40376,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791925,
+      "endpoint_chord_mm": 3.5751318856791925
+    },
+    {
+      "line": 40377,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40378,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 40379,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40380,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 40381,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40382,
+      "layer": 3.2,
+      "path_length_mm": 9.17541759267664,
+      "endpoint_chord_mm": 9.17541759267664
+    },
+    {
+      "line": 40383,
+      "layer": 3.2,
+      "path_length_mm": 0.581755962582253,
+      "endpoint_chord_mm": 0.581755962582253
+    },
+    {
+      "line": 40384,
+      "layer": 3.2,
+      "path_length_mm": 3.9979817408287373,
+      "endpoint_chord_mm": 3.9979817408287373
+    },
+    {
+      "line": 40385,
+      "layer": 3.2,
+      "path_length_mm": 1.7611888030532155,
+      "endpoint_chord_mm": 1.7611888030532155
+    },
+    {
+      "line": 40386,
+      "layer": 3.2,
+      "path_length_mm": 2.805799707748203,
+      "endpoint_chord_mm": 2.805799707748203
+    },
+    {
+      "line": 40387,
+      "layer": 3.2,
+      "path_length_mm": 0.43053679596106065,
+      "endpoint_chord_mm": 0.42790770032800535
+    },
+    {
+      "line": 40388,
+      "layer": 3.2,
+      "path_length_mm": 0.4033422864020017,
+      "endpoint_chord_mm": 0.4033422864020017
+    },
+    {
+      "line": 40389,
+      "layer": 3.2,
+      "path_length_mm": 0.13376471881630173,
+      "endpoint_chord_mm": 0.13376471881630173
+    },
+    {
+      "line": 40390,
+      "layer": 3.2,
+      "path_length_mm": 2.0293964620053946,
+      "endpoint_chord_mm": 2.0293964620053946
+    },
+    {
+      "line": 40391,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953770584,
+      "endpoint_chord_mm": 0.47133851953770584
+    },
+    {
+      "line": 40392,
+      "layer": 3.2,
+      "path_length_mm": 7.051268821992237,
+      "endpoint_chord_mm": 7.051268821992237
+    },
+    {
+      "line": 40393,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40394,
+      "layer": 3.2,
+      "path_length_mm": 6.472855474981653,
+      "endpoint_chord_mm": 6.472855474981653
+    },
+    {
+      "line": 40395,
+      "layer": 3.2,
+      "path_length_mm": 0.27014995835646854,
+      "endpoint_chord_mm": 0.27014995835646854
+    },
+    {
+      "line": 40396,
+      "layer": 3.2,
+      "path_length_mm": 0.13345411196362444,
+      "endpoint_chord_mm": 0.13345411196362444
+    },
+    {
+      "line": 40397,
+      "layer": 3.2,
+      "path_length_mm": 0.1654871596227394,
+      "endpoint_chord_mm": 0.1654871596227394
+    },
+    {
+      "line": 40398,
+      "layer": 3.2,
+      "path_length_mm": 5.813831954915799,
+      "endpoint_chord_mm": 5.813831954915799
+    },
+    {
+      "line": 40399,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40400,
+      "layer": 3.2,
+      "path_length_mm": 5.317442994522844,
+      "endpoint_chord_mm": 5.317442994522844
+    },
+    {
+      "line": 40401,
+      "layer": 3.2,
+      "path_length_mm": 0.4722044048926149,
+      "endpoint_chord_mm": 0.4722044048926149
+    },
+    {
+      "line": 40402,
+      "layer": 3.2,
+      "path_length_mm": 4.739736807038976,
+      "endpoint_chord_mm": 4.739736807038975
+    },
+    {
+      "line": 40403,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40404,
+      "layer": 3.2,
+      "path_length_mm": 4.162030514064005,
+      "endpoint_chord_mm": 4.162030514064005
+    },
+    {
+      "line": 40405,
+      "layer": 3.2,
+      "path_length_mm": 0.47220440489264137,
+      "endpoint_chord_mm": 0.47220440489264137
+    },
+    {
+      "line": 40406,
+      "layer": 3.2,
+      "path_length_mm": 3.5843243435827543,
+      "endpoint_chord_mm": 3.584324343582754
+    },
+    {
+      "line": 40407,
+      "layer": 3.2,
+      "path_length_mm": 0.6449999999999818,
+      "endpoint_chord_mm": 0.6449999999999818
+    },
+    {
+      "line": 40408,
+      "layer": 3.2,
+      "path_length_mm": 3.006618033605197,
+      "endpoint_chord_mm": 3.006618033605197
+    },
+    {
+      "line": 40409,
+      "layer": 3.2,
+      "path_length_mm": 0.4717054165472342,
+      "endpoint_chord_mm": 0.4717054165472342
+    },
+    {
+      "line": 40410,
+      "layer": 3.2,
+      "path_length_mm": 2.4282046865946123,
+      "endpoint_chord_mm": 2.4282046865946123
+    },
+    {
+      "line": 40411,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40412,
+      "layer": 3.2,
+      "path_length_mm": 1.8512055531463778,
+      "endpoint_chord_mm": 1.8512055531463778
+    },
+    {
+      "line": 40413,
+      "layer": 3.2,
+      "path_length_mm": 0.4722044048926272,
+      "endpoint_chord_mm": 0.4722044048926272
+    },
+    {
+      "line": 40414,
+      "layer": 3.2,
+      "path_length_mm": 1.2727922061357835,
+      "endpoint_chord_mm": 1.2727922061357835
+    },
+    {
+      "line": 40415,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40416,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 40417,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40418,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 40419,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40420,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075953
+    },
+    {
+      "line": 40421,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40422,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075953
+    },
+    {
+      "line": 40423,
+      "layer": 3.2,
+      "path_length_mm": 0.6449999999999818,
+      "endpoint_chord_mm": 0.6449999999999818
+    },
+    {
+      "line": 40424,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 40425,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40426,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 40427,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40428,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734075953,
+      "endpoint_chord_mm": 1.0295474734075953
+    },
+    {
+      "line": 40429,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40430,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 40431,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40432,
+      "layer": 3.2,
+      "path_length_mm": 6.416994078226972,
+      "endpoint_chord_mm": 6.416994078226972
+    },
+    {
+      "line": 40433,
+      "layer": 3.2,
+      "path_length_mm": 0.5129775823561793,
+      "endpoint_chord_mm": 0.5129775823561793
+    },
+    {
+      "line": 40434,
+      "layer": 3.2,
+      "path_length_mm": 5.724736500486291,
+      "endpoint_chord_mm": 5.724736500486291
+    },
+    {
+      "line": 40435,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40436,
+      "layer": 3.2,
+      "path_length_mm": 5.130766804289579,
+      "endpoint_chord_mm": 5.130766804289579
+    },
+    {
+      "line": 40437,
+      "layer": 3.2,
+      "path_length_mm": 0.4650827328818741,
+      "endpoint_chord_mm": 0.462212072538132
+    },
+    {
+      "line": 40438,
+      "layer": 3.2,
+      "path_length_mm": 4.596194077712559,
+      "endpoint_chord_mm": 4.596194077712559
+    },
+    {
+      "line": 40439,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40440,
+      "layer": 3.2,
+      "path_length_mm": 4.106876185131463,
+      "endpoint_chord_mm": 4.106876185131463
+    },
+    {
+      "line": 40441,
+      "layer": 3.2,
+      "path_length_mm": 0.45761992963595144,
+      "endpoint_chord_mm": 0.4576199296359514
+    },
+    {
+      "line": 40442,
+      "layer": 3.2,
+      "path_length_mm": 3.6967542520432666,
+      "endpoint_chord_mm": 3.6967542520432666
+    },
+    {
+      "line": 40443,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40444,
+      "layer": 3.2,
+      "path_length_mm": 3.3446150750123524,
+      "endpoint_chord_mm": 3.3446150750123524
+    },
+    {
+      "line": 40445,
+      "layer": 3.2,
+      "path_length_mm": 0.3820588959833407,
+      "endpoint_chord_mm": 0.3820588959833407
+    },
+    {
+      "line": 40446,
+      "layer": 3.2,
+      "path_length_mm": 0.10220078277585562,
+      "endpoint_chord_mm": 0.10220078277585562
+    },
+    {
+      "line": 40447,
+      "layer": 3.2,
+      "path_length_mm": 3.0490444404763912,
+      "endpoint_chord_mm": 3.0490444404763912
+    },
+    {
+      "line": 40448,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40449,
+      "layer": 3.2,
+      "path_length_mm": 2.8369124061204287,
+      "endpoint_chord_mm": 2.8369124061204287
+    },
+    {
+      "line": 40450,
+      "layer": 3.2,
+      "path_length_mm": 0.579245198512703,
+      "endpoint_chord_mm": 0.579245198512703
+    },
+    {
+      "line": 40451,
+      "layer": 3.2,
+      "path_length_mm": 2.737917456754312,
+      "endpoint_chord_mm": 2.737917456754312
+    },
+    {
+      "line": 40452,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40453,
+      "layer": 3.2,
+      "path_length_mm": 2.785293700850948,
+      "endpoint_chord_mm": 2.785293700850948
+    },
+    {
+      "line": 40454,
+      "layer": 3.2,
+      "path_length_mm": 0.49547680603153227,
+      "endpoint_chord_mm": 0.49244289008979514
+    },
+    {
+      "line": 40455,
+      "layer": 3.2,
+      "path_length_mm": 0.2740000000000009,
+      "endpoint_chord_mm": 0.2740000000000009
+    },
+    {
+      "line": 40456,
+      "layer": 3.2,
+      "path_length_mm": 2.5526554800834362,
+      "endpoint_chord_mm": 2.5526554800834362
+    },
+    {
+      "line": 40457,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40458,
+      "layer": 3.2,
+      "path_length_mm": 1.6419019459151654,
+      "endpoint_chord_mm": 1.6419019459151654
+    },
+    {
+      "line": 40459,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40460,
+      "layer": 3.2,
+      "path_length_mm": 1.0175269038212158,
+      "endpoint_chord_mm": 1.017526903821216
+    },
+    {
+      "line": 40474,
+      "layer": 3.2,
+      "path_length_mm": 8.705191611906086,
+      "endpoint_chord_mm": 8.705191611906086
+    },
+    {
+      "line": 40475,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40476,
+      "layer": 3.2,
+      "path_length_mm": 7.857370552544922,
+      "endpoint_chord_mm": 7.857370552544922
+    },
+    {
+      "line": 40477,
+      "layer": 3.2,
+      "path_length_mm": 0.4715824107810175,
+      "endpoint_chord_mm": 0.4687397998890002
+    },
+    {
+      "line": 40478,
+      "layer": 3.2,
+      "path_length_mm": 7.293099341158046,
+      "endpoint_chord_mm": 7.2930993411580465
+    },
+    {
+      "line": 40479,
+      "layer": 3.2,
+      "path_length_mm": 0.643999999999977,
+      "endpoint_chord_mm": 0.643999999999977
+    },
+    {
+      "line": 40480,
+      "layer": 3.2,
+      "path_length_mm": 6.792467740077991,
+      "endpoint_chord_mm": 6.792467740077991
+    },
+    {
+      "line": 40481,
+      "layer": 3.2,
+      "path_length_mm": 0.07810249675904646,
+      "endpoint_chord_mm": 0.07810249675904646
+    },
+    {
+      "line": 40482,
+      "layer": 3.2,
+      "path_length_mm": 0.3801539161971193,
+      "endpoint_chord_mm": 0.3801539161971193
+    },
+    {
+      "line": 40483,
+      "layer": 3.2,
+      "path_length_mm": 6.367496603846774,
+      "endpoint_chord_mm": 6.367496603846775
+    },
+    {
+      "line": 40484,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40485,
+      "layer": 3.2,
+      "path_length_mm": 5.987073158063137,
+      "endpoint_chord_mm": 5.987073158063137
+    },
+    {
+      "line": 40486,
+      "layer": 3.2,
+      "path_length_mm": 0.4764714052280507,
+      "endpoint_chord_mm": 0.4764714052280507
+    },
+    {
+      "line": 40487,
+      "layer": 3.2,
+      "path_length_mm": 5.669582171553729,
+      "endpoint_chord_mm": 5.669582171553729
+    },
+    {
+      "line": 40488,
+      "layer": 3.2,
+      "path_length_mm": 0.6449999999999818,
+      "endpoint_chord_mm": 0.6449999999999818
+    },
+    {
+      "line": 40489,
+      "layer": 3.2,
+      "path_length_mm": 5.446136428698788,
+      "endpoint_chord_mm": 5.446136428698788
+    },
+    {
+      "line": 40490,
+      "layer": 3.2,
+      "path_length_mm": 0.5590846214021998,
+      "endpoint_chord_mm": 0.5555339773587171
+    },
+    {
+      "line": 40491,
+      "layer": 3.2,
+      "path_length_mm": 5.308957713148596,
+      "endpoint_chord_mm": 5.308957713148596
+    },
+    {
+      "line": 40492,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40493,
+      "layer": 3.2,
+      "path_length_mm": 5.300472431774357,
+      "endpoint_chord_mm": 5.300472431774357
+    },
+    {
+      "line": 40494,
+      "layer": 3.2,
+      "path_length_mm": 0.8321039888112879,
+      "endpoint_chord_mm": 0.8268349291122156
+    },
+    {
+      "line": 40495,
+      "layer": 3.2,
+      "path_length_mm": 5.534524821518093,
+      "endpoint_chord_mm": 5.534524821518093
+    },
+    {
+      "line": 40496,
+      "layer": 3.2,
+      "path_length_mm": 0.643999999999977,
+      "endpoint_chord_mm": 0.643999999999977
+    },
+    {
+      "line": 40497,
+      "layer": 3.2,
+      "path_length_mm": 6.1984980438812896,
+      "endpoint_chord_mm": 6.1984980438812896
+    },
+    {
+      "line": 40498,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40499,
+      "layer": 3.2,
+      "path_length_mm": 5.287037450217279,
+      "endpoint_chord_mm": 5.287037450217279
+    },
+    {
+      "line": 40500,
+      "layer": 3.2,
+      "path_length_mm": 0.6450000000000102,
+      "endpoint_chord_mm": 0.6450000000000102
+    },
+    {
+      "line": 40501,
+      "layer": 3.2,
+      "path_length_mm": 4.375576761982348,
+      "endpoint_chord_mm": 4.375576761982348
+    },
+    {
+      "line": 40502,
+      "layer": 3.2,
+      "path_length_mm": 0.643999999999977,
+      "endpoint_chord_mm": 0.643999999999977
+    },
+    {
+      "line": 40503,
+      "layer": 3.2,
+      "path_length_mm": 3.4648232278140867,
+      "endpoint_chord_mm": 3.4648232278140867
+    },
+    {
+      "line": 40504,
+      "layer": 3.2,
+      "path_length_mm": 0.6449999999999818,
+      "endpoint_chord_mm": 0.6449999999999818
+    },
+    {
+      "line": 40505,
+      "layer": 3.2,
+      "path_length_mm": 2.5526554800834464,
+      "endpoint_chord_mm": 2.5526554800834464
+    },
+    {
+      "line": 40506,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40507,
+      "layer": 3.2,
+      "path_length_mm": 1.6419019459151654,
+      "endpoint_chord_mm": 1.6419019459151654
+    },
+    {
+      "line": 40508,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40509,
+      "layer": 3.2,
+      "path_length_mm": 1.0175269038212158,
+      "endpoint_chord_mm": 1.0175269038212158
+    },
+    {
+      "line": 40553,
+      "layer": 3.2,
+      "path_length_mm": 0.4030508652763273,
+      "endpoint_chord_mm": 0.4030508652763273
+    },
+    {
+      "line": 40554,
+      "layer": 3.2,
+      "path_length_mm": 0.644999999999996,
+      "endpoint_chord_mm": 0.644999999999996
+    },
+    {
+      "line": 40555,
+      "layer": 3.2,
+      "path_length_mm": 0.7863027406794472,
+      "endpoint_chord_mm": 0.7863027406794472
+    },
+    {
+      "line": 40557,
+      "layer": 3.2,
+      "path_length_mm": 0.36417715469259965,
+      "endpoint_chord_mm": 0.36417715469259965
+    },
+    {
+      "line": 40558,
+      "layer": 3.2,
+      "path_length_mm": 0.12116517651535601,
+      "endpoint_chord_mm": 0.12116517651535601
+    },
+    {
+      "line": 40559,
+      "layer": 3.2,
+      "path_length_mm": 1.4043140674364762,
+      "endpoint_chord_mm": 1.4043140674364762
+    },
+    {
+      "line": 40560,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40561,
+      "layer": 3.2,
+      "path_length_mm": 2.1036427928714576,
+      "endpoint_chord_mm": 2.103642792871457
+    },
+    {
+      "line": 40562,
+      "layer": 3.2,
+      "path_length_mm": 0.581755962582253,
+      "endpoint_chord_mm": 0.581755962582253
+    },
+    {
+      "line": 40563,
+      "layer": 3.2,
+      "path_length_mm": 2.7350890296295622,
+      "endpoint_chord_mm": 2.7350890296295622
+    },
+    {
+      "line": 40564,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40565,
+      "layer": 3.2,
+      "path_length_mm": 2.7888291449997253,
+      "endpoint_chord_mm": 2.7888291449997253
+    },
+    {
+      "line": 40566,
+      "layer": 3.2,
+      "path_length_mm": 0.1487581930516732,
+      "endpoint_chord_mm": 0.1487581930516732
+    },
+    {
+      "line": 40567,
+      "layer": 3.2,
+      "path_length_mm": 0.3615812495138587,
+      "endpoint_chord_mm": 0.3615812495138587
+    },
+    {
+      "line": 40568,
+      "layer": 3.2,
+      "path_length_mm": 0.4572946078944146,
+      "endpoint_chord_mm": 0.4546042234735785
+    },
+    {
+      "line": 40569,
+      "layer": 3.2,
+      "path_length_mm": 3.4662374413764665,
+      "endpoint_chord_mm": 3.4662374413764665
+    },
+    {
+      "line": 40899,
+      "layer": 3.2,
+      "path_length_mm": 0.6335676759431471,
+      "endpoint_chord_mm": 0.6335676759431471
+    },
+    {
+      "line": 40900,
+      "layer": 3.2,
+      "path_length_mm": 0.5781323377912534,
+      "endpoint_chord_mm": 0.5781323377912534
+    },
+    {
+      "line": 40901,
+      "layer": 3.2,
+      "path_length_mm": 1.1596551211459383,
+      "endpoint_chord_mm": 1.1596551211459383
+    },
+    {
+      "line": 40902,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40903,
+      "layer": 3.2,
+      "path_length_mm": 2.117077702872533,
+      "endpoint_chord_mm": 2.117077702872533
+    },
+    {
+      "line": 40904,
+      "layer": 3.2,
+      "path_length_mm": 0.17383325343558548,
+      "endpoint_chord_mm": 0.17383325343558548
+    },
+    {
+      "line": 40905,
+      "layer": 3.2,
+      "path_length_mm": 0.6842726064953835,
+      "endpoint_chord_mm": 0.6842726064953835
+    },
+    {
+      "line": 40906,
+      "layer": 3.2,
+      "path_length_mm": 0.07605918747923274,
+      "endpoint_chord_mm": 0.07605918747923274
+    },
+    {
+      "line": 40907,
+      "layer": 3.2,
+      "path_length_mm": 3.1409683220306595,
+      "endpoint_chord_mm": 3.1409683220306595
+    },
+    {
+      "line": 40908,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40909,
+      "layer": 3.2,
+      "path_length_mm": 7.072482025427865,
+      "endpoint_chord_mm": 7.072482025427865
+    },
+    {
+      "line": 40910,
+      "layer": 3.2,
+      "path_length_mm": 0.47083861353972173,
+      "endpoint_chord_mm": 0.47083861353972173
+    },
+    {
+      "line": 40911,
+      "layer": 3.2,
+      "path_length_mm": 1.9784847737599511,
+      "endpoint_chord_mm": 1.9784847737599511
+    },
+    {
+      "line": 40912,
+      "layer": 3.2,
+      "path_length_mm": 0.07605918747921349,
+      "endpoint_chord_mm": 0.07605918747921349
+    },
+    {
+      "line": 40913,
+      "layer": 3.2,
+      "path_length_mm": 0.8573043080146094,
+      "endpoint_chord_mm": 0.8554583566720279
+    },
+    {
+      "line": 40914,
+      "layer": 3.2,
+      "path_length_mm": 2.8475190956339627,
+      "endpoint_chord_mm": 2.8475190956339627
+    },
+    {
+      "line": 40915,
+      "layer": 3.2,
+      "path_length_mm": 1.7570907773931244,
+      "endpoint_chord_mm": 1.7570907773931244
+    },
+    {
+      "line": 40916,
+      "layer": 3.2,
+      "path_length_mm": 4.041822361262302,
+      "endpoint_chord_mm": 4.041822361262302
+    },
+    {
+      "line": 40917,
+      "layer": 3.2,
+      "path_length_mm": 0.5781323377912692,
+      "endpoint_chord_mm": 0.5781323377912692
+    },
+    {
+      "line": 40918,
+      "layer": 3.2,
+      "path_length_mm": 9.152790175678664,
+      "endpoint_chord_mm": 9.152790175678664
+    },
+    {
+      "line": 40919,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40920,
+      "layer": 3.2,
+      "path_length_mm": 8.454875812216281,
+      "endpoint_chord_mm": 8.454875812216281
+    },
+    {
+      "line": 40921,
+      "layer": 3.2,
+      "path_length_mm": 0.10536128321162325,
+      "endpoint_chord_mm": 0.10536128321162326
+    },
+    {
+      "line": 40922,
+      "layer": 3.2,
+      "path_length_mm": 0.37758840024555573,
+      "endpoint_chord_mm": 0.37758840024555573
+    },
+    {
+      "line": 40923,
+      "layer": 3.2,
+      "path_length_mm": 7.839692914904259,
+      "endpoint_chord_mm": 7.839692914904259
+    },
+    {
+      "line": 40924,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40925,
+      "layer": 3.2,
+      "path_length_mm": 7.280371419096688,
+      "endpoint_chord_mm": 7.280371419096688
+    },
+    {
+      "line": 40926,
+      "layer": 3.2,
+      "path_length_mm": 0.4576199296359404,
+      "endpoint_chord_mm": 0.45761992963594045
+    },
+    {
+      "line": 40927,
+      "layer": 3.2,
+      "path_length_mm": 6.780446961668529,
+      "endpoint_chord_mm": 6.780446961668529
+    },
+    {
+      "line": 40928,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40929,
+      "layer": 3.2,
+      "path_length_mm": 6.356889962867059,
+      "endpoint_chord_mm": 6.356889962867059
+    },
+    {
+      "line": 40930,
+      "layer": 3.2,
+      "path_length_mm": 0.4623642307042007,
+      "endpoint_chord_mm": 0.4613946250228865
+    },
+    {
+      "line": 40931,
+      "layer": 3.2,
+      "path_length_mm": 5.980709155275818,
+      "endpoint_chord_mm": 5.980709155275818
+    },
+    {
+      "line": 40932,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40933,
+      "layer": 3.2,
+      "path_length_mm": 5.66321825466757,
+      "endpoint_chord_mm": 5.663218254667571
+    },
+    {
+      "line": 40934,
+      "layer": 3.2,
+      "path_length_mm": 0.5113755958197561,
+      "endpoint_chord_mm": 0.5113755958197561
+    },
+    {
+      "line": 40935,
+      "layer": 3.2,
+      "path_length_mm": 5.4418937880116784,
+      "endpoint_chord_mm": 5.4418937880116784
+    },
+    {
+      "line": 40936,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40937,
+      "layer": 3.2,
+      "path_length_mm": 5.307543499586236,
+      "endpoint_chord_mm": 5.307543499586236
+    },
+    {
+      "line": 40938,
+      "layer": 3.2,
+      "path_length_mm": 0.6439657847420125,
+      "endpoint_chord_mm": 0.6400124998779184
+    },
+    {
+      "line": 40939,
+      "layer": 3.2,
+      "path_length_mm": 5.302593799264654,
+      "endpoint_chord_mm": 5.302593799264654
+    },
+    {
+      "line": 40940,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40941,
+      "layer": 3.2,
+      "path_length_mm": 5.539474523815415,
+      "endpoint_chord_mm": 5.539474523815415
+    },
+    {
+      "line": 40942,
+      "layer": 3.2,
+      "path_length_mm": 0.23409399821438187,
+      "endpoint_chord_mm": 0.23409399821438187
+    },
+    {
+      "line": 40943,
+      "layer": 3.2,
+      "path_length_mm": 0.9945300397675332,
+      "endpoint_chord_mm": 0.9945300397675332
+    },
+    {
+      "line": 40944,
+      "layer": 3.2,
+      "path_length_mm": 0.07899999999999352,
+      "endpoint_chord_mm": 0.07899999999999352
+    },
+    {
+      "line": 40945,
+      "layer": 3.2,
+      "path_length_mm": 6.187184335382291,
+      "endpoint_chord_mm": 6.187184335382291
+    },
+    {
+      "line": 40946,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40947,
+      "layer": 3.2,
+      "path_length_mm": 5.27784501477639,
+      "endpoint_chord_mm": 5.27784501477639
+    },
+    {
+      "line": 40948,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 40949,
+      "layer": 3.2,
+      "path_length_mm": 4.367091480608109,
+      "endpoint_chord_mm": 4.367091480608109
+    },
+    {
+      "line": 40950,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40951,
+      "layer": 3.2,
+      "path_length_mm": 3.4577521600022076,
+      "endpoint_chord_mm": 3.4577521600022076
+    },
+    {
+      "line": 40952,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40953,
+      "layer": 3.2,
+      "path_length_mm": 2.5484128393963066,
+      "endpoint_chord_mm": 2.5484128393963066
+    },
+    {
+      "line": 40954,
+      "layer": 3.2,
+      "path_length_mm": 0.643999999999977,
+      "endpoint_chord_mm": 0.643999999999977
+    },
+    {
+      "line": 40955,
+      "layer": 3.2,
+      "path_length_mm": 1.637659305228056,
+      "endpoint_chord_mm": 1.637659305228056
+    },
+    {
+      "line": 40956,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 40957,
+      "layer": 3.2,
+      "path_length_mm": 1.0146984773813468,
+      "endpoint_chord_mm": 1.0146984773813468
+    },
+    {
+      "line": 41014,
+      "layer": 3.2,
+      "path_length_mm": 6.7832753887779145,
+      "endpoint_chord_mm": 6.7832753887779145
+    },
+    {
+      "line": 41015,
+      "layer": 3.2,
+      "path_length_mm": 0.038078865529323346,
+      "endpoint_chord_mm": 0.038078865529323346
+    },
+    {
+      "line": 41016,
+      "layer": 3.2,
+      "path_length_mm": 0.9942957306556244,
+      "endpoint_chord_mm": 0.9942957306556244
+    },
+    {
+      "line": 41017,
+      "layer": 3.2,
+      "path_length_mm": 0.20012246250733662,
+      "endpoint_chord_mm": 0.20012246250733662
+    },
+    {
+      "line": 41018,
+      "layer": 3.2,
+      "path_length_mm": 5.063591709448947,
+      "endpoint_chord_mm": 5.063591709448947
+    },
+    {
+      "line": 41019,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41020,
+      "layer": 3.2,
+      "path_length_mm": 4.614578854023416,
+      "endpoint_chord_mm": 4.614578854023416
+    },
+    {
+      "line": 41021,
+      "layer": 3.2,
+      "path_length_mm": 0.4377270839233048,
+      "endpoint_chord_mm": 0.4377270839233048
+    },
+    {
+      "line": 41022,
+      "layer": 3.2,
+      "path_length_mm": 0.08653323061113115,
+      "endpoint_chord_mm": 0.08653323061113115
+    },
+    {
+      "line": 41023,
+      "layer": 3.2,
+      "path_length_mm": 4.2497117549311545,
+      "endpoint_chord_mm": 4.2497117549311545
+    },
+    {
+      "line": 41024,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41025,
+      "layer": 3.2,
+      "path_length_mm": 4.188900571749112,
+      "endpoint_chord_mm": 4.188900571749112
+    },
+    {
+      "line": 41026,
+      "layer": 3.2,
+      "path_length_mm": 0.4708386135397146,
+      "endpoint_chord_mm": 0.4708386135397146
+    },
+    {
+      "line": 41027,
+      "layer": 3.2,
+      "path_length_mm": 3.6119014383008876,
+      "endpoint_chord_mm": 3.6119014383008876
+    },
+    {
+      "line": 41028,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41029,
+      "layer": 3.2,
+      "path_length_mm": 3.035609493989628,
+      "endpoint_chord_mm": 3.035609493989628
+    },
+    {
+      "line": 41030,
+      "layer": 3.2,
+      "path_length_mm": 0.4699723396116026,
+      "endpoint_chord_mm": 0.4699723396116026
+    },
+    {
+      "line": 41031,
+      "layer": 3.2,
+      "path_length_mm": 2.4586103798690964,
+      "endpoint_chord_mm": 2.4586103798690964
+    },
+    {
+      "line": 41032,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41033,
+      "layer": 3.2,
+      "path_length_mm": 1.8823182515185939,
+      "endpoint_chord_mm": 1.8823182515185939
+    },
+    {
+      "line": 41034,
+      "layer": 3.2,
+      "path_length_mm": 0.4708386135397146,
+      "endpoint_chord_mm": 0.4708386135397146
+    },
+    {
+      "line": 41035,
+      "layer": 3.2,
+      "path_length_mm": 1.3053191180703694,
+      "endpoint_chord_mm": 1.3053191180703694
+    },
+    {
+      "line": 41036,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41037,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41038,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41039,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41040,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41041,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41042,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41043,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41044,
+      "layer": 3.2,
+      "path_length_mm": 0.6429999999999865,
+      "endpoint_chord_mm": 0.6429999999999865
+    },
+    {
+      "line": 41045,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 41046,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41047,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076153,
+      "endpoint_chord_mm": 1.0295474734076153
+    },
+    {
+      "line": 41048,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41049,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41050,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41051,
+      "layer": 3.2,
+      "path_length_mm": 1.0295474734076053,
+      "endpoint_chord_mm": 1.0295474734076053
+    },
+    {
+      "line": 41052,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41053,
+      "layer": 3.2,
+      "path_length_mm": 6.465784407169794,
+      "endpoint_chord_mm": 6.465784407169794
+    },
+    {
+      "line": 41054,
+      "layer": 3.2,
+      "path_length_mm": 0.16704490414256606,
+      "endpoint_chord_mm": 0.16704490414256606
+    },
+    {
+      "line": 41055,
+      "layer": 3.2,
+      "path_length_mm": 0.3979158202434288,
+      "endpoint_chord_mm": 0.3979158202434288
+    },
+    {
+      "line": 41056,
+      "layer": 3.2,
+      "path_length_mm": 4.310522938113197,
+      "endpoint_chord_mm": 4.310522938113197
+    },
+    {
+      "line": 41057,
+      "layer": 3.2,
+      "path_length_mm": 1.7575906804486718,
+      "endpoint_chord_mm": 1.7575906804486718
+    },
+    {
+      "line": 41058,
+      "layer": 3.2,
+      "path_length_mm": 3.0780358997256636,
+      "endpoint_chord_mm": 3.0780358997256636
+    },
+    {
+      "line": 41059,
+      "layer": 3.2,
+      "path_length_mm": 0.3186110481449198,
+      "endpoint_chord_mm": 0.3186110481449198
+    },
+    {
+      "line": 41060,
+      "layer": 3.2,
+      "path_length_mm": 0.5359048422994432,
+      "endpoint_chord_mm": 0.5359048422994432
+    },
+    {
+      "line": 41061,
+      "layer": 3.2,
+      "path_length_mm": 2.0994001524245025,
+      "endpoint_chord_mm": 2.0994001524245025
+    },
+    {
+      "line": 41062,
+      "layer": 3.2,
+      "path_length_mm": 0.3346475758167152,
+      "endpoint_chord_mm": 0.3346475758167152
+    },
+    {
+      "line": 41063,
+      "layer": 3.2,
+      "path_length_mm": 0.38128860460286484,
+      "endpoint_chord_mm": 0.3812886046028649
+    },
+    {
+      "line": 41064,
+      "layer": 3.2,
+      "path_length_mm": 9.735446163376386,
+      "endpoint_chord_mm": 9.735446163376386
+    },
+    {
+      "line": 41065,
+      "layer": 3.2,
+      "path_length_mm": 0.6429999999999865,
+      "endpoint_chord_mm": 0.6429999999999865
+    },
+    {
+      "line": 41066,
+      "layer": 3.2,
+      "path_length_mm": 9.158447029928173,
+      "endpoint_chord_mm": 9.158447029928173
+    },
+    {
+      "line": 41067,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953770584,
+      "endpoint_chord_mm": 0.47133851953770584
+    },
+    {
+      "line": 41068,
+      "layer": 3.2,
+      "path_length_mm": 8.581447896479938,
+      "endpoint_chord_mm": 8.581447896479938
+    },
+    {
+      "line": 41069,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41070,
+      "layer": 3.2,
+      "path_length_mm": 8.004448763031712,
+      "endpoint_chord_mm": 8.004448763031712
+    },
+    {
+      "line": 41071,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953771294,
+      "endpoint_chord_mm": 0.47133851953771294
+    },
+    {
+      "line": 41072,
+      "layer": 3.2,
+      "path_length_mm": 7.428156770020403,
+      "endpoint_chord_mm": 7.428156770020403
+    },
+    {
+      "line": 41073,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41074,
+      "layer": 3.2,
+      "path_length_mm": 6.850450496135264,
+      "endpoint_chord_mm": 6.850450496135264
+    },
+    {
+      "line": 41075,
+      "layer": 3.2,
+      "path_length_mm": 0.47047316607857576,
+      "endpoint_chord_mm": 0.47047316607857576
+    },
+    {
+      "line": 41076,
+      "layer": 3.2,
+      "path_length_mm": 6.27486557624942,
+      "endpoint_chord_mm": 6.27486557624942
+    },
+    {
+      "line": 41077,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41078,
+      "layer": 3.2,
+      "path_length_mm": 5.697866442801195,
+      "endpoint_chord_mm": 5.697866442801195
+    },
+    {
+      "line": 41079,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953770584,
+      "endpoint_chord_mm": 0.47133851953770584
+    },
+    {
+      "line": 41080,
+      "layer": 3.2,
+      "path_length_mm": 5.12086730935297,
+      "endpoint_chord_mm": 5.12086730935297
+    },
+    {
+      "line": 41081,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41082,
+      "layer": 3.2,
+      "path_length_mm": 4.5438681759047554,
+      "endpoint_chord_mm": 4.5438681759047554
+    },
+    {
+      "line": 41083,
+      "layer": 3.2,
+      "path_length_mm": 0.47133851953770584,
+      "endpoint_chord_mm": 0.47133851953770584
+    },
+    {
+      "line": 41084,
+      "layer": 3.2,
+      "path_length_mm": 3.9675762122484737,
+      "endpoint_chord_mm": 3.9675762122484737
+    },
+    {
+      "line": 41085,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41086,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 41087,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41088,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 41089,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41090,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 41091,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41092,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791827
+    },
+    {
+      "line": 41093,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41094,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791827
+    },
+    {
+      "line": 41095,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41096,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791823,
+      "endpoint_chord_mm": 3.5751318856791827
+    },
+    {
+      "line": 41097,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41098,
+      "layer": 3.2,
+      "path_length_mm": 3.5751318856791725,
+      "endpoint_chord_mm": 3.5751318856791725
+    },
+    {
+      "line": 41099,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41100,
+      "layer": 3.2,
+      "path_length_mm": 3.862217238840915,
+      "endpoint_chord_mm": 3.862217238840915
+    },
+    {
+      "line": 41112,
+      "layer": 3.2,
+      "path_length_mm": 5.996972652930806,
+      "endpoint_chord_mm": 5.996972652930806
+    },
+    {
+      "line": 41113,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41114,
+      "layer": 3.2,
+      "path_length_mm": 5.1746074247231535,
+      "endpoint_chord_mm": 5.1746074247231535
+    },
+    {
+      "line": 41115,
+      "layer": 3.2,
+      "path_length_mm": 0.465687479246854,
+      "endpoint_chord_mm": 0.4629135988497315
+    },
+    {
+      "line": 41116,
+      "layer": 3.2,
+      "path_length_mm": 4.632963630334264,
+      "endpoint_chord_mm": 4.632963630334264
+    },
+    {
+      "line": 41117,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41118,
+      "layer": 3.2,
+      "path_length_mm": 4.139403097066059,
+      "endpoint_chord_mm": 4.139403097066059
+    },
+    {
+      "line": 41119,
+      "layer": 3.2,
+      "path_length_mm": 0.4568468014553672,
+      "endpoint_chord_mm": 0.4568468014553672
+    },
+    {
+      "line": 41120,
+      "layer": 3.2,
+      "path_length_mm": 3.728574124246423,
+      "endpoint_chord_mm": 3.728574124246423
+    },
+    {
+      "line": 41121,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41122,
+      "layer": 3.2,
+      "path_length_mm": 3.3700709191350793,
+      "endpoint_chord_mm": 3.3700709191350793
+    },
+    {
+      "line": 41123,
+      "layer": 3.2,
+      "path_length_mm": 0.4789665959124843,
+      "endpoint_chord_mm": 0.4789665959124843
+    },
+    {
+      "line": 41124,
+      "layer": 3.2,
+      "path_length_mm": 3.066015003224869,
+      "endpoint_chord_mm": 3.066015003224869
+    },
+    {
+      "line": 41125,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41126,
+      "layer": 3.2,
+      "path_length_mm": 2.8538829688688967,
+      "endpoint_chord_mm": 2.8538829688688967
+    },
+    {
+      "line": 41127,
+      "layer": 3.2,
+      "path_length_mm": 0.10852188719333605,
+      "endpoint_chord_mm": 0.10852188719333605
+    },
+    {
+      "line": 41128,
+      "layer": 3.2,
+      "path_length_mm": 0.4642843956025113,
+      "endpoint_chord_mm": 0.4642843956025113
+    },
+    {
+      "line": 41129,
+      "layer": 3.2,
+      "path_length_mm": 2.744988524566181,
+      "endpoint_chord_mm": 2.744988524566181
+    },
+    {
+      "line": 41130,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41131,
+      "layer": 3.2,
+      "path_length_mm": 2.776808419751007,
+      "endpoint_chord_mm": 2.776808419751007
+    },
+    {
+      "line": 41132,
+      "layer": 3.2,
+      "path_length_mm": 0.23721720005091249,
+      "endpoint_chord_mm": 0.23721720005091249
+    },
+    {
+      "line": 41133,
+      "layer": 3.2,
+      "path_length_mm": 0.6456725176124626,
+      "endpoint_chord_mm": 0.6456725176124626
+    },
+    {
+      "line": 41134,
+      "layer": 3.2,
+      "path_length_mm": 3.074500284599118,
+      "endpoint_chord_mm": 3.074500284599118
+    },
+    {
+      "line": 41135,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41136,
+      "layer": 3.2,
+      "path_length_mm": 3.457752160002218,
+      "endpoint_chord_mm": 3.457752160002218
+    },
+    {
+      "line": 41137,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41138,
+      "layer": 3.2,
+      "path_length_mm": 2.5484128393963164,
+      "endpoint_chord_mm": 2.548412839396317
+    },
+    {
+      "line": 41139,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41140,
+      "layer": 3.2,
+      "path_length_mm": 1.637659305228036,
+      "endpoint_chord_mm": 1.637659305228036
+    },
+    {
+      "line": 41141,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41142,
+      "layer": 3.2,
+      "path_length_mm": 1.0146984773813368,
+      "endpoint_chord_mm": 1.0146984773813368
+    },
+    {
+      "line": 41188,
+      "layer": 3.2,
+      "path_length_mm": 0.267286363288505,
+      "endpoint_chord_mm": 0.267286363288505
+    },
+    {
+      "line": 41189,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41190,
+      "layer": 3.2,
+      "path_length_mm": 0.649124025129245,
+      "endpoint_chord_mm": 0.649124025129245
+    },
+    {
+      "line": 41192,
+      "layer": 3.2,
+      "path_length_mm": 0.4751178801097672,
+      "endpoint_chord_mm": 0.4751178801097672
+    },
+    {
+      "line": 41193,
+      "layer": 3.2,
+      "path_length_mm": 1.2416795077635676,
+      "endpoint_chord_mm": 1.2416795077635676
+    },
+    {
+      "line": 41194,
+      "layer": 3.2,
+      "path_length_mm": 0.6440000000000055,
+      "endpoint_chord_mm": 0.6440000000000055
+    },
+    {
+      "line": 41195,
+      "layer": 3.2,
+      "path_length_mm": 1.9403010075758862,
+      "endpoint_chord_mm": 1.9403010075758862
+    },
+    {
+      "line": 41196,
+      "layer": 3.2,
+      "path_length_mm": 0.16704490414256606,
+      "endpoint_chord_mm": 0.16704490414256606
+    },
+    {
+      "line": 41197,
+      "layer": 3.2,
+      "path_length_mm": 0.39791582024342737,
+      "endpoint_chord_mm": 0.39791582024342737
+    },
+    {
+      "line": 41198,
+      "layer": 3.2,
+      "path_length_mm": 2.7266037482553336,
+      "endpoint_chord_mm": 2.7266037482553336
+    },
+    {
+      "line": 41199,
+      "layer": 3.2,
+      "path_length_mm": 0.6430000000000007,
+      "endpoint_chord_mm": 0.6430000000000007
+    },
+    {
+      "line": 41200,
+      "layer": 3.2,
+      "path_length_mm": 3.6465497391369808,
+      "endpoint_chord_mm": 3.6465497391369808
+    },
+    {
+      "line": 41201,
+      "layer": 3.2,
+      "path_length_mm": 0.31861104814490565,
+      "endpoint_chord_mm": 0.31861104814490565
+    },
+    {
+      "line": 41202,
+      "layer": 3.2,
+      "path_length_mm": 0.5359048422994569,
+      "endpoint_chord_mm": 0.5359048422994569
+    },
+    {
+      "line": 41203,
+      "layer": 3.2,
+      "path_length_mm": 5.107432329458697,
+      "endpoint_chord_mm": 5.107432329458697
+    }
+  ],
+  "exact_datum_checks": [],
+  "pending_review": [],
+  "layer_image": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/y-keeper-head-clearance-back-down-unsupported/layer-path-review.png",
+  "resolved_process": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "filament_settings_id": [
+      "Generic PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.2",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "0",
+    "support_type": "tree(auto)",
+    "support_top_z_distance": "0.2",
+    "support_object_xy_distance": "0.35"
+  },
+  "method": "Actual G-code positive extrusion with .00125 mm maximum arc sagitta, width/2+.002 mm circumscribed footprint and full layer slab; explicit 3MF affine maps. Feature box intersections are conservative. Core checks are finite declared pick paths, not entire-hole dimensional acceptance. Exact X54 face disambiguates only that specific datum.",
+  "limits": [
+    "No physical support separation/grip/debris or dimensional/strength proof.",
+    "Bridge path length is not unsupported span.",
+    "Open channels require clipping tree branches before gibs, nuts, keeper, hose or host installation.",
+    "Textured PEI and Generic PETG remain analysis assumptions."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false,
+  "auditor_sha256": "51253cf850e231d702b3a642cedd1ece1468a3592d3df36e05cbf0031ddceb4b",
+  "auditor_archived_source": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/first-probe-definition/review.py"
+}

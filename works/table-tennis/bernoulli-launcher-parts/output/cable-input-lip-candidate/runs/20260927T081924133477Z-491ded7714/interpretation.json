@@ -1,0 +1,1291 @@
+{
+  "candidate_sha256": "491ded77149a2147f010092f7f715f59ef50a2dd714abb56677d596fb6544c9d",
+  "native_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/native-report.json",
+  "mesh_stats": {
+    "body": {
+      "triangles": 6448,
+      "signed_volume_mm3": 266916.2474022733,
+      "local_bounds": [
+        [
+          -79.00000000000001,
+          -124.59221484506969,
+          -12.0
+        ],
+        [
+          89.23687578574231,
+          71.00000000000001,
+          33.0
+        ]
+      ],
+      "guide_radial_interval": [
+        6.926518140321669,
+        134.30825137723158
+      ],
+      "guide_radius_penetration_bound": 52.32348185967833
+    },
+    "lever": {
+      "triangles": 4598,
+      "signed_volume_mm3": 13176.058804217551,
+      "local_bounds": [
+        [
+          -21.996649295091633,
+          -47.000000000000014,
+          -3.5
+        ],
+        [
+          12.000000000000002,
+          73.00000000000001,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        6.81417644859535,
+        79.00802540473798
+      ],
+      "guide_radius_penetration_bound": 52.43582355140465
+    },
+    "terminal-cap": {
+      "triangles": 3468,
+      "signed_volume_mm3": 1189.1665326274654,
+      "local_bounds": [
+        [
+          -6.999999999999951,
+          47.000000000000014,
+          3.0999999999999943
+        ],
+        [
+          7.0000000000000675,
+          73.00000000000001,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        54.20447209169155,
+        79.00802540473798
+      ],
+      "guide_radius_penetration_bound": 5.0455279083084505
+    },
+    "cover": {
+      "triangles": 2938,
+      "signed_volume_mm3": 24290.089582973964,
+      "local_bounds": [
+        [
+          -38.00000000000001,
+          -12.0,
+          8.0
+        ],
+        [
+          82.00000000000003,
+          66.99910411983728,
+          14.0
+        ]
+      ],
+      "guide_radial_interval": [
+        12.158451866469443,
+        112.72630220586453
+      ],
+      "guide_radius_penetration_bound": 47.09154813353056
+    },
+    "motion-0": {
+      "triangles": 1070,
+      "signed_volume_mm3": 8.86757334228605e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-1": {
+      "triangles": 1156,
+      "signed_volume_mm3": 7.048583938740194e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-2": {
+      "triangles": 1150,
+      "signed_volume_mm3": -6.6696278130014735e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-3": {
+      "triangles": 1160,
+      "signed_volume_mm3": 2.5996390225676198e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-4": {
+      "triangles": 1166,
+      "signed_volume_mm3": -9.625485593763491e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-5": {
+      "triangles": 1164,
+      "signed_volume_mm3": 1.3263464400855204e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-6": {
+      "triangles": 1186,
+      "signed_volume_mm3": -3.3120765389564135e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-7": {
+      "triangles": 1148,
+      "signed_volume_mm3": -3.512923285597935e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-8": {
+      "triangles": 1146,
+      "signed_volume_mm3": -2.902803923158596e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-9": {
+      "triangles": 1136,
+      "signed_volume_mm3": 1.8947806286936004e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-10": {
+      "triangles": 1222,
+      "signed_volume_mm3": 4.964325247177233e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-11": {
+      "triangles": 1216,
+      "signed_volume_mm3": 1.337715123857682e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-12": {
+      "triangles": 1212,
+      "signed_volume_mm3": 3.456079866737127e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "motion-13": {
+      "triangles": 1168,
+      "signed_volume_mm3": 1.6067739731321733e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-13": {
+      "triangles": 8,
+      "signed_volume_mm3": 5.3015369871900475e-12,
+      "local_bounds": [
+        [
+          -26.93997378685544,
+          59.21732896500628,
+          1.9999893493986463
+        ],
+        [
+          -26.832726384543427,
+          59.2207961228162,
+          2.0000106506013537
+        ]
+      ],
+      "guide_radial_interval": [
+        59.24999759685939,
+        59.249999999585434
+      ],
+      "guide_radius_penetration_bound": 2.4031406127278387e-06
+    },
+    "motion-14": {
+      "triangles": 1194,
+      "signed_volume_mm3": -1.422980252148894e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-14": {
+      "triangles": 20,
+      "signed_volume_mm3": 8.398615136684384e-12,
+      "local_bounds": [
+        [
+          -26.944999325505993,
+          59.20610256780558,
+          1.9999582611959994
+        ],
+        [
+          -26.519789872197936,
+          59.22094966691246,
+          2.0000417388040006
+        ]
+      ],
+      "guide_radial_interval": [
+        59.24999457298427,
+        59.250000003336
+      ],
+      "guide_radius_penetration_bound": 5.427015729253526e-06
+    },
+    "motion-15": {
+      "triangles": 1210,
+      "signed_volume_mm3": -1.1501318416170156e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-15": {
+      "triangles": 32,
+      "signed_volume_mm3": -1.345886365318923e-12,
+      "local_bounds": [
+        [
+          -26.945566594044283,
+          59.19349337456299,
+          1.9999603404955621
+        ],
+        [
+          -26.212997040332343,
+          59.22096699853423,
+          2.000039659504438
+        ]
+      ],
+      "guide_radial_interval": [
+        59.249994544657824,
+        59.250000003336
+      ],
+      "guide_radius_penetration_bound": 5.455342176219347e-06
+    },
+    "motion-16": {
+      "triangles": 1230,
+      "signed_volume_mm3": 2.9937533933358886e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-16": {
+      "triangles": 44,
+      "signed_volume_mm3": 1.1499542059330755e-11,
+      "local_bounds": [
+        [
+          -26.945433743065884,
+          59.179149333656106,
+          1.999958875874995
+        ],
+        [
+          -25.90335511500901,
+          59.220962939569645,
+          2.000041124125005
+        ]
+      ],
+      "guide_radial_interval": [
+        59.2499945303925,
+        59.250000003336
+      ],
+      "guide_radius_penetration_bound": 5.469607501140672e-06
+    },
+    "motion-17": {
+      "triangles": 1274,
+      "signed_volume_mm3": -1.0800249583553523e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-17": {
+      "triangles": 56,
+      "signed_volume_mm3": 5.5808394942384133e-11,
+      "local_bounds": [
+        [
+          -26.944129972848522,
+          59.163013486409326,
+          1.9999580188551107
+        ],
+        [
+          -25.59066557972977,
+          59.220923105785914,
+          2.0000419811448893
+        ]
+      ],
+      "guide_radial_interval": [
+        59.249994473809956,
+        59.25000000336142
+      ],
+      "guide_radius_penetration_bound": 5.526190044236046e-06
+    },
+    "motion-18": {
+      "triangles": 1254,
+      "signed_volume_mm3": 3.243864436323444e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-18": {
+      "triangles": 68,
+      "signed_volume_mm3": 2.0682714800083584e-11,
+      "local_bounds": [
+        [
+          -26.940586249895226,
+          59.14536366270765,
+          1.9999735944704327
+        ],
+        [
+          -25.280355765615198,
+          59.22081483525492,
+          2.0000264055295673
+        ]
+      ],
+      "guide_radial_interval": [
+        59.24999526017345,
+        59.25000000336142
+      ],
+      "guide_radius_penetration_bound": 4.7398265508036275e-06
+    },
+    "motion-19": {
+      "triangles": 1276,
+      "signed_volume_mm3": -1.1596057447604835e-11,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-19": {
+      "triangles": 84,
+      "signed_volume_mm3": -5.50540354045855e-11,
+      "local_bounds": [
+        [
+          -26.9426762769722,
+          59.11931670156034,
+          1.999957736413151
+        ],
+        [
+          -24.86702594213096,
+          59.220878691358905,
+          2.000042263586849
+        ]
+      ],
+      "guide_radial_interval": [
+        59.249994435928045,
+        59.25000000336142
+      ],
+      "guide_radius_penetration_bound": 5.564071955177496e-06
+    },
+    "motion-20": {
+      "triangles": 1250,
+      "signed_volume_mm3": 2.6526928801710406e-12,
+      "local_bounds": [
+        [
+          -8.000000000000002,
+          -8.000000000000002,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-20": {
+      "triangles": 96,
+      "signed_volume_mm3": 2.7984725647911546e-11,
+      "local_bounds": [
+        [
+          -26.943020003335786,
+          59.097978196351114,
+          1.9999577882995965
+        ],
+        [
+          -24.55842634938046,
+          59.22088919314937,
+          2.0000422117004035
+        ]
+      ],
+      "guide_radial_interval": [
+        59.24999444453829,
+        59.25000000336142
+      ],
+      "guide_radius_penetration_bound": 5.555461711992393e-06
+    },
+    "motion-22": {
+      "triangles": 1574,
+      "signed_volume_mm3": 4.453618547391746,
+      "local_bounds": [
+        [
+          -18.683059274414433,
+          -25.500000000000007,
+          -3.5
+        ],
+        [
+          8.000000000000002,
+          8.000000000000002,
+          7.5
+        ]
+      ],
+      "guide_radial_interval": [
+        20.799999999999997,
+        36.800000000000004
+      ],
+      "guide_radius_penetration_bound": 38.45
+    },
+    "core-22": {
+      "triangles": 124,
+      "signed_volume_mm3": 9.295349675160954e-11,
+      "local_bounds": [
+        [
+          -26.940290981116057,
+          59.04168236868117,
+          1.999970599864767
+        ],
+        [
+          -23.835964774937587,
+          59.22080581397759,
+          2.000029400135233
+        ]
+      ],
+      "guide_radial_interval": [
+        59.249994958986264,
+        59.25000000336142
+      ],
+      "guide_radius_penetration_bound": 5.041013736217792e-06
+    },
+    "cap-hardware-0": {
+      "triangles": 570,
+      "signed_volume_mm3": -6.518045362705986e-12,
+      "local_bounds": [
+        [
+          -0.7499999999999508,
+          50.824573519457076,
+          -0.5999999999999943
+        ],
+        [
+          4.750000000000074,
+          69.17542648054295,
+          4.5
+        ]
+      ],
+      "guide_radial_interval": [
+        59.416268437827924,
+        75.7223852553854
+      ],
+      "guide_radius_penetration_bound": 0
+    },
+    "cap-hardware-10": {
+      "triangles": 562,
+      "signed_volume_mm3": -1.975119327350209e-10,
+      "local_bounds": [
+        [
+          7.987862057327376,
+          49.78198585481621,
+          -0.5999999999999943
+        ],
+        [
+          15.938001234879852,
+          67.87664351728982,
+          4.5
+        ]
+      ],
+      "guide_radial_interval": [
+        63.38484525332596,
+        79.9734207099006
+      ],
+      "guide_radius_penetration_bound": 0
+    },
+    "cap-hardware-20": {
+      "triangles": 552,
+      "signed_volume_mm3": 6.017823276730876e-11,
+      "local_bounds": [
+        [
+          16.65707487790236,
+          47.29148047563804,
+          -0.5999999999999943
+        ],
+        [
+          26.874216597490303,
+          64.60591298142336,
+          4.5
+        ]
+      ],
+      "guide_radial_interval": [
+        67.04610058873293,
+        83.94926853182118
+      ],
+      "guide_radius_penetration_bound": 0
+    },
+    "cap-hardware-22": {
+      "triangles": 556,
+      "signed_volume_mm3": 2.135038812411949e-10,
+      "local_bounds": [
+        [
+          18.368637342960227,
+          46.614468521157626,
+          -0.5999999999999943
+        ],
+        [
+          29.01249624714703,
+          63.70791442861558,
+          4.5
+        ]
+      ],
+      "guide_radial_interval": [
+        67.74132724671811,
+        84.70845754612063
+      ],
+      "guide_radius_penetration_bound": 0
+    },
+    "terminal-cap-removal": {
+      "triangles": 554,
+      "signed_volume_mm3": -3.2256745422879857e-10,
+      "local_bounds": [
+        [
+          -6.999999999999947,
+          47.23851921597653,
+          3.0999999999999943
+        ],
+        [
+          6.999999999999992,
+          73.00000000000001,
+          3.0999999999999943
+        ]
+      ],
+      "guide_radial_interval": [
+        54.40445051960482,
+        79.00802540473795
+      ],
+      "guide_radius_penetration_bound": 4.845549480395178
+    },
+    "cover-removal": {
+      "triangles": 674,
+      "signed_volume_mm3": -3.668295297150811e-11,
+      "local_bounds": [
+        [
+          -37.0,
+          13.00000000000001,
+          8.0
+        ],
+        [
+          80.97336288664224,
+          27.000000000000007,
+          8.0
+        ]
+      ],
+      "guide_radial_interval": [
+        13.895035249606856,
+        111.72643737219008
+      ],
+      "guide_radius_penetration_bound": 45.354964750393144
+    },
+    "print-mating": {
+      "triangles": 382,
+      "signed_volume_mm3": 2.255546860396862e-10,
+      "local_bounds": [
+        [
+          -6.999999999999951,
+          47.000000000000014,
+          3.0999999999999943
+        ],
+        [
+          7.000000000000057,
+          73.00000000000001,
+          3.0999999999999943
+        ]
+      ],
+      "guide_radial_interval": [
+        54.541377130106994,
+        78.47572873188248
+      ],
+      "guide_radius_penetration_bound": 4.708622869893006
+    }
+  },
+  "supplement": [
+    {
+      "name": "core-except-analytic-contact-13",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-13.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-13.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-14",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-14.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-14.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-15.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-15.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-16",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-16.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-16.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-17",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-17.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-17.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-18",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-18.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-18.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-19",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-19.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-19.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-20.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "core-except-analytic-contact-22",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-22.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/core-except-analytic-contact-22.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "mesh": null
+    },
+    {
+      "name": "ball-exit-axis0-sign-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis0-sign-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis0-sign-1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 4838,
+        "signed_volume_mm3": 32.95603399261821,
+        "local_bounds": [
+          [
+            -6.242880945209925,
+            57.50237944604536,
+            -0.497620553954647
+          ],
+          [
+            -2.1964110752266963,
+            62.497620553954654,
+            4.497620553954647
+          ]
+        ],
+        "guide_radial_interval": [
+          62.490825736600364,
+          67.4187489745721
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    },
+    {
+      "name": "ball-exit-axis0-sign1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis0-sign1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis0-sign1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 5278,
+        "signed_volume_mm3": 58.60573621037664,
+        "local_bounds": [
+          [
+            2.196411075226752,
+            57.50237944604536,
+            -0.497620553954647
+          ],
+          [
+            6.497620553954643,
+            62.497620553954654,
+            4.497620553954647
+          ]
+        ],
+        "guide_radial_interval": [
+          65.88319825580085,
+          70.877079542331
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    },
+    {
+      "name": "ball-exit-axis1-sign-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis1-sign-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis1-sign-1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 4892,
+        "signed_volume_mm3": 50.54143801637425,
+        "local_bounds": [
+          [
+            -2.497620553954646,
+            53.50237944604537,
+            -0.497620553954647
+          ],
+          [
+            2.497620553954641,
+            57.80358892477331,
+            4.497620553954647
+          ]
+        ],
+        "guide_radial_interval": [
+          60.476064272998094,
+          65.36799684014389
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    },
+    {
+      "name": "ball-exit-axis1-sign1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis1-sign1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis1-sign1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 4892,
+        "signed_volume_mm3": 50.54143801701624,
+        "local_bounds": [
+          [
+            -2.497620553954641,
+            62.19641107522672,
+            -0.497620553954647
+          ],
+          [
+            2.497620553954651,
+            66.49762055395465,
+            4.497620553954647
+          ]
+        ],
+        "guide_radial_interval": [
+          67.83455914983125,
+          72.5862656804178
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    },
+    {
+      "name": "ball-exit-axis2-sign-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis2-sign-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis2-sign-1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 3744,
+        "signed_volume_mm3": 52.08253105776771,
+        "local_bounds": [
+          [
+            -2.497620553954646,
+            57.50237944604536,
+            -3.5
+          ],
+          [
+            2.497620553954646,
+            62.497620553954654,
+            -0.19902086539916297
+          ]
+        ],
+        "guide_radial_interval": [
+          64.0565800390163,
+          69.05150809771047
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    },
+    {
+      "name": "ball-exit-axis2-sign1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis2-sign1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/supplement/ball-exit-axis2-sign1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "mesh": {
+        "triangles": 3740,
+        "signed_volume_mm3": 52.082531057950824,
+        "local_bounds": [
+          [
+            -2.497620553954646,
+            57.50237944604536,
+            4.199020865399163
+          ],
+          [
+            2.497620553954646,
+            62.497620553954654,
+            7.5
+          ]
+        ],
+        "guide_radial_interval": [
+          64.0565800390163,
+          69.05150809771047
+        ],
+        "guide_radius_penetration_bound": 0
+      }
+    }
+  ],
+  "guide_contact": {
+    "centerline_R": 60,
+    "wire_radius": 0.75,
+    "guide_max_R": 59.25,
+    "guide_facet_step_deg": 0.1,
+    "guide_sagitta_mm": 2.2560726221532157e-05,
+    "wire_arc_step_deg_at_most": 0.05,
+    "wire_inner_surface_chord_sagitta_bound": 5.6401818250839675e-06,
+    "interpretation": "The analytic circular core inner boundary and guide have zero-volume intentional contact. The displayed wire torus has inscribed angular chords which can dip inside that radius. This is a local construction bound, not a global collision tolerance; all other printed geometry is checked separately."
+  },
+  "status": "LIMITED_DIAGNOSTIC_NOT_RELEASED"
+}

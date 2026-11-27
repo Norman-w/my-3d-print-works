@@ -1,0 +1,2749 @@
+{
+  "parts": [
+    {
+      "id": "right-support",
+      "name": "右导向支座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "right-support",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "right-support",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"right-support\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+      "sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+      "bytes": 868494,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3616,
+        "uniqueVertexCount": 1762,
+        "bounds": {
+          "min": [
+            35.5,
+            -19.0,
+            -50.0
+          ],
+          "max": [
+            75.0,
+            28.0,
+            21.0
+          ],
+          "size": [
+            39.5,
+            47.0,
+            71.0
+          ]
+        },
+        "surfaceArea": 17352.861607852865,
+        "signedVolume": 26531.268413711077,
+        "volume": 26531.268413711077,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 1762
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/right-support"
+    },
+    {
+      "id": "left-support",
+      "name": "左导向及弹簧座",
+      "role": "printed",
+      "group": "feeder",
+      "family": "left-support",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "left-support",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"left-support\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+      "sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+      "bytes": 738660,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3024,
+        "uniqueVertexCount": 1480,
+        "bounds": {
+          "min": [
+            -76.0,
+            -19.0,
+            -50.0
+          ],
+          "max": [
+            -35.5,
+            24.200000762939453,
+            21.0
+          ],
+          "size": [
+            40.5,
+            43.20000076293945,
+            71.0
+          ]
+        },
+        "surfaceArea": 15567.138325059026,
+        "signedVolume": 22887.677958862612,
+        "volume": 22887.677958862612,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 1480
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/left-support"
+    },
+    {
+      "id": "y-cap-right",
+      "name": "右公共架Y调节盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-cap",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-cap\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+      "sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+      "bytes": 224390,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 908,
+        "uniqueVertexCount": 448,
+        "bounds": {
+          "min": [
+            51.5,
+            24.200000762939453,
+            -35.0
+          ],
+          "max": [
+            67.0,
+            39.0,
+            5.0
+          ],
+          "size": [
+            15.5,
+            14.799999237060547,
+            40.0
+          ]
+        },
+        "surfaceArea": 3467.366600700075,
+        "signedVolume": 5877.924178662276,
+        "volume": 5877.924178662276,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 448
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-cap-right"
+    },
+    {
+      "id": "frame-y-gib-right",
+      "name": "右公共架Y压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "frame-y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "frame-y-gib",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"frame-y-gib\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+      "sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+      "bytes": 14099,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 68,
+        "uniqueVertexCount": 36,
+        "bounds": {
+          "min": [
+            53.5,
+            24.099998474121094,
+            -33.5
+          ],
+          "max": [
+            60.5,
+            27.099998474121094,
+            3.5
+          ],
+          "size": [
+            7.0,
+            3.0,
+            37.0
+          ]
+        },
+        "surfaceArea": 616.5999946594238,
+        "signedVolume": 443.79998397827114,
+        "volume": 443.79998397827114,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 36
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/frame-y-gib-right"
+    },
+    {
+      "id": "y-keeper-right-front",
+      "name": "右前Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-keeper\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+      "sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+      "bytes": 131218,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 556,
+        "uniqueVertexCount": 274,
+        "bounds": {
+          "min": [
+            43.79999923706055,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            60.0,
+            -11.049999237060547,
+            14.0
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1463.7795477635632,
+        "signedVolume": 1738.2735554444935,
+        "volume": 1738.2735554444935,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 274
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-keeper-right-front"
+    },
+    {
+      "id": "y-keeper-right-rear",
+      "name": "右后Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": 1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-keeper\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+      "sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+      "bytes": 120718,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 512,
+        "uniqueVertexCount": 252,
+        "bounds": {
+          "min": [
+            43.79999923706055,
+            -17.5,
+            -42.5
+          ],
+          "max": [
+            60.0,
+            -11.049999237060547,
+            -14.5
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1467.7598331966283,
+        "signedVolume": 1749.066206253657,
+        "volume": 1749.066206253657,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 252
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-keeper-right-rear"
+    },
+    {
+      "id": "y-cap-left",
+      "name": "左公共架Y调节盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-cap",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-cap",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-cap\"",
+        "-D",
+        "cse_side=-1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+      "sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+      "bytes": 227144,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 908,
+        "uniqueVertexCount": 448,
+        "bounds": {
+          "min": [
+            -67.0,
+            24.200000762939453,
+            -35.0
+          ],
+          "max": [
+            -51.5,
+            39.0,
+            5.0
+          ],
+          "size": [
+            15.5,
+            14.799999237060547,
+            40.0
+          ]
+        },
+        "surfaceArea": 3467.366600700075,
+        "signedVolume": 5877.92417866227,
+        "volume": 5877.92417866227,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 448
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-cap-left"
+    },
+    {
+      "id": "frame-y-gib-left",
+      "name": "左公共架Y压条",
+      "role": "printed",
+      "group": "feeder",
+      "family": "frame-y-gib",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "frame-y-gib",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"frame-y-gib\"",
+        "-D",
+        "cse_side=-1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+      "sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+      "bytes": 14305,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 68,
+        "uniqueVertexCount": 36,
+        "bounds": {
+          "min": [
+            -60.5,
+            24.099998474121094,
+            -33.5
+          ],
+          "max": [
+            -53.5,
+            27.099998474121094,
+            3.5
+          ],
+          "size": [
+            7.0,
+            3.0,
+            37.0
+          ]
+        },
+        "surfaceArea": 616.5999946594238,
+        "signedVolume": 443.7999839782715,
+        "volume": 443.7999839782715,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 36
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/frame-y-gib-left"
+    },
+    {
+      "id": "y-keeper-left-front",
+      "name": "左前Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": -1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-keeper\"",
+        "-D",
+        "cse_side=-1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+      "sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+      "bytes": 132807,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 556,
+        "uniqueVertexCount": 274,
+        "bounds": {
+          "min": [
+            -60.0,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            -43.79999923706055,
+            -11.049999237060547,
+            14.0
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1463.7795477635632,
+        "signedVolume": 1738.2735554444944,
+        "volume": 1738.2735554444944,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 274
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-keeper-left-front"
+    },
+    {
+      "id": "y-keeper-left-rear",
+      "name": "左后Y外盖",
+      "role": "printed",
+      "group": "feeder",
+      "family": "y-keeper",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "y-keeper",
+        "cse_side": -1,
+        "cse_rear": true
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"y-keeper\"",
+        "-D",
+        "cse_side=-1",
+        "-D",
+        "cse_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+      "sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+      "bytes": 122246,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 512,
+        "uniqueVertexCount": 252,
+        "bounds": {
+          "min": [
+            -60.0,
+            -17.5,
+            -42.5
+          ],
+          "max": [
+            -43.79999923706055,
+            -11.049999237060547,
+            -14.5
+          ],
+          "size": [
+            16.200000762939453,
+            6.450000762939453,
+            28.0
+          ]
+        },
+        "surfaceArea": 1467.7598331966283,
+        "signedVolume": 1749.066206253658,
+        "volume": 1749.066206253658,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 252
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/y-keeper-left-rear"
+    },
+    {
+      "id": "inlet-rear",
+      "name": "入口后夹与背梁锚固",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-rear",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-rear",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"inlet-rear\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+      "sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+      "bytes": 427696,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1728,
+        "uniqueVertexCount": 852,
+        "bounds": {
+          "min": [
+            -49.0,
+            -53.79999923706055,
+            -156.0
+          ],
+          "max": [
+            49.0,
+            -1.1999998092651367,
+            -101.0
+          ],
+          "size": [
+            98.0,
+            52.59999942779541,
+            55.0
+          ]
+        },
+        "surfaceArea": 16022.41692580787,
+        "signedVolume": 36888.02737588824,
+        "volume": 36888.02737588824,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 852
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/inlet-rear"
+    },
+    {
+      "id": "inlet-front",
+      "name": "入口前夹",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-front",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-front",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"inlet-front\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+      "sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+      "bytes": 214885,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 908,
+        "uniqueVertexCount": 452,
+        "bounds": {
+          "min": [
+            -49.0,
+            0.7999992370605469,
+            -123.0
+          ],
+          "max": [
+            49.0,
+            36.5,
+            -101.0
+          ],
+          "size": [
+            98.0,
+            35.70000076293945,
+            22.0
+          ]
+        },
+        "surfaceArea": 8098.529898805086,
+        "signedVolume": 19692.43866814018,
+        "volume": 19692.43866814018,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 452
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/inlet-front"
+    },
+    {
+      "id": "inlet-backplate",
+      "name": "入口后压板",
+      "role": "printed",
+      "group": "feeder",
+      "family": "inlet-backplate",
+      "source": "cad/cable-scene-export.scad",
+      "definitions": {
+        "cse_part": "legacy",
+        "cse_t": 0,
+        "cse_legacy": "inlet-backplate",
+        "cse_side": 1,
+        "cse_rear": false
+      },
+      "backend": "CGAL",
+      "motion": {
+        "kind": "fixed"
+      },
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "CGAL",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "cse_part=\"legacy\"",
+        "-D",
+        "cse_t=0",
+        "-D",
+        "cse_legacy=\"inlet-backplate\"",
+        "-D",
+        "cse_side=1",
+        "-D",
+        "cse_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+      ],
+      "returncode": 0,
+      "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.log",
+      "execution_ok": true,
+      "passed": true,
+      "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+      "sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+      "bytes": 135293,
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 596,
+        "uniqueVertexCount": 296,
+        "bounds": {
+          "min": [
+            -14.0,
+            -57.0,
+            -156.0
+          ],
+          "max": [
+            14.0,
+            -54.0,
+            -128.0
+          ],
+          "size": [
+            28.0,
+            3.0,
+            28.0
+          ]
+        },
+        "surfaceArea": 1932.2590956494503,
+        "signedVolume": 2312.419099441711,
+        "volume": 2312.419099441711,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "topology": {
+        "format": "ascii",
+        "exact_zero_area_face_indices": [],
+        "non_ring_vertex_links": [],
+        "vertex_count": 296
+      },
+      "components": 1,
+      "boolean_reimport": {
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.log",
+        "execution_ok": true
+      },
+      "instance_id": "feeder/inlet-backplate"
+    }
+  ],
+  "groups": {
+    "right-support": [
+      {
+        "id": "right-support",
+        "name": "右导向支座",
+        "role": "printed",
+        "group": "feeder",
+        "family": "right-support",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "right-support",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"right-support\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+        "sha256": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+        "bytes": 868494,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 3616,
+          "uniqueVertexCount": 1762,
+          "bounds": {
+            "min": [
+              35.5,
+              -19.0,
+              -50.0
+            ],
+            "max": [
+              75.0,
+              28.0,
+              21.0
+            ],
+            "size": [
+              39.5,
+              47.0,
+              71.0
+            ]
+          },
+          "surfaceArea": 17352.861607852865,
+          "signedVolume": 26531.268413711077,
+          "volume": 26531.268413711077,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 1762
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__right-support-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/right-support"
+      }
+    ],
+    "left-support": [
+      {
+        "id": "left-support",
+        "name": "左导向及弹簧座",
+        "role": "printed",
+        "group": "feeder",
+        "family": "left-support",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "left-support",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"left-support\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+        "sha256": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+        "bytes": 738660,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 3024,
+          "uniqueVertexCount": 1480,
+          "bounds": {
+            "min": [
+              -76.0,
+              -19.0,
+              -50.0
+            ],
+            "max": [
+              -35.5,
+              24.200000762939453,
+              21.0
+            ],
+            "size": [
+              40.5,
+              43.20000076293945,
+              71.0
+            ]
+          },
+          "surfaceArea": 15567.138325059026,
+          "signedVolume": 22887.677958862612,
+          "volume": 22887.677958862612,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 1480
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__left-support-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/left-support"
+      }
+    ],
+    "y-cap": [
+      {
+        "id": "y-cap-right",
+        "name": "右公共架Y调节盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-cap",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-cap",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-cap\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+        "sha256": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+        "bytes": 224390,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 908,
+          "uniqueVertexCount": 448,
+          "bounds": {
+            "min": [
+              51.5,
+              24.200000762939453,
+              -35.0
+            ],
+            "max": [
+              67.0,
+              39.0,
+              5.0
+            ],
+            "size": [
+              15.5,
+              14.799999237060547,
+              40.0
+            ]
+          },
+          "surfaceArea": 3467.366600700075,
+          "signedVolume": 5877.924178662276,
+          "volume": 5877.924178662276,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 448
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-cap-right"
+      },
+      {
+        "id": "y-cap-left",
+        "name": "左公共架Y调节盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-cap",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-cap",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-cap\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+        "sha256": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+        "bytes": 227144,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 908,
+          "uniqueVertexCount": 448,
+          "bounds": {
+            "min": [
+              -67.0,
+              24.200000762939453,
+              -35.0
+            ],
+            "max": [
+              -51.5,
+              39.0,
+              5.0
+            ],
+            "size": [
+              15.5,
+              14.799999237060547,
+              40.0
+            ]
+          },
+          "surfaceArea": 3467.366600700075,
+          "signedVolume": 5877.92417866227,
+          "volume": 5877.92417866227,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 448
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-cap-left"
+      }
+    ],
+    "frame-y-gib": [
+      {
+        "id": "frame-y-gib-right",
+        "name": "右公共架Y压条",
+        "role": "printed",
+        "group": "feeder",
+        "family": "frame-y-gib",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "frame-y-gib",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"frame-y-gib\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+        "sha256": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+        "bytes": 14099,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 68,
+          "uniqueVertexCount": 36,
+          "bounds": {
+            "min": [
+              53.5,
+              24.099998474121094,
+              -33.5
+            ],
+            "max": [
+              60.5,
+              27.099998474121094,
+              3.5
+            ],
+            "size": [
+              7.0,
+              3.0,
+              37.0
+            ]
+          },
+          "surfaceArea": 616.5999946594238,
+          "signedVolume": 443.79998397827114,
+          "volume": 443.79998397827114,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 36
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/frame-y-gib-right"
+      },
+      {
+        "id": "frame-y-gib-left",
+        "name": "左公共架Y压条",
+        "role": "printed",
+        "group": "feeder",
+        "family": "frame-y-gib",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "frame-y-gib",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"frame-y-gib\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+        "sha256": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+        "bytes": 14305,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 68,
+          "uniqueVertexCount": 36,
+          "bounds": {
+            "min": [
+              -60.5,
+              24.099998474121094,
+              -33.5
+            ],
+            "max": [
+              -53.5,
+              27.099998474121094,
+              3.5
+            ],
+            "size": [
+              7.0,
+              3.0,
+              37.0
+            ]
+          },
+          "surfaceArea": 616.5999946594238,
+          "signedVolume": 443.7999839782715,
+          "volume": 443.7999839782715,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 36
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/frame-y-gib-left"
+      }
+    ],
+    "y-keeper": [
+      {
+        "id": "y-keeper-right-front",
+        "name": "右前Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+        "sha256": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+        "bytes": 131218,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 556,
+          "uniqueVertexCount": 274,
+          "bounds": {
+            "min": [
+              43.79999923706055,
+              -17.5,
+              -14.0
+            ],
+            "max": [
+              60.0,
+              -11.049999237060547,
+              14.0
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1463.7795477635632,
+          "signedVolume": 1738.2735554444935,
+          "volume": 1738.2735554444935,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 274
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-right-front"
+      },
+      {
+        "id": "y-keeper-right-rear",
+        "name": "右后Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": 1,
+          "cse_rear": true
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=true",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+        "sha256": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+        "bytes": 120718,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 512,
+          "uniqueVertexCount": 252,
+          "bounds": {
+            "min": [
+              43.79999923706055,
+              -17.5,
+              -42.5
+            ],
+            "max": [
+              60.0,
+              -11.049999237060547,
+              -14.5
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1467.7598331966283,
+          "signedVolume": 1749.066206253657,
+          "volume": 1749.066206253657,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 252
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-right-rear"
+      },
+      {
+        "id": "y-keeper-left-front",
+        "name": "左前Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": -1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+        "sha256": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+        "bytes": 132807,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 556,
+          "uniqueVertexCount": 274,
+          "bounds": {
+            "min": [
+              -60.0,
+              -17.5,
+              -14.0
+            ],
+            "max": [
+              -43.79999923706055,
+              -11.049999237060547,
+              14.0
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1463.7795477635632,
+          "signedVolume": 1738.2735554444944,
+          "volume": 1738.2735554444944,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 274
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-left-front"
+      },
+      {
+        "id": "y-keeper-left-rear",
+        "name": "左后Y外盖",
+        "role": "printed",
+        "group": "feeder",
+        "family": "y-keeper",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "y-keeper",
+          "cse_side": -1,
+          "cse_rear": true
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"y-keeper\"",
+          "-D",
+          "cse_side=-1",
+          "-D",
+          "cse_rear=true",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+        "sha256": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+        "bytes": 122246,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 512,
+          "uniqueVertexCount": 252,
+          "bounds": {
+            "min": [
+              -60.0,
+              -17.5,
+              -42.5
+            ],
+            "max": [
+              -43.79999923706055,
+              -11.049999237060547,
+              -14.5
+            ],
+            "size": [
+              16.200000762939453,
+              6.450000762939453,
+              28.0
+            ]
+          },
+          "surfaceArea": 1467.7598331966283,
+          "signedVolume": 1749.066206253658,
+          "volume": 1749.066206253658,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 252
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/y-keeper-left-rear"
+      }
+    ],
+    "inlet-rear": [
+      {
+        "id": "inlet-rear",
+        "name": "入口后夹与背梁锚固",
+        "role": "printed",
+        "group": "feeder",
+        "family": "inlet-rear",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "inlet-rear",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"inlet-rear\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+        "sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+        "bytes": 427696,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 1728,
+          "uniqueVertexCount": 852,
+          "bounds": {
+            "min": [
+              -49.0,
+              -53.79999923706055,
+              -156.0
+            ],
+            "max": [
+              49.0,
+              -1.1999998092651367,
+              -101.0
+            ],
+            "size": [
+              98.0,
+              52.59999942779541,
+              55.0
+            ]
+          },
+          "surfaceArea": 16022.41692580787,
+          "signedVolume": 36888.02737588824,
+          "volume": 36888.02737588824,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 852
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/inlet-rear"
+      }
+    ],
+    "inlet-front": [
+      {
+        "id": "inlet-front",
+        "name": "入口前夹",
+        "role": "printed",
+        "group": "feeder",
+        "family": "inlet-front",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "inlet-front",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"inlet-front\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+        "sha256": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+        "bytes": 214885,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 908,
+          "uniqueVertexCount": 452,
+          "bounds": {
+            "min": [
+              -49.0,
+              0.7999992370605469,
+              -123.0
+            ],
+            "max": [
+              49.0,
+              36.5,
+              -101.0
+            ],
+            "size": [
+              98.0,
+              35.70000076293945,
+              22.0
+            ]
+          },
+          "surfaceArea": 8098.529898805086,
+          "signedVolume": 19692.43866814018,
+          "volume": 19692.43866814018,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 452
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/inlet-front"
+      }
+    ],
+    "inlet-backplate": [
+      {
+        "id": "inlet-backplate",
+        "name": "入口后压板",
+        "role": "printed",
+        "group": "feeder",
+        "family": "inlet-backplate",
+        "source": "cad/cable-scene-export.scad",
+        "definitions": {
+          "cse_part": "legacy",
+          "cse_t": 0,
+          "cse_legacy": "inlet-backplate",
+          "cse_side": 1,
+          "cse_rear": false
+        },
+        "backend": "CGAL",
+        "motion": {
+          "kind": "fixed"
+        },
+        "command": [
+          "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+          "--hardwarnings",
+          "--backend",
+          "CGAL",
+          "--export-format",
+          "asciistl",
+          "-D",
+          "cse_part=\"legacy\"",
+          "-D",
+          "cse_t=0",
+          "-D",
+          "cse_legacy=\"inlet-backplate\"",
+          "-D",
+          "cse_side=1",
+          "-D",
+          "cse_rear=false",
+          "-o",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+          "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-scene-export.scad"
+        ],
+        "returncode": 0,
+        "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.log",
+        "execution_ok": true,
+        "passed": true,
+        "file": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+        "sha256": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+        "bytes": 135293,
+        "mesh": {
+          "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl",
+          "format": "ascii",
+          "units": "unknown",
+          "triangleCount": 596,
+          "uniqueVertexCount": 296,
+          "bounds": {
+            "min": [
+              -14.0,
+              -57.0,
+              -156.0
+            ],
+            "max": [
+              14.0,
+              -54.0,
+              -128.0
+            ],
+            "size": [
+              28.0,
+              3.0,
+              28.0
+            ]
+          },
+          "surfaceArea": 1932.2590956494503,
+          "signedVolume": 2312.419099441711,
+          "volume": 2312.419099441711,
+          "degenerateTriangleCount": 0,
+          "boundaryEdgeCount": 0,
+          "nonManifoldEdgeCount": 0,
+          "inconsistentOrientationEdgeCount": 0,
+          "watertightByEdgeTopology": true
+        },
+        "topology": {
+          "format": "ascii",
+          "exact_zero_area_face_indices": [],
+          "non_ring_vertex_links": [],
+          "vertex_count": 296
+        },
+        "components": 1,
+        "boolean_reimport": {
+          "command": [
+            "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+            "--hardwarnings",
+            "--backend",
+            "CGAL",
+            "--export-format",
+            "asciistl",
+            "-o",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.stl",
+            "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.scad"
+          ],
+          "returncode": 0,
+          "log": "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate-reimport.log",
+          "execution_ok": true
+        },
+        "instance_id": "feeder/inlet-backplate"
+      }
+    ]
+  },
+  "source_sha256": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-manufacturing/feeder-new/slice.py": "d7b5f5df5e05d63135cea2dc889df1a7e9da56b2c72714e2cf4052ae2032b2ec",
+    "scripts/review_final_feeder_slice.py": "93c98ad145e0314bd0a39930817074afa782ca446260eed9c58a1712a618feea"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "printed_instances": 13,
+  "unique_geometry_families": 8,
+  "current_export_report": "output/cable-scene-export/20260927T091627124663Z/report.json",
+  "current_export_report_sha256": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9",
+  "inventory_sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+  "reuse_report_sha256": "3ea5375bac2669e19e5f21a5af3bc53744b601c1a548153fa51c2fd5f04d9b2f",
+  "scope": "13 actual unresolved current instances; old folders and shared profiles are read-only."
+}

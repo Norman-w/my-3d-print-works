@@ -1,0 +1,328 @@
+{
+  "status": "OFFLINE_HOLD_FORK_SLICE_AUDITED_PHYSICAL_OPEN",
+  "checks": {
+    "process_and_native_return_zero": true,
+    "no_native_warning": true,
+    "five_official_templates_exact": true,
+    "initial_nozzle_target_is_255": true,
+    "last_setpoint_before_first_layer_matches": true,
+    "same_mesh_as_original_slice": true,
+    "same_component_orientation": true,
+    "same_build_placement": true,
+    "input_stl_unchanged": true,
+    "cad_unchanged": true,
+    "configs_stable_during_slice": true
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/hold-fork/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/config/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/config/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/config/filament.json",
+    "--orient",
+    "0",
+    "--rotate-y",
+    "-90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "hold-fork-slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/hold-fork",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/spin-head/spin-hold-fork.stl"
+  ],
+  "script_sha256": "7d066408daba7ff925e2557b52b460695ff4be50b4427b05e20aec4205f5d577",
+  "input_stl": "output/spin-head/spin-hold-fork.stl",
+  "input_stl_sha256": "1d2b9004c3419a398c714f8f50b56647ffced6fe1b20a3ffe3c28e5188b6976d",
+  "cad_sha256": {
+    "cad/spin-head.scad": "09a5c2ad6126d449b117f995d3f591b1320366246fe4a144315f352a18734d1d",
+    "cad/spin-parameters.scad": "d560bfa3bb697db0ff519ba1914105b90cbf3274d2769caefc5f5dba680c1fe9",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "shared_config_fix": {
+    "changed_fields_this_run": [],
+    "templates": [
+      {
+        "field": "machine_start_gcode",
+        "source": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_start_gcode.json",
+        "source_sha256": "cc890a986c3f073e4691908d4bd3256222da9afc52fa9520261318bea9757505",
+        "was_already_equal": true
+      },
+      {
+        "field": "machine_end_gcode",
+        "source": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template machine_end_gcode.json",
+        "source_sha256": "e90eb249dceb719ff8511b59275793a85ab84e1d5b5d4981e1fe6256fb6ffe54",
+        "was_already_equal": true
+      },
+      {
+        "field": "time_lapse_gcode",
+        "source": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template time_lapse_gcode.json",
+        "source_sha256": "bd394064ba847dc7a75ab80c61c6a0824ac3d6876438b7c8bafd5646cf51b5c4",
+        "was_already_equal": true
+      },
+      {
+        "field": "change_filament_gcode",
+        "source": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template change_filament_gcode.json",
+        "source_sha256": "cdde6fbb5e4f6ec353aeb61e41862dd04743c2bfe21369d31145170aa932d4ae",
+        "was_already_equal": true
+      },
+      {
+        "field": "layer_change_gcode",
+        "source": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle template layer_change_gcode.json",
+        "source_sha256": "595fa7ed12c23068b658ca4b006d4970bfd217a1503bed36b602cba93b2dc81a",
+        "was_already_equal": true
+      }
+    ],
+    "machine_sha256": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "original_config_archive": "output/print-review/config/before-template-expansion"
+  },
+  "config_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "template_matches": {
+    "machine_start_gcode": true,
+    "machine_end_gcode": true,
+    "time_lapse_gcode": true,
+    "change_filament_gcode": true,
+    "layer_change_gcode": true
+  },
+  "original_slice_archive": "output/print-review/hold-fork/before-template-expansion",
+  "original_heater_commands": [
+    "M109 S205;",
+    "M104 S0 ; turn off hotend"
+  ],
+  "original_3mf": {
+    "source_file": "spin-hold-fork.stl",
+    "source_offset": [
+      65.0,
+      0.0,
+      64.5
+    ],
+    "component_transform": [
+      2.22044605e-16,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      -1.0,
+      0.0,
+      2.22044605e-16,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "build_transform": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      127.99999,
+      128.0,
+      6.0
+    ],
+    "face_count": 1190,
+    "canonical_source_mesh_sha256_5dp": "5f18097c16d96f5957c9d60614366a9eb5f2e5dd3d2787d4b878ff8629df2a50"
+  },
+  "new_3mf": {
+    "source_file": "spin-hold-fork.stl",
+    "source_offset": [
+      65.0,
+      0.0,
+      64.5
+    ],
+    "component_transform": [
+      2.22044605e-16,
+      0.0,
+      1.0,
+      0.0,
+      1.0,
+      0.0,
+      -1.0,
+      0.0,
+      2.22044605e-16,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "build_transform": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      127.99999,
+      128.0,
+      6.0
+    ],
+    "face_count": 1190,
+    "canonical_source_mesh_sha256_5dp": "5f18097c16d96f5957c9d60614366a9eb5f2e5dd3d2787d4b878ff8629df2a50"
+  },
+  "filament_initial_target_c": 255.0,
+  "last_nozzle_setpoint_before_first_layer_c": 255.0,
+  "actual_heater_commands": [
+    {
+      "offset": 49817,
+      "command": "M104 S75 ;set extruder temp to turn on the HB fan and prevent filament oozing from nozzle",
+      "temperature_c": 75.0
+    },
+    {
+      "offset": 50882,
+      "command": "M104 S255 ;set extruder temp",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 51238,
+      "command": "M109 S250 ;set nozzle to common flush temp",
+      "temperature_c": 250.0
+    },
+    {
+      "offset": 51327,
+      "command": "M104 S255",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 51404,
+      "command": "M109 S235 ; drop nozzle temp, make filament shink a bit",
+      "temperature_c": 235.0
+    },
+    {
+      "offset": 51880,
+      "command": "M109 S235",
+      "temperature_c": 235.0
+    },
+    {
+      "offset": 52371,
+      "command": "M104 S140 ; set temp down to heatbed acceptable",
+      "temperature_c": 140.0
+    },
+    {
+      "offset": 53030,
+      "command": "M109 S140 ; wait nozzle temp down to heatbed acceptable",
+      "temperature_c": 140.0
+    },
+    {
+      "offset": 54198,
+      "command": "M104 S255 ; set extrude temp earlier, to reduce wait time",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 54857,
+      "command": "M109 S255",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 59201,
+      "command": "M104 S140",
+      "temperature_c": 140.0
+    },
+    {
+      "offset": 62556,
+      "command": "M109 S255",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 62909,
+      "command": "M109 S255",
+      "temperature_c": 255.0
+    },
+    {
+      "offset": 581718,
+      "command": "M104 S0 ; turn off hotend",
+      "temperature_c": 0.0
+    }
+  ],
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 388,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 13,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 7.665132999420166,
+          "Bridge": 5.366593837738037,
+          "Custom": 428.7618103027344,
+          "Flush": 29.0,
+          "Gap infill": 31.10610008239746,
+          "Inner wall": 387.39459228515625,
+          "Internal solid infill": 26.739116668701172,
+          "Outer wall": 152.406494140625,
+          "Sparse infill": 111.4751968383789,
+          "Top surface": 14.759831428527832,
+          "Travel": 87.44833374023438,
+          "Undefined": 72.14349365234375
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 3.5502307415008545,
+            "total_used_g": 3.5502307415008545
+          }
+        ],
+        "generate_support_material_time": 16,
+        "id": 1,
+        "infill_time": 36,
+        "layer_filament_change": 0,
+        "main_predication": 795.366455078125,
+        "make_perimeters_time": 78,
+        "obj_cached_cnt": 0,
+        "sliced_time": 349,
+        "sliced_time_with_cache": 196,
+        "total_predication": 1266.7928466796875,
+        "triangle_count": 1190,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "warnings": [],
+  "estimates": {
+    "seconds": 1266.7928466796875,
+    "filament_g": 3.5502307415008545
+  },
+  "artifact_sha256": {
+    "hold-fork-slice-review.3mf": "55af22d9bec2b3b23a1be514e3e223f0ffc032e1ab7466e7f7bcdccb8be7a80a",
+    "plate_1.gcode": "8b7b8722d862eacc21474a4ab24e6ed1d183dbf73bbea25b7a7745d2d97c9c8a",
+    "result.json": "dec894a193003c9c9fac38a81e8e9b3313226088ead816501136439350285188",
+    "bambu-cli.log": "ff8704056bc4f19f37334e08f4da2615676a53c5d612a6ea67e43d2fe4e6ca19"
+  },
+  "assumptions": {
+    "machine": "X1C .4",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; user confirmed PEI, not texture",
+    "layer_height_mm": 0.2,
+    "wall_loops": 4,
+    "infill_percent": 25,
+    "supports_enabled": false,
+    "orientation": "Original -90 degree Y rotation; original +X becomes print +Z"
+  },
+  "limits": [
+    "One hold fork only; no inference for other parts or the complete assembly.",
+    "Official start/end/filament/time-lapse/layer templates and generated first-layer setpoint checked; no physical printer execution.",
+    "Fit, PETG strength, layer adhesion, wear, bed-specific adhesion and actual temperature remain untested."
+  ],
+  "sent_to_printer": false,
+  "print_ready": false
+}

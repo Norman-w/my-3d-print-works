@@ -1,0 +1,264 @@
+{
+  "family": "finger",
+  "part": "finger",
+  "orientation": "back-down",
+  "orientation_description": "Original local Y=-4.5 rear face down; V and M2 nut entry upwards; rod underside supported",
+  "supports": "supported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/finger-back-down-supported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/finger-back-down-supported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/finger-back-down-supported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/finger-back-down-supported/filament.json",
+    "--orient",
+    "0",
+    "--rotate-x",
+    "90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/finger-back-down-supported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/finger-right-front.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/finger-right-rear.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/finger-left-front.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/finger-left-rear.stl"
+  ],
+  "inputs": [
+    {
+      "id": "finger-right-front",
+      "name": "右前V定位挡指",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-right-front.stl",
+      "path": "output/launcher-final/finger-right-front.stl",
+      "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+    },
+    {
+      "id": "finger-right-rear",
+      "name": "右后V定位挡指",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-right-rear.stl",
+      "path": "output/launcher-final/finger-right-rear.stl",
+      "sha256": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43"
+    },
+    {
+      "id": "finger-left-front",
+      "name": "左前V定位挡指",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-left-front.stl",
+      "path": "output/launcher-final/finger-left-front.stl",
+      "sha256": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3"
+    },
+    {
+      "id": "finger-left-rear",
+      "name": "左后V定位挡指",
+      "role": "printed",
+      "family": "finger",
+      "definitions": {
+        "la_part": "finger",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/finger-left-rear.stl",
+      "path": "output/launcher-final/finger-left-rear.stl",
+      "sha256": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d"
+    }
+  ],
+  "input": {
+    "id": "finger-right-front",
+    "name": "右前V定位挡指",
+    "role": "printed",
+    "family": "finger",
+    "definitions": {
+      "la_part": "finger",
+      "la_side": 1,
+      "la_rear": false,
+      "la_t": 0
+    },
+    "file": "output/launcher-final/finger-right-front.stl",
+    "path": "output/launcher-final/finger-right-front.stl",
+    "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+  },
+  "source_sha256_at_start": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "21fce6371668fd4cc9d3b8e3e3cb7452f9eaf2af6da598cfb1da72f7d7456d04",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "supports": "tree(auto), build plate only"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 403,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 46,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 2.6072864532470703,
+          "Bridge": 5.050629615783691,
+          "Custom": 428.9536437988281,
+          "Flush": 29.0,
+          "Gap infill": 57.15816116333008,
+          "Inner wall": 317.6320495605469,
+          "Internal solid infill": 95.10604095458984,
+          "Outer wall": 217.06675720214844,
+          "Overhang wall": 39.910621643066406,
+          "Sparse infill": 20.454404830932617,
+          "Support": 89.65477752685547,
+          "Support interface": 15.16455364227295,
+          "Top surface": 43.117794036865234,
+          "Travel": 289.3756408691406,
+          "Undefined": 273.9414978027344
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 5.83772087097168,
+            "total_used_g": 5.83772087097168
+          }
+        ],
+        "generate_support_material_time": 86,
+        "id": 1,
+        "infill_time": 51,
+        "layer_filament_change": 0,
+        "main_predication": 1163.289306640625,
+        "make_perimeters_time": 63,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 8.0,
+              "height": 9.0,
+              "width": 30.492286682128906,
+              "x": 140.0,
+              "y": 151.2461395263672,
+              "z": 0.0
+            },
+            "id": 74,
+            "name": "finger-right-front.stl",
+            "triangle_count": 1964
+          },
+          {
+            "bbox": {
+              "depth": 8.0,
+              "height": 9.0,
+              "width": 30.492286682128906,
+              "x": 140.0,
+              "y": 119.24613952636719,
+              "z": 0.0
+            },
+            "id": 96,
+            "name": "finger-left-front.stl",
+            "triangle_count": 1964
+          },
+          {
+            "bbox": {
+              "depth": 8.0,
+              "height": 9.0,
+              "width": 30.492292404174805,
+              "x": 85.5077133178711,
+              "y": 151.2461395263672,
+              "z": -1.7763568394002505e-15
+            },
+            "id": 85,
+            "name": "finger-right-rear.stl",
+            "triangle_count": 1964
+          },
+          {
+            "bbox": {
+              "depth": 30.492294311523438,
+              "height": 9.0,
+              "width": 8.00000286102295,
+              "x": 108.21003723144531,
+              "y": 96.75385284423828,
+              "z": -1.7763568394002505e-15
+            },
+            "id": 107,
+            "name": "finger-left-rear.stl",
+            "triangle_count": 1964
+          }
+        ],
+        "sliced_time": 828,
+        "sliced_time_with_cache": 595,
+        "total_predication": 1634.7781982421875,
+        "triangle_count": 7856,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+    "slice-review.3mf": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1"
+  },
+  "last_temperature_before_first_layer_c": 255.0
+}

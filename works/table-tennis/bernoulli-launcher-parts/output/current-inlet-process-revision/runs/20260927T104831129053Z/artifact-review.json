@@ -1,0 +1,76 @@
+{
+  "status": "NATIVE_ARTIFACT_CONFIGURATION_AND_BED_BOUNDS_VERIFIED",
+  "bed": {
+    "passed": true,
+    "nominal_model_brim_support_bead_bounds_xy": [
+      [
+        78.80675,
+        92.81009592438251
+      ],
+      [
+        177.19324999999998,
+        152.82424999999998
+      ]
+    ],
+    "minimum_bed_edge_gap_mm": 78.80675,
+    "minimum_excluded_area_gap_mm": 110.0394062038303,
+    "path_counts": {
+      "Support": 52069,
+      "Inner wall": 77546,
+      "Outer wall": 28266,
+      "Bottom surface": 177,
+      "Internal solid infill": 5764,
+      "Sparse infill": 42574,
+      "Floating vertical shell": 4513,
+      "Bridge": 1400,
+      "Support interface": 981,
+      "Top surface": 594,
+      "Overhang wall": 392,
+      "Gap infill": 648
+    },
+    "support_path_count": 53050,
+    "skipped_startup_features": [
+      "Custom",
+      "Flush",
+      "Undefined",
+      ""
+    ],
+    "bead_error_budget_mm": 0.0032500000000000003,
+    "violations": []
+  },
+  "process_difference": {
+    "layer_height": {
+      "old": "0.2",
+      "new": "0.1"
+    },
+    "initial_layer_print_height": {
+      "old": "0.2",
+      "new": "0.1"
+    }
+  },
+  "normal_mesh_repairs": {
+    "face_count": "1728",
+    "edges_fixed": "0",
+    "degenerate_facets": "0",
+    "facets_removed": "0",
+    "facets_reversed": "0",
+    "backwards_edges": "0"
+  },
+  "machine_and_filament_byte_identical_to_original": true,
+  "last_setpoint_before_first_layer_c": 255.0,
+  "profile_assumptions": [
+    "Generic PETG; user filament brand not confirmed",
+    "Textured PEI; user specified PEI only"
+  ],
+  "artifacts": {
+    "plate_1.gcode": "fd6400493c511d247158a8005b9500bbaf68b72b694a3696161dcff4cd32aff7",
+    "slice-review.3mf": "c47b481058d27ede5055c8d5383654daa860e792b8798ce1a0074efdc6d71e36",
+    "machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process.json": "f47fb2bba842dca0084fcc92f6886e8a6bbd2237a056eb4a1e2794d6a4eff1f7",
+    "filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+    "invocation.json": "c14bd3122aed7b6c7e1de5965101ab6b6c55ce52c4b5b733a91f198570437870"
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

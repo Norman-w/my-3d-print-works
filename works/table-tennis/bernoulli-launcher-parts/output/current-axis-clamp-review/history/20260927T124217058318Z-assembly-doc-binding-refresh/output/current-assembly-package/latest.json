@@ -1,0 +1,8 @@
+{
+  "directory": "output/current-assembly-package/runs/20260927T122149439656Z",
+  "manifest": "output/current-assembly-package/runs/20260927T122149439656Z/manifest.json",
+  "manifest_sha256": "32e91ba619931725dd209c4b580183b20cac6901bdb4691b250081b2f837a85c",
+  "status": "CURRENT_ASSEMBLY_REQUIREMENTS_JOINED_NOT_A_PURCHASE_OR_RELEASE",
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,223 @@
+{
+  "status": "COMMON_HALF_SHELL_AXIAL_BOUND_CONDITIONAL_NORMAL_SUBDOMAIN_NOT_FULL_D02",
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c"
+  },
+  "source_evidence": [
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 90,
+      "text": "            body_tube(guide_start_z,guide_length,guide_od,guide_id);"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 99,
+      "text": "        for(z=body_side_seat_z)"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 132,
+      "text": "        for(z=body_side_seat_z)"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 161,
+      "text": "        for(z=body_side_seat_z) {"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 101,
+      "text": "                cylinder(h=120,r=finger_tip_radius+radial_print_clearance);"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 9,
+      "text": "seam_locator_y = [40,-40];"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 10,
+      "text": "seam_locator_z = [-59,3];"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 114,
+      "text": "    if(positive && index==1)"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 89,
+      "text": "module seam_halfspace(positive) {"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 143,
+      "text": "            seam_halfspace(positive);"
+    },
+    {
+      "path": "cad/parameters.scad",
+      "line": 15,
+      "text": "guide_start_z = -80;"
+    },
+    {
+      "path": "cad/parameters.scad",
+      "line": 16,
+      "text": "guide_length = 104;"
+    }
+  ],
+  "reference_geometry": {
+    "H": "Positive half is H(p)=Rx(theta)p+t relative to negative half; common seatedX0 plane. One theta,t applies to both gates, both locator axes and the positive inner guide.",
+    "guide_axes": "Gminus(z)=(0,0,z); Gplus(z)=H(Gminus(z)), localz in[-80,24]. Nominal boreR21.25; actual guide is two finite half-cylinders with radial side openings.",
+    "mu": "alpha=theta/2; ezM=Rx(alpha)ez; eyM=Rx(alpha)ey; M(z)=(Gminus(z)+Gplus(z))/2.",
+    "A": "A=ezM dot(Gplus(z)-Gminus(z))/2 is independent ofz, because both gate axes and both guide axes have localY0.",
+    "true_near_nominal_angle_bisector": "N(zeta)=M(0)+tan(alpha)*A*eyM+zeta*ezM. Same-z midpoint lineM(z) is parallel but is generally NOT the exact equidistant bisector. Transverse correction does not alter axial projections.",
+    "gate_midpoints": "M(0) andM(-Lgate) have axial coordinates0 and-Lgate*cos(alpha); actual gate pairs straddle those planes by the SAME +/-A.",
+    "ball_centre_not_forced_to_datum": true
+  },
+  "common_variables_and_relations": [
+    "p0=(40,-59),p1=(-40,3), L=sqrt10244, e=(-80,62)/L,n=Je. d_j=H(p_j)-p_j inYZ.",
+    "At common seamX0: ||d0||<=c; d1=lambda*Rx(theta)e+v, ||v||<=c, |lambda|<=.5; oneH, not independent locator extrema.",
+    "Rotate allYZ vectors by-alpha: q0=R(-alpha)d0, q1=R(-alpha)d1, v1=R(-alpha)v. Thenq1-q0=2L*sin(alpha)*n andq1=lambda*R(alpha)e+v1.",
+    "The sameH giveslambda*cos(alpha)=(q0-v1).e. The slot longitudinal parameter is eliminated; its.5 travel is not added toZ.",
+    "For localY0: A=(q0_z+q1_z)/4. Letk=e_z+tan(alpha)n_z; then4A=(ez+k*e).q0+(ez-k*e).v1.",
+    "Taking the support of the two necessary discs AFTER this elimination gives |A|<=c/4*(sqrt((2e_z+tan(alpha)n_z)^2+n_z^2)+|n_z|sec(alpha)). A uniform angle bound usesabs(tan(alpha)); omittedtheta consistency only enlarges the set, so this is an outer bound, not an attained extremum.",
+    "Each tip isTi,minus=p_g+e_i orTi,plus=H(p_g+e_i), with the SAME carrier/rodK_i and supportS_i as its finite guide and bearing constraints. Common-axis deviations are-A+ezM.e_i and+A+ezM.R(theta)e_i.",
+    "Local rod slope in that axial projection is bounded bytauZ=(|Rzx|+sinBetaBound*|Ryx|)/Rxx, |sinBeta|<=mountRotationChord+sin|alpha|. This rotates one actual axis; it does not add a mounting-translation norm.",
+    "At actual bearingX31.6, projectedaxis residual has magnitude<=cb. Tip axial residual isthat-(31.6-tipX)*projectedaxisSlope. Thus|tipZ-about-its-own-half-gate|<=cb+11.6tauZ on the inheritedtipX20..27 subdomain.",
+    "Combine these projected linear forms with their sharedalpha envelope, preserving +/-A and its equality for both gate heights. Conservative scalar support islocalAxial+A. It is not oldseamNorm+oldmountNorm+guidePlay."
+  ],
+  "numeric": {
+    "seam_locator_disc_radius_upper_mm": 0.152855335258,
+    "sin_theta_upper": 0.003020478945,
+    "sin_alpha_upper": 0.001510241206,
+    "cos_alpha_lower": 0.999998859585,
+    "tan_alpha_upper": 0.001510242929,
+    "slot_lambda_abs_upper_from_common_H_mm": 0.305711019154,
+    "same_A_abs_upper_mm": 0.085958512955,
+    "true_bisector_transverse_shift_from_midpoint_line_upper_mm": 0.000129818237,
+    "finite_axis_intersection_local_z_shift_upper_mm": 0.085958610984,
+    "support_rotation_chord_upper": 0.018038584461,
+    "axis_projection_sin_beta_upper": 0.019548825667,
+    "projected_rod_slope_abs_upper": 0.037534097354,
+    "own_half_tip_axial_upper_mm": 0.69743371263,
+    "front_tip_abs_Z_about_common_datum_upper_mm": 0.783392225585,
+    "rear_tip_abs_Z_about_nominal_minus28_5_upper_mm": 0.783424727413,
+    "projected_gate_spacing_lower_mm": 28.499967498172,
+    "gate_spacing_contraction_upper_mm": 3.2501828e-05,
+    "remaining_to_Bz1_lower_mm": 0.216575272587
+  },
+  "shared_cancellation": {
+    "same_side_front_minus_rear": "A cancels exactly. The projected nominal separation isLgate*cos(alpha), plus the difference of that same-side carrier errors.",
+    "opposite_side_front_minus_rear": "The shared seam term is+/-2A, not two freely chosen per-gate seam errors.",
+    "common_global_drift": "Any whole-assembly rigid transformation movesN, gates and ball guide together; it cancels from all expressed relations."
+  },
+  "finite_guide_interpretation": {
+    "axis_domain_local_z_mm": [
+      -80,
+      24
+    ],
+    "gate_axis_common_station_local_z_ranges": [
+      [
+        -0.085958610984,
+        0.085958610984
+      ],
+      [
+        -28.585958610984,
+        -28.414041389016
+      ]
+    ],
+    "physical_wall_limit": "The datum comes from the real finite inner guide, not a display line. A cylinder-axis datum does not imply full cylindrical wall at radial side holes, nor that spheres follow the bisector exactly.",
+    "nonunique_ball_centre_witness": {
+      "scope": "Guide-only nominal rigid-sphere fit, not full mechanism or release witness",
+      "half_shell_transform": "identity",
+      "ball_radius_mm": 20,
+      "centres_CAD": [
+        [
+          0,
+          0,
+          -14
+        ],
+        [
+          0,
+          0.5,
+          -14
+        ]
+      ],
+      "radial_ball_extent_mm": [
+        20,
+        20.5
+      ],
+      "nominal_inner_guide_radius_mm": 21.25,
+      "axial_ball_extent_mm": [
+        -34,
+        6
+      ],
+      "finite_cylindrical_guide_mm": [
+        -80,
+        24
+      ],
+      "assertion": "Both entire spheres fit the uncut ideal enclosing guide bore; current inscribed polygon must additionally containR20.5. This proves the source defines a guide datum, not a unique ball-centre trajectory.",
+      "guaranteed_inscribed32gon_radius_lower_mm": 21.147675441758,
+      "source_default_fn": 72
+    }
+  },
+  "necessary_remaining_conditions": [
+    "All carrier-body subdomain premises remain conditions, especiallytipX20..27, normal seatedX mounting planes, currentparallelgib and retained engagement. RadialBx is NOT proved here.",
+    "Full actual fabrication/form/load terms and differentialgib poses are not assigned zero by this digital nominal result. Their values remainunknown.",
+    "The two half-guides are not coaxial unlessH isidentity up to axialtranslation. ExistingfullcoaxialEmax andBy assumptions cannot be reused verbatim: need ball-centre envelope in the finite, split, rotated, side-opened lumen, at the actual parked-ball axial domain.",
+    "The half-axisbisector is a geometricdatum, not a measured gravity/airflow direction or unique ballcentreline. Dynamic/one-ball release is not certified.",
+    "Frame-finite-contact remains a separate sharedparallelhost comparison; this report doesnot use it as proof of true independentlyregisteredleft/right supports."
+  ],
+  "shape_load_budget": {
+    "actual_inputs": null,
+    "conditional_remaining_scalar_mm": 0.216575272587,
+    "warning": "This remainder is not freely spendable across changes that invalidate the inherited finitecontact/normal-plane/engagement proof. Such changes must enter the same projected formulas before recomputing."
+  },
+  "full_D02_closed": false,
+  "radial_Bx_certified": false,
+  "conditional_nominal_axial_Bz1_certified_on_declared_subdomain": true,
+  "static_two_ball_function_recertified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "all_sources_stable": true
+}

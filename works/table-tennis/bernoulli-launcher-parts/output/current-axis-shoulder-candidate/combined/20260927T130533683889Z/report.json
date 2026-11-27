@@ -1,0 +1,114 @@
+{
+  "status": "COMBINED_ISOLATED_LIMITED_PASS",
+  "source_sha256": {
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec",
+    "output/current-axis-shoulder-candidate/candidate.scad": "99ba9e0722404fdab660a9407e1afca3473c0cdb646140a6e763b6c552c74ea6",
+    "output/current-axis-shoulder-candidate/assembly.scad": "366a53f11345ee52ebdcc837d5b9dea95e6f1139523ae608100d461b567c04be",
+    "output/current-axis-shoulder-candidate/combined_review.py": "52b3c333e76637e916e579358eb26cc2f700f5d893af22ff6054df6bb5cdb1c1",
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288"
+  },
+  "sources_stable": true,
+  "cases": [
+    {
+      "case": "axis-rotor-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/combined/20260927T130533683889Z/axis-rotor-probe-0.stl",
+        "-D",
+        "part=\"axis-rotor-probe\"",
+        "-D",
+        "input_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/assembly.scad"
+      ],
+      "native_empty": true,
+      "returncode": 1,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null,
+      "mesh": null
+    },
+    {
+      "case": "rotor-plastic-probe-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/combined/20260927T130533683889Z/rotor-plastic-probe-0.stl",
+        "-D",
+        "part=\"rotor-plastic-probe\"",
+        "-D",
+        "input_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/assembly.scad"
+      ],
+      "native_empty": true,
+      "returncode": 1,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null,
+      "mesh": null
+    },
+    {
+      "case": "rotor-plastic-probe-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/combined/20260927T130533683889Z/rotor-plastic-probe-20.stl",
+        "-D",
+        "part=\"rotor-plastic-probe\"",
+        "-D",
+        "input_u=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/assembly.scad"
+      ],
+      "native_empty": true,
+      "returncode": 1,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null,
+      "mesh": null
+    },
+    {
+      "case": "bush-solid-control-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/combined/20260927T130533683889Z/bush-solid-control-0.stl",
+        "-D",
+        "part=\"bush-solid-control\"",
+        "-D",
+        "input_u=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-shoulder-candidate/assembly.scad"
+      ],
+      "native_empty": false,
+      "returncode": 0,
+      "log_sha256": "4891512ab9a2aff67e8396b110db1ee8ce70b672ef742d1db44cf0e6e50d3325",
+      "stl_sha256": "58b9a62df9852e4f3baeb3320e5ad518ecea0dc9c15244d2c707bc4afd817acc",
+      "mesh": {
+        "triangles": 624,
+        "signed_volume_mm3": 791.2463676379132,
+        "bounds_mm": [
+          [
+            -6.0000000000000036,
+            6.0000000000000036
+          ],
+          [
+            -6.928203230275509,
+            6.928203230275509
+          ],
+          [
+            -3.5,
+            7.5
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      }
+    }
+  ],
+  "scope": "Nominal combined geometry; two rotor/plastic poses. Continuous circumscribed axle Z envelope with rest rotor; shared central bore is rotation invariant. Solid bush control must be nonempty. Does not prove complete tolerance, tilted escape, material, load or supply acceptance.",
+  "adopted": false,
+  "physical_acceptance": false
+}

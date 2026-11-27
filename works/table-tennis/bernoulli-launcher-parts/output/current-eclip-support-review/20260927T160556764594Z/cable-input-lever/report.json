@@ -1,0 +1,528 @@
+{
+  "status": "ACTUAL_SUPPORT_UNDERLAY_AND_REVERSE_BUILD_REVIEW",
+  "part": "cable-input-lever",
+  "slice_folder": "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever",
+  "created_utc": "2026-09-27T16:06:14.369364+00:00",
+  "mapping": [
+    [
+      0.14302175737913003,
+      0.9897195446572451,
+      0.0,
+      115.0523297824235
+    ],
+    [
+      -0.9897195446572451,
+      0.14302175737913012,
+      0.0,
+      121.04250537477908
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      3.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "resolved_process": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.1",
+    "initial_layer_print_height": "0.1",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "1",
+    "support_type": "normal(manual)",
+    "support_on_build_plate_only": "1",
+    "support_top_z_distance": "0.2",
+    "support_bottom_z_distance": "0.2",
+    "support_object_xy_distance": "0.35",
+    "support_interface_top_layers": "2",
+    "support_interface_spacing": "0"
+  },
+  "path_features": {
+    "Support": 140,
+    "Brim": 1765,
+    "Outer wall": 3589,
+    "Inner wall": 11207,
+    "Bottom surface": 396,
+    "Gap infill": 4457,
+    "Internal solid infill": 7533,
+    "Sparse infill": 10552,
+    "Floating vertical shell": 1557,
+    "Bridge": 677,
+    "Support transition": 57,
+    "Support interface": 114,
+    "Top surface": 374,
+    "Overhang wall": 26
+  },
+  "support_paths": 311,
+  "feature_layer_height_metadata": {
+    "Support": [
+      0.1,
+      0.26
+    ],
+    "Brim": [
+      0.1
+    ],
+    "Outer wall": [
+      0.0999999,
+      0.1
+    ],
+    "Inner wall": [
+      0.0999999,
+      0.1
+    ],
+    "Bottom surface": [
+      0.1
+    ],
+    "Gap infill": [
+      0.0999999,
+      0.1
+    ],
+    "Internal solid infill": [
+      0.0999999,
+      0.1
+    ],
+    "Sparse infill": [
+      0.0999999,
+      0.1
+    ],
+    "Floating vertical shell": [
+      0.0999999,
+      0.1
+    ],
+    "Bridge": [
+      0.0999999,
+      0.4
+    ],
+    "Support transition": [
+      0.26
+    ],
+    "Support interface": [
+      0.26
+    ],
+    "Top surface": [
+      0.1
+    ],
+    "Overhang wall": [
+      0.0999999
+    ]
+  },
+  "support_clearance_numeric_XY_padding_mm": 0.0032500000000000003,
+  "underlay_uses_nominal_declared_bead_width": true,
+  "underside_source": null,
+  "underlay": [
+    {
+      "name": "M3_shoulder_1",
+      "status": "ACTUAL_PRECEDING_UNDERLAY_RECORDED",
+      "contact_local_z": -0.6,
+      "contact_print_z": 2.9,
+      "roi_area_mm2": 20.054612027325575,
+      "roi_local_xy_bounds": [
+        -0.9000000000000004,
+        50.65136843870017,
+        4.9,
+        57.34863156129983
+      ],
+      "first_model_print_z": 3.0,
+      "previous_model_print_z": 2.9,
+      "last_interface_print_z": 2.7,
+      "nominal_vertical_contact_gap_mm": 0.19999999999999973,
+      "all_top_interface_emitted_before_first_model": true,
+      "top_interface_path_count": 27,
+      "top_interface_area_under_roi_mm2": 12.807461927571541,
+      "previous_model_area_under_roi_mm2": 0.0015942930660991811,
+      "model_first_layer_path_count": 106,
+      "first_affected_command": {
+        "line": 25768,
+        "feature": "Inner wall",
+        "command_length_mm": 0.27759682993080503,
+        "clipped_centerline_length_mm": 0.04185470765237027,
+        "prior_projected_bead_overlap_area_mm2": 0.0,
+        "no_prior_projected_overlap": true,
+        "local_xy": [
+          [
+            -0.4372809083990177,
+            56.0453829582338
+          ],
+          [
+            -0.6064940317310032,
+            55.82532178746561
+          ]
+        ],
+        "prior_overlap_scope": "Above two fields concern only the bead portion inside this new-roof ROI, not the complete command.",
+        "complete_command_prior_projected_overlap_area_mm2": 0.1673835626133661,
+        "complete_command_without_prior_projection_overlap": false,
+        "unbacked_intervals": [],
+        "earlier_same_layer_command_count": 3,
+        "unbacked_intervals_also_allowing_only_preceding_same_layer_lateral_overlap": []
+      },
+      "neighbouring_underlay_search_margin_mm": 2,
+      "without_previous_model_or_interface_overlap": {
+        "count": 2,
+        "max_curved_or_straight_path_mm": 0.25035772759839897,
+        "max_true_straight_interval_mm": 0.019995818073202175,
+        "straight_intervals_with_both_end_samples": 1,
+        "intervals": [
+          {
+            "line": 25958,
+            "feature": "Overhang wall",
+            "path_length_mm": 0.019995818073202175,
+            "endpoint_chord_mm": 0.019995818073202175,
+            "is_straight_interval": true,
+            "local_xy_bounds": [
+              0.10338662448987596,
+              55.98847065314615,
+              0.11782132353843337,
+              56.00230800129506
+            ],
+            "first_xy": [
+              0.11782132353843337,
+              56.00230800129506
+            ],
+            "last_xy": [
+              0.10338662448987596,
+              55.98847065314615
+            ],
+            "preceding_0p05mm_command_sample_overlaps_underlay": true,
+            "following_0p05mm_command_sample_overlaps_underlay": true,
+            "both_samples_anchor": true
+          },
+          {
+            "line": 26058,
+            "feature": "Overhang wall",
+            "path_length_mm": 0.25035772759839897,
+            "endpoint_chord_mm": 0.25021435012306265,
+            "is_straight_interval": false,
+            "local_xy_bounds": [
+              3.8835361648775337,
+              55.819616466295656,
+              4.05564464595064,
+              56.001236651710755
+            ],
+            "first_xy": [
+              4.05564464595064,
+              55.819616466295656
+            ],
+            "last_xy": [
+              3.8835361648775337,
+              56.001236651710755
+            ],
+            "preceding_0p05mm_command_sample_overlaps_underlay": true,
+            "following_0p05mm_command_sample_overlaps_underlay": true,
+            "both_samples_anchor": true
+          }
+        ]
+      },
+      "same_layer_lateral_overlap_scope": "First affected command only; subsequent gap statistics conservatively omit all same-layer beads.",
+      "interpretation": "Projected underlay across recorded air gap is process evidence, not bonded support. Same-layer overlap is lateral contact only. Curved command length is not a free straight bridge span."
+    },
+    {
+      "name": "M3_shoulder_2",
+      "status": "ACTUAL_PRECEDING_UNDERLAY_RECORDED",
+      "contact_local_z": -0.6,
+      "contact_print_z": 2.9,
+      "roi_area_mm2": 20.054612027325593,
+      "roi_local_xy_bounds": [
+        -0.9000000000000004,
+        62.65136843870017,
+        4.9,
+        69.34863156129983
+      ],
+      "first_model_print_z": 3.0,
+      "previous_model_print_z": 2.9,
+      "last_interface_print_z": 2.7,
+      "nominal_vertical_contact_gap_mm": 0.19999999999999973,
+      "all_top_interface_emitted_before_first_model": true,
+      "top_interface_path_count": 30,
+      "top_interface_area_under_roi_mm2": 13.108484303884966,
+      "previous_model_area_under_roi_mm2": 0.001997067420448828,
+      "model_first_layer_path_count": 105,
+      "first_affected_command": {
+        "line": 26189,
+        "feature": "Inner wall",
+        "command_length_mm": 0.27702887933875076,
+        "clipped_centerline_length_mm": 0.04184443086945446,
+        "prior_projected_bead_overlap_area_mm2": 0.0001504634038159693,
+        "no_prior_projected_overlap": false,
+        "local_xy": [
+          [
+            1.4475822228451847,
+            62.8659247965665
+          ],
+          [
+            1.722306623700689,
+            62.83026664795685
+          ]
+        ],
+        "prior_overlap_scope": "Above two fields concern only the bead portion inside this new-roof ROI, not the complete command.",
+        "complete_command_prior_projected_overlap_area_mm2": 0.1676333724326259,
+        "complete_command_without_prior_projection_overlap": false,
+        "unbacked_intervals": [],
+        "earlier_same_layer_command_count": 3,
+        "unbacked_intervals_also_allowing_only_preceding_same_layer_lateral_overlap": []
+      },
+      "neighbouring_underlay_search_margin_mm": 2,
+      "without_previous_model_or_interface_overlap": {
+        "count": 1,
+        "max_curved_or_straight_path_mm": 0.12718688619179824,
+        "max_true_straight_interval_mm": 0,
+        "straight_intervals_with_both_end_samples": 0,
+        "intervals": [
+          {
+            "line": 26427,
+            "feature": "Overhang wall",
+            "path_length_mm": 0.12718688619179824,
+            "endpoint_chord_mm": 0.12713681928865964,
+            "is_straight_interval": false,
+            "local_xy_bounds": [
+              3.8819998046122786,
+              67.91199749139307,
+              3.97116251883744,
+              68.00262740483691
+            ],
+            "first_xy": [
+              3.97116251883744,
+              67.91199749139307
+            ],
+            "last_xy": [
+              3.8819998046122786,
+              68.00262740483691
+            ],
+            "preceding_0p05mm_command_sample_overlaps_underlay": true,
+            "following_0p05mm_command_sample_overlaps_underlay": true,
+            "both_samples_anchor": true
+          }
+        ]
+      },
+      "same_layer_lateral_overlap_scope": "First affected command only; subsequent gap statistics conservatively omit all same-layer beads.",
+      "interpretation": "Projected underlay across recorded air gap is process evidence, not bonded support. Same-layer overlap is lateral contact only. Curved command length is not a free straight bridge span."
+    }
+  ],
+  "pocket_cleanup": [
+    {
+      "index": 0,
+      "center_local_xy": [
+        2,
+        54
+      ],
+      "path_count": 155,
+      "outside_path_lines": [],
+      "complete_support_projection_outside_opening_mm2": 0.0,
+      "strict_all_selected_paths_in_original_shallow_hex": true,
+      "opening": "exact AF5.8 hexagon; unchanged metal bearing shoulder",
+      "unclassified_outside_lines_after_independent_bed_route": []
+    },
+    {
+      "index": 1,
+      "center_local_xy": [
+        2,
+        66
+      ],
+      "path_count": 153,
+      "outside_path_lines": [],
+      "complete_support_projection_outside_opening_mm2": 0.0,
+      "strict_all_selected_paths_in_original_shallow_hex": true,
+      "opening": "exact AF5.8 hexagon; unchanged metal bearing shoulder",
+      "unclassified_outside_lines_after_independent_bed_route": []
+    }
+  ],
+  "external_islands": [],
+  "unclassified_pocket_outside_lines": [],
+  "continuous_reverse_build_sweep": [
+    {
+      "support_top_local_z": -3.4,
+      "path_count": 49,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3457222743063281,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -3.14,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -2.88,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -2.62,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -2.36,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -2.1,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -1.84,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -1.58,
+      "path_count": 13,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.3355822135003659,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -1.32,
+      "path_count": 57,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.15627497343054836,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -1.06,
+      "path_count": 57,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.15627497343054836,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    },
+    {
+      "support_top_local_z": -0.8,
+      "path_count": 57,
+      "swept_projection_source_overlap_mm2": 0.0,
+      "projected_contact_empty": true,
+      "minimum_projected_clearance_mm": 0.15627497343054836,
+      "overlap_path_count": 0,
+      "overlap_paths": [],
+      "method": "Actual normal-part boundary clipped below support upper slab plane, projected to XY; full bead projection translated continuously toward -localZ."
+    }
+  ],
+  "nominal_reverse_build_sweep_clear": true,
+  "removal_routes": [
+    "Lift part off PEI before support cleanup; do not install hardware first.",
+    "Shallow M3-pocket supports exit through the original rear hex openings along -localZ.",
+    "Body underside support exits directly away from the open rear/backplate side along -localZ; no need to push through M4 or M6 bores.",
+    "Only separately classified exterior first-layer islands are bed residues; clear them with their contacting brim after lifting the part."
+  ],
+  "evidence_sha256": {
+    "analysis/cable_eclip_slice_artifacts.py": "ce76c2522e77df60b02fb45ab5e15aaef65c5f8ddce74cbfcbdb23764ebb6927",
+    "output/current-manufacturing/input-process/bind_current_input_process.py": "45c2675d18d4b83106aa5f884953d9a066c44338010c72de5cbb07a5730bc2df",
+    "analysis/cable_slice_artifacts.py": "5f61332254ff5cee88f4bbaf96dbd07bf870699a5e77c0f8df8d4edd175014f2",
+    "analysis/cable_input_slice_review.py": "85b8d3fe232d25703f428b709a939e7f396758c61216ec8ac7fcdbdb83b05692",
+    "analysis/cable_slice_contract.py": "3f3220655efb191c2363f98b9d5dcc9fa5d396b444b6e8a7dc4fe3a5bcc5e478",
+    "scripts/review_cable_slice.py": "7c9c7a618126596ba2db5a4d2a74ec5be3f08c751ab6138f1ec4d9e2ac0676cf",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/invocation.json": "825b516a128063d05eb932ba725b0ed087387889d628154e81557022f19cd4bc",
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "f13b272bed1b9f0928d75f0897615c898d85ba1b986a73872cce2c736be0b42b",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "e72f1161c3303f061c88ce1e7ac29d14c26ef4359e51bec4fd6b69f515d4bede",
+    "scripts/export_cable_scene.py": "0d05df5f82ebc9fa8b859c1d5347e6ca72ff600dbc5fa43258e98c3fd530c20b",
+    "output/cable-scene-export/20260927T153058669616Z/feeder__cable-input-lever.stl": "56e503bf19aab555c69cadd292e995a9cc4f10b107a2884209aa514086344586",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/oriented.stl": "ecd9b845be2f306b2b4fecbec70a1502c77724468868cec4fb0a15a7f7180ab4",
+    "output/cable-scene-export/20260927T153058669616Z/report.json": "3cb7da521e4160bb83ab8760ee894d2b6da9a39d24045db7d7f090b14a423418",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/slice-review.3mf": "d6d2e2b0078f380d8a794b7b1421de563ac470bed32afbd6f21e35a07c0e3bbd",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/plate_1.gcode": "4cf0cdc209cac117398df67893d52899c9d249c3a30284e1727ea411d818ea35",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/machine.json": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/process.json": "fa3ebf70fa7c7345a2423e6fbfbcb9018392122e958b493351eb4e091d08a84b",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/filament.json": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90",
+    "output/cable-scene-export/20260927T153058669616Z/inventory.json": "e72f1161c3303f061c88ce1e7ac29d14c26ef4359e51bec4fd6b69f515d4bede",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/support-input.3mf": "11f22b8903e77dfa6cdaf456db772bdce3501d5188fea08c5b5c7b7c5d4a6708",
+    "analysis/cable_eclip_support_review.py": "e96aaa6b3e51e70525f89b7427952150b3f70b03ac52a14e081e08a4fa605312",
+    "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/artifact-review.json": "f6d85127d08fc99117599af7b78ed23fc534078f94fbad6539fb49d6a1d93939"
+  },
+  "sources_and_artifacts_stable": true,
+  "limits": [
+    "Declared nozzle-bead width/height is a nominal process model, not a scan of PETG.",
+    "0.2 mm air-gap support does not guarantee bridge flatness, reliable release, removal force, grip/tool space, bearing cleanliness or strength.",
+    "Curve path length is not free straight span; lateral overlap with earlier same-layer extrusion is reported separately from previous-layer support.",
+    "This bounded review covers emitted support cleanup and the named first-roof ROIs, not every overhang, hole or production qualification.",
+    "Positive nominal support-sweep overlap is preserved for interpretation; no automatic clipping of support beads to intended enforcers."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

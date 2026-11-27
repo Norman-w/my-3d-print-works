@@ -1,0 +1,46 @@
+{
+  "input": "output/spin-head/spin-pad.stl",
+  "input_sha256": "89c8ae1e33bccdeb96e7ac6d58f82fb858297b45e973a0a5bb175716763acc70",
+  "cad_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524"
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/spin-head/pad/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/spin-head/pad/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/spin-head/pad/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/spin-head/pad/filament.json",
+    "--orient",
+    "0",
+    "--rotate-y",
+    "-90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "spin-slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/spin-head/pad",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/spin-head/spin-pad.stl"
+  ],
+  "profile_sources": {
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/Bambu TPU 95A HF @BBL X1C.json": "f2fbc93331888b018c92db1733166f067cf2fcbfc4b8445abd1cec91535dc621",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/Bambu TPU 95A HF @base.json": "214abb449f34418e2cd13f7c4ee14fdf7e1db2209b020b33bcaab9a4ae0a8b3c",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/fdm_filament_tpu.json": "8fc12ed3883ae4419cad7300c28b7d9492c32c20831a820b4c030670fa1bdb49",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/fdm_filament_common.json": "8c7105b7d59a28f600c43a946f067b8b4d707b9711c0bf6b88e9166e48878548",
+    "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/filament/fdm_filament_template_direct_dual.json": "e0f564b83f3ef70cce4de1401dd7cd855d6fbd834343cb8f4292f2a1ac3efc51"
+  },
+  "private_profiles": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "fcc95140ed4d89c0f981265585721a19f8056bc6b94d1ae68e40091ae30b14c7",
+    "filament": "ba5d456a2daffb77d659e8209627fd1306007c4a10cbd2b4d3e5465d0be056e3"
+  },
+  "sent_to_printer": false,
+  "returncode": 238
+}

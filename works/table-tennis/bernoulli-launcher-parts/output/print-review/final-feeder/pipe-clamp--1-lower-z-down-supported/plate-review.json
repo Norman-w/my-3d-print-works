@@ -1,0 +1,141 @@
+{
+  "family": "pipe-clamp--1",
+  "folder": "output/print-review/final-feeder/pipe-clamp--1-lower-z-down-supported",
+  "count": 1,
+  "orientation": "Original Z=90 lower flat face down",
+  "checks": {
+    "native_success_no_warning": true,
+    "correct_3mf_object_count": true,
+    "correct_input_names": true,
+    "no_mesh_repair_by_slicer": true,
+    "official_machine_templates_preserved": true,
+    "setpoint_255": true,
+    "proper_rotation_no_scaling": true,
+    "inside_X1C_build_box": true,
+    "source_identity": true,
+    "shared_presets_unchanged": true
+  },
+  "mapping": [
+    {
+      "source_file": "pipe-clamp-left.stl",
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "shift": [
+        144.19999000298026,
+        126.0,
+        -90.0
+      ],
+      "offset": [
+        -16.200000002980232,
+        0.0,
+        102.0
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        -16.2,
+        0.0,
+        102.0
+      ],
+      "build": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        144.19999,
+        128.0,
+        -90.0
+      ]
+    }
+  ],
+  "mesh_repair_stats": [
+    {
+      "face_count": "2238",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  ],
+  "first_layer_model_area_mm2": 1973.4791316476462,
+  "first_layer_model_components": 1,
+  "model_path_bounds_mm": [
+    [
+      112.41,
+      63.21,
+      0.2
+    ],
+    [
+      143.59,
+      188.79,
+      24.0
+    ]
+  ],
+  "support_sample_count": 39754,
+  "feature_command_counts": {
+    "Support": 2479,
+    "Inner wall": 30485,
+    "Outer wall": 10960,
+    "Bottom surface": 452,
+    "Internal solid infill": 3329,
+    "Sparse infill": 17642,
+    "Floating vertical shell": 1227,
+    "Bridge": 912,
+    "Top surface": 406,
+    "Gap infill": 164,
+    "Overhang wall": 48,
+    "Support interface": 69
+  },
+  "max_bridge_command_path_mm": 37.27018422278056,
+  "estimated_time_s": 3732.19482421875,
+  "estimated_filament_g": 30.67641830444336,
+  "native_warnings": "",
+  "gcode_sha256": "261bdf964c45bd52449c8bdeb9677e57119463cc306acc563607cbe96100d225",
+  "project_sha256": "2cf3e0d2d36c4e16a8140aa3ed4167e91ab1885a0d35257359f03ee7d5b1b7ea",
+  "sent_to_printer": false,
+  "limits": [
+    "First-layer area is emitted-bead footprint, not adhesion strength.",
+    "Bridge command length is not unsupported span.",
+    "Bounds/CLI success do not prove physical fit, removal force, shrinkage or PETG finish."
+  ],
+  "support_bounds_in_assembly_mm": [
+    [
+      -26.39361498364893,
+      -62.37850369646763,
+      90.2
+    ],
+    [
+      -10.835168729596973,
+      62.43767105673169,
+      108.0
+    ]
+  ]
+}

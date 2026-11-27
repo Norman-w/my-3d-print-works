@@ -1,0 +1,427 @@
+{
+  "status": "FINITE_SPLIT_GUIDE_BALL_CENTRE_OUTER_BOUND_FOR_NORMAL_PARKED_PAIR_CONDITIONAL_DOMAIN",
+  "source_hashes": {
+    "analysis/final_gate_error_bound.py": "44c0223503c002fd61193ecfc4b2f38700727695934da8ad8f082f50b55145ca",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "analysis/pin_v_seat_error.py": "18d09309068bccc25ea29a8705f277ab9b106f679f160fce5a6f2bffa28ff445",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-joint-tolerance/ball-center-coupling/review.py": "78bd0b26c9fb05789eea2b82d62483d13d326d4b068a276ee409bfe15b60bdd1",
+    "output/current-joint-tolerance/carrier-body-coupling/report.json": "b0fc39309eb2ce67e57b07966106c046a2368d1d8fcd52c9939a2a27b5256ec9",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/frame-finite-contact/report.json": "646f738694b06a122518d32d01e49966304bf38a2f26579e1bf4b32640928712",
+    "output/current-joint-tolerance/frame-finite-contact/review.py": "ca52c4a4f20c1e1bfb8efd50c4fae46b41a8a09258f66adb253dc4f26d58ff94",
+    "output/current-joint-tolerance/half-shell-axial-coupling/report.json": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+    "output/current-joint-tolerance/half-shell-axial-coupling/review.py": "4fbf51ed4e13a067821c09072ccaa2d81910d584f59e37ab6eeef030868371bf",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134",
+    "output/current-joint-tolerance/review.py": "64e899ac1129aa420666551d5adb0184941e6998fa5ca250a91de20eef08246c"
+  },
+  "source_evidence": [
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 90,
+      "text": "            body_tube(guide_start_z,guide_length,guide_od,guide_id);"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 101,
+      "text": "                cylinder(h=120,r=finger_tip_radius+radial_print_clearance);"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 98,
+      "text": "            body_port(z,a);"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 162,
+      "text": "            translate([side==1?33.5:-60,-4.75,z-4.25])"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 164,
+      "text": "            translate([side==1?23.5:-33.5,0,z]) rotate([0,90,0])"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 90,
+      "text": "    translate([positive?0:-100,-100,seam_inlet_start-1])"
+    },
+    {
+      "path": "cad/feeder-seam-candidate.scad",
+      "line": 133,
+      "text": "        seam_reservoir_segment(s,a[0],a[1],a[2],a[3]);"
+    },
+    {
+      "path": "cad/feeder-support-harness.scad",
+      "line": 44,
+      "text": "        sh_y_cyl(x,z,-55,22,4.5);"
+    },
+    {
+      "path": "cad/feeder-integrated-candidate.scad",
+      "line": 21,
+      "text": "    if(!positive) seam_reservoir_cuts();"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 151,
+      "text": "            rotate([0,90,0]) cylinder(h=cam_carrier_inner_offset+1,"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 155,
+      "text": "                cube([cam_carrier_length,cam_carrier_width,cam_carrier_axial]);"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 94,
+      "text": "module ps_carrier_local(){difference(){"
+    }
+  ],
+  "parent_axial_report_sha256": "84c8a086ecdedc0281b7cd00d854fd7df297b35980a501d49576af33de455fa3",
+  "coordinates": "Same H and true near-nominal bisectorN fromhalf-shell-axial-coupling. WorldX is unchanged byRx(theta); commontransversecoordinate isy along eyM and axialcoordinatezeta along ezM.",
+  "same_H_relations": [
+    "Let b(zeta)=ay0−tan(alpha)zeta whereay0=eyM.t/2. At commonaxialzeta the two actual guide axes are y=+/-b; theirlocalcross-sections obey x²+cos²(alpha)(y−/+b)²=innerR², restrictedto respectiveX halfspaces.",
+    "Usingq0,q1 fromthe same locator transform: q1−q0=2Lsin(alpha)n; beta=(zeta/cos(alpha)+59)/62; 2b=(1−beta)q0_y+beta q1_y.",
+    "Eliminate SAMEslotlambda: lambda cos(alpha)=(q0−v1).e. In2b, the q0 coefficient is(e_y+beta*tan(alpha)n_y)e+(1−beta)n_y n; the v1 coefficient is−beta*tan(alpha)n_y e+beta n_y n.",
+    "|b|<=c/(2L)*[sqrt((-80−62beta*tan(alpha))²+(62(1−beta))²)+62|beta|sec(alpha)]. This is a support-function outer bound aftercorrelated elimination, not addition ofindependent locator displacements.",
+    "The bound is convex inbeta withtanalpha fixed and convex intanalpha withbeta fixed. Four rectanglecorners enclose the whole continuous axial/angle domain; they are not sampled physical poses or achievable maxima."
+  ],
+  "continuous_wall_barrier_proof": [
+    "For any sameH pose and any centreplanein the stated finiteinterval, useuniform bbar>=|b(zeta)| andcosalpha>=camin. LetAstar=Amax/camin+bbar andhstar=hmax/camin+bbar.",
+    "At everypoint on commoncirclex²+y²=Astar², localradius sqrt(x²+cos²alpha(y−/+b)²)>=cosalpha(Astar−|b|)>=Amax. It isoutside eitherhalf actualinnercutter, onthe correct X half.",
+    "The same localradius<=Astar+bbar, strictlybelow the actualouterpolygon guaranteed inscribed radius23.5cos(pi/72). Thus thepointis within guidewall thickness. LocalZformula andreported interval keep all suchpoints strictlywithin realcylinderZ[-80,24], awayfromtaperports.",
+    "If |y|>=hstar then |localY|=cosalpha|y−/+b|>=hmax. BothroundX fingerholes arethereforeexcluded, regardless oftheirlocalZ centres or half-shell axialshift. Theirunion neverextendsoutside thisenlargedY band.",
+    "The seatedX0 halfspace seam haszero Xgap. Both reconstructed annularbands include the seam boundary; all othercurrent cutters areoutside thisrealinner-guide material region. A gasket/openXseam isNOTcovered.",
+    "Consequently actualsolid providesallcirclearcs outside |y|<hstar at the ball-equatorial plane. A rigidball cuts thisplane in a radiusR disc. Inthenormal interior component the surviving arcs force e<=sqrt(Astar²−hstar²)−sqrt(R²−hstar²).",
+    "All-direction proof: letgamma=asin(hstar/Astar). For centreazimuththeta nearanX opening, boundary distanceusesdelta=max(0,gamma−|theta|), so e<=Astar cosdelta−sqrt(R²−Astar²sin²delta). It increases withdelta forAstar>R; maximumatdelta=gamma. Elseanintactradialarc givesAstar−R. This rederives the circle-rim lemma for a NEWmaterialbarrier, ratherthan reusing oldphysicalcoaxialE.",
+    "Theboundisstrictlyinside the bootstrapinterior circle. A continuousnormallyinserted ball cannotfirst leave thiscomponent within thecertified axialrange withoutpenetrating one ofthesurviving arcs. Arbitraryoutsideballs/endescapeareexcluded."
+  ],
+  "parked_state_and_refinement": {
+    "state_conditions": [
+      "One rigidball is stationary against an actualfrontfinger; itscentre is upstream of the supportingcontactpoint incommonaxialcoordinate. A secondrigidball is upstream and touches it. Thisis the intended staticparked-pair state, not a claim about arriving or flyingballs.",
+      "Bothradii lie20..20.5 as CADdesigninputs, not measured40+size. Bothballs belong to normalinteriorguidecomponent; sourcecut and seatedseam assumptions hold.",
+      "Inheritedcarrier/axialnormalbranch, tipX20..27, parallelgib andrigidshape assumptions remainconditions; Bx itselfisnotderived."
+    ],
+    "full_finger_outer_geometry": {
+      "sphere_radius": 2.5,
+      "rod_local_X": [
+        0,
+        14
+      ],
+      "carrier_local_box": [
+        [
+          13,
+          28
+        ],
+        [
+          -4.5,
+          4.5
+        ],
+        [
+          -4,
+          4
+        ]
+      ],
+      "carrier_local_Y_to_common_Z_component_abs_upper": 0.035505260808,
+      "whole_finger_axial_extent_about_tip_upper_mm": 5.210728399548
+    },
+    "bootstrap_first_ball_Z_interval_mm": [
+      -26.494153126961,
+      5.994153126961
+    ],
+    "bootstrap_both_Z_interval_mm": [
+      -67.494153126961,
+      5.994153126961
+    ],
+    "bootstrap_barrier": {
+      "label": "bootstrap_full_finger_contact_budgeted_radius",
+      "held_ball_centre_common_Z_interval_mm": [
+        -67.494153126961,
+        5.994153126961
+      ],
+      "inner_radius_upper_mm": 21.5,
+      "hole_radius_upper_mm": 2.75,
+      "half_axis_separation_half_bound_mm": 0.109604371731,
+      "b_support_proof": {
+        "beta_interval": [
+          -0.137003711265,
+          1.048292902626
+        ],
+        "analytic_convex_corner_bounds": [
+          {
+            "beta": -0.137003711265,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.086938010948
+          },
+          {
+            "beta": -0.137003711265,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.086923475207
+          },
+          {
+            "beta": 1.048292902626,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.109456234917
+          },
+          {
+            "beta": 1.048292902626,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.109604371731
+          }
+        ]
+      },
+      "barrier_circle_radius_mm": 21.609628890682,
+      "all_holes_enclosing_Y_half_band_mm": 2.859607507876,
+      "actual_wall_local_radial_upper_mm": 21.719233262413,
+      "outer_wall_guaranteed_inscribed_radius_lower_mm": 23.477633207153,
+      "outer_wall_reserve_lower_mm": 1.75839994474,
+      "all_barrier_points_local_Z_interval_mm": [
+        -67.612989990414,
+        6.112919854811
+      ],
+      "finite_cylinder_Z_reserves_mm": [
+        12.387010009586,
+        17.887080145189
+      ],
+      "sphere_radius_interval_mm": [
+        20.0,
+        20.5
+      ],
+      "ball_centre_transverse_norm_upper_mm": 1.625076489774,
+      "radius_specific_analytic_values": [
+        {
+          "ball_radius_mm": 20.0,
+          "centre_norm_upper_mm": 1.625076489774
+        },
+        {
+          "ball_radius_mm": 20.25,
+          "centre_norm_upper_mm": 1.372513738354
+        },
+        {
+          "ball_radius_mm": 20.5,
+          "centre_norm_upper_mm": 1.120014433659
+        }
+      ],
+      "bound_formula_for_each_R": "E(R)=[Astar²−R²]/[sqrt(Astar²−hstar²)+sqrt(R²−hstar²)]",
+      "source_realization_note": "Barrier is a necessary wall constraint, not a reachable offset or a manufactured clearance measurement."
+    },
+    "contact_refinement": {
+      "carrier_world_abs_X_lower_mm": 32.709529839831,
+      "ball_world_abs_X_upper_mm": 22.125076489774,
+      "carrier_ball_X_separation_lower_mm": 10.584453350057,
+      "front_tip_abs_Y_bound_mm": 0.90790208649,
+      "ball_minus_tip_dot_outward_rod_axis_upper_mm": -17.214420793627,
+      "interpretation": "Carrier cannotcontactthisball. Negativeaxisprojection makesconstantrodsectiondistance strictlyincrease forlocalX>0, so anyfirstnonpenetrating rod/head contactis in the tip/rootcap radius2.5 envelope. Thisdoesnotassumethe32gonrodroot iscontainedinthe40gonhead."
+    },
+    "refined_first_ball_Z_interval_mm": [
+      -23.783424727413,
+      3.283424727413
+    ],
+    "refined_both_Z_interval_mm": [
+      -64.783424727413,
+      3.283424727413
+    ],
+    "derivation": "Ifallcontactpoints lie |zeta|<=Bz+Pz and upstreamcontact holds, firstcentre in[-Bz−Pz−Rmax,Bz+Pz]; touchingsecondadds atmost2Rmaxupstream. StartwithwholefingerPz, deriveE0, excludeothercontacts, thenusePz=2.5. Two finiteanalytical passes, no optimizer or infiniteiteration."
+  },
+  "final_cases": [
+    {
+      "label": "current_nominal_inner_radius",
+      "held_ball_centre_common_Z_interval_mm": [
+        -64.783424727413,
+        3.283424727413
+      ],
+      "inner_radius_upper_mm": 21.25,
+      "hole_radius_upper_mm": 2.75,
+      "half_axis_separation_half_bound_mm": 0.107512486198,
+      "b_support_proof": {
+        "beta_interval": [
+          -0.093282235605,
+          1.004571426966
+        ],
+        "analytic_convex_corner_bounds": [
+          {
+            "beta": -0.093282235605,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.083550465123
+          },
+          {
+            "beta": -0.093282235605,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.083540400825
+          },
+          {
+            "beta": 1.004571426966,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.107370429272
+          },
+          {
+            "beta": 1.004571426966,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.107512486198
+          }
+        ]
+      },
+      "barrier_circle_radius_mm": 21.357536720045,
+      "all_holes_enclosing_Y_half_band_mm": 2.857515622343,
+      "actual_wall_local_radial_upper_mm": 21.465049206243,
+      "outer_wall_guaranteed_inscribed_radius_lower_mm": 23.477633207153,
+      "outer_wall_reserve_lower_mm": 2.01258400091,
+      "all_barrier_points_local_Z_interval_mm": [
+        -64.901874620271,
+        3.401804484669
+      ],
+      "finite_cylinder_Z_reserves_mm": [
+        15.098125379729,
+        20.598195515331
+      ],
+      "sphere_radius_interval_mm": [
+        20.0,
+        20.5
+      ],
+      "ball_centre_transverse_norm_upper_mm": 1.370701348738,
+      "radius_specific_analytic_values": [
+        {
+          "ball_radius_mm": 20.0,
+          "centre_norm_upper_mm": 1.370701348738
+        },
+        {
+          "ball_radius_mm": 20.25,
+          "centre_norm_upper_mm": 1.118142403147
+        },
+        {
+          "ball_radius_mm": 20.5,
+          "centre_norm_upper_mm": 0.865646808659
+        }
+      ],
+      "bound_formula_for_each_R": "E(R)=[Astar²−R²]/[sqrt(Astar²−hstar²)+sqrt(R²−hstar²)]",
+      "source_realization_note": "Barrier is a necessary wall constraint, not a reachable offset or a manufactured clearance measurement."
+    },
+    {
+      "label": "conditional_inner_radius_plus_point25",
+      "held_ball_centre_common_Z_interval_mm": [
+        -64.783424727413,
+        3.283424727413
+      ],
+      "inner_radius_upper_mm": 21.5,
+      "hole_radius_upper_mm": 2.75,
+      "half_axis_separation_half_bound_mm": 0.107512486198,
+      "b_support_proof": {
+        "beta_interval": [
+          -0.093282235605,
+          1.004571426966
+        ],
+        "analytic_convex_corner_bounds": [
+          {
+            "beta": -0.093282235605,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.083550465123
+          },
+          {
+            "beta": -0.093282235605,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.083540400825
+          },
+          {
+            "beta": 1.004571426966,
+            "tan_alpha": -0.001510242929,
+            "b_abs_upper_mm": 0.107370429272
+          },
+          {
+            "beta": 1.004571426966,
+            "tan_alpha": 0.001510242929,
+            "b_abs_upper_mm": 0.107512486198
+          }
+        ]
+      },
+      "barrier_circle_radius_mm": 21.607537005149,
+      "all_holes_enclosing_Y_half_band_mm": 2.857515622343,
+      "actual_wall_local_radial_upper_mm": 21.715049491347,
+      "outer_wall_guaranteed_inscribed_radius_lower_mm": 23.477633207153,
+      "outer_wall_reserve_lower_mm": 1.762583715806,
+      "all_barrier_points_local_Z_interval_mm": [
+        -64.902252181003,
+        3.402182045401
+      ],
+      "finite_cylinder_Z_reserves_mm": [
+        15.097747818997,
+        20.597817954599
+      ],
+      "sphere_radius_interval_mm": [
+        20.0,
+        20.5
+      ],
+      "ball_centre_transverse_norm_upper_mm": 1.622943151079,
+      "radius_specific_analytic_values": [
+        {
+          "ball_radius_mm": 20.0,
+          "centre_norm_upper_mm": 1.622943151079
+        },
+        {
+          "ball_radius_mm": 20.25,
+          "centre_norm_upper_mm": 1.370384205488
+        },
+        {
+          "ball_radius_mm": 20.5,
+          "centre_norm_upper_mm": 1.117888611
+        }
+      ],
+      "bound_formula_for_each_R": "E(R)=[Astar²−R²]/[sqrt(Astar²−hstar²)+sqrt(R²−hstar²)]",
+      "source_realization_note": "Barrier is a necessary wall constraint, not a reachable offset or a manufactured clearance measurement."
+    }
+  ],
+  "wall_cut_audit": [
+    "body_inner_guide radialholes aretheonlyguidecuts in theverifiedinteriorZ range; taperbody_ports occuroutside[-80,24].",
+    "body_side_cuts rectangularcarrieropening begins|X|33.5 andshortbearingcutterbegins|X|23.5, beyondthestatedbarrierradialrange.",
+    "splitfasteners andseamlocatorcuts liearound|Y|40, outsideguide. Reservoirgrooves inthiscylindricalZsegment areatmeanbodyradius33.5, not innerguideR21.25.",
+    "ic_host onlyunionsoutlet/harness additions before sh_host_cuts andseamreservoir recuts; sh cutters haveY<=-33. Allareoutsidethebarrierlocalradius<22.0 region. Addedmaterial mayonlyrestrictballspace further."
+  ],
+  "parameter_limits": {
+    "nominal_hole_radius_not_measured": 2.75,
+    "actual_ball_radius_values": null,
+    "actual_guide_inner_outer_form_bounds": null,
+    "actual_seam_gap_or_form": null,
+    "budget_case_warning": "Amax21.5 is guide_clearance_budget input; it is valid only if an actual fullwall remains outto the reportedradius andholesremain insidehmax2.75. The sourceouterpolygon providesnominalmaterial, not an asprinted guarantee."
+  },
+  "not_closed": [
+    "FourfingerBy andradialBx, Vpreload/loadedshape, commoncamendpoint phase, andactualmaterials arestilloutside thisball-only bound.",
+    "No dynamicarrival/airflow/friction/ballcompression or exactone-release claim. The held-state assumptions are explicit.",
+    "These circlesenclosefeasiblecentres; everypointinthecircle neednotbe attainable, andfailedtests over thiscirclewouldnotprovea realcollision.",
+    "No claim a physicalball followsN or thateitherhalf iscoaxialwiththeother. OldEmax1.513367 isNOT used."
+  ],
+  "finite_conditional_ball_centre_domain_closed": true,
+  "full_D02_closed": false,
+  "static_two_ball_function_recertified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "all_sources_stable": true
+}

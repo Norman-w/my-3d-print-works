@@ -1,0 +1,452 @@
+{
+  "status": "READ_ONLY_INVENTORY_AND_PARAMETER_MAPPING_PASS",
+  "scope": "Native OpenSCAD function values and current frontend source-contract transforms at t=0,0.5,1; source module partition read-through. No mesh-equality, collision, strength, or physical acceptance claim.",
+  "inventory_sha256": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+  "adapter_sha256": "2b5d9f8e1513858f353211fc2dcd4eb9f6959bcffb249caf7a4c42bb1850ceb8",
+  "counts": {
+    "printed": 55,
+    "purchased": 23,
+    "reference": 6,
+    "feeder_printed": 45,
+    "spin_printed_including_hold": 10,
+    "total_instances": 84
+  },
+  "checks": [
+    {
+      "name": "unique-instances",
+      "passed": true
+    },
+    {
+      "name": "all-source-baseline-38-retained",
+      "passed": true
+    },
+    {
+      "name": "feeder-adds-exactly-seven",
+      "passed": true,
+      "added": [
+        "feeder/cable-input-body",
+        "feeder/cable-input-cover",
+        "feeder/cable-input-lever",
+        "feeder/cable-output-cap",
+        "feeder/cable-route-base",
+        "feeder/cable-route-cap",
+        "feeder/cable-route-lower"
+      ]
+    },
+    {
+      "name": "spin-ten",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/positive-half",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/negative-half",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/liner",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/right-support",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/left-support",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/x-gib",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/x-cover",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/fixed-spacer",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/moving-spacer",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/capture-right",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pipe-clamp-right",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-cap-right",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/frame-y-gib-right",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-gib-right-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-keeper-right-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/finger-right-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pin-block-right-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-gib-right-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-keeper-right-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/finger-right-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pin-block-right-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/capture-left",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pipe-clamp-left",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-cap-left",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/frame-y-gib-left",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-gib-left-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-keeper-left-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/finger-left-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pin-block-left-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-gib-left-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/y-keeper-left-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/finger-left-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/pin-block-left-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/inlet-rear",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/inlet-front",
+      "passed": true
+    },
+    {
+      "name": "source-selector:feeder/inlet-backplate",
+      "passed": true
+    },
+    {
+      "name": "only-two-source-replacements",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-scene-export.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:analysis/launcher_final_assembly.py",
+      "passed": true
+    },
+    {
+      "name": "source-hash:analysis/spin_head_geometry.py",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-complete-review.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-housing-route.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-output-interface.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-route-retention.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-service-contract.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-service-review.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-trigger-input.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cable-trigger-system.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/cam-study.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/feeder-return-spring.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/spin-head.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/spin-complete-hardware.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/parameters.scad",
+      "passed": true
+    },
+    {
+      "name": "source-hash:cad/spin-parameters.scad",
+      "passed": true
+    },
+    {
+      "name": "pose-0:input-angle",
+      "passed": true
+    },
+    {
+      "name": "pose-0:input-finger",
+      "passed": true
+    },
+    {
+      "name": "pose-0:frame-delta",
+      "passed": true
+    },
+    {
+      "name": "pose-0:spring-moving-hardware",
+      "passed": true
+    },
+    {
+      "name": "pose-0:feeder/hardware-right-front",
+      "passed": true
+    },
+    {
+      "name": "pose-0:feeder/hardware-right-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-0:feeder/hardware-left-front",
+      "passed": true
+    },
+    {
+      "name": "pose-0:feeder/hardware-left-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-0:output-tail",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:input-angle",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:input-finger",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:frame-delta",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:spring-moving-hardware",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:feeder/hardware-right-front",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:feeder/hardware-right-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:feeder/hardware-left-front",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:feeder/hardware-left-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-0.5:output-tail",
+      "passed": true
+    },
+    {
+      "name": "pose-1:input-angle",
+      "passed": true
+    },
+    {
+      "name": "pose-1:input-finger",
+      "passed": true
+    },
+    {
+      "name": "pose-1:frame-delta",
+      "passed": true
+    },
+    {
+      "name": "pose-1:spring-moving-hardware",
+      "passed": true
+    },
+    {
+      "name": "pose-1:feeder/hardware-right-front",
+      "passed": true
+    },
+    {
+      "name": "pose-1:feeder/hardware-right-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-1:feeder/hardware-left-front",
+      "passed": true
+    },
+    {
+      "name": "pose-1:feeder/hardware-left-rear",
+      "passed": true
+    },
+    {
+      "name": "pose-1:output-tail",
+      "passed": true
+    }
+  ],
+  "native_command": [
+    "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+    "--hardwarnings",
+    "-o",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-inventory-audit/native-poses.csg",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-inventory-audit/native-poses.scad"
+  ],
+  "native_poses": [
+    [
+      0,
+      0,
+      [
+        49.5442,
+        -80,
+        -20.4558
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        21,
+        26
+      ],
+      13,
+      [
+        -58,
+        35.5,
+        15
+      ]
+    ],
+    [
+      0.5,
+      -9.5493,
+      [
+        54.1199,
+        -80,
+        -24.3261
+      ],
+      [
+        0,
+        0,
+        10
+      ],
+      [
+        21,
+        21
+      ],
+      23,
+      [
+        -58,
+        35.5,
+        25
+      ]
+    ],
+    [
+      1,
+      -19.0986,
+      [
+        59.2743,
+        -80,
+        -27.3837
+      ],
+      [
+        0,
+        0,
+        20
+      ],
+      [
+        26,
+        21
+      ],
+      33,
+      [
+        -58,
+        35.5,
+        35
+      ]
+    ]
+  ],
+  "notes": [
+    "Original sh_bolts removed and sh_nuts restored by ct_original_fixed_hardware. New four M4x60 occur only in ci_fixed_hardware.",
+    "All four follower-hardware subassemblies reproduce ps_added_hardware + ps_original_pins; moving spring endpoint is separate.",
+    "Spin float and preload do not participate in trigger; current preload hardware mixed group is locked to p=0.",
+    "Optional removable hold bolt is a union-equivalent Boolean partition of sch_latch_hardware(true) minus stationary nut, not an independent factory bolt solid."
+  ]
+}

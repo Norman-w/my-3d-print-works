@@ -1,0 +1,22 @@
+{
+  "status": "OPEN",
+  "finding": "SUPPORT_EXPORT_GEOMETRY_DEFECTS_AND_RIGHT_BOOLEAN_REIMPORT_FAILURE",
+  "scope": "Current left/right support exports contain zero-area faces; right also has an overlap witness and Boolean reimport failure. CAD instance parity cannot close these findings.",
+  "evidence_sha256": {
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "output/integrated-review-parts/right-support.stl": "9647784b194f13aacf8b5150b2f16ec9909c09e95fc0867cc94bdbc01d03dedc",
+    "output/integrated-review-parts/right-support-cgal-snapped.stl": "095f0aeae904aa4d53474a83b7e5a24c75f5b7ab6caa7dd7992552b6cbe36578",
+    "output/integrated-review-parts/right-support-reimport.json": "af70eaf8d77743f2fdb8dd4dea8c5bb65670f769f5ad2583068674145a7daab8",
+    "output/integrated-review-parts/right-support-import-check.scad": "915d98d1635e90546a4fa2b94a4cead96066e0831d6392540ad121fc81f88ee2",
+    "output/integrated-review-parts/right-support-snapped-check.scad": "1f865304c5e11cee0734f612945ad2fbdb10970c800c101c14406315e2eb50e4",
+    "output/integrated-review-parts/right-support-reimport.log": "a2b9eb242c5c048ba5f8762154159bf333a420197b5b8876fea8787981297ba0",
+    "output/integrated-review-parts/right-support-snapped-check.log": "a2b9eb242c5c048ba5f8762154159bf333a420197b5b8876fea8787981297ba0",
+    "analysis/export_degeneracy_audit.py": "aa1f7cc2913d9650dd2f326483b61ba739c3809e4e5ad4e872d9204657157950",
+    "output/integrated-review-parts/degeneracy-audit.json": "5e12386a8ff77b92e1b92bfc2d2e64efd51ae90b68117a346afcd65d4c71f8ec",
+    "output/integrated-review-parts/left-support.stl": "acba3c53ce779a1ba4c39933878fe6ea44ca4309e8e77d4a412cecbef16ec145"
+  },
+  "source_or_export_modified": false,
+  "manufacturing_release": false,
+  "resolution_evidence": null
+}

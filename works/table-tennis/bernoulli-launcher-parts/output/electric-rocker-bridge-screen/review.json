@@ -1,0 +1,4535 @@
+{
+  "status": "OUTPUT_BRIDGE_LAYOUT_SCREEN_ONLY",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-end-switch-side-cap.scad": "e4ba58a0b92ead0282edca90b732bb9b12facd0fcc834f8a8e929d1ea8a9b78e",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electric-feeder-trigger-assembly.scad": "43867d498a0924e3b3996b6dd14c1cf557dace000c2e91f36ec20ee873e86263",
+    "cad/electric-full-stroke-switch-screen.scad": "e1d78fc67a09e0ea327e49c6046130e0d4d8ee22cd5fd485fb6167c64d01feb3",
+    "cad/electric-home-switch-screen.scad": "50a56df95d74a44807001d560ae729b66a879b3904046de0eadd6f6c371a2d5f",
+    "cad/electric-rocker-bridge-screen.scad": "c0c18a2a8aa34aae5e985196b6173e80339a70206d0fa07f9217b2a041676c49",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electric_rocker_bridge_screen.py": "79d898ddec2c59bd4a46c20775539806eeb3c32a261feb38636a2e31cb9cb2cd"
+  },
+  "side_switch_review_sha256": "f22829cdcf908694fed4508b2b1dc1ec2df0c9134c79820d7c2252dc5f359148",
+  "motor_envelope_review_sha256": "33c03431a47571ae33d43e82a97302d38007133afd9568f37c381a5fb3bc70b0",
+  "screen_contract": {
+    "input_full_stroke_mm": 30,
+    "output_full_stroke_mm": 20,
+    "same_side_rocker_ratio": 0.6666666666666666,
+    "angle_from_input_displacement": "asin((30*t-15)/input_radius)",
+    "max_input_output_position_identity_residual_mm": 1.7763568394002505e-15,
+    "sampled_feeder_travel_mm": [
+      0,
+      10,
+      20
+    ],
+    "selected_fine_sampled_feeder_travel_mm": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "motor_proxy": "seller-gallery full-length diameter-29-mm cylinder",
+    "motor_proxy_z_shift_for_lifted_layout_mm": 2,
+    "minimum_bridge_is_solid_occupied_envelope_not_a_slotted_part": true,
+    "mount_pivot_motor_clevis_and_pin_retention_designed": false,
+    "actual_motor_body_rod_and_force_verified": false,
+    "selected_r75_y62_cap_top_to_bridge_bottom_nominal_mm": 2.7,
+    "selected_r75_y62_dilated_neighbor_clearance_screen_mm": 2,
+    "selected_r75_y62_motor_bridge_clearance_screen_mm": 5,
+    "prior_z23_dilated_fixed_clearance_fails": true,
+    "selected_r75_y62_motor_radial_gap_to_bridge_nominal_mm": 5.6817,
+    "nominal_gap_is_not_print_or_dynamic_clearance": true
+  },
+  "candidates": [
+    {
+      "input_radius_mm": 45,
+      "output_radius_mm": 30.0,
+      "rocker_plane_y_mm": 52,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        42.5736,
+        52,
+        25
+      ],
+      "half_swing_deg": 19.4712,
+      "output_pin_x_range_mm": [
+        70.8579,
+        72.5736
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        63.9579,
+        79.4736
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        48.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 45,
+      "output_radius_mm": 30.0,
+      "rocker_plane_y_mm": 55,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        42.5736,
+        55,
+        25
+      ],
+      "half_swing_deg": 19.4712,
+      "output_pin_x_range_mm": [
+        70.8579,
+        72.5736
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        63.9579,
+        79.4736
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        51.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 45,
+      "output_radius_mm": 30.0,
+      "rocker_plane_y_mm": 58,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        42.5736,
+        58,
+        25
+      ],
+      "half_swing_deg": 19.4712,
+      "output_pin_x_range_mm": [
+        70.8579,
+        72.5736
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        63.9579,
+        79.4736
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        54.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 45,
+      "output_radius_mm": 30.0,
+      "rocker_plane_y_mm": 62,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        42.5736,
+        62,
+        25
+      ],
+      "half_swing_deg": 19.4712,
+      "output_pin_x_range_mm": [
+        70.8579,
+        72.5736
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        63.9579,
+        79.4736
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        58.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [
+        "r45-y62-t0.00-bridge-motor",
+        "r45-y62-t0.50-bridge-motor",
+        "r45-y62-t1.00-bridge-motor"
+      ],
+      "errors": [],
+      "sampled_clearance": false
+    },
+    {
+      "input_radius_mm": 45,
+      "output_radius_mm": 30.0,
+      "rocker_plane_y_mm": 63,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        42.5736,
+        63,
+        25
+      ],
+      "half_swing_deg": 19.4712,
+      "output_pin_x_range_mm": [
+        70.8579,
+        72.5736
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        63.9579,
+        79.4736
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        59.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [
+        "r45-y63-t0.00-bridge-motor",
+        "r45-y63-t0.50-bridge-motor",
+        "r45-y63-t1.00-bridge-motor"
+      ],
+      "errors": [],
+      "sampled_clearance": false
+    },
+    {
+      "input_radius_mm": 60,
+      "output_radius_mm": 40.0,
+      "rocker_plane_y_mm": 52,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        26.9052,
+        52,
+        25
+      ],
+      "half_swing_deg": 14.4775,
+      "output_pin_x_range_mm": [
+        65.6351,
+        66.9052
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        58.7351,
+        73.8052
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        48.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 60,
+      "output_radius_mm": 40.0,
+      "rocker_plane_y_mm": 55,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        26.9052,
+        55,
+        25
+      ],
+      "half_swing_deg": 14.4775,
+      "output_pin_x_range_mm": [
+        65.6351,
+        66.9052
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        58.7351,
+        73.8052
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        51.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 60,
+      "output_radius_mm": 40.0,
+      "rocker_plane_y_mm": 58,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        26.9052,
+        58,
+        25
+      ],
+      "half_swing_deg": 14.4775,
+      "output_pin_x_range_mm": [
+        65.6351,
+        66.9052
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        58.7351,
+        73.8052
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        54.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 60,
+      "output_radius_mm": 40.0,
+      "rocker_plane_y_mm": 62,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        26.9052,
+        62,
+        25
+      ],
+      "half_swing_deg": 14.4775,
+      "output_pin_x_range_mm": [
+        65.6351,
+        66.9052
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        58.7351,
+        73.8052
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        58.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 60,
+      "output_radius_mm": 40.0,
+      "rocker_plane_y_mm": 63,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        26.9052,
+        63,
+        25
+      ],
+      "half_swing_deg": 14.4775,
+      "output_pin_x_range_mm": [
+        65.6351,
+        66.9052
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        58.7351,
+        73.8052
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        59.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 75,
+      "output_radius_mm": 50.0,
+      "rocker_plane_y_mm": 52,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        11.5153,
+        52,
+        25
+      ],
+      "half_swing_deg": 11.537,
+      "output_pin_x_range_mm": [
+        60.5051,
+        61.5153
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        53.6051,
+        68.4153
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        48.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 75,
+      "output_radius_mm": 50.0,
+      "rocker_plane_y_mm": 55,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        11.5153,
+        55,
+        25
+      ],
+      "half_swing_deg": 11.537,
+      "output_pin_x_range_mm": [
+        60.5051,
+        61.5153
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        53.6051,
+        68.4153
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        51.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 75,
+      "output_radius_mm": 50.0,
+      "rocker_plane_y_mm": 58,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        11.5153,
+        58,
+        25
+      ],
+      "half_swing_deg": 11.537,
+      "output_pin_x_range_mm": [
+        60.5051,
+        61.5153
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        53.6051,
+        68.4153
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        54.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 75,
+      "output_radius_mm": 50.0,
+      "rocker_plane_y_mm": 62,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        11.5153,
+        62,
+        25
+      ],
+      "half_swing_deg": 11.537,
+      "output_pin_x_range_mm": [
+        60.5051,
+        61.5153
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        53.6051,
+        68.4153
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        58.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    },
+    {
+      "input_radius_mm": 75,
+      "output_radius_mm": 50.0,
+      "rocker_plane_y_mm": 63,
+      "motor_proxy_axis_xy_mm": [
+        85,
+        70
+      ],
+      "pivot_xyz_mm": [
+        11.5153,
+        63,
+        25
+      ],
+      "half_swing_deg": 11.537,
+      "output_pin_x_range_mm": [
+        60.5051,
+        61.5153
+      ],
+      "minimum_solid_bridge_x_range_mm": [
+        53.6051,
+        68.4153
+      ],
+      "bridge_y_range_mm": [
+        35.5,
+        59.5
+      ],
+      "bridge_z_range_at_home_mm": [
+        8.1,
+        21.9
+      ],
+      "integral_root_web_bottom_z_at_home_mm": 7.1,
+      "collisions": [],
+      "errors": [],
+      "sampled_clearance": true
+    }
+  ],
+  "probes": {
+    "r45-y52-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y52-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y55-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y58-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 47.61635,
+      "bounds": {
+        "min": [
+          76.16854411199819,
+          56.59527728746784,
+          8.1
+        ],
+        "max": [
+          79.47359312880715,
+          58.5,
+          21.9
+        ],
+        "size": [
+          3.3050490168089652,
+          1.9047227125321626,
+          13.799999999999999
+        ]
+      }
+    },
+    "r45-y62-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 47.61635,
+      "bounds": {
+        "min": [
+          76.16854411199819,
+          56.59527728746784,
+          18.1
+        ],
+        "max": [
+          79.47359312880715,
+          58.5,
+          31.9
+        ],
+        "size": [
+          3.3050490168089652,
+          1.9047227125321626,
+          13.799999999999997
+        ]
+      }
+    },
+    "r45-y62-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 41.06048,
+      "bounds": {
+        "min": [
+          76.16854411199819,
+          56.59527728746784,
+          28.1
+        ],
+        "max": [
+          79.47359312880715,
+          58.5,
+          40.0
+        ],
+        "size": [
+          3.3050490168089652,
+          1.9047227125321626,
+          11.899999999999999
+        ]
+      }
+    },
+    "r45-y62-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y62-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 101.46581,
+      "bounds": {
+        "min": [
+          75.01061929036827,
+          56.59527728746784,
+          8.1
+        ],
+        "max": [
+          79.47359312880715,
+          59.5,
+          21.9
+        ],
+        "size": [
+          4.462973838438884,
+          2.9047227125321626,
+          13.799999999999999
+        ]
+      }
+    },
+    "r45-y63-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 101.46581,
+      "bounds": {
+        "min": [
+          75.01061929036827,
+          56.59527728746784,
+          18.1
+        ],
+        "max": [
+          79.47359312880715,
+          59.5,
+          31.9
+        ],
+        "size": [
+          4.462973838438884,
+          2.9047227125321626,
+          13.799999999999997
+        ]
+      }
+    },
+    "r45-y63-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-bridge-motor": {
+      "occupied": true,
+      "volume_mm3": 87.49588,
+      "bounds": {
+        "min": [
+          75.01061929036827,
+          56.59527728746784,
+          28.1
+        ],
+        "max": [
+          79.47359312880715,
+          59.5,
+          40.0
+        ],
+        "size": [
+          4.462973838438884,
+          2.9047227125321626,
+          11.899999999999999
+        ]
+      }
+    },
+    "r45-y63-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r45-y63-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y52-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y55-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y58-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y62-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r60-y63-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y52-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y55-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y58-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t0.50-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y63-t1.00-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    }
+  },
+  "selected_fine_probes": {
+    "r75-y62-t0.05-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.05-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.10-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.15-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.20-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.25-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.30-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.35-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.40-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.45-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.55-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.60-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.65-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.70-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.75-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.80-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.85-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.90-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-motor": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-motor-proxy-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-motor-proxy-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-motor-proxy-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-hardware": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-switch": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-bridge-visual": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.95-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    }
+  },
+  "selected_end_clearance_probes": {
+    "r75-y62-t0.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.00-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t0.50-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-moving-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-switch-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "r75-y62-t1.00-rocker-hardware-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    }
+  },
+  "prior_z23_clearance_probe": {
+    "r75-y62-z23-t0.00-bridge-fixed-clearance-2mm": {
+      "occupied": true,
+      "volume_mm3": 72.18709,
+      "bounds": {
+        "min": [
+          51.9376169111477,
+          33.62777267069324,
+          4.102409087589654
+        ],
+        "max": [
+          70.0,
+          49.0,
+          5.4
+        ],
+        "size": [
+          18.0623830888523,
+          15.37222732930676,
+          1.297590912410346
+        ]
+      }
+    }
+  },
+  "positive_controls": {
+    "r75-y62-t0.00-bridge-tab-root": {
+      "occupied": true,
+      "volume_mm3": 52.83969,
+      "bounds": {
+        "min": [
+          54.0,
+          35.5,
+          7.1
+        ],
+        "max": [
+          68.41530771650466,
+          37.8,
+          9.0
+        ],
+        "size": [
+          14.415307716504657,
+          2.299999999999997,
+          1.9000000000000004
+        ]
+      }
+    },
+    "r75-y62-t0.00-visual-bridge-tab-root": {
+      "occupied": true,
+      "volume_mm3": 52.83969,
+      "bounds": {
+        "min": [
+          54.0,
+          35.5,
+          7.1
+        ],
+        "max": [
+          68.41530771650466,
+          37.8,
+          9.0
+        ],
+        "size": [
+          14.415307716504657,
+          2.299999999999997,
+          1.9000000000000004
+        ]
+      }
+    },
+    "r75-y62-t0.00-positive-control": {
+      "occupied": true,
+      "volume_mm3": 4755.75911,
+      "bounds": {
+        "min": [
+          53.605102572168214,
+          35.5,
+          7.1
+        ],
+        "max": [
+          68.41530771650466,
+          58.5,
+          21.9
+        ],
+        "size": [
+          14.810205144336443,
+          23.0,
+          14.799999999999999
+        ]
+      }
+    }
+  },
+  "images": {
+    "r75-y62-home.png": {
+      "file": "output/electric-rocker-bridge-screen/r75-y62-home.png",
+      "sha256": "ed7a3be295075b1c24bcc6173b156cedd75f17d90a28e791d422fc70c9896d33",
+      "pixels": [
+        1400,
+        1000
+      ],
+      "feeder_travel_mm": 0
+    },
+    "r75-y62-full.png": {
+      "file": "output/electric-rocker-bridge-screen/r75-y62-full.png",
+      "sha256": "ff0bc44f57c96ca0008102e9200f74c2c0e835c6bddbe378c3b5a5d4fe220e81",
+      "pixels": [
+        1400,
+        1000
+      ],
+      "feeder_travel_mm": 20
+    }
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

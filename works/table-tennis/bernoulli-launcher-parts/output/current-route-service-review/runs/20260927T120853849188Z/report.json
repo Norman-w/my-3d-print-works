@@ -1,0 +1,1549 @@
+{
+  "status": "NATIVE_PROBES_COMPLETE_CLASSIFICATION_REQUIRED",
+  "created_utc": "2026-09-27T12:09:03.340982+00:00",
+  "source_sha256": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "output/current-route-service-review/review.py": "a92e736a39a083ec4dde3f883a3e3b355e3d613971c507ff018cf07a7b67de7b",
+    "output/current-route-service-review/runs/20260927T120853849188Z/probe.scad": "4e0b886c6a1f6aa0f831532d0b76b7c313a8b00e0da280394cc1a19ffe80a26f",
+    "output/current-route-service-review/runs/20260927T120853849188Z/scene-obstacles.scad": "e3c4335cb2bd12ac9a5071416a76bbd923ec66cd26c3b0fad4f309b2ee505f6d"
+  },
+  "sources_stable": true,
+  "original_source_export_inventory": {
+    "file": "docs/cable-assembly-inventory.json",
+    "sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "feeder_group_instances": 65,
+    "current_rigid_external_instances": [
+      "feeder/positive-half",
+      "feeder/negative-half",
+      "feeder/beam-grip",
+      "feeder/liner",
+      "feeder/right-support",
+      "feeder/left-support",
+      "feeder/x-gib",
+      "feeder/x-cover",
+      "feeder/frame",
+      "feeder/fixed-spacer",
+      "feeder/moving-spacer",
+      "feeder/capture-right",
+      "feeder/pipe-clamp-right",
+      "feeder/y-cap-right",
+      "feeder/frame-y-gib-right",
+      "feeder/y-gib-right-front",
+      "feeder/y-keeper-right-front",
+      "feeder/finger-right-front",
+      "feeder/pin-block-right-front",
+      "feeder/y-gib-right-rear",
+      "feeder/y-keeper-right-rear",
+      "feeder/finger-right-rear",
+      "feeder/pin-block-right-rear",
+      "feeder/capture-left",
+      "feeder/pipe-clamp-left",
+      "feeder/y-cap-left",
+      "feeder/frame-y-gib-left",
+      "feeder/y-gib-left-front",
+      "feeder/y-keeper-left-front",
+      "feeder/finger-left-front",
+      "feeder/pin-block-left-front",
+      "feeder/y-gib-left-rear",
+      "feeder/y-keeper-left-rear",
+      "feeder/finger-left-rear",
+      "feeder/pin-block-left-rear",
+      "feeder/inlet-rear",
+      "feeder/inlet-front",
+      "feeder/inlet-backplate",
+      "feeder/cable-input-body",
+      "feeder/cable-input-lever",
+      "feeder/cable-input-terminal-cap",
+      "feeder/cable-input-cover",
+      "feeder/cable-output-cap",
+      "feeder/hardware-fixed",
+      "feeder/hardware-right-front",
+      "feeder/hardware-right-rear",
+      "feeder/hardware-left-front",
+      "feeder/hardware-left-rear",
+      "feeder/hardware-moving-spacer",
+      "feeder/cable-input-hardware-fixed",
+      "feeder/cable-input-hardware-moving",
+      "feeder/cable-output-hardware-fixed",
+      "feeder/cable-output-hardware-moving",
+      "feeder/pc-reference",
+      "feeder/hose-reference",
+      "feeder/liner-reference",
+      "feeder/spring-reference"
+    ],
+    "nominal_flexible_instances": [
+      "feeder/cable-core-input",
+      "feeder/cable-core-output",
+      "feeder/cable-core-route",
+      "feeder/cable-housing"
+    ],
+    "guide_own_instances_handled_separately": [
+      "feeder/cable-route-base",
+      "feeder/cable-route-cap",
+      "feeder/cable-route-hardware",
+      "feeder/cable-route-lower"
+    ]
+  },
+  "contract": {
+    "case": "contract",
+    "started_utc": "2026-09-27T12:08:53.870030+00:00",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "-D",
+      "kind=\"contract\"",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/contract.echo",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/probe.scad"
+    ],
+    "returncode": 0,
+    "native_empty_message": false,
+    "execution_ok": true,
+    "log": "output/current-route-service-review/runs/20260927T120853849188Z/contract.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact": "output/current-route-service-review/runs/20260927T120853849188Z/contract.echo",
+    "artifact_sha256": "10ec8fe53f7863a4601b7783162f4431e6a17a988b5823c1062f8f631162f4d3"
+  },
+  "cases": [
+    {
+      "case": "cap-current",
+      "started_utc": "2026-09-27T12:08:54.626773+00:00",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-D",
+        "kind=\"cap-current\"",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/cap-current.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/probe.scad"
+      ],
+      "returncode": 0,
+      "native_empty_message": false,
+      "execution_ok": true,
+      "log": "output/current-route-service-review/runs/20260927T120853849188Z/cap-current.log",
+      "log_sha256": "e827ede841980b480a08bd87654c5f3257ab9dfacb94911bc2f4c1cb21de4b69",
+      "artifact": "output/current-route-service-review/runs/20260927T120853849188Z/cap-current.stl",
+      "artifact_sha256": "c7e3c21c08b19d7d34b638eb04084d0defb076ef0f16196adcc342650468e5b3",
+      "raw_mesh_classification": {
+        "triangle_count": 470,
+        "components": [
+          {
+            "triangles": 32,
+            "volume_mm3": 2.830802259268239e-11,
+            "planar_error_mm": 1.115233287777385e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -66.19774329910337,
+                -60.5832707219147
+              ],
+              [
+                33.25798196219485,
+                34.793495862977295
+              ],
+              [
+                118.45489305151006,
+                153.0151728143207
+              ]
+            ]
+          },
+          {
+            "triangles": 14,
+            "volume_mm3": 5.684341886080802e-14,
+            "planar_error_mm": 3.706503061551096e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -55.02463133351061,
+                -49.80225669880491
+              ],
+              [
+                36.3137398276571,
+                37.74201803837723
+              ],
+              [
+                118.45737911799264,
+                130.9482113555367
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 6.778577699151356e-12,
+            "planar_error_mm": 1.0605500121492114e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -55.024631333510584,
+                -49.62790337814716
+              ],
+              [
+                36.3137398276571,
+                37.78970229434907
+              ],
+              [
+                144.93175829651858,
+                150.22657792258158
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 3.7552183584921295e-12,
+            "planar_error_mm": 8.63389597963878e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -72.05932818998109,
+                -68.60262205879988
+              ],
+              [
+                31.654884795574446,
+                32.60026661770927
+              ],
+              [
+                155.45325450507295,
+                159.28205382446635
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.258105145207082e-12,
+            "planar_error_mm": 3.093530043092228e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -73.46543578975037,
+                -69.89537495909848
+              ],
+              [
+                31.270325473971575,
+                32.2467089110156
+              ],
+              [
+                158.47938099700906,
+                160.86871613022788
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.5091927707544528e-11,
+            "planar_error_mm": 9.5550439739244e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -64.11252112016258,
+                -58.13557496379177
+              ],
+              [
+                33.82827375683154,
+                35.46292131831828
+              ],
+              [
+                161.23856903649065,
+                167.43799439444226
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.6839862837514374e-11,
+            "planar_error_mm": 1.454482792739431e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -61.20410314994153,
+                -54.54083673803065
+              ],
+              [
+                34.62370309790708,
+                36.44605382799636
+              ],
+              [
+                171.82319194462505,
+                178.81096203566648
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 9.29389898374211e-12,
+            "planar_error_mm": 6.783059705373105e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -54.64209033114797,
+                -49.414664443055486
+              ],
+              [
+                36.41836177008739,
+                37.84802145870863
+              ],
+              [
+                152.41609627487253,
+                154.80462630451652
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 2.4343194127141032e-11,
+            "planar_error_mm": 4.197855902413574e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -44.07486205134633,
+                -40.15802712129877
+              ],
+              [
+                39.30841523339983,
+                40.379638647437744
+              ],
+              [
+                155.24708332855286,
+                158.26278297192604
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 9.50706180447014e-12,
+            "planar_error_mm": 7.816529151530282e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -52.965358414291714,
+                -47.21374776878212
+              ],
+              [
+                36.87693470473472,
+                38.449954783940555
+              ],
+              [
+                161.09250950905164,
+                164.98743728273445
+              ]
+            ]
+          },
+          {
+            "triangles": 16,
+            "volume_mm3": 1.2448708730516955e-11,
+            "planar_error_mm": 5.8859458285773194e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -51.67871155807477,
+                -43.23382389822267
+              ],
+              [
+                37.2288224566041,
+                39.53843252486489
+              ],
+              [
+                165.48220700326473,
+                176.56100323819447
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.610089839232387e-11,
+            "planar_error_mm": 1.388951059457924e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -58.27593814877942,
+                -51.13822524696876
+              ],
+              [
+                35.42453309596195,
+                37.37664119335558
+              ],
+              [
+                179.01757584291317,
+                185.77737293558113
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 1.2462919585232157e-11,
+            "planar_error_mm": 1.3679335839873766e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -55.14816891929114,
+                -46.77179956261452
+              ],
+              [
+                36.27995327377743,
+                38.57082412735019
+              ],
+              [
+                184.14998910181694,
+                193.79539592843776
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.172751116333529e-12,
+            "planar_error_mm": 7.370696953153238e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -46.890455678309266,
+                -41.568806079420625
+              ],
+              [
+                38.53837261697994,
+                39.993801746224804
+              ],
+              [
+                176.72818238022595,
+                180.6994005681122
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 1.6143530956469476e-11,
+            "planar_error_mm": 1.6639359600117756e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -44.67488113441162,
+                -36.081254366648835
+              ],
+              [
+                39.14431475377066,
+                41.494603793145274
+              ],
+              [
+                179.78872417919095,
+                189.28324071656138
+              ]
+            ]
+          },
+          {
+            "triangles": 24,
+            "volume_mm3": 2.8251179173821583e-11,
+            "planar_error_mm": 2.663033638251427e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -38.882954132527146,
+                -28.60384628115783
+              ],
+              [
+                40.72836103798354,
+                43.53961584000147
+              ],
+              [
+                187.93882093265603,
+                198.36807736590572
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.679101716144942e-12,
+            "planar_error_mm": 6.888877320769011e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -46.94675548835235,
+                -41.67540218985748
+              ],
+              [
+                38.52297506364897,
+                39.96464855202983
+              ],
+              [
+                195.28737669689642,
+                201.15174486147015
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 6.0254023992456496e-12,
+            "planar_error_mm": 1.0079540292438257e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -43.60057260234191,
+                -36.37178494177787
+              ],
+              [
+                39.43812965125979,
+                41.41514597576712
+              ],
+              [
+                199.1705466804707,
+                206.69632239223378
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.4523493518936448e-11,
+            "planar_error_mm": 4.6264100802661555e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -38.11449703791441,
+                -32.53929092727228
+              ],
+              [
+                40.93852798326829,
+                42.4633028156186
+              ],
+              [
+                204.52091287119418,
+                210.0618555976522
+              ]
+            ]
+          },
+          {
+            "triangles": 16,
+            "volume_mm3": 1.63140612130519e-11,
+            "planar_error_mm": 1.057716136458979e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -34.910694394445095,
+                -23.788695501847485
+              ],
+              [
+                41.814742699214776,
+                44.85652154295829
+              ],
+              [
+                206.54495402155217,
+                216.9619893756997
+              ]
+            ]
+          },
+          {
+            "triangles": 16,
+            "volume_mm3": 1.1056044968427159e-11,
+            "planar_error_mm": 1.1932952755302503e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -30.346558377907712,
+                -19.8830254033752
+              ],
+              [
+                43.06299784733489,
+                45.92469146375208
+              ],
+              [
+                196.19266784644557,
+                205.86932725002293
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.252776074688882e-13,
+            "planar_error_mm": 2.440602015796519e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -20.56571360636589,
+                -15.547393875836455
+              ],
+              [
+                45.737981632831996,
+                47.11045243910268
+              ],
+              [
+                202.67045107551408,
+                208.49796321736687
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 3.161915174132446e-12,
+            "planar_error_mm": 9.214432230558087e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                0.5353033734656378,
+                5.253351318386976
+              ],
+              [
+                51.50894309853068,
+                52.79929194330362
+              ],
+              [
+                201.39579014813216,
+                205.51520685627577
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 3.126388037344441e-13,
+            "planar_error_mm": 7.797711471739029e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                2.311435826338027,
+                6.196785100240529
+              ],
+              [
+                51.994701294607225,
+                53.05731363039668
+              ],
+              [
+                204.32198189811038,
+                207.49403580057373
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.4711790653527714e-12,
+            "planar_error_mm": 7.276693200955265e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -24.427361771490858,
+                -19.367659730698357
+              ],
+              [
+                44.68185136307662,
+                46.06563990432273
+              ],
+              [
+                213.6850730967417,
+                219.43300787473504
+              ]
+            ]
+          },
+          {
+            "triangles": 20,
+            "volume_mm3": 1.1297629498585593e-11,
+            "planar_error_mm": 1.6508829072102625e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -16.61801149065757,
+                -3.8948958946822714
+              ],
+              [
+                46.817646978326245,
+                50.297318593120124
+              ],
+              [
+                204.44257710246163,
+                214.10884892884292
+              ]
+            ]
+          },
+          {
+            "triangles": 20,
+            "volume_mm3": 3.964828465541359e-12,
+            "planar_error_mm": 1.8783081074361447e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -20.766152405474017,
+                -7.1675574728113
+              ],
+              [
+                45.68316320455484,
+                49.40227150246535
+              ],
+              [
+                215.1568912391283,
+                224.93165985116352
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.5205614545266144e-12,
+            "planar_error_mm": 4.552225005745928e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                1.783043514604234,
+                7.684137103769562
+              ],
+              [
+                51.85019017115276,
+                53.46409265467308
+              ],
+              [
+                210.73693138822858,
+                216.56463915302666
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.2079226507921703e-12,
+            "planar_error_mm": 6.216596551916982e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -7.539396059807611,
+                -1.741848298322914
+              ],
+              [
+                49.30057658609868,
+                50.886160103663485
+              ],
+              [
+                220.7521177059517,
+                225.4519729200449
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 2.9913849175500218e-12,
+            "planar_error_mm": 1.101641604203022e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -8.592762513599595,
+                -3.8747145681546478
+              ],
+              [
+                49.01248918159569,
+                50.302838026511836
+              ],
+              [
+                230.91296551116682,
+                235.03238221862813
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 2.6716406864579767e-12,
+            "planar_error_mm": 8.301414640540631e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                0.4094051558893703,
+                8.188670273963027
+              ],
+              [
+                51.47451093050166,
+                53.60207849138116
+              ],
+              [
+                221.87162135838565,
+                228.2108799785245
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.98578931076554e-11,
+            "planar_error_mm": 3.84158756945755e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                79.73159955431024,
+                83.82666379638161
+              ],
+              [
+                73.1685045273734,
+                74.28847225040506
+              ],
+              [
+                164.58052796011174,
+                165.28206517263078
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 3.581046570388935e-11,
+            "planar_error_mm": 2.2127206327702256e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                90.01847873540831,
+                91.0092719837772
+              ],
+              [
+                75.9818847266859,
+                76.25285885377544
+              ],
+              [
+                168.81489063146395,
+                171.48849444206604
+              ]
+            ]
+          },
+          {
+            "triangles": 20,
+            "volume_mm3": 8.823519692668924e-11,
+            "planar_error_mm": 2.4224191680724675e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                45.647424773481944,
+                58.47701316853998
+              ],
+              [
+                63.84675195789751,
+                67.35554304220506
+              ],
+              [
+                196.11884233936325,
+                207.79381402075887
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 4.504840944719035e-12,
+            "planar_error_mm": 7.457200444496969e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                11.089601959853333,
+                13.688131507400243
+              ],
+              [
+                54.395460392826884,
+                55.10613769812956
+              ],
+              [
+                211.5060411437837,
+                216.98718464008277
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.7109869077103212e-11,
+            "planar_error_mm": 7.316009509327362e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                16.1120313696041,
+                21.212950968116367
+              ],
+              [
+                55.76905516390198,
+                57.16411638160432
+              ],
+              [
+                211.23176604287178,
+                216.96376153179713
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.8189894035458565e-12,
+            "planar_error_mm": 4.251683533215045e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                22.10688778885221,
+                25.61333118246335
+              ],
+              [
+                57.40860104081135,
+                58.36758561134294
+              ],
+              [
+                210.74521887274196,
+                216.41664636477157
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.609557097661309e-12,
+            "planar_error_mm": 8.327932031317208e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                11.277189718114407,
+                13.875719265894688
+              ],
+              [
+                54.446764162943566,
+                55.15744146831007
+              ],
+              [
+                223.0894813537318,
+                228.57062485066893
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.2647660696529783e-11,
+            "planar_error_mm": 3.3360275616189027e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                21.312859166817475,
+                23.89615635203922
+              ],
+              [
+                57.19144048476781,
+                57.89795185929596
+              ],
+              [
+                222.52118132405172,
+                228.22937058931603
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.9184653865522705e-12,
+            "planar_error_mm": 9.555028127864862e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                24.387982568250965,
+                30.44700506973272
+              ],
+              [
+                58.03246244446308,
+                59.689557238011346
+              ],
+              [
+                221.59531051104844,
+                227.74420646572386
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 2.495426087989472e-11,
+            "planar_error_mm": 6.228120939615495e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                33.25528029377024,
+                38.83944122363974
+              ],
+              [
+                60.45759832903966,
+                61.98482223371396
+              ],
+              [
+                207.10466225754288,
+                213.66757782067947
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.483880264975596e-12,
+            "planar_error_mm": 3.89103925835081e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                39.80167912950719,
+                44.168772220341964
+              ],
+              [
+                62.247986700189834,
+                63.44235216458499
+              ],
+              [
+                205.03728055982705,
+                211.0797084905532
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.8189894035458565e-12,
+            "planar_error_mm": 6.757589372350258e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                37.19153765513066,
+                41.65406255141213
+              ],
+              [
+                61.53413362462261,
+                62.75459893398549
+              ],
+              [
+                218.63997569867112,
+                224.42999373565345
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.578382283350948e-11,
+            "planar_error_mm": 9.958554366166864e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                56.82709839395453,
+                58.267229631912606
+              ],
+              [
+                66.90430438413846,
+                67.29816890203107
+              ],
+              [
+                182.49413209784817,
+                186.43113298946645
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 1.977973340672179e-11,
+            "planar_error_mm": 1.3142252920976161e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                59.24076673302454,
+                60.88692733559203
+              ],
+              [
+                67.56442360915322,
+                68.01463553082735
+              ],
+              [
+                182.45810762969967,
+                186.24187535427808
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 6.610889613511972e-11,
+            "planar_error_mm": 8.348324509525738e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                65.40314336458012,
+                72.65894958458071
+              ],
+              [
+                69.2497849408758,
+                71.23419062796769
+              ],
+              [
+                181.08647043339414,
+                188.29577787098663
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.450129485026991e-12,
+            "planar_error_mm": 5.222616798131958e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                60.4877438123377,
+                62.62711087803294
+              ],
+              [
+                67.90546199039352,
+                68.49056198386363
+              ],
+              [
+                183.24594581961324,
+                187.4995063318937
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 3.097966327914037e-12,
+            "planar_error_mm": 8.856518335499962e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                56.21369045371213,
+                63.603992161209135
+              ],
+              [
+                66.73654215783078,
+                68.75773129836448
+              ],
+              [
+                193.3228977947144,
+                199.27019082543893
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.0396132539608516e-12,
+            "planar_error_mm": 9.901150019212682e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                76.26570182930924,
+                82.05327083453714
+              ],
+              [
+                72.22060887693385,
+                73.80346328348526
+              ],
+              [
+                187.3601834203094,
+                192.45680451443803
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 1.865885224106023e-11,
+            "planar_error_mm": 1.9015243876348914e-14,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                75.25620789928408,
+                80.28925750259201
+              ],
+              [
+                71.9445202611292,
+                73.32101957125259
+              ],
+              [
+                199.0566707465331,
+                202.91458927371082
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 9.100276088247483e-12,
+            "planar_error_mm": 9.781260376192082e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                71.5672807851744,
+                75.01415480006483
+              ],
+              [
+                70.93562783449185,
+                71.87832065048568
+              ],
+              [
+                205.43065960395808,
+                208.12644924067615
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 3.304734264020226e-11,
+            "planar_error_mm": 9.611062831363293e-15,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                73.05533835411265,
+                76.60033038524503
+              ],
+              [
+                71.34259982533439,
+                72.31212714372987
+              ],
+              [
+                205.77794371569178,
+                209.28857812677086
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "case": "lower-current",
+      "started_utc": "2026-09-27T12:08:54.626887+00:00",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-D",
+        "kind=\"lower-current\"",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/lower-current.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/probe.scad"
+      ],
+      "returncode": 0,
+      "native_empty_message": false,
+      "execution_ok": true,
+      "log": "output/current-route-service-review/runs/20260927T120853849188Z/lower-current.log",
+      "log_sha256": "83dd649f55061a9c2957c87f5fd671955465fda856957c9db093bc88cfb9f2c3",
+      "artifact": "output/current-route-service-review/runs/20260927T120853849188Z/lower-current.stl",
+      "artifact_sha256": "f58fd7000c7068d6a6185f01d29a007b6efbc114edf7c9eb22626652211ed9ed",
+      "raw_mesh_classification": {
+        "triangle_count": 8,
+        "components": [
+          {
+            "triangles": 4,
+            "volume_mm3": 6.547651310029323e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -67.91273679492322,
+                -67.4
+              ],
+              [
+                -56.0,
+                -52.3
+              ],
+              [
+                84.7,
+                84.7
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.4158453015843406e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -40.722500000000004,
+                -39.0
+              ],
+              [
+                7.0,
+                17.0
+              ],
+              [
+                84.7,
+                84.7
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    },
+    {
+      "case": "lower-wrong-straight-down",
+      "started_utc": "2026-09-27T12:08:57.583692+00:00",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-D",
+        "kind=\"lower-wrong-straight-down\"",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/lower-wrong-straight-down.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/probe.scad"
+      ],
+      "returncode": 0,
+      "native_empty_message": false,
+      "execution_ok": true,
+      "log": "output/current-route-service-review/runs/20260927T120853849188Z/lower-wrong-straight-down.log",
+      "log_sha256": "69e11eaaefd490c5188675db5f8765219d00141f5a24f260f1e4a2111188f480",
+      "artifact": "output/current-route-service-review/runs/20260927T120853849188Z/lower-wrong-straight-down.stl",
+      "artifact_sha256": "c3a4b7d86e73901f02c7bb09dfce827cb14b59c3ce648b39cfe551805af2cbd7",
+      "raw_mesh_classification": {
+        "triangle_count": 1282,
+        "components": [
+          {
+            "triangles": 312,
+            "volume_mm3": 77.69863615612009,
+            "planar_error_mm": 4.5,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -74.75,
+                -67.4
+              ],
+              [
+                15.5,
+                20.0
+              ],
+              [
+                9.824573519457058,
+                16.175426480542942
+              ]
+            ]
+          },
+          {
+            "triangles": 12,
+            "volume_mm3": 1017.6000000000022,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -49.6,
+                -39.0
+              ],
+              [
+                -58.0,
+                -46.0
+              ],
+              [
+                18.0,
+                26.0
+              ]
+            ]
+          },
+          {
+            "triangles": 398,
+            "volume_mm3": 221.44663671057523,
+            "planar_error_mm": 14.999999999999998,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -49.6,
+                -43.8
+              ],
+              [
+                -21.0,
+                -6.0
+              ],
+              [
+                8.5,
+                14.255158414607923
+              ]
+            ]
+          },
+          {
+            "triangles": 32,
+            "volume_mm3": 506.70000000000044,
+            "planar_error_mm": 10.600000000000001,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -49.6,
+                -39.0
+              ],
+              [
+                8.0,
+                20.0
+              ],
+              [
+                8.5,
+                16.0
+              ]
+            ]
+          },
+          {
+            "triangles": 524,
+            "volume_mm3": 643.4468764109366,
+            "planar_error_mm": 8.0,
+            "planar_contact_only": false,
+            "bounds": [
+              [
+                -47.0,
+                -39.0
+              ],
+              [
+                -19.0,
+                -9.0
+              ],
+              [
+                8.5,
+                21.0
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 2.842170943040401e-14,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -40.722500000000004,
+                -39.0
+              ],
+              [
+                7.0,
+                17.0
+              ],
+              [
+                84.7,
+                84.7
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": true
+      }
+    },
+    {
+      "case": "lower-baseline",
+      "started_utc": "2026-09-27T12:09:00.619940+00:00",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-D",
+        "kind=\"lower-baseline\"",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/lower-baseline.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-route-service-review/runs/20260927T120853849188Z/probe.scad"
+      ],
+      "returncode": 0,
+      "native_empty_message": false,
+      "execution_ok": true,
+      "log": "output/current-route-service-review/runs/20260927T120853849188Z/lower-baseline.log",
+      "log_sha256": "035ad4b51bfc9729bfe54972409d3f3474833768f21e080fbea66a1e59daa99d",
+      "artifact": "output/current-route-service-review/runs/20260927T120853849188Z/lower-baseline.stl",
+      "artifact_sha256": "59f9d118a612adafafc11a93234f43d2a5671dc9cd62ececfe324caee612edbb",
+      "raw_mesh_classification": {
+        "triangle_count": 8,
+        "components": [
+          {
+            "triangles": 4,
+            "volume_mm3": 8.36664071357518e-12,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -67.91273679492322,
+                -67.4
+              ],
+              [
+                -56.0,
+                -52.3
+              ],
+              [
+                84.7,
+                84.7
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 8.242295734817162e-13,
+            "planar_error_mm": 0.0,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                -40.722500000000004,
+                -39.0
+              ],
+              [
+                7.0,
+                17.0
+              ],
+              [
+                84.7,
+                84.7
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    }
+  ],
+  "old_report": {
+    "path": "output/cable-retention-service/20260927T070337333817Z/report.json",
+    "sha256": "a72f68593022271269a3e31384b6556460d9a720911ca50d9e156b02254c0e4b",
+    "scope": "New guide printed parts and hardware against declared existing service envelopes. Continuous/sampled limits and cable disconnection prerequisites are inherited from service contract.",
+    "unverified": [
+      "new guide own installation and service (separate review)",
+      "tool choice/hand clearance/torque",
+      "arbitrary free cable deformation",
+      "load and print strength"
+    ],
+    "changed_sources": [
+      {
+        "source": "cad/cable-housing-route.scad",
+        "old_sha256": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+        "current_sha256": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1"
+      },
+      {
+        "source": "cad/cable-service-contract.scad",
+        "old_sha256": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029",
+        "current_sha256": "186e3aacb6a457ab789a5773fed710704e5c2783c7d3b52606469cc4fe07f3e0"
+      },
+      {
+        "source": "cad/cable-service-review.scad",
+        "old_sha256": "a1b19d9dc86357cba26f905252b4b08b91bdc35e16e93c38b631528a3dd7a0d1",
+        "current_sha256": "0dd2e56da4a83922e4430afd7713ad78c9e77d5347bb887b55e06f22c61663a0"
+      },
+      {
+        "source": "cad/cable-trigger-input.scad",
+        "old_sha256": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+        "current_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07"
+      },
+      {
+        "source": "cad/cable-trigger-system.scad",
+        "old_sha256": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+        "current_sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254"
+      }
+    ]
+  },
+  "scope": "Released t=0 only. Current feeder/cable inventory group, not unknown blower/Y fitting or illustrative spin-head world placement. Continuous rigid cap/lower sweeps only; no whole actuation repeat.",
+  "preconditions": {
+    "cap-current": "All six M3x16 cap screws and cap washers removed; main mount four M3x25 remain installed; nuts retained at their modeled base positions; nominal fixed cable envelope retained for geometric comparison only.",
+    "lower-current": "Cap/six screws/washers and flexible cable released/removed. All four M3x25 clamp screws and their top washers removed. Base AND lower externally supported; lower nuts removed or held within filled lower sweep. No live actuation.",
+    "lower-wrong-straight-down": "Same removals and support as lower-current, but intentionally incorrect -Z70 path.",
+    "lower-baseline": "Same lower sweep against current original-feeder-only la_fixed/la_moving set plus retainer base; this is a reduced-set diagnostic, NOT a preserved historical full assembly."
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

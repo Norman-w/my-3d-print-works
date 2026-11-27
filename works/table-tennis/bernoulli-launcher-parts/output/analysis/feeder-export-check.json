@@ -1,0 +1,254 @@
+{
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "3ca92ad21972059d136c0c09b90c2ad2882922496bf092977d676dd5f8a7cf8e"
+  },
+  "results": [
+    {
+      "name": "feeder-right_support",
+      "path": "output/analysis/feeder-right_support.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "5eec8bae3b34a5d7598bd90f0017dabc73fd2377a6ccc0dae60906d8724d4f3c",
+      "volume_mm3": 22060.7179141099,
+      "bounds_mm": [
+        [
+          35.5,
+          67.0
+        ],
+        [
+          -19.0,
+          24.200000000000003
+        ],
+        [
+          -50.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "name": "feeder-left_support",
+      "path": "output/analysis/feeder-left_support.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "5ed81d5b477cc5fa67e4bc230ad9ce7e0ad8cbd172f1b2b72ca942a9e1249586",
+      "volume_mm3": 23496.907296065212,
+      "bounds_mm": [
+        [
+          -76.0,
+          -35.5
+        ],
+        [
+          -19.0,
+          24.200000000000003
+        ],
+        [
+          -50.0,
+          21.0
+        ]
+      ]
+    },
+    {
+      "name": "feeder-cap",
+      "path": "output/analysis/feeder-cap.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9",
+      "volume_mm3": 2287.4405786758193,
+      "bounds_mm": [
+        [
+          51.5,
+          67.0
+        ],
+        [
+          24.2,
+          28.0
+        ],
+        [
+          -35.0,
+          5.0
+        ]
+      ]
+    },
+    {
+      "name": "feeder-carriage",
+      "path": "output/analysis/feeder-carriage.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "7f385a42a9a30fb6bb9caeed2ca4575fd1858b58a23bcf2b297478211b3461e2",
+      "volume_mm3": 27312.97527985851,
+      "bounds_mm": [
+        [
+          -76.0,
+          89.0
+        ],
+        [
+          -4.0,
+          54.0
+        ],
+        [
+          -64.5,
+          37.0
+        ]
+      ]
+    },
+    {
+      "name": "feeder-finger",
+      "path": "output/analysis/feeder-finger.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "708d36b590c25825beec0a35a5a7204d40b3cfe21d19148cc7f8efb5f5582660",
+      "volume_mm3": 1213.8823021988526,
+      "bounds_mm": [
+        [
+          -2.4922933343328197,
+          28.0
+        ],
+        [
+          -4.5,
+          4.5
+        ],
+        [
+          -4.0,
+          4.0
+        ]
+      ]
+    },
+    {
+      "name": "feeder-assembly",
+      "path": "output/preview/feeder-support-assembly.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "9500a06aecd7dbb27d3d593f4cfb9b2ab0b2d2b72d65a34a6dc08817afd0380a"
+    },
+    {
+      "name": "feeder-exploded",
+      "path": "output/preview/feeder-support-exploded.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "dbd957fb3f8dbed5efa6b93fa604ac6f687f81c8416170875f65d12f8a12b800"
+    },
+    {
+      "name": "feeder-front",
+      "path": "output/preview/feeder-support-front.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "f6f53dd2d075abf333f6637f45920cae8f982d54a2184db24e8207b5b8e72c1e"
+    },
+    {
+      "name": "cam-isometric",
+      "path": "output/preview/cam-isometric.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "4ca3cb55b44d74d55eddc3629a0e30f5ad87f63e211ea8a0142c410ad142ceaf"
+    },
+    {
+      "name": "cam-front",
+      "path": "output/preview/cam-front.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "b40c87accce8518afc0e18d0d5264ed15782033c0b2a547a8357b79b6411dc11"
+    },
+    {
+      "name": "cam-top",
+      "path": "output/preview/cam-top.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "e7b038bf06b4debdacdb334839c46527395a12787e4525ccadffeef7efd29910"
+    },
+    {
+      "name": "cam-installation",
+      "path": "output/preview/cam-installation.png",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "c5f7376f2568a31bfe4f48b9e2439ce4720d42112ba141f6a69f1c74193ff77e"
+    },
+    {
+      "name": "cam-carriage",
+      "path": "output/analysis/cam-carriage-study.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "c0e8f2634ffb3560797e3ab63ac8646a81f21e6e6ee325724e96410b3c94332f",
+      "volume_mm3": 20954.224793569763,
+      "bounds_mm": [
+        [
+          -52.0,
+          52.0
+        ],
+        [
+          8.0,
+          54.0
+        ],
+        [
+          -64.5,
+          16.0
+        ]
+      ]
+    },
+    {
+      "name": "cam-overlap-0",
+      "path": "output/analysis/cam-overlap-0.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.2",
+      "path": "output/analysis/cam-overlap-0.2.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.4",
+      "path": "output/analysis/cam-overlap-0.4.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.5",
+      "path": "output/analysis/cam-overlap-0.5.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.6",
+      "path": "output/analysis/cam-overlap-0.6.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-0.8",
+      "path": "output/analysis/cam-overlap-0.8.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-overlap-1",
+      "path": "output/analysis/cam-overlap-1.stl",
+      "exit_code": 1,
+      "empty": true
+    },
+    {
+      "name": "cam-control",
+      "path": "output/analysis/cam-misaligned-control.stl",
+      "exit_code": 0,
+      "empty": false,
+      "sha256": "99f735cf649d4d0c9a910892c2f399845200e9f5803123428bcef699f825caf7",
+      "volume_mm3": 32.008064817815594,
+      "bounds_mm": [
+        [
+          -44.0,
+          44.0
+        ],
+        [
+          8.0,
+          13.0
+        ],
+        [
+          -30.048980150179112,
+          1.5489801501791116
+        ]
+      ]
+    }
+  ]
+}

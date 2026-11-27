@@ -1,0 +1,101 @@
+{
+  "build_transform": [
+    [
+      0.452224083,
+      -0.891904355,
+      0.0,
+      132.95805
+    ],
+    [
+      0.891904355,
+      0.452224083,
+      0.0,
+      122.44437
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      3.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "parts": [
+    {
+      "objectid": "1",
+      "subtype": "normal_part",
+      "mesh_file": "/3D/Objects/object_1.model",
+      "component_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata_matrix": "1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1",
+      "mesh_stat": {
+        "face_count": "3006",
+        "edges_fixed": "0",
+        "degenerate_facets": "0",
+        "facets_removed": "0",
+        "facets_reversed": "0",
+        "backwards_edges": "0"
+      }
+    }
+  ],
+  "embedded_gcode_sha256": "0db560714c3748608decc2773bfe6dac2f89b9003a85a39daa45517d224a8cc2",
+  "actual_settings": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "printer_variant": "0.4",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.1",
+    "initial_layer_print_height": "0.1",
+    "enable_support": "0",
+    "support_type": "tree(auto)",
+    "support_on_build_plate_only": "1",
+    "support_top_z_distance": "0.2",
+    "support_bottom_z_distance": "0.2",
+    "support_interface_top_layers": "2",
+    "support_interface_spacing": "0.5",
+    "support_object_xy_distance": "0.35",
+    "raft_first_layer_expansion": "-1",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "brim_width": "5"
+  }
+}

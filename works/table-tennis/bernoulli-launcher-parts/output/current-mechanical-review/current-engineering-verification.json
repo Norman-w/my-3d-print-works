@@ -1,0 +1,98 @@
+{
+  "checked_at_utc": "2026-09-27T14:07:04.205432+00:00",
+  "scope": "Source identity and document-link verification after consolidation; no new CAD, physical measurements or force acceptance. Prior geometry report source bindings independently matched in this turn.",
+  "reports": [
+    {
+      "file": "output/current-axis-offset-candidate/runs/20260927T133316103433Z/report.json",
+      "sha256": "3644060da2eee0266a40348cc50fb7cf35a9e008ad6f400b5b63f9d1193be72b",
+      "verified_source_bindings": 10
+    },
+    {
+      "file": "output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/report.json",
+      "sha256": "ec1de5b75c0d0d6c63aeff649dc36039dcf4ff3062c181fbb6dc3ef0e80b8cd7",
+      "verified_source_bindings": 10
+    },
+    {
+      "file": "output/current-axis-offset-candidate/host-review/runs/20260927T133619983143Z/report.json",
+      "sha256": "0b4205934349e2b2cc37db53cdf609b103392b9aff5f1a5a101a4ce4fe6d8bb5",
+      "verified_source_bindings": 40
+    },
+    {
+      "file": "output/current-axis-offset-candidate/route/runs/20260927T133337580476Z/report.json",
+      "sha256": "342642f1f8bae32354ee23de580aa09f12d4e562f70c912c712990a3efb53093",
+      "verified_source_bindings": 24
+    },
+    {
+      "file": "output/current-axis-offset-candidate/route-fit/runs/20260927T133732758878Z/report.json",
+      "sha256": "c3b8c39a001476779e198144b4951cd9d18a8a51a9d0c46daf9576293fc9fe0f",
+      "verified_source_bindings": 25
+    },
+    {
+      "file": "output/current-axis-centering-washer/runs/20260927T133352450356Z/report.json",
+      "sha256": "a9b73ff1f90dda2da26bba962041581504ab4d8dcec4cc1a8b030c33353c5435",
+      "verified_source_bindings": 4
+    },
+    {
+      "file": "output/current-axis-root-interface/supplier/report.json",
+      "sha256": "ebd20e68ac24a7e01ee056e1934cc5c4cd136c221541db6a9de108a5b510e89f",
+      "verified_source_bindings": 6
+    },
+    {
+      "file": "output/current-joint-tolerance/gate-ball-joint-review/report.json",
+      "sha256": "4e47c6a6b8ac09c1a4220517e877c45783be4115e39f0065c8ab2821d6ab8205",
+      "verified_source_bindings": 46
+    },
+    {
+      "file": "output/current-assembly-package/runs/20260927T124252819653Z/manifest.json",
+      "sha256": "61556dc3690f9313f85c70cf5bf9f1e5b4baa9bcc172a6c58c20e680b73e2cc4",
+      "verified_source_bindings": 108
+    },
+    {
+      "file": "output/current-axis-offset-candidate/locking-load/report.json",
+      "sha256": "4483b781a76366e11539d506ba0d3552206ec9c20bde6b4b02b0c94f8e004621"
+    },
+    {
+      "file": "output/current-return-budget/moving-mass/runs/20260927T134712945261Z/report.json",
+      "sha256": "76e33d8eab6330f0cd0841316ff09ec2b8c281be0d7afc077592b28900497458"
+    },
+    {
+      "file": "output/current-return-budget/supplier-bounds/report.json",
+      "sha256": "3e1cf1d0e017ba5aae34ae2ed255a80f6c41e6f004752241d7f5b8bb3b32c49d"
+    },
+    {
+      "file": "output/current-return-budget/measurement-assessment/current-result.json",
+      "sha256": "b954b6de5e8390f09eaec4526ae76439b771832d435098cd539c11f89475ecb9"
+    },
+    {
+      "file": "output/current-return-budget/measurement-assessment/controls-report.json",
+      "sha256": "4c73c151cec1cb4f3e3bb0a793f4ea4be7d6adb7be63e28679574084fa4d449d"
+    },
+    {
+      "file": "output/current-joint-tolerance/common-radial-closure/report.json",
+      "sha256": "7715bef97cc64c285a371c5f28411a8ceb3f97b2706b1216b9849c7cbe38ca36"
+    }
+  ],
+  "documents": {
+    "docs/current-status.md": "deb1cfc06aea97f7db5ae0779e3799fb73d94f37a1f71786746207fbe76d19f9",
+    "docs/current-mechanical-review.md": "2fedef0d09d2213119e576b24111afb5a0043912267660f9907fe34ae293aae6",
+    "docs/goal-acceptance-audit.md": "600cf55328df6996058c91053cb625a42d7e6e25425d5f9230d67a8e9c710c1b",
+    "output/current-axis-offset-candidate/README.md": "0b5a4d891167e1b678f7e44640b195343442e78bf965c43c2d5e5df9cab3a997",
+    "output/current-axis-offset-candidate/locking-load/README.md": "3036a967ae113c66e3be87459c2d45e6f9ae0b0c2ac82a1f14c85356395dcbdc",
+    "output/current-return-budget/moving-mass/README.md": "670c0245e25d562144c3a7ffc7e3244f283193d7c263ff1d1535a45f93c7a342",
+    "output/current-return-budget/supplier-bounds/README.md": "d37c643cdfcc2d7468134262f71663b6aa154586f842bc8ddfa6c523fb12442b",
+    "output/current-return-budget/measurement-assessment/README.md": "212fb9d9ca073b20e17f980bd55c6afea302fcd66b02d67cdb1def270e81b95c",
+    "output/current-joint-tolerance/common-radial-closure/README.md": "4fa8485c5897cb2ffc3f14c495b84f9b89ece8f008330204beee613c4642daf1"
+  },
+  "local_links_checked": 110,
+  "common_radial_source_bindings_checked": 48,
+  "measured_force_records": 0,
+  "measurement_status": "NO_MEASUREMENTS",
+  "synthetic_assessor_controls_passed": 8,
+  "formal_package_unchanged": true,
+  "candidate_adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "goal_complete": false,
+  "previous_verification": "output/current-axis-offset-candidate/verification.json",
+  "previous_verification_document_hashes": "Historical; current document identities are in this report."
+}

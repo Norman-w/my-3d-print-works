@@ -1,0 +1,122 @@
+{
+  "family": "moving-spacer",
+  "folder": "output/print-review/final-feeder/moving-spacer-axis-up-unsupported",
+  "count": 1,
+  "orientation": "Original +Y shoulder-screw axis up",
+  "checks": {
+    "native_success_no_warning": true,
+    "correct_3mf_object_count": true,
+    "correct_input_names": true,
+    "no_mesh_repair_by_slicer": true,
+    "official_machine_templates_preserved": true,
+    "setpoint_255": true,
+    "proper_rotation_no_scaling": true,
+    "inside_X1C_build_box": true,
+    "source_identity": true,
+    "shared_presets_unchanged": true
+  },
+  "mapping": [
+    {
+      "source_file": "moving-spacer.stl",
+      "R": [
+        [
+          0.923882391,
+          -8.497125916866526e-17,
+          0.382676531
+        ],
+        [
+          0.382676531,
+          2.0514310057605056e-16,
+          -0.923882391
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        189.544727249,
+        165.563181315,
+        -24.50000000146973
+      ],
+      "offset": [
+        -72.0,
+        28.100000381469727,
+        13.0
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.22044605e-16,
+        1.0,
+        0.0,
+        -1.0,
+        2.22044605e-16,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "build": [
+        0.923882391,
+        0.382676531,
+        0.0,
+        -0.382676531,
+        0.923882391,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        127.99999,
+        128.0,
+        3.60000038
+      ]
+    }
+  ],
+  "mesh_repair_stats": [
+    {
+      "face_count": "576",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  ],
+  "first_layer_model_area_mm2": 23.30954922694113,
+  "first_layer_model_components": 1,
+  "model_path_bounds_mm": [
+    [
+      124.45304171735579,
+      122.45778127882377,
+      0.2
+    ],
+    [
+      131.53776900833407,
+      129.53911283778743,
+      7.2
+    ]
+  ],
+  "support_sample_count": 0,
+  "feature_command_counts": {
+    "Outer wall": 308,
+    "Gap infill": 86,
+    "Inner wall": 326,
+    "Top surface": 30
+  },
+  "max_bridge_command_path_mm": 0,
+  "estimated_time_s": 610.7789306640625,
+  "estimated_filament_g": 0.5868890881538391,
+  "native_warnings": "",
+  "gcode_sha256": "ce8eb4ef99d444cfb53d9cb04c864e58f43b37ae0b517101aea346b93203dfa3",
+  "project_sha256": "4fd8cf9119dcccbc72cba14af1bf5d1ff3c200c28349b7ae6231953e99d44326",
+  "sent_to_printer": false,
+  "limits": [
+    "First-layer area is emitted-bead footprint, not adhesion strength.",
+    "Bridge command length is not unsupported span.",
+    "Bounds/CLI success do not prove physical fit, removal force, shrinkage or PETG finish."
+  ],
+  "support_bounds_in_assembly_mm": null
+}

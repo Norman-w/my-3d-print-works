@@ -1,0 +1,205 @@
+{
+  "schema": "inlet-support-closure-v1",
+  "status": "INLET_REAR_BOUNDED_REMOVAL_SEQUENCE_DOCUMENTED_PENDING_TOOL_FINISH",
+  "instance_id": "feeder/inlet-rear",
+  "current_stl_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+  "slice_folder": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported",
+  "selected_3mf": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf",
+  "selected_3mf_sha256": "58992f2f1f87e43a030e792da8b566cf6702989b6968a1730fa49198a79ac068",
+  "gcode": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/plate_1.gcode",
+  "gcode_sha256": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+  "plate_quantity": 1,
+  "needs_reslice": false,
+  "pending_review": true,
+  "process_status": "CURRENT_SLICE_REVIEW_FLAGGED",
+  "reason": "The original current slice is valid. Six obstructing cavity branches have actual locations, accessible finite cutter-nose windows, and a concrete proposed sequence. Once these regions are removed, all remaining external-tree slabs have a clear continuous -CAD Z sweep against actual emitted model material. Complete mouth trimming/grasp/jaw motion for the 2.9 mm holes and 3 mm slots is not certified; do not infer this from small pick or nose clearance.",
+  "old_report": "output/current-manufacturing/feeder-new/report.json",
+  "old_report_sha256": "61b3c56ac5dc6c640be89cc4ae1989db21cb9c324265c05dc9ca373625c56521",
+  "evidence": [
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/README.md",
+      "sha256": "07b6373e09dfbbc4e74c18ba05d4641f342de6356ff4ef71af0832cb6ccf9303"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/original-sweep/report.json",
+      "sha256": "ec50a4db8595b3a97d33da814aa1ec8d2ac7e9bca6b6f64f6cadafe421f6589c"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/alternative-sweep/report.json",
+      "sha256": "7671a27ef6cd3df617b47f465be44fc0b090881f3b6b5d2295e9b61e61e61a5e"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/original-partition/report.json",
+      "sha256": "744346b65273e3a54305fc2926582a51879d3db58150cbdd845549c09a0d6c49"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/nose-access.json",
+      "sha256": "89059c50a7436d0b06b91215583448de3cb7ea070205b30994d593aa754daab0"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/key-bottom-boundary.json",
+      "sha256": "8791041b7aa82e3f486b8f00a1a4eb63d9dc8f29a46e4357c23b6b8b84c91123"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/alternative/20260927T100148769850Z/inlet-rear-split-face-down-supported/current-review.json",
+      "sha256": "1a526351c0f1b90f0e38088e7c565ce0bc7b7c60ce44f8685f6459f1c294f794"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/original-partition/branch-map.png",
+      "sha256": "9109d75217d464cc4f70883c4c2c63252707f5488047bc3caf8df22c14edc3e3"
+    },
+    {
+      "path": "output/current-manufacturing/inlet-support-closure/cut-access-sections.png",
+      "sha256": "85fbaae305b36d772da2d6fe48737067c0345f9aafd998cdcf22f447a35dc7ea"
+    }
+  ],
+  "original_and_sources_unchanged": {
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/current-review.json": "0fe01074483612c7269ad159cf271fc046e4c0423d448d3c5165544e00e93b0b",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/invocation.json": "a801ba838cb17aa3499160ab6e0d261991bf2e7cfea938ac0d283301522c7f98",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf": "58992f2f1f87e43a030e792da8b566cf6702989b6968a1730fa49198a79ac068",
+    "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/plate_1.gcode": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "output/current-manufacturing/feeder-new/report.json": "61b3c56ac5dc6c640be89cc4ae1989db21cb9c324265c05dc9ca373625c56521",
+    "output/current-manufacturing/feeder-new/mapping.json": "caec4df579c8b047f6a182814d450509b639df28e7dedadb44767c7313486f8d"
+  },
+  "original_support_records": 28199,
+  "original_whole_down_sweep_blocked_slabs": 65,
+  "alternate": {
+    "folder": "output/current-manufacturing/inlet-support-closure/alternative/20260927T100148769850Z/inlet-rear-split-face-down-supported",
+    "current_stl_same_sha": true,
+    "all_native_identity_profile_bed_feature_checks_pass": true,
+    "support_records": 58377,
+    "whole_down_sweep_blocked_slabs": 71,
+    "adopted": false,
+    "reason": "One alternate split-face-down slice retained as a counterexample. Automatic supports still flare after holes and wrap behind the collar; no advantage sufficient to replace original."
+  },
+  "partition_regions": [
+    {
+      "id": "M4_left",
+      "lo": [
+        -51,
+        -25,
+        -118.1
+      ],
+      "hi": [
+        -35,
+        0,
+        -107
+      ]
+    },
+    {
+      "id": "M2_5_left",
+      "lo": [
+        -13.5,
+        -61,
+        -146.1
+      ],
+      "hi": [
+        -7.5,
+        -40,
+        -140
+      ]
+    },
+    {
+      "id": "strap_left",
+      "lo": [
+        -24.0,
+        -58,
+        -137.1
+      ],
+      "hi": [
+        -17.0,
+        -40,
+        -130.5
+      ]
+    },
+    {
+      "id": "M4_right",
+      "lo": [
+        35,
+        -25,
+        -118.1
+      ],
+      "hi": [
+        51,
+        0,
+        -107
+      ]
+    },
+    {
+      "id": "M2_5_right",
+      "lo": [
+        7.5,
+        -61,
+        -146.1
+      ],
+      "hi": [
+        13.5,
+        -40,
+        -140
+      ]
+    },
+    {
+      "id": "strap_right",
+      "lo": [
+        17.0,
+        -58,
+        -137.1
+      ],
+      "hi": [
+        24.0,
+        -40,
+        -130.5
+      ]
+    }
+  ],
+  "remaining_external_tree": {
+    "actual_model_sweep_clear": true,
+    "reviewed_slab_intervals": 194,
+    "exact_source_boundary_issue": {
+      "raw_partition_status": "REMAINING_TREE_STILL_BLOCKED",
+      "raw_failure": [
+        {
+          "bottom": 3.1999999999999997,
+          "top": 3.4,
+          "clear_stl": false,
+          "clear_actual_model": true,
+          "stl_hit_area": 0.00808417711191517,
+          "model_hit_area": 0.0,
+          "hit_bounds": [
+            116.19999076293945,
+            99.69999078610229,
+            139.79998923706054,
+            99.7899128376411
+          ]
+        }
+      ],
+      "source_key_floor_CAD_Z": -152.60000610351562,
+      "source_key_floor_print_Z": 3.399993896484375,
+      "support_top_print_Z": 3.4,
+      "max_axial_overlap_mm": 6.103515624911182e-06,
+      "projected_overlap_area_mm2": 0.00808417711191517,
+      "overlap_volume_upper_mm3": 4.9341901317123594e-08,
+      "flat_source_triangle_count": 4,
+      "actual_model_gcode_overlap": false,
+      "interpretation": "The exact STL has a 6.103515625e-6 mm key-bottom overlap with the nominal support upper slab, caused by the stored -152.6000061035 coordinate versus the emitted 3.4 layer. It is not silently removed by an epsilon. The actual emitted model envelope is clear. Physical interface release is still unverified; this microscopic source/layer discrepancy is not evidence of a mechanically locked branch."
+    }
+  },
+  "nose_windows": {
+    "count": 10,
+    "all_source_and_actual_model_clear": true,
+    "all_intersect_real_support": true,
+    "not_a_purchased_tool_qualification": true
+  },
+  "not_proven": [
+    "A complete commercially specified cutter/jaw/handle closing sweep at each flush mouth.",
+    "Grasp and fragment size at the M2.5 and textile-slot support caps; the outer tree does not pass bodily through those openings.",
+    "Same-PETG adhesion/separation force, debris, dimensional accuracy, bearing-face condition, material strength."
+  ],
+  "no_further_slice_or_geometry_change_in_this_review": true,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false,
+  "report_builder_sha256": "45c9ce7e3f733a297d956ff1c27c34db29d4917017a4416e7d252d90182cd0cf"
+}

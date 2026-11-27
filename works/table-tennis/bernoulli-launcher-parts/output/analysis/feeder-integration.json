@@ -1,0 +1,1302 @@
+{
+  "status": "NOMINAL_SAMPLED_CSG_PASS",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-assembly.scad": "2ec40c3faa887b7364c1435b37229e1ef8a9f16b9a1d36a6a104bca525189105"
+  },
+  "sources_stable_during_check": true,
+  "nominal_samples": [
+    {
+      "name": "motion-0",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0
+      },
+      "returncode": 0,
+      "triangle_count": 110,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 9.947598300641403e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.738636363636363
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 5.169198402654729e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.657894736842101
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-1",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0.2
+      },
+      "returncode": 0,
+      "triangle_count": 134,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 7.913669719528116e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -15.699968045639482,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 6.842859612277152e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.058733685087475784
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 5.169198402654729e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.657894736842101
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-2",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0.4
+      },
+      "returncode": 0,
+      "triangle_count": 136,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 7.913669719528116e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -15.699968045639482,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 6.842859612277152e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 9.947598300641403e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.738636363636363
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 4.83779682980412e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.05873368508747312
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-3",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0.5
+      },
+      "returncode": 0,
+      "triangle_count": 110,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.058733685087475784
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 5.169198402654729e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.657894736842101
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-4",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0.6
+      },
+      "returncode": 0,
+      "triangle_count": 110,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.058733685087475784
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 18,
+          "volume_mm3": 5.169198402654729e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.657894736842101
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-5",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 0.8
+      },
+      "returncode": 0,
+      "triangle_count": 112,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 9.947598300641403e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              4.738636363636363
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 4.83779682980412e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.05873368508747312
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "motion-6",
+      "definitions": {
+        "assembly_part": "body_interference",
+        "assembly_stroke": 1
+      },
+      "returncode": 0,
+      "triangle_count": 136,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 2.2040147484858608e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 7.913669719528116e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -15.699968045639482,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 26,
+          "volume_mm3": 5.269951142139462e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -5.880948185464429
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 4.1655567883935873e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -35.5,
+              -35.5
+            ],
+            [
+              -10.0,
+              -4.7
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 1.7763568394002505e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              -50.0,
+              -40.0
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 6.842859612277152e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -19.0,
+              -9.0
+            ],
+            [
+              11.0,
+              13.275150712381683
+            ]
+          ]
+        },
+        {
+          "triangles": 24,
+          "volume_mm3": 2.842170943040401e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.058733685087475784
+            ],
+            [
+              -9.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 4.83779682980412e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              35.5,
+              35.5
+            ],
+            [
+              -10.0,
+              -0.05873368508747312
+            ],
+            [
+              -37.5,
+              -19.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-0",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 0
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-1",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 0.1
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-2",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 0.25
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-3",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 0.5
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-4",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 0.75
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    },
+    {
+      "name": "removal-5",
+      "definitions": {
+        "assembly_part": "removal_probe",
+        "assembly_removal": 1
+      },
+      "returncode": 1,
+      "triangle_count": 0,
+      "components": [],
+      "has_solid_or_unclassified_overlap": false
+    }
+  ],
+  "positive_control": {
+    "name": "fault-positive",
+    "definitions": {
+      "assembly_part": "body_interference",
+      "assembly_body_fault": 1
+    },
+    "returncode": 0,
+    "triangle_count": 778,
+    "components": [
+      {
+        "triangles": 122,
+        "volume_mm3": 375.79303260573874,
+        "planar_error_mm": 0.8503528130361815,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            35.5,
+            36.5
+          ],
+          [
+            -10.0,
+            7.25
+          ],
+          [
+            -37.5,
+            9.0
+          ]
+        ]
+      },
+      {
+        "triangles": 40,
+        "volume_mm3": 70.86690541668922,
+        "planar_error_mm": 1.0,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            35.5,
+            36.5
+          ],
+          [
+            -19.0,
+            -9.0
+          ],
+          [
+            -50.0,
+            -40.0
+          ]
+        ]
+      },
+      {
+        "triangles": 40,
+        "volume_mm3": 70.86690541669113,
+        "planar_error_mm": 1.0,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            35.5,
+            36.5
+          ],
+          [
+            -19.0,
+            -9.0
+          ],
+          [
+            11.0,
+            21.0
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 9.0,
+        "planar_error_mm": 0.5,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            36.0,
+            36.5
+          ],
+          [
+            8.0,
+            9.0
+          ],
+          [
+            -9.0,
+            9.0
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 9.0,
+        "planar_error_mm": 0.5,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            36.0,
+            36.5
+          ],
+          [
+            8.0,
+            9.0
+          ],
+          [
+            -37.5,
+            -19.5
+          ]
+        ]
+      },
+      {
+        "triangles": 124,
+        "volume_mm3": 3.3711607644414867,
+        "planar_error_mm": 0.480000000000004,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            32.0,
+            32.480000000000004
+          ],
+          [
+            -15.5,
+            -12.5
+          ],
+          [
+            -46.5,
+            -43.5
+          ]
+        ]
+      },
+      {
+        "triangles": 124,
+        "volume_mm3": 3.3711607644383235,
+        "planar_error_mm": 0.480000000000004,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            32.0,
+            32.480000000000004
+          ],
+          [
+            -15.5,
+            -12.5
+          ],
+          [
+            14.5,
+            17.5
+          ]
+        ]
+      },
+      {
+        "triangles": 304,
+        "volume_mm3": 24.135924518475043,
+        "planar_error_mm": 0.5,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            34.0,
+            34.5
+          ],
+          [
+            -4.5,
+            4.5
+          ],
+          [
+            -4.0,
+            4.0
+          ]
+        ]
+      }
+    ],
+    "has_solid_or_unclassified_overlap": true
+  },
+  "limits": [
+    "Finite nominal poses; unsampled positions are not proven.",
+    "Planar mounting contacts are explicitly separated from solid overlaps.",
+    "Manufacturing clearances, guide error budget, seals, strength and physical function remain OPEN.",
+    "The source-sized whole body is used; interface fit is still unmeasured."
+  ],
+  "physical_acceptance": "OPEN"
+}

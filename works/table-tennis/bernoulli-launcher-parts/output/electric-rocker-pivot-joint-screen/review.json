@@ -1,0 +1,1083 @@
+{
+  "status": "Y62_RETAINER_COLLISION_Y65_LAYOUT_SCREEN_ONLY",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-end-switch-side-cap.scad": "e4ba58a0b92ead0282edca90b732bb9b12facd0fcc834f8a8e929d1ea8a9b78e",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electric-feeder-trigger-assembly.scad": "43867d498a0924e3b3996b6dd14c1cf557dace000c2e91f36ec20ee873e86263",
+    "cad/electric-full-stroke-switch-screen.scad": "e1d78fc67a09e0ea327e49c6046130e0d4d8ee22cd5fd485fb6167c64d01feb3",
+    "cad/electric-home-switch-screen.scad": "50a56df95d74a44807001d560ae729b66a879b3904046de0eadd6f6c371a2d5f",
+    "cad/electric-rocker-bridge-screen.scad": "c0c18a2a8aa34aae5e985196b6173e80339a70206d0fa07f9217b2a041676c49",
+    "cad/electric-rocker-pivot-joint-screen.scad": "57d23f9e8ee07bdff72051fb99a38edeabcf557adcc0da35e331c23250cda9af",
+    "cad/electric-rocker-pivot-mount-screen.scad": "6e3f826b4cad3dadf4eef6b16a90892cfcbf8d4fe7befacd8991411450b6038b",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electric_rocker_pivot_joint_screen.py": "0c3cefff523a3124c31948d30a84ad6aa6c1f9dfdd436d5741e8066454ca9004"
+  },
+  "mount_report_sha256": "ef3b973b3d932ce36118e6f6d69aa320c70fd306672977ea106328de50155230",
+  "bridge_report_sha256": "93e8f0111587360d7028b8d0f741ab8ebae1606e74672c6cab13b5e77c480ed1",
+  "catalog_reference": {
+    "part": "igus iglide G GFM-0608-06",
+    "manufacturer_pdf": "https://www.igus.com/ContentData/Products/Downloads/iglide_G300_FM_USen.pdf",
+    "id_after_pressfit_mm": [
+      6.02,
+      6.068
+    ],
+    "od_mm": 8,
+    "flange_od_mm": 12,
+    "body_length_mm": 6,
+    "flange_thickness_mm": 1,
+    "required_housing_bore_mm": [
+      8.0,
+      8.015
+    ],
+    "recommended_shaft_diameter_range_mm": [
+      5.97,
+      6.0
+    ],
+    "catalog_tolerances_are_not_petg_print_tolerances": true
+  },
+  "nominal_axial_budget": {
+    "fork_inner_gap_mm": 8,
+    "bushing_body_plus_flange_mm": 7,
+    "total_free_gap_mm": 1,
+    "centered_side_gaps_mm": [
+      0.5,
+      0.5
+    ],
+    "rocker_hub_radial_wall_mm": 4,
+    "installed_id_to_shaft_diametral_clearance_range_mm": [
+      0.02,
+      0.098
+    ],
+    "real_pressfit_in_petg_verified": false,
+    "real_clevis_pin_and_retainer_selected": false,
+    "retainer_screen_envelope_diameter_mm": 16,
+    "retainer_screen_envelope_axial_mm": 3
+  },
+  "plane_comparison": {
+    "current_y62_front_retainer_colliding_travel_mm": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "outer_y65_nominal_bridge_to_motor_proxy_gap_mm": 4.136,
+    "outer_y65_bridge_motor_4mm_dilation_clear": true,
+    "outer_y65_bridge_motor_5mm_dilation_clear": false,
+    "actual_motor_envelope_and_load_verified": false,
+    "y65_promoted_to_selected_assembly": false
+  },
+  "probes": {
+    "y62-t0.00-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.00-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.00-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.00-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-front-retainer-moving": {
+      "occupied": true,
+      "volume_mm3": 78.4456,
+      "error": null
+    },
+    "y62-t0.25-front-retainer-moving-clearance-1mm": {
+      "occupied": true,
+      "volume_mm3": 168.44786,
+      "error": null
+    },
+    "y62-t0.25-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.25-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.25-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.25-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.25-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-front-retainer-moving": {
+      "occupied": true,
+      "volume_mm3": 180.65237,
+      "error": null
+    },
+    "y62-t0.50-front-retainer-moving-clearance-1mm": {
+      "occupied": true,
+      "volume_mm3": 306.1194,
+      "error": null
+    },
+    "y62-t0.50-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.50-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.50-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.50-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.50-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-front-retainer-moving": {
+      "occupied": true,
+      "volume_mm3": 171.91092,
+      "error": null
+    },
+    "y62-t0.75-front-retainer-moving-clearance-1mm": {
+      "occupied": true,
+      "volume_mm3": 294.79276,
+      "error": null
+    },
+    "y62-t0.75-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.75-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.75-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t0.75-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t0.75-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-front-retainer-moving": {
+      "occupied": true,
+      "volume_mm3": 52.05101,
+      "error": null
+    },
+    "y62-t1.00-front-retainer-moving-clearance-1mm": {
+      "occupied": true,
+      "volume_mm3": 122.30086,
+      "error": null
+    },
+    "y62-t1.00-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t1.00-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t1.00-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y62-t1.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y62-t1.00-bridge-motor-clearance-5mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.00-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.00-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.00-bridge-motor-clearance-5mm": {
+      "occupied": true,
+      "volume_mm3": 47.98673,
+      "error": null
+    },
+    "y65-t0.25-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.25-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.25-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.25-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.25-bridge-motor-clearance-5mm": {
+      "occupied": true,
+      "volume_mm3": 47.98673,
+      "error": null
+    },
+    "y65-t0.50-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.50-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.50-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.50-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.50-bridge-motor-clearance-5mm": {
+      "occupied": true,
+      "volume_mm3": 47.98673,
+      "error": null
+    },
+    "y65-t0.75-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.75-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.75-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t0.75-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.75-bridge-motor-clearance-5mm": {
+      "occupied": true,
+      "volume_mm3": 47.98673,
+      "error": null
+    },
+    "y65-t1.00-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-front-retainer-moving-clearance-1mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-front-retainer-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-rear-head-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-rear-head-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-rocker-fixed": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-bushing-rocker": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t1.00-bushing-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-pin-bushing": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t1.00-pin-bracket": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-bracket-fixed": {
+      "occupied": false,
+      "volume_mm3": 0.0,
+      "error": null
+    },
+    "y65-t1.00-bridge-fixed-clearance-2mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-bridge-motor-clearance-4mm": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t1.00-bridge-motor-clearance-5mm": {
+      "occupied": true,
+      "volume_mm3": 37.98766,
+      "error": null
+    }
+  },
+  "selected_y65_fine_probes": {
+    "y65-t0.05-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.05-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.05-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.10-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.10-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.10-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.15-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.15-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.15-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.20-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.20-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.20-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.30-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.30-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.30-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.35-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.35-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.35-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.40-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.40-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.40-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.45-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.45-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.45-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.55-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.55-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.55-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.60-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.60-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.60-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.65-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.65-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.65-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.70-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.70-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.70-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.80-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.80-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.80-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.85-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.85-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.85-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.90-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.90-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.90-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.95-front-retainer-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.95-rocker-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "y65-t0.95-bracket-moving": {
+      "occupied": false,
+      "volume_mm3": 0
+    }
+  },
+  "candidate_meshes": {
+    "rocker": {
+      "sha256": "13338025092b52a818b758635cf8bc75e5d244074762e0e39ff513c5608ab829",
+      "volume_mm3": 4033.81535,
+      "bounds": {
+        "min": [
+          3.515307716504651,
+          53.0,
+          6.501259190169694
+        ],
+        "max": [
+          88.4987408098303,
+          67.5,
+          33.0
+        ],
+        "size": [
+          84.98343309332564,
+          14.5,
+          26.498740809830306
+        ]
+      },
+      "watertight": true,
+      "degenerate_faces": 0
+    },
+    "bracket": {
+      "sha256": "66cbc7cb8c23e352dfb748339d57ac684c9c24b6fe10431f5c0416c42ad0dd26",
+      "volume_mm3": 5006.22328,
+      "bounds": {
+        "min": [
+          2.515307716504651,
+          35.0,
+          -15.0
+        ],
+        "max": [
+          20.51530771650465,
+          73.0,
+          34.0
+        ],
+        "size": [
+          18.0,
+          38.0,
+          49.0
+        ]
+      },
+      "watertight": true,
+      "degenerate_faces": 0
+    }
+  },
+  "rocker_phase_witness": {
+    "t0.00": {
+      "sha256": "13338025092b52a818b758635cf8bc75e5d244074762e0e39ff513c5608ab829",
+      "volume_mm3": 4033.81535,
+      "bounds": {
+        "min": [
+          3.515307716504651,
+          53.0,
+          6.501259190169694
+        ],
+        "max": [
+          88.4987408098303,
+          67.5,
+          33.0
+        ],
+        "size": [
+          84.98343309332564,
+          14.5,
+          26.498740809830306
+        ]
+      },
+      "watertight": true,
+      "degenerate_faces": 0
+    },
+    "t1.00": {
+      "sha256": "000d3781ad0dffb84ade51ce65e857ab0c801cbaa0ad63e1395a30199dafcbe5",
+      "volume_mm3": 4033.81535,
+      "bounds": {
+        "min": [
+          3.515307716504651,
+          53.0,
+          17.0
+        ],
+        "max": [
+          88.4987408098303,
+          67.5,
+          43.49874080983032
+        ],
+        "size": [
+          84.98343309332564,
+          14.5,
+          26.498740809830323
+        ]
+      },
+      "watertight": true,
+      "degenerate_faces": 0
+    }
+  },
+  "images": {
+    "y62": {
+      "path": "output/electric-rocker-pivot-joint-screen/joint-y62-mid.png",
+      "sha256": "8954210c3d2f15bf70e03f2eafdaa82c11a80c1c621de50866efc97510d2c2a6",
+      "feeder_travel_mm": 10.0
+    },
+    "y65": {
+      "path": "output/electric-rocker-pivot-joint-screen/joint-y65-mid.png",
+      "sha256": "ceaeac5c8c4fc99ed7256275550dedf1beb68c9ab8074105920bdb2dafd2c776",
+      "feeder_travel_mm": 10.0
+    }
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

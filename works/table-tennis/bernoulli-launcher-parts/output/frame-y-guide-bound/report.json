@@ -1,0 +1,134 @@
+{
+  "status": "CONDITIONAL_RAIL_POSE_COMPARISON_ONLY",
+  "source_sha256": {
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec"
+  },
+  "common_Y_contact_station_Z_mm": [
+    -33.29,
+    3.29
+  ],
+  "station_selection_scope": "Parallel-gib pose with the stated axial translation; a pitched gib must independently retain both contact domains.",
+  "necessary_inequalities": [
+    "116*abs(Rxy)+4*Rxx+Ly*abs(Ryz) <= (4+gy)*Rzz",
+    "4+36.7*abs(Rzx) <= (4+gx)*Rxx"
+  ],
+  "conditions": [
+    "Rigid orthogonal rail pose, Rxx>0, Rzz>0; both rails remain normally engaged.",
+    "The transformed rail corners used at the two fixed Z stations lie inside the real upper and lower Y pads, including their finite X widths.",
+    "Station selection directly covers parallel gibs only. The separate CAD differential-pitch clearance check is not a proof of contact-domain coverage here.",
+    "The original X-guide station intersections at world Y22 remain inside the finite rail side faces and the real X contact bands.",
+    "The actual rail is finite: the contact-domain and endpoint-phase checks must be maintained. This calculation does not replace them.",
+    "gy is the maximum effective gap across all four Y bands after adjustment, including differential jack settings; gx has the analogous meaning.",
+    "Displayed .1/.05 gaps are comparison inputs, not measured or guaranteed PETG capability."
+  ],
+  "rows": [
+    {
+      "X_parallel_gap_mm": 0.1,
+      "Y_parallel_gap_mm": 0.4,
+      "Y_station_separation_mm": 40.0,
+      "matrix_abs_upper": {
+        "Rxy": 0.003448612199,
+        "Ryz": 0.010000975377,
+        "Ryx": 0.003476049893,
+        "Rzx": 0.002724795641,
+        "Rzy": 0.01001056786,
+        "Rxz": 0.002759592875
+      },
+      "matrix_diagonal_lower": [
+        0.999990246235,
+        0.999943947213,
+        0.999946180561
+      ],
+      "axis_angle_upper_deg": 0.6266680772519226
+    },
+    {
+      "X_parallel_gap_mm": 0.1,
+      "Y_parallel_gap_mm": 0.1,
+      "Y_station_separation_mm": 36.58,
+      "matrix_abs_upper": {
+        "Rxy": 0.000862210015,
+        "Ryz": 0.002734181567,
+        "Ryx": 0.000869666586,
+        "Rzx": 0.002724795641,
+        "Rzy": 0.002736553301,
+        "Rxz": 0.00272717553
+      },
+      "matrix_diagonal_lower": [
+        0.999995909576,
+        0.999995883957,
+        0.999992543354
+      ],
+      "axis_angle_upper_deg": 0.226757655628
+    },
+    {
+      "X_parallel_gap_mm": 0.05,
+      "Y_parallel_gap_mm": 0.1,
+      "Y_station_separation_mm": 36.58,
+      "matrix_abs_upper": {
+        "Rxy": 0.000862113894,
+        "Ryz": 0.002733876754,
+        "Ryx": 0.000865842564,
+        "Rzx": 0.001362397821,
+        "Rzy": 0.002735058427,
+        "Rxz": 0.001364765952
+      },
+      "matrix_diagonal_lower": [
+        0.999998697093,
+        0.999995888108,
+        0.999995331652
+      ],
+      "axis_angle_upper_deg": 0.1819369318670806
+    },
+    {
+      "X_parallel_gap_mm": 0.1,
+      "Y_parallel_gap_mm": 0.05,
+      "Y_station_separation_mm": 36.58,
+      "matrix_abs_upper": {
+        "Rxy": 0.000431165753,
+        "Ryz": 0.001367283415,
+        "Ryx": 0.000434893343,
+        "Rzx": 0.002724795641,
+        "Rzy": 0.00136846867,
+        "Rxz": 0.002725390779
+      },
+      "matrix_diagonal_lower": [
+        0.999996193171,
+        0.999998970701,
+        0.99999535138
+      ],
+      "axis_angle_upper_deg": 0.17645570528093596
+    },
+    {
+      "X_parallel_gap_mm": 0.05,
+      "Y_parallel_gap_mm": 0.05,
+      "Y_station_separation_mm": 36.58,
+      "matrix_abs_upper": {
+        "Rxy": 0.000431069717,
+        "Ryz": 0.001366978872,
+        "Ryx": 0.000432932893,
+        "Rzx": 0.001362397821,
+        "Rzy": 0.001367568956,
+        "Rxz": 0.001362989887
+      },
+      "matrix_diagonal_lower": [
+        0.99999897822,
+        0.999998971968,
+        0.999998136811
+      ],
+      "axis_angle_upper_deg": 0.11333855895585991
+    }
+  ],
+  "roll_control": {
+    "angle_deg": 0.5,
+    "old_required_Y_height_mm": 4.3492270251733,
+    "old_available_mm": 4.4,
+    "new_required_Y_height_mm": 4.319381137328905,
+    "new_available_if_adjusted_gap_is_point1_mm": 4.1
+  },
+  "rounding": "Rational operations rounded outward on a 1e-12 grid; displayed degree bound includes 1e-9 degree padding.",
+  "whole_feeder_1mm_budget_proven": false,
+  "physical_acceptance": false
+}

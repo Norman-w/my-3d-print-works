@@ -1,0 +1,1714 @@
+{
+  "schema": "current-assembly-sequence-review-v1",
+  "review_script_sha256": "ed96aefb36cd493dda7b559cf0b283683abf1ac2fdbe8eb8dd22e1f1be4c6299",
+  "status": "ASSEMBLY_PRECEDENCE_REVIEW_COMPLETE_WITH_EXPLICIT_GAPS",
+  "scope": "Read-only source/evidence audit. No new CAD export, tool collision test, slicing, print or physical assembly. Acyclic sequence is a planning consistency check, not physical clearance proof.",
+  "inventory": {
+    "path": "docs/cable-assembly-inventory.json",
+    "sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "printed_count": 56,
+    "feeder_count": 46,
+    "spin_count": 10,
+    "baseline38_retained_instance_ids": 38,
+    "replacements": [
+      "feeder/beam-grip -> co_beam",
+      "feeder/frame -> co_frame"
+    ],
+    "added8": [
+      "feeder/cable-input-body",
+      "feeder/cable-input-lever",
+      "feeder/cable-input-terminal-cap",
+      "feeder/cable-input-cover",
+      "feeder/cable-output-cap",
+      "feeder/cable-route-base",
+      "feeder/cable-route-cap",
+      "feeder/cable-route-lower"
+    ],
+    "normal_work_printed_installed_count": 55,
+    "optional_parked_printed": [
+      "spin/hold-fork"
+    ],
+    "note": "56 is package instance count; normal spin work mode excludes the hold fork. 38 - 2 + 2 + 8 = 46 feeder; 46 + 10 = 56."
+  },
+  "duplicate_prevention": [
+    {
+      "item": "beam-grip/frame",
+      "rule": "co_beam/co_frame replace corresponding old printed instances; co_fixed_bridge already included in co_beam, no separate bridge layer.",
+      "evidence": [
+        "docs/cable-output-interface.md:10-14",
+        "cad/cable-scene-export.scad:60-71"
+      ]
+    },
+    {
+      "item": "shared 4 M4 fasteners",
+      "rule": "4 M4×60 and new washers replace old sh_bolts 4 M4×20 + old washers; old nuts retained once.",
+      "evidence": [
+        "cad/cable-trigger-system.scad:22-28",
+        "cad/cable-trigger-input.scad:297-301"
+      ]
+    },
+    {
+      "item": "frame Y guide",
+      "rule": "Current two supports/caps replace old pair; two frame gibs are additions. Current cap mounting M3×20 replaces old M3×12; four carrier Y guide systems remain separate.",
+      "evidence": [
+        "docs/feeder-frame-y-guide.md:60-60"
+      ]
+    },
+    {
+      "item": "spin hold hardware",
+      "rule": "Working hardware already retains the latch nut; add only fork and M3×16/washer for hold. Do not duplicate latch nut.",
+      "evidence": [
+        "docs/spin-complete-hardware.md:36-44",
+        "cad/cable-scene-export.scad:72-88"
+      ]
+    }
+  ],
+  "classification_legend": {
+    "current_source_geometry_inference": "Actual current source openings/stack read; no new motion/path test.",
+    "existing_current_bounded_path": "Existing bounded test report and current recorded source identities verified; only its stated stage/composition/primitive tested.",
+    "existing_historical_path_scope": "Historical path report; changed dependencies or earlier assembly composition prevents blanket current whole-assembly claim.",
+    "paper_sequence_candidate": "Practical sequencing proposal/inference; no digital proof of the complete operation."
+  },
+  "nodes": [
+    {
+      "id": "F01",
+      "title": "核对版本、清理及预装送料隐藏螺母",
+      "printed_instances": [],
+      "instruction": "当前 co_beam/co_frame 替换旧件；在各散件封闭前预放侧槽螺母。入口后夹支撑清理仍 pending，不能把本顺序当制造放行。"
+    },
+    {
+      "id": "F02",
+      "title": "壳体定位并合拢",
+      "printed_instances": [
+        "feeder/positive-half",
+        "feeder/negative-half"
+      ],
+      "instruction": "先定位销后八M3；接缝胶仅外侧且固化后继续，不能用厚胶垫改变基准。"
+    },
+    {
+      "id": "F03",
+      "title": "预装左右支座",
+      "printed_instances": [
+        "feeder/right-support",
+        "feeder/left-support"
+      ],
+      "instruction": "X导向调整螺母和相关支座捕获螺母先入槽；暂不以过拧消间隙。"
+    },
+    {
+      "id": "F04",
+      "title": "四个挡指/销座台面子装配",
+      "printed_instances": [
+        "feeder/finger-right-front",
+        "feeder/pin-block-right-front",
+        "feeder/finger-right-rear",
+        "feeder/pin-block-right-rear",
+        "feeder/finger-left-front",
+        "feeder/pin-block-left-front",
+        "feeder/finger-left-rear",
+        "feeder/pin-block-left-rear"
+      ],
+      "instruction": "每组M2螺母从+Y装入后再放销座；不要在导轨包住销座后尝试原位抬出。"
+    },
+    {
+      "id": "F05",
+      "title": "四挡指径向装入",
+      "printed_instances": [],
+      "instruction": "将F04子装配按左右/前后身份装入对应导向，保持可装凸轮框架的状态。"
+    },
+    {
+      "id": "F06",
+      "title": "装新 co_frame 及原销钉连接",
+      "printed_instances": [
+        "feeder/frame"
+      ],
+      "instruction": "先将新拉线耳两M3螺母从−Y装入；再装框架/肩销及M3。M2微调0.9mm六角工具，不拿1.0mm硬塞。"
+    },
+    {
+      "id": "F07",
+      "title": "装两公共框架Y压条及四挡指Y导向",
+      "printed_instances": [
+        "feeder/y-cap-right",
+        "feeder/frame-y-gib-right",
+        "feeder/y-cap-left",
+        "feeder/frame-y-gib-left",
+        "feeder/y-gib-right-front",
+        "feeder/y-keeper-right-front",
+        "feeder/y-gib-right-rear",
+        "feeder/y-keeper-right-rear",
+        "feeder/y-gib-left-front",
+        "feeder/y-keeper-left-front",
+        "feeder/y-gib-left-rear",
+        "feeder/y-keeper-left-rear"
+      ],
+      "instruction": "每个公共Y盖先预装两内侧螺母，再装gib，最后盖到支座上；公共盖安装M3×20，不能沿用旧M3×12。两套Y导向功能不同，不能漏装或互换。"
+    },
+    {
+      "id": "F08",
+      "title": "装X压条与盖并检查无负载行程",
+      "printed_instances": [
+        "feeder/x-gib",
+        "feeder/x-cover"
+      ],
+      "instruction": "先预装盖/调整螺母；调整时先退顶丝，再均匀取隙，检查全行程，不以拧入圈数当间隙值。"
+    },
+    {
+      "id": "F09",
+      "title": "装出口柔衬、PC管及分体捕获夹",
+      "printed_instances": [
+        "feeder/liner",
+        "feeder/capture-right",
+        "feeder/pipe-clamp-right",
+        "feeder/capture-left",
+        "feeder/pipe-clamp-left"
+      ],
+      "instruction": "柔衬先于PC管入肩；横M4、管夹、长拉杆螺母按次序就位，夹管前松开拉杆上下螺母，避免压塌1mm管壁。PC管保留可裁余量。"
+    },
+    {
+      "id": "F10",
+      "title": "装送料回位弹簧端点",
+      "printed_instances": [
+        "feeder/fixed-spacer",
+        "feeder/moving-spacer"
+      ],
+      "instruction": "肩螺钉先穿外DIN433垫片、弹簧钩、内DIN433、打印定距件、承力垫片；再到支座。不能将Ø7螺钉头硬穿钩眼。固定上端先定位，控制弹簧再接移动端。"
+    },
+    {
+      "id": "C01",
+      "title": "台面预装新背梁与入口后夹",
+      "printed_instances": [
+        "feeder/beam-grip",
+        "feeder/inlet-rear",
+        "feeder/inlet-backplate"
+      ],
+      "instruction": "新桥已与背梁一体；后夹M4螺母先入，双端键从梁+Y就位，背板从−Y，先完成M2.5紧固。背梁此时未固定主机，需支承。"
+    },
+    {
+      "id": "C02",
+      "title": "护套未入时装导向主座与下托",
+      "printed_instances": [
+        "feeder/cable-route-base",
+        "feeder/cable-route-lower"
+      ],
+      "instruction": "预放六盖螺母和四下托螺母；主座从+Z向下落，下托从后方+Y进入后升+Z8。螺钉闭合夹具自身止面，原平台留名义0.6mm笼隙，不继续拧压平台。"
+    },
+    {
+      "id": "C03",
+      "title": "台面输入座预装隐藏螺母/止挡/调节器",
+      "printed_instances": [
+        "feeder/cable-input-body"
+      ],
+      "instruction": "先背面盖螺母、止挡捕获螺母和轴系背面螺母；M6螺母/垫片及SW8、SW10工具操作在主盖未装时完成。δ限定±2，先设较小止挡。"
+    },
+    {
+      "id": "C04",
+      "title": "输入定距轴、推力片、轴套与扳机",
+      "printed_instances": [
+        "feeder/cable-input-lever"
+      ],
+      "instruction": "先预放扳机两端球盖螺母，再装定距管/两推力片/轴套。主轴夹紧的是金属定距管，确认旋转件未夹死。预放端球盖螺母是防散落顺序，不宣称装轴后必无任何入口。"
+    },
+    {
+      "id": "C05",
+      "title": "裸线尾贯穿整个线管链",
+      "printed_instances": [],
+      "instruction": "Ø5球头留在输入端，以Ø1.5未剪裸尾依次穿输入调节器/端套、护套、输出端套/调节器和Ø1.8夹头横孔。临时护套端部不锁死；允许台面穿线后再把球端坐入。完整柔性穿线/抓持属纸面候选。"
+    },
+    {
+      "id": "C06",
+      "title": "球头入座并装端球盖",
+      "printed_instances": [
+        "feeder/cable-input-terminal-cap"
+      ],
+      "instruction": "u=0支承扳机，球头从局部+Z入座；两M3×8紧固独立端球盖，留意背面螺母散落。"
+    },
+    {
+      "id": "C07",
+      "title": "输入主盖完成",
+      "printed_instances": [
+        "feeder/cable-input-cover"
+      ],
+      "instruction": "确认定距轴/推力片/轴套、端球盖、M6与止挡都已处理后再装主盖、轴螺钉和两盖M3；主盖内侧随后靠近背梁，不按原位拆盖设计。"
+    },
+    {
+      "id": "C08",
+      "title": "两总成受托后完成共享四M4×60",
+      "printed_instances": [],
+      "instruction": "同时承托输入模块与背梁/入口夹/导向总成，键对准后以四M4×60和新垫片完成共享主连接。旧四M4×20和旧垫片不叠装，原壳体M4螺母保留。"
+    },
+    {
+      "id": "C09",
+      "title": "装入口软管、柔衬及前夹",
+      "printed_instances": [
+        "feeder/inlet-front"
+      ],
+      "instruction": "后夹M2.5已经完成；软管套PC短管，装柔衬与前夹。背带走新增外侧槽，不能占后夹双键/M2.5位置，也不把两层硬塞3mm槽。"
+    },
+    {
+      "id": "C10",
+      "title": "护套侧放入导向并合盖",
+      "printed_instances": [
+        "feeder/cable-route-cap"
+      ],
+      "instruction": "两端端套暂不坐死，从+N整条敞槽侧放入护套，再合六M3弧盖，最后端套自然坐实并检查自由弯；不得把粗端套穿ID6.2闭孔或拉伸护套迁就长度。"
+    },
+    {
+      "id": "C11",
+      "title": "输出端开放定位、标记并裁尾",
+      "printed_instances": [],
+      "instruction": "护套/端套完整坐实后确定线芯长度；夹头、cap及M4垫圈保持开放，先按耳的零位基准标记，在+Y可接近侧处理尾长，再进入最终夹持。不得让未剪长尾坐进耳内带动滑架。完整柔性穿线/标记/抓持转移无独立数字路径，不以图上路由长直接下剪。"
+    },
+    {
+      "id": "C12",
+      "title": "输出夹头合盖并复核零位/止挡",
+      "printed_instances": [
+        "feeder/cable-output-cap"
+      ],
+      "instruction": "受限尾长的夹头+线从+Y入耳，cap/金属垫圈移开时以实际一字起子夹紧，再金属M4保持垫圈、两M3×16合盖。无球无风复核释放零位与输出终点前的止挡；M6变δ或重坐护套后必须重查。尾端中心下≤8mm是最大名义包络，非厂家最低余尾；不能盲设20mm。"
+    },
+    {
+      "id": "S01",
+      "title": "旋转头散件预放捕获螺母",
+      "printed_instances": [],
+      "instruction": "壳体盖/导块螺母、载体拉杆螺母(+Z)和压条螺母(±Y)、盖保持叉螺母(+Z)、笼螺母先入槽；保持叉螺母工作档也留在盖里。"
+    },
+    {
+      "id": "S02",
+      "title": "载体在壳外装TPU垫和压条",
+      "printed_instances": [
+        "spin/carriage",
+        "spin/pad",
+        "spin/pad-keeper"
+      ],
+      "instruction": "先放拉杆螺母，再TPU垫沿−Z入燕尾、沉头压条固定。压条工具仅在载体拆出状态获独立入口证据。pad按指定TPU，不混列为PETG。"
+    },
+    {
+      "id": "S03",
+      "title": "装旋转主体和对侧导块",
+      "printed_instances": [
+        "spin/body",
+        "spin/opposite-guide"
+      ],
+      "instruction": "导块从−X装入，以M3×10及垫片固定；主体装原出球PC管，实际三通/风机姿态与管裁长未被本报告补齐。"
+    },
+    {
+      "id": "S04",
+      "title": "外盖先装预压M4螺母、弹簧座和笼",
+      "printed_instances": [
+        "spin/cover",
+        "spin/spring-cage",
+        "spin/spring-seat"
+      ],
+      "instruction": "预压M4螺母先由+Y侧槽入位；弹簧座由笼+X开口装入，再把笼固定于外盖。笼螺钉之后会挡M4螺母路径，外盖关闭弹簧座另一端。"
+    },
+    {
+      "id": "S05",
+      "title": "装载体、弹簧及外盖",
+      "printed_instances": [],
+      "instruction": "载体沿+X装入主体，弹簧两端定位柱就位并受控，再从+X装盖并均匀紧固四M3；最小预压也不能假定无弹簧力。"
+    },
+    {
+      "id": "S06",
+      "title": "装预压螺钉及拉帽",
+      "printed_instances": [
+        "spin/pull-cap"
+      ],
+      "instruction": "装手拧预压螺钉/外锁母，M3×45从+X穿拉帽连接载体预置螺母。拉帽Ø12过不了盖孔Ø6.5，所以维修必须先拆拉帽。"
+    },
+    {
+      "id": "S07",
+      "title": "保持叉作为可选停放件",
+      "printed_instances": [
+        "spin/hold-fork"
+      ],
+      "instruction": "正常工作不装叉及其M3×16/垫片；保持档停风清空，拉到5.25mm硬止挡后下放叉固定，再轻放到5mm保持。先拉住卸载才能拆叉。不要重复添加已在盖内的同一保持叉螺母。"
+    }
+  ],
+  "dependency_edges": [
+    {
+      "id": "E01",
+      "before": "F01",
+      "after": "F02",
+      "reason": "壳体捕获螺母/定位销在合壳前处理",
+      "failure_if_reversed": "合壳后部分侧入口被邻件占用，不能靠总装渲染证明塞入",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:68-69"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E02",
+      "before": "F02",
+      "after": "F03",
+      "reason": "支座以已合拢壳体为基准",
+      "failure_if_reversed": "散件松旷状态会改变导向基准",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:68-71"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E03",
+      "before": "F01",
+      "after": "F04",
+      "reason": "M2螺母入口被销座包住",
+      "failure_if_reversed": "先装销座会堵螺母入口",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/feeder-pin-seat-revision.md:28-32",
+        "cad/feeder-pin-seat-revision.scad:75-88"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E04",
+      "before": "F04",
+      "after": "F05",
+      "reason": "销座和螺母在载体外完成",
+      "failure_if_reversed": "导轨限制销座沿+Y取放",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/feeder-pin-seat-revision.md:28-32"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E05",
+      "before": "F03",
+      "after": "F05",
+      "reason": "径向载体须进入支座导向",
+      "failure_if_reversed": "不能在导向未固定时完成受控位置关系",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:70-71"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E06",
+      "before": "F05",
+      "after": "F06",
+      "reason": "先装载体再框架和肩销",
+      "failure_if_reversed": "框架/肩销阻挡原位销座维护",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/feeder-pin-seat-revision.md:28-32",
+        "cad/feeder-pin-seat-revision.scad:104-122"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E07",
+      "before": "F01",
+      "after": "F06",
+      "reason": "新耳螺母从−Y预装",
+      "failure_if_reversed": "成组后背面邻件/抓持未另验证",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/cable-output-interface.md:30-32",
+        "cad/cable-output-interface.scad:118-137"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E08",
+      "before": "F06",
+      "after": "F07",
+      "reason": "公共Y盖先内侧螺母、再gib、最后装盖",
+      "failure_if_reversed": "gib先入会占螺母路径；装盖后gib不能从被主机封闭的−Y入口装入",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/feeder-frame-y-guide.md:40-43",
+        "cad/feeder-frame-y-guide.scad:83-105"
+      ],
+      "existing_report_refs": [
+        "frame-y"
+      ]
+    },
+    {
+      "id": "E09",
+      "before": "F07",
+      "after": "F08",
+      "reason": "Y结构与X压条共同限制框架",
+      "failure_if_reversed": "提前以X强行压紧可能掩盖Y不齐；调节需退顶丝",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:71-71"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E10",
+      "before": "F02",
+      "after": "F09",
+      "reason": "出口基准来自合拢主壳",
+      "failure_if_reversed": "松壳状态不能确认管与肩就座",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:72-72"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E11",
+      "before": "F09",
+      "after": "C08",
+      "reason": "出口夹和下部拉杆先于背梁主装",
+      "failure_if_reversed": "背梁会妨碍部分夹具/拉杆工具；不把历史局部工具路径升级为当前全机",
+      "classification": "existing_historical_path_scope",
+      "evidence": [
+        "docs/final-assembly.md:72-74"
+      ],
+      "existing_report_refs": [
+        "beam-old"
+      ]
+    },
+    {
+      "id": "E12",
+      "before": "F08",
+      "after": "F10",
+      "reason": "先完成可滑动导向再接回位弹簧",
+      "failure_if_reversed": "弹簧力会掩盖卡滞并增加销/框装配负载",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/feeder-return-spring.md:63-67"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E13",
+      "before": "F10",
+      "after": "C08",
+      "reason": "在共享梁总成安装前完成弹簧端点叠层",
+      "failure_if_reversed": "Ø7头不能穿钩；背梁在位不应假定深套筒/抓持仍可达",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/final-assembly.md:73-73",
+        "docs/feeder-return-spring.md:63-67"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E14",
+      "before": "F01",
+      "after": "C01",
+      "reason": "入口后夹预置M4螺母且台面键/背板M2.5先完成",
+      "failure_if_reversed": "背梁装机后不能从后面加背板；软管先上会挡M2.5螺母进路",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/inlet-retention-final.md:57-63",
+        "docs/inlet-retention-final.md:79-82"
+      ],
+      "existing_report_refs": [
+        "inlet"
+      ]
+    },
+    {
+      "id": "E15",
+      "before": "C01",
+      "after": "C02",
+      "reason": "导向座从+Z落在新梁一体输出平台",
+      "failure_if_reversed": "先上护套/盖/下托不能使用已记录的空平台落座路径",
+      "classification": "existing_historical_path_scope",
+      "evidence": [
+        "docs/cable-route-retention.md:39-44",
+        "cad/cable-route-retention.scad:132-148"
+      ],
+      "existing_report_refs": [
+        "route-local"
+      ]
+    },
+    {
+      "id": "E16",
+      "before": "C01",
+      "after": "C08",
+      "reason": "背梁后夹M2.5须台面完成",
+      "failure_if_reversed": "主机阻挡背板作业；旧四短M4不能先永久固定再叠新长M4",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/cable-trigger-input.md:52-52",
+        "docs/inlet-retention-final.md:79-82"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E17",
+      "before": "C03",
+      "after": "C04",
+      "reason": "后侧螺母、止挡及轴栈按开放台面安装",
+      "failure_if_reversed": "主盖/梁安装后后侧螺母与M6工具入口受限",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "cad/cable-trigger-input.scad:207-228",
+        "docs/cable-trigger-input.md:51-51"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E18",
+      "before": "C04",
+      "after": "C05",
+      "reason": "球端与未截线尾须在可访问台面整理",
+      "failure_if_reversed": "截短或毛刺尾无法保证顺利穿整个已选路线",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "cad/cable-trigger-input.scad:331-343",
+        "docs/cable-output-interface.md:31-31"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E19",
+      "before": "C05",
+      "after": "C06",
+      "reason": "裸尾先穿细孔，球头留输入端",
+      "failure_if_reversed": "Ø5球头不能穿Ø3调节器和Ø2.5端套；已锁死两端后不能把球端硬穿过去",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "cad/cable-trigger-input.scad:331-349",
+        "docs/cable-output-interface.md:22-22"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E20",
+      "before": "C06",
+      "after": "C07",
+      "reason": "独立端球盖及螺钉须主盖移开后操作",
+      "failure_if_reversed": "主盖在位的工具/螺钉/小盖路径均有碰撞阳性；端球盖在位阻球头取出",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "output/cable-direct-adoption/service/README.md:13-35",
+        "cad/cable-trigger-input.scad:262-294"
+      ],
+      "existing_report_refs": [
+        "terminal"
+      ]
+    },
+    {
+      "id": "E21",
+      "before": "C03",
+      "after": "C07",
+      "reason": "M6薄母锁紧与止挡预设在主盖之前",
+      "failure_if_reversed": "主盖闭合后不能据台面SW10预算称可调；变δ须重新开盖/放松线管并重定零位",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/cable-trigger-input.md:41-47",
+        "docs/cable-service-contract.md:25-27"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E22",
+      "before": "C07",
+      "after": "C08",
+      "reason": "输入模块先台面合盖再与背梁共享固定",
+      "failure_if_reversed": "主盖打开方向局部+Z=CAD+Y在梁侧；装机后不能原位硬拔盖",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/cable-trigger-input.md:51-54",
+        "docs/cable-service-contract.md:14-17"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E23",
+      "before": "C02",
+      "after": "C08",
+      "reason": "先在受托梁总成上安排导向笼",
+      "failure_if_reversed": "本顺序选取台面可接近阶段；不是证明其他顺序都不可行",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-route-retention.md:39-40"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E24",
+      "before": "C08",
+      "after": "C09",
+      "reason": "共享主固定完成后合入口前夹",
+      "failure_if_reversed": "软管不能先遮住后夹M2.5作业；前夹应按自身入口就位，不强迫错孔",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/inlet-retention-final.md:79-82"
+      ],
+      "existing_report_refs": [
+        "inlet"
+      ]
+    },
+    {
+      "id": "E25",
+      "before": "C05",
+      "after": "C10",
+      "reason": "自由端护套才能从敞槽侧放入",
+      "failure_if_reversed": "两端锁死强掰147°弧或拉伸护套不可取；粗端套不能穿闭合孔",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-route-retention.md:41-43"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E26",
+      "before": "C02",
+      "after": "C10",
+      "reason": "下托/主座先完成，护套后入",
+      "failure_if_reversed": "先入护套会挡主座安装路径和螺母照料",
+      "classification": "existing_historical_path_scope",
+      "evidence": [
+        "docs/cable-route-retention.md:39-42",
+        "cad/cable-route-retention.scad:82-87"
+      ],
+      "existing_report_refs": [
+        "route-local"
+      ]
+    },
+    {
+      "id": "E27",
+      "before": "C08",
+      "after": "C10",
+      "reason": "位置确定后自然布线并锁导向盖",
+      "failure_if_reversed": "在浮动总成间先锁线管会把定位误差当成护套拉力",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-trigger-input.md:52-52",
+        "docs/cable-route-retention.md:41-42"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E28",
+      "before": "C10",
+      "after": "C11",
+      "reason": "端套坐实后才确定线芯有效长度/输出夹紧",
+      "failure_if_reversed": "路线与端座改变绝对长度；先夹死无法同时保证释放零位和行程",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-trigger-input.md:43-47",
+        "docs/cable-output-interface.md:31-34"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E29",
+      "before": "C11",
+      "after": "C12",
+      "reason": "先按完整路线标记并限制尾包络，再装入耳/闭盖和运动复核",
+      "failure_if_reversed": "过早按图裁短会无法重新夹持；但保留未剪长尾到闭盖后才裁也不行：中心下15mm尾已撞Y导向盖，不能带长尾全程调试",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-output-interface.md:31-32",
+        "docs/cable-output-interface.md:65-67",
+        "docs/cable-route-retention.md:42-42",
+        "docs/cable-service-contract.md:12-12"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E30",
+      "before": "C09",
+      "after": "C12",
+      "reason": "软管/自由护套最终形态纳入零位复查",
+      "failure_if_reversed": "外部牵引变化可能改摩擦与释放位置",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/cable-trigger-input.md:52-54"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E31",
+      "before": "S01",
+      "after": "S02",
+      "reason": "拉杆螺母+Z先于TPU垫/压条",
+      "failure_if_reversed": "不能改从±Y穿过已装两颗压条螺钉；载体在壳内压条工具撞壳",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/spin-complete-hardware.md:33-34",
+        "cad/spin-complete-hardware.scad:98-100"
+      ],
+      "existing_report_refs": [
+        "spin"
+      ]
+    },
+    {
+      "id": "E32",
+      "before": "S01",
+      "after": "S03",
+      "reason": "主体/导块捕获螺母先于封闭件",
+      "failure_if_reversed": "侧槽螺母应先放，不能后靠薄工具强塞",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/spin-complete-hardware.md:33-33",
+        "cad/spin-complete-hardware.scad:91-97"
+      ],
+      "existing_report_refs": [
+        "spin"
+      ]
+    },
+    {
+      "id": "E33",
+      "before": "S01",
+      "after": "S04",
+      "reason": "预压M4先于笼和其M3；弹簧座先于笼封口",
+      "failure_if_reversed": "靠+Y笼M3挡预压螺母装入路径；装笼到盖后另一端封闭",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/spin-head.md:80-80",
+        "cad/spin-head.scad:149-192"
+      ],
+      "existing_report_refs": [
+        "spin"
+      ]
+    },
+    {
+      "id": "E34",
+      "before": "S02",
+      "after": "S05",
+      "reason": "TPU压条在载体壳外完成",
+      "failure_if_reversed": "已装机载体的压条工具路径有明确碰撞",
+      "classification": "existing_current_bounded_path",
+      "evidence": [
+        "docs/spin-complete-hardware.md:34-40"
+      ],
+      "existing_report_refs": [
+        "spin"
+      ]
+    },
+    {
+      "id": "E35",
+      "before": "S03",
+      "after": "S05",
+      "reason": "主体与导块先作为装载体基准",
+      "failure_if_reversed": "未形成主体导向时无法定义受控弹簧装配",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/spin-head.md:80-80"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E36",
+      "before": "S04",
+      "after": "S05",
+      "reason": "盖笼座成为可控子组件后装弹簧闭盖",
+      "failure_if_reversed": "必须控制预压，不能当作无力散件盖上",
+      "classification": "paper_sequence_candidate",
+      "evidence": [
+        "docs/spin-head.md:80-84"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E37",
+      "before": "S05",
+      "after": "S06",
+      "reason": "先闭外盖后装拉帽",
+      "failure_if_reversed": "拉帽Ø12大于导孔Ø6.5，不能带帽穿盖",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/spin-head.md:80-84"
+      ],
+      "existing_report_refs": []
+    },
+    {
+      "id": "E38",
+      "before": "S06",
+      "after": "S07",
+      "reason": "先装拉帽再允许保持档",
+      "failure_if_reversed": "没有拉帽无法按定义先拉住卸载叉；正常工作不安装叉及其螺栓",
+      "classification": "current_source_geometry_inference",
+      "evidence": [
+        "docs/spin-complete-hardware.md:36-38",
+        "docs/spin-head.md:82-82"
+      ],
+      "existing_report_refs": []
+    }
+  ],
+  "assembly_topological_order": [
+    "F01",
+    "C03",
+    "S01",
+    "F02",
+    "F04",
+    "C01",
+    "C04",
+    "S02",
+    "S03",
+    "S04",
+    "F03",
+    "F09",
+    "C02",
+    "C05",
+    "S05",
+    "F05",
+    "C06",
+    "S06",
+    "F06",
+    "C07",
+    "S07",
+    "F07",
+    "F08",
+    "F10",
+    "C08",
+    "C09",
+    "C10",
+    "C11",
+    "C12"
+  ],
+  "maintenance_nodes": [
+    {
+      "id": "M01",
+      "after": [],
+      "action": "无球无风，支承输出滑架/输入及梁总成；打开输出盖、拿住松散金属保持垫圈，再松夹线紧定螺钉。",
+      "evidence": [
+        "docs/cable-service-contract.md:9-11"
+      ],
+      "classification": "current_source_geometry_inference"
+    },
+    {
+      "id": "M02",
+      "after": [
+        "M01"
+      ],
+      "action": "尾线沿+Z退出封闭Ø1.8横孔后，夹头才可沿+Y拿出。8mm中心下尾需>10.5mm抽线；松夹后u/t解耦，不能把维修仍约束u=20t。",
+      "evidence": [
+        "docs/cable-service-contract.md:12-12"
+      ],
+      "classification": "paper_sequence_candidate"
+    },
+    {
+      "id": "M03",
+      "after": [
+        "M02"
+      ],
+      "action": "输出端套拔出，开中段盖侧取护套，解除软管/护套拖拽，托住输入模块以及背梁/入口夹/输出导向总成。",
+      "evidence": [
+        "docs/cable-service-contract.md:13-14"
+      ],
+      "classification": "paper_sequence_candidate"
+    },
+    {
+      "id": "M04",
+      "after": [
+        "M03"
+      ],
+      "action": "卸四共享M4×60。它们也是背梁主固定，不假定梁仍固定；受托状态相对梁退CAD−Y至少先退出键，再移台面。",
+      "evidence": [
+        "cad/cable-trigger-system.scad:22-28",
+        "cad/cable-trigger-input.scad:297-301",
+        "docs/cable-service-contract.md:14-14"
+      ],
+      "classification": "current_source_geometry_inference"
+    },
+    {
+      "id": "M05",
+      "after": [
+        "M04"
+      ],
+      "action": "台面移除主轴和两盖M3，主盖沿局部+Z=CAD+Y取下。",
+      "evidence": [
+        "docs/cable-service-contract.md:15-15"
+      ],
+      "classification": "current_source_geometry_inference"
+    },
+    {
+      "id": "M06",
+      "after": [
+        "M05"
+      ],
+      "action": "支承零位扳机/松散螺母，拆端球盖两M3，小盖+Z取下再取球头。当前数字证据只含短芯段，不含整条柔线搬出。",
+      "evidence": [
+        "output/cable-direct-adoption/service/README.md:5-17",
+        "output/cable-direct-adoption/service/README.md:43-43"
+      ],
+      "classification": "existing_current_bounded_path",
+      "report_refs": [
+        "terminal"
+      ]
+    },
+    {
+      "id": "M07",
+      "after": [
+        "M03"
+      ],
+      "action": "若拆中段夹具：取护套、松四平台螺钉并托下托；下托−Z8后−Y100，最后主座+Z。不能直接向下70。",
+      "evidence": [
+        "docs/cable-route-retention.md:44-44"
+      ],
+      "classification": "existing_historical_path_scope",
+      "report_refs": [
+        "route-local",
+        "route-service-old"
+      ]
+    },
+    {
+      "id": "MS01",
+      "after": [],
+      "action": "旋转头先拉住卸载保持叉，拆叉螺栓/垫片/叉；盖内同一螺母保留。",
+      "evidence": [
+        "docs/spin-head.md:82-84"
+      ],
+      "classification": "current_source_geometry_inference"
+    },
+    {
+      "id": "MS02",
+      "after": [
+        "MS01"
+      ],
+      "action": "先拆拉帽M3×45和Ø12拉帽；再最小预压但仍控制弹簧力，松四盖M3，盖+X至少20后再移开，最后抽载体以拆TPU压条。",
+      "evidence": [
+        "docs/spin-head.md:84-84",
+        "docs/spin-complete-hardware.md:38-40"
+      ],
+      "classification": "existing_current_bounded_path",
+      "report_refs": [
+        "spin"
+      ]
+    }
+  ],
+  "checks": {
+    "all56_printed_instances_assigned_exactly_once": true,
+    "assembly_graph_acyclic": true,
+    "new_geometry_checks_run": false,
+    "new_tool_checks_run": false,
+    "manufacturing_release": false,
+    "physical_acceptance": false
+  },
+  "existing_reports": {
+    "terminal": {
+      "path": "output/cable-direct-adoption/service/20260927T092327953026Z/report.json",
+      "sha256": "88f747636858b92accb5aa9c6157a62a63463fe421c2f8bf7236fc883ce958d1",
+      "recorded_status": "TERMINAL_BENCH_SERVICE_NOMINAL_PASS",
+      "source_count": 25,
+      "matching_source_count": 25,
+      "mismatches": [],
+      "all_recorded_sources_match": true,
+      "usable_scope": "Current input bench stage: main cover removed, u=0 supported, short terminal core only; nine bounded cases and wrong-order positive controls. No full flexible cable extraction or handles.",
+      "rerun_in_this_audit": false
+    },
+    "spin": {
+      "path": "output/spin-complete-hardware/report.json",
+      "sha256": "912c4df836732e3ba2986a3a6786f60b60d77ecd96106bf177216e71fedac323",
+      "recorded_status": "BOUNDED_HARDWARE_REVIEW_PASS",
+      "source_count": 4,
+      "matching_source_count": 4,
+      "mismatches": [],
+      "all_recorded_sources_match": true,
+      "usable_scope": "Current spin source; selected nut feeds, straight driver budgets and finite wrench poses, including keeper/preload wrong-order controls. Not whole actual-tool/grasp proof.",
+      "rerun_in_this_audit": false
+    },
+    "frame-y": {
+      "path": "output/feeder-frame-y-guide/report.json",
+      "sha256": "7d9a51800032abc00213fae61f0b4cc1182aad0735278322ff2ac599068aaa2c",
+      "recorded_status": "INDEPENDENT_FRAME_Y_GUIDE_DIGITAL_PASS",
+      "source_count": 18,
+      "matching_source_count": 18,
+      "mismatches": [],
+      "all_recorded_sources_match": true,
+      "usable_scope": "Local frame-Y nut/gib assembly and service. Source matches do not expand its archived baseline33 neighbour composition to current complete cable assembly.",
+      "rerun_in_this_audit": false
+    },
+    "inlet": {
+      "path": "output/inlet-retention-final/report.json",
+      "sha256": "a8487485b6a43a22de4e2194e37fdb22f7fcb97962e4a40ed3b2a38a1901bea6",
+      "recorded_status": "NOMINAL_INLET_CANDIDATE_GEOMETRY_PASS_PHYSICAL_OPEN",
+      "source_count": 20,
+      "matching_source_count": 20,
+      "mismatches": [],
+      "all_recorded_sources_match": true,
+      "usable_scope": "Nominal inlet/beam local paths and wrong-order controls against archived baseline33. Not whole current input/guide assembly path.",
+      "rerun_in_this_audit": false
+    },
+    "beam-old": {
+      "path": "output/feeder-support-harness/report.json",
+      "sha256": "00f76aad59066512bfa6584cb31bbe978b056b177f3451e3e01051091c63a266",
+      "recorded_status": "NOMINAL_HARNESS_GEOMETRY_PASS_PHYSICAL_OPEN",
+      "source_count": 10,
+      "matching_source_count": 9,
+      "mismatches": [
+        {
+          "path": "cad/feeder-guide-revision.scad",
+          "recorded": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+          "current": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21"
+        }
+      ],
+      "all_recorded_sources_match": false,
+      "usable_scope": "Historical only if any recorded source differs. Does not prove shared-long-bolt handling or supported assembly motion.",
+      "rerun_in_this_audit": false
+    },
+    "route-local": {
+      "path": "output/cable-route-retention/report.json",
+      "sha256": "f2df2c319a38602a1d16af5ab40fac1577377888af88f48dc1275d203b659146",
+      "recorded_status": "local_geometry_candidate_not_print_or_strength_release",
+      "source_count": 5,
+      "matching_source_count": 2,
+      "mismatches": [
+        {
+          "path": "cad/cable-trigger-input.scad",
+          "recorded": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+          "current": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07"
+        },
+        {
+          "path": "cad/cable-housing-route.scad",
+          "recorded": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+          "current": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1"
+        },
+        {
+          "path": "cad/cable-trigger-system.scad",
+          "recorded": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+          "current": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254"
+        }
+      ],
+      "all_recorded_sources_match": false,
+      "usable_scope": "Local guide candidate with historical source set. Unchanged guide geometry supports reading its assembly features, not current whole-system sweep certification.",
+      "rerun_in_this_audit": false
+    },
+    "route-service-old": {
+      "path": "output/cable-retention-service/20260927T070337333817Z/report.json",
+      "sha256": "a72f68593022271269a3e31384b6556460d9a720911ca50d9e156b02254c0e4b",
+      "recorded_status": "RETAINER_SERVICE_ENVELOPES_PASS",
+      "source_count": 29,
+      "matching_source_count": 24,
+      "mismatches": [
+        {
+          "path": "cad/cable-housing-route.scad",
+          "recorded": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+          "current": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1"
+        },
+        {
+          "path": "cad/cable-service-contract.scad",
+          "recorded": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029",
+          "current": "186e3aacb6a457ab789a5773fed710704e5c2783c7d3b52606469cc4fe07f3e0"
+        },
+        {
+          "path": "cad/cable-service-review.scad",
+          "recorded": "a1b19d9dc86357cba26f905252b4b08b91bdc35e16e93c38b631528a3dd7a0d1",
+          "current": "0dd2e56da4a83922e4430afd7713ad78c9e77d5347bb887b55e06f22c61663a0"
+        },
+        {
+          "path": "cad/cable-trigger-input.scad",
+          "recorded": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+          "current": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07"
+        },
+        {
+          "path": "cad/cable-trigger-system.scad",
+          "recorded": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+          "current": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254"
+        }
+      ],
+      "all_recorded_sources_match": false,
+      "usable_scope": "Historical 16-service-envelope composition; changed source dependencies explicitly prevent a current whole-machine clearance claim.",
+      "rerun_in_this_audit": false
+    }
+  },
+  "unproved_items": [
+    {
+      "id": "U01",
+      "subject": "入口后夹制造清理",
+      "status": "pending",
+      "detail": "本顺序未使 feeder/inlet-rear 支撑清理闭合。整树拔出失败保留；局部切断/清根完整工具头与抓持仍未证明。",
+      "evidence_file": "output/current-manufacturing/inlet-support-closure/report.json"
+    },
+    {
+      "id": "U02",
+      "subject": "全机实际工具/抓持",
+      "status": "unproved",
+      "detail": "未新增任何 CAD、扫掠、切片或实际工具测试；圆杆/有限薄扳手姿态不认证手柄、手指抓持、扭矩、碎料清除或所有角度。"
+    },
+    {
+      "id": "U03",
+      "subject": "共享长栓拆装时的支承",
+      "status": "paper_sequence_candidate",
+      "detail": "确认四长栓共同固定输入与背梁；移除后的重物/软管牵引必须由外部支承承担。支承夹具和两总成受托搬动的完整路径未设计/模拟。"
+    },
+    {
+      "id": "U04",
+      "subject": "整条成品拉索穿装/端套座深/裁长",
+      "status": "unproved",
+      "detail": "裸芯先穿顺序由真实孔径决定，但整条柔线穿过、未知端套实际锥面座深、实际夹线槽/起子、供应商最短安全尾长和扭矩仍未闭合；不按746.507mm路线长裁线。"
+    },
+    {
+      "id": "U09",
+      "subject": "长尾标记到受限尾长装入的顺序",
+      "status": "paper_sequence_candidate",
+      "detail": "旧15mm尾在零位撞Y盖，当前≤8mm包络；不能理解为先带未剪长尾装好并跑完全行程再剪。完整坐实端套后标记、在开放侧处理尾长、再夹头入耳/合盖/零位复核是候选。端套真实坐深、抓持和长度转移没有完整路径或实物证据；不把8mm最大值当供应商夹线最小余长。"
+    },
+    {
+      "id": "U05",
+      "subject": "预压/止挡/释放零位",
+      "status": "assembly_adjustment_required",
+      "detail": "20mm为工作范围上限，M6±2调整改变绝对长度。固定线芯后须重新检查零位/终点，不把名义20mm或数字几何通过当作实际有效送料、风力、单球释放与回位通过。"
+    },
+    {
+      "id": "U06",
+      "subject": "护套导向安装的全机当前通道",
+      "status": "historical_scope_only",
+      "detail": "当前guide自身的可拆结构清楚，但本次引用的route-local和route-service旧报告含变更输入/路由源，不能升级为当前全机全部路径的独立新通过；在台面受托梁上预装是本顺序的保守候选。"
+    },
+    {
+      "id": "U07",
+      "subject": "原三通/风机/PC管最终接口",
+      "status": "not_modeled_or_not_measured",
+      "detail": "原风机、斜三通插入深度、外部握持与软管实际路由未由现有名义PC参考补齐；PC裁长与旋转头在原出球管上的最终方向保留待实际布局。"
+    },
+    {
+      "id": "U08",
+      "subject": "打印捕获螺母和松散垫圈",
+      "status": "manual_retention_required",
+      "detail": "侧槽限制转动不保证摩擦自锁；端球盖背面螺母、输出金属保持垫圈、导向笼螺母拆装须拿住，实际手指/镊子抓持未认证。"
+    }
+  ],
+  "evidence": {
+    "docs/final-assembly.md:68-69": {
+      "path": "docs/final-assembly.md",
+      "line_start": 68,
+      "line_end": 69,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "1. **清理并预埋螺母。** 清理球道、旁通窗、螺母入口、压条导向及各夹持面。两半主壳安装座、背梁耳、右X支座、X外盖和四个Y调节座的捕获螺母先放入。螺母应以指定朝向到达承压底面，不能用螺钉拉入卡住的孔。\n2. **合主壳和封外缝。** 先放两根定位销，X=0硬止面贴合，再对称收紧8颗M3合壳螺钉。按密封工序在外侧覆缝并完成固化；不在两半之间夹入厚垫，不将湿胶挤入球道。"
+    },
+    "docs/final-assembly.md:68-71": {
+      "path": "docs/final-assembly.md",
+      "line_start": 68,
+      "line_end": 71,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "1. **清理并预埋螺母。** 清理球道、旁通窗、螺母入口、压条导向及各夹持面。两半主壳安装座、背梁耳、右X支座、X外盖和四个Y调节座的捕获螺母先放入。螺母应以指定朝向到达承压底面，不能用螺钉拉入卡住的孔。\n2. **合主壳和封外缝。** 先放两根定位销，X=0硬止面贴合，再对称收紧8颗M3合壳螺钉。按密封工序在外侧覆缝并完成固化；不在两半之间夹入厚垫，不将湿胶挤入球道。\n3. **组四根V挡指。** 台面上先放M2螺母和压块，再旋入M2×4，暂留松。将挡指从径向装入支座；装公共凸轮架，穿四根肩销并装M3螺母。先使销同时贴住两V面，再确认轴向肩面及M3螺母就座。M2用0.9内六角，从径向外侧进入；不可用1.0工具代替。四个压块由原导向捕获，不能在位向外硬拔。\n4. **装导向盖与调隙件。** 两公共架Y盖先放内侧调节螺母，再装两条独立Y压条和盖，盖的安装螺钉改用M3×20；四个调节螺钉用M3×16，并装外锁母。这两条公共架Y压条与四套载体Y压条是不同零件。再装载体Y外盖及X压条/外盖。两端均匀调整，往返完整20 mm行程检查是否卡紧；顶丝负责设定、锁母负责保持设定。不能把某个螺钉旋转圈数当成已测得的全机构公差。M2压块当前没有独立抗振锁，初装后需观察是否保持接触。"
+    },
+    "docs/feeder-pin-seat-revision.md:28-32": {
+      "path": "docs/feeder-pin-seat-revision.md",
+      "line_start": 28,
+      "line_end": 32,
+      "sha256": "8220b3a359fdd0a218ce745f360e338b83591f33dee9f41235abca3847968773",
+      "excerpt": "1. 台面上将 M2 螺母从 +Y 放入载体，推到 +X 反力端面。放入压块，保持 +X0.3 退回；从外端 +X 装 M2 紧定螺钉，暂不夹销。\n2. 将完整载体从径向外侧滑入原固定导向。装公共凸轮架，穿入原肩销并装 M3 螺母。\n3. 用具有至少约24 mm 可达细杆的0.9内六角工具沿径向外侧操作 M2。检查脚本用 Ø2 直杆走廊，不把手柄放进紧凑导向。先使销接触两固定 V 面，再使原肩面及 M3 螺母正确就座；重复确认二者，没有规定未经测力的拧紧扭矩。\n4. 往返全20 mm行程确认顺畅。M2工具入口在四根、所有名义行程位置均被检查。\n5. 维护时先退松 M2，再卸原肩销及 M3 螺母，按原机构顺序将载体径向退出固定导向。压块的耳边受固定导向捕获，不能从原位直接向 +Y 拔出。只有载体在台面上，才退开 M2 并向 +Y 拆压块、再取螺母。凸轮架也会挡住错误的原位拔出路径，这作为阳性对照。"
+    },
+    "cad/feeder-pin-seat-revision.scad:75-88": {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line_start": 75,
+      "line_end": 88,
+      "sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+      "excerpt": "module ps_new_cuts(){\n    ps_v_void();\n    // The block cavity starts at X22: tangent to, never undercutting, the\n    // original D4/D3.4 axial shoulder's bearing annulus at Y1.75.\n    ps_box(ps_block_front,ps_block_back+ps_retract_stop,\n        ps_block_y0-ps_clear,ps_seat_y1+ps_eps,\n        -ps_block_half_z-ps_clear,ps_block_half_z+ps_clear);\n    ps_box(ps_lip_x0-ps_advance_stop,ps_lip_x1+ps_retract_stop,\n        ps_lip_y0-ps_clear,ps_seat_y1+ps_eps,\n        -ps_lip_half_z-ps_clear,ps_lip_half_z+ps_clear);\n    ps_x_hex(ps_nut_x0-ps_clear,ps_nut_x1,ps_jack_y,ps_jack_z,ps_nut_slot_af);\n    // Nut drops in from +Y BEFORE the block. The block's return lip retains it.\n    ps_box(ps_nut_x0-ps_clear,ps_nut_x1,ps_jack_y,\n        ps_seat_y1+ps_eps,-ps_nut_slot_af/(2*cos(30)),ps_nut_slot_af/(2*cos(30)));"
+    },
+    "docs/final-assembly.md:70-71": {
+      "path": "docs/final-assembly.md",
+      "line_start": 70,
+      "line_end": 71,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "3. **组四根V挡指。** 台面上先放M2螺母和压块，再旋入M2×4，暂留松。将挡指从径向装入支座；装公共凸轮架，穿四根肩销并装M3螺母。先使销同时贴住两V面，再确认轴向肩面及M3螺母就座。M2用0.9内六角，从径向外侧进入；不可用1.0工具代替。四个压块由原导向捕获，不能在位向外硬拔。\n4. **装导向盖与调隙件。** 两公共架Y盖先放内侧调节螺母，再装两条独立Y压条和盖，盖的安装螺钉改用M3×20；四个调节螺钉用M3×16，并装外锁母。这两条公共架Y压条与四套载体Y压条是不同零件。再装载体Y外盖及X压条/外盖。两端均匀调整，往返完整20 mm行程检查是否卡紧；顶丝负责设定、锁母负责保持设定。不能把某个螺钉旋转圈数当成已测得的全机构公差。M2压块当前没有独立抗振锁，初装后需观察是否保持接触。"
+    },
+    "cad/feeder-pin-seat-revision.scad:104-122": {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line_start": 104,
+      "line_end": 122,
+      "sha256": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+      "excerpt": "module ps_block_local(dx=0,remove=0){translate([dx,remove,0])union(){\n    // Recess the lower heel, keeping the original axial shoulder intact.\n    // The pin-contact nose begins .2mm ABOVE the shoulder. The heel must not\n    // bottom at X22 before the nose reaches an undersize/displaced pin.\n    ps_box(ps_block_front+ps_lower_front_setback,ps_block_back,\n        ps_block_y0,ps_nose_y0,-ps_block_half_z,ps_block_half_z);\n    ps_box(ps_block_front,ps_block_back,ps_nose_y0,ps_seat_y1,\n        -ps_block_half_z,ps_block_half_z);\n    ps_box(ps_lip_x0,ps_lip_x1,ps_lip_y0,ps_seat_y1,\n        -ps_lip_half_z,ps_lip_half_z);\n}}\nmodule ps_block_y_sweep(dx=0,travel=12){translate([dx,0,0])union(){\n    // Exact translation of EACH convex block, not the convex hull of the L.\n    ps_box(ps_block_front+ps_lower_front_setback,ps_block_back,\n        ps_block_y0,ps_nose_y0+travel,-ps_block_half_z,ps_block_half_z);\n    ps_box(ps_block_front,ps_block_back,ps_nose_y0,ps_seat_y1+travel,\n        -ps_block_half_z,ps_block_half_z);\n    ps_box(ps_lip_x0,ps_lip_x1,ps_lip_y0,ps_seat_y1+travel,\n        -ps_lip_half_z,ps_lip_half_z);"
+    },
+    "docs/cable-output-interface.md:30-32": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 30,
+      "line_end": 32,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "1. 先把两枚 M3 螺母从新耳 -Y 面放入；连接原滑架与原各运动件。\n2. 钢丝穿过调节器及护套；钢丝进入端头横孔并由其 M4 紧定螺钉夹紧。调好座深、行程与预张紧后最后剪芯；当前安装空间上限为端头中心向下8 mm，即端头Ø5本体下缘外不超过5.5 mm余尾；模型显示上限。必须保证线芯完整穿过夹孔，真实供应件最低余尾要求尚未取得，因此这只是几何预算，不是已放行的裁线规格。压丝承力由横孔与螺钉形成，不能拿余尾长度证明夹线能力。\n3. 端头与钢丝从 +Y 侧推入新耳开槽，再套入金属保持垫圈，使其在浮动座中避让 M4 螺钉，最后装盖与两枚 M3×16 螺钉。盖中央贯通，螺钉没有盲底顶碰；拆盖后先取垫圈，再沿 +Y 取端头。垫圈在拆盖后不是防丢件。"
+    },
+    "cad/cable-output-interface.scad:118-137": {
+      "path": "cad/cable-output-interface.scad",
+      "line_start": 118,
+      "line_end": 137,
+      "sha256": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+      "excerpt": "module co_lug_blank(){\n    co_box(-65.5,-49,28,co_cap_y,co_lug_bottom,32);\n    // Positive volume into the ORIGINAL left upper side bridge, not edge contact.\n    co_box(-65.5,-47,28,33,10,16);\n}\nmodule co_retaining_seat_cut(){\n    co_ycyl(co_x,co_ret_seat_z,co_ret_back_y,\n        co_ret_front_y-co_ret_back_y,co_ret_seat_d);\n}\nmodule co_lug_cuts(){\n    co_ycyl(co_x,co_z-co_nipple_clear,31.8,co_cap_y-31.8+co_eps,\n        co_nipple_d+2*co_nipple_clear);\n    co_retaining_seat_cut();\n    // Side-open wire channel lets the clamped nipple and wire insert together.\n    co_box(co_x-co_wire_slot/2,co_x+co_wire_slot/2,\n        co_y-co_wire_slot/2,co_cap_y+co_eps,co_lug_bottom-co_eps,40);\n    for(x=co_cap_screws){\n        co_ycyl(x,co_cap_screw_z,27.6,20,3.4);\n        // Nuts enter from the free -Y face; roof takes clamp reaction in +Y.\n        co_yhex(x,co_cap_screw_z,27.8,3,5.8);"
+    },
+    "docs/feeder-frame-y-guide.md:40-43": {
+      "path": "docs/feeder-frame-y-guide.md",
+      "line_start": 40,
+      "line_end": 43,
+      "sha256": "a95384767cd1793ca18b59889ac60bdd52ac092096a8c6b9646d0f1e78ef295a",
+      "excerpt": "1. 盖未安装时，从 −Y 开口放入每盖两颗内 M3 螺母，贴向Y31.1承压面；随后放入对应压条。内螺母进料通道与先放压条的错误顺序分别有正反检查。\n2. 安放两支座与公共架，盖从 +Y 向母支座合拢。用原四颗安装螺母及垫片配四颗M3×20固定盖。盖本体承压，不靠拧弯旧薄盖消隙。\n3. 两顶丝带外垫片与锁母装入。先退到压条不会夹轨的位置，再交替调前后两端；完成全20 mm往返后锁母，并重复行程及间隙检查。\n4. 维护时先退出顶丝压力、取下盖安装螺钉，托住压条，把盖沿 +Y 移出；再取出压条。分析包含每侧25 mm连续平移扫掠。装着盖强行向外拉压条会被捕获耳/口袋阻住，保留阳性对照。"
+    },
+    "cad/feeder-frame-y-guide.scad:83-105": {
+      "path": "cad/feeder-frame-y-guide.scad",
+      "line_start": 83,
+      "line_end": 105,
+      "sha256": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+      "excerpt": "module yg_cap_local(sweep=0){difference(){union(){\n    for(z=yg_jack_z)yg_ycyl(yg_jack_x,z,yg_cap_top-.2,yg_lock_top-yg_cap_top+.2+sweep,yg_lock_boss_d);\n    yg_box(support_guide_x0,support_guide_x1,support_guide_y_split,yg_cap_top+sweep,\n        support_guide_z0,support_guide_z1);}\n    // Drop the gib through -Y while the cap is off. The HOST closes the\n    // opening in service; the loose cap alone does not permanently retain it.\n    yg_box(yg_gib_x[0]-yg_pocket_clear,yg_gib_x[1]+yg_pocket_clear,\n        support_guide_y_split-yg_eps,yg_hard_max+yg_spine_back,\n        yg_gib_z[0]-yg_pocket_clear,yg_gib_z[1]+yg_pocket_clear);\n    yg_box(yg_ear_x[0]-yg_pocket_clear,yg_ear_x[1]+yg_pocket_clear,\n        support_guide_y_split-yg_eps,yg_hard_max+yg_ear_top,\n        yg_ear_z[0]-yg_pocket_clear,yg_ear_z[1]+yg_pocket_clear);\n    for(z=support_cap_screw_z)\n        yg_ycyl(support_cap_screw_x,z,support_guide_y_split-yg_eps,\n            yg_cap_top+sweep-support_guide_y_split+2*yg_eps,fastener_d);\n    for(z=yg_jack_z){\n        yg_ycyl(yg_jack_x,z,yg_hard_max+yg_spine_back-yg_eps,\n            yg_lock_top+sweep-(yg_hard_max+yg_spine_back)+2*yg_eps,fastener_d);\n        // Nut enters the loose cap from -Y BEFORE the gib. A full 4.4 mm\n        // roof above Y31.1 carries the jack reaction into the bolted cap.\n        support_y_hex(yg_jack_x,z,support_guide_y_split-yg_eps,\n            yg_nut_top-support_guide_y_split+yg_eps,nut_af);\n    }"
+    },
+    "docs/final-assembly.md:71-71": {
+      "path": "docs/final-assembly.md",
+      "line_start": 71,
+      "line_end": 71,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "4. **装导向盖与调隙件。** 两公共架Y盖先放内侧调节螺母，再装两条独立Y压条和盖，盖的安装螺钉改用M3×20；四个调节螺钉用M3×16，并装外锁母。这两条公共架Y压条与四套载体Y压条是不同零件。再装载体Y外盖及X压条/外盖。两端均匀调整，往返完整20 mm行程检查是否卡紧；顶丝负责设定、锁母负责保持设定。不能把某个螺钉旋转圈数当成已测得的全机构公差。M2压块当前没有独立抗振锁，初装后需观察是否保持接触。"
+    },
+    "docs/final-assembly.md:72-72": {
+      "path": "docs/final-assembly.md",
+      "line_start": 72,
+      "line_end": 72,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "5. **出口先于背梁。** 从+Z放带肩内衬到止肩，再套PC至内衬肩。两道分体座从±X围住法兰/PC和两根长杆；先装横向M4，再调管夹、最后锁长杆螺母。夹管前松开其上下长杆螺母，不强拧到限位压瘪1 mm壁厚PC。密封带绕在Z54～89，夹管区为90～114。"
+    },
+    "docs/final-assembly.md:72-74": {
+      "path": "docs/final-assembly.md",
+      "line_start": 72,
+      "line_end": 74,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "5. **出口先于背梁。** 从+Z放带肩内衬到止肩，再套PC至内衬肩。两道分体座从±X围住法兰/PC和两根长杆；先装横向M4，再调管夹、最后锁长杆螺母。夹管前松开其上下长杆螺母，不强拧到限位压瘪1 mm壁厚PC。密封带绕在Z54～89，夹管区为90～114。\n6. **装回位弹簧。** 肩螺钉由头向肩依次穿：外侧DIN433垫片、弹簧钩、内侧DIN433垫片、对应长/短打印套、M3承载垫片，再入支座和M3螺母。长套13.2配固定肩长16，短套7.2配移动肩长10。固定端推到长槽上端锁住，再控制弹簧将上端接入初始位移动孔。不要把Ø7头硬穿钩眼。背面螺母用可容纳突出螺纹的5.5深套筒；几何按GEDORE2133 5,5的尺寸参考检查。\n7. **台面装入口夹，再装背梁。** 入口后夹与刚性支架是一件；背梁尚未装到主壳时，将其两定位键放入背梁原长孔，从另一侧装背板与两套M2.5。软管套满28 mm插嘴，夹环位于插嘴中部，两端各留3 mm，再装软衬、前半夹和两套M4×30。前半夹名义闭合行程0～2 mm，到机械限位仍夹不牢时不能继续强拧。四套M4固定背梁与握把；20 mm织带改穿入口支架左右外侧的新长孔，卸去自由软管拖拽。织带不是入口气密箍。旋转头按单独顺序装在原出球PC管末端。"
+    },
+    "docs/feeder-return-spring.md:63-67": {
+      "path": "docs/feeder-return-spring.md",
+      "line_start": 63,
+      "line_end": 67,
+      "sha256": "496583c6488034871f47e792b8b52f42080482731b86706da54c370a72e739c1",
+      "excerpt": "1. 在无球、无风、扳机初始位操作。固定M3螺母以AF面沿X，从−Y推入开放的后侧入口；这条直线用完整六角实体做连续扫掠。\n2. 每根肩螺钉先套上外侧DIN433垫片，再把肩轴穿过端钩眼，依次穿内侧DIN433垫片、相应长/短打印间隔套和M3承载垫片。**不能把已锁好的Ø7头硬穿钩眼，也不把约线径大的钩口掰到Ø4。**\n3. 先固定下端，向原槽上端偏置后锁紧。控制弹簧，上拉到移动端孔位，再把上端整套肩轴穿入通孔，由−Y侧螺母固定。上端此时已有目录名义预拉力约3 N，不是零载装配。\n4. +Y侧留Ø4圆柱工具入口到内六角头，−Y侧移动螺母采用下文有内孔的Ø9保守套筒通道检查实际套入。几何校核包括当前整合主壳、左右导向、五金、新背梁和出口座；不等于任意实物工具和手指都能操作。\n5. 拆卸先回到初始位并控制弹簧，再松上端螺母，将上肩轴沿+Y退出；随后释放弹簧预拉并取下下端。不是在20 mm末端带着最大拉力直接抽轴。取出轴后钩眼才能拆离；公共架后续拆卸前先拆掉弹簧。"
+    },
+    "docs/final-assembly.md:73-73": {
+      "path": "docs/final-assembly.md",
+      "line_start": 73,
+      "line_end": 73,
+      "sha256": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+      "excerpt": "6. **装回位弹簧。** 肩螺钉由头向肩依次穿：外侧DIN433垫片、弹簧钩、内侧DIN433垫片、对应长/短打印套、M3承载垫片，再入支座和M3螺母。长套13.2配固定肩长16，短套7.2配移动肩长10。固定端推到长槽上端锁住，再控制弹簧将上端接入初始位移动孔。不要把Ø7头硬穿钩眼。背面螺母用可容纳突出螺纹的5.5深套筒；几何按GEDORE2133 5,5的尺寸参考检查。"
+    },
+    "docs/inlet-retention-final.md:57-63": {
+      "path": "docs/inlet-retention-final.md",
+      "line_start": 57,
+      "line_end": 63,
+      "sha256": "0cac0bbf8ad4c7363e3cd888913dce8a09dedf1dc6a65a10a673f0dfc5027c41",
+      "excerpt": "与后半共享同一轴、内外径和耳基准；从+Y放入，从+Y拆出。两套M4从+Y进入，后半的金属螺母从−Y轴向口放入，宜在装到背梁前预装。耳和螺母口不封死换衬片路径；止挡是前半耳的一部分，不增加零件。\n\n### 3. 背梁后压板\n\n候选包络X−14..14、Y−57..−54、Z−156..−128。两套M2.5×20从−Y穿过后压板、既有槽和前锚板，在+Y侧用金属螺母锁紧。候选工具/硬件包络要求：头部不大于Ø5×3、垫片OD≤6/厚0.5、螺母对边≤5/厚≤2；原CAD按这些较保守尺寸审查；本轮标准件已选为Bossard BN610/1422898（ISO4762 M2.5×20，头最大Ø4.5×2.5、钥匙2.0）、BN628/1241427（DIN934 M2.5，AF5/厚最大2）及BN715/1777491（DIN125A，名义ID2.7/OD6/厚0.5），名义几何无需改CAD。**目录选定不等于已购买或全部公差通过。**\n\n该叠加为后板3＋原板6＋前板6＋垫片总厚1＋螺母2=18，20长螺纹名义突出2。头側使用AF2六角入口，审查采用沿−Y进入的Ø2.5工具杆包络，中心X±10.5；头部Ø5在X方向至±13，与原加强边从±15开始之间名义留2。前侧螺母外面约Y−39.5，距名义Ø55自由软管背侧Y−27.5约12。已以实体检查螺母、垫片、Ø2.5杆和前侧叉口工具候选的通路。前侧叉口工具包络宽10、厚2.2、开口5.2，沿−Z接近螺母；这是需要实工具满足的通路约束，不是已经核实某把扳手可用，也未模拟操作者手指、自由软管任意弯曲或扳手全角度摆动。"
+    },
+    "docs/inlet-retention-final.md:79-82": {
+      "path": "docs/inlet-retention-final.md",
+      "line_start": 79,
+      "line_end": 82,
+      "sha256": "0cac0bbf8ad4c7363e3cd888913dce8a09dedf1dc6a65a10a673f0dfc5027c41",
+      "excerpt": "1. 拆下背梁及原背梁连接螺栓（主机侧捕获螺母可留原位）；先清理并预装后半夹圈的M4金属螺母。候选锚板从背梁+Y侧将端键插入原孔，后压板从−Y安装；紧固件头和工具均在未装回主机时可达。\n2. 在台面上完成M2.5螺母装入和锁紧后，将软管套到插嘴既定位置；把已连成一体的背梁、后夹圈和后压板从−Y移回。连续65 mm路径已对旧主机及名义直软管检查；不能让后夹圈单独穿过已装好的背梁。\n3. 先回装并对齐背梁原M4连接，再从+Y装入前半夹圈和柔衬，使两侧M4逐渐形成均匀接触。不得靠拧背梁螺钉强迫软管/夹圈偏轴。0.4键端间隙不是靠歪斜补偿轴线的办法；2 mm止挡行程也不是推荐压紧量。\n4. 织带改穿新侧槽，约束自由软管。两侧M4和两侧金属螺母的最终工具路径留在外侧；后压板若需拆出，先卸背梁。换柔衬只需松开前半夹圈，但如后半衬片无法无损取出，应卸背梁，不从狭缝硬撬。"
+    },
+    "docs/cable-route-retention.md:39-44": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 39,
+      "line_end": 44,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "1. 护套尚未放入，弧盖与 U 下托分离。主座从原平台上方沿 −Z 落座。原调节器可在位；已经用保守连续 +Z60 mm 扫掠反查这一安装通道。\n2. 下托从后方沿 +Y 推到位，再向 +Z 抬 8 mm。暂托螺母，装四颗平台螺钉并均匀合到自身硬止挡。不能继续拧压来消除平台笼隙。\n3. 两端护套端套暂不坐死，弧盖卸下；从 `+N` 的开口侧把成品护套放入整条敞槽，保留装配松量。无需把较粗端套穿过 ID6.2 孔，也不应靠拉伸护套取得长度。不能在两端已完全锁死后强掰进入 147° 槽。\n4. 先检查护套在槽中自然就位，再装弧盖及六颗螺钉，最后落实两端端套的就座、张力调整及自由段形态。最终裁长仍按完整安装与端套座深处理，不能把现有 746.507 mm 路由长度直接当制造切长。\n5. 维修护套：卸六颗盖螺钉、沿 `+N` 拿开盖，按需松开端套后侧取护套。检查了 50 mm 拆盖通道。M3 驱动轴通道为名义 Ø4×45 mm，不代表任意电动起子外壳都能进入。\n6. 拆夹具：取出护套，拆四颗平台螺钉并托住下托；下托先向 −Z 降 8 mm，再向 −Y 抽 100 mm。直接向下抽 70 mm 会撞原机，初稿反例保留，禁止作为实际拆卸方式。最后把主座向 +Z 提走。"
+    },
+    "cad/cable-route-retention.scad:132-148": {
+      "path": "cad/cable-route-retention.scad",
+      "line_start": 132,
+      "line_end": 148,
+      "sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+      "excerpt": "module crr_lower(travel=0){translate([0,0,-travel])difference(){union(){\n    // U cradle stays outside the two gussets and behind the rear column.\n    crr_box(-77,-67.4,-65,20,78.5,84.7);\n    crr_box(-49.6,-39,-65,20,78.5,84.7);\n    crr_box(-77,-39,-65,-60,78.5,84.7);\n    }crr_clamp_holes();\n    for(x=crr_mount_x)for(y=crr_mount_stations)crr_zhex([x,y],78.48,2.82,5.8);\n}}\nmodule crr_lower_sweep(travel=8){union(){\n    crr_box(-77,-67.4,-65,20,78.5-travel,84.7);\n    crr_box(-49.6,-39,-65,20,78.5-travel,84.7);\n    crr_box(-77,-39,-65,-60,78.5-travel,84.7);\n}}\nmodule crr_lower_service_sweep(){\n    // First drop 8 mm, then withdraw 100 mm toward -Y behind the column.\n    // Long vertical removal is obstructed by the existing feeder below.\n    crr_lower_sweep(8);"
+    },
+    "docs/cable-trigger-input.md:52-52": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 52,
+      "line_end": 52,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "2. 同时承托已合盖的输入模块及背梁/入口夹总成，模块从CAD−Y靠近背梁，定位键就位，再以四M4×60完成共享主连接；不先永久安装旧四M4×20再叠装新螺钉。护套两端坐实后，在送料零位消除松弛而不拉离滑架；按功能窗口协调输入止挡，留在输出硬终点之前，锁定并复查释放零位。20 mm是工作范围上限，不是已有误差余量的止挡设置指令。"
+    },
+    "cad/cable-trigger-input.scad:207-228": {
+      "path": "cad/cable-trigger-input.scad",
+      "line_start": 207,
+      "line_end": 228,
+      "sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "excerpt": "module ci_local_body(){difference(){\n ci_local_body_blank();\n ci_zcyl(0,0,-13,28,4.5);\n ci_zcyl(0,0,-5.5,1.6,8.3); // steel spacer end seat, NOT the rotating bearing\n for(p=ci_cheek_posts){\n  ci_zcyl(p[0],p[1],-13,30,3.4);\n  ci_zhex(p[0],p[1],-12.1,3.1,5.8); // nuts enter from rear before mounting\n }\n ci_xcyl(60,2,-51,24,6.4);\n // OD12 washer edges would merely kiss the back rib Z=-4. Give .3 radial\n // clearance outside the load faces only; preserve the full 8 mm seat.\n ci_xcyl(60,2,-46.9,1.9,12.6);\n ci_xcyl(60,2,-37,1.9,12.6);\n // Thin wrench plane pockets: continuous rear material remains >=3.7 mm.\n // These are bench-service recesses, not in-place cover-on adjustment claims.\n for(x=ci_adjuster_tool_x)hull(){\n  ci_xcyl(60,2,x-.2,3.4,20.6);ci_xcyl(85,2,x-.2,3.4,20.6);\n }\n ci_xcyl(-24,2,-90,63,3.4);\n ci_xcyl(-24,2,-90,51.8,7.2); // screw head + hex tool access from local -X\n // M3 nut loaded against X=-32.6; enters from rear before the screw.\n translate([-38.3,-24,2])rotate([0,90,0])rotate([0,0,30])cylinder(h=5.7,d=5.8/cos(30),$fn=6);"
+    },
+    "docs/cable-trigger-input.md:51-51": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 51,
+      "line_end": 51,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "1. 无球、无风，在台面装输入模块：先装背面捕获螺母/止挡，再装定距管、推力垫片、轴套与扳机；放入球端和末端线芯，装两M3端球盖，随后完成端套、调节器和主盖。确认夹紧定距管时没有夹死旋转件。止挡先限制较小行程。"
+    },
+    "cad/cable-trigger-input.scad:331-343": {
+      "path": "cad/cable-trigger-input.scad",
+      "line_start": 331,
+      "line_end": 343,
+      "sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "excerpt": "module ci_local_adjuster(delta=ci_delta){translate([delta,0,0])difference(){\n union(){ci_xhex(60,2,-63,10,8);ci_xcyl(60,2,-53,24,6);}\n ci_xcyl(60,2,-63.1,8.6,7);\n translate([-54.5,60,2])rotate([0,90,0])cylinder(h=ci_adjuster_cone_display,d1=7,d2=3);\n ci_xcyl(60,2,-54.5+ci_adjuster_cone_display-ci_eps,\n   25.6-ci_adjuster_cone_display,3);\n}}\nmodule ci_local_ferrule(delta=ci_delta){translate([delta,0,0])difference(){\n ci_xcyl(60,2,ci_ferrule_mouth_display,11,5.5);\n ci_xcyl(60,2,ci_ferrule_mouth_display-ci_eps,9+ci_eps,5);\n translate([ci_ferrule_mouth_display+9,60,2])rotate([0,90,0])\n  cylinder(h=ci_ferrule_cone_display,d1=5,d2=2.5);\n ci_xcyl(60,2,ci_ferrule_mouth_display-ci_eps,11+2*ci_eps,2.5);"
+    },
+    "docs/cable-output-interface.md:31-31": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 31,
+      "line_end": 31,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "2. 钢丝穿过调节器及护套；钢丝进入端头横孔并由其 M4 紧定螺钉夹紧。调好座深、行程与预张紧后最后剪芯；当前安装空间上限为端头中心向下8 mm，即端头Ø5本体下缘外不超过5.5 mm余尾；模型显示上限。必须保证线芯完整穿过夹孔，真实供应件最低余尾要求尚未取得，因此这只是几何预算，不是已放行的裁线规格。压丝承力由横孔与螺钉形成，不能拿余尾长度证明夹线能力。"
+    },
+    "cad/cable-trigger-input.scad:331-349": {
+      "path": "cad/cable-trigger-input.scad",
+      "line_start": 331,
+      "line_end": 349,
+      "sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "excerpt": "module ci_local_adjuster(delta=ci_delta){translate([delta,0,0])difference(){\n union(){ci_xhex(60,2,-63,10,8);ci_xcyl(60,2,-53,24,6);}\n ci_xcyl(60,2,-63.1,8.6,7);\n translate([-54.5,60,2])rotate([0,90,0])cylinder(h=ci_adjuster_cone_display,d1=7,d2=3);\n ci_xcyl(60,2,-54.5+ci_adjuster_cone_display-ci_eps,\n   25.6-ci_adjuster_cone_display,3);\n}}\nmodule ci_local_ferrule(delta=ci_delta){translate([delta,0,0])difference(){\n ci_xcyl(60,2,ci_ferrule_mouth_display,11,5.5);\n ci_xcyl(60,2,ci_ferrule_mouth_display-ci_eps,9+ci_eps,5);\n translate([ci_ferrule_mouth_display+9,60,2])rotate([0,90,0])\n  cylinder(h=ci_ferrule_cone_display,d1=5,d2=2.5);\n ci_xcyl(60,2,ci_ferrule_mouth_display-ci_eps,11+2*ci_eps,2.5);\n}}\n\nmodule ci_local_moving_hardware(u=ci_u){rotate([0,0,-ci_angle(u)]){\n ci_zring(0,0,-3.5,11,12,8.2);\n translate(ci_terminal)sphere(d=5);\n ci_local_terminal_fasteners();"
+    },
+    "docs/cable-output-interface.md:22-22": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 22,
+      "line_end": 22,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "端头 `03096-35-03180507` 为镀镍黄铜 Ø5×7，轴向 M4 一字槽紧定螺钉、垂直横孔 Ø1.8、入口本体端面至横孔中心 3.5。调节器 `03096-30-0306X24` 为 M6 螺纹长 24、总长 34、SW8 头长 10；护套入口 Ø7 直孔深 8.5 后通过未标锥面收至 Ø3。线芯 Ø1.5、球端 Ø5、护套 Ø5；均不是已购确认。"
+    },
+    "output/cable-direct-adoption/service/README.md:13-35": {
+      "path": "output/cable-direct-adoption/service/README.md",
+      "line_start": 13,
+      "line_end": 35,
+      "sha256": "107f486ebfe17fde46bdfcf15085853f3fc8964ce60d5e06dc11a7b7f60fd3cf",
+      "excerpt": "1. 释放输出夹线，拉出横孔内尾线；断开并放开护套/中间约束，再拆下输入模块。主盖及对应主轴/盖螺钉卸下，支承扳机在 u0。\n2. SW2.5 直六角杆从 local+Z 进入两个 M3 头部；名义工具尖起 Z6.01，长40 mm。检查保留了完整固定金属和另一颗螺钉。实际手柄、手和扭矩未建模。\n3. 两颗 M3 螺钉旋出螺纹后，沿 local+Z 平移退出16 mm；轴向扫掠分别覆盖每颗螺杆和圆头，没有在两颗螺钉间做虚假凸包。\n4. 螺钉取出后，小盖沿 local+Z 退出20 mm；球端、POM衬套和后侧螺母保留。\n5. 小盖取出、线芯已放松后，Ø5 球端连末端12 mm钢芯沿 local+Z 退出20 mm；仅证明这段局部出口，不承诺整根软线任意弯曲路径。\n\n## 结果\n\n| 项目 | 结果 |\n|---|---|\n| terminal-tools | 仅源规定配合面接触；最大面残差 3.97e-14 mm |\n| terminal-bolts | 仅源规定配合面接触；最大面残差 0 mm |\n| terminal-cap | 仅源规定配合面接触；最大面残差 5.77e-15 mm |\n| terminal-ball | 明确空交集，无STL |\n| main-cover | 仅源规定配合面接触；最大面残差 0 mm |\n| terminal-tools-wrong-stage-positive | 真实错序阻挡，实料体积约 62.5457 mm³ |\n| terminal-bolts-wrong-stage-positive | 真实错序阻挡，实料体积约 244.151 mm³ |\n| terminal-cap-wrong-stage-positive | 真实错序阻挡，实料体积约 1366.34 mm³ |\n| terminal-ball-wrong-stage-positive | 真实错序阻挡，实料体积约 95.9595 mm³ |\n\n九项均符合预期，全部源身份前后一致。工具的零厚接触仅允许在各目标螺钉 SW2.5 六个侧面且限制 Z6..7.5；退出螺钉仅允许 Z4.5 头座和头投影内；小盖仅允许 Z3.1 分型面及盖轮廓内；主盖仅允许两支柱顶 Z8 范围。每个三角必须整体属于同一规定面，没有用小体积阈值判通过。\n\n四个阳性对照来自真实错误顺序：主盖不拆会挡住工具、螺钉、小盖；小盖不拆会挡住球端。"
+    },
+    "cad/cable-trigger-input.scad:262-294": {
+      "path": "cad/cable-trigger-input.scad",
+      "line_start": 262,
+      "line_end": 294,
+      "sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "excerpt": "module ci_local_terminal_cap(sweep=0){difference(){\n ci_web([0,54],[0,66],7,3.1,7.5+sweep);\n translate(ci_terminal)sphere(d=5.6);\n for(p=ci_cap_bolts){\n  ci_zcyl(p[0],p[1],3,5+sweep,3.4);\n  ci_zcyl(p[0],p[1],4.5+sweep,3.1,6.2);\n }\n}}\nmodule ci_local_lever(u=ci_u){rotate([0,0,-ci_angle(u)])ci_local_lever_zero();}\nmodule ci_terminal_cap(u=ci_u){ci_to_cad()rotate([0,0,-ci_angle(u)])ci_local_terminal_cap();}\nmodule ci_local_terminal_fasteners(){for(p=ci_cap_bolts){\n // Candidate standard M3x8 socket-head: D5.5 H3, SW2.5; M3 nut SW5.5 H2.4.\n ci_zbolt(p[0],p[1],4.5,8,3,5.5,3,2.5);\n difference(){ci_zhex(p[0],p[1],-3,2.4,5.5);ci_zcyl(p[0],p[1],-3.1,2.6,3.1);}\n}}\n\nmodule ci_local_cover_blank(sweep=0){union(){\n ci_zcyl(0,0,8,6+sweep,24);\n ci_sector(49,67,15,122,8,14+sweep);\n ci_web([0,0],[-30,20],7,8,14+sweep);\n ci_web([0,0],[74,20],7,8,14+sweep);\n ci_web([-30,20],[-28,54],6.5,8,14+sweep);\n ci_web([74,20],[62,30],7,8,14+sweep);\n for(p=ci_cheek_posts)ci_zcyl(p[0],p[1],8,6+sweep,16);\n}}\nmodule ci_local_cover(sweep=0){difference(){\n ci_local_cover_blank(sweep);\n ci_zcyl(0,0,7,8+sweep,4.5);\n ci_zcyl(0,0,7.9,1.6,8.3);\n for(p=ci_cheek_posts){\n  ci_zcyl(p[0],p[1],7,9+sweep,3.4);\n  translate([p[0]-4.2,p[1]-4.2,7.9])cube([8.4,8.4,1.8]);\n }"
+    },
+    "docs/cable-trigger-input.md:41-47": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 41,
+      "line_end": 47,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "输入M6调节器穿过8 mm厚固定座，两侧各有厚1.6金属垫片和厚3.2、SW10薄螺母。调节器/端套可在装配时沿局部X调整 `δ=−2…+2 mm`；锁紧面位置、固定导向与工作时护套座保持不动。名义5 mm入口直段因此为3～7 mm，两端最小名义露牙1.2 mm。实际螺纹退刀/倒角、端套鼻端与调节器内部锥面坐深仍未知，不能把显示位置当成已确认承力止面或裁切长度。\n\n调整 `δ` 后，同一设置下的增量收线关系不变，但绝对线长、松量和预紧会变。须重新坐实和布置护套、重设输出夹线零位，再锁紧两薄螺母。不能把“增量不变”理解为无需重新调零。工具与调节的限定见[台面调节审查](../output/cable-direct-pull-v2/independent/route-and-tool-review.md)。\n\n零位有机械止挡；满扣端为M3×30可调螺钉，配捕获螺母及外锁母，轴线局部Y−24/Z2。`ci_stop_setting`的16～22 mm是输入止挡配置域，**输出工作域仍为0～20 mm**。止挡坐标由当前 `ci_stop_tip()` / `ci_angle()`计算，不沿用旧圆弧止挡数值。护套就座、输出零位、滑架终点和输入止挡须一起协调，使继续勾扣的载荷由止挡承接，不能靠钢芯伸长吸收过扣。\n\n[本轮止挡预算](current-mechanical-review.md)进一步区分功能开启与硬终点：规定误差条件下充分开启阈值为18.4214 mm，至名义20 mm终点约有1.5786 mm区间，尚需失程和零位误差界后才能选设置。默认20不是有误差时的装配指令；实际72边形接触也有小的延迟。M6调节不构成保持两端零位的独立弹簧预紧。"
+    },
+    "docs/cable-service-contract.md:25-27": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 25,
+      "line_end": 27,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "| `cs_input_stop_tools(setting=20,entry_local_x=-100)` | 直接复用`ci_stop_tip(setting)`。局部轴Y−24/Z2，Ø4杆从X−100到螺钉头前；AF2.5端伸1.5。局部+X进入，即CAD[-√.5,0,+√.5] | 可原位检查；此模块仅查内六角入口，不包含外锁母扳手。检查16/20/22时实际止挡设置也须对应，不能把22工具与20螺钉做误配检查 |\n| `cs_input_stop_locknut_tool(sweep=30)` | 外侧M3锁母的候选薄SW5.5工具，厚3、头OD12、开口间隙5.7，局部X[-28.9,-25.9]；开口朝局部+Y，从−Y连续进入30，柄长至Y−99。距止挡座X−29有0.1名义轴向间隙 | 可查原位；只是指定工具预算与进入路径，未认证未知实扳手或全部拧紧摆角 |\n| `cs_input_adjuster_tools()` | 复用`ci_local_adjuster_tool(i,25)`，两处3 mm薄SW10开口工具，从局部+Y连续进入25 | 输入模块在台面，前盖卸下；非原位带盖调节 |"
+    },
+    "docs/cable-trigger-input.md:51-54": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 51,
+      "line_end": 54,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "1. 无球、无风，在台面装输入模块：先装背面捕获螺母/止挡，再装定距管、推力垫片、轴套与扳机；放入球端和末端线芯，装两M3端球盖，随后完成端套、调节器和主盖。确认夹紧定距管时没有夹死旋转件。止挡先限制较小行程。\n2. 同时承托已合盖的输入模块及背梁/入口夹总成，模块从CAD−Y靠近背梁，定位键就位，再以四M4×60完成共享主连接；不先永久安装旧四M4×20再叠装新螺钉。护套两端坐实后，在送料零位消除松弛而不拉离滑架；按功能窗口协调输入止挡，留在输出硬终点之前，锁定并复查释放零位。20 mm是工作范围上限，不是已有误差余量的止挡设置指令。\n3. 松手后，送料回位弹簧拉回滑架，再经保持张紧的内芯带回扳机。钢芯只能受拉，输入端没有独立回位弹簧；断线不保证扳机归位，也不能据弹簧存在排除卡球或断丝阻塞。\n4. 维护时先释放输出夹线、将尾线从横孔抽出、解除并移开护套/中段约束及软管拖拽；同时承托输入模块和背梁/入口夹总成，再卸四M4。这四颗也是背梁主固定，卸完不能假定背梁仍固定在送料壳体上。模块移到台面，再沿局部+Z（CAD+Y）拆主盖；主盖拆除并支承零位扳机后，才拆两M3端球盖并取出球头。不得在原位硬拉仍受护套约束的模块。"
+    },
+    "docs/cable-service-contract.md:14-17": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 14,
+      "line_end": 17,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "4. 先解除软管和拉索牵引，同时承托输入模块与背梁/入口夹总成，再卸四颗长M4及垫片；这四颗同时是背梁主固定，卸后不能把背梁视作仍独立固定。保持背梁受托，模块沿CAD−Y相对背梁退离。先退6只表示定位键全部退出梁Y−54后面，不等于已经搬到台面。当前中段支架接在输出桥上，应先解除护套约束；承托和相对拆卸不由单独刚体扫掠证明。\n5. 到台面后再卸输入主轴与两颗盖M3，沿输入局部+Z打开前盖。这个方向是CAD+Y；旧背梁还在原位时不能据独立盖扫掠宣称可打开。\n\n回装按相反顺序，在台面完成输入球头、定距轴、轴套、推力垫片、调节器薄螺母与前盖；同时承托并定位背梁和输入模块，再用四M4×60完成共享固定。线芯固定、护套坐实和终点调整仍按输入/输出装配说明完成，不将拆装检查冒充点射或回位验收。"
+    },
+    "docs/cable-route-retention.md:39-40": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 39,
+      "line_end": 40,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "1. 护套尚未放入，弧盖与 U 下托分离。主座从原平台上方沿 −Z 落座。原调节器可在位；已经用保守连续 +Z60 mm 扫掠反查这一安装通道。\n2. 下托从后方沿 +Y 推到位，再向 +Z 抬 8 mm。暂托螺母，装四颗平台螺钉并均匀合到自身硬止挡。不能继续拧压来消除平台笼隙。"
+    },
+    "docs/cable-route-retention.md:41-43": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 41,
+      "line_end": 43,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "3. 两端护套端套暂不坐死，弧盖卸下；从 `+N` 的开口侧把成品护套放入整条敞槽，保留装配松量。无需把较粗端套穿过 ID6.2 孔，也不应靠拉伸护套取得长度。不能在两端已完全锁死后强掰进入 147° 槽。\n4. 先检查护套在槽中自然就位，再装弧盖及六颗螺钉，最后落实两端端套的就座、张力调整及自由段形态。最终裁长仍按完整安装与端套座深处理，不能把现有 746.507 mm 路由长度直接当制造切长。\n5. 维修护套：卸六颗盖螺钉、沿 `+N` 拿开盖，按需松开端套后侧取护套。检查了 50 mm 拆盖通道。M3 驱动轴通道为名义 Ø4×45 mm，不代表任意电动起子外壳都能进入。"
+    },
+    "docs/cable-route-retention.md:39-42": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 39,
+      "line_end": 42,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "1. 护套尚未放入，弧盖与 U 下托分离。主座从原平台上方沿 −Z 落座。原调节器可在位；已经用保守连续 +Z60 mm 扫掠反查这一安装通道。\n2. 下托从后方沿 +Y 推到位，再向 +Z 抬 8 mm。暂托螺母，装四颗平台螺钉并均匀合到自身硬止挡。不能继续拧压来消除平台笼隙。\n3. 两端护套端套暂不坐死，弧盖卸下；从 `+N` 的开口侧把成品护套放入整条敞槽，保留装配松量。无需把较粗端套穿过 ID6.2 孔，也不应靠拉伸护套取得长度。不能在两端已完全锁死后强掰进入 147° 槽。\n4. 先检查护套在槽中自然就位，再装弧盖及六颗螺钉，最后落实两端端套的就座、张力调整及自由段形态。最终裁长仍按完整安装与端套座深处理，不能把现有 746.507 mm 路由长度直接当制造切长。"
+    },
+    "cad/cable-route-retention.scad:82-87": {
+      "path": "cad/cable-route-retention.scad",
+      "line_start": 82,
+      "line_end": 87,
+      "sha256": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+      "excerpt": "module crr_arc_base(){crr_basis()difference(){\n    translate([0,0,-crr_base_depth])linear_extrude(height=crr_base_depth)crr_band_2d();\n    crr_groove();\n    for(p=crr_bolt_points()){\n        translate([p[0],p[1],-crr_base_depth-crr_eps])cylinder(h=12,d=3.5,$fn=crr_fn);\n        crr_zhex(p,-crr_base_depth-crr_eps,3.02,5.8);"
+    },
+    "docs/cable-route-retention.md:41-42": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 41,
+      "line_end": 42,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "3. 两端护套端套暂不坐死，弧盖卸下；从 `+N` 的开口侧把成品护套放入整条敞槽，保留装配松量。无需把较粗端套穿过 ID6.2 孔，也不应靠拉伸护套取得长度。不能在两端已完全锁死后强掰进入 147° 槽。\n4. 先检查护套在槽中自然就位，再装弧盖及六颗螺钉，最后落实两端端套的就座、张力调整及自由段形态。最终裁长仍按完整安装与端套座深处理，不能把现有 746.507 mm 路由长度直接当制造切长。"
+    },
+    "docs/cable-trigger-input.md:43-47": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 43,
+      "line_end": 47,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "调整 `δ` 后，同一设置下的增量收线关系不变，但绝对线长、松量和预紧会变。须重新坐实和布置护套、重设输出夹线零位，再锁紧两薄螺母。不能把“增量不变”理解为无需重新调零。工具与调节的限定见[台面调节审查](../output/cable-direct-pull-v2/independent/route-and-tool-review.md)。\n\n零位有机械止挡；满扣端为M3×30可调螺钉，配捕获螺母及外锁母，轴线局部Y−24/Z2。`ci_stop_setting`的16～22 mm是输入止挡配置域，**输出工作域仍为0～20 mm**。止挡坐标由当前 `ci_stop_tip()` / `ci_angle()`计算，不沿用旧圆弧止挡数值。护套就座、输出零位、滑架终点和输入止挡须一起协调，使继续勾扣的载荷由止挡承接，不能靠钢芯伸长吸收过扣。\n\n[本轮止挡预算](current-mechanical-review.md)进一步区分功能开启与硬终点：规定误差条件下充分开启阈值为18.4214 mm，至名义20 mm终点约有1.5786 mm区间，尚需失程和零位误差界后才能选设置。默认20不是有误差时的装配指令；实际72边形接触也有小的延迟。M6调节不构成保持两端零位的独立弹簧预紧。"
+    },
+    "docs/cable-output-interface.md:31-34": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 31,
+      "line_end": 34,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "2. 钢丝穿过调节器及护套；钢丝进入端头横孔并由其 M4 紧定螺钉夹紧。调好座深、行程与预张紧后最后剪芯；当前安装空间上限为端头中心向下8 mm，即端头Ø5本体下缘外不超过5.5 mm余尾；模型显示上限。必须保证线芯完整穿过夹孔，真实供应件最低余尾要求尚未取得，因此这只是几何预算，不是已放行的裁线规格。压丝承力由横孔与螺钉形成，不能拿余尾长度证明夹线能力。\n3. 端头与钢丝从 +Y 侧推入新耳开槽，再套入金属保持垫圈，使其在浮动座中避让 M4 螺钉，最后装盖与两枚 M3×16 螺钉。盖中央贯通，螺钉没有盲底顶碰；拆盖后先取垫圈，再沿 +Y 取端头。垫圈在拆盖后不是防丢件。\n4. 桥与原背梁一体打印/安装，仍使用原背梁四个 M4 根部接口；不得在原夹紧层中额外塞板而不重算螺钉长度。\n5. 调节器从 +Z 装入，在下方套下垫圈与锁母，上方装上垫圈与锁母。下锁母通过 +X 开放扳手通道接近。"
+    },
+    "docs/cable-output-interface.md:31-32": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 31,
+      "line_end": 32,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "2. 钢丝穿过调节器及护套；钢丝进入端头横孔并由其 M4 紧定螺钉夹紧。调好座深、行程与预张紧后最后剪芯；当前安装空间上限为端头中心向下8 mm，即端头Ø5本体下缘外不超过5.5 mm余尾；模型显示上限。必须保证线芯完整穿过夹孔，真实供应件最低余尾要求尚未取得，因此这只是几何预算，不是已放行的裁线规格。压丝承力由横孔与螺钉形成，不能拿余尾长度证明夹线能力。\n3. 端头与钢丝从 +Y 侧推入新耳开槽，再套入金属保持垫圈，使其在浮动座中避让 M4 螺钉，最后装盖与两枚 M3×16 螺钉。盖中央贯通，螺钉没有盲底顶碰；拆盖后先取垫圈，再沿 +Y 取端头。垫圈在拆盖后不是防丢件。"
+    },
+    "docs/cable-output-interface.md:65-67": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 65,
+      "line_end": 67,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "当前源把原2.2 mm宽线槽下端贯穿到 `co_lug_bottom−co_eps`，X/Y和夹头窝、金属垫圈位置不变；两侧名义连续实体宽度分别为6.4/7.9 mm。先用中心下15 mm余尾做了[耳孔局部通线检查](../output/cable-tail-clearance/after.json)，该项空交；随后[整机检查](../output/cable-trigger-system/20260927T064713375950Z/report.json)检出长尾在输出0～4 mm行程撞到左Y导向盖Z0～5。这一失败保留，局部空交没有被当成整机通过。当前将中心下8 mm定义为安装空间上限，零位尾端Z7，距已知导向盖Z5有2 mm名义间隙；见[修改与范围记录](../output/cable-tail-clearance/tail-limit-revision.json)。这些实体宽度与通线结果不是PETG强度保证。\n\n拆线时先卸盖、取垫圈并松开夹头，再沿+Z抽出线尾；不能让端头穿过仍在封闭横孔内的钢丝。按8 mm中心下余尾上限，退出Ø5端头上缘需要超过10.5 mm，输入20 mm收线行程留9.5 mm名义余量；这只适用于夹头松开、滑架保持零位且线芯能自由滑动的拆卸状态。此时输入u与输出t已解除联动。若实际余尾更长，不得硬拉；应在拆卸前另行放出/解除线芯。"
+    },
+    "docs/cable-route-retention.md:42-42": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 42,
+      "line_end": 42,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "4. 先检查护套在槽中自然就位，再装弧盖及六颗螺钉，最后落实两端端套的就座、张力调整及自由段形态。最终裁长仍按完整安装与端套座深处理，不能把现有 746.507 mm 路由长度直接当制造切长。"
+    },
+    "docs/cable-service-contract.md:12-12": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 12,
+      "line_end": 12,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "2. 抽出端头封闭 Ø1.8 横孔中的裸线端，才能将端头向+Y移出。可以保持输出滑架 `t=0`，在夹头已松开的情况下扣输入扳机收线，线尾沿+Z退出。修正后的名义安装上限为端头中心下8 mm余尾，零位尾端Z7、端头上缘Z17.5，需超过10.5 mm的线芯移动，20 mm输入行程有9.5 mm名义余量。夹头解除后输入u与输出t不再同步。**实物尾长和滑动状态仍须核对**；若需要抽线量超过可用行程，须另外放出/解除线芯，不能硬扯端头。旧4 mm短尾显示已被尾线出口修正替代，当前空间上限也不是厂家最低夹线要求；长尾15 mm曾在整机检查中撞导向盖，失败记录在尾线修订目录。"
+    },
+    "docs/cable-trigger-input.md:52-54": {
+      "path": "docs/cable-trigger-input.md",
+      "line_start": 52,
+      "line_end": 54,
+      "sha256": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+      "excerpt": "2. 同时承托已合盖的输入模块及背梁/入口夹总成，模块从CAD−Y靠近背梁，定位键就位，再以四M4×60完成共享主连接；不先永久安装旧四M4×20再叠装新螺钉。护套两端坐实后，在送料零位消除松弛而不拉离滑架；按功能窗口协调输入止挡，留在输出硬终点之前，锁定并复查释放零位。20 mm是工作范围上限，不是已有误差余量的止挡设置指令。\n3. 松手后，送料回位弹簧拉回滑架，再经保持张紧的内芯带回扳机。钢芯只能受拉，输入端没有独立回位弹簧；断线不保证扳机归位，也不能据弹簧存在排除卡球或断丝阻塞。\n4. 维护时先释放输出夹线、将尾线从横孔抽出、解除并移开护套/中段约束及软管拖拽；同时承托输入模块和背梁/入口夹总成，再卸四M4。这四颗也是背梁主固定，卸完不能假定背梁仍固定在送料壳体上。模块移到台面，再沿局部+Z（CAD+Y）拆主盖；主盖拆除并支承零位扳机后，才拆两M3端球盖并取出球头。不得在原位硬拉仍受护套约束的模块。"
+    },
+    "docs/spin-complete-hardware.md:33-34": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 33,
+      "line_end": 34,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "1. 每个打印件先独立清除支撑和碎屑。对侧两颗 M3 螺母从 +Y 装入壳体，导向从 −X 就位，以带0.5 mm垫片的 M3×10 固定。螺母受拉时压在完整台肩上。\n2. 载体取出状态，从 +Z 放入拉帽螺母，从两侧装压条螺母。TPU95A HF 垫沿 −Z 滑入燕尾，装沉头压条。两颗压条螺钉的 +Z 工具入口只在载体取出后成立；装进主体后操作的反例被保留。"
+    },
+    "cad/spin-complete-hardware.scad:98-100": {
+      "path": "cad/spin-complete-hardware.scad",
+      "line_start": 98,
+      "line_end": 100,
+      "sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+      "excerpt": "    if(group==\"keeper\")for(y=[-7,7])hull()for(d=[0,y<0?-15:15])\n        translate([26.75,y+d,57.1])cylinder(h=2.4,d=5.5/cos(30),$fn=6);\n    if(group==\"pull\")hull()for(d=[0,16])sch_x_nut(sh_pull_nut_x+.3,0,57+d);"
+    },
+    "docs/spin-complete-hardware.md:33-33": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 33,
+      "line_end": 33,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "1. 每个打印件先独立清除支撑和碎屑。对侧两颗 M3 螺母从 +Y 装入壳体，导向从 −X 就位，以带0.5 mm垫片的 M3×10 固定。螺母受拉时压在完整台肩上。"
+    },
+    "cad/spin-complete-hardware.scad:91-97": {
+      "path": "cad/spin-complete-hardware.scad",
+      "line_start": 91,
+      "line_end": 97,
+      "sha256": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+      "excerpt": "module sch_nut_feeds(group=sch_group){\n    if(group==\"cover\")for(y=[-18,18],z=[27,61])hull()for(d=[0,y<0?-20:20])\n        sch_x_nut(49.3,y+d,z);\n    if(group==\"cage\")for(y=[-11,11])hull()for(d=[0,y<0?-20:20])\n        sch_x_nut(49.3,y+d,43);\n    if(group==\"guide\")for(z=[20,66])hull()for(d=[0,24])\n        sch_x_nut(sh_opposite_nut_x,d,z);"
+    },
+    "docs/spin-head.md:80-80": {
+      "path": "docs/spin-head.md",
+      "line_start": 80,
+      "line_end": 80,
+      "sha256": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+      "excerpt": "装配顺序：先把新增拉杆 M3 螺母从载体 +Z 顶槽装入，再预装载体两颗压条螺母及壳体侧向螺母。拉杆螺母不能改从 ±Y 横穿两颗压条螺钉。柔性垫沿 −Z 插入载体，装沉头压条后，从 +X 把整个载体推入；对侧导向块从 −X 安装。外盖耳部新增 M3 螺母从 +Z 顶槽装入。**在装弹簧笼及其 M3 螺钉之前，先从 +Y 侧槽将 M4 预压固定螺母装到外盖座位。** 靠 +Y 的弹簧笼 M3 螺钉会横穿该螺母的装入路径，不能最后才放入此 M4 螺母。随后将弹簧座从笼的 +X 开口装入，把笼固定到外盖，外盖内侧肩部封住座的另一端；该拆分避免把座困在封闭孔腔中。将符合规格的弹簧装入两端定位柱之间，导柱对准外盖孔，再从 +X 装外盖。最后装预压手拧螺钉及外锁定螺母，并从 +X 以 M3×45 固定拉帽。拉帽装在上导柱端部后才能承担主动拉回载荷；保持块在工作档取下并系在外部。"
+    },
+    "cad/spin-head.scad:149-192": {
+      "path": "cad/spin-head.scad",
+      "line_start": 149,
+      "line_end": 192,
+      "sha256": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+      "excerpt": "module cover() {\n    difference() {\n        union() {\n            translate([55,-20,20]) cube([4,40,49]);\n            // Continuous cover ear for the removable latch retaining screw.\n            translate([55,-10,64]) cube([4,20,11]);\n            for(y=[-18,18],z=[27,61]) cyl_x(55,y,z,4,10);\n            // Outer seat stop; separate cage permits axial seat assembly.\n            cyl_x(sh_spring_seat_front_x+sh_spring_seat_thickness,0,sh_spring_axis_z,\n                  55-sh_spring_seat_front_x-sh_spring_seat_thickness,12);\n            // M4 nut reacts on this outer boss, not a thin pocket lip.\n            cyl_x(59,0,sh_spring_axis_z,6,14);\n            // Outward stops belong to the removable cover. Removing the cover\n            // removes these stops, so the carriage can be inserted/extracted.\n            for(y=[-9,9],z=[32,54])\n                cyl_x(sh_carrier_back_x+sh_float_travel,y,z,55-sh_carrier_back_x-sh_float_travel+0.1,6);\n        }\n        for(y=[-18,18],z=[27,61]) hole_x(54.9,y,z,4.2,3.4);\n        for(y=[-11,11]) hole_x(54.9,y,sh_spring_axis_z,4.2,3.4);\n        for(z=sh_guide_pin_z) hole_x(54.9,0,z,4.2,sh_guide_pin_d+0.5);\n        hole_x(49,0,sh_spring_axis_z,18,4.5);\n        hex_x(55.7,0,sh_spring_axis_z,3.3,7.1);\n        translate([55.7,0,sh_spring_axis_z-4.1]) cube([3.3,21,8.2]);\n        hole_x(54.9,0,sh_latch_bolt_z,4.2,3.4);\n        hex_x(sh_latch_nut_x,0,sh_latch_bolt_z,2.7,5.8);\n        translate([sh_latch_nut_x,-3,sh_latch_bolt_z-3.4]) cube([2.7,6,9.42]);\n        hole_x(54.9,-7,72,4.2,2.5); // Cord eye, clear of the body behind it.\n    }\n}\nmodule spring_cage() {\n    difference() {\n        union() {\n            cyl_x(sh_spring_guide_front_x,0,sh_spring_axis_z,55-sh_spring_guide_front_x,sh_spring_guide_od);\n            for(y=[-11,11]) translate([48,y-3,40]) cube([7,6,6]);\n        }\n        hole_x(sh_spring_guide_front_x-0.1,0,sh_spring_axis_z,\n               sh_spring_seat_front_x-sh_preload_travel-sh_spring_guide_front_x+0.1,11);\n        hole_x(sh_spring_seat_front_x-sh_preload_travel,0,sh_spring_axis_z,\n               55.1-sh_spring_seat_front_x+sh_preload_travel,sh_spring_guide_id);\n        for(y=[-11,11]) {\n            hole_x(47.9,y,sh_spring_axis_z,7.3,3.4);\n            hex_x(49,y,sh_spring_axis_z,2.7,5.8);\n            translate([49,y<0?-15:y,sh_spring_axis_z-3.4]) cube([2.7,4,6.8]);\n        }"
+    },
+    "docs/spin-complete-hardware.md:34-40": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 34,
+      "line_end": 40,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "2. 载体取出状态，从 +Z 放入拉帽螺母，从两侧装压条螺母。TPU95A HF 垫沿 −Z 滑入燕尾，装沉头压条。两颗压条螺钉的 +Z 工具入口只在载体取出后成立；装进主体后操作的反例被保留。\n3. 外盖单独放置，先从 +Y 装 M4 预压固定螺母，再装弹簧座、弹簧笼与两颗 M3×12。反序时笼螺钉穿过螺母入口，已有正控，不可省略此顺序。保持叉螺母从 +Z 顶槽预装在外盖。\n4. 将载体插入主体，弹簧放在两定位柱之间，控制弹簧后装外盖及4颗 M3×12。装预压旋钮、外锁母，再以 M3×45 固定拉帽。正常工作不装保持叉及其螺钉；槽内捕获螺母留在外盖。\n5. 保持档：停风清空，拉到5.25 mm硬止挡，沿 −Z 放入保持叉，以 M3×16 和0.5 mm垫片固定，缓放到5.00 mm保持位。回工作档时先拉住卸载，再拆叉并控制回位。\n6. 维修先卸保持叉，再卸拉帽长螺钉与拉帽；最小预压仍可能有弹簧力。控制外盖、均匀松开固定螺钉，向 +X 直移至少20 mm后移开，再抽载体。不能带Ø12拉帽硬拔Ø6.5盖孔。\n\n各直线批头入口采用 Ø4 mm（M3）或Ø5 mm（管箍M4）外包络；内六角分别用2／2.5／3 mm对应头型。外锁母采用以 [GEDORE R09100070 官方目录](https://us.gedore.com/fileadmin/Kataloge/US/3101134_Kat_GEDred_GWF_EN_18.pdf) 头宽15.5、厚3.7、总长105 mm建立的7 mm开口扳手条件包络。柄从 −Y 接近，检查 −5／0／+5° 及滑块两端点；驱动中的目标锁母不被当作障碍。这证明指定包络的几个姿态，不证明任意扳手或连续大角度转动。锁紧后重新检查5.25 mm行程，不给未验证扭矩。"
+    },
+    "docs/spin-head.md:80-84": {
+      "path": "docs/spin-head.md",
+      "line_start": 80,
+      "line_end": 84,
+      "sha256": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+      "excerpt": "装配顺序：先把新增拉杆 M3 螺母从载体 +Z 顶槽装入，再预装载体两颗压条螺母及壳体侧向螺母。拉杆螺母不能改从 ±Y 横穿两颗压条螺钉。柔性垫沿 −Z 插入载体，装沉头压条后，从 +X 把整个载体推入；对侧导向块从 −X 安装。外盖耳部新增 M3 螺母从 +Z 顶槽装入。**在装弹簧笼及其 M3 螺钉之前，先从 +Y 侧槽将 M4 预压固定螺母装到外盖座位。** 靠 +Y 的弹簧笼 M3 螺钉会横穿该螺母的装入路径，不能最后才放入此 M4 螺母。随后将弹簧座从笼的 +X 开口装入，把笼固定到外盖，外盖内侧肩部封住座的另一端；该拆分避免把座困在封闭孔腔中。将符合规格的弹簧装入两端定位柱之间，导柱对准外盖孔，再从 +X 装外盖。最后装预压手拧螺钉及外锁定螺母，并从 +X 以 M3×45 固定拉帽。拉帽装在上导柱端部后才能承担主动拉回载荷；保持块在工作档取下并系在外部。\n\n切换保持档时停风并清空机构，先向 +X 拉到硬止挡，再下放保持块并固定 M3×16，随后轻放拉帽；返回工作档时先向外拉住拉帽卸载保持块，再卸 M3×16、向 +Z 取出块并控制载体回位。不得把装块强推到小于5 mm的位置，不靠过拧固定螺钉强迫对孔。\n\n维修前先取下保持块，卸下 M3×45 和拉帽（拉帽 Ø12 大于外盖导孔 Ø6.5，不能带帽硬拔外盖），再将调节退至最小；最小档仍可能存在由弹簧自由长度造成的预压，须控制住外盖并均匀松开四颗外盖螺钉。外盖/弹簧笼沿 +X 直拉至少 20 mm 后再移开，随后沿 +X 抽出载体。软垫的两颗沉头螺钉在载体拆出后有独立工具入口。禁止在弹簧仍加载时强撬，禁止靠压扁球强行越过止挡。"
+    },
+    "docs/spin-complete-hardware.md:36-38": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 36,
+      "line_end": 38,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "4. 将载体插入主体，弹簧放在两定位柱之间，控制弹簧后装外盖及4颗 M3×12。装预压旋钮、外锁母，再以 M3×45 固定拉帽。正常工作不装保持叉及其螺钉；槽内捕获螺母留在外盖。\n5. 保持档：停风清空，拉到5.25 mm硬止挡，沿 −Z 放入保持叉，以 M3×16 和0.5 mm垫片固定，缓放到5.00 mm保持位。回工作档时先拉住卸载，再拆叉并控制回位。\n6. 维修先卸保持叉，再卸拉帽长螺钉与拉帽；最小预压仍可能有弹簧力。控制外盖、均匀松开固定螺钉，向 +X 直移至少20 mm后移开，再抽载体。不能带Ø12拉帽硬拔Ø6.5盖孔。"
+    },
+    "docs/spin-head.md:82-82": {
+      "path": "docs/spin-head.md",
+      "line_start": 82,
+      "line_end": 82,
+      "sha256": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+      "excerpt": "切换保持档时停风并清空机构，先向 +X 拉到硬止挡，再下放保持块并固定 M3×16，随后轻放拉帽；返回工作档时先向外拉住拉帽卸载保持块，再卸 M3×16、向 +Z 取出块并控制载体回位。不得把装块强推到小于5 mm的位置，不靠过拧固定螺钉强迫对孔。"
+    },
+    "docs/cable-service-contract.md:9-11": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 9,
+      "line_end": 11,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "无球、无风，在送料零位支承滑架及输入模块。维修动作不要靠钢丝承担重量。输出端的夹线紧定螺钉一旦放松，输入行程 `u` 与输出位置 `t` 就不再受 `u=20t` 约束；维修检查必须允许它们解耦。\n\n1. 原位拆输出盖的两颗 M3，取盖、金属垫圈，按实际一字槽匹配起子松开夹线 M4。松开过程的槽宽、槽深和工具实际驱动形状尚无厂家尺寸；Ø3.4 走廊只是预算。"
+    },
+    "docs/cable-service-contract.md:13-14": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 13,
+      "line_end": 14,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "3. 若需卸输入模块，先将输出端线芯完全释放，将护套输出端套拔出调节器，并打开中段保持夹具，把自由护套和线芯移到不约束模块移动的位置。端套拔出顺输出口+Z；真实坐深仍未知，不指定一个假造的拔出长度。输入端端套可随输入模块一起到台面。\n4. 先解除软管和拉索牵引，同时承托输入模块与背梁/入口夹总成，再卸四颗长M4及垫片；这四颗同时是背梁主固定，卸后不能把背梁视作仍独立固定。保持背梁受托，模块沿CAD−Y相对背梁退离。先退6只表示定位键全部退出梁Y−54后面，不等于已经搬到台面。当前中段支架接在输出桥上，应先解除护套约束；承托和相对拆卸不由单独刚体扫掠证明。"
+    },
+    "cad/cable-trigger-system.scad:22-28": {
+      "path": "cad/cable-trigger-system.scad",
+      "line_start": 22,
+      "line_end": 28,
+      "sha256": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+      "excerpt": "module ct_original_fixed_hardware(){\n    // The longer actuator mounting screws replace the original four screws.\n    // Keep the original captive nuts. Do not draw two bolts in each hole.\n    // Boolean removal of a bolt would also cut the overlapping thread envelope\n    // from its nut. Restore each original nut unchanged after the subtraction.\n    difference(){la_fixed_hardware();union(){sh_bolts();sh_nuts();}}\n    sh_nuts();"
+    },
+    "cad/cable-trigger-input.scad:297-301": {
+      "path": "cad/cable-trigger-input.scad",
+      "line_start": 297,
+      "line_end": 301,
+      "sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+      "excerpt": "module ci_mount_hardware_cad(){for(x=[-16,16],z=[-60,3]){\n // Original nuts/host washers remain in parent. THESE replace old screws.\n ci_ycyl(x,z,-94.8,60,4);\n difference(){ci_ycyl(x,z,-98.8,4,7);ci_yhex(x,z,-98.9,2.1,3);}\n difference(){ci_ycyl(x,z,-94.8,.8,9);ci_ycyl(x,z,-94.9,1,4.3);}"
+    },
+    "docs/cable-service-contract.md:14-14": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 14,
+      "line_end": 14,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "4. 先解除软管和拉索牵引，同时承托输入模块与背梁/入口夹总成，再卸四颗长M4及垫片；这四颗同时是背梁主固定，卸后不能把背梁视作仍独立固定。保持背梁受托，模块沿CAD−Y相对背梁退离。先退6只表示定位键全部退出梁Y−54后面，不等于已经搬到台面。当前中段支架接在输出桥上，应先解除护套约束；承托和相对拆卸不由单独刚体扫掠证明。"
+    },
+    "docs/cable-service-contract.md:15-15": {
+      "path": "docs/cable-service-contract.md",
+      "line_start": 15,
+      "line_end": 15,
+      "sha256": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+      "excerpt": "5. 到台面后再卸输入主轴与两颗盖M3，沿输入局部+Z打开前盖。这个方向是CAD+Y；旧背梁还在原位时不能据独立盖扫掠宣称可打开。"
+    },
+    "output/cable-direct-adoption/service/README.md:5-17": {
+      "path": "output/cable-direct-adoption/service/README.md",
+      "line_start": 5,
+      "line_end": 17,
+      "sha256": "107f486ebfe17fde46bdfcf15085853f3fc8964ce60d5e06dc11a7b7f60fd3cf",
+      "excerpt": "**范围：** 输入模块断开输出夹线和护套、从总装拆下、主盖及相关主轴/盖螺钉先拆除；扳机无载回到 u0 并支承。以下路径不是连接着固定护套在总装上直接拆卸的证明。\n\n## 机械契约\n\n沿用 X1C / 0.4 mm / PETG 原设计，不增加打印件。小盖分型面 localZ3.1；两颗 M3x8 螺钉从 +Z 进入，在 Z4.5 头座承压，背面两颗 SW5.5/H2.4 螺母应保留并扶住。已有盖座和拉臂承担载荷，未改承力轮廓。本次仅定义服务包络，无密封要求或材料强度新结论。\n\n## 顺序与实际检查\n\n1. 释放输出夹线，拉出横孔内尾线；断开并放开护套/中间约束，再拆下输入模块。主盖及对应主轴/盖螺钉卸下，支承扳机在 u0。\n2. SW2.5 直六角杆从 local+Z 进入两个 M3 头部；名义工具尖起 Z6.01，长40 mm。检查保留了完整固定金属和另一颗螺钉。实际手柄、手和扭矩未建模。\n3. 两颗 M3 螺钉旋出螺纹后，沿 local+Z 平移退出16 mm；轴向扫掠分别覆盖每颗螺杆和圆头，没有在两颗螺钉间做虚假凸包。\n4. 螺钉取出后，小盖沿 local+Z 退出20 mm；球端、POM衬套和后侧螺母保留。\n5. 小盖取出、线芯已放松后，Ø5 球端连末端12 mm钢芯沿 local+Z 退出20 mm；仅证明这段局部出口，不承诺整根软线任意弯曲路径。"
+    },
+    "output/cable-direct-adoption/service/README.md:43-43": {
+      "path": "output/cable-direct-adoption/service/README.md",
+      "line_start": 43,
+      "line_end": 43,
+      "sha256": "107f486ebfe17fde46bdfcf15085853f3fc8964ce60d5e06dc11a7b7f60fd3cf",
+      "excerpt": "实际工具手柄/扭矩、松散螺母管理、其余柔性线芯、打印公差与带载操作仍未验收。所有结果都不是制造或首机放行。"
+    },
+    "docs/cable-route-retention.md:44-44": {
+      "path": "docs/cable-route-retention.md",
+      "line_start": 44,
+      "line_end": 44,
+      "sha256": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+      "excerpt": "6. 拆夹具：取出护套，拆四颗平台螺钉并托住下托；下托先向 −Z 降 8 mm，再向 −Y 抽 100 mm。直接向下抽 70 mm 会撞原机，初稿反例保留，禁止作为实际拆卸方式。最后把主座向 +Z 提走。"
+    },
+    "docs/spin-head.md:82-84": {
+      "path": "docs/spin-head.md",
+      "line_start": 82,
+      "line_end": 84,
+      "sha256": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+      "excerpt": "切换保持档时停风并清空机构，先向 +X 拉到硬止挡，再下放保持块并固定 M3×16，随后轻放拉帽；返回工作档时先向外拉住拉帽卸载保持块，再卸 M3×16、向 +Z 取出块并控制载体回位。不得把装块强推到小于5 mm的位置，不靠过拧固定螺钉强迫对孔。\n\n维修前先取下保持块，卸下 M3×45 和拉帽（拉帽 Ø12 大于外盖导孔 Ø6.5，不能带帽硬拔外盖），再将调节退至最小；最小档仍可能存在由弹簧自由长度造成的预压，须控制住外盖并均匀松开四颗外盖螺钉。外盖/弹簧笼沿 +X 直拉至少 20 mm 后再移开，随后沿 +X 抽出载体。软垫的两颗沉头螺钉在载体拆出后有独立工具入口。禁止在弹簧仍加载时强撬，禁止靠压扁球强行越过止挡。"
+    },
+    "docs/spin-head.md:84-84": {
+      "path": "docs/spin-head.md",
+      "line_start": 84,
+      "line_end": 84,
+      "sha256": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+      "excerpt": "维修前先取下保持块，卸下 M3×45 和拉帽（拉帽 Ø12 大于外盖导孔 Ø6.5，不能带帽硬拔外盖），再将调节退至最小；最小档仍可能存在由弹簧自由长度造成的预压，须控制住外盖并均匀松开四颗外盖螺钉。外盖/弹簧笼沿 +X 直拉至少 20 mm 后再移开，随后沿 +X 抽出载体。软垫的两颗沉头螺钉在载体拆出后有独立工具入口。禁止在弹簧仍加载时强撬，禁止靠压扁球强行越过止挡。"
+    },
+    "docs/spin-complete-hardware.md:38-40": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 38,
+      "line_end": 40,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "6. 维修先卸保持叉，再卸拉帽长螺钉与拉帽；最小预压仍可能有弹簧力。控制外盖、均匀松开固定螺钉，向 +X 直移至少20 mm后移开，再抽载体。不能带Ø12拉帽硬拔Ø6.5盖孔。\n\n各直线批头入口采用 Ø4 mm（M3）或Ø5 mm（管箍M4）外包络；内六角分别用2／2.5／3 mm对应头型。外锁母采用以 [GEDORE R09100070 官方目录](https://us.gedore.com/fileadmin/Kataloge/US/3101134_Kat_GEDred_GWF_EN_18.pdf) 头宽15.5、厚3.7、总长105 mm建立的7 mm开口扳手条件包络。柄从 −Y 接近，检查 −5／0／+5° 及滑块两端点；驱动中的目标锁母不被当作障碍。这证明指定包络的几个姿态，不证明任意扳手或连续大角度转动。锁紧后重新检查5.25 mm行程，不给未验证扭矩。"
+    },
+    "docs/cable-output-interface.md:10-14": {
+      "path": "docs/cable-output-interface.md",
+      "line_start": 10,
+      "line_end": 14,
+      "sha256": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+      "excerpt": "- `co_frame(t)` 是原 `feeder_carriage(t)` 与新耳的整体 wrapper，切孔在整体合并后执行。原文件不改；不得把原 frame 与 wrapper 再叠加。\n- 新耳连接原左上侧桥 X[-52,-47]、Y[8,54]、Z[10,16]+20*t，有体积重叠；不能只碰一条边。输出力由镀镍黄铜端头候选压向耳孔的 +Z 承力面，再到左上侧桥、凸轮架、原滑轨和固定支座。\n- `co_fixed_bridge()` 仅输出新增桥，不含原背梁。`co_beam()` 是 `union(sh_beam(),co_fixed_bridge())`，用于替换原背梁。桥根连接原背梁后板，护套压缩反力经带三角肋的桥回到背梁四个原 M4 安装点。\n- 护套端支承为 M6 调节器穿 6.6 mm 通孔，由双金属 M6 螺母与垫圈夹紧 8 mm 支座；不使用 PETG 打印螺纹承载。螺纹是名义包络，不是假造的工厂螺纹 CAD。\n- 动端端头沿 -Y 放入，盖板从 +Y 装入；盖板两枚 M3×16 螺钉从 +Y 进入，M3 六角螺母从 -Y 放入防转孔。端头轴向 M4 紧定螺钉为厂家图示的一字槽，在拆盖状态夹紧。现由金属 M4 平垫圈捕获端头，盖中间 Ø6 贯通出口避让螺钉，不再要求螺钉齐平或依赖未知突出长度。槽宽/深及扭矩仍未标，不能宣称工具已经匹配。金属浮动座与保持判据见 [垫圈修订](cable-washer-retention-review.md)。"
+    },
+    "cad/cable-scene-export.scad:60-71": {
+      "path": "cad/cable-scene-export.scad",
+      "line_start": 60,
+      "line_end": 71,
+      "sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "excerpt": "module cse_item(part=cse_part,t=cse_t){\n    if(part==\"legacy\")la_item(cse_legacy,cse_side,cse_rear,t);\n    else if(part==\"beam\")co_beam();\n    else if(part==\"frame\")co_frame(t);\n    else if(part==\"input-body\")ci_body();\n    else if(part==\"input-lever\")ci_lever(cse_input_u(t));\n    else if(part==\"input-terminal-cap\")ci_terminal_cap(cse_input_u(t));\n    else if(part==\"input-cover\")ci_cover();\n    else if(part==\"output-cap\")co_lug_cap(t);\n    else if(part==\"route-base\")crr_base();\n    else if(part==\"route-cap\")crr_cap();\n    else if(part==\"route-lower\")crr_lower();"
+    },
+    "docs/feeder-frame-y-guide.md:60-60": {
+      "path": "docs/feeder-frame-y-guide.md",
+      "line_start": 60,
+      "line_end": 60,
+      "sha256": "a95384767cd1793ca18b59889ac60bdd52ac092096a8c6b9646d0f1e78ef295a",
+      "excerpt": "替换原两支座与两盖，新增两压条：相对原33件净增2件。四颗原M3×12盖螺钉换M3×20；新加M3×16顶丝4、M3螺母8、M3垫片4。原盖安装螺母4与垫片4复用。"
+    },
+    "docs/spin-complete-hardware.md:36-44": {
+      "path": "docs/spin-complete-hardware.md",
+      "line_start": 36,
+      "line_end": 44,
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+      "excerpt": "4. 将载体插入主体，弹簧放在两定位柱之间，控制弹簧后装外盖及4颗 M3×12。装预压旋钮、外锁母，再以 M3×45 固定拉帽。正常工作不装保持叉及其螺钉；槽内捕获螺母留在外盖。\n5. 保持档：停风清空，拉到5.25 mm硬止挡，沿 −Z 放入保持叉，以 M3×16 和0.5 mm垫片固定，缓放到5.00 mm保持位。回工作档时先拉住卸载，再拆叉并控制回位。\n6. 维修先卸保持叉，再卸拉帽长螺钉与拉帽；最小预压仍可能有弹簧力。控制外盖、均匀松开固定螺钉，向 +X 直移至少20 mm后移开，再抽载体。不能带Ø12拉帽硬拔Ø6.5盖孔。\n\n各直线批头入口采用 Ø4 mm（M3）或Ø5 mm（管箍M4）外包络；内六角分别用2／2.5／3 mm对应头型。外锁母采用以 [GEDORE R09100070 官方目录](https://us.gedore.com/fileadmin/Kataloge/US/3101134_Kat_GEDred_GWF_EN_18.pdf) 头宽15.5、厚3.7、总长105 mm建立的7 mm开口扳手条件包络。柄从 −Y 接近，检查 −5／0／+5° 及滑块两端点；驱动中的目标锁母不被当作障碍。这证明指定包络的几个姿态，不证明任意扳手或连续大角度转动。锁紧后重新检查5.25 mm行程，不给未验证扭矩。\n\n## 交付身份和边界\n\n工作档五金：`hardware-work.stl`；工作弹簧安装环形包络：`spring-work-envelope.stl`。保持档对应 `hardware-held.stl`、`spring-held-envelope.stl`。均在 `output/spin-complete-hardware/`，角色为 `purchased-reference`，严禁作为打印件。工作档不带保持叉螺钉；弹簧包络没有虚构圈数。"
+    },
+    "cad/cable-scene-export.scad:72-88": {
+      "path": "cad/cable-scene-export.scad",
+      "line_start": 72,
+      "line_end": 88,
+      "sha256": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+      "excerpt": "    else if(part==\"original-fixed-hardware\")ct_original_fixed_hardware();\n    else if(part==\"follower-hardware\")cse_follower_hardware(cse_side,cse_rear,t);\n    else if(part==\"spring-moving-hardware\")rs_endpoint_hardware(false,t);\n    else if(part==\"input-fixed-hardware\")ci_fixed_hardware();\n    else if(part==\"input-moving-hardware\")ci_moving_hardware(cse_input_u(t));\n    else if(part==\"input-wire\")ci_cable(cse_input_u(t));\n    else if(part==\"output-fixed-hardware\"){co_adjuster_hardware();co_ferrule_reference();}\n    else if(part==\"output-moving-hardware\")co_terminal_hardware(t);\n    else if(part==\"output-wire\")co_wire(t);\n    else if(part==\"route-hardware\")crr_hardware();\n    else if(part==\"route-housing\")cr_housing();\n    else if(part==\"route-wire\")cse_route_wire();\n    else if(part==\"spring-reference\")rs_spring(t);\n    else if(part==\"spin-printed\")cse_spin_printed(cse_legacy,cse_float,cse_preload);\n    else if(part==\"spin-hardware\")sch_hardware(cse_legacy,cse_float,cse_preload,false);\n    else if(part==\"spin-latch-removable-hardware\")difference(){sch_latch_hardware(true);sch_latch_hardware(false);}\n    else if(part==\"spin-spring\")sch_spring(cse_float,cse_preload);"
+    }
+  },
+  "source_sha256": {
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "docs/cable-output-interface.md": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+    "docs/cable-route-retention.md": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+    "docs/cable-service-contract.md": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+    "docs/cable-trigger-input.md": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+    "docs/cable-trigger-integration.md": "26702470402b9fa945392317efb5a07691ddfed0b688dacbbdf0446ee48a85a3",
+    "docs/feeder-frame-y-guide.md": "a95384767cd1793ca18b59889ac60bdd52ac092096a8c6b9646d0f1e78ef295a",
+    "docs/feeder-pin-seat-revision.md": "8220b3a359fdd0a218ce745f360e338b83591f33dee9f41235abca3847968773",
+    "docs/feeder-return-spring.md": "496583c6488034871f47e792b8b52f42080482731b86706da54c370a72e739c1",
+    "docs/final-assembly.md": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+    "docs/inlet-retention-final.md": "0cac0bbf8ad4c7363e3cd888913dce8a09dedf1dc6a65a10a673f0dfc5027c41",
+    "docs/spin-complete-hardware.md": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+    "docs/spin-head.md": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+    "output/cable-direct-adoption/service/README.md": "107f486ebfe17fde46bdfcf15085853f3fc8964ce60d5e06dc11a7b7f60fd3cf"
+  },
+  "source_sha256_at_end": {
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "docs/cable-output-interface.md": "5a96b6976dbbc7bb492da12b619262675cba963cb360f8393c4a711652b66504",
+    "docs/cable-route-retention.md": "6b3f08f9be1782f91ce49cb19e6462a18de8bfbe2750da012c1047e186f4867d",
+    "docs/cable-service-contract.md": "2afa97006a0a64265457e8421ed1042826611190b6699d6d8189e0d269c05d78",
+    "docs/cable-trigger-input.md": "2d42cae9489806b5d63e5960feafb3eccd591e4db8c9fa0dcac00ba08ccaeba1",
+    "docs/cable-trigger-integration.md": "26702470402b9fa945392317efb5a07691ddfed0b688dacbbdf0446ee48a85a3",
+    "docs/feeder-frame-y-guide.md": "a95384767cd1793ca18b59889ac60bdd52ac092096a8c6b9646d0f1e78ef295a",
+    "docs/feeder-pin-seat-revision.md": "8220b3a359fdd0a218ce745f360e338b83591f33dee9f41235abca3847968773",
+    "docs/feeder-return-spring.md": "496583c6488034871f47e792b8b52f42080482731b86706da54c370a72e739c1",
+    "docs/final-assembly.md": "077000671b035ffc99a2c502f532b987c24f97bac33e7556e2e7e280bff495ec",
+    "docs/inlet-retention-final.md": "0cac0bbf8ad4c7363e3cd888913dce8a09dedf1dc6a65a10a673f0dfc5027c41",
+    "docs/spin-complete-hardware.md": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc",
+    "docs/spin-head.md": "7082abe022e6210005d048277e71351eaaf01a8e45d2fc32d1f2dc34be0b566d",
+    "output/cable-direct-adoption/service/README.md": "107f486ebfe17fde46bdfcf15085853f3fc8964ce60d5e06dc11a7b7f60fd3cf"
+  },
+  "sources_stable": true
+}

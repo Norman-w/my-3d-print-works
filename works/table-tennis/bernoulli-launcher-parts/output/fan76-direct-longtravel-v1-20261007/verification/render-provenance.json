@@ -1,0 +1,501 @@
+{
+  "mesh_renders": [
+    {
+      "part_id": "body",
+      "view": "front",
+      "mesh_sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "image": "render/body-front.png",
+      "sha256": "edefdc4076028e997839f26c03e3fb8906c5bda4caf5dc6e4e8e83489bee4402",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,-450,111.0,0,0,111.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/body-front.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-body.scad"
+      ]
+    },
+    {
+      "part_id": "body",
+      "view": "top",
+      "mesh_sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "image": "render/body-top.png",
+      "sha256": "0dfe8c91b22fa2a57ca136e6c795cd7136e9ee48a9f90fbfe4da85068a7a750b",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,0,500,0,0,111.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/body-top.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-body.scad"
+      ]
+    },
+    {
+      "part_id": "body",
+      "view": "iso",
+      "mesh_sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "image": "render/body-iso.png",
+      "sha256": "af189e3ad11f5298da9fc8a0fc1847a0a05597917bf23e04574217e8c38cfc03",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "260,-380,351.0,0,0,111.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/body-iso.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-body.scad"
+      ]
+    },
+    {
+      "part_id": "core15",
+      "view": "front",
+      "mesh_sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "image": "render/core15-front.png",
+      "sha256": "b85a0e2d102521361cbe26fe4137b63114945fab90fa725c5bcef2d290f3c808",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,-450,80.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core15-front.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core15.scad"
+      ]
+    },
+    {
+      "part_id": "core15",
+      "view": "top",
+      "mesh_sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "image": "render/core15-top.png",
+      "sha256": "c4e519aee4cb6e586f45eca1e431fb6170bb28926a6336b6cf5f9b1f12917e0a",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,0,500,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core15-top.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core15.scad"
+      ]
+    },
+    {
+      "part_id": "core15",
+      "view": "iso",
+      "mesh_sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "image": "render/core15-iso.png",
+      "sha256": "09bd1e5102d26eb47d02b64da0638f2aab7d9bd1a3e72d519c30f159e666a226",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "260,-380,320.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core15-iso.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core15.scad"
+      ]
+    },
+    {
+      "part_id": "core20",
+      "view": "front",
+      "mesh_sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "image": "render/core20-front.png",
+      "sha256": "f75c5c57eb0f70066597c90b63827d2225b97ab43654d51f76e48688b90954ca",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,-450,80.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core20-front.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core20.scad"
+      ]
+    },
+    {
+      "part_id": "core20",
+      "view": "top",
+      "mesh_sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "image": "render/core20-top.png",
+      "sha256": "87386786aa148d36a765de0d18d57f3a1ee258c67c27dcabfe6a3016c4fc5654",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,0,500,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core20-top.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core20.scad"
+      ]
+    },
+    {
+      "part_id": "core20",
+      "view": "iso",
+      "mesh_sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "image": "render/core20-iso.png",
+      "sha256": "e90405725effb32d6ddcb25035f10971fde036905e95a730fc8e29ae0e2580d3",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "260,-380,320.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core20-iso.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core20.scad"
+      ]
+    },
+    {
+      "part_id": "core25",
+      "view": "front",
+      "mesh_sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "image": "render/core25-front.png",
+      "sha256": "0539329095e403b287726718965e3d0484ff91959181001d315667d6c98f1e4a",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,-450,80.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core25-front.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core25.scad"
+      ]
+    },
+    {
+      "part_id": "core25",
+      "view": "top",
+      "mesh_sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "image": "render/core25-top.png",
+      "sha256": "e23aad58235d90122aec5c1a803cf21778530dae6db8055ce90fe398c53d8ace",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,0,500,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core25-top.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core25.scad"
+      ]
+    },
+    {
+      "part_id": "core25",
+      "view": "iso",
+      "mesh_sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "image": "render/core25-iso.png",
+      "sha256": "7e178b1f400a0e0dfb0c48cfecebe4d9ee72cbe1a42d9feb032a94c494f95f68",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "260,-380,320.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core25-iso.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core25.scad"
+      ]
+    },
+    {
+      "part_id": "core30",
+      "view": "front",
+      "mesh_sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "image": "render/core30-front.png",
+      "sha256": "d09115455dd772b80f5f97bcdb37be654fd666b1dc89273c24c7a975cd7a1887",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,-450,80.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core30-front.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core30.scad"
+      ]
+    },
+    {
+      "part_id": "core30",
+      "view": "top",
+      "mesh_sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "image": "render/core30-top.png",
+      "sha256": "f9fa266d42a0d030b659c5cbc03fff30f1164c65fd42701f6c23819eded0f139",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "0,0,500,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core30-top.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core30.scad"
+      ]
+    },
+    {
+      "part_id": "core30",
+      "view": "iso",
+      "mesh_sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "image": "render/core30-iso.png",
+      "sha256": "fd5cdd4c977cd8b8d2cbf243fb2dec250b425d83a08a6e579c423ab28eb95e1c",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend",
+        "Manifold",
+        "--hardwarnings",
+        "--render",
+        "--projection",
+        "o",
+        "--viewall",
+        "--autocenter",
+        "--imgsize",
+        "600,760",
+        "--colorscheme",
+        "Tomorrow",
+        "--camera",
+        "260,-380,320.0,0,0,80.0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/render/core30-iso.png",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/mesh-view-core30.scad"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "file": "render/all-four-minmax-sections.png",
+      "sha256": "bdfa80277b49344aa9bf9779920c5e3a3311929809acaa6372e1c1d7cd31c516"
+    },
+    {
+      "file": "render/assembly-minmax-section.png",
+      "sha256": "80c06a96fe684e80c130d5e6dbb2eb011f7d92bdf81ac764b5def351d022cbf2"
+    },
+    {
+      "file": "render/body-front.png",
+      "sha256": "edefdc4076028e997839f26c03e3fb8906c5bda4caf5dc6e4e8e83489bee4402"
+    },
+    {
+      "file": "render/body-iso.png",
+      "sha256": "af189e3ad11f5298da9fc8a0fc1847a0a05597917bf23e04574217e8c38cfc03"
+    },
+    {
+      "file": "render/body-top.png",
+      "sha256": "0dfe8c91b22fa2a57ca136e6c795cd7136e9ee48a9f90fbfe4da85068a7a750b"
+    },
+    {
+      "file": "render/core15-front.png",
+      "sha256": "b85a0e2d102521361cbe26fe4137b63114945fab90fa725c5bcef2d290f3c808"
+    },
+    {
+      "file": "render/core15-iso.png",
+      "sha256": "09bd1e5102d26eb47d02b64da0638f2aab7d9bd1a3e72d519c30f159e666a226"
+    },
+    {
+      "file": "render/core15-top.png",
+      "sha256": "c4e519aee4cb6e586f45eca1e431fb6170bb28926a6336b6cf5f9b1f12917e0a"
+    },
+    {
+      "file": "render/core20-front.png",
+      "sha256": "f75c5c57eb0f70066597c90b63827d2225b97ab43654d51f76e48688b90954ca"
+    },
+    {
+      "file": "render/core20-iso.png",
+      "sha256": "e90405725effb32d6ddcb25035f10971fde036905e95a730fc8e29ae0e2580d3"
+    },
+    {
+      "file": "render/core20-top.png",
+      "sha256": "87386786aa148d36a765de0d18d57f3a1ee258c67c27dcabfe6a3016c4fc5654"
+    },
+    {
+      "file": "render/core25-front.png",
+      "sha256": "0539329095e403b287726718965e3d0484ff91959181001d315667d6c98f1e4a"
+    },
+    {
+      "file": "render/core25-iso.png",
+      "sha256": "7e178b1f400a0e0dfb0c48cfecebe4d9ee72cbe1a42d9feb032a94c494f95f68"
+    },
+    {
+      "file": "render/core25-top.png",
+      "sha256": "e23aad58235d90122aec5c1a803cf21778530dae6db8055ce90fe398c53d8ace"
+    },
+    {
+      "file": "render/core30-front.png",
+      "sha256": "d09115455dd772b80f5f97bcdb37be654fd666b1dc89273c24c7a975cd7a1887"
+    },
+    {
+      "file": "render/core30-iso.png",
+      "sha256": "fd5cdd4c977cd8b8d2cbf243fb2dec250b425d83a08a6e579c423ab28eb95e1c"
+    },
+    {
+      "file": "render/core30-top.png",
+      "sha256": "f9fa266d42a0d030b659c5cbc03fff30f1164c65fd42701f6c23819eded0f139"
+    },
+    {
+      "file": "render/fan76-bayonet-sections.png",
+      "sha256": "b4e70fd81fe8b2c86bc22fd8611241adb8d6e08c7d11bf12229be45a7b2f21f4"
+    },
+    {
+      "file": "render/final-stl-three-views.png",
+      "sha256": "0f30cf70b14a6960814399cb86964c74b348f46bbdb4db6a023d9340e93bb490"
+    },
+    {
+      "file": "render/thread-profile-and-mesh-section.png",
+      "sha256": "6bf149b6def9488ca84c057ed55e652cfe3e768ec86ef57de80346b69e299dd9"
+    }
+  ],
+  "section_basis": "Contours intersect FINAL STL with a plane 0.017mm off exact symmetry, avoiding coincident mesh edges.",
+  "parameter_plot": "Only left panel of thread figure uses echoed profile points; adjacent panels are actual STL sections.",
+  "mesh_sha256": {
+    "body": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+    "core15": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+    "core20": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+    "core25": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+    "core30": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae"
+  },
+  "visually_reviewed": false
+}

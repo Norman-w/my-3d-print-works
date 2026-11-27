@@ -1,0 +1,239 @@
+{
+  "part": "cable-input-terminal-cap",
+  "selector": "cdp_terminal_cap",
+  "process_only": true,
+  "mechanical_geometry_changed": false,
+  "candidate_source": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad",
+  "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "input_stl": {
+    "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/terminal-cap.stl",
+    "sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d"
+  },
+  "inherited_invocation": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T082206132152Z/cable-input-terminal-cap/invocation.json",
+  "inherited_invocation_sha256": "c17520f12e118161ca4d23073a8f0c925010438dae293ab665d1e87def84144d",
+  "inherited_project_sha256": "4a9fed983b9ad18af830dca62e2dadf3789719885d5287cef1515b00746a06bf",
+  "cad_to_oriented": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      -117.42640687119281
+    ],
+    [
+      0.0,
+      6.123233995736766e-17,
+      1.0,
+      -47.426406871192896
+    ],
+    [
+      0.0,
+      -1.0,
+      6.123233995736766e-17,
+      -74.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "enforcers": [
+    {
+      "name": "M3_shoulder_enforcer_1",
+      "objectid": "20",
+      "local_bounds": [
+        [
+          -1.4,
+          50.6,
+          4.3
+        ],
+        [
+          5.4,
+          57.4,
+          7.5
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_20.model",
+      "raw_vertices": [
+        [
+          -5.6568542494923335,
+          -7.636753236814762,
+          0.9999999500000021
+        ],
+        [
+          -10.465180361560858,
+          -2.8284271247462343,
+          0.999999950000003
+        ],
+        [
+          -0.8485281374238127,
+          -2.8284271247462414,
+          0.999999950000003
+        ],
+        [
+          -5.656854249492341,
+          1.9798989873222865,
+          0.999999950000003
+        ],
+        [
+          -5.6568542494923335,
+          -7.636753236814762,
+          -2.200000049999998
+        ],
+        [
+          -10.465180361560858,
+          -2.8284271247462343,
+          -2.200000049999997
+        ],
+        [
+          -0.8485281374238127,
+          -2.8284271247462414,
+          -2.200000049999997
+        ],
+        [
+          -5.656854249492341,
+          1.9798989873222865,
+          -2.200000049999997
+        ]
+      ]
+    },
+    {
+      "name": "M3_shoulder_enforcer_2",
+      "objectid": "21",
+      "local_bounds": [
+        [
+          -1.4,
+          62.6,
+          4.3
+        ],
+        [
+          5.4,
+          69.4,
+          7.5
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_21.model",
+      "raw_vertices": [
+        [
+          2.8284271247462343,
+          0.8485281374238127,
+          0.999999950000003
+        ],
+        [
+          -1.9798989873222865,
+          5.6568542494923335,
+          0.999999950000003
+        ],
+        [
+          7.636753236814762,
+          5.6568542494923335,
+          0.999999950000003
+        ],
+        [
+          2.8284271247462414,
+          10.465180361560861,
+          0.9999999500000039
+        ],
+        [
+          2.8284271247462343,
+          0.8485281374238127,
+          -2.200000049999997
+        ],
+        [
+          -1.9798989873222865,
+          5.6568542494923335,
+          -2.200000049999997
+        ],
+        [
+          7.636753236814762,
+          5.6568542494923335,
+          -2.200000049999997
+        ],
+        [
+          2.8284271247462414,
+          10.465180361560861,
+          -2.2000000499999963
+        ]
+      ]
+    }
+  ],
+  "pocket_contract": {
+    "centres": [
+      [
+        2,
+        54
+      ],
+      [
+        2,
+        66
+      ]
+    ],
+    "half": 3.4,
+    "z": [
+      4.3,
+      7.5
+    ],
+    "contact": 4.5,
+    "opening": "circle6.2",
+    "growth": -1
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "0",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T090802720169Z/cable-input-terminal-cap/support-input.3mf"
+  ],
+  "input3mf_sha256": "c08007d67fb1f792beaa19ccb9eb07e9abd3472c2266d0303ceb7023de931ef3",
+  "profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "0ea41ad8a8374197441f66c3668a3ad500e966c49225220a8d7d2f099ebd4fa5",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "script_sha256": "9b7e74ce98e1206411c7db1dbb38f43f84b9fdf9c8011224d542c59556264cb0",
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "returncode": 206,
+  "source_stable": true,
+  "artifacts": {},
+  "native_result": {
+    "error_string": "One of the plate is empty or has no object fully inside it. Please check that the 3mf contains no empty plate in Bambu Studio before uploading.",
+    "export_time": 0,
+    "layer_height": 0.0,
+    "plate_index": 1,
+    "prepare_time": 5,
+    "return_code": -50,
+    "sparse_infill_density": 0.0,
+    "upward_compatible_machine": [
+      "Bambu Lab P1S 0.4 nozzle",
+      "Bambu Lab P1P 0.4 nozzle",
+      "Bambu Lab X1 0.4 nozzle",
+      "Bambu Lab X1E 0.4 nozzle",
+      "Bambu Lab A1 0.4 nozzle",
+      "Bambu Lab H2D 0.4 nozzle",
+      "Bambu Lab H2D Pro 0.4 nozzle",
+      "Bambu Lab H2S 0.4 nozzle",
+      "Bambu Lab P2S 0.4 nozzle",
+      "Bambu Lab H2C 0.4 nozzle",
+      "Bambu Lab X2D 0.4 nozzle",
+      "Bambu Lab A2L 0.4 nozzle"
+    ],
+    "wall_loops": 0
+  },
+  "status": "SLICE_FAILED"
+}

@@ -1,0 +1,255 @@
+{
+  "status": "OFFSET_AXIS_BENCH_ACCESS_LIMITED_PASS",
+  "source_sha256": {
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+    "output/current-axis-centering-washer/candidate.scad": "689d545b0cc9df2ca85e7d7d61d81104e6103eac455580f253e2457b084fb8a1",
+    "output/current-axis-offset-candidate/candidate.scad": "4dd0ba7c2a728d4869b0462f86ea02b63b5c74cd41e9cb2a4820e6793ce70ce9",
+    "output/current-axis-offset-candidate/tools/probes.scad": "686b1192385369658cc978663757bee853e39966664260623c79bc1f12fdf569",
+    "output/current-axis-offset-candidate/tools/review.py": "284f15a9d0d5570bbd97fc020821ef1a981696d3ed62dbe623886e75fb049081",
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec"
+  },
+  "sources_stable": true,
+  "checks": {
+    "head-bench": true,
+    "nut-bench": true,
+    "tools-mutual": true,
+    "head-drive-fit": true,
+    "nut-drive-fit": true,
+    "shaft-insertion": true,
+    "installed-head-positive": true
+  },
+  "cases": [
+    {
+      "case": "head-bench",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"head-bench\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/head-bench.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "nut-bench",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"nut-bench\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/nut-bench.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "tools-mutual",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"tools-mutual\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/tools-mutual.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "head-drive-fit",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"head-drive-fit\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/head-drive-fit.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "nut-drive-fit",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"nut-drive-fit\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/nut-drive-fit.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "shaft-insertion",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"shaft-insertion\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/shaft-insertion.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 232,
+        "signed_volume_mm3": -1.2448949613134627e-13,
+        "bounds_mm": [
+          [
+            -6.606287722077911,
+            6.606287722077911
+          ],
+          [
+            -6.606287722077911,
+            6.58114880280261
+          ],
+          [
+            14.0,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": true,
+        "each_triangle_on_one_contact_plane": true
+      },
+      "log_sha256": "d2b781f9c7a25003fb3e852cd36e9423eb2dff5c2115d5b3f6706d28b644bee9",
+      "stl_sha256": "bcf9eed8b91268da1fc717c1e7b5ebc22a8752a2c24dd3c9548a20a7dbdfe63c"
+    },
+    {
+      "case": "installed-head-positive",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ci_origin=[75,-85,5]",
+        "-D",
+        "at_case=\"installed-head-positive\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/runs/20260927T133317244669Z/installed-head-positive.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-offset-candidate/tools/probes.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 332,
+        "signed_volume_mm3": 573.6753939000282,
+        "bounds_mm": [
+          [
+            -2.9027627869736277,
+            2.9027627869736277
+          ],
+          [
+            -2.9027627869736277,
+            2.9027627869736277
+          ],
+          [
+            22.0,
+            44.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "log_sha256": "cc697e77cc29dbe099e22e150a291a55ea84ce78a14266096e2bcb3a169a7e6e",
+      "stl_sha256": "eee9543e3b135b6d81fb6be4b11faf585a108dac395f041a1f5f010d9920aa91"
+    }
+  ],
+  "tool_budget": {
+    "head_key": "SW5, 2.5 engagement, long leg60, short arm25, bend half-envelope4, OD5.8, axial insertion40, complete rotation",
+    "head_tip_z_mm": [
+      17.3,
+      18.25
+    ],
+    "nut_tool": "SW10 socket OD14 length40 cavity20, handle R70 thickness12 center55 behind mouth, axial insertion40, complete rotation",
+    "socket_mouth_z_mm": [
+      -16.1,
+      -15.45
+    ]
+  },
+  "scope": "Unloaded bench module at u=0, disconnected/parked free cable and housing, mounting bolts absent. All current input neighbors included. Coaxial 40mm shoulder insertion includes both root envelopes. Tools are dimensional budgets, not selected supply. Installed head entry rejected by original beam.",
+  "assembly_sequence": [
+    "Bench-assemble body, lever/POM bush, thrust washers and cover with side fasteners",
+    "Insert shoulder from cover side while aligning bore stack",
+    "Fit centering cup pocket toward shoulder; install M6 locknut and hold both ends with specified tools",
+    "Only then attach module to beam through four shared M4x60 bolts",
+    "For central-axis service detach four shared bolts first while independently supporting input and output structures"
+  ],
+  "unverified": [
+    "Actual tooling and hand envelope",
+    "Torque, thread locking life, real supplier root and cup seating",
+    "Print tolerances and distortion",
+    "Flexible cable and housing installation"
+  ],
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

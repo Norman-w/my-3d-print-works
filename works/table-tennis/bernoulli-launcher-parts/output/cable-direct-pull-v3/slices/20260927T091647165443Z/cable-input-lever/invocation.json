@@ -1,0 +1,301 @@
+{
+  "part": "cable-input-lever",
+  "selector": "cdp_lever",
+  "process_only": true,
+  "mechanical_geometry_changed": false,
+  "candidate_source": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad",
+  "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "input_stl": {
+    "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.stl",
+    "sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439"
+  },
+  "inherited_invocation": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-lever/invocation.json",
+  "inherited_invocation_sha256": "f44d26d37de618e95bde0882f546f6793ab9fdbc341df2d665d0702cb9f83992",
+  "inherited_project_sha256": "3af6e1fb9bffaf77d159d7fed81aa9628babed772386aa16504b9039ff912bef",
+  "cad_to_oriented": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      -84.13172798364528
+    ],
+    [
+      0.0,
+      6.123233995736766e-17,
+      -1.0,
+      14.838834764831857
+    ],
+    [
+      0.0,
+      1.0,
+      6.123233995736766e-17,
+      85.5
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "enforcers": [
+    {
+      "name": "M3_shoulder_enforcer_1",
+      "objectid": "20",
+      "local_bounds": [
+        [
+          -1.6,
+          50.4,
+          -3.5
+        ],
+        [
+          5.6,
+          57.6,
+          -0.4
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_20.model",
+      "raw_vertices": [
+        [
+          27.637824638055193,
+          -24.66797615707167,
+          -5.499999999999998
+        ],
+        [
+          22.546655813512054,
+          -29.75914498161481,
+          -5.499999999999998
+        ],
+        [
+          32.72899346259834,
+          -29.75914498161481,
+          -5.499999999999998
+        ],
+        [
+          27.6378246380552,
+          -34.850313806157956,
+          -5.499999999999997
+        ],
+        [
+          27.637824638055193,
+          -24.66797615707167,
+          -2.3999999999999977
+        ],
+        [
+          22.546655813512054,
+          -29.75914498161481,
+          -2.3999999999999977
+        ],
+        [
+          32.72899346259834,
+          -29.75914498161481,
+          -2.3999999999999977
+        ],
+        [
+          27.6378246380552,
+          -34.850313806157956,
+          -2.3999999999999972
+        ]
+      ]
+    },
+    {
+      "name": "M3_shoulder_enforcer_2",
+      "objectid": "21",
+      "local_bounds": [
+        [
+          -1.6,
+          62.4,
+          -3.5
+        ],
+        [
+          5.6,
+          69.6,
+          -0.4
+        ]
+      ],
+      "mesh_file": "3D/Objects/support_enforcer_21.model",
+      "raw_vertices": [
+        [
+          36.12310601229377,
+          -33.15325753131024,
+          -5.499999999999997
+        ],
+        [
+          31.03193718775062,
+          -38.244426355853385,
+          -5.4999999999999964
+        ],
+        [
+          41.21427483683691,
+          -38.24442635585338,
+          -5.4999999999999964
+        ],
+        [
+          36.12310601229376,
+          -43.335595180396524,
+          -5.4999999999999964
+        ],
+        [
+          36.12310601229377,
+          -33.15325753131024,
+          -2.3999999999999972
+        ],
+        [
+          31.03193718775062,
+          -38.244426355853385,
+          -2.3999999999999972
+        ],
+        [
+          41.21427483683691,
+          -38.24442635585338,
+          -2.3999999999999972
+        ],
+        [
+          36.12310601229376,
+          -43.335595180396524,
+          -2.399999999999997
+        ]
+      ]
+    }
+  ],
+  "pocket_contract": {
+    "centres": [
+      [
+        2,
+        54
+      ],
+      [
+        2,
+        66
+      ]
+    ],
+    "half": 3.6,
+    "z": [
+      -3.5,
+      -0.4
+    ],
+    "contact": -0.6,
+    "opening": "hex5.8",
+    "growth": 1
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "0",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T091647165443Z/cable-input-lever/support-input.3mf"
+  ],
+  "input3mf_sha256": "c7a764babe47dfc182bfdf3d45072ac0ab167e69bb432755dca777a4c96da585",
+  "profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "fa3ebf70fa7c7345a2423e6fbfbcb9018392122e958b493351eb4e091d08a84b",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "script_sha256": "de3d5a2729b47694cc5bb225f08652ef237e5f77b752b3852a5a106a7308d8c2",
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "returncode": 0,
+  "source_stable": true,
+  "artifacts": {
+    "slice-review.3mf": "65a14347cf7a2bb4edbfd98fd66fbc70972273f35b4c812aeff399dd7ab495ea",
+    "plate_1.gcode": "3b85f5059eabdf31474f0d68dd0b83f7604e5d8dbcab7c8a366b2315eb69be27"
+  },
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 141,
+    "layer_height": 0.10000000149011612,
+    "plate_index": 0,
+    "prepare_time": 23,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 45.92266082763672,
+          "Bridge": 50.82213592529297,
+          "Brim": 63.300537109375,
+          "Custom": 445.3412170410156,
+          "Flush": 29.0,
+          "Gap infill": 47.64798355102539,
+          "Inner wall": 650.2008666992188,
+          "Internal solid infill": 236.10975646972656,
+          "Outer wall": 277.4950256347656,
+          "Overhang wall": 7.896877288818359,
+          "Sparse infill": 453.72637939453125,
+          "Support": 8.047677993774414,
+          "Support interface": 3.7122108936309814,
+          "Support transition": 2.5609946250915527,
+          "Top surface": 45.73402786254883,
+          "Travel": 329.4039611816406,
+          "Undefined": 314.06402587890625
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 11.261028289794922,
+            "total_used_g": 11.261026382446289
+          }
+        ],
+        "generate_support_material_time": 161,
+        "id": 1,
+        "infill_time": 309,
+        "layer_filament_change": 0,
+        "main_predication": 2193.544921875,
+        "make_perimeters_time": 418,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 123.82882690429688,
+              "height": 11.0,
+              "width": 123.54277801513672,
+              "x": 66.6287612915039,
+              "y": 62.551753997802734,
+              "z": 0.0
+            },
+            "id": 5,
+            "name": "oriented.stl",
+            "triangle_count": 4602
+          }
+        ],
+        "sliced_time": 1665,
+        "sliced_time_with_cache": 636,
+        "total_predication": 2681.515625,
+        "triangle_count": 4602,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "upward_compatible_machine": [
+      "Bambu Lab P1S 0.4 nozzle",
+      "Bambu Lab P1P 0.4 nozzle",
+      "Bambu Lab X1 0.4 nozzle",
+      "Bambu Lab X1E 0.4 nozzle",
+      "Bambu Lab A1 0.4 nozzle",
+      "Bambu Lab H2D 0.4 nozzle",
+      "Bambu Lab H2D Pro 0.4 nozzle",
+      "Bambu Lab H2S 0.4 nozzle",
+      "Bambu Lab P2S 0.4 nozzle",
+      "Bambu Lab H2C 0.4 nozzle",
+      "Bambu Lab X2D 0.4 nozzle",
+      "Bambu Lab A2L 0.4 nozzle"
+    ],
+    "wall_loops": 4
+  },
+  "status": "SLICED_REVIEW_REQUIRED"
+}

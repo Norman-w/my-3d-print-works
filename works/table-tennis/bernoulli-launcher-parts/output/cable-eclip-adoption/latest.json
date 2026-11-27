@@ -1,0 +1,9 @@
+{
+  "report": "output/cable-eclip-adoption/20260927T151752917841Z/report.json",
+  "sha256": "7623354755bd1d40d3cd685a36501bbd3e930645f87e2e4780939e6c58bef42e",
+  "status": "FORMAL_ECLIP_AXIS_AND_UNIFIED_SCENE_ADOPTED_3_PRINTS_PENDING",
+  "snapshot_id": "20260927T153058669616Z",
+  "adopted": true,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

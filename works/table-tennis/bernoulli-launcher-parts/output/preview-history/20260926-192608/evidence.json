@@ -1,0 +1,119 @@
+{
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/spin-parameters.scad": "d560bfa3bb697db0ff519ba1914105b90cbf3274d2769caefc5f5dba680c1fe9",
+    "cad/spin-head.scad": "09a5c2ad6126d449b117f995d3f591b1320366246fe4a144315f352a18734d1d",
+    "analysis/spin_head_geometry.py": "d133c5d456b1fe8f302f8a98cea068827ab84ab4d3ac7f654e695de420b534b4",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "analysis/feeder_cam_guide_revision.py": "7947825c910626128407c21a2f170483d339698d59d9928f8a976a8c0e6a28bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de"
+  },
+  "spin_report_sha256": "5b4db170435bca87872a8e11720940283e02563a95190e36788d473333ad6bd1",
+  "cam_report_sha256": "e27080a48cba8f9d10b0e835af5440612992f8a5872c6852911dfef53d67b95a",
+  "assets": [
+    {
+      "source": "output/spin-head/spin-body.stl",
+      "file": "models/spin/body.stl",
+      "sha256": "308516763fce51b4b4c2dfcf058b62536e8bd6f65ba8e64702c21fbeff6af22b"
+    },
+    {
+      "source": "output/spin-head/spin-carriage.stl",
+      "file": "models/spin/carriage.stl",
+      "sha256": "fbb263853c443b979f77b809fa8870c52190bc35168bf85be803b6d1f7286e05"
+    },
+    {
+      "source": "output/spin-head/spin-pad.stl",
+      "file": "models/spin/pad.stl",
+      "sha256": "89c8ae1e33bccdeb96e7ac6d58f82fb858297b45e973a0a5bb175716763acc70"
+    },
+    {
+      "source": "output/spin-head/spin-pad-keeper.stl",
+      "file": "models/spin/pad-keeper.stl",
+      "sha256": "83b72c733fae493c6052903d5dc139a5808d00daa81dc52bf91aeacdd39a04f9"
+    },
+    {
+      "source": "output/spin-head/spin-opposite-guide.stl",
+      "file": "models/spin/opposite-guide.stl",
+      "sha256": "e510dd0f5e8165178d8f3f811367f765f753cf4a5fcc578021b0ffd8bf2a7450"
+    },
+    {
+      "source": "output/spin-head/spin-cover.stl",
+      "file": "models/spin/cover.stl",
+      "sha256": "f9ee6b239b5e88beb40aa6f1ef4c099d8c6ec52a6ffbbc09aee5d3711e6ad8fc"
+    },
+    {
+      "source": "output/spin-head/spin-spring-cage.stl",
+      "file": "models/spin/spring-cage.stl",
+      "sha256": "fff23c6907a5afc439d896833f598ca8ae03de98d646a8574d50459dc6c62cd9"
+    },
+    {
+      "source": "output/spin-head/spin-spring-seat.stl",
+      "file": "models/spin/spring-seat.stl",
+      "sha256": "599177c2dadf0a543ca4685c5362595e06120030514bd4c8e613778ce938314b"
+    },
+    {
+      "source": "output/spin-head/spin-pull-cap.stl",
+      "file": "models/spin/pull-cap.stl",
+      "sha256": "f69fee61263cfbd29e572fdee69799ff42d03f21693b81c0f6825f6ee0048637"
+    },
+    {
+      "source": "output/spin-head/spin-hold-fork.stl",
+      "file": "models/spin/hold-fork.stl",
+      "sha256": "1d2b9004c3419a398c714f8f50b56647ffced6fe1b20a3ffe3c28e5188b6976d"
+    },
+    {
+      "source": "output/feeder-cam-guide-revision/right-support.stl",
+      "file": "models/feeder/right-support.stl",
+      "sha256": "f1264a86663a1450bffd6ea05e77a7a3daebd916af6dd6b576f93dbf445b5c57"
+    },
+    {
+      "source": "output/feeder-cam-guide-revision/cam-gib.stl",
+      "file": "models/feeder/cam-gib.stl",
+      "sha256": "3f39c1ed17b75cf563a7a0d0fb2e8630630ab6832a41cc811a4f26756dabd3a0"
+    },
+    {
+      "source": "output/feeder-cam-guide-revision/cam-cover.stl",
+      "file": "models/feeder/cam-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+    },
+    {
+      "source": "output/spin-head/spin-work-section.png",
+      "file": "spin-work.png",
+      "sha256": "973812ff8edf40eadd6ab21e6fbcd09f9b462eef29fe2cc16232ff50ae0e0c4b"
+    },
+    {
+      "source": "output/spin-head/spin-held-section.png",
+      "file": "spin-held.png",
+      "sha256": "fe7886eb7e04a4a4a53749612065cfb48c8b74583c99c64bd9a6a38f8bcbd60e"
+    },
+    {
+      "source": "output/feeder-cam-guide-revision/assembly.png",
+      "file": "feeder.png",
+      "sha256": "85dbd568f056a20cdefb47e06c4a7bb05b8ac46fdf6cb4cbc1ced2457fd76eee"
+    },
+    {
+      "source": "output/feeder-cam-guide-revision/working-section.png",
+      "file": "feeder-section.png",
+      "sha256": "4d7f9be4b88cc8d207b107c66571dfc825146ee905100d88ef40bd247875dffb"
+    }
+  ],
+  "manufacturing_release": false,
+  "known_issues": [
+    {
+      "id": "right-support-export",
+      "part_id": "feeder/right-support",
+      "mesh_sha256": "f1264a86663a1450bffd6ea05e77a7a3daebd916af6dd6b576f93dbf445b5c57",
+      "status": "OPEN",
+      "description": "旧右支座存在顶点邻域不连通；仅供结构示意，不用于打印。替代CGAL导出的布尔回读也未通过。"
+    }
+  ],
+  "review_annotation_sha256": {
+    "manifest.json": "a8fb0810caf6051855879344e8f1184389110c7b3e3a81b2ec40a9d770d5b3f7",
+    "index.html": "f69bf7d314ccd16f2529940616da71d47ac6d959031eaf9b4fa0acf261001c8b"
+  }
+}

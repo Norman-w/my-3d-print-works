@@ -1,0 +1,4622 @@
+{
+  "status": "NOMINAL_GEOMETRY_PASS_PHYSICAL_AND_TOTAL_ERROR_OPEN",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-cam-guide-revision.scad": "77198198ac40a8b028a9985feff1017962ab56833be96c3fa4fa051b27b4836d",
+    "analysis/feeder_cam_guide_revision.py": "13f2641fe9c2253d08dc8c0e95e3f5bb05929b742e626231d75e2e3ffe547ab4",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de"
+  },
+  "sources_stable": true,
+  "printable_parts": [
+    {
+      "name": "right-support",
+      "definitions": {
+        "cg_part": "right_support"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/right-support.stl",
+      "empty": false,
+      "selector": {
+        "cg_part": "right_support"
+      },
+      "chinese_name": "右侧公共架 X 主导向支座",
+      "quantity": 1,
+      "units": "mm",
+      "sha256": "f1264a86663a1450bffd6ea05e77a7a3daebd916af6dd6b576f93dbf445b5c57",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-cam-guide-revision/right-support.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3634,
+        "uniqueVertexCount": 1768,
+        "bounds": {
+          "min": [
+            35.5,
+            -19.0,
+            -50.0
+          ],
+          "max": [
+            75.0,
+            28.0,
+            21.0
+          ],
+          "size": [
+            39.5,
+            47.0,
+            71.0
+          ]
+        },
+        "surfaceArea": 17354.41952738755,
+        "signedVolume": 26475.89023991703,
+        "volume": 26475.89023991703,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "mesh_passed": true
+    },
+    {
+      "name": "cam-gib",
+      "definitions": {
+        "cg_part": "gib"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/cam-gib.stl",
+      "empty": false,
+      "selector": {
+        "cg_part": "gib"
+      },
+      "chinese_name": "公共架 X 调隙压条",
+      "quantity": 1,
+      "units": "mm",
+      "sha256": "183a70e82efbc4c8c18a65082d0c2c66993e23145365763459ef15da7278ee9b",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-cam-guide-revision/cam-gib.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 60,
+        "uniqueVertexCount": 32,
+        "bounds": {
+          "min": [
+            59.0,
+            21.0,
+            -35.0
+          ],
+          "max": [
+            71.4,
+            26.0,
+            5.0
+          ],
+          "size": [
+            12.400000000000006,
+            5.0,
+            40.0
+          ]
+        },
+        "surfaceArea": 747.8399999999999,
+        "signedVolume": 535.5600000000069,
+        "volume": 535.5600000000069,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "mesh_passed": true
+    },
+    {
+      "name": "cam-cover",
+      "definitions": {
+        "cg_part": "cover"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/cam-cover.stl",
+      "empty": false,
+      "selector": {
+        "cg_part": "cover"
+      },
+      "chinese_name": "公共架 X 调节可拆外盖",
+      "quantity": 1,
+      "units": "mm",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/feeder-cam-guide-revision/cam-cover.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 604,
+        "uniqueVertexCount": 296,
+        "bounds": {
+          "min": [
+            69.4,
+            10.5,
+            -39.0
+          ],
+          "max": [
+            80.5,
+            28.0,
+            9.0
+          ],
+          "size": [
+            11.099999999999994,
+            17.5,
+            48.0
+          ]
+        },
+        "surfaceArea": 2701.5691425723116,
+        "signedVolume": 4384.15550313437,
+        "volume": 4384.15550313437,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "mesh_passed": true
+    }
+  ],
+  "previews": [
+    {
+      "name": "assembly",
+      "definitions": {
+        "cg_show_body": false
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/assembly.png",
+      "empty": false
+    },
+    {
+      "name": "working-section",
+      "definitions": {
+        "cg_part": "section",
+        "cg_show_body": false
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/working-section.png",
+      "empty": false
+    },
+    {
+      "name": "support-front",
+      "definitions": {
+        "cg_part": "right_support"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/support-front.png",
+      "empty": false
+    },
+    {
+      "name": "support-top",
+      "definitions": {
+        "cg_part": "right_support"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/support-top.png",
+      "empty": false
+    },
+    {
+      "name": "support-iso",
+      "definitions": {
+        "cg_part": "right_support"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/support-iso.png",
+      "empty": false
+    }
+  ],
+  "dimensions": {
+    "datum_x": 54,
+    "rail_x0": 54,
+    "rail_x1": 58,
+    "old_half_gap": 0.2,
+    "contact_y": [
+      21,
+      24
+    ],
+    "contact_z": [
+      [
+        -35,
+        -32.1
+      ],
+      [
+        2.1,
+        5
+      ]
+    ],
+    "front_x": 58.1,
+    "setting": 0.9,
+    "travel": 1,
+    "parallel_x_interval": [
+      0,
+      0.1
+    ],
+    "stroke": 20,
+    "spine_front_min": 67.4,
+    "datum_overlap": 0.8,
+    "nut_channel_y_max": 20.6,
+    "new_pocket_y_min": 20.8,
+    "jack_z": [
+      -33.55,
+      3.55
+    ],
+    "jack_y": 22.5,
+    "mount_z": [
+      -24,
+      -6
+    ],
+    "nut_bearing_web": 2.9,
+    "mount_tip_clearance": 1.5,
+    "max_new_hardware_x": 90.4,
+    "guide_z": [
+      -35,
+      5
+    ],
+    "old_parallel_x_interval_mm": [
+      -0.2,
+      0.2
+    ],
+    "new_parallel_x_interval_mm": [
+      0,
+      0.1
+    ],
+    "old_parallel_backlash_mm": 0.4,
+    "new_parallel_backlash_mm": 0.1,
+    "scope": "Same nominal rigid parallel rail model; no rotation, print error or loaded deflection."
+  },
+  "case_count": 55,
+  "pass_count": 55,
+  "old_exact_witnesses": {
+    "outward": {
+      "source": "output/guide-revision/tolerance/outward.scad",
+      "sha256": "17ed888eb9becc7a60b989fae5421ef1ec1abcf89b487669f56efa4d17b412f8",
+      "matrix": [
+        [
+          1.0,
+          1.1891946735691472e-14,
+          -8.587686681016685e-15,
+          0.19900000000012097
+        ],
+        [
+          -1.1976759252386256e-14,
+          0.9999505518889943,
+          -0.009944535026624271,
+          -0.1502772471030619
+        ],
+        [
+          8.469002155284566e-15,
+          0.009944535026624271,
+          0.9999505518889943,
+          0.0008406178870963288
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "stroke_mm": 17.0,
+      "baseline_pose_csg_verified": true
+    },
+    "inward": {
+      "source": "output/guide-revision/tolerance/inward.scad",
+      "sha256": "3d0f46a0c6fe55e9f9f327677afa19413ecf197fea3bdabc8a9dd57c019e32f0",
+      "matrix": [
+        [
+          1.0,
+          -8.314853809202986e-16,
+          -1.2370012804159423e-14,
+          -0.19899999999977297
+        ],
+        [
+          9.544582911498902e-16,
+          0.9999505518889941,
+          0.009944535026644736,
+          0.14809147806147732
+        ],
+        [
+          1.2361132394898433e-14,
+          -0.009944535026644736,
+          0.9999505518889941,
+          0.0009395141091133041
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "stroke_mm": 19.0,
+      "baseline_pose_csg_verified": true
+    }
+  },
+  "cases": [
+    {
+      "name": "motion-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-0.stl",
+      "empty": false,
+      "triangle_count": 38,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 6.636358129696873e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              58.199999999999996,
+              58.90783410138249
+            ],
+            [
+              19.460829493087555,
+              20.8
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 2.2246961217664563e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              21.0,
+              24.2
+            ],
+            [
+              5.0,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.773959005888173e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              50.5761424567086
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.0745185003743245e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -50.5761424567086,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.774758283725532e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.2
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-1.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 8.926193117986259e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.547918011776346e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -26.0,
+              -24.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.2,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-2",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.4
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-2.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-2",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.4,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-3",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.5
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-3.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-3",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.5,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-4",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.6
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-4.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-4",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.6,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-5",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.8
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-5.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 6.661338147750939e-16,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.6629367034256575e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -51.5,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              2.5,
+              4.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-5",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0.8,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "motion-6",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 1
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/motion-6.stl",
+      "empty": false,
+      "triangle_count": 34,
+      "components": [
+        {
+          "triangles": 10,
+          "volume_mm3": 1.3771067619572364e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              20.685534591194966,
+              24.0
+            ],
+            [
+              -35.0,
+              -35.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.687538997430238e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              50.57614245670856
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.3092638912203256e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -50.57614245670856,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -4.0,
+              -2.5
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.325873406851315e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -54.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              2.5,
+              4.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              44.29999999701977,
+              49.0
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              -49.0,
+              -44.29999999701977
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -32.5,
+              -31.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.795645659414703e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              58.1,
+              58.20680272108844
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              -35.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cam-followers-6",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 1,
+        "cg_probe": "cam_followers"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_fit-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 0,
+        "cg_probe": "gib_fit"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/gib_fit-0.stl",
+      "empty": false,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 0.0,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              69.4,
+              71.4
+            ],
+            [
+              24.0,
+              24.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "hardware-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 0,
+        "cg_probe": "hardware"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/hardware-0.stl",
+      "empty": false,
+      "triangle_count": 532,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 8.88941698029555e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.076738946423575e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.358187809684305
+            ],
+            [
+              -24.0,
+              -21.343702130112728
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.248921073456984e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -22.76407820589814,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 4.559339017440323e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              15.650561835020653,
+              16.58771324027147
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.070522111187529e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.458781428793042,
+              16.572058907972472
+            ],
+            [
+              -25.298688016061888,
+              -24.650561835020653
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.389199948993337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.32779015160992
+            ],
+            [
+              -8.595326265743118,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.2493708866946618e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.41266691813615,
+              13.420767310232591
+            ],
+            [
+              -8.72283953335896,
+              -8.688673711875307
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.7544633240950134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              14.60323715886105
+            ],
+            [
+              -4.580310998676439,
+              -3.25
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 8.269947227024232e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.376664834111576,
+              16.58431185106868
+            ],
+            [
+              -8.300729320037826,
+              -6.650561835020652
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 2.1075363676459347e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.146269069143383,
+              13.576040110601664
+            ],
+            [
+              -26.28172585935729,
+              -24.482710409743976
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 4.723582636145807e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.589210336878454,
+              13.856846566060895
+            ],
+            [
+              -27.233578363789505,
+              -25.250442565010925
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.124789481669723e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              14.410618099781667,
+              15.0
+            ],
+            [
+              -27.441950949534185,
+              -25.669054188438885
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 1.3034018309099338e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              11.909006650806843
+            ],
+            [
+              -24.682816127056448,
+              -22.39385018691935
+            ]
+          ]
+        },
+        {
+          "triangles": 32,
+          "volume_mm3": 4.346150392700587e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.628137063401276,
+              16.43838482710977
+            ],
+            [
+              -27.432748481411306,
+              -25.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 7.720699080060456e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              16.427542056213202,
+              16.54347994954397
+            ],
+            [
+              -24.962873217616178,
+              -24.701290910434555
+            ]
+          ]
+        },
+        {
+          "triangles": 42,
+          "volume_mm3": 6.235012506294879e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              15.331653547427418
+            ],
+            [
+              -8.881557826344316,
+              -2.508486550679914
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 3.525929548331419e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.369524635552338,
+              13.669046577575893
+            ],
+            [
+              -8.946389553953367,
+              -6.944469396133323
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 1.392913562270337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.660607986722185,
+              14.385207593711032
+            ],
+            [
+              -9.435925251898203,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.2504220709151923e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.68281612705645,
+              16.202081528017132
+            ],
+            [
+              -9.432748481411306,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 78,
+          "volume_mm3": 1.6760445028379811e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              25.5289068565361
+            ],
+            [
+              -37.05,
+              -33.88165354742741
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 1.0144220533025994e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.641027875904133,
+              21.849438164979347
+            ],
+            [
+              -35.71246379231544,
+              -34.972078991273094
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 5.552600046421219e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.729052399670973,
+              21.086501659085673
+            ],
+            [
+              -34.975874354655716,
+              -33.948224592595345
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 6.687358999890591e-16,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              20.607253431072074
+            ],
+            [
+              0.6398563569410913,
+              0.8458675815321827
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.268984917146554e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              21.252255023970914
+            ],
+            [
+              0.31642163621049635,
+              1.201267893909741
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.7763568394002505e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.8512837864206,
+              22.16834645257258
+            ],
+            [
+              1.0623337117353162,
+              1.882665023314506
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.3222756223285614e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.8020589283402,
+              21.032098248896467
+            ],
+            [
+              2.501626660857617,
+              2.8994381649793475
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.0366707492437399e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.167737204632072,
+              21.35684656606089
+            ],
+            [
+              2.165366691014061,
+              2.3479184719828687
+            ]
+          ]
+        },
+        {
+          "triangles": 50,
+          "volume_mm3": 2.724487302430134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              26.0
+            ],
+            [
+              0.7218566742714144,
+              7.05
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 3.6645686485314855e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.870241822889863,
+              22.16834645257258
+            ],
+            [
+              5.217334976685492,
+              5.512242588987928
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.298590141668443e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.437006175651895,
+              23.1728956072063
+            ],
+            [
+              0.38714904902953656,
+              1.6142392803358505
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 9.147543833520899e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.34847892783781,
+              23.150561835020653
+            ],
+            [
+              0.9762681790667913,
+              1.9794047947308124
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 5.913759065778734e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.242590671881963,
+              23.823090054762467
+            ],
+            [
+              0.42393383267447154,
+              2.2750649735089143
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 2.7216987344425014e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.832569879360122,
+              24.04347994954397
+            ],
+            [
+              0.5127233000005262,
+              2.8487090895654466
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 8.396061623727746e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              71.4,
+              71.4
+            ],
+            [
+              21.0,
+              23.971177920604845
+            ],
+            [
+              -35.0,
+              -32.05
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 2.9581892491137296e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              71.4,
+              71.4
+            ],
+            [
+              21.028822079395155,
+              24.0
+            ],
+            [
+              2.05,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_fit-0.9",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 0.9,
+        "cg_probe": "gib_fit"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "hardware-0.9",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 0.9,
+        "cg_probe": "hardware"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/hardware-0.9.stl",
+      "empty": false,
+      "triangle_count": 532,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 8.88941698029555e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.076738946423575e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.358187809684305
+            ],
+            [
+              -24.0,
+              -21.343702130112728
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.248921073456984e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -22.76407820589814,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 4.559339017440323e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              15.650561835020653,
+              16.58771324027147
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.070522111187529e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.458781428793042,
+              16.572058907972472
+            ],
+            [
+              -25.298688016061888,
+              -24.650561835020653
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.389199948993337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.32779015160992
+            ],
+            [
+              -8.595326265743118,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.2493708866946618e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.41266691813615,
+              13.420767310232591
+            ],
+            [
+              -8.72283953335896,
+              -8.688673711875307
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.7544633240950134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              14.60323715886105
+            ],
+            [
+              -4.580310998676439,
+              -3.25
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 8.269947227024232e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.376664834111576,
+              16.58431185106868
+            ],
+            [
+              -8.300729320037826,
+              -6.650561835020652
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 2.1075363676459347e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.146269069143383,
+              13.576040110601664
+            ],
+            [
+              -26.28172585935729,
+              -24.482710409743976
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 4.723582636145807e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.589210336878454,
+              13.856846566060895
+            ],
+            [
+              -27.233578363789505,
+              -25.250442565010925
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.124789481669723e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              14.410618099781667,
+              15.0
+            ],
+            [
+              -27.441950949534185,
+              -25.669054188438885
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 1.7383872119580701e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              11.909006650806843
+            ],
+            [
+              -24.682816127056448,
+              -22.39385018691935
+            ]
+          ]
+        },
+        {
+          "triangles": 32,
+          "volume_mm3": 4.346150392700587e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.628137063401276,
+              16.43838482710977
+            ],
+            [
+              -27.432748481411306,
+              -25.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 7.720699080060456e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              16.427542056213202,
+              16.54347994954397
+            ],
+            [
+              -24.962873217616178,
+              -24.701290910434555
+            ]
+          ]
+        },
+        {
+          "triangles": 42,
+          "volume_mm3": 6.235012506294879e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              15.331653547427418
+            ],
+            [
+              -8.881557826344316,
+              -2.508486550679914
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 3.525929548331419e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.369524635552338,
+              13.669046577575893
+            ],
+            [
+              -8.946389553953367,
+              -6.944469396133323
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 1.392913562270337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.660607986722185,
+              14.385207593711032
+            ],
+            [
+              -9.435925251898203,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.2504220709151923e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.68281612705645,
+              16.202081528017132
+            ],
+            [
+              -9.432748481411306,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 78,
+          "volume_mm3": 1.6760445028379811e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              25.5289068565361
+            ],
+            [
+              -37.05,
+              -33.88165354742741
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 1.0144220533025994e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.641027875904133,
+              21.849438164979347
+            ],
+            [
+              -35.71246379231544,
+              -34.972078991273094
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 5.552600046421219e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.729052399670973,
+              21.086501659085673
+            ],
+            [
+              -34.975874354655716,
+              -33.948224592595345
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 6.687358999890591e-16,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              20.607253431072074
+            ],
+            [
+              0.6398563569410913,
+              0.8458675815321827
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.268984917146554e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              21.252255023970914
+            ],
+            [
+              0.31642163621049635,
+              1.201267893909741
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.7763568394002505e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.8512837864206,
+              22.16834645257258
+            ],
+            [
+              1.0623337117353162,
+              1.882665023314506
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.3222756223285614e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.8020589283402,
+              21.032098248896467
+            ],
+            [
+              2.501626660857617,
+              2.8994381649793475
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.0366707492437399e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.167737204632072,
+              21.35684656606089
+            ],
+            [
+              2.165366691014061,
+              2.3479184719828687
+            ]
+          ]
+        },
+        {
+          "triangles": 50,
+          "volume_mm3": 2.724487302430134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              26.0
+            ],
+            [
+              0.7218566742714144,
+              7.05
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 3.6645686485314855e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.870241822889863,
+              22.16834645257258
+            ],
+            [
+              5.217334976685492,
+              5.512242588987928
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.298590141668443e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.437006175651895,
+              23.1728956072063
+            ],
+            [
+              0.38714904902953656,
+              1.6142392803358505
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 9.147543833520899e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.34847892783781,
+              23.150561835020653
+            ],
+            [
+              0.9762681790667913,
+              1.9794047947308124
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 5.913759065778734e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.242590671881963,
+              23.823090054762467
+            ],
+            [
+              0.42393383267447154,
+              2.2750649735089143
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 2.7216987344425014e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.832569879360122,
+              24.04347994954397
+            ],
+            [
+              0.5127233000005262,
+              2.8487090895654466
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 2.524425113392681e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.5,
+              70.5
+            ],
+            [
+              21.0,
+              23.971177920604845
+            ],
+            [
+              -35.0,
+              -32.05
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 3.066991105526995e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.5,
+              70.5
+            ],
+            [
+              21.028822079395155,
+              24.0
+            ],
+            [
+              2.05,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_fit-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 1,
+        "cg_probe": "gib_fit"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/gib_fit-1.stl",
+      "empty": false,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 9.805489753489383e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              67.4,
+              67.4
+            ],
+            [
+              24.2,
+              26.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "hardware-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_setting": 1,
+        "cg_probe": "hardware"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/hardware-1.stl",
+      "empty": false,
+      "triangle_count": 532,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 8.88941698029555e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 4.076738946423575e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.358187809684305
+            ],
+            [
+              -24.0,
+              -21.343702130112728
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.248921073456984e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              13.839152955513942
+            ],
+            [
+              -22.76407820589814,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 4.559339017440323e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              15.650561835020653,
+              16.58771324027147
+            ],
+            [
+              -26.75,
+              -25.23592179410186
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 9.070522111187529e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.458781428793042,
+              16.572058907972472
+            ],
+            [
+              -25.298688016061888,
+              -24.650561835020653
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.389199948993337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              13.32779015160992
+            ],
+            [
+              -8.595326265743118,
+              -6.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.2493708866946618e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.41266691813615,
+              13.420767310232591
+            ],
+            [
+              -8.72283953335896,
+              -8.688673711875307
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.7544633240950134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              14.60323715886105
+            ],
+            [
+              -4.580310998676439,
+              -3.25
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 8.269947227024232e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.376664834111576,
+              16.58431185106868
+            ],
+            [
+              -8.300729320037826,
+              -6.650561835020652
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 2.1075363676459347e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.146269069143383,
+              13.576040110601664
+            ],
+            [
+              -26.28172585935729,
+              -24.482710409743976
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 4.723582636145807e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.589210336878454,
+              13.856846566060895
+            ],
+            [
+              -27.233578363789505,
+              -25.250442565010925
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 5.124789481669723e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              14.410618099781667,
+              15.0
+            ],
+            [
+              -27.441950949534185,
+              -25.669054188438885
+            ]
+          ]
+        },
+        {
+          "triangles": 8,
+          "volume_mm3": 1.7383872119580701e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              11.909006650806843
+            ],
+            [
+              -24.682816127056448,
+              -22.39385018691935
+            ]
+          ]
+        },
+        {
+          "triangles": 32,
+          "volume_mm3": 4.346150392700587e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.628137063401276,
+              16.43838482710977
+            ],
+            [
+              -27.432748481411306,
+              -25.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 7.720699080060456e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              16.427542056213202,
+              16.54347994954397
+            ],
+            [
+              -24.962873217616178,
+              -24.701290910434555
+            ]
+          ]
+        },
+        {
+          "triangles": 42,
+          "volume_mm3": 6.235012506294879e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              11.5,
+              15.331653547427418
+            ],
+            [
+              -8.881557826344316,
+              -2.508486550679914
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 3.525929548331419e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.369524635552338,
+              13.669046577575893
+            ],
+            [
+              -8.946389553953367,
+              -6.944469396133323
+            ]
+          ]
+        },
+        {
+          "triangles": 20,
+          "volume_mm3": 1.392913562270337e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              13.660607986722185,
+              14.385207593711032
+            ],
+            [
+              -9.435925251898203,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 2.2504220709151923e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              15.68281612705645,
+              16.202081528017132
+            ],
+            [
+              -9.432748481411306,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 78,
+          "volume_mm3": 1.6760445028379811e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              25.5289068565361
+            ],
+            [
+              -37.05,
+              -33.88165354742741
+            ]
+          ]
+        },
+        {
+          "triangles": 16,
+          "volume_mm3": 1.0144220533025994e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.641027875904133,
+              21.849438164979347
+            ],
+            [
+              -35.71246379231544,
+              -34.972078991273094
+            ]
+          ]
+        },
+        {
+          "triangles": 14,
+          "volume_mm3": 5.552600046421219e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.729052399670973,
+              21.086501659085673
+            ],
+            [
+              -34.975874354655716,
+              -33.948224592595345
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 6.687358999890591e-16,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.555504184431392,
+              20.607253431072074
+            ],
+            [
+              0.6398563569410913,
+              0.8458675815321827
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.268984917146554e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              21.252255023970914
+            ],
+            [
+              0.31642163621049635,
+              1.201267893909741
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.7763568394002505e-15,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.8512837864206,
+              22.16834645257258
+            ],
+            [
+              1.0623337117353162,
+              1.882665023314506
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.3222756223285614e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              20.8020589283402,
+              21.032098248896467
+            ],
+            [
+              2.501626660857617,
+              2.8994381649793475
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.0366707492437399e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.167737204632072,
+              21.35684656606089
+            ],
+            [
+              2.165366691014061,
+              2.3479184719828687
+            ]
+          ]
+        },
+        {
+          "triangles": 50,
+          "volume_mm3": 2.724487302430134e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.160607986722187,
+              26.0
+            ],
+            [
+              0.7218566742714144,
+              7.05
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 3.6645686485314855e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              21.870241822889863,
+              22.16834645257258
+            ],
+            [
+              5.217334976685492,
+              5.512242588987928
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 1.298590141668443e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.437006175651895,
+              23.1728956072063
+            ],
+            [
+              0.38714904902953656,
+              1.6142392803358505
+            ]
+          ]
+        },
+        {
+          "triangles": 10,
+          "volume_mm3": 9.147543833520899e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              22.34847892783781,
+              23.150561835020653
+            ],
+            [
+              0.9762681790667913,
+              1.9794047947308124
+            ]
+          ]
+        },
+        {
+          "triangles": 6,
+          "volume_mm3": 5.913759065778734e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.242590671881963,
+              23.823090054762467
+            ],
+            [
+              0.42393383267447154,
+              2.2750649735089143
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 2.7216987344425014e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              80.5,
+              80.5
+            ],
+            [
+              23.832569879360122,
+              24.04347994954397
+            ],
+            [
+              0.5127233000005262,
+              2.8487090895654466
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 2.7887969711315463e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.4,
+              70.4
+            ],
+            [
+              21.0,
+              23.971177920604845
+            ],
+            [
+              -35.0,
+              -32.05
+            ]
+          ]
+        },
+        {
+          "triangles": 56,
+          "volume_mm3": 2.7605695507304517e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.4,
+              70.4
+            ],
+            [
+              21.028822079395155,
+              24.0
+            ],
+            [
+              2.05,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "tools-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0,
+        "cg_probe": "tools"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "old_tools-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 0,
+        "cg_probe": "old_tools"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "tools-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 1,
+        "cg_probe": "tools"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "old_tools-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_t": 1,
+        "cg_probe": "old_tools"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 0
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-0.1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 0.1
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 1
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-5",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 5
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-15",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 15
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "gib_remove-40",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "gib_remove",
+        "cg_remove": 40
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 0
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/cover_remove-0.stl",
+      "empty": false,
+      "triangle_count": 102,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 4.689582056016661e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              13.586501659085673,
+              13.79791847198287
+            ],
+            [
+              -23.055530603866675,
+              -6.944469396133323
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 6.536993168992922e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              14.055530603866677,
+              14.349438164979347
+            ],
+            [
+              -22.586501659085673,
+              -7.413498340914327
+            ]
+          ]
+        },
+        {
+          "triangles": 86,
+          "volume_mm3": 4.357902927409896e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              10.5,
+              28.0
+            ],
+            [
+              -39.0,
+              9.0
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 7.815970093361102e-14,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              75.0,
+              75.0
+            ],
+            [
+              24.2,
+              28.0
+            ],
+            [
+              -39.0,
+              -18.2
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 3.055333763768431e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              69.4,
+              71.4
+            ],
+            [
+              24.0,
+              24.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-0.1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 0.1
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/cover_remove-0.1.stl",
+      "empty": false,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 3.765876499528531e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              69.5,
+              71.4
+            ],
+            [
+              24.0,
+              24.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 1
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/cover_remove-1.stl",
+      "empty": false,
+      "triangle_count": 4,
+      "components": [
+        {
+          "triangles": 4,
+          "volume_mm3": 6.039613253960852e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.4,
+              71.4
+            ],
+            [
+              24.0,
+              24.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-5",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 5
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-15",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 15
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "cover_remove-40",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "cover_remove",
+        "cg_remove": 40
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 0
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-0.1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 0.1
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 1
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-5",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 5
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-15",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 15
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "lift_frame-65",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "lift_frame",
+        "cg_remove": 65
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "old_hardware",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "old_hardware"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "mount_nut_insert",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "mount_nut_insert"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/mount_nut_insert.stl",
+      "empty": false,
+      "triangle_count": 20,
+      "components": [
+        {
+          "triangles": 8,
+          "volume_mm3": 2.1176393971700236e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              11.824573519457058,
+              14.055530603866677
+            ],
+            [
+              -24.0,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 1.0800249583553523e-12,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.76091832102836,
+              20.8
+            ],
+            [
+              -26.75,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.886579864025407e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              13.412286759728529,
+              14.055530603866677
+            ],
+            [
+              -4.797918471982869,
+              -3.25
+            ]
+          ]
+        },
+        {
+          "triangles": 4,
+          "volume_mm3": 2.0961010704922955e-13,
+          "planar_error_mm": 0.0,
+          "planar_contact_only": true,
+          "bounds": [
+            [
+              70.6,
+              70.6
+            ],
+            [
+              16.76091832102836,
+              20.8
+            ],
+            [
+              -8.75,
+              -3.25
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": false,
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "jack_nut_insert",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "jack_nut_insert"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "old_nut_insert",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "old_nut_insert"
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "bearing-continuous-sweep-0",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "sweep",
+        "cg_fault_x": 0
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "bearing-continuous-sweep-0.1",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "sweep",
+        "cg_fault_x": 0.1
+      },
+      "exit_code": 1,
+      "path": null,
+      "empty": true,
+      "has_solid_or_unclassified_overlap": false,
+      "components": [],
+      "expected_solid_overlap": false,
+      "passed": true
+    },
+    {
+      "name": "advance-stop-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "advance_stop"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/advance-stop-control.stl",
+      "empty": false,
+      "triangle_count": 12,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 1.0800000000007663,
+          "planar_error_mm": 0.10000000000000853,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              67.3,
+              67.4
+            ],
+            [
+              24.2,
+              26.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "retract-stop-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "retract_stop"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/retract-stop-control.stl",
+      "empty": false,
+      "triangle_count": 12,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 1.199999999998899,
+          "planar_error_mm": 0.09999999999999432,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              69.4,
+              69.5
+            ],
+            [
+              24.0,
+              26.0
+            ],
+            [
+              -18.0,
+              -12.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "old-inward-frame-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "sweep",
+        "cg_fault_x": -0.199
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/old-inward-frame-control.stl",
+      "empty": false,
+      "triangle_count": 18,
+      "components": [
+        {
+          "triangles": 18,
+          "volume_mm3": 23.879999999998688,
+          "planar_error_mm": 1.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              53.0,
+              54.0
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "old-outward-frame-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "sweep",
+        "cg_fault_x": 0.199
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/old-outward-frame-control.stl",
+      "empty": false,
+      "triangle_count": 24,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 0.8613000000026358,
+          "planar_error_mm": 0.09899999999999665,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              58.1,
+              58.199
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              -32.1
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.8612999999995854,
+          "planar_error_mm": 0.09899999999999665,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              58.1,
+              58.199
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              2.1,
+              4.999999999999998
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "wrong-nut-install-order-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "bad_nut_sequence"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/wrong-nut-install-order-control.stl",
+      "empty": false,
+      "triangle_count": 24,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 37.950000000001246,
+          "planar_error_mm": 2.3000000000000114,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              68.19999999999999,
+              70.5
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -26.75,
+              -21.25
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 37.950000000000585,
+          "planar_error_mm": 2.3000000000000114,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              68.19999999999999,
+              70.5
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -8.75,
+              -3.25
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "old-exact-outward-frame-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "old_witness",
+        "cg_witness_matrix": [
+          [
+            1.0,
+            1.1891946735691472e-14,
+            -8.587686681016685e-15,
+            0.19900000000012097
+          ],
+          [
+            -1.1976759252386256e-14,
+            0.9999505518889943,
+            -0.009944535026624271,
+            -0.1502772471030619
+          ],
+          [
+            8.469002155284566e-15,
+            0.009944535026624271,
+            0.9999505518889943,
+            0.0008406178870963288
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "cg_t": 0.85
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/old-exact-outward-frame-control.stl",
+      "empty": false,
+      "triangle_count": 24,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 0.861300000007625,
+          "planar_error_mm": 0.09900000000070719,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              58.1,
+              58.19900000000071
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              -32.1
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 0.8083625155886753,
+          "planar_error_mm": 0.09900000000038034,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              58.1,
+              58.19900000000038
+            ],
+            [
+              21.0,
+              23.830033369955704
+            ],
+            [
+              2.1,
+              4.999999999999998
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "old-exact-inward-frame-control",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "old_witness",
+        "cg_witness_matrix": [
+          [
+            1.0,
+            -8.314853809202986e-16,
+            -1.2370012804159423e-14,
+            -0.19899999999977297
+          ],
+          [
+            9.544582911498902e-16,
+            0.9999505518889941,
+            0.009944535026644736,
+            0.14809147806147732
+          ],
+          [
+            1.2361132394898433e-14,
+            -0.009944535026644736,
+            0.9999505518889941,
+            0.0009395141091133041
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "cg_t": 0.95
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/old-exact-inward-frame-control.stl",
+      "empty": false,
+      "triangle_count": 16,
+      "components": [
+        {
+          "triangles": 16,
+          "volume_mm3": 23.48456015956378,
+          "planar_error_mm": 0.19899999999985596,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              53.801000000000144,
+              54.0
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              5.0
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    }
+  ],
+  "load_path_connections": [
+    {
+      "name": "datum_embed",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "datum_embed"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/datum_embed.stl",
+      "empty": false,
+      "triangle_count": 36,
+      "components": [
+        {
+          "triangles": 12,
+          "volume_mm3": 57.59999999999902,
+          "planar_error_mm": 0.7999999999999972,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              53.0,
+              53.8
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -26.25,
+              -2.25
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 6.599999999999675,
+          "planar_error_mm": 0.7999999999999972,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              53.0,
+              53.8
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              2.25,
+              5.0
+            ]
+          ]
+        },
+        {
+          "triangles": 12,
+          "volume_mm3": 10.199999999996617,
+          "planar_error_mm": 0.7999999999999972,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              53.0,
+              53.8
+            ],
+            [
+              21.0,
+              24.0
+            ],
+            [
+              -35.0,
+              -30.75
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    },
+    {
+      "name": "case_embed",
+      "definitions": {
+        "cg_part": "probe",
+        "cg_probe": "case_embed"
+      },
+      "exit_code": 0,
+      "path": "output/feeder-cam-guide-revision/case_embed.stl",
+      "empty": false,
+      "triangle_count": 316,
+      "components": [
+        {
+          "triangles": 316,
+          "volume_mm3": 554.7920470199512,
+          "planar_error_mm": 1.0,
+          "planar_contact_only": false,
+          "bounds": [
+            [
+              66.0,
+              67.0
+            ],
+            [
+              10.5,
+              24.200000000000003
+            ],
+            [
+              -36.0,
+              7.5
+            ]
+          ]
+        }
+      ],
+      "has_solid_or_unclassified_overlap": true,
+      "expected_solid_overlap": true,
+      "passed": true
+    }
+  ],
+  "hardware_added": {
+    "M3x16_socket_head_screw": 4,
+    "M3_hex_nut_AF5.5_H2.4": 6,
+    "M3_washer_OD7_H0.5": 4
+  },
+  "limits": [
+    "Only the right rail is the X master; nominal parallel motion is [0,+0.10], not +/-0.05 mm.",
+    "The continuous bearing sweep covers exact rail/end-stop primitives; full cam/finger motion uses seven samples.",
+    "Existing carrier gibs and split-body candidates are included. Eight body seam M3 sets and body-mount captive nuts remain unmodelled.",
+    "Pure +/-0.199 translation controls and two exact saved tilted-frame witnesses are excluded by new contact solids; this is not a global bound.",
+    "Rotation about X from the unmodified Y guide clearance remains; no global 3D gate-error budget has passed.",
+    "New nuts must be inserted before the gib/cover. Thread form, torque, friction, PETG creep and screw pressure remain physical gates.",
+    "Removal cases are static samples. The two new nut feeds and the old cap-nut feed use continuous convex sweeps.",
+    "Printing orientations, support removability and loaded function are not established by these STL/CSG checks."
+  ]
+}

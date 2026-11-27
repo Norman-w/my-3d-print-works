@@ -1,0 +1,119 @@
+{
+  "status": "BOUNDED_ROUTE_FORMULA_AND_BENCH_TOOL_GEOMETRY_REVIEW_PASS",
+  "source_hashes_before": {
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/equal-length-route.scad": "9d16bec62f032885f987e97506c62ae279fff389abc59246d7193fdb78d8a729",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/numeric/report.json": "6cff4cf7cdc8d21e49ac30c617d184eacda56a4975e16df32c9d9405ef10ae5a",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/numeric/plus2.echo": "bd4ad4b61d533fdb0626bd8ba6d470ce16ff98f02157f949d29f4a287c5a1bed",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review-upper-sector/report.json": "8649c88ac3235bd825cd7b60558bb68b76a7371875929baa8c3e4ca509cd021d",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review/report.json": "18e44165783f0b48c58b04221018b61ef8d6c240b99059f3680028ff0c4b50e4",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-service-contract.scad": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-service-review.scad": "a1b19d9dc86357cba26f905252b4b08b91bdc35e16e93c38b631528a3dd7a0d1",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-probes.scad": "bc6765b6cdedd9619ecca3ae83097508be2f2cff177801fd999a70f202da5d59",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/summarize_route_and_tools.py": "c50785f83491822c8c2674f8cab1de27a1c1e4afbf23ddde6e6b06581bfeeb09"
+  },
+  "source_hashes_after": {
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/candidate.scad": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/equal-length-route.scad": "9d16bec62f032885f987e97506c62ae279fff389abc59246d7193fdb78d8a729",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/numeric/report.json": "6cff4cf7cdc8d21e49ac30c617d184eacda56a4975e16df32c9d9405ef10ae5a",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/numeric/plus2.echo": "bd4ad4b61d533fdb0626bd8ba6d470ce16ff98f02157f949d29f4a287c5a1bed",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review-upper-sector/report.json": "8649c88ac3235bd825cd7b60558bb68b76a7371875929baa8c3e4ca509cd021d",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review/report.json": "18e44165783f0b48c58b04221018b61ef8d6c240b99059f3680028ff0c4b50e4",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-service-contract.scad": "80abb5f6a7455bd909c60fcc3c9ec1a82554b879b3c43b2719c9873f0e484029",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/cable-service-review.scad": "a1b19d9dc86357cba26f905252b4b08b91bdc35e16e93c38b631528a3dd7a0d1",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-probes.scad": "bc6765b6cdedd9619ecca3ae83097508be2f2cff177801fd999a70f202da5d59",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/summarize_route_and_tools.py": "c50785f83491822c8c2674f8cab1de27a1c1e4afbf23ddde6e6b06581bfeeb09"
+  },
+  "route_audit": {
+    "formula_review": "L=polyline length - sum(2 R tan(theta_i/2)-R theta_i); L(delta,s)=L(0,s)+delta. The parent derivative and positive lower-bound derivation are correct on |s|<=2. The same bound also stays positive over the native initial bisection bracket |s|<=12.",
+    "independent_derivative_coefficients": {
+      "c_dot_input_direction": -0.9638075977285044,
+      "c_y": -0.14285888682506237
+    },
+    "independent_inequality_checks": [
+      {
+        "shift_abs_bound_mm": 2,
+        "theta2_derivative_sign_numerator_upper": -187.65676378340822,
+        "length_derivative_wrt_shift_lower_bound": 0.5971573253976417,
+        "straight_lower_bounds_mm": [
+          20.226824561329806,
+          31.745199628194783,
+          214.08602802351913,
+          34.074446500750526
+        ]
+      },
+      {
+        "shift_abs_bound_mm": 12,
+        "theta2_derivative_sign_numerator_upper": -186.2281749151576,
+        "length_derivative_wrt_shift_lower_bound": 0.5035062644546859,
+        "straight_lower_bounds_mm": [
+          6.242737745392617,
+          23.215528969611597,
+          209.54044418087318,
+          34.074446500750526
+        ]
+      }
+    ],
+    "port_binding": "cv Pdelta=P0-delta*cr_input_direction equals v2 local head inlet [-63+delta,60,2], since direction is -basis_x and origin/basis are preserved.",
+    "third_arc_binding": "cv_vertices fixes indices 2,3,4; cv_arc(3) directly returns cr_arc(3); cv_require asserts radius equality. Geometry of the retained output bend is unchanged.",
+    "root_numeric_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/housing-route/numeric/report.json",
+    "root_numeric_report_sha256": "6cff4cf7cdc8d21e49ac30c617d184eacda56a4975e16df32c9d9405ef10ae5a",
+    "root_samples_consumed_not_rerun": 81,
+    "root_length_mm": 746.5072342203777,
+    "root_shift_at_minus2_mm": 1.7996608876425881,
+    "root_shift_at_plus2_mm": -1.7885838458496295,
+    "root_min_sampled_straight_mm": 24.104289628738922,
+    "no_claims": [
+      "Automatic physical shape retention of the free first two bends",
+      "Continuous all-delta collision clearance from three-delta or 81-delta samples",
+      "Final housing cut length without actual seating correction",
+      "Cable force/friction/bend lifetime/installation ergonomics"
+    ]
+  },
+  "tool_audit": {
+    "accepted_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review-upper-sector/report.json",
+    "accepted_report_sha256": "8649c88ac3235bd825cd7b60558bb68b76a7371875929baa8c3e4ca509cd021d",
+    "rejected_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/independent/tool-review/report.json",
+    "rejected_report_sha256": "18e44165783f0b48c58b04221018b61ef8d6c240b99059f3680028ff0c4b50e4",
+    "rejected_swing": "-60..+60 deg: real lower-rib intersection 65.3239956919 mm^3",
+    "accepted_swing_deg": [
+      0,
+      60
+    ],
+    "loose_nut_gap_mm": [
+      0,
+      0.2
+    ],
+    "minimum_nominal_thread_end_margin_during_loosen_mm": 1.0,
+    "minimum_nominal_tool_nut_axial_overlap_mm": 2.9,
+    "simultaneous_tools": {
+      "proof": "Exact axial interval separation. All torque/entry arc inflation is planar YZ; none enlarges X.",
+      "sw8_all_motion_x_mm": [
+        -63,
+        -56
+      ],
+      "sw10_left_all_motion_x_mm": [
+        -49.7,
+        -46.7
+      ],
+      "sw10_right_all_motion_x_mm": [
+        -35.3,
+        -32.3
+      ],
+      "minimum_axial_gap_left_mm": 6.3,
+      "minimum_axial_gap_right_mm": 20.7
+    },
+    "raw_contact_classification": "Loose-nut raw mesh has only x=-46.6 / -35.4 planar washer bearing contacts. No contact skins removed. Loose-nut versus printed parts alone is empty.",
+    "sequence": [
+      "Disconnect power/air; no balls; feeder at rest. Release output core and fully clear the terminal cross-bore. Disconnect/park housing, remove required retainer/mount fasteners, place input module on bench, remove main cover and park ferrule away from adjuster.",
+      "Counterhold SW8 head at fixed angular orientation; this wrench follows delta axially. Use only one SW10 wrench at a time.",
+      "Increase delta: retreat left nut from its washer by at most .2 mm; move SW10 to right nut and turn it toward its washer, advancing adjuster +X by no more than the available loose gap. Repeat. Decrease delta: exchange left/right and X directions.",
+      "Perform both turn directions within upper 0..60 deg by reversing stroke and reindexing entry as needed. Never take the downward -60 deg path. Limit each axial step by the loose gap and actual pitch, without assuming an unverified turn count.",
+      "Lock both nuts at their washer faces within measured delta +/-2. Reseat housing/ferrule, install within the equal-length family space, reset core slack/preload/output clamp and stroke stop, then refit cover and module."
+    ],
+    "scope": "Geometric budgets for candidate tools. No purchased tool certification, torque or preload approval, thread-runout approval, FDM tolerance or physical dexterity proof."
+  },
+  "sources_unchanged": true
+}

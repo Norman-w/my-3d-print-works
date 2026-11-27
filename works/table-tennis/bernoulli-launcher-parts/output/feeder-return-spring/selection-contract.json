@@ -1,0 +1,5 @@
+{
+  "spring": {"manufacturer":"Lee Spring", "model":"LEM063CA 03 M", "wire_material":"music wire", "outside_diameter_mm":7.0, "wire_diameter_mm":0.63, "free_inside_loop_length_mm":25.6, "initial_tension_N":1.67, "rate_N_per_mm":0.25, "maximum_load_N":12.2, "catalog_maximum_extended_length_mm":67.21, "loop_position":"INLINE", "catalog_page":177, "pdf_page":13},
+  "boundaries": {"spring_force_not_measured":true,"loop_wire_path_reconstructed_not_factory_CAD":true,"DIN_loop_tolerances_not_given_in_catalog":true,"maximum_length_checked_conservatively_as_overall":true},
+  "sources": ["https://www.leespring.co.uk/sites/default/files/2020-01/Extension_Springs_Lee_Spring_UK_Eng.pdf", "https://www.leespring.co.uk/engineering-notes-and-tolerances", "https://www.leespring.co.uk/extension-springs"]
+}

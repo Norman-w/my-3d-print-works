@@ -1,0 +1,112 @@
+{
+  "changed_common_parameters": {
+    "tee_measured_id": {
+      "before": 50,
+      "after": 50.2,
+      "delta": 0.20000000000000284
+    },
+    "tee_radial_clearance": {
+      "before": 0.18,
+      "after": 0.1,
+      "delta": -0.07999999999999999
+    },
+    "tee_od": {
+      "before": 49.64,
+      "after": 50,
+      "delta": 0.35999999999999943
+    },
+    "tee_id": {
+      "before": 43.64,
+      "after": 44,
+      "delta": 0.35999999999999943
+    },
+    "lug_radial_h": {
+      "before": 2.4,
+      "after": 3.4,
+      "delta": 1.0
+    },
+    "lug_z": {
+      "before": -7,
+      "after": -7.5,
+      "delta": -0.5
+    }
+  },
+  "unchanged_common_parameters": [
+    "air_transition_end",
+    "axial_clearance",
+    "body_od",
+    "core_inlet_id",
+    "core_l",
+    "core_od",
+    "core_seated_z",
+    "crest_w",
+    "entry_cone_z0",
+    "fan_back_z",
+    "fan_face_extra",
+    "fan_od",
+    "fan_radial_clearance",
+    "female_major",
+    "female_minor",
+    "female_z0",
+    "female_z1",
+    "fn",
+    "lug_d",
+    "lug_embed",
+    "male_major",
+    "male_z0",
+    "male_z1",
+    "phase",
+    "pitch",
+    "radial_clearance",
+    "root_embed",
+    "root_w",
+    "slot_axial_width",
+    "slot_turn_width",
+    "socket_id",
+    "socket_od",
+    "steps_per_turn",
+    "tee_z0",
+    "tee_z1",
+    "thread_h",
+    "tip_l",
+    "tip_radial_chamfer",
+    "wall"
+  ],
+  "additional_design_change": "Female groove upper roof relief only; original male and lower flank unchanged",
+  "old_groove_profile_rz": [
+    [
+      20.05,
+      -1.64
+    ],
+    [
+      21.15,
+      -0.76
+    ],
+    [
+      21.15,
+      0.76
+    ],
+    [
+      20.05,
+      1.64
+    ]
+  ],
+  "new_groove_profile_rz": [
+    [
+      20.05,
+      -1.64
+    ],
+    [
+      21.15,
+      -0.76
+    ],
+    [
+      21.15,
+      0.76
+    ],
+    [
+      20.05,
+      2.07093
+    ]
+  ]
+}

@@ -1,0 +1,734 @@
+{
+  "status": "LOCAL_MANUAL_SUPPORT_PATH_REVIEW",
+  "part": "cable-input-body",
+  "geometry_changed": false,
+  "normal_part_identity": {
+    "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+    "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+    "source_triangles": 5730,
+    "actual_3mf_triangles": 5730,
+    "collapsed_source_triangle_indices": [],
+    "maximum_corner_displacement_mm": 4.67480268507626e-06,
+    "surviving_oriented_faces_exactly_match": true,
+    "unexpected_actual_faces": 0,
+    "missing_surviving_faces": 0,
+    "non_two_incidence_edges": 0,
+    "vertex_link_faults": [],
+    "orientation_faults": 0,
+    "components": 1,
+    "volume_source_mm3": 267188.30349115306,
+    "volume_actual_3mf_mm3": 267188.2855574228,
+    "manufacturing_release": false,
+    "physical_acceptance": false
+  },
+  "mapping": {
+    "cad_to_command": [
+      [
+        -0.788070529,
+        -3.769370748213023e-17,
+        0.615584959,
+        169.93821312642575
+      ],
+      [
+        0.615584959,
+        -4.825540254211057e-17,
+        0.788070529,
+        103.4389552251296
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        94.00000000000001
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "local_to_command": [
+      [
+        0.9925343140145125,
+        -0.12196571620382686,
+        -3.769370748213023e-17,
+        113.91084824642576
+      ],
+      [
+        0.1219657162038269,
+        0.9925343140145126,
+        -4.825540254211057e-17,
+        153.5481797951296
+      ],
+      [
+        4.329780281177467e-17,
+        4.329780281177467e-17,
+        1.0,
+        12.000000000000014
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        -0.788070529,
+        -0.615584959,
+        0.0,
+        103.89966
+      ],
+      [
+        0.615584959,
+        -0.788070529,
+        0.0,
+        127.33694
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "extruder_offset_from_gcode": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "normal_component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        22.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "normal_source_offset": [
+      0.0,
+      0.0,
+      22.5
+    ],
+    "model_bbox": [
+      [
+        46.57646000532206,
+        32.49066390288752,
+        0.0
+      ],
+      [
+        209.39818002937477,
+        219.50538658155568,
+        45.0
+      ]
+    ],
+    "source_vs_actual_bbox_error_mm": 1.4908588639173104e-06,
+    "normal_part_identity": {
+      "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+      "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+      "source_triangles": 5730,
+      "actual_3mf_triangles": 5730,
+      "collapsed_source_triangle_indices": [],
+      "maximum_corner_displacement_mm": 4.67480268507626e-06,
+      "surviving_oriented_faces_exactly_match": true,
+      "unexpected_actual_faces": 0,
+      "missing_surviving_faces": 0,
+      "non_two_incidence_edges": 0,
+      "vertex_link_faults": [],
+      "orientation_faults": 0,
+      "components": 1,
+      "volume_source_mm3": 267188.30349115306,
+      "volume_actual_3mf_mm3": 267188.2855574228,
+      "manufacturing_release": false,
+      "physical_acceptance": false
+    },
+    "enforcers": [
+      {
+        "subtype": "support_enforcer",
+        "actual_local_bounds": [
+          [
+            -33.60000301996834,
+            16.400000984671152,
+            -12.000000000000014
+          ],
+          [
+            -26.400000915893642,
+            23.600003088745865,
+            -8.799999240000012
+          ]
+        ],
+        "expected_local_bounds": [
+          [
+            -33.6,
+            16.4,
+            -12.0
+          ],
+          [
+            -26.4,
+            23.6,
+            -8.8
+          ]
+        ]
+      },
+      {
+        "subtype": "support_enforcer",
+        "actual_local_bounds": [
+          [
+            70.39999649958563,
+            16.399998932186662,
+            -12.000000000000018
+          ],
+          [
+            77.5999999438418,
+            23.600002376442774,
+            -8.799999240000018
+          ]
+        ],
+        "expected_local_bounds": [
+          [
+            70.4,
+            16.4,
+            -12.0
+          ],
+          [
+            77.6,
+            23.6,
+            -8.8
+          ]
+        ]
+      }
+    ]
+  },
+  "process": {
+    "enable_support": "1",
+    "support_type": "normal(manual)",
+    "support_on_build_plate_only": "1",
+    "support_top_z_distance": "0.2",
+    "support_object_xy_distance": "0.35",
+    "support_interface_top_layers": "2",
+    "support_interface_spacing": "0",
+    "raft_first_layer_expansion": "0",
+    "layer_height": "0.1"
+  },
+  "enforcer_roles_roundtrip_verified": true,
+  "actual_support_path_count": 305,
+  "support_features": {
+    "Support": 161,
+    "Support transition": 48,
+    "Support interface": 96
+  },
+  "support_outside_selected_extraction_cavities": [],
+  "all_support_localized": true,
+  "bed": {
+    "model_brim_support_bead_bounds_xy": [
+      [
+        41.677749999999996,
+        27.591749999999998
+      ],
+      [
+        214.29025000000001,
+        224.40325
+      ]
+    ],
+    "violations": [],
+    "passed": true
+  },
+  "pockets": [
+    {
+      "centre_local_xy": [
+        -30,
+        20
+      ],
+      "contact_plane_local_z": -9,
+      "contact_plane_print_z": 3.000000000000014,
+      "first_shoulder_model_layer_print_z": 3.1,
+      "previous_model_layer_print_z": 3.0,
+      "last_support_interface_layer_print_z": 2.8,
+      "nominal_vertical_gap_mm": 0.2000000000000144,
+      "support_count": 149,
+      "support_interface_count": 48,
+      "support_projection_outside_original_opening_mm2": 0.0,
+      "opening_contains_complete_support_projection": true,
+      "support_to_opening_boundary_min_gap_mm": 0.15634816675177352,
+      "shoulder_area_mm2": 20.05400705080025,
+      "top_interface_projected_area_under_shoulder_mm2": 12.638376785449948,
+      "metal_bearing_area_preserved_mm2": 17.118180931971025,
+      "metal_bearing_loss_mm2": 0,
+      "shoulder_paths_without_previous_model_overlap": {
+        "count": 13,
+        "max_continuous_path_length_mm": 12.507822307106505,
+        "max_endpoint_chord_mm": 2.0189286758739513,
+        "entries": [
+          {
+            "line": 70094,
+            "feature": "Overhang wall",
+            "length_mm": 0.29163913847630163,
+            "end_chord_mm": 0.29148751904604336,
+            "bounds": [
+              -30.76166662937237,
+              17.28913042501341,
+              -30.47770403951526,
+              17.354934842199945
+            ]
+          },
+          {
+            "line": 70098,
+            "feature": "Overhang wall",
+            "length_mm": 1.2695592545683099,
+            "end_chord_mm": 1.2604959167616914,
+            "bounds": [
+              -30.47770403951526,
+              17.257160183322327,
+              -29.219557766545254,
+              17.36605839121934
+            ]
+          },
+          {
+            "line": 70124,
+            "feature": "Overhang wall",
+            "length_mm": 1.5723659124431202,
+            "end_chord_mm": 1.5530516032361308,
+            "bounds": [
+              -28.105298431005547,
+              18.00916830533151,
+              -27.328551494121662,
+              19.35402275037596
+            ]
+          },
+          {
+            "line": 70147,
+            "feature": "Overhang wall",
+            "length_mm": 1.5724072158567557,
+            "end_chord_mm": 1.55309584547316,
+            "bounds": [
+              -28.105116317382542,
+              20.645690646551078,
+              -27.328567399616976,
+              21.99071052876216
+            ]
+          },
+          {
+            "line": 70170,
+            "feature": "Overhang wall",
+            "length_mm": 1.5745545393066063,
+            "end_chord_mm": 1.555138686717133,
+            "bounds": [
+              -30.777985682047166,
+              22.635560103710517,
+              -29.222847135229152,
+              22.741396950403782
+            ]
+          },
+          {
+            "line": 70193,
+            "feature": "Overhang wall",
+            "length_mm": 1.5734440374441534,
+            "end_chord_mm": 1.5540825966654137,
+            "bounds": [
+              -32.67167399356911,
+              20.645144772929786,
+              -31.89467802063408,
+              21.991045948834266
+            ]
+          },
+          {
+            "line": 70216,
+            "feature": "Overhang wall",
+            "length_mm": 1.576004375286591,
+            "end_chord_mm": 1.556601988811083,
+            "bounds": [
+              -32.67192953942289,
+              18.008125166809744,
+              -31.89356402989153,
+              19.356144782817836
+            ]
+          },
+          {
+            "line": 70223,
+            "feature": "Overhang wall",
+            "length_mm": 1.8246697213078344,
+            "end_chord_mm": 1.7784209284234835,
+            "bounds": [
+              -31.903258792846486,
+              17.71125186547559,
+              -30.4036669581032,
+              18.667288124111167
+            ]
+          },
+          {
+            "line": 70224,
+            "feature": "Overhang wall",
+            "length_mm": 0.20300985193449575,
+            "end_chord_mm": 0.20300985193449575,
+            "bounds": [
+              -30.4036669581032,
+              17.684507756469543,
+              -30.202426423876275,
+              17.71125186547559
+            ]
+          },
+          {
+            "line": 70225,
+            "feature": "Overhang wall",
+            "length_mm": 12.507822307106505,
+            "end_chord_mm": 2.0189286758739513,
+            "bounds": [
+              -32.32302911286699,
+              17.676228909961623,
+              -27.677145782095906,
+              22.322217198725667
+            ]
+          },
+          {
+            "line": 70232,
+            "feature": "Overhang wall",
+            "length_mm": 1.5004694031186143,
+            "end_chord_mm": 1.4626346088787774,
+            "bounds": [
+              -31.564766255199558,
+              18.118485291233867,
+              -30.33145936243342,
+              18.90477665411757
+            ]
+          },
+          {
+            "line": 70233,
+            "feature": "Overhang wall",
+            "length_mm": 0.1660030119855609,
+            "end_chord_mm": 0.1660030119855609,
+            "bounds": [
+              -30.33145936243342,
+              18.097246448039044,
+              -30.16682063209325,
+              18.118485291233867
+            ]
+          },
+          {
+            "line": 70234,
+            "feature": "Overhang wall",
+            "length_mm": 10.266993104390608,
+            "end_chord_mm": 1.6681130054095197,
+            "bounds": [
+              -31.909756291930677,
+              18.090225509599833,
+              -28.0915019398566,
+              21.908347639095865
+            ]
+          }
+        ]
+      },
+      "shoulder_paths_without_previous_model_or_top_interface_overlap": {
+        "count": 3,
+        "max_continuous_path_length_mm": 0.6696661178581353,
+        "max_endpoint_chord_mm": 0.6680836941685243,
+        "entries": [
+          {
+            "line": 70124,
+            "feature": "Overhang wall",
+            "length_mm": 0.22480935020773116,
+            "end_chord_mm": 0.22471872110450103,
+            "bounds": [
+              -27.392839795726918,
+              19.138696212551306,
+              -27.328551494121662,
+              19.354022750375965
+            ]
+          },
+          {
+            "line": 70193,
+            "feature": "Overhang wall",
+            "length_mm": 0.6696661178581353,
+            "end_chord_mm": 0.6680836941685243,
+            "bounds": [
+              -32.67167399356911,
+              20.645144772929783,
+              -32.43119787869857,
+              21.268448118493268
+            ]
+          },
+          {
+            "line": 70216,
+            "feature": "Overhang wall",
+            "length_mm": 0.016091422879421204,
+            "end_chord_mm": 0.016091422879421204,
+            "bounds": [
+              -32.67192953942289,
+              19.340513612515306,
+              -32.66810849175798,
+              19.35614478281784
+            ]
+          }
+        ]
+      },
+      "removal_direction_local": [
+        0,
+        0,
+        -1
+      ],
+      "removal_contract": "Rigid axial extraction through this original constant-section shallow opening, before hardware/assembly. Projection containment proves nominal room only, not adhesion release or grasp force."
+    },
+    {
+      "centre_local_xy": [
+        74,
+        20
+      ],
+      "contact_plane_local_z": -9,
+      "contact_plane_print_z": 3.000000000000014,
+      "first_shoulder_model_layer_print_z": 3.1,
+      "previous_model_layer_print_z": 3.0,
+      "last_support_interface_layer_print_z": 2.8,
+      "nominal_vertical_gap_mm": 0.2000000000000144,
+      "support_count": 156,
+      "support_interface_count": 48,
+      "support_projection_outside_original_opening_mm2": 0.0,
+      "opening_contains_complete_support_projection": true,
+      "support_to_opening_boundary_min_gap_mm": 0.15669175174809943,
+      "shoulder_area_mm2": 20.054007050800315,
+      "top_interface_projected_area_under_shoulder_mm2": 12.637895153312458,
+      "metal_bearing_area_preserved_mm2": 17.11818093197102,
+      "metal_bearing_loss_mm2": 0,
+      "shoulder_paths_without_previous_model_overlap": {
+        "count": 13,
+        "max_continuous_path_length_mm": 11.900490873872155,
+        "max_endpoint_chord_mm": 2.5472975870988903,
+        "entries": [
+          {
+            "line": 70524,
+            "feature": "Overhang wall",
+            "length_mm": 1.5779106596870895,
+            "end_chord_mm": 1.5583808022957113,
+            "bounds": [
+              71.32796672330632,
+              18.008088818678168,
+              72.10647489034918,
+              19.35807984043031
+            ]
+          },
+          {
+            "line": 70547,
+            "feature": "Overhang wall",
+            "length_mm": 0.291136454163539,
+            "end_chord_mm": 0.29098378133479724,
+            "bounds": [
+              73.23823287851334,
+              17.288768540266034,
+              73.52167855609576,
+              17.354572102933563
+            ]
+          },
+          {
+            "line": 70551,
+            "feature": "Overhang wall",
+            "length_mm": 1.27144995458907,
+            "end_chord_mm": 1.2623738179498845,
+            "bounds": [
+              73.52167855609576,
+              17.256806062848426,
+              74.78168311480913,
+              17.366074220955834
+            ]
+          },
+          {
+            "line": 70574,
+            "feature": "Overhang wall",
+            "length_mm": 1.5792912657623501,
+            "end_chord_mm": 1.559696550321091,
+            "bounds": [
+              75.8922560145259,
+              18.007056458547957,
+              76.67186277135687,
+              19.35793270520677
+            ]
+          },
+          {
+            "line": 70597,
+            "feature": "Overhang wall",
+            "length_mm": 1.5812120038087292,
+            "end_chord_mm": 1.5615970487622517,
+            "bounds": [
+              75.89127778495532,
+              20.64095376831257,
+              76.6718905438093,
+              21.99344371778257
+            ]
+          },
+          {
+            "line": 70623,
+            "feature": "Overhang wall",
+            "length_mm": 1.5801645018169723,
+            "end_chord_mm": 1.5605972875867107,
+            "bounds": [
+              73.22014616574185,
+              22.634635754905513,
+              74.78074338358871,
+              22.741029675287024
+            ]
+          },
+          {
+            "line": 70649,
+            "feature": "Overhang wall",
+            "length_mm": 1.580129718864081,
+            "end_chord_mm": 1.56050668750783,
+            "bounds": [
+              71.32795091741077,
+              20.641659348485046,
+              72.10828870698343,
+              21.99304902430824
+            ]
+          },
+          {
+            "line": 70671,
+            "feature": "Overhang wall",
+            "length_mm": 2.433322968857433,
+            "end_chord_mm": 2.3240819688002663,
+            "bounds": [
+              71.81666739127832,
+              17.710768015012036,
+              73.5967081718214,
+              19.205027636800054
+            ]
+          },
+          {
+            "line": 70672,
+            "feature": "Overhang wall",
+            "length_mm": 0.20200247518937797,
+            "end_chord_mm": 0.20200247518937797,
+            "bounds": [
+              73.5967081718214,
+              17.685138406035747,
+              73.79707813745088,
+              17.710768015012036
+            ]
+          },
+          {
+            "line": 70673,
+            "feature": "Overhang wall",
+            "length_mm": 11.900490873872155,
+            "end_chord_mm": 2.5472975870988903,
+            "bounds": [
+              71.67647640100603,
+              17.676860857094454,
+              76.32240088849161,
+              22.32288802019616
+            ]
+          },
+          {
+            "line": 70680,
+            "feature": "Overhang wall",
+            "length_mm": 1.9989513298962618,
+            "end_chord_mm": 1.9091361916975906,
+            "bounds": [
+              72.20584210763045,
+              18.119115940800043,
+              73.66804519889371,
+              19.346618738495323
+            ]
+          },
+          {
+            "line": 70681,
+            "feature": "Overhang wall",
+            "length_mm": 0.16701197558300288,
+            "end_chord_mm": 0.16701197558300288,
+            "bounds": [
+              73.66804519889371,
+              18.09676259757549,
+              73.83355449783133,
+              18.119115940800043
+            ]
+          },
+          {
+            "line": 70682,
+            "feature": "Overhang wall",
+            "length_mm": 9.766328598714818,
+            "end_chord_mm": 2.1031502557160224,
+            "bounds": [
+              72.09137865606857,
+              18.089731562425555,
+              75.90894106134479,
+              21.90767500698928
+            ]
+          }
+        ]
+      },
+      "shoulder_paths_without_previous_model_or_top_interface_overlap": {
+        "count": 2,
+        "max_continuous_path_length_mm": 0.6579482772547172,
+        "max_endpoint_chord_mm": 0.6564166205377158,
+        "entries": [
+          {
+            "line": 70574,
+            "feature": "Overhang wall",
+            "length_mm": 0.2465568812823437,
+            "end_chord_mm": 0.24642531533639034,
+            "bounds": [
+              76.60051320007508,
+              19.122062667439046,
+              76.67186277135687,
+              19.357932705206764
+            ]
+          },
+          {
+            "line": 70649,
+            "feature": "Overhang wall",
+            "length_mm": 0.6579482772547172,
+            "end_chord_mm": 0.6564166205377158,
+            "bounds": [
+              71.32795091741077,
+              20.641659348485053,
+              71.56251410225094,
+              21.25473592774395
+            ]
+          }
+        ]
+      },
+      "removal_direction_local": [
+        0,
+        0,
+        -1
+      ],
+      "removal_contract": "Rigid axial extraction through this original constant-section shallow opening, before hardware/assembly. Projection containment proves nominal room only, not adhesion release or grasp force."
+    }
+  ],
+  "artifact_sha256": {
+    "invocation.json": "3cb6b87fb58a565a0ec11fadb05fe04b939b15a410cca2a21cbd94481d3c7f16",
+    "slice-review.3mf": "c52ee7e1df3818725096fcd9d14c7e4085e179ef1d20977f25f829dfd4e5e3f2",
+    "plate_1.gcode": "4f55b35f3cec08cbaa16f92ccb59fd7d30423235cdf75aaea47adc9051f65bbb"
+  },
+  "script_sha256": "a09219bab704e62491b6c40a1d0ebd1b230586296eb7f77bf930e38cd6da6a0c",
+  "parser_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+  "limits": [
+    "Support is separated by the recorded air gap; projected underlay is not a physical guarantee of no sag or reliable PETG separation.",
+    "Remaining unsupported-path lengths are curved centerline fragments relative to nominal bead footprints, not mechanical free spans.",
+    "No reduction in nominal metal bearing area; support scars, dimensions, torque and layer adhesion remain physical unknowns.",
+    "No support was requested for the transverse stop bore/nut chamber or M6 round roof. Those previously documented short bridges remain.",
+    "Removal envelope excludes unknown extraction-tool dimensions and glue-like support fusion. This is normal part manufacturing support, not a coupon."
+  ],
+  "manufacturing_release": false,
+  "sent_to_printer": false
+}

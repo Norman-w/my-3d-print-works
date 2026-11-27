@@ -1,0 +1,108 @@
+{
+  "status": "CONCEPT_KINEMATICS_CHECKS_PASS",
+  "samples": 401,
+  "checks": [
+    "trigger approaches fixed palm during pull",
+    "trigger moves away from palm during release",
+    "fixed pivot and rigid arms",
+    "guided cable input and constant exposed length",
+    "rigid finger segments and fixed root",
+    "pull control hold position .65 maps to full trigger stroke"
+  ],
+  "source_sha256": {
+    "web/feeder-motion.mjs": "ce21fd0ff66f997ef742306fbf66b82613803df379ecec316961aae94d18889b",
+    "web/feeder-motion.html": "c69dfb2a7f84f1c636866b9b1a2b01b3d27f5bf0d8f8712047489ccc9d46f8ae",
+    "web/trigger-concept.mjs": "01d114af5daf0c0d88c502cb758174db1ffd9f336ad2e14f9950899c8235770b",
+    "web/trigger-concept-kinematics.mjs": "433a222fd2055566348ccbaa93088e9f254face565cb7d0b0dec95993c84fd88"
+  },
+  "final_pose": {
+    "u": 20,
+    "angle": 0.3398369094541219,
+    "angleDeg": 19.47122063449069,
+    "input": [
+      -12,
+      -33.94112549695428,
+      40
+    ],
+    "output": [
+      20,
+      56.568542494923804,
+      40
+    ],
+    "cableInput": [
+      20,
+      69,
+      50
+    ],
+    "rearward": 12,
+    "squeeze": 12,
+    "slotSideTravel": 3.4314575050761986,
+    "inputFreeLength": 40,
+    "feederFreeLength": 40,
+    "feederCarriage": [
+      139.14213562373095,
+      -25.85786437626905,
+      0
+    ]
+  },
+  "hand_rest": {
+    "root": [
+      -44,
+      -14,
+      50
+    ],
+    "pip": [
+      -5.57496716581887,
+      -11.23084043256233,
+      43.92969465494769
+    ],
+    "dip": [
+      19.3,
+      -20.967036220358942,
+      40
+    ],
+    "tip": [
+      9.4,
+      -36,
+      40
+    ],
+    "lengths": [
+      39,
+      27,
+      18
+    ],
+    "reachable": true,
+    "contactSide": "front +X; curls rearward toward palm"
+  },
+  "hand_pulled": {
+    "root": [
+      -44,
+      -14,
+      50
+    ],
+    "pip": [
+      -8.339514954407504,
+      0.14140977547952005,
+      42.97502057831868
+    ],
+    "dip": [
+      6.762404990871396,
+      -22.041495050646553,
+      40
+    ],
+    "tip": [
+      -3.1375950091286047,
+      -37.07445883028761,
+      40
+    ],
+    "lengths": [
+      39,
+      27,
+      18
+    ],
+    "reachable": true,
+    "contactSide": "front +X; curls rearward toward palm"
+  },
+  "physical_or_CAD_validation": false,
+  "scope": "Animation only. No fit, force or manufacturing validation."
+}

@@ -1,0 +1,159 @@
+{
+  "status": "contract-pass-with-stl-topology-pass",
+  "scope": "declared interface dimensions, exported STL topology, and print envelope only",
+  "assumptions": [
+    "fan_outlet_id_assumed=35.0 mm must be replaced by a measured value",
+    "tee_bore_id=50.0 mm is nominal and tee_fit_radial_clearance=0.40 mm is a PETG first-print starting point",
+    "L-slot axial/circumferential datum is represented by button_z=-7.0 mm and requires physical orientation confirmation"
+  ],
+  "stl_verification": {
+    "tool": "OpenSCAD 2026.04.26 CGAL export plus independent edge-topology inspection",
+    "connector": {
+      "stl": "output/fan-tee-direct/fan-tee-direct-connector.stl",
+      "format": "ascii",
+      "facets": 8420,
+      "bbox_mm": [
+        50.0,
+        50.0,
+        98.5
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_facets": 0,
+      "connected_components": 1,
+      "manifold": true,
+      "watertight": true
+    },
+    "core34": {
+      "stl": "output/fan-tee-direct/fan-tee-direct-core34.stl",
+      "format": "ascii",
+      "facets": 5974,
+      "bbox_mm": [
+        41.8,
+        41.8,
+        45.0
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_facets": 0,
+      "connected_components": 1,
+      "manifold": true,
+      "watertight": true
+    },
+    "core36": {
+      "stl": "output/fan-tee-direct/fan-tee-direct-core36.stl",
+      "format": "ascii",
+      "facets": 5974,
+      "bbox_mm": [
+        41.8,
+        41.8,
+        45.0
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_facets": 0,
+      "connected_components": 1,
+      "manifold": true,
+      "watertight": true
+    },
+    "core38": {
+      "stl": "output/fan-tee-direct/fan-tee-direct-core38.stl",
+      "format": "ascii",
+      "facets": 5396,
+      "bbox_mm": [
+        41.8,
+        41.8,
+        45.0
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_facets": 0,
+      "connected_components": 1,
+      "manifold": true,
+      "watertight": true
+    }
+  },
+  "checks": {
+    "fan_socket": {
+      "fan_outlet_od_mm": 41.0,
+      "socket_id_mm": 41.9,
+      "radial_clearance_mm": 0.45,
+      "button_d_mm": 6.0,
+      "axial_slot_clearance_mm": 1.0,
+      "turn_slot_clearance_mm": 0.5,
+      "turn_angle_deg": 55.898,
+      "opposed_buttons": 2,
+      "axial_back_length_mm": 18.5,
+      "turn_start_back_mm": 7.0
+    },
+    "tee_spigot": {
+      "tee_nominal_bore_id_mm": 50.0,
+      "printed_spigot_od_mm": 49.2,
+      "printed_spigot_id_mm": 43.2,
+      "radial_fit_clearance_mm": 0.4,
+      "wall_mm": 3.0,
+      "insertion_l_mm": 25.0,
+      "z_range_mm": [
+        55.0,
+        80.0
+      ]
+    },
+    "replaceable_core": {
+      "core_od_mm": 40.0,
+      "inlet_straight_id_mm": 38.0,
+      "available_exit_ids_mm": [
+        34.0,
+        36.0,
+        38.0
+      ],
+      "core_walls_mm": {
+        "34.0": 3.0,
+        "36.0": 2.0,
+        "38.0": 1.0
+      },
+      "lead_bore_id_mm": 42.4,
+      "lead_bore_z_range_mm": [
+        48.0,
+        50.0
+      ],
+      "guide_and_thread_bore_id_mm": 40.6,
+      "thread_pitch_mm": 4.0,
+      "thread_engagement_l_mm": 16.0,
+      "thread_start_after_lead_mm": 4.0,
+      "thread_major_od_mm": 41.8,
+      "body_groove_id_mm": 42.8,
+      "thread_radial_clearance_mm": 0.5,
+      "nominal_core_z_range_mm": [
+        48.0,
+        93.0
+      ],
+      "nominal_extension_past_tee_mm": 13.0,
+      "adjustment_range_mm": 8.0
+    },
+    "print_envelope": {
+      "connector_bbox_mm": [
+        50.0,
+        50.0,
+        98.5
+      ],
+      "core_bbox_mm": [
+        41.8,
+        41.8,
+        45.0
+      ],
+      "x1c_bed_mm": [
+        256.0,
+        256.0
+      ],
+      "x1c_z_margin_mm": 157.5
+    }
+  },
+  "not_verified": [
+    "fan outlet measured inner diameter",
+    "exact fan L-groove axial datum, handedness, and two-side angular datum",
+    "actual Y-tee insertion stop and bore cylindricity",
+    "printed button engagement, bayonet torque, pull-out, and repeated service life",
+    "printed thread fit and actual core adjustment travel",
+    "fan flow, pressure, noise, ball capture, and physical fit"
+  ]
+}

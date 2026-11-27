@@ -1,0 +1,61 @@
+{
+  "status": "ISOLATED_0_1MM_CANDIDATE_RESOLVES_TWO_0_2MM_DATUM_SHIFTS",
+  "reviews": [
+    {
+      "folder": "output/print-review/current-cable/20260927T080057477531Z/cable-input-body",
+      "report": "output/print-review/current-cable/20260927T080057477531Z/cable-input-body/body-seat-layer-review/report.json",
+      "report_sha256": "59c37870d700d7925f8ebf2d1dac2f34e335812cfdab45fbc34b8b811ae231dc",
+      "status": "LAYER_QUANTIZATION_DATUM_SHIFT",
+      "findings": {
+        "axis_sleeve_nominal_floor_print_mm": 6.5,
+        "axis_sleeve_emitted_floor_print_mm": 6.6,
+        "axis_floor_error_mm": 0.1,
+        "axis_nominal_floor_local_z_mm": -5.5,
+        "axis_first_expanded_layer_top_mm": 6.8,
+        "axis_first_expanded_clear_diameter_lower_mm": 8.269267773534299,
+        "axis_preceding_layer_top_mm": 6.6,
+        "axis_preceding_clear_diameter_lower_mm": 4.475026179027223,
+        "stop_nut_nominal_roof_print_mm": 16.9,
+        "stop_nut_emitted_roof_underside_print_mm": 17.0,
+        "stop_nut_roof_error_mm": 0.1,
+        "stop_nut_declared_bead_bottom_range_mm": [
+          16.999999,
+          16.999999
+        ],
+        "stop_nut_first_roof_layer_top_mm": 17.2,
+        "stop_nut_preceding_clear_witness_mm2": 8.0
+      },
+      "script_sha256": "369ca116f162b3c890a72c89537259de05e6fd5ed8274e5ce91f5fabdbe4d4c4"
+    },
+    {
+      "folder": "output/print-review/current-cable/20260927T080622796004Z/cable-input-body",
+      "report": "output/print-review/current-cable/20260927T080622796004Z/cable-input-body/body-seat-layer-review/report.json",
+      "report_sha256": "8b6000ecadf3ded4e672ccf75ef2ad64a9a1dc67e000002e1990955a91c2a639",
+      "status": "NOMINAL_DATUM_LEVELS_MATCH_EMITTED_SLABS",
+      "findings": {
+        "axis_sleeve_nominal_floor_print_mm": 6.5,
+        "axis_sleeve_emitted_floor_print_mm": 6.5,
+        "axis_floor_error_mm": 0.0,
+        "axis_nominal_floor_local_z_mm": -5.5,
+        "axis_first_expanded_layer_top_mm": 6.6,
+        "axis_first_expanded_clear_diameter_lower_mm": 8.275978186098326,
+        "axis_preceding_layer_top_mm": 6.5,
+        "axis_preceding_clear_diameter_lower_mm": 4.473984277524366,
+        "stop_nut_nominal_roof_print_mm": 16.9,
+        "stop_nut_emitted_roof_underside_print_mm": 16.9,
+        "stop_nut_roof_error_mm": 0.0,
+        "stop_nut_declared_bead_bottom_range_mm": [
+          16.9,
+          16.9
+        ],
+        "stop_nut_first_roof_layer_top_mm": 17.0,
+        "stop_nut_preceding_clear_witness_mm2": 8.0
+      },
+      "script_sha256": "369ca116f162b3c890a72c89537259de05e6fd5ed8274e5ce91f5fabdbe4d4c4"
+    }
+  ],
+  "source_cad_adopted": false,
+  "physical_acceptance": false,
+  "manufacturing_release": false,
+  "script_sha256": "369ca116f162b3c890a72c89537259de05e6fd5ed8274e5ce91f5fabdbe4d4c4"
+}

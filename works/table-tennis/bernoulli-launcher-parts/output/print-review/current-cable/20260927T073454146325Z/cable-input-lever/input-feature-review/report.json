@@ -1,0 +1,1434 @@
+{
+  "status": "CRITICAL_VOID_SUPPORT_FREE_BRIDGING_REVIEW_REQUIRED",
+  "part": "cable-input-lever",
+  "selector": "ci_lever",
+  "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T073454146325Z/cable-input-lever",
+  "mapping": {
+    "cad_to_oriented": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -87.36736807068556
+      ],
+      [
+        0.0,
+        6.123233995736766e-17,
+        -1.0,
+        20.000176377455034
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        85.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        5.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        0.308507915,
+        -0.951221776,
+        0.0,
+        135.06369
+      ],
+      [
+        0.951221776,
+        0.308507915,
+        0.0,
+        122.38833
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_offset": [
+      0.0,
+      0.0,
+      5.5
+    ],
+    "extruder_offset": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "cad_to_command": [
+      [
+        0.308507915,
+        -5.824553516288303e-17,
+        0.951221776,
+        89.08556214339922
+      ],
+      [
+        0.951221776,
+        1.8890661530818688e-17,
+        -0.308507915,
+        43.45279969319769
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        85.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "local_to_command": [
+      [
+        0.45446732947568813,
+        0.8907634069681343,
+        -5.824553516288303e-17,
+        116.97976464839923
+      ],
+      [
+        -0.8907634069681342,
+        0.45446732947568813,
+        1.8890661530818688e-17,
+        113.25189331819769
+      ],
+      [
+        4.329780281177467e-17,
+        4.329780281177467e-17,
+        1.0,
+        3.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "command_to_local": [
+      [
+        0.45446732913291005,
+        -0.8907634062962835,
+        4.329780281177467e-17,
+        47.71716105926668
+      ],
+      [
+        0.8907634062962834,
+        0.45446732913291,
+        4.329780281177466e-17,
+        -155.6705791015122
+      ],
+      [
+        -5.824553511895183e-17,
+        1.8890661516570578e-17,
+        1.0,
+        -3.499999999999995
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "pre_orientation_bounds_error_mm": 1.0011346915916874e-06,
+    "project_source_bounds_error_mm": 3.974609086299097e-08,
+    "input_stl_sha256": "8776933cf22f0381a7ac4f481cdee09161cf71d37b77594876e3032430fec247",
+    "oriented_stl_sha256": "b49772c5d55b8a73413f613a450626f9bf76554ba96e5e2f2d91bae3952d44bf",
+    "gcode_sha256": "463a191f2b9826ecc88acab7910a2eb40801076027b0e787155970efe6635682",
+    "project_sha256": "3fe2f90a8baf7f6d021b2a5d26ae773d3191903c8e4b0ba99e127e0f1bc99c61"
+  },
+  "source_sha256_at_start": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "2b5d9f8e1513858f353211fc2dcd4eb9f6959bcffb249caf7a4c42bb1850ceb8",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443"
+  },
+  "roi_source_sha256": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+  "review_script_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+  "feature_path_counts": {
+    "Brim": 2077,
+    "Outer wall": 2051,
+    "Inner wall": 6215,
+    "Gap infill": 2162,
+    "Bottom surface": 576,
+    "Internal solid infill": 5073,
+    "Sparse infill": 9544,
+    "Floating vertical shell": 309,
+    "Bridge": 796,
+    "Top surface": 630,
+    "Overhang wall": 14
+  },
+  "critical_roi_results": [
+    {
+      "roi": {
+        "name": "R60_face_open_core_groove",
+        "kind": "sector",
+        "r": [
+          58.9,
+          61.1
+        ],
+        "angles": [
+          44,
+          116
+        ],
+        "zrange": [
+          0.9,
+          7.5
+        ],
+        "roof": null,
+        "access": "Open +local Z before fixed cover assembly."
+      },
+      "support_path_hits": 0,
+      "support_paths": [],
+      "support_centerline_hits_in_projected_void": 0,
+      "bead_projection_hit_counts": {
+        "Model": 232,
+        "Overhang": 3
+      },
+      "layer_hit_counts": [
+        {
+          "local_z_top": 1.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.3,
+          "Support": 0,
+          "Model": 8,
+          "Bridge": 0,
+          "Overhang": 3
+        },
+        {
+          "local_z_top": 3.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.7,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.9,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.1,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.3,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.5,
+          "Support": 0,
+          "Model": 7,
+          "Bridge": 0,
+          "Overhang": 0
+        }
+      ],
+      "roof_model_path_review": [],
+      "support_absence_in_reviewed_void": true,
+      "cleanup_access_assessed_from_actual_support": false,
+      "interpretation": "Conservative projected bead/slab intersections; model edge hits alone are not a CAD collision or blockage claim."
+    },
+    {
+      "roi": {
+        "name": "ball_terminal_pocket",
+        "kind": "ball_entry",
+        "center": [
+          42.426406871192846,
+          42.426406871192846,
+          2
+        ],
+        "radius": 2.8,
+        "zrange": [
+          -0.8,
+          7.5
+        ],
+        "roof": null,
+        "access": "Open +local Z via Ø5.6 entry, lower hemisphere floor."
+      },
+      "support_path_hits": 0,
+      "support_paths": [],
+      "support_centerline_hits_in_projected_void": 0,
+      "bead_projection_hit_counts": {
+        "Model": 144
+      },
+      "layer_hit_counts": [
+        {
+          "local_z_top": -0.7,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": -0.5,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": -0.3,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": -0.1,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 0.1,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 0.3,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 0.5,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 0.7,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 0.9,
+          "Support": 0,
+          "Model": 5,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 4.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 5.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 6.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 7.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        }
+      ],
+      "roof_model_path_review": [],
+      "support_absence_in_reviewed_void": true,
+      "cleanup_access_assessed_from_actual_support": false,
+      "interpretation": "Conservative projected bead/slab intersections; model edge hits alone are not a CAD collision or blockage claim."
+    },
+    {
+      "roi": {
+        "name": "tangent_2p2mm_window",
+        "kind": "sector",
+        "r": [
+          60.8,
+          64
+        ],
+        "angles": [
+          89,
+          115
+        ],
+        "zrange": [
+          0.9,
+          3.1
+        ],
+        "roof": 3.1,
+        "access": "Radially outward, nominal2.2 mm height. PETG removal force not certified."
+      },
+      "support_path_hits": 0,
+      "support_paths": [],
+      "support_centerline_hits_in_projected_void": 0,
+      "bead_projection_hit_counts": {
+        "Model": 33
+      },
+      "layer_hit_counts": [
+        {
+          "local_z_top": 1.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 1.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.3,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.5,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.7,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 2.9,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        },
+        {
+          "local_z_top": 3.1,
+          "Support": 0,
+          "Model": 3,
+          "Bridge": 0,
+          "Overhang": 0
+        }
+      ],
+      "roof_model_path_review": [
+        {
+          "local_z_top": 3.1,
+          "nominal_roof_z": 3.1,
+          "previous_emitted_layer_z": 2.9,
+          "model_paths_with_geometric_underlay_gaps": [],
+          "max_geometric_centerline_gap_touching_roi_mm": 0,
+          "max_continuous_no_bead_overlap_path_touching_roi_mm": 0,
+          "interpretation": "Curved path length relative to previous actual model-bead footprints only; not a free span. Centerline underlay and any sideways bead overlap are separate. Support is not counted as a model anchor."
+        },
+        {
+          "local_z_top": 3.3,
+          "nominal_roof_z": 3.1,
+          "previous_emitted_layer_z": 3.1,
+          "model_paths_with_geometric_underlay_gaps": [
+            {
+              "stroke": 1489,
+              "feature": "Overhang wall",
+              "gcode_lines": [
+                33182,
+                33183,
+                33184,
+                33185
+              ],
+              "continuous_path_length_mm": 55.213770206393,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 55.213770206393,
+                  "bounds_xy": [
+                    -25.69869880890878,
+                    56.71029055005877,
+                    0.8991412106933439,
+                    62.99031453354186
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 55.213770206393
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": [
+                {
+                  "length_mm": 55.16380871021997,
+                  "bounds_xy": [
+                    -25.69869880890878,
+                    56.71029055005877,
+                    0.8743084343815594,
+                    62.99031453354186
+                  ],
+                  "both_ends_touch_previous_model_footprint": true,
+                  "length_within_source_roi_projection_mm": 55.16380871021997
+                }
+              ]
+            },
+            {
+              "stroke": 1490,
+              "feature": "Inner wall",
+              "gcode_lines": [
+                33191,
+                33194,
+                33196,
+                33197,
+                33200,
+                33201,
+                33202,
+                33204,
+                33207
+              ],
+              "continuous_path_length_mm": 44.670959016587425,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.1998844765750361,
+                  "bounds_xy": [
+                    0.8838740105008469,
+                    62.090154209296124,
+                    1.083731858834629,
+                    62.09341679033989
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.1998844765750361
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1490,
+              "feature": "Inner wall",
+              "gcode_lines": [
+                33191,
+                33194,
+                33196,
+                33197,
+                33200,
+                33201,
+                33202,
+                33204,
+                33207
+              ],
+              "continuous_path_length_mm": 45.32970830357482,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.1402366302398363,
+                  "bounds_xy": [
+                    0.959058585190796,
+                    62.97586064460589,
+                    1.099230915264379,
+                    62.98010685971667
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.1402366302398363
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1491,
+              "feature": "Overhang wall",
+              "gcode_lines": [
+                33215,
+                33229,
+                33230,
+                33231,
+                33232
+              ],
+              "continuous_path_length_mm": 56.85132815103185,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 56.85132815103185,
+                  "bounds_xy": [
+                    -26.242664138064505,
+                    56.166707003224275,
+                    0.9060296034289621,
+                    63.39675543630523
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 56.85132815103185
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": [
+                {
+                  "length_mm": 56.801827616304394,
+                  "bounds_xy": [
+                    -26.242664138064505,
+                    56.166707003224275,
+                    0.8814345852033821,
+                    63.39675543630523
+                  ],
+                  "both_ends_touch_previous_model_footprint": true,
+                  "length_within_source_roi_projection_mm": 56.801827616304394
+                }
+              ]
+            },
+            {
+              "stroke": 1492,
+              "feature": "Inner wall",
+              "gcode_lines": [
+                33238,
+                33241,
+                33243,
+                33244,
+                33248,
+                33249,
+                33250,
+                33252,
+                33255
+              ],
+              "continuous_path_length_mm": 44.591566399558275,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.20010448719780802,
+                  "bounds_xy": [
+                    0.8765493216880529,
+                    61.683426772349584,
+                    1.0766144988997228,
+                    61.68739296245607
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.20010448719780802
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1492,
+              "feature": "Inner wall",
+              "gcode_lines": [
+                33238,
+                33241,
+                33243,
+                33244,
+                33248,
+                33249,
+                33250,
+                33252,
+                33255
+              ],
+              "continuous_path_length_mm": 45.62026971829166,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.139575911019522,
+                  "bounds_xy": [
+                    0.9668377413327036,
+                    63.38298033842563,
+                    1.1063551393375262,
+                    63.387021451006774
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.13957480892810772
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1493,
+              "feature": "Outer wall",
+              "gcode_lines": [
+                33293,
+                33294,
+                33295,
+                33297,
+                33300
+              ],
+              "continuous_path_length_mm": 53.893831585786565,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.20052981276866788,
+                  "bounds_xy": [
+                    0.912790797400767,
+                    63.77457648270692,
+                    1.1132308900347845,
+                    63.78057440517253
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.2004882991090305
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1494,
+              "feature": "Overhang wall",
+              "gcode_lines": [
+                33306,
+                33307,
+                33308,
+                33309,
+                33310
+              ],
+              "continuous_path_length_mm": 58.42653182347177,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 58.42653182347177,
+                  "bounds_xy": [
+                    -26.767014501029713,
+                    55.64588335138029,
+                    0.912790797400767,
+                    63.789318009375364
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 58.42653182347177
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": [
+                {
+                  "length_mm": 58.37752932281099,
+                  "bounds_xy": [
+                    -26.767014501029713,
+                    55.64588335138029,
+                    0.8883515574381309,
+                    63.789318009375364
+                  ],
+                  "both_ends_touch_previous_model_footprint": true,
+                  "length_within_source_roi_projection_mm": 58.37752932281099
+                }
+              ]
+            },
+            {
+              "stroke": 1495,
+              "feature": "Outer wall",
+              "gcode_lines": [
+                33316,
+                33319,
+                33321,
+                33322,
+                33325,
+                33326
+              ],
+              "continuous_path_length_mm": 44.53631062323106,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 0.20044928462360875,
+                  "bounds_xy": [
+                    0.869333660387106,
+                    61.29121499627156,
+                    1.0697511498175634,
+                    61.2947850994226
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 0.20044928462360875
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": []
+            },
+            {
+              "stroke": 1499,
+              "feature": "Gap infill",
+              "gcode_lines": [
+                33397
+              ],
+              "continuous_path_length_mm": 71.71955257823957,
+              "centerline_without_previous_model_footprint": [
+                {
+                  "length_mm": 27.16721191214632,
+                  "bounds_xy": [
+                    -25.328704354670684,
+                    57.18612100616912,
+                    1.091363808680682,
+                    62.5371275903309
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 27.16721191214632
+                }
+              ],
+              "path_without_any_declared_bead_overlap_with_previous_model": [
+                {
+                  "length_mm": 26.908525894242615,
+                  "bounds_xy": [
+                    -25.328704354670684,
+                    57.18612100616912,
+                    0.8327193014822534,
+                    62.5371275903309
+                  ],
+                  "both_ends_touch_previous_model_footprint": false,
+                  "length_within_source_roi_projection_mm": 26.908525894242615
+                }
+              ]
+            }
+          ],
+          "max_geometric_centerline_gap_touching_roi_mm": 58.42653182347177,
+          "max_continuous_no_bead_overlap_path_touching_roi_mm": 58.37752932281099,
+          "interpretation": "Curved path length relative to previous actual model-bead footprints only; not a free span. Centerline underlay and any sideways bead overlap are separate. Support is not counted as a model anchor."
+        },
+        {
+          "local_z_top": 3.5,
+          "nominal_roof_z": 3.1,
+          "previous_emitted_layer_z": 3.3,
+          "model_paths_with_geometric_underlay_gaps": [],
+          "max_geometric_centerline_gap_touching_roi_mm": 0,
+          "max_continuous_no_bead_overlap_path_touching_roi_mm": 0,
+          "interpretation": "Curved path length relative to previous actual model-bead footprints only; not a free span. Centerline underlay and any sideways bead overlap are separate. Support is not counted as a model anchor."
+        }
+      ],
+      "support_absence_in_reviewed_void": true,
+      "cleanup_access_assessed_from_actual_support": false,
+      "interpretation": "Conservative projected bead/slab intersections; model edge hits alone are not a CAD collision or blockage claim."
+    }
+  ],
+  "images": [
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T073454146325Z/cable-input-lever/input-feature-review/critical-paths.png",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T073454146325Z/cable-input-lever/input-feature-review/roof-paths.png",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T073454146325Z/cable-input-lever/input-feature-review/downward-faces.png"
+  ],
+  "whole_STL_downward_planar_face_review": [
+    {
+      "name": "downface_z3.1_0",
+      "source_z": 3.1,
+      "area_mm2": 82.30396398499649,
+      "bounds_local_xy": [
+        -27.047568753361716,
+        55.36697184346107,
+        1.1168590492810395,
+        63.99578096717596
+      ],
+      "actual_first_model_layer": 3.3,
+      "previous_model_layer": 3.1,
+      "source_face_area_not_over_previous_model_footprint_mm2": 82.30386982165422,
+      "first_model_bead_area_over_face_mm2": 82.28889654495012,
+      "support_paths_within_0p61_below_face": 0,
+      "support_projection_area_over_face_mm2": 0.0,
+      "nearest_support_top_local_z": null,
+      "first_model_paths_without_previous_model_bead_overlap": [
+        {
+          "line": 33182,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.15095629263734647
+          ]
+        },
+        {
+          "line": 33183,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            27.19542372283505
+          ]
+        },
+        {
+          "line": 33184,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.8705699279370865
+          ]
+        },
+        {
+          "line": 33185,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            26.946858766810497
+          ]
+        },
+        {
+          "line": 33215,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.15386255992398457
+          ]
+        },
+        {
+          "line": 33229,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            27.78417743372557
+          ]
+        },
+        {
+          "line": 33230,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            1.6949174014781012
+          ]
+        },
+        {
+          "line": 33231,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.47527781331515956
+          ]
+        },
+        {
+          "line": 33232,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            26.693592407861562
+          ]
+        },
+        {
+          "line": 33306,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.1558214382555338
+          ]
+        },
+        {
+          "line": 33307,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            28.353293399625215
+          ]
+        },
+        {
+          "line": 33308,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            2.4858481440625435
+          ]
+        },
+        {
+          "line": 33309,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            0.8599563939190411
+          ]
+        },
+        {
+          "line": 33310,
+          "feature": "Overhang wall",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            26.52260994694867
+          ]
+        },
+        {
+          "line": 33397,
+          "feature": "Gap infill",
+          "no_previous_layer_bead_overlap_path_pieces_mm": [
+            26.908525894242615
+          ]
+        }
+      ],
+      "interpretation": "Whole-STL horizontal underside candidate, not an attribution of the slicer warning. Nearby support is projected through up to0.61 mm and may have a deliberate separation gap."
+    }
+  ],
+  "identity_checks": {
+    "preorientation_stl_bounds_match": true,
+    "project_source_offset_bounds_match": true,
+    "current_source_hashes_match": true
+  },
+  "numerical_contract": {
+    "arc_chord_sagitta_max_mm": 0.00125,
+    "bead_projection_extra_mm": 0.002,
+    "width_source": "emitted LINE_WIDTH",
+    "height_source": "emitted LAYER_HEIGHT",
+    "support_projection": "whole actual local-Z bead slab against union of source void cross sections over that slab"
+  },
+  "limits": [
+    "This is an offline path inspection, not a sliced-part manufacturing release.",
+    "A raw Bridge command length is not an unsupported span. Geometric underlay gaps are explicitly computed against the previous actual model layer.",
+    "A footprint touching both ends does not certify anchorage length, adhesion, sag or PETG bridge strength.",
+    "Curved-void slab projection over-covers a bead/void overlap and can flag wall-adjacent support conservatively.",
+    "The long stop-bore interior ROI is a named internal window; it does not prove the complete external entry free.",
+    "Support adhesion, fragment extraction, tool approach, residual debris, shrinkage and actual hole fit remain open.",
+    "No print, coupon, source modification, scaling or G-code upload is performed."
+  ],
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "manufacturing_release": false
+}

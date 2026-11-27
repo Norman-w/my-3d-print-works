@@ -1,0 +1,1135 @@
+{
+  "method": "Actual positive-E support samples <=.1mm spacing; expanded by declared bead half-width + .052 mm in print XY and full emitted layer height, inverse 3MF transform. Region hits are conservative flags, not measured contact. Frame slot interiors recovered from current STL plane Y8.",
+  "families": [
+    {
+      "family": "positive-half",
+      "count": 1,
+      "support_sample_count": 4251217,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "negative-half",
+      "count": 1,
+      "support_sample_count": 4352707,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "beam-grip",
+      "count": 1,
+      "support_sample_count": 2352090,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "liner",
+      "count": 1,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "right-support",
+      "count": 1,
+      "support_sample_count": 822146,
+      "findings": [
+        {
+          "source_file": "right-support.stl",
+          "region": "carrier_open_channel_Z0",
+          "box_min": [
+            43.9,
+            -4.4,
+            -3.9
+          ],
+          "box_max": [
+            57.7,
+            4.4,
+            3.9
+          ],
+          "support_envelope_sample_hits": 6238,
+          "classification": "internal_functional_channel",
+          "hit_centers_bounds": [
+            [
+              43.900000500000004,
+              -4.661859915401095,
+              -2.1011249398142535
+            ],
+            [
+              57.699999500000004,
+              1.116733618549432,
+              3.3321211111111113
+            ]
+          ]
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "Y_datum_band_Z0_(-4.1, -2.5)",
+          "box_min": [
+            44.4,
+            4.48,
+            -4.1
+          ],
+          "box_max": [
+            57.2,
+            4.52,
+            -2.5
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "Y_datum_band_Z0_(2.5, 4.1)",
+          "box_min": [
+            44.4,
+            4.48,
+            2.5
+          ],
+          "box_max": [
+            57.2,
+            4.52,
+            4.1
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "carrier_open_channel_Z-28.5",
+          "box_min": [
+            43.9,
+            -4.4,
+            -32.4
+          ],
+          "box_max": [
+            57.7,
+            4.4,
+            -24.6
+          ],
+          "support_envelope_sample_hits": 5815,
+          "classification": "internal_functional_channel",
+          "hit_centers_bounds": [
+            [
+              43.9000005,
+              -4.6619723271411715,
+              -31.18538245172779
+            ],
+            [
+              57.6999995,
+              0.9220534531250166,
+              -25.233656666666672
+            ]
+          ]
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "Y_datum_band_Z-28.5_(-4.1, -2.5)",
+          "box_min": [
+            44.4,
+            4.48,
+            -32.6
+          ],
+          "box_max": [
+            57.2,
+            4.52,
+            -31.0
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "Y_datum_band_Z-28.5_(2.5, 4.1)",
+          "box_min": [
+            44.4,
+            4.48,
+            -26.0
+          ],
+          "box_max": [
+            57.2,
+            4.52,
+            -24.4
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "right-support.stl",
+          "region": "X_master_datum",
+          "box_min": [
+            53.98,
+            21.05,
+            -34.9
+          ],
+          "box_max": [
+            54.02,
+            23.95,
+            4.9
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        }
+      ],
+      "removal_tool_corridors": [
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z0_X47",
+          "min": [
+            46,
+            -25,
+            -1
+          ],
+          "max": [
+            48,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1495,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z0_X51",
+          "min": [
+            50,
+            -25,
+            -1
+          ],
+          "max": [
+            52,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1216,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z0_X55",
+          "min": [
+            54,
+            -25,
+            -1
+          ],
+          "max": [
+            56,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1300,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X47",
+          "min": [
+            46.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            48.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1283,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X51",
+          "min": [
+            50.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            52.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1178,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "right-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X55",
+          "min": [
+            54.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            56.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1042,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        }
+      ],
+      "exact_face_checks": [
+        {
+          "plane": "X54 master datum actual STL face",
+          "support_footprint_hit_patches": [],
+          "solid_face_positive_control_area_mm2": 1.0,
+          "reason": "3 coarse AABB corner flags require this circular-footprint intersection, not automatic dismissal."
+        }
+      ]
+    },
+    {
+      "family": "left-support",
+      "count": 1,
+      "support_sample_count": 950815,
+      "findings": [
+        {
+          "source_file": "left-support.stl",
+          "region": "carrier_open_channel_Z0",
+          "box_min": [
+            -57.7,
+            -4.4,
+            -3.9
+          ],
+          "box_max": [
+            -43.9,
+            4.4,
+            3.9
+          ],
+          "support_envelope_sample_hits": 7394,
+          "classification": "internal_functional_channel",
+          "hit_centers_bounds": [
+            [
+              -57.699999500000004,
+              -4.661968182467575,
+              -3.248893787600859
+            ],
+            [
+              -43.9000005,
+              1.6266363565986808,
+              2.270989999999988
+            ]
+          ]
+        },
+        {
+          "source_file": "left-support.stl",
+          "region": "Y_datum_band_Z0_(-4.1, -2.5)",
+          "box_min": [
+            -57.2,
+            4.48,
+            -4.1
+          ],
+          "box_max": [
+            -44.4,
+            4.52,
+            -2.5
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "left-support.stl",
+          "region": "Y_datum_band_Z0_(2.5, 4.1)",
+          "box_min": [
+            -57.2,
+            4.48,
+            2.5
+          ],
+          "box_max": [
+            -44.4,
+            4.52,
+            4.1
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "left-support.stl",
+          "region": "carrier_open_channel_Z-28.5",
+          "box_min": [
+            -57.7,
+            -4.4,
+            -32.4
+          ],
+          "box_max": [
+            -43.9,
+            4.4,
+            -24.6
+          ],
+          "support_envelope_sample_hits": 6118,
+          "classification": "internal_functional_channel",
+          "hit_centers_bounds": [
+            [
+              -57.6999995,
+              -4.66159459529419,
+              -31.745878674389484
+            ],
+            [
+              -43.90000049999999,
+              1.1697135891741794,
+              -25.464010000000012
+            ]
+          ]
+        },
+        {
+          "source_file": "left-support.stl",
+          "region": "Y_datum_band_Z-28.5_(-4.1, -2.5)",
+          "box_min": [
+            -57.2,
+            4.48,
+            -32.6
+          ],
+          "box_max": [
+            -44.4,
+            4.52,
+            -31.0
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "left-support.stl",
+          "region": "Y_datum_band_Z-28.5_(2.5, 4.1)",
+          "box_min": [
+            -57.2,
+            4.48,
+            -26.0
+          ],
+          "box_max": [
+            -44.4,
+            4.52,
+            -24.4
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_datum_face",
+          "hit_centers_bounds": null
+        }
+      ],
+      "removal_tool_corridors": [
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z0_X-47",
+          "min": [
+            -48,
+            -25,
+            -1
+          ],
+          "max": [
+            -46,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1188,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z0_X-51",
+          "min": [
+            -52,
+            -25,
+            -1
+          ],
+          "max": [
+            -50,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1626,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z0_X-55",
+          "min": [
+            -56,
+            -25,
+            -1
+          ],
+          "max": [
+            -54,
+            3,
+            1
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1489,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X-47",
+          "min": [
+            -48.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            -46.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1145,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X-51",
+          "min": [
+            -52.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            -50.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 1026,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "left-support.stl",
+          "label": "open_minus_Y_channel_Z-28.5_X-55",
+          "min": [
+            -56.0,
+            -25.0,
+            -29.5
+          ],
+          "max": [
+            -54.0,
+            3.0,
+            -27.5
+          ],
+          "pick_section_XZ_mm": [
+            2.0,
+            2.0
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 621,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        }
+      ],
+      "exact_face_checks": []
+    },
+    {
+      "family": "x-gib",
+      "count": 1,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "x-cover",
+      "count": 1,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "frame",
+      "count": 1,
+      "support_sample_count": 1889552,
+      "findings": [
+        {
+          "region": "four_actual_STL_cam_slots_Y8_to13",
+          "actual_holes": 4,
+          "support_envelope_sample_hits": 0,
+          "classification": "internal_cam_slots"
+        }
+      ],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "fixed-spacer",
+      "count": 1,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "moving-spacer",
+      "count": 1,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "capture-1",
+      "count": 1,
+      "support_sample_count": 154907,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "capture--1",
+      "count": 1,
+      "support_sample_count": 158852,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "pipe-clamp-1",
+      "count": 1,
+      "support_sample_count": 26692,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "pipe-clamp--1",
+      "count": 1,
+      "support_sample_count": 39754,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "y-cap",
+      "count": 2,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "y-gib",
+      "count": 4,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "y-keeper",
+      "count": 4,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    },
+    {
+      "family": "finger",
+      "count": 4,
+      "support_sample_count": 50312,
+      "findings": [
+        {
+          "source_file": "finger-right-front.stl",
+          "region": "V_and_M2_entry_upper_region",
+          "box_min": [
+            18.507707595825195,
+            1.7,
+            -4.0
+          ],
+          "box_max": [
+            49.0,
+            4.5,
+            4.0
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_V_and_nut_entry",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "finger-right-front.stl",
+          "region": "rear_M3_nut_mouth",
+          "box_min": [
+            18.507707595825195,
+            -4.51,
+            -3.3
+          ],
+          "box_max": [
+            49.0,
+            -1.85,
+            3.3
+          ],
+          "support_envelope_sample_hits": 11816,
+          "classification": "open_rear_mouth_remove_before_nut",
+          "hit_centers_bounds": [
+            [
+              18.20638576127675,
+              -4.400000000000001,
+              -3.6010460465116134
+            ],
+            [
+              43.828714751586915,
+              -2.1999999999999997,
+              3.5985905494505337
+            ]
+          ]
+        },
+        {
+          "source_file": "finger-left-front.stl",
+          "region": "V_and_M2_entry_upper_region",
+          "box_min": [
+            -49.0,
+            1.7,
+            -4.0
+          ],
+          "box_max": [
+            -18.507707595825195,
+            4.5,
+            4.0
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_V_and_nut_entry",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "finger-left-front.stl",
+          "region": "rear_M3_nut_mouth",
+          "box_min": [
+            -49.0,
+            -4.51,
+            -3.3
+          ],
+          "box_max": [
+            -18.507707595825195,
+            -1.85,
+            3.3
+          ],
+          "support_envelope_sample_hits": 11666,
+          "classification": "open_rear_mouth_remove_before_nut",
+          "hit_centers_bounds": [
+            [
+              -43.82899475158692,
+              -4.400000000000001,
+              -3.5985658823529443
+            ],
+            [
+              -18.25149062312991,
+              -2.1999999999999997,
+              3.5985965217391245
+            ]
+          ]
+        },
+        {
+          "source_file": "finger-right-rear.stl",
+          "region": "V_and_M2_entry_upper_region",
+          "box_min": [
+            23.507707595825195,
+            1.7,
+            -32.5
+          ],
+          "box_max": [
+            54.0,
+            4.5,
+            -24.5
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_V_and_nut_entry",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "finger-right-rear.stl",
+          "region": "rear_M3_nut_mouth",
+          "box_min": [
+            23.507707595825195,
+            -4.51,
+            -31.8
+          ],
+          "box_max": [
+            54.0,
+            -1.85,
+            -25.2
+          ],
+          "support_envelope_sample_hits": 11756,
+          "classification": "open_rear_mouth_remove_before_nut",
+          "hit_centers_bounds": [
+            [
+              23.20921944135057,
+              -4.400000000000001,
+              -32.09746000000001
+            ],
+            [
+              48.828994751586904,
+              -2.1999999999999997,
+              -24.899949568949154
+            ]
+          ]
+        },
+        {
+          "source_file": "finger-left-rear.stl",
+          "region": "V_and_M2_entry_upper_region",
+          "box_min": [
+            -54.0,
+            1.7,
+            -32.5
+          ],
+          "box_max": [
+            -23.507707595825195,
+            4.5,
+            -24.5
+          ],
+          "support_envelope_sample_hits": 0,
+          "classification": "functional_V_and_nut_entry",
+          "hit_centers_bounds": null
+        },
+        {
+          "source_file": "finger-left-rear.stl",
+          "region": "rear_M3_nut_mouth",
+          "box_min": [
+            -54.0,
+            -4.51,
+            -31.8
+          ],
+          "box_max": [
+            -23.507707595825195,
+            -1.85,
+            -25.2
+          ],
+          "support_envelope_sample_hits": 11832,
+          "classification": "open_rear_mouth_remove_before_nut",
+          "hit_centers_bounds": [
+            [
+              -48.82885475158692,
+              -4.400000000000001,
+              -32.095996359739814
+            ],
+            [
+              -23.213854751586908,
+              -2.1999999999999997,
+              -24.905559038205496
+            ]
+          ]
+        }
+      ],
+      "removal_tool_corridors": [
+        {
+          "source_file": "finger-right-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset-1",
+          "min": [
+            40.25,
+            -10.0,
+            -1.75
+          ],
+          "max": [
+            41.75,
+            -2.2,
+            -0.25
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 185,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-right-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset0",
+          "min": [
+            40.25,
+            -10.0,
+            -0.75
+          ],
+          "max": [
+            41.75,
+            -2.2,
+            0.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 128,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-right-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset1",
+          "min": [
+            40.25,
+            -10.0,
+            0.25
+          ],
+          "max": [
+            41.75,
+            -2.2,
+            1.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 303,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset-1",
+          "min": [
+            -41.75,
+            -10.0,
+            -1.75
+          ],
+          "max": [
+            -40.25,
+            -2.2,
+            -0.25
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 201,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset0",
+          "min": [
+            -41.75,
+            -10.0,
+            -0.75
+          ],
+          "max": [
+            -40.25,
+            -2.2,
+            0.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 135,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-front.stl",
+          "label": "M3_open_rear_mouth_Zoffset1",
+          "min": [
+            -41.75,
+            -10.0,
+            0.25
+          ],
+          "max": [
+            -40.25,
+            -2.2,
+            1.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 308,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-right-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset-1",
+          "min": [
+            45.25,
+            -10.0,
+            -30.25
+          ],
+          "max": [
+            46.75,
+            -2.2,
+            -28.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 161,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-right-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset0",
+          "min": [
+            45.25,
+            -10.0,
+            -29.25
+          ],
+          "max": [
+            46.75,
+            -2.2,
+            -27.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 133,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-right-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset1",
+          "min": [
+            45.25,
+            -10.0,
+            -28.25
+          ],
+          "max": [
+            46.75,
+            -2.2,
+            -26.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 306,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset-1",
+          "min": [
+            -46.75,
+            -10.0,
+            -30.25
+          ],
+          "max": [
+            -45.25,
+            -2.2,
+            -28.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 185,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset0",
+          "min": [
+            -46.75,
+            -10.0,
+            -29.25
+          ],
+          "max": [
+            -45.25,
+            -2.2,
+            -27.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 224,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        },
+        {
+          "source_file": "finger-left-rear.stl",
+          "label": "M3_open_rear_mouth_Zoffset1",
+          "min": [
+            -46.75,
+            -10.0,
+            -28.25
+          ],
+          "max": [
+            -45.25,
+            -2.2,
+            -26.75
+          ],
+          "pick_section_XZ_mm": [
+            1.5,
+            1.5
+          ],
+          "actual_mesh_triangle_hits": 0,
+          "support_center_samples_reached": 127,
+          "scope": "Rectangular pick-tip access before hardware; section dimensions explicitly recorded; no force/debris test"
+        }
+      ],
+      "exact_face_checks": []
+    },
+    {
+      "family": "pin-block",
+      "count": 4,
+      "support_sample_count": 0,
+      "findings": [],
+      "removal_tool_corridors": [],
+      "exact_face_checks": []
+    }
+  ],
+  "physical_support_removal_tested": false
+}

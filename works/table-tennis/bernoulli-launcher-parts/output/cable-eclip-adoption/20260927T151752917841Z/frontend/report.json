@@ -1,0 +1,143 @@
+{
+  "status": "DISPLAY_AND_METADATA_BEHAVIOR_PASS_NOT_SYNCED_OR_PUBLISHED",
+  "created_at_utc": "2026-09-27T15:24:51.299064+00:00",
+  "source_sha256": {
+    "scripts/sync_cable_inventory.py": "85ca80fc5d8c082076e4c378e46cddb47ba75931f6066b6b3ec604d65ea7cabf",
+    "scripts/publish_cable_scene.py": "03a535b68c0380375365ab29746855491d495b3d54a7d7cddc7ad44998cd4144",
+    "web/feeder-motion.mjs": "eb8e85fc436ab2f7364d9533d8afee9565dd4908fd927d7c01d268eb18b4da09",
+    "web/scene-display.mjs": "707160644b7c9c0a31db6056f5413b09102c2d4398a7786f7998ab0c705fd1a4",
+    "web/cable-scene-kinematics.mjs": "83dd0fbf8278662aef1946435ba37f7484ef06ea6d4657340a569e65c2356539"
+  },
+  "sources_stable": true,
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/frontend/test-metadata.py"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/frontend/check-1.log",
+      "sha256": "93c8584e12f4196ce74080d766f61cc6fab9c9c70b056156d8e0f06df548fe65"
+    },
+    {
+      "command": [
+        "node",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-eclip-adoption/20260927T151752917841Z/frontend/test-display.mjs"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/frontend/check-2.log",
+      "sha256": "18a2060c7945543a86793e56bfd4459c7d7862342bec06e0ed2227bcd885db95"
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "web/feeder-motion.mjs"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/frontend/check-3.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "web/scene-display.mjs"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/frontend/check-4.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/sync_cable_inventory.py",
+        "scripts/publish_cable_scene.py"
+      ],
+      "returncode": 0,
+      "log": "output/cable-eclip-adoption/20260927T151752917841Z/frontend/check-5.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "metadata_result": {
+    "passed": true,
+    "counts": {
+      "printed": 56,
+      "purchased": 23,
+      "reference": 7
+    },
+    "idempotent": true,
+    "all_original_rows_preserved_except_CGAL": true,
+    "physical_hardware_groups_unchanged": true,
+    "production_inventory_unchanged": true
+  },
+  "display_result": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "86-row metadata fixture retains existing motion schema and reference remains fixed at both travel endpoints",
+        "passed": true
+      },
+      {
+        "name": "initial visibility is false only for the new optional space layer",
+        "passed": true
+      },
+      {
+        "name": "actual applyRecord keeps translucent envelope across surface modes and layer toggles",
+        "passed": true
+      },
+      {
+        "name": "actual rowColor selects declared orange instead of hardware/reference grey",
+        "passed": true
+      },
+      {
+        "name": "old physical shell and PC display behavior remains unchanged",
+        "passed": true
+      },
+      {
+        "name": "missing/malformed space display contract fails explicitly instead of showing a solid physical ring",
+        "passed": true
+      },
+      {
+        "name": "Actual catalogue checkbox starts unchecked and explicitly shows/hides the reference",
+        "passed": true
+      }
+    ],
+    "scope": "Metadata and actual rendering-handler behavior with mesh stubs; not a browser/GPU or geometry acceptance."
+  },
+  "inventory_sha256_unchanged": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+  "display_contract": {
+    "kind": "space-requirement",
+    "default_visible": false,
+    "color": "#f2a340",
+    "opacity": 0.22
+  },
+  "new_reference": "feeder/cable-input-eclip-space",
+  "selector": "input-eclip-space",
+  "counts": {
+    "printed": 56,
+    "purchased": 23,
+    "reference": 7,
+    "total": 86
+  },
+  "required_backends": {
+    "feeder/cable-input-body": "CGAL",
+    "feeder/cable-input-hardware-fixed": "CGAL",
+    "feeder/cable-input-eclip-space": "CGAL"
+  },
+  "scope": "Executed production metadata helper, publishing helper, and actual applyRecord/rowColor/catalogue handlers against a metadata-only fixture and mesh/DOM stubs. No native CAD export, inventory main(), LAN publication, or browser/GPU validation.",
+  "resolved_test_harness_issue": "Initial rowColor source extraction accidentally included adjacent store initialization; extractor now ends at the actual top-level function close. Production code did not cause this harness error.",
+  "unavailable_check": "Workspace is not a Git worktree, so git diff --check was unavailable; interface.diff is against root frozen pre-adoption tar.",
+  "preserved_source_archive_sha256": "e29344e11e1a039aae117a6899ace193d0bd38ef00adabf0d4dfcb81b213a945",
+  "published": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "test_sources": {
+    "output/cable-eclip-adoption/20260927T151752917841Z/frontend/test-metadata.py": "e5d1256007d6bfc82c6e2d0161b5a6a27cbaf532012548aace044d5c3efbc565",
+    "output/cable-eclip-adoption/20260927T151752917841Z/frontend/test-display.mjs": "666174d5d9c23a286b61411fcec2538c9a53c1b525158ab612700970f858a972",
+    "output/cable-eclip-adoption/20260927T151752917841Z/frontend/metadata-fixture.json": "27740fff3002d757f34f3e56153def62c594d3d143bb88f7fd2ee79aac618420",
+    "output/cable-eclip-adoption/20260927T151752917841Z/frontend/interface.diff": "cb8a038a9e82951d551ca59ab8c5a184020c8779a5aedca42c4569387e1e2618"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "CURRENT_CABLE_SCENE_PUBLISHED",
+  "snapshot_id": "20260927T071458613482Z",
+  "parts": 84,
+  "printed_instances": 55,
+  "backup": "output/preview-history/before-cable-20260927T071859849402Z",
+  "public": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/revision-review",
+  "report": "output/cable-scene-export/20260927T071458613482Z/report.json",
+  "published_manifest_sha256": "5867fef90d386299bb3d554011d0dd98b1e2284d8e62ed37bbe9af40eb956f00",
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

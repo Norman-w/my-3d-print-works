@@ -1,0 +1,21 @@
+{
+  "status": "PORTABLE_CORE_MATCHES_REFERENCE_UNRELEASED",
+  "exhaustive_reference_transition_count": 1984,
+  "cross_language_boolean_transition_count": 3584,
+  "invalid_state_fails_closed": true,
+  "mismatches": [],
+  "source_sha256": {
+    "firmware/point_shot_core.h": "5d41412cf61b90ff5797d4d512af8326301f5ff1c9de666502570f17adb851a3",
+    "firmware/point_shot_core.cpp": "04fc0a1fee1f665f265b4abf4f4a8026bf96c84f7cadd8e57132706abef13f09",
+    "firmware/point_shot_core_cli.cpp": "607b3c41c5bbfb4f4eda543025619fec7232584f6aedc19772f7ed892cdf5702",
+    "analysis/electric_point_shot_fsm.py": "f61bac994dd84a82c36b6113d14996f9491be88e26e9cf5fa8f1ee13437de989",
+    "scripts/check_point_shot_core.py": "b0efcc0b40b7bde95666d058f37c169fefb75dfac2d178904acc39d952567ed7"
+  },
+  "hardware_adapter_implemented": false,
+  "motor_driver_selected": false,
+  "real_sensor_inputs_verified": false,
+  "watchdog_time_measured": false,
+  "motor_stop_repeatability_measured": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,1683 @@
+{
+  "status": "SERVICE_FORK_NOMINAL_ASSEMBLY_PATH_ONLY",
+  "source_sha256": {
+    "cad/cable-housing-route.scad": "b5b335abe0b6fa4790c1331ad849c36827c2ef39711eaaf60e655ebd0d82cfaa",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-trigger-input.scad": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/electric-end-switch-side-cap.scad": "e4ba58a0b92ead0282edca90b732bb9b12facd0fcc834f8a8e929d1ea8a9b78e",
+    "cad/electric-feeder-assembly.scad": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d",
+    "cad/electric-feeder-trigger-assembly.scad": "43867d498a0924e3b3996b6dd14c1cf557dace000c2e91f36ec20ee873e86263",
+    "cad/electric-full-stroke-switch-screen.scad": "e1d78fc67a09e0ea327e49c6046130e0d4d8ee22cd5fd485fb6167c64d01feb3",
+    "cad/electric-home-switch-screen.scad": "50a56df95d74a44807001d560ae729b66a879b3904046de0eadd6f6c371a2d5f",
+    "cad/electric-output-crosshead-screen.scad": "d4b34a4c0fd186b717aa335b98071d94ad3d7e5b911192a24d46b11b61fb7493",
+    "cad/electric-rocker-bridge-screen.scad": "c0c18a2a8aa34aae5e985196b6173e80339a70206d0fa07f9217b2a041676c49",
+    "cad/electric-rocker-clamped-fork-screen.scad": "6623d9c3da516f8edd27a6e919a12e338526a70ce794233341dd4e5ef8718439",
+    "cad/electric-rocker-pin-retention-screen.scad": "e6d252c2fcc5f9d3a3c3331a4907a53309fde3ef7a3f50589622b8cbbe2b986b",
+    "cad/electric-rocker-pivot-joint-screen.scad": "57d23f9e8ee07bdff72051fb99a38edeabcf557adcc0da35e331c23250cda9af",
+    "cad/electric-rocker-pivot-mount-screen.scad": "6e3f826b4cad3dadf4eef6b16a90892cfcbf8d4fe7befacd8991411450b6038b",
+    "cad/electric-rocker-service-fork-screen.scad": "c3f3a828207ccb93a8e89fa1440b429e6bb523da6a2e059ee9189443d4282ce9",
+    "cad/electronic-trigger-candidate.scad": "4d064f9dc99d3103f29d577c37a9d68880867e600d2f29da62a5fc1a617823cb",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-optical-home.scad": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "scripts/review_electric_rocker_clamped_fork_screen.py": "d6953163b0be159d6f42e9aa8f5ef1e220f18c8b734cd36a73d9e7537dae787f",
+    "scripts/review_electric_rocker_service_fork_screen.py": "76dfe985ff1b97c5ca0ee383499f87fd3cdd0f60ea05c361964e25bee37442a0"
+  },
+  "predecessor_sha256": {
+    "output/electric-output-crosshead-screen/assembly-review.json": "c737d01a922b751a8f4748eec0ec28e51a8bd38a545a94872560af12863b5216",
+    "output/electric-output-crosshead-screen/review.json": "21461b1ec8ebca384a9738699a488f8a68398c764ef6e0cf15539a2b6ba5e995",
+    "output/electric-rocker-clamped-fork-screen/review.json": "5282ceb15aa611ceb920bc5857b26d921707d3f4631b4178a574b9de51fff991"
+  },
+  "mechanical_contract": {
+    "units": "mm",
+    "process": "X1C/0.4 mm/PETG candidate",
+    "mounting_face_y": 68,
+    "rocker_pivot_xyz": [
+      11.515307716504651,
+      65,
+      25
+    ],
+    "base_fixed_to_shell_at_z": [
+      -10,
+      16
+    ],
+    "rear_cheek_insert_direction": "from +Y toward -Y",
+    "two_m3_bolt_axes_xz": [
+      [
+        15,
+        -14
+      ],
+      [
+        15,
+        2
+      ]
+    ],
+    "shear_key_xyz": [
+      [
+        10,
+        20
+      ],
+      [
+        68,
+        72
+      ],
+      [
+        -8,
+        -4
+      ]
+    ],
+    "key_nominal_clearance_mm": 0.3,
+    "captured_nut_pocket_open_on_mating_face_y": 68,
+    "selected_motor_mount_or_fasteners": false
+  },
+  "parts": {
+    "base": {
+      "volume_mm3": 7352.724361,
+      "bounds_mm": {
+        "min": [
+          1.5,
+          35.0,
+          -21.0
+        ],
+        "max": [
+          24.0,
+          72.0,
+          42.0
+        ],
+        "size": [
+          22.5,
+          37.0,
+          63.0
+        ]
+      },
+      "triangle_count": 2998,
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "3c98772699ea4be088c2c800e8d36b72110c826ff278e70e0fffde14f14d8724"
+    },
+    "rear": {
+      "volume_mm3": 5211.11362,
+      "bounds_mm": {
+        "min": [
+          1.5,
+          67.0,
+          -21.0
+        ],
+        "max": [
+          24.0,
+          76.0,
+          42.0
+        ],
+        "size": [
+          22.5,
+          9.0,
+          63.0
+        ]
+      },
+      "triangle_count": 1588,
+      "watertight": true,
+      "connected_components": 1,
+      "sha256": "4284963271b5885e491b6d46365ef1e83636a9bea16b1de6792831cd65a2876f"
+    }
+  },
+  "static_pose_count": 5,
+  "static_probe_count": 105,
+  "assembly_probe_count": 264,
+  "positive_control_count": 2,
+  "clear_probes": {
+    "base-fixed-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-fixed-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-fixed-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-fixed-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-fixed-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-carriage-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-carriage-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-carriage-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-carriage-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-carriage-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-hardware-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-hardware-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-hardware-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-hardware-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-hardware-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-motor-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-motor-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-motor-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-motor-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-motor-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-bushing-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-bushing-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-bushing-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-bushing-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-bushing-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-hardware-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-hardware-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-hardware-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-hardware-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-hardware-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-motor-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-motor-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-motor-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-motor-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-motor-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-bushing-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-bushing-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-bushing-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-bushing-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-bushing-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rear-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-rear-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-rear-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-rear-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "base-rear-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-hardware-fixed-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-fixed-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-fixed-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-fixed-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-fixed-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-original-minus-base-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-original-minus-base-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-original-minus-base-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-original-minus-base-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-original-minus-base-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-base-minus-original-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-base-minus-original-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-base-minus-original-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-base-minus-original-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "anchor-base-minus-original-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-moving-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-moving-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-moving-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-moving-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-moving-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rocker-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rocker-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rocker-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rocker-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rocker-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-base-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-base-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-base-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-base-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-base-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-hardware-rear-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-hardware-rear-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-hardware-rear-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-hardware-rear-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-hardware-rear-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "m3-tools-fixed-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-fixed-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-fixed-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-fixed-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-fixed-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-moving-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-moving-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-moving-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-moving-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-moving-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-motor-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-motor-t0.25-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-motor-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-motor-t0.75-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "m3-tools-motor-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.00-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.00-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "rear-base-insertion-t0.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft2.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft7.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft10-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft15-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft20-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.00-rear0-rocker0-shaft25-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t0.50-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t0.50-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "rear-base-insertion-t0.50-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t0.50-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft2.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft7.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft10-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft15-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft20-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t0.50-rear0-rocker0-shaft25-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t0.50-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t0.50-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t0.50-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t0.50-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "base-rocker-insertion-t1.00-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker2.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker7.5-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker10-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker15-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker20-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rocker-crosshead-insertion-t1.00-rear25-rocker25-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-rocker-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "rear-base-insertion-t1.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-base-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-carriage-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear2.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear7.5-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear10-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear15-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear20-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "rear-fixed-insertion-t1.00-rear25-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft2.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft7.5-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft10-nut0": {
+      "occupied": false,
+      "volume_mm3": 0.0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft15-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft20-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "shaft-assembly-insertion-t1.00-rear0-rocker0-shaft25-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-base-insertion-t1.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-fixed-insertion-t1.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-carriage-insertion-t1.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut2.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut7.5": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut10": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut15": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut20": {
+      "occupied": false,
+      "volume_mm3": 0
+    },
+    "nut-rocker-insertion-t1.00-rear0-rocker0-shaft0-nut25": {
+      "occupied": false,
+      "volume_mm3": 0
+    }
+  },
+  "positive_controls": {
+    "key-contact-control-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": true,
+      "volume_mm3": 164.284
+    },
+    "base-self-control-t0.00-rear0-rocker0-shaft0-nut0": {
+      "occupied": true,
+      "volume_mm3": 7352.724361
+    }
+  },
+  "images": {
+    "rocker-entry": {
+      "file": "output/electric-rocker-service-fork-screen/rocker-entry.png",
+      "sha256": "cfe594be5da8093e38f627b0155bda8da010e3b99a3d6ab72b7137272cdd63bc"
+    },
+    "rocker-seated": {
+      "file": "output/electric-rocker-service-fork-screen/rocker-seated.png",
+      "sha256": "2078997d6ef4ffcc04f95874054f84286435964126483ea0ad5ac8b05ab18c1b"
+    },
+    "rear-seated": {
+      "file": "output/electric-rocker-service-fork-screen/rear-seated.png",
+      "sha256": "acf4c639139d8778f952a92593e77470663e9802d53577be72088b9c9f1574d5"
+    },
+    "base-front": {
+      "file": "output/electric-rocker-service-fork-screen/base-front.png",
+      "sha256": "a649c2d7f6829a2e0d6546c097807d95b7fcf5fddc78d24d46b4c215985b7db0"
+    },
+    "base-nut-face": {
+      "file": "output/electric-rocker-service-fork-screen/base-nut-face.png",
+      "sha256": "9a21c0c1e28442eb9d09ce2ddffe7d80601c60873477268113553caca7ec6f89"
+    },
+    "base-top": {
+      "file": "output/electric-rocker-service-fork-screen/base-top.png",
+      "sha256": "e83858e602215e883baaf5d7ad21e59779b65f4d4f780c7e44e2efb7b54cf286"
+    },
+    "base-iso": {
+      "file": "output/electric-rocker-service-fork-screen/base-iso.png",
+      "sha256": "f540e376b7287476680096c19c07356bcc6ed646ca50a2c6af5f969fd38a983f"
+    },
+    "rear-front": {
+      "file": "output/electric-rocker-service-fork-screen/rear-front.png",
+      "sha256": "c4c456283ff41ded7288f52414a4b75cf67ed5c9aaf20762c9feae12acc51ef7"
+    },
+    "rear-top": {
+      "file": "output/electric-rocker-service-fork-screen/rear-top.png",
+      "sha256": "245db0723c00bfb9873af249f79297e1005b24fc79a8b1dc6171a1bb5f641f0b"
+    },
+    "rear-iso": {
+      "file": "output/electric-rocker-service-fork-screen/rear-iso.png",
+      "sha256": "3bf11e4ed90338cc6f84d08dad141ee489b01175ab7102327022997f53e52473"
+    }
+  },
+  "replaces_one_piece_fork_candidate": true,
+  "promoted_to_selected_assembly": false,
+  "real_motor_interface_verified": false,
+  "rear_joint_strength_and_creep_verified": false,
+  "metal_pivot_bushing_and_fasteners_physically_fitted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "failures": []
+}

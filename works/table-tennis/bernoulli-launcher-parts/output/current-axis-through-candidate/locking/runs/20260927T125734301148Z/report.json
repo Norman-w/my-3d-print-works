@@ -1,0 +1,1434 @@
+{
+  "status": "REJECTED_EXTERNAL_COLLISION",
+  "external_clearance_passed": false,
+  "source_sha256": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443",
+    "output/current-axis-through-candidate/locking/candidate.scad": "a77d24f1b256039ac4cf0f55c8619c8e7599b3a12a21298b7e2b3a0c37a08130",
+    "output/current-axis-through-candidate/locking/review.py": "24c566113aac9bea9c0c8dba36ac06d9efce6b2e0cb8d615b60f29a3ab32c685",
+    "output/current-axis-through-candidate/candidate.scad": "60af9ce0ed445706cfbd923ed2e4ee71d8f58782664ac5c5ed1f899be17721d9",
+    "output/current-axis-through-candidate/review.py": "ae2a41b12f3d62aeca8a806fea0859d5b6aebb9f2b94f2a76806a924b5c29fec",
+    "output/cable-scene-export/20260927T091627124663Z/report.json": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__positive-half.stl": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__negative-half.stl": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__beam-grip.stl": "3b2a3f05fb93481eab1d6ceabc089c91c75e99afdfc0148fa019380a85b762be",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__liner.stl": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__right-support.stl": "6df7e9307351e3f5ddfdc14275a1c53ab0f06f8acb3cbe23bcad4b1f4eff83de",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__left-support.stl": "c4588d6ce29b8ac4aa6d3eec3d440cfdc1f848e506a2cdba1e38c0e190ae8963",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__x-gib.stl": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__x-cover.stl": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__frame.stl": "adeb5addaf66db2b61d0726a87e675e89e1f7d09540316b2850802aa0003d566",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__fixed-spacer.stl": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__moving-spacer.stl": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__capture-right.stl": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-right.stl": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-right.stl": "54de7e4748eec09ce9d16b7d778a85b4233fbcda50493a0655c081a99bb0494d",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-right.stl": "c6831fe320e13cbac9879602908241624766b45226fc5ce889b8d32aa56a2574",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-front.stl": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-front.stl": "db65415d23163e872542e054aca6be3432b6dd47b30b82b5809544696b23f886",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-front.stl": "9e428c4b473c2f14c3edd33bef58f2401d804475bbad78cf2d1708edff5d29d1",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-front.stl": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-right-rear.stl": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-right-rear.stl": "70d83c27fe527d451b8aa78691db560ab3686e28225963aa5f9c5b97bc6f7c33",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-right-rear.stl": "1fa72fcd3a27adaf6866632bca177c1dc54fcbd1c79805a5ba92cc386f4fd530",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-right-rear.stl": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__capture-left.stl": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pipe-clamp-left.stl": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-cap-left.stl": "61077543b0541db9226b933c4963f92190edaea26c5ece77355bedb969393bc6",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__frame-y-gib-left.stl": "df0551dad84968d8c76f9c8fc718bb6e4768d9d911255b3c1035107be1f08b7f",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-front.stl": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-front.stl": "559ce2321d0bffef42190ff3a73aae1f82b8124e431c0d3602eb5a69e5395e82",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-front.stl": "4752a0fbac2a012a4da35ced9e66d93172c00a900b082d2c5ccc77dcd556a52c",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-front.stl": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-gib-left-rear.stl": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__y-keeper-left-rear.stl": "dec885c7f4b6a179ffb98abfd7728b586461c7b9f41d2a070e3d0c5d299852c0",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__finger-left-rear.stl": "83f40903c9c440ba9fb24bbb82288fa340bd68dcdb25c5f68a912b6e5d6f5f6c",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pin-block-left-rear.stl": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-rear.stl": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-front.stl": "17134ee54d1dc908eef6f1636906eaeca73ba6bd1a62c4754ad9d3a636d1f239",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__inlet-backplate.stl": "b4ac87b237de2c54627b02b4056d6543c564fa7d9c60ae2b83e314e652279cdf",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-cap.stl": "23a3c12394b4277c7237bb255f06e9cd69f8f7df836d0c89e79e662d487e4978",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-base.stl": "44f127273119eb95da26e9e52e264f8db5b32ec6b4dfafee739118ebc13ef056",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-cap.stl": "cb8c36c03b29af13be3405e5e447722d0b1238f6a105dfcd6bb69fe8676fd740",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-lower.stl": "0124b92d34bb90374021e09629237813fb939663d6bfbe64e235e56397ee99e2",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-fixed.stl": "bea816ead6099096cfb3110426d708c1c63bc387ea6242f5b5ba8753a301c193",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-right-front.stl": "fec57990f1ea8d1cdaa5e27ab577c4e354c8000c31bb6995ac80f5075b7260d3",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-right-rear.stl": "32e48a61e2c2a619fa609b5c0c69b61e3fd91182ae7a0c2780af69cfbe273986",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-left-front.stl": "328762ba20ff5cf30ce225a8c1b771a0f72f6d61b083dd07e4f184032fe34d83",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-left-rear.stl": "363c7af3088bf36c333912de9becc07a6b61a09a4673dda47786ff0cd3562bd9",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hardware-moving-spacer.stl": "e41357301b321880783a2adffce56dcc63b6f666d8b9e498b3a8ee77d546c7c6",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-hardware-fixed.stl": "98b7f429082ce985efb7543aeac5a63281c52ed0efb7e353c75b0f25810b63fc",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-output-hardware-moving.stl": "15497ac35c253cedcfc0bd91eee701f63f2bba1f2ec06ec1f165abc5062a3e4c",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-route-hardware.stl": "a099925c86d05233062f6004c352038aa70c8b9445eee053f9fca5d964c1f9d8",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__pc-reference.stl": "ee453a79a7f840405b89a9e7312c3aa67feb90467f86ad640bf303cdeb25f617",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__hose-reference.stl": "0fd4cb7032fe802c6a96da52e9203638ac76e8d6b70b9fc4b4039d3382254e38",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__liner-reference.stl": "084ef512f55b6a8ce58ffe22c94814756dd5d8012959a505a3f1307741c278ae",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__spring-reference.stl": "560a6cb4824a9f60716b6d8f429ca004433b3b09f95b4248a7d43ad00f911cfb",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-housing.stl": "de4385e7ce80af551411b24757a424e3807c66ea4a65eedae0431cbc7bc3c73b",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-core-route.stl": "ad867d9999b1a5e9a5a9a222fc85d4cb1de076d2b9a955a64dc8af662070ff26",
+    "output/cable-scene-export/20260927T091627124663Z/feeder__cable-core-output.stl": "5964d49e115dfb7ea26244b7888d20f6cd09dc33f26c802daee5208ba52bbe49"
+  },
+  "sources_stable": true,
+  "cases": [
+    {
+      "case": "plastic-probe",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-D",
+        "part=\"plastic-probe\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/runs/20260927T125734301148Z/plastic-probe.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 638,
+        "signed_volume_mm3": -4.367434690809302e-14,
+        "bounds_mm": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -12.0,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": true,
+        "each_triangle_on_one_contact_plane": true
+      },
+      "log_sha256": "cb390a5c5a9be0266a302bbd24d294aac6bdca0a43224314a01b186d6735a859",
+      "stl_sha256": "9cb0073b46b7663cffedd8bbd2ad0ad05081cdd651846471bfa8032a621d120f"
+    },
+    {
+      "case": "metal-probe",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-D",
+        "part=\"metal-probe\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/runs/20260927T125734301148Z/metal-probe.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "rotor-probe",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-D",
+        "part=\"rotor-probe\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/runs/20260927T125734301148Z/rotor-probe.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "mesh": null,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "stl_sha256": null
+    },
+    {
+      "case": "external-probe",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-D",
+        "part=\"external-probe\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/runs/20260927T125734301148Z/external-probe.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 312,
+        "signed_volume_mm3": 35.538118793192794,
+        "bounds_mm": [
+          [
+            71.5,
+            78.5
+          ],
+          [
+            -63.0,
+            -61.879999999999995
+          ],
+          [
+            1.4999999999999996,
+            8.5
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "log_sha256": "b4cd6c882b74831a95a32cc1675c07a6fcf34eda1542e0eea019769d29e5cad6",
+      "stl_sha256": "3d94b7fd7ede356448bd7dea7c4df8aef8c8f651e08062a6888f52cced31863a"
+    },
+    {
+      "case": "short-positive",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--export-format=asciistl",
+        "-D",
+        "part=\"short-positive\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/runs/20260927T125734301148Z/short-positive.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-through-candidate/locking/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "mesh": {
+        "triangles": 1166,
+        "signed_volume_mm3": 5.891641053999001,
+        "bounds_mm": [
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -6.0,
+            6.0
+          ],
+          [
+            -12.0,
+            14.0
+          ]
+        ],
+        "all_vertices_on_external_contact_planes": false,
+        "each_triangle_on_one_contact_plane": false
+      },
+      "log_sha256": "9b9ce63c4c53a161fecc5ef3d77a517b859250765b75612057cad90a6d9defd5",
+      "stl_sha256": "91d6cd08119fd90c03514c094cfb867a4ede802fe02bf3519d7967593e3810d5"
+    }
+  ],
+  "axis_cad_aabb_mm": [
+    [
+      69,
+      -108.1,
+      -1
+    ],
+    [
+      81,
+      -61.88,
+      11
+    ]
+  ],
+  "feeder_noninput_broad_phase": [
+    {
+      "id": "feeder/positive-half",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          0.0,
+          -48.0,
+          -126.0
+        ],
+        [
+          35.5,
+          45.0,
+          69.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 33.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/negative-half",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -35.5,
+          -48.0,
+          -126.0
+        ],
+        [
+          0.0,
+          45.0,
+          69.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 69.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/beam-grip",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -70.0,
+          -63.0,
+          -156.0
+        ],
+        [
+          87.0,
+          45.0,
+          93.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": -1.1199999999999974,
+      "aabb_separated": false
+    },
+    {
+      "id": "feeder/liner",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -25.0,
+          -25.0,
+          44.0
+        ],
+        [
+          25.0,
+          25.0,
+          118.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 44.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/right-support",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          35.5,
+          -19.0,
+          -50.0
+        ],
+        [
+          75.0,
+          28.0,
+          21.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 42.88,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/left-support",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -76.0,
+          -19.0,
+          -50.0
+        ],
+        [
+          -35.5,
+          24.200000762939453,
+          21.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 104.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/x-gib",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          58.1,
+          21.0,
+          -34.6
+        ],
+        [
+          70.5,
+          26.0,
+          4.600000000000001
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 82.88,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/x-cover",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          69.4,
+          10.5,
+          -39.0
+        ],
+        [
+          80.5,
+          28.0,
+          9.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 72.38,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/frame",
+      "motion_basis": "full 20 mm Z stroke (symmetric outer bound)",
+      "bounds_mm": [
+        [
+          -76.0,
+          -4.0,
+          -84.5
+        ],
+        [
+          89.0,
+          54.0,
+          57.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 57.88,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/fixed-spacer",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -75.75,
+          18.5,
+          -17.57
+        ],
+        [
+          -68.25,
+          31.7,
+          -10.07
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 137.25,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/moving-spacer",
+      "motion_basis": "full 20 mm Z stroke (symmetric outer bound)",
+      "bounds_mm": [
+        [
+          -75.75,
+          24.5,
+          -10.75
+        ],
+        [
+          -68.25,
+          31.7,
+          36.75
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 137.25,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/capture-right",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          0.0,
+          -63.0,
+          40.0
+        ],
+        [
+          36.0,
+          63.0,
+          53.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 33.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pipe-clamp-right",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          0.4,
+          -63.0,
+          90.0
+        ],
+        [
+          32.0,
+          63.0,
+          114.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 79.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-cap-right",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          51.5,
+          24.200000762939453,
+          -35.0
+        ],
+        [
+          67.0,
+          39.0,
+          5.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 86.08000076293945,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/frame-y-gib-right",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          53.5,
+          24.099998474121094,
+          -33.5
+        ],
+        [
+          60.5,
+          27.099998474121094,
+          3.5
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 85.97999847412109,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-gib-right-front",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          43.8,
+          -10.149999999999999,
+          -6.5
+        ],
+        [
+          62.5,
+          -4.6,
+          6.5
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 51.730000000000004,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-keeper-right-front",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          43.79999923706055,
+          -17.5,
+          -14.0
+        ],
+        [
+          60.0,
+          -11.049999237060547,
+          14.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 44.38,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/finger-right-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          13.507707595825195,
+          -4.5,
+          -4.0
+        ],
+        [
+          54.0,
+          4.5,
+          4.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 57.38,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pin-block-right-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          38.0,
+          1.0,
+          -2.799999237060547
+        ],
+        [
+          53.099998474121094,
+          4.5,
+          2.799999237060547
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 62.88,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-gib-right-rear",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          43.8,
+          -10.149999999999999,
+          -35.0
+        ],
+        [
+          62.5,
+          -4.6,
+          -22.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 51.730000000000004,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-keeper-right-rear",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          43.79999923706055,
+          -17.5,
+          -42.5
+        ],
+        [
+          60.0,
+          -11.049999237060547,
+          -14.5
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 44.38,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/finger-right-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          18.507707595825195,
+          -4.5,
+          -32.5
+        ],
+        [
+          59.0,
+          4.5,
+          -24.5
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 57.38,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pin-block-right-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          43.0,
+          1.0,
+          -31.299999237060547
+        ],
+        [
+          58.099998474121094,
+          4.5,
+          -25.700000762939453
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 62.88,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/capture-left",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -36.0,
+          -63.0,
+          40.0
+        ],
+        [
+          0.0,
+          63.0,
+          53.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 69.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pipe-clamp-left",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -32.0,
+          -63.0,
+          90.0
+        ],
+        [
+          -0.4000000000000057,
+          63.0,
+          114.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 79.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-cap-left",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -67.0,
+          24.200000762939453,
+          -35.0
+        ],
+        [
+          -51.5,
+          39.0,
+          5.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 120.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/frame-y-gib-left",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -60.5,
+          24.099998474121094,
+          -33.5
+        ],
+        [
+          -53.5,
+          27.099998474121094,
+          3.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 122.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-gib-left-front",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -62.5,
+          -10.149999999999999,
+          -6.5
+        ],
+        [
+          -43.8,
+          -4.6,
+          6.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 112.8,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-keeper-left-front",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -60.0,
+          -17.5,
+          -14.0
+        ],
+        [
+          -43.79999923706055,
+          -11.049999237060547,
+          14.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 112.79999923706055,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/finger-left-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -54.0,
+          -4.5,
+          -4.0
+        ],
+        [
+          -13.507707595825195,
+          4.5,
+          4.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 82.5077075958252,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pin-block-left-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -53.099998474121094,
+          1.0,
+          -2.799999237060547
+        ],
+        [
+          -38.0,
+          4.5,
+          2.799999237060547
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 107.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-gib-left-rear",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -62.5,
+          -10.149999999999999,
+          -35.0
+        ],
+        [
+          -43.8,
+          -4.6,
+          -22.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 112.8,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/y-keeper-left-rear",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -60.0,
+          -17.5,
+          -42.5
+        ],
+        [
+          -43.79999923706055,
+          -11.049999237060547,
+          -14.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 112.79999923706055,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/finger-left-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -59.0,
+          -4.5,
+          -32.5
+        ],
+        [
+          -18.507707595825195,
+          4.5,
+          -24.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 87.5077075958252,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pin-block-left-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -58.099998474121094,
+          1.0,
+          -31.299999237060547
+        ],
+        [
+          -43.0,
+          4.5,
+          -25.700000762939453
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 112.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/inlet-rear",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -49.0,
+          -53.79999923706055,
+          -156.0
+        ],
+        [
+          49.0,
+          -1.1999998092651367,
+          -101.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 100.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/inlet-front",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -49.0,
+          0.7999992370605469,
+          -123.0
+        ],
+        [
+          49.0,
+          36.5,
+          -101.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 100.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/inlet-backplate",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -14.0,
+          -57.0,
+          -156.0
+        ],
+        [
+          14.0,
+          -54.0,
+          -128.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 127.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-output-cap",
+      "motion_basis": "full 20 mm Z stroke (symmetric outer bound)",
+      "bounds_mm": [
+        [
+          -65.5,
+          39.2,
+          -13.0
+        ],
+        [
+          -48.0,
+          43.2,
+          52.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 117.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-route-base",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -77.0,
+          -56.0,
+          84.7
+        ],
+        [
+          91.19364031613785,
+          85.0,
+          235.4156535349121
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 73.7,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-route-cap",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -73.54998459799425,
+          26.424320514570464,
+          117.50119772913047
+        ],
+        [
+          92.5126603178511,
+          76.30328213633881,
+          235.4156535349121
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 106.50119772913047,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-route-lower",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -77.0,
+          -65.0,
+          78.5
+        ],
+        [
+          -39.0,
+          20.0,
+          84.7
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 108.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-fixed",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -76.0,
+          -61.0,
+          -145.0
+        ],
+        [
+          89.5,
+          61.0,
+          130.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 0.8800000000000026,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-right-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          32.5,
+          -5.25,
+          -3.5
+        ],
+        [
+          53.6,
+          16.75,
+          3.5
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 56.63,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-right-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          37.5,
+          -5.25,
+          -32.0
+        ],
+        [
+          58.6,
+          16.75,
+          -25.0
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": 56.63,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-left-front",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -53.6,
+          -5.25,
+          -3.5
+        ],
+        [
+          -32.5,
+          16.75,
+          3.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 101.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-left-rear",
+      "motion_basis": "all radial displacements enclosed by +/-5 in X",
+      "bounds_mm": [
+        [
+          -58.6,
+          -5.25,
+          -32.0
+        ],
+        [
+          -37.5,
+          16.75,
+          -25.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 106.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hardware-moving-spacer",
+      "motion_basis": "full 20 mm Z stroke (symmetric outer bound)",
+      "bounds_mm": [
+        [
+          -76.0,
+          15.5,
+          -11.0
+        ],
+        [
+          -68.0,
+          37.5,
+          37.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 137.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-output-hardware-fixed",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -64.0,
+          29.5,
+          77.0
+        ],
+        [
+          -52.0,
+          41.5,
+          113.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 121.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-output-hardware-moving",
+      "motion_basis": "full 20 mm Z stroke (symmetric outer bound)",
+      "bounds_mm": [
+        [
+          -66.0,
+          27.7,
+          -9.5
+        ],
+        [
+          -47.5,
+          46.7,
+          49.5
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 116.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-route-hardware",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -76.5,
+          -15.5,
+          74.8
+        ],
+        [
+          80.8228142124684,
+          82.65202515361138,
+          233.41593535130798
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 63.8,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/pc-reference",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -25.0,
+          -25.0,
+          45.5
+        ],
+        [
+          25.0,
+          25.0,
+          135.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 44.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/hose-reference",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -27.5,
+          -27.5,
+          -166.0
+        ],
+        [
+          27.5,
+          27.5,
+          -98.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 97.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/liner-reference",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -30.447606868509784,
+          -30.5,
+          -123.0
+        ],
+        [
+          30.447606868509784,
+          30.5,
+          -101.0
+        ]
+      ],
+      "separation_axis": "Z",
+      "separation_mm": 100.0,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/spring-reference",
+      "motion_basis": "source-defined constant-X slab; do not assert Z envelope",
+      "bounds_mm": [
+        [
+          -75.5,
+          29.6,
+          -16.45
+        ],
+        [
+          -68.5,
+          36.6,
+          15.629999999999999
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 137.5,
+      "aabb_separated": true
+    },
+    {
+      "id": "feeder/cable-housing",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -60.478612153434526,
+          -82.47861215343453,
+          -70.31061061564893
+        ],
+        [
+          235.16342435803466,
+          105.87446786878981,
+          222.55043473153245
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": -20.598612153434523,
+      "aabb_separated": false
+    },
+    {
+      "id": "feeder/cable-core-route",
+      "motion_basis": "fixed geometry",
+      "bounds_mm": [
+        [
+          -58.74358364603036,
+          -80.74358364603036,
+          -68.57558210824476
+        ],
+        [
+          233.42839585063047,
+          104.13943936138564,
+          220.81540622412825
+        ]
+      ],
+      "separation_axis": "Y",
+      "separation_mm": -18.863583646030357,
+      "aabb_separated": false
+    },
+    {
+      "id": "feeder/cable-core-output",
+      "motion_basis": "source-defined constant-X slab; do not assert Z envelope",
+      "bounds_mm": [
+        [
+          -58.75,
+          34.75,
+          7.0
+        ],
+        [
+          -57.25,
+          36.25,
+          111.0
+        ]
+      ],
+      "separation_axis": "X",
+      "separation_mm": 126.25,
+      "aabb_separated": true
+    }
+  ],
+  "fixed_native_candidates": [
+    "feeder/beam-grip",
+    "feeder/cable-housing",
+    "feeder/cable-core-route"
+  ],
+  "supplier_dimensions": {
+    "nut": {
+      "code": "HNN-M4-A2",
+      "url": "https://www.accu.co.uk/hexagon-nylon-locking-nuts/7946-HNN-M4-A2",
+      "standard": "DIN985",
+      "height_mm": [
+        4.7,
+        5
+      ],
+      "across_flats_mm": [
+        6.78,
+        7
+      ],
+      "pitch_mm": 0.7
+    },
+    "bolt_reference": {
+      "code": "SSC-M4-40-A2-BL",
+      "url": "https://www.accu.co.uk/api/product-datasheet?id=151797",
+      "length_nominal_mm": 40,
+      "head_d_mm": [
+        6.78,
+        7
+      ],
+      "head_h_mm": [
+        3.82,
+        4
+      ],
+      "minimum_thread_length_mm": 20,
+      "socket_mm": 3
+    }
+  },
+  "design_acceptance_requirements_not_supplier_tolerances": {
+    "bolt_underhead_length_mm": [
+      39,
+      41
+    ],
+    "distal_incomplete_thread_length_max_mm": 1.4,
+    "full_thread_projection_min_pitches": 2,
+    "note": "These are generous design acceptance limits. Supplier length and end geometry have not been certified against them."
+  },
+  "computed": {
+    "physical_tip_projection_mm": [
+      4.780000000000001,
+      7.519999999999999
+    ],
+    "full_thread_projection_min_mm": 3.3800000000000012,
+    "nut_metal_entry_distance_from_head_mm": [
+      28.78,
+      29.22
+    ],
+    "latest_guaranteed_thread_start_mm": 21,
+    "old_35mm_bolt_min_nominal_projection_with_locknut_mm": 0.7800000000000002
+  },
+  "scope": "Continuous coaxial axle envelope and continuous trigger stroke for nominal registered feeder. Other rotating input geometry uses rotationally invariant central bore/Z separation plus remote cap radius; the native rotor case is at rest. Excludes spin head pose, actual tolerances/tilt/loads and unmodelled blower/human geometry.",
+  "not_checked": [
+    "Socket/wrench approach and hand clearance",
+    "Applied torque, prevailing torque and reuse limits",
+    "Actual bearing surface/axis selection",
+    "Actual bush/thrust capture",
+    "PETG support deflection/creep",
+    "Whole candidate manufacturing adoption"
+  ],
+  "adopted": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

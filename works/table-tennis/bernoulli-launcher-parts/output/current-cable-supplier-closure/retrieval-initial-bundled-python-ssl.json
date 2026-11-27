@@ -1,0 +1,17 @@
+[
+  {
+    "id": "03096-35",
+    "url": "https://www.norelem.de/en/Product-overview/Flexible-standard-component-system/03000/Accessories-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Screw-nipples-locked-with-grub-screw/p/agid.30769",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+  },
+  {
+    "id": "03096-25",
+    "url": "https://www.norelem.mx/es/Vista-general-de-productos/Sistema-flexible-de-piezas-est%C3%A1ndar/03000/Accesorios-para-pernos-de-bloqueo-pasadores-de-bloqueo-y-pernos-de-bloqueo-de-bola/Fundas-terminales/Casquillo-terminal-lat%C3%B3n-pasivado-en-azul/p/03096-25-0350",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+  },
+  {
+    "id": "03096-14",
+    "url": "https://www.norelemusa.com/en-us/Product-Overview/Flexible-standard-component-system/03000/Accessory-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Bowden-cables-for-indexing-plungers-with-remote-actuation/p/agid.32096",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+  }
+]

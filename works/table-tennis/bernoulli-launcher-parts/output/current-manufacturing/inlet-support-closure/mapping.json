@@ -1,0 +1,18 @@
+[
+  {
+    "instance_id": "feeder/inlet-rear",
+    "current_stl_sha256": "146bcf746c8f1a52825c68675ad1844d8ed4de079c75c3885504240121e3069a",
+    "slice_folder": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported",
+    "selected_3mf": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/slice-review.3mf",
+    "selected_3mf_sha256": "58992f2f1f87e43a030e792da8b566cf6702989b6968a1730fa49198a79ac068",
+    "gcode": "output/current-manufacturing/feeder-new/runs/20260927T094300899015Z/inlet-rear-anchor-z-down-supported/plate_1.gcode",
+    "gcode_sha256": "8b8f80c2a4b26a0ff9167b57714bc41ca300858938c04ce996f1ffd849d1d5c0",
+    "plate_quantity": 1,
+    "needs_reslice": false,
+    "pending_review": true,
+    "process_status": "CURRENT_SLICE_REVIEW_FLAGGED",
+    "reason": "The original current slice is valid. Six obstructing cavity branches have actual locations, accessible finite cutter-nose windows, and a concrete proposed sequence. Once these regions are removed, all remaining external-tree slabs have a clear continuous -CAD Z sweep against actual emitted model material. Complete mouth trimming/grasp/jaw motion for the 2.9 mm holes and 3 mm slots is not certified; do not infer this from small pick or nose clearance.",
+    "report_file": "output/current-manufacturing/inlet-support-closure/report.json",
+    "report_sha256": "cf797d9fc4d2f545064d81fea73b911c4aa7419edaa04311deac2af6bee3d79e"
+  }
+]

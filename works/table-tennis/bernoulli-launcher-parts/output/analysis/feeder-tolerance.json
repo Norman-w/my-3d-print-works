@@ -1,0 +1,858 @@
+{
+  "status": "RIGID_CSG_COUNTEREXAMPLE_VERIFIED",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de"
+  },
+  "script_sha256": "8b0789b00daa3725fd2405c12dbc93c90321d4255d37fc13b40aa6960971f2da",
+  "stroke_mm": 17,
+  "nominal_front_tip_r": 24.125,
+  "parameter_snapshot": {
+    "finger_tip_radius": 2.5,
+    "finger_closed_center_r": 21.0,
+    "finger_open_center_r": 26.0,
+    "cam_stroke": 20.0,
+    "gate_spacing": 28.5,
+    "gate_overlap_fraction": 0.2,
+    "radial_print_clearance": 0.25,
+    "fastener_d": 3.4,
+    "nut_af": 5.8,
+    "$fn": 72.0,
+    "cam_follower_offset": 20.0,
+    "cam_pin_d": 4.0,
+    "cam_pin_thread_d": 3.0,
+    "cam_pin_shoulder_start_y": 1.75,
+    "cam_pin_start_y": -5.25,
+    "cam_plate_y": 8.0,
+    "cam_plate_thickness": 5.0,
+    "cam_carrier_inner_offset": 13.0,
+    "cam_carrier_length": 15.0,
+    "cam_carrier_width": 9.0,
+    "cam_carrier_axial": 8.0,
+    "support_radial_clearance": 0.2,
+    "support_axial_clearance": 0.2,
+    "support_radial_y1": 7.25,
+    "support_rail_x0": 54.0,
+    "support_rail_x1": 58.0,
+    "support_rail_y0": 20.0,
+    "support_rail_y1": 24.0,
+    "support_guide_z0": -35.0,
+    "support_guide_z1": 5.0
+  },
+  "best": {
+    "success": true,
+    "min_margin": -3.057998299027531e-12,
+    "radial_tip_error": 1.0110761225998808,
+    "variables": [
+      1.0110761225998808,
+      -0.33170792240041774,
+      -0.08830638871885316,
+      -0.020024984723219702,
+      0.0007996601963851708,
+      0.016181585602079322,
+      -0.17320508075689967,
+      1.6413490275952625e-14,
+      0.2175717809235226,
+      -0.23888165623280366,
+      0.007446117683561823,
+      -6.549797469633891e-06,
+      0.0008796093440211362
+    ],
+    "iterations": 11,
+    "constraint_minima": {
+      "carrier_rectangle": -2.7533531010703882e-14,
+      "outer_round_rod_bore": -1.318944953254686e-13,
+      "inner_guide_cap_or_rod": 0.5164334172614284,
+      "thread_hole": 0.02679491924310029,
+      "captured_nut_flats": -1.865174681370263e-14,
+      "two_axial_rails": -3.057998299027531e-12,
+      "fixed_front_shoulder_window": 1.8740564655672642e-13,
+      "fixed_back_thread_window": 0.18946217434317014,
+      "finite_thickness_slot": -2.457783976339556e-12
+    }
+  },
+  "runs": [
+    {
+      "success": true,
+      "min_margin": -1.8030021919912542e-13,
+      "radial_tip_error": 1.0110761225938862,
+      "variables": [
+        1.0110761225938862,
+        -0.3317079224003594,
+        -0.08830638871881438,
+        -0.02002498472322732,
+        0.0007996601963902559,
+        0.01618158560208472,
+        -0.17320508075688784,
+        -2.867330359934063e-16,
+        0.2175727532392547,
+        -0.238877113330686,
+        0.007445976477749644,
+        -6.550036078286334e-06,
+        0.0008796580751907811
+      ],
+      "iterations": 13,
+      "constraint_minima": {
+        "carrier_rectangle": -1.8030021919912542e-13,
+        "outer_round_rod_bore": 4.39648317751562e-14,
+        "inner_guide_cap_or_rod": 0.5164334172563043,
+        "thread_hole": 0.026794919243112114,
+        "captured_nut_flats": -3.3306690738754696e-16,
+        "two_axial_rails": -1.7319479184152442e-13,
+        "fixed_front_shoulder_window": 5.639932965095795e-14,
+        "fixed_back_thread_window": 0.18946217434312995,
+        "finite_thickness_slot": 7.438494264988549e-14
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -4.147793219999585e-13,
+      "radial_tip_error": 1.0110761225908353,
+      "variables": [
+        1.0110761225908353,
+        -0.3317079224003983,
+        -0.08830638871887446,
+        -0.02002498472321846,
+        0.0007996601963950706,
+        0.016181585602079118,
+        -0.17320508075688715,
+        1.0426309542125196e-15,
+        0.21757512311799587,
+        -0.238866040671584,
+        0.007445632309305604,
+        -6.55061768651389e-06,
+        0.0008797768502607589
+      ],
+      "iterations": 17,
+      "constraint_minima": {
+        "carrier_rectangle": -6.927791673660977e-14,
+        "outer_round_rod_bore": -1.4210854715202004e-14,
+        "inner_guide_cap_or_rod": 0.5164334172536131,
+        "thread_hole": 0.026794919243112808,
+        "captured_nut_flats": -1.1102230246251565e-16,
+        "two_axial_rails": -4.147793219999585e-13,
+        "fixed_front_shoulder_window": -3.597122599785507e-14,
+        "fixed_back_thread_window": 0.18946217434293167,
+        "finite_thickness_slot": 2.5912605394751154e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -5.995204332975845e-13,
+      "radial_tip_error": 1.0110761225932996,
+      "variables": [
+        1.0110761225932996,
+        -0.3317079224003633,
+        -0.08830638871882274,
+        -0.020024984723227078,
+        0.0007996601963914447,
+        0.016181585602083944,
+        -0.17320508075688737,
+        -1.3739545447755582e-16,
+        0.21756898853635667,
+        -0.23889470294951604,
+        0.007446523210936451,
+        -6.549112002506936e-06,
+        0.0008794693935220491
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -1.545430450278218e-13,
+        "outer_round_rod_bore": 3.863576125695545e-14,
+        "inner_guide_cap_or_rod": 0.5164334172557912,
+        "thread_hole": 0.026794919243112586,
+        "captured_nut_flats": 1.6653345369377348e-16,
+        "two_axial_rails": -5.995204332975845e-13,
+        "fixed_front_shoulder_window": 2.6201263381153694e-14,
+        "fixed_back_thread_window": 0.18946217434309665,
+        "finite_thickness_slot": 2.6451063561694355e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -9.98146010289247e-13,
+      "radial_tip_error": 1.0110761225945326,
+      "variables": [
+        1.0110761225945326,
+        -0.3317079224003529,
+        -0.08830638871880761,
+        -0.020024984723226162,
+        0.0007996601963888977,
+        0.016181585602076776,
+        -0.17320508075688756,
+        -2.5777416910873103e-16,
+        0.21757052274891592,
+        -0.23888753473116947,
+        0.007446300403237523,
+        -6.549488587974818e-06,
+        0.0008795462861139909
+      ],
+      "iterations": 13,
+      "constraint_minima": {
+        "carrier_rectangle": -2.042810365310288e-14,
+        "outer_round_rod_bore": 0.0,
+        "inner_guide_cap_or_rod": 0.5164334172568719,
+        "thread_hole": 0.02679491924311239,
+        "captured_nut_flats": -8.326672684688674e-17,
+        "two_axial_rails": -1.6253665080512292e-13,
+        "fixed_front_shoulder_window": 9.592326932761353e-14,
+        "fixed_back_thread_window": 0.1894621743431557,
+        "finite_thickness_slot": -9.98146010289247e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -3.544109450359656e-13,
+      "radial_tip_error": 1.0110761225928577,
+      "variables": [
+        1.0110761225928577,
+        -0.331707922400369,
+        -0.08830638871883977,
+        -0.020024984723222755,
+        0.0007996601963919031,
+        0.01618158560207681,
+        -0.17320508075688731,
+        -2.6629550743728874e-17,
+        0.21756876929157457,
+        -0.23889572731505007,
+        0.007446555050993524,
+        -6.5490581613838566e-06,
+        0.0008794584052810471
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -2.3092638912203256e-14,
+        "outer_round_rod_bore": -9.325873406851315e-15,
+        "inner_guide_cap_or_rod": 0.5164334172554002,
+        "thread_hole": 0.02679491924311264,
+        "captured_nut_flats": 2.498001805406602e-16,
+        "two_axial_rails": 1.865174681370263e-14,
+        "fixed_front_shoulder_window": 2.886579864025407e-14,
+        "fixed_back_thread_window": 0.1894621743430478,
+        "finite_thickness_slot": -3.544109450359656e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -3.057998299027531e-12,
+      "radial_tip_error": 1.0110761225998808,
+      "variables": [
+        1.0110761225998808,
+        -0.33170792240041774,
+        -0.08830638871885316,
+        -0.020024984723219702,
+        0.0007996601963851708,
+        0.016181585602079322,
+        -0.17320508075689967,
+        1.6413490275952625e-14,
+        0.2175717809235226,
+        -0.23888165623280366,
+        0.007446117683561823,
+        -6.549797469633891e-06,
+        0.0008796093440211362
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -2.7533531010703882e-14,
+        "outer_round_rod_bore": -1.318944953254686e-13,
+        "inner_guide_cap_or_rod": 0.5164334172614284,
+        "thread_hole": 0.02679491924310029,
+        "captured_nut_flats": -1.865174681370263e-14,
+        "two_axial_rails": -3.057998299027531e-12,
+        "fixed_front_shoulder_window": 1.8740564655672642e-13,
+        "fixed_back_thread_window": 0.18946217434317014,
+        "finite_thickness_slot": -2.457783976339556e-12
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -5.284661597215745e-13,
+      "radial_tip_error": 1.0110761225916163,
+      "variables": [
+        1.0110761225916163,
+        -0.33170792240020336,
+        -0.08830638871871511,
+        -0.020024984723238996,
+        0.0007996601964058278,
+        0.016181585602078826,
+        -0.17320508075687108,
+        -1.523715575250013e-14,
+        0.21756754421753344,
+        -0.2389014511601181,
+        0.00744673296361455,
+        -6.5487574310560915e-06,
+        0.0008793970063173723
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -3.019806626980426e-13,
+        "outer_round_rod_bore": 1.8740564655672642e-13,
+        "inner_guide_cap_or_rod": 0.5164334172545189,
+        "thread_hole": 0.02679491924312888,
+        "captured_nut_flats": 6.716849298982197e-15,
+        "two_axial_rails": -5.284661597215745e-13,
+        "fixed_front_shoulder_window": -2.5268676040468563e-13,
+        "fixed_back_thread_window": 0.18946217434296098,
+        "finite_thickness_slot": -8.454348332520567e-14
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -6.208367153703875e-13,
+      "radial_tip_error": 1.0110761225946123,
+      "variables": [
+        1.0110761225946123,
+        -0.33170792240034425,
+        -0.08830638871880907,
+        -0.020024984723227605,
+        0.0007996601963931479,
+        0.016181585602076668,
+        -0.17320508075688826,
+        -7.490469205461548e-17,
+        0.21757236958900128,
+        -0.2388789058393108,
+        0.007446032193805813,
+        -6.549941925485267e-06,
+        0.0008796388471693254
+      ],
+      "iterations": 12,
+      "constraint_minima": {
+        "carrier_rectangle": -1.9539925233402755e-14,
+        "outer_round_rod_bore": -4.440892098500626e-15,
+        "inner_guide_cap_or_rod": 0.5164334172569505,
+        "thread_hole": 0.026794919243111698,
+        "captured_nut_flats": -5.828670879282072e-16,
+        "two_axial_rails": -6.208367153703875e-13,
+        "fixed_front_shoulder_window": -4.440892098500626e-16,
+        "fixed_back_thread_window": 0.18946217434307666,
+        "finite_thickness_slot": -3.0780933357732465e-14
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -1.310784814023691e-12,
+      "radial_tip_error": 1.0110761225943952,
+      "variables": [
+        1.0110761225943952,
+        -0.33170792240035485,
+        -0.08830638871880667,
+        -0.020024984723224684,
+        0.0007996601963899648,
+        0.016181585602077202,
+        -0.17320508075688712,
+        3.890454584133328e-16,
+        0.21757078710324154,
+        -0.23888629960262955,
+        0.007446262012086543,
+        -6.549553465403037e-06,
+        0.000879559535191716
+      ],
+      "iterations": 17,
+      "constraint_minima": {
+        "carrier_rectangle": -1.1546319456101628e-14,
+        "outer_round_rod_bore": 4.440892098500626e-16,
+        "inner_guide_cap_or_rod": 0.5164334172567533,
+        "thread_hole": 0.026794919243112836,
+        "captured_nut_flats": 2.220446049250313e-16,
+        "two_axial_rails": -5.17808018685173e-13,
+        "fixed_front_shoulder_window": 8.704148513061227e-14,
+        "fixed_back_thread_window": 0.18946217434312929,
+        "finite_thickness_slot": -1.310784814023691e-12
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -9.903189379656396e-13,
+      "radial_tip_error": 1.0110761225938614,
+      "variables": [
+        1.0110761225938614,
+        -0.33170792239989916,
+        -0.08830638871841932,
+        -0.020024984723273808,
+        0.0007996601964354873,
+        0.01618158560205698,
+        -0.17320508075685526,
+        -4.925160161664598e-14,
+        0.21757000877875068,
+        -0.23888993612286105,
+        0.007446375045022618,
+        -6.549362469005551e-06,
+        0.0008795205266821513
+      ],
+      "iterations": 13,
+      "constraint_minima": {
+        "carrier_rectangle": -9.903189379656396e-13,
+        "outer_round_rod_bore": 3.481659405224491e-13,
+        "inner_guide_cap_or_rod": 0.5164334172568321,
+        "thread_hole": 0.0267949192431447,
+        "captured_nut_flats": 3.4139358007223564e-15,
+        "two_axial_rails": -6.776801342311956e-13,
+        "fixed_front_shoulder_window": -8.357758929378178e-13,
+        "fixed_back_thread_window": 0.18946217434279422,
+        "finite_thickness_slot": 8.203993040467594e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -1.2354561818028742e-12,
+      "radial_tip_error": 1.0110761225819407,
+      "variables": [
+        1.0110761225819407,
+        -0.331707922400591,
+        -0.08830638871927537,
+        -0.02002498472318626,
+        0.0007996601963793446,
+        0.016181585602101062,
+        -0.17320508075685093,
+        -4.0867890491942213e-14,
+        0.2175744986894819,
+        -0.23886895813997097,
+        0.007445722992241317,
+        -6.55046449274285e-06,
+        0.0008797455549112535
+      ],
+      "iterations": 10,
+      "constraint_minima": {
+        "carrier_rectangle": -2.433608869978343e-13,
+        "outer_round_rod_bore": -4.75175454539567e-14,
+        "inner_guide_cap_or_rod": 0.516433417245624,
+        "thread_hole": 0.02679491924314903,
+        "captured_nut_flats": 1.1352030426792226e-14,
+        "two_axial_rails": -1.2354561818028742e-12,
+        "fixed_front_shoulder_window": 7.283063041541027e-14,
+        "fixed_back_thread_window": 0.18946217434265522,
+        "finite_thickness_slot": 7.783357292012738e-12
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -3.2356339829675562e-12,
+      "radial_tip_error": 1.011076122593966,
+      "variables": [
+        1.011076122593966,
+        -0.331707922399988,
+        -0.08830638871866701,
+        -0.02002498472326233,
+        0.0007996601964118399,
+        0.016181585602078982,
+        -0.17320508075682806,
+        -5.884447789934674e-14,
+        0.21757115522498138,
+        -0.23888457964224033,
+        0.007446208551040168,
+        -6.549643913994502e-06,
+        0.0008795779849290714
+      ],
+      "iterations": 13,
+      "constraint_minima": {
+        "carrier_rectangle": -5.302425165609748e-13,
+        "outer_round_rod_bore": 3.5704772471945034e-13,
+        "inner_guide_cap_or_rod": 0.5164334172567719,
+        "thread_hole": 0.0267949192431719,
+        "captured_nut_flats": 2.2148949341271873e-14,
+        "two_axial_rails": -3.2356339829675562e-12,
+        "fixed_front_shoulder_window": -5.333511410299252e-13,
+        "fixed_back_thread_window": 0.18946217434295942,
+        "finite_thickness_slot": 2.3175628083293986e-12
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -3.368694212468881e-13,
+      "radial_tip_error": 1.0110761225933256,
+      "variables": [
+        1.0110761225933256,
+        -0.33170792240036173,
+        -0.08830638871882751,
+        -0.020024984723220143,
+        0.0007996601963905301,
+        0.016181585602076193,
+        -0.17320508075688718,
+        5.988584556251659e-16,
+        0.21757341008349268,
+        -0.2388740443922243,
+        0.0074458810867811705,
+        -6.550197278137672e-06,
+        0.0008796909953218482
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -1.4210854715202004e-14,
+        "outer_round_rod_bore": -5.329070518200751e-15,
+        "inner_guide_cap_or_rod": 0.5164334172558156,
+        "thread_hole": 0.02679491924311278,
+        "captured_nut_flats": 8.326672684688674e-17,
+        "two_axial_rails": 3.9968028886505635e-14,
+        "fixed_front_shoulder_window": 8.79296635503124e-14,
+        "fixed_back_thread_window": 0.18946217434307555,
+        "finite_thickness_slot": -3.368694212468881e-13
+      }
+    },
+    {
+      "success": true,
+      "min_margin": -8.654188476953095e-13,
+      "radial_tip_error": 1.0110761225923566,
+      "variables": [
+        1.0110761225923566,
+        -0.331707922400379,
+        -0.08830638871885059,
+        -0.020024984723216663,
+        0.0007996601963897621,
+        0.016181585602073046,
+        -0.17320508075688715,
+        4.492457198275904e-16,
+        0.21756836116040706,
+        -0.2388976342040929,
+        0.007446614322276776,
+        -6.548957958023907e-06,
+        0.000879437950327881
+      ],
+      "iterations": 11,
+      "constraint_minima": {
+        "carrier_rectangle": -5.861977570020827e-14,
+        "outer_round_rod_bore": -3.241851231905457e-14,
+        "inner_guide_cap_or_rod": 0.5164334172549536,
+        "thread_hole": 0.026794919243112808,
+        "captured_nut_flats": 1.942890293094024e-16,
+        "two_axial_rails": -1.8740564655672642e-13,
+        "fixed_front_shoulder_window": 1.0347278589506459e-13,
+        "fixed_back_thread_window": 0.1894621743430498,
+        "finite_thickness_slot": -8.654188476953095e-13
+      }
+    }
+  ],
+  "global_bound": null,
+  "whole_assembly_counterexample_verified": true,
+  "witness": {
+    "variables": [
+      1.0060207419868814,
+      -0.33004938278841567,
+      -0.08786485677525889,
+      -0.0199248597996036,
+      0.000795661895403245,
+      0.016100677674068926,
+      -0.17233905535311517,
+      1.6331422824572863e-14,
+      0.216483922018905,
+      -0.23768724795163965,
+      0.007408887095144014,
+      -6.517048482285722e-06,
+      0.0008752112973010305
+    ],
+    "radial_tip_error": 1.0060207419868814,
+    "analytic_min_margin": 0.0007499999999814599,
+    "constraint_minima": {
+      "carrier_rectangle": 0.0009924735528361595,
+      "outer_round_rod_bore": 0.00131230380907299,
+      "inner_guide_cap_or_rod": 0.5137860426908525,
+      "thread_hole": 0.02766094464688479,
+      "captured_nut_flats": 0.0007499999999814599,
+      "two_axial_rails": 0.0009972775507565146,
+      "fixed_front_shoulder_window": 0.001253056702140487,
+      "fixed_back_thread_window": 0.18951679196155347,
+      "finite_thickness_slot": 0.0012482816074828595
+    },
+    "frame_transform": [
+      [
+        0.999999616981381,
+        -0.0008752354484178834,
+        -3.2585585695891804e-08,
+        0.21648447597386183
+      ],
+      [
+        0.000875211185547896,
+        0.999972171292421,
+        -0.007408822180454476,
+        -0.11173727088391355
+      ],
+      [
+        6.51704848223959e-06,
+        0.007408819314218366,
+        0.9999725543003154,
+        0.0004665768946381377
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "carrier_transform": [
+      [
+        0.9998700703913594,
+        -0.016112636653816324,
+        0.00047463211014597877,
+        25.13102074198688
+      ],
+      [
+        0.016099976952147668,
+        0.9996716639411609,
+        0.01993376671005518,
+        -0.33004938278841567
+      ],
+      [
+        -0.0007956618114505937,
+        -0.019923535157513713,
+        0.9998011900718607,
+        -0.08786485677525889
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "actual_cam_origin_xyz": [
+      0.216483922018905,
+      -0.23768724795163965,
+      17.0
+    ],
+    "probes": [
+      {
+        "name": "fixed",
+        "exit_code": 1,
+        "has_solid_or_unclassified_overlap": false,
+        "triangle_count": 0,
+        "components": []
+      },
+      {
+        "name": "cam",
+        "exit_code": 1,
+        "has_solid_or_unclassified_overlap": false,
+        "triangle_count": 0,
+        "components": []
+      },
+      {
+        "name": "seat",
+        "exit_code": 0,
+        "triangle_count": 84,
+        "components": [
+          {
+            "triangles": 8,
+            "volume_mm3": 5.509102288941969e-16,
+            "planar_error_mm": 2.0841387264889016e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                43.6395362210409,
+                44.155207462375344
+              ],
+              [
+                1.689760741203211,
+                1.6980090883143997
+              ],
+              [
+                -1.552862392934238,
+                -1.5010480064568545
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 6.375108774214766e-16,
+            "planar_error_mm": 2.313070614418254e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                43.49218063645079,
+                43.686462074539364
+              ],
+              [
+                1.6963707227994755,
+                1.7031208736958148
+              ],
+              [
+                -1.1539556725528752,
+                -0.7878271137728217
+              ]
+            ]
+          },
+          {
+            "triangles": 14,
+            "volume_mm3": 1.4649306073755142e-14,
+            "planar_error_mm": 1.919735222745414e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                44.083810029696956,
+                45.936463843424235
+              ],
+              [
+                1.689021092126684,
+                1.7222278184604973
+              ],
+              [
+                -1.9734561888411735,
+                -1.7652530118450713
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 1.491862189340054e-16,
+            "planar_error_mm": 5.2748620083667206e-17,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                42.96677786981403,
+                43.433264108588446
+              ],
+              [
+                1.710176776719339,
+                1.7219381391855653
+              ],
+              [
+                -0.03278442002875675,
+                0.32269676602053987
+              ]
+            ]
+          },
+          {
+            "triangles": 6,
+            "volume_mm3": 2.095979639848977e-15,
+            "planar_error_mm": 2.2597733123410644e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                43.47789562142072,
+                43.68735862554426
+              ],
+              [
+                1.7325149641786328,
+                1.737445110048258
+              ],
+              [
+                0.6341209703454634,
+                0.8397367690931073
+              ]
+            ]
+          },
+          {
+            "triangles": 14,
+            "volume_mm3": 3.583288180064592e-17,
+            "planar_error_mm": 9.859048904487445e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                43.5145497892717,
+                45.694052798959845
+              ],
+              [
+                1.7440227108033495,
+                1.7877561003530729
+              ],
+              [
+                1.275324522111412,
+                1.8206319607867694
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.69791609728032e-15,
+            "planar_error_mm": 1.4252130742203306e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                46.63304631633127,
+                46.88903887471155
+              ],
+              [
+                1.7517059769599246,
+                1.7624043842185066
+              ],
+              [
+                -0.931493297020527,
+                -0.5255014034855849
+              ]
+            ]
+          },
+          {
+            "triangles": 10,
+            "volume_mm3": 5.6430554673525535e-15,
+            "planar_error_mm": 2.944670397422435e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                45.46399999624166,
+                46.22403163550034
+              ],
+              [
+                1.7802669338373756,
+                1.7896388917825374
+              ],
+              [
+                1.3486775012112295,
+                1.558647834351155
+              ]
+            ]
+          },
+          {
+            "triangles": 8,
+            "volume_mm3": 5.2339859876737727e-17,
+            "planar_error_mm": 1.303262876743131e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                46.75058695614074,
+                46.92764851304551
+              ],
+              [
+                1.7708008672367248,
+                1.7779599240843427
+              ],
+              [
+                -0.14009847954783866,
+                0.26609122283545333
+              ]
+            ]
+          },
+          {
+            "triangles": 4,
+            "volume_mm3": 5.433659181912397e-16,
+            "planar_error_mm": 1.18970560295637e-16,
+            "planar_contact_only": true,
+            "bounds": [
+              [
+                46.72941584244261,
+                46.733042751053034
+              ],
+              [
+                1.7829484398960116,
+                1.7830256115529302
+              ],
+              [
+                0.6289887663218046,
+                0.6317435917265171
+              ]
+            ]
+          }
+        ],
+        "has_solid_or_unclassified_overlap": false
+      }
+    ],
+    "source_stable": true,
+    "fixed_pin_offset_path_samples": 101,
+    "fixed_pin_offset_path_min_margin": 0.0007499999999814599,
+    "path_scope": "Analytic constraint samples only; not a continuous CSG path certificate."
+  },
+  "artifact_sha256": {
+    "output/analysis/feeder-tolerance-witness.scad": "95ebe440d23eb1480157878a2022ea98b7030bbe924c7fac57ae857a021bb20f",
+    "output/analysis/feeder-tolerance-fixed.log": "b1b15b23b5f71cdaf13be517864c40403fe36ec27b9ae70216020fa64e8e040c",
+    "output/analysis/feeder-tolerance-cam.log": "b1b15b23b5f71cdaf13be517864c40403fe36ec27b9ae70216020fa64e8e040c",
+    "output/analysis/feeder-tolerance-seat.log": "d4d105444f18ce4d8fc7769b7d5fbbb5267b9436a4cb7a833ea7cdd2b01eaa47"
+  },
+  "limits": [
+    "A feasible rigid CAD configuration is a lower bound on the worst error, not a global maximum.",
+    "Other three followers retain their nominal poses in the actual CSG check.",
+    "The verified excess over 1mm is small; this rejects a claimed guarantee, not a prediction of actual double feeding.",
+    "No print/profile/assembly-position error, elastic deformation, wear, airflow, friction or spring force is added.",
+    "The shoulder and captured nut are seated; a loose screw creates a different and potentially larger uncertainty.",
+    "Finite interpolation samples do not prove a continuous loaded actuation trajectory."
+  ]
+}

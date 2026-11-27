@@ -1,0 +1,1166 @@
+{
+  "candidate_sha256": "adcaa525302a8d7c0415bf17929ee30900d66cfa273140c9a4d7fc99e057ab3b",
+  "results": [
+    {
+      "name": "body",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/body.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/body.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/body.stl",
+      "sha256": "8492395db883c06b964b61501e1e5eaa635a3fe58dc4c73cdb1c58a56f36afd0"
+    },
+    {
+      "name": "lever",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/lever.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/lever.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/lever.stl",
+      "sha256": "e3e301b8e160bbe96d3fc4ddbc823fbd520650d1ffd35a71450f97630d25afe1"
+    },
+    {
+      "name": "terminal-cap",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap.stl",
+      "sha256": "ec1b62be069333ec838c39aea24815be50a72ee27c6f2673814bffa4d268520d"
+    },
+    {
+      "name": "cover",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover.stl",
+      "sha256": "99358762a57f21b495c4b1def22ea98894406af184ac52e7bf9a249254959c2b"
+    },
+    {
+      "name": "contract",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/contract.csg",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/contract.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-0.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-0.stl",
+      "sha256": "7aded358196628d4a99e924fbffd1a6bf7e5f723c38bc80d57400036b77b595d"
+    },
+    {
+      "name": "core-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-0.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-1.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-1.stl",
+      "sha256": "e008007b48c87840b90fdfeef1e2140f5bc29a0796cbedb1528b141a0c503d85"
+    },
+    {
+      "name": "core-1",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-1.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-2",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-2.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-2.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-2.stl",
+      "sha256": "e10050a67194690f31eae72c767721ef3d4d207c6d1cb70664bb961b16476f03"
+    },
+    {
+      "name": "core-2",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-2.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-2.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-3",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-3.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-3.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-3.stl",
+      "sha256": "b376972c19c3ebafa17c91fe91625a921484e6a9121cfbb5e30d0cbd098caecc"
+    },
+    {
+      "name": "core-3",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-3.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-3.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-4",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-4.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-4.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-4.stl",
+      "sha256": "7638adbe7bac89b3fb11a043f617af2f24ebc6d155b2a149d08dcbff631e19f8"
+    },
+    {
+      "name": "core-4",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-4.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-4.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-5.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-5.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-5.stl",
+      "sha256": "84931a8ee98ef74b5d83645e78ca2be36d21cef61cdc4ab4d9420243b9d7830f"
+    },
+    {
+      "name": "core-5",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-5.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-5.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-6",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-6.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-6.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-6.stl",
+      "sha256": "b6523cc9b8b4f075cdb98e9f301418c443456c9880af6ce6cf61cf36854b526f"
+    },
+    {
+      "name": "core-6",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-6.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-6.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-7",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-7.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-7.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-7.stl",
+      "sha256": "557ddf3c73193b193eb5fdaff4c90a78fc84492c79fe2443f01d5cdfd9e34f46"
+    },
+    {
+      "name": "core-7",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-7.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-7.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-8",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-8.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-8.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-8.stl",
+      "sha256": "69bf579883b30da938c994c78b9ade87b01ba6a09c487b3a0483072c30f35486"
+    },
+    {
+      "name": "core-8",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-8.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-8.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-9",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-9.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-9.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-9.stl",
+      "sha256": "58c14dcdbef1b33e8017df95f9ad44cb3e7054a78d12c072487f1f5d695dc770"
+    },
+    {
+      "name": "core-9",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-9.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-9.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-10.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-10.stl",
+      "sha256": "e4b0ed302db8d3454d76ddb30f18e6e393a274acc864c56958fed7fdfa1610d6"
+    },
+    {
+      "name": "core-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-10.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-11",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-11.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-11.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-11.stl",
+      "sha256": "830109e0d17102eb4db0f766046e81c5d71c762843607f6160620fac51d93e9a"
+    },
+    {
+      "name": "core-11",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-11.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-11.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-12",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-12.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-12.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-12.stl",
+      "sha256": "90bfbdbd0cdf37efca851e3f1d0da405558aa09b462865fe84acc3397a554d5e"
+    },
+    {
+      "name": "core-12",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-12.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-12.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-13",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-13.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-13.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-13.stl",
+      "sha256": "659bf5a35db4e162b1c9fefd449442c83515a8ad6f142d32a904f16633da9d78"
+    },
+    {
+      "name": "core-13",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-13.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-13.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "motion-14",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-14.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-14.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-14.stl",
+      "sha256": "e5778f6f6abf20aeeb6455399c516f4c7356d6d26c17d8d4aec6e23770c0ab6b"
+    },
+    {
+      "name": "core-14",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-14.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-14.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-14.stl",
+      "sha256": "54fb5ae4044a72667db805da35892a14300b087db21d90e7048d3e84b41b8e26"
+    },
+    {
+      "name": "motion-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-15.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-15.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-15.stl",
+      "sha256": "51406f3f40ba84f27869684fe1a49b10278132b1556bfa4b2ce176a3fcf7f93c"
+    },
+    {
+      "name": "core-15",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-15.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-15.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-15.stl",
+      "sha256": "2115760a08e2f5ab199bf3335c82df77c8ee7b167f2cb8a762bbe309205eabc5"
+    },
+    {
+      "name": "motion-16",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-16.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-16.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-16.stl",
+      "sha256": "a04bb12ebf1f2530926a8738a654f915b6e5d0f70c564d9b7937e837a07cc375"
+    },
+    {
+      "name": "core-16",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-16.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-16.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-16.stl",
+      "sha256": "45b42d759c1df1162e88077996615fc9d3dc32e9456ac8afcea355de434e338e"
+    },
+    {
+      "name": "motion-17",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-17.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-17.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-17.stl",
+      "sha256": "4d1f18ab6fca983a09c7e6f0219f2e9c466c63bc46e47759fd1077d734848e8c"
+    },
+    {
+      "name": "core-17",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-17.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-17.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-17.stl",
+      "sha256": "fecc0cfbe7a9db6ac2dc0583bf90e05037801a057dde82e2e60983b750fd7e2b"
+    },
+    {
+      "name": "motion-18",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-18.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-18.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-18.stl",
+      "sha256": "240350da4e0a82a54d5cf08eeefa57e8ebb2ab3d3d579487ab01e133280fba95"
+    },
+    {
+      "name": "core-18",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-18.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-18.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-18.stl",
+      "sha256": "cab049fc3fe8b9b60fe560eefc340f6ff8b64038f90b722cc803080e828cc39a"
+    },
+    {
+      "name": "motion-19",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-19.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-19.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-19.stl",
+      "sha256": "fb8c060704a8589d34b267937fd4d864afd63ecc0edd635586f9e2c7aa34893e"
+    },
+    {
+      "name": "core-19",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-19.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-19.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-19.stl",
+      "sha256": "28a3e4d11b6dc7eb59516c280cddb3bd525c225ee87a194e4a59d33e1f56f0da"
+    },
+    {
+      "name": "motion-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-20.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-20.stl",
+      "sha256": "3a185268853e04c076a99a5c5249abc161deda633c0c4102120e6f169011e85a"
+    },
+    {
+      "name": "core-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-20.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-20.stl",
+      "sha256": "ab58d3a63ce673c260c0932a4e4e54c83b568fd804fde315e14dda6ce28e83a3"
+    },
+    {
+      "name": "motion-22",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-22.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-22.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/motion-22.stl",
+      "sha256": "ecdbded8a297173201c085a6cfa56a4be50d48ff05a8c10ed99aaa07473af9be"
+    },
+    {
+      "name": "core-22",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-22.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-22.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/core-22.stl",
+      "sha256": "7d5ad16527be1308c1ae25f0e709961557126b1944e2503556284abd9651a3d0"
+    },
+    {
+      "name": "ball-fit-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-0.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "cap-hardware-0",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-0.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-0.stl",
+      "sha256": "0e85d2b68c8c18ec3c12fdaf75cd79b4b04ff00024535200df20ed835871bfc1"
+    },
+    {
+      "name": "ball-fit-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-10.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "cap-hardware-10",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-10.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-10.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-10.stl",
+      "sha256": "5338a838efabe546cc3b6d10e9bb1c79ce9c315341925766276b43ebc32b673d"
+    },
+    {
+      "name": "ball-fit-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-20.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "cap-hardware-20",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-20.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-20.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-20.stl",
+      "sha256": "acd925e11807f2176817e6c02a7e224892732bc6f4ddc01a9a2e278605a47ac6"
+    },
+    {
+      "name": "ball-fit-22",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-22.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/ball-fit-22.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "cap-hardware-22",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-22.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-22.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cap-hardware-22.stl",
+      "sha256": "b45e7dcd20e4a484bd6dc91341511512cd1741e02f1192acedf1696baf61ce35"
+    },
+    {
+      "name": "terminal-insertion",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-insertion.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-insertion.scad"
+      ],
+      "returncode": 1,
+      "empty": true,
+      "warnings": false,
+      "file": null,
+      "sha256": null
+    },
+    {
+      "name": "terminal-cap-removal",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap-removal.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/terminal-cap-removal.stl",
+      "sha256": "da69d9b6080e0801a415738cb7e02b1f3c7796e9e23b59e48e773a4ac372ed8a"
+    },
+    {
+      "name": "cover-removal",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover-removal.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover-removal.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/cover-removal.stl",
+      "sha256": "2680b63305ff1b2813db0d262de9f29946c6319e3427493732a98314bbaaba00"
+    },
+    {
+      "name": "print-mating",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/print-mating.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/print-mating.scad"
+      ],
+      "returncode": 0,
+      "empty": false,
+      "warnings": false,
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-input-lip-candidate/print-mating.stl",
+      "sha256": "055fb4e7adf8918aefa0ee9e59baf71a08fc97e1764b32e5605f7574f93c35b0"
+    }
+  ],
+  "status": "DIAGNOSTIC_NATIVE_REVIEW_REQUIRED",
+  "print_release": false
+}

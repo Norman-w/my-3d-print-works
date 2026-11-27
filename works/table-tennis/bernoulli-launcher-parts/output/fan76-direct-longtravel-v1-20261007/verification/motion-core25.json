@@ -1,0 +1,2229 @@
+{
+  "status": "PASS_SAMPLED_MESH_PATH",
+  "parameters": {
+    "female": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-body-clean.stl",
+    "male": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core25-clean.stl",
+    "seated_z": 70.0,
+    "approach_z": 180.0,
+    "pitch": 4.0,
+    "step": 0.25,
+    "phase": 360.0,
+    "volume_tolerance": 1e-05,
+    "output": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/verification/motion-core25.json"
+  },
+  "sha256": {
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-body-clean.stl": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core25-clean.stl": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333"
+  },
+  "max_intersection_mm3": 0.0,
+  "wrong_phase_intersection_mm3": 471.9240094838279,
+  "poses": [
+    {
+      "z": 180.0,
+      "rotation_deg": 10260.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 179.75,
+      "rotation_deg": 10237.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 179.5,
+      "rotation_deg": 10215.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 179.25,
+      "rotation_deg": 10192.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 179.0,
+      "rotation_deg": 10170.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 178.75,
+      "rotation_deg": 10147.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 178.5,
+      "rotation_deg": 10125.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 178.25,
+      "rotation_deg": 10102.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 178.0,
+      "rotation_deg": 10080.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 177.75,
+      "rotation_deg": 10057.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 177.5,
+      "rotation_deg": 10035.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 177.25,
+      "rotation_deg": 10012.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 177.0,
+      "rotation_deg": 9990.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 176.75,
+      "rotation_deg": 9967.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 176.5,
+      "rotation_deg": 9945.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 176.25,
+      "rotation_deg": 9922.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 176.0,
+      "rotation_deg": 9900.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 175.75,
+      "rotation_deg": 9877.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 175.5,
+      "rotation_deg": 9855.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 175.25,
+      "rotation_deg": 9832.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 175.0,
+      "rotation_deg": 9810.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 174.75,
+      "rotation_deg": 9787.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 174.5,
+      "rotation_deg": 9765.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 174.25,
+      "rotation_deg": 9742.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 174.0,
+      "rotation_deg": 9720.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 173.75,
+      "rotation_deg": 9697.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 173.5,
+      "rotation_deg": 9675.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 173.25,
+      "rotation_deg": 9652.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 173.0,
+      "rotation_deg": 9630.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 172.75,
+      "rotation_deg": 9607.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 172.5,
+      "rotation_deg": 9585.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 172.25,
+      "rotation_deg": 9562.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 172.0,
+      "rotation_deg": 9540.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 171.75,
+      "rotation_deg": 9517.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 171.5,
+      "rotation_deg": 9495.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 171.25,
+      "rotation_deg": 9472.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 171.0,
+      "rotation_deg": 9450.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 170.75,
+      "rotation_deg": 9427.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 170.5,
+      "rotation_deg": 9405.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 170.25,
+      "rotation_deg": 9382.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 170.0,
+      "rotation_deg": 9360.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 169.75,
+      "rotation_deg": 9337.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 169.5,
+      "rotation_deg": 9315.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 169.25,
+      "rotation_deg": 9292.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 169.0,
+      "rotation_deg": 9270.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 168.75,
+      "rotation_deg": 9247.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 168.5,
+      "rotation_deg": 9225.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 168.25,
+      "rotation_deg": 9202.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 168.0,
+      "rotation_deg": 9180.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 167.75,
+      "rotation_deg": 9157.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 167.5,
+      "rotation_deg": 9135.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 167.25,
+      "rotation_deg": 9112.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 167.0,
+      "rotation_deg": 9090.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 166.75,
+      "rotation_deg": 9067.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 166.5,
+      "rotation_deg": 9045.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 166.25,
+      "rotation_deg": 9022.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 166.0,
+      "rotation_deg": 9000.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 165.75,
+      "rotation_deg": 8977.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 165.5,
+      "rotation_deg": 8955.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 165.25,
+      "rotation_deg": 8932.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 165.0,
+      "rotation_deg": 8910.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 164.75,
+      "rotation_deg": 8887.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 164.5,
+      "rotation_deg": 8865.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 164.25,
+      "rotation_deg": 8842.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 164.0,
+      "rotation_deg": 8820.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 163.75,
+      "rotation_deg": 8797.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 163.5,
+      "rotation_deg": 8775.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 163.25,
+      "rotation_deg": 8752.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 163.0,
+      "rotation_deg": 8730.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 162.75,
+      "rotation_deg": 8707.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 162.5,
+      "rotation_deg": 8685.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 162.25,
+      "rotation_deg": 8662.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 162.0,
+      "rotation_deg": 8640.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 161.75,
+      "rotation_deg": 8617.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 161.5,
+      "rotation_deg": 8595.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 161.25,
+      "rotation_deg": 8572.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 161.0,
+      "rotation_deg": 8550.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 160.75,
+      "rotation_deg": 8527.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 160.5,
+      "rotation_deg": 8505.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 160.25,
+      "rotation_deg": 8482.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 160.0,
+      "rotation_deg": 8460.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 159.75,
+      "rotation_deg": 8437.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 159.5,
+      "rotation_deg": 8415.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 159.25,
+      "rotation_deg": 8392.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 159.0,
+      "rotation_deg": 8370.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 158.75,
+      "rotation_deg": 8347.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 158.5,
+      "rotation_deg": 8325.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 158.25,
+      "rotation_deg": 8302.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 158.0,
+      "rotation_deg": 8280.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 157.75,
+      "rotation_deg": 8257.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 157.5,
+      "rotation_deg": 8235.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 157.25,
+      "rotation_deg": 8212.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 157.0,
+      "rotation_deg": 8190.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 156.75,
+      "rotation_deg": 8167.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 156.5,
+      "rotation_deg": 8145.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 156.25,
+      "rotation_deg": 8122.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 156.0,
+      "rotation_deg": 8100.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 155.75,
+      "rotation_deg": 8077.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 155.5,
+      "rotation_deg": 8055.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 155.25,
+      "rotation_deg": 8032.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 155.0,
+      "rotation_deg": 8010.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 154.75,
+      "rotation_deg": 7987.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 154.5,
+      "rotation_deg": 7965.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 154.25,
+      "rotation_deg": 7942.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 154.0,
+      "rotation_deg": 7920.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 153.75,
+      "rotation_deg": 7897.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 153.5,
+      "rotation_deg": 7875.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 153.25,
+      "rotation_deg": 7852.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 153.0,
+      "rotation_deg": 7830.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 152.75,
+      "rotation_deg": 7807.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 152.5,
+      "rotation_deg": 7785.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 152.25,
+      "rotation_deg": 7762.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 152.0,
+      "rotation_deg": 7740.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 151.75,
+      "rotation_deg": 7717.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 151.5,
+      "rotation_deg": 7695.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 151.25,
+      "rotation_deg": 7672.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 151.0,
+      "rotation_deg": 7650.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 150.75,
+      "rotation_deg": 7627.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 150.5,
+      "rotation_deg": 7605.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 150.25,
+      "rotation_deg": 7582.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 150.0,
+      "rotation_deg": 7560.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 149.75,
+      "rotation_deg": 7537.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 149.5,
+      "rotation_deg": 7515.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 149.25,
+      "rotation_deg": 7492.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 149.0,
+      "rotation_deg": 7470.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 148.75,
+      "rotation_deg": 7447.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 148.5,
+      "rotation_deg": 7425.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 148.25,
+      "rotation_deg": 7402.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 148.0,
+      "rotation_deg": 7380.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 147.75,
+      "rotation_deg": 7357.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 147.5,
+      "rotation_deg": 7335.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 147.25,
+      "rotation_deg": 7312.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 147.0,
+      "rotation_deg": 7290.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 146.75,
+      "rotation_deg": 7267.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 146.5,
+      "rotation_deg": 7245.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 146.25,
+      "rotation_deg": 7222.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 146.0,
+      "rotation_deg": 7200.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 145.75,
+      "rotation_deg": 7177.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 145.5,
+      "rotation_deg": 7155.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 145.25,
+      "rotation_deg": 7132.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 145.0,
+      "rotation_deg": 7110.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 144.75,
+      "rotation_deg": 7087.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 144.5,
+      "rotation_deg": 7065.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 144.25,
+      "rotation_deg": 7042.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 144.0,
+      "rotation_deg": 7020.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 143.75,
+      "rotation_deg": 6997.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 143.5,
+      "rotation_deg": 6975.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 143.25,
+      "rotation_deg": 6952.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 143.0,
+      "rotation_deg": 6930.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 142.75,
+      "rotation_deg": 6907.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 142.5,
+      "rotation_deg": 6885.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 142.25,
+      "rotation_deg": 6862.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 142.0,
+      "rotation_deg": 6840.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 141.75,
+      "rotation_deg": 6817.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 141.5,
+      "rotation_deg": 6795.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 141.25,
+      "rotation_deg": 6772.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 141.0,
+      "rotation_deg": 6750.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 140.75,
+      "rotation_deg": 6727.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 140.5,
+      "rotation_deg": 6705.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 140.25,
+      "rotation_deg": 6682.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 140.0,
+      "rotation_deg": 6660.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 139.75,
+      "rotation_deg": 6637.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 139.5,
+      "rotation_deg": 6615.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 139.25,
+      "rotation_deg": 6592.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 139.0,
+      "rotation_deg": 6570.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 138.75,
+      "rotation_deg": 6547.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 138.5,
+      "rotation_deg": 6525.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 138.25,
+      "rotation_deg": 6502.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 138.0,
+      "rotation_deg": 6480.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 137.75,
+      "rotation_deg": 6457.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 137.5,
+      "rotation_deg": 6435.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 137.25,
+      "rotation_deg": 6412.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 137.0,
+      "rotation_deg": 6390.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 136.75,
+      "rotation_deg": 6367.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 136.5,
+      "rotation_deg": 6345.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 136.25,
+      "rotation_deg": 6322.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 136.0,
+      "rotation_deg": 6300.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 135.75,
+      "rotation_deg": 6277.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 135.5,
+      "rotation_deg": 6255.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 135.25,
+      "rotation_deg": 6232.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 135.0,
+      "rotation_deg": 6210.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 134.75,
+      "rotation_deg": 6187.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 134.5,
+      "rotation_deg": 6165.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 134.25,
+      "rotation_deg": 6142.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 134.0,
+      "rotation_deg": 6120.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 133.75,
+      "rotation_deg": 6097.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 133.5,
+      "rotation_deg": 6075.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 133.25,
+      "rotation_deg": 6052.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 133.0,
+      "rotation_deg": 6030.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 132.75,
+      "rotation_deg": 6007.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 132.5,
+      "rotation_deg": 5985.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 132.25,
+      "rotation_deg": 5962.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 132.0,
+      "rotation_deg": 5940.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 131.75,
+      "rotation_deg": 5917.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 131.5,
+      "rotation_deg": 5895.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 131.25,
+      "rotation_deg": 5872.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 131.0,
+      "rotation_deg": 5850.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 130.75,
+      "rotation_deg": 5827.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 130.5,
+      "rotation_deg": 5805.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 130.25,
+      "rotation_deg": 5782.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 130.0,
+      "rotation_deg": 5760.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 129.75,
+      "rotation_deg": 5737.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 129.5,
+      "rotation_deg": 5715.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 129.25,
+      "rotation_deg": 5692.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 129.0,
+      "rotation_deg": 5670.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 128.75,
+      "rotation_deg": 5647.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 128.5,
+      "rotation_deg": 5625.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 128.25,
+      "rotation_deg": 5602.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 128.0,
+      "rotation_deg": 5580.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 127.75,
+      "rotation_deg": 5557.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 127.5,
+      "rotation_deg": 5535.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 127.25,
+      "rotation_deg": 5512.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 127.0,
+      "rotation_deg": 5490.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 126.75,
+      "rotation_deg": 5467.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 126.5,
+      "rotation_deg": 5445.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 126.25,
+      "rotation_deg": 5422.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 126.0,
+      "rotation_deg": 5400.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 125.75,
+      "rotation_deg": 5377.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 125.5,
+      "rotation_deg": 5355.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 125.25,
+      "rotation_deg": 5332.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 125.0,
+      "rotation_deg": 5310.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 124.75,
+      "rotation_deg": 5287.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 124.5,
+      "rotation_deg": 5265.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 124.25,
+      "rotation_deg": 5242.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 124.0,
+      "rotation_deg": 5220.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 123.75,
+      "rotation_deg": 5197.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 123.5,
+      "rotation_deg": 5175.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 123.25,
+      "rotation_deg": 5152.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 123.0,
+      "rotation_deg": 5130.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 122.75,
+      "rotation_deg": 5107.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 122.5,
+      "rotation_deg": 5085.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 122.25,
+      "rotation_deg": 5062.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 122.0,
+      "rotation_deg": 5040.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 121.75,
+      "rotation_deg": 5017.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 121.5,
+      "rotation_deg": 4995.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 121.25,
+      "rotation_deg": 4972.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 121.0,
+      "rotation_deg": 4950.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 120.75,
+      "rotation_deg": 4927.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 120.5,
+      "rotation_deg": 4905.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 120.25,
+      "rotation_deg": 4882.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 120.0,
+      "rotation_deg": 4860.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 119.75,
+      "rotation_deg": 4837.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 119.5,
+      "rotation_deg": 4815.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 119.25,
+      "rotation_deg": 4792.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 119.0,
+      "rotation_deg": 4770.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 118.75,
+      "rotation_deg": 4747.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 118.5,
+      "rotation_deg": 4725.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 118.25,
+      "rotation_deg": 4702.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 118.0,
+      "rotation_deg": 4680.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 117.75,
+      "rotation_deg": 4657.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 117.5,
+      "rotation_deg": 4635.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 117.25,
+      "rotation_deg": 4612.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 117.0,
+      "rotation_deg": 4590.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 116.75,
+      "rotation_deg": 4567.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 116.5,
+      "rotation_deg": 4545.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 116.25,
+      "rotation_deg": 4522.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 116.0,
+      "rotation_deg": 4500.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 115.75,
+      "rotation_deg": 4477.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 115.5,
+      "rotation_deg": 4455.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 115.25,
+      "rotation_deg": 4432.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 115.0,
+      "rotation_deg": 4410.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 114.75,
+      "rotation_deg": 4387.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 114.5,
+      "rotation_deg": 4365.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 114.25,
+      "rotation_deg": 4342.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 114.0,
+      "rotation_deg": 4320.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 113.75,
+      "rotation_deg": 4297.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 113.5,
+      "rotation_deg": 4275.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 113.25,
+      "rotation_deg": 4252.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 113.0,
+      "rotation_deg": 4230.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 112.75,
+      "rotation_deg": 4207.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 112.5,
+      "rotation_deg": 4185.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 112.25,
+      "rotation_deg": 4162.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 112.0,
+      "rotation_deg": 4140.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 111.75,
+      "rotation_deg": 4117.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 111.5,
+      "rotation_deg": 4095.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 111.25,
+      "rotation_deg": 4072.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 111.0,
+      "rotation_deg": 4050.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 110.75,
+      "rotation_deg": 4027.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 110.5,
+      "rotation_deg": 4005.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 110.25,
+      "rotation_deg": 3982.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 110.0,
+      "rotation_deg": 3960.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 109.75,
+      "rotation_deg": 3937.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 109.5,
+      "rotation_deg": 3915.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 109.25,
+      "rotation_deg": 3892.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 109.0,
+      "rotation_deg": 3870.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 108.75,
+      "rotation_deg": 3847.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 108.5,
+      "rotation_deg": 3825.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 108.25,
+      "rotation_deg": 3802.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 108.0,
+      "rotation_deg": 3780.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 107.75,
+      "rotation_deg": 3757.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 107.5,
+      "rotation_deg": 3735.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 107.25,
+      "rotation_deg": 3712.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 107.0,
+      "rotation_deg": 3690.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 106.75,
+      "rotation_deg": 3667.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 106.5,
+      "rotation_deg": 3645.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 106.25,
+      "rotation_deg": 3622.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 106.0,
+      "rotation_deg": 3600.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 105.75,
+      "rotation_deg": 3577.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 105.5,
+      "rotation_deg": 3555.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 105.25,
+      "rotation_deg": 3532.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 105.0,
+      "rotation_deg": 3510.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 104.75,
+      "rotation_deg": 3487.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 104.5,
+      "rotation_deg": 3465.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 104.25,
+      "rotation_deg": 3442.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 104.0,
+      "rotation_deg": 3420.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 103.75,
+      "rotation_deg": 3397.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 103.5,
+      "rotation_deg": 3375.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 103.25,
+      "rotation_deg": 3352.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 103.0,
+      "rotation_deg": 3330.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 102.75,
+      "rotation_deg": 3307.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 102.5,
+      "rotation_deg": 3285.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 102.25,
+      "rotation_deg": 3262.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 102.0,
+      "rotation_deg": 3240.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 101.75,
+      "rotation_deg": 3217.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 101.5,
+      "rotation_deg": 3195.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 101.25,
+      "rotation_deg": 3172.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 101.0,
+      "rotation_deg": 3150.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 100.75,
+      "rotation_deg": 3127.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 100.5,
+      "rotation_deg": 3105.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 100.25,
+      "rotation_deg": 3082.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 100.0,
+      "rotation_deg": 3060.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 99.75,
+      "rotation_deg": 3037.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 99.5,
+      "rotation_deg": 3015.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 99.25,
+      "rotation_deg": 2992.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 99.0,
+      "rotation_deg": 2970.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 98.75,
+      "rotation_deg": 2947.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 98.5,
+      "rotation_deg": 2925.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 98.25,
+      "rotation_deg": 2902.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 98.0,
+      "rotation_deg": 2880.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 97.75,
+      "rotation_deg": 2857.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 97.5,
+      "rotation_deg": 2835.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 97.25,
+      "rotation_deg": 2812.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 97.0,
+      "rotation_deg": 2790.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 96.75,
+      "rotation_deg": 2767.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 96.5,
+      "rotation_deg": 2745.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 96.25,
+      "rotation_deg": 2722.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 96.0,
+      "rotation_deg": 2700.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 95.75,
+      "rotation_deg": 2677.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 95.5,
+      "rotation_deg": 2655.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 95.25,
+      "rotation_deg": 2632.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 95.0,
+      "rotation_deg": 2610.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 94.75,
+      "rotation_deg": 2587.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 94.5,
+      "rotation_deg": 2565.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 94.25,
+      "rotation_deg": 2542.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 94.0,
+      "rotation_deg": 2520.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 93.75,
+      "rotation_deg": 2497.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 93.5,
+      "rotation_deg": 2475.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 93.25,
+      "rotation_deg": 2452.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 93.0,
+      "rotation_deg": 2430.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 92.75,
+      "rotation_deg": 2407.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 92.5,
+      "rotation_deg": 2385.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 92.25,
+      "rotation_deg": 2362.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 92.0,
+      "rotation_deg": 2340.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 91.75,
+      "rotation_deg": 2317.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 91.5,
+      "rotation_deg": 2295.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 91.25,
+      "rotation_deg": 2272.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 91.0,
+      "rotation_deg": 2250.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 90.75,
+      "rotation_deg": 2227.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 90.5,
+      "rotation_deg": 2205.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 90.25,
+      "rotation_deg": 2182.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 90.0,
+      "rotation_deg": 2160.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 89.75,
+      "rotation_deg": 2137.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 89.5,
+      "rotation_deg": 2115.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 89.25,
+      "rotation_deg": 2092.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 89.0,
+      "rotation_deg": 2070.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 88.75,
+      "rotation_deg": 2047.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 88.5,
+      "rotation_deg": 2025.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 88.25,
+      "rotation_deg": 2002.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 88.0,
+      "rotation_deg": 1980.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 87.75,
+      "rotation_deg": 1957.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 87.5,
+      "rotation_deg": 1935.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 87.25,
+      "rotation_deg": 1912.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 87.0,
+      "rotation_deg": 1890.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 86.75,
+      "rotation_deg": 1867.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 86.5,
+      "rotation_deg": 1845.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 86.25,
+      "rotation_deg": 1822.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 86.0,
+      "rotation_deg": 1800.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 85.75,
+      "rotation_deg": 1777.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 85.5,
+      "rotation_deg": 1755.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 85.25,
+      "rotation_deg": 1732.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 85.0,
+      "rotation_deg": 1710.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 84.75,
+      "rotation_deg": 1687.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 84.5,
+      "rotation_deg": 1665.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 84.25,
+      "rotation_deg": 1642.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 84.0,
+      "rotation_deg": 1620.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 83.75,
+      "rotation_deg": 1597.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 83.5,
+      "rotation_deg": 1575.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 83.25,
+      "rotation_deg": 1552.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 83.0,
+      "rotation_deg": 1530.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 82.75,
+      "rotation_deg": 1507.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 82.5,
+      "rotation_deg": 1485.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 82.25,
+      "rotation_deg": 1462.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 82.0,
+      "rotation_deg": 1440.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 81.75,
+      "rotation_deg": 1417.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 81.5,
+      "rotation_deg": 1395.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 81.25,
+      "rotation_deg": 1372.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 81.0,
+      "rotation_deg": 1350.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 80.75,
+      "rotation_deg": 1327.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 80.5,
+      "rotation_deg": 1305.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 80.25,
+      "rotation_deg": 1282.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 80.0,
+      "rotation_deg": 1260.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 79.75,
+      "rotation_deg": 1237.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 79.5,
+      "rotation_deg": 1215.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 79.25,
+      "rotation_deg": 1192.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 79.0,
+      "rotation_deg": 1170.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 78.75,
+      "rotation_deg": 1147.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 78.5,
+      "rotation_deg": 1125.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 78.25,
+      "rotation_deg": 1102.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 78.0,
+      "rotation_deg": 1080.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 77.75,
+      "rotation_deg": 1057.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 77.5,
+      "rotation_deg": 1035.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 77.25,
+      "rotation_deg": 1012.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 77.0,
+      "rotation_deg": 990.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 76.75,
+      "rotation_deg": 967.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 76.5,
+      "rotation_deg": 945.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 76.25,
+      "rotation_deg": 922.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 76.0,
+      "rotation_deg": 900.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 75.75,
+      "rotation_deg": 877.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 75.5,
+      "rotation_deg": 855.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 75.25,
+      "rotation_deg": 832.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 75.0,
+      "rotation_deg": 810.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 74.75,
+      "rotation_deg": 787.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 74.5,
+      "rotation_deg": 765.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 74.25,
+      "rotation_deg": 742.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 74.0,
+      "rotation_deg": 720.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 73.75,
+      "rotation_deg": 697.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 73.5,
+      "rotation_deg": 675.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 73.25,
+      "rotation_deg": 652.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 73.0,
+      "rotation_deg": 630.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 72.75,
+      "rotation_deg": 607.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 72.5,
+      "rotation_deg": 585.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 72.25,
+      "rotation_deg": 562.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 72.0,
+      "rotation_deg": 540.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 71.75,
+      "rotation_deg": 517.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 71.5,
+      "rotation_deg": 495.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 71.25,
+      "rotation_deg": 472.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 71.0,
+      "rotation_deg": 450.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 70.75,
+      "rotation_deg": 427.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 70.5,
+      "rotation_deg": 405.0,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 70.25,
+      "rotation_deg": 382.5,
+      "intersection_mm3": 0.0
+    },
+    {
+      "z": 70.0,
+      "rotation_deg": 360.0,
+      "intersection_mm3": 0.0
+    }
+  ],
+  "physical_fit_verified": false,
+  "limitations": "Finite sampling; pair with analytic lead/phase and entry-envelope checks. Counterexample must collide, otherwise engagement is unproven."
+}

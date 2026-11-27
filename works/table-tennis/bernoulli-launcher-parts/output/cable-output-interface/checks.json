@@ -1,0 +1,1435 @@
+{
+  "source_sha256": {
+    "cad/cable-output-interface.scad": "2f22059f74e07aaf6761c3434ef3a16ec91da016cf3ae00b6d9eee736d8b76cf",
+    "docs/cable-output-interface.md": "3355f2bccb6406e2bae94482277e6298640b7bd2a9993a868df1d6339be6c1be"
+  },
+  "meaning": "Digital source/mesh/declared-envelope evidence only; no physical release. contact-residue-only threshold 1e-8 mm^3 retains exact logs and full metrics.",
+  "results": [
+    {
+      "kind": "part",
+      "name": "frame",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/frame-0.stl",
+        "-D",
+        "co_part=\"frame\"",
+        "-D",
+        "co_t=0",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/frame-0.stl",
+      "output": "Geometries in cache: 215\nGeometry cache size in bytes: 1094936\nCGAL Polyhedrons in cache: 189\nCGAL cache size in bytes: 9073500\nTotal rendering time: 0:00:00.271\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      11\n   Vertices:     1987\n   Facets:       4014\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/frame-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4014,
+        "uniqueVertexCount": 1987,
+        "bounds": {
+          "min": [
+            -76.0,
+            -4.0,
+            -64.5
+          ],
+          "max": [
+            89.0,
+            54.0,
+            37.0
+          ],
+          "size": [
+            165.0,
+            58.0,
+            101.5
+          ]
+        },
+        "surfaceArea": 22087.924982658074,
+        "signedVolume": 30514.4279263267,
+        "volume": 30514.4279263267,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "FAIL_STRICT_ZERO_AREA_RETAINED",
+      "strict_zero_area_facets": [
+        122
+      ]
+    },
+    {
+      "kind": "part",
+      "name": "lug-cap",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/lug-cap-0.stl",
+        "-D",
+        "co_part=\"lug-cap\"",
+        "-D",
+        "co_t=0",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/lug-cap-0.stl",
+      "output": "Geometries in cache: 11\nGeometry cache size in bytes: 89384\nCGAL Polyhedrons in cache: 3\nCGAL cache size in bytes: 294000\nTotal rendering time: 0:00:00.008\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      3\n   Vertices:      444\n   Facets:        896\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/lug-cap-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 896,
+        "uniqueVertexCount": 444,
+        "bounds": {
+          "min": [
+            -65.5,
+            39.2,
+            10.0
+          ],
+          "max": [
+            -48.0,
+            43.2,
+            32.0
+          ],
+          "size": [
+            17.5,
+            4.0,
+            22.0
+          ]
+        },
+        "surfaceArea": 1107.8239755028007,
+        "signedVolume": 1324.8628496445672,
+        "volume": 1324.8628496445672,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "watertight",
+      "strict_zero_area_facets": []
+    },
+    {
+      "kind": "part",
+      "name": "fixed-bridge",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/fixed-bridge-0.stl",
+        "-D",
+        "co_part=\"fixed-bridge\"",
+        "-D",
+        "co_t=0",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/fixed-bridge-0.stl",
+      "output": "Geometries in cache: 17\nGeometry cache size in bytes: 58944\nCGAL Polyhedrons in cache: 4\nCGAL cache size in bytes: 102000\nTotal rendering time: 0:00:00.006\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      1\n   Vertices:      235\n   Facets:        470\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/fixed-bridge-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 470,
+        "uniqueVertexCount": 235,
+        "bounds": {
+          "min": [
+            -70.0,
+            -58.0,
+            18.0
+          ],
+          "max": [
+            12.0,
+            45.0,
+            93.0
+          ],
+          "size": [
+            82.0,
+            103.0,
+            75.0
+          ]
+        },
+        "surfaceArea": 21642.903116108013,
+        "signedVolume": 54258.5779106984,
+        "volume": 54258.5779106984,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "watertight",
+      "strict_zero_area_facets": []
+    },
+    {
+      "kind": "part",
+      "name": "beam",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/beam-0.stl",
+        "-D",
+        "co_part=\"beam\"",
+        "-D",
+        "co_t=0",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/beam-0.stl",
+      "output": "Geometries in cache: 43\nGeometry cache size in bytes: 164528\nCGAL Polyhedrons in cache: 14\nCGAL cache size in bytes: 807000\nTotal rendering time: 0:00:00.026\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      8\n   Vertices:      994\n   Facets:       2016\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/beam-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2016,
+        "uniqueVertexCount": 994,
+        "bounds": {
+          "min": [
+            -70.0,
+            -63.0,
+            -156.0
+          ],
+          "max": [
+            87.0,
+            45.0,
+            93.0
+          ],
+          "size": [
+            157.0,
+            108.0,
+            249.0
+          ]
+        },
+        "surfaceArea": 51951.35598210127,
+        "signedVolume": 140196.34183248386,
+        "volume": 140196.34183248386,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "watertight",
+      "strict_zero_area_facets": []
+    },
+    {
+      "kind": "probe",
+      "name": "motion",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-motion-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"motion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-motion-0.stl",
+      "output": "Geometries in cache: 1073\nGeometry cache size in bytes: 6945464\nCGAL Polyhedrons in cache: 567\nCGAL cache size in bytes: 104752000\nTotal rendering time: 0:00:01.969\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -5\n   Vertices:       29\n   Facets:         34\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-motion-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 34,
+        "uniqueVertexCount": 29,
+        "bounds": {
+          "min": [
+            -54.0,
+            4.5,
+            -32.5
+          ],
+          "max": [
+            58.90783410138249,
+            24.2,
+            5.0
+          ],
+          "size": [
+            112.90783410138249,
+            19.7,
+            37.5
+          ]
+        },
+        "surfaceArea": 49.11446552347489,
+        "signedVolume": -1.0946799022804043e-13,
+        "volume": 1.0946799022804043e-13,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "motion",
+      "t": 0.5,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-motion-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"motion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-motion-0.5.stl",
+      "output": "Geometries in cache: 1073\nGeometry cache size in bytes: 6945464\nCGAL Polyhedrons in cache: 567\nCGAL cache size in bytes: 104746750\nTotal rendering time: 0:00:02.008\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -1\n   Vertices:        8\n   Facets:          8\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-motion-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 8,
+        "uniqueVertexCount": 8,
+        "bounds": {
+          "min": [
+            44.29999999701977,
+            4.5,
+            -32.5
+          ],
+          "max": [
+            49.0,
+            4.5,
+            -3.0
+          ],
+          "size": [
+            4.700000002980232,
+            0.0,
+            29.5
+          ]
+        },
+        "surfaceArea": 17.80000001192093,
+        "signedVolume": 0.0,
+        "volume": 0.0,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "motion",
+      "t": 1,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-motion-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"motion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-motion-1.stl",
+      "output": "Geometries in cache: 1073\nGeometry cache size in bytes: 6945464\nCGAL Polyhedrons in cache: 567\nCGAL cache size in bytes: 104752750\nTotal rendering time: 0:00:01.976\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -5\n   Vertices:       27\n   Facets:         30\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-motion-1.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 30,
+        "uniqueVertexCount": 27,
+        "bounds": {
+          "min": [
+            -54.0,
+            4.5,
+            -35.0
+          ],
+          "max": [
+            54.0,
+            48.5,
+            36.0
+          ],
+          "size": [
+            108.0,
+            44.0,
+            71.0
+          ]
+        },
+        "surfaceArea": 47.48334402108611,
+        "signedVolume": -8.195666367782906e-13,
+        "volume": 8.195666367782906e-13,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "hardware-fit",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-hardware-fit-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"hardware-fit\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-hardware-fit-0.stl",
+      "output": "Geometries in cache: 326\nGeometry cache size in bytes: 1949016\nCGAL Polyhedrons in cache: 225\nCGAL cache size in bytes: 14734750\nTotal rendering time: 0:00:00.388\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -64\n   Vertices:      715\n   Facets:       1170\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-hardware-fit-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1170,
+        "uniqueVertexCount": 659,
+        "bounds": {
+          "min": [
+            -65.36703215501147,
+            29.5,
+            17.490486745229365
+          ],
+          "max": [
+            -48.13296784498853,
+            43.2,
+            93.0
+          ],
+          "size": [
+            17.234064310022944,
+            13.700000000000003,
+            75.50951325477064
+          ]
+        },
+        "surfaceArea": 290.2785154562223,
+        "signedVolume": 1.6030443639181158e-10,
+        "volume": 1.6030443639181158e-10,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 17,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "hardware-fit",
+      "t": 0.5,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-hardware-fit-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"hardware-fit\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-hardware-fit-0.5.stl",
+      "output": "Geometries in cache: 326\nGeometry cache size in bytes: 1949016\nCGAL Polyhedrons in cache: 225\nCGAL cache size in bytes: 14734750\nTotal rendering time: 0:00:00.528\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -64\n   Vertices:      715\n   Facets:       1170\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-hardware-fit-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1170,
+        "uniqueVertexCount": 659,
+        "bounds": {
+          "min": [
+            -65.36703215501147,
+            29.5,
+            27.490486745229365
+          ],
+          "max": [
+            -48.13296784498853,
+            43.2,
+            93.0
+          ],
+          "size": [
+            17.234064310022944,
+            13.700000000000003,
+            65.50951325477064
+          ]
+        },
+        "surfaceArea": 290.27851545622246,
+        "signedVolume": 1.3314194191593742e-10,
+        "volume": 1.3314194191593742e-10,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 17,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "hardware-fit",
+      "t": 1,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-hardware-fit-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"hardware-fit\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-hardware-fit-1.stl",
+      "output": "Geometries in cache: 326\nGeometry cache size in bytes: 1949016\nCGAL Polyhedrons in cache: 225\nCGAL cache size in bytes: 14733750\nTotal rendering time: 0:00:00.424\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -63\n   Vertices:      711\n   Facets:       1166\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-hardware-fit-1.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1166,
+        "uniqueVertexCount": 656,
+        "bounds": {
+          "min": [
+            -65.36703215501147,
+            29.5,
+            37.49048674522936
+          ],
+          "max": [
+            -48.13296784498853,
+            43.2,
+            93.0
+          ],
+          "size": [
+            17.234064310022944,
+            13.700000000000003,
+            55.50951325477064
+          ]
+        },
+        "surfaceArea": 289.92362609514123,
+        "signedVolume": 1.701474516835333e-10,
+        "volume": 1.701474516835333e-10,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 17,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "spring",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-spring-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"spring\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-spring-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "spring",
+      "t": 0.5,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-spring-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"spring\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-spring-0.5.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "spring",
+      "t": 1,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-spring-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"spring\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-spring-1.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "tools",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-tools-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"tools\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-tools-0.stl",
+      "output": "Geometries in cache: 1054\nGeometry cache size in bytes: 6701056\nCGAL Polyhedrons in cache: 505\nCGAL cache size in bytes: 104821500\nTotal rendering time: 0:00:01.927\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -7\n   Vertices:      108\n   Facets:        184\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-tools-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 184,
+        "uniqueVertexCount": 93,
+        "bounds": {
+          "min": [
+            -67.0,
+            26.5,
+            81.95431354951505
+          ],
+          "max": [
+            -48.32526489631317,
+            44.5,
+            85.0
+          ],
+          "size": [
+            18.674735103686828,
+            18.0,
+            3.0456864504849506
+          ]
+        },
+        "surfaceArea": 298.6380303208344,
+        "signedVolume": -2.1742607714259066e-11,
+        "volume": 2.1742607714259066e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 7,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "tools",
+      "t": 0.5,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-tools-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"tools\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-tools-0.5.stl",
+      "output": "Geometries in cache: 1054\nGeometry cache size in bytes: 6701056\nCGAL Polyhedrons in cache: 505\nCGAL cache size in bytes: 104820500\nTotal rendering time: 0:00:01.969\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -7\n   Vertices:      108\n   Facets:        184\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-tools-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 184,
+        "uniqueVertexCount": 93,
+        "bounds": {
+          "min": [
+            -67.0,
+            26.5,
+            81.95431354951505
+          ],
+          "max": [
+            -48.32526489631317,
+            44.5,
+            85.0
+          ],
+          "size": [
+            18.674735103686828,
+            18.0,
+            3.0456864504849506
+          ]
+        },
+        "surfaceArea": 298.6380303208344,
+        "signedVolume": -2.1742607714259066e-11,
+        "volume": 2.1742607714259066e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 7,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "tools",
+      "t": 1,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-tools-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"tools\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-tools-1.stl",
+      "output": "Geometries in cache: 1054\nGeometry cache size in bytes: 6701056\nCGAL Polyhedrons in cache: 505\nCGAL cache size in bytes: 104822250\nTotal rendering time: 0:00:02.043\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -7\n   Vertices:      108\n   Facets:        184\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-tools-1.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 184,
+        "uniqueVertexCount": 93,
+        "bounds": {
+          "min": [
+            -67.0,
+            26.5,
+            81.95431354951505
+          ],
+          "max": [
+            -48.32526489631317,
+            44.5,
+            85.0
+          ],
+          "size": [
+            18.674735103686828,
+            18.0,
+            3.0456864504849506
+          ]
+        },
+        "surfaceArea": 298.6380303208344,
+        "signedVolume": -2.1742607714259066e-11,
+        "volume": 2.1742607714259066e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 7,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "cap-insertion",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-cap-insertion-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"cap-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-cap-insertion-0.stl",
+      "output": "Geometries in cache: 1044\nGeometry cache size in bytes: 6611520\nCGAL Polyhedrons in cache: 506\nCGAL cache size in bytes: 104500500\nTotal rendering time: 0:00:01.937\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -9\n   Vertices:      115\n   Facets:        190\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-cap-insertion-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 190,
+        "uniqueVertexCount": 112,
+        "bounds": {
+          "min": [
+            -65.5,
+            39.2,
+            10.0
+          ],
+          "max": [
+            -49.0,
+            39.2,
+            32.0
+          ],
+          "size": [
+            16.5,
+            0.0,
+            22.0
+          ]
+        },
+        "surfaceArea": 108.20478560855067,
+        "signedVolume": -7.1634920217888975e-12,
+        "volume": 7.1634920217888975e-12,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 1,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "cap-insertion",
+      "t": 0.5,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-cap-insertion-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"cap-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-cap-insertion-0.5.stl",
+      "output": "Geometries in cache: 1044\nGeometry cache size in bytes: 6611520\nCGAL Polyhedrons in cache: 506\nCGAL cache size in bytes: 104499500\nTotal rendering time: 0:00:01.958\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -9\n   Vertices:      115\n   Facets:        190\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-cap-insertion-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 190,
+        "uniqueVertexCount": 112,
+        "bounds": {
+          "min": [
+            -65.5,
+            39.2,
+            20.0
+          ],
+          "max": [
+            -49.0,
+            39.2,
+            42.0
+          ],
+          "size": [
+            16.5,
+            0.0,
+            22.0
+          ]
+        },
+        "surfaceArea": 108.2047856085506,
+        "signedVolume": -3.3869795856844576e-11,
+        "volume": 3.3869795856844576e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 1,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "cap-insertion",
+      "t": 1,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-cap-insertion-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"cap-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-cap-insertion-1.stl",
+      "output": "Geometries in cache: 1044\nGeometry cache size in bytes: 6611520\nCGAL Polyhedrons in cache: 506\nCGAL cache size in bytes: 104501250\nTotal rendering time: 0:00:02.031\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      -9\n   Vertices:      115\n   Facets:        190\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-cap-insertion-1.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 190,
+        "uniqueVertexCount": 112,
+        "bounds": {
+          "min": [
+            -65.5,
+            39.2,
+            30.0
+          ],
+          "max": [
+            -49.0,
+            39.2,
+            52.0
+          ],
+          "size": [
+            16.5,
+            0.0,
+            22.0
+          ]
+        },
+        "surfaceArea": 108.20478560855065,
+        "signedVolume": -7.111589095387671e-11,
+        "volume": 7.111589095387671e-11,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 1,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "nipple-insertion",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-nipple-insertion-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"nipple-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-nipple-insertion-0.stl",
+      "output": "Geometries in cache: 1037\nGeometry cache size in bytes: 6571256\nCGAL Polyhedrons in cache: 506\nCGAL cache size in bytes: 104472750\nTotal rendering time: 0:00:02.168\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:        4\n   Facets:          4\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-nipple-insertion-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4,
+        "uniqueVertexCount": 4,
+        "bounds": {
+          "min": [
+            -58.0,
+            32.0,
+            17.490486745229365
+          ],
+          "max": [
+            -57.782110643130856,
+            32.083168316831724,
+            17.5
+          ],
+          "size": [
+            0.21788935686914357,
+            0.0831683168317241,
+            0.009513254770634916
+          ]
+        },
+        "surfaceArea": 0.01817268818736355,
+        "signedVolume": 1.2286237294472507e-13,
+        "volume": 1.2286237294472507e-13,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "nipple-insertion",
+      "t": 0.5,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-nipple-insertion-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"nipple-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-nipple-insertion-0.5.stl",
+      "output": "Geometries in cache: 1037\nGeometry cache size in bytes: 6571256\nCGAL Polyhedrons in cache: 506\nCGAL cache size in bytes: 104471750\nTotal rendering time: 0:00:02.121\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:        4\n   Facets:          4\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-nipple-insertion-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4,
+        "uniqueVertexCount": 4,
+        "bounds": {
+          "min": [
+            -58.0,
+            32.0,
+            27.490486745229365
+          ],
+          "max": [
+            -57.782110643130856,
+            32.083168316831724,
+            27.5
+          ],
+          "size": [
+            0.21788935686914357,
+            0.0831683168317241,
+            0.009513254770634916
+          ]
+        },
+        "surfaceArea": 0.01817268818736355,
+        "signedVolume": -3.906366061786487e-13,
+        "volume": 3.906366061786487e-13,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "contact-residue-only"
+    },
+    {
+      "kind": "probe",
+      "name": "nipple-insertion",
+      "t": 1,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-nipple-insertion-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"nipple-insertion\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-nipple-insertion-1.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "wire-channel",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-wire-channel-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"wire-channel\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-wire-channel-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "wire-channel",
+      "t": 0.5,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-wire-channel-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"wire-channel\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-wire-channel-0.5.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "wire-channel",
+      "t": 1,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-wire-channel-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"wire-channel\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-wire-channel-1.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "frame-extract-bridge",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-frame-extract-bridge-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"frame-extract-bridge\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-frame-extract-bridge-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "frame-extract-bridge",
+      "t": 0.5,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-frame-extract-bridge-0.5.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0.5",
+        "-D",
+        "co_kind=\"frame-extract-bridge\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-frame-extract-bridge-0.5.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "frame-extract-bridge",
+      "t": 1,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-frame-extract-bridge-1.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=1",
+        "-D",
+        "co_kind=\"frame-extract-bridge\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-frame-extract-bridge-1.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "fixed-fit",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-fixed-fit-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"fixed-fit\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-fixed-fit-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "continuous",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-continuous-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"continuous\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-continuous-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "spring-continuous",
+      "t": 0,
+      "returncode": 1,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-spring-continuous-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"spring-continuous\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-spring-continuous-0.stl",
+      "output": "Current top level object is empty.\n",
+      "result": "exact-empty"
+    },
+    {
+      "kind": "probe",
+      "name": "lug-root",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-lug-root-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"lug-root\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-lug-root-0.stl",
+      "output": "Geometries in cache: 201\nGeometry cache size in bytes: 1001304\nCGAL Polyhedrons in cache: 185\nCGAL cache size in bytes: 7364750\nTotal rendering time: 0:00:00.300\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:       12\n   Facets:         20\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-lug-root-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 20,
+        "uniqueVertexCount": 12,
+        "bounds": {
+          "min": [
+            -52.0,
+            28.0,
+            10.0
+          ],
+          "max": [
+            -47.0,
+            39.2,
+            16.0
+          ],
+          "size": [
+            5.0,
+            11.200000000000003,
+            6.0
+          ]
+        },
+        "surfaceArea": 281.6000000000001,
+        "signedVolume": 261.59999999999945,
+        "volume": 261.59999999999945,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "positive-volume-root"
+    },
+    {
+      "kind": "probe",
+      "name": "bridge-root",
+      "t": 0,
+      "returncode": 0,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "-o",
+        "output/cable-output-interface/probe-bridge-root-0.stl",
+        "-D",
+        "co_part=\"probe\"",
+        "-D",
+        "co_t=0",
+        "-D",
+        "co_kind=\"bridge-root\"",
+        "cad/cable-output-interface.scad"
+      ],
+      "file": "output/cable-output-interface/probe-bridge-root-0.stl",
+      "output": "Geometries in cache: 43\nGeometry cache size in bytes: 164528\nCGAL Polyhedrons in cache: 14\nCGAL cache size in bytes: 560500\nTotal rendering time: 0:00:00.021\n   Top level object is a 3D object (manifold):\n   Status:     NoError\n   Genus:      0\n   Vertices:        8\n   Facets:         12\n",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-bridge-root-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 12,
+        "uniqueVertexCount": 8,
+        "bounds": {
+          "min": [
+            -24.0,
+            -54.0,
+            18.0
+          ],
+          "max": [
+            12.0,
+            -48.0,
+            26.0
+          ],
+          "size": [
+            36.0,
+            6.0,
+            8.0
+          ]
+        },
+        "surfaceArea": 1104.0,
+        "signedVolume": 1728.0,
+        "volume": 1728.0,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "result": "positive-volume-root"
+    },
+    {
+      "kind": "part",
+      "name": "frame-cgal.stl",
+      "file": "output/cable-output-interface/frame-cgal.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/frame-cgal.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2616,
+        "uniqueVertexCount": 1288,
+        "bounds": {
+          "min": [
+            -76.0,
+            -4.0,
+            -64.5
+          ],
+          "max": [
+            89.0,
+            54.0,
+            37.0
+          ],
+          "size": [
+            165.0,
+            58.0,
+            101.5
+          ]
+        },
+        "surfaceArea": 22087.925220759887,
+        "signedVolume": 30514.429060303464,
+        "volume": 30514.429060303464,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "strict_zero_area_facets": [],
+      "result": "watertight-no-zeroarea",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=CGAL",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "output/cable-output-interface/frame-cgal.stl",
+        "-D",
+        "co_part=\"frame\"",
+        "cad/cable-output-interface.scad"
+      ]
+    },
+    {
+      "kind": "positive-control",
+      "name": "probe-wire-positive-control.stl",
+      "file": "output/cable-output-interface/probe-wire-positive-control.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/probe-wire-positive-control.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 296,
+        "uniqueVertexCount": 152,
+        "bounds": {
+          "min": [
+            -56.9,
+            34.75741352278107,
+            11.0
+          ],
+          "max": [
+            -56.25,
+            36.24258647721893,
+            32.0
+          ],
+          "size": [
+            0.6499999999999986,
+            1.4851729544378571,
+            21.0
+          ]
+        },
+        "surfaceArea": 61.872585093949716,
+        "signedVolume": 11.830089126524136,
+        "volume": 11.830089126524136,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "strict_zero_area_facets": [],
+      "result": "positive-volume-detected",
+      "fault_mm": 1
+    }
+  ],
+  "recommended_exports": [
+    "frame-cgal.stl",
+    "lug-cap-0.stl",
+    "beam-0.stl"
+  ]
+}

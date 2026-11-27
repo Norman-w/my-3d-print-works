@@ -1,0 +1,13 @@
+{
+  "directory": "output/current-stop-contract/runs/20260927T163722528406Z",
+  "report": "output/current-stop-contract/runs/20260927T163722528406Z/report.json",
+  "report_sha256": "1defdcefd763af48cc79722f1fbdca3086d4a75344085423ac5000527ce11cd1",
+  "status": "CURRENT_CONDITIONAL_STOP_EXAMPLE_CORRECTED_ACTUAL_JOINT_AND_LOAD_BOUNDS_OPEN",
+  "actual_joint_domain_certified": false,
+  "phase_reference_alignment_certified": false,
+  "physical_setting_authorized": false,
+  "physical_acceptance": false,
+  "integration_report": "output/current-stop-contract/runs/20260927T163722528406Z/integration-report.json",
+  "integration_report_sha256": "19bcdf00fd825ab6647f01e0fb898540693af57a0e4e7fb9f57d35a3c43bbb8f",
+  "common_phase_report": "output/current-joint-tolerance/common-phase-registration/report.json"
+}

@@ -1,0 +1,391 @@
+{
+  "status": "BOUNDED_STATIC_PARAMETER_FEASIBILITY_ONLY",
+  "source_sha256": {
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "analysis/gate_geometry.py": "3c09c8a5f76915770e82c79f25c4efd842eaa6d5ebd048a06478d72a2913ea0d",
+    "analysis/guide_openings.py": "0da76e06c220b07823ce53044b8c6560dc4bc86307ac8dc6e8373de8d7e513d1",
+    "analysis/gate_budget_feasibility.py": "d5a1224797e4a9f46c8f5b3b9d52a081d825bf34384e43f6044713eadb0f3e80"
+  },
+  "sources_stable": true,
+  "parameters_read": {
+    "barrel_id": 48.0,
+    "barrel_od": 50.0,
+    "hose_id": 50.0,
+    "hose_od": 55.0,
+    "ball_min_d": 40.0,
+    "ball_max_d": 41.0,
+    "guide_id": 42.5,
+    "guide_od": 47.0,
+    "guide_start_z": -80.0,
+    "guide_length": 104.0,
+    "transition_length": 18.0,
+    "feed_socket_od": 49.4,
+    "feed_socket_length": 28.0,
+    "y_stub_od": 50.0,
+    "y_stub_engagement": 25.0,
+    "barrel_engagement": 25.0,
+    "interface_radial_clearance": 0.25,
+    "finger_tip_radius": 2.5,
+    "finger_closed_center_r": 21.0,
+    "finger_open_center_r": 26.0,
+    "gate_spacing": 28.5,
+    "gate_overlap_fraction": 0.2,
+    "cam_stroke": 20.0,
+    "guide_clearance_budget": 0.25,
+    "gate_position_budget": 1.0,
+    "body_id": 64.0,
+    "body_wall": 3.0,
+    "body_flange": 9.0,
+    "split_gasket_thickness": 1.0,
+    "fastener_d": 3.4,
+    "nut_af": 5.8,
+    "nut_depth": 2.6,
+    "radial_print_clearance": 0.25,
+    "axial_print_clearance": 0.3,
+    "spin_guide_id": 42.5,
+    "spin_body_wall": 3.0,
+    "spin_pad_width": 12.0,
+    "spin_pad_length": 22.0,
+    "spin_pad_thickness": 1.0,
+    "spin_adjustment_travel": 2.5,
+    "spin_contact_length": 30.0,
+    "spin_angle": 0.0
+  },
+  "cases": [
+    {
+      "uniform_budget_mm": 1.0,
+      "result": "NOT_EXCLUDED_BY_THESE_NECESSARY_CONDITIONS",
+      "closed_radius_domain_mm": [
+        "2.50",
+        "21.44994432064364831350249239389929581053611884667236167782247280392022"
+      ],
+      "domain_reason": "B+e0 through intact-bore blocking limit sqrt((R0+t)^2-e0^2)-B; includes the narrower admissible domain c-B>Emax of gate_geometry.py.",
+      "partition_segments": 10000,
+      "all_intervals_have_negative_upper_bound": false,
+      "maximum_certified_window_width_upper_bound_mm": "2.08777818407873331297651144516549720477511251104155366701415927112461",
+      "max_upper_bound_interval_mm": [
+        "20.86818102999988831027796587740658742915265999807952017431332288883986",
+        "20.87007602443195267510931612664597735873371360996418741048110513612026"
+      ],
+      "rounded_arithmetic": "70-digit Decimal; directed elementary operations; sqrt expanded by next_plus/next_minus; adjacent intervals share exact stored endpoints.",
+      "diagnostic_midpoint_not_an_optimum_proof": {
+        "closed_radius_mm": 20.86912852721592,
+        "necessary_nominal_spacing_interval_mm": [
+          28.302546540090475,
+          30.382163717619385
+        ],
+        "width_mm": 2.0796171775289096
+      },
+      "witness_family": {
+        "guide_radius_mm": "21.50",
+        "ball_radii_mm": [
+          "20.0",
+          "20.5"
+        ],
+        "intact_bore_center_offsets_mm": [
+          "1.50",
+          "1.00"
+        ],
+        "lower_spacing_state": {
+          "ball_diameters_mm": [
+            41.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_and_rear_finger_radii": "c-B",
+          "actual_spacing": "L-2B",
+          "necessary_condition": "L >= 2H(c)+2B"
+        },
+        "upper_spacing_state": {
+          "ball_diameters_mm": [
+            40.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            0,
+            1.5
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_finger_radii": "c+B",
+          "rear_finger_radii": "c-B",
+          "actual_spacing": "L+2B",
+          "necessary_condition": "L <= h(c)+P-H(c)-2B"
+        }
+      }
+    },
+    {
+      "uniform_budget_mm": 1.1,
+      "result": "NOT_EXCLUDED_BY_THESE_NECESSARY_CONDITIONS",
+      "closed_radius_domain_mm": [
+        "2.60",
+        "21.34994432064364831350249239389929581053611884667236167782247280392022"
+      ],
+      "domain_reason": "B+e0 through intact-bore blocking limit sqrt((R0+t)^2-e0^2)-B; includes the narrower admissible domain c-B>Emax of gate_geometry.py.",
+      "partition_segments": 10000,
+      "all_intervals_have_negative_upper_bound": false,
+      "maximum_certified_window_width_upper_bound_mm": "0.84342727411399460681386171732155372732384984316232296632570554046210",
+      "max_upper_bound_interval_mm": [
+        "20.72182118590208609500015889870366940088315886530883756161541996498889",
+        "20.72369618033415045983150914794305933046421247719350479778320221226928"
+      ],
+      "rounded_arithmetic": "70-digit Decimal; directed elementary operations; sqrt expanded by next_plus/next_minus; adjacent intervals share exact stored endpoints.",
+      "diagnostic_midpoint_not_an_optimum_proof": {
+        "closed_radius_mm": 20.72275868311812,
+        "necessary_nominal_spacing_interval_mm": [
+          29.195767003761812,
+          30.031432649846774
+        ],
+        "width_mm": 0.8356656460849621
+      },
+      "witness_family": {
+        "guide_radius_mm": "21.50",
+        "ball_radii_mm": [
+          "20.0",
+          "20.5"
+        ],
+        "intact_bore_center_offsets_mm": [
+          "1.50",
+          "1.00"
+        ],
+        "lower_spacing_state": {
+          "ball_diameters_mm": [
+            41.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_and_rear_finger_radii": "c-B",
+          "actual_spacing": "L-2B",
+          "necessary_condition": "L >= 2H(c)+2B"
+        },
+        "upper_spacing_state": {
+          "ball_diameters_mm": [
+            40.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            0,
+            1.5
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_finger_radii": "c+B",
+          "rear_finger_radii": "c-B",
+          "actual_spacing": "L+2B",
+          "necessary_condition": "L <= h(c)+P-H(c)-2B"
+        }
+      }
+    },
+    {
+      "uniform_budget_mm": 1.5,
+      "result": "NO_COMMON_ROBUST_SPACING_WITHIN_DECLARED_MODEL",
+      "closed_radius_domain_mm": [
+        "3.00",
+        "20.94994432064364831350249239389929581053611884667236167782247280392022"
+      ],
+      "domain_reason": "B+e0 through intact-bore blocking limit sqrt((R0+t)^2-e0^2)-B; includes the narrower admissible domain c-B>Emax of gate_geometry.py.",
+      "partition_segments": 10000,
+      "all_intervals_have_negative_upper_bound": true,
+      "maximum_certified_window_width_upper_bound_mm": "-3.83479582066462417852761559566604934570253512547569770040963820402249",
+      "max_upper_bound_interval_mm": [
+        "20.12065689302991176141867724530114834408935015595609856830707456037910",
+        "20.12245188746197612625002749454053827367040376784076580447485680765949"
+      ],
+      "rounded_arithmetic": "70-digit Decimal; directed elementary operations; sqrt expanded by next_plus/next_minus; adjacent intervals share exact stored endpoints.",
+      "diagnostic_midpoint_not_an_optimum_proof": {
+        "closed_radius_mm": 20.121554390245944,
+        "necessary_nominal_spacing_interval_mm": [
+          32.56219348232494,
+          28.72097686364357
+        ],
+        "width_mm": -3.841216618681372
+      },
+      "witness_family": {
+        "guide_radius_mm": "21.50",
+        "ball_radii_mm": [
+          "20.0",
+          "20.5"
+        ],
+        "intact_bore_center_offsets_mm": [
+          "1.50",
+          "1.00"
+        ],
+        "lower_spacing_state": {
+          "ball_diameters_mm": [
+            41.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_and_rear_finger_radii": "c-B",
+          "actual_spacing": "L-2B",
+          "necessary_condition": "L >= 2H(c)+2B"
+        },
+        "upper_spacing_state": {
+          "ball_diameters_mm": [
+            40.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            0,
+            1.5
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_finger_radii": "c+B",
+          "rear_finger_radii": "c-B",
+          "actual_spacing": "L+2B",
+          "necessary_condition": "L <= h(c)+P-H(c)-2B"
+        }
+      }
+    },
+    {
+      "uniform_budget_mm": 2.0,
+      "result": "NO_COMMON_ROBUST_SPACING_WITHIN_DECLARED_MODEL",
+      "closed_radius_domain_mm": [
+        "3.50",
+        "20.44994432064364831350249239389929581053611884667236167782247280392022"
+      ],
+      "domain_reason": "B+e0 through intact-bore blocking limit sqrt((R0+t)^2-e0^2)-B; includes the narrower admissible domain c-B>Emax of gate_geometry.py.",
+      "partition_segments": 10000,
+      "all_intervals_have_negative_upper_bound": true,
+      "maximum_certified_window_width_upper_bound_mm": "-9.12250993415700682915855233736257189296859920326597919133103526204790",
+      "max_upper_bound_interval_mm": [
+        "19.31090806229639514683512490502926313206809166017597897307280263149678",
+        "19.31260305672845951166647515426865306164914527206064620924058487877717"
+      ],
+      "rounded_arithmetic": "70-digit Decimal; directed elementary operations; sqrt expanded by next_plus/next_minus; adjacent intervals share exact stored endpoints.",
+      "diagnostic_midpoint_not_an_optimum_proof": {
+        "closed_radius_mm": 19.311755559512427,
+        "necessary_nominal_spacing_interval_mm": [
+          36.43002501181369,
+          27.302398603495046
+        ],
+        "width_mm": -9.127626408318644
+      },
+      "witness_family": {
+        "guide_radius_mm": "21.50",
+        "ball_radii_mm": [
+          "20.0",
+          "20.5"
+        ],
+        "intact_bore_center_offsets_mm": [
+          "1.50",
+          "1.00"
+        ],
+        "lower_spacing_state": {
+          "ball_diameters_mm": [
+            41.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_and_rear_finger_radii": "c-B",
+          "actual_spacing": "L-2B",
+          "necessary_condition": "L >= 2H(c)+2B"
+        },
+        "upper_spacing_state": {
+          "ball_diameters_mm": [
+            40.0,
+            41.0
+          ],
+          "first_lateral_xy_mm": [
+            0,
+            1.5
+          ],
+          "second_lateral_xy_mm": [
+            1.0,
+            0
+          ],
+          "front_finger_radii": "c+B",
+          "rear_finger_radii": "c-B",
+          "actual_spacing": "L+2B",
+          "necessary_condition": "L <= h(c)+P-H(c)-2B"
+        }
+      }
+    }
+  ],
+  "sufficient_controls": [
+    {
+      "uniform_budget_mm": 1.0,
+      "closed_radius_mm": 21.0,
+      "open_radius_mm": 26.0,
+      "nominal_spacing_mm": 28.5,
+      "sufficient_nominal_spacing_interval_mm": [
+        27.94842505926547,
+        29.37873923033888
+      ],
+      "minimum_spacing_margin_mm": 0.551574940734529,
+      "closed_blocking_margin_mm": 0.44800960032450377,
+      "open_clearance_mm": 0.9866326991175569,
+      "scope": "Formula-only control of the existing ideal static envelope, not assembled CAD, complete error proof, dynamics or manufacturing acceptance."
+    },
+    {
+      "uniform_budget_mm": 1.1,
+      "closed_radius_mm": 20.72,
+      "open_radius_mm": 26,
+      "nominal_spacing_mm": 29.34,
+      "sufficient_nominal_spacing_interval_mm": [
+        29.22733323419475,
+        29.448710906062118
+      ],
+      "minimum_spacing_margin_mm": 0.10871090606211808,
+      "closed_blocking_margin_mm": 0.6275817389256133,
+      "open_clearance_mm": 0.8866326991175555,
+      "scope": "Formula-only control of the existing ideal static envelope, not assembled CAD, complete error proof, dynamics or manufacturing acceptance."
+    }
+  ],
+  "formula": {
+    "symbols": "R0/R1=min/max ball radii; t=tip radius; A=largest allowed guide radius; e0=A-R0, e1=A-R1; c=common nominal closed radius; L=nominal gate spacing; B=independent +/- radial finger budget AND +/- axial budget per gate.",
+    "H": "sqrt((R1+t)^2-(c-B-e1)^2)",
+    "h": "sqrt((R0+t)^2-(c+B)^2-e0^2)",
+    "P": "sqrt((R0+R1)^2-e0^2-e1^2)",
+    "necessary_window": "[2H+2B, h+P-H-2B]",
+    "width": "W(c)=h+P-3H-4B",
+    "continuous_interval_bound": "For c in [l,r], h is decreasing and H is decreasing on the declared domain, hence W(c)<=h(l)+P-3H(r)-4B. Every adjacent interval is bounded, not only its midpoint."
+  },
+  "limits": [
+    "Applies to the same nominal closed radius at both gates, opposed equal-radius tips coplanar within each gate, and the current monotone radial capsule model; it is not a theorem about every two-gate mechanism.",
+    "The two necessary witness families use offsets inside the INTACT round-bore disk, not arbitrary points of the larger side-hole enclosing disk.",
+    "Requires arbitrary declared parked touching pairs, including mixed sizes and lateral offsets, to admit a rear finger between the first and second balls without moving or deforming them. It does not prove loaded dynamic reachability of every such state.",
+    "Negative maximum interval upper bound means no single L works for both necessary state families over this static uncertainty envelope. It does not predict a real double shot or condemn a narrower measured envelope.",
+    "The open radius cannot repair a missing CLOSED insertion window; it only changes open passage and required stroke.",
+    "This script does not establish guide-end containment or dynamic transitions for altered designs. Violating those requirements is not accepted as an escape from the declared static model.",
+    "A found X-error lower bound such as 0.930586mm is neither an axial-error bound nor a full-vector error certificate. A split radial/axial budget needs independent justification and a revised model.",
+    "No CAD/parameters/existing reports are changed. No whole-mechanism error, force, friction, deformation, seal, print or physical-function acceptance is issued."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": "OPEN"
+}

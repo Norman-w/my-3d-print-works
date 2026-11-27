@@ -1,0 +1,194 @@
+{
+  "part": "cable-input-body",
+  "selector": "cdp_body",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/oriented.stl"
+  ],
+  "orientation": "Y+; external tree support candidate; diagnostic layer override=0.1; diagnostic support override=off",
+  "cad_to_oriented": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      -65.52310752868652
+    ],
+    [
+      0.0,
+      6.123233995736766e-17,
+      -1.0,
+      -23.395183563232422
+    ],
+    [
+      0.0,
+      1.0,
+      6.123233995736766e-17,
+      94.00000000000001
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "input": {
+    "id": "feeder/cable-input-body",
+    "file": "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/body.stl",
+    "sha256": "18cf43d1b90d6402e75621ae8f3f000a42bddca556566a034f585d44f46fe4c9"
+  },
+  "oriented": {
+    "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/slices/20260927T084928459673Z-f76a83eeb9/cable-input-body/oriented.stl",
+    "sha256": "2e29861dc2e890f607beebc4e4b3bc3f799e4d7fb6318454208963a06f37a34b"
+  },
+  "oriented_bounds_mm": [
+    [
+      -93.72310829162598,
+      -101.86322402954102,
+      0.0
+    ],
+    [
+      93.72310829162598,
+      101.86322402954102,
+      45.000000000000014
+    ]
+  ],
+  "stl_encoding": "ASCII 17 significant digits",
+  "roundtrip_max_vertex_error_mm": 0.0,
+  "triangle_count_preserved": true,
+  "export_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/slice-export-report.json",
+  "export_report_sha256": "2cb410330140f2eb2e032df4c1f8191fe8a105d2b729317d25e34f81a0185104",
+  "export_status": "DIAGNOSTIC_CANDIDATE_EXPORT",
+  "diagnostic_candidate": {
+    "source": "output/cable-direct-pull-v2/candidate.scad",
+    "source_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "purpose": "Isolated direct-pull v2 Cx=-24 input adjuster delta[-2,2]; offline print diagnostics only",
+    "native_export": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/native-report.json",
+    "motion": "cdp_angle(u); guide radius60/Cx-24; not u/60"
+  },
+  "source_sha256_at_start": {
+    "output/cable-direct-pull-v2/candidate.scad": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/native-report.json": "ca784fb8f0a64a03680875ae6d6b69f2d827f1e8165a31666b58b79e330e45a0",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/interpretation.json": "16d13c9f3a35f3642d67ea5bbfac5a0f7e0a018a55a3ab2009960c36325315dc",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/body.scad": "e0a438a462f2ed1099b130481e31e41601a58b80e580bab35ead447e19b19a13",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.scad": "60338a90ea9c209a1bc14474ac799985fa4f8738ed678e981bf2719dbe692654",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/terminal-cap.scad": "f85335e03c2c867235228eec50bcd5d8a53659e657af0fdb31ac4318bde2ae99",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/cover.scad": "56199fba10505d456fa777dbba4f38d128061d0365114680a0cbc434a492d6e2"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "cd1bea34c35a23ffbccb8395b53d22edaea3e1a1df86cee60591a58b1cd79b1f",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.1,
+    "walls": 4,
+    "infill_percent": 25,
+    "support": "disabled",
+    "brim_mm": 5
+  },
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 1149,
+    "layer_height": 0.10000000149011612,
+    "plate_index": 0,
+    "prepare_time": 21,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 392.3246154785156,
+          "Bridge": 646.474609375,
+          "Brim": 217.0900421142578,
+          "Custom": 445.8709411621094,
+          "Flush": 29.0,
+          "Gap infill": 415.5923767089844,
+          "Inner wall": 5920.64306640625,
+          "Internal solid infill": 2619.019775390625,
+          "Outer wall": 2884.949951171875,
+          "Overhang wall": 14.795662879943848,
+          "Sparse infill": 7056.38671875,
+          "Top surface": 372.616943359375,
+          "Travel": 3179.67626953125,
+          "Undefined": 3163.93017578125
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 160.35792541503906,
+            "total_used_g": 160.35792541503906
+          }
+        ],
+        "generate_support_material_time": 266,
+        "id": 1,
+        "infill_time": 1157,
+        "layer_filament_change": 0,
+        "main_predication": 23692.240234375,
+        "make_perimeters_time": 1919,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 275.93988037109375,
+              "height": 45.0,
+              "width": 273.13177490234375,
+              "x": -32.666229248046875,
+              "y": -10.633002281188965,
+              "z": 0.0
+            },
+            "id": 5,
+            "name": "oriented.stl",
+            "triangle_count": 5730
+          }
+        ],
+        "sliced_time": 5186,
+        "sliced_time_with_cache": 1332,
+        "total_predication": 24180.333984375,
+        "triangle_count": 5730,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "6c60a02159897054ef0f97f5832bc827e1ccc8acaee05a6a0557b6854be6b31d",
+    "slice-review.3mf": "59464ee2479398ed9c0ec7f818d94e2254bec3acf8e7377818618d2bc81989fb"
+  },
+  "last_temperature_before_first_layer_c": 255.0,
+  "status": "SLICE_GENERATED_REVIEW_REQUIRED"
+}

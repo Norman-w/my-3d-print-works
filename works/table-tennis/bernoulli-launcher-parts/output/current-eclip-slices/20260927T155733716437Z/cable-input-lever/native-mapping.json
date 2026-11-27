@@ -1,0 +1,191 @@
+{
+  "build_transform": [
+    [
+      0.598705747,
+      -0.800969056,
+      0.0,
+      128.40015
+    ],
+    [
+      0.800969056,
+      0.598705747,
+      0.0,
+      124.46617
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "parts": [
+    {
+      "objectid": "1",
+      "subtype": "normal_part",
+      "mesh_file": "/3D/Objects/object_1.model",
+      "component_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          5.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata_matrix": "1 0 0 0 0 1 0 0 0 0 1 5.5 0 0 0 1",
+      "mesh_stat": {
+        "face_count": "4338",
+        "edges_fixed": "0",
+        "degenerate_facets": "0",
+        "facets_removed": "0",
+        "facets_reversed": "0",
+        "backwards_edges": "0"
+      }
+    },
+    {
+      "objectid": "2",
+      "subtype": "support_enforcer",
+      "mesh_file": "/3D/Objects/object_1.model",
+      "component_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          27.637825
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -29.7591448
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.54999995
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata_matrix": "1 0 0 27.637825012207031 0 1 0 -29.75914478302002 0 0 1 1.5499999523162842 0 0 0 1",
+      "mesh_stat": {
+        "face_count": "20",
+        "edges_fixed": "0",
+        "degenerate_facets": "0",
+        "facets_removed": "0",
+        "facets_reversed": "0",
+        "backwards_edges": "0"
+      }
+    },
+    {
+      "objectid": "3",
+      "subtype": "support_enforcer",
+      "mesh_file": "/3D/Objects/object_1.model",
+      "component_transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          36.123106
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -38.2444248
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.54999995
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "metadata_matrix": "1 0 0 36.123106002807617 0 1 0 -38.244424819946289 0 0 1 1.5499999523162842 0 0 0 1",
+      "mesh_stat": {
+        "face_count": "20",
+        "edges_fixed": "0",
+        "degenerate_facets": "0",
+        "facets_removed": "0",
+        "facets_reversed": "0",
+        "backwards_edges": "0"
+      }
+    }
+  ],
+  "embedded_gcode_sha256": "4cf0cdc209cac117398df67893d52899c9d249c3a30284e1727ea411d818ea35",
+  "actual_settings": {
+    "printer_model": "Bambu Lab X1 Carbon",
+    "printer_variant": "0.4",
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "filament_type": [
+      "PETG"
+    ],
+    "curr_bed_type": "Textured PEI Plate",
+    "layer_height": "0.1",
+    "initial_layer_print_height": "0.1",
+    "enable_support": "1",
+    "support_type": "normal(manual)",
+    "support_on_build_plate_only": "1",
+    "support_top_z_distance": "0.2",
+    "support_bottom_z_distance": "0.2",
+    "support_interface_top_layers": "2",
+    "support_interface_spacing": "0",
+    "support_object_xy_distance": "0.35",
+    "raft_first_layer_expansion": "0",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "brim_width": "5"
+  }
+}

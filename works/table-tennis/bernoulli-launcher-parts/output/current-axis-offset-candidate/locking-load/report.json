@@ -1,0 +1,203 @@
+{
+  "schema": "axis-locking-load-review/v1",
+  "timestamp_utc": "2026-09-27T13:55:20.342590+00:00",
+  "status": "METAL_CLAMP_PATH_DEFINED_TORQUE_FORCE_WINDOW_NOT_CLOSED",
+  "source_sha256": {
+    "output/current-axis-offset-candidate/candidate.scad": "4dd0ba7c2a728d4869b0462f86ea02b63b5c74cd41e9cb2a4820e6793ce70ce9",
+    "output/current-axis-centering-washer/candidate.scad": "689d545b0cc9df2ca85e7d7d61d81104e6103eac455580f253e2457b084fb8a1",
+    "output/current-axis-centering-washer/runs/20260927T133352450356Z/report.json": "a9b73ff1f90dda2da26bba962041581504ab4d8dcec4cc1a8b030c33353c5435",
+    "output/current-axis-root-interface/supplier/report.json": "ebd20e68ac24a7e01ee056e1934cc5c4cd136c221541db6a9de108a5b510e89f"
+  },
+  "metal_clamp_loop": [
+    "M6 nut",
+    "CW-01 rear bearing face",
+    "cup web",
+    "cup floor annulus",
+    "integral shaft tail shoulder",
+    "integral threaded tail",
+    "M6 nut"
+  ],
+  "petg_is_in_metal_preload_loop": false,
+  "geometry": {
+    "annulus_mm": [
+      7.0,
+      7.8
+    ],
+    "area_mm2": 9.299114254625785,
+    "projected_area_lower_mm2": 9.299057601239499,
+    "web_min_mm": 1.7500000000000004,
+    "metal_clamp_thickness_mm": [
+      2.4000000000000004,
+      2.55
+    ]
+  },
+  "force_window_N": null,
+  "installation_torque_Nm": null,
+  "load_examples_not_limits": [
+    {
+      "F_N": 100,
+      "uniform_average_pressure_MPa": 10.753712371074013
+    },
+    {
+      "F_N": 300,
+      "uniform_average_pressure_MPa": 32.26113711322204
+    },
+    {
+      "F_N": 1000,
+      "uniform_average_pressure_MPa": 107.53712371074013
+    }
+  ],
+  "rejected_generic_rule": {
+    "description": "A2-50 class reference + full M6 stress area + generic 70% yield rule; not shoulder/cup rating",
+    "conditional_Rp02_MPa": 210,
+    "conditional_M6_As_mm2": 20.1,
+    "conditional_70percent_force_N": 2954.7000000000003,
+    "conditional_average_pressure_MPa": 317.7399394281239,
+    "accepted": false,
+    "why": [
+      "special tail root has no specified minimum neck/strength rating",
+      "cup material condition/allowable and local bending/contact not established",
+      "average pressure is neither maximum local stress nor complete failure criterion"
+    ]
+  },
+  "torque_model": {
+    "equation": "T_total = T_prevailing + F*c; c=(p/(2*pi)+mu_thread*d2/(2*cos(30deg))+mu_bearing*r_eff)/1000, dimensions mm, T Nm",
+    "scope": "small-helix-angle engineering approximation; no numerical friction or force assumed",
+    "robust_setpoint_interval": "Pmax+cmax*Fmin <= T_actual <= Pmin+cmin*Fmax",
+    "tool_error_must_also_fit": true,
+    "not_known": [
+      "required residual Fmin after service loads/settlement",
+      "matched complete shoulder+cup+nut Fmax",
+      "SKU prevailing-torque range and permitted reuse",
+      "thread/bearing friction and effective contact radius"
+    ]
+  },
+  "nut": {
+    "sku": "Accu HNN-M6-A2",
+    "catalogue_material": "A2-70",
+    "standard": "DIN 985",
+    "pitch_mm": 1,
+    "overall_height_mm": [
+      5.7,
+      6
+    ],
+    "published_SKU_proof_load_found": false,
+    "published_SKU_prevailing_torque_found": false,
+    "iso2320_steel_table_directly_applied": false,
+    "reason": "ISO 2320 scope references nuts with ISO 898-2 mechanical properties; no statement found mapping this A2-70 SKU to that test/table",
+    "nylon_feature_is_not_positive_angular_pin": true
+  },
+  "selected_next_component_candidate": {
+    "family": "FIBRO 244.17, h8 shoulder diameter",
+    "configured_candidate": "244.17.H8.080.030",
+    "legacy_h8_ordering": "244.17.080.030",
+    "h8_suffix_evidence": "2025-07 official chapter search index; live download 404 retained",
+    "shoulder_diameter_mm": [
+      7.978,
+      8.0
+    ],
+    "diameter_limit_status": "h8 interpreted with ISO diameter step >6..10; h8 is explicit in downloaded original sheet",
+    "shoulder_length_mm": [
+      30,
+      30.25
+    ],
+    "thread": "M6",
+    "thread_length_nominal_mm": 11,
+    "head_nominal_diameter_mm": 13,
+    "head_nominal_height_mm": 5.5,
+    "hex_key_nominal_mm": 4,
+    "catalogue_tightening_torque_Nm": 13,
+    "torque_is_current_cup_joint_instruction": false,
+    "head_root_envelope_known": false,
+    "tail_root_envelope_known": false,
+    "material": "heat treated high tensile steel, class 12.9 ISO 898-1; not A2 stainless",
+    "suggested_new_cup_design_only": {
+      "pilot_depth_mm": [
+        3.5,
+        3.55
+      ],
+      "total_thickness_mm": [
+        5.95,
+        6.05
+      ],
+      "pilot_diameter_mm": [
+        8.02,
+        8.03
+      ],
+      "metal_thickness_mm": [
+        2.4000000000000004,
+        2.55
+      ],
+      "capture_span_mm": [
+        26.45,
+        26.75
+      ],
+      "float_if_actual_shell_span_26_mm": [
+        0.4499999999999993,
+        0.75
+      ],
+      "old_pilot_eccentricity_bound_if_other_old_conditions_hold_mm": 0.05007574897214995,
+      "new_pilot_eccentricity_bound_if_other_old_conditions_hold_mm": 0.045075748972150054,
+      "straight_engagement_assumed_mm": 3.4,
+      "tilt_ceiling_from_clearance_alone_deg": 0.8762200779243726,
+      "clearance_alone_proves_point_2_deg": false,
+      "nominal_physical_tail_projection_using_11mm_only_mm": [
+        2.4499999999999993,
+        2.8999999999999995
+      ],
+      "full_thread_or_nylon_engagement_proven": false,
+      "prototype_or_adopted": false
+    }
+  },
+  "comparators": {
+    "unbrako_metric_shoulder": {
+      "D8_M6_recommended_seating_Nm": 12,
+      "thread_neck_min_diameter_mm": 4.4,
+      "catalogue_tensile_stress_MPa": 1100,
+      "minimum_neck_area_mm2": 15.205308443374602,
+      "derived_catalogue_tensile_force_N_not_working_limit": 16725.83928771206,
+      "note": "official current web PDF has values; local download timed out. Not adopted; not proof load and no CW compatibility inferred"
+    },
+    "force_defined_disc_spring": {
+      "sku": "SCHNORR 002 050 C",
+      "standard": "DIN EN 16983 bold table entry",
+      "D_mm": 12.5,
+      "d_mm": 6.2,
+      "t_mm": 0.35,
+      "nominal_test_height_mm": 0.463,
+      "nominal_force_at_test_height_N": 151,
+      "catalogue_force_test_range_N": [
+        139.675,
+        188.75
+      ],
+      "note": "force tolerance from standard-material table at prescribed test length; not arbitrary installed-height tolerance; no current assembly force claim",
+      "current_cup_direct_fit": false,
+      "why": [
+        "outer edge nominal 12.5 exceeds CW-01 OD <=12; adequate concentric bearing support needs redesign",
+        "added axial height changes nut and service envelope",
+        "spring force is not yet matched to cup allowable or required residual preload"
+      ],
+      "benefit": "measured installed height/qualified force-deflection can remove most torque-friction conversion dependence, retains separate anti-loosening need"
+    },
+    "positive_lock": {
+      "candidate": "slotted/castle nut with cross pin on purposely supplied drilled tail",
+      "benefit": "physical angular restraint independent of prevailing friction",
+      "not_drop_in": [
+        "current tail has no cross hole",
+        "one-slot index can back off cup seat unless axial indexing designed",
+        "after-drilling hardened catalogue screw invalidates unmodified rating"
+      ],
+      "adopted": false
+    }
+  },
+  "decision": {
+    "preferred_next_component": "FIBRO h8 L30 catalogue shoulder screw, subject to its own root drawing and redesigned cup fit; no direct swap",
+    "current_final_joint_ready_to_tighten_to_catalogue_Nm": false,
+    "minimum_remaining_closure": "match complete shoulder/root geometry and cup strength/contact to a required residual force interval, then use qualified torque-tension or force-defined preload with separately qualified locking; no invented torque",
+    "not_required": "new FDM fit coupons or printing to discover assembly fit"
+  },
+  "production_cad_changed": false,
+  "purchased": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

@@ -1,0 +1,83 @@
+{
+    "error_string": "Success.",
+    "export_time": 425,
+    "layer_height": 0.10000000149011612,
+    "plate_index": 0,
+    "prepare_time": 13,
+    "return_code": 0,
+    "sliced_plates": [
+        {
+            "feature_type_times": {
+                "Bottom surface": 123.73396301269531,
+                "Bridge": 151.8060760498047,
+                "Brim": 69.82620239257813,
+                "Custom": 445.0901184082031,
+                "Flush": 29.0,
+                "Gap infill": 21.304218292236328,
+                "Inner wall": 507.89599609375,
+                "Internal solid infill": 476.32708740234375,
+                "Outer wall": 240.24945068359375,
+                "Overhang wall": 13.18709945678711,
+                "Sparse infill": 620.6112670898438,
+                "Support": 10.816096305847168,
+                "Support interface": 8.750460624694824,
+                "Support transition": 6.358429908752441,
+                "Top surface": 85.9426040649414,
+                "Travel": 321.0794372558594,
+                "Undefined": 305.9433898925781
+            },
+            "filament_change_times": 0,
+            "filaments": [
+                {
+                    "filament_id": "GFG99",
+                    "id": 1,
+                    "main_used_g": 17.904584884643555,
+                    "total_used_g": 17.904584884643555
+                }
+            ],
+            "generate_support_material_time": 34,
+            "id": 1,
+            "infill_time": 111,
+            "layer_filament_change": 0,
+            "main_predication": 2628.783447265625,
+            "make_perimeters_time": 124,
+            "obj_cached_cnt": 0,
+            "objects": [
+                {
+                    "bbox": {
+                        "depth": 139.9092559814453,
+                        "height": 6.0,
+                        "width": 130.2681884765625,
+                        "x": 67.82395935058594,
+                        "y": 52.489742279052734,
+                        "z": 0.0
+                    },
+                    "id": 5,
+                    "name": "cable-input-cover",
+                    "triangle_count": 3006
+                }
+            ],
+            "sliced_time": 524,
+            "sliced_time_with_cache": 195,
+            "total_predication": 3116.70703125,
+            "triangle_count": 3006,
+            "warning_message": ""
+        }
+    ],
+    "sparse_infill_density": 25.0,
+    "upward_compatible_machine": [
+        "Bambu Lab P1S 0.4 nozzle",
+        "Bambu Lab P1P 0.4 nozzle",
+        "Bambu Lab X1 0.4 nozzle",
+        "Bambu Lab X1E 0.4 nozzle",
+        "Bambu Lab A1 0.4 nozzle",
+        "Bambu Lab H2D 0.4 nozzle",
+        "Bambu Lab H2D Pro 0.4 nozzle",
+        "Bambu Lab H2S 0.4 nozzle",
+        "Bambu Lab P2S 0.4 nozzle",
+        "Bambu Lab H2C 0.4 nozzle",
+        "Bambu Lab X2D 0.4 nozzle",
+        "Bambu Lab A2L 0.4 nozzle"
+    ],
+    "wall_loops": 4
+}

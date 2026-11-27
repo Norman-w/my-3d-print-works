@@ -1,0 +1,1824 @@
+{
+  "status": "CANDIDATE_COUPONS_SLICED_PHYSICAL_ACCEPTANCE_OPEN",
+  "created_utc": "2026-09-24T05:26:14.773108+00:00",
+  "source_sha256": {
+    "cad/fit-coupons.scad": "871e06857327d9c5ff6f4f1754f0d61c2af4901b7bd7d5aa62bfa4528ef70eff",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/spin-head.scad": "c185e32ac9cb943ad906720884f14890ef7919366ad6c0ce1e49f1c5af0df0c7",
+    "cad/spin-parameters.scad": "ba398332e29b53e5a3c6484385c1cecbb01139f32d039293e1d50afdd1f26e2e",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8"
+  },
+  "source_units": "mm; STL itself has no units",
+  "part_count": 7,
+  "parts": [
+    {
+      "part": "radial-pair",
+      "path": "output/fit-coupons/fit-radial-pair.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-pair.stl",
+        "-D",
+        "coupon_part=\"radial-pair\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-radial-pair.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 5568,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          26.0,
+          50.0,
+          16.0
+        ],
+        "size_mm": [
+          26.0,
+          50.0,
+          16.0
+        ],
+        "volume_mm3": 4448.428911805776,
+        "surface_area_mm2": 5261.31860698227,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              26.0,
+              50.0,
+              16.0
+            ],
+            "size": [
+              26.0,
+              50.0,
+              16.0
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "e8605b4b34b2b3375aab6bc87690c6904bfefe81e73875c8b02468998b58025f",
+      "candidate_print_direction": "Assembly +Z remains print +Z; two radial holes are horizontal, like an upright body."
+    },
+    {
+      "part": "finger",
+      "path": "output/fit-coupons/fit-finger.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-finger.stl",
+        "-D",
+        "coupon_part=\"finger\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-finger.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 2538,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          12.0,
+          16.0,
+          33.49229431152344
+        ],
+        "size_mm": [
+          12.0,
+          16.0,
+          33.49229431152344
+        ],
+        "volume_mm3": 1800.6795907081737,
+        "surface_area_mm2": 1410.3477856127895,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              12.0,
+              16.0,
+              33.49229431152344
+            ],
+            "size": [
+              12.0,
+              16.0,
+              33.49229431152344
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "2b2675780f6f3e2c37e8ffa35c87039feace5f8b42ee3f3d496d980b3d9f40d9",
+      "candidate_print_direction": "Ball-tip direction (-assembly X) is print +Z; actual finger retained above labelled root tab."
+    },
+    {
+      "part": "slider-seat",
+      "path": "output/fit-coupons/fit-slider-seat.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-seat.stl",
+        "-D",
+        "coupon_part=\"slider-seat\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-slider-seat.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 2678,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          31.0,
+          42.20000076293945,
+          30.0
+        ],
+        "size_mm": [
+          31.0,
+          42.20000076293945,
+          30.0
+        ],
+        "volume_mm3": 7153.6995334138,
+        "surface_area_mm2": 6348.433143245753,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              31.0,
+              42.20000076293945,
+              30.0
+            ],
+            "size": [
+              31.0,
+              42.20000076293945,
+              30.0
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "03155552f1cf7952b9127d1922950f3eed8f10e11e0d2fdb555acb03751ab7e5",
+      "candidate_print_direction": "Assembly +Z remains print +Z; crop X43..67,Y-18..28,Z-15..15 plus outside label tab."
+    },
+    {
+      "part": "slider-gib",
+      "path": "output/fit-coupons/fit-slider-gib.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-gib.stl",
+        "-D",
+        "coupon_part=\"slider-gib\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-slider-gib.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 792,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          18.700000762939453,
+          13.0,
+          5.550000190734863
+        ],
+        "size_mm": [
+          18.700000762939453,
+          13.0,
+          5.550000190734863
+        ],
+        "volume_mm3": 548.5701204097566,
+        "surface_area_mm2": 674.1137237613877,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              18.700000762939453,
+              13.0,
+              5.550000190734863
+            ],
+            "size": [
+              18.700000762939453,
+              13.0,
+              5.550000190734863
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "825f70e8963b76420a71c2b84219ce726428d525adb553761088c37f7fc2807a",
+      "candidate_print_direction": "Actual retracted gib back face on bed; assembly +Y becomes print +Z."
+    },
+    {
+      "part": "slider-keeper",
+      "path": "output/fit-coupons/fit-slider-keeper.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-keeper.stl",
+        "-D",
+        "coupon_part=\"slider-keeper\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-slider-keeper.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 532,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          23.0,
+          28.0,
+          6.449999809265137
+        ],
+        "size_mm": [
+          23.0,
+          28.0,
+          6.449999809265137
+        ],
+        "volume_mm3": 1840.5970672795793,
+        "surface_area_mm2": 1584.760995219504,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              23.0,
+              28.0,
+              6.449999809265137
+            ],
+            "size": [
+              23.0,
+              28.0,
+              6.449999809265137
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "ed1e0f0fb4c6350f1ce468aff2bd9c074031b4c21e5af6cb5b6e6b8ac8a13688",
+      "candidate_print_direction": "Actual keeper back face on bed; assembly +Y becomes print +Z."
+    },
+    {
+      "part": "locator",
+      "path": "output/fit-coupons/fit-locator.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-locator.stl",
+        "-D",
+        "coupon_part=\"locator\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-locator.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 5480,
+        "bounds_min_mm": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          13.0,
+          54.0,
+          4.0
+        ],
+        "size_mm": [
+          10.0,
+          54.0,
+          4.0
+        ],
+        "volume_mm3": 1387.2426414496263,
+        "surface_area_mm2": 1473.4778817077356,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              3.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              13.0,
+              54.0,
+              4.0
+            ],
+            "size": [
+              10.0,
+              54.0,
+              4.0
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "b262e015b097533ccb8c2efa7c64daa1de57d1df0058a5cc0e74ffa27ffccad8",
+      "candidate_print_direction": "Seam face on bed; assembly +X becomes print +Z. Blind holes open toward bed."
+    },
+    {
+      "part": "seal",
+      "path": "output/fit-coupons/fit-seal.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-seal.stl",
+        "-D",
+        "coupon_part=\"seal\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false,
+      "mesh": {
+        "file": "output/fit-coupons/fit-seal.stl",
+        "units_assumed_from_scad": "mm",
+        "triangles": 2126,
+        "bounds_min_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max_mm": [
+          32.0,
+          10.0,
+          4.0
+        ],
+        "size_mm": [
+          32.0,
+          10.0,
+          4.0
+        ],
+        "volume_mm3": 507.8140787592593,
+        "surface_area_mm2": 676.522914513544,
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "inconsistent_edge_orientation": 0,
+        "connected_components": 1,
+        "component_bounds_mm": [
+          {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              32.0,
+              10.0,
+              4.0
+            ],
+            "size": [
+              32.0,
+              10.0,
+              4.0
+            ]
+          }
+        ],
+        "watertight": true
+      },
+      "sha256": "69b81310bc68962a6906935c432ec4af68ca55c7e0853c83fee72f2ae2a7ca69",
+      "candidate_print_direction": "Negative-half seam face on bed; assembly -X becomes print +Z. Groove opens toward bed."
+    }
+  ],
+  "all_watertight": true,
+  "all_single_component": true,
+  "radial_55_real_body_xor": {
+    "part": "radial-reference-xor",
+    "path": "output/fit-coupons/fit-radial-reference-xor.stl",
+    "command": [
+      "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+      "--hardwarnings",
+      "--backend",
+      "Manifold",
+      "-o",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-reference-xor.stl",
+      "-D",
+      "coupon_part=\"radial-reference-xor\"",
+      "--export-format",
+      "binstl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+    ],
+    "empty": false,
+    "mesh": {
+      "file": "output/fit-coupons/fit-radial-reference-xor.stl",
+      "units_assumed_from_scad": "mm",
+      "triangles": 626,
+      "bounds_min_mm": [
+        20.92716407775879,
+        -4.080732345581055,
+        -7.050000190734863
+      ],
+      "bounds_max_mm": [
+        23.5,
+        4.080732345581055,
+        7.0
+      ],
+      "size_mm": [
+        2.572835922241211,
+        8.16146469116211,
+        14.050000190734863
+      ],
+      "volume_mm3": 3.233190073226311e-06,
+      "surface_area_mm2": 247.66124547556234,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 154,
+      "inconsistent_edge_orientation": 0,
+      "connected_components": 15,
+      "component_bounds_mm": [
+        {
+          "min": [
+            23.142982482910156,
+            -4.080732345581055,
+            -7.050000190734863
+          ],
+          "max": [
+            23.41057586669922,
+            -2.0481598377227783,
+            7.0
+          ],
+          "size": [
+            0.2675933837890625,
+            2.0325725078582764,
+            14.050000190734863
+          ]
+        },
+        {
+          "min": [
+            23.41057586669922,
+            -2.0481598377227783,
+            -7.050000190734863
+          ],
+          "max": [
+            23.5,
+            0.0,
+            -1.8314663171768188
+          ],
+          "size": [
+            0.08942413330078125,
+            2.0481598377227783,
+            5.218533873558044
+          ]
+        },
+        {
+          "min": [
+            23.41057586669922,
+            -2.0481598377227783,
+            2.739535331726074
+          ],
+          "max": [
+            23.5,
+            0.0,
+            7.0
+          ],
+          "size": [
+            0.08942413330078125,
+            2.0481598377227783,
+            4.260464668273926
+          ]
+        },
+        {
+          "min": [
+            23.41057586669922,
+            0.0,
+            -7.050000190734863
+          ],
+          "max": [
+            23.5,
+            2.0481598377227783,
+            -2.739535331726074
+          ],
+          "size": [
+            0.08942413330078125,
+            2.0481598377227783,
+            4.310464859008789
+          ]
+        },
+        {
+          "min": [
+            23.142982482910156,
+            2.0481598377227783,
+            -7.050000190734863
+          ],
+          "max": [
+            23.41057586669922,
+            4.080732345581055,
+            7.0
+          ],
+          "size": [
+            0.2675933837890625,
+            2.0325725078582764,
+            14.050000190734863
+          ]
+        },
+        {
+          "min": [
+            23.41057586669922,
+            0.0,
+            1.9445436000823975
+          ],
+          "max": [
+            23.5,
+            2.0481598377227783,
+            7.0
+          ],
+          "size": [
+            0.08942413330078125,
+            2.0481598377227783,
+            5.0554563999176025
+          ]
+        },
+        {
+          "min": [
+            20.92716407775879,
+            -3.69002366065979,
+            -7.050000190734863
+          ],
+          "max": [
+            21.169137954711914,
+            -1.8520594835281372,
+            7.0
+          ],
+          "size": [
+            0.241973876953125,
+            1.8379641771316528,
+            14.050000190734863
+          ]
+        },
+        {
+          "min": [
+            21.169137954711914,
+            -1.8520594835281372,
+            -7.050000190734863
+          ],
+          "max": [
+            21.25,
+            0.0,
+            -2.708221435546875
+          ],
+          "size": [
+            0.08086204528808594,
+            1.8520594835281372,
+            4.341778755187988
+          ]
+        },
+        {
+          "min": [
+            20.92716407775879,
+            -3.69002366065979,
+            1.767665982246399
+          ],
+          "max": [
+            23.422822952270508,
+            -1.767665982246399,
+            7.0
+          ],
+          "size": [
+            2.4956588745117188,
+            1.9223576784133911,
+            5.232334017753601
+          ]
+        },
+        {
+          "min": [
+            21.169137954711914,
+            -1.8520594835281372,
+            2.1066222190856934
+          ],
+          "max": [
+            21.25,
+            0.0,
+            7.0
+          ],
+          "size": [
+            0.08086204528808594,
+            1.8520594835281372,
+            4.893377780914307
+          ]
+        },
+        {
+          "min": [
+            21.169137954711914,
+            0.0,
+            -7.050000190734863
+          ],
+          "max": [
+            21.25,
+            1.8520594835281372,
+            -2.1066222190856934
+          ],
+          "size": [
+            0.08086204528808594,
+            1.8520594835281372,
+            4.94337797164917
+          ]
+        },
+        {
+          "min": [
+            20.92716407775879,
+            1.767665982246399,
+            -7.050000190734863
+          ],
+          "max": [
+            23.422822952270508,
+            3.69002366065979,
+            -0.239678293466568
+          ],
+          "size": [
+            2.4956588745117188,
+            1.9223576784133911,
+            6.810321897268295
+          ]
+        },
+        {
+          "min": [
+            20.92716407775879,
+            2.739535331726074,
+            -7.050000190734863
+          ],
+          "max": [
+            21.05229949951172,
+            3.69002366065979,
+            7.0
+          ],
+          "size": [
+            0.1251354217529297,
+            0.9504883289337158,
+            14.050000190734863
+          ]
+        },
+        {
+          "min": [
+            21.169137954711914,
+            0.0,
+            2.708221435546875
+          ],
+          "max": [
+            21.25,
+            1.8520594835281372,
+            7.0
+          ],
+          "size": [
+            0.08086204528808594,
+            1.8520594835281372,
+            4.291778564453125
+          ]
+        },
+        {
+          "min": [
+            20.92716407775879,
+            1.8520594835281372,
+            0.7117523550987244
+          ],
+          "max": [
+            21.169137954711914,
+            3.69002366065979,
+            7.0
+          ],
+          "size": [
+            0.241973876953125,
+            1.8379641771316528,
+            6.288247644901276
+          ]
+        }
+      ],
+      "watertight": false
+    }
+  },
+  "xor_coplanar_residue_is_not_a_containment_proof": true,
+  "radial_55_reference_exports": [
+    {
+      "part": "radial-reference-actual",
+      "path": "output/fit-coupons/fit-radial-reference-actual.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-reference-actual.stl",
+        "-D",
+        "coupon_part=\"radial-reference-actual\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false
+    },
+    {
+      "part": "radial-reference-derived",
+      "path": "output/fit-coupons/fit-radial-reference-derived.stl",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-reference-derived.stl",
+        "-D",
+        "coupon_part=\"radial-reference-derived\"",
+        "--export-format",
+        "binstl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false
+    }
+  ],
+  "radial_55_sampled_sections": [
+    {
+      "axis": 0,
+      "coordinates": [
+        -5,
+        -6
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -5,
+        -2.15
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -5,
+        0.13
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -5,
+        2.15
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -5,
+        6
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -2,
+        -6
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -2,
+        -2.15
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -2,
+        0.13
+      ],
+      "actual": [],
+      "derived": [],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -2,
+        2.15
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        -2,
+        6
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        0,
+        -6
+      ],
+      "actual": [
+        21.25,
+        23.5,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.25,
+        23.5,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        0,
+        -2.15
+      ],
+      "actual": [],
+      "derived": [],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        0,
+        0.13
+      ],
+      "actual": [],
+      "derived": [],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        0,
+        2.15
+      ],
+      "actual": [],
+      "derived": [],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        0,
+        6
+      ],
+      "actual": [
+        21.25,
+        23.5,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.25,
+        23.5,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        2,
+        -6
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        2,
+        -2.15
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        2,
+        0.13
+      ],
+      "actual": [],
+      "derived": [],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        2,
+        2.15
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        2,
+        6
+      ],
+      "actual": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        21.14966,
+        23.41268,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        5,
+        -6
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        5,
+        -2.15
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        5,
+        0.13
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        5,
+        2.15
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 0,
+      "coordinates": [
+        5,
+        6
+      ],
+      "actual": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "derived": [
+        20.63675,
+        22.93919,
+        31.5,
+        33.5
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        21.6,
+        -2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        21.6,
+        0.13
+      ],
+      "actual": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        21.6,
+        2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        22.5,
+        -2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        22.5,
+        0.13
+      ],
+      "actual": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        22.5,
+        2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        32.5,
+        -2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        32.5,
+        0.13
+      ],
+      "actual": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -2.74432,
+        2.74432,
+        7.0
+      ],
+      "match": true
+    },
+    {
+      "axis": 2,
+      "coordinates": [
+        32.5,
+        2
+      ],
+      "actual": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "derived": [
+        -7.05,
+        -1.88402,
+        1.88402,
+        7.0
+      ],
+      "match": true
+    }
+  ],
+  "radial_55_sampled_reference_match": true,
+  "mesh_section_readbacks": {
+    "radial_midwall_ray_x_at_y25_z15": [
+      3.25,
+      5.5,
+      13.5,
+      15.5
+    ],
+    "radial_53_hole_ray_z_at_x4_y7": [
+      0.0,
+      6.35,
+      11.65,
+      16.0
+    ],
+    "radial_55_hole_ray_z_at_x4_y25": [
+      0.0,
+      6.25,
+      11.75,
+      16.0
+    ],
+    "radial_57_hole_ray_z_at_x4_y43": [
+      0.0,
+      6.15,
+      11.85,
+      16.0
+    ],
+    "locator_31_blind_bottom_z_at_x7_y8": [
+      3.2,
+      4.0
+    ],
+    "locator_32_blind_bottom_z_at_x7_y26": [
+      3.2,
+      4.0
+    ],
+    "locator_slot_blind_bottom_z_at_x7_y44": [
+      3.2,
+      4.0
+    ],
+    "seal_depth_ray_z_at_x16_y4_7": [
+      0.2,
+      4.0
+    ],
+    "seal_left_land_ray_z_at_x16_y4_0": [
+      0.0,
+      4.0
+    ],
+    "seal_right_land_ray_z_at_x16_y5_4": [
+      0.0,
+      3.71754
+    ]
+  },
+  "spring_window": {
+    "existing_entity_report_sha256": "db7659e9e269ca04e4ea5fe57786c5e12c80fac552c2f1df2bd593b13f010b8f",
+    "existing_entity_report_source_matches_current": true,
+    "geometry": {
+      "seat_spacing_max_mm": 16.75,
+      "seat_spacing_min_at_max_preload_and_retreat_mm": 9.75,
+      "outer_diameter_envelope_mm": 10.5,
+      "pilot_diameter_mm": 6,
+      "spring_selected": false,
+      "spring_force_verified": false,
+      "solid_height_verified": false
+    },
+    "identity": "L=16.75-preload(0..4)-float(0..3), mm; geometry only",
+    "must_measure": [
+      "free length and end form",
+      "solid height with reserve below 9.75 mm",
+      "force over full 9.75..16.75 mm installed-length window",
+      "ID clearance to nominal D6 pilots and OD growth/buckling within D10.5 envelope",
+      "hysteresis, set, fatigue and actual seat fit"
+    ],
+    "spring_selected": false
+  },
+  "material": null,
+  "actual_nozzle": null,
+  "actual_printer_errors": null,
+  "sliced": true,
+  "printed": false,
+  "physical_fit_passed": false,
+  "baseline_parameters_changed": false,
+  "views": [
+    {
+      "part": "layout",
+      "path": "output/fit-coupons/fit-view-iso.png",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-view-iso.png",
+        "-D",
+        "coupon_part=\"layout\"",
+        "--render",
+        "--imgsize",
+        "1500,950",
+        "--projection",
+        "o",
+        "--autocenter",
+        "--viewall",
+        "--camera",
+        "170,-160,190,65,30,5",
+        "--colorscheme",
+        "Tomorrow",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false
+    },
+    {
+      "part": "layout",
+      "path": "output/fit-coupons/fit-view-top.png",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-view-top.png",
+        "-D",
+        "coupon_part=\"layout\"",
+        "--render",
+        "--imgsize",
+        "1500,950",
+        "--projection",
+        "o",
+        "--autocenter",
+        "--viewall",
+        "--camera",
+        "65,30,250,65,30,0",
+        "--colorscheme",
+        "Tomorrow",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false
+    },
+    {
+      "part": "layout",
+      "path": "output/fit-coupons/fit-view-front.png",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-view-front.png",
+        "-D",
+        "coupon_part=\"layout\"",
+        "--render",
+        "--imgsize",
+        "1500,950",
+        "--projection",
+        "o",
+        "--autocenter",
+        "--viewall",
+        "--camera",
+        "65,-230,30,65,30,10",
+        "--colorscheme",
+        "Tomorrow",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/fit-coupons.scad"
+      ],
+      "empty": false
+    }
+  ],
+  "slicing_review": {
+    "status": "INITIAL_MIXED_PLATE_WARNED_SEAT_ONLY_SUPPORTED_RETRY_SUCCEEDED",
+    "return_code": 0,
+    "assumptions": {
+      "machine": "X1 Carbon 0.4 nozzle (unconfirmed physical nozzle)",
+      "material": "Generic PETG (unconfirmed actual material)",
+      "plate": "Textured PEI Plate (unconfirmed actual plate)",
+      "process": "0.20mm Standard @BBL X1C",
+      "supports_enabled": false
+    },
+    "warnings": [
+      "It seems object fit-slider-seat.stl has floating regions. Please re-orient the object or enable support generation."
+    ],
+    "input_stl_sha256": {
+      "output/fit-coupons/fit-radial-pair.stl": "e8605b4b34b2b3375aab6bc87690c6904bfefe81e73875c8b02468998b58025f",
+      "output/fit-coupons/fit-finger.stl": "2b2675780f6f3e2c37e8ffa35c87039feace5f8b42ee3f3d496d980b3d9f40d9",
+      "output/fit-coupons/fit-slider-seat.stl": "03155552f1cf7952b9127d1922950f3eed8f10e11e0d2fdb555acb03751ab7e5",
+      "output/fit-coupons/fit-slider-gib.stl": "825f70e8963b76420a71c2b84219ce726428d525adb553761088c37f7fc2807a",
+      "output/fit-coupons/fit-slider-keeper.stl": "ed1e0f0fb4c6350f1ce468aff2bd9c074031b4c21e5af6cb5b6e6b8ac8a13688",
+      "output/fit-coupons/fit-locator.stl": "b262e015b097533ccb8c2efa7c64daa1de57d1df0058a5cc0e74ffa27ffccad8",
+      "output/fit-coupons/fit-seal.stl": "69b81310bc68962a6906935c432ec4af68ca55c7e0853c83fee72f2ae2a7ca69"
+    },
+    "artifacts": {
+      "fit-coupons-candidate.3mf": "caf33cf80bdd099d00703699aa72cbb348bfc87728b9216a4cea904e6d8004a5",
+      "plate_1.gcode": "d86470a8213e39a265b5824ea51eaa905d769c6f55e3d727b7a2be8e225b21e6",
+      "result.json": "4deba6e49bb40d02f0c096c0d6d62614dd14fea1feb1dcbc7a40847ffc26ae9d",
+      "bambu-cli-third.log": "da82009288871a99c6d99c0b4c4e09740400013b5253d6604a5331288a776d39"
+    },
+    "profile_copies_sha256": {
+      "machine": "9115b9287c3a4c935f3d525f6667c1f43a7cbf4e55a82315030db9fb0bc3c5b2",
+      "process": "4cb46bdd9e86452b3b2f2b9ccbc73ce85eca240000bbc1cfeb134d4d77d24dd0",
+      "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+    },
+    "prior_attempts": [
+      {
+        "log": "bambu-cli-initial-cool-plate-rejection.log",
+        "reason": "Default Cool Plate/PETG combination rejected"
+      },
+      {
+        "log": "bambu-cli-second-abort.log",
+        "exit_code": 134,
+        "cause": "Not diagnosed"
+      }
+    ],
+    "layer_path_spot_check": {
+      "seal_layer_1": "G-code object204, Z0.2: longitudinal groove wall centre lines Y108.550 and109.850, commanded width0.5; nominal path gap0.8 at the straight middle only.",
+      "locator_layer_1": "G-code object193, Z0.2 contains separate closed round/capsule hole contours; this does not establish printed diameters or full depth.",
+      "not_a_complete_toolpath_audit": true
+    },
+    "command": [
+      "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+      "--datadir",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/app-data",
+      "--load-settings",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/process.json",
+      "--load-filaments",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/filament.json",
+      "--orient",
+      "0",
+      "--arrange",
+      "1",
+      "--ensure-on-bed",
+      "--slice",
+      "0",
+      "--export-3mf",
+      "fit-coupons-candidate.3mf",
+      "--outputdir",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-pair.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-finger.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-seat.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-gib.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-keeper.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-locator.stl",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-seal.stl"
+    ],
+    "user_profiles_read_or_changed": false,
+    "printer_accessed": false,
+    "sent_to_printer": false,
+    "support_removal_validated": false,
+    "print_ready": false,
+    "seat_only_support_attempt": {
+      "return_code": 0,
+      "warnings": [],
+      "same_orientation": true,
+      "other_six_parts_changed": false,
+      "input_stl_sha256": "03155552f1cf7952b9127d1922950f3eed8f10e11e0d2fdb555acb03751ab7e5",
+      "config_changes": {
+        "enable_support": "1",
+        "support_type": "tree(auto)",
+        "support_on_build_plate_only": "1"
+      },
+      "unchanged_clearances_mm": {
+        "xy": 0.35,
+        "top_z": 0.2,
+        "bottom_z": 0.2
+      },
+      "artifacts": {
+        "fit-slider-seat-supported-candidate.3mf": "31ac3378570d6cc218daea2af9802b79f2b54b31238eb044cb97b69cff8f31eb",
+        "plate_1.gcode": "34c2fc645957671f441c25e0ebc361ba48bff43c802ed5bd09325ec05e4e02ae",
+        "result.json": "31fa961cf02e65d479e26e27698304eb63c698351d2276a6df63df6335e34b8e",
+        "bambu-cli.log": "f242203381bcb3e62219990703dd2b5ce23e7657f28cd0d03cd106517c278f57",
+        "process-supported.json": "9089fa4ae5208088e72695dac9d373d64f6804c7cabda0cfc28c834d5b7fa8b4",
+        "support-path-review.json": "f3c564dc4f73bbb755044e14050be03b03eb204965552a572a43574484eb410f"
+      },
+      "support_path_review": {
+        "support_path_endpoint_count": 27654,
+        "support_arc_commands": 9393,
+        "coordinate_mapping": "assembly=(gcode X-69.5,Y-124.9,Z-15), verified untranslated rotation from single-object 3MF",
+        "global_support_bounds_assembly_mm": [
+          [
+            33.67400000000001,
+            75.767
+          ],
+          [
+            -24.88300000000001,
+            31.169999999999987
+          ],
+          [
+            -14.8,
+            6.600000000000001
+          ]
+        ],
+        "regions": {
+          "radial_through_channel": {
+            "endpoint_count": 4977,
+            "bounds_mm": [
+              [
+                43.007999999999996,
+                66.99799999999999
+              ],
+              [
+                -4.699000000000012,
+                4.699999999999989
+              ],
+              [
+                -4.199999999999999,
+                4.0
+              ]
+            ],
+            "features": {
+              "Support": 4499,
+              "Support interface": 478
+            }
+          },
+          "gib_open_side_pocket": {
+            "endpoint_count": 2798,
+            "bounds_mm": [
+              [
+                43.613,
+                57.980999999999995
+              ],
+              [
+                -13.998000000000005,
+                -4.703000000000003
+              ],
+              [
+                -4.199999999999999,
+                4.199999999999999
+              ]
+            ],
+            "features": {
+              "Support": 2469,
+              "Support interface": 329
+            }
+          },
+          "keeper_nut_pockets": {
+            "endpoint_count": 0,
+            "bounds_mm": null,
+            "features": {}
+          },
+          "guide_cap_open_nut_slot": {
+            "endpoint_count": 0,
+            "bounds_mm": null,
+            "features": {}
+          }
+        },
+        "limits": "Centreline endpoints only; extrusion width and between-endpoint/arc crossing are not a complete solid-removal proof. No locating-coupon blind holes exist in this seat-only model. Real support separation remains untested."
+      },
+      "removal_access": "Clean before gib/keeper assembly. Through radial channel open at +/-X and gib pocket open at -Y. Break supports into pieces; no one-piece withdrawal claim. Captive-nut entrances remain open.",
+      "blind_hole_scope": "This seat-only crop has no 3.2-mm blind locator holes; those belong to a separate coupon and were not re-sliced.",
+      "actual_removal_surface_damage_residue_and_sliding_fit": "OPEN",
+      "command": [
+        "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+        "--datadir",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported/app-data",
+        "--load-settings",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported/process-supported.json",
+        "--load-filaments",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/filament.json",
+        "--orient",
+        "0",
+        "--arrange",
+        "1",
+        "--ensure-on-bed",
+        "--slice",
+        "0",
+        "--export-3mf",
+        "fit-slider-seat-supported-candidate.3mf",
+        "--outputdir",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-seat.stl"
+      ]
+    }
+  }
+}

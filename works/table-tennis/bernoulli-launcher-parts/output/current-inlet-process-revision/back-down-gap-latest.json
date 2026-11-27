@@ -1,0 +1,11 @@
+{
+  "folder": "output/current-inlet-process-revision/runs/20260927T111514812952Z/inlet-rear-rear-key-ends-down-xy060-supported",
+  "status": "NATIVE_XY_GAP_CANDIDATE_REVIEW_REQUIRED",
+  "mechanical_geometry_changed": false,
+  "process_delta": {
+    "support_object_xy_distance": [
+      "0.35",
+      "0.6"
+    ]
+  }
+}

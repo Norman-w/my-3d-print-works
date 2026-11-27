@@ -1,0 +1,24 @@
+{
+  "status": "FROZEN_COORDINATES_AND_EXACT_FACE_IDENTITY_TESTS_PASS",
+  "old_origin": [
+    75,
+    -82,
+    5
+  ],
+  "new_origin": [
+    75.0,
+    -85.0,
+    5.0
+  ],
+  "third_arc_unchanged": true,
+  "historical_actual_3mf_mapping_recovered": true,
+  "negative_report_sha_input_mesh_unknown_route_reversed_face_and_1nm_change_rejected": true,
+  "source_sha256": {
+    "analysis/cable_slice_contract.py": "3f3220655efb191c2363f98b9d5dcc9fa5d396b444b6e8a7dc4fe3a5bcc5e478",
+    "analysis/cable_input_slice_review.py": "85b8d3fe232d25703f428b709a939e7f396758c61216ec8ac7fcdbdb83b05692",
+    "analysis/cable_flat_slice_review.py": "f53583d48aa5d5f81a5602e30cc7869161ec7a92fc5b406fa6fb7966e06e1a55",
+    "analysis/cable_direct_pull_slice_review.py": "af5a7e853ed10492400e11f986f84a0b58c863dc5c37e74fe9fd09de8f013d82",
+    "scripts/rebind_eclip_manufacturing.py": "57e6b23427eff07a25cc687b046ae4297c9c731dd7b20fe55868c4ccc50c311c",
+    "output/cable-eclip-adoption/20260927T151752917841Z/manufacturing/test-contracts.py": "5895c777954f1d8fa740340a50352a64ff9f16455852047d3491278627e237be"
+  }
+}

@@ -1,0 +1,606 @@
+{
+  "reports": {
+    "output/launcher-final/report.json": "3dc13c3a25f49bf382a327bb96c19d43d1dcbb2bf903ff719b6ffbeef8294f52",
+    "output/analysis/spin-head-geometry.json": "e1a3fa97c5e72a112626cb62aca16b739d643278233949c4b181b5c3fc656839",
+    "output/spin-complete-hardware/report.json": "912c4df836732e3ba2986a3a6786f60b60d77ecd96106bf177216e71fedac323"
+  },
+  "source_sha256": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "analysis/spin_head_geometry.py": "834ec85d81c9c38d5fc3e990eb3e25d2b7ebd058ac1178c6618b58088cfdd137",
+    "analysis/spin_complete_hardware.py": "e94b89ed3cdaa65c397a81b7e95988734ee8d5da096b50a5db1f10744163afe3",
+    "analysis/feeder_body_geometry.py": "624f455577532cc7a0e41f51ade0ce8c4ad90ad66b64ba78d300fcbdb4763534",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb"
+  },
+  "assets": [
+    {
+      "source": "output/launcher-final/positive-half.stl",
+      "file": "models/feeder/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+    },
+    {
+      "source": "output/launcher-final/negative-half.stl",
+      "file": "models/feeder/negative-half.stl",
+      "sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+    },
+    {
+      "source": "output/launcher-final/beam-grip.stl",
+      "file": "models/feeder/beam-grip.stl",
+      "sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9"
+    },
+    {
+      "source": "output/launcher-final/liner.stl",
+      "file": "models/feeder/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+    },
+    {
+      "source": "output/launcher-final/right-support.stl",
+      "file": "models/feeder/right-support.stl",
+      "sha256": "3da12da9ed89f7bfe8d538348a0134f03dedfb025e79deb4d84110bf7b1a13ef"
+    },
+    {
+      "source": "output/launcher-final/left-support.stl",
+      "file": "models/feeder/left-support.stl",
+      "sha256": "2f417fd36eddfc21967ba3e23ae8c36cd2aa08c33d9990aa296650a43f4390bc"
+    },
+    {
+      "source": "output/launcher-final/x-gib.stl",
+      "file": "models/feeder/x-gib.stl",
+      "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3"
+    },
+    {
+      "source": "output/launcher-final/x-cover.stl",
+      "file": "models/feeder/x-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+    },
+    {
+      "source": "output/launcher-final/frame.stl",
+      "file": "models/feeder/frame.stl",
+      "sha256": "adb66bbdd13e8ab3761072d98e67998a3f0b7989bef9cf73165146171b63d147"
+    },
+    {
+      "source": "output/launcher-final/fixed-spacer.stl",
+      "file": "models/feeder/fixed-spacer.stl",
+      "sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a"
+    },
+    {
+      "source": "output/launcher-final/moving-spacer.stl",
+      "file": "models/feeder/moving-spacer.stl",
+      "sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5"
+    },
+    {
+      "source": "output/launcher-final/capture-right.stl",
+      "file": "models/feeder/capture-right.stl",
+      "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d"
+    },
+    {
+      "source": "output/launcher-final/pipe-clamp-right.stl",
+      "file": "models/feeder/pipe-clamp-right.stl",
+      "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e"
+    },
+    {
+      "source": "output/launcher-final/y-cap-right.stl",
+      "file": "models/feeder/y-cap-right.stl",
+      "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9"
+    },
+    {
+      "source": "output/launcher-final/y-gib-right-front.stl",
+      "file": "models/feeder/y-gib-right-front.stl",
+      "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb"
+    },
+    {
+      "source": "output/launcher-final/y-keeper-right-front.stl",
+      "file": "models/feeder/y-keeper-right-front.stl",
+      "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+    },
+    {
+      "source": "output/launcher-final/finger-right-front.stl",
+      "file": "models/feeder/finger-right-front.stl",
+      "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+    },
+    {
+      "source": "output/launcher-final/pin-block-right-front.stl",
+      "file": "models/feeder/pin-block-right-front.stl",
+      "sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3"
+    },
+    {
+      "source": "output/launcher-final/y-gib-right-rear.stl",
+      "file": "models/feeder/y-gib-right-rear.stl",
+      "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4"
+    },
+    {
+      "source": "output/launcher-final/y-keeper-right-rear.stl",
+      "file": "models/feeder/y-keeper-right-rear.stl",
+      "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f"
+    },
+    {
+      "source": "output/launcher-final/finger-right-rear.stl",
+      "file": "models/feeder/finger-right-rear.stl",
+      "sha256": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43"
+    },
+    {
+      "source": "output/launcher-final/pin-block-right-rear.stl",
+      "file": "models/feeder/pin-block-right-rear.stl",
+      "sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6"
+    },
+    {
+      "source": "output/launcher-final/capture-left.stl",
+      "file": "models/feeder/capture-left.stl",
+      "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f"
+    },
+    {
+      "source": "output/launcher-final/pipe-clamp-left.stl",
+      "file": "models/feeder/pipe-clamp-left.stl",
+      "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708"
+    },
+    {
+      "source": "output/launcher-final/y-cap-left.stl",
+      "file": "models/feeder/y-cap-left.stl",
+      "sha256": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16"
+    },
+    {
+      "source": "output/launcher-final/y-gib-left-front.stl",
+      "file": "models/feeder/y-gib-left-front.stl",
+      "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280"
+    },
+    {
+      "source": "output/launcher-final/y-keeper-left-front.stl",
+      "file": "models/feeder/y-keeper-left-front.stl",
+      "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5"
+    },
+    {
+      "source": "output/launcher-final/finger-left-front.stl",
+      "file": "models/feeder/finger-left-front.stl",
+      "sha256": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3"
+    },
+    {
+      "source": "output/launcher-final/pin-block-left-front.stl",
+      "file": "models/feeder/pin-block-left-front.stl",
+      "sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e"
+    },
+    {
+      "source": "output/launcher-final/y-gib-left-rear.stl",
+      "file": "models/feeder/y-gib-left-rear.stl",
+      "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20"
+    },
+    {
+      "source": "output/launcher-final/y-keeper-left-rear.stl",
+      "file": "models/feeder/y-keeper-left-rear.stl",
+      "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010"
+    },
+    {
+      "source": "output/launcher-final/finger-left-rear.stl",
+      "file": "models/feeder/finger-left-rear.stl",
+      "sha256": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d"
+    },
+    {
+      "source": "output/launcher-final/pin-block-left-rear.stl",
+      "file": "models/feeder/pin-block-left-rear.stl",
+      "sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+    },
+    {
+      "source": "output/launcher-final/hardware.stl",
+      "file": "models/feeder/hardware.stl",
+      "sha256": "1330dc7f5742d9807816735a43f3e6d236a870d62d3f599db9ed3fbcb93f77d7"
+    },
+    {
+      "source": "output/launcher-final/pc-reference.stl",
+      "file": "models/feeder/pc-reference.stl",
+      "sha256": "ee453a79a7f840405b89a9e7312c3aa67feb90467f86ad640bf303cdeb25f617"
+    },
+    {
+      "source": "output/launcher-final/spring-reference.stl",
+      "file": "models/feeder/spring-reference.stl",
+      "sha256": "560a6cb4824a9f60716b6d8f429ca004433b3b09f95b4248a7d43ad00f911cfb"
+    },
+    {
+      "source": "output/spin-head/spin-body.stl",
+      "file": "models/spin/body.stl",
+      "sha256": "cfd1ee550bc530be0242b227c42d032d353014fdaf6a85968e95b475f9dde4ba"
+    },
+    {
+      "source": "output/spin-head/spin-carriage.stl",
+      "file": "models/spin/carriage.stl",
+      "sha256": "d4b9b9c729270d4eb748fa8d865ea41b2b880400c3b4d1d9becd117e2c08943d"
+    },
+    {
+      "source": "output/spin-head/spin-pad.stl",
+      "file": "models/spin/pad.stl",
+      "sha256": "89c8ae1e33bccdeb96e7ac6d58f82fb858297b45e973a0a5bb175716763acc70"
+    },
+    {
+      "source": "output/spin-head/spin-pad-keeper.stl",
+      "file": "models/spin/pad-keeper.stl",
+      "sha256": "b9d33c4f0db5113d909effc6851ad9cbcb6741c103b0dc9c78ddc422db38df8c"
+    },
+    {
+      "source": "output/spin-head/spin-opposite-guide.stl",
+      "file": "models/spin/opposite-guide.stl",
+      "sha256": "e510dd0f5e8165178d8f3f811367f765f753cf4a5fcc578021b0ffd8bf2a7450"
+    },
+    {
+      "source": "output/spin-head/spin-cover.stl",
+      "file": "models/spin/cover.stl",
+      "sha256": "f9ee6b239b5e88beb40aa6f1ef4c099d8c6ec52a6ffbbc09aee5d3711e6ad8fc"
+    },
+    {
+      "source": "output/spin-head/spin-spring-cage.stl",
+      "file": "models/spin/spring-cage.stl",
+      "sha256": "fff23c6907a5afc439d896833f598ca8ae03de98d646a8574d50459dc6c62cd9"
+    },
+    {
+      "source": "output/spin-head/spin-spring-seat.stl",
+      "file": "models/spin/spring-seat.stl",
+      "sha256": "599177c2dadf0a543ca4685c5362595e06120030514bd4c8e613778ce938314b"
+    },
+    {
+      "source": "output/spin-head/spin-pull-cap.stl",
+      "file": "models/spin/pull-cap.stl",
+      "sha256": "f69fee61263cfbd29e572fdee69799ff42d03f21693b81c0f6825f6ee0048637"
+    },
+    {
+      "source": "output/spin-head/spin-hold-fork.stl",
+      "file": "models/spin/hold-fork.stl",
+      "sha256": "1d2b9004c3419a398c714f8f50b56647ffced6fe1b20a3ffe3c28e5188b6976d"
+    },
+    {
+      "source": "output/spin-complete-hardware/hardware-work.stl",
+      "file": "models/spin/hardware-work.stl",
+      "sha256": "9f300dba4cdf0bbf1f8f361f5e590324eb0a1e8245085bb949a3b37908a13bcb"
+    },
+    {
+      "source": "output/spin-complete-hardware/spring-work-envelope.stl",
+      "file": "models/spin/spring-work-envelope.stl",
+      "sha256": "0437942e83fa3c306a56d6c5bd69a8bab56089be12e273a1fdf49ec523a8e134"
+    },
+    {
+      "source": "output/viewer-vendor/three/build/three.module.js",
+      "file": "vendor/three/build/three.module.js",
+      "sha256": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495"
+    },
+    {
+      "source": "output/viewer-vendor/three/examples/jsm/controls/OrbitControls.js",
+      "file": "vendor/three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064"
+    },
+    {
+      "source": "output/viewer-vendor/three/examples/jsm/loaders/STLLoader.js",
+      "file": "vendor/three/examples/jsm/loaders/STLLoader.js",
+      "sha256": "896d006a48b8f125385a485ccae154dadee801a953f0b45ceffe7ddd8a29ca93"
+    },
+    {
+      "source": "output/viewer-vendor/three/LICENSE",
+      "file": "vendor/three/LICENSE",
+      "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+    },
+    {
+      "source": "output/launcher-final/assembly.png",
+      "file": "feeder.png",
+      "sha256": "781322593acbbd85a3785ab09f08caaf82fa7eff9ef89fa8579755d843b0e765"
+    },
+    {
+      "source": "output/launcher-final/front.png",
+      "file": "feeder-front.png",
+      "sha256": "684fbf0a7134a7794480f297f5ec648cf02eff1b6ea6d73720086f333655a489"
+    },
+    {
+      "source": "output/spin-head/spin-work-section.png",
+      "file": "spin-work.png",
+      "sha256": "ba9084f44f85b19b029291c3a5e0de9c54e528249e5e3040a6432318e171c49d"
+    },
+    {
+      "source": "output/spin-head/spin-held-section.png",
+      "file": "spin-held.png",
+      "sha256": "a0f8e73f01f38623486202ee798b7ed90ceddbe40cf056a37a2d97b41a4c9bc8"
+    },
+    {
+      "source": "docs/final-assembly.md",
+      "file": "assembly.md",
+      "sha256": "70a90dc5b7af30e5dd6ec3a7def7e95879f3d5bc38fde1d8d9a61214199fa831"
+    },
+    {
+      "source": "docs/final-sealing-process.md",
+      "file": "sealing.md",
+      "sha256": "925d433d71d96a0ba27f622cda545669bfc5b870be23c70606f77b128b9ebd18"
+    },
+    {
+      "source": "docs/final-feeder-print.md",
+      "file": "feeder-print.md",
+      "sha256": "173109d8286f08d2c6ee1243340a4d2c31946705ddae966a19851436d8cbf7d0"
+    },
+    {
+      "source": "docs/final-spin-print.md",
+      "file": "spin-print.md",
+      "sha256": "65b11792557913b0984768d6f4ed2849883e8a1f6fa329f14da1a91e343e8e35"
+    },
+    {
+      "source": "docs/spin-complete-hardware.md",
+      "file": "spin-hardware.md",
+      "sha256": "647ceb7bca4b08545cb998e95dab42c0fa9f780d2c8147d2e6d2acf9e053aabc"
+    },
+    {
+      "source": "docs/spin-material-selection.md",
+      "file": "materials.md",
+      "sha256": "1379d1138c29df72b6db4015acf05037716b919ec92da566e90713c22400e858"
+    },
+    {
+      "source": "output/manufacturing/launcher-candidate.zip",
+      "file": "launcher-candidate.zip",
+      "sha256": "5fdcf365b11569653ac889119ab3f7c652a65b7e7bf9c71f65bcbc8ce503bf23"
+    },
+    {
+      "source": "web/trigger-concept.mjs",
+      "file": "trigger-concept.mjs",
+      "sha256": "aaec809297249f71d25f8a33b114b74cdcd03ae89e6ee1855473283a7bf0ae0a"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/positive-half.stl",
+      "file": "motion-models/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/negative-half.stl",
+      "file": "motion-models/negative-half.stl",
+      "sha256": "5659c276ac34e8cea3aecf0bdce39f1dae57aaee5ce121472edbc179ee566fe1"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/beam-grip.stl",
+      "file": "motion-models/beam-grip.stl",
+      "sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/liner.stl",
+      "file": "motion-models/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/right-support.stl",
+      "file": "motion-models/right-support.stl",
+      "sha256": "3da12da9ed89f7bfe8d538348a0134f03dedfb025e79deb4d84110bf7b1a13ef"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/left-support.stl",
+      "file": "motion-models/left-support.stl",
+      "sha256": "2f417fd36eddfc21967ba3e23ae8c36cd2aa08c33d9990aa296650a43f4390bc"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/x-gib.stl",
+      "file": "motion-models/x-gib.stl",
+      "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/x-cover.stl",
+      "file": "motion-models/x-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/frame.stl",
+      "file": "motion-models/frame.stl",
+      "sha256": "adb66bbdd13e8ab3761072d98e67998a3f0b7989bef9cf73165146171b63d147"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/fixed-spacer.stl",
+      "file": "motion-models/fixed-spacer.stl",
+      "sha256": "6abca94cb200e04d24bcb22194520d4ece0e9c98888c151ce57efaa5d723659a"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/moving-spacer.stl",
+      "file": "motion-models/moving-spacer.stl",
+      "sha256": "09374514abd4d6ccefd67022fab58a23ae811a2ba877a8a93c1817fb90a92af5"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/capture-right.stl",
+      "file": "motion-models/capture-right.stl",
+      "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pipe-clamp-right.stl",
+      "file": "motion-models/pipe-clamp-right.stl",
+      "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-cap-right.stl",
+      "file": "motion-models/y-cap-right.stl",
+      "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-gib-right-front.stl",
+      "file": "motion-models/y-gib-right-front.stl",
+      "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-keeper-right-front.stl",
+      "file": "motion-models/y-keeper-right-front.stl",
+      "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/finger-right-front.stl",
+      "file": "motion-models/finger-right-front.stl",
+      "sha256": "dff25afcdc928ff74ec35b2444198b9dbc1837f4b34eb259be7027f6db1468d9"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pin-block-right-front.stl",
+      "file": "motion-models/pin-block-right-front.stl",
+      "sha256": "0c9f21a52c194dcbbae53101f053dcda8aaad0c451831d0cb2650433d95961f3"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-gib-right-rear.stl",
+      "file": "motion-models/y-gib-right-rear.stl",
+      "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-keeper-right-rear.stl",
+      "file": "motion-models/y-keeper-right-rear.stl",
+      "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/finger-right-rear.stl",
+      "file": "motion-models/finger-right-rear.stl",
+      "sha256": "a90c38e320e46b6f9ea511edb180a554d1c3eaecb324668f3aefa188bc7efa43"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pin-block-right-rear.stl",
+      "file": "motion-models/pin-block-right-rear.stl",
+      "sha256": "2a6fed25372662f83e65e058f51d3f9c56d4ee01e280a14f36da383b55bbbdb6"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/capture-left.stl",
+      "file": "motion-models/capture-left.stl",
+      "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pipe-clamp-left.stl",
+      "file": "motion-models/pipe-clamp-left.stl",
+      "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-cap-left.stl",
+      "file": "motion-models/y-cap-left.stl",
+      "sha256": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-gib-left-front.stl",
+      "file": "motion-models/y-gib-left-front.stl",
+      "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-keeper-left-front.stl",
+      "file": "motion-models/y-keeper-left-front.stl",
+      "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/finger-left-front.stl",
+      "file": "motion-models/finger-left-front.stl",
+      "sha256": "d5334dc2299d9f8776c2cab5a1c29d5b5bdbd73940e998563842d500cb156ac3"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pin-block-left-front.stl",
+      "file": "motion-models/pin-block-left-front.stl",
+      "sha256": "7fa741163b6e5408adeca1170e4841f913c46b9bcc9b69f1d2cb60302728a91e"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-gib-left-rear.stl",
+      "file": "motion-models/y-gib-left-rear.stl",
+      "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/y-keeper-left-rear.stl",
+      "file": "motion-models/y-keeper-left-rear.stl",
+      "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/finger-left-rear.stl",
+      "file": "motion-models/finger-left-rear.stl",
+      "sha256": "0161dbfb9a6a2ea119a7906947790b81598ea336eccb870b3523ce95fd7b530d"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pin-block-left-rear.stl",
+      "file": "motion-models/pin-block-left-rear.stl",
+      "sha256": "4a1d5c9451b1042691223222f7af30c492198332912435ef34c08f248da37030"
+    },
+    {
+      "source": "output/launcher-final-history/before-frame-y-guide/output/launcher-final/pc-reference.stl",
+      "file": "motion-models/pc-reference.stl",
+      "sha256": "ee453a79a7f840405b89a9e7312c3aa67feb90467f86ad640bf303cdeb25f617"
+    },
+    {
+      "source": "web/feeder-motion.html",
+      "file": "feeder-motion.html",
+      "sha256": "fc903a888cf06987dfb86f145b0d256a7c17407ee19f8b710297c84c3175088a"
+    },
+    {
+      "source": "web/feeder-motion.mjs",
+      "file": "feeder-motion.mjs",
+      "sha256": "337b5969e411096464df279ef1f0ec143200f4e127ce603a9d2030add6378e00"
+    },
+    {
+      "source": "web/feeder-motion-kinematics.mjs",
+      "file": "feeder-motion-kinematics.mjs",
+      "sha256": "7fb3c970c6b5d7821caec13ecc08ebe19541e3e6faf2119cba21f6a9970ca1f5"
+    },
+    {
+      "source": "web/feeder-overview.mjs",
+      "file": "feeder-overview.mjs",
+      "sha256": "9bbb0d02d349213f01733168deac20d40a5837ee9d8e9c7456bcefea521bff0e"
+    },
+    {
+      "source": "web/trigger-concept-kinematics.mjs",
+      "file": "trigger-concept-kinematics.mjs",
+      "sha256": "433a222fd2055566348ccbaa93088e9f254face565cb7d0b0dec95993c84fd88"
+    },
+    {
+      "source": "web/trigger-overlay.mjs",
+      "file": "trigger-overlay.mjs",
+      "sha256": "fb062776bb6746f14d6dfb59afaadb63f1b80e6c068fbda2754b15bb35e13d84"
+    },
+    {
+      "source": "web/scene-assets.mjs",
+      "file": "scene-assets.mjs",
+      "sha256": "d51daf4652c54175fc5d3cd310646b8a5d7a5f751fc38a0b9f49f28228c8e5f9"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/fixed.stl",
+      "sha256": "01658dd049c25109bd9eefe65cbe44f1d5b036a7ce51da3dcf41857f29624971"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/finger-right-front.stl",
+      "sha256": "ec19214902e95bc15f68ddb125f9fbd9d1eb1821c607c0afb1a02a961cb131f6"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/finger-right-rear.stl",
+      "sha256": "547b05a89a52360eacd7fe599d3f2b56113ed66e9e9349d89473fa35976ecd94"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/finger-left-front.stl",
+      "sha256": "ab08495e304f9126d4dc19f4b6761ea03676709336ee89de2e1d01bc9a969a69"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/finger-left-rear.stl",
+      "sha256": "af770d908d71f59e882c5d8825626be04ae2aa90cef5ea2a308bbb71ca81da43"
+    },
+    {
+      "source": "partition of preserved hardware triangles",
+      "file": "motion-hardware/frame.stl",
+      "sha256": "949245f2648e5c36ca15181d2ca4b7dcdb386e05250f05b6d404e9929cfb3a02"
+    },
+    {
+      "source": "preserved hardware partition proof",
+      "file": "motion-hardware/hardware-manifest.json",
+      "sha256": "2da29c9e04ac6835bea198b7c6ee78d4a1cd08ac9e30a922ef27e223b35470e4"
+    },
+    {
+      "source": "web motion snapshot manifest",
+      "file": "motion-manifest.json",
+      "sha256": "dc7c67b11459b2e2b9a479ca956772ac746b9c277b8017ab0a7bf87013ee038e"
+    }
+  ],
+  "printed_instances": 43,
+  "physical_acceptance": false,
+  "motion_page": {
+    "manifest": "motion-manifest.json",
+    "snapshot": "preserved-baseline33-la_t0",
+    "physical_acceptance": false
+  }
+}

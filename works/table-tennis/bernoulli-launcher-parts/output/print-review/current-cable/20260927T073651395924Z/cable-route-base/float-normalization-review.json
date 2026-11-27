@@ -1,0 +1,25 @@
+{
+  "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+  "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+  "source_triangles": 7898,
+  "actual_3mf_triangles": 7896,
+  "collapsed_source_triangle_indices": [
+    1583,
+    1599
+  ],
+  "maximum_corner_displacement_mm": 8.291657687533827e-06,
+  "surviving_oriented_faces_exactly_match": true,
+  "unexpected_actual_faces": 0,
+  "missing_surviving_faces": 0,
+  "non_two_incidence_edges": 0,
+  "vertex_link_faults": [],
+  "orientation_faults": 0,
+  "components": 1,
+  "volume_source_mm3": 76195.23056696332,
+  "volume_actual_3mf_mm3": 76195.22813335253,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "input_stl_sha256": "b04f1f594fd063669a03416b542e1623bfdedbf649e0a3b24f4fb47491e2ccff",
+  "slice_3mf_sha256": "b11a3caa22f817d568f807ed3320d5e51788b83baa8d52c4575ca824250d8570",
+  "auditor_sha256": "5f61332254ff5cee88f4bbaf96dbd07bf870699a5e77c0f8df8d4edd175014f2"
+}

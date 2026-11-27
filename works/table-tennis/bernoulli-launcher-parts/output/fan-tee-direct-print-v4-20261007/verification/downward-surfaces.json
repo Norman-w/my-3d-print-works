@@ -1,0 +1,24 @@
+{
+  "angle_datum": "degrees to horizontal build plate; Z-up print",
+  "all_thread_downward_triangles": 2221,
+  "thread_min_deg": 49.86314461561235,
+  "thread_median_deg": 50.034973792195764,
+  "thread_max_deg": 89.99994269895541,
+  "below_45_excluding_bed_triangles": 108,
+  "below_45_excluding_bed_centroid_bounds_mm": [
+    [
+      -21.087867101033527,
+      -2.073559323946635,
+      -10.497859001159668
+    ],
+    [
+      21.087867101033527,
+      2.073559323946635,
+      -9.666053771972656
+    ]
+  ],
+  "below_45_outside_lugs_triangles": 0,
+  "support_policy_geometry_screen": "PASS_ONLY_LUGS_BELOW_45_EXCLUDING_BUILD_BASE",
+  "actual_slice_verified": false,
+  "limits": "Mesh-angle screen only; check both Support and Support interface toolpaths/contact areas in actual slice."
+}

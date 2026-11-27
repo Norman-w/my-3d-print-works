@@ -1,0 +1,155 @@
+{
+  "pass": true,
+  "parts": [
+    {
+      "part": "body",
+      "sha256": "c231f583c3c5e225649f69b30b4a22025e08aacb7aa90cd5a23ddacc2518a3a8",
+      "bounds": [
+        [
+          -43.0,
+          -43.0,
+          0.0
+        ],
+        [
+          43.0,
+          43.0,
+          234.0
+        ]
+      ],
+      "size_mm": [
+        86.0,
+        86.0,
+        234.0
+      ],
+      "volume_mm3": 188052.55571315615,
+      "faces": 195420,
+      "closed_positive_volume": true,
+      "connected_components": 1,
+      "dimension_match": true,
+      "thread_min_angle_to_horizontal_deg": 49.69755239928732,
+      "thread_area_below_49_8_deg_mm2": 4.1194973705385545e-07,
+      "source_reused_byte_for_byte": false,
+      "pass": true
+    },
+    {
+      "part": "core15",
+      "sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+      "bounds": [
+        [
+          -20.899999618530273,
+          -20.899999618530273,
+          0.0
+        ],
+        [
+          20.899999618530273,
+          20.899999618530273,
+          106.0
+        ]
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        106.0
+      ],
+      "volume_mm3": 21509.396915422945,
+      "faces": 16756,
+      "closed_positive_volume": true,
+      "connected_components": 1,
+      "dimension_match": true,
+      "thread_min_angle_to_horizontal_deg": 49.99692971853766,
+      "thread_area_below_49_8_deg_mm2": 0.0,
+      "source_reused_byte_for_byte": true,
+      "pass": true
+    },
+    {
+      "part": "core20",
+      "sha256": "a06deceaae500d0cdfe385d9af3bbc5104cb911b42cb85a245747ca547ffa4c1",
+      "bounds": [
+        [
+          -20.899999618530273,
+          -20.899999618530273,
+          0.0
+        ],
+        [
+          20.899999618530273,
+          20.899999618530273,
+          106.0
+        ]
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        106.0
+      ],
+      "volume_mm3": 22702.988840592283,
+      "faces": 16756,
+      "closed_positive_volume": true,
+      "connected_components": 1,
+      "dimension_match": true,
+      "thread_min_angle_to_horizontal_deg": 49.99692971853766,
+      "thread_area_below_49_8_deg_mm2": 0.0,
+      "source_reused_byte_for_byte": true,
+      "pass": true
+    },
+    {
+      "part": "core25",
+      "sha256": "045099483f50b50c594d2084906ab8d5e38a7abfb6adc85bb53392403f7e4872",
+      "bounds": [
+        [
+          -20.899999618530273,
+          -20.899999618530273,
+          0.0
+        ],
+        [
+          20.899999618530273,
+          20.899999618530273,
+          106.0
+        ]
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        106.0
+      ],
+      "volume_mm3": 23896.581232266195,
+      "faces": 16756,
+      "closed_positive_volume": true,
+      "connected_components": 1,
+      "dimension_match": true,
+      "thread_min_angle_to_horizontal_deg": 49.99692971853766,
+      "thread_area_below_49_8_deg_mm2": 0.0,
+      "source_reused_byte_for_byte": true,
+      "pass": true
+    },
+    {
+      "part": "core30",
+      "sha256": "cf0fc6720405ca58c8862259ad47d2749a8c4a5f91f37ee9e581e9b34052b3d6",
+      "bounds": [
+        [
+          -20.899999618530273,
+          -20.899999618530273,
+          0.0
+        ],
+        [
+          20.899999618530273,
+          20.899999618530273,
+          106.0
+        ]
+      ],
+      "size_mm": [
+        41.79999923706055,
+        41.79999923706055,
+        106.0
+      ],
+      "volume_mm3": 25090.173009049046,
+      "faces": 16756,
+      "closed_positive_volume": true,
+      "connected_components": 1,
+      "dimension_match": true,
+      "thread_min_angle_to_horizontal_deg": 49.99692971853766,
+      "thread_area_below_49_8_deg_mm2": 0.0,
+      "source_reused_byte_for_byte": true,
+      "pass": true
+    }
+  ]
+}

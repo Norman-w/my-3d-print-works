@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "script_parses": true,
+    "all_report_artifacts_match": true,
+    "report_sources_match": true,
+    "csv_header_matches_schema": true,
+    "measurement_rows_zero": true,
+    "README.md:paired-return.csv": true,
+    "README.md:measurement-protocol.md": true,
+    "README.md:measurement-schema.json": true,
+    "README.md:report.json": true,
+    "README.md:build.py": true
+  },
+  "passed": true,
+  "report_sha256": "3e1cf1d0e017ba5aae34ae2ed255a80f6c41e6f004752241d7f5b8bb3b32c49d",
+  "actual_measurements": 0,
+  "release": false
+}

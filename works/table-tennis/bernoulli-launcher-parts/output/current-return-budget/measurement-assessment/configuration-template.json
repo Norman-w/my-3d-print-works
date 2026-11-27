@@ -1,0 +1,6 @@
+{
+  "configuration_id": null,
+  "assembly_source_sha256": null,
+  "route_identity": null,
+  "status": "Awaiting an actual assembled configuration; these identities are filled by the assistant from the assembly record, not guessed from the latest candidate"
+}

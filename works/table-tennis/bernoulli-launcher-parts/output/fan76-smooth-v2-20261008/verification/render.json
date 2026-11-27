@@ -1,0 +1,31 @@
+{
+  "body_sha256": "51875af2aa3c8a6d5b998951cf9e36c60cf4a1fe02f1c37e1956977902b930cc",
+  "core15_sha256": "b159553a7e1b0038e3f194ed8274143b6e72837c2d5061f5c1412f785de02b59",
+  "images": [
+    {
+      "view": "front",
+      "source_wrapper": "review/final-mesh-view.scad",
+      "image": "render/front.png",
+      "sha256": "2b1b92b66d65f9f208db6f032109b35e2462618c5682f531bad6efa265d1423b"
+    },
+    {
+      "view": "top",
+      "source_wrapper": "review/final-mesh-view.scad",
+      "image": "render/top.png",
+      "sha256": "e13129777b5273c5a81d400c44dfbb4a9b4ed52869124459d5a281e0a5dba215"
+    },
+    {
+      "view": "iso",
+      "source_wrapper": "review/final-mesh-view.scad",
+      "image": "render/iso.png",
+      "sha256": "15e904f6407f80f270579b1b68b8e6ffe9caad6629b096941d02c2d461975b8d"
+    },
+    {
+      "view": "assembly-section-iso",
+      "source_wrapper": "review/final-assembly-section.scad",
+      "image": "render/assembly-section-iso.png",
+      "sha256": "86393aca5e15174881ac8ad1ee823085c0c55678d9e49838df62407e675763d7"
+    }
+  ],
+  "sections": "Real STL plane intersections, not illustrative outlines"
+}

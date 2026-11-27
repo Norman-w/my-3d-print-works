@@ -1,0 +1,626 @@
+{
+  "status": "INITIAL_SNAPSHOT_HAS_TWO_BLOCKING_ASSEMBLY_COUNTEREXAMPLES",
+  "report_generated_utc": "2026-09-24T05:03:06.747317+00:00",
+  "scope": "Frozen initial snapshot only; later root fixes need separate evidence",
+  "frozen_snapshot": {
+    "created_utc": "2026-09-24T05:01:09.471465+00:00",
+    "sources": [
+      {
+        "original_path": "cad/parameters.scad",
+        "snapshot_path": "output/review-slice/manufacturing-snapshot/cad/parameters.scad",
+        "sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+      },
+      {
+        "original_path": "cad/cam-study.scad",
+        "snapshot_path": "output/review-slice/manufacturing-snapshot/cad/cam-study.scad",
+        "sha256": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007"
+      },
+      {
+        "original_path": "cad/feeder-supports.scad",
+        "snapshot_path": "output/review-slice/manufacturing-snapshot/cad/feeder-supports.scad",
+        "sha256": "3ca92ad21972059d136c0c09b90c2ad2882922496bf092977d676dd5f8a7cf8e"
+      },
+      {
+        "original_path": "cad/spin-parameters.scad",
+        "snapshot_path": "output/review-slice/manufacturing-snapshot/cad/spin-parameters.scad",
+        "sha256": "ba398332e29b53e5a3c6484385c1cecbb01139f32d039293e1d50afdd1f26e2e"
+      },
+      {
+        "original_path": "cad/spin-head.scad",
+        "snapshot_path": "output/review-slice/manufacturing-snapshot/cad/spin-head.scad",
+        "sha256": "c185e32ac9cb943ad906720884f14890ef7919366ad6c0ce1e49f1c5af0df0c7"
+      }
+    ]
+  },
+  "current_sources_for_drift_notice_only": [
+    {
+      "path": "cad/parameters.scad",
+      "sha256_at_report_run": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+      "matches_initial_snapshot": true
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "sha256_at_report_run": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+      "matches_initial_snapshot": true
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "sha256_at_report_run": "b9d2af21b5648b4d0a04ded780e44a747cb19f29650f83abea2707e98043c3c9",
+      "matches_initial_snapshot": false
+    },
+    {
+      "path": "cad/spin-parameters.scad",
+      "sha256_at_report_run": "ba398332e29b53e5a3c6484385c1cecbb01139f32d039293e1d50afdd1f26e2e",
+      "matches_initial_snapshot": true
+    },
+    {
+      "path": "cad/spin-head.scad",
+      "sha256_at_report_run": "c185e32ac9cb943ad906720884f14890ef7919366ad6c0ce1e49f1c5af0df0c7",
+      "matches_initial_snapshot": true
+    }
+  ],
+  "probe_sources": [
+    {
+      "path": "output/review-slice/manufacturing-feeder-nut-probe.scad",
+      "sha256": "14da757a1f474e15b85fe94c8393ec82f6311bdcceede7030671e7985359a0a4"
+    },
+    {
+      "path": "output/review-slice/manufacturing-spin-nut-probe.scad",
+      "sha256": "54b4d5c79cebaedc9230b50aac94263fc1582a0b0c8235fb2335e31b52ffdbdc"
+    }
+  ],
+  "fastener_envelopes": {
+    "M3_probe": {
+      "af_mm": 5.5,
+      "thickness_mm": 2.4,
+      "generous_hole_mm": 3.2
+    },
+    "M4_probe": {
+      "af_mm": 7,
+      "thickness_mm": 3.2,
+      "generous_hole_mm": 4.5
+    },
+    "evidence_level": "Nominal review envelopes, no actual purchased lot or SKU verified"
+  },
+  "counterexample_cases": [
+    {
+      "name": "manufacturing-feeder-nut-entry",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-entry.stl",
+        "-D",
+        "review_nut_z=-40",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_z": -40
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    },
+    {
+      "name": "manufacturing-feeder-nut-mid",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-mid.stl",
+        "-D",
+        "review_nut_z=-15",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_z": -15
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-feeder-nut-mid.stl",
+        "sha256": "c2d78e54ee4c794a4322b2fe27321efc7dd2d93f5c7454cfa3766b4fcaf5dab5",
+        "triangles": 80,
+        "volume_mm3": 20.02895065345399,
+        "bounds_min_mm": [
+          -65.5,
+          18.100000381469727,
+          -18.031089782714844
+        ],
+        "bounds_max_mm": [
+          -63.0,
+          20.5,
+          -11.968911170959473
+        ],
+        "size_mm": [
+          2.5,
+          2.3999996185302734,
+          6.062178611755371
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    },
+    {
+      "name": "manufacturing-feeder-nut-seated",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-seated.stl",
+        "-D",
+        "review_nut_z=-1",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_z": -1
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    },
+    {
+      "name": "manufacturing-feeder-nut-without-brace",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-without-brace.stl",
+        "-D",
+        "review_nut_z=-15",
+        "-D",
+        "review_with_spring_interface=false",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_z": -15,
+        "review_with_spring_interface": false
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    },
+    {
+      "name": "manufacturing-spin-nut-entry",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-entry.stl",
+        "-D",
+        "review_nut_y=20",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_y": 20
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    },
+    {
+      "name": "manufacturing-spin-nut-mid",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-mid.stl",
+        "-D",
+        "review_nut_y=14.5",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_y": 14.5
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-spin-nut-mid.stl",
+        "sha256": "39e57a8b1619509f795d5c78ca3cd7336c5e2b2dcc9e125ddb77504b2b9096b0",
+        "triangles": 136,
+        "volume_mm3": 10.598355477608708,
+        "bounds_min_mm": [
+          55.75,
+          11.0,
+          41.5
+        ],
+        "bounds_max_mm": [
+          58.95000076293945,
+          12.349166870117188,
+          44.5
+        ],
+        "size_mm": [
+          3.200000762939453,
+          1.3491668701171875,
+          3.0
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    },
+    {
+      "name": "manufacturing-spin-nut-seated",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-seated.stl",
+        "-D",
+        "review_nut_y=0",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_y": 0
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    },
+    {
+      "name": "manufacturing-spin-nut-before-cage-bolt",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-before-cage-bolt.stl",
+        "-D",
+        "review_nut_y=14.5",
+        "-D",
+        "review_with_cage_bolt=false",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-nut-probe.scad"
+      ],
+      "definitions": {
+        "review_nut_y": 14.5,
+        "review_with_cage_bolt": false
+      },
+      "expected_empty": true,
+      "actual_empty": true,
+      "matches_expectation": true
+    }
+  ],
+  "all_cases_match_expected_counterexamples_and_controls": true,
+  "selected_exported_parts": [
+    {
+      "name": "manufacturing-spin-body",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-body.stl",
+        "-D",
+        "part=\"body\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-snapshot/cad/spin-head.scad"
+      ],
+      "definitions": {
+        "part": "body"
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-spin-body.stl",
+        "sha256": "308516763fce51b4b4c2dfcf058b62536e8bd6f65ba8e64702c21fbeff6af22b",
+        "triangles": 6826,
+        "volume_mm3": 115914.57874401509,
+        "bounds_min_mm": [
+          -40.0,
+          -29.0,
+          -25.0
+        ],
+        "bounds_max_mm": [
+          55.0,
+          29.0,
+          75.0
+        ],
+        "size_mm": [
+          95.0,
+          58.0,
+          100.0
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    },
+    {
+      "name": "manufacturing-spin-cover",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-spin-cover.stl",
+        "-D",
+        "part=\"cover\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-snapshot/cad/spin-head.scad"
+      ],
+      "definitions": {
+        "part": "cover"
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-spin-cover.stl",
+        "sha256": "0cc91b08f46a07dc8399ed9015a26760406cc251623fa9441885d2e837e82f0e",
+        "triangles": 5858,
+        "volume_mm3": 10743.538843358097,
+        "bounds_min_mm": [
+          33.75,
+          -23.0,
+          20.0
+        ],
+        "bounds_max_mm": [
+          65.0,
+          23.0,
+          69.0
+        ],
+        "size_mm": [
+          31.25,
+          46.0,
+          49.0
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    },
+    {
+      "name": "manufacturing-feeder-left-support",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-left-support.stl",
+        "-D",
+        "support_part=\"left_support\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-snapshot/cad/feeder-supports.scad"
+      ],
+      "definitions": {
+        "support_part": "left_support"
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-feeder-left-support.stl",
+        "sha256": "bc9b4650897497d58df41dbde01dc98406b83e980dd91634e85dd12734b3f5eb",
+        "triangles": 1404,
+        "volume_mm3": 23496.907246532537,
+        "bounds_min_mm": [
+          -76.0,
+          -19.0,
+          -50.0
+        ],
+        "bounds_max_mm": [
+          -35.5,
+          24.200000762939453,
+          21.0
+        ],
+        "size_mm": [
+          40.5,
+          43.20000076293945,
+          71.0
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    },
+    {
+      "name": "manufacturing-feeder-carriage",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "binstl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-feeder-carriage.stl",
+        "-D",
+        "support_part=\"carriage\"",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/review-slice/manufacturing-snapshot/cad/feeder-supports.scad"
+      ],
+      "definitions": {
+        "support_part": "carriage"
+      },
+      "expected_empty": false,
+      "actual_empty": false,
+      "matches_expectation": true,
+      "mesh": {
+        "path": "output/review-slice/manufacturing-feeder-carriage.stl",
+        "sha256": "de3f326392f2ac6d58cef5b169d022726bbff3e0434dd19baf19a75e32a14374",
+        "triangles": 3012,
+        "volume_mm3": 27312.975146267832,
+        "bounds_min_mm": [
+          -76.0,
+          -4.0,
+          -64.5
+        ],
+        "bounds_max_mm": [
+          89.0,
+          54.0,
+          37.0
+        ],
+        "size_mm": [
+          165.0,
+          58.0,
+          101.5
+        ],
+        "watertight_by_rounded_edges": true
+      }
+    }
+  ],
+  "installed_bundled_machine_profile": {
+    "name": "Bambu Lab X1 Carbon 0.4 nozzle",
+    "printable_area": [
+      "0x0",
+      "256x0",
+      "256x256",
+      "0x256"
+    ],
+    "printable_height": "250",
+    "bed_exclude_area": [
+      "0x0",
+      "18x0",
+      "18x28",
+      "0x28"
+    ],
+    "nozzle_diameter": [
+      "0.4"
+    ],
+    "default_print_profile": "0.20mm Standard @BBL X1C"
+  },
+  "installed_bundled_process_profile": {
+    "name": "0.20mm Standard @BBL X1C",
+    "layer_height": "0.2",
+    "line_width": "0.42",
+    "wall_loops": "2",
+    "enable_support": "0",
+    "support_type": "tree(auto)",
+    "support_on_build_plate_only": "0"
+  },
+  "profile_source_chain": {
+    "machine": [
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/fdm_machine_common.json",
+        "sha256": "26ef8ee697849323e67d8e1a9026c175cebe3397e38c5091dddb5cd3fc52e94c"
+      },
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/fdm_bbl_3dp_001_common.json",
+        "sha256": "2ca207f457c1f9b3eb25a1801adb2eaa8ddc5620f5a8945abb51a3fcddab5e47"
+      },
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/machine/Bambu Lab X1 Carbon 0.4 nozzle.json",
+        "sha256": "e2b26b1e94216c8c1d823b9a327bf746c0aeeb1fa0e61489846cfc15b96b3b53"
+      }
+    ],
+    "process": [
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_common.json",
+        "sha256": "d7981c4b92854f251b8697e1bb621c63fe393f263fb8024ab63c401525d543d7"
+      },
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_single_common.json",
+        "sha256": "05b38ac1318e465e817978b36da51754f928da0172738a20bb3a8d4a69eb4769"
+      },
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/fdm_process_single_0.20.json",
+        "sha256": "cdda8d56d67f62a0faa892cb6efc605ebb5c745bf742f6ead4daaeb6627c182a"
+      },
+      {
+        "path": "/Applications/BambuStudio.app/Contents/Resources/profiles/BBL/process/0.20mm Standard @BBL X1C.json",
+        "sha256": "e4d3f211b6ef87e9612c96f3ac2d18413e0610fff7eeb815a76420344a3b0a19"
+      }
+    ]
+  },
+  "profile_is_user_active_preset": false,
+  "individual_unrotated_bbox_screen_only": [
+    {
+      "name": "manufacturing-spin-body",
+      "size_mm": [
+        95.0,
+        58.0,
+        100.0
+      ],
+      "fits_simple_256_256_250_box": true,
+      "exclusion_brim_support_and_toolpath_not_checked": true
+    },
+    {
+      "name": "manufacturing-spin-cover",
+      "size_mm": [
+        31.25,
+        46.0,
+        49.0
+      ],
+      "fits_simple_256_256_250_box": true,
+      "exclusion_brim_support_and_toolpath_not_checked": true
+    },
+    {
+      "name": "manufacturing-feeder-left-support",
+      "size_mm": [
+        40.5,
+        43.20000076293945,
+        71.0
+      ],
+      "fits_simple_256_256_250_box": true,
+      "exclusion_brim_support_and_toolpath_not_checked": true
+    },
+    {
+      "name": "manufacturing-feeder-carriage",
+      "size_mm": [
+        165.0,
+        58.0,
+        101.5
+      ],
+      "fits_simple_256_256_250_box": true,
+      "exclusion_brim_support_and_toolpath_not_checked": true
+    }
+  ],
+  "upright_body_cantilever_witness": {
+    "actual_mesh": "output/review-slice/manufacturing-spin-body.stl",
+    "ray_xy_mm": [
+      45,
+      0
+    ],
+    "ray_surface_z_mm": [
+      20.0,
+      23.7,
+      65.3,
+      69.0
+    ],
+    "body_bed_z_mm": -25.0,
+    "first_material_height_above_bed_mm": 45.0,
+    "interpretation": "No material directly below the outboard floor; does not by itself prove print failure. Orientation/support and removable support paths need sliced inspection."
+  },
+  "sliced": false,
+  "printer_accessed": false,
+  "profiles_modified": false,
+  "open_gates": [
+    "actual supplier/lot dimensions and screw head geometry",
+    "printed nut-pocket and sliding fits",
+    "external locknut and wrench swept path",
+    "layer orientation, support removal and actual sliced paths",
+    "spring free length, solid height, force curve and fatigue",
+    "soft-pad hardness, retention and wear",
+    "loaded physical assembly and launch acceptance"
+  ]
+}

@@ -1,0 +1,416 @@
+{
+  "schema_version": "fan76-direct-cad-v1",
+  "generated_utc": "2026-10-07T02:37:14.794217+00:00",
+  "units": "mm",
+  "openscad_version": "OpenSCAD version 2026.04.26",
+  "status": "GEOMETRY_EXPORTED_VALIDATION_PENDING",
+  "embedded_supports": false,
+  "source_sha256": {
+    "fan76-direct-v1.scad": "6c47c347a872f63b275ebff2e9f6718c071d25b75e7745aa5ee2b996fdc4c5b0",
+    "fan76-direct-v1-parameters.scad": "d11c4478c98ea104d56b19913ff9cd60bac740fbcd1fa583c832a632b9077125",
+    "fan76-direct-v1-thread.scad": "ee5c6db2ffb951b2407c1326fc7b0673356cd9e1cb32b04dfe3404bbbfaa9213"
+  },
+  "skill_files_sha256": {
+    "SKILL.md": "8796b824a9046be17a465d70a0cf7dee5ce9734990945ad6099408c0d0c78f93",
+    "references/helical-thread-workflow.md": "7df227ce8373309e223b40ca6da863861b6a00e7f3c1e896c579af58135c8359",
+    "references/printability-checklist.md": "40b85a043ac963f0729badc1bfb818981df94460f5cb368fc22c3626c4d34107",
+    "references/socket-bayonet-fit.md": "ef82bb81bdb5f9fe3f86bad1c01b5eec4737d71d9ce543e65a83bf2fec7bf7b1",
+    "references/versioned-print-package.md": "d1757beb97f07c6b6fd2db14bed50bf256d58719ea226801fb020fce43719cf5",
+    "references/mechanical-design-patterns.md": "2fc68151b639c41e3891b3dce8cfbfd249af3150754d8c079aed40130e317606",
+    "examples/helical-thread-profile.scad": "00b0836ea51581d60973ce9dded13f92eb25522beb58231a9714ad2761d511a6"
+  },
+  "files": [
+    {
+      "part_id": "body",
+      "file": "stl/fan76-direct-v1-body-clean.stl",
+      "sha256": "a319b4d1e06b28cbc3d7b69207de9475bf82d26b1d3ba66f66ab4ffed747acb5",
+      "source_module": "f76_body",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-body-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 100152,
+        "uniqueVertexCount": 50076,
+        "bounds": {
+          "min": [
+            -43.0,
+            -43.0,
+            0.0
+          ],
+          "max": [
+            43.0,
+            43.0,
+            222.0
+          ],
+          "size": [
+            86.0,
+            86.0,
+            222.0
+          ]
+        },
+        "surfaceArea": 82605.14608848425,
+        "signedVolume": 216547.0955326623,
+        "volume": 216547.0955326623,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-body-clean.stl"
+      }
+    },
+    {
+      "part_id": "core15",
+      "file": "stl/fan76-direct-v1-core15-clean.stl",
+      "sha256": "282eb92da7b87c2e6b051ebdb3429bd0aa09b9341988396658e12214937aaa68",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core15-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 35143.1572819258,
+        "signedVolume": 35135.85487927308,
+        "volume": 35135.85487927308,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core15-clean.stl"
+      }
+    },
+    {
+      "part_id": "core20",
+      "file": "stl/fan76-direct-v1-core20-clean.stl",
+      "sha256": "307dd1496ca960e74ab24f8de8f7f9798b074484528dc3ce2534d1f5b57b86cd",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core20-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 36080.239814248795,
+        "signedVolume": 36136.91858264803,
+        "volume": 36136.91858264803,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core20-clean.stl"
+      }
+    },
+    {
+      "part_id": "core25",
+      "file": "stl/fan76-direct-v1-core25-clean.stl",
+      "sha256": "ef40f508c59237e0631a724785df8f69df5e1391067f6ffa277cce9517ad7333",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core25-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 37031.07017616209,
+        "signedVolume": 37138.397676175606,
+        "volume": 37138.397676175606,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core25-clean.stl"
+      }
+    },
+    {
+      "part_id": "core30",
+      "file": "stl/fan76-direct-v1-core30-clean.stl",
+      "sha256": "b39b46ba5ca3eb58f16aeafaeb84f52809e29b2bfae2deba9169cb0413dd29ae",
+      "source_module": "f76_core",
+      "quantity": 1,
+      "print_target": true,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/stl/fan76-direct-v1-core30-clean.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 52296,
+        "uniqueVertexCount": 26148,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            0.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            160.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            160.0
+          ]
+        },
+        "surfaceArea": 38005.58596005232,
+        "signedVolume": 38140.1915401383,
+        "volume": 38140.1915401383,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "stl/fan76-direct-v1-core30-clean.stl"
+      }
+    },
+    {
+      "part_id": "review-fan-envelope",
+      "file": "review/review-fan-envelope.stl",
+      "sha256": "d56fcfe64ddc10a1151cde3d86c04b937e781162c808781ec7f14c77c4d5a68c",
+      "source_module": "review-fan-envelope",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-fan-envelope.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 1624,
+        "uniqueVertexCount": 812,
+        "bounds": {
+          "min": [
+            -38.0,
+            -40.0,
+            0.0
+          ],
+          "max": [
+            38.0,
+            40.0,
+            24.0
+          ],
+          "size": [
+            76.0,
+            80.0,
+            24.0
+          ]
+        },
+        "surfaceArea": 12369.08492402544,
+        "signedVolume": 14099.768518106222,
+        "volume": 14099.768518106222,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-fan-envelope.stl"
+      }
+    },
+    {
+      "part_id": "review-male-ridge",
+      "file": "review/review-male-ridge.stl",
+      "sha256": "a71012c8defe634fa402f372466460d584e0feb48a251b03082d8caca414d4cc",
+      "source_module": "review-male-ridge",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-male-ridge.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 11428,
+        "uniqueVertexCount": 5716,
+        "bounds": {
+          "min": [
+            -20.899999618530273,
+            -20.899999618530273,
+            4.0
+          ],
+          "max": [
+            20.899999618530273,
+            20.899999618530273,
+            28.0
+          ],
+          "size": [
+            41.79999923706055,
+            41.79999923706055,
+            24.0
+          ]
+        },
+        "surfaceArea": 5424.210197071419,
+        "signedVolume": 1656.5930433307037,
+        "volume": 1656.5930433307037,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-male-ridge.stl"
+      }
+    },
+    {
+      "part_id": "review-female-groove",
+      "file": "review/review-female-groove.stl",
+      "sha256": "b725600f7a606a241a86b3ef4e256b46044446169a7a200686220797f961ad03",
+      "source_module": "review-female-groove",
+      "quantity": 0,
+      "print_target": false,
+      "material": "PETG candidate; actual filament not yet selected",
+      "print_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "topology": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-direct-longtravel-v1-20261007/review/review-female-groove.stl",
+        "format": "binary",
+        "units": "unknown",
+        "triangleCount": 47292,
+        "uniqueVertexCount": 23648,
+        "bounds": {
+          "min": [
+            -21.149999618530273,
+            -21.149999618530273,
+            66.0
+          ],
+          "max": [
+            21.149999618530273,
+            21.149999618530273,
+            186.0
+          ],
+          "size": [
+            42.29999923706055,
+            42.29999923706055,
+            120.0
+          ]
+        },
+        "surfaceArea": 30708.50085084309,
+        "signedVolume": 10569.247272601904,
+        "volume": 10569.247272601904,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true,
+        "export_returncode": 0,
+        "inspect_returncode": 0,
+        "file": "review/review-female-groove.stl"
+      }
+    }
+  ]
+}

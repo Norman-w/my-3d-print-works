@@ -1,0 +1,118 @@
+{
+  "status": "PARTIAL_SUPPLIER_CLOSURE_SHORTENING_CONFIRMED_FORCE_AND_SEATS_OPEN",
+  "created_utc": "2026-09-27T10:51:00.109486+00:00",
+  "scope": "Only three requested cable supplier families. Findings are bounded to accessible official text and the already-saved drawings; no claim of exhaustive official-document absence.",
+  "source_sha256": {
+    "docs/cable-hardware-evidence.md": "53c8b0e4a0d808042de94bdf1463ebe82bdf2625e77188fe54b19d7c4227f64e",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "output/current-cable-supplier-closure/build_report.py": "3a6960a7d1e0dbe24017f3e854844795d5e41169c27b8406e266c1f80620a531",
+    "output/current-cable-supplier-closure/retrieval.json": "366918846306c3f3a8a6d02827a0f9a909d828fa645cf19305893d0c1abbc308",
+    "output/current-cable-supplier-closure/retrieval-initial-bundled-python-ssl.json": "ddedbfd963fd513e9e89f056b011842fc7b313ef500bb86df973afbfd38138b7",
+    "output/cable-hardware-evidence/03096-35-drawing.png": "26315cc42e4afb19c264449529b88955077bd6d9d536f69db5408dc6725015f9",
+    "output/cable-hardware-evidence/03096-35-assets.json": "27e85ca8e07f3d3de8b5e195519b8733a4348afa36828e4d36db8d27b83ba59f",
+    "output/cable-hardware-evidence/03096-25-drawing.png": "7d88942d282c2a2665a4c2ce515afb2df5f346a7ee71ffcb9f5b255e53bc3262",
+    "output/cable-hardware-evidence/03096-25-assets.json": "0cb4fdb6c543298892020b8c6df4111e2f3fcd017e052f455ba36566805160f6",
+    "output/cable-hardware-evidence/03096-14-drawing.png": "6fe697693fdcc6ab97b700902c5a26c2d744c4c3fb3072e39686b2170ffb3781",
+    "output/cable-hardware-evidence/03096-14-assets.json": "369ff1689679e1e4946ac023f4ae002fde563668fb513b710662df511ed5e2be",
+    "output/cable-hardware-evidence/03096-30-drawing.png": "039d5119543f7509d3ba447d2f0d7304566c2e07eec762cbf5a97285864c2c9d",
+    "output/cable-hardware-evidence/03096-30-assets.json": "f2dbd82a7926d0c244ddb18426458ac742843589e1b299a795955fbd3a4bbcea"
+  },
+  "web_evidence_file": "output/current-cable-supplier-closure/reviewed-official-evidence.json",
+  "web_evidence_sha256": "99c24a796b6a99519cbce835628d8d7832e74aec9b19ed69bb6678a72a7a805a",
+  "newly_confirmed": [
+    {
+      "field_id": "shortening_permission",
+      "part": "03096-14",
+      "status": "OFFICIAL_ASSEMBLY_SHORTENING_PERMISSION",
+      "source_url": "https://www.norelemusa.com/en-us/Product-Overview/Flexible-standard-component-system/03000/Accessory-for-indexing-plungers-cam-action-indexing-plungers-and-ball-lock-pins/Bowden-cables-for-indexing-plungers-with-remote-actuation/p/agid.32096",
+      "limits": "Does not specify a complete cutter/deburr/liner/crimp procedure, final installed lengths, ferrule seating, clamp torque or minimum tail. Preserve factory-fixed ball end; no inference that arbitrary replacement cable/ends are equivalent."
+    }
+  ],
+  "requested_fields": [
+    {
+      "field_id": "clamp_torque_for_1p5_wire",
+      "part": "03096-35-03180507",
+      "requested_value": null,
+      "unit": "N m",
+      "status": "NOT_PROVIDED_IN_REVIEWED_ACCESSIBLE_EVIDENCE",
+      "needed_definition": "Approved tightening torque/range for this M4 slotted screw, nickel-plated brass body and supplied Ø1.5 stainless core, including lubrication and reuse conditions.",
+      "not_a_substitute": "Generic M4 bolt torque is not a cable-clamp torque; it can damage wire/brass and provides no slip-force assurance."
+    },
+    {
+      "field_id": "minimum_free_tail",
+      "part": "03096-35-03180507 + Ø1.5 core",
+      "requested_value": null,
+      "unit": "mm",
+      "status": "NOT_PROVIDED_IN_REVIEWED_ACCESSIBLE_EVIDENCE",
+      "needed_definition": "Minimum cable extension beyond the terminal wire-exit surface, with a clearly defined datum and any end treatment.",
+      "not_a_substitute": "L7 is nipple axial body length and L1=3.5 locates the transverse hole; neither is wire-tail requirement."
+    },
+    {
+      "field_id": "clamp_retention_force",
+      "part": "03096-35-03180507 + Ø1.5 core",
+      "requested_value": null,
+      "unit": "N",
+      "status": "NOT_PROVIDED_IN_REVIEWED_ACCESSIBLE_EVIDENCE",
+      "needed_definition": "Slip/pull-out limit or rated allowable force at stated torque, tail, core construction and load history, including repeat actuation if applicable.",
+      "not_a_substitute": "The core material, nominal diameter and hole clearance do not establish clamp retention. Neither M4 thread capacity nor core breaking force alone supplies this rating."
+    },
+    {
+      "field_id": "ferrule_into_adjuster_bearing_depth",
+      "part": "03096-25-0350 mated with existing03096-30-0306X24 candidate",
+      "requested_value": null,
+      "unit": "mm",
+      "status": "NOT_PROVIDED_IN_REVIEWED_ACCESSIBLE_EVIDENCE",
+      "needed_definition": "Distance from adjuster inlet face to the actual loaded ferrule reaction datum, including mating nose/cone/chamfers and tolerances.",
+      "not_a_substitute": "Ø7 straight-bore depth8.5 belongs to the adjuster, and the CAD shallow-boundary pose is not a measured loaded seat.03096-30 was not newly researched; only existing evidence was reused."
+    },
+    {
+      "field_id": "housing_into_ferrule_final_seat_and_crimp",
+      "part": "03096-25-0350 + housing",
+      "requested_value": null,
+      "unit": "mm / process",
+      "status": "PARTIAL_GEOMETRY_ONLY",
+      "known_geometry": {
+        "OD_mm": 5.5,
+        "length_mm": 11,
+        "housing_bore_mm": 5,
+        "straight_bore_depth_mm": 9,
+        "wire_bore_mm": 2.5,
+        "crimp_zone_offset_mm": 4.5
+      },
+      "needed_definition": "Final housing insertion/seat datum plus prescribed crimp tool/profile/force and post-crimp dimensions.",
+      "not_a_substitute": "L1=9 describes the straight bore; L2=4.5 identifies crimp-zone location, not crimp depth or final compression."
+    }
+  ],
+  "current_candidate_geometric_tail_budget": {
+    "source": "cad/cable-output-interface.scad",
+    "wire_diameter_mm": 1.5,
+    "tail_below_nipple_center_mm": 8.0,
+    "nominal_tail_outside_body_mm": 5.5,
+    "interpretation": "CAD installation maximum/space budget only, not a manufacturer minimum or validated holding-force condition.",
+    "conditional_gate": "If the supplier-required external tail is larger than this nominal5.5 mm allowance, this exact packaging is incompatible and requires a separately reviewed change. Do not trim below a required tail merely to clear surrounding parts."
+  },
+  "bounded_next_choices": [
+    {
+      "choice": "retain_this_candidate",
+      "next_evidence": "Obtain an exact-part assembly specification with torque/tail/retention and seat/crimp data, or documented validation on the actual selected hardware/core assembly. No extra printed coupon is required by this report.",
+      "current_action": "Keep the force/seat gates open and leave final core trimming until the actual routed and seated assembly is established; do not issue invented setup values."
+    },
+    {
+      "choice": "factory_terminated_rated_cable_assembly",
+      "next_evidence": "Use a supplier-defined assembly that specifies terminal geometry, length datums and rated pull/retention performance; review its actual interfaces before substitution.",
+      "current_action": "This is an alternative evidence path, not a selected replacement product or permission to change CAD."
+    }
+  ],
+  "technical_information_request_fields_not_sent": [
+    "03096-35-03180507 with supplied Ø1.5 1.4401 core: permissible tightening range, screw drive dimensions, minimum external tail with drawing datum, slip/rated retention force and repeated-use limits.",
+    "03096-25-0350: final housing insertion datum, crimp profile/tool/force and accepted post-crimp dimensions.",
+    "Mating03096-25-0350/03096-30-0306X24: dimensioned loaded-seat datum and relevant nose/cone tolerances.",
+    "03096-14 exact length SKU: allowed shortening/end-preparation procedure and actual quantities of included ferrules/adjusters/nuts."
+  ],
+  "no_physical_release": true,
+  "source_changed": false,
+  "supplier_contacted": false,
+  "purchased": false,
+  "sent_to_printer": false,
+  "sources_stable": true
+}

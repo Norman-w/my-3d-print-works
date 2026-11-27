@@ -1,0 +1,20 @@
+{
+  "left-y-cap": {
+    "slice_generated": true,
+    "source_stl_sha256": "9c162b06e35e89228e7b132fcb7f1f2419f7cd42692255bf2d914105cc96de10",
+    "gcode_layers": 76,
+    "filament_g": 8.721,
+    "estimated_time_s": 2038.5,
+    "native_warnings": [],
+    "folder": "output/optical-home-candidate/slices/left-y-cap"
+  },
+  "moving-spring-spacer-flag": {
+    "slice_generated": true,
+    "source_stl_sha256": "c179e0daf04fb48f805edd49b35b308f1cc63b68b7da767c0d77adbb16456f4a",
+    "gcode_layers": 61,
+    "filament_g": 1.494,
+    "estimated_time_s": 1019.8,
+    "native_warnings": [],
+    "folder": "output/optical-home-candidate/slices/moving-spring-spacer-flag"
+  }
+}

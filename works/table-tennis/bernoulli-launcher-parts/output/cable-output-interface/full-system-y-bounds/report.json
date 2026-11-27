@@ -1,0 +1,341 @@
+{
+  "source_sha256": {
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-output-interface.scad": "0113eb4c7164701f2b82e5a7ed881f8457622f6cd99a14757703fbf4ee073125",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529"
+  },
+  "role": "Read-only assembly bounds; full union is reference mesh and not printable. Includes original reference outlet pipe, inlet hose/pads, route housing/core, current input/output parts/hardware, return spring.",
+  "results": [
+    {
+      "name": "full-0",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/full-0.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 123644,
+        "uniqueVertexCount": 61264,
+        "bounds": {
+          "min": [
+            -76.0,
+            -102.2,
+            -166.0
+          ],
+          "max": [
+            235.16342435803466,
+            105.87446786878981,
+            222.55043473153245
+          ],
+          "size": [
+            311.16342435803466,
+            208.0744678687898,
+            388.55043473153245
+          ]
+        },
+        "surfaceArea": 519579.26575688814,
+        "signedVolume": 1065352.7303930381,
+        "volume": 1065352.7303930381,
+        "degenerateTriangleCount": 144,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 130,
+        "inconsistentOrientationEdgeCount": 56,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "full-0.5",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.5.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.5.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/full-0.5.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-0.5.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 124098,
+        "uniqueVertexCount": 61465,
+        "bounds": {
+          "min": [
+            -76.0,
+            -102.2,
+            -166.0
+          ],
+          "max": [
+            235.16342435803466,
+            105.87446786878981,
+            222.55043473153245
+          ],
+          "size": [
+            311.16342435803466,
+            208.0744678687898,
+            388.55043473153245
+          ]
+        },
+        "surfaceArea": 520076.6448772576,
+        "signedVolume": 1065478.9634452648,
+        "volume": 1065478.9634452648,
+        "degenerateTriangleCount": 144,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 129,
+        "inconsistentOrientationEdgeCount": 56,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "full-1",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-1.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-1.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/full-1.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/full-1.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 124330,
+        "uniqueVertexCount": 61584,
+        "bounds": {
+          "min": [
+            -76.0,
+            -102.2,
+            -166.0
+          ],
+          "max": [
+            235.16342435803466,
+            105.87446786878981,
+            222.55043473153245
+          ],
+          "size": [
+            311.16342435803466,
+            208.0744678687898,
+            388.55043473153245
+          ]
+        },
+        "surfaceArea": 520361.71919504204,
+        "signedVolume": 1065605.2729638466,
+        "volume": 1065605.2729638466,
+        "degenerateTriangleCount": 144,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 129,
+        "inconsistentOrientationEdgeCount": 56,
+        "watertightByEdgeTopology": false
+      }
+    },
+    {
+      "name": "or-pipe",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/or-pipe.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/or-pipe.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/or-pipe.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/or-pipe.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 240,
+        "uniqueVertexCount": 120,
+        "bounds": {
+          "min": [
+            -25.0,
+            -24.863047384206833,
+            45.5
+          ],
+          "max": [
+            25.0,
+            24.863047384206833,
+            135.0
+          ],
+          "size": [
+            50.0,
+            49.72609476841367,
+            89.5
+          ]
+        },
+        "surfaceArea": 27810.204725119675,
+        "signedVolume": 13676.9508012192,
+        "volume": 13676.9508012192,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "ir-hose",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/ir-hose.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/ir-hose.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/ir-hose.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/ir-hose.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 240,
+        "uniqueVertexCount": 120,
+        "bounds": {
+          "min": [
+            -27.5,
+            -27.349352122627515,
+            -166.0
+          ],
+          "max": [
+            27.5,
+            27.349352122627515,
+            -98.0
+          ],
+          "size": [
+            55.0,
+            54.69870424525503,
+            68.0
+          ]
+        },
+        "surfaceArea": 23208.649114526263,
+        "signedVolume": 27834.17760822727,
+        "volume": 27834.17760822727,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "route-only",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/route-only.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/route-only.scad"
+      ],
+      "returncode": 0,
+      "file": "output/cable-output-interface/full-system-y-bounds/route-only.stl",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/route-only.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 15430,
+        "uniqueVertexCount": 7717,
+        "bounds": {
+          "min": [
+            -60.478612153434526,
+            -82.47861215343453,
+            -70.31061061564893
+          ],
+          "max": [
+            235.16342435803466,
+            105.87446786878981,
+            222.55043473153245
+          ],
+          "size": [
+            295.6420365114692,
+            188.35308002222433,
+            292.8610453471814
+          ]
+        },
+        "surfaceArea": 11890.356462262078,
+        "signedVolume": 14551.131920433972,
+        "volume": 14551.131920433972,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "name": "pipe-hose-vs-ray",
+      "cmd": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--backend=Manifold",
+        "--export-format",
+        "asciistl",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/pipe-hose-vs-ray.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-output-interface/full-system-y-bounds/pipe-hose-vs-ray.scad"
+      ],
+      "returncode": 1,
+      "file": "output/cable-output-interface/full-system-y-bounds/pipe-hose-vs-ray.stl",
+      "output": "Current top level object is empty.\n"
+    }
+  ],
+  "conclusion": {
+    "rendered_mesh_y_min_mm": -102.2,
+    "rendered_mesh_y_max_mm": 105.87446786878981,
+    "tested_t": [
+      0,
+      0.5,
+      1
+    ],
+    "same_bbox_all_tested_poses": true,
+    "ray_end_y_mm": 1000,
+    "mesh_y_margin_mm": 894.1255321312102,
+    "conservative_ideal_route_y_max_mm": 117.5,
+    "ideal_route_bound_basis": "Every 0<theta<180deg tangent circular fillet lies in the convex hull of its two tangent points and original corner. Valid nonoverlapping tangent segments remain within route vertices with Y<=115. Add nominal housing radius2.5.",
+    "conservative_total_y_max_mm": 117.5,
+    "conservative_ray_margin_mm": 882.5,
+    "stroke_y_invariant": true,
+    "stroke_invariance_basis": [
+      "Output carriage/cap/hardware translate only global Z.",
+      "Original followers/pins/blocks move global X and Z; Y is unchanged.",
+      "Input local-Z rotation preserves local Z; mapping global Y=local Z-82. Input wire changes wrapped angle in the local XY plane while local axial thickness stays fixed.",
+      "Return spring endpoints/length change global Z only; radial Y envelope stays fixed.",
+      "Housing route, inlet/outlet tube references and all fixed parts do not depend on t."
+    ],
+    "scope": "Current modeled solids and nominal reference geometry only, excludes external objects and unmodeled purchased shapes. No CAD source was edited."
+  },
+  "source_hashes_still_current": {
+    "cad/cable-trigger-system.scad": true,
+    "cad/launcher-final-assembly.scad": true,
+    "cad/cable-trigger-input.scad": true,
+    "cad/cable-output-interface.scad": true,
+    "cad/cable-housing-route.scad": true,
+    "cad/feeder-return-spring.scad": true,
+    "cad/outlet-retention.scad": true,
+    "cad/inlet-retention-final.scad": true
+  }
+}

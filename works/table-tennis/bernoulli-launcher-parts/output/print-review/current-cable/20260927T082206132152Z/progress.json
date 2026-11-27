@@ -1,0 +1,18 @@
+[
+  {
+    "part": "cable-input-terminal-cap",
+    "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T082206132152Z/cable-input-terminal-cap",
+    "warnings": [
+      ""
+    ]
+  },
+  {
+    "part": "cable-input-lever",
+    "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+    "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T082206132152Z/cable-input-lever",
+    "warnings": [
+      ""
+    ]
+  }
+]

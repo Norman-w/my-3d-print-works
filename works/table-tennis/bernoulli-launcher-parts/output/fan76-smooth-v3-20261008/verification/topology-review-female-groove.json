@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan76-smooth-v3-20261008/review/review-female-groove.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 21180,
+  "uniqueVertexCount": 10592,
+  "bounds": {
+    "min": [
+      -21.149999618530273,
+      -21.149999618530273,
+      132.0
+    ],
+    "max": [
+      21.149999618530273,
+      21.149999618530273,
+      184.0
+    ],
+    "size": [
+      42.29999923706055,
+      42.29999923706055,
+      52.0
+    ]
+  },
+  "surfaceArea": 13406.837388914224,
+  "signedVolume": 4580.013468304473,
+  "volume": 4580.013468304473,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

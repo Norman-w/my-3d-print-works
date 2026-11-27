@@ -1,0 +1,215 @@
+{
+  "status": "READ_ONLY_KINEMATIC_AND_CAPTURE_REVIEW_NOT_CAD_VALIDATION",
+  "source_sha256": {
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6"
+  },
+  "scope": "Existing wrap candidate, proposed cover-fixed keeper, and alternative straight-pull ball at polar90. No production CAD edited; no candidate mesh/continuous collision validation claimed.",
+  "existing_wrap": {
+    "groove_radial_bounds_mm": [
+      58.9,
+      61.1
+    ],
+    "wire_nominal_d_mm": 1.5,
+    "animation_radius_mm": 60,
+    "ideal_taut_inner_contact_radius_mm": 59.65,
+    "nominal_angle_at_u20_rad": 0.3333333333333333,
+    "ideal_contact_payout_at_u20_mm": 19.883333333333333,
+    "shortfall_mm": 0.11666666666666714,
+    "relative_shortfall": 0.005833333333333357,
+    "ideal_angle_for_20_deg": 19.210655327102206,
+    "equivalent_R60_setting_for_20_mm": 20.117351215423305,
+    "stop_tip_nominal_mm": -17.786889901958908,
+    "stop_tip_ideal_compensated_mm": -17.832359725704567,
+    "stop_tip_delta_mm": -0.045469823745659,
+    "finger_rearward_nominal_mm": 11.77900908466148,
+    "finger_rearward_ideal_compensated_mm": 11.845521620457811,
+    "ball_to_first_contact_angle_deg": 6.191663829905909,
+    "ideal_contact_start_angle_rest_deg": 51.191663829905906,
+    "ideal_contact_start_angle_at_u20_deg": 32.09307065887847,
+    "meaning": "Ideal taut flexible core is pulled against the inner rail. Ball-to-rail and rail-to-port tangent lengths are fixed for fixed radius, so the incremental payout is Rc*dtheta, not R60*dtheta. Actual cable bending, friction, seating and printed groove dimensions are unmeasured.",
+    "stop_budget_action": "Include the 0.116667 mm nominal shortfall. Existing16..22 equivalent stop adjustment contains ideal20.117351, but set actual endpoint with the feed carriage20mm stop and then trigger stop; do not use wire stretch or blindly adopt20.117351.",
+    "faceted_inner_wall_radius_drop_2deg_mm": 0.00897075528855422,
+    "corresponding_simple_stroke_bound_mm": 0.002990251762851407,
+    "radius65_scope": "Previously sourced supplier minimumR65 applies to flexible housing, not an established bare-core wrapping radius."
+  },
+  "fixed_keeper_review": {
+    "original_exit_cut": {
+      "local_angle_deg": [
+        89,
+        116
+      ],
+      "radial_mm": [
+        60.8,
+        66
+      ],
+      "Z_mm": [
+        0.9,
+        3.1
+      ]
+    },
+    "full_top_open_cut_risk": "Opening the same exit cut throughZ7.5 removes outer wall at global angles69.9014..96.9014 at20mm nominal. A remote skirt only prevents complete outward escape; a loose core can leaveR60 intoR61.1..64 and be trapped when the uncut rotating wall returns.",
+    "outer_skirt_proposal_mm": [
+      64.4,
+      67
+    ],
+    "original_outer_rim_r_mm": 64,
+    "rim_to_skirt_gap_mm": 0.4,
+    "positive_capture_not_proven": true,
+    "recursive_local_relief": "A fixed inner keeper over global68..90 requires rotor clearance over local68..111 for21deg travel; the relief then sweeps back toglobal47..90. Adding a keeper for the new unguarded47..68 continues the recursion. The earlier limited radial-relief suggestion was withdrawn as an unproved complete solution.",
+    "max_existing_stop_angle_deg": 21.008452488130185,
+    "minimal_constraints": [
+      "Protect the full permitted angular interval, including adjustable-stop extreme or explicitly constrain that setting.",
+      "The core must not enter a clearance that later closes under a rotating outer wall or rotating bottom edge. A skirt preventing loss of the cable is not necessarily a track-retention proof.",
+      "Ball insertion/removal remains with cover removed along local+Z. An installed ball must be retained against both axial lift and escape through the cable throat.",
+      "For cover removal along+Z, any fixed wire outlet guide must be open continuously to the keeper bottom; a closed transverse hole can trap the cable during cover withdrawal.",
+      "Check full source-derived core segments, ball envelope and fixed/rotating solids. Do not test only the animation centreline."
+    ],
+    "larger_alternatives": [
+      "Remove the whole moving upper outer rim and construct a continuous stationary guide, with independent bottom-edge and ball-retention proof; local skirt patches are insufficient.",
+      "A separately printed rotating keeper bolted to the wheel avoids fixed/moving sweep recursion, but needs real fastener seats, retention and accessible tool paths. No such CAD is accepted by this review."
+    ]
+  },
+  "direct_pull_polar90": {
+    "ball_rest_mm": [
+      0,
+      60,
+      2
+    ],
+    "fixed_mathematical_exit_mm": [
+      -29,
+      60,
+      2
+    ],
+    "ball_equation": "P(theta)=[60sin(theta),60cos(theta),2]",
+    "payout_equation": "s(theta)=sqrt((29+60sin(theta))^2+(60cos(theta)-60)^2)-29",
+    "inverse_equation": "Delta=(29+s)^2-29^2; v=4*29*60; t=2*Delta/(v+sqrt(v^2+4*(4*60^2-Delta)*Delta)); theta=2atan(t)",
+    "angle_for_ideal20_rad": 0.3377620855807335,
+    "angle_for_ideal20_deg": 19.35234198331255,
+    "ball_full_mm": [
+      19.88258727283385,
+      56.60991718186969,
+      2
+    ],
+    "free_segment_length_rest_mm": 29,
+    "free_segment_length_full_mm": 49,
+    "payout_at_old_angle20_over60_mm": 19.74369222150184,
+    "old_R60_equivalent_setting_for_ideal20_mm": 20.26572513484401,
+    "finger_rearward_at_full_mm": 11.929552363700308,
+    "stop_tip_at_ideal20_mm": -17.889782297019313,
+    "stop_tip_change_from_current_mm": -0.1028923950604046,
+    "local_ball_anchor_mm": [
+      0,
+      60,
+      2
+    ],
+    "full_fixed_exit_in_rotor_local_mm": [
+      -47.24404724407087,
+      47.0,
+      2
+    ],
+    "local_wire_direction_deg": [
+      180,
+      195.38514343168708
+    ],
+    "full_free_line_angle_to_fixed_bore_axis_deg": 3.9671985516254544,
+    "minimum_full_segment_radius_mm": 57.849853768250036,
+    "wire_swept_radial_lower_extent_at_full_mm": 57.099853768250036,
+    "centerline_global_bounds_mm": [
+      [
+        -29,
+        56.60991718186969,
+        2
+      ],
+      [
+        19.88258727283385,
+        60,
+        2
+      ]
+    ],
+    "core_envelope_global_bounds_mm": [
+      [
+        -29.75,
+        55.85991718186969,
+        1.25
+      ],
+      [
+        20.63258727283385,
+        60.75,
+        2.75
+      ]
+    ],
+    "ball_envelope_global_bounds_mm": [
+      [
+        -2.5,
+        54.10991718186969,
+        -0.5
+      ],
+      [
+        22.38258727283385,
+        62.5,
+        4.5
+      ]
+    ],
+    "endpoint_linear_angle_mapping_examples": [
+      {
+        "fraction": 0.0,
+        "linear_angle_payout": 0.0,
+        "desired_payout": 0.0,
+        "difference": 0.0
+      },
+      {
+        "fraction": 0.25,
+        "linear_angle_payout": 5.061083531875802,
+        "desired_payout": 5.0,
+        "difference": 0.061083531875802066
+      },
+      {
+        "fraction": 0.5,
+        "linear_angle_payout": 10.09408488702173,
+        "desired_payout": 10.0,
+        "difference": 0.09408488702172946
+      },
+      {
+        "fraction": 0.75,
+        "linear_angle_payout": 15.078866540535486,
+        "desired_payout": 15.0,
+        "difference": 0.07886654053548625
+      },
+      {
+        "fraction": 1.0,
+        "linear_angle_payout": 20.0,
+        "desired_payout": 20.0,
+        "difference": 0.0
+      }
+    ],
+    "sweep_design_implication": "Replace the old R60 slot and old ball position with a true moving-frame segment sweep open to+Z. Full-stroke core reaches radial57.10, crosses the oldR58.9 inner wall and105deg spoke. Do not assume the existing tangent cut clears it.",
+    "ball_capture_candidate": "At polar90 the fixed-to-rotor wire fan spans about15.385deg. A2.2mm core slot has an approximate2.95mm mouth span at radius2.8 around the ball, below nominal ballD5. This is a preliminary throat estimate, not a rigid sphere escape/cap clearance proof.",
+    "geometric_advantage": "Core no longer needs to remain on a prescribed R60 circular contact rail, removing the wrapping-keeper recursion; the straight segment still needs complete clearance and proper ball retention.",
+    "M6_exit_gap": {
+      "wire_d_mm": 1.5,
+      "bore_d_mm": 3,
+      "radial_center_clearance_mm": 0.75,
+      "thread_bore_length_checked_mm": 24,
+      "straight_extension_drift_mm": 1.664437014780185,
+      "maximum_end_to_end_center_offset_mm": 1.5,
+      "straight_extension_through_entire_bore_possible": false,
+      "reason": "The full-pull line extended through24mm drifts1.66444mm, beyond the1.5mm total diameter clearance even if both ends float to opposite sides. Real core must change direction/contact near or within the metal exit.",
+      "unclosed": [
+        "Actual exit-edge radius and core contact position are not dimensioned.",
+        "Bare-core permitted bending radius, contact friction and fatigue are unconfirmed.",
+        "Bending/contact changes free length; fixed-Q ideal20mm is not yet a real cable-payout contract."
+      ],
+      "possible_next_steps": [
+        "Use a defined guide or articulated outlet whose real contact path can be included in length and interference calculations.",
+        "Alternatively retain the wrap scheme and solve manufacturability by a bolted split rotating keeper with real fasteners."
+      ]
+    },
+    "qualified_conclusion": "Promising bounded kinematic alternative. Ideal20mm is exact only for an inextensible straight free segment with fixed exitQ; no current claim of real20mm payout or full manufacturability."
+  },
+  "cad_modified": false,
+  "physical_acceptance": false,
+  "manufacturing_release": false
+}

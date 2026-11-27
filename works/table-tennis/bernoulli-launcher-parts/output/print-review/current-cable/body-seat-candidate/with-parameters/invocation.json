@@ -1,0 +1,6 @@
+{
+  "reason": "Initial diagnostic wrapper omitted parameters.scad, so OpenSCAD used a different dynamic facet count. Repeat with the same parameter include as the current scene adapter; prior diagnostics retained, not accepted as current-shape equivalence.",
+  "prior_directory": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/body-seat-candidate",
+  "parameters_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+  "manufacturing_release": false
+}

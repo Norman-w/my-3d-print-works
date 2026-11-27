@@ -1,0 +1,43 @@
+{
+  "status": "OFFLINE_SLICES_GENERATED_REVIEW_REQUIRED",
+  "parts": [
+    {
+      "part": "cable-input-lever",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155733716437Z/cable-input-lever",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "invocation_sha256": "825b516a128063d05eb932ba725b0ed087387889d628154e81557022f19cd4bc",
+      "warnings": [
+        ""
+      ],
+      "error": null
+    },
+    {
+      "part": "cable-input-cover",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155733716437Z/cable-input-cover",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "invocation_sha256": "9f1e0438cd92d2c9495752bafb8f4fa5856aa9d700c00e8a366774f29a0fdb8a",
+      "warnings": [
+        ""
+      ],
+      "error": null
+    },
+    {
+      "part": "cable-input-body",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-eclip-slices/20260927T155733716437Z/cable-input-body",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "invocation_sha256": "b806ea19376f485dfc57ac39e1e7559f370630b5cdd2e5ca2b2135dbdc9d3fd0",
+      "warnings": [
+        ""
+      ],
+      "error": null
+    }
+  ],
+  "source_stable": true,
+  "export_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T153058669616Z/report.json",
+  "export_report_sha256": "3cb7da521e4160bb83ab8760ee894d2b6da9a39d24045db7d7f090b14a423418",
+  "script_sha256": "79c54cb17b88b2ff26578c65350282d8abfeffccdac689b56099d58a79470e33",
+  "sent_to_printer": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "scope": "Current normal geometry rebuilt exactly before native import. Inherited process is diagnostic; actual output mesh, support and features require independent review."
+}

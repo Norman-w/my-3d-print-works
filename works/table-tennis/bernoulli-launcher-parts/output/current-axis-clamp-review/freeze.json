@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN_READ_ONLY_AUDIT",
+  "created_utc": "2026-09-27T12:35:08.861210+00:00",
+  "artifacts": {
+    "output/current-axis-clamp-review/report.json": "ac0a459f35e24e590f3882deab55670c06d9e70f062590556909a66380d56e37",
+    "output/current-axis-clamp-review/README.md": "d02f09c5bfe62d3e6d1568e0e5e1cd662cc64153db5ac10533c340c7a4f8a9f6",
+    "output/current-axis-clamp-review/review.py": "e95377e17e16783a1d6c67782a362a4fefb1204a0c76cc2e6954999f94eeca23",
+    "output/current-axis-clamp-review/axis-section.png": "b7315cbb451b2300e1ec232659830883e29d756d2db4903b09bfdd330b1107c6",
+    "output/current-axis-clamp-review/followup-L27.json": "85dfb544c1cc1f698d6df69c50b18f75172638e6bc69614e671429aad4f9ae74"
+  },
+  "source_hashes_rechecked": 5,
+  "local_links_checked": 8,
+  "production_CAD_changed": false,
+  "physical_acceptance": false
+}

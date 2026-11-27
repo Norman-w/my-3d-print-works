@@ -1,0 +1,98 @@
+{
+  "status": "READ_ONLY_SOURCE_INVENTORY_VERIFIED",
+  "created_utc": "2026-09-27T10:35:27.911373+00:00",
+  "checks": {
+    "unique_instance_ids": true,
+    "each_instance_quantity_one": true,
+    "all_specs_exist": true,
+    "all_source_modules_exist": true,
+    "all_readme_links_exist": true,
+    "sources_still_match": true,
+    "legacy_22_rows_match": true,
+    "handoff_8_removed_4_retained": true,
+    "held_adds_exactly_bolt_and_washer": true
+  },
+  "artifacts": {
+    "review.py": "6310b26860d6da53b85f9cc1d19ea1338be11fa96a3434a94637d7a42545ae01",
+    "inventory.json": "4595728f3584f84242e5f56cf57828b5b3a4707f6021f09785dcf10258e3f535",
+    "source-modules.json": "c39ddc71e0918c53f2f253c00dbf20f86609a41b5b962a597fcb89e95699423f",
+    "README.md": "cd2c9361e8bd60be481bf4deab29c1f6a853886bfe1cda4b4420dc6e1f2c5d40"
+  },
+  "readme_links": [
+    {
+      "link": "inventory.json",
+      "exists": true
+    },
+    {
+      "link": "review.py",
+      "exists": true
+    },
+    {
+      "link": "../../../cad/launcher-final-assembly.scad",
+      "exists": true
+    },
+    {
+      "link": "../../../cad/spin-complete-hardware.scad",
+      "exists": true
+    },
+    {
+      "link": "source-modules.json",
+      "exists": true
+    },
+    {
+      "link": "inventory.json",
+      "exists": true
+    },
+    {
+      "link": "../../manufacturing/feeder-hardware-bom.json",
+      "exists": true
+    },
+    {
+      "link": "../../../docs/spin-complete-hardware.md",
+      "exists": true
+    },
+    {
+      "link": "../../../docs/final-feeder-hardware.md",
+      "exists": true
+    }
+  ],
+  "current_source_identity": {
+    "cad/cam-study.scad": true,
+    "cad/feeder-body.scad": true,
+    "cad/feeder-cam-guide-revision.scad": true,
+    "cad/feeder-complete-hardware.scad": true,
+    "cad/feeder-frame-y-guide.scad": true,
+    "cad/feeder-guide-revision.scad": true,
+    "cad/feeder-hardware-clearance.scad": true,
+    "cad/feeder-integrated-candidate.scad": true,
+    "cad/feeder-pin-seat-revision.scad": true,
+    "cad/feeder-return-spring.scad": true,
+    "cad/feeder-review-parts.scad": true,
+    "cad/feeder-seam-candidate.scad": true,
+    "cad/feeder-support-harness.scad": true,
+    "cad/feeder-supports.scad": true,
+    "cad/inlet-retention-final.scad": true,
+    "cad/launcher-final-assembly.scad": true,
+    "cad/outlet-retention.scad": true,
+    "cad/parameters.scad": true,
+    "cad/spin-complete-hardware.scad": true,
+    "cad/spin-head.scad": true,
+    "cad/spin-parameters.scad": true,
+    "docs/final-feeder-hardware.md": true,
+    "docs/spin-complete-hardware.md": true,
+    "output/current-assembly-package/base-hardware/review.py": true,
+    "output/manufacturing/feeder-hardware-bom.json": true
+  },
+  "source_file_count": 25,
+  "source_module_count": 44,
+  "physical_counts": {
+    "base_feeder_count": 195,
+    "spin_work_count": 31,
+    "spin_held_count": 33,
+    "base_plus_spin_work": 226,
+    "base_plus_spin_held": 228,
+    "kit_union_unique_items": 228,
+    "warning": "195 is feeder before cable replacement. Work and held totals are alternate installed states, not additive. Kit union contains the two removable held-only items once."
+  },
+  "not_a_geometry_or_physical_acceptance": true
+}

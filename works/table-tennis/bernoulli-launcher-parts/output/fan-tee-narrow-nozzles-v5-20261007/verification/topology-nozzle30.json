@@ -1,0 +1,32 @@
+{
+  "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fan-tee-narrow-nozzles-v5-20261007/stl/fan-tee-v5-nozzle30-clean.stl",
+  "format": "binary",
+  "units": "unknown",
+  "triangleCount": 16756,
+  "uniqueVertexCount": 8378,
+  "bounds": {
+    "min": [
+      -20.899999618530273,
+      -20.899999618530273,
+      0.0
+    ],
+    "max": [
+      20.899999618530273,
+      20.899999618530273,
+      106.0
+    ],
+    "size": [
+      41.79999923706055,
+      41.79999923706055,
+      106.0
+    ]
+  },
+  "surfaceArea": 24900.231667346565,
+  "signedVolume": 25090.173009048904,
+  "volume": 25090.173009048904,
+  "degenerateTriangleCount": 0,
+  "boundaryEdgeCount": 0,
+  "nonManifoldEdgeCount": 0,
+  "inconsistentOrientationEdgeCount": 0,
+  "watertightByEdgeTopology": true
+}

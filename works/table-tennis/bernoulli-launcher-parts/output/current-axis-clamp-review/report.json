@@ -1,0 +1,352 @@
+{
+  "status": "PRINTED_END_SEATS_IN_SERIES_CONFIRMED_METAL_ONLY_CLAMP_CLAIM_NOT_SUPPORTED",
+  "created_utc": "2026-09-27T12:32:14.490315+00:00",
+  "method": "Source literal/coordinate audit and exact scalar arithmetic; no production CAD modification, native CSG, slice, print or FEA.",
+  "source_sha256": {
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/current-axis-supply-review/report.json": "96a404b4133a84f5438ad35855d930de46e580862fd624bc338c09cc44c38305",
+    "output/current-axis-supply-review/README.md": "f7dcbe933be6c1d396a5d3ec114dbc2d1c4344ba56a9c77a6245cda1748695c5",
+    "output/current-assembly-package/runs/20260927T122149439656Z/hardware.csv": "9066da23d63a91600b3319f01569fc4b9cb7d7b9b71296809ce059304b2800f4"
+  },
+  "script_sha256": "e95377e17e16783a1d6c67782a362a4fefb1204a0c76cc2e6954999f94eeca23",
+  "source_evidence": [
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 35,
+      "literal": "ci_axis_body_z=[-12,-4];"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 36,
+      "literal": "ci_axis_lever_z=[-3.5,7.5];"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 37,
+      "literal": "ci_axis_cover_z=[8,14];"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 38,
+      "literal": "ci_axis_sleeve_z=[-5.5,9.5];"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 210,
+      "literal": "ci_zcyl(0,0,-5.5,1.6,8.3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 290,
+      "literal": "ci_zcyl(0,0,7.9,1.6,8.3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 209,
+      "literal": "ci_zcyl(0,0,-13,28,4.5);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 289,
+      "literal": "ci_zcyl(0,0,7,8+sweep,4.5);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 305,
+      "literal": "ci_zring(0,0,-5.5,15,8,4.3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 306,
+      "literal": "for(z=[-3.75,7.5])ci_zring(0,0,z,.25,16,8.4);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 307,
+      "literal": "ci_zbolt(0,0,14.8,35,4,7,4,3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 308,
+      "literal": "ci_zring(0,0,14,.8,9,4.3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 309,
+      "literal": "ci_zring(0,0,-12.8,.8,9,4.3);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 310,
+      "literal": "difference(){ci_zhex(0,0,-16,3.2,7);ci_zcyl(0,0,-16.1,3.4,4.1);}"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 193,
+      "literal": "for(p=ci_cheek_posts){ci_zcyl(p[0],p[1],-12,20,14);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 194,
+      "literal": "translate([p[0]-4,p[1]-4,7.9])cube([8,8,1.6]);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 293,
+      "literal": "translate([p[0]-4.2,p[1]-4.2,7.9])cube([8.4,8.4,1.8]);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 312,
+      "literal": "ci_zbolt(p[0],p[1],14.5,30,3,5.5,3,2.5);"
+    },
+    {
+      "file": "cad/cable-trigger-input.scad",
+      "line": 347,
+      "literal": "ci_zring(0,0,-3.5,11,12,8.2);"
+    }
+  ],
+  "coordinate_convention": "Input local z; CAD Y = local z - 82, axis CAD X=75,Z=5.",
+  "current_face_stacks": [
+    {
+      "part": "rear nut",
+      "local_z": [
+        -16,
+        -12.8
+      ],
+      "cad_Y": [
+        -98,
+        -94.8
+      ],
+      "description": "metal; M4 SW7 H3.2"
+    },
+    {
+      "part": "rear outer washer",
+      "local_z": [
+        -12.8,
+        -12
+      ],
+      "cad_Y": [
+        -94.8,
+        -94
+      ],
+      "description": "metal; OD9 ID4.3 t.8"
+    },
+    {
+      "part": "body between outer washer and sleeve seat",
+      "local_z": [
+        -12,
+        -5.5
+      ],
+      "cad_Y": [
+        -94,
+        -87.5
+      ],
+      "description": "PETG; axial thickness 6.5, central through bore D4.5"
+    },
+    {
+      "part": "metal sleeve",
+      "local_z": [
+        -5.5,
+        9.5
+      ],
+      "cad_Y": [
+        -87.5,
+        -72.5
+      ],
+      "description": "OD8 ID4.3 L15"
+    },
+    {
+      "part": "cover between sleeve seat and outer washer",
+      "local_z": [
+        9.5,
+        14
+      ],
+      "cad_Y": [
+        -72.5,
+        -68
+      ],
+      "description": "PETG; axial thickness 4.5, central through bore D4.5"
+    },
+    {
+      "part": "front outer washer",
+      "local_z": [
+        14,
+        14.8
+      ],
+      "cad_Y": [
+        -68,
+        -67.2
+      ],
+      "description": "metal; OD9 ID4.3 t.8"
+    },
+    {
+      "part": "screw head",
+      "local_z": [
+        14.8,
+        18.8
+      ],
+      "cad_Y": [
+        -67.2,
+        -63.2
+      ],
+      "description": "M4x35 underhead; OD7 H4"
+    },
+    {
+      "part": "rotating lever and bush",
+      "local_z": [
+        -3.5,
+        7.5
+      ],
+      "cad_Y": [
+        -85.5,
+        -74.5
+      ],
+      "description": "11 mm; bush OD12 ID8.2"
+    },
+    {
+      "part": "rear thrust washer",
+      "local_z": [
+        -3.75,
+        -3.5
+      ],
+      "cad_Y": [
+        -85.75,
+        -85.5
+      ],
+      "description": "OD16 ID8.4 t.25"
+    },
+    {
+      "part": "front thrust washer",
+      "local_z": [
+        7.5,
+        7.75
+      ],
+      "cad_Y": [
+        -74.5,
+        -74.25
+      ],
+      "description": "OD16 ID8.4 t.25"
+    }
+  ],
+  "current_primary_series_load_path": [
+    "M4x35 head underside z14.8",
+    "outer washer z14..14.8",
+    "PETG cover z9.5..14 (4.5 mm)",
+    "sleeve z-5.5..9.5 (15 mm)",
+    "PETG body z-12..-5.5 (6.5 mm)",
+    "outer washer z-12.8..-12",
+    "nut top z-12.8"
+  ],
+  "current_parallel_path": "Cover -> two cheek-column contacts at z8 -> body. Their own M3x30 screws close these faces. Column keys top9.5 vs cover key-pocket roof9.7 leave .2 clearance and are not the axial stop.",
+  "closed_column_seat_distance": 15,
+  "printed_axial_material_in_series": 11,
+  "screw": {
+    "designation_from_source_and_BOM": "M4x35",
+    "underhead_z": 14.8,
+    "length_underhead": 35,
+    "tip_z": -20.2,
+    "nut_lower_z": -16,
+    "nominal_protrusion_beyond_nut": 4.2,
+    "M4x30_is_current_axis": false
+  },
+  "lever_clearance": {
+    "inner_cavity_z": [
+      -4,
+      8
+    ],
+    "gap12": 12,
+    "lever_and_bush_length": 11,
+    "two_thrust_washer_total": 0.5,
+    "nominal_total_endplay": 0.5,
+    "nominal_end_gap_each": 0.25,
+    "not_a_tolerance_result": true
+  },
+  "seat_annulus": {
+    "printed_through_hole_D": 4.5,
+    "sleeve_ID": 4.3,
+    "sleeve_OD": 8,
+    "nominal_contact_area_each_mm2": 34.36116964863836,
+    "inner_radial_overhang_of_sleeve_end_mm": 0.1,
+    "status": "Most tube end rests on PETG annulus; small inner ring overhangs D4.5 through bore."
+  },
+  "length_cases": [
+    {
+      "sleeve_length": 14.98,
+      "seat_distance_with_columns_closed": 15,
+      "gap_positive_interference_negative": 0.019999999999999574,
+      "if_seated_in_rear_pocket_front_end_z": 9.48,
+      "first_contacts": "Both cheek-column stop faces at z8 can close while sleeve has total .02 end gap; sleeve may float or touch either single seat.",
+      "not_inferred": "No preload/deflection/friction/jamming value is calculated."
+    },
+    {
+      "sleeve_length": 15,
+      "seat_distance_with_columns_closed": 15,
+      "gap_positive_interference_negative": 0,
+      "if_seated_in_rear_pocket_front_end_z": 9.5,
+      "first_contacts": "Sleeve seats and cheek-column stop faces can nominally close simultaneously.",
+      "not_inferred": "No preload/deflection/friction/jamming value is calculated."
+    },
+    {
+      "sleeve_length": 15.02,
+      "seat_distance_with_columns_closed": 15,
+      "gap_positive_interference_negative": -0.019999999999999574,
+      "if_seated_in_rear_pocket_front_end_z": 9.52,
+      "first_contacts": "Rear-seated sleeve contacts cover roof .02 before cheek-column stop faces close; cover lift .02 or deformation required.",
+      "not_inferred": "No preload/deflection/friction/jamming value is calculated."
+    }
+  ],
+  "overconstraint_conclusion": "No nominal geometric solid overlap at L15. However the central sleeve/seat chain and two remote column stops redundantly set the same cover separation. L variation cannot be absorbed while insisting all three stops are rigidly closed; short tube loses the central stop, long tube needs deformation or lifted columns. This does not by itself prove the lever jams.",
+  "unimplemented_through_sleeve_proposal": {
+    "status": "ROOT_PROPOSED_UNIMPLEMENTED_CONCEPT",
+    "sleeve_z": [
+      -12.2,
+      14.2
+    ],
+    "nominal_L": 26.4,
+    "conditional_L_bounds": [
+      26.38,
+      26.42
+    ],
+    "length_tolerance_status": "Uses the same +/-0.02 only as a calculation input; no new supplier configuration verification here.",
+    "required_changes": [
+      "Body and cover center bores become through D8.3; old blind seats removed.",
+      "Move rear washer to z[-13,-12.2], front washer to [14.2,15.0], screw underhead to15.0 and nut to[-16.2,-13]. Retain hardware dimensions. Old hardware positions would overlap sleeve ends by .2 each."
+    ],
+    "metal_clamp_path": "head -> front washer -> entire sleeve -> rear washer -> nut; PETG bypassed only if actual sleeve length exceeds actual closed housing outer-face span.",
+    "remaining_M4x35_tip_z": -20,
+    "nut_lower_z": -16.2,
+    "nominal_tip_beyond_nut": 3.8,
+    "total_axial_float_metal_cartridge_nominal": 0.4,
+    "conditional_total_axial_float_if_housing_span26": [
+      0.38,
+      0.42
+    ],
+    "capture": {
+      "washer_OD": 9,
+      "housing_bore_D": 8.3,
+      "centered_radial_lip": 0.35,
+      "sleeve_min_OD": 7.9,
+      "max_radial_eccentricity": 0.2,
+      "minimum_one_side_lip_with_eccentricity_only": 0.15,
+      "status": "Nominal positive capture, not tolerance/strength proof. Both washers/nut/head must remain; no positive antirotation to body is present."
+    },
+    "moving_clearance": "Internal cavity and lever/thrust stack unchanged, so their nominal .5 total endplay remains. Axle-cartridge float is a separate .4 DOF and is not additional lever travel.",
+    "housing_retention": "The two side M3 screws/columns hold the cover to the body. The center fastener clamps only its own metal cartridge in this proposal; it no longer provides center PETG preload.",
+    "constraints_to_define": [
+      "Treat the cartridge as deliberately floating in rotation/axial translation, or add an explicit datum/capture/antirotation scheme. It cannot be called a fixed shaft merely because its own screw is tight.",
+      "For metal-only clamping require L_min > H_outer_max including outer-face flatness/parallelism and print tolerance; the .4 nominal clearance alone does not prove this.",
+      "Confirm washer minimum OD vs maximum through-hole and eccentricity, edge bearing under axial loads, and side-M3 cover load path.",
+      "Changed bore diameter, moved screw head/nut and service positions need current CAD interference/reuse/manufacturing identity checks before adoption. No such checks were run here."
+    ]
+  },
+  "limits": [
+    "No actual PETG dimensions, stiffness, creep, tightening torque, bearing supply tolerances or axial force are known.",
+    "No value of screw preload or loss of lever running clearance is inferred from the .02 mismatch alone.",
+    "The current BOM correctly says M4x35 for this axis; the M4x30 premise was not used."
+  ],
+  "production_CAD_changed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

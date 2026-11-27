@@ -1,0 +1,262 @@
+{
+  "status": "BOM_DESIGN_SELECTION_NOT_PURCHASE_OR_PHYSICAL_ACCEPTANCE",
+  "axis_revision": "HCDG8-30-NETW7-adopted",
+  "selections": [
+    {
+      "id": "output-cap-drive",
+      "cable_item_id": "m3x16-output-cap-fastener",
+      "description": "输出盖M3×16全牙圆柱头内六角螺钉，DIN 912 / ISO 4762",
+      "quantity": 2,
+      "nominal": {
+        "thread_nominal": "M3",
+        "underhead_length_mm": 16,
+        "head_diameter_mm": 5.5,
+        "head_height_mm": 3,
+        "thread_pitch_mm": 0.5,
+        "socket_AF_mm": 2.5,
+        "full_thread": true
+      },
+      "reference_candidate": {
+        "manufacturer": "Accu",
+        "code": "SSCF-M3-16-A2",
+        "material": "Stainless Steel A2",
+        "head_diameter_tolerance_mm": [
+          -0.18,
+          0
+        ],
+        "head_height_tolerance_mm": [
+          -0.14,
+          0
+        ],
+        "drive_depth_mm": 1.3,
+        "official_url": "https://www.accu.co.uk/metric-cap-head-screws/3822-SSCF-M3-16-A2",
+        "checked_date": "2026-09-27",
+        "availability_verified": false,
+        "purchased": false
+      },
+      "basis": "本次在装配BOM层明确选择内六角型式；头部名义最大外形与当前输出盖CAD相同。原提取报告保留其源中未画驱动孔的事实，不改写为原CAD已经指定。",
+      "resolves_at_design_level": [
+        "output-m3-drive-envelope"
+      ],
+      "remaining_limits": [
+        "No new whole-tool or installed driver access proof.",
+        "No torque, locking, load or PETG creep acceptance.",
+        "Supplier availability, owned stock and actual delivered part are unverified."
+      ]
+    },
+    {
+      "id": "input-axis-pin",
+      "cable_item_id": "input-axis-pin",
+      "description": "HCDG8-30带头槽销；与原配NETW7合为一套采购",
+      "quantity": 1,
+      "nominal": {
+        "part": "HCDG8-30",
+        "shaft_diameter_mm": 8,
+        "L_to_groove_near_wall_mm": 30,
+        "shaft_diameter_limits_mm": [
+          7.986,
+          7.995
+        ],
+        "L_limits_mm": [
+          30,
+          30.1
+        ],
+        "head_diameter_mm": 12,
+        "head_height_mm": 2,
+        "tail_from_groove_near_wall_mm": 3,
+        "groove_width_limits_mm": [
+          0.9,
+          1.0
+        ],
+        "groove_root_diameter_limits_mm": [
+          7,
+          7.09
+        ],
+        "material": "S45C equivalent",
+        "surface": "Black oxide",
+        "model_reference_values": {
+          "shaft_diameter_mm": 7.9905,
+          "L_to_groove_near_wall_mm": 30.05,
+          "axial_display_shift_mm": 0.7,
+          "groove_width_mm": 0.95,
+          "groove_root_diameter_mm": 7.045
+        },
+        "includes": "one supplied NETW7; purchase root input-axis-pin-kit"
+      },
+      "basis": "采用同一正式ci轴合同及本次具来源的五金枚举。尺寸是设计/目录约束，未采购、未发起加工。",
+      "procurement_accounting": "included_member_of_axis_pin_kit",
+      "evidence_files": [
+        {
+          "path": "output/current-assembly-package/cable-hardware-current/runs/20260927T153831015826Z/hardware.json",
+          "sha256": "8c950cabc9290c56960ddab35c11cb91a4da9a23e0ba0dc2e39c1cbaabf487ac"
+        }
+      ],
+      "remaining_limits": [
+        "actual_stock_or_purchase",
+        "head_diameter_and_tail_tolerances",
+        "root_envelope_acceptance",
+        "actual_retention_load"
+      ]
+    },
+    {
+      "id": "input-axis-eclip",
+      "cable_item_id": "input-axis-eclip",
+      "description": "原配NETW7 E卡簧；随HCDG8-30供货，不重复采购",
+      "quantity": 1,
+      "nominal": {
+        "part": "NETW7",
+        "type": "E",
+        "nominal_size": 7,
+        "material": "spring steel",
+        "included_with": "HCDG8-30",
+        "actual_installed_CAD_solid_available": false,
+        "display_space_is_not_part_geometry": true
+      },
+      "basis": "采用同一正式ci轴合同及本次具来源的五金枚举。尺寸是设计/目录约束，未采购、未发起加工。",
+      "procurement_accounting": "included_member_of_axis_pin_kit",
+      "evidence_files": [
+        {
+          "path": "output/current-assembly-package/cable-hardware-current/runs/20260927T153831015826Z/hardware.json",
+          "sha256": "8c950cabc9290c56960ddab35c11cb91a4da9a23e0ba0dc2e39c1cbaabf487ac"
+        }
+      ],
+      "remaining_limits": [
+        "actual_installed_outline_and_full_seating",
+        "installation_removal_tool",
+        "load_and_reuse_requirements"
+      ]
+    },
+    {
+      "id": "input-axis-tail-washers",
+      "cable_item_id": "tail-washer-m8",
+      "description": "DIN433 M8尾垫，HRDW-M8-A2，15/8.5/1.6，两片",
+      "quantity": 2,
+      "nominal": {
+        "part": "HRDW-M8-A2",
+        "standard": "DIN433",
+        "OD_mm": 15,
+        "ID_mm": 8.5,
+        "thickness_mm": 1.6,
+        "ID_limits_mm": [
+          8.4,
+          8.62
+        ],
+        "thickness_limits_mm": [
+          1.4,
+          1.8
+        ],
+        "OD_tolerance_mm": null,
+        "material": "A2 stainless steel",
+        "layout": "two at tail; none under head"
+      },
+      "basis": "采用同一正式ci轴合同及本次具来源的五金枚举。尺寸是设计/目录约束，未采购、未发起加工。",
+      "procurement_accounting": "separate_purchase_root",
+      "evidence_files": [
+        {
+          "path": "output/current-assembly-package/cable-hardware-current/runs/20260927T153831015826Z/hardware.json",
+          "sha256": "8c950cabc9290c56960ddab35c11cb91a4da9a23e0ba0dc2e39c1cbaabf487ac"
+        }
+      ],
+      "remaining_limits": [
+        "actual_purchase",
+        "OD_tolerance_flatness",
+        "installed_stack_and_retention_load"
+      ]
+    },
+    {
+      "id": "input-axis-pom-bush",
+      "cable_item_id": "replaceable-bush",
+      "description": "加工未填充POM-C六角轴套，AF12/ID8.2/L11",
+      "quantity": 1,
+      "nominal": {
+        "part": "machined-unfilled-POM-C",
+        "AF_mm": 12,
+        "ID_mm": 8.2,
+        "length_mm": 11,
+        "material": "unfilled machined POM-C",
+        "design_acceptance_bounds_not_supplier_guarantee": {
+          "material": "unfilled machined POM-C; grade/supplier unselected",
+          "AF": [
+            11.97,
+            12
+          ],
+          "ID": [
+            8.2,
+            8.25
+          ],
+          "length": [
+            10.97,
+            11
+          ],
+          "bore_cylindricity_max": 0.02,
+          "bore_to_hex_center_position_diameter_max": 0.05,
+          "end_parallelism_max": 0.02,
+          "end_perpendicularity_to_bore_max": 0.03,
+          "outer_edge_break_max": 0.05,
+          "inner_edge_break_max": 0.1,
+          "socket_AF_CAD": 12.4,
+          "finished_socket_acceptance_AF": [
+            12.2,
+            12.6
+          ],
+          "acceptance_status": "Design acceptance bounds, not a claim that FDM reaches them; no disposable test coupon required."
+        },
+        "is_PETG_printed_part": false
+      },
+      "basis": "采用同一正式ci轴合同及本次具来源的五金枚举。尺寸是设计/目录约束，未采购、未发起加工。",
+      "procurement_accounting": "separate_purchase_root",
+      "evidence_files": [
+        {
+          "path": "output/current-assembly-package/cable-hardware-current/runs/20260927T153831015826Z/hardware.json",
+          "sha256": "8c950cabc9290c56960ddab35c11cb91a4da9a23e0ba0dc2e39c1cbaabf487ac"
+        }
+      ],
+      "remaining_limits": [
+        "supplier_grade_and_machining_route",
+        "finished_part_dimensional_acceptance",
+        "lubrication_and_wear"
+      ]
+    },
+    {
+      "id": "input-axis-thrust-washers",
+      "cable_item_id": "thrust-washer",
+      "description": "SWSPS16-10-.25尼龙推力垫片，两片",
+      "quantity": 2,
+      "nominal": {
+        "part": "SWSPS16-10-.25",
+        "OD_mm": 16,
+        "ID_mm": 10,
+        "thickness_mm": 0.25,
+        "material": "Polyslider nylon resin",
+        "catalogue_bounds_mm": {
+          "OD": [
+            15.5,
+            16
+          ],
+          "ID": [
+            10,
+            10.5
+          ],
+          "thickness": [
+            0.225,
+            0.275
+          ]
+        },
+        "evidence_status": "CATALOGUE_ROW_COMBINATION_NOT_LIVE_CONFIGURED"
+      },
+      "basis": "采用同一正式ci轴合同及本次具来源的五金枚举。尺寸是设计/目录约束，未采购、未发起加工。",
+      "procurement_accounting": "separate_purchase_root",
+      "evidence_files": [
+        {
+          "path": "output/current-assembly-package/cable-hardware-current/runs/20260927T153831015826Z/hardware.json",
+          "sha256": "8c950cabc9290c56960ddab35c11cb91a4da9a23e0ba0dc2e39c1cbaabf487ac"
+        }
+      ],
+      "remaining_limits": [
+        "actual_SKU_configuration_and_purchase",
+        "current_radial_drawing_revision",
+        "actual_fit_and_wear"
+      ]
+    }
+  ]
+}

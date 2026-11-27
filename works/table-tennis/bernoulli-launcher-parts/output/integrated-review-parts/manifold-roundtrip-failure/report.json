@@ -1,0 +1,3031 @@
+{
+  "status": "FAIL_OR_STALE",
+  "source_sha256": {
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "848a9a02b33a66c4f0c798a4f4e382fbb867495fe074bc5e8ac5fb3735b4e40e",
+    "cad/feeder-integrated-candidate.scad": "00e49d9001e309ec089064a0ce69d7679148f1db6f0af47b293a36e2e47faee6",
+    "cad/feeder-review-parts.scad": "469e0eb98b471ef85c0f25f31c6c84f8e3d07dbea94411f6f4423395e7d3a79e",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "scripts/export_integrated_review.py": "5e3b289f46f8a5d5f34f8b8b3654ad2fa4dd3bb2085d98ad18e6835616a95239"
+  },
+  "sources_stable": true,
+  "parts": [
+    {
+      "id": "positive-half",
+      "name": "联合主壳右半",
+      "family": "positive-half",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "positive-half",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/positive-half.stl",
+      "sha256": "b2b408a5258c3e23b8634a9ab6f3b96b03c4015dead58e5f72ba1b588a5b13a3",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/positive-half.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 12608,
+        "uniqueVertexCount": 6264,
+        "bounds": {
+          "min": [
+            0.0,
+            -48.0,
+            -126.0
+          ],
+          "max": [
+            35.5,
+            45.0,
+            69.0
+          ],
+          "size": [
+            35.5,
+            93.0,
+            195.0
+          ]
+        },
+        "surfaceArea": 69539.22574109919,
+        "signedVolume": 91379.5089481213,
+        "volume": 91379.5089481213,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"positive-half\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/positive-half.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "negative-half",
+      "name": "联合主壳左半",
+      "family": "negative-half",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "negative-half",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/negative-half.stl",
+      "sha256": "f8a2aba50cdbd5ce71a9f51bc75b81e8ed0895dfb6150cc6a189ca2ce4bf66c4",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/negative-half.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 13422,
+        "uniqueVertexCount": 6671,
+        "bounds": {
+          "min": [
+            -35.5,
+            -48.0,
+            -126.0
+          ],
+          "max": [
+            0.0,
+            45.0,
+            69.0
+          ],
+          "size": [
+            35.5,
+            93.0,
+            195.0
+          ]
+        },
+        "surfaceArea": 69650.23175125557,
+        "signedVolume": 91454.81011996855,
+        "volume": 91454.81011996855,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"negative-half\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/negative-half.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "beam-grip",
+      "name": "支承背梁与握把",
+      "family": "beam-grip",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "beam-grip",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/beam-grip.stl",
+      "sha256": "b5b057e09edb91bef0345df5ab7376855a5532c9cb32d5cd0bd94d8840c7f7a9",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/beam-grip.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1524,
+        "uniqueVertexCount": 750,
+        "bounds": {
+          "min": [
+            -24.0,
+            -63.0,
+            -156.0
+          ],
+          "max": [
+            87.0,
+            -41.0,
+            28.0
+          ],
+          "size": [
+            111.0,
+            22.0,
+            184.0
+          ]
+        },
+        "surfaceArea": 31412.452865993786,
+        "signedVolume": 87665.76392178543,
+        "volume": 87665.76392178543,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"beam-grip\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/beam-grip.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "liner",
+      "name": "出口带肩内衬",
+      "family": "liner",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "liner",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/liner.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1296,
+        "uniqueVertexCount": 648,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            44.0
+          ],
+          "max": [
+            25.0,
+            25.0,
+            118.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            74.0
+          ]
+        },
+        "surfaceArea": 22129.890106646253,
+        "signedVolume": 17147.962047218403,
+        "volume": 17147.962047218403,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"liner\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/liner.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "right-support",
+      "name": "X导向右主支座",
+      "family": "right-support",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "right-support",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/right-support.stl",
+      "sha256": "f1264a86663a1450bffd6ea05e77a7a3daebd916af6dd6b576f93dbf445b5c57",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/right-support.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3634,
+        "uniqueVertexCount": 1768,
+        "bounds": {
+          "min": [
+            35.5,
+            -19.0,
+            -50.0
+          ],
+          "max": [
+            75.0,
+            28.0,
+            21.0
+          ],
+          "size": [
+            39.5,
+            47.0,
+            71.0
+          ]
+        },
+        "surfaceArea": 17354.41952738755,
+        "signedVolume": 26475.89023991703,
+        "volume": 26475.89023991703,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"right-support\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/right-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "left-support",
+      "name": "左支座与弹簧接口",
+      "family": "left-support",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "left-support",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/left-support.stl",
+      "sha256": "621ea4965fe0d13e89edf5aa6b62e818188292b6a465c8ec148e7f529d2412b2",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/left-support.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2948,
+        "uniqueVertexCount": 1442,
+        "bounds": {
+          "min": [
+            -76.0,
+            -19.0,
+            -50.0
+          ],
+          "max": [
+            -35.5,
+            24.200000000000003,
+            21.0
+          ],
+          "size": [
+            40.5,
+            43.2,
+            71.0
+          ]
+        },
+        "surfaceArea": 15527.119046685406,
+        "signedVolume": 22851.843129311263,
+        "volume": 22851.843129311263,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"left-support\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/left-support.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "x-gib",
+      "name": "公共架X压条",
+      "family": "x-gib",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "x-gib",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/x-gib.stl",
+      "sha256": "3c9610c3d60e8dc0ecf595430552074c54ec3d30be94daecb3851a5e467f54b3",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/x-gib.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 60,
+        "uniqueVertexCount": 32,
+        "bounds": {
+          "min": [
+            58.1,
+            21.0,
+            -34.6
+          ],
+          "max": [
+            70.5,
+            26.0,
+            4.600000000000001
+          ],
+          "size": [
+            12.399999999999999,
+            5.0,
+            39.2
+          ]
+        },
+        "surfaceArea": 723.1999999999996,
+        "signedVolume": 505.79999999999706,
+        "volume": 505.79999999999706,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"x-gib\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/x-gib.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "x-cover",
+      "name": "X压条调节外盖",
+      "family": "x-cover",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "x-cover",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/x-cover.stl",
+      "sha256": "5c8675ba94e2c016d0670001439c65a6482db855ab6c1430ced3271d3c7d6003",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/x-cover.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 604,
+        "uniqueVertexCount": 296,
+        "bounds": {
+          "min": [
+            69.4,
+            10.5,
+            -39.0
+          ],
+          "max": [
+            80.5,
+            28.0,
+            9.0
+          ],
+          "size": [
+            11.099999999999994,
+            17.5,
+            48.0
+          ]
+        },
+        "surfaceArea": 2701.5691425723116,
+        "signedVolume": 4384.15550313437,
+        "volume": 4384.15550313437,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"x-cover\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/x-cover.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "frame",
+      "name": "公共凸轮架与扣动指环",
+      "family": "frame",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "frame",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/frame.stl",
+      "sha256": "7f385a42a9a30fb6bb9caeed2ca4575fd1858b58a23bcf2b297478211b3461e2",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/frame.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 3012,
+        "uniqueVertexCount": 1490,
+        "bounds": {
+          "min": [
+            -76.0,
+            -4.0,
+            -64.5
+          ],
+          "max": [
+            89.0,
+            54.0,
+            37.0
+          ],
+          "size": [
+            165.0,
+            58.0,
+            101.5
+          ]
+        },
+        "surfaceArea": 20259.850269652845,
+        "signedVolume": 27312.975279858616,
+        "volume": 27312.975279858616,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"frame\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/frame.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "capture-right",
+      "name": "右出口法兰捕获座",
+      "family": "capture-1",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "capture",
+        "rp_t": 0,
+        "rp_side": 1
+      },
+      "file": "output/integrated-review-parts/capture-right.stl",
+      "sha256": "9a34efd53aee0cd2354b58101a881b2c1b072f3131b85fa39030ded8f69fab1d",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/capture-right.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2370,
+        "uniqueVertexCount": 1183,
+        "bounds": {
+          "min": [
+            0.0,
+            -63.0,
+            40.0
+          ],
+          "max": [
+            36.0,
+            63.0,
+            53.0
+          ],
+          "size": [
+            36.0,
+            126.0,
+            13.0
+          ]
+        },
+        "surfaceArea": 9412.62620739817,
+        "signedVolume": 22784.074774893736,
+        "volume": 22784.074774893736,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"capture\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/capture-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "pipe-clamp-right",
+      "name": "右硬管分体夹",
+      "family": "pipe-clamp-1",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "pipe-clamp",
+        "rp_t": 0,
+        "rp_side": 1
+      },
+      "file": "output/integrated-review-parts/pipe-clamp-right.stl",
+      "sha256": "07b97804d02918bfb909a64d23f427dd453d216d126c400e5cebb0773050675e",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pipe-clamp-right.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2188,
+        "uniqueVertexCount": 1092,
+        "bounds": {
+          "min": [
+            0.4,
+            -63.0,
+            90.0
+          ],
+          "max": [
+            32.0,
+            63.0,
+            114.0
+          ],
+          "size": [
+            31.6,
+            126.0,
+            24.0
+          ]
+        },
+        "surfaceArea": 12702.454115396618,
+        "signedVolume": 47392.5667714163,
+        "volume": 47392.5667714163,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"pipe-clamp\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pipe-clamp-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-cap-right",
+      "name": "右公共架导向盖",
+      "family": "y-cap",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-cap",
+        "rp_t": 0,
+        "rp_side": 1
+      },
+      "file": "output/integrated-review-parts/y-cap-right.stl",
+      "sha256": "c7c7d98766b7fce93cce6bee33f857d71f48342109e8444f0dad40a08f5375a9",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-cap-right.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 276,
+        "uniqueVertexCount": 136,
+        "bounds": {
+          "min": [
+            51.5,
+            24.2,
+            -35.0
+          ],
+          "max": [
+            67.0,
+            28.0,
+            5.0
+          ],
+          "size": [
+            15.5,
+            3.8000000000000007,
+            40.0
+          ]
+        },
+        "surfaceArea": 1706.764507035604,
+        "signedVolume": 2287.4405786758184,
+        "volume": 2287.4405786758184,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-cap\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-cap-right.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-gib-right-front",
+      "name": "右前载体Y压条",
+      "family": "y-gib",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-gib",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/y-gib-right-front.stl",
+      "sha256": "8a593b35e6bbe5df817f3a702d6743d269331645430d195d45244a87e64f3bbb",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-right-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 88,
+        "uniqueVertexCount": 46,
+        "bounds": {
+          "min": [
+            43.8,
+            -10.149999999999999,
+            -6.5
+          ],
+          "max": [
+            62.5,
+            -4.6,
+            6.5
+          ],
+          "size": [
+            18.700000000000003,
+            5.549999999999999,
+            13.0
+          ]
+        },
+        "surfaceArea": 668.9999999999995,
+        "signedVolume": 549.1999999999992,
+        "volume": 549.1999999999992,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-gib\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-keeper-right-front",
+      "name": "右前Y压条外盖",
+      "family": "y-keeper",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-keeper",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/y-keeper-right-front.stl",
+      "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-right-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 464,
+        "uniqueVertexCount": 228,
+        "bounds": {
+          "min": [
+            43.8,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            60.0,
+            -11.05,
+            14.0
+          ],
+          "size": [
+            16.200000000000003,
+            6.449999999999999,
+            28.0
+          ]
+        },
+        "surfaceArea": 1470.8768831739708,
+        "signedVolume": 1759.6967750771616,
+        "volume": 1759.6967750771616,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-keeper\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "finger-right-front",
+      "name": "右前挡指载体",
+      "family": "finger",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "finger",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/finger-right-front.stl",
+      "sha256": "87027a8e40a2ebf75be19e7b71fe7c29831e94e7520d58cf66e50c63fed27a86",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-right-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1568,
+        "uniqueVertexCount": 784,
+        "bounds": {
+          "min": [
+            18.50770666566718,
+            -4.5,
+            -4.0
+          ],
+          "max": [
+            49.0,
+            4.5,
+            4.0
+          ],
+          "size": [
+            30.49229333433282,
+            9.0,
+            8.0
+          ]
+        },
+        "surfaceArea": 989.386516156162,
+        "signedVolume": 1213.882302198853,
+        "volume": 1213.882302198853,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"finger\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-right-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-gib-right-rear",
+      "name": "右后载体Y压条",
+      "family": "y-gib",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-gib",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/y-gib-right-rear.stl",
+      "sha256": "308d4906cd1b849df7a717fb8f848312194cd8e6343d605eb5222620ed8e7fe4",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-right-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 88,
+        "uniqueVertexCount": 46,
+        "bounds": {
+          "min": [
+            43.8,
+            -10.149999999999999,
+            -35.0
+          ],
+          "max": [
+            62.5,
+            -4.6,
+            -22.0
+          ],
+          "size": [
+            18.700000000000003,
+            5.549999999999999,
+            13.0
+          ]
+        },
+        "surfaceArea": 668.9999999999998,
+        "signedVolume": 549.1999999999981,
+        "volume": 549.1999999999981,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-gib\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-keeper-right-rear",
+      "name": "右后Y压条外盖",
+      "family": "y-keeper",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-keeper",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/y-keeper-right-rear.stl",
+      "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-right-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 464,
+        "uniqueVertexCount": 228,
+        "bounds": {
+          "min": [
+            43.8,
+            -17.5,
+            -42.5
+          ],
+          "max": [
+            60.0,
+            -11.05,
+            -14.5
+          ],
+          "size": [
+            16.200000000000003,
+            6.449999999999999,
+            28.0
+          ]
+        },
+        "surfaceArea": 1470.8768831739717,
+        "signedVolume": 1759.6967750771655,
+        "volume": 1759.6967750771655,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-keeper\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "finger-right-rear",
+      "name": "右后挡指载体",
+      "family": "finger",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "finger",
+        "rp_t": 0,
+        "rp_side": 1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/finger-right-rear.stl",
+      "sha256": "24fbcea97d7b68d65b73a0821f670091929479b580e005f0e78dea90163bfd7b",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-right-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1568,
+        "uniqueVertexCount": 784,
+        "bounds": {
+          "min": [
+            23.50770666566718,
+            -4.5,
+            -32.5
+          ],
+          "max": [
+            54.0,
+            4.5,
+            -24.5
+          ],
+          "size": [
+            30.49229333433282,
+            9.0,
+            8.0
+          ]
+        },
+        "surfaceArea": 989.3865161561619,
+        "signedVolume": 1213.8823021988512,
+        "volume": 1213.8823021988512,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"finger\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-right-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "capture-left",
+      "name": "左出口法兰捕获座",
+      "family": "capture--1",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "capture",
+        "rp_t": 0,
+        "rp_side": -1
+      },
+      "file": "output/integrated-review-parts/capture-left.stl",
+      "sha256": "bf6b8e7d09fd7ac9d20aeda7ac7a33d0828d4457b742aa6e665beecb0e6da56f",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/capture-left.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2406,
+        "uniqueVertexCount": 1201,
+        "bounds": {
+          "min": [
+            -36.0,
+            -63.0,
+            40.0
+          ],
+          "max": [
+            0.0,
+            63.0,
+            53.0
+          ],
+          "size": [
+            36.0,
+            126.0,
+            13.0
+          ]
+        },
+        "surfaceArea": 9495.424106243838,
+        "signedVolume": 22557.054521794078,
+        "volume": 22557.054521794078,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"capture\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/capture-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "pipe-clamp-left",
+      "name": "左硬管分体夹",
+      "family": "pipe-clamp--1",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "pipe-clamp",
+        "rp_t": 0,
+        "rp_side": -1
+      },
+      "file": "output/integrated-review-parts/pipe-clamp-left.stl",
+      "sha256": "48714ce44e647bcbe5c6fc316bef656db90b2c5420c0a7fb0df8a554d501d708",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pipe-clamp-left.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 2238,
+        "uniqueVertexCount": 1117,
+        "bounds": {
+          "min": [
+            -32.0,
+            -63.0,
+            90.0
+          ],
+          "max": [
+            -0.4000000000000057,
+            63.0,
+            114.0
+          ],
+          "size": [
+            31.599999999999994,
+            126.0,
+            24.0
+          ]
+        },
+        "surfaceArea": 12785.252014242593,
+        "signedVolume": 47165.5465183165,
+        "volume": 47165.5465183165,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"pipe-clamp\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pipe-clamp-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-cap-left",
+      "name": "左公共架导向盖",
+      "family": "y-cap",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-cap",
+        "rp_t": 0,
+        "rp_side": -1
+      },
+      "file": "output/integrated-review-parts/y-cap-left.stl",
+      "sha256": "2647cb778c6fb12f5742f9e76c80a89973b3a7b3333f5454ee8fbf75ccf48e16",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-cap-left.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 276,
+        "uniqueVertexCount": 136,
+        "bounds": {
+          "min": [
+            -67.0,
+            24.2,
+            -35.0
+          ],
+          "max": [
+            -51.5,
+            28.0,
+            5.0
+          ],
+          "size": [
+            15.5,
+            3.8000000000000007,
+            40.0
+          ]
+        },
+        "surfaceArea": 1706.764507035604,
+        "signedVolume": 2287.4405786758184,
+        "volume": 2287.4405786758184,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-cap\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-cap-left.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-gib-left-front",
+      "name": "左前载体Y压条",
+      "family": "y-gib",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-gib",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/y-gib-left-front.stl",
+      "sha256": "dca03c7dd7670050dcdc4753aa5a062ba21c3c9bef1cbe3fa52c4ba2e7c27280",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-left-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 88,
+        "uniqueVertexCount": 46,
+        "bounds": {
+          "min": [
+            -62.5,
+            -10.149999999999999,
+            -6.5
+          ],
+          "max": [
+            -43.8,
+            -4.6,
+            6.5
+          ],
+          "size": [
+            18.700000000000003,
+            5.549999999999999,
+            13.0
+          ]
+        },
+        "surfaceArea": 668.9999999999995,
+        "signedVolume": 549.1999999999992,
+        "volume": 549.1999999999992,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-gib\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-keeper-left-front",
+      "name": "左前Y压条外盖",
+      "family": "y-keeper",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-keeper",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/y-keeper-left-front.stl",
+      "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-left-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 464,
+        "uniqueVertexCount": 228,
+        "bounds": {
+          "min": [
+            -60.0,
+            -17.5,
+            -14.0
+          ],
+          "max": [
+            -43.8,
+            -11.05,
+            14.0
+          ],
+          "size": [
+            16.200000000000003,
+            6.449999999999999,
+            28.0
+          ]
+        },
+        "surfaceArea": 1470.8768831739708,
+        "signedVolume": 1759.6967750771616,
+        "volume": 1759.6967750771616,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-keeper\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "finger-left-front",
+      "name": "左前挡指载体",
+      "family": "finger",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "finger",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": false
+      },
+      "file": "output/integrated-review-parts/finger-left-front.stl",
+      "sha256": "db7f02b869b69b6cb09c0b4c81ae89767b4cf1a5de81ca26ba1b78dd439cccd3",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-left-front.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1568,
+        "uniqueVertexCount": 784,
+        "bounds": {
+          "min": [
+            -49.0,
+            -4.5,
+            -4.0
+          ],
+          "max": [
+            -18.50770666566718,
+            4.5,
+            4.0
+          ],
+          "size": [
+            30.49229333433282,
+            9.0,
+            8.0
+          ]
+        },
+        "surfaceArea": 989.386516156162,
+        "signedVolume": 1213.882302198853,
+        "volume": 1213.882302198853,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"finger\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=false",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-left-front.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-gib-left-rear",
+      "name": "左后载体Y压条",
+      "family": "y-gib",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-gib",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/y-gib-left-rear.stl",
+      "sha256": "b62e3b04775445035e858add502c9be50ce93dc57e98a6a2a73ed1d68b167a20",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-left-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 88,
+        "uniqueVertexCount": 46,
+        "bounds": {
+          "min": [
+            -62.5,
+            -10.149999999999999,
+            -35.0
+          ],
+          "max": [
+            -43.8,
+            -4.6,
+            -22.0
+          ],
+          "size": [
+            18.700000000000003,
+            5.549999999999999,
+            13.0
+          ]
+        },
+        "surfaceArea": 668.9999999999998,
+        "signedVolume": 549.1999999999981,
+        "volume": 549.1999999999981,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-gib\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-gib-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "y-keeper-left-rear",
+      "name": "左后Y压条外盖",
+      "family": "y-keeper",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "y-keeper",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/y-keeper-left-rear.stl",
+      "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-left-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 464,
+        "uniqueVertexCount": 228,
+        "bounds": {
+          "min": [
+            -60.0,
+            -17.5,
+            -42.5
+          ],
+          "max": [
+            -43.8,
+            -11.05,
+            -14.5
+          ],
+          "size": [
+            16.200000000000003,
+            6.449999999999999,
+            28.0
+          ]
+        },
+        "surfaceArea": 1470.8768831739717,
+        "signedVolume": 1759.6967750771655,
+        "volume": 1759.6967750771655,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"y-keeper\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/y-keeper-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "finger-left-rear",
+      "name": "左后挡指载体",
+      "family": "finger",
+      "role": "printed",
+      "definitions": {
+        "rp_part": "finger",
+        "rp_t": 0,
+        "rp_side": -1,
+        "rp_rear": true
+      },
+      "file": "output/integrated-review-parts/finger-left-rear.stl",
+      "sha256": "3eae42d90c40e556ed953b08df8eedcc4b090a3a3da5613cbb58a07cf595bfec",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-left-rear.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1568,
+        "uniqueVertexCount": 784,
+        "bounds": {
+          "min": [
+            -54.0,
+            -4.5,
+            -32.5
+          ],
+          "max": [
+            -23.50770666566718,
+            4.5,
+            -24.5
+          ],
+          "size": [
+            30.49229333433282,
+            9.0,
+            8.0
+          ]
+        },
+        "surfaceArea": 989.3865161561619,
+        "signedVolume": 1213.8823021988512,
+        "volume": 1213.8823021988512,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"finger\"",
+        "-D",
+        "rp_t=0",
+        "-D",
+        "rp_side=-1",
+        "-D",
+        "rp_rear=true",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/finger-left-rear.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "hardware",
+      "name": "标准五金与定位销（参考组）",
+      "family": "hardware",
+      "role": "purchased",
+      "definitions": {
+        "rp_part": "hardware",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/hardware.stl",
+      "sha256": "bbc74595218a36f745432641cdb718f6b07ede0267fd9183c2a921da8669a606",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/hardware.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 44576,
+        "uniqueVertexCount": 22328,
+        "bounds": {
+          "min": [
+            -66.25,
+            -61.0,
+            -75.17542648054294
+          ],
+          "max": [
+            89.5,
+            61.0,
+            130.0
+          ],
+          "size": [
+            155.75,
+            122.0,
+            205.17542648054294
+          ]
+        },
+        "surfaceArea": 23462.48345065088,
+        "signedVolume": 17678.807610076517,
+        "volume": 17678.807610076517,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 4,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": false
+      },
+      "components": 66,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"hardware\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/hardware.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    },
+    {
+      "id": "pc-reference",
+      "name": "50外/48内PC硬管（长度示意）",
+      "family": "pc-reference",
+      "role": "purchased",
+      "definitions": {
+        "rp_part": "pc-reference",
+        "rp_t": 0
+      },
+      "file": "output/integrated-review-parts/pc-reference.stl",
+      "sha256": "ee453a79a7f840405b89a9e7312c3aa67feb90467f86ad640bf303cdeb25f617",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pc-reference.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 576,
+        "uniqueVertexCount": 288,
+        "bounds": {
+          "min": [
+            -25.0,
+            -25.0,
+            45.5
+          ],
+          "max": [
+            25.0,
+            25.0,
+            135.0
+          ],
+          "size": [
+            50.0,
+            50.0,
+            89.5
+          ]
+        },
+        "surfaceArea": 27853.652014271658,
+        "signedVolume": 13759.974353514826,
+        "volume": 13759.974353514826,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      },
+      "components": 1,
+      "passed": true,
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "rp_part=\"pc-reference\"",
+        "-D",
+        "rp_t=0",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/integrated-review-parts/pc-reference.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/cad/feeder-review-parts.scad"
+      ]
+    }
+  ],
+  "printed_instances": 27,
+  "printed_families": 17,
+  "assembly_parity": {
+    "passed": false,
+    "triangle_count": 1856,
+    "components": [
+      {
+        "triangles": 12,
+        "volume_mm3": 8.748557434046234e-14,
+        "planar_error_mm": 0.021642629040878426,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            17.427384889368202,
+            17.73927352006616
+          ],
+          [
+            -54.0,
+            -39.0
+          ],
+          [
+            4.427384889368202,
+            4.739273520066158
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 8.881784197001252e-15,
+        "planar_error_mm": 0.021642629040877843,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -17.73927352006616,
+            -17.427384889368202
+          ],
+          [
+            -54.0,
+            -39.0
+          ],
+          [
+            1.2607264799338418,
+            1.5726151106317976
+          ]
+        ]
+      },
+      {
+        "triangles": 24,
+        "volume_mm3": 4.574118861455645e-13,
+        "planar_error_mm": 0.19254788595054706,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            49.3,
+            49.429404794730814
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -39.15056183502065,
+            -37.84943816497935
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 1.3304912727107876e-12,
+        "planar_error_mm": 0.06501546459798362,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            50.34943816497935,
+            51.0
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -40.2,
+            -40.070595205269186
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 6.288303211476887e-13,
+        "planar_error_mm": 0.06501546459797268,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            52.570595205269186,
+            52.7
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -38.5,
+            -37.84943816497935
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 1.2679268518516014,
+        "planar_error_mm": 0.20000000000000284,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            55.199999999999996,
+            57.99999999999999
+          ],
+          [
+            -10.0,
+            -4.68
+          ],
+          [
+            -32.800000000000004,
+            -32.6
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 1.6064137372287166,
+        "planar_error_mm": 1.0764367816091962,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            43.8,
+            57.99999999999999
+          ],
+          [
+            -10.0,
+            -4.6
+          ],
+          [
+            -25.2764367816092,
+            -24.200000000000003
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 1.2679268518517133,
+        "planar_error_mm": 0.20000000000000018,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            55.199999999999996,
+            57.99999999999999
+          ],
+          [
+            -10.0,
+            -4.68
+          ],
+          [
+            -4.3,
+            -4.1
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 1.6064137372283986,
+        "planar_error_mm": 1.076436781609197,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            43.8,
+            57.99999999999999
+          ],
+          [
+            -10.0,
+            -4.6
+          ],
+          [
+            3.2235632183908027,
+            4.3
+          ]
+        ]
+      },
+      {
+        "triangles": 74,
+        "volume_mm3": 1.196914875335684e-11,
+        "planar_error_mm": 4.2362599690437104e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            63.0,
+            67.02
+          ],
+          [
+            24.2,
+            24.200000000000003
+          ],
+          [
+            -36.0,
+            -35.02
+          ]
+        ]
+      },
+      {
+        "triangles": 1130,
+        "volume_mm3": 97.22615333380521,
+        "planar_error_mm": 7.309169268983606,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            58.199999999999996,
+            65.98
+          ],
+          [
+            20.5,
+            28.0
+          ],
+          [
+            -31.900000000000002,
+            1.9000000000000001
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 2.504663143554353e-13,
+        "planar_error_mm": 2.0484591319849708e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            63.0,
+            66.0
+          ],
+          [
+            24.2,
+            24.200000000000003
+          ],
+          [
+            5.0,
+            7.5
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 2.0961010704922955e-13,
+        "planar_error_mm": 0.06501546459798352,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            49.429404794730814,
+            49.79791847198287
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -19.702081528017132,
+            -19.150561835020653
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 7.354117315117037e-13,
+        "planar_error_mm": 0.06501546459798352,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            49.429404794730814,
+            49.79791847198287
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -17.849438164979347,
+            -17.297918471982868
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 2.504663143554353e-13,
+        "planar_error_mm": 0.06501546459798345,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            52.20208152801713,
+            52.570595205269186
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -19.702081528017132,
+            -19.150561835020653
+          ]
+        ]
+      },
+      {
+        "triangles": 14,
+        "volume_mm3": 1.3108962962979884,
+        "planar_error_mm": 0.20000000000000284,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -57.99999999999999,
+            -55.199999999999996
+          ],
+          [
+            -10.0,
+            -4.68
+          ],
+          [
+            -32.800000000000004,
+            -32.6
+          ]
+        ]
+      },
+      {
+        "triangles": 24,
+        "volume_mm3": 1.509903313490213e-13,
+        "planar_error_mm": 0.19254788595054775,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -52.7,
+            -52.570595205269186
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -39.15056183502065,
+            -37.84943816497935
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 3.552713678800501e-15,
+        "planar_error_mm": 0.06501546459798362,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -51.65056183502065,
+            -51.0
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -40.2,
+            -40.070595205269186
+          ]
+        ]
+      },
+      {
+        "triangles": 20,
+        "volume_mm3": 1.2679268518527929,
+        "planar_error_mm": 0.19999999999999574,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -57.99999999999999,
+            -43.8
+          ],
+          [
+            -10.0,
+            -4.6
+          ],
+          [
+            -24.400000000000002,
+            -24.200000000000003
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 1.085354028873553e-12,
+        "planar_error_mm": 0.065015464597972,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -49.429404794730814,
+            -49.3
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -38.5,
+            -37.84943816497935
+          ]
+        ]
+      },
+      {
+        "triangles": 14,
+        "volume_mm3": 1.3108962962962365,
+        "planar_error_mm": 0.20000000000000018,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -57.99999999999999,
+            -55.199999999999996
+          ],
+          [
+            -10.0,
+            -4.68
+          ],
+          [
+            -4.3,
+            -4.1
+          ]
+        ]
+      },
+      {
+        "triangles": 20,
+        "volume_mm3": 1.2679268518518814,
+        "planar_error_mm": 0.20000000000000018,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -57.99999999999999,
+            -43.8
+          ],
+          [
+            -10.0,
+            -4.6
+          ],
+          [
+            4.099999999999999,
+            4.3
+          ]
+        ]
+      },
+      {
+        "triangles": 80,
+        "volume_mm3": 4.440892098500626e-14,
+        "planar_error_mm": 1.571952534410789,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -64.45,
+            -63.40056183502065
+          ],
+          [
+            20.6,
+            28.0
+          ],
+          [
+            -2.4134983409143267,
+            0.5705952052691874
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 4.4941828036826337e-13,
+        "planar_error_mm": 0.06501546459798578,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -52.570595205269186,
+            -52.20208152801713
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -19.702081528017132,
+            -19.150561835020653
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 4.831690603168681e-13,
+        "planar_error_mm": 0.06501546459798352,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -52.570595205269186,
+            -52.20208152801713
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -17.849438164979347,
+            -17.297918471982868
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 4.440892098500626e-16,
+        "planar_error_mm": 0.0,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -35.5,
+            -35.5
+          ],
+          [
+            -9.833333333333332,
+            -9.0
+          ],
+          [
+            -38.75,
+            -37.5
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 1.5187850976872141e-13,
+        "planar_error_mm": 0.06501546459798119,
+        "planar_contact_only": false,
+        "bounds": [
+          [
+            -49.79791847198287,
+            -49.429404794730814
+          ],
+          [
+            -17.5,
+            -8.6
+          ],
+          [
+            -19.702081528017132,
+            -19.150561835020653
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.4210854715202004e-14,
+        "planar_error_mm": 3.552713678800501e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -67.0,
+            -63.0
+          ],
+          [
+            24.2,
+            24.200000000000003
+          ],
+          [
+            5.0,
+            7.5
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 5.684341886080802e-14,
+        "planar_error_mm": 0.0,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -58.2,
+            -53.8
+          ],
+          [
+            24.2,
+            24.2
+          ],
+          [
+            -17.70967741935485,
+            5.0
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 4.887229509975555e-12,
+        "planar_error_mm": 6.464715105974146e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            -57.0,
+            -56.995717846477206
+          ],
+          [
+            46.86919374153971,
+            47.0
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.0914324999333758e-12,
+        "planar_error_mm": 3.364018389123299e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -56.66293922460509,
+            -56.58670668058247
+          ],
+          [
+            45.78247714198256,
+            45.8888595339608
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 1.5190348978677548e-12,
+        "planar_error_mm": 6.464715105974146e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            -53.004282153522794,
+            -53.0
+          ],
+          [
+            47.0,
+            47.13080625846029
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 1.4774848011711583e-12,
+        "planar_error_mm": 1.304627810302554e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            -57.0,
+            -56.995717846477206
+          ],
+          [
+            101.86919374153972,
+            102.0
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 9.85426612994574e-12,
+        "planar_error_mm": 1.8282134331493473e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -53.41329331941753,
+            -53.33706077539491
+          ],
+          [
+            100.78247714198255,
+            100.8888595339608
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 6.967482146791326e-13,
+        "planar_error_mm": 1.304627810302554e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            -53.004282153522794,
+            -53.0
+          ],
+          [
+            102.0,
+            102.13080625846028
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 2.0036750036922513e-13,
+        "planar_error_mm": 6.464715105974146e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            53.0,
+            53.004282153522794
+          ],
+          [
+            46.86919374153971,
+            47.0
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.6903145549918008e-13,
+        "planar_error_mm": 3.364018389123299e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            53.33706077539491,
+            53.41329331941753
+          ],
+          [
+            45.78247714198256,
+            45.8888595339608
+          ]
+        ]
+      },
+      {
+        "triangles": 22,
+        "volume_mm3": 8.910025495190155e-13,
+        "planar_error_mm": 6.464715105974146e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            56.995717846477206,
+            57.0
+          ],
+          [
+            47.0,
+            47.13080625846029
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 2.8782254357651027e-12,
+        "planar_error_mm": 1.304627810302554e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            53.0,
+            53.004282153522794
+          ],
+          [
+            101.86919374153972,
+            102.0
+          ]
+        ]
+      },
+      {
+        "triangles": 12,
+        "volume_mm3": 8.140134472150081e-12,
+        "planar_error_mm": 1.8282134331493473e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            56.58670668058247,
+            56.66293922460509
+          ],
+          [
+            100.78247714198255,
+            100.8888595339608
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 1.0820233597996776e-12,
+        "planar_error_mm": 1.304627810302554e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -15.2,
+            -10.600000000000001
+          ],
+          [
+            56.995717846477206,
+            57.0
+          ],
+          [
+            102.0,
+            102.13080625846028
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 1.822986206434507e-13,
+        "planar_error_mm": 4.528206636354139e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -56.89386025899021,
+            -56.84775906502257
+          ],
+          [
+            47.64287893060632,
+            47.76536686473018
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 4.654536015872661e-12,
+        "planar_error_mm": 6.969060552305583e-16,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -56.961570560806464,
+            -56.93185165257814
+          ],
+          [
+            102.39018064403226,
+            102.51763809020504
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.8077021361288341e-12,
+        "planar_error_mm": 6.969060552305583e-16,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -53.06814834742186,
+            -53.038429439193536
+          ],
+          [
+            101.48236190979496,
+            101.60981935596774
+          ]
+        ]
+      },
+      {
+        "triangles": 8,
+        "volume_mm3": 2.44569179722968e-12,
+        "planar_error_mm": 4.528206636354139e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            53.10613974100979,
+            53.15224093497743
+          ],
+          [
+            47.64287893060632,
+            47.76536686473018
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.0813572259849025e-12,
+        "planar_error_mm": 6.969060552305583e-16,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            53.038429439193536,
+            53.06814834742186
+          ],
+          [
+            102.39018064403226,
+            102.51763809020504
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.401230983096487e-12,
+        "planar_error_mm": 6.969060552305583e-16,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            56.93185165257814,
+            56.961570560806464
+          ],
+          [
+            101.48236190979496,
+            101.60981935596774
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.2745360322696797e-12,
+        "planar_error_mm": 1.14114483337904e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -56.84775906502257,
+            -56.79374548306538
+          ],
+          [
+            46.115422619562,
+            46.23463313526982
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 5.140332604014475e-13,
+        "planar_error_mm": 1.1432158766338114e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -53.20625451693462,
+            -53.15224093497743
+          ],
+          [
+            47.76536686473018,
+            47.884577380438
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 4.887201754399939e-13,
+        "planar_error_mm": 1.6734029498552677e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -53.41329331941753,
+            -53.33706077539491
+          ],
+          [
+            48.1111404660392,
+            48.21752285801744
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 6.061817714453355e-13,
+        "planar_error_mm": 1.14114483337904e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            53.15224093497743,
+            53.20625451693462
+          ],
+          [
+            46.115422619562,
+            46.23463313526982
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.509903313490213e-13,
+        "planar_error_mm": 1.1432158766338114e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            56.79374548306538,
+            56.84775906502257
+          ],
+          [
+            47.76536686473018,
+            47.884577380438
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 4.360956040727615e-13,
+        "planar_error_mm": 1.6734029498552677e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            56.58670668058247,
+            56.66293922460509
+          ],
+          [
+            48.1111404660392,
+            48.21752285801744
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 2.0312640458541864e-12,
+        "planar_error_mm": 4.019576962680784e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -56.50367961495795,
+            -56.41421356237309
+          ],
+          [
+            103.31869163020014,
+            103.41421356237309
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 2.842170943040401e-14,
+        "planar_error_mm": 4.019576962680784e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            -53.58578643762691,
+            -53.49632038504205
+          ],
+          [
+            100.58578643762691,
+            100.68130836979986
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.2437412211241394e-12,
+        "planar_error_mm": 4.019576962680784e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            53.49632038504205,
+            53.58578643762691
+          ],
+          [
+            103.31869163020014,
+            103.41421356237309
+          ]
+        ]
+      },
+      {
+        "triangles": 4,
+        "volume_mm3": 1.937339177970898e-12,
+        "planar_error_mm": 4.019576962680784e-15,
+        "planar_contact_only": true,
+        "bounds": [
+          [
+            -13.8,
+            -10.600000000000001
+          ],
+          [
+            56.41421356237309,
+            56.50367961495795
+          ],
+          [
+            100.58578643762691,
+            100.68130836979986
+          ]
+        ]
+      }
+    ],
+    "has_solid_or_unclassified_overlap": true
+  },
+  "manufacturing_release": false,
+  "scope": "Nominal rest pose of the integrated feeder. Standard metal parts are a visual reference group; PC pipe length is illustrative. Actual spring, hose and Y fitting remain absent."
+}

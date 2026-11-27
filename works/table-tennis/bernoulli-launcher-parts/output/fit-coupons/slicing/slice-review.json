@@ -1,0 +1,205 @@
+{
+  "status": "INITIAL_MIXED_PLATE_WARNED_SEAT_ONLY_SUPPORTED_RETRY_SUCCEEDED",
+  "return_code": 0,
+  "assumptions": {
+    "machine": "X1 Carbon 0.4 nozzle (unconfirmed physical nozzle)",
+    "material": "Generic PETG (unconfirmed actual material)",
+    "plate": "Textured PEI Plate (unconfirmed actual plate)",
+    "process": "0.20mm Standard @BBL X1C",
+    "supports_enabled": false
+  },
+  "warnings": [
+    "It seems object fit-slider-seat.stl has floating regions. Please re-orient the object or enable support generation."
+  ],
+  "input_stl_sha256": {
+    "output/fit-coupons/fit-radial-pair.stl": "e8605b4b34b2b3375aab6bc87690c6904bfefe81e73875c8b02468998b58025f",
+    "output/fit-coupons/fit-finger.stl": "2b2675780f6f3e2c37e8ffa35c87039feace5f8b42ee3f3d496d980b3d9f40d9",
+    "output/fit-coupons/fit-slider-seat.stl": "03155552f1cf7952b9127d1922950f3eed8f10e11e0d2fdb555acb03751ab7e5",
+    "output/fit-coupons/fit-slider-gib.stl": "825f70e8963b76420a71c2b84219ce726428d525adb553761088c37f7fc2807a",
+    "output/fit-coupons/fit-slider-keeper.stl": "ed1e0f0fb4c6350f1ce468aff2bd9c074031b4c21e5af6cb5b6e6b8ac8a13688",
+    "output/fit-coupons/fit-locator.stl": "b262e015b097533ccb8c2efa7c64daa1de57d1df0058a5cc0e74ffa27ffccad8",
+    "output/fit-coupons/fit-seal.stl": "69b81310bc68962a6906935c432ec4af68ca55c7e0853c83fee72f2ae2a7ca69"
+  },
+  "artifacts": {
+    "fit-coupons-candidate.3mf": "caf33cf80bdd099d00703699aa72cbb348bfc87728b9216a4cea904e6d8004a5",
+    "plate_1.gcode": "d86470a8213e39a265b5824ea51eaa905d769c6f55e3d727b7a2be8e225b21e6",
+    "result.json": "4deba6e49bb40d02f0c096c0d6d62614dd14fea1feb1dcbc7a40847ffc26ae9d",
+    "bambu-cli-third.log": "da82009288871a99c6d99c0b4c4e09740400013b5253d6604a5331288a776d39"
+  },
+  "profile_copies_sha256": {
+    "machine": "9115b9287c3a4c935f3d525f6667c1f43a7cbf4e55a82315030db9fb0bc3c5b2",
+    "process": "4cb46bdd9e86452b3b2f2b9ccbc73ce85eca240000bbc1cfeb134d4d77d24dd0",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "prior_attempts": [
+    {
+      "log": "bambu-cli-initial-cool-plate-rejection.log",
+      "reason": "Default Cool Plate/PETG combination rejected"
+    },
+    {
+      "log": "bambu-cli-second-abort.log",
+      "exit_code": 134,
+      "cause": "Not diagnosed"
+    }
+  ],
+  "layer_path_spot_check": {
+    "seal_layer_1": "G-code object204, Z0.2: longitudinal groove wall centre lines Y108.550 and109.850, commanded width0.5; nominal path gap0.8 at the straight middle only.",
+    "locator_layer_1": "G-code object193, Z0.2 contains separate closed round/capsule hole contours; this does not establish printed diameters or full depth.",
+    "not_a_complete_toolpath_audit": true
+  },
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "fit-coupons-candidate.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-radial-pair.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-finger.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-seat.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-gib.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-keeper.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-locator.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-seal.stl"
+  ],
+  "user_profiles_read_or_changed": false,
+  "printer_accessed": false,
+  "sent_to_printer": false,
+  "support_removal_validated": false,
+  "print_ready": false,
+  "seat_only_support_attempt": {
+    "return_code": 0,
+    "warnings": [],
+    "same_orientation": true,
+    "other_six_parts_changed": false,
+    "input_stl_sha256": "03155552f1cf7952b9127d1922950f3eed8f10e11e0d2fdb555acb03751ab7e5",
+    "config_changes": {
+      "enable_support": "1",
+      "support_type": "tree(auto)",
+      "support_on_build_plate_only": "1"
+    },
+    "unchanged_clearances_mm": {
+      "xy": 0.35,
+      "top_z": 0.2,
+      "bottom_z": 0.2
+    },
+    "artifacts": {
+      "fit-slider-seat-supported-candidate.3mf": "31ac3378570d6cc218daea2af9802b79f2b54b31238eb044cb97b69cff8f31eb",
+      "plate_1.gcode": "34c2fc645957671f441c25e0ebc361ba48bff43c802ed5bd09325ec05e4e02ae",
+      "result.json": "31fa961cf02e65d479e26e27698304eb63c698351d2276a6df63df6335e34b8e",
+      "bambu-cli.log": "f242203381bcb3e62219990703dd2b5ce23e7657f28cd0d03cd106517c278f57",
+      "process-supported.json": "9089fa4ae5208088e72695dac9d373d64f6804c7cabda0cfc28c834d5b7fa8b4",
+      "support-path-review.json": "f3c564dc4f73bbb755044e14050be03b03eb204965552a572a43574484eb410f"
+    },
+    "support_path_review": {
+      "support_path_endpoint_count": 27654,
+      "support_arc_commands": 9393,
+      "coordinate_mapping": "assembly=(gcode X-69.5,Y-124.9,Z-15), verified untranslated rotation from single-object 3MF",
+      "global_support_bounds_assembly_mm": [
+        [
+          33.67400000000001,
+          75.767
+        ],
+        [
+          -24.88300000000001,
+          31.169999999999987
+        ],
+        [
+          -14.8,
+          6.600000000000001
+        ]
+      ],
+      "regions": {
+        "radial_through_channel": {
+          "endpoint_count": 4977,
+          "bounds_mm": [
+            [
+              43.007999999999996,
+              66.99799999999999
+            ],
+            [
+              -4.699000000000012,
+              4.699999999999989
+            ],
+            [
+              -4.199999999999999,
+              4.0
+            ]
+          ],
+          "features": {
+            "Support": 4499,
+            "Support interface": 478
+          }
+        },
+        "gib_open_side_pocket": {
+          "endpoint_count": 2798,
+          "bounds_mm": [
+            [
+              43.613,
+              57.980999999999995
+            ],
+            [
+              -13.998000000000005,
+              -4.703000000000003
+            ],
+            [
+              -4.199999999999999,
+              4.199999999999999
+            ]
+          ],
+          "features": {
+            "Support": 2469,
+            "Support interface": 329
+          }
+        },
+        "keeper_nut_pockets": {
+          "endpoint_count": 0,
+          "bounds_mm": null,
+          "features": {}
+        },
+        "guide_cap_open_nut_slot": {
+          "endpoint_count": 0,
+          "bounds_mm": null,
+          "features": {}
+        }
+      },
+      "limits": "Centreline endpoints only; extrusion width and between-endpoint/arc crossing are not a complete solid-removal proof. No locating-coupon blind holes exist in this seat-only model. Real support separation remains untested."
+    },
+    "removal_access": "Clean before gib/keeper assembly. Through radial channel open at +/-X and gib pocket open at -Y. Break supports into pieces; no one-piece withdrawal claim. Captive-nut entrances remain open.",
+    "blind_hole_scope": "This seat-only crop has no 3.2-mm blind locator holes; those belong to a separate coupon and were not re-sliced.",
+    "actual_removal_surface_damage_residue_and_sliding_fit": "OPEN",
+    "command": [
+      "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+      "--datadir",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported/app-data",
+      "--load-settings",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported/process-supported.json",
+      "--load-filaments",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/filament.json",
+      "--orient",
+      "0",
+      "--arrange",
+      "1",
+      "--ensure-on-bed",
+      "--slice",
+      "0",
+      "--export-3mf",
+      "fit-slider-seat-supported-candidate.3mf",
+      "--outputdir",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/slicing/seat-supported",
+      "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/fit-coupons/fit-slider-seat.stl"
+    ]
+  }
+}

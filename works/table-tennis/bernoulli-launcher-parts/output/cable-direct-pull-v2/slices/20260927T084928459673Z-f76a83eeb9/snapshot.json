@@ -1,0 +1,26 @@
+{
+  "export_report": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/slice-export-report.json",
+  "export_report_sha256": "2cb410330140f2eb2e032df4c1f8191fe8a105d2b729317d25e34f81a0185104",
+  "source_sha256": {
+    "output/cable-direct-pull-v2/candidate.scad": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/native-report.json": "ca784fb8f0a64a03680875ae6d6b69f2d827f1e8165a31666b58b79e330e45a0",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/interpretation.json": "16d13c9f3a35f3642d67ea5bbfac5a0f7e0a018a55a3ab2009960c36325315dc",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/body.scad": "e0a438a462f2ed1099b130481e31e41601a58b80e580bab35ead447e19b19a13",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.scad": "60338a90ea9c209a1bc14474ac799985fa4f8738ed678e981bf2719dbe692654",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/terminal-cap.scad": "f85335e03c2c867235228eec50bcd5d8a53659e657af0fdb31ac4318bde2ae99",
+    "output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/cover.scad": "56199fba10505d456fa777dbba4f38d128061d0365114680a0cbc434a492d6e2"
+  },
+  "shared_profiles": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "parts": [
+    "cable-input-body",
+    "cable-input-lever"
+  ],
+  "runner_sha256": "bb7a22bbe9d061d64a2643b83bc05a2156d336d4cec78d924d99d31c4fc273b4",
+  "slicer_sha256": "7c9c7a618126596ba2db5a4d2a74ec5be3f08c751ab6138f1ec4d9e2ac0676cf",
+  "bambu_binary_sha256": "1a79017b9f86fb6db92987f4a4c4a4834ac540cf36703d49c7c91ed1959c2026"
+}

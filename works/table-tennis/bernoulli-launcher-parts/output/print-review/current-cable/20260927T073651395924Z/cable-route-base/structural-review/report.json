@@ -1,0 +1,466 @@
+{
+  "status": "DIGITAL_REVIEW_FAILED",
+  "part": "cable-route-base",
+  "orientation": "X+",
+  "checks": {
+    "slice_success_no_native_warning": true,
+    "input_source_identity_current": true,
+    "oriented_identity": true,
+    "archive_triangle_count_exact": false,
+    "archive_vertices_match_at_0_0001mm": false,
+    "no_archive_zero_area": true,
+    "no_reported_mesh_repair": true,
+    "all_layer_extrusion_envelopes_inside_build_and_exclusion": true,
+    "no_shared_preset_changes": true,
+    "first_layer_model_present": true,
+    "official_bed_is_declared_256_square": true
+  },
+  "mapping": {
+    "cad_to_oriented": [
+      [
+        6.123233995736766e-17,
+        0.0,
+        -1.0,
+        160.05782676745605
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        -14.5
+      ],
+      [
+        1.0,
+        0.0,
+        6.123233995736766e-17,
+        77.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_offset": [
+      0.0,
+      0.0,
+      84.09681701660156
+    ],
+    "component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        84.096817
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        127.99999
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        128.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "extruder_offset": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "cad_to_gcode": [
+      [
+        6.123233995736766e-17,
+        0.0,
+        -1.0,
+        288.0578167674561
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        111.5
+      ],
+      [
+        1.0,
+        0.0,
+        6.123233995736766e-17,
+        76.99999998339844
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "mesh_stat": {
+      "face_count": "7896",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    },
+    "input_triangles": 7898,
+    "archived_triangles": 7896,
+    "archived_triangle_vertex_multiset_matches_at_0_0001_mm": false,
+    "vertex_matching_bijective": false,
+    "oriented_face_connectivity_and_winding_preserved": false,
+    "maximum_vertex_difference_mm": 8.291657687533827e-06,
+    "archived_zero_area_triangles": 0
+  },
+  "first_layer": {
+    "model_area_mm2": 1908.9280825778912,
+    "model_components": 1,
+    "support_area_mm2": 2251.511475446465,
+    "all_features_area_mm2": 6176.701559670109
+  },
+  "all_layer_extrusion_bounds_mm": [
+    [
+      52.629495999999996,
+      45.83292137484164,
+      0.0
+    ],
+    [
+      213.01786615190517,
+      201.20450400000001,
+      168.0
+    ]
+  ],
+  "boundary_violations": [],
+  "feature_command_counts": {
+    "Support": 35653,
+    "Brim": 2067,
+    "Outer wall": 46108,
+    "Inner wall": 86260,
+    "Gap infill": 3954,
+    "Bottom surface": 756,
+    "Internal solid infill": 11789,
+    "Sparse infill": 45388,
+    "Support interface": 2652,
+    "Floating vertical shell": 22888,
+    "Bridge": 1867,
+    "Overhang wall": 779,
+    "Top surface": 2050
+  },
+  "support_sample_count": 1144291,
+  "support_bounds_CAD": [
+    [
+      -76.89999998339846,
+      -65.41582762515836,
+      75.2912016155509
+    ],
+    [
+      53.90000151660155,
+      78.05600082399539,
+      234.26233073666202
+    ]
+  ],
+  "support_z_layers": [
+    0.2,
+    131.0
+  ],
+  "selected_layers": [
+    0.2,
+    13.4,
+    33.6,
+    58.800000000000004,
+    84.0,
+    117.80000000000001,
+    143.0,
+    164.8
+  ],
+  "max_bridge_command_length_mm": 38.872,
+  "features": [
+    {
+      "name": "clamp_M3_-73_-12",
+      "lo": [
+        -73.7,
+        -12.7,
+        78
+      ],
+      "hi": [
+        -72.3,
+        -11.3,
+        106
+      ],
+      "access": "Through Z, 1.4 x 1.4 mm nominal pick core",
+      "corridor": true,
+      "support_envelope_samples": 319,
+      "support_center_samples": 199,
+      "support_hit_bounds": [
+        [
+          -73.69999998339844,
+          -12.960486847266964,
+          78.11451016685183
+        ],
+        [
+          -72.29999998339844,
+          -11.045585638373609,
+          83.12313544182896
+        ]
+      ],
+      "model_commands_flagged_by_conservative_box": 0,
+      "stl_triangle_intersections": 0,
+      "center_inside_stl": false
+    },
+    {
+      "name": "clamp_M3_-73_12",
+      "lo": [
+        -73.7,
+        11.3,
+        78
+      ],
+      "hi": [
+        -72.3,
+        12.7,
+        106
+      ],
+      "access": "Through Z, 1.4 x 1.4 mm nominal pick core",
+      "corridor": true,
+      "support_envelope_samples": 319,
+      "support_center_samples": 198,
+      "support_hit_bounds": [
+        [
+          -73.69999998339844,
+          11.040638063234937,
+          78.11510893296645
+        ],
+        [
+          -72.29999998339844,
+          12.959081580308705,
+          83.12249468860767
+        ]
+      ],
+      "model_commands_flagged_by_conservative_box": 0,
+      "stl_triangle_intersections": 0,
+      "center_inside_stl": false
+    },
+    {
+      "name": "clamp_M3_-43_-12",
+      "lo": [
+        -43.7,
+        -12.7,
+        78
+      ],
+      "hi": [
+        -42.3,
+        -11.3,
+        106
+      ],
+      "access": "Through Z, 1.4 x 1.4 mm nominal pick core",
+      "corridor": true,
+      "support_envelope_samples": 0,
+      "support_center_samples": 0,
+      "support_hit_bounds": null,
+      "model_commands_flagged_by_conservative_box": 0,
+      "stl_triangle_intersections": 0,
+      "center_inside_stl": false
+    },
+    {
+      "name": "clamp_M3_-43_12",
+      "lo": [
+        -43.7,
+        11.3,
+        78
+      ],
+      "hi": [
+        -42.3,
+        12.7,
+        106
+      ],
+      "access": "Through Z, 1.4 x 1.4 mm nominal pick core",
+      "corridor": true,
+      "support_envelope_samples": 0,
+      "support_center_samples": 0,
+      "support_hit_bounds": null,
+      "model_commands_flagged_by_conservative_box": 0,
+      "stl_triangle_intersections": 0,
+      "center_inside_stl": false
+    },
+    {
+      "name": "platform_capture",
+      "lo": [
+        -70.25,
+        -52.25,
+        84.72
+      ],
+      "hi": [
+        -45.75,
+        45.25,
+        93.28
+      ],
+      "access": "Open -Z before lower托; never scrape hard-stop faces",
+      "corridor": false,
+      "support_envelope_samples": 107594,
+      "support_center_samples": 100669,
+      "support_hit_bounds": [
+        [
+          -70.29999998339844,
+          -52.31053796781545,
+          84.45880299902177
+        ],
+        [
+          -45.90000048339845,
+          23.463565498124126,
+          93.54124644686053
+        ]
+      ],
+      "model_commands_flagged_by_conservative_box": 0
+    },
+    {
+      "name": "long_braces",
+      "lo": [
+        -80,
+        50,
+        99
+      ],
+      "hi": [
+        -35,
+        90,
+        180
+      ],
+      "access": "External braces; remove support before placing housing",
+      "corridor": false,
+      "support_envelope_samples": 0,
+      "support_center_samples": 0,
+      "support_hit_bounds": null,
+      "model_commands_flagged_by_conservative_box": 0
+    }
+  ],
+  "route_features": {
+    "inventory_sha256": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+    "basis_scope": "rounded SCAD echo, reorthogonalized and extra 0.002 mm envelope margin; diagnostic flags, not clearance proof",
+    "groove_arc_support_envelope_samples": 0,
+    "groove_arc_support_center_samples": 0,
+    "groove_hit_bounds_CAD": null,
+    "bolt_holes_and_open_back_nut_pockets": [
+      {
+        "angle_deg": 10,
+        "radius_mm": 63,
+        "bore_support_envelope_samples": 0,
+        "nut_entry_support_envelope_samples": 0
+      },
+      {
+        "angle_deg": 10,
+        "radius_mm": 87,
+        "bore_support_envelope_samples": 0,
+        "nut_entry_support_envelope_samples": 0
+      },
+      {
+        "angle_deg": 70,
+        "radius_mm": 63,
+        "bore_support_envelope_samples": 0,
+        "nut_entry_support_envelope_samples": 0
+      },
+      {
+        "angle_deg": 70,
+        "radius_mm": 87,
+        "bore_support_envelope_samples": 0,
+        "nut_entry_support_envelope_samples": 0
+      },
+      {
+        "angle_deg": 137,
+        "radius_mm": 63,
+        "bore_support_envelope_samples": 0,
+        "nut_entry_support_envelope_samples": 0
+      },
+      {
+        "angle_deg": 137,
+        "radius_mm": 87,
+        "bore_support_envelope_samples": 2676,
+        "nut_entry_support_envelope_samples": 2293
+      }
+    ],
+    "cleaning_direction": "+N open semicircular groove with cap separate; six nut pockets from -N, then through bores; do not trap residue by fitting cap/hose first"
+  },
+  "source_sha256_at_start": {
+    "analysis/exact_mesh.py": "38228c711880b3671f90164ce4b460b71ec21b36f73160ac29d70cf037bf60bb",
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "cad/cable-housing-route.scad": "0dbe838a2a1d91f6bd3f73d3e2f6b7dfa51bcac1d97810fe4976585d72e60a66",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "2b5d9f8e1513858f353211fc2dcd4eb9f6959bcffb249caf7a4c42bb1850ceb8",
+    "cad/cable-trigger-input.scad": "01d2b74807dd584a6dfe855fa36b9ef11929df49453812943dfd080756f98e84",
+    "cad/cable-trigger-system.scad": "429fdc2fdd49a0288c676dd57eec4b13bccabce4aee1ca45b6e61954fb41f5a6",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "docs/cable-assembly-inventory.json": "0ec271d8ad6d30f3fd850b117e0d46eeb17a07873f93ba6fdb1efd468435195f",
+    "scripts/export_cable_scene.py": "744ebe72a4e5328dbdec4b5ff5e58d6e12b399c558d37627f6e2359e85fee443"
+  },
+  "artifact_sha256": {
+    "invocation.json": "cb0e95515eb5e4d2b5f49d12d8ae216519fb859b3fabf23f459992ad016eab32",
+    "oriented.stl": "b04f1f594fd063669a03416b542e1623bfdedbf649e0a3b24f4fb47491e2ccff",
+    "plate_1.gcode": "a2f93292f26345aced0052983f00f8679b0617abfd874345ee1ee38c6776426d",
+    "slice-review.3mf": "b11a3caa22f817d568f807ed3320d5e51788b83baa8d52c4575ca824250d8570"
+  },
+  "script_sha256": "29db2f682f248d45b82f7aee9b8f165162e41a124dfcf42226feeb48a3845293",
+  "parser_sha256": "7e6ad6b98d125608dcdf1b511a999517121ddc886980bc7dd83292d0e41248c8",
+  "limits": [
+    "Positive-E object layers only; pre-object prime/maintenance extrusion belongs to unchanged printer start routines and is not counted here.",
+    "Bead width/full layer-height and bounded arc sampling envelopes, not measured PETG dimensions. All model/support/brim/skirt layer paths are included in bed/exclusion checks.",
+    "Feature hits are conservative flags for support removal; model-corridor AABBs overestimate actual contact and do not establish blocked holes.",
+    "Clear nominal STL corridors are narrow declared pick-tip access, not whole pliers/wrench-body clearance, removal force or complete debris evacuation.",
+    "Eight layer views and actual support occupancy locate supports but do not prove every overhang supported, adhesion, load strength, return behavior or an acceptable physical sliding surface.",
+    "Generic PETG / Textured PEI remain analysis assumptions; user confirmed PETG and PEI only."
+  ],
+  "sent_to_printer": false,
+  "physical_acceptance": false
+}

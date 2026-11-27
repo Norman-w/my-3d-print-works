@@ -1,0 +1,84 @@
+{
+  "status": "GEOMETRIC_NEAR_HOME_ONLY_ZERO_UNPROVEN",
+  "source": {
+    "analysis_script_sha256": "1a093592169521868a0ddb49c0e60d959159253f280ab1c8ad84d8e63c2afe4f",
+    "cad_sha256": "208579de9f6cc8df2c5f8ab6d2ba190b5cf1ad7c5b2efa6bed033c33c2d5b7a7",
+    "parameters_sha256": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "geometry_review_sha256": "639839510bb7b9978efdb322376f14e44fcbc3b30366bb9da769e9eb61798975",
+    "partial_return_counterexample_report_sha256": "1ee0ba2983b3e37572fa226c17ca9c5d41b9d63d20c435e5c07c88c7da25beb2",
+    "electric_carriage_cad_sha256": "e6fecf97459732745aff3b01cdd3261191f60fb3e31895b1a3a77bf750e5747d"
+  },
+  "feeder_displacement_zero_definition": "mechanical return stop, u=0 mm",
+  "feeder_stroke_mm": 20.0,
+  "flag_vertical_extent_at_zero_mm": [
+    11.0,
+    29.0
+  ],
+  "optical_window_is_cad_probe_not_sensor_switching_spec": true,
+  "adjustment_rows": [
+    {
+      "sensor_upward_adjustment_mm": 0,
+      "modelled_window_z_mm": [
+        12.0,
+        14.0
+      ],
+      "return_window_first_overlap_below_feeder_displacement_mm": 3.0,
+      "return_window_centre_covered_at_feeder_displacement_mm": 2.0,
+      "return_entire_window_covered_at_or_below_feeder_displacement_mm": 1.0,
+      "modelled_transition_band_above_mechanical_zero_mm": [
+        1.0,
+        3.0
+      ]
+    },
+    {
+      "sensor_upward_adjustment_mm": 1,
+      "modelled_window_z_mm": [
+        13.0,
+        15.0
+      ],
+      "return_window_first_overlap_below_feeder_displacement_mm": 4.0,
+      "return_window_centre_covered_at_feeder_displacement_mm": 3.0,
+      "return_entire_window_covered_at_or_below_feeder_displacement_mm": 2.0,
+      "modelled_transition_band_above_mechanical_zero_mm": [
+        2.0,
+        4.0
+      ]
+    },
+    {
+      "sensor_upward_adjustment_mm": 2,
+      "modelled_window_z_mm": [
+        14.0,
+        16.0
+      ],
+      "return_window_first_overlap_below_feeder_displacement_mm": 5.0,
+      "return_window_centre_covered_at_feeder_displacement_mm": 4.0,
+      "return_entire_window_covered_at_or_below_feeder_displacement_mm": 3.0,
+      "modelled_transition_band_above_mechanical_zero_mm": [
+        3.0,
+        5.0
+      ]
+    }
+  ],
+  "all_adjustments_modelled_transition_band_above_zero_mm": [
+    1.0,
+    5.0
+  ],
+  "partial_return_double_shot_observability": {
+    "counterexample_feeder_displacement_mm": 1.0,
+    "counterexample_output_count_if_retriggered_before_true_zero": 2,
+    "modelled_entire_optical_window_covered_at_unsafe_u_by_sensor_adjustment": {
+      "0": true,
+      "1": true,
+      "2": true
+    },
+    "modelled_blocked_boolean_distinguishes_u0_from_unsafe_u": false,
+    "interpretation": "The current electric carriage retains the same gate motion. In the CAD 2 mm optical-window proxy, both true zero and the previously identified u=1 mm partial return appear covered for every allowed sensor height. Actual optical switching is unmeasured; this is a counterexample to accepting blocked alone, not a measured double shot."
+  },
+  "actual_switching_displacement_mm": null,
+  "actual_motor_braking_distance_mm": null,
+  "actual_motor_cycle_home_behavior": null,
+  "optical_blocked_alone_confirms_mechanical_zero": false,
+  "one_shot_rearm_from_optical_blocked_alone_permitted": false,
+  "required_closure": "Prove the actual motor reaches and remains at the mechanical return position after the optical edge, using measured braking and cycle behavior or an independent home confirmation.",
+  "manufacturing_release": false
+}

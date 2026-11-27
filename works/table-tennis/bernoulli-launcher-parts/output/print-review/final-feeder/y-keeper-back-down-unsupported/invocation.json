@@ -1,0 +1,261 @@
+{
+  "family": "y-keeper",
+  "part": "y-keeper",
+  "orientation": "back-down",
+  "orientation_description": "Original Y=-17.5 back plane down; nut mouths up",
+  "supports": "unsupported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/y-keeper-back-down-unsupported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/y-keeper-back-down-unsupported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/y-keeper-back-down-unsupported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/y-keeper-back-down-unsupported/filament.json",
+    "--orient",
+    "0",
+    "--rotate-x",
+    "90",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/y-keeper-back-down-unsupported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/y-keeper-right-front.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/y-keeper-right-rear.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/y-keeper-left-front.stl",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/y-keeper-left-rear.stl"
+  ],
+  "inputs": [
+    {
+      "id": "y-keeper-right-front",
+      "name": "右前Y外盖",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-right-front.stl",
+      "path": "output/launcher-final/y-keeper-right-front.stl",
+      "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+    },
+    {
+      "id": "y-keeper-right-rear",
+      "name": "右后Y外盖",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": 1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-right-rear.stl",
+      "path": "output/launcher-final/y-keeper-right-rear.stl",
+      "sha256": "ac3bce4dc9d5621b56586b99fae3a7eb97d54afedd545ebe6460dce7b9e6ee3f"
+    },
+    {
+      "id": "y-keeper-left-front",
+      "name": "左前Y外盖",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": -1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-left-front.stl",
+      "path": "output/launcher-final/y-keeper-left-front.stl",
+      "sha256": "71f8b83c515fb221b41197ded43f4ead5165bb7c551e2da72b829662b32403a5"
+    },
+    {
+      "id": "y-keeper-left-rear",
+      "name": "左后Y外盖",
+      "role": "printed",
+      "family": "y-keeper",
+      "definitions": {
+        "la_part": "y-keeper",
+        "la_side": -1,
+        "la_rear": true,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/y-keeper-left-rear.stl",
+      "path": "output/launcher-final/y-keeper-left-rear.stl",
+      "sha256": "250e22259b079a9b18f5d9e1c4504a67ec8d6087504ca80b52e4689facd30010"
+    }
+  ],
+  "input": {
+    "id": "y-keeper-right-front",
+    "name": "右前Y外盖",
+    "role": "printed",
+    "family": "y-keeper",
+    "definitions": {
+      "la_part": "y-keeper",
+      "la_side": 1,
+      "la_rear": false,
+      "la_t": 0
+    },
+    "file": "output/launcher-final/y-keeper-right-front.stl",
+    "path": "output/launcher-final/y-keeper-right-front.stl",
+    "sha256": "2d8ee1bbe28242eca9dcc043ba0f42e7f3b581a2f065314fcb628df723aacb6a"
+  },
+  "source_sha256_at_start": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "3377a6c27c8ac3db3f4ef0c53d2316eb47676b0d3b1942d2dd01e0d0563cf1e6",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "supports": "disabled"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 450,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 29,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Bottom surface": 60.89975357055664,
+          "Bridge": 37.403995513916016,
+          "Custom": 428.7760925292969,
+          "Flush": 29.0,
+          "Gap infill": 24.75552749633789,
+          "Inner wall": 382.8804626464844,
+          "Internal solid infill": 158.89715576171875,
+          "Outer wall": 178.99530029296875,
+          "Sparse infill": 87.1438217163086,
+          "Top surface": 77.14142608642578,
+          "Travel": 211.31033325195312,
+          "Undefined": 195.9453582763672
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 7.492486476898193,
+            "total_used_g": 7.492486476898193
+          }
+        ],
+        "generate_support_material_time": 15,
+        "id": 1,
+        "infill_time": 275,
+        "layer_filament_change": 0,
+        "main_predication": 1190.455810546875,
+        "make_perimeters_time": 199,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 28.0000057220459,
+              "height": 6.449999809265137,
+              "width": 16.199996948242188,
+              "x": 134.89999389648438,
+              "y": 128.99998474121094,
+              "z": 4.440892098500626e-16
+            },
+            "id": 74,
+            "name": "y-keeper-right-front.stl",
+            "triangle_count": 464
+          },
+          {
+            "bbox": {
+              "depth": 28.0000057220459,
+              "height": 6.449999809265137,
+              "width": 16.200000762939453,
+              "x": 116.70001983642578,
+              "y": 128.99998474121094,
+              "z": 3.1086244689504383e-15
+            },
+            "id": 85,
+            "name": "y-keeper-right-rear.stl",
+            "triangle_count": 464
+          },
+          {
+            "bbox": {
+              "depth": 28.000001907348633,
+              "height": 6.449999809265137,
+              "width": 16.200002670288086,
+              "x": 134.8999786376953,
+              "y": 99.00000762939453,
+              "z": 4.440892098500626e-16
+            },
+            "id": 96,
+            "name": "y-keeper-left-front.stl",
+            "triangle_count": 464
+          },
+          {
+            "bbox": {
+              "depth": 16.200002670288086,
+              "height": 6.449999809265137,
+              "width": 28.0,
+              "x": 104.90000915527344,
+              "y": 110.80001831054688,
+              "z": 3.1086244689504383e-15
+            },
+            "id": 107,
+            "name": "y-keeper-left-rear.stl",
+            "triangle_count": 464
+          }
+        ],
+        "sliced_time": 1334,
+        "sliced_time_with_cache": 736,
+        "total_predication": 1661.8363037109375,
+        "triangle_count": 1856,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "490387c9feb41a8789b52fefc426e0b9b0039dbdfd2885d6f8bde6a3cc878b98",
+    "slice-review.3mf": "47253cd2cdbcc766b79e359938d660f36b851d3c5b709442cfd9f56a1579a630"
+  },
+  "last_temperature_before_first_layer_c": 255.0
+}

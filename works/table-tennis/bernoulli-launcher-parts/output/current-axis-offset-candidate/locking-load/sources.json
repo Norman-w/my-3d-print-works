@@ -1,0 +1,67 @@
+{
+  "checked_utc": "2026-09-27T13:56:10.958580+00:00",
+  "sources": [
+    {
+      "id": "fibro",
+      "url": "https://static.shop.fibro.com/assets/EN/document/doc_244_17_english.pdf",
+      "local": "evidence/fibro-24417-sheet.pdf",
+      "method": "download + PDF text + visual page review",
+      "supports": "D8 h8 / M6, L30 +.25, nominal thread11/head13x5.5/SW4, catalogue torque13 Nm; no numeric root boundaries"
+    },
+    {
+      "id": "fibro2025",
+      "url": "https://medien.fibro.de/fileadmin/FIBRO/EN/02_NORMALIEN/Kapitel_F/PDF/B2_HK_GB_Kapitel_F.pdf",
+      "method": "official indexed search text; direct download 404",
+      "supports": "July2025 h8/F9 code distinction only; not archived complete PDF"
+    },
+    {
+      "id": "unbrako",
+      "url": "https://unbrako.com/docs/engguide.pdf",
+      "method": "current web PDF text read; direct download timed out",
+      "supports": "printed p42 D8/M6 seating12Nm/neck4.4/tensile1100MPa; printed p1 guide torques, variation; no current delivery certificate"
+    },
+    {
+      "id": "schnorr",
+      "url": "https://www.schnorr-group.com/fileadmin/4_Downloads/Brochures/SCHNORR_Produktbroschuere_EN_2024-02.pdf",
+      "local": "evidence/schnorr-product-2024.pdf",
+      "method": "download + text + visual table review",
+      "supports": "printed p10 test-load tolerances; p11 bold002050C nominal151N at .463mm"
+    },
+    {
+      "id": "accu",
+      "url": "https://www.accu.co.uk/hexagon-nylon-locking-nuts/7948-HNN-M6-A2",
+      "method": "current web product page read",
+      "supports": "A2-70 DIN985 M6x1 SW9.78..10 height5.7..6; no exact-SKU prevailing/proof data found in bounded page review"
+    },
+    {
+      "id": "iso",
+      "url": "https://committee.iso.org/standard/61175.html?browse=tc",
+      "method": "official scope read",
+      "supports": "ISO2320 steel-nut scope with mechanical properties ISO898-2; not automatically applied to this A2-70 SKU"
+    },
+    {
+      "id": "ganter",
+      "url": "https://www.ganternorm.com/en/products/3.2-Mounting-Positioning-Leveling-with-Retaining-Cables-Screws-Clamping-and-Supporting-Elements/Swing-bolts-Shoulder-screws-Thrust-bolts/ISO-7379-Shoulder-Screws-Steel-with-Collar",
+      "method": "manufacturer product page read",
+      "supports": "shoulder bearing/transitions restrict torque beyond property-class inference"
+    },
+    {
+      "id": "misumi",
+      "url": "https://sg.misumi-ec.com/tech-info/categories/machine_design/md05/d0066.html",
+      "method": "current official general article read",
+      "supports": "generic70percent yield rule not used as actual shoulder joint instruction"
+    },
+    {
+      "id": "bossard",
+      "url": "https://www.bossard.com/-/media/bossard-group/website/documents/technical-resources-old/stainless-steel-fasteners.pdf",
+      "method": "official search indexed content only; old direct PDF404",
+      "supports": "A2-50 Rp210 class reference solely for rejected shortcut"
+    },
+    {
+      "id": "nordlock",
+      "url": "https://www.nord-lock.com/en-us/nord-lock/torquelator/?cachebreak=true",
+      "method": "official calculator description read",
+      "supports": "torque depends on thread and bearing friction; no coefficients/table transferred"
+    }
+  ]
+}

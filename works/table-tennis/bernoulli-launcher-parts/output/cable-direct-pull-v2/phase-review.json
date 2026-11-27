@@ -1,0 +1,115 @@
+{
+  "status": "V2_DIGITAL_REVIEW_PROGRESS_NOT_RELEASED",
+  "created_utc": "2026-09-27T09:01:23.314048+00:00",
+  "candidate_sha256": "f76a83eeb95644bd3c856922b31da749cc47c083d688d271116f946493994588",
+  "route_sha256": "9d16bec62f032885f987e97506c62ae279fff389abc59246d7193fdb78d8a729",
+  "formal_scene": {
+    "report": "output/cable-scene-export/20260927T071458613482Z/report.json",
+    "source_count": 32,
+    "all_current_sources_unchanged": true,
+    "printed_instances": 55,
+    "scene_entries": 84,
+    "candidate_integrated": false
+  },
+  "evidence": [
+    {
+      "file": "output/cable-direct-pull-v2/local-review-summary.json",
+      "sha256": "f5cf64eee3ebdfba754d4c73c148ccd313fcc126bb6c86f9040e9a29a3910e3f",
+      "recorded_status": "V2_LOCAL_GEOMETRY_AND_OFFLINE_SLICE_REVIEW_COMPLETE_NOT_RELEASED"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/source-identity.json",
+      "sha256": "098c7510331b44128035a12fff7f506788ba2fa2ad3ba504f73f6b49dd652b58",
+      "recorded_status": "DIAGNOSTIC_V2_UNVALIDATED"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/slice-reuse-proof.json",
+      "sha256": "cf7f70ae68e3556ce43014df4d8047bc756e6a70feba4012d13d32358eaa225a",
+      "recorded_status": "BYTE_IDENTICAL_PRINT_GEOMETRY_REUSE_PROVEN"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/independent/adjuster-review.json",
+      "sha256": "8b2cfba0fe01047615c755736e740162c6a9404bbda569cf3bc5b884c1d022b4",
+      "recorded_status": "NOMINAL_HARDWARE_BUDGET_AND_NATIVE_KINEMATICS_CONFIRMED_ROUTE_AND_SERVICE_PENDING"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/independent/native-verification.json",
+      "sha256": "83a9ed2f19aab1a2bc95b7830f1bd7a5136aff541ded4f026079f2af0666a187",
+      "recorded_status": "See report scope and component verdicts"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/independent/tool-review-upper-sector/report.json",
+      "sha256": "8649c88ac3235bd825cd7b60558bb68b76a7371875929baa8c3e4ca509cd021d",
+      "recorded_status": "See report scope and component verdicts"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/independent/route-and-tool-review.md",
+      "sha256": "d5e304fe6ad59d02a64babb83347884ca1782229dcd9537a3fe5759d1a8bb192"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/independent/route-and-tool-review.json",
+      "sha256": "3a3620d4929bacfc9fe3dd8345cc554eecc1e318fb64c35dd42607bef55dc02e",
+      "recorded_status": "BOUNDED_ROUTE_FORMULA_AND_BENCH_TOOL_GEOMETRY_REVIEW_PASS"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/housing-route/numeric/report.json",
+      "sha256": "6cff4cf7cdc8d21e49ac30c617d184eacda56a4975e16df32c9d9405ef10ae5a",
+      "recorded_status": "SAMPLED_EQUAL_LENGTH_FAMILY_PASS"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/housing-route/numeric/native-report.json",
+      "sha256": "32156ac7357494b406075dd6eaa1ecf34d90d34adb4bf0d0af9ebb5d31d58ce9",
+      "recorded_status": "PASS"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/housing-route/service/20260927T084938984042Z/report.json",
+      "sha256": "e289fab160c052adbae28fc91148a6fe1a775f6d45d41c145c910f1ef661431f",
+      "recorded_status": "THREE_SETTING_ROUTE_SERVICE_PASS"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/host-review/20260927T084810774074Z/report.json",
+      "sha256": "11915c037eb987b08351141f00fe5960a36a98c35b910d5830d2dc7675ba8090",
+      "recorded_status": "V2_SAMPLED_ADDED_GEOMETRY_HOST_PASS"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/actuation/report.json",
+      "sha256": "b45024f65ed8493fb9ae636ce5695cf2c890245392a6522a28a13a0ef6a2d492",
+      "recorded_status": "CANDIDATE_IDEAL_LENGTH_AND_FORCE_BUDGET_COMPLETE"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/render/report.json",
+      "sha256": "11a2a3da2fba1e35db39a8d0dc5926d0967f19c1ce3f5244bad927db7a8a269a",
+      "recorded_status": "NATIVE_CAD_PNG_VISUALLY_CHECKED"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/integration-plan.json",
+      "sha256": "1789fd0cdf9bfd50fc012474def39e17ac6c6f63b6128ecb2cbf2a921b5b7f2a",
+      "recorded_status": "READ_ONLY_INTEGRATION_PLAN_NOT_ADOPTION"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/README.md",
+      "sha256": "c98a6bf89b47aaf555685fcecefb66099e2ee474e0302bd79d8b3b02680dacc2"
+    },
+    {
+      "file": "output/cable-direct-pull-v2/bed-bounds-review.json",
+      "sha256": "3aa6b0ccc5ee3dc3674976bd1268d6e08eb170cdd2030b7b682a0bd3f65f953b",
+      "recorded_status": "BED_BOUNDS_PASS"
+    }
+  ],
+  "preserved_failures": [
+    "output/cable-input-slack-review/report.json",
+    "output/cable-input-lip-candidate/adjuster-travel/20260927T083207056075Z/report.json",
+    "output/cable-direct-pull-v2/independent/tool-review/report.json"
+  ],
+  "interpretation": "Each evidence file retains its own scope and verdict. Do not add counts into a single universal acceptance claim. The new trigger and route are isolated candidates; existing formal source and LAN scene remain unchanged.",
+  "remaining": [
+    "FDM overhang/bridge manufacturing treatment and actual material/profile agreement",
+    "Adopt all affected CAD contracts, scene motion, cap inventory, service checks and print plan consistently",
+    "Supplier fitting seats/thread runout/tool dimensions and clamping/torque evidence",
+    "Actual friction, preload, loaded return, material strength and original-device outer geometry",
+    "First-machine one-ball/airflow/spin operation; not replaced by images or sampled CAD checks"
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

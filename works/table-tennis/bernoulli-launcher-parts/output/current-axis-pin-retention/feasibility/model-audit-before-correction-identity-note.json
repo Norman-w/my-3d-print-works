@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-09-27T14:24:35.821330+00:00",
+  "prior_record": "model-audit-before-correction.json",
+  "issue": "The first finding was based on earlier read tool output with old Z[-18.25,-14], but its later hash capture raced the parent edit and equals the corrected source. That prior source hash must not be used as identity evidence for old geometry. The original record is preserved, its hash-to-finding association withdrawn.",
+  "current_candidate_sha256": "9862682108521262faae881bee9b4488e4f3836a0f44240349e9bda479c95f9f",
+  "current_final_audit": "model-audit.json",
+  "current_final_text_checked": [
+    "Z[-18.65,-13.6]",
+    "straight cotter-leg centre plane +/-1",
+    "R24 includes transverse play",
+    "short control derives14-25-2.25/2+1.75/2"
+  ]
+}

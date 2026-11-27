@@ -1,0 +1,1267 @@
+{
+  "status": "REFERENCE_CONTROLLER_CONTRACT_ONLY_MISSING_REAL_INPUTS",
+  "source_sha256": {
+    "analysis/electric_point_shot_fsm.py": "f61bac994dd84a82c36b6113d14996f9491be88e26e9cf5fa8f1ee13437de989",
+    "output/electric-trigger-integration/review.json": "1d8c856ac7ea40ec01d635d2eab1af2490721fb687b57996650a4d158a5c1bff",
+    "output/optical-home-candidate/transition-budget.json": "3f185a60b43b6e380ed6bc6ae77c95441d56c99f2a0008cb30b23b98071b7b8a",
+    "output/electric-drive-feasibility/report.json": "74eb0dbe2938fe18f4087f8d5e9eec52f88f0ea7dae6d61fc88f78d1606e6708"
+  },
+  "state_names": [
+    "LOCKED",
+    "READY",
+    "OUTBOUND",
+    "RETURN",
+    "STOPPING",
+    "WAIT_RELEASE",
+    "FAULT"
+  ],
+  "normal_cycle": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "near-home alone cannot complete cycle"
+      },
+      {
+        "tick": 5,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 6,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": true,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": true,
+        "reason": "stopped at zero; release required before next press"
+      },
+      {
+        "tick": 7,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "held trigger cannot repeat"
+      },
+      {
+        "tick": 8,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released after complete cycle"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 1,
+    "final_state": "READY"
+  },
+  "two_presses_with_release": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "near-home alone cannot complete cycle"
+      },
+      {
+        "tick": 5,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 6,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": true,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": true,
+        "reason": "stopped at zero; release required before next press"
+      },
+      {
+        "tick": 7,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "held trigger cannot repeat"
+      },
+      {
+        "tick": 8,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released after complete cycle"
+      },
+      {
+        "tick": 9,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      }
+    ],
+    "motor_start_count": 2,
+    "completed_cycle_count": 1,
+    "final_state": "OUTBOUND"
+  },
+  "held_trigger_cycle": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "near-home alone cannot complete cycle"
+      },
+      {
+        "tick": 5,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 6,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": true,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": true,
+        "reason": "stopped at zero; release required before next press"
+      },
+      {
+        "tick": 7,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "held trigger cannot repeat"
+      },
+      {
+        "tick": 8,
+        "before": "WAIT_RELEASE",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "WAIT_RELEASE",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "held trigger cannot repeat"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 1,
+    "final_state": "WAIT_RELEASE"
+  },
+  "partial_return_timeout": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "near-home alone cannot complete cycle"
+      },
+      {
+        "tick": 5,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": true
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "cycle watchdog expired"
+      },
+      {
+        "tick": 6,
+        "before": "FAULT",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "latched fault"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "FAULT"
+  },
+  "stop_not_confirmed_timeout": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 5,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": true
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "cycle watchdog expired"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "FAULT"
+  },
+  "coast_past_zero_after_drive_cut": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 5,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "zero lost during stopping"
+      },
+      {
+        "tick": 6,
+        "before": "FAULT",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "latched fault"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "FAULT"
+  },
+  "stuck_high_idle_without_fresh_stop_event": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "departed near home"
+      },
+      {
+        "tick": 3,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": true,
+          "verified_mechanical_zero": false,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "RETURN",
+        "motor_enable": true,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "full stroke confirmed"
+      },
+      {
+        "tick": 4,
+        "before": "RETURN",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "true zero; remove drive"
+      },
+      {
+        "tick": 5,
+        "before": "STOPPING",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "STOPPING",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "waiting for stopped motor"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "STOPPING"
+  },
+  "stale_stop_event_while_running": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 1,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      },
+      {
+        "tick": 2,
+        "before": "OUTBOUND",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": false,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": false,
+          "motor_idle": false,
+          "fresh_stop_event": true,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "FAULT",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "stale or contradictory stop event"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "FAULT"
+  },
+  "boot_with_trigger_held": {
+    "rows": [
+      {
+        "tick": 0,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "LOCKED",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "not yet safe to arm"
+      },
+      {
+        "tick": 1,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "LOCKED",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "not yet safe to arm"
+      },
+      {
+        "tick": 2,
+        "before": "LOCKED",
+        "inputs": {
+          "trigger_pressed": false,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "READY",
+        "motor_enable": false,
+        "start_event": false,
+        "completed_cycle_event": false,
+        "reason": "released and verified at zero"
+      },
+      {
+        "tick": 3,
+        "before": "READY",
+        "inputs": {
+          "trigger_pressed": true,
+          "near_home_blocked": true,
+          "full_stroke_event": false,
+          "verified_mechanical_zero": true,
+          "motor_idle": true,
+          "fresh_stop_event": false,
+          "power_good": true,
+          "cycle_watchdog_expired": false
+        },
+        "after": "OUTBOUND",
+        "motor_enable": true,
+        "start_event": true,
+        "completed_cycle_event": false,
+        "reason": "fresh trigger starts one cycle"
+      }
+    ],
+    "motor_start_count": 1,
+    "completed_cycle_count": 0,
+    "final_state": "OUTBOUND"
+  },
+  "exhaustive_boolean_input_review": {
+    "distinct_abstract_states": 31,
+    "checked_transitions": 1984,
+    "invariants": [
+      "start only from READY with a pressed trigger and prior arming",
+      "held trigger cannot cause a second start",
+      "optical reblock without verified mechanical zero cannot stop or rearm",
+      "cycle completion requires motor idle and verified zero",
+      "a fresh post-disable stop event is required for completion",
+      "FAULT is latched with motor command off"
+    ]
+  },
+  "electrical_output_scope": "At most one motor-start command per uninterrupted trigger hold, conditional on trusted full-stroke, mechanical-zero, and cycle-bound fresh-stop proofs; ball count is not proved",
+  "current_hardware_inputs_missing": [
+    "trusted full-stroke event or validated internal motor phase",
+    "mechanical-zero proof independent of the current near-home optical boolean",
+    "stopped-motor feedback or validated post-stop settling behavior",
+    "a cycle-bound fresh stop event from the hardware adapter",
+    "measured cycle duration for a watchdog setting"
+  ],
+  "optical_blocked_aliased_as_verified_zero": false,
+  "mcu_firmware_implemented": false,
+  "power_stage_selected": false,
+  "motor_mounted": false,
+  "ball_exit_count_verified": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

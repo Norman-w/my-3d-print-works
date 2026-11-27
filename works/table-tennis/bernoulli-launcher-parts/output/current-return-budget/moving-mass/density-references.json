@@ -1,0 +1,10 @@
+{
+  "status": "Reference material densities only; no stock identity or maximum density certified",
+  "read_utc_date": "2026-09-27",
+  "values_g_per_cm3": {"PETG": 1.28, "POM": 1.41, "metal": 8.0},
+  "sources": [
+    {"key":"PETG", "manufacturer":"Bambu Lab", "grade":"PETG HF", "url":"https://us.store.bambulab.com/collections/bambu-lab-3d-printer-filament/products/petg-hf?from=home_web", "evidence":"Official indexed product specification gives density 1.28 g/cm3. Direct open failed. This is not a supplier maximum, current stock claim, or assertion about the user's unnamed PETG."},
+    {"key":"POM", "manufacturer":"Ensinger", "grade":"TECAFORM AH natural unfilled POM-C", "url":"https://www.ensingerplastics.com/en-us/shapes/acetal-tecaform-ah-natural", "evidence":"Official material page read live; density 1.41 g/cm3. Grade not yet selected for the bush."},
+    {"key":"metal", "manufacturer":"Outokumpu", "grade":"Supra 316/4401", "url":"https://www.outokumpu.com/-/media/files/products/supra/outokumpu-supra-range-datasheet.pdf?modified=20251117111951&revision=7a909396-d1f3-4d36-9c1c-99606be41fd2", "evidence":"Official Table7 density 8.0 kg/dm3. Used as one explicit reference density for modeled hardware, not certification of every purchased component."}
+  ]
+}

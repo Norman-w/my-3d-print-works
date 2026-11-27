@@ -1,0 +1,168 @@
+{
+  "family": "liner",
+  "part": "liner",
+  "orientation": "shoulder-down",
+  "orientation_description": "Original Z=44 shoulder down; bore vertical",
+  "supports": "unsupported",
+  "command": [
+    "/Applications/BambuStudio.app/Contents/MacOS/BambuStudio",
+    "--datadir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/liner-shoulder-down-unsupported/app-data",
+    "--load-settings",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/liner-shoulder-down-unsupported/machine.json;/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/liner-shoulder-down-unsupported/process.json",
+    "--load-filaments",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/liner-shoulder-down-unsupported/filament.json",
+    "--orient",
+    "0",
+    "--arrange",
+    "1",
+    "--ensure-on-bed",
+    "--slice",
+    "0",
+    "--export-3mf",
+    "slice-review.3mf",
+    "--outputdir",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/final-feeder/liner-shoulder-down-unsupported",
+    "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/launcher-final/liner.stl"
+  ],
+  "inputs": [
+    {
+      "id": "liner",
+      "name": "出口内衬",
+      "role": "printed",
+      "family": "liner",
+      "definitions": {
+        "la_part": "liner",
+        "la_side": 1,
+        "la_rear": false,
+        "la_t": 0
+      },
+      "file": "output/launcher-final/liner.stl",
+      "path": "output/launcher-final/liner.stl",
+      "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+    }
+  ],
+  "input": {
+    "id": "liner",
+    "name": "出口内衬",
+    "role": "printed",
+    "family": "liner",
+    "definitions": {
+      "la_part": "liner",
+      "la_side": 1,
+      "la_rear": false,
+      "la_t": 0
+    },
+    "file": "output/launcher-final/liner.stl",
+    "path": "output/launcher-final/liner.stl",
+    "sha256": "ad9676f4678765bf2869d6688983acbff79cfa05d1d17d5369221c46410f6bb0"
+  },
+  "source_sha256_at_start": {
+    "analysis/feeder_integration.py": "e7769af55bae559623bb223745d540630ba03a70c7225865382f76405b7c67de",
+    "analysis/launcher_final_assembly.py": "24639836016a9e2dc81b312d2fa9f6622e69364a8950b2988f7008f04c7a85f2",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/launcher-final-assembly.scad": "a8b81b6fcc0eafd306cdd38a9608405f99ce503665e1965407293146ef6f4813",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58"
+  },
+  "shared_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "e8b5fbfe69a9240a8f4b3496dca3d2f848137780f9cbe14a823d57a848de0f20",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "local_profile_sha256": {
+    "machine": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857",
+    "process": "3377a6c27c8ac3db3f4ef0c53d2316eb47676b0d3b1942d2dd01e0d0563cf1e6",
+    "filament": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+  },
+  "assumptions": {
+    "machine": "X1C 0.4 confirmed",
+    "material": "Generic PETG; brand unconfirmed",
+    "plate": "Textured PEI analysis assumption; only PEI confirmed",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill_percent": 25,
+    "supports": "disabled"
+  },
+  "sent_to_printer": false,
+  "physical_acceptance": false,
+  "return_code": 0,
+  "native_result": {
+    "error_string": "Success.",
+    "export_time": 427,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 20,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "feature_type_times": {
+          "Custom": 428.6727600097656,
+          "Flush": 29.0,
+          "Gap infill": 60.357295989990234,
+          "Inner wall": 2097.4638671875,
+          "Outer wall": 2225.731201171875,
+          "Top surface": 15.397354125976562,
+          "Travel": 190.1597900390625,
+          "Undefined": 174.8839111328125
+        },
+        "filament_change_times": 0,
+        "filaments": [
+          {
+            "filament_id": "GFG99",
+            "id": 1,
+            "main_used_g": 20.656492233276367,
+            "total_used_g": 20.656492233276367
+          }
+        ],
+        "generate_support_material_time": 95,
+        "id": 1,
+        "infill_time": 35,
+        "layer_filament_change": 0,
+        "main_predication": 4560.068359375,
+        "make_perimeters_time": 249,
+        "obj_cached_cnt": 0,
+        "objects": [
+          {
+            "bbox": {
+              "depth": 65.32814025878906,
+              "height": 74.0,
+              "width": 65.32814025878906,
+              "x": 95.33592224121094,
+              "y": 95.33592987060547,
+              "z": 0.0
+            },
+            "id": 5,
+            "name": "liner.stl",
+            "triangle_count": 1296
+          }
+        ],
+        "sliced_time": 1725,
+        "sliced_time_with_cache": 1302,
+        "total_predication": 5031.4345703125,
+        "triangle_count": 1296,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "input_and_cad_stable": true,
+  "shared_profiles_untouched": true,
+  "artifact_sha256": {
+    "plate_1.gcode": "3804811b9fedf3c55dd4198b421c2bc6ee2b4adc1b77eb3e5d593d51e553b4df",
+    "slice-review.3mf": "57a3a80809fedb33880d642dc31184b7ce306633a85d0835ed16260cdef11ce5"
+  },
+  "last_temperature_before_first_layer_c": 255.0
+}

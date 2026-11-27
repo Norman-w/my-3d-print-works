@@ -1,0 +1,33 @@
+{
+  "status": "OFFLINE_SLICES_GENERATED_REVIEW_REQUIRED",
+  "source_stable": true,
+  "parts": [
+    {
+      "part": "cable-input-terminal-cap",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T082206132152Z/cable-input-terminal-cap",
+      "warnings": [
+        ""
+      ]
+    },
+    {
+      "part": "cable-input-lever",
+      "status": "SLICE_GENERATED_REVIEW_REQUIRED",
+      "folder": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/print-review/current-cable/20260927T082206132152Z/cable-input-lever",
+      "warnings": [
+        ""
+      ]
+    }
+  ],
+  "scope": "Native slice generation only; support removal, toolpath features, strength and physical fit need separate evidence.",
+  "diagnostic_candidate": {
+    "purpose": "Independent native slicing of frozen direct-pull lever and screwed terminal cap only; not current inventory or complete geometry acceptance",
+    "source": "output/cable-input-lip-candidate/candidate.scad",
+    "source_sha256": "491ded77149a2147f010092f7f715f59ef50a2dd714abb56677d596fb6544c9d",
+    "native_export": "output/cable-input-lip-candidate/runs/20260927T081924133477Z-491ded7714/native-report.json",
+    "feature_ROI_contract": "New geometry; old ci_lever path ROIs are not applicable. Only generic artifact verification may be reused."
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

@@ -1,0 +1,194 @@
+{
+  "output/analysis/feeder-right_support.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-right_support.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 1240,
+    "uniqueVertexCount": 598,
+    "bounds": {
+      "min": [
+        35.5,
+        -19.0,
+        -50.0
+      ],
+      "max": [
+        67.0,
+        24.200000000000003,
+        21.0
+      ],
+      "size": [
+        31.5,
+        43.2,
+        71.0
+      ]
+    },
+    "surfaceArea": 13374.315365062263,
+    "signedVolume": 22060.71791410986,
+    "volume": 22060.71791410986,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "output/analysis/feeder-left_support.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-left_support.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 1404,
+    "uniqueVertexCount": 678,
+    "bounds": {
+      "min": [
+        -76.0,
+        -19.0,
+        -50.0
+      ],
+      "max": [
+        -35.5,
+        24.200000000000003,
+        21.0
+      ],
+      "size": [
+        40.5,
+        43.2,
+        71.0
+      ]
+    },
+    "surfaceArea": 14384.112553854862,
+    "signedVolume": 23496.90729606516,
+    "volume": 23496.90729606516,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "output/analysis/feeder-finger.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-finger.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 1568,
+    "uniqueVertexCount": 784,
+    "bounds": {
+      "min": [
+        -2.4922933343328197,
+        -4.5,
+        -4.0
+      ],
+      "max": [
+        28.0,
+        4.5,
+        4.0
+      ],
+      "size": [
+        30.49229333433282,
+        9.0,
+        8.0
+      ]
+    },
+    "surfaceArea": 989.3865161561615,
+    "signedVolume": 1213.8823021988505,
+    "volume": 1213.8823021988505,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "output/analysis/feeder-cap.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-cap.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 276,
+    "uniqueVertexCount": 136,
+    "bounds": {
+      "min": [
+        51.5,
+        24.2,
+        -35.0
+      ],
+      "max": [
+        67.0,
+        28.0,
+        5.0
+      ],
+      "size": [
+        15.5,
+        3.8000000000000007,
+        40.0
+      ]
+    },
+    "surfaceArea": 1706.764507035604,
+    "signedVolume": 2287.4405786758184,
+    "volume": 2287.4405786758184,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "output/analysis/feeder-carriage.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/feeder-carriage.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 3012,
+    "uniqueVertexCount": 1490,
+    "bounds": {
+      "min": [
+        -76.0,
+        -4.0,
+        -64.5
+      ],
+      "max": [
+        89.0,
+        54.0,
+        37.0
+      ],
+      "size": [
+        165.0,
+        58.0,
+        101.5
+      ]
+    },
+    "surfaceArea": 20259.850269652845,
+    "signedVolume": 27312.975279858616,
+    "volume": 27312.975279858616,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  },
+  "output/analysis/cam-carriage-study.stl": {
+    "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/analysis/cam-carriage-study.stl",
+    "format": "ascii",
+    "units": "unknown",
+    "triangleCount": 1996,
+    "uniqueVertexCount": 990,
+    "bounds": {
+      "min": [
+        -52.0,
+        8.0,
+        -64.5
+      ],
+      "max": [
+        52.0,
+        54.0,
+        16.0
+      ],
+      "size": [
+        104.0,
+        46.0,
+        80.5
+      ]
+    },
+    "surfaceArea": 14791.427469697313,
+    "signedVolume": 20954.22479356969,
+    "volume": 20954.22479356969,
+    "degenerateTriangleCount": 0,
+    "boundaryEdgeCount": 0,
+    "nonManifoldEdgeCount": 0,
+    "inconsistentOrientationEdgeCount": 0,
+    "watertightByEdgeTopology": true
+  }
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="880" viewBox="0 0 1200 880">
+<defs><pattern id="wire" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 0L14 14" stroke="#338ca6" stroke-width="2"/></pattern></defs>
+<rect width="1200" height="880" fill="#f3f6f8"/>
+<g font-family="-apple-system, PingFang SC, sans-serif" fill="#172f3b">
+<text x="48" y="54" font-size="30" font-weight="600">接口已明确：硬管可以按设计裁切</text>
+<text x="48" y="88" font-size="18" fill="#586e7a">结构示意，不按比例。尺寸单位 mm；不表示固定、密封或实物性能已通过。</text>
+<rect x="36" y="116" width="1128" height="262" rx="14" fill="white" stroke="#d8e2e8"/>
+<text x="62" y="153" font-size="23" font-weight="600">① 用户确认的原机连接</text>
+<rect x="78" y="210" width="370" height="82" rx="9" fill="#caeaf3" stroke="#338ca6" stroke-width="2"/>
+<rect x="78" y="210" width="370" height="82" rx="9" fill="url(#wire)"/>
+<rect x="726" y="198" width="318" height="106" rx="9" fill="#e0e5ec" stroke="#737d92" stroke-width="2"/>
+<rect x="330" y="223" width="482" height="56" fill="#c8d7df" stroke="#556e7b" stroke-width="2"/>
+<rect x="330" y="235" width="482" height="32" fill="white"/>
+<text x="97" y="190" font-size="19" fill="#227b99">钢丝软管：内50 / 外55</text>
+<text x="466" y="204" font-size="19">硬管：内48 / 外50</text>
+<text x="837" y="185" font-size="19">斜三通的承口</text>
+<text x="282" y="324" font-size="18" fill="#227b99">软管套在硬管外面</text>
+<text x="698" y="324" font-size="18" fill="#596483">硬管插进三通里面</text>
+<text x="62" y="355" font-size="17" fill="#586e7a">硬管有余料，可裁所需长度；无需再量“现有管口还剩多长”。</text>
+<rect x="36" y="397" width="1128" height="288" rx="14" fill="white" stroke="#d8e2e8"/>
+<text x="62" y="435" font-size="23" font-weight="600">② 插入点射模块后的连接路线</text>
+<rect x="74" y="495" width="206" height="76" rx="8" fill="#caeaf3" stroke="#338ca6" stroke-width="2"/>
+<rect x="74" y="495" width="206" height="76" rx="8" fill="url(#wire)"/>
+<rect x="230" y="506" width="104" height="54" fill="#88b6c4" stroke="#327b91" stroke-width="2"/>
+<rect x="316" y="475" width="238" height="116" rx="8" fill="#e2f0ed" stroke="#398776" stroke-width="2"/>
+<rect x="551" y="493" width="114" height="80" fill="#dcebe9" stroke="#398776" stroke-width="2"/>
+<rect x="856" y="484" width="244" height="100" rx="8" fill="#e0e5ec" stroke="#737d92" stroke-width="2"/>
+<rect x="612" y="507" width="318" height="52" fill="#c8d7df" stroke="#556e7b" stroke-width="2"/>
+<rect x="612" y="519" width="318" height="28" fill="white"/>
+<text x="350" y="542" font-size="24" fill="#286e5c">点射模块</text>
+<text x="79" y="479" font-size="18" fill="#227b99">钢丝软管</text>
+<text x="686" y="479" font-size="18">硬管短节</text>
+<text x="962" y="471" font-size="18">原斜三通</text>
+<path d="M612 575V607M665 580V607M612 598H665" fill="none" stroke="#256c88" stroke-width="2"/>
+<text x="584" y="631" font-size="19" fill="#256c88">模块内插入25</text>
+<text x="883" y="614" font-size="18" fill="#596483">沿用原三通插入止位</text>
+<text x="77" y="615" font-size="17" fill="#586e7a">模块入口插嘴：外49.4，长28</text>
+<text x="62" y="661" font-size="17" fill="#586e7a">出口母口内50.5接外50硬管；25是模块的插入段，不是三通深度。固定、密封仍需落实。</text>
+<rect x="36" y="706" width="1128" height="139" rx="14" fill="white" stroke="#d8e2e8"/>
+<text x="62" y="746" font-size="22" font-weight="600">裁管由设计安排</text>
+<text x="62" y="780" font-size="19">短节长度 = 模块插入25 + 原三通插入段 + 两口间外露间隔；先留长，试装划线后裁切。</text>
+<text x="62" y="815" font-size="19">旋转头另需末端25 mm直管夹持段。它不是出球管总长，也无需先量旧管剩余长度。</text>
+</g></svg>

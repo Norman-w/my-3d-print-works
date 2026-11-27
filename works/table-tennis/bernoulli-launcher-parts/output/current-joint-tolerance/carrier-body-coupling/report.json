@@ -1,0 +1,685 @@
+{
+  "status": "NEW_CONTINUOUS_FINITE_CARRIER_BODY_TRANSVERSE_BOUND_ON_EXPLICIT_NORMAL_SUBDOMAIN",
+  "task_id": "D02-carrier-body-coupling",
+  "new_result": {
+    "matrix_diagonal_lower": {
+      "Rxx": 0.998933652672,
+      "Ryy": 0.999505536737,
+      "Rzz": 0.999189605078
+    },
+    "matrix_abs_upper": {
+      "Ryx": 0.027677288125,
+      "Ryz": 0.014921452767,
+      "Rzx": 0.036953014489,
+      "Rzy": 0.015956435141,
+      "Rxy": 0.028228680786,
+      "Rxz": 0.037394645342
+    },
+    "axis_angle_deg_upper_display_only": 2.7902951762333505,
+    "rod_axis_to_support_X_tan_upper": 0.046218078724,
+    "rod_axis_to_support_X_angle_deg_display_only": 2.6462177164401512,
+    "carrier_reference_abs_Y_upper_mm": 0.254450169371,
+    "carrier_reference_abs_Z_upper_mm": 0.203241579688,
+    "strictly_inside_bootstrap_angle_and_offsets": true,
+    "rod_full_cross_section_local_X_interval_mm": [
+      4.48445480319,
+      13.529849504366
+    ],
+    "rod_guaranteed_inscribed_radius_lower_mm": 2.487961816677,
+    "body_bore_radial_axis_room_upper_mm": 0.262038183323,
+    "tip_transverse_YZ_norm_upper_mm_CURRENT_nominal_mesh": 0.798167896522,
+    "tip_transverse_YZ_norm_upper_mm_ideal_round_rod_reference": 0.786129713199,
+    "remaining_transverse_budget_to1_mm": 0.201832103478,
+    "axial_radial_lower_endpoint_extra_error_gain": 0.046218078724
+  },
+  "source_hashes": {
+    "analysis/frame_y_guide_bound.py": "ebfc158b12e6602488272624dee5e0e40111e3c48153c91daf746bdbd35bf6ec",
+    "cad/cable-contract-codec.scad": "f0c05f2e00dfa233fe3c2bdb88ff75824869dad05c2db245dc21f771a720b9be",
+    "cad/cable-housing-route.scad": "5f7aa2f1c5ee59f0b90833ea8b9265c1fe96cf00420faf6991872c87085897f1",
+    "cad/cable-output-interface.scad": "6acd8783a2c4d865b824acabd6e2f5da446f544ea1431363bbfd50c61b2ca566",
+    "cad/cable-route-retention.scad": "26dd6865899162e94702b09428eeef627d10598c1bfe4ef90bb3b3be770f10c3",
+    "cad/cable-scene-export.scad": "c756235f815ba7c62d484792856654d950e87943733e75fa86eefdc4c08229c4",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/cable-trigger-system.scad": "004c9050f34fe497db26d2c5e66e3cceefdb1cda0231e3d0f7e85d79f07a6254",
+    "cad/cam-study.scad": "e76603b8b82ed232fe52d290a27a7c037278451e49872045bcec0cc164c7f007",
+    "cad/feeder-body.scad": "b94b41f33d7cf021fec44012777c6c55d646b4de317f5e35583f042db5a3015b",
+    "cad/feeder-cam-guide-revision.scad": "1804ef62f6b56790b7e041425c6c3c1a764b7389f12d1909f388eb8d8f62868c",
+    "cad/feeder-complete-hardware.scad": "bcaa6ae90a91472bfc82fac12f3fdbf6615923ab39fc5128d3933e6fbb43f1f3",
+    "cad/feeder-frame-y-guide.scad": "1f39b1ee357f92a7aa979cc8ee95792dd7b7f471ffeece3197c9e7e0c7848b7c",
+    "cad/feeder-guide-revision.scad": "c95d3897032e549abeb42f416e6472b46e32f74863cc93dd3da68ad39193cc21",
+    "cad/feeder-hardware-clearance.scad": "2cbf715ceec44006f4f7dcaff8e8b13cc1e4e335afcac346bfd082fc74a35878",
+    "cad/feeder-integrated-candidate.scad": "0cf66a4354edf71dc75160810e8dbc9c2119346896d9b305a491a6850d7818c3",
+    "cad/feeder-pin-seat-revision.scad": "a57a182fab94148726d86d54795a3c15b66adb72aca14fb76830a803663c6451",
+    "cad/feeder-return-spring.scad": "0fd8f725f5f0604ba9de476b4a7f5bdbac2a97e36d77e9d816f12807264b9603",
+    "cad/feeder-review-parts.scad": "6cd610f764840d933e6ccf527eeb0cfb6d04886abf9437a773653c328dda0aa0",
+    "cad/feeder-seam-candidate.scad": "2a3c8e0afaf8fe6d83cb96840eed08e51a12ca7b82651ba4fd84ff0ca3c87dc8",
+    "cad/feeder-support-harness.scad": "7dc29833a648600dae69bab1f666d8d3ca1999a66493dec843d37afc6da9e9b8",
+    "cad/feeder-supports.scad": "8f3440a2281717d670cd835c1d77a62de68c1cf8b50c3865d2aec3a9c1d320a3",
+    "cad/inlet-retention-final.scad": "dea31ca9f37210f2bed814869637ab628cac67dcea9f53f1171c6c78069c1529",
+    "cad/launcher-final-assembly.scad": "0d5272c13ee6b986d2e1b3c2759c19605793add1d338ab8f4b562571d836b1fc",
+    "cad/outlet-retention.scad": "598cb3270aeb6eb07418e00600d5ce7206f49526c313dc1f72d29660c7cf3dc2",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "cad/review-launcher-baseline33.scad": "718dbac7de8d855c748e052a7b4083bb1a844f6a3c2768c6c22622d3053a562c",
+    "cad/spin-complete-hardware.scad": "a418cc0a8fd7296f20dc1c496d6d7c2d347c2ed5de497296a6cb4cfac52ff6fb",
+    "cad/spin-head.scad": "7409cb5e40df633e45951ed197f11e29f217adfa2c821fb3047bfc598b8eb524",
+    "cad/spin-parameters.scad": "08469af1f05146b87fe69f6d72276ba6567306e1a63cace57c28d3a77bf0ab58",
+    "output/current-joint-tolerance/carrier-body-coupling/review.py": "4c3f81658f5867d5849cf1e4e95f6ef261cde8b6f3a2f457aa9504f42b80106d",
+    "output/current-joint-tolerance/report.json": "20f0368302367b7f1237332d414f6e9095030a51094a67a7c3f1a6c10ee0a134"
+  },
+  "source_evidence": [
+    {
+      "path": "cad/cam-study.scad",
+      "line": 151,
+      "text": "            rotate([0,90,0]) cylinder(h=cam_carrier_inner_offset+1,"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 155,
+      "text": "                cube([cam_carrier_length,cam_carrier_width,cam_carrier_axial]);"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 133,
+      "text": "            translate([side==1?31.5:-body_side_mount_x,-10,z-9])"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 162,
+      "text": "            translate([side==1?33.5:-60,-4.75,z-4.25])"
+    },
+    {
+      "path": "cad/feeder-body.scad",
+      "line": 164,
+      "text": "            translate([side==1?23.5:-33.5,0,z]) rotate([0,90,0])"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 89,
+      "text": "            translate([revision_x0-revision_pocket_clearance,-14,"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 28,
+      "text": "revision_datum_lead=0.50;"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 67,
+      "text": "                    [revision_x0+revision_datum_lead,revision_datum_y],"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 68,
+      "text": "                    [revision_x1-revision_datum_lead,revision_datum_y],"
+    },
+    {
+      "path": "cad/feeder-guide-revision.scad",
+      "line": 277,
+      "text": "        [\"datum_lead\",revision_datum_lead],"
+    },
+    {
+      "path": "cad/feeder-pin-seat-revision.scad",
+      "line": 84,
+      "text": "        -ps_lip_half_z-ps_clear,ps_lip_half_z+ps_clear);"
+    },
+    {
+      "path": "cad/feeder-supports.scad",
+      "line": 122,
+      "text": "                    cam_carrier_width+2*support_radial_clearance,"
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "line": 29,
+      "text": "    hc_support_clearance(1)yg_right_support();"
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "line": 71,
+      "text": "    if(part==\"right-support\")hc_support_clearance(1)yg_right_support();"
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "line": 28,
+      "text": "    ic_host_half(false);ic_host_half(true);"
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "line": 53,
+      "text": "    color([.67,.75,.80]){ic_host_half(false);ic_host_half(true);}"
+    },
+    {
+      "path": "cad/launcher-final-assembly.scad",
+      "line": 55,
+      "text": "        ic_host_half(false);ic_host_half(true);sh_beam();"
+    },
+    {
+      "path": "cad/feeder-return-spring.scad",
+      "line": 47,
+      "text": "    translate([rs_x-nut_af/2,11.4-rs_eps,-11])cube([nut_af,2.6+rs_eps,.8]);"
+    },
+    {
+      "path": "cad/feeder-frame-y-guide.scad",
+      "line": 80,
+      "text": "    yg_at(-1)for(z=support_cap_screw_z)yg_ycyl(support_cap_screw_x,z,15.98,16,fastener_d);"
+    },
+    {
+      "path": "cad/feeder-hardware-clearance.scad",
+      "line": 50,
+      "text": "        hc_x_cylinder(47.05,-14,z,45,7+2*hc_head_clearance);"
+    },
+    {
+      "path": "cad/feeder-integrated-candidate.scad",
+      "line": 19,
+      "text": "    sh_host_cuts(positive);"
+    },
+    {
+      "path": "cad/cam-study.scad",
+      "line": 152,
+      "text": "                r=finger_tip_radius,$fn=32);"
+    }
+  ],
+  "finite_back_substitution": {
+    "leading_Y_witness_world_X": [
+      35.559384906032,
+      43.418687650032
+    ],
+    "trailing_Y_witness_world_X": [
+      46.544309788326,
+      54.418687650032
+    ],
+    "leading_Z_witness_world_X": [
+      35.768728731048,
+      43.209343825016
+    ],
+    "trailing_Z_witness_world_X": [
+      46.753653613342,
+      54.209343825016
+    ],
+    "Z_witness_abs_Y_coarse_upper": 1.497191584413,
+    "Z_witness_abs_Z_coarse_range": [
+      2.706670379619,
+      5.287847759397
+    ],
+    "Y_witness_abs_Z_after_Z_constraint": [
+      3.054209707512,
+      3.936197035766
+    ],
+    "Y_witness_abs_Y_coarse_upper": 5.971023606286
+  },
+  "domain": {
+    "one_rigid_carrier": "The same K_i transforms both rod and actual carrier patches. Additional V/P_i/window/cam constraints can only shrink this set; no independent pin pose was used to gain a favourable result.",
+    "reference_origin_local": [
+      21.5,
+      0,
+      0
+    ],
+    "carrier_tip_body_X_mm": [
+      20,
+      27
+    ],
+    "radial_X_scope": "Supplied finite subdomain, NOT inferred or certified by this proof. Covers nominal21..26 with1mm X allowance; cannot itself certify Bx<=1.",
+    "body_and_support_registration": "Mount faces remain seated with common X normal, so support/body relative rotation is aboutX and preserves rod-axis transverse norm; translations and roll are otherwise NOT set to zero.",
+    "normal_connected_branch": "Starts threaded through real outer body bearing and with carrier relative rotation<3deg, |cY|<1, |cZ|<1; continuous nonpenetration while radialX remains20..27. Proven bounds are strictly inside those angle/offset limits, so no first exit through them is possible. Arbitrary disconnected poses are not covered.",
+    "gib_setting": "Current parallel carrier gib source setting0.9: trailing gap[-4.6,4.5]. Old leading channel[-4.7,4.7]. Manufacturing/tilted-gib changes require new effective planes and finite coverage.",
+    "rigidity": "Current nominal straight rod rigidly joined to carrier; loaded deflection/form errors remain external parameters."
+  },
+  "witnesses": {
+    "Z_faces_local": {
+      "x": [
+        16,
+        27
+      ],
+      "y": [
+        0
+      ],
+      "z": [
+        -4,
+        4
+      ]
+    },
+    "Y_faces_local": {
+      "x": [
+        16,
+        27
+      ],
+      "y": [
+        -4.5,
+        4.5
+      ],
+      "z": [
+        -3.5,
+        3.5
+      ]
+    },
+    "body_axis_sections_world_X": [
+      31.6,
+      33.4
+    ],
+    "real_body_bearing_material_X": [
+      31.5,
+      33.5
+    ],
+    "rod_local_axis_extent": [
+      0,
+      14
+    ]
+  },
+  "finite_material_audit": {
+    "coordinate_note": "Right-side support-local coordinates, each gate translated toZ0. Support/body share X coordinate on the seated-normal branch. Left side uses the mirrored canonical coordinates.",
+    "leading_Y_planes": {
+      "X": [
+        35.5,
+        43.6
+      ],
+      "Y": [
+        -4.7,
+        4.7
+      ],
+      "outer_material_Y": [
+        -10,
+        7.25
+      ]
+    },
+    "trailing_Y_planes": {
+      "front_X": [
+        44.3,
+        57.3
+      ],
+      "front_Y": 4.5,
+      "front_abs_Z": [
+        2.5,
+        4.1
+      ],
+      "rear_X": [
+        43.8,
+        57.8
+      ],
+      "rear_Y": -4.6,
+      "rear_abs_Z": [
+        2.1,
+        4.1
+      ],
+      "outer_material_Y": [
+        -10.15,
+        7.25
+      ]
+    },
+    "Z_planes": {
+      "Z": [
+        -4.2,
+        4.2
+      ],
+      "body_outer_Z": [
+        -7.5,
+        7.5
+      ],
+      "witness_Y_is_outside_front_and_rear_cuts": true
+    },
+    "wrapper_cut_exclusions": [
+      "hc_support service cutters have Y<=-10.25; all witness-Y envelopes lie above that.",
+      "rs nut relief is atX-72, while mirrored witness absoluteX is35.56..54.42.",
+      "yg reopened cap screw axes are at|X|62.75; cg guide case cutters are outside the radial guide witness region.",
+      "sh/seam host cuts are atX near16/0, not the finite outer rod bearingX31.5..33.5. All current wrappers were read and their source hashes are included."
+    ],
+    "carrier_cut_exclusions": "Y-face witnesses absZ3.5 exceed the V/block ear cuts absZ3 and the original hex circumradius5.8/sqrt3; top/bottomZ4 witnesses likewise remain material."
+  },
+  "continuous_derivation": [
+    "Let R map carrier to support axes, c be the transformed carrier-local point(21.5,0,0), and all diagonals be positive on the stated branch.",
+    "Z witnesses remain in real host material ranges: nonpenetration gives |cz|+5.5|Rzx|+4Rzz<=4.2. This first bounds Y-witness Z into the actual front/rear bands.",
+    "Set W=4.5Ryy+3.5|Ryz|. Leading station gives |cy-5.5Ryx|+W<=4.7; trailing station gives |cy+5.5Ryx+.05|+W<=4.55.",
+    "Consequently 9Ryy+7|Ryz|<=9.1 and |11Ryx+.05|+9Ryy+7|Ryz|<=9.25. Preserve these correlated inequalities; the printed matrix box is only an outer consequence.",
+    "Orthogonality gives |Rzy|<=(|Ryz|+|Ryx||Rzx|)/(1-|Ryx|²), |Rxz|<=|Rzx|+|Ryx||Rzy|, and diagonal square-root lower bounds. Outward rational iteration encloses every feasible matrix in the subdomain.",
+    "Support/body rotation aboutX preserves |axis_YZ| and axis_X. Same K_i therefore has body transverse slope <=tau=sqrt(Ryx²+Rzx²)/Rxx.",
+    "At each actual body section X31.6/33.4, the rod contains a disk of radius2.5cos(pi/32). Within the threaded normal branch the axis centre is in the hole outer disk eroded by this disk: ||a||,||b||<=2.75-rmin; b-a=1.8w, ||w||<=tau.",
+    "Tip centre is a-(31.6-tipX)w. Thus ||tip_YZ-body_bore_axis_YZ||<=bodyGap+(31.6-20)*tau, continuously for every eligible pose and every stroke position. No separate support-registration extremum or fixed-pin-window error is added to this direct point bound."
+  ],
+  "parameterized_remaining_allowance": {
+    "inequality": "delta_body_hole_outward + delta_rod_inward + transverse_nonrigid_tip_error + tau*extra_radial_lower_endpoint_error <= remaining_transverse_budget_to1_mm",
+    "scope": "Only if stated effective carrier guide planes, finite contact patches, straight-cylinder engagement and common-X mounting normals remain valid. Carrier guide form changes also alter tau and cannot be hidden only in the final residual.",
+    "actual_parameter_values": null,
+    "real_manufacturing_acceptance": false
+  },
+  "what_did_not_close": [
+    "This does not certify radialBx, shaft/form accuracy, retained V contact, common cam/slot endpoint phase or the physical ball-release process.",
+    "The bound is relative to the matching body-half bore axis. The two half/liner/ball-axis joint registration must still be handled by the root common-domain proof; do not add seam extrema and call them attainable.",
+    "No statement that matrix-box component maxima occur in the same actual configuration; only universal inequalities support the continuous bound."
+  ],
+  "comparison": "Earlier mount-only norm0.802717 was registration before local pin/window terms. The new bound is directly on the tip point after BOTH carrier and body constraints, so adding old registration or .25 fixed-window play would double-count the already constrained same point.",
+  "numerical_method": "Fraction arithmetic, outward1e-12 grid; pi enclosed by alternating Machin arctan; cosine lower bound by alternating Taylor. Degree values are displays only, first-exit certificate is diagonal trace inequality.",
+  "iterations": [
+    [
+      0.99889838568,
+      0.999467983381,
+      0.99915515815,
+      0.02839401702,
+      0.016047741031,
+      0.037360338361,
+      0.017122355504,
+      0.028993566055,
+      0.037846510815
+    ],
+    [
+      0.998931873832,
+      0.999503963472,
+      0.99918787568,
+      0.027708013598,
+      0.014969735653,
+      0.0369780668,
+      0.016006613253,
+      0.028261565483,
+      0.037421578258
+    ],
+    [
+      0.998933570479,
+      0.999505470892,
+      0.999189524898,
+      0.027678575342,
+      0.014923475536,
+      0.036954272233,
+      0.015958543041,
+      0.02823006152,
+      0.037395981969
+    ],
+    [
+      0.998933649023,
+      0.999505533982,
+      0.99918960151,
+      0.027677341998,
+      0.014921537425,
+      0.036953072802,
+      0.015956523519,
+      0.028228738657,
+      0.037394706961
+    ],
+    [
+      0.998933652514,
+      0.999505536622,
+      0.999189604923,
+      0.027677290379,
+      0.014921456309,
+      0.036953017084,
+      0.015956438843,
+      0.028228683209,
+      0.037394648076
+    ],
+    [
+      0.998933652666,
+      0.999505536732,
+      0.999189605072,
+      0.027677288219,
+      0.014921452915,
+      0.036953014602,
+      0.015956435296,
+      0.028228680887,
+      0.037394645461
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288129,
+      0.014921452774,
+      0.036953014494,
+      0.015956435148,
+      0.02822868079,
+      0.037394645348
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ],
+    [
+      0.998933652672,
+      0.999505536737,
+      0.999189605078,
+      0.027677288125,
+      0.014921452767,
+      0.036953014489,
+      0.015956435141,
+      0.028228680786,
+      0.037394645342
+    ]
+  ],
+  "all_sources_stable": true,
+  "full_D02_closed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false
+}

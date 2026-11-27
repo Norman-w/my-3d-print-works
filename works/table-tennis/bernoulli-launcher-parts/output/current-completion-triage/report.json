@@ -1,0 +1,865 @@
+{
+  "schema_version": 1,
+  "status": "SCOPED_COMPLETION_TRIAGE_NO_RELEASE",
+  "created_utc": "2026-09-27T11:48:55.603746+00:00",
+  "formal_scene_snapshot": "20260927T091627124663Z",
+  "scope": "Read-only evidence triage of current acceptance/assembly/mechanical/tolerance/return documents and their directly necessary local references. No CAD changes, network, procurement, contact, print, or repeated nominal checks.",
+  "source_claims_not_reexecuted": true,
+  "classification": {
+    "1": "现有本机文件可继续完成的数字设计工作",
+    "2": "需要厂家型号或数据",
+    "3": "只能由正式首机或同等实际总成记录证明",
+    "4": "用户尚未给定且不能自行猜测的输入"
+  },
+  "classification_note": "Atomic evidence gaps are split across classes; a design topic may have both a local digital subtask and a separate supplier/first-unit gap. A class-1 result never implies class-3 acceptance.",
+  "counts_by_class": {
+    "1": 3,
+    "2": 4,
+    "3": 6,
+    "4": 4
+  },
+  "current_manufacturing_counts_read_only": {
+    "printed_instances": 56,
+    "material_instances": {
+      "PETG": 55,
+      "Bambu TPU 95A HF": 1
+    },
+    "bound_instances": 56,
+    "candidate_instances": 0,
+    "pending_instances": 0,
+    "needs_reslice_instances": 0,
+    "selected_plates": 42,
+    "candidate_plates": 0
+  },
+  "preserved_completed_requirements": [
+    {
+      "requirement": "向虎口近端扣动、松手远端释放的方向及当前非线性几何",
+      "status": "digital_direction_present",
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 19,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "| 固定与传动 | 四M4输入座、固定护套、球头盖与输出垫圈捕获、金属定距轴系均有实体。手指近端11.9188 mm对应19.3343°和理想20 mm收线；钢芯只能拉，回位依靠送料弹簧。见[当前机构](cable-trigger-integration.md)。 |"
+        }
+      ]
+    },
+    {
+      "requirement": "完整统一场景、全部模型/五金与相机/显隐/剖切",
+      "status": "existing_browser_evidence_not_repeated",
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 22,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "| 完整场景 | [实际Chrome检查](../output/cable-scene-export/20260927T091627124663Z/browser-review.json)确认加载、扣动/释放、视角/剖切保持实例及服务文件身份；不冒充另一设备或实物验收。 |"
+        }
+      ]
+    },
+    {
+      "requirement": "当前实例/五金/装配顺序与共享四长栓承托",
+      "status": "documented_not_actual_assembly",
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 25,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "| 统一装配与五金 | [56件总装指南](current-assembly.md)及[44类五金表](../output/current-assembly-package/runs/20260927T113921981888Z/README.md)已形成；29阶段无环依赖覆盖全部打印实例。修正共享长栓承托、输出保持垫圈和受限余尾顺序；真实柔线穿装、供货和完整工具路径仍开放。 |"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 13,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "共享固定点须先记清：四颗M4×60同时固定输入座和背梁，替换旧四颗M4×20及旧四片OD9垫片；当前四片新垫片装一次，原四颗M4螺母保留。卸完这四颗时，输入模块和背梁/入口夹总成都要另行承托。"
+        }
+      ]
+    },
+    {
+      "requirement": "不以消耗性试片为继续条件",
+      "status": "preserved_no_coupon_gate",
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 12,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "- 不把消耗性试片作为继续工作的条件。本轮未打印、采购；当前修正版没有实机发球验收记录。"
+        }
+      ]
+    }
+  ],
+  "open_requirements": [
+    {
+      "id": "D02",
+      "class": 1,
+      "requirement": "共同装配位姿下的挡指与销槽误差包络",
+      "current_state": "静态通球采用Bx/Bz不超过1 mm的条件，当前并未证明实体加工/装配满足此条件。销槽全域与窗仅两项已占0.542457 mm，剩0.457543 mm须合并注册、V座、导向、相位与加载。槽端拟合余量仅0.239165 mm。",
+      "next_action": "用当前有限接触带、差动压条、壳体孔销注册及V座约束建立同一装配姿态的联合可达/外包域，分别输出已证明几何项和外部形状/受载误差允许上限；不把旧固定间隙或独立极值直接相加或设零。若发现真实可达反例再做最小接口修订。",
+      "closure_criterion": "得到当前名义有限接触系统连续域的有界结果或具体反例；清楚保留FDM形状和加载未知，不把充分预算失败说成实机必卡。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": true,
+      "priority": 1,
+      "evidence": [
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 83,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "全行程销槽误差不能只使用直斜槽的 0.294812 mm。包含槽的折点和端帽后，旧解析函数仍适用，名义充分项为 **0.386207 mm**。再加固定销窗的 `0.625×0.25=0.15625 mm`，仅这两项就占 **0.542457 mm**；若坚持总 Bx≤1，给其余全部装配位姿、V 面、倾斜、止挡相位和加载变形的余量合计只有 **0.457543 mm**。具体逐项不等式保存在 JSON 中，未把未证实的姿态输入调小来凑通过。"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 71,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "四载体前面也不能再视作完整平板：V 压块耳腔在局部 X22.8～27.5 一带移除了部分接触，剩余完整前带约为 |Z|=3～4。支架与壳体之间的 M3 安装孔、两半壳定位销也不是零误差定位：两 D3.4 通孔对 D3 螺杆，单看孔中心可容纳合计 0.4 mm 的相对偏移；D3 定位销与 D3.1/D3.2 的组合名义横向间隙合计 0.15 mm。其他接触可能缩小可达域，因此这两个数不是整机能自由移动的反例；它们提醒安装注册不能被设为零或在通过预算后再额外添加。"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 21,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "| D4 销与 32 边形凸轮槽 | 圆包络半隙 0.25；内切拟合余量 0.239165 mm | 不能把圆包络的数字用于保证圆金属销通过多边形槽端 |"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 129,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "3. **±1 mm 的完整实现链仍缺有限接触及加载后的上界。** 本轮已明确可花的 0.457543 mm 剩余径向预算、V 补偿和当前导向域；不能把四载体、肩销、壳体注册与加载变形分别省略。下一次针对这些真实域建立联合包络，比重跑名义21姿态有意义。"
+        }
+      ]
+    },
+    {
+      "id": "D03",
+      "class": 1,
+      "requirement": "把共同几何界接入已有止挡契约，保留外部参数入口",
+      "current_state": "参数化止挡计算契约本轮已完成，不再是待编写工作：u=C+b+e−ℓ，已显式计入0～0.013795251 mm分面延迟及独立输入止挡误差。共同装配域的F/H、真实失程ℓ和输入止挡误差e仍为null；零外部误差示例区间宽1.564817 mm不是施工设置。计算器还将实际输入与输出限制在既有0～20 mm范围；恒定2 mm失程也可能使设置区间为空，这不把原离散同步姿态提升为连续、带失程的双自由度无干涉证明。",
+      "next_action": "消费D02在同一实际零位下给出的F/H界，核对销槽仍持续约束并避免重复计相位；将它们接入已有计算器。失程与受载止挡误差维持待证参数，取得相应记录后才解出可安装值。无需另写同一公式或重跑名义姿态。",
+      "closure_criterion": "本机部分完成共同几何界与现有计算器的身份和参数绑定；最终固定设置另需真实ℓ/e边界且严格非空。18.421388～19.986205 mm及中点19.203796 mm只是零外部误差示例，不是放行设置。",
+      "depends_on": [
+        "D02",
+        "M01"
+      ],
+      "can_progress_from_existing_local_files_now": true,
+      "priority": 2,
+      "evidence": [
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 115,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "U > 18.421388 + ell_max      保证到达功能开挡"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 118,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "存在设置区间 ⇔ ell_max−ell_min < Hmin−18.421388"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 123,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "零位装配需同时让输出滑架到真实回位止挡、输入到其零位耳，端套就座后再在输出端重夹线、锁紧 M6，最后协调满扣止挡。M6 轴向 ±2 mm 调节改变绝对芯套基准；若不重设零位，这个量本身就超过 1.5786 mm 的功能终段窗口。M6 不是独立增加回位弹簧预紧的旋钮。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 50,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "[当前机械预算](current-mechanical-review.md)给出有条件的输出功能窗约18.4214～20 mm。输入止挡应在最不利失程时仍能充分开门，同时在最小失程时不强拉输出硬止挡；需要已界定的失程、零位和终点误差。当前没有直接可照拧的圈数、19.2或20 mm设置值。不要用22 mm配置极限补偿缺失的载荷数据，或靠芯线拉长吸收过扣。"
+        },
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 3,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "**固定止挡必须让球通过，同时停在输出硬止挡之前。** 当前已完成这一要求的参数化计算；实际装配失程、加载变形和共同位姿界尚未给定，所以没有把某个刻度或螺钉圈数写成可直接照做的安装值。当前CAD没有修改。"
+        },
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 71,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "这完成的是止挡的计算契约。实际共同装配域、正式成品失程和输入止挡误差仍开放；夹线保持、受载回位和动态逐球发射也不由此公式证明。"
+        },
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 33,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "这些只把设置限制在既有检查范围，并不把离散同步姿态升级成连续、带失程的双自由度无干涉证明。所有条件与`16≤C≤22`相交后必须仍有严格正宽度。未裁配置和输入/输出工作域前，条件为："
+        },
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 52,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "**这些是零外部误差示例，不是安装尺寸。** 在未裁配置和输入/输出工作域前，恒定失程只平移区间；裁剪后可能缩窄甚至为空。例：恒定2 mm失程虽没有变化宽度，仍会把所需输入推出当前20 mm范围，计算器拒绝给设置值。这表示现有覆盖范围不足，不证明实机必卡。输入止挡±0.1 mm的示例误差会消耗0.2 mm总宽度。源码的20 mm默认值没有这项正余量，不能直接当作首机标定结果。"
+        }
+      ],
+      "final_numeric_setting_requires": [
+        "D02",
+        "M01",
+        "P03"
+      ],
+      "already_completed_subcontract": "output/current-stop-contract/report.json"
+    },
+    {
+      "id": "D04",
+      "class": 1,
+      "requirement": "完整装拆与裁线中间状态的条件化工具/路径审查",
+      "current_state": "29阶段顺序和有限台架工具路径已完成；整根柔线从开放侧标记到夹头入耳、真实手柄/承托夹具仍没有全路径证据。现输出外露尾上限5.5 mm，厂家最小尾未知。",
+      "next_action": "从现有顺序提取有限未检动作，区分台架/共享四长栓承托、工具杆及待定柄包络、可变尾长/端套坐深和R65路线约束；只对现有明确几何做可执行包络检查，将未知尺寸留参数。先完成可独立的刚性工具路径，不在供货规格未明时宣布整根线能装。",
+      "closure_criterion": "对每个剩余动作注明前提、已知包络、允许参数域和未定项；实际柔线/工具操作仍由P01/P06验证，最终裁切值受M01/U02约束。",
+      "depends_on": [
+        "M01",
+        "U02"
+      ],
+      "can_progress_from_existing_local_files_now": true,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-assembly.md",
+          "line": 30,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "上述次序整合已有接口和有限工具路径。实际手柄、承托夹具、操作力、所有中间姿态及弹性变形未因列成步骤就自动得到验证。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 40,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "当前输出耳允许的余尾空间上限为**夹头中心下8 mm**，相当于Ø5夹头本体下缘外最多5.5 mm。厂家最低保留尾长与夹丝紧固要求仍未知，所以这只是不能超过的已建模空间，不能直接写成保证抗滑的裁线尺寸。候选操作顺序是：端套和路线就座，在输出耳开放侧穿线并标记，核对最低留尾要求后裁到允许包络，夹头入耳、装保持垫圈并合盖，最后复核零位与止挡。开放侧标记到入耳的完整柔线搬动和抓持还未验证。长尾不能在输出耳内盘绕，也不能装入后随总装通行程。厂家最低要求与该上限不能同时满足时，这个端接必须先修订，不能直接剪短凑合。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 64,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "拆输入模块前，先松开输出夹线、抽出夹头横孔内的自由尾线，解除输出端套与中段护套约束，消除外接软管拖拽。**同时承托输入模块和背梁/入口夹总成后才卸四M4×60**；保持背梁受托，输入模块相对退离并移到台面。再拆主盖、端球盖和球端。不能在仍连接护套、仍靠共享螺钉悬挂的状态硬开输入主盖。"
+        }
+      ]
+    },
+    {
+      "id": "M01",
+      "class": 2,
+      "requirement": "拉索夹头、端套、护套端接的型号级装配参数",
+      "current_state": "官方允许安装裁短和布线后重调；可访问正文/原图未给Ø1.5钢芯夹丝扭矩、最短尾、抗滑/保持载荷、端套承力坐深、护套最终插入/压接工艺。不能说所有厂家资料均无此值。",
+      "next_action": "取得这些现型号正式参数，或选择具备端部尺寸和额定保持能力的厂家预制总成再核接口。需要厂家资料的动作与本轮本机设计并行；本任务未联系任何人。",
+      "closure_criterion": "参数与同一钢芯/夹头/端套及负载条件对应；最小尾与本体外5.5 mm上限兼容，否则必须修接口，不能靠剪短凑合。套件子件随货数未知时补购数保留未定。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "output/current-cable-supplier-closure/README.md",
+          "line": 7,
+          "sha256": "c51cfb4881ffa35b09550af60c6e7e40ca6c5930b4a31dc603d4aee0dee72b98",
+          "excerpt": "| 尚缺字段 | 已有证据不能替代它的原因 |"
+        },
+        {
+          "file": "output/current-cable-supplier-closure/README.md",
+          "line": 10,
+          "sha256": "c51cfb4881ffa35b09550af60c6e7e40ca6c5930b4a31dc603d4aee0dee72b98",
+          "excerpt": "| 最短外露余尾 | 端头L7、横孔位置L1=3.5均不是钢芯余尾要求 |"
+        },
+        {
+          "file": "output/current-cable-supplier-closure/README.md",
+          "line": 12,
+          "sha256": "c51cfb4881ffa35b09550af60c6e7e40ca6c5930b4a31dc603d4aee0dee72b98",
+          "excerpt": "| 端套在调节器中的实际承力坐深 | 鼻端、配合锥面与公差不完整，显示位置不是坐实尺寸 |"
+        },
+        {
+          "file": "output/current-cable-supplier-closure/README.md",
+          "line": 17,
+          "sha256": "c51cfb4881ffa35b09550af60c6e7e40ca6c5930b4a31dc603d4aee0dee72b98",
+          "excerpt": "当前CAD只为余尾提供从端头中心向外8 mm、名义露出本体5.5 mm的空间预算，**不是厂家规定的最短余尾**。若真正需要的余尾大于5.5 mm，不能为了装进去就再剪短，需另行处理接口空间。"
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "class": 2,
+      "requirement": "轴套、软衬及接触材料的实际规格",
+      "current_state": "轴系几何和0.5 mm名义总轴向游隙已有模型；轴套材质/真实尺寸、软衬材料未锁定，不能从参考模型得摩擦/压缩性质。",
+      "next_action": "按现有尺寸契约选定实际商品/材料及公差、压缩和适用润滑资料；规格记录后再核局部配合。",
+      "closure_criterion": "材料/公差与安装位置一致；允许值有依据。厂商材料资料不等同于打印总成承压、摩擦或蠕变验证。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-assembly.md",
+          "line": 68,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "剩余缺口明确保留：实物支撑分离及承面质量、轴套材质与真实规格、软衬材料、端套坐深、夹丝要求、行程误差、摩擦和带载回位、紧固/蠕变以及风机实际表现。此方案不新增消耗性试片或打印任务；正式成品验证不被动画和清单代替。"
+        },
+        {
+          "file": "docs/current-mechanical-review.md",
+          "line": 10,
+          "sha256": "3f4a61a288245d642d6ac868d891d92336769f194a4660734c267aaa24c00cb1",
+          "excerpt": "| 转轴 | 金属定距管承担轴向夹紧，轴套和两片推力垫片提供转动界面，名义总轴向游隙0.5 mm。 | 不需要松着轴螺钉使用；真实轴套、打印承面及启动摩擦仍未确认。 |"
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "class": 2,
+      "requirement": "所选弹簧与紧固件载荷/规格依据",
+      "current_state": "目录弹簧名义力2.975至7.975 N及目录长度/载荷界已有预算；实供弹簧力偏差、钩端/材质和真正夹持允许载荷不能由名义几何推得。",
+      "next_action": "落实已选型号的实际供货、公差/力曲线与关键五金等级、头型、扭矩/保持要求；已有BOM数量不证明库存或强度。",
+      "closure_criterion": "设计使用的力上下界和允许载荷对应实供品；PETG/实际夹持接头强度仍由P02覆盖，不以通用M2/M4扭矩替代。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 79,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "接下来真正需要的是正式成品或供应数据：实际弹簧力曲线；有球/预定气流及手持姿态下送料端各位置的总启动/运行阻力；实际移动质量、质心与预定姿态，或覆盖这些姿态的总载荷测量；实际线路双向传力损失；装好轴系后的总启动阻力矩；芯套松量与弹性失程；可接受的扣力和已证实的夹线/结构承载值。不要求另打印耗材试片，也不阻止继续完成其他明确的数字检查。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 20,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "4. **组挡指、V座和当前凸轮架。** 各压块的M2螺母先入位，装M2×4但暂不施加过量预紧。挡指从径向装入支座，装当前带输出耳的凸轮架，穿入四根D4肩销及M3螺母。两V面须真实贴销，肩面就座；压块到自身硬限位不代表已压紧。M2平端紧定螺钉用0.9 mm内六角。当前没有已定额紧固扭矩或M2长期保持结论。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 5,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "配套文件：[当前五金汇总](../output/current-assembly-package/runs/20260927T113921981888Z/README.md)、[五金CSV](../output/current-assembly-package/runs/20260927T113921981888Z/hardware.csv)、[56件打印取件表](../output/current-assembly-package/runs/20260927T113921981888Z/print-picklist.csv)、[29阶段装配依赖](../output/current-assembly-package/sequence-review/README.md)。五金表是所需安装量，不是采购缺口；套件与散件、工作档与保持档不得重复相加。"
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "class": 2,
+      "requirement": "最终风机额定工况与加载性能资料",
+      "current_state": "三款订单套餐已锁定，额定电压/电流、可靠调速方式、出风口尺寸和压力-流量性能尚未锁定；旧21→42 V经历不是新机额定依据。",
+      "next_action": "在U01确定的设备上取得铭牌/同型号额定及曲线资料；可读铭牌/原订单现有证据优先，订单营销数字不能补出串并联或流量单位。",
+      "closure_criterion": "额定供电、控制和有负载性能来源明确；实际新增机构下的发球由P04/P05证明。",
+      "depends_on": [
+        "U01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/owned-blowers-review.md",
+          "line": 25,
+          "sha256": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+          "excerpt": "| 五羊涡轮 | 15节2电；吹吸两用；紫铜无刷电机；展示充电器、集风管和吸嘴。通用图另宣传64 mm涵道、1100G推力 | 调速方式、额定输入电压/电流、性能曲线、实际接管口内外径；64 mm涵道不等于外接管尺寸 |"
+        },
+        {
+          "file": "docs/owned-blowers-review.md",
+          "line": 26,
+          "sha256": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+          "excerpt": "| 京迪思重载款 | 2电1充+标配；10节锂电池×2；图片电池及机身标签“21V”；“约1.8kg”“空载转速0–50000r”“出风量4.8m³” | 转速范围文案没有明确控制方式，不能确认无级调速；4.8m³缺少时间单位，不能当m³/min；21V的额定/最高电压含义及实物铭牌未核实 |"
+        },
+        {
+          "file": "docs/owned-blowers-review.md",
+          "line": 35,
+          "sha256": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+          "excerpt": "- 最早设备21V、可调电源设到42V后发球的经历仍只属于用户回忆中的旧设备，不迁移到上述三款，更不作为改装供电方案。"
+        }
+      ]
+    },
+    {
+      "id": "P01",
+      "class": 3,
+      "requirement": "正式打印件的配合、承面及支撑清理",
+      "current_state": "网格与实际层路径已给限定数字证据，不能证明PETG实物孔径、层间桥接、分离力、无残屑、承面平度与轴系自由转动。",
+      "next_action": "使用正式成品按选定工艺清理和装配，记录关键孔槽、轴向游隙、导轨/V座贴合、支撑清洁和旋转垫装入结果；不新增耗材试片门槛。",
+      "closure_criterion": "正式零件在所需配合/调整范围内能装、能动且没有以松轴螺钉或强拉薄PC壁补偿尺寸。",
+      "depends_on": [
+        "D01",
+        "D02",
+        "M02",
+        "U03"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-manufacturing.md",
+          "line": 7,
+          "sha256": "e251c1bae888ebe0da00604b8d879da56f8872090c310f649c36078f17c741b3",
+          "excerpt": "`needs_reslice=true`表示当前几何没有可用切片绑定，旧切片不会进入选择。`pending_review=true`表示该实例还有明确数字审查缺口，文件只进入`candidate_3mf`和`candidate_plates`，不进入选定板。没有这两个标记仍不代表实物验收：孔径、清理力、材料强度和装配摩擦没有由离线路径确认。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 25,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "9. **台面组完整输入模块。** 先预埋捕获螺母和止挡，安装金属定距管、轴套、两片推力垫片及扳机；把原厂球头置入窝内，装两颗M3×8端球盖。两侧M6薄螺母/垫片与调节器在主盖封闭前装好并留出后续重新调零条件，最后装主盖和轴螺钉。夹紧由定距管承担；不能松着轴螺钉使用。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 22,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "6. **出口机构先于背梁。** 从出口轴向放入带肩内衬，再将PC端推到内衬肩；围装两半捕获座、两半PC夹和两根长杆。先装横向螺钉，管夹上下长杆螺母暂松，完成夹持后再锁长杆。保留密封带区和各螺母工具入口，不能靠长杆强拉PC夹闭合，也不能强压1 mm管壁。"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "class": 3,
+      "requirement": "实际固定、夹丝保持、密封和长期保持",
+      "current_state": "四M4共同固定与捕获路径成立；数字固定不证明PETG承压/蠕变、V座正压力、夹丝抗滑、PC夹持及外缝密封。",
+      "next_action": "正式总成按明确型号工艺紧固，记录预定使用载荷下不滑、不松、不漏与持续保持；长期保持需相应时间/循环记录，单次装上不能替代。",
+      "closure_criterion": "载荷、扭矩、持续时间/循环和允许变化都有适用的记录，且无非额定替代紧固法。",
+      "depends_on": [
+        "M01",
+        "M02",
+        "M03",
+        "P01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-mechanical-review.md",
+          "line": 9,
+          "sha256": "3f4a61a288245d642d6ac868d891d92336769f194a4660734c267aaa24c00cb1",
+          "excerpt": "| 输入座 | 四颗M4×60经过安装板固定到原背梁接口，连续筋传递护套反力；替换原短螺钉，原螺母保留。 | 当前实体和名义啮合检查；没有PETG承压、蠕变或实物紧固力证据。 |"
+        },
+        {
+          "file": "output/current-assembly-budget/README.md",
+          "line": 81,
+          "sha256": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+          "excerpt": "因此对称面误差 E、销半径误差 ρ 必须满足 `sqrt(2) E+(1+sqrt(2))ρ≤0.3` 才能保证落在现有非对称工作补偿范围。ρ=0 时 E≤0.212132；把 ρ=0.005 仅当敏感性参数时 E≤约 0.2036 mm。这只是能补偿位置，不能保证 PETG 的接触精度、M2 预紧或长期蠕变。两面还须维持正压力，二维必要条件为 `P−Fx>|Fz|`；不能把压块碰硬限位当作压住了销。"
+        },
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 35,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "5. 正式成品验证紧固、配合、清理、摩擦、带载回位、球就绪下逐次单发及旋转效果。气动性能、PETG长期保持与动态球行为需要实际工况记录。"
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "class": 3,
+      "requirement": "全行程带载回位和真实失程/扣力",
+      "current_state": "名义无死点；总阻力恒定才可称零位最弱。真实球载、摩擦、方向相关重力、线管损失及端部坐实/弹性失程未知；输入无独立回位弹簧。",
+      "next_action": "在正式总成的预定气流/有球及手持方向下记录分位置启动/运行阻力、回位、扣力、芯套失程；或以覆盖同样工况的供应界替代其中可替代项。带入现有严格正余力与止挡公式。",
+      "closure_criterion": "全工况正余力和功能行程满足，松手能回到双零位且不松线/滑线；保守上界预算不通过不自动等于实机必不回位。",
+      "depends_on": [
+        "D02",
+        "D03",
+        "M01",
+        "M03",
+        "P01",
+        "U01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 31,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "**仅在总阻力恒定的模型中，零位是最弱回位点。** 对恒定非负的总R、D、H、τ和恒定效率，解析导数证明这一点；真实重力矩、球载荷、摩擦或效率随行程/手持姿态变化时，仍需逐位置、逐预定姿态满足条件，不能只检零位。零位的共同预算是："
+        },
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 33,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "`D + τ/60 + H/(5/3) < η·(2.975 − R)`"
+        },
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 53,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "这两个简式不能直接包办凸轮径向件、变形弹簧及线芯的全部重力。它们应以位移导数计算`Q_u_gravity = Σ[m_i·g_vector·(dr_i/du)]`，其保守界是`g·Σ[m_i·|dr_i/du|]`；也可用覆盖预定姿态的总实测阻力替代。质量、质心、实际手持方向均未知，本报告没有用假定密度或STL体积补出数值。"
+        },
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 61,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "**判据范围不同：** 使用精确的非负等效阻力时，上述式子检查该准静态模型的正余力；改用只保留不利分量的`max(0,…)`或各方向上界后，它是模型内的保守充分预算。保守预算不通过，不能反推实机必然无法回位，因为可能遗漏了有利重力或把不会同时出现的最坏载荷叠加了。通过这一预算也不替代尚未给定的实际摩擦、效率、松量与结构能力证据。"
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "class": 3,
+      "requirement": "40+球就绪下逐次单发",
+      "current_state": "静态挡指时序及有条件误差预算成立；未记录动态球离开、补球、卡球或扣住/释放后的实际出球次数。40+表示用户的球规格，不解释为40颗容量。",
+      "next_action": "正式成品在定义的正常扣动—保持—释放循环和球就绪条件下记录出球次数/漏发/连发/卡球，并核实实际球径落入采用的设计包络。",
+      "closure_criterion": "每个正常完整触发出一球，保持不自行重复，释放后能再就绪；实际操作范围及失败记录保留。仅静态通球或动画不闭合此项。",
+      "depends_on": [
+        "D02",
+        "D03",
+        "P03",
+        "M04",
+        "U01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 9,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "- 40+球；PC硬管内48/外50 mm，可按需要重新裁；钢丝软管内50/外55 mm套在PC外，PC插入原斜三通。"
+        },
+        {
+          "file": "docs/current-mechanical-review.md",
+          "line": 15,
+          "sha256": "3f4a61a288245d642d6ac868d891d92336769f194a4660734c267aaa24c00cb1",
+          "excerpt": "送料名义时序为0～8 mm先关上游挡指、8～12 mm两挡均关闭、12～20 mm打开下游挡指；完整扣住不会自行重复循环。这一静态时序不包含球的离开速度、半程操作或卡球行为。详见[固定和动作](cable-trigger-integration.md)、[当前输入端](cable-trigger-input.md)、[244项名义总装检查](../output/cable-trigger-system/20260927T091437982269Z/report.json)。"
+        },
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 35,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "5. 正式成品验证紧固、配合、清理、摩擦、带载回位、球就绪下逐次单发及旋转效果。气动性能、PETG长期保持与动态球行为需要实际工况记录。"
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "class": 3,
+      "requirement": "气动余量与可调旋转的实际效果",
+      "current_state": "四条内部正体积气路共用入口/出口，不能相加成总面积；其存在不证明压降或发球能力。旋转头几何/调压/退垫存在不证明球自转可调，退垫也非标定零旋转。",
+      "next_action": "在额定风机工况下记录装配后的发球与旋转随设置变化，必要时测实际压差/流量、速度与转动；先闭合基本能发和可调，再对U04给出的量化指标验收。",
+      "closure_criterion": "所需发球与旋转调节能在预定工况重复实现，无过压代替气动余量；不把通路面积、预压旋钮或视觉动画当性能。",
+      "depends_on": [
+        "M04",
+        "U01",
+        "P02",
+        "P04"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-mechanical-review.md",
+          "line": 42,
+          "sha256": "3f4a61a288245d642d6ac868d891d92336769f194a4660734c267aaa24c00cb1",
+          "excerpt": "[65个当前送料实例的气路检查](../output/current-airway-review/README.md)已找到全行程保持畅通的四条有限通路，范围为入口内部Z−124至PC内部Z133。四路共用入口和出口；见证盒2×2 mm不是有效流通面积。本结果排除这些通路被名义机构封死，不证明压降、风机能力或单球发射性能。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 58,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "5. 退出保持档时停风清球，拉到5.25 mm硬止挡、放入保持叉和螺钉/垫片，再缓放到5.00 mm保持位。恢复时先拉住卸载再拆叉，控制回位。退出垫不等于已经标定为零旋转。"
+        },
+        {
+          "file": "docs/owned-blowers-review.md",
+          "line": 36,
+          "sha256": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+          "excerpt": "- 机械点射和旋转头的几何、装配与可调配合可以独立推进；这些订单不能证明新增摩擦和收缩后仍有足够发球能力。"
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "class": 3,
+      "requirement": "真实柔线与完整装拆操作",
+      "current_state": "刚性路径/序列不能覆盖线管弯曲、抓持、端套就座、实际工具柄和共享安装解除时的支撑。",
+      "next_action": "正式零件在D04规定前提下完成布线、调零、端接与拆装，记录实际R65、自由两弯形状及工具/承托可达性；同时核对外部原机连接。",
+      "closure_criterion": "无超弯、强迫装配或未支撑的共享接口，端套坐实且最小尾与可用空间相容；操作者能按同一顺序完成。",
+      "depends_on": [
+        "D04",
+        "M01",
+        "U02",
+        "P01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-assembly.md",
+          "line": 36,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "**护套按实装路线和端套坐深确定，不按746.507 mm直接裁。** 该数字是名义外端面间路线；前两弯自由段、调节器位置及端套真实坐深都会参与最终长度。第三弯从开口侧放入槽，成品端套无需穿槽。全程保持厂家R65下限，名义第三弯R75不能代替其余自由段的确认。先保留长度和调节余量，端套坐实后再决定是否需要裁短。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 30,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "上述次序整合已有接口和有限工具路径。实际手柄、承托夹具、操作力、所有中间姿态及弹性变形未因列成步骤就自动得到验证。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 40,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "当前输出耳允许的余尾空间上限为**夹头中心下8 mm**，相当于Ø5夹头本体下缘外最多5.5 mm。厂家最低保留尾长与夹丝紧固要求仍未知，所以这只是不能超过的已建模空间，不能直接写成保证抗滑的裁线尺寸。候选操作顺序是：端套和路线就座，在输出耳开放侧穿线并标记，核对最低留尾要求后裁到允许包络，夹头入耳、装保持垫圈并合盖，最后复核零位与止挡。开放侧标记到入耳的完整柔线搬动和抓持还未验证。长尾不能在输出耳内盘绕，也不能装入后随总装通行程。厂家最低要求与该上限不能同时满足时，这个端接必须先修订，不能直接剪短凑合。"
+        }
+      ]
+    },
+    {
+      "id": "U01",
+      "class": 4,
+      "requirement": "最终采用哪一台已购风机",
+      "current_state": "三款各自订单SKU已查明，当前限定文档没有用户最终选机答复。不能由价格、21V图片或原先升压经历替用户决定。",
+      "next_action": "在需要锁风机额定数据/接口时只确认最终选用设备；不重问订单、配对、登录或记忆中的电流。",
+      "closure_criterion": "具体已购SKU/实际设备被明确指定，后续M04与接口只绑定它。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 13,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "- 三款已购风机的订单套餐已核对，见[已购风机](owned-blowers-review.md)。最终选机、额定参数和实际接管几何仍未锁定；不重新要求配对、登录或回忆电流。历史21 V升到42 V能发球不等于额定工况。"
+        },
+        {
+          "file": "docs/owned-blowers-review.md",
+          "line": 5,
+          "sha256": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+          "excerpt": "## 实际购买版本"
+        }
+      ]
+    },
+    {
+      "id": "U02",
+      "class": 4,
+      "requirement": "原三通、风口、出口管与使用空间的真实接口",
+      "current_state": "PC48/50可自由裁、软管50/55关系已知，不再提问。原三通插深/外壳、选定风机接口和相对方向及人体/背包空间没有权威实尺寸，场景只是参考。",
+      "next_action": "只收集无法从订单或型号图得到的实际接口与朝向；先提出测量基准和最小所需尺寸，PC长度由这些尺寸计算。手/背包外形只在声称全外部无碰撞前需要。",
+      "closure_criterion": "模块到三通长度、风机连接及实际包络能计算/核对；未知人体不阻止局部送料/拉索设计。",
+      "depends_on": [
+        "U01"
+      ],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/current-assembly.md",
+          "line": 34,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "**PC短节先留长。** 模块端实际插深23.5 mm；从PC模块端到三通入口端面的布局值先留100 mm，再加原三通真实插深。长杆从同一管端起算延至84.5 mm，100 mm只给轴向留15.5 mm名义间隔；若三通外壳或风机占用这里，要增加外露段。用户PC可裁任意长度，不等于未知三通外形已经不会相撞。最终标记确认后裁齐、去毛刺和清屑。"
+        },
+        {
+          "file": "docs/current-assembly.md",
+          "line": 11,
+          "sha256": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+          "excerpt": "连接顺序为：球仓 → 原软管 → 送料入口 → 送料模块 → PC短节 → 原斜三通；风机接原三通风口，旋转头装在出球管末端。旋转头与送料模块不是沿同一根参考管直接叠起来。完整3D里未知的风机、三通和人体仍是参考外形。"
+        },
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 37,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "原机未知邻件只限制外部实装结论，不阻止本机继续设计和审核。最终若要证明与原三通、风机、手部和背包都无碰撞，须取得相应真实外形/方向；可裁PC不等于外部包络已知。"
+        }
+      ]
+    },
+    {
+      "id": "U03",
+      "class": 4,
+      "requirement": "实用PETG/PEI及独立TPU是否与候选工艺一致",
+      "current_state": "X1C/.4/PETG/PEI已确认；具体PETG品牌/配置、光面或纹理PEI未确认，当前Generic PETG/Textured PEI及TPU95A HF是候选配置。",
+      "next_action": "在实际制造前确认用户采用的材料与板面，或明确接受设计选定的对应材料；可从现有材料标签/配置读取时不重复问用户。",
+      "closure_criterion": "实际材料/板面与最终切片配置匹配；不同则限定重切受影响板并保留身份。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 10,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "- X1C、0.4 mm喷嘴、PETG、PEI。当前切片的Generic PETG及Textured PEI为分析假设；具体品牌/床面尚未确认。旋转摩擦垫单独使用Bambu TPU95A HF候选配置。"
+        },
+        {
+          "file": "docs/current-manufacturing.md",
+          "line": 24,
+          "sha256": "e251c1bae888ebe0da00604b8d879da56f8872090c310f649c36078f17c741b3",
+          "excerpt": "- X1C与0.4 mm喷嘴来自用户；PETG品牌及PEI具体表面尚未确认，Generic PETG/Textured PEI属于当前分析假设。TPU摩擦垫有独立材料、温度和填充配置，不与PETG混用。"
+        }
+      ]
+    },
+    {
+      "id": "U04",
+      "class": 4,
+      "requirement": "若要求量化性能保证，对应目标工况和验收数值",
+      "current_state": "已给定点射、可调旋转、近端扣动；未给发射距离/速度、目标旋转范围、可接受扣力和预定手持方向/使用寿命的数值。不得自行创造通过线。",
+      "next_action": "只在给出数值保证或优化取舍前确认有关指标；基本点射/可调旋转可先继续，不能把一串未定性能指标作为暂停数字设计的理由。",
+      "closure_criterion": "若宣称某数值性能/任意方向/寿命，须有相应用户目标和P02/P03/P05记录；无指标时只能给实际测得范围。",
+      "depends_on": [],
+      "can_progress_from_existing_local_files_now": false,
+      "priority": null,
+      "evidence": [
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 79,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "接下来真正需要的是正式成品或供应数据：实际弹簧力曲线；有球/预定气流及手持姿态下送料端各位置的总启动/运行阻力；实际移动质量、质心与预定姿态，或覆盖这些姿态的总载荷测量；实际线路双向传力损失；装好轴系后的总启动阻力矩；芯套松量与弹性失程；可接受的扣力和已证实的夹线/结构承载值。不要求另打印耗材试片，也不阻止继续完成其他明确的数字检查。"
+        },
+        {
+          "file": "output/current-return-budget/README.md",
+          "line": 31,
+          "sha256": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+          "excerpt": "**仅在总阻力恒定的模型中，零位是最弱回位点。** 对恒定非负的总R、D、H、τ和恒定效率，解析导数证明这一点；真实重力矩、球载荷、摩擦或效率随行程/手持姿态变化时，仍需逐位置、逐预定姿态满足条件，不能只检零位。零位的共同预算是："
+        },
+        {
+          "file": "docs/goal-acceptance-audit.md",
+          "line": 35,
+          "sha256": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+          "excerpt": "5. 正式成品验证紧固、配合、清理、摩擦、带载回位、球就绪下逐次单发及旋转效果。气动性能、PETG长期保持与动态球行为需要实际工况记录。"
+        }
+      ],
+      "blocks_basic_requested_function": false,
+      "only_needed_for_additional_quantified_guarantees": true
+    }
+  ],
+  "top_local_actions": [
+    {
+      "rank": 1,
+      "id": "D02",
+      "why": "静态通球采用Bx/Bz不超过1 mm的条件，当前并未证明实体加工/装配满足此条件。销槽全域与窗仅两项已占0.542457 mm，剩0.457543 mm须合并注册、V座、导向、相位与加载。槽端拟合余量仅0.239165 mm。",
+      "next_action": "用当前有限接触带、差动压条、壳体孔销注册及V座约束建立同一装配姿态的联合可达/外包域，分别输出已证明几何项和外部形状/受载误差允许上限；不把旧固定间隙或独立极值直接相加或设零。若发现真实可达反例再做最小接口修订。",
+      "completion_boundary": "得到当前名义有限接触系统连续域的有界结果或具体反例；清楚保留FDM形状和加载未知，不把充分预算失败说成实机必卡。"
+    },
+    {
+      "rank": 2,
+      "id": "D03",
+      "why": "参数化止挡计算契约本轮已完成，不再是待编写工作：u=C+b+e−ℓ，已显式计入0～0.013795251 mm分面延迟及独立输入止挡误差。共同装配域的F/H、真实失程ℓ和输入止挡误差e仍为null；零外部误差示例区间宽1.564817 mm不是施工设置。计算器还将实际输入与输出限制在既有0～20 mm范围；恒定2 mm失程也可能使设置区间为空，这不把原离散同步姿态提升为连续、带失程的双自由度无干涉证明。",
+      "next_action": "消费D02在同一实际零位下给出的F/H界，核对销槽仍持续约束并避免重复计相位；将它们接入已有计算器。失程与受载止挡误差维持待证参数，取得相应记录后才解出可安装值。无需另写同一公式或重跑名义姿态。",
+      "completion_boundary": "本机部分完成共同几何界与现有计算器的身份和参数绑定；最终固定设置另需真实ℓ/e边界且严格非空。18.421388～19.986205 mm及中点19.203796 mm只是零外部误差示例，不是放行设置。"
+    }
+  ],
+  "do_not_infer": [
+    "40+ is the user ball specification, not an asserted hopper quantity.",
+    "A numeric separation bound is neither physical detachment force nor acceptable print error.",
+    "A sufficient tolerance budget failure is not by itself a realizable interference counterexample.",
+    "The functional stop window is conditional on the declared ball and gate error envelope.",
+    "Worst adverse gravity bounds may be conservative; failure does not prove impossible real return.",
+    "Four internal air paths with shared entrance/exit do not provide summed effective flow area.",
+    "Supplier data remain model-specific; generic screw torque or raw steel strength does not prove the nipple holds.",
+    "No file-only workflow guarantees an unbuilt printed assembly succeeds first time."
+  ],
+  "source_sha256": {
+    "docs/goal-acceptance-audit.md": "cdf856d41e28d9ab0cfc24d134b64f110c0d582a71aa261da0613ffef2d24530",
+    "docs/current-assembly.md": "0dbf2dad5df558c7fea1573aaff558c24d3024748966008e4f06ff943d6be058",
+    "docs/current-mechanical-review.md": "3f4a61a288245d642d6ac868d891d92336769f194a4660734c267aaa24c00cb1",
+    "docs/current-manufacturing.md": "e251c1bae888ebe0da00604b8d879da56f8872090c310f649c36078f17c741b3",
+    "docs/owned-blowers-review.md": "ebc409ca34a45744ec18697e576436c472dfa4cfcea08a03d128e6acaf0d6088",
+    "output/current-assembly-budget/README.md": "e72c88569ccb70dee337a6e5172bf3af64a011b4a3f4c5cc1682a84e768cb482",
+    "output/current-assembly-budget/report.json": "90bd4806faf43217d0cae0817716358aca9c39ecbbab9280f89b7face821ce5e",
+    "output/current-return-budget/README.md": "905b8a9d72fbedd83078e1222c117020cfc9fb409f8225682e914de4fd8dade3",
+    "output/current-return-budget/report.json": "b8525a0c4ffaf3ca629a42e1df7a807a7c7ebb7a3a8c8ea5027285e6222789fe",
+    "output/current-inlet-process-revision/README.md": "c3d7e4c2ebcb9dfe96ff3671588b48027a3edf90cfb1b312698e3b44b76cc926",
+    "output/current-cable-supplier-closure/README.md": "c51cfb4881ffa35b09550af60c6e7e40ca6c5930b4a31dc603d4aee0dee72b98",
+    "output/current-cable-supplier-closure/report.json": "dbc5ab64f269d11852b9f848f4a257d360822f0791c6b3a0b114bf69afd56033",
+    "output/current-manufacturing/manifest.json": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+    "output/current-manufacturing/inlet-process/README.md": "9824ef227466eceb4d514e97cafc0be52e63c63dd91b97d3659d1eea21d8661f",
+    "output/current-manufacturing/inlet-process/manifest.json": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+    "output/current-stop-contract/README.md": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+    "output/current-stop-contract/report.json": "43e992ad11b6b70304f0f07347d1553ab82f11d3766bf53c1ec7ea56f7a33425"
+  },
+  "sources_stable_during_generation": true,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "goal_complete": false,
+  "network_used": false,
+  "contacted_supplier": false,
+  "procurement_actions": false,
+  "cad_modified": false,
+  "sent_to_printer": false,
+  "dependency_note": "depends_on lists supporting evidence contracts, not an execution or manufacturing DAG. Conditional local work may proceed before external values arrive; final_numeric_setting_requires marks later physical binding.",
+  "closed_during_this_review": [
+    {
+      "id": "D01",
+      "requirement": "入口后夹最终制作盘与有界清理工艺",
+      "status": "BOUNDED_DIGITAL_BINDING_COMPLETED_DURING_TRIAGE_PHYSICAL_OPEN",
+      "resolution": "候选3自己的起始承托、完整名义五金体积、全支撑路径及原始命中来源证据已绑定；当前56实例/42盘，无待绑定候选。没有改变机械CAD或把原严格失败改为通过。",
+      "retained_limits": "锚板4.60631 mm已识别局部桥线、M4肩台少量边缘搭接、源曲面/打印台阶及层高命令接触分类；真实分离力、残屑、桥接质量和承面尺寸仍由P01/P06覆盖。",
+      "binding_report": "output/current-manufacturing/inlet-process/manifest.json",
+      "binding_report_sha256": "2e142a19045570e988c011f62253754267927d23a65e6c667fccf7690062e26b",
+      "evidence": [
+        {
+          "file": "docs/current-manufacturing.md",
+          "line": 3,
+          "sha256": "e251c1bae888ebe0da00604b8d879da56f8872090c310f649c36078f17c741b3",
+          "excerpt": "正式版本为`20260927T091627124663Z`，共56个打印实例：55 PETG、1 Bambu TPU95A HF。当前逐件入口是[manifest.json](../output/current-manufacturing/manifest.json)和[实例CSV](../output/current-manufacturing/instances.csv)。56实例绑定42张已做限定审查的板；入口后夹已采用后键端朝打印板的第三候选。这里的选盘是制作证据绑定，尚未放行整机制作或实物性能。"
+        },
+        {
+          "file": "output/current-manufacturing/inlet-process/README.md",
+          "line": 12,
+          "sha256": "9824ef227466eceb4d514e97cafc0be52e63c63dd91b97d3659d1eea21d8661f",
+          "excerpt": "- 锚板和两螺母肩台按实际 G-code 先后核对。锚板最长已识别直线无下托段约 4.60631 mm，两端有此前投影承托；M4 肩台最早环弧仅有少量珠体边缘搭接。没有把后打的路径倒算成先前支撑。"
+        },
+        {
+          "file": "output/current-manufacturing/inlet-process/README.md",
+          "line": 15,
+          "sha256": "9824ef227466eceb4d514e97cafc0be52e63c63dd91b97d3659d1eea21d8661f",
+          "excerpt": "原严格零交叠失败全部保留。这里分类的是起始边界接触及其来源，**不把接触说成始终有正间隙**，也不据数值分离界保证真实 PETG 可以整块轻松拔下。"
+        }
+      ]
+    },
+    {
+      "id": "D03-CALC",
+      "requirement": "显式包含分面延迟和独立止挡误差的参数化计算契约",
+      "status": "PARAMETRIC_CALCULATION_COMPLETED_ACTUAL_INPUTS_OPEN",
+      "evidence": [
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 3,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "**固定止挡必须让球通过，同时停在输出硬止挡之前。** 当前已完成这一要求的参数化计算；实际装配失程、加载变形和共同位姿界尚未给定，所以没有把某个刻度或螺钉圈数写成可直接照做的安装值。当前CAD没有修改。"
+        },
+        {
+          "file": "output/current-stop-contract/README.md",
+          "line": 71,
+          "sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124",
+          "excerpt": "这完成的是止挡的计算契约。实际共同装配域、正式成品失程和输入止挡误差仍开放；夹线保持、受载回位和动态逐球发射也不由此公式证明。"
+        }
+      ],
+      "report": "output/current-stop-contract/report.json",
+      "independent_review_not_replaced_by_this_triage": true,
+      "coverage_limit": "计算器还将实际输入与输出限制在既有0～20 mm范围；恒定2 mm失程也可能使设置区间为空，这不把原离散同步姿态提升为连续、带失程的双自由度无干涉证明。"
+    }
+  ],
+  "inlet_transition": {
+    "initial_manifest_sha256": "43bd40d41c3a68cf0bcacf41234a5ee4f08c7f5b943188ae709347718c49e2a5",
+    "initial_counts": {
+      "printed_instances": 56,
+      "material_instances": {
+        "PETG": 55,
+        "Bambu TPU 95A HF": 1
+      },
+      "bound_instances": 55,
+      "candidate_instances": 1,
+      "pending_instances": 1,
+      "needs_reslice_instances": 0,
+      "selected_plates": 41,
+      "candidate_plates": 1
+    },
+    "current_manifest_sha256": "3576be96a2a2fbe858544d4ce82776036151ba51c892d0f643e9916dc3a3266c",
+    "note": "Parent completed the bound candidate-3 evidence and selected the plate while this read-only triage ran. The old pending task is removed from active gaps; documentation synchronization is not treated as a mechanical defect."
+  },
+  "finalized_utc": "2026-09-27T11:56:24.433381+00:00",
+  "final_source_refresh": [
+    {
+      "file": "output/current-inlet-process-revision/README.md",
+      "previous_sha256": "e6e4dea504a5d6a2a096cd469cd61d6558c85d4fa283608ee928e4e17e9d94ce",
+      "final_sha256": "c3d7e4c2ebcb9dfe96ff3671588b48027a3edf90cfb1b312698e3b44b76cc926"
+    }
+  ],
+  "verification": {
+    "atomic_open_items": 17,
+    "completed_items_or_subcontracts_during_review": 2,
+    "exact_line_evidence_references": 66,
+    "current_source_files": 17,
+    "source_hash_and_line_checks_passed": true,
+    "dependency_ids_resolve": true,
+    "no_geometry_or_physical_checks_reexecuted": true
+  },
+  "prior_frozen_snapshot": {
+    "directory": "output/current-completion-triage/history/before-stop-contract",
+    "report_sha256": "a85a210a967c0dc115ff16e85980da9b7912fcb2455159a8f29405e03693f4fa",
+    "reason": "Parent supplied newly completed stop-calculation contract immediately after first freeze; bounded refresh preserves prior snapshot."
+  },
+  "stop_domain_restriction_refresh": {
+    "history_directory": "output/current-completion-triage/history/before-stop-domain-limit",
+    "changed_sources": [
+      {
+        "file": "output/current-stop-contract/README.md",
+        "previous_sha256": "d0ca2808b234b54eb4e80b0f611279e4b1de8c1ec59941827a4c325f52f0d89a",
+        "current_sha256": "42ec958025ac1835526b3a362b6c14150bd5880469f4e967fad694b224640124"
+      },
+      {
+        "file": "output/current-stop-contract/report.json",
+        "previous_sha256": "07a11cb10af55d6a3534543cd342056f37955ceed2170a37fbde7a3f5cb0c31f",
+        "current_sha256": "43e992ad11b6b70304f0f07347d1553ab82f11d3766bf53c1ec7ea56f7a33425"
+      }
+    ],
+    "scope": "计算器还将实际输入与输出限制在既有0～20 mm范围；恒定2 mm失程也可能使设置区间为空，这不把原离散同步姿态提升为连续、带失程的双自由度无干涉证明。",
+    "no_new_triage_item": true
+  }
+}

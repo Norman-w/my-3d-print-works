@@ -1,0 +1,556 @@
+{
+  "instance_id": "feeder/cable-input-lever",
+  "name": "近端勾扣扳机",
+  "quantity": 1,
+  "status": "CURRENT_INSTANCE_FROZEN_SLICE_REUSE_VERIFIED",
+  "current_stl": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/feeder__cable-input-lever.stl",
+  "current_stl_sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439",
+  "current_export_definition": {
+    "cse_part": "input-lever",
+    "cse_t": 0
+  },
+  "current_backend": "Manifold",
+  "source_binding": {
+    "current_export_report": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-scene-export/20260927T091627124663Z/report.json",
+      "sha256": "acc9076c4c138493ba9afeb880f02cbc7078d0b04f073e00329dc1bf894b8ad9"
+    },
+    "current_inventory": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/docs/cable-assembly-inventory.json",
+      "sha256": "5230193fbb08680c5a420ba914d34890d97b458b7af6bbb517dd4441a64ec63b"
+    },
+    "source_hashes_verified": {
+      "analysis/exact_mesh.py": true,
+      "analysis/feeder_integration.py": true,
+      "cad/cable-contract-codec.scad": true,
+      "cad/cable-housing-route.scad": true,
+      "cad/cable-output-interface.scad": true,
+      "cad/cable-route-retention.scad": true,
+      "cad/cable-scene-export.scad": true,
+      "cad/cable-trigger-input.scad": true,
+      "cad/cable-trigger-system.scad": true,
+      "cad/cam-study.scad": true,
+      "cad/feeder-body.scad": true,
+      "cad/feeder-cam-guide-revision.scad": true,
+      "cad/feeder-complete-hardware.scad": true,
+      "cad/feeder-frame-y-guide.scad": true,
+      "cad/feeder-guide-revision.scad": true,
+      "cad/feeder-hardware-clearance.scad": true,
+      "cad/feeder-integrated-candidate.scad": true,
+      "cad/feeder-pin-seat-revision.scad": true,
+      "cad/feeder-return-spring.scad": true,
+      "cad/feeder-review-parts.scad": true,
+      "cad/feeder-seam-candidate.scad": true,
+      "cad/feeder-support-harness.scad": true,
+      "cad/feeder-supports.scad": true,
+      "cad/inlet-retention-final.scad": true,
+      "cad/launcher-final-assembly.scad": true,
+      "cad/outlet-retention.scad": true,
+      "cad/parameters.scad": true,
+      "cad/review-launcher-baseline33.scad": true,
+      "cad/spin-complete-hardware.scad": true,
+      "cad/spin-head.scad": true,
+      "cad/spin-parameters.scad": true,
+      "docs/cable-assembly-inventory.json": true,
+      "scripts/export_cable_scene.py": true
+    },
+    "current_input_scad_sha256": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07"
+  },
+  "selected_slice": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever",
+  "historical_slice_input": {
+    "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v2/runs/20260927T084134904834Z-f76a83eeb9/lever.stl",
+    "sha256": "86f4ba7aed6f7e1d8b5bad392f2112c1403742ab5ef2e8a0a92449f1e378e439"
+  },
+  "historical_input_is_current_stl_byte_identical": true,
+  "exact_oriented_triangle_multiset_identical": true,
+  "current_triangle_count": 4602,
+  "actual_3mf_normal_mesh": {
+    "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+    "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+    "source_triangles": 4602,
+    "actual_3mf_triangles": 4602,
+    "collapsed_source_triangle_indices": [],
+    "maximum_corner_displacement_mm": 2.693203092500997e-06,
+    "surviving_oriented_faces_exactly_match": true,
+    "unexpected_actual_faces": 0,
+    "missing_surviving_faces": 0,
+    "non_two_incidence_edges": 0,
+    "vertex_link_faults": [],
+    "orientation_faults": 0,
+    "components": 1,
+    "volume_source_mm3": 13176.640998343175,
+    "volume_actual_3mf_mm3": 13176.640843992165,
+    "manufacturing_release": false,
+    "physical_acceptance": false,
+    "scope": "Exact oriented-face correspondence after bounded native vertex precision conversion; no faces lost and no physical material/process guarantee."
+  },
+  "placement": {
+    "cad_to_oriented": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -84.13172798364528
+      ],
+      [
+        0.0,
+        6.123233995736766e-17,
+        -1.0,
+        14.838834764831857
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        85.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_offset": [
+      0.0,
+      0.0,
+      5.5
+    ],
+    "component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        5.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        0.598705747,
+        -0.800969056,
+        0.0,
+        128.40015
+      ],
+      [
+        0.800969056,
+        0.598705747,
+        0.0,
+        124.46617
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "extruder_offset": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "cad_to_command": [
+      [
+        0.598705747,
+        -4.904520953232386e-17,
+        0.800969056,
+        66.1445534774235
+      ],
+      [
+        0.800969056,
+        3.6660153834733754e-17,
+        -0.598705747,
+        63.963354909779085
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        85.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "input_local_to_command": [
+      [
+        0.14302175737842068,
+        0.9897195446564787,
+        -4.904520953232386e-17,
+        115.0523297824235
+      ],
+      [
+        -0.9897195446572796,
+        0.1430217573790193,
+        3.6660153834733754e-17,
+        121.0425053747791
+      ],
+      [
+        4.329780281174114e-17,
+        4.329780281174114e-17,
+        1.0,
+        3.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "normal_actual_3mf_build_bounds": [
+      [
+        68.62953718788742,
+        111.04827708915198,
+        0.0
+      ],
+      [
+        187.37045173119606,
+        144.9511688059815,
+        11.0
+      ]
+    ],
+    "normal_command_bounds": [
+      [
+        68.62953718788742,
+        109.04827708915198,
+        0.0
+      ],
+      [
+        187.37045173119606,
+        142.9511688059815,
+        11.0
+      ]
+    ],
+    "current_predicted_vs_native_command_bbox_error_mm": 1.2657979624464133e-06,
+    "build_direction_input_local": [
+      0,
+      0,
+      1
+    ]
+  },
+  "process": {
+    "layer_height": "0.1",
+    "initial_layer_print_height": "0.1",
+    "wall_loops": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "1",
+    "support_type": "normal(manual)",
+    "support_on_build_plate_only": "1",
+    "support_top_z_distance": "0.2",
+    "support_bottom_z_distance": "0.2",
+    "support_object_xy_distance": "0.35",
+    "support_interface_top_layers": "2",
+    "support_interface_spacing": "0",
+    "raft_first_layer_expansion": "0",
+    "brim_type": "outer_only",
+    "brim_width": "5",
+    "curr_bed_type": "Textured PEI Plate",
+    "filament_type": [
+      "PETG"
+    ],
+    "printer_model": "Bambu Lab X1 Carbon",
+    "nozzle_diameter": [
+      "0.4"
+    ]
+  },
+  "profiles": {
+    "machine": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/machine.json",
+      "sha256": "134804b2209e6413b0e54614367e15792e0648446258dffab8406604093de857"
+    },
+    "filament": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/filament.json",
+      "sha256": "589dbfbe8f3884f1c718192af5f241cc04dbd503d5b9343952bc1da31b64ee90"
+    },
+    "process": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/process.json",
+      "sha256": "fa3ebf70fa7c7345a2423e6fbfbcb9018392122e958b493351eb4e091d08a84b"
+    }
+  },
+  "support_enforcers": [
+    {
+      "name": "M3_shoulder_enforcer_1",
+      "subtype": "support_enforcer",
+      "triangle_count": 20,
+      "local_bounds": [
+        [
+          -0.9000002790792934,
+          50.65136895472429,
+          -3.5000000000000027
+        ],
+        [
+          4.900000858822821,
+          57.34863130038735,
+          -0.4000001000000024
+        ]
+      ],
+      "expected_local_bounds": [
+        [
+          -0.9000000000000004,
+          50.65136843870017,
+          -3.5
+        ],
+        [
+          4.9,
+          57.34863156129983,
+          -0.4
+        ]
+      ],
+      "source_to_native_enforcer_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 20,
+        "actual_3mf_triangles": 20,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 1.8757084318305491e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 90.31259322273922,
+        "volume_actual_3mf_mm3": 90.31259315453583,
+        "manufacturing_release": false,
+        "physical_acceptance": false,
+        "scope": "Exact oriented-face correspondence after bounded native vertex precision conversion; no faces lost and no physical material/process guarantee."
+      },
+      "role": "slicer-only modifier; excluded from physical normal-part mesh"
+    },
+    {
+      "name": "M3_shoulder_enforcer_2",
+      "subtype": "support_enforcer",
+      "triangle_count": 20,
+      "local_bounds": [
+        [
+          -0.8999982871594909,
+          62.65136771130244,
+          -3.500000000000003
+        ],
+        [
+          4.900001495218916,
+          69.34863276518448,
+          -0.40000010000000286
+        ]
+      ],
+      "expected_local_bounds": [
+        [
+          -0.9000000000000004,
+          62.65136843870017,
+          -3.5
+        ],
+        [
+          4.9,
+          69.34863156129983,
+          -0.4
+        ]
+      ],
+      "source_to_native_enforcer_mesh": {
+        "status": "BOUNDED_VERTEX_CONTRACTION_VERIFIED",
+        "method": "Map each source triangle corner to an actual 3MF vertex. Require exact oriented-face multiset equality after recording the collapsed source faces. Verify final edge/vertex manifold, winding and connectivity. Corresponding triangle points move no more than the maximum corner displacement by barycentric interpolation. This explains numerical conversion, not byte or face-count identity.",
+        "source_triangles": 20,
+        "actual_3mf_triangles": 20,
+        "collapsed_source_triangle_indices": [],
+        "maximum_corner_displacement_mm": 4.365954467387104e-06,
+        "surviving_oriented_faces_exactly_match": true,
+        "unexpected_actual_faces": 0,
+        "missing_surviving_faces": 0,
+        "non_two_incidence_edges": 0,
+        "vertex_link_faults": [],
+        "orientation_faults": 0,
+        "components": 1,
+        "volume_source_mm3": 90.31259322274407,
+        "volume_actual_3mf_mm3": 90.31260082877718,
+        "manufacturing_release": false,
+        "physical_acceptance": false,
+        "scope": "Exact oriented-face correspondence after bounded native vertex precision conversion; no faces lost and no physical material/process guarantee."
+      },
+      "role": "slicer-only modifier; excluded from physical normal-part mesh"
+    }
+  ],
+  "support_cleanup": {
+    "interior": {
+      "centres": [
+        [
+          2,
+          54
+        ],
+        [
+          2,
+          66
+        ]
+      ],
+      "half": 3.6,
+      "z": [
+        -3.5,
+        -0.4
+      ],
+      "contact": -0.6,
+      "opening": "hex5.8",
+      "growth": 1
+    },
+    "direction_local": [
+      0,
+      0,
+      -1
+    ],
+    "stage": "After removal from PEI and before hardware/assembly; pull through original shallow nut/head opening, never through D3.4 bore.",
+    "strict_original_pocket_only_pass": false,
+    "exterior_bed_island_count": 1,
+    "classification": "INTERIOR_POCKETS_PLUS_SEPARATE_EXTERIOR_BRIM_BED_RESIDUES",
+    "remaining_interior_support_contained": true,
+    "exterior_route": "Remove exterior support islands with Brim/bed cleanup; they are outside entire model projection and disconnected from interior supports."
+  },
+  "critical_path_evidence": {
+    "pockets": [
+      {
+        "centre": [
+          2,
+          54
+        ],
+        "contact_z": -0.6,
+        "interface_vertical_gap": 0.2000000000000024,
+        "metal_bearing_area_preserved_mm2": 17.11818093197101,
+        "metal_bearing_area_loss_mm2": 0,
+        "first_shoulder_max_curved_path_without_previous_model_projection_mm": 9.929927645785902,
+        "first_shoulder_max_curved_path_without_model_or_top_support_projection_mm": 0.23122943532165427
+      },
+      {
+        "centre": [
+          2,
+          66
+        ],
+        "contact_z": -0.6,
+        "interface_vertical_gap": 0.2000000000000024,
+        "metal_bearing_area_preserved_mm2": 17.11818093197101,
+        "metal_bearing_area_loss_mm2": 0,
+        "first_shoulder_max_curved_path_without_previous_model_projection_mm": 10.682411875094887,
+        "first_shoulder_max_curved_path_without_model_or_top_support_projection_mm": 0.1080597827166119
+      }
+    ]
+  },
+  "bed_and_path_counts": {
+    "passed": true,
+    "nominal_model_brim_support_bead_bounds_xy": [
+      [
+        63.735749999999996,
+        104.14975000000001
+      ],
+      [
+        192.26125000000002,
+        147.84625
+      ]
+    ],
+    "minimum_bed_edge_gap_mm": 63.735749999999996,
+    "minimum_excluded_area_gap_mm": 92.57294218600207,
+    "path_counts": {
+      "Support": 140,
+      "Brim": 1765,
+      "Outer wall": 3196,
+      "Inner wall": 9783,
+      "Gap infill": 4449,
+      "Bottom surface": 410,
+      "Internal solid infill": 7397,
+      "Sparse infill": 9842,
+      "Floating vertical shell": 1490,
+      "Bridge": 677,
+      "Support transition": 57,
+      "Support interface": 114,
+      "Top surface": 372,
+      "Overhang wall": 30
+    },
+    "support_path_count": 311,
+    "skipped_startup_features": [
+      "Custom",
+      "Flush",
+      "Undefined",
+      ""
+    ],
+    "bead_error_budget_mm": 0.0032500000000000003,
+    "violations": []
+  },
+  "review_evidence": [
+    {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/support-path-review/report.json",
+      "sha256": "a7f6d2d863f676d4a847c61cbb0820176dfbbf942350e45eff8254feccc3f88f"
+    },
+    {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/local-review-summary.json",
+      "sha256": "96b52ce5201e04bcb8b8e8445d8a41f3068045d86a93fb8fa2fe3803946f69cf"
+    },
+    {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/first-layer-island-review/report.json",
+      "sha256": "4318e5a1e741bbb4caccbd93da4b4c55de764a5535bbf7dca9244166d383e6aa"
+    }
+  ],
+  "artifacts": {
+    "invocation.json": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/invocation.json",
+      "sha256": "73d349a1f002278cbe5e74b5f17aac2a721413dcc878c416f3d252506072b6df"
+    },
+    "result.json": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/result.json",
+      "sha256": "7800a0c581d601ff7f493d09dd78ed2f5dde848a96051fb3e80dff8344f6bc52"
+    },
+    "slice-review.3mf": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/slice-review.3mf",
+      "sha256": "8d81d0cf4e9464ae3d353645565da25c8c104c5cb6d989432edc9bc7757201a1"
+    },
+    "plate_1.gcode": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/plate_1.gcode",
+      "sha256": "3b85f5059eabdf31474f0d68dd0b83f7604e5d8dbcab7c8a366b2315eb69be27"
+    },
+    "support-input.3mf": {
+      "file": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/cable-direct-pull-v3/slices/20260927T092019389929Z/cable-input-lever/support-input.3mf",
+      "sha256": "7fec5c064d7f1a9ce3eef21da6a68c13b0d0ed4986335d2af092603ac0746856"
+    }
+  },
+  "resolved_project_settings_sha256": "a1611d78145562a95a5a12138aca49d4489ffe2503fd12de55b55a8f26a1421a",
+  "profile_assumptions": [
+    "X1C / 0.4 mm and PETG confirmed by user; Generic PETG temperatures/profile remain a material assumption.",
+    "Actual slice selects Textured PEI; user specified PEI without confirming texture."
+  ],
+  "remaining_physical_limits": [
+    "Support is separated by the recorded air gap; projected underlay is not a physical guarantee of no sag or reliable PETG separation.",
+    "Remaining unsupported-path lengths are curved centerline fragments relative to nominal bead footprints, not mechanical free spans.",
+    "No reduction in nominal metal bearing area; support scars, dimensions, torque and layer adhesion remain physical unknowns.",
+    "No support was requested for the transverse stop bore/nut chamber or M6 round roof. Those previously documented short bridges remain.",
+    "Removal envelope excludes unknown extraction-tool dimensions and glue-like support fusion. This is normal part manufacturing support, not a coupon.",
+    "Original strict pocket-only failure is preserved for lever/cap; its exterior-bed-island alternative cleanup classification is separate."
+  ],
+  "operation": "reuse_exact_selected_artifacts_only",
+  "resliced": false,
+  "mechanical_geometry_changed": false,
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

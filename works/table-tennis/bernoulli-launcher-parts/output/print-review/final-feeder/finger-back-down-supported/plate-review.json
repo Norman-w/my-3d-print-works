@@ -1,0 +1,327 @@
+{
+  "family": "finger",
+  "folder": "output/print-review/final-feeder/finger-back-down-supported",
+  "count": 4,
+  "orientation": "Original local Y=-4.5 rear face down; V and M2 nut entry upwards; rod underside supported",
+  "checks": {
+    "native_success_no_warning": true,
+    "correct_3mf_object_count": true,
+    "correct_input_names": true,
+    "no_mesh_repair_by_slicer": true,
+    "official_machine_templates_preserved": true,
+    "setpoint_255": true,
+    "proper_rotation_no_scaling": true,
+    "inside_X1C_build_box": true,
+    "source_identity": true,
+    "shared_presets_unchanged": true
+  },
+  "mapping": [
+    {
+      "source_file": "finger-right-front.stl",
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.22044605e-16,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        121.49228524841308,
+        153.24614,
+        4.5
+      ],
+      "offset": [
+        33.7538537979126,
+        0.0,
+        0.0
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.22044605e-16,
+        1.0,
+        0.0,
+        -1.0,
+        2.22044605e-16,
+        -9.53674316e-07,
+        0.0,
+        0.0
+      ],
+      "build": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        155.24614,
+        155.24614,
+        4.5
+      ]
+    },
+    {
+      "source_file": "finger-left-front.stl",
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.22044605e-16,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        188.9999947515869,
+        121.24614,
+        4.5
+      ],
+      "offset": [
+        -33.7538537979126,
+        0.0,
+        0.0
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.22044605e-16,
+        1.0,
+        0.0,
+        -1.0,
+        2.22044605e-16,
+        9.53674316e-07,
+        0.0,
+        0.0
+      ],
+      "build": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        155.24614,
+        123.24614,
+        4.5
+      ]
+    },
+    {
+      "source_file": "finger-right-rear.stl",
+      "R": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.22044605e-16,
+          -1.0
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        62.00000524841309,
+        124.74614,
+        4.500000000000006
+      ],
+      "offset": [
+        38.7538537979126,
+        0.0,
+        -28.5
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.22044605e-16,
+        1.0,
+        0.0,
+        -1.0,
+        2.22044605e-16,
+        -9.53674316e-07,
+        0.0,
+        0.0
+      ],
+      "build": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        100.75386,
+        155.24614,
+        4.5
+      ]
+    },
+    {
+      "source_file": "finger-left-rear.stl",
+      "R": [
+        [
+          6.123234e-17,
+          -2.22044605e-16,
+          1.0
+        ],
+        [
+          1.0,
+          1.35963107485257e-32,
+          -6.123234e-17
+        ],
+        [
+          0.0,
+          1.0,
+          2.22044605e-16
+        ]
+      ],
+      "shift": [
+        140.71004000000002,
+        148.7538547515869,
+        4.500000000000006
+      ],
+      "offset": [
+        -38.7538537979126,
+        0.0,
+        -28.5
+      ],
+      "component": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.22044605e-16,
+        1.0,
+        0.0,
+        -1.0,
+        2.22044605e-16,
+        9.53674316e-07,
+        0.0,
+        0.0
+      ],
+      "build": [
+        6.123234e-17,
+        1.0,
+        0.0,
+        -1.0,
+        6.123234e-17,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        112.21004,
+        112.0,
+        4.5
+      ]
+    }
+  ],
+  "mesh_repair_stats": [
+    {
+      "face_count": "1964",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    },
+    {
+      "face_count": "1964",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    },
+    {
+      "face_count": "1964",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    },
+    {
+      "face_count": "1964",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  ],
+  "first_layer_model_area_mm2": 324.2867147851492,
+  "first_layer_model_components": 4,
+  "model_path_bounds_mm": [
+    [
+      85.71816499939432,
+      94.964,
+      0.2
+    ],
+    [
+      170.282,
+      157.036,
+      9.0
+    ]
+  ],
+  "support_sample_count": 50312,
+  "feature_command_counts": {
+    "Support": 2240,
+    "Inner wall": 9018,
+    "Outer wall": 4158,
+    "Gap infill": 1268,
+    "Bottom surface": 28,
+    "Internal solid infill": 4204,
+    "Support interface": 650,
+    "Overhang wall": 232,
+    "Bridge": 165,
+    "Sparse infill": 903,
+    "Top surface": 752,
+    "Floating vertical shell": 331
+  },
+  "max_bridge_command_path_mm": 4.523841288109029,
+  "estimated_time_s": 1634.7781982421875,
+  "estimated_filament_g": 5.83772087097168,
+  "native_warnings": "",
+  "gcode_sha256": "5f9909e7ad22a4e9a7db3c5a20fd4b3475774d0eb6c2bb961c048d1f3c0fdcad",
+  "project_sha256": "68e8ce8f2647667fe0dedd705179e0386b8a173d127a8b46358387f0ace56bc1",
+  "sent_to_printer": false,
+  "limits": [
+    "First-layer area is emitted-bead footprint, not adhesion strength.",
+    "Bridge command length is not unsupported span.",
+    "Bounds/CLI success do not prove physical fit, removal force, shrinkage or PETG finish."
+  ]
+}

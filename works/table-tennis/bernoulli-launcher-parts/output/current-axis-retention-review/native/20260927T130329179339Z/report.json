@@ -1,0 +1,193 @@
+{
+  "status": "LOCAL_CANDIDATE_EXPORT_AND_ZERO_POSE_FIT_COMPLETE_NOT_MANUFACTURING_RELEASE",
+  "source_sha256": {
+    "output/current-axis-retention-review/candidate.scad": "e84ec9b66856ae3fc6075799c8b66c9f33071858ee5aea60ba82618aaaa3c288",
+    "cad/cable-trigger-input.scad": "e243be6b39956ae2ac28bda58c8f3d92bcf4e9a04b28818d8b37d65dea276d07",
+    "cad/parameters.scad": "5127f36d8f0a292f2b2866c7b112419cd065859e09678aaee90881c16d726b58",
+    "output/current-axis-retention-review/native_review.py": "016a2c95b14b13ddc2329183a6a395a414ffb46ba7bcf068880030f3700d3906"
+  },
+  "sources_stable": true,
+  "parts": [
+    {
+      "selector": "lever",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ar_part=\"lever\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/lever.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "9394c761449e205af9c65c650453d101ad3906f4667d8800b5e4c5cdb6656c77",
+      "artifact": "output/current-axis-retention-review/native/20260927T130329179339Z/lever.stl",
+      "artifact_sha256": "85b0c0729f92b2c5fa16cfdc2e5822db62315c49258c49422276251a5e5e532b",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/lever.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 4338,
+        "uniqueVertexCount": 2165,
+        "bounds": {
+          "min": [
+            -21.99664929509163,
+            -47.0,
+            -3.5
+          ],
+          "max": [
+            12.0,
+            73.0,
+            7.5
+          ],
+          "size": [
+            33.99664929509163,
+            120.0,
+            11.0
+          ]
+        },
+        "surfaceArea": 6392.8314567774605,
+        "signedVolume": 12996.13408570406,
+        "volume": 12996.13408570406,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "bush",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ar_part=\"bush\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/bush.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "bf74c8f03b7dea735786e56f594882333b271835ec16498694956b6369863dfb",
+      "artifact": "output/current-axis-retention-review/native/20260927T130329179339Z/bush.stl",
+      "artifact_sha256": "358a955f07ec2cd6cec2f5e0b8e15d5787e09c1544570d99fb86574c36920eba",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/bush.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 624,
+        "uniqueVertexCount": 312,
+        "bounds": {
+          "min": [
+            -6.0000000000000036,
+            -6.928203230275509,
+            -3.5
+          ],
+          "max": [
+            6.0000000000000036,
+            6.928203230275509,
+            7.5
+          ],
+          "size": [
+            12.000000000000007,
+            13.856406460551018,
+            11.0
+          ]
+        },
+        "surfaceArea": 879.0402307603796,
+        "signedVolume": 791.2463676379189,
+        "volume": 791.2463676379189,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "thrust-washers",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ar_part=\"thrust-washers\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/thrust-washers.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/candidate.scad"
+      ],
+      "returncode": 0,
+      "native_empty": false,
+      "log_sha256": "9d03d3856f5121aefda21e463eaaa046a53c3b43e5fbcc105d8be679ae41cb48",
+      "artifact": "output/current-axis-retention-review/native/20260927T130329179339Z/thrust-washers.stl",
+      "artifact_sha256": "cc9350234776ce08f806ed66d09a1fab45e750af518da687663bd784c7ea8579",
+      "mesh": {
+        "path": "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/thrust-washers.stl",
+        "format": "ascii",
+        "units": "unknown",
+        "triangleCount": 1152,
+        "uniqueVertexCount": 576,
+        "bounds": {
+          "min": [
+            -8.0,
+            -8.0,
+            -3.75
+          ],
+          "max": [
+            8.0,
+            8.0,
+            7.75
+          ],
+          "size": [
+            16.0,
+            16.0,
+            11.5
+          ]
+        },
+        "surfaceArea": 530.2943978448191,
+        "signedVolume": 61.18333140885486,
+        "volume": 61.18333140885486,
+        "degenerateTriangleCount": 0,
+        "boundaryEdgeCount": 0,
+        "nonManifoldEdgeCount": 0,
+        "inconsistentOrientationEdgeCount": 0,
+        "watertightByEdgeTopology": true
+      }
+    },
+    {
+      "selector": "local-fit",
+      "command": [
+        "/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD",
+        "--hardwarnings",
+        "--backend",
+        "Manifold",
+        "--export-format",
+        "asciistl",
+        "-D",
+        "ar_part=\"local-fit\"",
+        "-o",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/native/20260927T130329179339Z/local-fit.stl",
+        "/Users/norman/CodexProjects/Pingpang-BernoulliLauncherParts/output/current-axis-retention-review/candidate.scad"
+      ],
+      "returncode": 1,
+      "native_empty": true,
+      "log_sha256": "af43e3c6c1d7b2206057815e662e536a3a0498eb0c6b715fdc2689ab69c8437b",
+      "artifact": null,
+      "artifact_sha256": null
+    }
+  ],
+  "scope": "Exports and nominal concentric zero-pose fit only; no force/tilt/whole-system/print claim."
+}

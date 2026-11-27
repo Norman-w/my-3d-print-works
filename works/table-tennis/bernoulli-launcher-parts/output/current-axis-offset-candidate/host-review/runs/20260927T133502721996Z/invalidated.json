@@ -1,0 +1,5 @@
+{
+  "status": "INVALIDATED_DO_NOT_USE",
+  "report_sha256": "56e0bde611a89b1479bceff1631fee5ba4358ade04b706bc8e64e724236b6600",
+  "reason": "Wrapper did not explicitly set $fn=72. use does not execute top-level library assignment; sec(pi/72) expansion with default tessellation did not make the claimed outward circular envelope. Preserve original report; supersede with corrected rerun."
+}

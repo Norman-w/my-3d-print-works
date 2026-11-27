@@ -1,0 +1,2151 @@
+{
+  "status": "BOUNDED_NEW_TERMINAL_PATH_REVIEW",
+  "part": "cable-input-terminal-cap",
+  "source_snapshot_stable": true,
+  "source_sha256": "491ded77149a2147f010092f7f715f59ef50a2dd714abb56677d596fb6544c9d",
+  "mapping": {
+    "cad_to_oriented": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -117.42640687119281
+      ],
+      [
+        0.0,
+        6.123233995736766e-17,
+        1.0,
+        -47.426406871192896
+      ],
+      [
+        0.0,
+        -1.0,
+        6.123233995736766e-17,
+        -74.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "component": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        2.20000005
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "build": [
+      [
+        0.707106781,
+        0.707106781,
+        0.0,
+        127.99999
+      ],
+      [
+        -0.707106781,
+        0.707106781,
+        0.0,
+        128.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_offset": [
+      0.0,
+      0.0,
+      2.200000047683716
+    ],
+    "extruder_offset": [
+      0.0,
+      2.0,
+      0.0
+    ],
+    "oriented_to_command": [
+      [
+        0.707106781,
+        0.707106781,
+        0.0,
+        127.99999
+      ],
+      [
+        -0.707106781,
+        0.707106781,
+        0.0,
+        126.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        2.3162840534496354e-09
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "cad_to_command": [
+      [
+        0.707106781,
+        4.329780280035193e-17,
+        0.707106781,
+        11.43144753582908
+      ],
+      [
+        -0.707106781,
+        4.329780280035193e-17,
+        0.707106781,
+        175.49747466999995
+      ],
+      [
+        0.0,
+        -1.0,
+        6.123233995736766e-17,
+        -74.49999999768372
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "part_metadata": {
+      "name": "oriented.stl",
+      "matrix": "1 0 0 0 0 1 0 0 0 0 1 2.2000000476837158 0 0 0 1",
+      "source_file": "oriented.stl",
+      "source_object_id": "0",
+      "source_volume_id": "0",
+      "source_offset_x": "0",
+      "source_offset_y": "0",
+      "source_offset_z": "2.2000000476837158"
+    },
+    "mesh_stat": {
+      "face_count": "3468",
+      "edges_fixed": "0",
+      "degenerate_facets": "0",
+      "facets_removed": "0",
+      "facets_reversed": "0",
+      "backwards_edges": "0"
+    }
+  },
+  "local_to_command": [
+    [
+      1.0811774252756263e-17,
+      0.999999999736182,
+      4.329780280035193e-17,
+      67.99999001582908
+    ],
+    [
+      0.999999999736182,
+      1.0811774252756263e-17,
+      4.329780280035193e-17,
+      125.99999999999994
+    ],
+    [
+      4.329780281177467e-17,
+      4.329780281177467e-17,
+      -1.0,
+      7.500000002316284
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "local_print_growth_sign": -1.0,
+  "split_plane": {
+    "nominal_local_z": 3.1,
+    "actual_terminal_bead_extreme_local_z": 3.1000000023162864,
+    "error_mm": 0.0,
+    "terminal_xy_witness": [
+      [
+        -5,
+        51
+      ],
+      [
+        5,
+        69
+      ]
+    ]
+  },
+  "fastener_holes": [
+    {
+      "center_local_xy": [
+        2,
+        54
+      ],
+      "name": "M3/socket-head recess",
+      "nominal_transition_print_mm": 3.0,
+      "actual_transition_print_mm": 3.0,
+      "transition_error_mm": 0.0,
+      "first_small_hole_layer_top_mm": 3.1,
+      "small_hole_min_clear_diameter_lower_mm": 3.345750901933405,
+      "large_recess_min_inscribed_diameter_lower_mm": 6.167523468167713,
+      "layers": [
+        {
+          "print_top_mm": 0.1,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.2417650132685374,
+          "clear_diameter_lower_mm": 6.483530026537075,
+          "local_z_slab_bounds_mm": [
+            7.400000002316286,
+            7.500000002316288
+          ],
+          "features": {
+            "Outer wall": 7,
+            "Inner wall": 14,
+            "Gap infill": 25
+          }
+        },
+        {
+          "print_top_mm": 0.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086247872896409,
+          "clear_diameter_lower_mm": 6.172495745792818,
+          "local_z_slab_bounds_mm": [
+            7.3000000023162865,
+            7.400000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Internal solid infill": 21
+          }
+        },
+        {
+          "print_top_mm": 0.3,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0922855062614243,
+          "clear_diameter_lower_mm": 6.184571012522849,
+          "local_z_slab_bounds_mm": [
+            7.200000002316287,
+            7.300000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 35,
+            "Internal solid infill": 21
+          }
+        },
+        {
+          "print_top_mm": 0.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.092384578865613,
+          "clear_diameter_lower_mm": 6.184769157731226,
+          "local_z_slab_bounds_mm": [
+            7.100000002316286,
+            7.200000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.5,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0859956430073634,
+          "clear_diameter_lower_mm": 6.171991286014727,
+          "local_z_slab_bounds_mm": [
+            7.000000002316287,
+            7.100000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.6,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0874736530712554,
+          "clear_diameter_lower_mm": 6.174947306142511,
+          "local_z_slab_bounds_mm": [
+            6.900000002316286,
+            7.000000002316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086228673349333,
+          "clear_diameter_lower_mm": 6.172457346698666,
+          "local_z_slab_bounds_mm": [
+            6.8000000023162865,
+            6.900000002316287
+          ],
+          "features": {
+            "Inner wall": 21,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.8,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0852019738692342,
+          "clear_diameter_lower_mm": 6.1704039477384685,
+          "local_z_slab_bounds_mm": [
+            6.700000002316287,
+            6.800000002316287
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0852042679918017,
+          "clear_diameter_lower_mm": 6.170408535983603,
+          "local_z_slab_bounds_mm": [
+            6.600000002316286,
+            6.700000002316287
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.0,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0838712020224417,
+          "clear_diameter_lower_mm": 6.167742404044883,
+          "local_z_slab_bounds_mm": [
+            6.500000002316287,
+            6.600000002316287
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.1,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.083873398019113,
+          "clear_diameter_lower_mm": 6.167746796038226,
+          "local_z_slab_bounds_mm": [
+            6.400000002316286,
+            6.500000002316288
+          ],
+          "features": {
+            "Inner wall": 19,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0838756262308795,
+          "clear_diameter_lower_mm": 6.167751252461759,
+          "local_z_slab_bounds_mm": [
+            6.3000000023162865,
+            6.400000002316287
+          ],
+          "features": {
+            "Inner wall": 18,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0853271519432943,
+          "clear_diameter_lower_mm": 6.170654303886589,
+          "local_z_slab_bounds_mm": [
+            6.200000002316287,
+            6.299999902316288
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0853288030060453,
+          "clear_diameter_lower_mm": 6.170657606012091,
+          "local_z_slab_bounds_mm": [
+            6.100000002316286,
+            6.200000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.5,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0853304638026424,
+          "clear_diameter_lower_mm": 6.170660927605285,
+          "local_z_slab_bounds_mm": [
+            6.000000002316287,
+            6.100000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.6,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0853321414447525,
+          "clear_diameter_lower_mm": 6.170664282889505,
+          "local_z_slab_bounds_mm": [
+            5.900000002316286,
+            6.000000002316288
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.083887094929177,
+          "clear_diameter_lower_mm": 6.167774189858354,
+          "local_z_slab_bounds_mm": [
+            5.8000000023162865,
+            5.900000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Floating vertical shell": 13,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 1.8,
+          "bead_heights_mm": [
+            0.0999999,
+            0.1,
+            0.4
+          ],
+          "clear_radius_lower_mm": 3.083889453384856,
+          "clear_diameter_lower_mm": 6.167778906769712,
+          "local_z_slab_bounds_mm": [
+            5.700000002316287,
+            6.100000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Bridge": 15,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 1.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0837617340838563,
+          "clear_diameter_lower_mm": 6.167523468167713,
+          "local_z_slab_bounds_mm": [
+            5.600000002316286,
+            5.700000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Internal solid infill": 8,
+            "Sparse infill": 7
+          }
+        },
+        {
+          "print_top_mm": 2.0,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0850192892624317,
+          "clear_diameter_lower_mm": 6.1700385785248635,
+          "local_z_slab_bounds_mm": [
+            5.500000002316287,
+            5.600000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Floating vertical shell": 8,
+            "Sparse infill": 7
+          }
+        },
+        {
+          "print_top_mm": 2.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.085340805066473,
+          "clear_diameter_lower_mm": 6.170681610132946,
+          "local_z_slab_bounds_mm": [
+            5.400000002316286,
+            5.499999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Floating vertical shell": 8,
+            "Sparse infill": 7
+          }
+        },
+        {
+          "print_top_mm": 2.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.085279855062748,
+          "clear_diameter_lower_mm": 6.170559710125496,
+          "local_z_slab_bounds_mm": [
+            5.3000000023162865,
+            5.400000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Floating vertical shell": 9,
+            "Sparse infill": 7
+          }
+        },
+        {
+          "print_top_mm": 2.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0856214551308283,
+          "clear_diameter_lower_mm": 6.171242910261657,
+          "local_z_slab_bounds_mm": [
+            5.200000002316287,
+            5.299999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Floating vertical shell": 8,
+            "Sparse infill": 7
+          }
+        },
+        {
+          "print_top_mm": 2.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0839477025254065,
+          "clear_diameter_lower_mm": 6.167895405050813,
+          "local_z_slab_bounds_mm": [
+            5.100000002316287,
+            5.200000002316287
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 5,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.5,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.085959890661814,
+          "clear_diameter_lower_mm": 6.171919781323628,
+          "local_z_slab_bounds_mm": [
+            5.000000002316286,
+            5.099999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Floating vertical shell": 12,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.6,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0869723184916045,
+          "clear_diameter_lower_mm": 6.173944636983209,
+          "local_z_slab_bounds_mm": [
+            4.900000002316286,
+            4.999999902316288
+          ],
+          "features": {
+            "Inner wall": 15,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 5,
+            "Floating vertical shell": 12
+          }
+        },
+        {
+          "print_top_mm": 2.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.08756307360881,
+          "clear_diameter_lower_mm": 6.17512614721762,
+          "local_z_slab_bounds_mm": [
+            4.8000000023162865,
+            4.900000002316287
+          ],
+          "features": {
+            "Inner wall": 29,
+            "Outer wall": 6,
+            "Gap infill": 57,
+            "Internal solid infill": 5,
+            "Top surface": 2,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.8,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0893362154834803,
+          "clear_diameter_lower_mm": 6.1786724309669605,
+          "local_z_slab_bounds_mm": [
+            4.700000002316287,
+            4.799999902316288
+          ],
+          "features": {
+            "Inner wall": 19,
+            "Outer wall": 6,
+            "Gap infill": 49,
+            "Internal solid infill": 6,
+            "Floating vertical shell": 4,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0865869146929845,
+          "clear_diameter_lower_mm": 6.173173829385969,
+          "local_z_slab_bounds_mm": [
+            4.600000002316286,
+            4.700000002316287
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 6,
+            "Gap infill": 38,
+            "Internal solid infill": 5,
+            "Floating vertical shell": 3,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 3.0,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.091583763340045,
+          "clear_diameter_lower_mm": 6.18316752668009,
+          "local_z_slab_bounds_mm": [
+            4.500000002316287,
+            4.599999902316288
+          ],
+          "features": {
+            "Inner wall": 26,
+            "Outer wall": 8,
+            "Gap infill": 36,
+            "Internal solid infill": 6,
+            "Floating vertical shell": 3,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 3.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6728754509667025,
+          "clear_diameter_lower_mm": 3.345750901933405,
+          "local_z_slab_bounds_mm": [
+            4.400000002316286,
+            4.499999902316288
+          ],
+          "features": {
+            "Inner wall": 12,
+            "Outer wall": 3,
+            "Overhang wall": 15,
+            "Internal solid infill": 26,
+            "Gap infill": 20,
+            "Floating vertical shell": 73
+          }
+        },
+        {
+          "print_top_mm": 3.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6853257965649169,
+          "clear_diameter_lower_mm": 3.3706515931298338,
+          "local_z_slab_bounds_mm": [
+            4.3000000023162865,
+            4.400000002316287
+          ],
+          "features": {
+            "Inner wall": 23,
+            "Outer wall": 7,
+            "Floating vertical shell": 61,
+            "Gap infill": 19,
+            "Internal solid infill": 22
+          }
+        },
+        {
+          "print_top_mm": 3.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6896027461214256,
+          "clear_diameter_lower_mm": 3.379205492242851,
+          "local_z_slab_bounds_mm": [
+            4.200000002316287,
+            4.299999902316288
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Internal solid infill": 17,
+            "Gap infill": 25,
+            "Sparse infill": 4,
+            "Floating vertical shell": 9
+          }
+        },
+        {
+          "print_top_mm": 3.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6860054072518844,
+          "clear_diameter_lower_mm": 3.372010814503769,
+          "local_z_slab_bounds_mm": [
+            4.100000002316287,
+            4.200000002316287
+          ],
+          "features": {
+            "Inner wall": 24,
+            "Outer wall": 8,
+            "Floating vertical shell": 16,
+            "Sparse infill": 5,
+            "Gap infill": 36,
+            "Internal solid infill": 19
+          }
+        },
+        {
+          "print_top_mm": 3.5,
+          "bead_heights_mm": [
+            0.0999999,
+            0.1,
+            0.4
+          ],
+          "clear_radius_lower_mm": 1.686450176528654,
+          "clear_diameter_lower_mm": 3.372900353057308,
+          "local_z_slab_bounds_mm": [
+            4.000000002316287,
+            4.400000002316287
+          ],
+          "features": {
+            "Inner wall": 26,
+            "Outer wall": 8,
+            "Bridge": 15,
+            "Gap infill": 33,
+            "Internal solid infill": 15,
+            "Floating vertical shell": 33
+          }
+        },
+        {
+          "print_top_mm": 3.6,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6865854508552636,
+          "clear_diameter_lower_mm": 3.373170901710527,
+          "local_z_slab_bounds_mm": [
+            3.9000000023162866,
+            3.9999999023162873
+          ],
+          "features": {
+            "Inner wall": 23,
+            "Outer wall": 8,
+            "Internal solid infill": 74,
+            "Gap infill": 27
+          }
+        },
+        {
+          "print_top_mm": 3.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6865580067741506,
+          "clear_diameter_lower_mm": 3.373116013548301,
+          "local_z_slab_bounds_mm": [
+            3.8000000023162865,
+            3.9000000023162875
+          ],
+          "features": {
+            "Inner wall": 26,
+            "Outer wall": 8,
+            "Internal solid infill": 74,
+            "Gap infill": 28
+          }
+        },
+        {
+          "print_top_mm": 3.8,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.68703995107773,
+          "clear_diameter_lower_mm": 3.37407990215546,
+          "local_z_slab_bounds_mm": [
+            3.700000002316287,
+            3.7999999023162876
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 8,
+            "Internal solid infill": 74,
+            "Gap infill": 27
+          }
+        },
+        {
+          "print_top_mm": 3.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6863428188448348,
+          "clear_diameter_lower_mm": 3.3726856376896697,
+          "local_z_slab_bounds_mm": [
+            3.600000002316287,
+            3.700000002316288
+          ],
+          "features": {
+            "Inner wall": 28,
+            "Outer wall": 7,
+            "Internal solid infill": 74,
+            "Gap infill": 20
+          }
+        },
+        {
+          "print_top_mm": 4.0,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6842399646540696,
+          "clear_diameter_lower_mm": 3.368479929308139,
+          "local_z_slab_bounds_mm": [
+            3.5000000023162867,
+            3.5999999023162874
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 8,
+            "Internal solid infill": 70,
+            "Gap infill": 22
+          }
+        },
+        {
+          "print_top_mm": 4.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6860789783780021,
+          "clear_diameter_lower_mm": 3.3721579567560043,
+          "local_z_slab_bounds_mm": [
+            3.400000002316287,
+            3.4999999023162878
+          ],
+          "features": {
+            "Inner wall": 23,
+            "Outer wall": 8,
+            "Internal solid infill": 67,
+            "Gap infill": 20
+          }
+        },
+        {
+          "print_top_mm": 4.2,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6890002139747415,
+          "clear_diameter_lower_mm": 3.378000427949483,
+          "local_z_slab_bounds_mm": [
+            3.3000000023162865,
+            3.3999999023162872
+          ],
+          "features": {
+            "Inner wall": 21,
+            "Outer wall": 8,
+            "Internal solid infill": 59,
+            "Gap infill": 25
+          }
+        },
+        {
+          "print_top_mm": 4.3,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6856397261665355,
+          "clear_diameter_lower_mm": 3.371279452333071,
+          "local_z_slab_bounds_mm": [
+            3.200000002316287,
+            3.300000002316288
+          ],
+          "features": {
+            "Inner wall": 20,
+            "Outer wall": 8,
+            "Internal solid infill": 68,
+            "Gap infill": 20
+          }
+        },
+        {
+          "print_top_mm": 4.4,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6899276576636446,
+          "clear_diameter_lower_mm": 3.3798553153272892,
+          "local_z_slab_bounds_mm": [
+            3.1000000023162864,
+            3.199999902316287
+          ],
+          "features": {
+            "Outer wall": 8,
+            "Top surface": 35,
+            "Gap infill": 6
+          }
+        }
+      ]
+    },
+    {
+      "center_local_xy": [
+        2,
+        66
+      ],
+      "name": "M3/socket-head recess",
+      "nominal_transition_print_mm": 3.0,
+      "actual_transition_print_mm": 3.0,
+      "transition_error_mm": 0.0,
+      "first_small_hole_layer_top_mm": 3.1,
+      "small_hole_min_clear_diameter_lower_mm": 3.3493098406583726,
+      "large_recess_min_inscribed_diameter_lower_mm": 6.166244509341433,
+      "layers": [
+        {
+          "print_top_mm": 0.1,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.242002480577932,
+          "clear_diameter_lower_mm": 6.484004961155864,
+          "local_z_slab_bounds_mm": [
+            7.400000002316287,
+            7.500000002316288
+          ],
+          "features": {
+            "Outer wall": 7,
+            "Inner wall": 14,
+            "Gap infill": 27
+          }
+        },
+        {
+          "print_top_mm": 0.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086258521406881,
+          "clear_diameter_lower_mm": 6.172517042813762,
+          "local_z_slab_bounds_mm": [
+            7.300000002316287,
+            7.400000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Internal solid infill": 22,
+            "Gap infill": 34
+          }
+        },
+        {
+          "print_top_mm": 0.3,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0924329027564457,
+          "clear_diameter_lower_mm": 6.184865805512891,
+          "local_z_slab_bounds_mm": [
+            7.200000002316287,
+            7.300000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Internal solid infill": 22,
+            "Gap infill": 34
+          }
+        },
+        {
+          "print_top_mm": 0.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.093180539807249,
+          "clear_diameter_lower_mm": 6.186361079614498,
+          "local_z_slab_bounds_mm": [
+            7.100000002316287,
+            7.200000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.5,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0850537878990463,
+          "clear_diameter_lower_mm": 6.1701075757980925,
+          "local_z_slab_bounds_mm": [
+            7.000000002316287,
+            7.100000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.6,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0865546281384253,
+          "clear_diameter_lower_mm": 6.173109256276851,
+          "local_z_slab_bounds_mm": [
+            6.900000002316287,
+            7.000000002316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086532996504316,
+          "clear_diameter_lower_mm": 6.173065993008632,
+          "local_z_slab_bounds_mm": [
+            6.8000000023162865,
+            6.900000002316287
+          ],
+          "features": {
+            "Inner wall": 23,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.8,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0850599232969262,
+          "clear_diameter_lower_mm": 6.1701198465938525,
+          "local_z_slab_bounds_mm": [
+            6.700000002316287,
+            6.800000002316287
+          ],
+          "features": {
+            "Inner wall": 26,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 0.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0850620173863974,
+          "clear_diameter_lower_mm": 6.170124034772795,
+          "local_z_slab_bounds_mm": [
+            6.600000002316286,
+            6.700000002316287
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.0,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0850641272148907,
+          "clear_diameter_lower_mm": 6.170128254429781,
+          "local_z_slab_bounds_mm": [
+            6.500000002316287,
+            6.600000002316287
+          ],
+          "features": {
+            "Inner wall": 20,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.1,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.083650833076762,
+          "clear_diameter_lower_mm": 6.167301666153524,
+          "local_z_slab_bounds_mm": [
+            6.400000002316286,
+            6.500000002316288
+          ],
+          "features": {
+            "Inner wall": 18,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.08387562307568,
+          "clear_diameter_lower_mm": 6.16775124615136,
+          "local_z_slab_bounds_mm": [
+            6.3000000023162865,
+            6.400000002316287
+          ],
+          "features": {
+            "Inner wall": 15,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0853271487785454,
+          "clear_diameter_lower_mm": 6.170654297557091,
+          "local_z_slab_bounds_mm": [
+            6.200000002316287,
+            6.299999902316288
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.085328799841161,
+          "clear_diameter_lower_mm": 6.170657599682322,
+          "local_z_slab_bounds_mm": [
+            6.100000002316287,
+            6.200000002316287
+          ],
+          "features": {
+            "Inner wall": 15,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.5,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0856060255671736,
+          "clear_diameter_lower_mm": 6.171212051134347,
+          "local_z_slab_bounds_mm": [
+            6.000000002316287,
+            6.100000002316287
+          ],
+          "features": {
+            "Inner wall": 15,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.6,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.085332138279652,
+          "clear_diameter_lower_mm": 6.170664276559304,
+          "local_z_slab_bounds_mm": [
+            5.900000002316286,
+            6.000000002316288
+          ],
+          "features": {
+            "Inner wall": 15,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 10
+          }
+        },
+        {
+          "print_top_mm": 1.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.083887091772042,
+          "clear_diameter_lower_mm": 6.167774183544084,
+          "local_z_slab_bounds_mm": [
+            5.8000000023162865,
+            5.900000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 6,
+            "Gap infill": 34,
+            "Sparse infill": 7,
+            "Floating vertical shell": 10
+          }
+        },
+        {
+          "print_top_mm": 1.8,
+          "bead_heights_mm": [
+            0.0999999,
+            0.1,
+            0.4
+          ],
+          "clear_radius_lower_mm": 3.083889450227349,
+          "clear_diameter_lower_mm": 6.167778900454698,
+          "local_z_slab_bounds_mm": [
+            5.700000002316287,
+            6.100000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 6,
+            "Bridge": 21,
+            "Sparse infill": 5,
+            "Gap infill": 34
+          }
+        },
+        {
+          "print_top_mm": 1.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.0831222546707164,
+          "clear_diameter_lower_mm": 6.166244509341433,
+          "local_z_slab_bounds_mm": [
+            5.600000002316287,
+            5.700000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Internal solid infill": 8,
+            "Sparse infill": 7,
+            "Gap infill": 34
+          }
+        },
+        {
+          "print_top_mm": 2.0,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.084920749734502,
+          "clear_diameter_lower_mm": 6.169841499469004,
+          "local_z_slab_bounds_mm": [
+            5.500000002316287,
+            5.600000002316287
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 7,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0852778681409023,
+          "clear_diameter_lower_mm": 6.170555736281805,
+          "local_z_slab_bounds_mm": [
+            5.400000002316287,
+            5.499999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 7,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.085279851920034,
+          "clear_diameter_lower_mm": 6.170559703840068,
+          "local_z_slab_bounds_mm": [
+            5.3000000023162865,
+            5.400000002316287
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 7,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0856214519874436,
+          "clear_diameter_lower_mm": 6.171242903974887,
+          "local_z_slab_bounds_mm": [
+            5.200000002316287,
+            5.299999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 7,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086226971678113,
+          "clear_diameter_lower_mm": 6.172453943356226,
+          "local_z_slab_bounds_mm": [
+            5.100000002316287,
+            5.200000002316287
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 5,
+            "Floating vertical shell": 8
+          }
+        },
+        {
+          "print_top_mm": 2.5,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.085959887496094,
+          "clear_diameter_lower_mm": 6.171919774992188,
+          "local_z_slab_bounds_mm": [
+            5.000000002316288,
+            5.099999902316288
+          ],
+          "features": {
+            "Inner wall": 16,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Floating vertical shell": 11,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.6,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.086972315348884,
+          "clear_diameter_lower_mm": 6.173944630697768,
+          "local_z_slab_bounds_mm": [
+            4.900000002316287,
+            4.999999902316288
+          ],
+          "features": {
+            "Inner wall": 17,
+            "Outer wall": 7,
+            "Gap infill": 34,
+            "Sparse infill": 5,
+            "Floating vertical shell": 11
+          }
+        },
+        {
+          "print_top_mm": 2.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.087563070483002,
+          "clear_diameter_lower_mm": 6.175126140966004,
+          "local_z_slab_bounds_mm": [
+            4.8000000023162865,
+            4.900000002316287
+          ],
+          "features": {
+            "Inner wall": 30,
+            "Outer wall": 7,
+            "Gap infill": 57,
+            "Internal solid infill": 4,
+            "Top surface": 5,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.8,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.0893362123184613,
+          "clear_diameter_lower_mm": 6.178672424636923,
+          "local_z_slab_bounds_mm": [
+            4.700000002316287,
+            4.799999902316288
+          ],
+          "features": {
+            "Inner wall": 22,
+            "Outer wall": 7,
+            "Internal solid infill": 7,
+            "Gap infill": 45,
+            "Floating vertical shell": 4,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 2.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 3.086586911555466,
+          "clear_diameter_lower_mm": 6.173173823110932,
+          "local_z_slab_bounds_mm": [
+            4.600000002316287,
+            4.700000002316287
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 7,
+            "Internal solid infill": 5,
+            "Gap infill": 36,
+            "Floating vertical shell": 3,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 3.0,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 3.091254566833084,
+          "clear_diameter_lower_mm": 6.182509133666168,
+          "local_z_slab_bounds_mm": [
+            4.500000002316288,
+            4.599999902316288
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 8,
+            "Internal solid infill": 5,
+            "Gap infill": 36,
+            "Floating vertical shell": 3,
+            "Sparse infill": 5
+          }
+        },
+        {
+          "print_top_mm": 3.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6746549203291863,
+          "clear_diameter_lower_mm": 3.3493098406583726,
+          "local_z_slab_bounds_mm": [
+            4.400000002316287,
+            4.499999902316288
+          ],
+          "features": {
+            "Inner wall": 19,
+            "Outer wall": 6,
+            "Overhang wall": 15,
+            "Gap infill": 22,
+            "Internal solid infill": 23,
+            "Floating vertical shell": 83
+          }
+        },
+        {
+          "print_top_mm": 3.2,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6865534551311365,
+          "clear_diameter_lower_mm": 3.373106910262273,
+          "local_z_slab_bounds_mm": [
+            4.3000000023162865,
+            4.400000002316287
+          ],
+          "features": {
+            "Inner wall": 31,
+            "Outer wall": 11,
+            "Gap infill": 19,
+            "Floating vertical shell": 63,
+            "Internal solid infill": 20
+          }
+        },
+        {
+          "print_top_mm": 3.3,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6874259921465093,
+          "clear_diameter_lower_mm": 3.3748519842930187,
+          "local_z_slab_bounds_mm": [
+            4.200000002316287,
+            4.299999902316288
+          ],
+          "features": {
+            "Inner wall": 30,
+            "Outer wall": 10,
+            "Gap infill": 23,
+            "Internal solid infill": 17,
+            "Sparse infill": 4,
+            "Floating vertical shell": 9
+          }
+        },
+        {
+          "print_top_mm": 3.4,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6833388540960623,
+          "clear_diameter_lower_mm": 3.3666777081921246,
+          "local_z_slab_bounds_mm": [
+            4.100000002316287,
+            4.200000002316287
+          ],
+          "features": {
+            "Inner wall": 29,
+            "Outer wall": 10,
+            "Gap infill": 39,
+            "Floating vertical shell": 7,
+            "Sparse infill": 5,
+            "Internal solid infill": 18
+          }
+        },
+        {
+          "print_top_mm": 3.5,
+          "bead_heights_mm": [
+            0.0999999,
+            0.1,
+            0.4
+          ],
+          "clear_radius_lower_mm": 1.6847550384963854,
+          "clear_diameter_lower_mm": 3.369510076992771,
+          "local_z_slab_bounds_mm": [
+            4.000000002316287,
+            4.400000002316288
+          ],
+          "features": {
+            "Inner wall": 31,
+            "Outer wall": 10,
+            "Gap infill": 31,
+            "Bridge": 25,
+            "Internal solid infill": 14,
+            "Floating vertical shell": 38
+          }
+        },
+        {
+          "print_top_mm": 3.6,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6838710839367632,
+          "clear_diameter_lower_mm": 3.3677421678735264,
+          "local_z_slab_bounds_mm": [
+            3.9000000023162866,
+            3.9999999023162873
+          ],
+          "features": {
+            "Inner wall": 28,
+            "Outer wall": 10,
+            "Gap infill": 30,
+            "Internal solid infill": 75
+          }
+        },
+        {
+          "print_top_mm": 3.7,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6839615244915949,
+          "clear_diameter_lower_mm": 3.3679230489831897,
+          "local_z_slab_bounds_mm": [
+            3.800000002316287,
+            3.9000000023162875
+          ],
+          "features": {
+            "Inner wall": 30,
+            "Outer wall": 10,
+            "Gap infill": 28,
+            "Internal solid infill": 76
+          }
+        },
+        {
+          "print_top_mm": 3.8,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6843770363084272,
+          "clear_diameter_lower_mm": 3.3687540726168543,
+          "local_z_slab_bounds_mm": [
+            3.700000002316287,
+            3.7999999023162876
+          ],
+          "features": {
+            "Inner wall": 27,
+            "Outer wall": 10,
+            "Gap infill": 29,
+            "Internal solid infill": 73
+          }
+        },
+        {
+          "print_top_mm": 3.9,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.683832618434607,
+          "clear_diameter_lower_mm": 3.367665236869214,
+          "local_z_slab_bounds_mm": [
+            3.600000002316287,
+            3.700000002316288
+          ],
+          "features": {
+            "Inner wall": 31,
+            "Outer wall": 10,
+            "Gap infill": 20,
+            "Internal solid infill": 74
+          }
+        },
+        {
+          "print_top_mm": 4.0,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6827011728569798,
+          "clear_diameter_lower_mm": 3.3654023457139597,
+          "local_z_slab_bounds_mm": [
+            3.5000000023162867,
+            3.5999999023162874
+          ],
+          "features": {
+            "Inner wall": 27,
+            "Outer wall": 9,
+            "Gap infill": 21,
+            "Internal solid infill": 73
+          }
+        },
+        {
+          "print_top_mm": 4.1,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6835787155373456,
+          "clear_diameter_lower_mm": 3.3671574310746912,
+          "local_z_slab_bounds_mm": [
+            3.400000002316287,
+            3.4999999023162878
+          ],
+          "features": {
+            "Inner wall": 28,
+            "Outer wall": 12,
+            "Gap infill": 22,
+            "Internal solid infill": 68
+          }
+        },
+        {
+          "print_top_mm": 4.2,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6859575579231503,
+          "clear_diameter_lower_mm": 3.3719151158463005,
+          "local_z_slab_bounds_mm": [
+            3.3000000023162865,
+            3.3999999023162872
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 11,
+            "Gap infill": 22,
+            "Internal solid infill": 63
+          }
+        },
+        {
+          "print_top_mm": 4.3,
+          "bead_heights_mm": [
+            0.1
+          ],
+          "clear_radius_lower_mm": 1.6844322556681284,
+          "clear_diameter_lower_mm": 3.3688645113362568,
+          "local_z_slab_bounds_mm": [
+            3.200000002316287,
+            3.300000002316288
+          ],
+          "features": {
+            "Inner wall": 25,
+            "Outer wall": 11,
+            "Gap infill": 23,
+            "Internal solid infill": 53
+          }
+        },
+        {
+          "print_top_mm": 4.4,
+          "bead_heights_mm": [
+            0.0999999
+          ],
+          "clear_radius_lower_mm": 1.6878019647568423,
+          "clear_diameter_lower_mm": 3.3756039295136846,
+          "local_z_slab_bounds_mm": [
+            3.1000000023162864,
+            3.199999902316287
+          ],
+          "features": {
+            "Outer wall": 11,
+            "Top surface": 36,
+            "Gap infill": 8
+          }
+        }
+      ]
+    }
+  ],
+  "new_feature_contract": {
+    "ball_pocket_center_local": [
+      0,
+      60,
+      2
+    ],
+    "ball_pocket_nominal_diameter_mm": 5.6,
+    "split_local_z_mm": 3.1,
+    "fan_local_z_mm": [
+      0.9,
+      3.2
+    ],
+    "fan_offset_mm": 1.11,
+    "cap_bolts_local_xy": [
+      [
+        2,
+        54
+      ],
+      [
+        2,
+        66
+      ]
+    ]
+  },
+  "fastener_metal_envelopes": [
+    {
+      "name": "M3_rod",
+      "center_local_xy": [
+        2,
+        54
+      ],
+      "local_z_interval_mm": [
+        -3.5,
+        4.5
+      ],
+      "radius_mm": 1.5,
+      "hex_vertices_local_xy": null,
+      "minimum_bead_clearance_lower_mm": 0.1728754509667026,
+      "closest_command": {
+        "gcode_line": 17265,
+        "print_top_mm": 3.1,
+        "local_z_slab_mm": [
+          4.400000002316287,
+          4.499999902316287
+        ],
+        "feature": "Overhang wall"
+      },
+      "possible_intrusion_commands": 0,
+      "boundary_plane_contact_commands_excluded": 228,
+      "examples": []
+    },
+    {
+      "name": "M3_socket_head",
+      "center_local_xy": [
+        2,
+        54
+      ],
+      "local_z_interval_mm": [
+        4.5,
+        7.5
+      ],
+      "radius_mm": 2.75,
+      "hex_vertices_local_xy": null,
+      "minimum_bead_clearance_lower_mm": 0.33376173408385634,
+      "closest_command": {
+        "gcode_line": 10368,
+        "print_top_mm": 1.9,
+        "local_z_slab_mm": [
+          5.600000002316287,
+          5.700000002316287
+        ],
+        "feature": "Outer wall"
+      },
+      "possible_intrusion_commands": 0,
+      "boundary_plane_contact_commands_excluded": 387,
+      "examples": []
+    },
+    {
+      "name": "M3_rod",
+      "center_local_xy": [
+        2,
+        66
+      ],
+      "local_z_interval_mm": [
+        -3.5,
+        4.5
+      ],
+      "radius_mm": 1.5,
+      "hex_vertices_local_xy": null,
+      "minimum_bead_clearance_lower_mm": 0.17465492032918634,
+      "closest_command": {
+        "gcode_line": 17208,
+        "print_top_mm": 3.1,
+        "local_z_slab_mm": [
+          4.400000002316287,
+          4.499999902316287
+        ],
+        "feature": "Overhang wall"
+      },
+      "possible_intrusion_commands": 0,
+      "boundary_plane_contact_commands_excluded": 228,
+      "examples": []
+    },
+    {
+      "name": "M3_socket_head",
+      "center_local_xy": [
+        2,
+        66
+      ],
+      "local_z_interval_mm": [
+        4.5,
+        7.5
+      ],
+      "radius_mm": 2.75,
+      "hex_vertices_local_xy": null,
+      "minimum_bead_clearance_lower_mm": 0.33312225467071643,
+      "closest_command": {
+        "gcode_line": 10298,
+        "print_top_mm": 1.9,
+        "local_z_slab_mm": [
+          5.600000002316287,
+          5.700000002316287
+        ],
+        "feature": "Outer wall"
+      },
+      "possible_intrusion_commands": 0,
+      "boundary_plane_contact_commands_excluded": 387,
+      "examples": []
+    }
+  ],
+  "ball_envelope": {
+    "diameter_mm": 5,
+    "center_local": [
+      0,
+      60,
+      2
+    ],
+    "minimum_bead_clearance_lower_mm": 0.29077631665204073,
+    "possible_intrusion_commands": 0,
+    "examples": []
+  },
+  "wire_terminal_envelopes": [
+    {
+      "u_mm": 0,
+      "angle_deg": 5.329070518200751e-14,
+      "tangent_phi_deg": 0.0,
+      "takeup_residual_mm": 5.684341886080802e-14,
+      "terminal_segment_length_mm": 12,
+      "from_local": [
+        0.0,
+        60.0,
+        2.0
+      ],
+      "to_local": [
+        -12.0,
+        59.999999999999986,
+        2.0
+      ],
+      "minimum_bead_clearance_lower_mm": null,
+      "possible_intrusion_commands": 0,
+      "examples": [],
+      "reason": "No printed layer slab intersects wire Z[1.25,2.75]"
+    },
+    {
+      "u_mm": 10,
+      "angle_deg": 9.585210222197505,
+      "tangent_phi_deg": 1.2584337279827826,
+      "takeup_residual_mm": 0.0,
+      "terminal_segment_length_mm": 12,
+      "from_local": [
+        0.0,
+        60.0,
+        2.0
+      ],
+      "to_local": [
+        -11.873498614518839,
+        58.2621764614843,
+        2.0
+      ],
+      "minimum_bead_clearance_lower_mm": null,
+      "possible_intrusion_commands": 0,
+      "examples": [],
+      "reason": "No printed layer slab intersects wire Z[1.25,2.75]"
+    },
+    {
+      "u_mm": 20,
+      "angle_deg": 19.34830831924148,
+      "tangent_phi_deg": 4.16850176320766,
+      "takeup_residual_mm": -5.684341886080802e-14,
+      "terminal_segment_length_mm": 12,
+      "from_local": [
+        0.0,
+        60.0,
+        2.0
+      ],
+      "to_local": [
+        -11.581306092433122,
+        56.85781140073174,
+        2.0
+      ],
+      "minimum_bead_clearance_lower_mm": null,
+      "possible_intrusion_commands": 0,
+      "examples": [],
+      "reason": "No printed layer slab intersects wire Z[1.25,2.75]"
+    },
+    {
+      "u_mm": 22,
+      "angle_deg": 21.333348934578293,
+      "tangent_phi_deg": 4.8887403051600105,
+      "takeup_residual_mm": -2.1316282072803006e-14,
+      "terminal_segment_length_mm": 12,
+      "from_local": [
+        0.0,
+        60.0,
+        2.0
+      ],
+      "to_local": [
+        -11.50912634327425,
+        56.60294085795512,
+        2.0
+      ],
+      "minimum_bead_clearance_lower_mm": null,
+      "possible_intrusion_commands": 0,
+      "examples": [],
+      "reason": "No printed layer slab intersects wire Z[1.25,2.75]"
+    }
+  ],
+  "wire_scope": "Each source-derived current terminal-to-tangent segment is transformed into rotating lever coordinates; only first 12 mm from ball centre, capsule diameter1.5. No old R60 wrap-slot ROI or u/60 angle assumption.",
+  "feature_counts": {
+    "Brim": 797,
+    "Outer wall": 779,
+    "Inner wall": 2050,
+    "Gap infill": 2864,
+    "Bottom surface": 78,
+    "Internal solid infill": 3233,
+    "Sparse infill": 752,
+    "Floating vertical shell": 1174,
+    "Bridge": 122,
+    "Top surface": 97,
+    "Overhang wall": 30
+  },
+  "support_commands": 0,
+  "bead_xy_error_bound_mm": 0.0032500000000000003,
+  "sampled_layers": [
+    0.2,
+    2.7,
+    3.0,
+    3.1,
+    4.3,
+    4.4
+  ],
+  "artifact_sha256": {
+    "invocation.json": "c17520f12e118161ca4d23073a8f0c925010438dae293ab665d1e87def84144d",
+    "plate_1.gcode": "17570d24389370361281d7eec7a8b56d6cd27233fc9a6c0dfa72c43c7d8063e8",
+    "slice-review.3mf": "4a9fed983b9ad18af830dca62e2dadf3789719885d5287cef1515b00746a06bf"
+  },
+  "script_sha256": "45a4c2ef2c8c2b384620ea8b78a2d3ede586a9aecd28835b398cac4e47098210",
+  "parser_sha256": "265b1f5327e71b968bcb9aa19830c7e3d7ab7c4f84f6284d2af1ccc38a37e04e",
+  "mapping_helper_sha256": "72970875bf37f1c728cb48444b5ad5367a307cbf6b3903598cec873b42d5485e",
+  "limits": [
+    "All layer slabs use each command declared bead height, including bridge height, and actual local-Z orientation. XY swept disks use declared width with arc/buffer error; not PETG dimensions.",
+    "Positive clearance certifies only the stated ideal constant-height wire capsule or nominal sphere against the conservative emitted-bead slab envelope. Four discrete u values are not a continuous motion proof.",
+    "Negative lower clearance is possible contact under an over-covering slab projection, not automatically proven physical interference; bridge sag and wire bending are not modeled.",
+    "Circular opening measurements are supplemented by exact nominal SW5.5 hex polygon at30 degrees, nominal M3 rod/head cylinders and actual layer-slab overlap. No manufactured tolerance, torque, retention force or loaded-return proof.",
+    "Printed local split extremes do not prove flatness, tightening preload or bond strength. Candidate remains isolated."
+  ],
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}

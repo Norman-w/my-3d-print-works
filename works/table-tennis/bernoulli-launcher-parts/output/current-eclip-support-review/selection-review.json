@@ -1,0 +1,239 @@
+{
+  "status": "BOUNDED_DIGITAL_SUPPORT_AND_UNDERLAY_SELECTION_REVIEW_COMPLETE",
+  "created_utc": "2026-09-27T16:18:48.781465+00:00",
+  "ci_source_sha256": "cf2dc90ecea43e0bb5bf3b6fe68f9cf7adb8d47145b4b15577e5dd40f1679d8d",
+  "items": [
+    {
+      "selection": "selected",
+      "part": "cable-input-body",
+      "report": "output/current-eclip-support-review/20260927T161002872879Z/cable-input-body/report.json",
+      "report_sha256": "b789bef85a26e2cfda272095338754a462890ad2811a0cc1a71cb475df6e5311",
+      "slice_folder": "output/current-eclip-slices/20260927T155752390241Z/cable-input-body",
+      "all_report_evidence_currently_matches": true,
+      "artifacts_sha256": {
+        "output/current-eclip-slices/20260927T155752390241Z/cable-input-body/invocation.json": "90d5796d8b5730710b7ab750ad2cc3c4e51773186368217457245a3be41bbcf3",
+        "output/current-eclip-slices/20260927T155752390241Z/cable-input-body/artifact-review.json": "94f9539b150c6e80b468fa4047a313d3fcc2d3456955bd58b45fc98bb5ed99e2",
+        "output/current-eclip-slices/20260927T155752390241Z/cable-input-body/slice-review.3mf": "08fb5210a8a4515f400386cd558e94471e42e2b11e182001415aa3b6c85e8534",
+        "output/current-eclip-slices/20260927T155752390241Z/cable-input-body/plate_1.gcode": "c908d907cb2e75713eefa797fb3b2277382c802f0a075a49306b43618d89cc87",
+        "output/current-eclip-support-review/20260927T161002872879Z/cable-input-body/README.md": "f5a66467a6d2a86ae1ae96154ca0123d928e22445cb85f39eef54c113e37371b",
+        "output/current-eclip-support-review/20260927T161002872879Z/cable-input-body/underlay.png": "5b270e862c7c54c5f1a582443662627ac06e1c57c233e649d29cc0208acef011",
+        "output/current-eclip-support-review/20260927T161002872879Z/cable-input-body/cleanup.png": "fda8840ea45aa755947f9427424fd812736ba0deeba18b93ac18cd5f80bd0800"
+      },
+      "support_paths": 3911,
+      "nominal_continuous_reverse_build_sweep_clear": true,
+      "minimum_projected_clearance_mm": 0.15631305467965526,
+      "strict_pocket_only_all_contained": true,
+      "bed_residue_path_lines": [],
+      "unclassified_pocket_outside_lines": [],
+      "roofs": [
+        {
+          "name": "M3_shoulder_1",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": 2.8,
+          "air_gap_mm": 0.20000000000000018,
+          "top_interface_area_under_roi_mm2": 12.585717129633501,
+          "first_complete_command_prior_projection_overlap_mm2": 0.16503683749622056,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.03894348890428438
+        },
+        {
+          "name": "M3_shoulder_2",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": 2.8,
+          "air_gap_mm": 0.20000000000000018,
+          "top_interface_area_under_roi_mm2": 12.585228875050516,
+          "first_complete_command_prior_projection_overlap_mm2": 0.1673275591468065,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.026209944069152058
+        },
+        {
+          "name": "backplate_bottom",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": 2.8,
+          "air_gap_mm": 0.20000000000000018,
+          "top_interface_area_under_roi_mm2": 4376.725627214003,
+          "first_complete_command_prior_projection_overlap_mm2": 2.942502796785856,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.30591823887570263
+        }
+      ]
+    },
+    {
+      "selection": "selected",
+      "part": "cable-input-lever",
+      "report": "output/current-eclip-support-review/20260927T161002771025Z/cable-input-lever/report.json",
+      "report_sha256": "e6b5cef91ccd56de6593424fbc459b8843b97f82359ce068f83dd97f225e1b64",
+      "slice_folder": "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever",
+      "all_report_evidence_currently_matches": true,
+      "artifacts_sha256": {
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/invocation.json": "825b516a128063d05eb932ba725b0ed087387889d628154e81557022f19cd4bc",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/artifact-review.json": "f6d85127d08fc99117599af7b78ed23fc534078f94fbad6539fb49d6a1d93939",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/slice-review.3mf": "d6d2e2b0078f380d8a794b7b1421de563ac470bed32afbd6f21e35a07c0e3bbd",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-lever/plate_1.gcode": "4cf0cdc209cac117398df67893d52899c9d249c3a30284e1727ea411d818ea35",
+        "output/current-eclip-support-review/20260927T161002771025Z/cable-input-lever/README.md": "cc3df51945c09fedc4e8a43bde18e4019c0d077062682a76e4d290e7926070e1",
+        "output/current-eclip-support-review/20260927T161002771025Z/cable-input-lever/underlay.png": "6c8f452788f8376eb951261d42f334e65dc3d880df1619ea29baad4b9fa1b0f6",
+        "output/current-eclip-support-review/20260927T161002771025Z/cable-input-lever/cleanup.png": "2e309dce275fbddd8553c699552511a3fd0cada9eb010ef2be78ff4e49bf96d4"
+      },
+      "support_paths": 311,
+      "nominal_continuous_reverse_build_sweep_clear": true,
+      "minimum_projected_clearance_mm": 0.15627497343054836,
+      "strict_pocket_only_all_contained": false,
+      "bed_residue_path_lines": [
+        1322,
+        1323,
+        1324
+      ],
+      "unclassified_pocket_outside_lines": [],
+      "roofs": [
+        {
+          "name": "M3_shoulder_1",
+          "contact_local_z": -0.6,
+          "print_contact_plane_mm": 2.9,
+          "preceding_support_interface_top_mm": 2.7,
+          "air_gap_mm": 0.19999999999999973,
+          "top_interface_area_under_roi_mm2": 12.818261008088134,
+          "first_complete_command_prior_projection_overlap_mm2": 0.1673835626133661,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.019995818073202175
+        },
+        {
+          "name": "M3_shoulder_2",
+          "contact_local_z": -0.6,
+          "print_contact_plane_mm": 2.9,
+          "preceding_support_interface_top_mm": 2.7,
+          "air_gap_mm": 0.19999999999999973,
+          "top_interface_area_under_roi_mm2": 13.119283384401557,
+          "first_complete_command_prior_projection_overlap_mm2": 0.1676333724326259,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0
+        }
+      ]
+    },
+    {
+      "selection": "selected",
+      "part": "cable-input-cover",
+      "report": "output/current-eclip-support-review/20260927T161606303921Z/cable-input-cover/report.json",
+      "report_sha256": "69ced0c0fcc2a624416afb8107a0f3a0abc391487d435a88c1fefc4172c8a790",
+      "slice_folder": "output/current-eclip-slices/20260927T160923352541Z/cable-input-cover",
+      "all_report_evidence_currently_matches": true,
+      "artifacts_sha256": {
+        "output/current-eclip-slices/20260927T160923352541Z/cable-input-cover/invocation.json": "e75f1c071919c1e8b46cecee62876021023950c7aec86b647d4da11dcfb9bd55",
+        "output/current-eclip-slices/20260927T160923352541Z/cable-input-cover/artifact-review.json": "3148d03ae636f70e6e1f12af43553ce124ba52f203a6f4f9766ee071f36825d4",
+        "output/current-eclip-slices/20260927T160923352541Z/cable-input-cover/slice-review.3mf": "ad5a919f1b120b26c239fe203596e225a8b9925d71c52d15508bb0d559e53c94",
+        "output/current-eclip-slices/20260927T160923352541Z/cable-input-cover/plate_1.gcode": "a6bbbca44fed019f7ab9ce752d4382165a6cd1794d7f0479002639c12a2e8fd3",
+        "output/current-eclip-support-review/20260927T161606303921Z/cable-input-cover/README.md": "5c9c284602c7a6d1bdd1b262c12dc6755d12916db962afe1e95c625031d3a896",
+        "output/current-eclip-support-review/20260927T161606303921Z/cable-input-cover/underlay.png": "026dc81bd0f679178900fc5146e3c87361e2c17c8cb2de596bd1816cf1cdd44c",
+        "output/current-eclip-support-review/20260927T161606303921Z/cable-input-cover/cleanup.png": "13f10c8a94c0acf8c01157fb392c5102daa8c13dd983f069003863db6423e24c"
+      },
+      "support_paths": 406,
+      "nominal_continuous_reverse_build_sweep_clear": true,
+      "minimum_projected_clearance_mm": 0.156317914558176,
+      "strict_pocket_only_all_contained": false,
+      "bed_residue_path_lines": [
+        1243,
+        1244,
+        1245
+      ],
+      "unclassified_pocket_outside_lines": [],
+      "roofs": [
+        {
+          "name": "M3_shoulder_1",
+          "contact_local_z": 9.7,
+          "print_contact_plane_mm": 1.6999999999999993,
+          "preceding_support_interface_top_mm": 1.5,
+          "air_gap_mm": 0.1999999999999993,
+          "top_interface_area_under_roi_mm2": 49.27147518240827,
+          "first_complete_command_prior_projection_overlap_mm2": 8.526453737756881,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.22201580198945678
+        },
+        {
+          "name": "M3_shoulder_2",
+          "contact_local_z": 9.7,
+          "print_contact_plane_mm": 1.6999999999999993,
+          "preceding_support_interface_top_mm": 1.5,
+          "air_gap_mm": 0.1999999999999993,
+          "top_interface_area_under_roi_mm2": 49.29845000994717,
+          "first_complete_command_prior_projection_overlap_mm2": 5.029309596886927,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.6771607669563369
+        }
+      ]
+    },
+    {
+      "selection": "rejected-backplate-no-underlay",
+      "part": "cable-input-body",
+      "report": "output/current-eclip-support-review/20260927T161002871166Z/cable-input-body/report.json",
+      "report_sha256": "6820ea60af897fdabf8c30e49bd3dd5578116321543e7208199fa242de5fe218",
+      "slice_folder": "output/current-eclip-slices/20260927T155733716437Z/cable-input-body",
+      "all_report_evidence_currently_matches": true,
+      "artifacts_sha256": {
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-body/invocation.json": "b806ea19376f485dfc57ac39e1e7559f370630b5cdd2e5ca2b2135dbdc9d3fd0",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-body/artifact-review.json": "ed25af6407ee44a606b0570d6b9cafbabdfde26bf0de15d276d035f326348ab6",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-body/slice-review.3mf": "aade21e3373ee00ccc66bafafdf4f7d4021e39fa9bb6eed7b7c028bec277c83f",
+        "output/current-eclip-slices/20260927T155733716437Z/cable-input-body/plate_1.gcode": "15b09e1cbe2a6a4388744b97a3af6c6943103a960333fe86c2f31b8d56351e6e",
+        "output/current-eclip-support-review/20260927T161002871166Z/cable-input-body/README.md": "b2c39500bcc440107f2750b8ea23185f7b1b84b86e81f27c456df5588c9351f8",
+        "output/current-eclip-support-review/20260927T161002871166Z/cable-input-body/underlay.png": "4975287aead8f688e1b1602f8b5bbf3337e3e0e5b3d3edd9c4ec73e908b25f46",
+        "output/current-eclip-support-review/20260927T161002871166Z/cable-input-body/cleanup.png": "03dddcdbc8ab007320e242095928404468849be01991b42f1fe81e3c4faf7750"
+      },
+      "support_paths": 305,
+      "nominal_continuous_reverse_build_sweep_clear": true,
+      "minimum_projected_clearance_mm": 0.15634784158347498,
+      "strict_pocket_only_all_contained": true,
+      "bed_residue_path_lines": [],
+      "unclassified_pocket_outside_lines": [],
+      "roofs": [
+        {
+          "name": "M3_shoulder_1",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": 2.8,
+          "air_gap_mm": 0.20000000000000018,
+          "top_interface_area_under_roi_mm2": 12.585717129633501,
+          "first_complete_command_prior_projection_overlap_mm2": 0.16503683749622056,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.03894348890428438
+        },
+        {
+          "name": "M3_shoulder_2",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": 2.8,
+          "air_gap_mm": 0.20000000000000018,
+          "top_interface_area_under_roi_mm2": 12.585228875050516,
+          "first_complete_command_prior_projection_overlap_mm2": 0.1673275591468065,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 0.026209944069152058
+        },
+        {
+          "name": "backplate_bottom",
+          "contact_local_z": -9,
+          "print_contact_plane_mm": 3.0,
+          "preceding_support_interface_top_mm": null,
+          "air_gap_mm": null,
+          "top_interface_area_under_roi_mm2": 0.0,
+          "first_complete_command_prior_projection_overlap_mm2": 0.0,
+          "largest_straight_interval_without_previous_underlay_overlap_mm": 95.57979672040541
+        }
+      ]
+    }
+  ],
+  "script_sha256": {
+    "analysis/cable_eclip_support_review.py": "a27c2375c9f5859b45160a1c4c75ddd5e7fa4197ede9638652658bd6a704340f",
+    "analysis/cable_eclip_support_review_v3.py": "7c82e5d918ab676b209a9b1877bd303f0fe2c7d6a8bb4eb4d099bb329ae68c47"
+  },
+  "scope": [
+    "Actual emitted support paths, complete declared nominal bead widths plus 0.00325 mm numerical XY padding, inverse mapped from independently verified 3MF/Gcode transforms.",
+    "Continuous reverse -localZ sweep against the actual normal-part mesh is examined per support upper height.",
+    "Only selected backplate and M3 roof first-model layers are reviewed for prior support/model overlap. Curved Gcode length is not a free straight bridge span.",
+    "The nominal 0.2 mm vertical support gap is retained; projected underlay is not bonded support or physical bridge-flatness evidence."
+  ],
+  "selection_rationale": [
+    "The body with only two M3 enforcers has no interface under the separate 4415.954 mm2 backplate face; its first backplate command is entirely unbacked by earlier projected material. Keep as rejected diagnostic.",
+    "The third body enforcer supplies 4376.726 mm2 of preceding interface below the broad face. The first complete command overlaps the preceding projected material; the bounded remaining straight interval is recorded, not hidden.",
+    "Lever and +Z cover each have three independent 0..0.1 mm exterior bed-residue paths, separate from the model and all other support, but touching brim. Their original strict pocket-only checks remain false; lift-part/clear-bed is a distinct allowed cleanup route.",
+    "All selected full support beads have an open nominal reverse-build extraction path. PETG separation force, residue, gripping and bearing cleanup are not measured."
+  ],
+  "historical_correction": {
+    "withdrawn_summary": "output/current-eclip-support-review/stage-1-summary.md",
+    "correction": "output/current-eclip-support-review/frozen-stage-1/classification-correction.json",
+    "reason": "Earlier pocket assignment omitted far first-layer islands from the per-pocket classifier. Latest selected reports assign every lever/cover support path. Old results retained; no original evidence overwritten."
+  },
+  "manufacturing_release": false,
+  "physical_acceptance": false,
+  "sent_to_printer": false
+}
