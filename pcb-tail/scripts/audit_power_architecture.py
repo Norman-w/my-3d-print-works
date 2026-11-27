@@ -56,8 +56,8 @@ EXPECTED_MATED_CONNECTOR_BOXES = {
     },
     "J3": {
         "header_pcb_box_xy": (1.225, -8.400, 11.375, -3.200),
-        "housing_pcb_box_xy": (2.925, -12.200, 9.675, -8.250),
-        "housing_keepout_pcb_box_xy": (2.675, -12.450, 9.925, -8.000),
+        "housing_pcb_box_xy": (2.925, -3.350, 9.675, 0.600),
+        "housing_keepout_pcb_box_xy": (2.675, -3.600, 9.925, 0.850),
     },
 }
 
@@ -567,7 +567,7 @@ def _audit_mechanical_contract(parts: dict[str, "pcbnew.FOOTPRINT"]) -> None:
         )
         _expect(
             tuple(float(value) for value in item.get("housing_local_box_xy", []))
-            == (-3.375, 2.450, 3.375, 6.400),
+            == (-3.375, -6.400, 3.375, -2.450),
             f"{ref} 51021 local envelope changed",
         )
         for key, expected in expected_boxes.items():

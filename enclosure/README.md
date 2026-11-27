@@ -32,7 +32,7 @@ Type-C 尾端开口左右侧各有一个附加紧固点，防止开口两侧受�
 
 ## 导出（唯一入口）
 
-2026-08-17 已按正式尾板重导仓库内的四层件、合体件和两张打印拼板；`enclosure/stl/print/` 现为 **M7** 产物，含当前尾板干涉。主板尚未布线，整机 release gate 仍未放行。更新壳体或尾板后必须通过下述唯一入口整体重导，不能局部混用旧 STL。
+2026-08-23 已按当前 M7.C5 主板/尾板重导仓库内的四层件、合体件和两张打印拼板；`enclosure/stl/print/` 现为 **M7** 产物，含当前主板/尾板干涉。机械 handoff 和 M7 几何校验已通过，整机工程样板 release gate 已放行；这仍不是量产模具或整机可靠性放行。更新壳体或 PCB 后必须通过下述唯一入口整体重导，不能局部混用旧 STL。
 
 ```bash
 ./scripts/export-stl.sh
@@ -60,6 +60,18 @@ SKIP_STEP6=1 ./scripts/export-stl.sh
 QUALITY_MODE=quick ./scripts/export-stl.sh
 ./scripts/.venv-stl/bin/python scripts/validate_m7_geometry.py
 ```
+
+## M7-LB1 光板版
+
+`M7-LB1` 是基于当前 **M7.C5** 的光板机械变体，不升级为 M8：沿用原四层打印、两张刚体拼板、螺丝位置和装配流程；拍面与红框肩颈加强段保持实体，肩颈下方才开始贝塞尔手柄内腔。唯一入口：
+
+```bash
+./scripts/export-lightboard-stl.sh
+```
+
+产物位于 `enclosure/stl/lightboard/`，包含四层 STL、两张拼板 STL、两张 `arranged-model` 3MF，以及供网页 3D 预览使用的 manifest。局域网页面：`/?tab=print`。
+
+另外生成独立的 **TPU95A 拍柄把套**：内外轮廓直接由真实 M7-LB1 手柄截面做 2D 偏置，壁厚 1.8mm、单侧名义间隙 0.65mm；从拍柄尾端滑入，完整覆盖前后手柄外贴直到拍柄/拍头接合线，尾端为圆滑过渡的无开孔 TPU 封头。把套只负责握持与减振，不替代 M7-LB1 的结构承力。把套 STL 按手柄轴竖立打印，另有单件 `arranged-model` 3MF；首次打印仍需用实物检查插入余量和手感。
 
 旧 `paddle_shell_*`、`paddle_blade_*`、`paddle_handle_*` 以及 `paddle_m6_*` 文件名已废止，
 导出脚本会主动删除它们，避免误打印旧结构。

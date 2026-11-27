@@ -75,6 +75,25 @@ else
   python3 "$ROOT/scripts/write_preview_manifest.py"
 fi
 
+LIGHTBOARD_MANIFEST="$ROOT/enclosure/stl/lightboard/preview/lightboard_manifest.json"
+LIGHTBOARD_STALE=0
+for SOURCE in \
+  "$ROOT/enclosure/paddle_shell.scad" \
+  "$ROOT/enclosure/parameters.scad" \
+  "$ROOT/scripts/bezier_to_openscad.py" \
+  "$ROOT/scripts/export-lightboard-stl.sh" \
+  "$ROOT/scripts/build_print_plates.py" \
+  "$ROOT/scripts/build_3mf_package.py" \
+  "$ROOT/scripts/write_lightboard_manifest.py"; do
+  if [[ ! -f "$LIGHTBOARD_MANIFEST" || "$SOURCE" -nt "$LIGHTBOARD_MANIFEST" ]]; then
+    LIGHTBOARD_STALE=1
+  fi
+done
+if [[ "${SKIP_STL_EXPORT:-0}" != "1" && "$LIGHTBOARD_STALE" == "1" ]]; then
+  echo "  M7-LB1 光板版源文件有更新，执行快速 STL → 3MF 导出..."
+  QUALITY_MODE=quick "$ROOT/scripts/export-lightboard-stl.sh"
+fi
+
 # 2. Start Go server
 require_free_port "$SP_API_PORT" "Go API"
 echo "[2/5] Starting Go server on :$SP_API_PORT..."

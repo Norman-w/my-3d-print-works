@@ -4,7 +4,7 @@ export interface ProcessComponent {
   label: string;
   path: string;
   color: string;
-  kind: 'skin' | 'core' | 'monolithic' | 'assembly' | 'inspection' | 'interference' | 'fastener' | 'plug';
+  kind: 'skin' | 'core' | 'monolithic' | 'assembly' | 'inspection' | 'interference' | 'fastener' | 'plug' | 'grip';
   opacity: number;
 }
 
@@ -28,6 +28,7 @@ export interface ProcessPrintPlate {
   id: string;
   label: string;
   path: string;
+  threeMfPath?: string;
   description: string;
 }
 
@@ -48,8 +49,10 @@ export const PROCESS_MANIFEST_URL = '/stl/preview/manifest.json';
 //#endregion
 
 //#region 公开 API
-export async function loadProcessManifest(): Promise<ProcessPreviewManifest> {
-  const response = await fetch(PROCESS_MANIFEST_URL, { cache: 'no-store' });
+export async function loadProcessManifest(
+  url = PROCESS_MANIFEST_URL,
+): Promise<ProcessPreviewManifest> {
+  const response = await fetch(url, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error(`manifest HTTP ${response.status}`);
   }

@@ -1,0 +1,1046 @@
+{
+  "source_pcb": "pcb/layouts/default/default.kicad_pcb",
+  "board_thickness": 0.8,
+  "board_back_clearance": 0.2,
+  "component_top_clearance": 0.2,
+  "module_top_clearance": 0.2,
+  "minimum_retained_blade_skin": 0.39999999999999947,
+  "scad_y_offset": -10.0,
+  "inventory": {
+    "footprint_count": 67,
+    "component_pockets": 50,
+    "module_flat_pocket_refs": [
+      "IMU_IM948",
+      "MCU_ESP32_S3"
+    ],
+    "skipped_dnp_refs": [
+      "JP_ADC_BL",
+      "JP_ADC_BR",
+      "JP_ADC_TL",
+      "JP_ADC_TR",
+      "SW_BOOT",
+      "SW_EN",
+      "SW_PWR"
+    ],
+    "skipped_non_body_refs": [
+      "PZT_BL_GND",
+      "PZT_BL_SIG",
+      "PZT_BR_GND",
+      "PZT_BR_SIG",
+      "PZT_TL_GND",
+      "PZT_TL_SIG",
+      "PZT_TR_GND",
+      "PZT_TR_SIG"
+    ]
+  },
+  "component_keepouts": [
+    {
+      "ref": "BAT_C_ADC_100N",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        7.119007,
+        83.217,
+        8.629007,
+        86.227
+      ],
+      "scad_box_xyz": [
+        7.019007,
+        -96.327,
+        -0.1,
+        8.729007,
+        -93.117,
+        1.15
+      ]
+    },
+    {
+      "ref": "BAT_R_BOT_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        7.119002,
+        86.442999,
+        8.629002,
+        89.452999
+      ],
+      "scad_box_xyz": [
+        7.019002,
+        -99.552999,
+        -0.1,
+        8.729002,
+        -96.342999,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "BAT_R_TOP_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        4.147,
+        83.192,
+        7.157,
+        84.702
+      ],
+      "scad_box_xyz": [
+        4.047000000000001,
+        -94.80199999999999,
+        -0.1,
+        7.257,
+        -93.092,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "D_BTN_START",
+      "footprint": "SmartPaddle:D_SOD-323_HandSoldering",
+      "layer": "F.Cu",
+      "height_max": 1.0,
+      "courtyard_kicad_xy": [
+        -17.412006,
+        -27.036497,
+        -13.362006,
+        -25.086497
+      ],
+      "scad_box_xyz": [
+        -17.512006000000003,
+        14.986497000000002,
+        -0.1,
+        -13.262006,
+        17.136497000000002,
+        1.2
+      ]
+    },
+    {
+      "ref": "LED_C_SUP_100N",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        -8.374996,
+        85.248999,
+        -6.864996,
+        88.258999
+      ],
+      "scad_box_xyz": [
+        -8.474995999999999,
+        -98.358999,
+        -0.1,
+        -6.764996,
+        -95.148999,
+        1.15
+      ]
+    },
+    {
+      "ref": "LED_MCU_PWR",
+      "footprint": "SmartPaddle:LED_0603",
+      "layer": "F.Cu",
+      "height_max": 0.8,
+      "courtyard_kicad_xy": [
+        -20.225,
+        -13.225,
+        -18.575,
+        -12.375
+      ],
+      "scad_box_xyz": [
+        -20.325000000000003,
+        2.275,
+        -0.1,
+        -18.474999999999998,
+        3.3249999999999997,
+        1.0
+      ]
+    },
+    {
+      "ref": "LED_R_DATA_330R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -6.903,
+        83.319,
+        -3.893,
+        84.829
+      ],
+      "scad_box_xyz": [
+        -7.002999999999999,
+        -94.92899999999999,
+        -0.1,
+        -3.7929999999999997,
+        -93.21900000000001,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "MCU_C_BULK_10U",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        -13.505,
+        9.645,
+        -10.495,
+        11.155
+      ],
+      "scad_box_xyz": [
+        -13.605,
+        -21.255000000000003,
+        -0.1,
+        -10.395,
+        -19.544999999999998,
+        1.15
+      ]
+    },
+    {
+      "ref": "MCU_C_DEC_100N",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        -10.305,
+        9.645,
+        -7.295,
+        11.155
+      ],
+      "scad_box_xyz": [
+        -10.405,
+        -21.255000000000003,
+        -0.1,
+        -7.195,
+        -19.544999999999998,
+        1.15
+      ]
+    },
+    {
+      "ref": "MCU_C_EN_1U",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        -6.455,
+        9.29,
+        -4.945,
+        12.3
+      ],
+      "scad_box_xyz": [
+        -6.555,
+        -22.400000000000002,
+        -0.1,
+        -4.845000000000001,
+        -19.189999999999998,
+        1.15
+      ]
+    },
+    {
+      "ref": "PW_BUCK_3V3",
+      "footprint": "Package_SON:Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm",
+      "layer": "F.Cu",
+      "height_max": 0.8,
+      "courtyard_kicad_xy": [
+        -17.825,
+        -20.775,
+        -14.775,
+        -18.225
+      ],
+      "scad_box_xyz": [
+        -17.925,
+        8.125000000000002,
+        -0.1,
+        -14.675,
+        10.874999999999998,
+        1.0
+      ]
+    },
+    {
+      "ref": "PW_C_IN_10U",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "layer": "F.Cu",
+      "height_max": 1.45,
+      "courtyard_kicad_xy": [
+        -20.005,
+        -22.425,
+        -17.995,
+        -18.975
+      ],
+      "scad_box_xyz": [
+        -20.105,
+        8.875000000000002,
+        -0.1,
+        -17.895,
+        12.525,
+        1.65
+      ]
+    },
+    {
+      "ref": "PW_C_OUT_22U",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        -11.975,
+        -25.975,
+        -9.625,
+        -21.325
+      ],
+      "scad_box_xyz": [
+        -12.075,
+        11.225,
+        -0.1,
+        -9.525,
+        16.075000000000003,
+        1.15
+      ]
+    },
+    {
+      "ref": "PW_L_BUCK_2U2",
+      "footprint": "SmartPaddle:L_Coilcraft_XFL3012",
+      "layer": "F.Cu",
+      "height_max": 1.3,
+      "courtyard_kicad_xy": [
+        -14.24,
+        -20.952,
+        -9.89,
+        -17.402
+      ],
+      "scad_box_xyz": [
+        -14.34,
+        7.302000000000001,
+        -0.1,
+        -9.790000000000001,
+        11.052000000000001,
+        1.5
+      ]
+    },
+    {
+      "ref": "PW_Q_BTN_SENSE",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        -13.125,
+        -30.455,
+        -9.675,
+        -26.545
+      ],
+      "scad_box_xyz": [
+        -13.225,
+        16.445,
+        -0.1,
+        -9.575000000000001,
+        20.555,
+        1.4
+      ]
+    },
+    {
+      "ref": "PW_Q_LATCH",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        -17.878497,
+        -24.865502,
+        -13.968497,
+        -21.415502
+      ],
+      "scad_box_xyz": [
+        -17.978497,
+        11.315502,
+        -0.1,
+        -13.868497,
+        14.965501999999999,
+        1.4
+      ]
+    },
+    {
+      "ref": "PW_Q_LOAD",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        -17.539,
+        -17.808,
+        -14.089,
+        -13.898
+      ],
+      "scad_box_xyz": [
+        -17.639000000000003,
+        3.7979999999999996,
+        -0.1,
+        -13.989,
+        7.9079999999999995,
+        1.4
+      ]
+    },
+    {
+      "ref": "PW_R_BTN_GPIO_PU_100K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -12.905,
+        -32.955,
+        -9.895,
+        -31.445
+      ],
+      "scad_box_xyz": [
+        -13.004999999999999,
+        21.345,
+        -0.1,
+        -9.795,
+        23.055,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PW_R_BTN_RAW_PU_100K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -19.555,
+        -30.165,
+        -18.045,
+        -27.155
+      ],
+      "scad_box_xyz": [
+        -19.655,
+        17.055,
+        -0.1,
+        -17.945,
+        20.265,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PW_R_BTN_SER_1K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -15.868,
+        -30.168999,
+        -14.358,
+        -27.158999
+      ],
+      "scad_box_xyz": [
+        -15.968,
+        17.058999,
+        -0.1,
+        -14.258000000000001,
+        20.268999,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PW_R_EN_PU_10K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -4.655,
+        9.29,
+        -3.145,
+        12.3
+      ],
+      "scad_box_xyz": [
+        -4.755,
+        -22.400000000000002,
+        -0.1,
+        -3.045,
+        -19.189999999999998,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PW_R_GATE_100K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -17.253004,
+        -13.735499,
+        -14.243004,
+        -12.225499
+      ],
+      "scad_box_xyz": [
+        -17.353004000000002,
+        2.125498999999999,
+        -0.1,
+        -14.143004000000001,
+        3.835499000000001,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PW_R_LATCH_PD_100K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -17.392004,
+        -30.1705,
+        -15.882004,
+        -27.1605
+      ],
+      "scad_box_xyz": [
+        -17.492004,
+        17.060499999999998,
+        -0.1,
+        -15.782004,
+        20.270500000000002,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_BL_D_CLAMP",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        -35.468244,
+        28.5544,
+        -31.148505,
+        32.858616
+      ],
+      "scad_box_xyz": [
+        -35.568244,
+        -42.958616,
+        -0.1,
+        -31.048505,
+        -38.4544,
+        1.4
+      ]
+    },
+    {
+      "ref": "PZT_BL_R_DIS_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -32.895232,
+        31.132765,
+        -29.842768,
+        34.399235
+      ],
+      "scad_box_xyz": [
+        -32.995232,
+        -44.499235,
+        -0.1,
+        -29.742767999999998,
+        -41.032765,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_BL_R_SER_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -35.096835,
+        32.509768,
+        -31.830365,
+        35.562232
+      ],
+      "scad_box_xyz": [
+        -35.196835,
+        -45.662232,
+        -0.1,
+        -31.730365,
+        -42.409768,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_BR_D_CLAMP",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        31.584463,
+        28.299689,
+        35.90413,
+        32.604107
+      ],
+      "scad_box_xyz": [
+        31.484462999999998,
+        -42.704107,
+        -0.1,
+        36.00413,
+        -38.199689,
+        1.4
+      ]
+    },
+    {
+      "ref": "PZT_BR_R_DIS_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        34.360755,
+        27.107131,
+        37.521245,
+        30.296869
+      ],
+      "scad_box_xyz": [
+        34.260754999999996,
+        -40.396869,
+        -0.1,
+        37.621245,
+        -37.007130999999994,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_BR_R_SER_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        35.489131,
+        29.407757,
+        38.678869,
+        32.568243
+      ],
+      "scad_box_xyz": [
+        35.389131,
+        -42.668243000000004,
+        -0.1,
+        38.778869,
+        -39.307757,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_CMP_TLV9034",
+      "footprint": "Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        12.42,
+        -21.9675,
+        17.97,
+        -14.2175
+      ],
+      "scad_box_xyz": [
+        12.32,
+        4.1175,
+        -0.1,
+        18.07,
+        12.0675,
+        1.4
+      ]
+    },
+    {
+      "ref": "PZT_C_CMP_100N",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        14.445,
+        -25.505,
+        15.955,
+        -22.495
+      ],
+      "scad_box_xyz": [
+        14.345,
+        12.395000000000001,
+        -0.1,
+        16.055,
+        15.604999999999999,
+        1.15
+      ]
+    },
+    {
+      "ref": "PZT_C_DAC_100N",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.95,
+      "courtyard_kicad_xy": [
+        12.453,
+        -29.94,
+        13.963,
+        -26.93
+      ],
+      "scad_box_xyz": [
+        12.353,
+        16.83,
+        -0.1,
+        14.062999999999999,
+        20.040000000000003,
+        1.15
+      ]
+    },
+    {
+      "ref": "PZT_DAC_MCP4728",
+      "footprint": "Package_SO:MSOP-10_3x3mm_P0.5mm",
+      "layer": "F.Cu",
+      "height_max": 1.1,
+      "courtyard_kicad_xy": [
+        14.195,
+        -30.275,
+        20.605,
+        -26.725
+      ],
+      "scad_box_xyz": [
+        14.095,
+        16.625,
+        -0.1,
+        20.705000000000002,
+        20.375,
+        1.3
+      ]
+    },
+    {
+      "ref": "PZT_R_ADC_BL_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -37.571994,
+        30.490761,
+        -34.316032,
+        33.561837
+      ],
+      "scad_box_xyz": [
+        -37.671994,
+        -43.661837,
+        -0.1,
+        -34.216032,
+        -40.390761,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_R_ADC_BR_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        32.284033,
+        32.01476,
+        35.539995,
+        35.085836
+      ],
+      "scad_box_xyz": [
+        32.184033,
+        -45.185836,
+        -0.1,
+        35.639995,
+        -41.91476,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_R_ADC_TL_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -31.795858,
+        -53.449673,
+        -28.483744,
+        -50.505925
+      ],
+      "scad_box_xyz": [
+        -31.895858,
+        40.405924999999996,
+        -0.1,
+        -28.383744,
+        43.549673,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_R_ADC_TR_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        29.490032,
+        -51.446538,
+        32.745994,
+        -48.375462
+      ],
+      "scad_box_xyz": [
+        29.390031999999998,
+        38.275462,
+        -0.1,
+        32.845994000000005,
+        41.546538,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_R_SCL_PU_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        16.898,
+        -26.206,
+        18.408,
+        -23.196
+      ],
+      "scad_box_xyz": [
+        16.798,
+        13.096000000000002,
+        -0.1,
+        18.508000000000003,
+        16.306,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_R_SDA_PU_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        19.057,
+        -23.92,
+        20.567,
+        -20.91
+      ],
+      "scad_box_xyz": [
+        18.956999999999997,
+        10.81,
+        -0.1,
+        20.667,
+        14.020000000000001,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_TL_D_CLAMP",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        -31.934659,
+        -51.223033,
+        -27.618404,
+        -46.876709
+      ],
+      "scad_box_xyz": [
+        -32.034659,
+        36.776709,
+        -0.1,
+        -27.518404,
+        41.323033,
+        1.4
+      ]
+    },
+    {
+      "ref": "PZT_TL_R_DIS_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -33.482129,
+        -49.413626,
+        -30.556291,
+        -46.096112
+      ],
+      "scad_box_xyz": [
+        -33.582129,
+        35.996112,
+        -0.1,
+        -30.456291,
+        39.513626,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_TL_R_SER_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -34.343801,
+        -51.543296,
+        -31.026287,
+        -48.617458
+      ],
+      "scad_box_xyz": [
+        -34.443801,
+        38.517458,
+        -0.1,
+        -30.926287,
+        41.643296,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_TR_D_CLAMP",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "layer": "F.Cu",
+      "height_max": 1.2,
+      "courtyard_kicad_xy": [
+        25.959567,
+        -51.060162,
+        30.267205,
+        -46.691457
+      ],
+      "scad_box_xyz": [
+        25.859567,
+        36.591457,
+        -0.1,
+        30.367205000000002,
+        41.160162,
+        1.4
+      ]
+    },
+    {
+      "ref": "PZT_TR_R_DIS_1M",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        29.648467,
+        -53.593495,
+        32.835533,
+        -50.430127
+      ],
+      "scad_box_xyz": [
+        29.548467,
+        40.330127,
+        -0.1,
+        32.935533,
+        43.693495,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "PZT_TR_R_SER_4K7",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        27.235467,
+        -53.778684,
+        30.422533,
+        -50.615316
+      ],
+      "scad_box_xyz": [
+        27.135467,
+        40.515316,
+        -0.1,
+        30.522533000000003,
+        43.878684,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "R_MCU_PWR_1K",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        -20.155,
+        -16.505,
+        -18.645,
+        -13.495
+      ],
+      "scad_box_xyz": [
+        -20.255000000000003,
+        3.394999999999999,
+        -0.1,
+        -18.544999999999998,
+        6.604999999999999,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "TAIL_MX125_B",
+      "footprint": "SmartPaddle:Molex_PicoBlade_53261-0571_1x05-1MP_P1.25mm_Horizontal",
+      "layer": "B.Cu",
+      "height_max": 3.4,
+      "courtyard_kicad_xy": [
+        -6.625,
+        83.375,
+        6.625,
+        90.225
+      ],
+      "scad_box_xyz": [
+        -6.725,
+        -100.32499999999999,
+        -4.4,
+        6.725,
+        -93.275,
+        -0.7000000000000001
+      ]
+    },
+    {
+      "ref": "TAIL_MX125_F",
+      "footprint": "SmartPaddle:Molex_PicoBlade_53261-0571_1x05-1MP_P1.25mm_Horizontal",
+      "layer": "F.Cu",
+      "height_max": 3.4,
+      "courtyard_kicad_xy": [
+        -6.625,
+        83.375,
+        6.625,
+        90.225
+      ],
+      "scad_box_xyz": [
+        -6.725,
+        -100.32499999999999,
+        -0.1,
+        6.725,
+        -93.275,
+        3.6
+      ]
+    },
+    {
+      "ref": "USB_R_DN_22R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        6.245,
+        9.095,
+        7.755,
+        12.105
+      ],
+      "scad_box_xyz": [
+        6.1450000000000005,
+        -22.205000000000002,
+        -0.1,
+        7.8549999999999995,
+        -18.994999999999997,
+        0.8500000000000001
+      ]
+    },
+    {
+      "ref": "USB_R_DP_22R",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "layer": "F.Cu",
+      "height_max": 0.65,
+      "courtyard_kicad_xy": [
+        7.745,
+        9.095,
+        9.255,
+        12.105
+      ],
+      "scad_box_xyz": [
+        7.6450000000000005,
+        -22.205000000000002,
+        -0.1,
+        9.355,
+        -18.994999999999997,
+        0.8500000000000001
+      ]
+    }
+  ],
+  "module_flat_box_xyz": [
+    -16.925,
+    -19.175,
+    -1.0,
+    10.924999999999999,
+    19.025000000000002,
+    2.6000000000000005
+  ]
+}

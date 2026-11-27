@@ -514,9 +514,9 @@
       ],
       "housing_local_box_xy": [
         -3.375,
-        2.45,
+        -6.4,
         3.375,
-        6.4
+        -2.45
       ],
       "header_pcb_box_xy": [
         -13.9,
@@ -526,23 +526,23 @@
       ],
       "housing_pcb_box_xy": [
         -8.850000000000001,
-        -3.975,
+        -3.9750000000000005,
         -4.9,
-        2.7750000000000004
+        2.775
       ],
       "housing_keepout_pcb_box_xy": [
         -9.100000000000001,
-        -4.225,
+        -4.2250000000000005,
         -4.65,
-        3.0250000000000004
+        3.025
       ],
       "housing_keepout_handle_box_xyz": [
         -9.100000000000001,
         -171.4461678557074,
-        -4.225,
+        -4.2250000000000005,
         -4.65,
         -167.6961678557074,
-        3.0250000000000004
+        3.025
       ],
       "source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/532/53261/532610271_sd.pdf",
       "housing_source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/510/51021/510210500_sd.pdf"
@@ -567,9 +567,9 @@
       ],
       "housing_local_box_xy": [
         -3.375,
-        2.45,
+        -6.4,
         3.375,
-        6.4
+        -2.45
       ],
       "header_pcb_box_xy": [
         1.2249999999999994,
@@ -579,23 +579,23 @@
       ],
       "housing_pcb_box_xy": [
         2.924999999999999,
-        -12.2,
+        -3.3499999999999996,
         9.675,
-        -8.25
+        0.6000000000000005
       ],
       "housing_keepout_pcb_box_xy": [
         2.674999999999999,
-        -12.45,
+        -3.5999999999999996,
         9.925,
-        -8.0
+        0.8500000000000005
       ],
       "housing_keepout_handle_box_xyz": [
         2.674999999999999,
         -171.4461678557074,
-        -12.45,
+        -3.5999999999999996,
         9.925,
         -167.6961678557074,
-        -8.0
+        0.8500000000000005
       ],
       "source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/532/53261/532610271_sd.pdf",
       "housing_source": "https://www.molex.com/content/dam/molex/molex-dot-com/products/automated/en-us/salesdrawingpdf/510/51021/510210500_sd.pdf"
