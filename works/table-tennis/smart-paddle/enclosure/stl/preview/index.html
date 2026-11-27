@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>M7 轻量 STL 预览</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/three/examples/jsm/"
+  }
+}
+</script>
+<style>
+  :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+  body { margin: 0; background: #0b0d12; color: #d7dde8; }
+  #bar { display:flex; gap:8px; flex-wrap:wrap; padding:10px 12px; align-items:center;
+         border-bottom:1px solid #243044; background:#121722; }
+  button { background:#1c2433; color:#e8eef8; border:1px solid #334155; border-radius:8px;
+           padding:6px 10px; cursor:pointer; }
+  button.on { background:#2563eb; border-color:#3b82f6; }
+  #c { width:100vw; height:calc(100vh - 52px); display:block; }
+  #hint { opacity:.85; font-size:12px; margin-left:auto; max-width:52vw; text-align:right; }
+  #hint.err { color:#fca5a5; opacity:1; }
+</style>
+</head>
+<body>
+<!-- region: 视图层 -->
+<div id="bar">
+  <strong>M7 轻量预览</strong>
+  <button data-k="shell" class="on">正面无缝合体</button>
+  <button data-k="board">板槽</button>
+  <button data-k="ui">USB/键/灯</button>
+  <button data-k="all">全部</button>
+  <button data-k="butt" type="button" id="btn-butt">拍尾正视</button>
+  <a href="http://localhost:5173/?tab=process" style="color:#93c5fd">进入完整工艺预览</a>
+  <span id="hint">加载中…</span>
+</div>
+<canvas id="c"></canvas>
+<!-- endregion -->
+
+<script type="module">
+// ===== 分区：导入/依赖 =====
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+// ===== 分区：常量/配置 =====
+// 相对本页：../ 为 enclosure/stl/
+const FILES = {
+  shell: '../paddle_m7_monolithic_front.stl',
+  board: '../interference/board_slot.stl',
+  ui: '../interference/ui_cuts.stl',
+};
+const COLORS = { shell: 0x8b93a7, board: 0x22c55e, ui: 0xf59e0b };
+
+// ===== 分区：私有成员 =====
+const hint = document.getElementById('hint');
+function setHint(text, err = false) {
+  hint.textContent = text;
+  hint.classList.toggle('err', err);
+}
+
+function fitButtView(cam, controls, meshes) {
+  const box = new THREE.Box3();
+  for (const m of Object.values(meshes)) {
+    if (m.visible) box.expandByObject(m);
+  }
+  if (box.isEmpty()) {
+    for (const m of Object.values(meshes)) box.expandByObject(m);
+  }
+  if (box.isEmpty()) return;
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  // 从拍尾 (−Y) 正视：X 左右、Z 上下 — Type-C 口宽应左右横向
+  const span = Math.max(size.x, size.z, 1);
+  controls.target.copy(center);
+  cam.up.set(0, 0, 1);
+  cam.position.set(center.x, center.y - span * 2.2, center.z);
+  cam.near = Math.max(0.01, span / 100);
+  cam.far = Math.max(500, span * 40);
+  cam.updateProjectionMatrix();
+  controls.update();
+}
+
+function fitOrbit(cam, controls, meshes) {
+  const box = new THREE.Box3();
+  for (const m of Object.values(meshes)) {
+    if (m.visible) box.expandByObject(m);
+  }
+  if (box.isEmpty()) {
+    for (const m of Object.values(meshes)) box.expandByObject(m);
+  }
+  if (box.isEmpty()) return;
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const radius = Math.max(size.x, size.y, size.z, 1) * 0.85;
+  controls.target.copy(center);
+  cam.up.set(0, 0, 1);
+  cam.position.set(
+    center.x + radius * 1.4,
+    center.y - radius * 1.6,
+    center.z + radius * 0.9,
+  );
+  cam.near = Math.max(0.01, radius / 100);
+  cam.far = Math.max(500, radius * 40);
+  cam.updateProjectionMatrix();
+  controls.update();
+}
+
+// ===== 分区：视图层 =====
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0b0d12);
+const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 2000);
+cam.up.set(0, 0, 1);
+const controls = new OrbitControls(cam, canvas);
+controls.enableDamping = true;
+scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+const key = new THREE.DirectionalLight(0xffffff, 1.15);
+key.position.set(40, -80, 60);
+scene.add(key);
+scene.add(new THREE.AxesHelper(12));
+
+const loader = new STLLoader();
+const meshes = {};
+let mode = 'shell';
+
+async function load(key) {
+  const url = FILES[key];
+  const geo = await new Promise((res, rej) => loader.load(url, res, undefined, rej));
+  geo.computeVertexNormals();
+  const mat = new THREE.MeshStandardMaterial({
+    color: COLORS[key],
+    metalness: 0.08,
+    roughness: 0.55,
+    transparent: key !== 'shell',
+    opacity: key === 'shell' ? 1 : 0.72,
+    side: THREE.DoubleSide,
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+  meshes[key] = mesh;
+}
+
+function applyMode() {
+  const show = {
+    shell: mode === 'shell' || mode === 'all',
+    board: mode === 'board' || mode === 'all',
+    ui: mode === 'ui' || mode === 'all',
+  };
+  for (const k of Object.keys(meshes)) meshes[k].visible = !!show[k];
+  document.querySelectorAll('#bar button[data-k]').forEach((b) => {
+    if (b.id === 'btn-butt') return;
+    b.classList.toggle('on', b.dataset.k === mode);
+  });
+  fitOrbit(cam, controls, meshes);
+}
+
+document.querySelectorAll('#bar button[data-k]').forEach((b) => {
+  if (b.id === 'btn-butt') return;
+  b.onclick = () => {
+    mode = b.dataset.k;
+    applyMode();
+  };
+});
+document.getElementById('btn-butt').onclick = () => {
+  fitButtView(cam, controls, meshes);
+  setHint('拍尾正视：X 左右 · Z 上下 · Type-C 口宽应横向');
+};
+
+function resize() {
+  const w = canvas.clientWidth || window.innerWidth;
+  const h = canvas.clientHeight || Math.max(200, window.innerHeight - 52);
+  renderer.setSize(w, h, false);
+  cam.aspect = w / Math.max(h, 1);
+  cam.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+resize();
+
+function tick() {
+  controls.update();
+  renderer.render(scene, cam);
+  requestAnimationFrame(tick);
+}
+tick();
+
+try {
+  setHint('加载 STL…');
+  await Promise.all(['shell', 'board', 'ui'].map(load));
+  applyMode();
+  fitButtView(cam, controls, meshes);
+  const b = new THREE.Box3().setFromObject(meshes.shell);
+  const s = b.getSize(new THREE.Vector3());
+  setHint(`就绪 · 尾段 ${s.x.toFixed(1)}×${s.y.toFixed(1)}×${s.z.toFixed(1)} mm · 默认拍尾正视`);
+} catch (e) {
+  console.error(e);
+  setHint('加载失败：先 ./scripts/export-stl.sh；完整预览请运行 ./dev.sh — ' + e, true);
+}
+</script>
+</body>
+</html>

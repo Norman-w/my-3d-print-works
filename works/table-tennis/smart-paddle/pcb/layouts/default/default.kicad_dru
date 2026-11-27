@@ -1,0 +1,46 @@
+(version 1)
+
+# 板级默认：普通铜皮/走线相对 Edge.Cuts ≥ 0.2mm。
+# 故意半孔仅通过具名封装 / courtyard / 局部 rule area 放行（无全局 castellation 豁免）。
+(rule "Default board edge copper clearance"
+    (constraint edge_clearance (min 0.2mm))
+    (condition "true"))
+
+(rule "Embedded IMU castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('IMU_IM948') || B.memberOfFootprint('IMU_IM948') || A.intersectsCourtyard('IMU_IM948') || B.intersectsCourtyard('IMU_IM948') || A.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('IMU_EMBEDDED_CASTELLATED_EDGE')"))
+
+(rule "Embedded ESP32-S3 castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('MCU_ESP32_S3') || B.memberOfFootprint('MCU_ESP32_S3') || A.intersectsCourtyard('MCU_ESP32_S3') || B.intersectsCourtyard('MCU_ESP32_S3') || A.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || B.intersectsArea('MCU_EMBEDDED_CASTELLATED_EDGE') || A.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE') || B.intersectsArea('HANDLE_CUTOUT_EDGE_INTERFACE')"))
+
+(rule "PZT castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('PZT_BL_SIG') || B.memberOfFootprint('PZT_BL_SIG') || A.intersectsCourtyard('PZT_BL_SIG') || B.intersectsCourtyard('PZT_BL_SIG') || A.intersectsArea('PZT_BL_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_BL_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_BL_GND') || B.memberOfFootprint('PZT_BL_GND') || A.intersectsCourtyard('PZT_BL_GND') || B.intersectsCourtyard('PZT_BL_GND') || A.memberOfFootprint('PZT_BR_SIG') || B.memberOfFootprint('PZT_BR_SIG') || A.intersectsCourtyard('PZT_BR_SIG') || B.intersectsCourtyard('PZT_BR_SIG') || A.intersectsArea('PZT_BR_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_BR_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_BR_GND') || B.memberOfFootprint('PZT_BR_GND') || A.intersectsCourtyard('PZT_BR_GND') || B.intersectsCourtyard('PZT_BR_GND') || A.memberOfFootprint('PZT_TL_SIG') || B.memberOfFootprint('PZT_TL_SIG') || A.intersectsCourtyard('PZT_TL_SIG') || B.intersectsCourtyard('PZT_TL_SIG') || A.intersectsArea('PZT_TL_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_TL_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_TL_GND') || B.memberOfFootprint('PZT_TL_GND') || A.intersectsCourtyard('PZT_TL_GND') || B.intersectsCourtyard('PZT_TL_GND') || A.memberOfFootprint('PZT_TR_SIG') || B.memberOfFootprint('PZT_TR_SIG') || A.intersectsCourtyard('PZT_TR_SIG') || B.intersectsCourtyard('PZT_TR_SIG') || A.intersectsArea('PZT_TR_SIG_CASTELLATED_EDGE') || B.intersectsArea('PZT_TR_SIG_CASTELLATED_EDGE') || A.memberOfFootprint('PZT_TR_GND') || B.memberOfFootprint('PZT_TR_GND') || A.intersectsCourtyard('PZT_TR_GND') || B.intersectsCourtyard('PZT_TR_GND') || A.memberOfFootprint('PZT_BL_D_CLAMP') || B.memberOfFootprint('PZT_BL_D_CLAMP') || A.intersectsCourtyard('PZT_BL_D_CLAMP') || B.intersectsCourtyard('PZT_BL_D_CLAMP') || A.memberOfFootprint('PZT_BR_D_CLAMP') || B.memberOfFootprint('PZT_BR_D_CLAMP') || A.intersectsCourtyard('PZT_BR_D_CLAMP') || B.intersectsCourtyard('PZT_BR_D_CLAMP') || A.memberOfFootprint('PZT_TL_D_CLAMP') || B.memberOfFootprint('PZT_TL_D_CLAMP') || A.intersectsCourtyard('PZT_TL_D_CLAMP') || B.intersectsCourtyard('PZT_TL_D_CLAMP') || A.memberOfFootprint('PZT_TR_D_CLAMP') || B.memberOfFootprint('PZT_TR_D_CLAMP') || A.intersectsCourtyard('PZT_TR_D_CLAMP') || B.intersectsCourtyard('PZT_TR_D_CLAMP')"))
+
+# 六段 PZT 过渡走线受狭窄坞口/内开槽几何限制；仅按具体 PCB 组放行，避免全网豁免。
+(rule "PZT exact edge transition segments"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfGroup('PZT_EDGE_TRANSITION_SEGMENTS') || B.memberOfGroup('PZT_EDGE_TRANSITION_SEGMENTS')"))
+
+(rule "Tail finger castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('TAIL_PWR') || B.memberOfFootprint('TAIL_PWR') || A.intersectsCourtyard('TAIL_PWR') || B.intersectsCourtyard('TAIL_PWR') || A.memberOfFootprint('TAIL_LED') || B.memberOfFootprint('TAIL_LED') || A.intersectsCourtyard('TAIL_LED') || B.intersectsCourtyard('TAIL_LED') || A.memberOfFootprint('TAIL_CTL') || B.memberOfFootprint('TAIL_CTL') || A.intersectsCourtyard('TAIL_CTL') || B.intersectsCourtyard('TAIL_CTL') || A.memberOfFootprint('TAIL_USB') || B.memberOfFootprint('TAIL_USB') || A.intersectsCourtyard('TAIL_USB') || B.intersectsCourtyard('TAIL_USB') || A.memberOfFootprint('TAIL_UART') || B.memberOfFootprint('TAIL_UART') || A.intersectsCourtyard('TAIL_UART') || B.intersectsCourtyard('TAIL_UART') || A.intersectsArea('TAIL_FINGER_CASTELLATED_EDGE') || B.intersectsArea('TAIL_FINGER_CASTELLATED_EDGE') || A.intersectsArea('TAIL_SHOULDER_EDGE_INTERFACE') || B.intersectsArea('TAIL_SHOULDER_EDGE_INTERFACE')"))
+
+(rule "Tail stiffener / tip castellated edge interface"
+    (constraint edge_clearance (min -1mm))
+    (condition "A.memberOfFootprint('TAIL_STIFF_L') || B.memberOfFootprint('TAIL_STIFF_L') || A.intersectsCourtyard('TAIL_STIFF_L') || B.intersectsCourtyard('TAIL_STIFF_L') || A.memberOfFootprint('TAIL_STIFF_R') || B.memberOfFootprint('TAIL_STIFF_R') || A.intersectsCourtyard('TAIL_STIFF_R') || B.intersectsCourtyard('TAIL_STIFF_R') || A.memberOfFootprint('TAIL_TIP') || B.memberOfFootprint('TAIL_TIP') || A.intersectsCourtyard('TAIL_TIP') || B.intersectsCourtyard('TAIL_TIP') || A.intersectsArea('TAIL_STIFF_CASTELLATED_EDGE') || B.intersectsArea('TAIL_STIFF_CASTELLATED_EDGE') || A.intersectsArea('TAIL_STIFF_R_CASTELLATED_EDGE') || B.intersectsArea('TAIL_STIFF_R_CASTELLATED_EDGE')"))
+
+
+(rule "Tail stiffener strip meets castellation"
+    (constraint clearance (min -1mm))
+    (constraint hole_clearance (min -1mm))
+    (condition "(A.memberOfFootprint('TAIL_STIFF_L') && B.memberOfFootprint('TAIL_STIFF_L')) || (A.memberOfFootprint('TAIL_STIFF_R') && B.memberOfFootprint('TAIL_STIFF_R'))"))
+
+(rule "MCU castellated pad pitch"
+    (constraint clearance (min 0.12mm))
+    (condition "A.memberOfFootprint('MCU_ESP32_S3') && B.memberOfFootprint('MCU_ESP32_S3')"))
+
+(rule "C4 fine-pitch analog packages"
+    (constraint clearance (min 0.12mm))
+    (condition "(A.memberOfFootprint('PZT_DAC_MCP4728') && B.memberOfFootprint('PZT_DAC_MCP4728')) || (A.memberOfFootprint('PZT_CMP_TLV9034') && B.memberOfFootprint('PZT_CMP_TLV9034'))"))

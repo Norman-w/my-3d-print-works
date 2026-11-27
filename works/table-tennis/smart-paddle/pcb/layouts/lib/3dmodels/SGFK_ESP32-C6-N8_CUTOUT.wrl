@@ -1,0 +1,77 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+  title "SmartPaddle SGFK ESP32-C6-N8 simplified module, millimeter scale"
+}
+
+Transform {
+  translation 0 0 0.55
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.00 0.30 0.14 }
+      }
+      geometry Box { size 25.50 18.00 1.10 }
+    }
+  ]
+}
+
+Transform {
+  translation -9.15 0.00 1.35
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.01 0.01 0.01 specularColor 0.02 0.02 0.02 }
+      }
+      geometry Box { size 5.95 16.40 0.50 }
+    }
+  ]
+}
+
+Transform {
+  translation 4.10 0.15 1.95
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.70 0.70 0.68 specularColor 0.9 0.9 0.85 shininess 0.55 }
+      }
+      geometry Box { size 14.80 15.10 1.70 }
+    }
+  ]
+}
+
+Transform {
+  translation -1.00 -8.65 1.18
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.82 0.65 0.28 specularColor 0.4 0.35 0.2 shininess 0.4 }
+      }
+      geometry Box { size 17.60 0.70 0.14 }
+    }
+  ]
+}
+
+Transform {
+  translation -1.00 8.65 1.18
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.82 0.65 0.28 specularColor 0.4 0.35 0.2 shininess 0.4 }
+      }
+      geometry Box { size 17.60 0.70 0.14 }
+    }
+  ]
+}
+
+Transform {
+  translation -5.25 -3.90 2.45
+  children [
+    Shape {
+      appearance Appearance {
+        material Material { diffuseColor 0.87 0.86 0.80 specularColor 0.7 0.7 0.65 shininess 0.5 }
+      }
+      geometry Box { size 2.30 2.30 0.85 }
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+"""pcb-tail physical parts — independent fixed-battery butt board.
+
+电源管理基线为 IP5305T；线束为两组 MX1.25 4P 卧插。
+"""
+
+# ===== 分区：公开 API =====
+
+component Resistor:
+    designator_prefix = "R"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Resistor_SMD:R_0603_1608Metric"
+
+
+component Capacitor:
+    """0603 去耦 / 小信号电容。"""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_0603_1608Metric"
+
+
+component Capacitor0805:
+    """0805 功率电容（VIN / VOUT / BAT）。"""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_0805_2012Metric"
+
+
+component Capacitor1206:
+    """1206 功率电容；用于需要保留直流偏压后有效容量的 22 uF 节点。"""
+    designator_prefix = "C"
+    value = "unknown"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Capacitor_SMD:C_1206_3216Metric"
+
+
+component Diode_1N4148W:
+    """1N4148W 小信号隔离二极管，SOD-323；pad1=K、pad2=A。"""
+    designator_prefix = "D"
+    value = "1N4148W"
+    signal anode
+    signal cathode
+    anode ~ pin 2
+    cathode ~ pin 1
+    footprint = "Diode_SMD:D_SOD-323"
+
+
+component InductorXFL4020:
+    """Coilcraft XFL4020-222MEC 类 2.2µH（4×4×2 mm）。"""
+    designator_prefix = "L"
+    value = "2.2uH"
+    signal p1
+    signal p2
+    p1 ~ pin 1
+    p2 ~ pin 2
+    footprint = "Inductor_SMD:L_Coilcraft_XxL4020"
+
+
+component LED_0603:
+    """0603 LED；KiCad 惯例 pad1=阴极、pad2=阳极。"""
+    designator_prefix = "LED"
+    value = "green"
+    signal a
+    signal c
+    c ~ pin 1
+    a ~ pin 2
+    footprint = "LED_SMD:LED_0603_1608Metric"
+
+
+component Omron_B3U_1000P:
+    """Omron B3U-1000P 超小型顶按 SPST-NO 贴片轻触开关（无定位柱）。
+
+    3.0×2.5 mm 本体、1.6 mm 操作高度、1.5 N；配合拍柄导向活动推杆，
+    不再使用旧 4.5×4.5 mm THT 开关的四个大通孔。
+    """
+    designator_prefix = "SW"
+    value = "B3U-1000P"
+    signal a
+    signal b
+    a ~ pin 1
+    b ~ pin 2
+    footprint = "Button_Switch_SMD:SW_SPST_B3U-1000P"
+
+
+component WS2812B_2020:
+    """Worldsemi WS2812B-2020 正面发光（2.0×2.0 mm PLCC-4）。
+
+    焊盘：1=DOUT, 2=GND, 3=DIN, 4=VDD。
+    """
+    designator_prefix = "D"
+    value = "WS2812B-2020"
+    signal DOUT
+    signal VSS
+    signal DIN
+    signal VDD
+    DOUT ~ pin 1
+    VSS ~ pin 2
+    DIN ~ pin 3
+    VDD ~ pin 4
+    footprint = "SmartPaddleTail:LED_WS2812B-2020_PLCC4_2.0x2.0mm"
+
+
+component USB4120_03_C_Vertical:
+    """16P Type-C 立贴超短体（优选身体高度 5.8 mm）。
+
+    主图纸：docs/usb-c-vertical-16p-short/
+      Type-C-16PIN-vertical-H5.8-short-datasheet.pdf
+    封装由 scripts/gen_usb_16p_vert_smt_fp.py 按该 PDF 的推荐 PCB 生成：
+    16×贴片 + 左右腰圆孔；无 USB4115 四角圆孔。
+    焊盘直接使用数据表触点名 A1…B12；A8/B8 在本板明确 NC，S1 为外壳。
+    """
+    designator_prefix = "J"
+    value = "USB-C-16P-VERT-5.8"
+    pin "A1"
+    pin "A4"
+    pin "A5"
+    pin "A6"
+    pin "A7"
+    pin "A8"
+    pin "A9"
+    pin "A12"
+    pin "B1"
+    pin "B4"
+    pin "B5"
+    pin "B6"
+    pin "B7"
+    pin "B8"
+    pin "B9"
+    pin "B12"
+    pin "S1"
+    footprint = "SmartPaddleTail:USB_C_Receptacle_16P_Vertical_SMT_Short"
+
+
+component MolexPicoBlade_53261_4P_Horizontal:
+    """MX1.25 4P 卧插（Molex PicoBlade 53261-0471，SMT+侧耳）。
+
+    本板两组：j_pwr（电源）与 j_sig（信号），替代原单颗 8P。
+    与旧 53398 立插同属 PicoBlade，均配 51021 4P 线端外壳；
+    引脚电气顺序不变，但 PCB land pattern 不可互换。
+
+    主证据与封装版本记录：
+      docs/molex-picoblade-53261-4p-horizontal/README.md
+    """
+    designator_prefix = "J"
+    value = "Molex 53261-0471"
+    signal p1
+    signal p2
+    signal p3
+    signal p4
+    p1 ~ pin 1
+    p2 ~ pin 2
+    p3 ~ pin 3
+    p4 ~ pin 4
+    footprint = "Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal"
+
+
+component JST_ACH_BM02B_ACHSS_GAN_ETF_2P_Battery:
+    """Dedicated 1-cell battery connector, JST ACH 1.2 mm SMT top-entry.
+
+    Exact board header: BM02B-ACHSS-GAN-ETF, mating housing ACHR-02V-S,
+    contact SACH-003G-P0.2 with 28 AWG finished cable.
+    Pin 1 is BAT_P/red; pin 2 is GND/black.
+
+    Primary source:
+      docs/battery-connector-jst-ach-2p/JST-ACH-official.pdf
+      SHA-256 d1f9e9375b1c0dfc4814d5f633997484d84da6c0b03f712104df3bbdf462131b
+    """
+    designator_prefix = "J"
+    value = "BM02B-ACHSS-GAN-ETF"
+    signal BAT_P
+    signal GND
+    BAT_P ~ pin 1
+    GND ~ pin 2
+    footprint = "SmartPaddleTail:JST_ACH_BM02B-ACHSS-GAN-ETF_1x02-1MP_P1.20mm_Vertical"
+
+
+component IP5305T:
+    """Injoinic IP5305T — 1S 充放电 + 5V 升压（ESOP-8 EP）。
+
+    1=VIN  2=LED1/VSET  3=LED2/VTHS  4=LED3
+    5=KEY/WLED  6=BAT  7=SW  8=VOUT  9=EPAD(GND)
+    """
+    designator_prefix = "U"
+    value = "IP5305T"
+    signal VIN
+    signal LED1
+    signal LED2
+    signal LED3
+    signal KEY
+    signal BAT
+    signal SW
+    signal VOUT
+    signal EPAD
+    VIN ~ pin 1
+    LED1 ~ pin 2
+    LED2 ~ pin 3
+    LED3 ~ pin 4
+    KEY ~ pin 5
+    BAT ~ pin 6
+    SW ~ pin 7
+    VOUT ~ pin 8
+    EPAD ~ pin 9
+    footprint = "SmartPaddleTail:IP5305T_HSOP-8-1EP"
+
+
+component TPS2553DBV:
+    """TI TPS2553DBVR 可调恒流 USB 电源开关，DBV/SOT-23-6。
+
+    1=IN, 2=GND, 3=EN(active high), 4=/FAULT(open drain),
+    5=ILIM, 6=OUT。RILIM 必须为 1%，并紧靠 ILIM/GND。
+
+    Primary source:
+      docs/power-architecture-rework/sources/TPS2553-RevF.pdf
+    """
+    designator_prefix = "U"
+    value = "TPS2553DBVR"
+    signal IN
+    signal GND
+    signal EN
+    signal FAULT_N
+    # Avoid the legacy parser's ILIM identifier collision: expose pin 5 under
+    # an unambiguous interface name and retain the datasheet name in comments.
+    signal LIMIT_SET
+    signal OUT
+    IN ~ pin 1
+    GND ~ pin 2
+    EN ~ pin 3
+    FAULT_N ~ pin 4
+    LIMIT_SET ~ pin 5
+    OUT ~ pin 6
+    footprint = "Package_TO_SOT_SMD:SOT-23-6"
+
+
+component USBLC6_2SC6:
+    """ST USBLC6-2SC6 USB D+/D− ESD（SOT-23-6）。
+
+    1/6=I/O1 对（D+），3/4=I/O2 对（D−），2=GND，5=VBUS。
+    """
+    designator_prefix = "U"
+    value = "USBLC6-2SC6"
+    signal IO1A
+    signal GND
+    signal IO2A
+    signal IO2B
+    signal VBUS
+    signal IO1B
+    IO1A ~ pin 1
+    GND ~ pin 2
+    IO2A ~ pin 3
+    IO2B ~ pin 4
+    VBUS ~ pin 5
+    IO1B ~ pin 6
+    footprint = "Package_TO_SOT_SMD:SOT-23-6"
+
+
+component SN74AHCT1G125:
+    """TI SN74AHCT1G125 — 3.3V→5V RGB 数据缓冲（SOT-23-5）。
+
+    1=/OE  2=A  3=GND  4=Y  5=VCC
+    """
+    designator_prefix = "U"
+    value = "SN74AHCT1G125"
+    signal OE_N
+    signal A
+    signal GND
+    signal Y
+    signal VCC
+    OE_N ~ pin 1
+    A ~ pin 2
+    GND ~ pin 3
+    Y ~ pin 4
+    VCC ~ pin 5
+    footprint = "Package_TO_SOT_SMD:SOT-23-5"

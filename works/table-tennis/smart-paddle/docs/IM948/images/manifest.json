@@ -1,0 +1,274 @@
+[
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1644399294531-cea8439d-2229-4ed2-aa5c-66efbab88b2f.png",
+    "alt": "buy_qr",
+    "w": 354,
+    "h": 351,
+    "file": "01_buy_qr.png",
+    "bytes": 27829
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1660142406281-c7970534-fecb-4f7c-bad4-8799645445d8.png",
+    "alt": "product_selection",
+    "w": 742,
+    "h": 773,
+    "file": "02_product_selection.png",
+    "bytes": 184267
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2023/png/8364861/1678604814470-d260731e-79b7-4d15-92df-ae43b1051b29.png",
+    "alt": "module_photo_or_size",
+    "w": 368,
+    "h": 315,
+    "file": "03_module_photo_or_size.png",
+    "bytes": 157878
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/jpeg/8364861/1659199340313-ec6b8712-e344-4c8c-b3b7-498bbd8ffe86.jpeg",
+    "alt": "application_fields",
+    "w": 430,
+    "h": 650,
+    "file": "04_application_fields.jpg",
+    "bytes": 124881
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/jpeg/8364861/1638776530368-b1267335-0798-42c0-88d6-b1e8487c62d1.jpeg",
+    "alt": "coordinate_axes",
+    "w": 372,
+    "h": 320,
+    "file": "05_coordinate_axes.jpg",
+    "bytes": 17149
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1660668580891-13f73b32-0418-4d12-b6e5-adfb07963805.png",
+    "alt": "module_top_view",
+    "w": 287,
+    "h": 255,
+    "file": "06_module_top_view.png",
+    "bytes": 51788
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2026/png/12595793/1782900588044-61edc468-6309-4ae5-9797-ac3324a798c6.png",
+    "alt": "module_pinout_diagram",
+    "w": 900,
+    "h": 776,
+    "file": "07_module_pinout_diagram.png",
+    "bytes": 80075
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1660120658617-4bb0af39-3464-4ca5-9367-aec5fc046002.png",
+    "alt": "module_side_or_detail",
+    "w": 347,
+    "h": 231,
+    "file": "08_module_side_or_detail.png",
+    "bytes": 110739
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2023/png/12595793/1691306170781-8082f490-ea2c-429b-8a18-66400787b9d0.png",
+    "alt": "pin_table_wide",
+    "w": 1430,
+    "h": 525,
+    "file": "09_pin_table_wide.png",
+    "bytes": 89589
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/12595793/1636449946922-8f308b1c-1cf7-4e36-9161-b3906eba4035.png",
+    "alt": "pin_desc_1",
+    "w": 1146,
+    "h": 423,
+    "file": "10_pin_desc_1.png",
+    "bytes": 60156
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/12595793/1636513645114-7dc52e15-215c-43a4-b612-40a4210dd4b0.png",
+    "alt": "pin_desc_2",
+    "w": 1148,
+    "h": 424,
+    "file": "11_pin_desc_2.png",
+    "bytes": 46601
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1637136546525-c3ad705e-74aa-4425-a12c-70de04b42655.png",
+    "alt": "led_status",
+    "w": 449,
+    "h": 423,
+    "file": "12_led_status.png",
+    "bytes": 131877
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1637137253032-27723cc6-028e-4293-afa3-118238200867.png",
+    "alt": "power_note_1",
+    "w": 456,
+    "h": 618,
+    "file": "13_power_note_1.png",
+    "bytes": 162526
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1637137567649-082ff7b7-749b-4666-a64a-5720aa4c9a20.png",
+    "alt": "power_note_2",
+    "w": 452,
+    "h": 727,
+    "file": "14_power_note_2.png",
+    "bytes": 152257
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659199914469-24fbce8d-3053-4905-ab7e-94eb66efb845.png",
+    "alt": "typical_application_schematic",
+    "w": 888,
+    "h": 586,
+    "file": "15_typical_application_schematic.png",
+    "bytes": 66590
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1639623781687-adbad644-5b7e-4cbf-9369-4fd2aac3ba78.png",
+    "alt": "block_or_mech_diagram",
+    "w": 926,
+    "h": 913,
+    "file": "16_block_or_mech_diagram.png",
+    "bytes": 56020
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2024/png/8364861/1705554201909-aa1f08dc-f0b3-42ab-be52-38f4333be333.png",
+    "alt": "hardware_diagram_2024",
+    "w": 783,
+    "h": 694,
+    "file": "17_hardware_diagram_2024.png",
+    "bytes": 138818
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659200029687-cc56b119-1b70-45b6-899f-4fde98f7bc30.png",
+    "alt": "ros_example",
+    "w": 892,
+    "h": 1200,
+    "file": "18_ros_example.png",
+    "bytes": 525246
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659200319701-6b55edcb-40ad-4da7-916f-5888b33dee65.png",
+    "alt": "software_ui_1",
+    "w": 892,
+    "h": 662,
+    "file": "19_software_ui_1.png",
+    "bytes": 267478
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2024/png/8364861/1710382306442-bfcb7bc0-35b0-45a6-85d8-6412979a2cea.png",
+    "alt": "software_ui_2",
+    "w": 859,
+    "h": 560,
+    "file": "20_software_ui_2.png",
+    "bytes": 121876
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659782431704-822a4b0e-ec6e-4bed-b3ff-126273c97e82.png",
+    "alt": "protocol_ui",
+    "w": 813,
+    "h": 360,
+    "file": "21_protocol_ui.png",
+    "bytes": 39159
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1660977414568-793ad3cb-461b-4737-b5a0-ee7912ddb6fb.png",
+    "alt": "ble_connect_steps",
+    "w": 782,
+    "h": 322,
+    "file": "22_ble_connect_steps.png",
+    "bytes": 10914
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/jpeg/8364861/1660982090544-1a1af62b-7afe-4c3d-8514-ef3517596797.jpeg",
+    "alt": "accel_calibration",
+    "w": 830,
+    "h": 546,
+    "file": "23_accel_calibration.jpg",
+    "bytes": 107706
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659776990328-3370ec7e-12fb-46a1-8825-e163c979f82b.png",
+    "alt": "calib_simple",
+    "w": 829,
+    "h": 355,
+    "file": "24_calib_simple.png",
+    "bytes": 15298
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659778006192-45705bd3-ec86-4a69-b065-6227fbb1effd.png",
+    "alt": "calib_faces",
+    "w": 820,
+    "h": 355,
+    "file": "25_calib_faces.png",
+    "bytes": 39293
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659782052266-5895bdcd-5bc6-48a6-b635-dd7dac6278a4.png",
+    "alt": "calib_flow",
+    "w": 818,
+    "h": 363,
+    "file": "26_calib_flow.png",
+    "bytes": 36889
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659797873258-c931257e-6933-4b9d-9f9b-c1299ac0cf5b.png",
+    "alt": "sensor_axes_internal",
+    "w": 848,
+    "h": 554,
+    "file": "27_sensor_axes_internal.png",
+    "bytes": 50250
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1614326191610-e055e999-144a-4acb-970a-9695c672eb76.png",
+    "alt": "matrix_default",
+    "w": 401,
+    "h": 336,
+    "file": "28_matrix_default.png",
+    "bytes": 21447
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2021/png/8364861/1614323653342-a6ccd5b4-052c-4cbe-baa7-5b5b29503bb1.png",
+    "alt": "install_orientation",
+    "w": 494,
+    "h": 470,
+    "file": "29_install_orientation.png",
+    "bytes": 48974
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1658134355336-61aae419-6ea3-4cde-921e-28e3ff04ffad.png",
+    "alt": "factory_save",
+    "w": 347,
+    "h": 398,
+    "file": "30_factory_save.png",
+    "bytes": 38194
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659433048074-2f31b5dd-5795-4a9b-bc9f-f58de5a993a2.png",
+    "alt": "charge_params_ui",
+    "w": 875,
+    "h": 1055,
+    "file": "31_charge_params_ui.png",
+    "bytes": 491551
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2022/png/8364861/1659200904039-60cd70d4-f259-4080-a3d4-a8f8029d8375.png",
+    "alt": "data_log_ui",
+    "w": 871,
+    "h": 1059,
+    "file": "32_data_log_ui.png",
+    "bytes": 442794
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2023/jpeg/8364861/1675675470718-1da3cc93-2555-4596-b995-7752a07b2d06.jpeg",
+    "alt": "data_log_content",
+    "w": 2440,
+    "h": 257,
+    "file": "33_data_log_content.jpg",
+    "bytes": 207852
+  },
+  {
+    "src": "https://cdn.nlark.com/yuque/0/2024/png/8364861/1710412185384-c13aa9f0-6497-4fa4-9e9b-0c49acd788cb.png",
+    "alt": "misc_2024",
+    "w": 325,
+    "h": 533,
+    "file": "34_misc_2024.png",
+    "bytes": 47370
+  }
+]
