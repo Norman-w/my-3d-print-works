@@ -2,6 +2,8 @@
 
 理疗仪线缆串联保护盒（OpenSCAD 参数化外壳 + Web STL 预览）。
 
+![理疗仪线缆串联保护盒](output/previews/therapy-cable-inline-box_assembly.png)
+
 ## 版本说明
 
 ### v1 — 水泥电阻方案（已弃用）
@@ -67,3 +69,10 @@ python3 web/server.py
 服务启动时会比较 `scad/*.scad` 与三份 `stl/*.stl` 的修改时间；任一 STL
 缺失或过期时，会自动调用 OpenSCAD 重新导出全部模型。若 OpenSCAD 不可用
 或导出失败，服务会停止启动，避免继续展示旧模型。
+
+## 作品集维护入口
+
+本项目的可公开 3D 打印工程文件已收录到个人作品集：
+[my-3d-print-works / 理疗仪线缆串联保护盒](https://github.com/Norman-w/my-3d-print-works/tree/main/works/health/therapy-cable-inline-box)
+
+后续作品集版本的模型、打印文件、预览图和说明以该绝对链接为维护入口；本仓库保留原始历史和迁移前上下文。
