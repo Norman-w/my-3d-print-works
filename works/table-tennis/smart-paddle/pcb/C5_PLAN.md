@@ -1,6 +1,6 @@
 # SmartPaddle C5 / M5 一体尾板与抽屉式可换电池计划（历史）
 
-> 状态更新（2026-08-15）：本文是早期 **M5/单 8P** 规划记录，不再是当前实施或制造真理源。现行组合已登记为 **M7.C5**：独立 IP5305T 尾板、电池接口、USB-C、按键及主板 TPS62162 电源重整均已进入 Atopile/KiCad，M7 外壳又固化了受保护 14500、双 4 芯通道和 PZT 焊点让位；两板当前都故意无铜、不可制造。现行真理源为 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)，布线入口为 [`ROUTING_HANDOFF.md`](ROUTING_HANDOFF.md)。
+> 状态更新（2026-08-23）：本文是早期 **M5/单 8P** 规划记录，不再是当前实施或制造真理源。现行组合已登记为 **M7.C5**：独立 IP5305T 尾板、电池接口、USB-C、按键及主板 TPS62162 电源重整均已进入 Atopile/KiCad，M7 外壳又固化了受保护 14500、双 4 芯通道和 PZT 焊点让位；两板已完成布线、铺地并通过工程样板 release gate。现行真理源为 [`../docs/power-architecture-rework/README.md`](../docs/power-architecture-rework/README.md)，当前下单包为 `fab/jlcpcb-orders/20260823-m7c5/`。
 >
 > 下文所有“仅规划”“单根 8P”等表述应按历史方案理解；现行实现保留两只 4P PicoBlade 线束，不能据本文旧线束定义改写当前 PCB。
 

@@ -28,3 +28,19 @@ function bezier_envelope_hx(y) =
     y >= BEZIER_Y1 ? BEZIER_HX[BEZIER_N] :
     let(i = _bezier_idx(y), t = _bezier_t(y, i))
     _bezier_lerp(BEZIER_HX[i], BEZIER_HX[i + 1], t);
+
+// BEZIER_HX 是拍头/拍柄合并后的包络，肩颈附近会转入拍面宽度；
+// TPU 把套必须只跟随真实手柄 planform，不能在肩颈处突然膨胀到拍面宽度。
+function bezier_handle_hx_at(y) =
+    max([
+        for (i = [0:len(BEZIER_HANDLE_PLANFORM) - 2])
+            let(
+                a = BEZIER_HANDLE_PLANFORM[i],
+                b = BEZIER_HANDLE_PLANFORM[i + 1],
+                dy = b[1] - a[1]
+            )
+            abs(dy) > 0.0001
+                && ((a[1] <= y && y <= b[1]) || (b[1] <= y && y <= a[1]))
+                ? abs(a[0] + (y - a[1]) / dy * (b[0] - a[0]))
+                : 0
+    ]);

@@ -430,6 +430,24 @@ def write_plate(
         placed, part_metadata, x1c_validation = place_x1c_rear(parts)
     else:
         placed, part_metadata = place_parts(parts, y_alignments=y_alignments)
+    cleaned_parts: list[tuple[tuple[float, ...], ...]] = []
+    removed_degenerate = 0
+    for triangles in placed:
+        cleaned: list[tuple[float, ...]] = []
+        for values in triangles:
+            # Binary STL stores float32.  A rigid rotation can collapse a
+            # sub-micron source edge only at that final serialization step;
+            # remove the resulting zero-area triangle, not real source faces.
+            quantized = list(values)
+            for index, value in enumerate(quantized[:12]):
+                quantized[index] = struct.unpack("<f", struct.pack("<f", value))[0]
+            points = [tuple(quantized[start:start + 3]) for start in (3, 6, 9)]
+            if len(set(points)) < 3:
+                removed_degenerate += 1
+                continue
+            cleaned.append(tuple(quantized))
+        cleaned_parts.append(tuple(cleaned))
+    placed = cleaned_parts
     OUT.mkdir(parents=True, exist_ok=True)
     output = OUT / filename
     count = sum(len(triangles) for triangles in placed)
@@ -446,6 +464,7 @@ def write_plate(
         "buildVolumeMm": [BUILD_MM, BUILD_MM, BUILD_MM],
         "gapMm": GAP_MM,
         "assemblyGeometryUnchanged": True,
+        "removedFloat32DegenerateTriangles": removed_degenerate,
         "sha256": sha256_file(output),
         "parts": part_metadata,
     }
@@ -455,32 +474,41 @@ def write_plate(
 
 
 def main() -> int:
+    global STL, OUT
     parser = argparse.ArgumentParser()
     parser.add_argument("--plate", choices=("all", "1_2", "3_4"), default="all")
+    parser.add_argument("--stl-root", type=Path, default=STL)
+    parser.add_argument("--prefix", default="paddle_m7")
+    parser.add_argument("--metadata", type=Path)
     args = parser.parse_args()
-    layer1 = load_binary_stl(STL / "paddle_m7_layer1_handle_skin_front.stl")
-    layer2 = load_binary_stl(STL / "paddle_m7_layer2_core_front.stl")
-    layer3 = load_binary_stl(STL / "paddle_m7_layer3_core_back.stl")
-    layer4 = load_binary_stl(STL / "paddle_m7_layer4_handle_skin_back.stl")
+    STL = args.stl_root.resolve()
+    OUT = STL / "print"
+    prefix = args.prefix
+    layer1 = load_binary_stl(STL / f"{prefix}_layer1_handle_skin_front.stl")
+    layer2 = load_binary_stl(STL / f"{prefix}_layer2_core_front.stl")
+    layer3 = load_binary_stl(STL / f"{prefix}_layer3_core_back.stl")
+    layer4 = load_binary_stl(STL / f"{prefix}_layer4_handle_skin_back.stl")
+    plate_1_2 = f"{prefix}_print_plate_layers_1_2.stl"
+    plate_3_4 = f"{prefix}_print_plate_layers_3_4.stl"
     builders = [
         # Bambu Studio check: layer 1 is flipped, moved to the upper-left;
         # layer 2 remains flat at 45° but is shifted right. Bounds and the
         # exact 5 mm X gap are calculated from the source meshes.
         lambda: write_plate(
-                "paddle_m7_print_plate_layers_1_2.stl",
+                plate_1_2,
                 "第1+2块：长承力板平放45° + 加厚外贴件竖立",
                 [upright_thick_part(layer1, bed_end="shoulder"), flat_core(layer2, flip_face_up=True)],
                 y_alignments=["high", "low"],
             ),
         # Mirrored bed layout with the same per-part orientations.
         lambda: write_plate(
-                "paddle_m7_print_plate_layers_3_4.stl",
+                plate_3_4,
                 "第3+4块：长承力板平放45° + 加厚外贴件竖立",
                 [upright_thick_part(layer4, bed_end="base"), flat_core(layer3)],
                 x1c_rear_solver=True,
             ),
     ]
-    metadata = OUT / "print_plates.json"
+    metadata = (args.metadata or (OUT / "print_plates.json")).resolve()
     if args.plate == "all":
         plates = [build() for build in builders]
     else:
@@ -491,7 +519,7 @@ def main() -> int:
         by_path = {item["path"]: item for item in previous.get("plates", [])}
         replacement = builders[selected]()
         by_path[replacement["path"]] = replacement
-        order = ["print/paddle_m7_print_plate_layers_1_2.stl", "print/paddle_m7_print_plate_layers_3_4.stl"]
+        order = [f"print/{plate_1_2}", f"print/{plate_3_4}"]
         plates = [by_path[path] for path in order]
     metadata.write_text(
         json.dumps({

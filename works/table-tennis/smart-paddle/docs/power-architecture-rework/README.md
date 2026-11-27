@@ -1,6 +1,6 @@
 # SmartPaddle 电源架构重整：跨层设计与放行说明
 
-状态（2026-08-18）：当前硬件登记为 **M7.C5**。电气、封装、网络映射、元件位姿和固件接口已同步；尾板 J2/J3 已换为 Molex 53261-0471 卧插 SMT。按板端与已插 51021 线端的完整包络，C2、低电流状态电阻 R6 和 J4 做了最小避让；C3/U3/L1 保持原位。无铜交接基线为 **主板 67 个封装**、尾板 33 个封装（主板已去掉 `TP_3V3` / `TP_5VSW`）。MCU footprint 内另有一个双面天线规则区，它不是覆铜。现板已开始布线，**当前不得制造**。
+状态（2026-08-23）：当前硬件登记为 **M7.C5**。电气、封装、网络映射、元件位姿和固件接口已同步；尾板 J2/J3 已换为 Molex 53261-0471 卧插 SMT。当前主板 67 个封装、尾板 33 个封装均已完成布线和铺地；主板 DRC 为 0 error / 0 warning / 0 未连接，尾板为 0 error / 0 未连接（保留 3 条已审计 warning）。`scripts/validate_power_rework.py --release-gate --target all` 已通过，当前达到**工程样板下单**标准，不等于量产放行。独立上传包位于 `fab/jlcpcb-orders/20260823-m7c5/`。
 
 版本判断以现行源为准：M7 相对 M6 新增受保护 14500 的局部内腔、两束实购 4 芯线通道、8 个 PZT 焊点让位，以及主板 B3U 调试键/ESP32 天线边界的跨层门禁；电气拓扑仍是增加 TPS62162、按键隔离、修正尾板 USB-C、双 TPS2553、ACH 电池座等内容的 C5。外壳打印件使用当前模型号 `paddle_m7_*`；PCB、同步脚本和交接文件保持跨版本通用名。OpenSCAD 连续承力生成链内部仍保留 `m6_*` 模块/参数名。现行通用入口为 [`../../pcb/ROUTING_HANDOFF.md`](../../pcb/ROUTING_HANDOFF.md)、[`../../pcb-tail/ADAPTER_HARNESS.md`](../../pcb-tail/ADAPTER_HARNESS.md) 与 [`../mechanical-handoff/README.md`](../mechanical-handoff/README.md)。
 
@@ -76,7 +76,7 @@ USB-C VBUS
 - 主板开关回路、MCU 去耦/EN 和 USB 22R 已移到对应器件附近；尾板新增两颗 TPS2553 及外围位于 F 面公共空腔，名义最小顶部余量 2.35mm。
 - 拍尾端面本身不挡 J1 或 SW1；完整 KiCad 3D 装配与原 Step6 壳体曾在 12 个器件处出现约 9.73mm³ 的局部环槽/侧壁相交。当前按每个器件的 KiCad courtyard 和保守高度生成独立小避让，复核总交集约 `4.97e-08mm³`，属于布尔数值噪声。方法、逐件结果和预览见 [`../tail-handle-interference/README.md`](../tail-handle-interference/README.md)。
 - B3U-1000P 的基准操作方式改为执行头中心 **Ø2.0mm 直通针孔**，可用针尖/笔尖操作，因此不再由推杆行程阻塞壳体放行。项目仍提供从壳内装入、Ø3.0mm 法兰防外脱的可选推杆；其 0.05mm 间隙和最坏 0.40mm 触发行程仍应先做尾段试片，未验证前不得把可选推杆当作唯一操作方式。
-- 当前没有生成或更新任何 Gerber、钻孔、BOM/CPL、下单 ZIP 或壳体制造 STL。
+- 当前已按两板独立下单流程生成 Gerber、钻孔、Fab 图、上传 ZIP 和审阅 ZIP；主板/尾板包均绑定当前 PCB SHA，位于 `fab/jlcpcb-orders/20260823-m7c5/`。本轮不生成 BOM/CPL，也不处理用户已自制的转接线束。
 - 当前主/尾板 3D 视觉检查图见 [`previews/README.md`](previews/README.md)；它们展示无铜交接态，不是制造预览。
 - M7 电池、双线束、PZT 焊点和天线边界的参数、剖视图及验证结果见 [`../mechanical-handoff/README.md`](../mechanical-handoff/README.md)。主板三只 `B3U-1000P` 都是 DNP 调试件，正式外壳不开孔；尾板 SW1 仍为装配的日常按键。
 
@@ -96,13 +96,13 @@ $KPY pcb-tail/scripts/place_power_architecture.py
 python3 scripts/validate_power_rework.py
 ```
 
-当前最后一条应输出 route-free handoff PASS，同时明确 manufacturing blocked。用户完成两板布线、铺地、机械试片和实测后，制造导出还会先运行：
+当前应运行工程样板制造放行命令：
 
 ```sh
 python3 scripts/validate_power_rework.py --release-gate
 ```
 
-它要求逐触点/线束/数据表审计通过、两板存在铜、DRC 无规则违规且无未连接，并确认 Ø2.0mm 针孔基准仍有效。可选 B3U 推杆的试片状态会被明确保留，但不再阻塞针孔基准方案；任何电气或基准机械条件失败都不会生成上传 ZIP。
+它要求逐触点/线束/数据表审计通过、两板存在铜、DRC 无 error 且无未连接，并确认 Ø2.0mm 针孔基准仍有效。可选 B3U 推杆的试片状态会被明确保留，但不再阻塞针孔基准方案；任何电气或基准机械条件失败都不会生成上传 ZIP。当前包已通过该门禁；回板后的电气、热、射频和可靠性测试仍未完成。
 
 ## 旧板结论
 

@@ -42,15 +42,13 @@ class Pose:
     rotation_deg: float
 
 
-# Only these references are intentionally moved.  Existing connectors,
-# sensors, the comparator body, PZT docks and switches remain untouched.
-# PZT frontend lives on IMU +X.  DAC sits toward the blade head so
-# TR/TL VREF match the TLV9034 south row without wrapping the TSSOP.
+# Current KiCad-approved route-free reconstruction poses.  Existing
+# connectors, sensors, PZT docks and switches remain untouched.
 PLACEMENTS = {
     # PMIC block: CIN -> TPS62162 -> L -> COUT, all on F.Cu.
     "PW_C_IN_10U": Pose(-19.00, -20.70, 90.0),
     "PW_BUCK_3V3": Pose(-16.30, -19.50, 0.0),
-    "PW_L_BUCK_2U2": Pose(-12.55, -19.50, 0.0),
+    "PW_L_BUCK_2U2": Pose(-12.065, -19.177, 0.0),
     "PW_C_OUT_22U": Pose(-10.80, -23.65, 90.0),
     # Isolated button reader at the bottom of the existing latch cluster.
     "PW_R_BTN_RAW_PU_100K": Pose(-18.80, -28.66, 90.0),
@@ -59,24 +57,22 @@ PLACEMENTS = {
     # ESP32 bulk/decap stay above pins 2/3.  EN RC sits on the EN pad row.
     "MCU_C_BULK_10U": Pose(-12.00, 10.40, 0.0),
     "MCU_C_DEC_100N": Pose(-8.80, 10.40, 0.0),
-    "MCU_C_EN_1U": Pose(-5.70, 10.50, -90.0),
-    "PW_R_EN_PU_10K": Pose(-3.90, 10.50, -90.0),
+    "MCU_C_EN_1U": Pose(-5.70, 10.795, 270.0),
+    "PW_R_EN_PU_10K": Pose(-3.90, 10.795, 270.0),
     # Power indicator is non-critical; park it in the clear left column.
     "LED_MCU_PWR": Pose(-19.40, -12.80, 0.0),
     "R_MCU_PWR_1K": Pose(-19.40, -15.00, 90.0),
     # USB 22R beside the MCU USB pads.  90° puts pad 2 (PHY) toward the MCU.
     "USB_R_DN_22R": Pose(7.00, 10.60, 90.0),
     "USB_R_DP_22R": Pose(8.50, 10.60, 90.0),
-    # No Bluetooth: IMU ±X are both legal.  PZT frontend sits on IMU +X.
-    # TLV9034 keeps -90° so TL/TR stay on the head-side row.  Bypass is
-    # south of pin 3.  DAC sits further south with VOUT west toward the
-    # comparator so TR/TL VREF do not wrap around the TSSOP.
-    "PZT_CMP_TLV9034": Pose(14.00, -18.80, -90.0),
+    # No Bluetooth: IMU ±X are both legal.  These final hand-routed poses
+    # preserve the verified escape channels around the comparator and DAC.
+    "PZT_CMP_TLV9034": Pose(15.195, -18.093, 270.0),
     "PZT_C_CMP_100N": Pose(15.20, -24.00, 90.0),
     "PZT_DAC_MCP4728": Pose(17.40, -28.50, 0.0),
-    "PZT_C_DAC_100N": Pose(19.50, -29.00, 90.0),
-    "PZT_R_SCL_PU_4K7": Pose(19.50, -26.80, 90.0),
-    "PZT_R_SDA_PU_4K7": Pose(19.50, -25.50, 90.0),
+    "PZT_C_DAC_100N": Pose(13.208, -28.435, 90.0),
+    "PZT_R_SCL_PU_4K7": Pose(17.653, -24.701, 90.0),
+    "PZT_R_SDA_PU_4K7": Pose(19.812, -22.415, 90.0),
 }
 
 PLACEMENT_VALUES = {

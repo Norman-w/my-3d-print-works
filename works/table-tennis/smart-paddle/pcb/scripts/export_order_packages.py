@@ -27,6 +27,10 @@ TAIL_CONNECTION = ROOT / "pcb-tail" / "ADAPTER_HARNESS.md"
 MAIN_ROUTING_HANDOFF = ROOT / "pcb" / "ROUTING_HANDOFF.md"
 POWER_REWORK_NOTES = ROOT / "docs" / "power-architecture-rework" / "README.md"
 DEFAULT_KICAD_CLI = "/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli"
+KICAD_PYTHON = (
+    "/Applications/KiCad/KiCad.app/Contents/Frameworks/"
+    "Python.framework/Versions/Current/bin/python3"
+)
 
 TAIL_ORDER_README = """\
 SmartPaddle Tail PCB — JLCPCB prototype review notes
@@ -119,6 +123,27 @@ def zip_files(destination: Path, files: list[Path], base: Path | None = None) ->
             archive.write(path, arcname=arcname)
 
 
+def write_shifted_fab_copy(source: Path, destination: Path) -> None:
+    """Translate a drawing-only copy into the printable A4 area.
+
+    The tail board uses handle-relative coordinates around the origin.  KiCad's
+    PDF exporter otherwise places most of that board outside the A4 page even
+    though the Gerber/drill coordinates themselves are correct.
+    """
+    script = r"""
+import pcbnew, sys
+source, destination = sys.argv[1], sys.argv[2]
+board = pcbnew.LoadBoard(source)
+box = board.GetBoardEdgesBoundingBox()
+left = pcbnew.ToMM(box.GetLeft())
+top = pcbnew.ToMM(box.GetTop())
+board.Move(pcbnew.VECTOR2I_MM(18.0 - left, 18.0 - top))
+board.Save(destination)
+print(f"tail fab drawing translation: dx={18.0-left:.3f} dy={18.0-top:.3f} mm")
+"""
+    run([KICAD_PYTHON, "-c", script, str(source), str(destination)])
+
+
 def export_tail(out: Path, kicad_cli: str) -> tuple[Path, Path]:
     run([sys.executable, str(TAIL_J1_AUDITOR)])
     if out.exists() and any(out.iterdir()):
@@ -160,11 +185,18 @@ def export_tail(out: Path, kicad_cli: str) -> tuple[Path, Path]:
         "--map-format", "pdf", str(TAIL_BOARD),
     ])
     fab_pdf = out / "tail_fabrication_drawing.pdf"
-    run([
-        kicad_cli, "pcb", "export", "pdf", "--layers", "F.Fab,B.Fab,Edge.Cuts",
-        "--sketch-pads-on-fab-layers", "--mode-single", "--output", str(fab_pdf),
-        str(TAIL_BOARD),
-    ])
+    shifted_fab_dir = reports / "_fab_drawing_source"
+    shifted_fab_dir.mkdir(parents=True, exist_ok=True)
+    shifted_fab_board = shifted_fab_dir / TAIL_BOARD.name
+    write_shifted_fab_copy(TAIL_BOARD, shifted_fab_board)
+    try:
+        run([
+            kicad_cli, "pcb", "export", "pdf", "--layers", "F.Fab,B.Fab,Edge.Cuts",
+            "--include-border-title", "--sketch-pads-on-fab-layers", "--mode-single",
+            "--output", str(fab_pdf), str(shifted_fab_board),
+        ])
+    finally:
+        shutil.rmtree(shifted_fab_dir, ignore_errors=True)
     after = sha256(TAIL_BOARD)
     if after != before:
         raise RuntimeError(f"tail board changed during export: {before} -> {after}")

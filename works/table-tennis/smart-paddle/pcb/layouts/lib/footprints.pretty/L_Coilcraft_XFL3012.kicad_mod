@@ -109,4 +109,15 @@
 		(uuid "6069b32d-6b5a-493b-82cb-f5e79e8c496c")
 	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/../lib/3dmodels/XFL3012_MAX_ENVELOPE.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

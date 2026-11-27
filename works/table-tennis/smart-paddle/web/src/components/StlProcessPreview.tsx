@@ -13,6 +13,11 @@ import {
 
 //#region 模型/类型
 type BrowseMode = 'steps' | 'types' | 'components';
+
+interface StlProcessPreviewProps {
+  manifestUrl?: string;
+  minimal?: boolean;
+}
 //#endregion
 
 //#region 常量/配置
@@ -95,7 +100,10 @@ function fitMeshes(
 //#endregion
 
 //#region 视图层
-export default function StlProcessPreview() {
+export default function StlProcessPreview({
+  manifestUrl = '/stl/preview/manifest.json',
+  minimal = false,
+}: StlProcessPreviewProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera>();
   const controlsRef = useRef<OrbitControls>();
@@ -116,7 +124,7 @@ export default function StlProcessPreview() {
   const [downloadOpen, setDownloadOpen] = useState(false);
 
   useEffect(() => {
-    loadProcessManifest()
+    loadProcessManifest(manifestUrl)
       .then((next) => {
         const initialIds = idsForDefault(next);
         visibleIdsRef.current = initialIds;
@@ -125,10 +133,10 @@ export default function StlProcessPreview() {
         setActiveId(next.processSteps[0]?.id ?? '');
       })
       .catch((reason: unknown) => {
-        setError(`未找到 M7 预览资产：${String(reason)}。请先运行 ./scripts/export-stl.sh`);
+        setError(`未找到工艺预览资产：${String(reason)}`);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [manifestUrl]);
 
   useEffect(() => {
     if (!manifest || !hostRef.current) return;
@@ -349,6 +357,14 @@ export default function StlProcessPreview() {
     if (manifest) applyCamera(cameraById(manifest, view.camera));
   };
 
+  const toggleMinimalExploded = () => {
+    if (!manifest) return;
+    const targetId = exploded ? 'assembled' : 'four_layers';
+    const target = manifest.processSteps.find((view) => view.id === targetId);
+    if (target) selectView(target);
+    else setExploded((value) => !value);
+  };
+
   const toggleComponent = (id: string) => {
     setVisibleIds((current) => {
       const next = new Set(current);
@@ -360,7 +376,7 @@ export default function StlProcessPreview() {
 
   return (
     <div style={{ display: 'flex', flex: 1, minHeight: 0, color: '#e5e7eb' }}>
-      <aside style={PANEL}>
+      {!minimal && <aside style={PANEL}>
         <h2 style={{ margin: '0 0 4px', color: '#60a5fa' }}>
           {manifest?.modelVersion ?? 'M7'} 工艺预览
         </h2>
@@ -451,10 +467,52 @@ export default function StlProcessPreview() {
           ))}
         </div>
         {error && <p style={{ color: '#fca5a5', fontSize: 12 }}>{error}</p>}
-      </aside>
+      </aside>}
       <div style={{ flex: 1, minWidth: 0, position: 'relative' }}>
         <div ref={hostRef} style={{ position: 'absolute', inset: 0 }} />
-        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 3 }}>
+        {minimal && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 14,
+              left: 16,
+              zIndex: 3,
+              padding: '8px 11px',
+              borderRadius: 7,
+              border: '1px solid #334155',
+              background: '#0f172acc',
+              color: '#dbeafe',
+              fontSize: 13,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>{manifest?.modelVersion ?? 'M7-LB1'} · 3D 预览</span>
+              {manifest && (
+                <div style={{ display: 'flex', gap: 4 }}>
+                  <button
+                    type="button"
+                    aria-pressed={exploded}
+                    title={exploded ? '合拢四层' : '展开四层'}
+                    style={{ ...BUTTON, padding: '4px 7px', fontSize: 11, borderColor: exploded ? '#60a5fa' : '#374151' }}
+                    onClick={toggleMinimalExploded}
+                  >
+                    {exploded ? '合拢' : '爆炸'}
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={transparent}
+                    title={transparent ? '恢复实体显示' : '透明观察内部'}
+                    style={{ ...BUTTON, padding: '4px 7px', fontSize: 11, borderColor: transparent ? '#60a5fa' : '#374151' }}
+                    onClick={() => setTransparent((value) => !value)}
+                  >
+                    {transparent ? '实体' : '透明'}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        {!minimal && <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 3 }}>
           <button
             type="button"
             style={{
@@ -523,7 +581,7 @@ export default function StlProcessPreview() {
               </div>
             </div>
           )}
-        </div>
+        </div>}
         {(loading || error) && (
           <div
             style={{
